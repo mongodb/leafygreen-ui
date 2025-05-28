@@ -2,10 +2,11 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import startCase from 'lodash/startCase';
 
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
+import { scrollbarColor } from './color/scrollbar';
 import { Mode } from './mode';
 import {
   addOverflowShadow,
@@ -19,28 +20,34 @@ import {
   spacing,
   transitionDuration,
   typeScales,
+  Variant,
 } from '.';
 
-const Card = ({
+const DemoCard = ({
   children,
   darkMode,
+  className,
 }: {
   children: React.ReactNode;
   darkMode: boolean;
+  className?: string;
 }) => {
   const theme = darkMode ? Theme.Dark : Theme.Light;
 
   return (
     <div
-      className={css`
-        padding: 24px;
-        min-height: 68px; // 48px + 20px (padding + line-height)
-        border-radius: 24px;
-        color: ${color[theme].text.primary.default};
-        background-color: ${color[theme].background.primary.default};
-        border: 1px solid ${color[theme].border.secondary.default};
-        box-shadow: ${darkMode ? shadow.dark[100] : shadow.light[100]};
-      `}
+      className={cx(
+        css`
+          padding: 24px;
+          min-height: 68px; // 48px + 20px (padding + line-height)
+          border-radius: 24px;
+          color: ${color[theme].text.primary.default};
+          background-color: ${color[theme].background.primary.default};
+          border: 1px solid ${color[theme].border.secondary.default};
+          box-shadow: ${darkMode ? shadow.dark[100] : shadow.light[100]};
+        `,
+        className,
+      )}
     >
       {children}
     </div>
@@ -270,7 +277,7 @@ export const FontFamilies = () => (
 const generateTable = (theme: Theme) => {
   const isDarkMode = !!(theme === Theme.Dark);
   return (
-    <Card darkMode={isDarkMode}>
+    <DemoCard darkMode={isDarkMode}>
       <h3
         className={css`
           color: ${color[theme].text.primary.default};
@@ -286,7 +293,7 @@ const generateTable = (theme: Theme) => {
         `}
       >
         {Object.keys(color[theme]).map(type => (
-          <Card darkMode={isDarkMode} key={`color-${theme}-${type}`}>
+          <DemoCard darkMode={isDarkMode} key={`color-${theme}-${type}`}>
             <table
               className={css`
                 border-spacing: ${spacing[400]}px;
@@ -361,31 +368,85 @@ const generateTable = (theme: Theme) => {
                 </tbody>
               ))}
             </table>
-          </Card>
+          </DemoCard>
         ))}
       </div>
-    </Card>
+    </DemoCard>
   );
 };
 
-export const Colors = () => {
-  return (
-    <div
-      className={css`
-        display: flex;
-        flex-direction: column;
-        gap: ${spacing[400]}px;
-      `}
-    >
-      <h2>Color Tokens</h2>
-      {Object.values(Theme).map(theme => generateTable(theme))}
-    </div>
-  );
+export const Colors = {
+  render: () => {
+    return (
+      <div
+        className={css`
+          display: flex;
+          flex-direction: column;
+          gap: ${spacing[400]}px;
+        `}
+      >
+        <h2>Color Tokens</h2>
+        {Object.values(Theme).map(theme => generateTable(theme))}
+      </div>
+    );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
-Colors.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+export const Scrollbars = {
+  render: () => {
+    return (
+      <div
+        className={css`
+          display: grid;
+          gap: ${spacing[400]}px;
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+        `}
+      >
+        {Object.values(Theme).map((theme: Theme) => {
+          const isDarkMode = theme === Theme.Dark;
+
+          return [Variant.Primary, Variant.Secondary].map(variant => {
+            const thumbColor = scrollbarColor[theme].thumb[variant].default;
+            const trackColor = scrollbarColor[theme].track[variant].default;
+            return (
+              <DemoCard
+                darkMode={isDarkMode}
+                key={theme}
+                className={css`
+                  color: ${color[theme].text[variant].default};
+                  background-color: ${color[theme].background[variant].default};
+                `}
+              >
+                <div
+                  className={css`
+                    max-height: 144px;
+                    max-width: 144px;
+                    overflow: scroll;
+                    scrollbar-color: ${thumbColor} ${trackColor};
+                  `}
+                >
+                  <div
+                    className={css`
+                      height: 256px;
+                      width: 256px;
+                    `}
+                  >
+                    <h3>{theme} Mode</h3>
+                    <h4>{variant}</h4>
+                  </div>
+                </div>
+              </DemoCard>
+            );
+          });
+        })}
+      </div>
+    );
   },
 };
 
