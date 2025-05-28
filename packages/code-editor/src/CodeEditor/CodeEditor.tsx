@@ -46,10 +46,18 @@ const createTooltipExtension = ({
       above: above,
       create() {
         const dom = document.createElement('div');
-        const contentString = renderToString(
-          React.createElement(React.Fragment, null, content),
-        );
-        dom.innerHTML = contentString;
+
+        if (typeof content === 'string') {
+          dom.textContent = content;
+        } else if (React.isValidElement(content) || Array.isArray(content)) {
+          const contentString = renderToString(
+            React.createElement(React.Fragment, null, content),
+          );
+          dom.innerHTML = contentString;
+        } else if (content) {
+          dom.textContent = String(content);
+        }
+
         return { dom };
       },
     };
