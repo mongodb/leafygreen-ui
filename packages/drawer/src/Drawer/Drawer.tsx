@@ -124,9 +124,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                   as={typeof title === 'string' ? 'h2' : 'div'}
                   baseFontSize={BaseFontSize.Body2}
                   id={titleId}
-                  weight="medium"
                 >
-                  {title}
+                  <strong>{title}</strong>
                 </Body>
                 {showCloseButton && (
                   <IconButton
