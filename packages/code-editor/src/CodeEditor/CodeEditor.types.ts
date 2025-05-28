@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import type {
   EditorState,
   EditorView,
@@ -48,7 +49,9 @@ export const CodeEditorSelectors = {
   FoldGutter: '.cm-foldGutter',
   GutterElement: '.cm-gutterElement',
   HyperLink: '.cm-hyper-link-icon',
+  Line: '.cm-line',
   LineWrapping: '.cm-lineWrapping',
+  Tooltip: '.cm-tooltip',
 } as const;
 export type CodeEditorSelectors =
   (typeof CodeEditorSelectors)[keyof typeof CodeEditorSelectors];
@@ -58,6 +61,30 @@ export const IndentUnits = {
   Tab: 'tab',
 } as const;
 export type IndentUnits = (typeof IndentUnits)[keyof typeof IndentUnits];
+
+export interface Tooltip {
+  /**
+   * Which line in the document the tooltip should be rendered. 0 based.
+   */
+  line: number;
+
+  /**
+   * Which character, going from left to right, the tooltip should be
+   * rendered. 0 based. Defaults to 0.
+   */
+  column?: number;
+
+  /**
+   * What gets rendered in the tooltip.
+   */
+  content: ReactNode;
+
+  /**
+   * Whether the tooltip should be shown above or below the target position.
+   * Defaults to true.
+   */
+  above?: boolean;
+}
 
 export interface CodeEditorProps extends DarkModeProps {
   /**
@@ -123,4 +150,9 @@ export interface CodeEditorProps extends DarkModeProps {
    * Enables read only mode, making the contents uneditable.
    */
   readOnly?: boolean;
+
+  /**
+   * Add tooltips to the editor content.
+   */
+  tooltips?: Array<Tooltip>;
 }
