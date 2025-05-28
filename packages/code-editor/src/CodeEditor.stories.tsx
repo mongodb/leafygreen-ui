@@ -72,7 +72,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     enableCodeFolding: true,
     enableLineNumbers: true,
     enableLineWrapping: true,
-    defaultValue: 'test\n'.repeat(5),
+    defaultValue: '',
     forceParsing: false,
     placeholder: 'Type your code here...',
     readOnly: false,
