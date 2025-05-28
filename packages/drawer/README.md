@@ -66,6 +66,16 @@ or
 #### With `OverlayDrawerLayout`
 
 ```tsx
+import React, { useState } from 'react';
+
+import Button from '@leafygreen-ui/button';
+import {
+  DisplayMode,
+  Drawer,
+  DrawerStackProvider,
+  OverlayDrawerLayout,
+} from '@leafygreen-ui/drawer';
+
 function ExampleComponent() {
   const [open, setOpen] = useState(false);
 
@@ -319,6 +329,8 @@ const Component = () => {
 
 Use `EmbeddedDrawerLayout` when you need an embedded `Drawer` within a specific container.
 
+If rendering `EmbeddedDrawerLayout` inside another element, make sure that element has an explicit height. Otherwise, the layout may not size itself correctly.
+
 | Prop                      | Type      | Description                                           | Default |
 | ------------------------- | --------- | ----------------------------------------------------- | ------- |
 | `isDrawerOpen`            | `boolean` | Determines if the `Drawer` instance is open or closed |         |
@@ -327,6 +339,8 @@ Use `EmbeddedDrawerLayout` when you need an embedded `Drawer` within a specific 
 ### OverlayDrawerLayout
 
 Use `OverlayDrawerLayout` when you need an overlay `Drawer` that is positioned relative to a specific container rather than the entire app. The `OverlayDrawerLayout` adds `position: relative` to its container, ensuring the `Drawer` overlays only its parent element. If the `Drawer` should overlay the entire application, this layout is not necessary.
+
+If rendering `OverlayDrawerLayout` inside another element, make sure that element has an explicit height. Otherwise, the layout may not size itself correctly.
 
 | Prop                      | Type      | Description                                          | Default |
 | ------------------------- | --------- | ---------------------------------------------------- | ------- |
@@ -430,6 +444,10 @@ const Component = () => {
 | ----------- | ---------------------- |
 | openDrawer  | `(id: DataId) => void` |
 | closeDrawer | `() => void`           |
+
+### Height Considerations
+
+If rendering `DrawerToolbarLayout` inside another element, make sure that element has an explicit height. Otherwise, the layout may not size itself correctly.
 
 # Test Harnesses
 
