@@ -7,4 +7,6 @@ export {
   type CodeMirrorRef,
   type CodeMirrorState,
   type CodeMirrorView,
+  IndentUnits,
+  type Tooltip,
 } from './CodeEditor.types';
