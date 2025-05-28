@@ -49,7 +49,9 @@ export const CodeEditorSelectors = {
   FoldGutter: '.cm-foldGutter',
   GutterElement: '.cm-gutterElement',
   HyperLink: '.cm-hyper-link-icon',
+  Line: '.cm-line',
   LineWrapping: '.cm-lineWrapping',
+  Tooltip: '.cm-tooltip',
 } as const;
 export type CodeEditorSelectors =
   (typeof CodeEditorSelectors)[keyof typeof CodeEditorSelectors];
