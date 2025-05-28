@@ -11,6 +11,7 @@ import {
 import { DisplayMode } from '../Drawer/Drawer.types';
 
 const MOBILE_BREAKPOINT = breakpoints.Tablet;
+const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
 const drawerIn = keyframes`
   from {
@@ -53,6 +54,18 @@ const drawerInMobile = keyframes`
   }
 `;
 
+const drawerPaddingOut = keyframes`
+  0% {
+    padding-left: ${SHADOW_WIDTH}px;
+  }
+  99% {
+    padding-left: ${SHADOW_WIDTH}px;
+  }
+  100% {
+    padding-left: 0px;
+  }
+`;
+
 const openStyles = css`
   animation-name: ${drawerIn};
   animation-fill-mode: forwards;
@@ -73,11 +86,15 @@ const closedStyles = css`
 const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
   ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
 
+  // Need this to show the box shadow since we are using overflow: hidden
+  padding-left: ${SHADOW_WIDTH}px;
+
   &::before {
     transition-property: opacity;
     transition-duration: ${drawerTransitionDuration}ms;
     transition-timing-function: ease-in-out;
     opacity: 1;
+    left: ${SHADOW_WIDTH}px;
   }
 `;
 
@@ -90,7 +107,8 @@ const baseStyles = css`
   animation-timing-function: ease-in-out;
   animation-duration: ${drawerTransitionDuration}ms;
   z-index: 0;
-  height: inherit;
+  height: 100%;
+  overflow: hidden;
 
   & > :first-child {
     grid-area: ${GRID_AREA.toolbar};
@@ -115,6 +133,11 @@ const baseStyles = css`
 `;
 
 const closedDrawerShadowStyles = css`
+  padding-left: 0;
+  animation-name: ${drawerPaddingOut};
+  animation-timing-function: ease-in-out;
+  animation-duration: ${drawerTransitionDuration}ms;
+
   ::before {
     opacity: 0;
   }
