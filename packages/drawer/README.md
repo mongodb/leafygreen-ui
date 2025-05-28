@@ -350,9 +350,11 @@ If rendering `OverlayDrawerLayout` inside another element, make sure that elemen
 
 Use `DrawerToolbarLayout` when you want to render a `Drawer` with a `Toolbar`. This component handles rendering both elements and manages their state together.
 
-```tsx
-// Dummy Data
+### Data
 
+Each object in the array defines a `Toolbar` item. If a `Toolbar` item is intended to perform an action other than opening a `Drawer` (for example, opening a modal), leave the `content` and `title` fields empty.
+
+```tsx
 const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
   {
     id: 'Code',
@@ -385,6 +387,8 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
 ];
 ```
 
+#### Rendering
+
 ```tsx
 import React, { useState } from 'react';
 
@@ -409,7 +413,11 @@ const Component = () => {
 
   return (
     <div>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        displayMode="embedded"
+        onClose={() => {}}
+      >
         <Main />
       </DrawerToolbarLayout>
     </div>
