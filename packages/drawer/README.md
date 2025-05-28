@@ -26,7 +26,9 @@ npm install @leafygreen-ui/drawer
 
 ## Example
 
-### Single Overlay Drawer
+### Single Overlay Drawer without Toolbar
+
+#### Without `OverlayDrawerLayout`
 
 ```tsx
 import React, { useState } from 'react';
@@ -59,7 +61,35 @@ function ExampleComponent() {
 }
 ```
 
-### Multiple Overlay Drawers
+or
+
+#### With `OverlayDrawerLayout`
+
+```tsx
+function ExampleComponent() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <DrawerStackProvider>
+      <OverlayDrawerLayout>
+        <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+          Open Drawer
+        </Button>
+        <Drawer
+          displayMode={DisplayMode.Overlay}
+          onClose={() => setOpen(false)}
+          open={open}
+          title="Drawer Title"
+        >
+          content
+        </Drawer>
+      </OverlayDrawerLayout>
+    </DrawerStackProvider>
+  );
+}
+```
+
+### Multiple Overlay Drawers without Toolbar
 
 ```tsx
 import React, { useState } from 'react';
@@ -104,7 +134,11 @@ function ExampleComponent() {
 }
 ```
 
-### Embedded Drawer
+### Overlay Drawer with Toolbar
+
+// TODO: in separate PR
+
+### Embedded Drawer without Toolbar
 
 ```tsx
 import React, { useState } from 'react';
@@ -142,6 +176,10 @@ function ExampleComponent() {
 }
 ```
 
+### Embedded Drawer with Toolbar
+
+// TODO: in separate PR
+
 ## Properties
 
 ### Drawer
@@ -156,9 +194,24 @@ function ExampleComponent() {
 
 ### EmbeddedDrawerLayout
 
+Use `EmbeddedDrawerLayout` when you need an embedded `Drawer` within a specific container.
+
 | Prop           | Type      | Description                                           | Default |
 | -------------- | --------- | ----------------------------------------------------- | ------- |
 | `isDrawerOpen` | `boolean` | Determines if the `Drawer` instance is open or closed |         |
+| `hasToolbar`   | `boolean` | Determines if the `Toolbar` is present in the layout  | `false` |
+
+### OverlayDrawerLayout
+
+Use `OverlayDrawerLayout` when you need an overlay `Drawer` that is positioned relative to a specific container rather than the entire app. The `OverlayDrawerLayout` adds `position: relative` to its container, ensuring the `Drawer` overlays only its parent element. If the `Drawer` should overlay the entire application, this layout is not necessary.
+
+| Prop         | Type      | Description                                          | Default |
+| ------------ | --------- | ---------------------------------------------------- | ------- |
+| `hasToolbar` | `boolean` | Determines if the `Toolbar` is present in the layout | `false` |
+
+## DrawerToolbarLayout
+
+// TODO: Add in separate PR
 
 # Test Harnesses
 
@@ -240,10 +293,11 @@ const { findDrawer, getCloseButtonUtils, getDrawer, isOpen, queryDrawer } =
   getTestUtils();
 ```
 
-| Util                  | Description                                                                                                                                               | Returns                                                                                                                  |
+// TODO: toolbar utils in a separate PR
+| Util | Description | Returns |
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `findDrawer`          | Returns a promise that resolves to the drawer element. The promise is rejected if no elements match or if more than one match is found.                   | `Promise<HTMLDialogElement>` \| `Promise<HTMLDivElement>`                                                                |
-| `getCloseButtonUtils` | Returns the button test utils for the close button                                                                                                        | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
-| `getDrawer`           | Returns the drawer element and throws if no elements match or if more than one match is found.                                                            | `HTMLDivElement`                                                                                                         |
-| `isOpen`              | Checks the `aria-hidden` attribute and that the drawer element is visible based on CSS properties for `display`, `opacity`, `transform`, and `visibility` | `boolean`                                                                                                                |
-| `queryDrawer`         | Returns the drawer element or `null` if no elements match and throws if more than one match is found.                                                     | `HTMLDivElement`                                                                                                         |
+| `findDrawer` | Returns a promise that resolves to the drawer element. The promise is rejected if no elements match or if more than one match is found. | `Promise<HTMLDialogElement>` \| `Promise<HTMLDivElement>` |
+| `getCloseButtonUtils` | Returns the button test utils for the close button | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
+| `getDrawer` | Returns the drawer element and throws if no elements match or if more than one match is found. | `HTMLDivElement` |
+| `isOpen` | Checks the `aria-hidden` attribute and that the drawer element is visible based on CSS properties for `display`, `opacity`, `transform`, and `visibility` | `boolean` |
+| `queryDrawer` | Returns the drawer element or `null` if no elements match and throws if more than one match is found. | `HTMLDivElement` |

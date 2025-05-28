@@ -24,6 +24,8 @@ export const getBaseStyles = ({
       // Show the focus ring on the toolbar itself when a child element is focused and only when navigating with a keyboard
       &:has(:focus-visible) {
         box-shadow: ${focusRing[theme].default};
+        // So the focus ring overlaps sibling elements
+        z-index: 1;
       }
     `,
     className,
