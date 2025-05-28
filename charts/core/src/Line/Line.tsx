@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { colors } from '@lg-charts/colors';
 import { useSeriesContext } from '@lg-charts/series-provider';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -14,12 +13,9 @@ export function Line({ name, data }: LineProps) {
   const {
     chart: { addSeries, ready, removeSeries },
   } = useChartContext();
-  const { getSeriesIndex, isChecked } = useSeriesContext();
+  const { getColor, isChecked } = useSeriesContext();
 
-  const themedColors = colors[theme];
-  const colorIndex = getSeriesIndex(name) % themedColors.length; // loop through colors if more lines than available colors
-  const color = themedColors[colorIndex];
-
+  const color = getColor(name, theme);
   const isVisible = isChecked(name);
 
   useEffect(() => {
