@@ -12,7 +12,7 @@ const baseStyles = css`
   transition: all ${drawerTransitionDuration}ms ease-in-out;
   overflow: hidden;
   position: relative;
-  height: inherit;
+  height: 100%;
 `;
 
 const drawerBaseStyles = css`

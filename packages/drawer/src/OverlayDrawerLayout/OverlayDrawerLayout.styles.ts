@@ -19,6 +19,7 @@ const toolbarBaseStyles = css`
   display: grid;
   grid-template-columns: auto ${TOOLBAR_WIDTH}px;
   grid-template-areas: '${GRID_AREA.content} ${GRID_AREA.drawer}';
+  height: 100%;
 `;
 
 export const getOverlayDrawerLayoutStyles = ({
