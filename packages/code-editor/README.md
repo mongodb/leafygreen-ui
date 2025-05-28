@@ -59,6 +59,7 @@ console.log(greet('MongoDB user'));`;
 | `onChange` _(optional)_                     | Callback that receives the updated editor value when changes are made.                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(value: string) => void;` | `undefined` |
 | `placeholder` _(optional)_                  | Value to display in the editor when it is empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `HTMLElement \| string`    | `undefined` |
 | `readOnly` _(optional)_                     | Enables read only mode, making the contents uneditable.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `boolean`                  | `false`     |
+| `tooltips` _(optional)_                     | Add tooltips to the editor content that appear on hover.                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `Array<Tooltip>`           | `undefined` |
 
 ## Types
 
@@ -70,8 +71,14 @@ console.log(greet('MongoDB user'));`;
 | `CodeMirrorRef`          | Underlying CodeMirror editor ref type. When a ref is passed to the `CodeEditor` it will be of this type and give you direct access to CodeMirror internals such as `CodeMirrorState` and `CodeMirrorView` |
 | `CodeMirrorState`        | Underlying CodeMirror editor `EditorState` type. For more information see https://codemirror.net/docs/ref/#state.EditorState.                                                                             |
 | `CodeMirrorView`         | Underlying CodeMirror editor `EditorView` type. For more information see https://codemirror.net/docs/ref/#view.EditorView.                                                                                |
+| `IndentUnits`            | Unit options that can be set via the `indentUnit` prop of `CodeEditor`.                                                                                                                                   |
 | `RenderedTestResult`     | Type returned by the `renderEditor` test utility. More info in Test Utilities section.                                                                                                                    |
 | `RenderedTestEditorType` | Editor type used to interact with editor in a Jest test. More info in Test Utilities section.                                                                                                             |
+| `Tooltip`                | Describes a tooltip to be displayed on hover                                                                                                                                                              |
+| `Tooltip.line`           | Number. Which line in the document the tooltip should be rendered. 0 based.                                                                                                                               |
+| `Tooltip.content`        | ReactNode. What gets rendered in the tooltip.                                                                                                                                                             |
+| `Tooltip.column`         | Optional number. Which character, going from left to right, the tooltip should be rendered. 0 based. Defaults to 0.                                                                                       |
+| `Tooltip.above`          | Optional boolean. Whether the tooltip should be shown above or below the target position. Defaults to true.                                                                                               |
 
 ## Test Utlities
 
@@ -97,29 +104,83 @@ Has the following interface:
 
 ```tsx
 {
-  // Used to find single element in the editor. Will throw error if not found.
+  /**
+   * Returns the first element matching a specific CodeEditor selector
+   * @param selector - The CSS selector to look for in the editor
+   * @param options - Optional filtering options
+   * @param options.text - Optional text content filter
+   * @returns The first DOM element matching the selector and optional text filter
+   * @throws Error if no elements or multiple elements are found
+   */
   getBySelector(
     selector: CodeEditorSelectors,
     options?: { text?: string },
   ): Element;
 
-  // Used to find single element in the editor. Will return null if not found. Useful when checking if something has not rendered.
+  /**
+   * Returns all elements matching a specific CodeEditor selector
+   * @param selector - The CSS selector to look for in the editor
+   * @param options - Optional filtering options
+   * @param options.text - Optional text content filter
+   * @returns All DOM elements matching the selector and optional text filter
+   * @throws Error if no elements are found
+   */
+  function getAllBySelector(
+    selector: CodeEditorSelectors,
+    options?: { text?: string },
+  ): Array<Element>;
+
+  /**
+   * Returns the first element matching a specific CodeEditor selector or null if not found
+   * @param selector - The CSS selector to look for in the editor
+   * @param options - Optional filtering options
+   * @param options.text - Optional text content filter
+   * @returns The first DOM element matching the selector and optional text filter, or null if not found
+   */
   queryBySelector(selector: CodeEditorSelectors, options?: {
     text?: string;
   }): Element | null;
 
-  // Returns the editor's currently set indent unit.
-  getIndentUnit(): string;
+  /**
+   * Returns all elements matching a specific CodeEditor selector or null if none are found
+   * @param selector - The CSS selector to look for in the editor
+   * @param options - Optional filtering options
+   * @param options.text - Optional text content filter
+   * @returns All DOM elements matching the selector and optional text filter, or null if none found
+   */
+  function queryAllBySelector(
+    selector: CodeEditorSelectors,
+    options?: { text?: string },
+  ): Array<Element> | null;
 
-  // Returns whether editor is in a read only state.
-  isReadOnly(): boolean;
+  /**
+   * Checks if the editor is in read-only mode
+   * @returns Boolean indicating whether the editor is in read-only mode
+   */
+  function isReadOnly(): boolean;
 
-  // Returns whether line wrapping is enabled in editor.
-  isLineWrappingEnabled(): boolean;
+  /**
+   * Retrieves the current indentation unit configuration from the editor
+   * @returns The string used for indentation (spaces or tab)
+   */
+  function getIndentUnit(): IndentUnit;
+
+  /**
+   * Checks if line wrapping is enabled in the editor
+   * @returns Boolean indicating whether line wrapping is enabled
+   */
+  function isLineWrappingEnabled(): boolean;
 
   // Group of actions that can be performed on the editor.
   interactions: {
-    // Insert text into the editor
+    /**
+     * Inserts text into the editor at the specified position
+     * @param text - The text to insert
+     * @param options - Optional position options
+     * @param options.from - Starting position for insertion (defaults to 0)
+     * @param options.to - End position for replacement (optional)
+     * @throws Error if editor view is not initialized
+     */
     insertText(text: string, options?: { to?: number; from?: number; }): undefined;
   }
 }
