@@ -1,3 +1,5 @@
+import type { DarkColor, LightColor } from '@lg-charts/colors';
+
 import { Theme } from '@leafygreen-ui/lib';
 
 export type SeriesName = string;
@@ -39,12 +41,17 @@ export interface SeriesContextType {
   toggleSelectAll: () => void;
 }
 
+interface CustomColors {
+  [Theme.Dark]: Array<DarkColor>;
+  [Theme.Light]: Array<LightColor>;
+}
+
 export interface SeriesProviderProps {
   /**
-   * An optional array of custom colors to be used for the series.
+   * An optional object mapping each theme to an array of custom colors for the series.
    * If not provided, default colors based on the current theme will be used.
    */
-  customColors?: Array<string>;
+  customColors?: CustomColors;
 
   /**
    * An array of series names representing the data series to be displayed in descendant charts components.

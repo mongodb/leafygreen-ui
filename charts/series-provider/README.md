@@ -51,10 +51,10 @@ const App = () => {
 
 ## Props
 
-| Name           | Description                                                                                                                           | Type            | Default |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ------- |
-| `customColors` | An optional array of custom colors to be used for the series. If not provided, default colors based on the current theme will be used | `Array<string>` |         |
-| `series`       | An array of series names representing the data series to be displayed in the descendant charts components                             | `Array<string>` |         |
+| Name           | Description                                                                                                                                                | Type            | Default |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ------- |
+| `customColors` | An optional object mapping each theme to an array of custom colors for the series. If not provided, default colors based on the current theme will be used | `Array<string>` |         |
+| `series`       | An array of series names representing the data series to be displayed in the descendant charts components                                                  | `Array<string>` |         |
 
 ## `useSeriesContext`
 

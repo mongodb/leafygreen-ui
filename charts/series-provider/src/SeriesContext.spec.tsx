@@ -1,5 +1,9 @@
 import React from 'react';
-import { colors as defaultColors } from '@lg-charts/colors';
+import {
+  colors as defaultColors,
+  type DarkColor,
+  type LightColor,
+} from '@lg-charts/colors';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -45,7 +49,7 @@ const TestComponent = () => {
 
 const renderTestComponentWithProvider = (
   series: Array<string>,
-  customColors?: Array<string>,
+  customColors?: { light: Array<LightColor>; dark: Array<DarkColor> },
 ) => {
   const providerProps = customColors ? { series, customColors } : { series };
   const utils = render(
@@ -138,13 +142,16 @@ describe('SeriesContext', () => {
 
   describe('getColor util', () => {
     const series = ['Test series'];
-    const customColors = ['red', 'blue'];
+    const customColors = {
+      light: ['#D68000', '#016BF8'] as Array<LightColor>,
+      dark: ['#D68000', '#016BF8'] as Array<DarkColor>,
+    };
 
     test('returns customColors when provided', () => {
       const { getColorLightEl, getColorDarkEl } =
         renderTestComponentWithProvider(series, customColors);
-      expect(getColorLightEl.textContent).toBe(customColors[0]);
-      expect(getColorDarkEl.textContent).toBe(customColors[0]);
+      expect(getColorLightEl.textContent).toBe(customColors.light[0]);
+      expect(getColorDarkEl.textContent).toBe(customColors.dark[0]);
     });
 
     test('returns defaultColors based on theme when no customColors', () => {

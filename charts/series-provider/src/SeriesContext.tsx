@@ -3,6 +3,7 @@ import React, {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -26,6 +27,10 @@ export const SeriesContext = createContext<SeriesContextType>({
   toggleSelectAll: () => {},
 });
 
+const hasDuplicates = (arr: Array<string>) => {
+  return new Set(arr).size !== arr.length;
+};
+
 export const SeriesProvider = ({
   children,
   customColors,
@@ -35,6 +40,20 @@ export const SeriesProvider = ({
     () => new Set(series),
   );
 
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production' || !customColors) {
+      return;
+    }
+
+    for (const colors of Object.values(customColors)) {
+      if (colors && hasDuplicates(colors)) {
+        console.warn(
+          'customColors provided to SeriesProvider should not contain duplicates. This may lead to unexpected behavior.',
+        );
+      }
+    }
+  }, [customColors]);
+
   const getSeriesIndex = useCallback(
     (name: SeriesName) => series.indexOf(name),
     [series],
@@ -42,7 +61,7 @@ export const SeriesProvider = ({
 
   const getColor = useCallback(
     (name: SeriesName, theme: Theme) => {
-      const colors = customColors ?? defaultColors[theme];
+      const colors = customColors ? customColors[theme] : defaultColors[theme];
       const index = getSeriesIndex(name) % colors.length; // loop through colors if more series than available colors
       return colors[index];
     },
