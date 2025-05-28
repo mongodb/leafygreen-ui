@@ -36,7 +36,7 @@ export function ChartTooltip({
     return () => {
       setTooltipMounted(false);
     };
-  }, [isChartHovered, setTooltipMounted, tooltipPinned]);
+  }, [setTooltipMounted]);
 
   useEffect(() => {
     if (!ready) return;

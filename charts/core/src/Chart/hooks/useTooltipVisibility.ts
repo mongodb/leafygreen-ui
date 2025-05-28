@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { EChartEvents, EChartsInstance } from '../../Echart';
 
@@ -24,6 +24,9 @@ export const useTooltipVisibility = ({
   const [tooltipMounted, setTooltipMounted] = useState(false);
   const [tooltipPinned, setTooltipPinned] = useState(false);
 
+  const tooltipMountedRef = useRef(tooltipMounted);
+  const tooltipPinnedRef = useRef(tooltipPinned);
+
   const {
     addToGroup,
     hideTooltip,
@@ -48,14 +51,14 @@ export const useTooltipVisibility = ({
    */
   const showTooltipOnMouseMove = useCallback(
     (params: any) => {
-      if (!tooltipMounted || tooltipPinned) {
+      if (!tooltipMountedRef.current || tooltipPinnedRef.current) {
         return;
       }
 
       const { offsetX, offsetY } = params;
       showTooltip(offsetX, offsetY);
     },
-    [showTooltip, tooltipMounted, tooltipPinned],
+    [showTooltip],
   );
 
   /**
@@ -108,7 +111,7 @@ export const useTooltipVisibility = ({
    */
   const pinTooltipOnClick = useCallback(
     (params: any) => {
-      if (!tooltipMounted || tooltipPinned) {
+      if (!tooltipMountedRef.current || tooltipPinnedRef.current) {
         return;
       }
 
@@ -134,14 +137,7 @@ export const useTooltipVisibility = ({
       setPinnedPosition([offsetX, offsetY]);
       setTooltipPinned(true);
     },
-    [
-      tooltipMounted,
-      tooltipPinned,
-      groupId,
-      off,
-      showTooltipOnMouseMove,
-      removeFromGroup,
-    ],
+    [groupId, off, showTooltipOnMouseMove, removeFromGroup],
   );
 
   /**
@@ -150,7 +146,7 @@ export const useTooltipVisibility = ({
    */
   const hideTooltipOnMouseOverMark = useCallback(
     (params: any) => {
-      if (!tooltipMounted) {
+      if (!tooltipMountedRef.current) {
         return;
       }
 
@@ -165,7 +161,7 @@ export const useTooltipVisibility = ({
         });
       }
     },
-    [hideTooltip, off, on, pinTooltipOnClick, tooltipMounted],
+    [hideTooltip, off, on, pinTooltipOnClick],
   );
 
   /**
@@ -174,7 +170,7 @@ export const useTooltipVisibility = ({
    */
   const stopHideTooltipOnMouseOutMark = useCallback(
     (params: any) => {
-      if (!tooltipMounted) {
+      if (!tooltipMountedRef.current) {
         return;
       }
 
@@ -188,8 +184,16 @@ export const useTooltipVisibility = ({
         });
       }
     },
-    [hideTooltip, off, on, pinTooltipOnClick, tooltipMounted],
+    [hideTooltip, off, on, pinTooltipOnClick],
   );
+
+  useEffect(() => {
+    tooltipMountedRef.current = tooltipMounted;
+  }, [tooltipMounted]);
+
+  useEffect(() => {
+    tooltipPinnedRef.current = tooltipPinned;
+  }, [tooltipPinned]);
 
   /**
    * Effect to add event listeners to the chart container to toggle the `isChartHovered`
