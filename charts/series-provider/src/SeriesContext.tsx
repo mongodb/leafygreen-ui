@@ -6,6 +6,9 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { colors as defaultColors } from '@lg-charts/colors';
+
+import { Theme } from '@leafygreen-ui/lib';
 
 import {
   SeriesContextType,
@@ -14,6 +17,7 @@ import {
 } from './SeriesContext.types';
 
 export const SeriesContext = createContext<SeriesContextType>({
+  getColor: () => '',
   getSeriesIndex: () => -1,
   isChecked: () => true,
   isSelectAllChecked: () => true,
@@ -24,6 +28,7 @@ export const SeriesContext = createContext<SeriesContextType>({
 
 export const SeriesProvider = ({
   children,
+  customColors,
   series,
 }: PropsWithChildren<SeriesProviderProps>) => {
   const [checkedState, setCheckedState] = useState<Set<SeriesName>>(
@@ -33,6 +38,15 @@ export const SeriesProvider = ({
   const getSeriesIndex = useCallback(
     (name: SeriesName) => series.indexOf(name),
     [series],
+  );
+
+  const getColor = useCallback(
+    (name: SeriesName, theme: Theme) => {
+      const colors = customColors ?? defaultColors[theme];
+      const index = getSeriesIndex(name) % colors.length; // loop through colors if more series than available colors
+      return colors[index];
+    },
+    [customColors, getSeriesIndex],
   );
 
   const isChecked = useCallback(
@@ -75,6 +89,7 @@ export const SeriesProvider = ({
 
   const value = useMemo(
     () => ({
+      getColor,
       getSeriesIndex,
       isChecked,
       isSelectAllChecked,
@@ -83,6 +98,7 @@ export const SeriesProvider = ({
       toggleSelectAll,
     }),
     [
+      getColor,
       getSeriesIndex,
       isChecked,
       isSelectAllChecked,

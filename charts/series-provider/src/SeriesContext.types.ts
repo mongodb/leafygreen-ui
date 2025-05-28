@@ -1,6 +1,13 @@
+import { Theme } from '@leafygreen-ui/lib';
+
 export type SeriesName = string;
 
 export interface SeriesContextType {
+  /**
+   * Util to get the color of a series by its name and current theme.
+   */
+  getColor: (name: SeriesName, theme: Theme) => string;
+
   /**
    * Util to get the index of a series in the `series` prop.
    */
@@ -33,6 +40,12 @@ export interface SeriesContextType {
 }
 
 export interface SeriesProviderProps {
+  /**
+   * An optional array of custom colors to be used for the series.
+   * If not provided, default colors based on the current theme will be used.
+   */
+  customColors?: Array<string>;
+
   /**
    * An array of series names representing the data series to be displayed in descendant charts components.
    */
