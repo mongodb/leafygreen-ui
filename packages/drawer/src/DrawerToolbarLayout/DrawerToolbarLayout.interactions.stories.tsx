@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
+import { storybookExcludedControlParams } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 
@@ -16,6 +17,14 @@ import { getTestUtils } from '../testing';
 
 import { DrawerToolbarLayout } from './DrawerToolbarLayout';
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
+
+const excludedControls = [
+  ...storybookExcludedControlParams,
+  'children',
+  'open',
+  'displayMode',
+  'title',
+];
 
 const LongContent = () => {
   const paragraphs = useMemo(() => {
@@ -75,7 +84,7 @@ export default {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: ['children'],
+      exclude: excludedControls,
     },
   },
   decorators: [
@@ -122,6 +131,7 @@ const Template: StoryFn<DrawerProps> = ({
         border-bottom: 1px solid ${palette.gray.light1};
         width: 100%;
       `}
+      {...rest}
     >
       <DrawerToolbarLayout
         data={DRAWER_TOOLBAR_DATA}
