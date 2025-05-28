@@ -252,6 +252,7 @@ const ComponentOpen: StoryFn<DrawerProps> = ({
 
     useEffect(() => {
       openDrawer('Code');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
