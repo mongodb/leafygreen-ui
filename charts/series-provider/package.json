@@ -21,6 +21,10 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
+  "dependencies": {
+    "@leafygreen-ui/lib": "workspace:^",
+    "@lg-charts/colors": "workspace:^"
+  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },

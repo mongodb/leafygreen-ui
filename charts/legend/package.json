@@ -20,7 +20,6 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@lg-charts/colors": "workspace:^",
     "@lg-charts/series-provider": "workspace:^"
   },
   "peerDependencies": {
