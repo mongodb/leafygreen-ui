@@ -9,7 +9,6 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { scrollbarColor } from './color/scrollbar';
-import { Mode } from './mode';
 import {
   addOverflowShadow,
   borderRadius,
@@ -469,15 +468,16 @@ export const Scrollbars: StoryObj = {
 };
 
 export const InteractionRings = () => {
-  const invertMode = (mode: Mode): Mode => (mode === 'dark' ? 'light' : 'dark');
+  const invertTheme = (theme: Theme): Theme =>
+    theme === 'dark' ? 'light' : 'dark';
 
-  const modeWrapper = (mode: Mode) => css`
+  const themeWrapper = (theme: Theme) => css`
     display: flex;
     gap: ${spacing[200]}px;
-    color: ${mode === 'dark' ? palette.white : palette.black};
-    background-color: ${mode === 'dark' ? palette.black : palette.white};
+    color: ${theme === 'dark' ? palette.white : palette.black};
+    background-color: ${theme === 'dark' ? palette.black : palette.white};
     border: 1px solid
-      ${mode === 'dark' ? palette.gray.light3 : palette.gray.dark3};
+      ${theme === 'dark' ? palette.gray.light3 : palette.gray.dark3};
     border-radius: ${spacing[400]}px;
     padding: ${spacing[600]}px;
     margin: ${spacing[400]}px 0;
@@ -499,22 +499,22 @@ export const InteractionRings = () => {
     <div>
       <h2>Interaction States</h2>
       <div>
-        {Object.values(Mode).map((mode: Mode) => (
-          <div key={mode} className={modeWrapper(mode)}>
-            {Object.keys(hoverRing[mode]).map(_color => {
+        {Object.values(Theme).map((theme: Theme) => (
+          <div key={theme} className={themeWrapper(theme)}>
+            {Object.keys(hoverRing[theme]).map(_color => {
               const color = _color as HoverRingColor;
               return (
                 <button
                   key={color}
                   className={css`
                     ${buttonBase};
-                    background-color: ${palette[color][`${mode}3`]};
-                    color: ${palette[color][`${invertMode(mode)}2`]};
+                    background-color: ${palette[color][`${theme}3`]};
+                    color: ${palette[color][`${invertTheme(theme)}2`]};
                     &:hover {
-                      box-shadow: ${hoverRing[mode][color]};
+                      box-shadow: ${hoverRing[theme][color]};
                     }
                     &:focus {
-                      box-shadow: ${focusRing[mode].default};
+                      box-shadow: ${focusRing[theme].default};
                     }
                   `}
                 >
@@ -527,12 +527,12 @@ export const InteractionRings = () => {
               placeholder="Input"
               className={css`
                 ${buttonBase};
-                border: 1px solid ${palette.gray[`${mode}1`]};
+                border: 1px solid ${palette.gray[`${theme}1`]};
                 &:hover {
-                  box-shadow: ${hoverRing[mode].gray};
+                  box-shadow: ${hoverRing[theme].gray};
                 }
                 &:focus {
-                  box-shadow: ${focusRing[mode].input};
+                  box-shadow: ${focusRing[theme].input};
                 }
               `}
             />
