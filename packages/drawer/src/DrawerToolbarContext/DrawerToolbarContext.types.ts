@@ -22,7 +22,7 @@ export interface DrawerToolbarContextType {
    * Indicates whether the drawer should be closed. Used to manage transition states.
    * For example, during close animations, content should remain until the transition completes.
    */
-  shouldCloseDrawer: boolean;
+  isDrawerOpen: boolean;
 
   /**
    * This function is used to get the active drawer content.
