@@ -102,7 +102,6 @@
 '@lg-tools/meta': patch
 '@lg-tools/test': patch
 '@lg-tools/cli': patch
-'lg-scripts': patch
 ---
 
 Adds `@lg-tools/build` as a dev dependency
