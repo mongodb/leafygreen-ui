@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook-addon",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Storybook Addon for LeafyGreen UI Kit",
   "license": "Apache-2.0",
   "main": "./dist/umd/index.js",
@@ -34,7 +34,14 @@
     "./preset": "./preset.js",
     "./package.json": "./package.json"
   },
-  "files": ["dist/**/*", "*.js", "*.d.ts",  "README.md", "package.json", "preset.js"],
+  "files": [
+    "dist/**/*",
+    "*.js",
+    "*.d.ts",
+    "README.md",
+    "package.json",
+    "preset.js"
+  ],
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
