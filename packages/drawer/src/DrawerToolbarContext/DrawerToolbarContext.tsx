@@ -27,15 +27,15 @@ export const DrawerToolbarProvider = ({
 
   const openDrawer = useCallback(
     (id: DataId) => {
-      const getActiveDrawerContent = data.find(
+      const activeDrawerContent = data.find(
         item => item?.id === id && item?.content,
       );
 
-      if (getActiveDrawerContent) {
+      if (activeDrawerContent) {
         setIsDrawerOpen(true);
         setContent(prev => {
           if (prev?.id === id) return prev;
-          return getActiveDrawerContent;
+          return activeDrawerContent;
         });
       } else {
         console.error(
