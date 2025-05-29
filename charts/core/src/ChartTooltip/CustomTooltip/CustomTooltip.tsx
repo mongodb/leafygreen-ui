@@ -15,16 +15,19 @@ import { SeriesList } from './SeriesList';
 
 function formatDate(dateTimeStamp: number) {
   const date = new Date(dateTimeStamp);
-  const formattedYear = date.getFullYear();
-  const formattedMonth = String(date.getMonth() + 1).padStart(2, '0');
-  const formattedDay = String(date.getDate()).padStart(2, '0');
-  const formattedHour = String(date.getHours()).padStart(2, '0');
-  const formattedMinute = String(date.getMinutes()).padStart(2, '0');
-  const formattedSecond = String(date.getSeconds()).padStart(2, '0');
-  const formattedDate = `${formattedYear}/${formattedMonth}/${formattedDay}`;
-  const formattedTime = `${formattedHour}:${formattedMinute}:${formattedSecond}`;
 
-  return `${formattedDate}/${formattedTime}`;
+  return (
+    date.toLocaleString('en-US', {
+      timeZone: 'UTC',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    }) + ' (UTC)'
+  );
 }
 
 export function CustomTooltip({

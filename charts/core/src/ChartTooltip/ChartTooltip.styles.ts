@@ -8,7 +8,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-const TOOLTIP_WIDTH = 261;
+const TOOLTIP_WIDTH = 270;
 
 export const getRootStylesText = (theme: Theme) => `
   width: ${TOOLTIP_WIDTH}px;
