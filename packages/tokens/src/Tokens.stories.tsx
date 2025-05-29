@@ -1,5 +1,7 @@
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { type StoryObj } from '@storybook/react';
+import { within } from '@storybook/test';
 import startCase from 'lodash/startCase';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -27,10 +29,12 @@ const DemoCard = ({
   children,
   darkMode,
   className,
+  ...rest
 }: {
   children: React.ReactNode;
   darkMode: boolean;
   className?: string;
+  [key: string]: any;
 }) => {
   const theme = darkMode ? Theme.Dark : Theme.Light;
 
@@ -38,9 +42,9 @@ const DemoCard = ({
     <div
       className={cx(
         css`
-          padding: 24px;
-          min-height: 68px; // 48px + 20px (padding + line-height)
-          border-radius: 24px;
+          padding: ${spacing[600]}px;
+          min-height: ${spacing[1200] + typeScales.body1.lineHeight}px;
+          border-radius: ${spacing[600]}px;
           color: ${color[theme].text.primary.default};
           background-color: ${color[theme].background.primary.default};
           border: 1px solid ${color[theme].border.secondary.default};
@@ -48,6 +52,8 @@ const DemoCard = ({
         `,
         className,
       )}
+      data-testid={`demo-card`}
+      {...rest}
     >
       {children}
     </div>
@@ -107,7 +113,7 @@ export const OverflowShadows = () => {
         return (
           <div
             className={css`
-              padding: 24px;
+              padding: ${spacing[600]}px;
               color: ${color[theme].text.primary.default};
               background-color: ${backgroundColor};
               border: 1px solid ${color[theme].border.secondary.default};
@@ -397,7 +403,7 @@ export const Colors = {
   },
 };
 
-export const Scrollbars = {
+export const Scrollbars: StoryObj = {
   render: () => {
     return (
       <div
@@ -424,6 +430,7 @@ export const Scrollbars = {
                 `}
               >
                 <div
+                  data-testid="scrollable"
                   className={css`
                     max-height: 144px;
                     max-width: 144px;
@@ -447,6 +454,17 @@ export const Scrollbars = {
         })}
       </div>
     );
+  },
+  play: async ({ canvasElement }) => {
+    const cards = within(canvasElement).getAllByTestId('demo-card');
+    cards.forEach(card => {
+      const scrollable = within(card).getByTestId('scrollable');
+      scrollable.scrollTo({
+        top: 12,
+        left: 12,
+        behavior: 'smooth',
+      });
+    });
   },
 };
 
