@@ -1,8 +1,10 @@
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
 import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
+import { getTestUtils as getDrawerToolbarTestUtils } from '@leafygreen-ui/toolbar';
 
-import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
+
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = <T extends HTMLElement = HTMLElement>(
@@ -50,11 +52,17 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
     return isAriaVisible && isCSSVisible;
   };
 
+  /**
+   * Returns the toolbar test utils for the drawer toolbar.
+   */
+  const getToolbarTestUtils = () => getDrawerToolbarTestUtils(lgIds.toolbar);
+
   return {
     findDrawer,
     getDrawer,
     queryDrawer,
     getCloseButtonUtils,
     isOpen,
+    getToolbarTestUtils,
   };
 };

@@ -152,6 +152,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
         className={css`
           height: 90vh;
           overflow: auto;
+          position: relative;
           width: 100%;
         `}
       >

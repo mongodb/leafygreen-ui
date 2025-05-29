@@ -1,54 +1,16 @@
 import React from 'react';
-import { renderAsyncTest } from '@lg-tools/test-harnesses';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Drawer } from '../Drawer';
-import { DrawerStackProvider } from '../DrawerStackContext';
+import { DEFAULT_LGID_ROOT } from '../utils';
 
 import { getTestUtils } from './getTestUtils';
-
-const drawerTest = {
-  content: 'Drawer content',
-  title: 'Drawer title',
-} as const;
-
-const renderDrawerAsync = () => {
-  return renderAsyncTest(
-    <DrawerStackProvider>
-      <Drawer title={drawerTest.title} open>
-        {drawerTest.content}
-      </Drawer>
-    </DrawerStackProvider>,
-    render,
-  );
-};
-
-const renderDrawer = (props = {}) => {
-  render(
-    <DrawerStackProvider>
-      <Drawer title={drawerTest.title} {...props}>
-        {drawerTest.content}
-      </Drawer>
-    </DrawerStackProvider>,
-  );
-};
-
-const renderMultipleDrawers = () => {
-  render(
-    <DrawerStackProvider>
-      <Drawer data-lgid="lg-drawer-1" title={`${drawerTest.title} 1`} open>
-        {drawerTest.content}
-      </Drawer>
-      <Drawer data-lgid="lg-drawer-2" title={`${drawerTest.title} 2`} open>
-        {drawerTest.content}
-      </Drawer>
-      <Drawer data-lgid="lg-drawer-3" title={`${drawerTest.title} 3`}>
-        {drawerTest.content}
-      </Drawer>
-    </DrawerStackProvider>,
-  );
-};
+import {
+  renderDrawer,
+  renderDrawerAsync,
+  renderDrawerToolbarLayout,
+  renderMultipleDrawers,
+} from './render.testutils';
 
 describe('packages/drawer/getTestUtils', () => {
   beforeAll(() => {
@@ -136,6 +98,73 @@ describe('packages/drawer/getTestUtils', () => {
       expect(utilsOne.isOpen()).toBeTruthy();
       expect(utilsTwo.isOpen()).toBeTruthy();
       expect(utilsThree.isOpen()).toBeFalsy();
+    });
+  });
+
+  describe('getToolbarTestUtils', () => {
+    test('findToolbar', async () => {
+      renderDrawerToolbarLayout();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { findToolbar } = getToolbarTestUtils();
+      const toolbar = await findToolbar();
+
+      expect(toolbar).toBeInTheDocument();
+    });
+
+    test('getToolbar', () => {
+      renderDrawerToolbarLayout();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { getToolbar } = getToolbarTestUtils();
+      const toolbar = getToolbar();
+
+      expect(toolbar).toBeInTheDocument();
+    });
+
+    test('queryToolbar', () => {
+      renderDrawerToolbarLayout();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { queryToolbar } = getToolbarTestUtils();
+      const toolbar = queryToolbar();
+
+      expect(toolbar).toBeInTheDocument();
+    });
+
+    test('getAllToolbarIconButtons', () => {
+      renderDrawerToolbarLayout();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { getAllToolbarIconButtons } = getToolbarTestUtils();
+      const buttons = getAllToolbarIconButtons();
+
+      expect(buttons).toHaveLength(3);
+    });
+
+    test('getToolbarIconButtonByLabel', () => {
+      renderDrawerToolbarLayout();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+
+      expect(
+        getToolbarIconButtonByLabel('Code')?.getElement(),
+      ).toBeInTheDocument();
+    });
+
+    test('getActiveToolbarIconButton', () => {
+      renderDrawerToolbarLayout();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { getActiveToolbarIconButton, getToolbarIconButtonByLabel } =
+        getToolbarTestUtils();
+
+      const button = getToolbarIconButtonByLabel('Code')?.getElement();
+      userEvent.click(button!);
+
+      expect(getActiveToolbarIconButton()).toHaveAttribute(
+        'data-active',
+        'true',
+      );
+      expect(getActiveToolbarIconButton()).toHaveAttribute(
+        'aria-label',
+        'Code',
+      );
     });
   });
 });
