@@ -30,14 +30,11 @@ export const DrawerToolbarLayoutContainer = ({
   darkMode: darkModeProp,
 }: DrawerToolbarLayoutContainerProps) => {
   const { darkMode } = useDarkMode(darkModeProp);
-  const { openDrawer, closeDrawer, getActiveDrawerContent, shouldCloseDrawer } =
+  const { openDrawer, closeDrawer, getActiveDrawerContent, isDrawerOpen } =
     useDrawerToolbarContext();
-  const isDrawerOpen = shouldCloseDrawer;
   const { id, title, content } = getActiveDrawerContent() || {};
   const lgIds = getLgIds(dataLgId);
-
-  // If there is no data, we don't want to render anything
-  if (!data || data.length === 0) return null;
+  const hasData = data && data.length > 0;
 
   const handleOnClose = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClose?.(event);
@@ -53,7 +50,7 @@ export const DrawerToolbarLayoutContainer = ({
   // We want to pass the isDrawerOpen prop to the LayoutComponent only if the display mode is embedded
   const layoutProps = {
     hasToolbar: true,
-    isDrawerOpen: displayMode === DisplayMode.Embedded ? isDrawerOpen : false,
+    isDrawerOpen: displayMode === DisplayMode.Embedded && isDrawerOpen,
   };
 
   const handleIconClick = (
@@ -78,40 +75,47 @@ export const DrawerToolbarLayoutContainer = ({
           >
             {children}
           </div>
-          <DrawerWithToolbarWrapper
-            displayMode={displayMode}
-            isDrawerOpen={isDrawerOpen}
-          >
-            <Toolbar data-lgid={lgIds.toolbar}>
-              {data?.map(toolbar => (
-                <ToolbarIconButton
-                  key={toolbar.glyph}
-                  glyph={toolbar.glyph}
-                  label={toolbar.label}
-                  onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-                    if (!toolbar.content) {
-                      // If the toolbar item does not have content, we don't want to open/update/close the drawer
-                      // but we still want to call the onClick function if it exists. E.g. open a modal or perform an action
-                      toolbar.onClick?.(event);
-                      return;
-                    }
-
-                    return handleIconClick(event, toolbar.id, toolbar.onClick);
-                  }}
-                  active={toolbar.id === id}
-                />
-              ))}
-            </Toolbar>
-            <Drawer
+          {/*  If there is no data, don't render the Toolbar */}
+          {!hasData ? null : (
+            <DrawerWithToolbarWrapper
               displayMode={displayMode}
-              open={isDrawerOpen}
-              onClose={handleOnClose}
-              title={title}
-              data-lgid={`${dataLgId}`}
+              isDrawerOpen={isDrawerOpen}
             >
-              {content}
-            </Drawer>
-          </DrawerWithToolbarWrapper>
+              <Toolbar data-lgid={lgIds.toolbar}>
+                {data?.map(toolbar => (
+                  <ToolbarIconButton
+                    key={toolbar.glyph}
+                    glyph={toolbar.glyph}
+                    label={toolbar.label}
+                    onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                      if (!toolbar.content) {
+                        // If the toolbar item does not have content, we don't want to open/update/close the drawer
+                        // but we still want to call the onClick function if it exists. E.g. open a modal or perform an action
+                        toolbar.onClick?.(event);
+                        return;
+                      }
+
+                      return handleIconClick(
+                        event,
+                        toolbar.id,
+                        toolbar.onClick,
+                      );
+                    }}
+                    active={toolbar.id === id}
+                  />
+                ))}
+              </Toolbar>
+              <Drawer
+                displayMode={displayMode}
+                open={isDrawerOpen}
+                onClose={handleOnClose}
+                title={title}
+                data-lgid={`${dataLgId}`}
+              >
+                {content}
+              </Drawer>
+            </DrawerWithToolbarWrapper>
+          )}
         </LayoutComponent>
       </DrawerStackProvider>
     </LeafyGreenProvider>

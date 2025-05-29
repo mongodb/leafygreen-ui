@@ -23,7 +23,7 @@ export const DrawerToolbarProvider = ({
   data,
 }: DrawerToolbarProviderProps) => {
   const [content, setContent] = useState<ContextData>(undefined);
-  const [shouldCloseDrawer, setShouldCloseDrawer] = useState<boolean>(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const openDrawer = useCallback(
     (id: DataId) => {
@@ -32,7 +32,7 @@ export const DrawerToolbarProvider = ({
       );
 
       if (getActiveDrawerContent) {
-        setShouldCloseDrawer(true);
+        setIsDrawerOpen(true);
         setContent(prev => {
           if (prev?.id === id) return prev;
           return getActiveDrawerContent;
@@ -43,7 +43,7 @@ export const DrawerToolbarProvider = ({
         );
       }
     },
-    [setContent, data, setShouldCloseDrawer],
+    [setContent, data, setIsDrawerOpen],
   );
 
   const closeDrawer = useCallback(() => {
@@ -51,7 +51,7 @@ export const DrawerToolbarProvider = ({
     setTimeout(() => {
       setContent(undefined);
     }, drawerTransitionDuration);
-    setShouldCloseDrawer(false);
+    setIsDrawerOpen(false);
   }, [setContent]);
 
   const getActiveDrawerContent = useCallback(() => {
@@ -63,9 +63,9 @@ export const DrawerToolbarProvider = ({
       openDrawer,
       closeDrawer,
       getActiveDrawerContent,
-      shouldCloseDrawer,
+      isDrawerOpen,
     }),
-    [openDrawer, closeDrawer, getActiveDrawerContent, shouldCloseDrawer],
+    [openDrawer, closeDrawer, getActiveDrawerContent, isDrawerOpen],
   );
 
   return (
