@@ -1,6 +1,8 @@
 import React from 'react';
 import { SeriesName } from '@lg-charts/series-provider';
 
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import { OptionDataValue } from '../../ChartTooltip.types';
 import { SeriesListItem } from '../SeriesListItem';
 
@@ -26,8 +28,10 @@ export function SeriesList({
   sort,
   tooltipPinned,
 }: SeriesListProps) {
+  const { theme } = useDarkMode();
+
   return (
-    <ul className={getSeriesListStyles(tooltipPinned)}>
+    <ul className={getSeriesListStyles({ theme, tooltipPinned })}>
       {seriesData
         .sort((a, b) => {
           const [nameA, valueA] = a.data;

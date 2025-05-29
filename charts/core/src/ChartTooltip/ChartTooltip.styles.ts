@@ -12,7 +12,7 @@ const TOOLTIP_WIDTH = 261;
 
 export const getRootStylesText = (theme: Theme) => `
   width: ${TOOLTIP_WIDTH}px;
-  overflow-y: auto;
+  overflow: hidden;
   background: ${
     color[theme].background[Variant.InversePrimary][InteractionState.Default]
   };
