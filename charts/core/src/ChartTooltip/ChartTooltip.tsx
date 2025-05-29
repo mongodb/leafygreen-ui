@@ -4,6 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../ChartContext';
+import { CHART_TOOLTIP_CLASSNAME } from '../constants';
 
 import { getRootStylesText } from './ChartTooltip.styles';
 import {
@@ -58,6 +59,7 @@ export function ChartTooltip({
          * using `extraCssText` instead of `className` because emotion-defined class
          * didn't have high-enough specificity
          */
+        className: CHART_TOOLTIP_CLASSNAME,
         extraCssText: getRootStylesText(theme),
         borderWidth: 0,
         padding: 0,

@@ -17,7 +17,7 @@ export const getSeriesListStyles = ({
   tooltipPinned: boolean;
 }) => css`
   all: unset;
-  background: ${color[theme].background[Variant.InversePrimary][
+  background-color: ${color[theme].background[Variant.InversePrimary][
     InteractionState.Default
   ]};
   overflow-y: auto;

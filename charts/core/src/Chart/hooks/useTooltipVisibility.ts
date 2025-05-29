@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { CHART_TOOLTIP_CLASSNAME } from '../../constants';
 import { EChartEvents, EChartsInstance } from '../../Echart';
 
 import { UseTooltipVisibilityReturnObj } from './useTooltipVisibility.types';
@@ -274,7 +275,7 @@ export const useTooltipVisibility = ({
     setTimeout(() => {
       showTooltip(x, y);
       addUnpinCallbackToCloseButton();
-    }, 0);
+    });
   }, [
     isChartHovered,
     tooltipPinned,
@@ -282,6 +283,21 @@ export const useTooltipVisibility = ({
     showTooltip,
     addUnpinCallbackToCloseButton,
   ]);
+
+  /**
+   * Effect to clean up any tooltip elements when the component is unmounted.
+   *
+   * This is specifically required for cases where the echarts instance is cleaned up
+   * before the `hideTooltip` action can be called on the instance.
+   */
+  useEffect(() => {
+    return () => {
+      const tooltipEls = document.getElementsByClassName(
+        CHART_TOOLTIP_CLASSNAME,
+      );
+      Array.from(tooltipEls).forEach(el => el.remove());
+    };
+  }, []);
 
   return {
     isChartHovered,
