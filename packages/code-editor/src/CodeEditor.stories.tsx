@@ -50,7 +50,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [...storybookExcludedControlParams],
+      exclude: [...storybookExcludedControlParams, 'extensions'],
     },
   },
   decorators: [
