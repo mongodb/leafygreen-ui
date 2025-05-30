@@ -27,6 +27,7 @@ export function getMarkConfig({
     backgroundColor:
       color[theme].background[Variant.InversePrimary][InteractionState.Default],
     color: color[theme].text[Variant.InversePrimary][InteractionState.Default],
+    distance: type === 'line' ? [0, -spacing[1400]] : undefined,
     fontFamily: fontFamilies.default,
     fontSize: 12,
     fontWeight: fontWeights.regular,
