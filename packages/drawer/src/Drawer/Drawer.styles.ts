@@ -7,12 +7,9 @@ import {
   spacing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
+import { PANEL_WIDTH } from '../constants';
 
-import {
-  HEADER_HEIGHT,
-  MOBILE_BREAKPOINT,
-  PANEL_WIDTH,
-} from './Drawer.constants';
+import { HEADER_HEIGHT, MOBILE_BREAKPOINT } from './Drawer.constants';
 import { DisplayMode } from './Drawer.types';
 
 export const drawerTransitionDuration = transitionDuration.slower;

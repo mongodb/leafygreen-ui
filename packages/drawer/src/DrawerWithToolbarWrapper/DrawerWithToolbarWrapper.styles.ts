@@ -4,7 +4,7 @@ import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
 import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
 import { GRID_AREA } from '../constants';
-import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer/Drawer.constants';
+import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../constants';
 import {
   drawerClassName,
   drawerTransitionDuration,
