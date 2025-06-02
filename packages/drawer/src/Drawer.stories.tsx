@@ -9,8 +9,8 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
+import { color, spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
@@ -38,7 +38,7 @@ export default {
   title: 'Components/Drawer',
   component: Drawer,
   decorators: [
-    StoryFn => (
+    (StoryFn, ctx) => (
       <div
         className={css`
           height: 100%;
@@ -46,7 +46,9 @@ export default {
           align-items: center;
           margin: -100px;
           width: 100vw;
-          border-bottom: 3px solid ${palette.green.base}; // Used to visualize the height of the parent container
+          border: 1px solid
+            ${color[ctx?.args?.darkMode ? Theme.Dark : Theme.Light].border
+              .secondary.default};
         `}
       >
         <StoryFn />
@@ -126,7 +128,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     <DrawerStackProvider>
       <EmbeddedDrawerLayout
         className={css`
-          height: 90vh;
+          height: 500px;
         `}
         isDrawerOpen={open}
       >
@@ -150,8 +152,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     <DrawerStackProvider>
       <div
         className={css`
-          height: 90vh;
-          overflow: auto;
+          height: 500px;
           width: 100%;
         `}
       >
