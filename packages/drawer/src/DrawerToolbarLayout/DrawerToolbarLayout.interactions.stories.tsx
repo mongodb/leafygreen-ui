@@ -104,10 +104,15 @@ export default {
   ],
 };
 
-const Template: StoryFn<DrawerToolbarLayoutProps> = ({
+type DrawerToolbarLayoutPropsWithoutData = Omit<
+  DrawerToolbarLayoutProps,
+  'data'
+>;
+
+const Template: StoryFn<DrawerToolbarLayoutPropsWithoutData> = ({
   displayMode = DisplayMode.Embedded,
   ...rest
-}: DrawerToolbarLayoutProps) => {
+}: DrawerToolbarLayoutPropsWithoutData) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -150,13 +155,17 @@ export const OverlayOpensFirstToolbarItem = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getToolbarTestUtils } = getTestUtils();
+    const { getToolbarTestUtils, isOpen, getDrawer } = getTestUtils();
     const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
     await userEvent.click(codeButton);
 
-    await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
+    await waitFor(() => {
+      expect(canvas.getByText('Code Title')).toBeVisible();
+      expect(getDrawer().textContent).toContain('Code Title');
+      expect(isOpen()).toBe(true);
+    });
   },
 };
 
@@ -167,14 +176,17 @@ export const OverlaySwitchesToolbarItems = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getToolbarTestUtils, getDrawer } = getTestUtils();
+    const { getToolbarTestUtils, getDrawer, isOpen } = getTestUtils();
     const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const dashboardButton =
       getToolbarIconButtonByLabel('Dashboard')?.getElement();
 
     await userEvent.click(codeButton);
-    await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
+    await waitFor(() => {
+      expect(canvas.getByText('Code Title')).toBeVisible();
+      expect(isOpen()).toBe(true);
+    });
 
     await userEvent.unhover(codeButton);
     // Pause so the change is visible in the story
@@ -201,7 +213,10 @@ export const OverlayClosesDrawer = {
     const closeButton = getCloseButtonUtils().getButton();
 
     await userEvent.click(codeButton);
-    await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
+    await waitFor(() => {
+      expect(canvas.getByText('Code Title')).toBeVisible();
+      expect(isOpen()).toBe(true);
+    });
     // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -217,13 +232,17 @@ export const EmbeddedOpensFirstToolbarItem = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getToolbarTestUtils } = getTestUtils();
+    const { getToolbarTestUtils, isOpen, getDrawer } = getTestUtils();
     const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
     await userEvent.click(codeButton);
 
-    await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
+    await waitFor(() => {
+      expect(isOpen()).toBe(true);
+      expect(canvas.getByText('Code Title')).toBeVisible();
+      expect(getDrawer().textContent).toContain('Code Title');
+    });
   },
 };
 
@@ -234,23 +253,29 @@ export const EmbeddedSwitchesToolbarItems = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getToolbarTestUtils } = getTestUtils();
+    const { getToolbarTestUtils, isOpen, getDrawer } = getTestUtils();
     const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const dashboardButton =
       getToolbarIconButtonByLabel('Dashboard')?.getElement();
 
     await userEvent.click(codeButton);
-    await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
+    await waitFor(() => {
+      expect(isOpen()).toBe(true);
+      expect(canvas.getByText('Code Title')).toBeVisible();
+      expect(getDrawer().textContent).toContain('Code Title');
+    });
 
     await userEvent.unhover(codeButton);
     // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     await userEvent.click(dashboardButton);
-    await waitFor(() =>
-      expect(canvas.getByText('Dashboard Title')).toBeVisible(),
-    );
+    await waitFor(() => {
+      expect(isOpen()).toBe(true);
+      expect(canvas.getByText('Dashboard Title')).toBeVisible();
+      expect(getDrawer().textContent).toContain('Dashboard Title');
+    });
   },
 };
 
@@ -261,13 +286,18 @@ export const EmbeddedClosesDrawer = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getToolbarTestUtils, getCloseButtonUtils, isOpen } = getTestUtils();
+    const { getToolbarTestUtils, getCloseButtonUtils, isOpen, getDrawer } =
+      getTestUtils();
     const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const closeButton = getCloseButtonUtils().getButton();
 
     await userEvent.click(codeButton);
-    await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
+    await waitFor(() => {
+      expect(isOpen()).toBe(true);
+      expect(canvas.getByText('Code Title')).toBeVisible();
+      expect(getDrawer().textContent).toContain('Code Title');
+    });
     // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
 

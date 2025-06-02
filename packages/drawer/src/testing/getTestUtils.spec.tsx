@@ -101,70 +101,106 @@ describe('packages/drawer/getTestUtils', () => {
     });
   });
 
-  describe('getToolbarTestUtils', () => {
-    test('findToolbar', async () => {
+  describe('DrawerToolbarLayout', () => {
+    test('getDrawer', () => {
       renderDrawerToolbarLayout();
-      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { findToolbar } = getToolbarTestUtils();
-      const toolbar = await findToolbar();
+      const { getDrawer } = getTestUtils();
+      const drawer = getDrawer();
 
-      expect(toolbar).toBeInTheDocument();
+      expect(drawer).toBeInTheDocument();
     });
 
-    test('getToolbar', () => {
+    test('queryDrawer', async () => {
       renderDrawerToolbarLayout();
-      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { getToolbar } = getToolbarTestUtils();
-      const toolbar = getToolbar();
+      const { queryDrawer } = getTestUtils();
 
-      expect(toolbar).toBeInTheDocument();
+      expect(queryDrawer()).toBeInTheDocument();
     });
 
-    test('queryToolbar', () => {
-      renderDrawerToolbarLayout();
-      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { queryToolbar } = getToolbarTestUtils();
-      const toolbar = queryToolbar();
+    describe('isOpen', () => {
+      test('returns true when the drawer is open', () => {
+        renderDrawerToolbarLayout();
+        const { getToolbarTestUtils, isOpen } = getTestUtils();
+        const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+        const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
-      expect(toolbar).toBeInTheDocument();
+        userEvent.click(codeButton!);
+
+        expect(isOpen()).toBeTruthy();
+      });
+
+      test('returns false when the drawer is closed', () => {
+        renderDrawerToolbarLayout();
+        const { isOpen } = getTestUtils();
+        expect(isOpen()).toBeFalsy();
+      });
     });
 
-    test('getAllToolbarIconButtons', () => {
-      renderDrawerToolbarLayout();
-      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { getAllToolbarIconButtons } = getToolbarTestUtils();
-      const buttons = getAllToolbarIconButtons();
+    describe('getToolbarTestUtils', () => {
+      test('findToolbar', async () => {
+        renderDrawerToolbarLayout();
+        const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+        const { findToolbar } = getToolbarTestUtils();
+        const toolbar = await findToolbar();
 
-      expect(buttons).toHaveLength(3);
-    });
+        expect(toolbar).toBeInTheDocument();
+      });
 
-    test('getToolbarIconButtonByLabel', () => {
-      renderDrawerToolbarLayout();
-      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+      test('getToolbar', () => {
+        renderDrawerToolbarLayout();
+        const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+        const { getToolbar } = getToolbarTestUtils();
+        const toolbar = getToolbar();
 
-      expect(
-        getToolbarIconButtonByLabel('Code')?.getElement(),
-      ).toBeInTheDocument();
-    });
+        expect(toolbar).toBeInTheDocument();
+      });
 
-    test('getActiveToolbarIconButton', () => {
-      renderDrawerToolbarLayout();
-      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { getActiveToolbarIconButton, getToolbarIconButtonByLabel } =
-        getToolbarTestUtils();
+      test('queryToolbar', () => {
+        renderDrawerToolbarLayout();
+        const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+        const { queryToolbar } = getToolbarTestUtils();
+        const toolbar = queryToolbar();
 
-      const button = getToolbarIconButtonByLabel('Code')?.getElement();
-      userEvent.click(button!);
+        expect(toolbar).toBeInTheDocument();
+      });
 
-      expect(getActiveToolbarIconButton()).toHaveAttribute(
-        'data-active',
-        'true',
-      );
-      expect(getActiveToolbarIconButton()).toHaveAttribute(
-        'aria-label',
-        'Code',
-      );
+      test('getAllToolbarIconButtons', () => {
+        renderDrawerToolbarLayout();
+        const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+        const { getAllToolbarIconButtons } = getToolbarTestUtils();
+        const buttons = getAllToolbarIconButtons();
+
+        expect(buttons).toHaveLength(3);
+      });
+
+      test('getToolbarIconButtonByLabel', () => {
+        renderDrawerToolbarLayout();
+        const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+        const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+
+        expect(
+          getToolbarIconButtonByLabel('Code')?.getElement(),
+        ).toBeInTheDocument();
+      });
+
+      test('getActiveToolbarIconButton', () => {
+        renderDrawerToolbarLayout();
+        const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+        const { getActiveToolbarIconButton, getToolbarIconButtonByLabel } =
+          getToolbarTestUtils();
+
+        const button = getToolbarIconButtonByLabel('Code')?.getElement();
+        userEvent.click(button!);
+
+        expect(getActiveToolbarIconButton()).toHaveAttribute(
+          'data-active',
+          'true',
+        );
+        expect(getActiveToolbarIconButton()).toHaveAttribute(
+          'aria-label',
+          'Code',
+        );
+      });
     });
   });
 });
