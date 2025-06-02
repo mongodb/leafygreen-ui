@@ -1,7 +1,3 @@
 export { Drawer } from './Drawer';
-export {
-  MOBILE_BREAKPOINT,
-  PANEL_WIDTH,
-  TOOLBAR_WIDTH,
-} from './Drawer.constants';
+export { MOBILE_BREAKPOINT } from './Drawer.constants';
 export { DisplayMode, type DrawerProps } from './Drawer.types';

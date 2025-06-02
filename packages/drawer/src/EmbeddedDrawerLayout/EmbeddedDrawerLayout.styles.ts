@@ -2,7 +2,8 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
 import { GRID_AREA } from '../constants';
-import { MOBILE_BREAKPOINT, PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer';
+import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../constants';
+import { MOBILE_BREAKPOINT } from '../Drawer';
 import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
 const baseStyles = css`
