@@ -55,6 +55,7 @@ const drawerInMobile = keyframes`
   }
 `;
 
+// This animation is used to animate the padding of the drawer when it closes, so that the padding does not block the content underneath it.
 const drawerPaddingOut = keyframes`
   0% {
     padding-left: ${SHADOW_WIDTH}px;
