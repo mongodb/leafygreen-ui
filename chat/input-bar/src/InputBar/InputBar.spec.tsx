@@ -130,4 +130,50 @@ describe('packages/input-bar', () => {
     const textarea = screen.getByRole('textbox');
     expect(textarea).toHaveFocus();
   });
+
+  test('InputBar preserves controlled value after form submission', () => {
+    const onMessageSend = jest.fn();
+    const controlledValue = 'persistent text';
+
+    render(
+      <InputBar
+        textareaProps={{ value: controlledValue }}
+        onMessageSend={onMessageSend}
+      />,
+    );
+
+    const textarea = screen.getByRole('textbox');
+    const sendButton = screen.getByRole('button');
+
+    expect(textarea).toHaveValue(controlledValue);
+    userEvent.click(sendButton);
+
+    // The value should remain unchanged after submission in controlled mode
+    expect(textarea).toHaveValue(controlledValue);
+    expect(onMessageSend).toHaveBeenCalledWith(
+      controlledValue,
+      expect.objectContaining({
+        type: 'submit',
+      }),
+    );
+  });
+
+  test('InputBar handles textareaProps.onChange correctly', () => {
+    const onTextareaChange = jest.fn();
+
+    render(
+      <InputBar
+        textareaProps={{
+          value: 'initial',
+          onChange: onTextareaChange,
+        }}
+      />,
+    );
+
+    const textarea = screen.getByRole('textbox');
+    userEvent.type(textarea, 'x');
+
+    // The onChange handler should be called when typing
+    expect(onTextareaChange).toHaveBeenCalled();
+  });
 });
