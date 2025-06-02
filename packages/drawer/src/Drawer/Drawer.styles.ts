@@ -52,7 +52,6 @@ const drawerOut = keyframes`
 
 const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   all: unset;
-  padding: 0;
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
   width: 100%;
