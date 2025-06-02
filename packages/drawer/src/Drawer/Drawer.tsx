@@ -51,6 +51,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
+    const [initialOpen, setInitialOpen] = useState(true);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
@@ -79,6 +80,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         setShouldAnimate(true);
       } else {
         drawerElement.close();
+        setInitialOpen(true);
       }
     }, [ref, open]);
 
@@ -89,6 +91,27 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         setTimeout(() => unregisterDrawer(id), drawerTransitionDuration);
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
+
+    /**
+     * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
+     *
+     */
+    const handleAnimationEnd = () => {
+      const drawerElement = ref.current;
+
+      // Check if the drawerElement is null or is a div, which means it is not a dialog element.
+      if (!drawerElement || drawerElement instanceof HTMLDivElement) {
+        return;
+      }
+
+      if (open && initialOpen) {
+        setInitialOpen(false);
+        const firstFocusable = drawerElement.querySelector(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        );
+        (firstFocusable as HTMLElement)?.focus();
+      }
+    };
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -106,6 +129,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           data-lgid={lgIds.root}
           id={id}
           ref={drawerRef}
+          onAnimationEnd={handleAnimationEnd}
           {...rest}
         >
           <div className={getDrawerShadowStyles({ theme, displayMode })}>

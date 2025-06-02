@@ -1,6 +1,7 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
+import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
 import { GRID_AREA } from '../constants';
 import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer/Drawer.constants';
@@ -110,7 +111,7 @@ const baseStyles = css`
   height: 100%;
   overflow: hidden;
 
-  & > :first-child {
+  .${toolbarClassName} {
     grid-area: ${GRID_AREA.toolbar};
   }
 
