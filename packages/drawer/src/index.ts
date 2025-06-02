@@ -3,7 +3,6 @@ export {
   DrawerStackProvider,
   useDrawerStackContext,
 } from './DrawerStackContext';
-export { getLgIds, getTestUtils, type GetTestUtilsReturnType } from './utils';
 export {
   DrawerToolbarLayout,
   type DrawerToolbarLayoutProps,
@@ -16,3 +15,4 @@ export {
   OverlayDrawerLayout,
   type OverlayDrawerLayoutProps,
 } from './OverlayDrawerLayout';
+export { getLgIds, getTestUtils, type GetTestUtilsReturnType } from './utils';
