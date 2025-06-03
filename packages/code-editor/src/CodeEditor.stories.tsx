@@ -1,15 +1,34 @@
 import React from 'react';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
+
+import { IndentUnits } from './CodeEditor/CodeEditor.types';
 import { CodeEditor } from '.';
 
-export default {
+const meta: StoryMetaType<typeof CodeEditor> = {
   title: 'Components/CodeEditor',
   component: CodeEditor,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams],
+    },
+  },
   decorators: [
-    Story => (
-      <div style={{ width: '100%', height: '100vh' }}>
-        <Story />
+    StoryFn => (
+      <div
+        className={css`
+          width: 100vw;
+          height: 100vh;
+          padding: 0;
+        `}
+      >
+        <StoryFn />
       </div>
     ),
   ],
@@ -23,6 +42,8 @@ export default {
     forceParsing: false,
     placeholder: 'Type your code here...',
     readOnly: false,
+    indentSize: 2,
+    indentUnit: IndentUnits.Space,
   },
   argTypes: {
     enableActiveLineHighlighting: {
@@ -49,8 +70,17 @@ export default {
     defaultValue: {
       control: { type: 'text' },
     },
+    indentSize: {
+      control: { type: 'number' },
+    },
+    indentUnit: {
+      options: ['space', 'tab'],
+      control: { type: 'radio' },
+    },
   },
 };
+
+export default meta;
 
 const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 
