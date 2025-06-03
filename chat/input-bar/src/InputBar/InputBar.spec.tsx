@@ -9,7 +9,13 @@ import { InputBar } from '.';
 const testText = 'test';
 
 describe('packages/input-bar', () => {
-  test('onChange is fired when user types', () => {
+  test('renders `badgeText` when the prop is set', () => {
+    render(<InputBar badgeText="beta" />);
+
+    expect(screen.getByText('beta')).toBeInTheDocument();
+  });
+
+  test('fires `onChange` when user types', () => {
     const onChange = jest.fn();
     render(<InputBar onChange={onChange} />);
 
@@ -19,161 +25,191 @@ describe('packages/input-bar', () => {
     expect(onChange).toHaveBeenCalledTimes(testText.length);
   });
 
-  test('onMessageSend is fired when enter is clicked', () => {
+  describe('onMessageSend', () => {
     const onMessageSend = jest.fn();
-    render(<InputBar onMessageSend={onMessageSend} />);
-
-    const textarea = screen.getByRole('textbox');
-    const sendButton = screen.getByRole('button');
-    userEvent.type(textarea, testText);
-    userEvent.click(sendButton);
-
-    expect(onMessageSend).toHaveBeenCalled();
-    expect(onMessageSend).toHaveBeenCalledWith(
-      testText,
-      expect.objectContaining({
-        type: 'submit',
-      }),
-    );
-  });
-
-  test('onMessageSend is fired when enter key is pressed', () => {
-    const onMessageSend = jest.fn();
-    render(<InputBar onMessageSend={onMessageSend} />);
-
-    const textarea = screen.getByRole('textbox');
-    userEvent.type(textarea, testText);
-    userEvent.type(textarea, '{enter}');
-
-    expect(onMessageSend).toHaveBeenCalled();
-    expect(onMessageSend).toHaveBeenCalledWith(
-      testText,
-      expect.objectContaining({
-        type: 'submit',
-      }),
-    );
-  });
-
-  test('onSubmit is fired when enter is clicked', () => {
-    const onSubmit = jest.fn();
-    render(<InputBar onSubmit={onSubmit} />);
-
-    const textarea = screen.getByRole('textbox');
-    const sendButton = screen.getByRole('button');
-    userEvent.type(textarea, testText);
-    userEvent.click(sendButton);
-
-    expect(onSubmit).toHaveBeenCalled();
-    expect(onSubmit).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: 'submit',
-      }),
-    );
-  });
-
-  test('onSubmit is fired when enter key is pressed', () => {
-    const onSubmit = jest.fn();
-    render(<InputBar onSubmit={onSubmit} />);
-
-    const textarea = screen.getByRole('textbox');
-    userEvent.type(textarea, testText);
-    userEvent.type(textarea, '{enter}');
-
-    expect(onSubmit).toHaveBeenCalled();
-    expect(onSubmit).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: 'submit',
-      }),
-    );
-  });
-
-  test('badgeText is rendered when the prop is set', () => {
-    render(<InputBar badgeText="beta" />);
-
-    expect(screen.getByText('beta')).toBeInTheDocument();
-  });
-
-  test('Hotkey Indicator is rendered when the prop is set', () => {
-    render(<InputBar shouldRenderHotkeyIndicator />);
-
-    expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeInTheDocument();
-  });
-
-  test('Hotkey Indicator is hidden when InputBar is focused and visible when unfocused', async () => {
-    render(<InputBar shouldRenderHotkeyIndicator />);
-    const textarea = screen.getByRole('textbox');
-
-    act(() => {
-      textarea.focus();
+    beforeEach(() => {
+      onMessageSend.mockClear();
+      render(<InputBar onMessageSend={onMessageSend} />);
     });
-    // Wait for CSS animation
-    await new Promise(resolve =>
-      setTimeout(resolve, transitionDuration.default),
-    );
 
-    expect(screen.getByTestId('lg-chat-hotkey-indicator')).not.toBeVisible();
+    test('fires when enter is clicked', () => {
+      const textarea = screen.getByRole('textbox');
+      const sendButton = screen.getByRole('button');
+      userEvent.type(textarea, testText);
+      userEvent.click(sendButton);
 
-    act(() => {
-      textarea.blur();
+      expect(onMessageSend).toHaveBeenCalledTimes(1);
+      expect(onMessageSend).toHaveBeenCalledWith(
+        testText,
+        expect.objectContaining({
+          type: 'submit',
+        }),
+      );
     });
-    // Wait for CSS animation
-    await new Promise(resolve =>
-      setTimeout(resolve, transitionDuration.default),
-    );
-    expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeVisible();
+
+    test('fires when enter key is pressed', () => {
+      const textarea = screen.getByRole('textbox');
+      userEvent.type(textarea, testText);
+      userEvent.type(textarea, '{enter}');
+
+      expect(onMessageSend).toHaveBeenCalledTimes(1);
+      expect(onMessageSend).toHaveBeenCalledWith(
+        testText,
+        expect.objectContaining({
+          type: 'submit',
+        }),
+      );
+    });
   });
 
-  test('When the hotkey indicator is enabled, pressing the hotkey focuses the input', async () => {
-    render(<InputBar shouldRenderHotkeyIndicator />);
+  describe('onSubmit', () => {
+    const onSubmit = jest.fn();
+    beforeEach(() => {
+      onSubmit.mockClear();
+      render(<InputBar onSubmit={onSubmit} />);
+    });
 
-    userEvent.keyboard('/');
-    const textarea = screen.getByRole('textbox');
-    expect(textarea).toHaveFocus();
+    test('fires when enter is clicked', () => {
+      const textarea = screen.getByRole('textbox');
+      const sendButton = screen.getByRole('button');
+      userEvent.type(textarea, testText);
+      userEvent.click(sendButton);
+
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+      expect(onSubmit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'submit',
+        }),
+      );
+    });
+
+    test('fires when enter key is pressed', () => {
+      const textarea = screen.getByRole('textbox');
+      userEvent.type(textarea, testText);
+      userEvent.type(textarea, '{enter}');
+
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+      expect(onSubmit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'submit',
+        }),
+      );
+    });
   });
 
-  test('InputBar preserves controlled value after form submission', () => {
-    const onMessageSend = jest.fn();
-    const controlledValue = 'persistent text';
+  describe('Hotkey Indicator', () => {
+    beforeEach(() => {
+      render(<InputBar shouldRenderHotkeyIndicator />);
+    });
 
-    render(
-      <InputBar
-        textareaProps={{ value: controlledValue }}
-        onMessageSend={onMessageSend}
-      />,
-    );
+    test('renders when the prop is set', () => {
+      expect(
+        screen.getByTestId('lg-chat-hotkey-indicator'),
+      ).toBeInTheDocument();
+    });
 
-    const textarea = screen.getByRole('textbox');
-    const sendButton = screen.getByRole('button');
+    test('is hidden when InputBar is focused and visible when unfocused', async () => {
+      const textarea = screen.getByRole('textbox');
 
-    expect(textarea).toHaveValue(controlledValue);
-    userEvent.click(sendButton);
+      act(() => {
+        textarea.focus();
+      });
+      // Wait for CSS animation
+      await new Promise(resolve =>
+        setTimeout(resolve, transitionDuration.default),
+      );
 
-    // The value should remain unchanged after submission in controlled mode
-    expect(textarea).toHaveValue(controlledValue);
-    expect(onMessageSend).toHaveBeenCalledWith(
-      controlledValue,
-      expect.objectContaining({
-        type: 'submit',
-      }),
-    );
+      expect(screen.getByTestId('lg-chat-hotkey-indicator')).not.toBeVisible();
+
+      act(() => {
+        textarea.blur();
+      });
+      // Wait for CSS animation
+      await new Promise(resolve =>
+        setTimeout(resolve, transitionDuration.default),
+      );
+      expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeVisible();
+    });
+
+    test('focuses the input when the hotkey indicator is enabled and hotkey is pressed', async () => {
+      userEvent.keyboard('/');
+      const textarea = screen.getByRole('textbox');
+      expect(textarea).toHaveFocus();
+    });
   });
 
-  test('InputBar handles textareaProps.onChange correctly', () => {
-    const onTextareaChange = jest.fn();
+  describe('controlled vs uncontrolled behavior', () => {
+    test('resets value to empty string after form submission when uncontrolled', () => {
+      const onMessageSend = jest.fn();
 
-    render(
-      <InputBar
-        textareaProps={{
-          value: 'initial',
-          onChange: onTextareaChange,
-        }}
-      />,
-    );
+      render(<InputBar onMessageSend={onMessageSend} />);
 
-    const textarea = screen.getByRole('textbox');
-    userEvent.type(textarea, 'x');
+      const textarea = screen.getByRole('textbox');
+      const sendButton = screen.getByRole('button');
 
-    // The onChange handler should be called when typing
-    expect(onTextareaChange).toHaveBeenCalled();
+      // Type text in the textarea
+      userEvent.type(textarea, 'message to be cleared');
+      expect(textarea).toHaveValue('message to be cleared');
+
+      // Submit the form
+      userEvent.click(sendButton);
+
+      // Check that the textarea is empty after submission
+      expect(textarea).toHaveValue('');
+
+      // Verify onMessageSend was called with the correct message
+      expect(onMessageSend).toHaveBeenCalledWith(
+        'message to be cleared',
+        expect.objectContaining({
+          type: 'submit',
+        }),
+      );
+    });
+
+    test('preserves value after form submission when controlled', () => {
+      const onMessageSend = jest.fn();
+      const controlledValue = 'persistent text';
+
+      render(
+        <InputBar
+          textareaProps={{ value: controlledValue }}
+          onMessageSend={onMessageSend}
+        />,
+      );
+
+      const textarea = screen.getByRole('textbox');
+      const sendButton = screen.getByRole('button');
+
+      expect(textarea).toHaveValue(controlledValue);
+      userEvent.click(sendButton);
+
+      // The value should remain unchanged after submission in controlled mode
+      expect(textarea).toHaveValue(controlledValue);
+      expect(onMessageSend).toHaveBeenCalledWith(
+        controlledValue,
+        expect.objectContaining({
+          type: 'submit',
+        }),
+      );
+    });
+
+    test('handles textareaProps.onChange correctly', () => {
+      const onTextareaChange = jest.fn();
+
+      render(
+        <InputBar
+          textareaProps={{
+            value: 'initial',
+            onChange: onTextareaChange,
+          }}
+        />,
+      );
+
+      const textarea = screen.getByRole('textbox');
+      userEvent.type(textarea, 'x');
+
+      // The onChange handler should be called when typing
+      expect(onTextareaChange).toHaveBeenCalled();
+    });
   });
 });
