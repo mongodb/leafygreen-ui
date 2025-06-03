@@ -9,8 +9,8 @@ import { CodeEditorTooltip, CodeMirrorExtension } from '../CodeEditor.types';
  * in the document.
  *
  * @param tooltip - Configuration object for the tooltip
- * @param tooltip.line - Zero-based line number where the tooltip should appear
- * @param tooltip.column - Zero-based column position (defaults to 0)
+ * @param tooltip.line - One-based line number where the tooltip should appear
+ * @param tooltip.column - One-based column position (defaults to 0)
  * @param tooltip.content - Content to render in the tooltip (string, ReactNode, or any other value)
  * @param tooltip.above - Whether the tooltip should appear above the position (defaults to true)
  * @returns A CodeMirror extension that renders the tooltip when hovering over the specified position
