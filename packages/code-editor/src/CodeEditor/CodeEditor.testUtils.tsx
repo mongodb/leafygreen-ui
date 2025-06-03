@@ -1,4 +1,5 @@
 import React from 'react';
+import { indentUnit } from '@codemirror/language';
 import { render } from '@testing-library/react';
 import { ChangeSpec } from '@uiw/react-codemirror';
 
@@ -85,6 +86,10 @@ function isReadOnly() {
   return editorView.state.readOnly;
 }
 
+function getIndentUnit() {
+  return editorView.state.facet(indentUnit);
+}
+
 function isLineWrappingEnabled() {
   return !!queryBySelector(CodeEditorSelectors.LineWrapping);
 }
@@ -112,6 +117,7 @@ export const editor = {
   queryBySelector,
   isLineWrappingEnabled,
   isReadOnly,
+  getIndentUnit,
   interactions: {
     insertText,
   },
