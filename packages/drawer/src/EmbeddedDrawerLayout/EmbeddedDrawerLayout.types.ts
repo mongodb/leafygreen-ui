@@ -1,13 +1,8 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { BaseDrawerLayout } from '../Drawer/Drawer.types';
 
-export interface EmbeddedDrawerLayoutProps extends HTMLElementProps<'div'> {
+export interface EmbeddedDrawerLayoutProps extends BaseDrawerLayout {
   /**
    * Determines if the Drawer instance is open or closed
    */
   isDrawerOpen: boolean;
-
-  /**
-   * Determines if the Toolbar is present in the layout
-   */
-  hasToolbar?: boolean;
 }

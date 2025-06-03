@@ -10,7 +10,10 @@ const baseStyles = css`
   width: 100%;
   display: grid;
   grid-template-columns: auto 0;
-  transition: all ${drawerTransitionDuration}ms ease-in-out;
+  transition-property: grid-template-columns, grid-template-rows;
+  transition-timing-function: ease-in-out, ease-in-out;
+  transition-duration: ${drawerTransitionDuration}ms,
+    ${drawerTransitionDuration}ms;
   overflow: hidden;
   position: relative;
   height: 100%;

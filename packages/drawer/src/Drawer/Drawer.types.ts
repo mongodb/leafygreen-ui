@@ -41,3 +41,10 @@ export interface DrawerProps
    */
   title: React.ReactNode;
 }
+
+export interface BaseDrawerLayout extends HTMLElementProps<'div'> {
+  /**
+   * Determines if the Toolbar is present in the layout
+   */
+  hasToolbar?: boolean;
+}
