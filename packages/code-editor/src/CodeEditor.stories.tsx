@@ -129,19 +129,24 @@ const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 export const LiveExample = Template.bind({});
 
 export const TooltipOnHover: StoryObj<{}> = {
-  render: () => (
-    <CodeEditor
-      defaultValue={'test\n'.repeat(5)}
-      tooltips={[
-        {
-          line: 2,
-          column: 2,
-          content: <MyTooltip line={2} column={2} />,
-          above: true,
-        },
-      ]}
-    />
-  ),
+  render: () => {
+    const column = 3;
+    const line = 2;
+
+    return (
+      <CodeEditor
+        defaultValue={'test\n'.repeat(5)}
+        tooltips={[
+          {
+            line,
+            column,
+            content: <MyTooltip line={line} column={column} />,
+            above: true,
+          },
+        ]}
+      />
+    );
+  },
   /**
    * Tests that the tooltip appears when hovering over a specific character
    * in the editor. This is done here instead of in Jest because it depends on

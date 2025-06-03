@@ -3,10 +3,10 @@ export { renderCodeEditor } from './CodeEditor.testUtils';
 export {
   type CodeEditorProps,
   CodeEditorSelectors,
+  type CodeEditorTooltip,
   type CodeMirrorExtension,
   type CodeMirrorRef,
   type CodeMirrorState,
   type CodeMirrorView,
   IndentUnits,
-  type Tooltip,
 } from './CodeEditor.types';

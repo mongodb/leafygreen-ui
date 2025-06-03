@@ -62,7 +62,7 @@ export const IndentUnits = {
 } as const;
 export type IndentUnits = (typeof IndentUnits)[keyof typeof IndentUnits];
 
-export interface Tooltip {
+export interface CodeEditorTooltip {
   /**
    * Which line in the document the tooltip should be rendered. 0 based.
    */
@@ -154,5 +154,5 @@ export interface CodeEditorProps extends DarkModeProps {
   /**
    * Add tooltips to the editor content.
    */
-  tooltips?: Array<Tooltip>;
+  tooltips?: Array<CodeEditorTooltip>;
 }

@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { renderToString } from 'react-dom/server';
 import {
   forceParsing,
   indentUnit as indentUnitFacet,
@@ -15,54 +14,20 @@ import CodeMirror, {
   Compartment,
   EditorState,
   EditorView,
-  hoverTooltip,
 } from '@uiw/react-codemirror';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
+import { createTooltipExtension } from './utils/createTooltipExtension';
 import {
   type CodeEditorProps,
   type CodeMirrorExtension,
   type CodeMirrorRef,
   IndentUnits,
-  type Tooltip,
 } from './CodeEditor.types';
 
 const CODE_MIRROR_HEIGHT = '200px';
 const CODE_MIRROR_WIDTH = '100%';
-
-const createTooltipExtension = ({
-  line,
-  column = 0,
-  content,
-  above = true,
-}: Tooltip): CodeMirrorExtension => {
-  return hoverTooltip(view => {
-    const lineInfo = view.state.doc.line(line + 1); // CodeMirror lines are 1-indexed
-
-    return {
-      pos: lineInfo.from + column,
-      end: lineInfo.to,
-      above: above,
-      create() {
-        const dom = document.createElement('div');
-
-        if (typeof content === 'string') {
-          dom.textContent = content;
-        } else if (React.isValidElement(content) || Array.isArray(content)) {
-          const contentString = renderToString(
-            React.createElement(React.Fragment, null, content),
-          );
-          dom.innerHTML = contentString;
-        } else if (content) {
-          dom.textContent = String(content);
-        }
-
-        return { dom };
-      },
-    };
-  });
-};
 
 export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
   (
