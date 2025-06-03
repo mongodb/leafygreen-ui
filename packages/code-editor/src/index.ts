@@ -9,6 +9,7 @@ export {
   type CodeEditorProps,
   CodeEditorSelectors,
   type CodeEditorTooltip,
+  CodeEditorTooltipSeverity,
   type CodeMirrorExtension,
   type CodeMirrorRef,
   type CodeMirrorState,

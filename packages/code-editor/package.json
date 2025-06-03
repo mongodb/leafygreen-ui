@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@codemirror/language": "^6.11.0",
+    "@codemirror/lint": "^6.8.5",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/leafygreen-provider": "workspace:^",

@@ -62,15 +62,29 @@ export const IndentUnits = {
 } as const;
 export type IndentUnits = (typeof IndentUnits)[keyof typeof IndentUnits];
 
+export const CodeEditorTooltipSeverity = {
+  Info: 'info',
+  Warning: 'warning',
+  Error: 'error',
+  Hint: 'hint',
+} as const;
+export type CodeEditorTooltipSeverity =
+  (typeof CodeEditorTooltipSeverity)[keyof typeof CodeEditorTooltipSeverity];
+
 export interface CodeEditorTooltip {
   /**
-   * Which line in the document the tooltip should be rendered. 0 based.
+   * Which line in the document the tooltip should be rendered. 1 based.
    */
   line: number;
 
   /**
-   * Which character, going from left to right, the tooltip should be
-   * rendered. 0 based. Defaults to 0.
+   * The length the text that the tooltip should cover in characters.
+   */
+  length: number;
+
+  /**
+   * Which character, going from left to right, the tooltip should start. 1 based.
+   * Defaults to 1.
    */
   column?: number;
 
@@ -80,10 +94,9 @@ export interface CodeEditorTooltip {
   content: ReactNode;
 
   /**
-   * Whether the tooltip should be shown above or below the target position.
-   * Defaults to true.
+   * Severity level of the tooltip. Defaults to 'info'.
    */
-  above?: boolean;
+  severity?: CodeEditorTooltipSeverity;
 }
 
 export interface CodeEditorProps extends DarkModeProps {

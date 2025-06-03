@@ -11,7 +11,15 @@ import { css } from '@leafygreen-ui/emotion';
 import { IndentUnits } from './CodeEditor/CodeEditor.types';
 import { CodeEditor } from '.';
 
-const MyTooltip = ({ line, column }: { line: number; column: number }) => {
+const MyTooltip = ({
+  line,
+  column,
+  length,
+}: {
+  line: number;
+  column: number;
+  length: number;
+}) => {
   return (
     <div
       className={css`
@@ -39,6 +47,13 @@ const MyTooltip = ({ line, column }: { line: number; column: number }) => {
         `}
       >
         Column: {column}
+      </div>
+      <div
+        className={css`
+          margin-bottom: 4px;
+        `}
+      >
+        Length: {length}
       </div>
     </div>
   );
@@ -78,14 +93,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     readOnly: false,
     indentSize: 2,
     indentUnit: IndentUnits.Space,
-    tooltips: [
-      {
-        line: 2,
-        column: 2,
-        content: <MyTooltip line={2} column={2} />,
-        above: true,
-      },
-    ],
+    tooltips: [],
   },
   argTypes: {
     enableActiveLineHighlighting: {
@@ -130,18 +138,15 @@ export const LiveExample = Template.bind({});
 
 export const TooltipOnHover: StoryObj<{}> = {
   render: () => {
-    const column = 3;
-    const line = 2;
-
     return (
       <CodeEditor
         defaultValue={'test\n'.repeat(5)}
         tooltips={[
           {
-            line,
-            column,
-            content: <MyTooltip line={line} column={column} />,
-            above: true,
+            line: 2,
+            column: 1,
+            content: <MyTooltip line={2} column={1} length={4} />,
+            length: 4,
           },
         ]}
       />
@@ -153,14 +158,19 @@ export const TooltipOnHover: StoryObj<{}> = {
    * bounding rects, which are not available in Jest's JSDOM environment.
    */
   play: async ({ canvasElement }) => {
+    // Wait for diagnostic to be applied
+    await waitFor(() => {
+      expect(canvasElement.querySelector('.cm-lintRange')).toBeInTheDocument();
+    });
+
     // Find the third line (line: 2, zero-based)
-    const lines = canvasElement.getElementsByClassName('cm-line');
-    const targetLine = lines[2];
+    // const lines = canvasElement.getElementsByClassName('cm-line');
+    const target = canvasElement.getElementsByClassName('cm-lintRange')[0];
 
     // Find the text node and calculate the offset for column 2
     const range = document.createRange();
-    range.setStart(targetLine.firstChild!, 2); // column: 2
-    range.setEnd(targetLine.firstChild!, 3);
+    range.setStart(target.firstChild!, 0); // column: 0
+    range.setEnd(target.firstChild!, 4); // column: 4
 
     // Get the bounding rect for the character at column 2
     const rect = range.getBoundingClientRect();
@@ -170,7 +180,7 @@ export const TooltipOnHover: StoryObj<{}> = {
     const y = rect.top + rect.height / 2;
 
     // Dispatch a mousemove event at the character position
-    targetLine.dispatchEvent(
+    target.dispatchEvent(
       new MouseEvent('mousemove', {
         bubbles: true,
         clientX: x,
