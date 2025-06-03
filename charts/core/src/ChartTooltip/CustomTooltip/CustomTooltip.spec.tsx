@@ -80,7 +80,7 @@ describe('@lg-charts/core/ChartTooltip/CustomTooltip', () => {
   test('should render properly formatted date', () => {
     renderCustomTooltip();
     const dateElement = screen.getByText(
-      /\d{4}\/\d{2}\/\d{2}\/\d{2}:\d{2}:\d{2}/,
+      /^[A-Z][a-z]{2} \d{1,2}, \d{4}, \d{1,2}:\d{2}:\d{2} [AP]M \(UTC\)$/,
     );
     expect(dateElement).toBeInTheDocument();
   });

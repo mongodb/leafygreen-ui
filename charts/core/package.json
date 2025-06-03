@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/core",
-  "version": "0.18.0",
+  "version": "1.1.0",
   "description": "lg-charts Core Chart Components",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -19,6 +19,8 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
@@ -34,9 +36,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
-    "@leafygreen-ui/icon": "workspace:^",
-    "@lg-tools/build": "workspace:^",
-    "@types/lodash.debounce": "^4.0.9"
+    "@lg-tools/build": "workspace:^"
   },
   "repository": {
     "type": "git",

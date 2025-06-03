@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/code",
-  "version": "18.1.0",
+  "version": "19.0.0",
   "description": "leafyGreen UI Kit Code Blocks",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
