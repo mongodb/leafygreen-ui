@@ -140,43 +140,6 @@ InitialOpen.parameters = {
   },
 };
 
-export const FunctionTriggerStyleRetention = (args: TooltipProps) => {
-  return (
-    <div
-      className={css`
-        padding: 100px;
-      `}
-    >
-      <Tooltip {...args} />
-    </div>
-  );
-};
-FunctionTriggerStyleRetention.args = {
-  enabled: true,
-  renderMode: RenderMode.TopLayer,
-  trigger: (props: any) => {
-    return (
-      <Button
-        className={css`
-          outline: unset;
-          border: unset;
-          background-color: lavender;
-          color: rebeccapurple;
-        `}
-        {...props}
-      >
-        Trigger
-      </Button>
-    );
-  },
-  children: 'I am a tooltip!',
-};
-FunctionTriggerStyleRetention.parameters = {
-  chromatic: {
-    disableSnapshot: true,
-  },
-};
-
 export const WithLeafyGreenChildren = LiveExample.bind({});
 WithLeafyGreenChildren.args = {
   children: (
