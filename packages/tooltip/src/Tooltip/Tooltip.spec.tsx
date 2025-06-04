@@ -429,7 +429,10 @@ describe('packages/tooltip', () => {
   });
 
   describe('when trigger is an inline function', () => {
-    function renderInlineTrigger(props = {}, customTrigger: any = undefined) {
+    function renderInlineTrigger(
+      props = {},
+      customTrigger?: (props: ButtonTestProps) => ReactElement,
+    ) {
       const utils = render(
         <>
           <div data-testid="backdrop" />

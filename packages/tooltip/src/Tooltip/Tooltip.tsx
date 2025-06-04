@@ -294,7 +294,7 @@ function Tooltip({
   if (trigger) {
     const originalTrigger =
       typeof trigger === 'function'
-        ? (trigger({}) as React.ReactElement<any>)
+        ? (trigger({}) as React.ReactElement<unknown>)
         : trigger;
 
     return React.cloneElement(originalTrigger, {
