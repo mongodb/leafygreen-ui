@@ -140,7 +140,7 @@ InitialOpen.parameters = {
   },
 };
 
-export const WithOriginalStyling = (args: TooltipProps) => {
+export const FunctionTriggerStyleRetention = (args: TooltipProps) => {
   return (
     <div
       className={css`
@@ -151,15 +151,24 @@ export const WithOriginalStyling = (args: TooltipProps) => {
     </div>
   );
 };
-WithOriginalStyling.args = {
+FunctionTriggerStyleRetention.args = {
   enabled: true,
   renderMode: RenderMode.TopLayer,
-  trigger: () => {
-    return <Button size={Size.XSmall}>Trigger</Button>;
+  trigger: (props: any) => {
+    return (
+      <Button
+        className={css`
+          size: xsmall;
+        `}
+        {...props}
+      >
+        Trigger
+      </Button>
+    );
   },
   children: 'I am a tooltip!',
 };
-WithOriginalStyling.parameters = {
+FunctionTriggerStyleRetention.parameters = {
   chromatic: {
     disableSnapshot: true,
   },
