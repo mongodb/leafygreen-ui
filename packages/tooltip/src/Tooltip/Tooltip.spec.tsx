@@ -478,14 +478,13 @@ describe('packages/tooltip', () => {
     test(`retains existing class names of trigger component`, () => {
       const TEST_CLASS_NAME = 'test-class-name';
 
-      const customTrigger = ({ children, ...rest }: ButtonTestProps) => (
+      const customTrigger = (props: ButtonTestProps) => (
         <button
           className={TEST_CLASS_NAME}
           data-testid="inline-trigger"
-          {...rest}
+          {...props}
         >
           {buttonText}
-          {children}
         </button>
       );
 
