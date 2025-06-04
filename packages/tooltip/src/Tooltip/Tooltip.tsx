@@ -292,32 +292,21 @@ function Tooltip({
   );
 
   if (trigger) {
-    if (typeof trigger === 'function') {
-      const originalTrigger = trigger({}) as React.ReactElement<any>;
+    const originalTrigger =
+      typeof trigger === 'function'
+        ? (trigger({}) as React.ReactElement<any>)
+        : trigger;
 
-      return React.cloneElement(originalTrigger, {
-        ...createTriggerProps(triggerEvent, originalTrigger.props),
-        'aria-describedby': active ? tooltipId : undefined,
-        children: (
-          <>
-            {originalTrigger.props.children}
-            {tooltip}
-          </>
-        ),
-        className: cx(positionRelative, originalTrigger.props.className),
-      });
-    }
-
-    return React.cloneElement(trigger, {
-      ...createTriggerProps(triggerEvent, trigger.props),
+    return React.cloneElement(originalTrigger, {
+      ...createTriggerProps(triggerEvent, originalTrigger.props),
       'aria-describedby': active ? tooltipId : undefined,
       children: (
         <>
-          {trigger.props.children}
+          {originalTrigger.props.children}
           {tooltip}
         </>
       ),
-      className: cx(positionRelative, trigger.props.className),
+      className: cx(positionRelative, originalTrigger.props.className),
     });
   }
 
