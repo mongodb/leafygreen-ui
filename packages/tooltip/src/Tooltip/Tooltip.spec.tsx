@@ -429,13 +429,13 @@ describe('packages/tooltip', () => {
   });
 
   describe('when trigger is an inline function', () => {
-    function renderInlineTrigger(props = {}, trigger: any = undefined) {
+    function renderInlineTrigger(props = {}, customTrigger: any = undefined) {
       const utils = render(
         <>
           <div data-testid="backdrop" />
           <Tooltip
             trigger={
-              trigger ??
+              customTrigger ??
               (({ children, ...rest }: ButtonTestProps) => (
                 <button {...rest} data-testid="inline-trigger">
                   {buttonText}
@@ -472,22 +472,24 @@ describe('packages/tooltip', () => {
       await waitForElementToBeRemoved(tooltip);
     });
 
-    test(`retains class names of trigger component`, () => {
-      const styledTrigger = ({ children, ...rest }: ButtonTestProps) => (
+    test(`retains existing class names of trigger component`, () => {
+      const TEST_CLASS_NAME = 'test-class-name';
+
+      const customTrigger = ({ children, ...rest }: ButtonTestProps) => (
         <button
-          {...rest}
-          className="styled-trigger"
+          className={TEST_CLASS_NAME}
           data-testid="inline-trigger"
+          {...rest}
         >
           {buttonText}
           {children}
         </button>
       );
 
-      const { button } = renderInlineTrigger({}, styledTrigger);
+      const { button } = renderInlineTrigger({}, customTrigger);
 
       expect(button).toBeInTheDocument();
-      expect(button).toHaveClass('styled-trigger');
+      expect(button).toHaveClass(TEST_CLASS_NAME);
     });
   });
 
