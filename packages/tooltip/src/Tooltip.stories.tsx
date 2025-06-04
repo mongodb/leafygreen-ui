@@ -140,6 +140,31 @@ InitialOpen.parameters = {
   },
 };
 
+export const WithOriginalStyling = (args: TooltipProps) => {
+  return (
+    <div
+      className={css`
+        padding: 100px;
+      `}
+    >
+      <Tooltip {...args} />
+    </div>
+  );
+};
+WithOriginalStyling.args = {
+  enabled: true,
+  renderMode: RenderMode.TopLayer,
+  trigger: () => {
+    return <Button size={Size.XSmall}>Trigger</Button>;
+  },
+  children: 'I am a tooltip!',
+};
+WithOriginalStyling.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
 export const WithLeafyGreenChildren = LiveExample.bind({});
 WithLeafyGreenChildren.args = {
   children: (
