@@ -158,7 +158,10 @@ FunctionTriggerStyleRetention.args = {
     return (
       <Button
         className={css`
-          size: xsmall;
+          outline: unset;
+          border: unset;
+          background-color: lavender;
+          color: rebeccapurple;
         `}
         {...props}
       >
