@@ -1,8 +1,3 @@
-import { BaseDrawerLayout } from '../Drawer/Drawer.types';
+import { BaseLayoutComponentProps } from '../LayoutComponent/LayoutComponent.types';
 
-export interface EmbeddedDrawerLayoutProps extends BaseDrawerLayout {
-  /**
-   * Determines if the Drawer instance is open or closed
-   */
-  isDrawerOpen: boolean;
-}
+export type EmbeddedDrawerLayoutProps = BaseLayoutComponentProps;

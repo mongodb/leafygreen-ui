@@ -6,6 +6,8 @@ import { getDrawerWithToolbarWrapperStyles } from './DrawerWithToolbarWrapper.st
 import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types';
 
 /**
+ * @internal
+ *
  * This layout wrapper is used to position the toolbar and drawer together. When the drawer is open, the toolbar and drawer will shift to the right.
  *
  * If the drawer is overlay, a box shadow will be applied to the left side of this component.

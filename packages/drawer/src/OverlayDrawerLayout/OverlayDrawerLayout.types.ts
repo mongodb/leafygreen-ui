@@ -1,3 +1,3 @@
-import { BaseDrawerLayout } from '../Drawer/Drawer.types';
+import { BaseLayoutComponentProps } from '../LayoutComponent/LayoutComponent.types';
 
-export interface OverlayDrawerLayoutProps extends BaseDrawerLayout {}
+export type OverlayDrawerLayoutProps = BaseLayoutComponentProps;

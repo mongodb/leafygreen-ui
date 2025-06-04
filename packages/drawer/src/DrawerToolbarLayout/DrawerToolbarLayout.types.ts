@@ -1,14 +1,13 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 
 import { GlyphName } from '@leafygreen-ui/icon';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { DrawerProps } from '../Drawer/Drawer.types';
 
-type PickedRequiredDrawerProps = Required<Pick<DrawerProps, 'displayMode'>>;
-type PickedOptionalDrawerProps = Pick<DrawerProps, 'onClose'>;
+type PickedOptionalDrawerProps = Pick<DrawerProps, 'onClose' | 'displayMode'>;
 
-interface LayoutData {
+export interface LayoutData {
   /**
    * The id of the layout. This is used to open the drawer.
    */
@@ -43,11 +42,13 @@ interface LayoutData {
 }
 
 export type DrawerToolbarLayoutProps = PickedOptionalDrawerProps &
-  PickedRequiredDrawerProps &
-  DarkModeProps &
-  PropsWithChildren<{
+  DarkModeProps & {
+    /**
+     * An array of data that will be used to render the toolbar items and the drawer content.
+     */
     data?: Array<LayoutData>;
     className?: string;
-  }>;
+    children: React.ReactNode;
+  };
 
 export type DrawerToolbarLayoutContainerProps = DrawerToolbarLayoutProps;

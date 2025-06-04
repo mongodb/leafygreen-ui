@@ -14,9 +14,8 @@ import { color, spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
+import { DrawerLayout } from './DrawerLayout';
 import { DrawerStackProvider } from './DrawerStackContext';
-import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
-import { OverlayDrawerLayout } from './OverlayDrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -124,31 +123,12 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     />
   );
 
-  return displayMode === DisplayMode.Embedded ? (
-    <DrawerStackProvider>
-      <EmbeddedDrawerLayout
-        className={css`
-          height: 500px;
-        `}
-        isDrawerOpen={open}
-      >
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: ${spacing[200]}px;
-          `}
-        >
-          {renderTrigger()}
-          <LongContent />
-        </main>
-        {renderDrawer()}
-      </EmbeddedDrawerLayout>
-    </DrawerStackProvider>
-  ) : (
+  const drawerLayoutProps = {
+    displayMode,
+    ...(displayMode === DisplayMode.Embedded && { isDrawerOpen: open }),
+  };
+
+  return (
     <DrawerStackProvider>
       <div
         className={css`
@@ -156,7 +136,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
           width: 100%;
         `}
       >
-        <OverlayDrawerLayout>
+        <DrawerLayout {...drawerLayoutProps}>
           <main
             className={css`
               padding: ${spacing[400]}px;
@@ -171,7 +151,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
             <LongContent />
           </main>
           {renderDrawer()}
-        </OverlayDrawerLayout>
+        </DrawerLayout>
       </div>
     </DrawerStackProvider>
   );

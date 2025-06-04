@@ -14,10 +14,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from '../Drawer';
-import {
-  DrawerToolbarLayout,
-  DrawerToolbarLayoutProps,
-} from '../DrawerToolbarLayout';
+import { DrawerLayout, DrawerLayoutProps } from '../DrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -167,7 +164,7 @@ const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
   </div>
 );
 
-const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
+const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['data'] = [
   {
     id: 'Code',
     label: 'Code',
@@ -198,11 +195,7 @@ const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout
-        data={DRAWER_TOOLBAR_DATA}
-        {...args}
-        displayMode="embedded"
-      >
+      <DrawerLayout data={DRAWER_TOOLBAR_DATA} {...args} displayMode="embedded">
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -210,7 +203,7 @@ const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         >
           <LongContent />
         </main>
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </div>
   );
 };
@@ -224,11 +217,7 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout
-        data={DRAWER_TOOLBAR_DATA}
-        {...args}
-        displayMode="overlay"
-      >
+      <DrawerLayout data={DRAWER_TOOLBAR_DATA} {...args} displayMode="overlay">
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -237,7 +226,7 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
           <LongContent />
           <LongContent />
         </main>
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </div>
   );
 };
@@ -245,11 +234,7 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
 const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerToolbarLayout
-        data={DRAWER_TOOLBAR_DATA}
-        {...args}
-        displayMode="overlay"
-      >
+      <DrawerLayout data={DRAWER_TOOLBAR_DATA} {...args} displayMode="overlay">
         <div
           className={css`
             padding: ${spacing[400]}px;
@@ -258,7 +243,7 @@ const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
           <LongContent />
           <LongContent />
         </div>
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </CloudNavLayoutMock>
   );
 };
@@ -284,11 +269,7 @@ export const Overlay: StoryObj<DrawerProps> = {
 const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerToolbarLayout
-        data={DRAWER_TOOLBAR_DATA}
-        {...args}
-        displayMode="embedded"
-      >
+      <DrawerLayout data={DRAWER_TOOLBAR_DATA} {...args} displayMode="embedded">
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -297,7 +278,7 @@ const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
           <LongContent />
           <LongContent />
         </main>
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </CloudNavLayoutMock>
   );
 };

@@ -1,5 +1,5 @@
 export {
-  DrawerContext,
   type DrawerContextProps,
+  DrawerProvider,
   useDrawerContext,
 } from './DrawerContext';

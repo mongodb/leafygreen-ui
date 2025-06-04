@@ -15,6 +15,7 @@ import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { useDrawerContext } from '../DrawerContext';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
@@ -50,6 +51,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     );
     const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
+    const { setIsDrawerOpen } = useDrawerContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const [initialOpen, setInitialOpen] = useState(true);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
@@ -87,10 +89,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     useEffect(() => {
       if (open) {
         registerDrawer(id);
+        setIsDrawerOpen(open);
       } else {
         setTimeout(() => unregisterDrawer(id), drawerTransitionDuration);
+        setIsDrawerOpen(open);
       }
-    }, [id, open, registerDrawer, unregisterDrawer]);
+    }, [id, open, registerDrawer, setIsDrawerOpen, unregisterDrawer]);
 
     /**
      * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
