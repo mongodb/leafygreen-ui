@@ -192,6 +192,23 @@ describe('CopyButton', () => {
     );
   });
 
-  // TODO: get this to work https://jira.mongodb.org/browse/LG-4760
-  test.todo('copies the correct text when copy button is clicked');
+  test('copies the correct text when copy button is clicked', async () => {
+    const onCopy = jest.fn();
+    const clipboardTextFn = jest.fn().mockReturnValue(contents);
+
+    const { getByTestId, getByRole } = renderCopyButton({ onCopy });
+    const copyButton = getByTestId(testIds.copyButton);
+
+    userEvent.click(copyButton);
+
+    await waitFor(() => {
+      expect(onCopy).toHaveBeenCalledTimes(1);
+      expect(ClipboardJS).toHaveBeenCalled();
+      expect(clipboardTextFn()).toBe(contents);
+
+      // Check for screen reader announcement
+      const alert = getByRole('alert');
+      expect(alert).toHaveTextContent(COPIED_TEXT);
+    });
+  });
 });
