@@ -6,7 +6,7 @@ import { color } from '@leafygreen-ui/tokens';
 
 export const searchResultsMenuStyles = css`
   box-shadow: 0px 4px 7px ${transparentize(0.75, '#000000')};
-  padding: 0px 0;
+  padding: 0;
   border-radius: 12px;
 `;
 
