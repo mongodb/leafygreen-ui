@@ -2,8 +2,10 @@
 '@leafygreen-ui/tokens': minor
 ---
 
-Adds scrollbar color tokens.
+Creates scrollbar color tokens and `addScrollbarStyles`
 
+
+### `scrollbarColor`
 Use the `scrollbar-color` CSS property to set the colors of the scrollbar thumb and track.
 For Safari, use the `-webkit-scrollbar-thumb` and `-webkit-scrollbar-track` pseudo-elements.
 
@@ -21,4 +23,17 @@ css`
    background-color: ${scrollbarColor[theme].track.primary.default};
   }
 `
+```
+
+### `addScrollbarStyles`
+
+A utility for quickly adding the above styles for a particular theme & variant.
+
+```tsx
+import { addScrollbarStyles } from '@leafygreen-ui/tokens'
+
+css`
+  ${addScrollbarStyles({theme, variant})};
+`
+
 ```
