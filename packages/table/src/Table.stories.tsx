@@ -695,7 +695,6 @@ export const WithInitialState: StoryFn<StoryTableProps> = args => {
   const table = useLeafyGreenTable<any>({
     data,
     columns,
-    // TEMPORARY
     initialState: {
       expanded: Object.fromEntries(
         data.map(({ mdbVersion }, i) => [i, mdbVersion === '9.7.5']),
