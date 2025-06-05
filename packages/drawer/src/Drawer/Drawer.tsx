@@ -66,6 +66,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     });
 
     const showCloseButton = !!onClose;
+    // This will use the default value of 0 if not wrapped in a DrawerStackProvider. If using a Drawer + Toolbar, the DrawerStackProvider will not be necessary.
     const drawerIndex = getDrawerIndex(id);
 
     useIsomorphicLayoutEffect(() => {

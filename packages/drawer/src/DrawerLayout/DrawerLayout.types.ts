@@ -28,7 +28,7 @@ export type DrawerLayoutPropsWithoutToolbar = Omit<
   onClose?: never;
 
   /**
-   * Determines if the Drawer is open. This is only needed if using the Drawer without a toolbar. This will shift the layout to the right by the width of the drawer if the display mode is set to 'embedded'.
+   * Determines if the Drawer is open. This is only needed if using the Drawer without a toolbar. This will shift the layout to the right by the width of the drawer if `displayMode` is set to 'embedded'.
    */
   isDrawerOpen?: boolean;
 } & BaseDrawerLayoutProps;
@@ -38,7 +38,7 @@ export type DrawerLayoutPropsWithToolbar = Omit<
   'displayMode'
 > & {
   /**
-   * Determines if the Drawer is open. This is only needed if using the Drawer without a toolbar. This will shift the layout to the right by the width of the drawer if the display mode is set to 'embedded'.
+   * Determines if the Drawer is open. This is only needed if using the Drawer without a toolbar. This will shift the layout to the right by the width of the drawer if `displayMode` is set to 'embedded'.
    */
   isDrawerOpen?: never;
 } & BaseDrawerLayoutProps;

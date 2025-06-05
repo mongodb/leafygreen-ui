@@ -9,7 +9,7 @@ import React, {
 import { DrawerStackContextType } from './DrawerStackContext.types';
 
 export const DrawerStackContext = createContext<DrawerStackContextType>({
-  getDrawerIndex: () => -1,
+  getDrawerIndex: () => 0,
   registerDrawer: () => {},
   unregisterDrawer: () => {},
 });
