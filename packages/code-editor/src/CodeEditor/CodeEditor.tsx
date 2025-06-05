@@ -48,7 +48,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       indentUnit = IndentUnits.Space,
       indentSize = 2,
       tooltips = [],
-      extensions: customExtensions = [],
+      extensions: consumerExtensions = [],
       ...rest
     },
     forwardedRef,
@@ -158,7 +158,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         readOnly={readOnly}
         placeholder={placeholder}
         extensions={[
-          ...customExtensions.map(extension => Prec.highest(extension)),
+          ...consumerExtensions.map(extension => Prec.highest(extension)),
           ...extensions,
         ]}
         basicSetup={{
