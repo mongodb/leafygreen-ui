@@ -7,10 +7,7 @@ import {
   Month,
   newUTC,
 } from '@leafygreen-ui/date-utils';
-import {
-  mockTimeZone,
-  testTimeZones,
-} from '@leafygreen-ui/date-utils/src/testing';
+import { mockTimeZone, testTimeZones } from '@leafygreen-ui/date-utils/testing';
 
 import {
   SharedDatePickerProvider,

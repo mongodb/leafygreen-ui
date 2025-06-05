@@ -8,8 +8,8 @@ import {
   Month,
   newUTC,
   SupportedLocales,
-  testLocales,
 } from '@leafygreen-ui/date-utils';
+import { testLocales } from '@leafygreen-ui/date-utils/testing';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import {

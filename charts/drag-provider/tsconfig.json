@@ -1,19 +1,22 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src",
-    "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../../packages/*/src"]
+      "@leafygreen-ui/icon/dist/*": [
+        "../../packages/icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../../packages/*/src"
+      ]
     }
   },
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
   "references": [
     {
       "path": "../chart-card"
@@ -26,6 +29,6 @@
     },
     {
       "path": "../../packages/leafygreen-provider"
-    }, 
+    }
   ]
 }

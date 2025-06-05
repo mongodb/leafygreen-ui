@@ -67,7 +67,7 @@ export interface WithoutUnitSelectProps {
    * Required if using `unitOptions`. When using `unitOptions` this value becomes the controlled value of the select input.
    *
    */
-  unit?: string;
+  unit?: React.ReactNode;
 
   /**
    * The options that appear in the select element attached to the right of the input.

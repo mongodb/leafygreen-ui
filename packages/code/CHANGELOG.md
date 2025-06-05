@@ -1,5 +1,91 @@
 # @leafygreen-ui/code
 
+## 19.0.0
+
+### Major Changes
+
+- 0757cfbfc: Adds code splitting for test utilities
+
+  - Adds `/testing` entry point
+  - Removes `getTestUtils` from main bundle entry point
+
+  When using the component, testing utilities won't be included into your final bundle
+
+  ```tsx
+  // App.tsx
+  import { Component } from `@leafygreen-ui/<package>`
+  ```
+
+  Testing utilities (and their dependencies) will only be imported if you import them explicitly
+
+  ```tsx
+  import { getTestUtils } from `@leafygreen-ui/<package>/testing`
+  ```
+
+- 0757cfbfc: Updates Typescript build to TS5.8
+
+### Minor Changes
+
+- 0757cfbfc: Adds postinstall script to ensure dependency types are resolved correctly
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Adds missing `@lg-tools/` devDependencies.
+  Updates `build`, `tsc` & `docs` scripts to use `lg-build *` cli
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+  - @leafygreen-ui/leafygreen-provider@5.0.0
+  - @leafygreen-ui/skeleton-loader@3.0.0
+  - @leafygreen-ui/icon-button@17.0.0
+  - @lg-tools/test-harnesses@0.3.0
+  - @leafygreen-ui/typography@21.0.0
+  - @leafygreen-ui/emotion@5.0.0
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tooltip@14.0.0
+  - @leafygreen-ui/button@24.0.0
+  - @leafygreen-ui/select@15.0.0
+  - @leafygreen-ui/tokens@3.0.0
+  - @leafygreen-ui/hooks@9.0.0
+  - @leafygreen-ui/a11y@3.0.0
+  - @leafygreen-ui/icon@14.0.0
+  - @leafygreen-ui/lib@15.0.0
+
+## 18.1.0
+
+### Minor Changes
+
+- 5c80334ed: [LG-4972](https://jira.mongodb.org/browse/LG-4972): add language support for `markdown`
+
+## 18.0.5
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/button@23.1.6
+  - @leafygreen-ui/icon-button@16.0.12
+  - @leafygreen-ui/select@14.1.8
+  - @leafygreen-ui/skeleton-loader@2.0.12
+  - @leafygreen-ui/tooltip@13.0.13
+  - @leafygreen-ui/typography@20.1.9
+
+## 18.0.4
+
+### Patch Changes
+
+- @leafygreen-ui/select@14.1.7
+- @leafygreen-ui/tooltip@13.0.12
+
 ## 18.0.3
 
 ### Patch Changes

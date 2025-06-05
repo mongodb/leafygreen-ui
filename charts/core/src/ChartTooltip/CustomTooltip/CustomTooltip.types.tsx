@@ -6,9 +6,11 @@ import {
 } from '../ChartTooltip.types';
 
 export interface CustomTooltipProps extends DarkModeProps {
-  seriesData: Array<CallbackSeriesDataPoint>;
-  sort?: ChartTooltipProps['sort'];
-  seriesValueFormatter?: ChartTooltipProps['seriesValueFormatter'];
-  seriesNameFormatter?: ChartTooltipProps['seriesNameFormatter'];
+  chartId: string;
   headerFormatter?: ChartTooltipProps['headerFormatter'];
+  seriesData: Array<CallbackSeriesDataPoint>;
+  seriesNameFormatter?: ChartTooltipProps['seriesNameFormatter'];
+  seriesValueFormatter?: ChartTooltipProps['seriesValueFormatter'];
+  sort?: ChartTooltipProps['sort'];
+  tooltipPinned: boolean;
 }

@@ -1,5 +1,45 @@
 # @leafygreen-ui/modal
 
+## 18.0.0
+
+### Major Changes
+
+- 0757cfbfc: Updates Typescript build to TS5.8
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Adds missing `@lg-tools/` devDependencies.
+  Updates `build`, `tsc` & `docs` scripts to use `lg-build *` cli
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+  - @leafygreen-ui/leafygreen-provider@5.0.0
+  - @leafygreen-ui/icon-button@17.0.0
+  - @lg-tools/test-harnesses@0.3.0
+  - @leafygreen-ui/emotion@5.0.0
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/portal@7.0.0
+  - @leafygreen-ui/tokens@3.0.0
+  - @leafygreen-ui/hooks@9.0.0
+  - @leafygreen-ui/icon@14.0.0
+  - @leafygreen-ui/lib@15.0.0
+
+## 17.1.7
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/icon-button@16.0.12
+
 ## 17.1.6
 
 ### Patch Changes

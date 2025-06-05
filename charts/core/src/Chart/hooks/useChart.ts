@@ -1,23 +1,24 @@
-import { RefCallback, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 import { useEchart } from '../../Echart';
 import { EChartEvents } from '../../Echart';
 import { getDefaultChartOptions } from '../config';
 
 import type { ChartHookProps, ChartInstance } from './useChart.types';
-
-// TODO(LG-4803): Fix linting issues
-/* eslint-disable react-hooks/exhaustive-deps */
+import { useTooltipVisibility } from './useTooltipVisibility';
 
 export function useChart({
   onChartReady = () => {},
   zoomSelect,
   onZoomSelect,
+  chartId,
   groupId,
   theme,
   state,
 }: ChartHookProps): ChartInstance {
-  const initialOptions = getDefaultChartOptions(theme);
+  const initialOptions = useMemo(() => getDefaultChartOptions(theme), [theme]);
 
   /**
    * It is necessary for `useEchart` to know when the container exists
@@ -26,138 +27,146 @@ export function useChart({
    * element only gets populated after render.
    */
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
-  const chartRef: RefCallback<HTMLDivElement> = useCallback(node => {
-    setContainer(node);
-  }, []);
+
+  const id = useIdAllocator({ id: chartId, prefix: 'lg-chart' });
+
   const echart = useEchart({
     container,
     initialOptions,
     theme,
   });
 
-  useEffect(() => {
-    if (echart.ready) {
-      onChartReady();
-    }
-  }, [echart.ready]);
+  const {
+    addToGroup,
+    enableZoom,
+    off,
+    on,
+    ready,
+    removeFromGroup,
+    resize,
+    setupZoomSelect,
+  } = echart;
 
   useEffect(() => {
-    if (echart.ready) {
-      if (groupId) {
-        echart.addToGroup(groupId);
-      }
-
-      return () => {
-        echart.removeFromGroup();
-      };
+    if (!ready) {
+      return;
     }
-  }, [echart.ready, groupId]);
+    onChartReady();
+  }, [ready, onChartReady]);
+
+  const { isChartHovered, setTooltipMounted, tooltipPinned } =
+    useTooltipVisibility({
+      chartId: id,
+      container,
+      echart,
+      groupId,
+    });
+
+  useEffect(() => {
+    if (!ready || !groupId || tooltipPinned) {
+      return;
+    }
+
+    addToGroup(groupId);
+
+    return () => {
+      removeFromGroup();
+    };
+  }, [ready, groupId, addToGroup, removeFromGroup, tooltipPinned]);
 
   // SETUP AND ENABLE ZOOM
   useEffect(() => {
-    if (echart.ready) {
-      echart.setupZoomSelect({
-        xAxis: zoomSelect?.xAxis,
-        yAxis: zoomSelect?.yAxis,
-      });
+    if (!ready) {
+      return;
+    }
 
-      if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
-        function enableZoomOnRender() {
-          echart.enableZoom();
-          /**
-           * Enabling zoom triggers a render, so once we enable it, we want to
-           * remove the handler or else there will be an infinite loop of
-           * render -> enable -> render -> etc.
-           */
-          echart?.off('rendered', enableZoomOnRender);
-        }
+    setupZoomSelect({
+      xAxis: zoomSelect?.xAxis,
+      yAxis: zoomSelect?.yAxis,
+    });
 
-        echart?.on('rendered', enableZoomOnRender);
+    if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
+      function enableZoomOnRender() {
+        enableZoom();
+        /**
+         * Enabling zoom triggers a render, so once we enable it, we want to
+         * remove the handler or else there will be an infinite loop of
+         * render -> enable -> render -> etc.
+         */
+        off('rendered', enableZoomOnRender);
       }
+
+      on('rendered', enableZoomOnRender);
     }
-  }, [echart.ready, zoomSelect]);
+  }, [enableZoom, off, on, ready, setupZoomSelect, zoomSelect]);
 
   useEffect(() => {
-    if (echart.ready && onZoomSelect) {
-      echart.on(EChartEvents.ZoomSelect, zoomEventResponse => {
-        onZoomSelect(zoomEventResponse);
-      });
+    if (!ready || !onZoomSelect) {
+      return;
     }
-  }, [echart.ready, onZoomSelect]);
-
-  function hideTooltip() {
-    echart.hideTooltip();
-  }
-
-  // We want to hide the tooltip when it's hovered over any `EventMarkerPoint`
-  useEffect(() => {
-    if (echart.ready) {
-      echart.on('mouseover', e => {
-        if (e.componentType === 'markPoint') {
-          hideTooltip();
-          echart.on('mousemove', hideTooltip);
-        }
-      });
-
-      // Stop hiding once the mouse leaves the `EventMarkerPoint`
-      echart.on('mouseout', e => {
-        if (e.componentType === 'markPoint') {
-          echart.off('mousemove', hideTooltip);
-        }
-      });
-    }
-  }, [echart, echart.ready]);
+    on(EChartEvents.ZoomSelect, zoomEventResponse => {
+      onZoomSelect(zoomEventResponse);
+    });
+  }, [ready, onZoomSelect, on]);
 
   const initialRenderRef = useRef(true);
 
   const handleResize = useCallback(() => {
-    if (echart.ready) {
-      // Skip the first resize event, as it's triggered by the initial render
-      if (initialRenderRef.current) {
-        initialRenderRef.current = false;
-        return;
-      }
-
-      if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
-        /**
-         * If the chart has been resized, the chart appears to reset zoom, which
-         * disables it. We need to re-enable it after the resize however, doing so
-         * immediately doesn't work. To work around this, we listen for the `finished`
-         * event, which is triggered after the chart has been rendered, and then
-         * execute the re-enable zoom logic after all tasks on the queue have been
-         * processed.
-         *
-         * TODO(LG-4818): Investigate why this is necessary
-         */
-        function reEnableZoom() {
-          function reEnableZoomCallback() {
-            echart.enableZoom();
-            echart.off('finished', reEnableZoom);
-          }
-          setTimeout(reEnableZoomCallback, 0);
-        }
-
-        echart.on('finished', reEnableZoom);
-      }
-
-      echart.resize();
+    if (!ready) {
+      return;
     }
-  }, [echart.ready, initialRenderRef, zoomSelect]);
+
+    // Skip the first resize event, as it's triggered by the initial render
+    if (initialRenderRef.current) {
+      initialRenderRef.current = false;
+      return;
+    }
+
+    if (zoomSelect && (zoomSelect.xAxis || zoomSelect.yAxis)) {
+      /**
+       * If the chart has been resized, the chart appears to reset zoom, which
+       * disables it. We need to re-enable it after the resize however, doing so
+       * immediately doesn't work. To work around this, we listen for the `finished`
+       * event, which is triggered after the chart has been rendered, and then
+       * execute the re-enable zoom logic after all tasks on the queue have been
+       * processed.
+       *
+       * TODO(LG-4818): Investigate why this is necessary
+       */
+      function reEnableZoom() {
+        function reEnableZoomCallback() {
+          enableZoom();
+          off('finished', reEnableZoom);
+        }
+        setTimeout(reEnableZoomCallback, 0);
+      }
+
+      on('finished', reEnableZoom);
+    }
+
+    resize();
+  }, [enableZoom, off, on, ready, resize, zoomSelect]);
 
   useEffect(() => {
-    if (echart.ready && container) {
-      const resizeObserver = new ResizeObserver(handleResize);
-      resizeObserver.observe(container);
-
-      return () => {
-        resizeObserver.disconnect();
-      };
+    if (!ready || !container) {
+      return;
     }
-  }, [echart.ready, container, handleResize]);
+
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(container);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [container, ready, handleResize]);
 
   return {
     ...echart,
-    ref: chartRef,
+    id,
+    isChartHovered,
+    ref: setContainer,
+    setTooltipMounted,
     state,
+    tooltipPinned,
   };
 }

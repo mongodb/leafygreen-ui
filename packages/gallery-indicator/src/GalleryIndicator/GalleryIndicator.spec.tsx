@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { LGIDs } from '../constants';
-import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
+import { getTestUtils } from '../testing';
 
 import { GalleryIndicator, GalleryIndicatorProps } from '.';
 

@@ -11,6 +11,7 @@ import java from 'highlight.js/lib/languages/java';
 import javascript from 'highlight.js/lib/languages/javascript';
 import json from 'highlight.js/lib/languages/json';
 import kotlin from 'highlight.js/lib/languages/kotlin';
+import markdown from 'highlight.js/lib/languages/markdown';
 import objectivec from 'highlight.js/lib/languages/objectivec';
 import perl from 'highlight.js/lib/languages/perl';
 import php from 'highlight.js/lib/languages/php';
@@ -54,6 +55,7 @@ export const languageParsers = {
   json,
   diff,
   xml,
+  markdown,
 } as const;
 
 export const SupportedLanguages = {
@@ -89,6 +91,7 @@ export const SupportedLanguages = {
   Graphql: 'graphql',
   Diff: 'diff',
   Xml: 'xml',
+  Markdown: 'markdown',
 } as const;
 
 export type SupportedLanguages =

@@ -1,1 +1,2 @@
-module.exports = require('./dist/index');
+// @ts-nocheck
+module.exports = require('./dist/umd/index.js');

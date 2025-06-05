@@ -1,5 +1,39 @@
 # @lg-tools/validate
 
+## 0.5.1
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+  - @lg-tools/build@0.8.0
+  - @lg-tools/meta@0.6.0
+
+## 0.5.0
+
+### Minor Changes
+
+- 989387c95: Updates build validation to use the entry files defined in the package.json
+
+### Patch Changes
+
+- Updated dependencies [028147fe1]
+  - @lg-tools/meta@0.5.1
+
 ## 0.4.6
 
 ### Patch Changes

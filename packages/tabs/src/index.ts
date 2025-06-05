@@ -9,4 +9,3 @@ export {
   default as Tabs,
   type AccessibleTabsProps as TabsProps,
 } from './Tabs';
-export { getTestUtils } from './utils';

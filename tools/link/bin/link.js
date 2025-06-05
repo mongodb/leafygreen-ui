@@ -1,2 +1,2 @@
 #! /usr/bin/env node
-require('../dist/link.js');
+require('../dist/umd/link.js');

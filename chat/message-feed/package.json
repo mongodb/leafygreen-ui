@@ -1,20 +1,14 @@
 {
   "name": "@lg-chat/message-feed",
-  "version": "4.1.12",
+  "version": "5.0.0",
   "description": "lg-chat Message Feed",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -35,7 +29,8 @@
   "devDependencies": {
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-chat/chat-disclaimer": "workspace:^",
-    "@lg-chat/message-prompts": "workspace:^"
+    "@lg-chat/message-prompts": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^",
