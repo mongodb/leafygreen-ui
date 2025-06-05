@@ -16,7 +16,7 @@ export const getSearchResultsMenuThemeStyles = (theme: Theme) => css`
 `;
 
 export const searchResultsListStyles = css`
-  padding: 8px 0;
+  padding: 12px 0;
   margin: 0;
   border-radius: 12px;
   overflow-y: auto;
