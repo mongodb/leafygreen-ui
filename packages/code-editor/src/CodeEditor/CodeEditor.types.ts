@@ -131,6 +131,14 @@ export interface CodeEditorProps extends DarkModeProps {
   enableLineWrapping?: boolean;
 
   /**
+   * Additional CodeMirror extensions to apply to the editor. These will be applied
+   * with high precendence, meaning they can override extensions applied through
+   * built in props.
+   * @see {@link https://codemirror.net/docs/ref/#state.Extension}
+   */
+  extensions?: Array<CodeMirrorExtension>;
+
+  /**
    * Forces parsing of complete document, even if it is not visible. USE WITH CAUTION!
    * By default the editor only parses the visible part of the code on the
    * screen. This significantly increases performance when there is a lot of
