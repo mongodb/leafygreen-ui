@@ -8,6 +8,8 @@ import type {
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
+import { LanguageName } from './utils/codeMirrorLanguageExtenstions';
+
 /**
  * Re-export of CodeMirror's {@link Extension} type.
  * Extensions provide additional functionality to the editor.
@@ -156,6 +158,11 @@ export interface CodeEditorProps extends DarkModeProps {
    * Sets the editor's indent unit on tab click.
    */
   indentUnit?: IndentUnits;
+
+  /**
+   * Language to use for syntax highlighting. Will have no highlighting if not set.
+   */
+  language?: LanguageName;
 
   /**
    * Callback that receives the updated editor value when changes are made.

@@ -93,6 +93,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     readOnly: false,
     indentSize: 2,
     indentUnit: IndentUnits.Space,
+    language: 'javascript',
     tooltips: [],
   },
   argTypes: {

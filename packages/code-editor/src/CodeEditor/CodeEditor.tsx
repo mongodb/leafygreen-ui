@@ -1,7 +1,7 @@
 import React, {
   forwardRef,
   useCallback,
-  useMemo,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -19,6 +19,7 @@ import CodeMirror, {
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
+import { codeMirrorLanguageExtenstions } from './utils/codeMirrorLanguageExtenstions';
 import { createDiagnosticsTooltipExtension } from './utils/createTooltipExtension';
 import {
   type CodeEditorProps,
@@ -40,6 +41,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       enableLineNumbers = true,
       enableLineWrapping = true,
       forceParsing: forceParsingProp = false,
+      language,
       onChange: onChangeProp,
       placeholder,
       readOnly = false,
@@ -52,7 +54,11 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     forwardedRef,
   ) => {
     const [value, setValue] = useState(defaultValue || '');
+    const [extensions, setExtensions] = useState<Array<CodeMirrorExtension>>(
+      [],
+    );
     const editorRef = useRef<CodeMirrorRef>(null);
+    const refs = useMergeRefs([editorRef, forwardedRef]);
 
     const onChange = useCallback(
       (val: string) => {
@@ -93,44 +99,52 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       [],
     );
 
-    const extensions = useMemo(() => {
-      const extensions: Array<CodeMirrorExtension> = [];
+    useEffect(() => {
+      async function setupExtensions() {
+        const extensions: Array<CodeMirrorExtension> = [];
 
-      /**
-       * CodeMirror state is immutable. Once configuration is set, the entire
-       * state would need to be updated to update one facet. Compartments allow
-       * us to dynamically change parts of the configuration after
-       * initialization, without needing to recreate the entire editor state.
-       * See https://codemirror.net/examples/config/#dynamic-configuration
-       */
-      const hyperLinkCompartment = new Compartment();
-      const lineWrappingCompartment = new Compartment();
-      const indentExtensionCompartment = new Compartment();
-      const tooltipCompartment = new Compartment();
+        /**
+         * CodeMirror state is immutable. Once configuration is set, the entire
+         * state would need to be updated to update one facet. Compartments allow
+         * us to dynamically change parts of the configuration after
+         * initialization, without needing to recreate the entire editor state.
+         * See https://codemirror.net/examples/config/#dynamic-configuration
+         */
+        const hyperLinkCompartment = new Compartment();
+        const lineWrappingCompartment = new Compartment();
+        const indentExtensionCompartment = new Compartment();
+        const tooltipCompartment = new Compartment();
+        const languageCompartment = new Compartment();
 
-      extensions.push(
-        hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
-        lineWrappingCompartment.of(
-          enableLineWrapping ? EditorView.lineWrapping : [],
-        ),
-        indentExtensionCompartment.of(
-          createIndentExtension(indentUnit, indentSize),
-        ),
-        // Use diagnostics-based tooltips if any tooltips are provided
-        tooltipCompartment.of(
-          tooltips.length > 0
-            ? [createDiagnosticsTooltipExtension(tooltips)]
-            : [],
-        ),
-      );
+        extensions.push(
+          hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
+          lineWrappingCompartment.of(
+            enableLineWrapping ? EditorView.lineWrapping : [],
+          ),
+          indentExtensionCompartment.of(
+            createIndentExtension(indentUnit, indentSize),
+          ),
+          // Use diagnostics-based tooltips if any tooltips are provided
+          tooltipCompartment.of(
+            tooltips.length > 0
+              ? [createDiagnosticsTooltipExtension(tooltips)]
+              : [],
+          ),
+          languageCompartment.of(
+            language ? await codeMirrorLanguageExtenstions[language]() : [],
+          ),
+        );
 
-      return extensions;
+        setExtensions(extensions);
+      }
+      setupExtensions();
     }, [
       createIndentExtension,
       enableClickableUrls,
       enableLineWrapping,
       indentUnit,
       indentSize,
+      language,
       tooltips,
     ]);
 
@@ -154,7 +168,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
           highlightActiveLineGutter: enableActiveLineHighlighting,
           lineNumbers: enableLineNumbers,
         }}
-        ref={useMergeRefs([editorRef, forwardedRef])}
+        ref={refs}
         {...rest}
       />
     );
