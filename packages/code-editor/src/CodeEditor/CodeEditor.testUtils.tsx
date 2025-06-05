@@ -12,6 +12,14 @@ import {
 
 let editorView: CodeMirrorView;
 
+/**
+ * Returns the first element matching a specific CodeEditor selector
+ * @param selector - The CSS selector to look for in the editor
+ * @param options - Optional filtering options
+ * @param options.text - Optional text content filter
+ * @returns The first DOM element matching the selector and optional text filter
+ * @throws Error if no elements or multiple elements are found
+ */
 function getBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
@@ -49,6 +57,49 @@ function getBySelector(
   return elements[0];
 }
 
+/**
+ * Returns all elements matching a specific CodeEditor selector
+ * @param selector - The CSS selector to look for in the editor
+ * @param options - Optional filtering options
+ * @param options.text - Optional text content filter
+ * @returns All DOM elements matching the selector and optional text filter
+ * @throws Error if no elements are found
+ */
+function getAllBySelector(
+  selector: CodeEditorSelectors,
+  options?: { text?: string },
+): Array<Element> {
+  const elements = editorView.dom.querySelectorAll(selector);
+
+  if (!elements || elements.length === 0) {
+    throw new Error(`No elements with selector "${selector}" found`);
+  }
+
+  // If text filter is provided, return only elements containing the text
+  if (options?.text) {
+    const matchingElements = Array.from(elements).filter(element =>
+      element.textContent?.includes(options.text as string),
+    );
+
+    if (!matchingElements || matchingElements.length === 0) {
+      throw new Error(
+        `No elements with selector "${selector}" and text "${options.text}" found`,
+      );
+    }
+
+    return matchingElements;
+  }
+
+  return Array.from(elements);
+}
+
+/**
+ * Returns the first element matching a specific CodeEditor selector or null if not found
+ * @param selector - The CSS selector to look for in the editor
+ * @param options - Optional filtering options
+ * @param options.text - Optional text content filter
+ * @returns The first DOM element matching the selector and optional text filter, or null if not found
+ */
 function queryBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
@@ -82,18 +133,71 @@ function queryBySelector(
   return elements[0];
 }
 
+/**
+ * Returns all elements matching a specific CodeEditor selector or null if none are found
+ * @param selector - The CSS selector to look for in the editor
+ * @param options - Optional filtering options
+ * @param options.text - Optional text content filter
+ * @returns All DOM elements matching the selector and optional text filter, or null if none found
+ */
+function queryAllBySelector(
+  selector: CodeEditorSelectors,
+  options?: { text?: string },
+): Array<Element> | null {
+  const elements = editorView.dom.querySelectorAll(selector);
+
+  if (!elements || elements.length === 0) {
+    return null;
+  }
+
+  // If text filter is provided, return only elements containing the text
+  if (options?.text) {
+    const matchingElements = Array.from(elements).filter(element =>
+      element.textContent?.includes(options.text as string),
+    );
+
+    if (!matchingElements || matchingElements.length === 0) {
+      return null;
+    }
+
+    return matchingElements;
+  }
+
+  return Array.from(elements);
+}
+
+/**
+ * Checks if the editor is in read-only mode
+ * @returns Boolean indicating whether the editor is in read-only mode
+ */
 function isReadOnly() {
   return editorView.state.readOnly;
 }
 
+/**
+ * Retrieves the current indentation unit configuration from the editor
+ * @returns The string used for indentation (spaces or tab)
+ */
 function getIndentUnit() {
   return editorView.state.facet(indentUnit);
 }
 
+/**
+ * Checks if line wrapping is enabled in the editor
+ * @returns Boolean indicating whether line wrapping is enabled
+ */
 function isLineWrappingEnabled() {
   return !!queryBySelector(CodeEditorSelectors.LineWrapping);
 }
 
+/**
+ * Inserts text into the editor at the specified position
+ * @param text - The text to insert
+ * @param options - Optional position options
+ * @param options.from - Starting position for insertion (defaults to 0)
+ * @param options.to - End position for replacement (optional)
+ * @throws Error if editor view is not initialized
+ */
 function insertText(text: string, options?: { from?: number; to?: number }) {
   if (!editorView) {
     throw new Error('Editor view is not initialized');
@@ -114,7 +218,9 @@ function insertText(text: string, options?: { from?: number; to?: number }) {
 
 export const editor = {
   getBySelector,
+  getAllBySelector,
   queryBySelector,
+  queryAllBySelector,
   isLineWrappingEnabled,
   isReadOnly,
   getIndentUnit,
@@ -123,6 +229,11 @@ export const editor = {
   },
 };
 
+/**
+ * Renders a CodeEditor component with the specified props for testing
+ * @param props - Props to pass to the CodeEditor component
+ * @returns Object containing the rendered container and editor test utilities
+ */
 export function renderCodeEditor(props: Partial<CodeEditorProps> = {}) {
   const { container } = render(
     <CodeEditor
