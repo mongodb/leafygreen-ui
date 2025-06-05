@@ -14,6 +14,7 @@ import CodeMirror, {
   Compartment,
   EditorState,
   EditorView,
+  Prec,
 } from '@uiw/react-codemirror';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
@@ -45,6 +46,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       indentUnit = IndentUnits.Space,
       indentSize = 2,
       tooltips = [],
+      extensions: customExtensions = [],
       ...rest
     },
     forwardedRef,
@@ -141,7 +143,10 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         onCreateEditor={onCreateEditor}
         readOnly={readOnly}
         placeholder={placeholder}
-        extensions={extensions}
+        extensions={[
+          ...customExtensions.map(extension => Prec.highest(extension)),
+          ...extensions,
+        ]}
         basicSetup={{
           allowMultipleSelections: true,
           foldGutter: enableCodeFolding,

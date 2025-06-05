@@ -1,5 +1,6 @@
 import { forceParsing } from '@codemirror/language';
 import { act } from '@testing-library/react';
+import { EditorState } from '@uiw/react-codemirror';
 
 import { renderCodeEditor } from './CodeEditor.testUtils';
 import { CodeEditorSelectors } from '.';
@@ -182,5 +183,20 @@ describe('packages/code-editor', () => {
     });
 
     expect(editor.getIndentUnit()).toBe('\t');
+  });
+
+  test('applies custom extensions to the editor', () => {
+    const { editor } = renderCodeEditor({
+      extensions: [EditorState.readOnly.of(true)],
+    });
+    expect(editor.isReadOnly()).toBe(true);
+  });
+
+  test('custom extensions have precendence over built-in functionality', () => {
+    const { editor } = renderCodeEditor({
+      readOnly: false,
+      extensions: [EditorState.readOnly.of(true)],
+    });
+    expect(editor.isReadOnly()).toBe(true);
   });
 });
