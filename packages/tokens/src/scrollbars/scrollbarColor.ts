@@ -1,7 +1,7 @@
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { InteractionState, Variant } from './color.types';
+import { InteractionState, Variant } from '../color/color.types';
 const { black, gray, white } = palette;
 
 export const ScrollbarProperty = {
@@ -10,6 +10,8 @@ export const ScrollbarProperty = {
 } as const;
 type ScrollbarProperty =
   (typeof ScrollbarProperty)[keyof typeof ScrollbarProperty];
+
+export type ScrollbarVariant = Extract<Variant, 'primary' | 'secondary'>;
 
 export interface ScrollbarColorRecord {
   [ScrollbarProperty.Thumb]: {
