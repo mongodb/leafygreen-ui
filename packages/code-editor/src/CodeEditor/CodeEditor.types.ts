@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import type {
   EditorState,
   EditorView,
@@ -48,7 +49,9 @@ export const CodeEditorSelectors = {
   FoldGutter: '.cm-foldGutter',
   GutterElement: '.cm-gutterElement',
   HyperLink: '.cm-hyper-link-icon',
+  Line: '.cm-line',
   LineWrapping: '.cm-lineWrapping',
+  Tooltip: '.cm-tooltip',
 } as const;
 export type CodeEditorSelectors =
   (typeof CodeEditorSelectors)[keyof typeof CodeEditorSelectors];
@@ -58,6 +61,43 @@ export const IndentUnits = {
   Tab: 'tab',
 } as const;
 export type IndentUnits = (typeof IndentUnits)[keyof typeof IndentUnits];
+
+export const CodeEditorTooltipSeverity = {
+  Info: 'info',
+  Warning: 'warning',
+  Error: 'error',
+  Hint: 'hint',
+} as const;
+export type CodeEditorTooltipSeverity =
+  (typeof CodeEditorTooltipSeverity)[keyof typeof CodeEditorTooltipSeverity];
+
+export interface CodeEditorTooltip {
+  /**
+   * Which line in the document the tooltip should be rendered. 1 based.
+   */
+  line: number;
+
+  /**
+   * The length the text that the tooltip should cover in characters.
+   */
+  length: number;
+
+  /**
+   * Which character, going from left to right, the tooltip should start. 1 based.
+   * Defaults to 1.
+   */
+  column?: number;
+
+  /**
+   * What gets rendered in the tooltip.
+   */
+  content: ReactNode;
+
+  /**
+   * Severity level of the tooltip. Defaults to 'info'.
+   */
+  severity?: CodeEditorTooltipSeverity;
+}
 
 export interface CodeEditorProps extends DarkModeProps {
   /**
@@ -123,4 +163,9 @@ export interface CodeEditorProps extends DarkModeProps {
    * Enables read only mode, making the contents uneditable.
    */
   readOnly?: boolean;
+
+  /**
+   * Add tooltips to the editor content.
+   */
+  tooltips?: Array<CodeEditorTooltip>;
 }
