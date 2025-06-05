@@ -1,5 +1,50 @@
 # @lg-tools/build
 
+## 0.8.0
+
+### Minor Changes
+
+- 0757cfbfc: - Only adds output `globals` for UMD builds
+  - Splits `/testing` entry point if `src/testing/index.ts` file exists
+- 0757cfbfc: Updates rollup config to build UMD bundles into `./dist/umd`
+- 0757cfbfc: Updates `package.tsconfig.json` "moduleResolution" to "bundler", and "target" to "ES2020"
+- 0757cfbfc: - Updates default types directory to `./dist/types`
+  - Uses "${configDir}" in base package.json baseUrl, rootDir, outDir, & declarationDir properties
+- 0757cfbfc: - Upgrades to TS 5.8.
+  - Adds `--downlevel` option for `build-ts`. This option exports downleveled `*.d.ts` files for a defined set of targets.
+    Updates a package's `package.json` if necessary `--update` flag is provided.
+    This uses [downlevel-dts](https://github.com/sandersn/downlevel-dts) under the hood.
+- 0757cfbfc: Updates Typescript build to TS5.8
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- 0757cfbfc: Updates `./bin` require reference to new UMD build directory
+- 0757cfbfc: Adds `lg-build` cli command.
+  Usage:
+
+  ```bash
+  # Build the production bundle
+  lg-build bundle
+
+  # Build types
+  lg-build tsc
+
+  # Builds docs
+  lg-build docs
+
+  # Build & downlevel types
+  lg-build tsc --downlevel
+
+  # Build, downlevel & update package.json types references
+  lg-build tsc --downlevel --update
+  ```
+
+- 0757cfbfc: Removes direct build warning. Using `lg-build` directly is now the preferred approach
+
 ## 0.7.4
 
 ### Patch Changes

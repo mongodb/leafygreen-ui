@@ -1,5 +1,37 @@
 # @lg-tools/test
 
+## 0.4.19
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+  - @leafygreen-ui/testing-lib@0.8.0
+  - @lg-tools/build@0.8.0
+  - @lg-tools/meta@0.6.0
+
+## 0.4.18
+
+### Patch Changes
+
+- Updated dependencies [028147fe1]
+  - @lg-tools/meta@0.5.1
+
 ## 0.4.17
 
 ### Patch Changes

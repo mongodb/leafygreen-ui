@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 import { useChartContext } from '../ChartContext';
+import { CHART_TOOLTIP_CLASSNAME } from '../constants';
 
+import { getRootStylesText } from './ChartTooltip.styles';
 import {
   CallbackSeriesDataPoint,
   ChartTooltipProps,
@@ -13,36 +14,58 @@ import {
 import { CustomTooltip } from './CustomTooltip';
 
 export function ChartTooltip({
+  headerFormatter,
   seriesValueFormatter,
   seriesNameFormatter,
   sort,
 }: ChartTooltipProps) {
-  const { chart } = useChartContext();
-  const { theme } = useDarkMode();
+  const {
+    chart: {
+      id: chartId,
+      isChartHovered,
+      ready,
+      setTooltipMounted,
+      tooltipPinned,
+      updateOptions,
+    },
+  } = useChartContext();
+  const { darkMode, theme } = useDarkMode();
 
   useEffect(() => {
-    if (!chart.ready) return;
+    setTooltipMounted(true);
 
-    chart.updateOptions({
+    return () => {
+      setTooltipMounted(false);
+    };
+  }, [setTooltipMounted]);
+
+  useEffect(() => {
+    if (!ready) return;
+
+    updateOptions({
       tooltip: {
-        axisPointer: {
-          z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
-        },
-        show: true,
-        trigger: 'axis',
-        // Still adding background color to prevent peak of color at corners
-        backgroundColor:
-          color[theme].background[Variant.InversePrimary][
-            InteractionState.Default
-          ],
-        borderWidth: 0,
-        enterable: false,
-        confine: true,
+        /* LOGIC PROPERTIES */
+        alwaysShowContent: tooltipPinned,
         appendTo: 'body',
+        confine: true,
+        enterable: tooltipPinned,
+        renderMode: 'html',
+        showContent: isChartHovered || tooltipPinned,
+        trigger: 'axis',
+        triggerOn: 'none',
+
+        /* STYLING PROPERTIES */
+        /**
+         * using `extraCssText` instead of `className` because emotion-defined class
+         * didn't have high-enough specificity
+         */
+        className: CHART_TOOLTIP_CLASSNAME,
+        extraCssText: getRootStylesText(theme),
+        borderWidth: 0,
+        padding: 0,
         showDelay: 0,
         hideDelay: 0,
         transitionDuration: 0,
-        padding: 0,
         /**
          * Since the formatter trigger is set to 'axis', the seriesData will be
          * an array of objects. Additionally, it should contain axis related
@@ -55,10 +78,14 @@ export function ChartTooltip({
 
           return renderToString(
             <CustomTooltip
+              chartId={chartId}
+              darkMode={darkMode}
+              headerFormatter={headerFormatter}
               seriesData={seriesDataArr}
-              sort={sort}
-              seriesValueFormatter={seriesValueFormatter}
               seriesNameFormatter={seriesNameFormatter}
+              seriesValueFormatter={seriesValueFormatter}
+              sort={sort}
+              tooltipPinned={tooltipPinned}
             />,
           );
         },
@@ -66,15 +93,30 @@ export function ChartTooltip({
     });
 
     return () => {
-      chart.updateOptions({
+      updateOptions({
         tooltip: {
-          show: false,
+          axisPointer: {
+            z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
+          },
+          show: true,
+          trigger: 'axis',
+          formatter: () => '',
         },
       });
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, sort, theme, seriesNameFormatter, seriesValueFormatter]);
+  }, [
+    chartId,
+    darkMode,
+    headerFormatter,
+    isChartHovered,
+    ready,
+    seriesNameFormatter,
+    seriesValueFormatter,
+    sort,
+    theme,
+    tooltipPinned,
+    updateOptions,
+  ]);
 
   return null;
 }

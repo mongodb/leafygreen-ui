@@ -24,7 +24,7 @@ const meta: StoryMetaType<typeof Badge> = {
     variant: {
       options: Object.values(Variant),
       control: { type: 'select' },
-      defaultValue: Variant.Info,
+      defaultValue: Variant.Blue,
     },
   },
 };

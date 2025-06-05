@@ -35,7 +35,7 @@ export interface TableProps<T extends LGRowData>
 
   /**
    * Whether all rows will truncate. If true, cells will truncate at one line. If false then there will be no height limit and cells will not truncate.
-   * @default true
+   * @default false
    */
   shouldTruncate?: boolean;
 

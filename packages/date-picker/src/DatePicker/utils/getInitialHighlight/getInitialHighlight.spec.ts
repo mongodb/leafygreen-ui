@@ -1,5 +1,5 @@
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
-import { testTimeZones } from '@leafygreen-ui/date-utils';
+import { testTimeZones } from '@leafygreen-ui/date-utils/testing';
 
 import { getInitialHighlight } from '.';
 

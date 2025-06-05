@@ -384,6 +384,15 @@ describe('packages/number-input', () => {
         onSelectChange={() => {}}
         label={label}
       />
+
+      {/* @ts-expect-error - unit must be a string with unitOptions */}
+      <NumberInput
+        unitOptions={selectProps.unitOptions}
+        onSelectChange={() => {}}
+        label={label}
+        unit={<span>div</span>}
+      />
+
       <NumberInput
         unit={unitProps.unit}
         unitOptions={selectProps.unitOptions}

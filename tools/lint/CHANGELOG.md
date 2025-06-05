@@ -1,5 +1,34 @@
 # @lg-tools/lint
 
+## 3.0.0
+
+### Major Changes
+
+- 0757cfbfc: Updates Typescript build to TS5.8
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- d71439b8e: chore: downgrade `glob` to v10.3.12
+- 0757cfbfc: Updates `typescript` peerDepedency to v5.8
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+  - @lg-tools/build@0.8.0
+  - @lg-tools/meta@0.6.0
+
 ## 2.1.1
 
 ### Patch Changes

@@ -9,11 +9,11 @@ describe('packages/chip', () => {
       {/* @ts-expect-error - Missing children */}
       <DrawerLayout />
 
-      <DrawerLayout>{}</DrawerLayout>
+      <DrawerLayout>{'children'}</DrawerLayout>
 
-      <DrawerLayout displayMode="embedded">{}</DrawerLayout>
+      <DrawerLayout displayMode="embedded">{'children'}</DrawerLayout>
 
-      <DrawerLayout displayMode="overlay">{}</DrawerLayout>
+      <DrawerLayout displayMode="overlay">{'children'}</DrawerLayout>
 
       <DrawerLayout
         toolbarData={[
@@ -29,11 +29,11 @@ describe('packages/chip', () => {
         displayMode="overlay"
         darkMode
       >
-        {}
+        {'children'}
       </DrawerLayout>
 
       <DrawerLayout isDrawerOpen={false} displayMode="embedded">
-        {}{' '}
+        {'children'}
       </DrawerLayout>
 
       {/* @ts-expect-error - ToolbarData should not be passed with isDrawerOpen */}
@@ -42,7 +42,7 @@ describe('packages/chip', () => {
         displayMode="embedded"
         toolbarData={[]}
       >
-        {}{' '}
+        {'children'}
       </DrawerLayout>
     </>;
   });

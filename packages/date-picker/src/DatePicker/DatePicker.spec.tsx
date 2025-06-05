@@ -9,13 +9,17 @@ import {
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
-import { getISODate, Month, newUTC } from '@leafygreen-ui/date-utils';
-import { SupportedLocales } from '@leafygreen-ui/date-utils';
+import {
+  getISODate,
+  Month,
+  newUTC,
+  SupportedLocales,
+} from '@leafygreen-ui/date-utils';
 import {
   mockTimeZone,
   testTimeZones,
   undefinedTZ,
-} from '@leafygreen-ui/date-utils/src/testing';
+} from '@leafygreen-ui/date-utils/testing';
 import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
 import {
   eventContainingTargetValue,
