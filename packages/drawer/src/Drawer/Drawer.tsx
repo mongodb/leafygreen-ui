@@ -51,7 +51,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
-    const [initialOpen, setInitialOpen] = useState(true);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
@@ -81,7 +80,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         setShouldAnimate(true);
       } else {
         drawerElement.close();
-        setInitialOpen(true);
       }
     }, [ref, open]);
 
@@ -105,8 +103,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         return;
       }
 
-      if (open && initialOpen) {
-        setInitialOpen(false);
+      if (open) {
         const firstFocusable = drawerElement.querySelector(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
         );
