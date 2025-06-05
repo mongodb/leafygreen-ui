@@ -63,9 +63,5 @@ export const DrawerStackProvider = ({
 export const useDrawerStackContext = () => {
   const context = useContext(DrawerStackContext);
 
-  // if (!context) {
-  //   throw new Error('useDrawerStack must be used within a DrawerStackProvider');
-  // }
-
   return context;
 };
