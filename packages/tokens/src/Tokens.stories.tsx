@@ -8,7 +8,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { scrollbarColor } from './color/scrollbar';
+import { scrollbarColor } from './scrollbars';
 import {
   addOverflowShadow,
   borderRadius,
@@ -342,6 +342,7 @@ const generateTable = (theme: Theme) => {
                   </th>
                 </tr>
               </thead>
+              {/* @ts-expect-error */}
               {Object.keys(color[theme][type]).map(variant => (
                 <tbody
                   key={`color-${theme}-${type}-${variant}`}
@@ -354,6 +355,7 @@ const generateTable = (theme: Theme) => {
                       <code>{variant}</code>
                     </td>
 
+                    {/* @ts-expect-error */}
                     {Object.keys(color[theme][type][variant]).map(state => (
                       <td key={`color-${theme}-${type}-${variant}-${state}`}>
                         <div
@@ -361,6 +363,7 @@ const generateTable = (theme: Theme) => {
                             aspect-ratio: 1/1;
                             border: 1px solid
                               ${color[theme].border.primary.default};
+                            // @ts-expect-error
                             background-color: ${color[theme][type][variant][
                               state
                             ]};
