@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@codemirror/language": "^6.11.0",
+    "@codemirror/lint": "^6.8.5",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/leafygreen-provider": "workspace:^",
@@ -40,6 +41,7 @@
     "url": "https://jira.mongodb.org/projects/LG/summary"
   },
   "devDependencies": {
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@storybook/test": "^8.6.14"
   }
 }
