@@ -164,7 +164,6 @@ export const TooltipOnHover: StoryObj<{}> = {
     });
 
     // Find the third line (line: 2, zero-based)
-    // const lines = canvasElement.getElementsByClassName('cm-line');
     const target = canvasElement.getElementsByClassName('cm-lintRange')[0];
 
     // Find the text node and calculate the offset for column 2
