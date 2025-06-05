@@ -38,7 +38,7 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
     }
 
     consoleOnce.warn(
-      'The use of a Drawer without a toolbar is discouraged. To use a Drawer with a toolbar, please provide a `data` prop with toolbar items.',
+      'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
     );
 
     // If there is no data, we render the LayoutComponent.
