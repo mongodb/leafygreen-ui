@@ -16,7 +16,7 @@ describe('packages/chip', () => {
       <DrawerLayout displayMode="overlay">{}</DrawerLayout>
 
       <DrawerLayout
-        data={[
+        toolbarData={[
           {
             id: 'code',
             glyph: 'Code',
@@ -30,6 +30,19 @@ describe('packages/chip', () => {
         darkMode
       >
         {}
+      </DrawerLayout>
+
+      <DrawerLayout isDrawerOpen={false} displayMode="embedded">
+        {}{' '}
+      </DrawerLayout>
+
+      {/* @ts-expect-error - ToolbarData should not be passed with isDrawerOpen */}
+      <DrawerLayout
+        isDrawerOpen={false}
+        displayMode="embedded"
+        toolbarData={[]}
+      >
+        {}{' '}
       </DrawerLayout>
     </>;
   });

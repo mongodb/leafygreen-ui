@@ -11,9 +11,8 @@ const baseStyles = css`
   display: grid;
   grid-template-columns: auto 0;
   transition-property: grid-template-columns, grid-template-rows;
-  transition-timing-function: ease-in-out, ease-in-out;
-  transition-duration: ${drawerTransitionDuration}ms,
-    ${drawerTransitionDuration}ms;
+  transition-timing-function: ease-in-out;
+  transition-duration: ${drawerTransitionDuration}ms;
   overflow: hidden;
   position: relative;
   height: 100%;

@@ -100,7 +100,7 @@ const LongContent = () => {
 };
 
 const TemplateComponent: StoryFn<DrawerProps> = ({
-  displayMode,
+  displayMode = DisplayMode.Overlay,
   initialOpen,
   ...rest
 }: DrawerProps & {
@@ -123,11 +123,6 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     />
   );
 
-  const drawerLayoutProps = {
-    displayMode,
-    ...(displayMode === DisplayMode.Embedded && { isDrawerOpen: open }),
-  };
-
   return (
     <DrawerStackProvider>
       <div
@@ -136,7 +131,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
           width: 100%;
         `}
       >
-        <DrawerLayout {...drawerLayoutProps}>
+        <DrawerLayout displayMode={displayMode} isDrawerOpen={open}>
           <main
             className={css`
               padding: ${spacing[400]}px;

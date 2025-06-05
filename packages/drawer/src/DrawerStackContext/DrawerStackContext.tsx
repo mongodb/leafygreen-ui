@@ -8,9 +8,11 @@ import React, {
 
 import { DrawerStackContextType } from './DrawerStackContext.types';
 
-export const DrawerStackContext = createContext<DrawerStackContextType | null>(
-  null,
-);
+export const DrawerStackContext = createContext<DrawerStackContextType>({
+  getDrawerIndex: () => -1,
+  registerDrawer: () => {},
+  unregisterDrawer: () => {},
+});
 
 export const DrawerStackProvider = ({
   children,
@@ -61,9 +63,9 @@ export const DrawerStackProvider = ({
 export const useDrawerStackContext = () => {
   const context = useContext(DrawerStackContext);
 
-  if (!context) {
-    throw new Error('useDrawerStack must be used within a DrawerStackProvider');
-  }
+  // if (!context) {
+  //   throw new Error('useDrawerStack must be used within a DrawerStackProvider');
+  // }
 
   return context;
 };

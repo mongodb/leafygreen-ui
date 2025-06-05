@@ -46,7 +46,7 @@ export type DrawerToolbarLayoutProps = PickedOptionalDrawerProps &
     /**
      * An array of data that will be used to render the toolbar items and the drawer content.
      */
-    data?: Array<LayoutData>;
+    toolbarData: Array<LayoutData>;
     className?: string;
     children: React.ReactNode;
   };

@@ -1,13 +1,16 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { DisplayMode } from '../Drawer';
 import { EmbeddedDrawerLayoutProps } from '../EmbeddedDrawerLayout';
 import { OverlayDrawerLayoutProps } from '../OverlayDrawerLayout';
 
-export type LayoutComponentProps = { displayMode: DisplayMode } & (
-  | EmbeddedDrawerLayoutProps
-  | OverlayDrawerLayoutProps
-);
+export type LayoutComponentProps = {
+  displayMode: DisplayMode;
+} & DarkModeProps &
+  (
+    | EmbeddedDrawerLayoutProps
+    | (OverlayDrawerLayoutProps & { isDrawerOpen?: never })
+  );
 
 // This interface is used to define the common properties for OverlayDrawerLayout and EmbeddedDrawerLayout
 export interface BaseLayoutComponentProps

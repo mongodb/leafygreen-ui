@@ -13,7 +13,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { DisplayMode, Drawer, DrawerProps } from '../Drawer';
+import { DisplayMode, Drawer } from '../Drawer';
 import { DrawerLayout, DrawerLayoutProps } from '../DrawerLayout';
 
 const SEED = 0;
@@ -164,7 +164,7 @@ const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
   </div>
 );
 
-const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['data'] = [
+const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
   {
     id: 'Code',
     label: 'Code',
@@ -187,7 +187,9 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['data'] = [
   },
 ];
 
-const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
+const EmbeddedComponent: StoryFn<DrawerLayoutProps> = ({
+  darkMode,
+}: DrawerLayoutProps) => {
   return (
     <div
       className={css`
@@ -195,7 +197,11 @@ const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         width: 100%;
       `}
     >
-      <DrawerLayout data={DRAWER_TOOLBAR_DATA} {...args} displayMode="embedded">
+      <DrawerLayout
+        darkMode={darkMode}
+        toolbarData={DRAWER_TOOLBAR_DATA}
+        displayMode="embedded"
+      >
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -208,16 +214,21 @@ const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
+const OverlayComponent: StoryFn<DrawerLayoutProps> = ({
+  darkMode,
+}: DrawerLayoutProps) => {
   return (
     <div
       className={css`
         height: 90vh;
-
         width: 100%;
       `}
     >
-      <DrawerLayout data={DRAWER_TOOLBAR_DATA} {...args} displayMode="overlay">
+      <DrawerLayout
+        darkMode={darkMode}
+        toolbarData={DRAWER_TOOLBAR_DATA}
+        displayMode="overlay"
+      >
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -231,10 +242,16 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
+const OverlayCloudNavComponent: StoryFn<DrawerLayoutProps> = ({
+  darkMode,
+}: DrawerLayoutProps) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerLayout data={DRAWER_TOOLBAR_DATA} {...args} displayMode="overlay">
+      <DrawerLayout
+        darkMode={darkMode}
+        toolbarData={DRAWER_TOOLBAR_DATA}
+        displayMode="overlay"
+      >
         <div
           className={css`
             padding: ${spacing[400]}px;
@@ -248,7 +265,7 @@ const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-export const OverlayCloudNav: StoryObj<DrawerProps> = {
+export const OverlayCloudNav: StoryObj<DrawerLayoutProps> = {
   render: OverlayCloudNavComponent,
   parameters: {
     controls: {
@@ -257,7 +274,7 @@ export const OverlayCloudNav: StoryObj<DrawerProps> = {
   },
 };
 
-export const Overlay: StoryObj<DrawerProps> = {
+export const Overlay: StoryObj<DrawerLayoutProps> = {
   render: OverlayComponent,
   parameters: {
     controls: {
@@ -266,10 +283,16 @@ export const Overlay: StoryObj<DrawerProps> = {
   },
 };
 
-const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
+const EmbeddedCloudNavComponent: StoryFn<DrawerLayoutProps> = (
+  args: DrawerLayoutProps,
+) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerLayout data={DRAWER_TOOLBAR_DATA} {...args} displayMode="embedded">
+      <DrawerLayout
+        toolbarData={DRAWER_TOOLBAR_DATA}
+        darkMode={args.darkMode}
+        displayMode="embedded"
+      >
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -283,7 +306,7 @@ const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-export const EmbeddedCloudNav: StoryObj<DrawerProps> = {
+export const EmbeddedCloudNav: StoryObj<DrawerLayoutProps> = {
   render: EmbeddedCloudNavComponent,
   parameters: {
     controls: {
@@ -292,7 +315,7 @@ export const EmbeddedCloudNav: StoryObj<DrawerProps> = {
   },
 };
 
-export const Embedded: StoryObj<DrawerProps> = {
+export const Embedded: StoryObj<DrawerLayoutProps> = {
   render: EmbeddedComponent,
   parameters: {
     controls: {

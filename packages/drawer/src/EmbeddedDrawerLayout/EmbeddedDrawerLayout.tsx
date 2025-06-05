@@ -1,7 +1,5 @@
 import React, { forwardRef } from 'react';
 
-import { useDrawerContext } from '../DrawerContext';
-
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
 
@@ -18,10 +16,14 @@ export const EmbeddedDrawerLayout = forwardRef<
   EmbeddedDrawerLayoutProps
 >(
   (
-    { children, className, hasToolbar = false }: EmbeddedDrawerLayoutProps,
+    {
+      children,
+      className,
+      isDrawerOpen = false,
+      hasToolbar = false,
+    }: EmbeddedDrawerLayoutProps,
     forwardedRef,
   ) => {
-    const { isDrawerOpen } = useDrawerContext();
     return (
       <div
         ref={forwardedRef}
