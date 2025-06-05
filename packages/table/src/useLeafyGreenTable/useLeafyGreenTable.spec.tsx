@@ -93,7 +93,6 @@ describe('packages/table/useLeafyGreenTable', () => {
     expect(result.current.getRowCount()).toEqual(data.length + 1);
   });
 
-  // FIX THIS
   test('returns the correct number of rows with initialState set by consumer', () => {
     const data = getDefaultTestData({
       subRows: getDefaultTestData({}),
