@@ -18,6 +18,7 @@ import CodeMirror, {
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
+import { createDiagnosticsTooltipExtension } from './utils/createTooltipExtension';
 import {
   type CodeEditorProps,
   type CodeMirrorExtension,
@@ -43,6 +44,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       readOnly = false,
       indentUnit = IndentUnits.Space,
       indentSize = 2,
+      tooltips = [],
       ...rest
     },
     forwardedRef,
@@ -102,6 +104,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       const hyperLinkCompartment = new Compartment();
       const lineWrappingCompartment = new Compartment();
       const indentExtensionCompartment = new Compartment();
+      const tooltipCompartment = new Compartment();
 
       extensions.push(
         hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
@@ -111,15 +114,22 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         indentExtensionCompartment.of(
           createIndentExtension(indentUnit, indentSize),
         ),
+        // Use diagnostics-based tooltips if any tooltips are provided
+        tooltipCompartment.of(
+          tooltips.length > 0
+            ? [createDiagnosticsTooltipExtension(tooltips)]
+            : [],
+        ),
       );
 
       return extensions;
     }, [
+      createIndentExtension,
       enableClickableUrls,
       enableLineWrapping,
       indentUnit,
       indentSize,
-      createIndentExtension,
+      tooltips,
     ]);
 
     return (
