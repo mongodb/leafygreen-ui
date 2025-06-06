@@ -1,7 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { GRID_AREA } from '../constants';
-import { TOOLBAR_WIDTH } from '../Drawer';
+import { GRID_AREA, TOOLBAR_WIDTH } from '../constants';
 
 const baseStyles = css`
   width: 100%;

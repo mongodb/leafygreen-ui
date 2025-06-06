@@ -13,7 +13,7 @@ import {
   DrawerToolbarLayoutProps,
 } from '../DrawerToolbarLayout';
 
-const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
+const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
   {
     id: 'Code',
     label: 'Code',
@@ -88,7 +88,10 @@ export const renderMultipleDrawers = () => {
 
 export const renderDrawerToolbarLayout = (): RenderResult => {
   return render(
-    <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
+    <DrawerToolbarLayout
+      toolbarData={DRAWER_TOOLBAR_DATA}
+      displayMode="overlay"
+    >
       <main>
         <div>Content for the main area</div>
       </main>

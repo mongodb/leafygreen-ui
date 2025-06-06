@@ -14,9 +14,9 @@ For each package you want turbo to build, add the following scripts to package.j
 
 ```json
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   }
 ```
 
@@ -29,7 +29,7 @@ For a package that cli depends on, define the following scripts in its `package.
 
 ```json
   "scripts": {
-    "build": "lg-internal-build-package",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   }
 ```

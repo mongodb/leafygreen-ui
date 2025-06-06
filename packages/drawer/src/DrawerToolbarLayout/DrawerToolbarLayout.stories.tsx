@@ -15,11 +15,10 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer } from '../Drawer';
+
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
-import {
-  DrawerToolbarLayout,
-  DrawerToolbarLayoutProps,
-} from '../DrawerToolbarLayout';
+
+import { DrawerLayout, DrawerLayoutProps } from '../DrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -171,7 +170,7 @@ const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
   </div>
 );
 
-const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
+const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
   {
     id: 'Code',
     label: 'Code',
@@ -202,10 +201,10 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
   },
 ];
 
-const Component: StoryFn<DrawerToolbarLayoutProps> = ({
+const Component: StoryFn<DrawerLayoutProps> = ({
   displayMode = DisplayMode.Embedded,
-  ...rest
-}: DrawerToolbarLayoutProps) => {
+  darkMode,
+}: DrawerLayoutProps) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -229,21 +228,21 @@ const Component: StoryFn<DrawerToolbarLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout
-        {...rest}
-        data={DRAWER_TOOLBAR_DATA}
-        displayMode={displayMode!}
+      <DrawerLayout
+        darkMode={darkMode}
+        toolbarData={DRAWER_TOOLBAR_DATA}
+        displayMode={displayMode}
       >
         <MainContent />
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </div>
   );
 };
 
-const ComponentOpen: StoryFn<DrawerToolbarLayoutProps> = ({
+const ComponentOpen: StoryFn<DrawerLayoutProps> = ({
   displayMode = DisplayMode.Embedded,
-  ...rest
-}: DrawerToolbarLayoutProps) => {
+  darkMode,
+}: DrawerLayoutProps) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -268,30 +267,29 @@ const ComponentOpen: StoryFn<DrawerToolbarLayoutProps> = ({
     <div
       className={css`
         height: 90vh;
-
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout
-        {...rest}
-        data={DRAWER_TOOLBAR_DATA}
+      <DrawerLayout
+        darkMode={darkMode}
+        toolbarData={DRAWER_TOOLBAR_DATA}
         displayMode={displayMode}
       >
         <MainContent />
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </div>
   );
 };
 
-const OverlayCloudNavComponent: StoryFn<DrawerToolbarLayoutProps> = (
-  args: DrawerToolbarLayoutProps,
-) => {
+const OverlayCloudNavComponent: StoryFn<DrawerLayoutProps> = ({
+  darkMode,
+}: DrawerLayoutProps) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerToolbarLayout
-        {...args}
-        data={DRAWER_TOOLBAR_DATA}
+      <DrawerLayout
+        toolbarData={DRAWER_TOOLBAR_DATA}
         displayMode="overlay"
+        darkMode={darkMode}
       >
         <div
           className={css`
@@ -301,12 +299,12 @@ const OverlayCloudNavComponent: StoryFn<DrawerToolbarLayoutProps> = (
           <LongContent />
           <LongContent />
         </div>
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </CloudNavLayoutMock>
   );
 };
 
-export const OverlayCloudNavMock: StoryObj<DrawerToolbarLayoutProps> = {
+export const OverlayCloudNav: StoryObj<DrawerLayoutProps> = {
   render: OverlayCloudNavComponent,
   parameters: {
     controls: {
@@ -315,7 +313,7 @@ export const OverlayCloudNavMock: StoryObj<DrawerToolbarLayoutProps> = {
   },
 };
 
-export const Overlay: StoryObj<DrawerToolbarLayoutProps> = {
+export const Overlay: StoryObj<DrawerLayoutProps> = {
   render: Component,
   args: {
     displayMode: DisplayMode.Overlay,
@@ -327,7 +325,7 @@ export const Overlay: StoryObj<DrawerToolbarLayoutProps> = {
   },
 };
 
-export const OverlayOpen: StoryObj<DrawerToolbarLayoutProps> = {
+export const OverlayOpen: StoryObj<DrawerLayoutProps> = {
   render: ComponentOpen,
   args: {
     displayMode: DisplayMode.Overlay,
@@ -339,14 +337,14 @@ export const OverlayOpen: StoryObj<DrawerToolbarLayoutProps> = {
   },
 };
 
-const EmbeddedCloudNavComponent: StoryFn<DrawerToolbarLayoutProps> = (
-  args: DrawerToolbarLayoutProps,
+const EmbeddedCloudNavComponent: StoryFn<DrawerLayoutProps> = (
+  args: DrawerLayoutProps,
 ) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerToolbarLayout
-        {...args}
-        data={DRAWER_TOOLBAR_DATA}
+      <DrawerLayout
+        toolbarData={DRAWER_TOOLBAR_DATA}
+        darkMode={args.darkMode}
         displayMode="embedded"
       >
         <main
@@ -357,12 +355,12 @@ const EmbeddedCloudNavComponent: StoryFn<DrawerToolbarLayoutProps> = (
           <LongContent />
           <LongContent />
         </main>
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </CloudNavLayoutMock>
   );
 };
 
-export const EmbeddedCloudNavMock: StoryObj<DrawerToolbarLayoutProps> = {
+export const EmbeddedCloudNav: StoryObj<DrawerLayoutProps> = {
   render: EmbeddedCloudNavComponent,
   parameters: {
     controls: {
@@ -371,7 +369,7 @@ export const EmbeddedCloudNavMock: StoryObj<DrawerToolbarLayoutProps> = {
   },
 };
 
-export const Embedded: StoryObj<DrawerToolbarLayoutProps> = {
+export const Embedded: StoryObj<DrawerLayoutProps> = {
   render: Component,
   args: {
     displayMode: DisplayMode.Embedded,
@@ -383,7 +381,7 @@ export const Embedded: StoryObj<DrawerToolbarLayoutProps> = {
   },
 };
 
-export const EmbeddedOpen: StoryObj<DrawerToolbarLayoutProps> = {
+export const EmbeddedOpen: StoryObj<DrawerLayoutProps> = {
   render: ComponentOpen,
   args: {
     displayMode: DisplayMode.Embedded,

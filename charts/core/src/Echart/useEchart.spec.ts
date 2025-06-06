@@ -8,13 +8,16 @@ import { useEchart } from './useEchart';
 
 // Mock echarts instance creation with all required methods
 const mockEchartsInstance = {
-  setOption: jest.fn(),
-  dispose: jest.fn(),
-  resize: jest.fn(),
-  on: jest.fn(),
-  off: jest.fn(),
   dispatchAction: jest.fn(),
+  dispose: jest.fn(),
+  getDom: jest.fn(),
+  getOption: jest.fn(),
   group: null,
+  isDisposed: jest.fn(),
+  off: jest.fn(),
+  on: jest.fn(),
+  resize: jest.fn(),
+  setOption: jest.fn(),
 };
 
 // Mock implementations
@@ -69,21 +72,23 @@ describe('@lg-echarts/core/hooks/useChart', () => {
   test('should return a chart instance with the correct properties', async () => {
     const { result } = await setupHook();
 
-    expect(result.current).toHaveProperty('_echartsInstance');
-    expect(result.current).toHaveProperty('ready');
-    expect(result.current).toHaveProperty('options');
-    expect(result.current).toHaveProperty('updateOptions');
-    expect(result.current).toHaveProperty('on');
-    expect(result.current).toHaveProperty('off');
     expect(result.current).toHaveProperty('addSeries');
-    expect(result.current).toHaveProperty('removeSeries');
     expect(result.current).toHaveProperty('addToGroup');
-    expect(result.current).toHaveProperty('removeFromGroup');
-    expect(result.current).toHaveProperty('setupZoomSelect');
+    expect(result.current).toHaveProperty('disableZoom');
+    expect(result.current).toHaveProperty('enableZoom');
     expect(result.current).toHaveProperty('error');
+    expect(result.current).toHaveProperty('hideTooltip');
+    expect(result.current).toHaveProperty('off');
+    expect(result.current).toHaveProperty('on');
+    expect(result.current).toHaveProperty('ready');
+    expect(result.current).toHaveProperty('removeFromGroup');
+    expect(result.current).toHaveProperty('removeSeries');
+    expect(result.current).toHaveProperty('resize');
+    expect(result.current).toHaveProperty('setupZoomSelect');
+    expect(result.current).toHaveProperty('updateOptions');
   });
 
-  test('should properly update state on addSeries call', async () => {
+  test('should properly update options state on addSeries call', async () => {
     const { result } = await setupHook();
 
     const newSeries: SeriesOption = {
@@ -97,12 +102,12 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result.current.options.series).toContainEqual(
+    expect(result.current._getOptions().series).toContainEqual(
       expect.objectContaining(newSeries),
     );
   });
 
-  test('should properly update state on removeSeries call', async () => {
+  test('should properly update options state on removeSeries call', async () => {
     const { result } = await setupHook();
 
     const series: SeriesOption = {
@@ -117,16 +122,18 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result.current.options.series).not.toContainEqual(
+    expect(result.current._getOptions().series).not.toContainEqual(
       expect.objectContaining(series),
     );
   });
 
-  test('should properly update state on updateChartOptions call', async () => {
+  test('should properly update options state on updateOptions call', async () => {
     const { result } = await setupHook();
 
     const newOptions = {
-      grid: { top: 100 },
+      grid: {
+        top: 100,
+      },
     };
 
     await act(async () => {
@@ -134,7 +141,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result.current.options.grid).toEqual(
+    expect(result.current._getOptions().grid).toEqual(
       expect.objectContaining(newOptions.grid),
     );
   });
@@ -149,7 +156,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result?.current?._echartsInstance?.on).toHaveBeenCalledWith(
+    expect(result?.current?._getEChartsInstance()?.on).toHaveBeenCalledWith(
       'click',
       mockCallback,
     );
@@ -165,7 +172,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result?.current?._echartsInstance?.off).toHaveBeenCalledWith(
+    expect(result?.current?._getEChartsInstance()?.off).toHaveBeenCalledWith(
       'click',
       mockCallback,
     );
@@ -179,7 +186,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result?.current?._echartsInstance?.group).toBe('test-group');
+    expect(result?.current?._getEChartsInstance()?.group).toBe('test-group');
   });
 
   test('should remove chart from group on call to `removeFromGroup`', async () => {
@@ -191,7 +198,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result?.current?._echartsInstance?.group).toBe('');
+    expect(result?.current?._getEChartsInstance()?.group).toBe('');
   });
 
   test('should set `ready` to true when chart instance is available', async () => {

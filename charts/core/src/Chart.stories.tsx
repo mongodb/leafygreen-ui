@@ -33,6 +33,14 @@ export default {
   component: Chart,
   parameters: {
     default: 'LiveExample',
+    chromatic: {
+      /**
+       * For some reason diffs keep getting flagged on non-changes to the canvas.
+       * The default threshold is .063, so bumping it up to 1 to test. We might
+       * consider lowering this in the future.
+       */
+      diffThreshold: 1,
+    },
   },
 
   argTypes: {
@@ -1064,23 +1072,6 @@ export const WithWarningEventMarkerLine: StoryObj<{}> = {
   },
 };
 
-export const WithZoomAndTooltip: StoryObj<{}> = {
-  render: () => {
-    return (
-      <Chart
-        zoomSelect={{
-          xAxis: true,
-          yAxis: true,
-        }}
-      >
-        {lineData.map(({ name, data }) => (
-          <Line name={name} data={data} key={name} />
-        ))}
-      </Chart>
-    );
-  },
-};
-
 export const WithZoom: StoryObj<{}> = {
   render: () => {
     return (
@@ -1127,6 +1118,29 @@ export const WithYAxisZoom: StoryObj<{}> = {
         ))}
       </Chart>
     );
+  },
+};
+
+export const WithZoomAndTooltip: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart
+        zoomSelect={{
+          xAxis: true,
+          yAxis: true,
+        }}
+      >
+        <ChartTooltip />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
 

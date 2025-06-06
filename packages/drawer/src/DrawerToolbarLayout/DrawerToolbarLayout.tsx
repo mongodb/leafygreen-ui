@@ -1,8 +1,4 @@
-import React from 'react';
-
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+import React, { forwardRef } from 'react';
 
 import { DisplayMode } from '../Drawer/Drawer.types';
 import { DrawerToolbarProvider } from '../DrawerToolbarContext';
@@ -10,27 +6,31 @@ import { DrawerToolbarProvider } from '../DrawerToolbarContext';
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 import { DrawerToolbarLayoutContainer } from './DrawerToolbarLayoutContainer';
 
-export const DrawerToolbarLayout = ({
-  children,
-  data = [],
-  darkMode: darkModeProp,
-  displayMode = DisplayMode.Overlay,
-  ...rest
-}: DrawerToolbarLayoutProps) => {
-  const { darkMode } = useDarkMode(darkModeProp);
-  return (
-    <DrawerToolbarProvider data={data}>
-      <LeafyGreenProvider darkMode={darkMode}>
+/**
+ * @internal
+ *
+ * DrawerToolbarLayout is a component that provides a layout for displaying content in a drawer with a toolbar.
+ */
+export const DrawerToolbarLayout = forwardRef<
+  HTMLDivElement,
+  DrawerToolbarLayoutProps
+>(
+  (
+    { children, toolbarData, ...rest }: DrawerToolbarLayoutProps,
+    forwardRef,
+  ) => {
+    return (
+      <DrawerToolbarProvider data={toolbarData}>
         <DrawerToolbarLayoutContainer
-          data={data}
-          displayMode={displayMode}
+          ref={forwardRef}
+          toolbarData={toolbarData}
           {...rest}
         >
           {children}
         </DrawerToolbarLayoutContainer>
-      </LeafyGreenProvider>
-    </DrawerToolbarProvider>
-  );
-};
+      </DrawerToolbarProvider>
+    );
+  },
+);
 
 DrawerToolbarLayout.displayName = 'DrawerToolbarLayout';

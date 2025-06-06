@@ -9,14 +9,13 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
+import { color, spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
+import { DrawerLayout } from './DrawerLayout';
 import { DrawerStackProvider } from './DrawerStackContext';
-import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
-import { OverlayDrawerLayout } from './OverlayDrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -38,7 +37,7 @@ export default {
   title: 'Components/Drawer',
   component: Drawer,
   decorators: [
-    StoryFn => (
+    (StoryFn, ctx) => (
       <div
         className={css`
           height: 100%;
@@ -46,7 +45,9 @@ export default {
           align-items: center;
           margin: -100px;
           width: 100vw;
-          border-bottom: 3px solid ${palette.green.base}; // Used to visualize the height of the parent container
+          border: 1px solid
+            ${color[ctx?.args?.darkMode ? Theme.Dark : Theme.Light].border
+              .secondary.default};
         `}
       >
         <StoryFn />
@@ -99,7 +100,7 @@ const LongContent = () => {
 };
 
 const TemplateComponent: StoryFn<DrawerProps> = ({
-  displayMode,
+  displayMode = DisplayMode.Overlay,
   initialOpen,
   ...rest
 }: DrawerProps & {
@@ -122,41 +123,15 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     />
   );
 
-  return displayMode === DisplayMode.Embedded ? (
-    <DrawerStackProvider>
-      <EmbeddedDrawerLayout
-        className={css`
-          height: 90vh;
-        `}
-        isDrawerOpen={open}
-      >
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: ${spacing[200]}px;
-          `}
-        >
-          {renderTrigger()}
-          <LongContent />
-        </main>
-        {renderDrawer()}
-      </EmbeddedDrawerLayout>
-    </DrawerStackProvider>
-  ) : (
+  return (
     <DrawerStackProvider>
       <div
         className={css`
-          height: 90vh;
-          overflow: auto;
-          position: relative;
+          height: 500px;
           width: 100%;
         `}
       >
-        <OverlayDrawerLayout>
+        <DrawerLayout displayMode={displayMode} isDrawerOpen={open}>
           <main
             className={css`
               padding: ${spacing[400]}px;
@@ -171,7 +146,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
             <LongContent />
           </main>
           {renderDrawer()}
-        </OverlayDrawerLayout>
+        </DrawerLayout>
       </div>
     </DrawerStackProvider>
   );

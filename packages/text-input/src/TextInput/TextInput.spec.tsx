@@ -5,7 +5,7 @@ import { axe } from 'jest-axe';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { getTestUtils } from '../utils';
+import { getTestUtils } from '../testing';
 
 import TextInput from './TextInput';
 import { State, TextInputProps } from './TextInput.types';
@@ -192,6 +192,17 @@ describe('packages/text-input', () => {
 
       userEvent.type(textInput, '123');
       expect(getInputValue()).toBe('123');
+    });
+
+    test('when uncontrolled and there is a defaultValue suppolied', () => {
+      const { textInput, getInputValue } = renderTextInput({
+        defaultValue: '123',
+      });
+
+      expect(getInputValue()).toBe('123');
+
+      userEvent.type(textInput, 'update');
+      expect(getInputValue()).toBe('123update');
     });
 
     test('when controlled', () => {

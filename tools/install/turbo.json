@@ -3,7 +3,7 @@
   "extends": ["//"],
   "tasks": {
     "prebuild": {
-      "dependsOn": ["^prebuild", "^build"],
+      "dependsOn": ["^prebuild", "^build", "^tsc"],
       "outputs": ["src/ALL_PACKAGES.ts"]
     }
   }

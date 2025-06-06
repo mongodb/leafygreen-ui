@@ -1,21 +1,15 @@
 {
   "name": "@leafygreen-ui/polymorphic",
-  "version": "2.0.9",
+  "version": "3.0.0",
   "description": "LeafyGreen UI Kit Polymorphic",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/polymorphic",
@@ -30,7 +24,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@emotion/styled": "^11.10.5"
+    "@emotion/styled": "^11.10.5",
+    "@lg-tools/build": "workspace:^"
   },
   "dependencies": {
     "@leafygreen-ui/lib": "workspace:^",

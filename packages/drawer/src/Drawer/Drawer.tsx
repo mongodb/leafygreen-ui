@@ -65,6 +65,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     });
 
     const showCloseButton = !!onClose;
+    // This will use the default value of 0 if not wrapped in a DrawerStackProvider. If using a Drawer + Toolbar, the DrawerStackProvider will not be necessary.
     const drawerIndex = getDrawerIndex(id);
 
     useIsomorphicLayoutEffect(() => {
@@ -90,6 +91,26 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
+    /**
+     * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
+     *
+     */
+    const handleAnimationEnd = () => {
+      const drawerElement = ref.current;
+
+      // Check if the drawerElement is null or is a div, which means it is not a dialog element.
+      if (!drawerElement || drawerElement instanceof HTMLDivElement) {
+        return;
+      }
+
+      if (open) {
+        const firstFocusable = drawerElement.querySelector(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        );
+        (firstFocusable as HTMLElement)?.focus();
+      }
+    };
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <Component
@@ -106,6 +127,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           data-lgid={lgIds.root}
           id={id}
           ref={drawerRef}
+          onAnimationEnd={handleAnimationEnd}
           {...rest}
         >
           <div className={getDrawerShadowStyles({ theme, displayMode })}>

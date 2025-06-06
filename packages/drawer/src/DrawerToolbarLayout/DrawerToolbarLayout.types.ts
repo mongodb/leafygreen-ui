@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { ToolbarIconButtonProps } from '@leafygreen-ui/toolbar';
@@ -46,12 +46,13 @@ export type LayoutData = LayoutWithContent | LayoutWithoutContent;
 
 export type DrawerToolbarLayoutProps = PickedOptionalDrawerProps &
   DarkModeProps &
-  LgIdProps &
-  PropsWithChildren<{
+  LgIdProps & {
     /**
      * An array of data that will be used to render the toolbar items and the drawer content.
      */
-    data: Array<LayoutData>;
-  }>;
+    toolbarData: Array<LayoutData>;
+    className?: string;
+    children: React.ReactNode;
+  };
 
 export type DrawerToolbarLayoutContainerProps = DrawerToolbarLayoutProps;

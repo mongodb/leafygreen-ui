@@ -8,11 +8,9 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import {
-  HEADER_HEIGHT,
-  MOBILE_BREAKPOINT,
-  PANEL_WIDTH,
-} from './Drawer.constants';
+import { PANEL_WIDTH } from '../constants';
+
+import { HEADER_HEIGHT, MOBILE_BREAKPOINT } from './Drawer.constants';
 import { DisplayMode } from './Drawer.types';
 
 export const drawerTransitionDuration = transitionDuration.slower;
@@ -25,11 +23,12 @@ const drawerIn = keyframes`
   0% {
     transform: translate3d(0%, 0, 0);
     opacity: 0;
-    visibility: visible; // Adding visibility: hidden break autoFocus of the close button when using the dialog component
+    visibility: hidden; 
   }
   1% {
    transform: translate3d(100%, 0, 0);
     opacity: 1;
+    visibility: visible;
   }
   100% {
     transform: translate3d(0%, 0, 0);
@@ -53,7 +52,6 @@ const drawerOut = keyframes`
 
 const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   all: unset;
-  padding: 0;
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
   width: 100%;

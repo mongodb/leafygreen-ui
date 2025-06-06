@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 import { storybookExcludedControlParams } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
@@ -47,7 +47,7 @@ const LongContent = () => {
   );
 };
 
-const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
+const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
   {
     id: 'Code',
     label: 'Code',
@@ -88,7 +88,7 @@ export default {
     },
   },
   decorators: [
-    StoryFn => (
+    (Story: StoryFn) => (
       <div
         className={css`
           height: 100%;
@@ -98,7 +98,7 @@ export default {
           width: 100vw;
         `}
       >
-        <StoryFn />
+        <Story />
       </div>
     ),
   ],
@@ -134,7 +134,7 @@ const Template: StoryFn<DrawerToolbarLayoutProps> = ({
     >
       <DrawerToolbarLayout
         {...rest}
-        data={DRAWER_TOOLBAR_DATA}
+        toolbarData={DRAWER_TOOLBAR_DATA}
         displayMode={displayMode!}
       >
         <MainContent />
@@ -143,25 +143,26 @@ const Template: StoryFn<DrawerToolbarLayoutProps> = ({
   );
 };
 
-export const OverlayOpensFirstToolbarItem = {
-  render: (args: DrawerProps) => <Template {...args} />,
-  args: {
-    displayMode: DisplayMode.Overlay,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const { getToolbarTestUtils } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+export const OverlayOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
+  {
+    render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
+    args: {
+      displayMode: DisplayMode.Overlay,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const { getToolbarTestUtils } = getTestUtils();
+      const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+      const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
-    await userEvent.click(codeButton);
+      await userEvent.click(codeButton);
 
-    await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
-  },
-};
+      await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
+    },
+  };
 
-export const OverlaySwitchesToolbarItems = {
-  render: (args: DrawerProps) => <Template {...args} />,
+export const OverlaySwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> = {
+  render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
   args: {
     displayMode: DisplayMode.Overlay,
   },
@@ -188,8 +189,8 @@ export const OverlaySwitchesToolbarItems = {
   },
 };
 
-export const OverlayClosesDrawer = {
-  render: (args: DrawerProps) => <Template {...args} />,
+export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
+  render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
   args: {
     displayMode: DisplayMode.Overlay,
   },
@@ -210,52 +211,54 @@ export const OverlayClosesDrawer = {
   },
 };
 
-export const EmbeddedOpensFirstToolbarItem = {
-  render: (args: DrawerProps) => <Template {...args} />,
-  args: {
-    displayMode: DisplayMode.Embedded,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const { getToolbarTestUtils } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
+  {
+    render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
+    args: {
+      displayMode: DisplayMode.Embedded,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const { getToolbarTestUtils } = getTestUtils();
+      const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+      const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
-    await userEvent.click(codeButton);
+      await userEvent.click(codeButton);
 
-    await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
-  },
-};
+      await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
+    },
+  };
 
-export const EmbeddedSwitchesToolbarItems = {
-  render: (args: DrawerProps) => <Template {...args} />,
-  args: {
-    displayMode: DisplayMode.Embedded,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const { getToolbarTestUtils } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
-    const dashboardButton =
-      getToolbarIconButtonByLabel('Dashboard')?.getElement();
+export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> =
+  {
+    render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
+    args: {
+      displayMode: DisplayMode.Embedded,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const { getToolbarTestUtils } = getTestUtils();
+      const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+      const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+      const dashboardButton =
+        getToolbarIconButtonByLabel('Dashboard')?.getElement();
 
-    await userEvent.click(codeButton);
-    await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
+      await userEvent.click(codeButton);
+      await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
 
-    await userEvent.unhover(codeButton);
-    // Pause so the change is visible in the story
-    await new Promise(resolve => setTimeout(resolve, 1000));
+      await userEvent.unhover(codeButton);
+      // Pause so the change is visible in the story
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-    await userEvent.click(dashboardButton);
-    await waitFor(() =>
-      expect(canvas.getByText('Dashboard Title')).toBeVisible(),
-    );
-  },
-};
+      await userEvent.click(dashboardButton);
+      await waitFor(() =>
+        expect(canvas.getByText('Dashboard Title')).toBeVisible(),
+      );
+    },
+  };
 
-export const EmbeddedClosesDrawer = {
-  render: (args: DrawerProps) => <Template {...args} />,
+export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
+  render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
   args: {
     displayMode: DisplayMode.Embedded,
   },

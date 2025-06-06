@@ -12,6 +12,23 @@
   "eslint.lintTask.enable": true,
   "eslint.format.enable": true,
   "eslint.runtime": "node",
-  "eslint.workingDirectories": ["./"],
-  "typescript.preferences.importModuleSpecifier": "project-relative"
+  "eslint.workingDirectories": [
+    "./"
+  ],
+  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "file": "node_modules/@lg-tools/prompt-kit/src/prompts/codeGeneration.md"
+    }
+  ],
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file": "node_modules/@lg-tools/prompt-kit/src/prompts/commitMessageGeneration.md"
+    }
+  ],
+  "github.copilot.chat.testGeneration.instructions": [
+    {
+      "file": "node_modules/@lg-tools/prompt-kit/src/prompts/testGeneration.md"
+    }
+  ]
 }

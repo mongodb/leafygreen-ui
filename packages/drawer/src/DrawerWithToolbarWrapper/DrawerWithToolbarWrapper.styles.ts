@@ -1,9 +1,10 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
+import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
 import { GRID_AREA } from '../constants';
-import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer/Drawer.constants';
+import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../constants';
 import {
   drawerClassName,
   drawerTransitionDuration,
@@ -54,6 +55,7 @@ const drawerInMobile = keyframes`
   }
 `;
 
+// This animation is used to animate the padding of the drawer when it closes, so that the padding does not block the content underneath it.
 const drawerPaddingOut = keyframes`
   0% {
     padding-left: ${SHADOW_WIDTH}px;
@@ -110,7 +112,7 @@ const baseStyles = css`
   height: 100%;
   overflow: hidden;
 
-  & > :first-child {
+  .${toolbarClassName} {
     grid-area: ${GRID_AREA.toolbar};
   }
 

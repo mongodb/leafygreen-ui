@@ -1,8 +1,3 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { BaseLayoutComponentProps } from '../LayoutComponent/LayoutComponent.types';
 
-export interface OverlayDrawerLayoutProps extends HTMLElementProps<'div'> {
-  /**
-   * Determines if the Toolbar is present in the layout
-   */
-  hasToolbar?: boolean;
-}
+export type OverlayDrawerLayoutProps = BaseLayoutComponentProps;

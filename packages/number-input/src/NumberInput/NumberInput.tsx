@@ -63,6 +63,12 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const renderUnitOnly = hasUnit && !hasSelectOptions;
     const renderSelectOnly = hasUnit && hasSelectOptions && !!isUnitInOptions;
 
+    if (typeof unit !== 'string' && hasSelectOptions) {
+      console.warn(
+        '`unit` prop must be a string when `unitOptions` prop is provided',
+      );
+    }
+
     const formFieldFeedbackProps = {
       disabled,
       errorMessage,
@@ -126,7 +132,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               <UnitSelect
                 id={selectId}
                 disabled={disabled}
-                unit={unit}
+                unit={unit as string}
                 unitOptions={unitOptions}
                 onChange={onSelectChange}
                 size={size}

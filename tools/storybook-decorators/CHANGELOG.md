@@ -1,5 +1,45 @@
 # @lg-tools/storybook-decorators
 
+## 1.0.0
+
+### Minor Changes
+
+- 0757cfbfc: Updates Typescript build to TS5.8
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+  - @leafygreen-ui/leafygreen-provider@5.0.0
+  - @lg-tools/storybook-utils@0.3.0
+  - @leafygreen-ui/emotion@5.0.0
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/banner@10.0.0
+  - @leafygreen-ui/tokens@3.0.0
+  - @lg-tools/build@0.8.0
+
+## 0.4.9
+
+### Patch Changes
+
+- @leafygreen-ui/banner@9.0.13
+
 ## 0.4.8
 
 ### Patch Changes

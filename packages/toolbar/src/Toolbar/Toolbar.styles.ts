@@ -1,8 +1,10 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { color, focusRing } from '@leafygreen-ui/tokens';
 
 import { TOOLBAR_WIDTH } from '../constants';
+
+export const toolbarClassName = createUniqueClassName('lg-toolbar');
 
 export const getBaseStyles = ({
   theme,
@@ -28,5 +30,6 @@ export const getBaseStyles = ({
         z-index: 1;
       }
     `,
+    toolbarClassName,
     className,
   );

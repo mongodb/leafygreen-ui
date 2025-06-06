@@ -1,13 +1,8 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { BaseLayoutComponentProps } from '../LayoutComponent/LayoutComponent.types';
 
-export interface EmbeddedDrawerLayoutProps extends HTMLElementProps<'div'> {
+export type EmbeddedDrawerLayoutProps = BaseLayoutComponentProps & {
   /**
-   * Determines if the Drawer instance is open or closed
+   * Determines if the Drawer is open. This will shift the layout to the right by the width of the drawer + toolbar if it exists if the display mode is set to 'embedded'.
    */
-  isDrawerOpen: boolean;
-
-  /**
-   * Determines if the Toolbar is present in the layout
-   */
-  hasToolbar?: boolean;
-}
+  isDrawerOpen?: boolean;
+};

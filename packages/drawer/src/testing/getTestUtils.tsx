@@ -38,7 +38,7 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
 
   /**
    * Checks the `aria-hidden` attribute and that the drawer element is visible based on CSS
-   * properties for `display`, `opacity`, `transform`, and `visibility`
+   * properties for `display`, `opacity`, and `visibility`
    */
   const isOpen = () => {
     const element = getDrawer();
