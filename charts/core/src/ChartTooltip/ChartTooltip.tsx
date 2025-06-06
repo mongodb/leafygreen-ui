@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../ChartContext';
-import { CHART_TOOLTIP_CLASSNAME } from '../constants';
+import { CHART_TOOLTIP_CLASSNAME, DEFAULT_TOOLTIP_OPTIONS } from '../constants';
 
 import { getRootStylesText } from './ChartTooltip.styles';
 import {
@@ -93,16 +93,7 @@ export function ChartTooltip({
     });
 
     return () => {
-      updateOptions({
-        tooltip: {
-          axisPointer: {
-            z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
-          },
-          show: true,
-          trigger: 'axis',
-          formatter: () => '',
-        },
-      });
+      updateOptions({ ...DEFAULT_TOOLTIP_OPTIONS });
     };
   }, [
     chartId,
