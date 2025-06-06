@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-interface RenderAsyncTestReturnType {
+export interface RenderAsyncTestReturnType {
   openButton: HTMLButtonElement;
   asyncTestComponentId: string;
   [key: string]: any;
