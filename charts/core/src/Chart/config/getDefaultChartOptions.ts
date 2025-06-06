@@ -9,6 +9,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+import { DEFAULT_TOOLTIP_OPTIONS } from '../../constants';
 import { ChartOptions } from '../Chart.types';
 
 const commonAxisOptions = {
@@ -92,13 +93,5 @@ export const getDefaultChartOptions = (
     },
   },
 
-  // Adds vertical dashed line on hover, even when no tooltip is shown
-  tooltip: {
-    axisPointer: {
-      z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
-    },
-    show: true,
-    trigger: 'axis',
-    formatter: () => '',
-  },
+  ...DEFAULT_TOOLTIP_OPTIONS,
 });

@@ -73,7 +73,6 @@ export function renderHookServer<Hook extends () => any>(
   jest.spyOn(global, 'window', 'get').mockImplementation(() => undefined);
 
   // Render hook on server
-  // @ts-ignore FIXME: this is wonky with TS4 vs TS5
   const serverOutput = renderToString(component);
 
   // Restore window
@@ -84,7 +83,6 @@ export function renderHookServer<Hook extends () => any>(
     const root = document.createElement('div');
     root.innerHTML = serverOutput;
     act(() => {
-      // @ts-ignore FIXME: this is wonky with TS4 vs TS5
       hydrateRoot(root, component);
     });
   };

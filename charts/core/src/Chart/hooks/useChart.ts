@@ -1,15 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useIdAllocator } from '@leafygreen-ui/hooks';
+
 import { useEchart } from '../../Echart';
 import { EChartEvents } from '../../Echart';
 import { getDefaultChartOptions } from '../config';
 
 import type { ChartHookProps, ChartInstance } from './useChart.types';
+import { useTooltipVisibility } from './useTooltipVisibility';
 
 export function useChart({
   onChartReady = () => {},
   zoomSelect,
   onZoomSelect,
+  chartId,
   groupId,
   theme,
   state,
@@ -24,6 +28,8 @@ export function useChart({
    */
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
 
+  const id = useIdAllocator({ id: chartId, prefix: 'lg-chart' });
+
   const echart = useEchart({
     container,
     initialOptions,
@@ -33,7 +39,6 @@ export function useChart({
   const {
     addToGroup,
     enableZoom,
-    hideTooltip,
     off,
     on,
     ready,
@@ -49,8 +54,16 @@ export function useChart({
     onChartReady();
   }, [ready, onChartReady]);
 
+  const { isChartHovered, setTooltipMounted, tooltipPinned } =
+    useTooltipVisibility({
+      chartId: id,
+      container,
+      echart,
+      groupId,
+    });
+
   useEffect(() => {
-    if (!ready || !groupId) {
+    if (!ready || !groupId || tooltipPinned) {
       return;
     }
 
@@ -59,7 +72,7 @@ export function useChart({
     return () => {
       removeFromGroup();
     };
-  }, [ready, groupId, addToGroup, removeFromGroup]);
+  }, [ready, groupId, addToGroup, removeFromGroup, tooltipPinned]);
 
   // SETUP AND ENABLE ZOOM
   useEffect(() => {
@@ -95,27 +108,6 @@ export function useChart({
       onZoomSelect(zoomEventResponse);
     });
   }, [ready, onZoomSelect, on]);
-
-  // We want to hide the tooltip when it's hovered over any `EventMarkerPoint`
-  useEffect(() => {
-    if (!ready) {
-      return;
-    }
-
-    on('mouseover', e => {
-      if (e.componentType === 'markPoint') {
-        hideTooltip();
-        on('mousemove', hideTooltip);
-      }
-    });
-
-    // Stop hiding once the mouse leaves the `EventMarkerPoint`
-    on('mouseout', e => {
-      if (e.componentType === 'markPoint') {
-        off('mousemove', hideTooltip);
-      }
-    });
-  }, [echart, hideTooltip, off, on, ready]);
 
   const initialRenderRef = useRef(true);
 
@@ -170,7 +162,11 @@ export function useChart({
 
   return {
     ...echart,
+    id,
+    isChartHovered,
     ref: setContainer,
+    setTooltipMounted,
     state,
+    tooltipPinned,
   };
 }

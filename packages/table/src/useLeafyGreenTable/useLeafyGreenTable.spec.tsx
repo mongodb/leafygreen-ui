@@ -93,6 +93,27 @@ describe('packages/table/useLeafyGreenTable', () => {
     expect(result.current.getRowCount()).toEqual(data.length + 1);
   });
 
+  test('returns the correct number of rows with initialState set by consumer', () => {
+    const data = getDefaultTestData({
+      subRows: getDefaultTestData({}),
+    });
+
+    const { result } = renderHook(() =>
+      useLeafyGreenTable({
+        data,
+        columns: getDefaultTestColumns({}),
+        initialState: {
+          expanded: Object.fromEntries(data.map((_dataObj, i) => [i, i === 0])),
+        },
+      }),
+    );
+
+    // Subrows of the first row should be included in the count due to initialState
+    expect(result.current.getRowCount()).toEqual(
+      data.length + (data[0]?.subRows?.length ?? 0),
+    );
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('Typescript', () => {
     // @ts-expect-error - requires columns, data

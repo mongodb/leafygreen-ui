@@ -105,7 +105,9 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     // Simulate zoom select event
     const zoomEventResponse = { start: 0, end: 100 };
-    const zoomSelectHandler = on.mock.calls[0][1];
+    const zoomSelectHandler = on.mock.calls.find(
+      ([action, _]) => action === EChartEventsMock.ZoomSelect,
+    )[1];
     act(() => {
       zoomSelectHandler(zoomEventResponse);
     });
@@ -125,11 +127,18 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     (useEchart as jest.Mock).mockReturnValue(mockEchartInstance);
 
-    const { result } = renderHook(() => useChart({ theme: 'dark' }));
+    const { result } = renderHook(() =>
+      useChart({ chartId: 'test-chart-id', theme: 'dark' }),
+    );
 
     expect(result.current).toEqual({
       ...mockEchartInstance,
+      id: 'test-chart-id',
+      isChartHovered: true,
       ref: expect.any(Function),
+      setTooltipMounted: expect.any(Function),
+      state: undefined,
+      tooltipPinned: false,
     });
   });
 

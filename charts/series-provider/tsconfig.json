@@ -19,7 +19,13 @@
   ],
   "references": [
     {
+      "path": "../colors"
+    },
+    {
       "path": "../../packages/leafygreen-provider"
+    },
+    {
+      "path": "../../packages/lib"
     }
   ]
 }
