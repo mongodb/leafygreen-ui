@@ -64,7 +64,6 @@ function Portal({
     return null;
   }
 
-  // @ts-ignore FIXME
   return createPortal(children, portalContainer);
 }
 
