@@ -62,7 +62,9 @@ console.log(greet('MongoDB user'));`;
 | `readOnly` _(optional)_                     | Enables read only mode, making the contents uneditable.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `boolean`                    | `false`     |
 | `tooltips` _(optional)_                     | Add tooltips to the editor content that appear on hover.                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `Array<Tooltip>`             | `undefined` |
 
-## Types
+## Types and Variables
+
+### Types
 
 | Name                         | Description                                                                                                                                                                                               |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -82,8 +84,21 @@ console.log(greet('MongoDB user'));`;
 | `CodeEditorTooltip.column`   | Optional number. Which character, going from left to right, the tooltip should be rendered. 1 based. Defaults to 1.                                                                                       |
 | `CodeEditorTooltip.severity` | Optional `CodeEditorTooltipSeverity` level. Defaults to 'info'.                                                                                                                                           |
 | `CodeEditorTooltipSeverity`  | Possible severity levels a `CodeEditorTooltip` can have.                                                                                                                                                  |
+| `LanguageName`               | Type of a supported language name.                                                                                                                                                                        |
+
+### Variables
+
+| `languageNames` | Array of all supported language names. |
 
 ## Test Utlities
+
+### `codeSnippets`
+
+Code snippets for all supported languages.
+
+```ts
+const snippet = codeSnippets[languageNames.javascript];
+```
 
 ### `renderEditor`
 
@@ -249,4 +264,31 @@ test('Updates value on when user types', () => {
     'new content',
   );
 });
+```
+
+## CodeMirror Utils
+
+[CodeMirror v6](https://codemirror.net/) is used to drive `CodeEditor` under the
+hood. Some implementations of a CodeMirror editor may be so unique that adopting
+this component is too difficult. However, there may be a desire to bring in certain
+aspects of this editor to be better inline with the design system - E.g. language
+support, themes, and syntax highlighting. For this reason, custom CodeMirror
+utils or extensions that are used internally are also exported from this package.
+
+### Utils
+
+#### `createCodeMirrorLanguageExtensions(language: LanguageName): CodeMirrorExtension`
+
+Utility method that will load the language extension used in `CodeEditor` for
+any supported `LanguageName`.
+
+##### Usage
+
+```ts
+import { createCodeMirrorLanuageExtension, languageNames } from "@leafygreen-ui/code-editor";
+import { EditorState } from "@codemirror/state"
+
+let state = EditorState.create({extensions: [
+  createCodeMirrorLanuageExtension(languageName.javascript);
+]});
 ```
