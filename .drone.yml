@@ -28,7 +28,7 @@ steps:
     settings:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
-      repo: ${KANOPY_NAMESPACE}/${DRONE_REPO_NAME}
+      repo: ux-foundations/${DRONE_REPO_NAME}
       dockerfile: ./apps/chatbot-server/Dockerfile
       tags:
         - git-${DRONE_COMMIT_SHA:0:7}
@@ -47,7 +47,7 @@ steps:
       chart: mongodb/web-app
       chart_version: 4.25.0
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
-      namespace: ${KANOPY_NAMESPACE}
+      namespace: ux-foundations
       release: lg-chatbot-server
       values: arch=arm64,image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/skunkworks/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=lg-chatbot-server.skunkworks.staging.corp.mongodb.com,mesh.enabled=true
       api_server: https://api.staging.corp.mongodb.com
