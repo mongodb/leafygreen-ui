@@ -49,6 +49,12 @@ const meta: StoryMetaType<typeof Callout> = {
       control: { type: 'select' },
       defaultValue: Variant.Note,
     },
+    baseFontSize: {
+      options: Object.values(BaseFontSize),
+      control: { type: 'radio' },
+      description:
+        'The base font size of the title and text rendered in children',
+    },
   },
 };
 export default meta;
