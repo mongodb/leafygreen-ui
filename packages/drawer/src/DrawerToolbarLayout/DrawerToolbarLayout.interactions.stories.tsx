@@ -106,7 +106,6 @@ export default {
 
 const Template: StoryFn<DrawerToolbarLayoutProps> = ({
   displayMode = DisplayMode.Embedded,
-  ...rest
 }: DrawerToolbarLayoutProps) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
@@ -133,7 +132,6 @@ const Template: StoryFn<DrawerToolbarLayoutProps> = ({
       `}
     >
       <DrawerToolbarLayout
-        {...rest}
         toolbarData={DRAWER_TOOLBAR_DATA}
         displayMode={displayMode!}
       >

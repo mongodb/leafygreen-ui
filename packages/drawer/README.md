@@ -60,28 +60,16 @@ function ExampleComponent() {
 ```
 
 ### Overlay Drawer with Toolbar
-<<<<<<< HEAD
-=======
-
-TODO: updated with hook in a separate PR
->>>>>>> 401bdcb224747d907e05b44f5d7c9702ddaae078
 
 ```tsx
 import React, { useState } from 'react';
 
 import Button from '@leafygreen-ui/button';
 import {
-<<<<<<< HEAD
   DrawerLayout,
   DrawerLayout,
   useDrawerToolbarContext,
   type DisplayMode,
-=======
-  DisplayMode,
-  Drawer,
-  DrawerLayout,
-  DrawerLayoutProps,
->>>>>>> 401bdcb224747d907e05b44f5d7c9702ddaae078
 } from '@leafygreen-ui/drawer';
 
 const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
@@ -114,7 +102,6 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
     },
   },
 ];
-<<<<<<< HEAD
 
 const Component = () => {
   const Main = () => {
@@ -151,41 +138,11 @@ import React, { useState } from 'react';
 
 import Button from '@leafygreen-ui/button';
 import { DisplayMode, Drawer, DrawerLayout } from '@leafygreen-ui/drawer';
-=======
->>>>>>> 401bdcb224747d907e05b44f5d7c9702ddaae078
 
 function ExampleComponent() {
   const [open, setOpen] = useState(false);
 
   return (
-<<<<<<< HEAD
-=======
-    <DrawerLayout
-      displayMode={DisplayMode.Overlay}
-      toolbarData={DRAWER_TOOLBAR_DATA}
-      onClose={() => {}}
-    >
-      <main>content</main>
-    </DrawerLayout>
-  );
-}
-```
-
-### Embedded Drawer without a `Toolbar`
-
-The `Drawer` component is manually rendered as a child of `<DrawerLayout>`
-
-```tsx
-import React, { useState } from 'react';
-
-import Button from '@leafygreen-ui/button';
-import { DisplayMode, Drawer, DrawerLayout } from '@leafygreen-ui/drawer';
-
-function ExampleComponent() {
-  const [open, setOpen] = useState(false);
-
-  return (
->>>>>>> 401bdcb224747d907e05b44f5d7c9702ddaae078
     <DrawerLayout displayMode={DisplayMode.Embedded} isDrawerOpen={open}>
       <main>
         <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
@@ -201,70 +158,6 @@ function ExampleComponent() {
         Drawer content
       </Drawer>
     </DrawerLayout>
-<<<<<<< HEAD
-=======
-  );
-}
-```
-
-### Embedded Drawer with Toolbar
-
-TODO: updated with hook in a separate PR
-
-```tsx
-import React, { useState } from 'react';
-
-import Button from '@leafygreen-ui/button';
-import {
-  DisplayMode,
-  Drawer,
-  DrawerLayout,
-  DrawerLayoutProps,
-} from '@leafygreen-ui/drawer';
-
-const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['data'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <DrawerContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-    onClick: () => {
-      console.log('Code clicked');
-    },
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <DrawerContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-    onClick: () => {
-      console.log('Dashboard clicked');
-    },
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-    onClick: () => {
-      console.log('Plus clicked, does not update drawer');
-    },
-  },
-];
-
-function ExampleComponent() {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <DrawerLayout
-      displayMode={DisplayMode.Embedded}
-      toolbarData={DRAWER_TOOLBAR_DATA}
-      onClose={() => {}}
-    >
-      <main>content</main>
-    </DrawerLayout>
->>>>>>> 401bdcb224747d907e05b44f5d7c9702ddaae078
   );
 }
 ```
@@ -353,7 +246,6 @@ const Component = () => {
 
 ### DrawerLayout
 
-<<<<<<< HEAD
 `DrawerLayout` is a flexible layout wrapper that shift the page content when a Drawer opens. It can be used in both `overlay` and `embedded` modes, with or without a toolbar.
 
 #### With Toolbar
@@ -465,9 +357,6 @@ function ExampleComponent() {
   );
 }
 ```
-=======
-`DrawerLayout` is a layout wrapper that helps to shift the page content when a Drawer opens.
->>>>>>> 401bdcb224747d907e05b44f5d7c9702ddaae078
 
 | Prop                        | Type                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Default     |
 | --------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
@@ -479,7 +368,6 @@ function ExampleComponent() {
 
 ### LayoutData
 
-<<<<<<< HEAD
 | Prop                 | Type   | Default | Description                                                                                   |
 | -------------------- | ------ | ------- | --------------------------------------------------------------------------------------------- |
 | id                   | string |         | The required id of the layout. This is used to open the drawer with `openDrawer(id)`.         |
@@ -488,21 +376,9 @@ function ExampleComponent() {
 
 \+ Extends the following from LG [Toolbar props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toolbar/README.md#toolbariconbutton): `glyph`, `label`, and `onClick`
 
-### useDrawerToolbarContext
-
-`useDrawerToolbarContext` is a React hook that enables a consumer to interact with `DrawerToolbarLayout`. It may only be used inside of `DrawerToolbarLayout`. The hook takes no arguments and returns the following functions:
-
-| Name        | Signature              |
-| ----------- | ---------------------- |
-| openDrawer  | `(id: DataId) => void` |
-| closeDrawer | `() => void`           |
-
 ### Height Considerations
 
 If rendering `DrawerLayout` inside another element, make sure that element has an explicit height. Otherwise, the layout may not size itself correctly.
-=======
-<!-- TODO: added in separate PR -->
->>>>>>> 401bdcb224747d907e05b44f5d7c9702ddaae078
 
 # Test Harnesses
 
@@ -659,7 +535,6 @@ const {
 } = getTestUtils();
 ```
 
-<<<<<<< HEAD
 | Util                  | Description                                                                                                                                               | Returns                                                                                                                    |
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `findDrawer`          | Returns a promise that resolves to the drawer element. The promise is rejected if no elements match or if more than one match is found.                   | `Promise<HTMLDialogElement>` \| `Promise<HTMLDivElement>`                                                                  |
@@ -668,13 +543,3 @@ const {
 | `isOpen`              | Checks the `aria-hidden` attribute and that the drawer element is visible based on CSS properties for `display`, `opacity`, `transform`, and `visibility` | `boolean`                                                                                                                  |
 | `queryDrawer`         | Returns the drawer element or `null` if no elements match and throws if more than one match is found.                                                     | `HTMLDivElement`                                                                                                           |
 | `getToolbarTestUtils` | Returns the Toolbar test utils for the Toolbar                                                                                                            | [Toolbar test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/toolbar/README.md#test-utils) |
-=======
-// TODO: toolbar utils in a separate PR
-| Util | Description | Returns |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `findDrawer` | Returns a promise that resolves to the drawer element. The promise is rejected if no elements match or if more than one match is found. | `Promise<HTMLDialogElement>` \| `Promise<HTMLDivElement>` |
-| `getCloseButtonUtils` | Returns the button test utils for the close button | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
-| `getDrawer` | Returns the drawer element and throws if no elements match or if more than one match is found. | `HTMLDivElement` |
-| `isOpen` | Checks the `aria-hidden` attribute and that the drawer element is visible based on CSS properties for `display`, `opacity`, `transform`, and `visibility` | `boolean` |
-| `queryDrawer` | Returns the drawer element or `null` if no elements match and throws if more than one match is found. | `HTMLDivElement` |
->>>>>>> 401bdcb224747d907e05b44f5d7c9702ddaae078
