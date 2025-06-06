@@ -25,7 +25,7 @@ css`
 `
 ```
 
-### `addScrollbarStyles`
+#### `addScrollbarStyles`
 
 A utility for quickly adding the above styles for a particular theme & variant.
 
