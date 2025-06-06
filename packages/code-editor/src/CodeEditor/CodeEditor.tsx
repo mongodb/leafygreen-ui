@@ -19,8 +19,8 @@ import CodeMirror, {
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
-import { codeMirrorLanguageExtenstions } from './utils/codeMirrorLanguageExtenstions';
-import { createDiagnosticsTooltipExtension } from './utils/createTooltipExtension';
+import { createCodeMirrorLanguageExtension } from './utils/createCodeMirrorLanguageExtension';
+import { createCodeMirrorTooltipsExtension } from './utils/createCodeMirrorTooltipsExtension';
 import {
   type CodeEditorProps,
   type CodeMirrorExtension,
@@ -126,11 +126,11 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
           // Use diagnostics-based tooltips if any tooltips are provided
           tooltipCompartment.of(
             tooltips.length > 0
-              ? [createDiagnosticsTooltipExtension(tooltips)]
+              ? [createCodeMirrorTooltipsExtension(tooltips)]
               : [],
           ),
           languageCompartment.of(
-            language ? await codeMirrorLanguageExtenstions[language]() : [],
+            language ? await createCodeMirrorLanguageExtension(language) : [],
           ),
         );
 

@@ -1,4 +1,4 @@
-export const codeMirrorLanguageExtenstions = {
+const codeMirrorLanguageExtenstions = {
   cpp: async () => {
     const { cpp } = await import('@codemirror/lang-cpp');
     return cpp();
@@ -66,6 +66,10 @@ export const codeMirrorLanguageExtenstions = {
     return javascript({ jsx: true, typescript: true });
   },
 };
+
+export function createCodeMirrorLanguageExtension(language: LanguageName) {
+  return codeMirrorLanguageExtenstions[language]();
+}
 
 export const languageNames = Object.keys(
   codeMirrorLanguageExtenstions,
