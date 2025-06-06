@@ -1,5 +1,15 @@
 # @leafygreen-ui/tooltip
 
+## 14.0.1
+
+### Patch Changes
+
+- 8df5cd4ed: Bug fix for overwritten class names if tooltip trigger is an inline function
+- Updated dependencies [4bd4da36a]
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/popover@14.0.1
+  - @leafygreen-ui/typography@21.0.1
+
 ## 14.0.0
 
 ### Major Changes

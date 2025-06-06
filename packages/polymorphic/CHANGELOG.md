@@ -1,5 +1,11 @@
 # @leafygreen-ui/polymorphic
 
+## 3.0.1
+
+### Patch Changes
+
+- 9de60ce65: Replace `ReactElement` with `ReactNode` in type definitions
+
 ## 3.0.0
 
 ### Major Changes

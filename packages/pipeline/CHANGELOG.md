@@ -1,5 +1,14 @@
 # @leafygreen-ui/pipeline
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [8df5cd4ed]
+- Updated dependencies [4bd4da36a]
+  - @leafygreen-ui/tooltip@14.0.1
+  - @leafygreen-ui/tokens@3.1.0
+
 ## 8.0.0
 
 ### Major Changes
