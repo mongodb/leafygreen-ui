@@ -15,10 +15,8 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer } from '../Drawer';
-
-import { useDrawerToolbarContext } from '../DrawerToolbarContext';
-
 import { DrawerLayout, DrawerLayoutProps } from '../DrawerLayout';
+import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 
 const SEED = 0;
 faker.seed(SEED);

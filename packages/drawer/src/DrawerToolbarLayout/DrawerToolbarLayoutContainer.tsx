@@ -1,15 +1,13 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 
 import { Drawer } from '../Drawer/Drawer';
 import { DisplayMode } from '../Drawer/Drawer.types';
-
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
-
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 import { DrawerWithToolbarWrapper } from '../DrawerWithToolbarWrapper';
 import { LayoutComponent } from '../LayoutComponent';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { contentStyles } from './DrawerToolbarLayout.styles';
 import {

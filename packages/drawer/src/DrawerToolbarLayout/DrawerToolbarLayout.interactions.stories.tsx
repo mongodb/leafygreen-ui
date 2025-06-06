@@ -11,7 +11,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { DisplayMode, Drawer, DrawerProps } from '../Drawer';
+import { DisplayMode, Drawer } from '../Drawer';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 import { getTestUtils } from '../testing';
 
@@ -155,7 +155,7 @@ export const OverlayOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
       const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
       const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
-      await userEvent.click(codeButton);
+      await userEvent.click(codeButton!);
 
       await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
     },
@@ -174,14 +174,14 @@ export const OverlaySwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> = {
     const dashboardButton =
       getToolbarIconButtonByLabel('Dashboard')?.getElement();
 
-    await userEvent.click(codeButton);
+    await userEvent.click(codeButton!);
     await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
 
-    await userEvent.unhover(codeButton);
+    await userEvent.unhover(codeButton!);
     // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    await userEvent.click(dashboardButton);
+    await userEvent.click(dashboardButton!);
     await waitFor(() => {
       expect(canvas.getByText('Dashboard Title')).toBeVisible();
       expect(getDrawer().textContent).toContain('Dashboard Title');
@@ -201,7 +201,7 @@ export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const closeButton = getCloseButtonUtils().getButton();
 
-    await userEvent.click(codeButton);
+    await userEvent.click(codeButton!);
     await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
     // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -223,7 +223,7 @@ export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
       const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
       const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
-      await userEvent.click(codeButton);
+      await userEvent.click(codeButton!);
 
       await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
     },
@@ -243,14 +243,14 @@ export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> =
       const dashboardButton =
         getToolbarIconButtonByLabel('Dashboard')?.getElement();
 
-      await userEvent.click(codeButton);
+      await userEvent.click(codeButton!);
       await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
 
-      await userEvent.unhover(codeButton);
+      await userEvent.unhover(codeButton!);
       // Pause so the change is visible in the story
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      await userEvent.click(dashboardButton);
+      await userEvent.click(dashboardButton!);
       await waitFor(() =>
         expect(canvas.getByText('Dashboard Title')).toBeVisible(),
       );
@@ -269,12 +269,12 @@ export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const closeButton = getCloseButtonUtils().getButton();
 
-    await userEvent.click(codeButton);
+    await userEvent.click(codeButton!);
     await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
     // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    await userEvent.click(closeButton);
+    await userEvent.click(closeButton!);
     await waitFor(() => expect(isOpen()).toBe(false));
   },
 };
