@@ -8,7 +8,7 @@ import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
 
-import { IndentUnits } from './CodeEditor/CodeEditor.types';
+import { codeSnippets, IndentUnits, languageNames } from './CodeEditor';
 import { CodeEditor } from '.';
 
 const MyTooltip = ({
@@ -87,12 +87,13 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     enableCodeFolding: true,
     enableLineNumbers: true,
     enableLineWrapping: true,
-    defaultValue: '',
     forceParsing: false,
     placeholder: 'Type your code here...',
     readOnly: false,
     indentSize: 2,
     indentUnit: IndentUnits.Space,
+    // language: 'kotlin',
+    defaultValue: '',
     tooltips: [],
   },
   argTypes: {
@@ -126,6 +127,10 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     indentUnit: {
       options: ['space', 'tab'],
       control: { type: 'radio' },
+    },
+    langauge: {
+      control: { type: 'select' },
+      options: languageNames,
     },
   },
 };
@@ -192,4 +197,93 @@ export const TooltipOnHover: StoryObj<{}> = {
       expect(canvasElement.querySelector('.cm-tooltip')).toBeInTheDocument();
     });
   },
+};
+
+/**
+ * Syntax Highlighting Examples / Regressions
+ * These have been hardcoded for now, but we could potentially determine a good
+ * way to dynamically generate these in the future if needed.
+ */
+export const Cpp = Template.bind({});
+Cpp.args = {
+  language: 'cpp',
+  defaultValue: codeSnippets.cpp,
+};
+
+export const CSharp = Template.bind({});
+CSharp.args = {
+  language: 'csharp',
+  defaultValue: codeSnippets.csharp,
+};
+
+export const Css = Template.bind({});
+Css.args = {
+  language: 'css',
+  defaultValue: codeSnippets.css,
+};
+
+export const Go = Template.bind({});
+Go.args = {
+  language: 'go',
+  defaultValue: codeSnippets.go,
+};
+
+export const Html = Template.bind({});
+Html.args = {
+  language: 'html',
+  defaultValue: codeSnippets.html,
+};
+
+export const Java = Template.bind({});
+Java.args = {
+  language: 'java',
+  defaultValue: codeSnippets.java,
+};
+
+export const Javascript = Template.bind({});
+Javascript.args = {
+  language: 'javascript',
+  defaultValue: codeSnippets.javascript,
+};
+
+export const Json = Template.bind({});
+Json.args = {
+  language: 'json',
+  defaultValue: codeSnippets.json,
+};
+
+export const Kotlin = Template.bind({});
+Kotlin.args = {
+  language: 'kotlin',
+  defaultValue: codeSnippets.kotlin,
+};
+
+export const Php = Template.bind({});
+Php.args = {
+  language: 'php',
+  defaultValue: codeSnippets.php,
+};
+
+export const Python = Template.bind({});
+Python.args = {
+  language: 'python',
+  defaultValue: codeSnippets.python,
+};
+
+export const Ruby = Template.bind({});
+Ruby.args = {
+  language: 'ruby',
+  defaultValue: codeSnippets.ruby,
+};
+
+export const Rust = Template.bind({});
+Rust.args = {
+  language: 'rust',
+  defaultValue: codeSnippets.rust,
+};
+
+export const Typescript = Template.bind({});
+Typescript.args = {
+  language: 'typescript',
+  defaultValue: codeSnippets.typescript,
 };
