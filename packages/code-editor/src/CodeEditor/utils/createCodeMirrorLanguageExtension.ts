@@ -1,4 +1,5 @@
-const codeMirrorLanguageExtenstions = {
+// Functional code
+const codeMirrorLanguageExtensions = {
   cpp: async () => {
     const { cpp } = await import('@codemirror/lang-cpp');
     return cpp();
@@ -8,12 +9,12 @@ const codeMirrorLanguageExtenstions = {
     return csharp();
   },
   css: async () => {
-    const { cpp } = await import('@codemirror/lang-cpp');
-    return cpp();
-  },
-  go: async () => {
     const { css } = await import('@codemirror/lang-css');
     return css();
+  },
+  go: async () => {
+    const { go } = await import('@codemirror/lang-go');
+    return go();
   },
   html: async () => {
     const { html } = await import('@codemirror/lang-html');
@@ -65,13 +66,17 @@ const codeMirrorLanguageExtenstions = {
     const { javascript } = await import('@codemirror/lang-javascript');
     return javascript({ jsx: true, typescript: true });
   },
-};
+} as const;
+
+export type LanguageName = keyof typeof codeMirrorLanguageExtensions;
+export const LanguageName = Object.keys(codeMirrorLanguageExtensions).reduce(
+  (acc, key) => {
+    acc[key as LanguageName] = key as LanguageName;
+    return acc;
+  },
+  {} as Record<LanguageName, LanguageName>,
+);
 
 export function createCodeMirrorLanguageExtension(language: LanguageName) {
-  return codeMirrorLanguageExtenstions[language]();
+  return codeMirrorLanguageExtensions[language]();
 }
-
-export const languageNames = Object.keys(
-  codeMirrorLanguageExtenstions,
-) as Array<LanguageName>;
-export type LanguageName = keyof typeof codeMirrorLanguageExtenstions;

@@ -8,7 +8,7 @@ import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
 
-import { codeSnippets, IndentUnits, languageNames } from './CodeEditor';
+import { codeSnippets, IndentUnits, LanguageName } from './CodeEditor';
 import { CodeEditor } from '.';
 
 const MyTooltip = ({
@@ -92,7 +92,6 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     readOnly: false,
     indentSize: 2,
     indentUnit: IndentUnits.Space,
-    // language: 'kotlin',
     defaultValue: '',
     tooltips: [],
   },
@@ -130,7 +129,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     },
     langauge: {
       control: { type: 'select' },
-      options: languageNames,
+      options: Object.values(LanguageName),
     },
   },
 };

@@ -17,6 +17,5 @@ export {
   codeSnippets,
   createCodeMirrorLanguageExtension,
   IndentUnits,
-  type LanguageName,
-  languageNames,
+  LanguageName,
 } from './CodeEditor';

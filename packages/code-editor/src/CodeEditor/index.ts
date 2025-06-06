@@ -14,6 +14,5 @@ export {
 export { codeSnippets } from './utils/codeSnippets';
 export {
   createCodeMirrorLanguageExtension,
-  type LanguageName,
-  languageNames,
+  LanguageName,
 } from './utils/createCodeMirrorLanguageExtension';

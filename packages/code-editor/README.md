@@ -31,7 +31,7 @@ npm install @leafygreen-ui/code-editor
 #### Example
 
 ```tsx
-import { CodeEditor } from '@leafygreen-ui/code-editor';
+import { CodeEditor, LanguageName } from '@leafygreen-ui/code-editor';
 
 const sampleCode = `// Your code goes here
 function greet(name: string): string {
@@ -40,7 +40,7 @@ function greet(name: string): string {
 
 console.log(greet('MongoDB user'));`;
 
-<CodeEditor defaultValue={sampleCode} />;
+<CodeEditor defaultValue={sampleCode} language={LanguageName.javascipt} />;
 ```
 
 #### Properties
@@ -57,6 +57,7 @@ console.log(greet('MongoDB user'));`;
 | `forceParsing` _(optional)_                 | _**This should be used with caution as it can significantly impact performance!**_<br><br>Forces the parsing of the complete document, even parts not currently visible.<br><br>By default, the editor optimizes performance by only parsing the code that is visible on the screen, which is especially beneficial when dealing with large amounts of code. Enabling this option overrides this behavior and forces the parsing of all code, visible or not. This should generally be reserved for exceptional circumstances. | `boolean`                    | `false`     |
 | `indentSize` _(optional)_                   | Sets the editor's indent size on tab click. made.                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `number`                     | `2`         |
 | `indentUnit` _(optional)_                   | Sets the editor's indent unit on tab click. made.                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `'space' \| 'tab'`           | `space`     |
+| `language` _(optional)_                     | Specifies the language for syntax highlighting and autocompletion. The following languages are supported::<br><ul><li>cpp</li><li>csharp</li><li>css</li><li>go</li><li>html</li><li>java</li><li>javascript</li><li>json</li><li>kotlin</li><li>php</li><li>python</li><li>ruby</li><li>rust</li><li>typescript</li></ul>                                                                                                                                                                                                     | `LanguageName`               | `undefined` |
 | `onChange` _(optional)_                     | Callback that receives the updated editor value when changes are made.                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(value: string) => void;`   | `undefined` |
 | `placeholder` _(optional)_                  | Value to display in the editor when it is empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `HTMLElement \| string`      | `undefined` |
 | `readOnly` _(optional)_                     | Enables read only mode, making the contents uneditable.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `boolean`                    | `false`     |
@@ -64,31 +65,25 @@ console.log(greet('MongoDB user'));`;
 
 ## Types and Variables
 
-### Types
-
 | Name                         | Description                                                                                                                                                                                               |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `CodeEditorProps`            | Props that can be passed to the `CodeEditor` component.                                                                                                                                                   |
 | `CodeEditorSelectors`        | Enum-like map of CSS selectors for common elements that make up the code editor. These can be useful in testing.                                                                                          |
+| `CodeEditorTooltip`          | Describes a tooltip to be displayed on hover                                                                                                                                                              |
+| `CodeEditorTooltip.column`   | Optional number. Which character, going from left to right, the tooltip should be rendered. 1 based. Defaults to 1.                                                                                       |
+| `CodeEditorTooltip.content`  | ReactNode. What gets rendered in the tooltip.                                                                                                                                                             |
+| `CodeEditorTooltip.length`   | Number. The length the text that the tooltip should cover in characters.                                                                                                                                  |
+| `CodeEditorTooltip.line`     | Number. Which line in the document the tooltip should be rendered. 1 based.                                                                                                                               |
+| `CodeEditorTooltip.severity` | Optional `CodeEditorTooltipSeverity` level. Defaults to 'info'.                                                                                                                                           |
+| `CodeEditorTooltipSeverity`  | Possible severity levels a `CodeEditorTooltip` can have.                                                                                                                                                  |
 | `CodeMirrorExtension`        | Underlying CodeMirror editor `Extension` type. For more information see https://codemirror.net/docs/ref/#state.Extension.                                                                                 |
 | `CodeMirrorRef`              | Underlying CodeMirror editor ref type. When a ref is passed to the `CodeEditor` it will be of this type and give you direct access to CodeMirror internals such as `CodeMirrorState` and `CodeMirrorView` |
 | `CodeMirrorState`            | Underlying CodeMirror editor `EditorState` type. For more information see https://codemirror.net/docs/ref/#state.EditorState.                                                                             |
 | `CodeMirrorView`             | Underlying CodeMirror editor `EditorView` type. For more information see https://codemirror.net/docs/ref/#view.EditorView.                                                                                |
 | `IndentUnits`                | Unit options that can be set via the `indentUnit` prop of `CodeEditor`.                                                                                                                                   |
-| `RenderedTestResult`         | Type returned by the `renderEditor` test utility. More info in Test Utilities section.                                                                                                                    |
+| `LanguageName`               | Record of all supported languages.                                                                                                                                                                        |
 | `RenderedTestEditorType`     | Editor type used to interact with editor in a Jest test. More info in Test Utilities section.                                                                                                             |
-| `CodeEditorTooltip`          | Describes a tooltip to be displayed on hover                                                                                                                                                              |
-| `CodeEditorTooltip.line`     | Number. Which line in the document the tooltip should be rendered. 1 based.                                                                                                                               |
-| `CodeEditorTooltip.content`  | ReactNode. What gets rendered in the tooltip.                                                                                                                                                             |
-| `CodeEditorTooltip.length`   | Number. The length the text that the tooltip should cover in characters.                                                                                                                                  |
-| `CodeEditorTooltip.column`   | Optional number. Which character, going from left to right, the tooltip should be rendered. 1 based. Defaults to 1.                                                                                       |
-| `CodeEditorTooltip.severity` | Optional `CodeEditorTooltipSeverity` level. Defaults to 'info'.                                                                                                                                           |
-| `CodeEditorTooltipSeverity`  | Possible severity levels a `CodeEditorTooltip` can have.                                                                                                                                                  |
-| `LanguageName`               | Type of a supported language name.                                                                                                                                                                        |
-
-### Variables
-
-| `languageNames` | Array of all supported language names. |
+| `RenderedTestResult`         | Type returned by the `renderEditor` test utility. More info in Test Utilities section.                                                                                                                    |
 
 ## Test Utlities
 
@@ -97,7 +92,7 @@ console.log(greet('MongoDB user'));`;
 Code snippets for all supported languages.
 
 ```ts
-const snippet = codeSnippets[languageNames.javascript];
+const snippet = codeSnippets[LanguageName.javascript];
 ```
 
 ### `renderEditor`
@@ -285,10 +280,10 @@ any supported `LanguageName`.
 ##### Usage
 
 ```ts
-import { createCodeMirrorLanuageExtension, languageNames } from "@leafygreen-ui/code-editor";
+import { createCodeMirrorLanuageExtension, LanguageName } from "@leafygreen-ui/code-editor";
 import { EditorState } from "@codemirror/state"
 
 let state = EditorState.create({extensions: [
-  createCodeMirrorLanuageExtension(languageName.javascript);
+  createCodeMirrorLanuageExtension(LanguageName.javascript);
 ]});
 ```
