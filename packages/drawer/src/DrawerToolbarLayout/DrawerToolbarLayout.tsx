@@ -1,5 +1,7 @@
 import React, { forwardRef } from 'react';
 
+import { DrawerToolbarProvider } from '../DrawerToolbarContext';
+
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 import { DrawerToolbarLayoutContainer } from './DrawerToolbarLayoutContainer';
 
@@ -11,12 +13,23 @@ import { DrawerToolbarLayoutContainer } from './DrawerToolbarLayoutContainer';
 export const DrawerToolbarLayout = forwardRef<
   HTMLDivElement,
   DrawerToolbarLayoutProps
->(({ children, ...rest }: DrawerToolbarLayoutProps, forwardRef) => {
-  return (
-    <DrawerToolbarLayoutContainer ref={forwardRef} {...rest}>
-      {children}
-    </DrawerToolbarLayoutContainer>
-  );
-});
+>(
+  (
+    { children, toolbarData, ...rest }: DrawerToolbarLayoutProps,
+    forwardRef,
+  ) => {
+    return (
+      <DrawerToolbarProvider data={toolbarData}>
+        <DrawerToolbarLayoutContainer
+          ref={forwardRef}
+          toolbarData={toolbarData}
+          {...rest}
+        >
+          {children}
+        </DrawerToolbarLayoutContainer>
+      </DrawerToolbarProvider>
+    );
+  },
+);
 
 DrawerToolbarLayout.displayName = 'DrawerToolbarLayout';

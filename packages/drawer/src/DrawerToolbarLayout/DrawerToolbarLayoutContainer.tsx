@@ -1,50 +1,26 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 
-import { css } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
-import { Body } from '@leafygreen-ui/typography';
 
 import { Drawer } from '../Drawer/Drawer';
 import { DisplayMode } from '../Drawer/Drawer.types';
+import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 import { DrawerWithToolbarWrapper } from '../DrawerWithToolbarWrapper';
 import { LayoutComponent } from '../LayoutComponent';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { contentStyles } from './DrawerToolbarLayout.styles';
-import { DrawerToolbarLayoutContainerProps } from './DrawerToolbarLayout.types';
+import {
+  DrawerToolbarLayoutContainerProps,
+  LayoutData,
+} from './DrawerToolbarLayout.types';
 
-// Dummy content for now
-const LongContent = () => {
-  return (
-    <div
-      className={css`
-        display: flex;
-        flex-direction: column;
-        gap: ${spacing[100]}px;
-      `}
-    >
-      <Body>
-        Ipsam aspernatur sequi quo esse recusandae aperiam distinctio quod
-        dignissimos. Nihil totam accusamus. Odio occaecati commodi sapiente
-        dolores.
-      </Body>
-      <Body>
-        Molestiae accusantium porro eum quas praesentium consequuntur deleniti.
-        Fuga mollitia incidunt atque. Minima nisi fugit sapiente.
-      </Body>
-      <Body>
-        Ratione explicabo saepe occaecati. Et esse eveniet accusamus veritatis
-        esse quod. Vero aliquid quasi saepe vel harum molestiae rerum.
-      </Body>
-      <Body>
-        Minima distinctio eligendi sit culpa tempore adipisci. Consequuntur
-        consequatur minus quaerat sapiente consectetur esse blanditiis
-        provident. Nulla quas esse quasi a error sint pariatur possimus quia.
-      </Body>
-    </div>
-  );
-};
-
+/**
+ * @internal
+ *
+ * DrawerToolbarLayoutContainer is a component that provides a layout for displaying content in a drawer with a toolbar.
+ * It manages the state of the drawer and toolbar, and renders the appropriate components based on the display mode.
+ */
 export const DrawerToolbarLayoutContainer = forwardRef<
   HTMLDivElement,
   DrawerToolbarLayoutContainerProps
@@ -52,29 +28,33 @@ export const DrawerToolbarLayoutContainer = forwardRef<
   (
     {
       children,
-      displayMode = DisplayMode.Embedded,
+      displayMode = DisplayMode.Overlay,
       toolbarData,
       onClose,
       darkMode: darkModeProp,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
     }: DrawerToolbarLayoutContainerProps,
     forwardRef,
   ) => {
-    const [open, setOpen] = useState(false);
+    const { openDrawer, closeDrawer, getActiveDrawerContent, isDrawerOpen } =
+      useDrawerToolbarContext();
+    const { id, title, content } = getActiveDrawerContent() || {};
+    const lgIds = getLgIds(dataLgId);
+    const hasData = toolbarData && toolbarData.length > 0;
 
     const handleOnClose = (event: React.MouseEvent<HTMLButtonElement>) => {
       onClose?.(event);
-      setOpen(false);
-
-      // TODO: add call to context to update the drawer content
+      closeDrawer();
     };
 
     const handleIconClick = (
       event: React.MouseEvent<HTMLButtonElement>,
+      id: LayoutData['id'],
       onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void,
     ) => {
       onClick?.(event);
-      setOpen(true);
+      openDrawer(id);
     };
 
     return (
@@ -82,38 +62,46 @@ export const DrawerToolbarLayoutContainer = forwardRef<
         {...rest}
         ref={forwardRef}
         displayMode={displayMode}
-        hasToolbar
-        isDrawerOpen={open}
+        hasToolbar={hasData}
+        isDrawerOpen={isDrawerOpen}
       >
         <div className={contentStyles}>{children}</div>
-        <DrawerWithToolbarWrapper displayMode={displayMode} isDrawerOpen={open}>
-          <Toolbar>
+        <DrawerWithToolbarWrapper
+          displayMode={displayMode}
+          isDrawerOpen={isDrawerOpen}
+        >
+          <Toolbar data-lgid={lgIds.toolbar}>
             {toolbarData?.map(toolbarItem => (
               <ToolbarIconButton
                 key={toolbarItem.glyph}
                 glyph={toolbarItem.glyph}
                 label={toolbarItem.label}
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                  handleIconClick(e, toolbarItem.onClick)
-                }
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                  if (!toolbarItem.content) {
+                    // If the toolbar item does not have content, we don't want to open/update/close the drawer
+                    // but we still want to call the onClick function if it exists. E.g. open a modal or perform an action
+                    toolbarItem.onClick?.(event);
+                    return;
+                  }
+
+                  return handleIconClick(
+                    event,
+                    toolbarItem.id,
+                    toolbarItem.onClick,
+                  );
+                }}
+                active={toolbarItem.id === id}
               />
             ))}
           </Toolbar>
           <Drawer
             displayMode={displayMode}
-            open={open}
+            open={isDrawerOpen}
             onClose={handleOnClose}
-            title="Drawer Title"
+            title={title}
+            data-lgid={`${dataLgId}`}
           >
-            {/* TODO: get content from context */}
-            {/* Filler for now */}
-            <LongContent />
-            <LongContent />
-            <LongContent />
-            <LongContent />
-            <LongContent />
-            <LongContent />
-            {/* Filler for now */}
+            {content}
           </Drawer>
         </DrawerWithToolbarWrapper>
       </LayoutComponent>

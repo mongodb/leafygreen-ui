@@ -32,7 +32,7 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
     const childrenLength = descendants?.length ?? 0;
     const [isUsingKeyboard, setIsUsingKeyboard] = useState(false);
 
-    const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
+    const lgIds = getLgIds(dataLgId);
 
     /**
      * Implements roving tabindex

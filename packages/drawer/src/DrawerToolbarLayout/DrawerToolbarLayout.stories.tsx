@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 import {
   storybookArgTypes,
@@ -8,6 +8,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
+import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -15,6 +16,7 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer } from '../Drawer';
 import { DrawerLayout, DrawerLayoutProps } from '../DrawerLayout';
+import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -76,8 +78,10 @@ export default {
 
 const LongContent = () => {
   const paragraphs = useMemo(() => {
-    const text = faker.lorem.paragraphs(30, '\n');
-    return text.split('\n').map((p, i) => <Body key={i}>{p}</Body>);
+    return faker.lorem
+      .paragraphs(30, '\n')
+      .split('\n')
+      .map((p, i) => <Body key={i}>{p}</Body>);
   }, []);
 
   return (
@@ -185,11 +189,36 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
       console.log('Dashboard clicked');
     },
   },
+  {
+    id: 'Plus',
+    label: "Perform some action, doesn't open a drawer",
+    glyph: 'Plus',
+    onClick: () => {
+      console.log('Plus clicked, does not update drawer');
+    },
+  },
 ];
 
-const EmbeddedComponent: StoryFn<DrawerLayoutProps> = ({
+const Component: StoryFn<DrawerLayoutProps> = ({
+  displayMode = DisplayMode.Embedded,
   darkMode,
 }: DrawerLayoutProps) => {
+  const MainContent = () => {
+    const { openDrawer } = useDrawerToolbarContext();
+
+    return (
+      <main
+        className={css`
+          padding: ${spacing[400]}px;
+        `}
+      >
+        <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
+        <LongContent />
+        <LongContent />
+      </main>
+    );
+  };
+
   return (
     <div
       className={css`
@@ -200,23 +229,38 @@ const EmbeddedComponent: StoryFn<DrawerLayoutProps> = ({
       <DrawerLayout
         darkMode={darkMode}
         toolbarData={DRAWER_TOOLBAR_DATA}
-        displayMode="embedded"
+        displayMode={displayMode}
       >
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-        </main>
+        <MainContent />
       </DrawerLayout>
     </div>
   );
 };
 
-const OverlayComponent: StoryFn<DrawerLayoutProps> = ({
+const ComponentOpen: StoryFn<DrawerLayoutProps> = ({
+  displayMode = DisplayMode.Embedded,
   darkMode,
 }: DrawerLayoutProps) => {
+  const MainContent = () => {
+    const { openDrawer } = useDrawerToolbarContext();
+
+    useEffect(() => {
+      openDrawer('Code');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+      <main
+        className={css`
+          padding: ${spacing[400]}px;
+        `}
+      >
+        <LongContent />
+        <LongContent />
+      </main>
+    );
+  };
+
   return (
     <div
       className={css`
@@ -227,16 +271,9 @@ const OverlayComponent: StoryFn<DrawerLayoutProps> = ({
       <DrawerLayout
         darkMode={darkMode}
         toolbarData={DRAWER_TOOLBAR_DATA}
-        displayMode="overlay"
+        displayMode={displayMode}
       >
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </main>
+        <MainContent />
       </DrawerLayout>
     </div>
   );
@@ -248,9 +285,9 @@ const OverlayCloudNavComponent: StoryFn<DrawerLayoutProps> = ({
   return (
     <CloudNavLayoutMock>
       <DrawerLayout
-        darkMode={darkMode}
         toolbarData={DRAWER_TOOLBAR_DATA}
         displayMode="overlay"
+        darkMode={darkMode}
       >
         <div
           className={css`
@@ -275,7 +312,22 @@ export const OverlayCloudNav: StoryObj<DrawerLayoutProps> = {
 };
 
 export const Overlay: StoryObj<DrawerLayoutProps> = {
-  render: OverlayComponent,
+  render: Component,
+  args: {
+    displayMode: DisplayMode.Overlay,
+  },
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const OverlayOpen: StoryObj<DrawerLayoutProps> = {
+  render: ComponentOpen,
+  args: {
+    displayMode: DisplayMode.Overlay,
+  },
   parameters: {
     controls: {
       exclude: toolbarExcludedControls,
@@ -316,7 +368,22 @@ export const EmbeddedCloudNav: StoryObj<DrawerLayoutProps> = {
 };
 
 export const Embedded: StoryObj<DrawerLayoutProps> = {
-  render: EmbeddedComponent,
+  render: Component,
+  args: {
+    displayMode: DisplayMode.Embedded,
+  },
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const EmbeddedOpen: StoryObj<DrawerLayoutProps> = {
+  render: ComponentOpen,
+  args: {
+    displayMode: DisplayMode.Embedded,
+  },
   parameters: {
     controls: {
       exclude: toolbarExcludedControls,

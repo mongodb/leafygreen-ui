@@ -3,15 +3,16 @@
   "name": "@leafygreen-ui/toolbar",
   "version": "0.1.0",
   "description": "LeafyGreen UI Kit Toolbar",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "license": "Apache-2.0",
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
+  "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
