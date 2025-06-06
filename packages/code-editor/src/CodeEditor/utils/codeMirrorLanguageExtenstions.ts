@@ -67,7 +67,7 @@ export const codeMirrorLanguageExtenstions = {
   },
 };
 
-export const langNames = Object.keys(
+export const languageNames = Object.keys(
   codeMirrorLanguageExtenstions,
 ) as Array<LanguageName>;
 export type LanguageName = keyof typeof codeMirrorLanguageExtenstions;
