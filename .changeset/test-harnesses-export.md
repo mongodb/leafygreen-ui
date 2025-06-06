@@ -2,4 +2,5 @@
 '@lg-tools/test-harnesses': patch
 ---
 
-Export `RenderAsyncTestReturnType` typeg
+Export `RenderAsyncTestReturnType` type
+https://jira.mongodb.org/browse/LG-5290
