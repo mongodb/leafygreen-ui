@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/slackbot",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "Slackbot for LeafyGreen",
   "license": "Apache-2.0",
   "bin": {

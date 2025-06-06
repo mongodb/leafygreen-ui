@@ -1,11 +1,23 @@
 {
   "name": "@leafygreen-ui/code",
-  "version": "18.0.4",
+  "version": "19.0.0",
   "description": "leafyGreen UI Kit Code Blocks",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",

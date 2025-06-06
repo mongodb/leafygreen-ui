@@ -1,11 +1,23 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "13.1.9",
+  "version": "14.0.0",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
@@ -35,13 +47,14 @@
     "react-intersection-observer": "^8.25.1"
   },
   "devDependencies": {
+    "@emotion/styled": "^11.14.0",
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/code": "workspace:^",
-    "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/badge": "workspace:^",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/pagination": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
-    "@emotion/styled": "^11.14.0"
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

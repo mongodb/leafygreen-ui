@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/series-provider",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "description": "lg-charts SeriesProvider Component",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -20,6 +20,10 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "dependencies": {
+    "@leafygreen-ui/lib": "workspace:^",
+    "@lg-charts/colors": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
