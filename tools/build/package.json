@@ -14,8 +14,8 @@
   "module": "dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build": "sh ./scripts/build.sh",
-    "tsc": "sh ./scripts/build-ts.sh" 
+    "build": "./scripts/build.sh",
+    "tsc": "./scripts/build-ts.sh"
   },
   "dependencies": {
     "@babel/core": "7.24.3",
@@ -29,7 +29,6 @@
     "@rollup/plugin-babel": "6.0.4",
     "@rollup/plugin-node-resolve": "15.1.0",
     "@rollup/plugin-terser": "0.4.3",
-    "@rollup/plugin-url": "8.0.1",
     "@svgr/babel-plugin-replace-jsx-attribute-value": "8.0.0",
     "@svgr/cli": "8.0.1",
     "@svgr/rollup": "^8.1.0",
@@ -42,6 +41,7 @@
     "fs-extra": "11.1.1",
     "glob": "10.3.12",
     "lodash": "4.17.21",
+    "lodash-es": "^4.17.21",
     "react-docgen-typescript": "2.2.2",
     "rollup": "4.16.1",
     "rollup-plugin-bundle-stats": "^4.18.2",

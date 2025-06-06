@@ -7,7 +7,7 @@
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
   "scripts": {
-    "prebuild": "tsx ./scripts/writePackageNames.ts",
+    "prebuild": "npx ts-node ./scripts/writePackageNames.ts",
     "build": "lg-build bundle",
     "tsc": "lg-build tsc"
   },
@@ -24,8 +24,7 @@
   },
   "devDependencies": {
     "@lg-tools/lint": "workspace:^",
-    "fs-extra": "^11.3.0",
-    "tsx": "^4.19.4"
+    "fs-extra": "^11.3.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/install",
   "repository": {
