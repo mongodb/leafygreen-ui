@@ -5,7 +5,7 @@
 Creates scrollbar color tokens and `addScrollbarStyles`
 
 
-### `scrollbarColor`
+#### `scrollbarColor`
 Use the `scrollbar-color` CSS property to set the colors of the scrollbar thumb and track.
 For Safari, use the `-webkit-scrollbar-thumb` and `-webkit-scrollbar-track` pseudo-elements.
 
