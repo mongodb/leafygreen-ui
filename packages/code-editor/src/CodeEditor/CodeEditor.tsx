@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -53,9 +54,8 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     forwardedRef,
   ) => {
     const [value, setValue] = useState(defaultValue || '');
-    const [extensions, setExtensions] = useState<Array<CodeMirrorExtension>>(
-      [],
-    );
+    const [languageExtension, setLanguageExtension] =
+      useState<CodeMirrorExtension>([]);
     const editorRef = useRef<CodeMirrorRef>(null);
     const refs = useMergeRefs([editorRef, forwardedRef]);
 
@@ -98,54 +98,62 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       [],
     );
 
-    useEffect(() => {
-      async function setupExtensions() {
-        const extensions: Array<CodeMirrorExtension> = [];
+    const customExtensions = useMemo(() => {
+      const extensions: Array<CodeMirrorExtension> = [];
 
-        /**
-         * CodeMirror state is immutable. Once configuration is set, the entire
-         * state would need to be updated to update one facet. Compartments allow
-         * us to dynamically change parts of the configuration after
-         * initialization, without needing to recreate the entire editor state.
-         * See https://codemirror.net/examples/config/#dynamic-configuration
-         */
-        const hyperLinkCompartment = new Compartment();
-        const lineWrappingCompartment = new Compartment();
-        const indentExtensionCompartment = new Compartment();
-        const tooltipCompartment = new Compartment();
-        const languageCompartment = new Compartment();
+      /**
+       * CodeMirror state is immutable. Once configuration is set, the entire
+       * state would need to be updated to update one facet. Compartments allow
+       * us to dynamically change parts of the configuration after
+       * initialization, without needing to recreate the entire editor state.
+       * See https://codemirror.net/examples/config/#dynamic-configuration
+       */
+      const hyperLinkCompartment = new Compartment();
+      const lineWrappingCompartment = new Compartment();
+      const indentExtensionCompartment = new Compartment();
+      const tooltipCompartment = new Compartment();
 
-        extensions.push(
-          hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
-          lineWrappingCompartment.of(
-            enableLineWrapping ? EditorView.lineWrapping : [],
-          ),
-          indentExtensionCompartment.of(
-            createIndentExtension(indentUnit, indentSize),
-          ),
-          // Use diagnostics-based tooltips if any tooltips are provided
-          tooltipCompartment.of(
-            tooltips.length > 0
-              ? [createCodeMirrorTooltipsExtension(tooltips)]
-              : [],
-          ),
-          languageCompartment.of(
-            language ? await createCodeMirrorLanguageExtension(language) : [],
-          ),
-        );
+      extensions.push(
+        hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
+        lineWrappingCompartment.of(
+          enableLineWrapping ? EditorView.lineWrapping : [],
+        ),
+        indentExtensionCompartment.of(
+          createIndentExtension(indentUnit, indentSize),
+        ),
+        // Use diagnostics-based tooltips if any tooltips are provided
+        tooltipCompartment.of(
+          tooltips.length > 0
+            ? [createCodeMirrorTooltipsExtension(tooltips)]
+            : [],
+        ),
+      );
 
-        setExtensions(extensions);
-      }
-      setupExtensions();
+      return extensions;
     }, [
       createIndentExtension,
       enableClickableUrls,
       enableLineWrapping,
       indentUnit,
       indentSize,
-      language,
       tooltips,
     ]);
+
+    /**
+     * Handles setting up language support. This is done separately because
+     * it is an asynchronous operation that requires dynamic imports.
+     */
+    useEffect(() => {
+      async function setupLanguageExtension() {
+        const languageCompartment = new Compartment();
+        setLanguageExtension(
+          languageCompartment.of(
+            language ? await createCodeMirrorLanguageExtension(language) : [],
+          ),
+        );
+      }
+      setupLanguageExtension();
+    }, [language]);
 
     return (
       <CodeMirror
@@ -157,7 +165,8 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         placeholder={placeholder}
         extensions={[
           ...consumerExtensions.map(extension => Prec.highest(extension)),
-          ...extensions,
+          ...customExtensions,
+          languageExtension,
         ]}
         basicSetup={{
           allowMultipleSelections: true,
