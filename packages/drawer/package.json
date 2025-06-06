@@ -25,6 +25,7 @@
     "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tabs": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/toolbar": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
     "polished": "^4.2.2",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
+    "@storybook/test": "8.5.3",
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {

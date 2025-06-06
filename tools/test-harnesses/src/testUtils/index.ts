@@ -1,1 +1,4 @@
-export { renderAsyncTest } from './renderAsyncTest';
+export {
+  renderAsyncTest,
+  type RenderAsyncTestReturnType,
+} from './renderAsyncTest';
