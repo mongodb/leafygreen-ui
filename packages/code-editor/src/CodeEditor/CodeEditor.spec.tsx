@@ -1,5 +1,5 @@
 import { forceParsing } from '@codemirror/language';
-import { act, screen, waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import { EditorState } from '@uiw/react-codemirror';
 
 import { renderCodeEditor } from './CodeEditor.testUtils';
