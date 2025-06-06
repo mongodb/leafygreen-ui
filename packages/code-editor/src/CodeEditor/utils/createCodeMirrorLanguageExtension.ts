@@ -1,4 +1,3 @@
-// Functional code
 const codeMirrorLanguageExtensions = {
   cpp: async () => {
     const { cpp } = await import('@codemirror/lang-cpp');
