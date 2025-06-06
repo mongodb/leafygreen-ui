@@ -406,6 +406,13 @@ export const Colors = {
 };
 
 export const Scrollbars: StoryObj = {
+  parameters: {
+    chromatic: {
+      // TODO: skipping for now until we can get Chromatic to snapshot the scrollbars
+      // https://github.com/storybookjs/storybook/discussions/31691#discussion-8425494
+      disableSnapshot: true,
+    },
+  },
   render: () => {
     return (
       <div
