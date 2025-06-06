@@ -1,4 +1,10 @@
-export { DisplayMode, Drawer, type DrawerProps } from './Drawer';
+export {
+  DisplayMode,
+  Drawer,
+  drawerClassName,
+  type DrawerProps,
+} from './Drawer';
+export { DrawerLayout, type DrawerLayoutProps } from './DrawerLayout';
 export {
   DrawerStackProvider,
   useDrawerStackContext,

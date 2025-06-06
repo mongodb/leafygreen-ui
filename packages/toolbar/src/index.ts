@@ -1,5 +1,6 @@
+export * from './constants';
 export { getTestUtils, type TestUtilsReturnType } from './testing';
-export { Toolbar, type ToolbarProps } from './Toolbar';
+export { Toolbar, toolbarClassName, type ToolbarProps } from './Toolbar';
 export {
   ToolbarIconButton,
   type ToolbarIconButtonProps,
