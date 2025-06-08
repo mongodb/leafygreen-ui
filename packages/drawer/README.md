@@ -70,7 +70,7 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
   },
 ];
 
-const Component = () => {
+const App = () => {
   const Main = () => {
     const { openDrawer, closeDrawer } = useDrawerToolbarContext();
 
@@ -106,7 +106,7 @@ import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import { DisplayMode, Drawer, DrawerLayout } from '@leafygreen-ui/drawer';
 
-function ExampleComponent() {
+function App() {
   const [open, setOpen] = useState(false);
 
   return (
