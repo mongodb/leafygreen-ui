@@ -153,6 +153,7 @@ export const OverlayOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
       const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
       const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
+      expect(isOpen()).toBe(false);
       userEvent.click(codeButton!);
 
       await waitFor(() => {
@@ -175,7 +176,10 @@ export const OverlaySwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> = {
     const dashboardButton =
       getToolbarIconButtonByLabel('Dashboard')?.getElement();
 
+    expect(isOpen()).toBe(false);
+
     userEvent.click(codeButton!);
+
     await waitFor(() => {
       expect(isOpen()).toBe(true);
       expect(canvas.getByText('Code Title')).toBeVisible();
@@ -186,6 +190,7 @@ export const OverlaySwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> = {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     userEvent.click(dashboardButton!);
+
     await waitFor(() => {
       expect(canvas.getByText('Dashboard Title')).toBeVisible();
       expect(getDrawer().textContent).toContain('Dashboard Title');
@@ -205,7 +210,10 @@ export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const closeButton = getCloseButtonUtils().getButton();
 
+    expect(isOpen()).toBe(false);
+
     userEvent.click(codeButton!);
+
     await waitFor(() => {
       expect(isOpen()).toBe(true);
       expect(canvas.getByText('Code Title')).toBeVisible();
@@ -214,6 +222,7 @@ export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     userEvent.click(closeButton);
+
     await waitFor(() => expect(isOpen()).toBe(false));
   },
 };
@@ -229,6 +238,8 @@ export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
       const { getToolbarTestUtils, isOpen } = getTestUtils();
       const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
       const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+
+      expect(isOpen()).toBe(false);
 
       userEvent.click(codeButton!);
 
@@ -253,7 +264,10 @@ export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> =
       const dashboardButton =
         getToolbarIconButtonByLabel('Dashboard')?.getElement();
 
+      expect(isOpen()).toBe(false);
+
       userEvent.click(codeButton!);
+      expect(isOpen()).toBe(false);
       await waitFor(() => {
         expect(isOpen()).toBe(true);
         expect(canvas.getByText('Code Title')).toBeVisible();
@@ -264,6 +278,7 @@ export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> =
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       userEvent.click(dashboardButton!);
+
       await waitFor(() =>
         expect(canvas.getByText('Dashboard Title')).toBeVisible(),
       );
@@ -282,7 +297,10 @@ export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const closeButton = getCloseButtonUtils().getButton();
 
+    expect(isOpen()).toBe(false);
+
     userEvent.click(codeButton!);
+
     await waitFor(() => {
       expect(isOpen()).toBe(true);
       expect(canvas.getByText('Code Title')).toBeVisible();
@@ -291,6 +309,7 @@ export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     userEvent.click(closeButton!);
+
     await waitFor(() => expect(isOpen()).toBe(false));
   },
 };
