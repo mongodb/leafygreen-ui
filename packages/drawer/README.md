@@ -131,11 +131,11 @@ function App() {
 
 ## DrawerLayout
 
-`DrawerLayout` is a flexible layout wrapper that shift the page content appropriately when a Drawer opens. It can be used in both `overlay` and `embedded` modes, with or without a toolbar.
+`DrawerLayout` is a flexible layout wrapper that shift the page content appropriately when a `Drawer` opens. It can be used in both `overlay` and `embedded` modes, with or without a toolbar.
 
 ### With `Toolbar`
 
-To use with a `Toolbar`, pass the `toolbarData` prop to render the toolbar items and the drawer content. Each object in the array defines a `Toolbar` item. If a `Toolbar` item is intended to perform an action other than opening a `Drawer` (for example, opening a modal), leave the `content` and `title` fields empty.
+To use with a `Toolbar`, pass the `toolbarData` prop to render the `Toolbar` items and the `Drawer` content. Each object in the array defines a `Toolbar` item. If a `Toolbar` item is intended to perform an action other than opening a `Drawer` (for example, opening a modal), leave the `content` and `title` fields empty.
 
 The `Drawer` and `Toolbar` component will be rendered automatically based on the `toolbarData` provided.
 
@@ -143,10 +143,10 @@ The `Drawer` and `Toolbar` component will be rendered automatically based on the
 
 To control the `Drawer` state, use the `useDrawerToolbarContext` hook from within `<DrawerLayout>`. This hook provides the `openDrawer()` and `closeDrawer()` functions to open and close the drawer programmatically. The hook takes no arguments and returns the following functions:
 
-| Name        | Signature              |
-| ----------- | ---------------------- |
-| openDrawer  | `(id: DataId) => void` |
-| closeDrawer | `() => void`           |
+| Name        | Signature              | Description                                                                                        |
+| ----------- | ---------------------- | -------------------------------------------------------------------------------------------------- |
+| openDrawer  | `(id: string) => void` | Opens the `Drawer` associated with the `Toolbar` item that has the matching `id` in `toolbarData`. |
+| closeDrawer | `() => void`           | Closes the Drawer.                                                                                 |
 
 ### Rendering
 
