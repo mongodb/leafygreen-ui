@@ -24,13 +24,8 @@ describe('CopyButton', () => {
 
   const renderCopyButton = ({ onCopy }: Pick<CopyProps, 'onCopy'>) => {
     return render(
-      <CodeContextProvider
-        // @ts-expect-error - other ids are missing but not needed for test
-        lgIds={{
-          copyButton: `lg-code-copy_button`,
-          copyTooltip: `lg-code-copy_tooltip`,
-        }}
-      >
+      // @ts-expect-error - props are required but not needed for this test
+      <CodeContextProvider>
         <CopyButton onCopy={onCopy} contents={contents} />
       </CodeContextProvider>,
     );

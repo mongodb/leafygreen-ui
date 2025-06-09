@@ -27,7 +27,7 @@ const CodeContextProvider = ({
   language,
   isLoading,
   showPanel,
-  lgIds,
+  lgIds = getLgIds(),
 }: PropsWithChildren<CodeProviderProps>) => {
   const CodeProvider = (CodeContext as React.Context<CodeProviderProps>)
     .Provider;
