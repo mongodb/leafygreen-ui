@@ -49,7 +49,7 @@ export const PasswordInput = React.forwardRef<
       stateNotifications = [],
       disabled = false,
       autoComplete = 'new-password',
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       className,
       label,
       ...rest

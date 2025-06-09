@@ -26,7 +26,7 @@ export const Label = Polymorphic<BaseLabelProps>(
     children,
     disabled = false,
     as = 'label' as PolymorphicAs,
-    'data-lgid': dataLgId = getLgIds().root,
+    'data-lgid': dataLgId,
     ...rest
   }) => {
     const { theme } = useDarkMode(darkModeProp);

@@ -45,7 +45,7 @@ const Checkbox = React.forwardRef(
       checked: checkedProp,
       className,
       darkMode: darkModeProp,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       description,
       disabled = false,
       id: idProp,

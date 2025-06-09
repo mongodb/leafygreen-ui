@@ -20,7 +20,7 @@ export const GalleryIndicator = React.forwardRef<
       length,
       activeIndex,
       className,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       ...rest
     }: GalleryIndicatorProps,
     forwardRef,

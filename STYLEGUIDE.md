@@ -689,7 +689,7 @@ export const Component = forwardRef<
 >(
   (
     {
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       ...rest
     },
     fwdRef: React.Ref<any>,

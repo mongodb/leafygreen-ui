@@ -30,7 +30,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       shouldTruncate = false,
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       ...rest
     }: TableProps<T>,
     containerRef: ForwardedRef<HTMLDivElement>,

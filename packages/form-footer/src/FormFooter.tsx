@@ -29,7 +29,7 @@ export default function FormFooter({
   contentClassName,
   className,
   darkMode: darkModeProp,
-  'data-lgid': dataLgId = getLgIds().root,
+  'data-lgid': dataLgId,
   ...rest
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);

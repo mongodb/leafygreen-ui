@@ -46,7 +46,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       darkMode,
       optional,
       id,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       ...rest
     }: FormFieldProps,
     fwdRef,

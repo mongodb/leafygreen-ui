@@ -24,7 +24,7 @@ export const Button = InferredPolymorphic<BaseButtonProps, 'button'>(
       variant = Variant.Default,
       size = Size.Default,
       darkMode: darkModeProp,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       baseFontSize = BaseFontSize.Body1,
       disabled = false,
       onClick,

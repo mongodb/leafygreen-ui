@@ -21,7 +21,7 @@ export const Description = Polymorphic<DescriptionProps>(
     children,
     className,
     darkMode: darkModeProp,
-    'data-lgid': dataLgId = getLgIds().root,
+    'data-lgid': dataLgId,
     disabled = false,
     ...rest
   }) => {

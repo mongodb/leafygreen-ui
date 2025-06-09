@@ -65,7 +65,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       sizeVariant: size = SizeVariant.Default,
       handleValidation,
       baseFontSize: baseFontSizeProp,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledby,
       'aria-invalid': ariaInvalid,

@@ -59,7 +59,7 @@ export const SplitButton = InferredPolymorphic<
       triggerAriaLabel,
       onChange,
       renderDarkMenu,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       ...rest
     },
     ref: React.Ref<any>,

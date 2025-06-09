@@ -74,7 +74,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       id: idProp,
       'aria-labelledby': ariaLabelledby,
       'aria-label': ariaLabel,

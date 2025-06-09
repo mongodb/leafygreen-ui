@@ -46,7 +46,7 @@ function Code({
   onCopy,
   panel,
   customKeywords,
-  'data-lgid': dataLgId = getLgIds().root,
+  'data-lgid': dataLgId,
   baseFontSize: baseFontSizeProp,
   ...rest
 }: CodeProps) {

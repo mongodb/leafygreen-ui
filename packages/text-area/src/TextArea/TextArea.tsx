@@ -60,7 +60,7 @@ export const TextArea: TextArea = forwardRef<
     'aria-labelledby': ariaLabelledby,
     'aria-invalid': ariaInvalid,
     baseFontSize: baseFontSizeProp,
-    'data-lgid': dataLgId = getLgIds().root,
+    'data-lgid': dataLgId,
     defaultValue = '',
     ...rest
   }: TextAreaProps,

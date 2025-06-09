@@ -38,7 +38,7 @@ export const ConfirmationModal = React.forwardRef(
       darkMode: darkModeProp,
       confirmButtonProps = {},
       cancelButtonProps = {},
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       ...modalProps
     }: ConfirmationModalProps,
     forwardRef: React.ForwardedRef<HTMLDivElement | null>,

@@ -53,7 +53,7 @@ const ModalView = React.forwardRef(
       className,
       contentClassName,
       initialFocus,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       ...rest
     }: ModalProps,
     forwardedRef: ForwardedRef,

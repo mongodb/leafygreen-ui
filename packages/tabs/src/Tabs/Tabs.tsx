@@ -60,7 +60,7 @@ const Tabs = <SelectedType extends number | string>(
     selected: controlledSelected,
     setSelected: setControlledSelected,
     size = 'default',
-    'data-lgid': dataLgId = getLgIds().root,
+    'data-lgid': dataLgId,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest

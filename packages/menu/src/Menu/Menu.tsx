@@ -67,7 +67,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
     renderDarkMenu = true,
-    'data-lgid': dataLgId = getLgIds().root,
+    'data-lgid': dataLgId,
     children,
     className,
     refEl,

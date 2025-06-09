@@ -34,7 +34,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     {
       children,
       className,
-      'data-lgid': dataLgId = getLgIds().root,
+      'data-lgid': dataLgId,
       displayMode = DisplayMode.Overlay,
       id: idProp,
       onClose,

@@ -29,7 +29,7 @@ function Toggle({
   onChange: onChangeProp,
   onClick: onClickProp,
   checked: controlledChecked,
-  'data-lgid': dataLgId = getLgIds().root,
+  'data-lgid': dataLgId,
   ...rest
 }: ToggleProps) {
   validateAriaLabelProps(rest, Toggle.displayName);
