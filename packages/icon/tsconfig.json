@@ -1,18 +1,19 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
-   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src",
-    "baseUrl": ".",
+  "compilerOptions": {
     "paths": {
-      "@leafygreen-ui/*": ["../*/src"]
+      "@leafygreen-ui/*": [
+        "../*/src"
+      ]
     }
   },
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
   "references": [
     {
       "path": "../emotion"

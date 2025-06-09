@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { colors } from '@lg-charts/colors';
 import { useSeriesContext } from '@lg-charts/series-provider';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -11,33 +10,33 @@ import { LineProps } from './Line.types';
 
 export function Line({ name, data }: LineProps) {
   const { theme } = useDarkMode();
-  const { chart } = useChartContext();
-  const { getSeriesIndex, isChecked } = useSeriesContext();
+  const {
+    chart: { addSeries, ready, removeSeries },
+  } = useChartContext();
+  const { getColor, isChecked } = useSeriesContext();
 
-  const themedColors = colors[theme];
-  const colorIndex = getSeriesIndex(name) % themedColors.length; // loop through colors if more lines than available colors
-  const color = themedColors[colorIndex];
+  const color = getColor(name, theme);
   const isVisible = isChecked(name);
 
   useEffect(() => {
-    if (!chart.ready) return;
+    if (!ready) return;
 
     if (isVisible) {
-      chart.addSeries({
+      addSeries({
         ...defaultLineOptions,
         name,
         data,
         lineStyle: {
           ...defaultLineOptions.lineStyle,
-          color,
+          color: color || undefined,
         },
         itemStyle: {
           ...defaultLineOptions.itemStyle,
-          color,
+          color: color || undefined,
         },
       });
     } else {
-      chart.removeSeries(name);
+      removeSeries(name);
     }
 
     return () => {
@@ -45,11 +44,9 @@ export function Line({ name, data }: LineProps) {
        * Remove the series when the component unmounts to make sure the series
        * is removed when a `Line` is hidden.
        */
-      chart.removeSeries(name);
+      removeSeries(name);
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, name, data, isVisible, theme]);
+  }, [addSeries, color, data, isVisible, name, ready, removeSeries, theme]);
 
   return null;
 }

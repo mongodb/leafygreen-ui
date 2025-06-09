@@ -1,20 +1,14 @@
 {
   "name": "@lg-chat/avatar",
-  "version": "4.0.10",
+  "version": "5.0.0",
   "description": "lg-chat Avatar",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -31,5 +25,7 @@
     "@leafygreen-ui/leafygreen-provider": "workspace:^",
     "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  }
 }

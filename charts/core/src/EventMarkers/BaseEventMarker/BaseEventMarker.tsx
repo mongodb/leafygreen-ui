@@ -18,15 +18,18 @@ export function BaseEventMarker({
   level = EventLevel.Warning,
   type,
 }: BaseEventMarkerLineProps | BaseEventMarkerPointProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { addSeries, ready, removeSeries },
+  } = useChartContext();
   const { theme } = useDarkMode();
+
   const name =
     type === 'line'
       ? `event-marker-${position}`
       : `event-marker-${position[0]}-${position[1]}`;
 
   useEffect(() => {
-    if (!chart.ready) return;
+    if (!ready) return;
 
     /**
      * Threshold lines/Points in Echarts are always attached to a series. In order
@@ -34,16 +37,25 @@ export function BaseEventMarker({
      * a dummy series with no data, and a mark line. This does not show up as a
      * series in something like a ChartTooltip.
      */
-    chart.addSeries(
+    addSeries(
       getMarkConfig({ name, theme, label, message, level, position, type }),
     );
 
     return () => {
-      chart.removeSeries(name);
+      removeSeries(name);
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme, chart.ready, position, label, message, level, type]);
+  }, [
+    addSeries,
+    label,
+    level,
+    message,
+    name,
+    position,
+    ready,
+    removeSeries,
+    theme,
+    type,
+  ]);
 
   return null;
 }

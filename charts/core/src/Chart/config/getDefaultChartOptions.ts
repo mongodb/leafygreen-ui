@@ -9,6 +9,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+import { DEFAULT_TOOLTIP_OPTIONS } from '../../constants';
 import { ChartOptions } from '../Chart.types';
 
 const commonAxisOptions = {
@@ -91,4 +92,6 @@ export const getDefaultChartOptions = (
       },
     },
   },
+
+  ...DEFAULT_TOOLTIP_OPTIONS,
 });

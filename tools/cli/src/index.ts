@@ -4,6 +4,7 @@ import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
+import { mergePromptsVSCode } from '@lg-tools/prompt-kit';
 import { releaseBot } from '@lg-tools/slackbot';
 import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';
@@ -232,8 +233,17 @@ cli
   .command('build-ts')
   .description("Builds a package's TypeScript definitions")
   .argument('[pass-through...]', 'Pass-through options for `tsc`')
-  .passThroughOptions(true) // allows passing flags to the `tsc` CLI
   .option('-v --verbose', 'Prints additional information to the console', false)
+  .option(
+    '--downlevel',
+    'Builds all TS downlevel targets based on the typesVersions field in package.json',
+    false,
+  )
+  .option(
+    '-u, --update',
+    'Update package.json typesVersions and exports fields',
+    false,
+  )
   .allowUnknownOption(true)
   .action(buildTypescript);
 cli
@@ -241,5 +251,17 @@ cli
   .description("Builds a package's TSDoc file")
   .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildTSDoc);
+
+/** Merge editor settings */
+cli
+  .command('merge-prompts-vscode')
+  .description('Merges the prompts settings into the VSCode settings file')
+  .option('-d, --dry', 'Dry run. Does not write to the filesystem.', false)
+  .option(
+    '-v, --verbose',
+    'Prints additional information to the console',
+    false,
+  )
+  .action(mergePromptsVSCode);
 
 cli.parse(process.argv);

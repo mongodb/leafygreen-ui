@@ -8,10 +8,13 @@ import type {
   ToolboxComponentOption,
   TooltipComponentOption,
 } from 'echarts/components';
-import type { EChartsType } from 'echarts/core';
-import type { ComposeOption } from 'echarts/core';
+import type { ComposeOption, EChartsType } from 'echarts/core';
 
 import { Theme } from '@leafygreen-ui/lib';
+
+// Type not exported by echarts.
+// reference: https://github.com/apache/echarts/blob/master/src/coord/axisCommonTypes.ts#L193
+export type AxisLabelValueFormatter = (value: number, index?: number) => string;
 
 type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type EChartSeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
@@ -100,30 +103,36 @@ export interface EChartSetupZoomSelectProps {
 }
 
 interface EChartsEventHandlerType {
-  (event: EChartEventsType, callback: (params: any) => void): void;
+  (
+    event: EChartEventsType,
+    callback: (params: any) => void,
+    options?: Partial<{ useCanvasAsTrigger: boolean }>,
+  ): void;
   (
     event: 'zoomselect',
     callback: (params: EChartZoomSelectionEvent) => void,
+    options?: Partial<{ useCanvasAsTrigger: boolean }>,
   ): void;
 }
 
 export interface EChartsInstance {
-  _echartsInstance: EChartsType | null;
-  ready: boolean;
-  options: Partial<EChartOptions>;
-  updateOptions: (options: Omit<Partial<EChartOptions>, 'series'>) => void;
-  on: EChartsEventHandlerType;
-  off: EChartsEventHandlerType;
+  _getEChartsInstance: () => EChartsType | null;
+  _getOptions: () => Partial<EChartOptions>;
   addSeries: (series: EChartSeriesOption) => void;
-  removeSeries: (name: string) => void;
   addToGroup: (groupId: string) => void;
-  removeFromGroup: () => void;
-  enableZoom: () => void;
   disableZoom: () => void;
-  setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
+  enableZoom: () => void;
   error: Error | null;
   hideTooltip: () => void;
+  off: EChartsEventHandlerType;
+  on: EChartsEventHandlerType;
+  ready: boolean;
+  removeFromGroup: () => void;
+  removeSeries: (name: string) => void;
   resize: () => void;
+  setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
+  showTooltip: (x: number, y: number) => void;
+  updateOptions: (options: Omit<Partial<EChartOptions>, 'series'>) => void;
 }
 
 export interface EChartHookProps {

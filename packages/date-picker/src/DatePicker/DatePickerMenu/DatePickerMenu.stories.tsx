@@ -7,13 +7,11 @@ import last from 'lodash/last';
 import omit from 'lodash/omit';
 import MockDate from 'mockdate';
 
+import { DateType, Month, newUTC } from '@leafygreen-ui/date-utils';
 import {
-  DateType,
-  Month,
-  newUTC,
   testLocales,
   testTimeZoneLabels,
-} from '@leafygreen-ui/date-utils';
+} from '@leafygreen-ui/date-utils/testing';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';

@@ -18,11 +18,13 @@ export function ChartGrid({
   horizontal = true,
   vertical = true,
 }: ChartGridProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { ready, updateOptions },
+  } = useChartContext();
   const { theme } = useDarkMode();
 
   useEffect(() => {
-    if (!chart.ready) return;
+    if (!ready) return;
 
     const updatedOptions: Partial<ChartOptions> = {};
     const getUpdatedLineOptions = (show: boolean) => ({
@@ -34,22 +36,24 @@ export function ChartGrid({
         },
       },
     });
-    updatedOptions.xAxis = getUpdatedLineOptions(!!vertical);
-    updatedOptions.yAxis = getUpdatedLineOptions(!!horizontal);
-    chart.updateOptions(updatedOptions);
+    updatedOptions.xAxis = {
+      ...getUpdatedLineOptions(!!vertical),
+    };
+    updatedOptions.yAxis = {
+      ...getUpdatedLineOptions(!!horizontal),
+    };
+    updateOptions(updatedOptions);
 
     return () => {
       /**
        * Hides the grid lines when the component is unmounted.
        */
-      chart.updateOptions({
+      updateOptions({
         xAxis: unsetGridOptions,
         yAxis: unsetGridOptions,
       });
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, horizontal, vertical, theme]);
+  }, [horizontal, ready, theme, updateOptions, vertical]);
 
   return null;
 }

@@ -11,7 +11,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { ChartOptions } from '../Chart/Chart.types';
+import { type ChartOptions } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
 import { YAxisProps } from './YAxis.types';
@@ -97,25 +97,25 @@ const unsetAxisOptions = {
  * </Chart>
  */
 export function YAxis({ type, label, formatter }: YAxisProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { ready, updateOptions },
+  } = useChartContext();
   const { theme } = useDarkMode();
 
   useEffect(() => {
-    if (!chart.ready) return;
+    if (!ready) return;
 
-    chart.updateOptions(getOptions({ type, label, formatter, theme }));
+    updateOptions(getOptions({ type, label, formatter, theme }));
 
     return () => {
       /**
        * Hides the axis when the component is unmounted.
        */
-      chart.updateOptions({
-        yAxis: unsetAxisOptions,
+      updateOptions({
+        yAxis: { ...unsetAxisOptions },
       });
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, label, formatter, theme, chart.ready]);
+  }, [formatter, label, ready, theme, type, updateOptions]);
 
   return null;
 }

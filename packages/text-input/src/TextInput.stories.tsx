@@ -117,4 +117,8 @@ WithValidation.parameters = {
   },
 };
 
+export const WithDefaultValue = (args: TextInputProps) => {
+  return <TextInput defaultValue="lauren@ipsum.com" type="email" {...args} />;
+};
+
 export const Generated = () => {};

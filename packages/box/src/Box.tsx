@@ -51,7 +51,17 @@ type BoxComponent<TProps = {}, ExtraProps = {}> = Override2<
   ExtraProps
 >;
 
-// TODO: TSDoc
+/**
+ * A flexible polymorphic type for the Box component, which allows various implementations:
+ * - Default anchor element
+ * - Any intrinsic JSX element
+ * - Custom React component
+ * - Default element type
+ *
+ * @deprecated Prefer using Polymorphic types from `@leafygreen-ui/polymorphic` package.
+ * @typeParam Default - The default React element type to render, defaults to 'div'
+ * @typeParam ExtraProps - Additional props to extend the component with
+ */
 export type BoxProps<
   Default extends React.ElementType = 'div',
   ExtraProps = {},

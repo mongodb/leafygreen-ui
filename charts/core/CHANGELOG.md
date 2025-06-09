@@ -1,5 +1,77 @@
 # @lg-charts/core
 
+## 1.2.0
+
+### Minor Changes
+
+- 4e7a6b536: [LG-4769](https://jira.mongodb.org/browse/LG-4769): fix label of event marker line bleeding out of canvas
+  [LG-5145](https://jira.mongodb.org/browse/LG-5145): add dark mode symbols for event markers
+
+## 1.1.0
+
+### Minor Changes
+
+- 4d350c5fb: [LG-4580](https://jira.mongodb.org/browse/LG-4580): implement tooltip pinning and visibility management
+
+## 1.0.1
+
+### Minor Changes
+
+- 21371bddd: [LG-5091](https://jira.mongodb.org/browse/LG-5091): add `customColors` prop to `SeriesProvider` to enable customizing chart component colors
+- 0757cfbfc: Updates Typescript build to TS5.8
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Adds missing `@lg-tools/` devDependencies.
+  Updates `build`, `tsc` & `docs` scripts to use `lg-build *` cli
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [21371bddd]
+- Updated dependencies [21371bddd]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+  - @leafygreen-ui/leafygreen-provider@5.0.0
+  - @lg-charts/series-provider@1.0.0
+  - @leafygreen-ui/typography@21.0.0
+  - @lg-charts/chart-card@1.0.0
+  - @leafygreen-ui/emotion@5.0.0
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.0.0
+  - @leafygreen-ui/hooks@9.0.0
+  - @lg-charts/colors@1.0.0
+  - @leafygreen-ui/lib@15.0.0
+
+## 0.18.0
+
+### Minor Changes
+
+- 9173c66ff: [LG-5137](https://jira.mongodb.org/browse/LG-5137): refactor option updates and improve memory usage
+
+## 0.17.4
+
+### Patch Changes
+
+- @lg-charts/chart-card@0.2.5
+- @leafygreen-ui/typography@20.1.9
+
+## 0.17.3
+
+### Patch Changes
+
+- 30a9d55a9: Renders a vertical line on hover regardless of whether a ChartTooltip is rendered
+
+## 0.17.2
+
+### Patch Changes
+
+- 89924b8b7: [LG-4803](https://jira.mongodb.org/browse/LG-4803): fix exhaustive dependencies issues and refactor echarts options configuration
+
 ## 0.17.1
 
 ### Patch Changes
