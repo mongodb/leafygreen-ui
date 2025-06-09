@@ -119,7 +119,22 @@ function ExampleComponent() {
 
 ```
 
+- Adds code splitting for test utilities
 
+  - Adds `/testing` entry point
+  - Removes `getTestUtils` from main bundle entry point
 
+  When using the component, testing utilities won't be included into your final bundle
+
+    ```tsx
+  // App.tsx
+  import { DrawerLayout } from `@leafygreen-ui/drawer`
+  ```
+
+  Testing utilities (and their dependencies) will only be imported if you import them explicitly
+
+  ```tsx
+  import { getTestUtils } from `@leafygreen-ui/drawer/testing`
+  ```
 
 - Removes deprecated `DrawerTabs` package internally

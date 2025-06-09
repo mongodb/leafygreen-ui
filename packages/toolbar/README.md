@@ -67,7 +67,7 @@ import {Toolbar, ToolbarIconButton} from `@leafygreen-ui/toolbar`;
 ### Usage
 
 ```tsx
-import { getTestUtils } from '@leafygreen-ui/toolbar';
+import { getTestUtils } from '@leafygreen-ui/toolbar/testing';
 
 const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Toolbar`. It defaults to 'lg-toolbar' if left empty.
 ```
@@ -77,7 +77,8 @@ const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lg
 ```tsx
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Toolbar, ToolbarIconButton, getTestUtils } from '@leafygreen-ui/toolbar';
+import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
+import { getTestUtils } from '@leafygreen-ui/toolbar/testing';
 
 ...
 
@@ -115,7 +116,8 @@ When testing multiple `Toolbar` components, it is recommended to add the custom 
 ```tsx
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Toolbar, ToolbarIconButton, getTestUtils } from '@leafygreen-ui/toolbar';
+import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
+import { getTestUtils } from '@leafygreen-ui/toolbar/testing';
 
 ...
 

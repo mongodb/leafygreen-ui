@@ -10,5 +10,4 @@ export {
   useDrawerStackContext,
 } from './DrawerStackContext';
 export { useDrawerToolbarContext } from './DrawerToolbarContext';
-export { getTestUtils, type GetTestUtilsReturnType } from './testing';
 export { getLgIds } from './utils';

@@ -1,7 +1,7 @@
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
 import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
-import { getTestUtils as getDrawerToolbarTestUtils } from '@leafygreen-ui/toolbar';
+import { getTestUtils as getDrawerToolbarTestUtils } from '@leafygreen-ui/toolbar/testing';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 

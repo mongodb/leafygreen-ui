@@ -378,7 +378,8 @@ const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lg
 
 ```tsx
 import { render } from '@testing-library/react';
-import { Drawer, DrawerStackProvider, getTestUtils } from '@leafygreen-ui/drawer';
+import { Drawer, DrawerStackProvider } from '@leafygreen-ui/drawer';
+import { getTestUtils } from '@leafygreen-ui/drawer/testing';
 
 ...
 
@@ -414,7 +415,8 @@ When testing multiple `Drawer` instances it is recommended to add the custom `da
 
 ```tsx
 import { render } from '@testing-library/react';
-import { Drawer, DrawerStackProvider, getTestUtils } from '@leafygreen-ui/drawer';
+import { Drawer, DrawerStackProvider } from '@leafygreen-ui/drawer';
+import { getTestUtils } from '@leafygreen-ui/drawer/testing';
 
 ...
 
@@ -447,7 +449,8 @@ test('Drawer', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import {DrawerLayout, DrawerLayoutProps, getTestUtils } from '@leafygreen-ui/drawer';
+import { DrawerLayout, DrawerLayoutProps } from '@leafygreen-ui/drawer';
+import { getTestUtils } from '@leafygreen-ui/drawer/testing';
 
 ...
 
