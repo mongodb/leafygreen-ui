@@ -86,6 +86,7 @@ export const LiveExample: StoryObj<{
   tooltipSeriesValueFormatter: ChartTooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
   headerTitle: ChartHeaderProps['title'];
+  headerTitleIcon: ChartHeaderProps['titleIcon'];
   headerShowDivider: ChartHeaderProps['showDivider'];
   zoomSelectXAxis: boolean;
   zoomSelectYAxis: boolean;
@@ -121,6 +122,7 @@ export const LiveExample: StoryObj<{
     renderTooltip: true,
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
+    headerTitleIcon: '🍃',
     headerShowDivider: true,
     zoomSelectXAxis: true,
     zoomSelectYAxis: true,
@@ -458,6 +460,7 @@ export const LiveExample: StoryObj<{
     tooltipSeriesValueFormatter,
     renderHeader,
     headerTitle,
+    headerTitleIcon,
     headerShowDivider,
     zoomSelectXAxis,
     zoomSelectYAxis,
@@ -490,6 +493,7 @@ export const LiveExample: StoryObj<{
         {renderHeader && (
           <ChartHeader
             title={headerTitle}
+            titleIcon={headerTitleIcon}
             showDivider={headerShowDivider}
             headerContent={
               <div

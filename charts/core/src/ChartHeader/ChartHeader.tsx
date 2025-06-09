@@ -13,6 +13,7 @@ export function ChartHeader({
   showDivider,
   headerContent,
   className,
+  titleIcon,
   ...rest
 }: ChartHeaderProps) {
   const { theme } = useDarkMode();
@@ -23,7 +24,7 @@ export function ChartHeader({
     >
       <div className={titleStyles}>
         <Body weight="regular" baseFontSize={BaseFontSize.Body1}>
-          {title}
+          {title} {titleIcon}
         </Body>
       </div>
       <div>{headerContent}</div>
