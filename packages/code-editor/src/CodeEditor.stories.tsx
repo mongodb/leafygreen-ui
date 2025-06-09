@@ -127,7 +127,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
       options: ['space', 'tab'],
       control: { type: 'radio' },
     },
-    langauge: {
+    language: {
       control: { type: 'select' },
       options: Object.values(LanguageName),
     },
