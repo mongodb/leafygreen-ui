@@ -12,7 +12,6 @@
 '@leafygreen-ui/select': major
 '@leafygreen-ui/toggle': major
 '@leafygreen-ui/table': major
-'@leafygreen-ui/code': major
 '@leafygreen-ui/menu': major
 '@leafygreen-ui/tabs': major
 ---

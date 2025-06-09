@@ -1,4 +1,5 @@
 ---
+'@leafygreen-ui/button': patch
 '@leafygreen-ui/drawer': patch
 ---
 
