@@ -5,7 +5,7 @@
 # What's New
 
 ## `DrawerLayout`
-[Adds new component](https://jira.mongodb.org/browse/LG-5026), `DrawerLayout`, that supports `Drawer` + `Toolbar` integration:
+- [Adds new component](https://jira.mongodb.org/browse/LG-5026), `DrawerLayout`, that supports `Drawer` + `Toolbar` integration:
   - Provides a flexible layout for displaying content in a `Drawer` with `Toolbar` functionality.
   - Specify `toolbarData` prop to render the Toolbar component. `DrawerLayout` will automatically render the `Toolbar` and `Drawer` components in the correct layout. If the `toolbarData` prop is not provided, the `DrawerLayout` will not render the `Toolbar` or `Drawer` components.
   - Supports both `overlay` and `embedded` display modes.

@@ -173,49 +173,59 @@ const MultipleDrawersComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   const [openC, setOpenC] = useState(false);
 
   return (
-    <DrawerStackProvider>
-      <div
-        className={css`
-          display: flex;
-          flex-direction: column;
-          gap: ${spacing[400]}px;
-        `}
-      >
-        <Button onClick={() => setOpenA(prevOpen => !prevOpen)}>
-          Toggle Drawer A
-        </Button>
-        <Button onClick={() => setOpenB(prevOpen => !prevOpen)}>
-          Toggle Drawer B
-        </Button>
-        <Drawer
-          {...args}
-          open={openA}
-          onClose={() => setOpenA(false)}
-          title="Drawer A"
+    <DrawerLayout
+      displayMode={DisplayMode.Overlay}
+      isDrawerOpen={openA || openB || openC}
+      className={css`
+        height: 500px;
+      `}
+    >
+      <DrawerStackProvider>
+        <div
+          className={css`
+            display: flex;
+            flex-direction: column;
+            gap: ${spacing[400]}px;
+          `}
         >
-          <LongContent />
-        </Drawer>
-        <Drawer
-          {...args}
-          open={openB}
-          onClose={() => setOpenB(false)}
-          title="Drawer B"
-        >
-          <Button onClick={() => setOpenC(prevOpen => !prevOpen)}>
-            Toggle Drawer C
+          <Button onClick={() => setOpenA(prevOpen => !prevOpen)}>
+            Toggle Drawer A
           </Button>
-          <LongContent />
-        </Drawer>
-        <Drawer
-          {...args}
-          open={openC}
-          onClose={() => setOpenC(false)}
-          title="Drawer C"
-        >
-          <LongContent />
-        </Drawer>
-      </div>
-    </DrawerStackProvider>
+          <Button onClick={() => setOpenB(prevOpen => !prevOpen)}>
+            Toggle Drawer B
+          </Button>
+        </div>
+        <div>
+          <Drawer
+            {...args}
+            open={openA}
+            onClose={() => setOpenA(false)}
+            title="Drawer A"
+          >
+            <LongContent />
+          </Drawer>
+          <Drawer
+            {...args}
+            open={openB}
+            onClose={() => setOpenB(false)}
+            title="Drawer B"
+          >
+            <Button onClick={() => setOpenC(prevOpen => !prevOpen)}>
+              Toggle Drawer C
+            </Button>
+            <LongContent />
+          </Drawer>
+          <Drawer
+            {...args}
+            open={openC}
+            onClose={() => setOpenC(false)}
+            title="Drawer C"
+          >
+            <LongContent />
+          </Drawer>
+        </div>
+      </DrawerStackProvider>
+    </DrawerLayout>
   );
 };
 

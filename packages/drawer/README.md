@@ -26,7 +26,7 @@ npm install @leafygreen-ui/drawer
 
 ## Example
 
-### With Toolbar (Recommended)
+### With `Toolbar` (Recommended)
 
 ```tsx
 import React, { useState } from 'react';
@@ -98,7 +98,7 @@ const App = () => {
 
 ### Without Toolbar
 
-The `Drawer` component is manually rendered as a child of `<DrawerLayout>` and the consumer controls the open state.
+The `Drawer` component is manually rendered as a child of `<DrawerLayout>` and the consumer controls the `open` state.
 
 ```tsx
 import React, { useState } from 'react';
@@ -110,7 +110,7 @@ function App() {
   const [open, setOpen] = useState(false);
 
   return (
-    <DrawerLayout displayMode={DisplayMode.Overlay}>
+    <DrawerLayout displayMode={DisplayMode.Overlay} isDrawerOpen={open}>
       <main>
         <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
           Open Drawer
@@ -222,7 +222,9 @@ const Component = () => {
 
 ### Without `Toolbar`
 
-To render a `Drawer` without a `Toolbar`, pass the `isDrawerOpen` prop to `<DrawerLayout>` to control the drawer state. The `Drawer` component should be rendered manually as a child of the `DrawerLayout` and the open state should be managed by the consumer.
+#### Single `Drawer` instance
+
+To render a `Drawer` without a `Toolbar`, pass the `isDrawerOpen` prop to `<DrawerLayout>`. The `Drawer` component should be rendered manually as a child of the `DrawerLayout` and the `open` state should be managed by the consumer.
 
 ```tsx
 import React, { useState } from 'react';
@@ -251,6 +253,75 @@ function ExampleComponent() {
     </DrawerLayout>
   );
 }
+```
+
+#### Multiple overlay `Drawer` instances
+
+When rendering multiple overlay `Drawer` instances, it is recommended to wrap the `Drawer`'s in a `<DrawerStackProvider>`. The `DrawerStackProvider` will manage the stacking of multiple `Drawer` instances by providing the correct z-index.
+
+```tsx
+import React, { useState } from 'react';
+
+import Button from '@leafygreen-ui/button';
+import { DisplayMode, Drawer, DrawerLayout, DrawerStackProvider } from '@leafygreen-ui/drawer';
+
+
+const MultipleDrawersComponent = () => {
+  const [openA, setOpenA] = useState(false);
+  const [openB, setOpenB] = useState(false);
+  const [openC, setOpenC] = useState(false);
+
+  return (
+    <DrawerLayout
+      displayMode={DisplayMode.Overlay}
+      isDrawerOpen={openA || openB || openC}
+      className={css`
+        height: 500px;
+      `}
+    >
+      <DrawerStackProvider>
+        <div
+          className={css`
+            display: flex;
+            flex-direction: column;
+            gap: ${spacing[400]}px;
+          `}
+        >
+          <Button onClick={() => setOpenA(prevOpen => !prevOpen)}>
+            Toggle Drawer A
+          </Button>
+          <Button onClick={() => setOpenB(prevOpen => !prevOpen)}>
+            Toggle Drawer B
+          </Button>
+        </div>
+        <div>
+          <Drawer
+            open={openA}
+            onClose={() => setOpenA(false)}
+            title="Drawer A"
+          >
+            Drawer content
+          </Drawer>
+          <Drawer
+            open={openB}
+            onClose={() => setOpenB(false)}
+            title="Drawer B"
+          >
+            <Button onClick={() => setOpenC(prevOpen => !prevOpen)}>
+              Toggle Drawer C
+            </Button>
+            Drawer content
+          </Drawer>
+          <Drawer
+            open={openC}
+            onClose={() => setOpenC(false)}
+            title="Drawer C"
+          >
+            Drawer content
+          </Drawer>
+        </div>
+      </DrawerStackProvider>
+    </DrawerLayout>
 ```
 
 ## Props
