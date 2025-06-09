@@ -41,6 +41,9 @@
       "path": "../palette"
     },
     {
+      "path": "../toast"
+    },
+    {
       "path": "../tokens"
     },
     {

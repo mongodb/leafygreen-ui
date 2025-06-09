@@ -14,6 +14,7 @@ import Code, { Panel } from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
+import { ToastProvider, useToast } from '@leafygreen-ui/toast';
 import { spacing } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
@@ -309,3 +310,53 @@ TooltipTrigger.parameters = {
     disableSnapshots: true,
   },
 };
+
+const ModalExample = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setOpen(o => !o)}>Open Modal</button>
+      <Modal
+        className={css`
+          div[role='dialog'] {
+            width: 1040px;
+          }
+        `}
+        open={open}
+        setOpen={setOpen}
+      >
+        Conent that appears inside of a modalVestibulum id ligula porta felis
+        euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
+        consectetur et. Etiam porta sem malesuada magna mollis euismod. Aenean
+        lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque
+        ornare sem lacinia quam venenatis vestibulum.
+      </Modal>
+    </div>
+  );
+};
+
+export const Container = () => {
+  const { pushToast } = useToast();
+
+  const createToast = () => {
+    pushToast({
+      title: 'Toast Title',
+      description: 'Toast Description',
+      variant: 'success',
+      timeout: null,
+    });
+  };
+
+  return <button onClick={createToast}>Create toast</button>;
+};
+
+export function Example() {
+  return (
+    <div>
+      <ModalExample />
+      <ToastProvider portalClassName="testing-classname">
+        <Container />
+      </ToastProvider>
+    </div>
+  );
+}
