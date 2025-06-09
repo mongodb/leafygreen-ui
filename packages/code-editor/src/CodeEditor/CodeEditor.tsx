@@ -57,7 +57,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     const [languageExtension, setLanguageExtension] =
       useState<CodeMirrorExtension>([]);
     const editorRef = useRef<CodeMirrorRef>(null);
-    const refs = useMergeRefs([editorRef, forwardedRef]);
+    const ref = useMergeRefs([editorRef, forwardedRef]);
 
     const onChange = useCallback(
       (val: string) => {
@@ -175,7 +175,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
           highlightActiveLineGutter: enableActiveLineHighlighting,
           lineNumbers: enableLineNumbers,
         }}
-        ref={refs}
+        ref={ref}
         {...rest}
       />
     );
