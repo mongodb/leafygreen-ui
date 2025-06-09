@@ -6,8 +6,8 @@ import { axe } from 'jest-axe';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { getLgIds } from '../utils';
 import { getTestUtils } from '../testing';
+import { getLgIds } from '../utils';
 import { Person } from '../utils/makeData.testutils';
 import { useMockTestRowData } from '../utils/testHookCalls.testutils';
 
