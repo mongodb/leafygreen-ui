@@ -8,14 +8,16 @@ import { useEchart } from './useEchart';
 
 // Mock echarts instance creation with all required methods
 const mockEchartsInstance = {
-  getOption: jest.fn(),
-  setOption: jest.fn(),
-  dispose: jest.fn(),
-  resize: jest.fn(),
-  on: jest.fn(),
-  off: jest.fn(),
   dispatchAction: jest.fn(),
+  dispose: jest.fn(),
+  getDom: jest.fn(),
+  getOption: jest.fn(),
   group: null,
+  isDisposed: jest.fn(),
+  off: jest.fn(),
+  on: jest.fn(),
+  resize: jest.fn(),
+  setOption: jest.fn(),
 };
 
 // Mock implementations
@@ -70,7 +72,6 @@ describe('@lg-echarts/core/hooks/useChart', () => {
   test('should return a chart instance with the correct properties', async () => {
     const { result } = await setupHook();
 
-    expect(result.current).toHaveProperty('_getEChartsInstance');
     expect(result.current).toHaveProperty('addSeries');
     expect(result.current).toHaveProperty('addToGroup');
     expect(result.current).toHaveProperty('disableZoom');
@@ -87,11 +88,10 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     expect(result.current).toHaveProperty('updateOptions');
   });
 
-  test('should properly update echarts instance on addSeries call', async () => {
+  test('should properly update options state on addSeries call', async () => {
     const { result } = await setupHook();
 
     const newSeries: SeriesOption = {
-      id: 'series-1',
       name: 'test-series',
       data: [[1, 2]],
       type: 'line',
@@ -102,30 +102,15 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    const calls = (result.current._getEChartsInstance()?.setOption as jest.Mock)
-      .mock.calls;
-
-    const calledWithExpectedArgs = calls.some(([option, config]) => {
-      const series = option?.series;
-      return (
-        Array.isArray(series) &&
-        series.some(item =>
-          expect.objectContaining(newSeries).asymmetricMatch(item),
-        ) &&
-        expect
-          .objectContaining({ replaceMerge: ['series'] })
-          .asymmetricMatch(config)
-      );
-    });
-
-    expect(calledWithExpectedArgs).toBe(true);
+    expect(result.current._getOptions().series).toContainEqual(
+      expect.objectContaining(newSeries),
+    );
   });
 
-  test('should properly update echarts instance on removeSeries call', async () => {
+  test('should properly update options state on removeSeries call', async () => {
     const { result } = await setupHook();
 
     const series: SeriesOption = {
-      id: 'series-1',
       name: 'test-series',
       data: [[1, 2]],
       type: 'line',
@@ -133,30 +118,16 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     await act(async () => {
       result.current.addSeries(series);
-      result.current.removeSeries('series-1');
+      result.current.removeSeries('test-series');
       await Promise.resolve();
     });
 
-    const calls = (result.current._getEChartsInstance()?.setOption as jest.Mock)
-      .mock.calls;
-
-    const calledWithExpectedArgs = calls.some(([option, config]) => {
-      const series = option?.series;
-      return (
-        Array.isArray(series) &&
-        series.some(item =>
-          expect.not.objectContaining(series).asymmetricMatch(item),
-        ) &&
-        expect
-          .objectContaining({ replaceMerge: ['series'] })
-          .asymmetricMatch(config)
-      );
-    });
-
-    expect(calledWithExpectedArgs).toBe(true);
+    expect(result.current._getOptions().series).not.toContainEqual(
+      expect.objectContaining(series),
+    );
   });
 
-  test('should properly update echarts instance on updateOptions call', async () => {
+  test('should properly update options state on updateOptions call', async () => {
     const { result } = await setupHook();
 
     const newOptions = {
@@ -170,16 +141,9 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    const calls = (result.current._getEChartsInstance()?.setOption as jest.Mock)
-      .mock.calls;
-
-    const calledWithExpectedArgs = calls.some(([option]) => {
-      return expect
-        .objectContaining(newOptions.grid)
-        .asymmetricMatch(option?.grid);
-    });
-
-    expect(calledWithExpectedArgs).toBe(true);
+    expect(result.current._getOptions().grid).toEqual(
+      expect.objectContaining(newOptions.grid),
+    );
   });
 
   test('should add event handler on call of `on`', async () => {

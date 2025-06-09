@@ -1,3 +1,5 @@
+import type { AxisLabelValueFormatter } from '../Echart/Echart.types';
+
 export const XAxisType = {
   Log: 'log',
   Time: 'time',
@@ -24,5 +26,5 @@ export interface XAxisProps {
    * formatter: (value, index) => `${value}GB`
    * ```
    */
-  formatter?: (value: string, index: number) => string;
+  formatter?: AxisLabelValueFormatter | string;
 }

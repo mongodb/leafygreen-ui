@@ -18,7 +18,7 @@ export default [
     output: {
       ...umdConfig.output,
       dir: null,
-      file: 'dist/main.js',
+      file: 'dist/umd/main.js',
     },
   },
   {
@@ -36,7 +36,7 @@ export default [
     output: {
       ...umdConfig.output,
       dir: null,
-      file: 'dist/manager.js',
+      file: 'dist/umd/manager.js',
     },
   },
   {
@@ -54,7 +54,7 @@ export default [
     output: {
       ...umdConfig.output,
       dir: null,
-      file: 'dist/preview.js',
+      file: 'dist/umd/preview.js',
     },
   },
 ];

@@ -1,5 +1,55 @@
 # @lg-tools/cli
 
+## 0.10.0
+
+### Minor Changes
+
+- 0757cfbfc: Adds `--downlevel` option for `build-ts`. This option reads a package's package.json and exports downleveled `*.d.ts` files for all targets listed in `"typeVersions"`
+- 0757cfbfc: Updates Typescript build to TS5.8
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- 0757cfbfc: Updates `./bin` require reference to new UMD build directory
+- 0757cfbfc: Adds `--update` flag for build-ts
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [d71439b8e]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+  - @lg-tools/codemods@0.2.0
+  - @lg-tools/slackbot@0.2.17
+  - @lg-tools/validate@0.5.1
+  - @lg-tools/install@0.2.2
+  - @lg-tools/create@0.3.3
+  - @lg-tools/update@0.1.18
+  - @lg-tools/build@0.8.0
+  - @lg-tools/link@0.2.13
+  - @lg-tools/lint@3.0.0
+  - @lg-tools/test@0.4.19
+  - @lg-tools/prompt-kit@0.2.1
+
+## 0.9.2
+
+### Patch Changes
+
+- Updated dependencies [92fafc876]
+- Updated dependencies [e14fc7768]
+  - @lg-tools/codemods@0.1.6
+  - @lg-tools/prompt-kit@0.2.0
+
 ## 0.9.1
 
 ### Patch Changes

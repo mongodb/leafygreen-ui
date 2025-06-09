@@ -7,7 +7,7 @@ import {
   ElementType,
   PropsWithChildren,
   PropsWithoutRef,
-  ReactElement,
+  ReactNode,
   RefAttributes,
   WeakValidationMap,
 } from 'react';
@@ -109,7 +109,7 @@ export interface PolymorphicComponentType<
   <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
-  ): ReactElement | null;
+  ): ReactNode | null;
   displayName?: string;
   propTypes?:
     | WeakValidationMap<
@@ -133,7 +133,7 @@ export interface PolymorphicRenderFunction<
   <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
-  ): ReactElement | null;
+  ): ReactNode | null;
   displayName?: string;
   propTypes?: never;
 }

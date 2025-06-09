@@ -3,7 +3,7 @@ import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { getTestUtils } from '../utils';
+import { getTestUtils } from '../testing';
 import Toggle from '..';
 
 const className = 'test-className';

@@ -1,13 +1,35 @@
 {
-  "extends": "@lg-tools/build/config/package.tsconfig.json",
-   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src",
-    "baseUrl": "."
-  },
+  "extends": "@lg-tools/build/config/node.tsconfig.json",
+   "compilerOptions": {},
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"]
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "references": [
+    {
+      "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/palette"
+    },
+    {
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
+    },
+    {
+      "path": "../../tools/build"
+    },
+    {
+      "path": "../../tools/meta"
+    },
+    {
+      "path": "../../tools/storybook-decorators"
+    },
+    {
+      "path": "../../tools/storybook-utils"
+    },
+
+  ]
 }

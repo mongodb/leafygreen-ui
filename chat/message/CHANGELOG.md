@@ -1,5 +1,52 @@
 # @lg-chat/message
 
+## 6.0.0
+
+### Major Changes
+
+- 0757cfbfc: Updates Typescript build to TS5.8
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Adds missing `@lg-tools/` devDependencies.
+  Updates `build`, `tsc` & `docs` scripts to use `lg-build *` cli
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+  - @lg-chat/leafygreen-chat-provider@4.0.0
+  - @leafygreen-ui/leafygreen-provider@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.0
+  - @leafygreen-ui/typography@21.0.0
+  - @lg-chat/lg-markdown@4.0.0
+  - @leafygreen-ui/emotion@5.0.0
+  - @leafygreen-ui/palette@5.0.0
+  - @lg-chat/rich-links@3.0.0
+  - @leafygreen-ui/banner@10.0.0
+  - @leafygreen-ui/tokens@3.0.0
+  - @leafygreen-ui/lib@15.0.0
+
+## 5.0.17
+
+### Patch Changes
+
+- @lg-chat/lg-markdown@3.0.17
+
+## 5.0.16
+
+### Patch Changes
+
+- @lg-chat/rich-links@2.0.12
+- @leafygreen-ui/banner@9.0.13
+- @leafygreen-ui/typography@20.1.9
+- @lg-chat/lg-markdown@3.0.16
+
 ## 5.0.15
 
 ### Patch Changes

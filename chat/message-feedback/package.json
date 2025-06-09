@@ -1,22 +1,16 @@
 {
   "name": "@lg-chat/message-feedback",
-  "version": "4.0.9",
+  "version": "5.0.0",
   "description": "LeafyGreen UI Kit Message Feedback",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "license": "Apache-2.0",
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "publishConfig": {
     "access": "public"
@@ -35,7 +29,8 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "devDependencies": {
-    "@lg-chat/message-rating": "workspace:^"
+    "@lg-chat/message-rating": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

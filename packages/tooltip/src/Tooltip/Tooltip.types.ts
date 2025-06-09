@@ -67,7 +67,7 @@ export type TooltipProps = Omit<
      * The `tooltip` content is rendered (via `Popover`) as a child of the trigger,
      * and if the trigger does not render any children, then the trigger will not be rendered.
      */
-    trigger?: React.ReactElement | Function;
+    trigger?: React.ReactElement | ((props: any) => React.ReactElement);
 
     /**
      * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.

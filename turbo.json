@@ -2,15 +2,15 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "prebuild": {
-      "dependsOn": ["^prebuild"]
+      "dependsOn": ["^prebuild", "^build", "^tsc"]
     },
     "build": {
-      "dependsOn": ["^build", "prebuild", "^prebuild"],
+      "dependsOn": ["^build", "^prebuild", "prebuild"],
       "inputs": ["$TURBO_DEFAULT$", "!**/*.stories.{tsx,jsx,mdx}"],
       "outputs": ["dist/**/*.js", "dist/**/*.js.map", "stories.js"]
     },
     "tsc": {
-      "dependsOn": ["^tsc", "prebuild", "^prebuild"],
+      "dependsOn": ["^tsc", "^prebuild", "prebuild"],
       "outputs": [
         "dist/**/*.d.ts",
         "dist/**/*.d.ts.map",

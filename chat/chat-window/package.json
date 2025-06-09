@@ -1,20 +1,14 @@
 {
   "name": "@lg-chat/chat-window",
-  "version": "3.0.14",
+  "version": "4.0.0",
   "description": "lg-chat Chat Window",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -34,8 +28,9 @@
     "@lg-chat/input-bar": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feed": "workspace:^",
+    "@lg-chat/message-feedback": "workspace:^",
     "@lg-chat/message-prompts": "workspace:^",
-    "@lg-chat/message-feedback": "workspace:^"
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

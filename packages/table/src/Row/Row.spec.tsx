@@ -7,7 +7,7 @@ import { axe } from 'jest-axe';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { getLgIds } from '../utils';
-import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
+import { getTestUtils } from '../testing';
 import { Person } from '../utils/makeData.testutils';
 import { useMockTestRowData } from '../utils/testHookCalls.testutils';
 

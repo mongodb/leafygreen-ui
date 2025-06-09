@@ -10,9 +10,6 @@ import { DatePickerComponentRefs } from './DatePickerContext.types';
 export const useDateRangeComponentRefs = (): DatePickerComponentRefs => {
   const segmentRefs = useSegmentRefs();
 
-  // TODO: https://jira.mongodb.org/browse/LG-3666
-  // useDynamicRefs may overflow if a user navigates to too many months.
-  // consider purging the refs map within the hook
   const calendarCellRefs = useDynamicRefs<HTMLTableCellElement>();
 
   const calendarButtonRef = useRef<HTMLButtonElement>(null);

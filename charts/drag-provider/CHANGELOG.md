@@ -1,5 +1,57 @@
 # @lg-charts/drag-provider
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [4e7a6b536]
+  - @lg-charts/core@1.2.0
+
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [4d350c5fb]
+  - @lg-charts/core@1.1.0
+
+## 1.0.0
+
+### Minor Changes
+
+- 0757cfbfc: Updates Typescript build to TS5.8
+
+### Patch Changes
+
+- 0757cfbfc: Adds `@lg-tools/build` as a dev dependency
+- 0757cfbfc: Adds missing `@lg-tools/` devDependencies.
+  Updates `build`, `tsc` & `docs` scripts to use `lg-build *` cli
+- 0757cfbfc: Updates `types` entry point to `./dist/types`.
+  Removes redundant `compilerOptions` from TSConfig
+- 0757cfbfc: Updates `main` entry point in package.json to `./dist/umd`
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [0757cfbfc]
+- Updated dependencies [21371bddd]
+- Updated dependencies [0757cfbfc]
+  - @leafygreen-ui/leafygreen-provider@5.0.0
+  - @lg-charts/chart-card@1.0.0
+  - @lg-charts/core@1.0.0
+
+## 0.2.8
+
+### Patch Changes
+
+- Updated dependencies [9173c66ff]
+  - @lg-charts/core@0.18.0
+
+## 0.2.7
+
+### Patch Changes
+
+- @lg-charts/chart-card@0.2.5
+- @lg-charts/core@0.17.4
+
 ## 0.2.6
 
 ### Patch Changes

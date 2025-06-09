@@ -3,7 +3,7 @@ import { fireEvent, getByLabelText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { getTestUtils } from '../utils';
+import { getTestUtils } from '../testing';
 
 import { TextArea, TextAreaProps } from '.';
 

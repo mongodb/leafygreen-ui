@@ -12,6 +12,10 @@ import type { ComposeOption, EChartsType } from 'echarts/core';
 
 import { Theme } from '@leafygreen-ui/lib';
 
+// Type not exported by echarts.
+// reference: https://github.com/apache/echarts/blob/master/src/coord/axisCommonTypes.ts#L193
+export type AxisLabelValueFormatter = (value: number, index?: number) => string;
+
 type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type EChartSeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
   Partial<Omit<LineSeriesOption, RequiredSeriesProps>>;
@@ -99,15 +103,21 @@ export interface EChartSetupZoomSelectProps {
 }
 
 interface EChartsEventHandlerType {
-  (event: EChartEventsType, callback: (params: any) => void): void;
+  (
+    event: EChartEventsType,
+    callback: (params: any) => void,
+    options?: Partial<{ useCanvasAsTrigger: boolean }>,
+  ): void;
   (
     event: 'zoomselect',
     callback: (params: EChartZoomSelectionEvent) => void,
+    options?: Partial<{ useCanvasAsTrigger: boolean }>,
   ): void;
 }
 
 export interface EChartsInstance {
   _getEChartsInstance: () => EChartsType | null;
+  _getOptions: () => Partial<EChartOptions>;
   addSeries: (series: EChartSeriesOption) => void;
   addToGroup: (groupId: string) => void;
   disableZoom: () => void;
@@ -118,13 +128,11 @@ export interface EChartsInstance {
   on: EChartsEventHandlerType;
   ready: boolean;
   removeFromGroup: () => void;
-  removeSeries: (id: string) => void;
+  removeSeries: (name: string) => void;
   resize: () => void;
   setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
-  updateOptions: (
-    options: Omit<Partial<EChartOptions>, 'series'>,
-    replaceMerge?: Array<string>,
-  ) => void;
+  showTooltip: (x: number, y: number) => void;
+  updateOptions: (options: Omit<Partial<EChartOptions>, 'series'>) => void;
 }
 
 export interface EChartHookProps {

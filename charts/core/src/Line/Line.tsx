@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import { colors } from '@lg-charts/colors';
 import { useSeriesContext } from '@lg-charts/series-provider';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../ChartContext';
@@ -15,14 +13,9 @@ export function Line({ name, data }: LineProps) {
   const {
     chart: { addSeries, ready, removeSeries },
   } = useChartContext();
-  const { getSeriesIndex, isChecked } = useSeriesContext();
+  const { getColor, isChecked } = useSeriesContext();
 
-  const id = useIdAllocator({ prefix: 'line' });
-
-  const themedColors = colors[theme];
-  const colorIndex = getSeriesIndex(name) % themedColors.length; // loop through colors if more lines than available colors
-  const color = themedColors[colorIndex];
-
+  const color = getColor(name, theme);
   const isVisible = isChecked(name);
 
   useEffect(() => {
@@ -31,20 +24,19 @@ export function Line({ name, data }: LineProps) {
     if (isVisible) {
       addSeries({
         ...defaultLineOptions,
-        id,
         name,
         data,
         lineStyle: {
           ...defaultLineOptions.lineStyle,
-          color,
+          color: color || undefined,
         },
         itemStyle: {
           ...defaultLineOptions.itemStyle,
-          color,
+          color: color || undefined,
         },
       });
     } else {
-      removeSeries(id);
+      removeSeries(name);
     }
 
     return () => {
@@ -52,9 +44,9 @@ export function Line({ name, data }: LineProps) {
        * Remove the series when the component unmounts to make sure the series
        * is removed when a `Line` is hidden.
        */
-      removeSeries(id);
+      removeSeries(name);
     };
-  }, [addSeries, color, data, id, isVisible, name, ready, removeSeries, theme]);
+  }, [addSeries, color, data, isVisible, name, ready, removeSeries, theme]);
 
   return null;
 }
