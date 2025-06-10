@@ -128,6 +128,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           id={id}
           ref={drawerRef}
           onAnimationEnd={handleAnimationEnd}
+          inert={!open ? 'inert' : undefined}
           {...rest}
         >
           <div className={getDrawerShadowStyles({ theme, displayMode })}>
