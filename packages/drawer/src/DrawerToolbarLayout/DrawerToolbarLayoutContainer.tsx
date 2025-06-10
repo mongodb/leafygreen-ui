@@ -42,8 +42,12 @@ export const DrawerToolbarLayoutContainer = forwardRef<
     const { id, title, content } = getActiveDrawerContent() || {};
     const lgIds = getLgIds(dataLgId);
     const hasData = toolbarData && toolbarData.length > 0;
+    const toolbarRefs = React.useRef<Record<string, HTMLButtonElement>>({});
 
     const handleOnClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+      // If the drawer is embedded and closed, we want to focus the toolbar icon that was clicked else the focus will be lost.
+      if (id && displayMode === DisplayMode.Embedded)
+        toolbarRefs.current[id]?.focus();
       onClose?.(event);
       closeDrawer();
     };
@@ -91,6 +95,11 @@ export const DrawerToolbarLayoutContainer = forwardRef<
                   );
                 }}
                 active={toolbarItem.id === id}
+                ref={el => {
+                  if (el) {
+                    toolbarRefs.current[toolbarItem.id] = el;
+                  }
+                }}
               />
             ))}
           </Toolbar>
@@ -100,6 +109,8 @@ export const DrawerToolbarLayoutContainer = forwardRef<
             onClose={handleOnClose}
             title={title}
             data-lgid={`${dataLgId}`}
+            aria-live="polite"
+            aria-atomic="true"
           >
             {content}
           </Drawer>

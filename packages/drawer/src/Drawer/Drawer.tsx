@@ -29,6 +29,16 @@ import {
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 
+const focusFirstFocusable = (element: HTMLElement) => {
+  const getFirstFocusable = (element: HTMLElement) =>
+    element.querySelector(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+
+  const firstFocusable = getFirstFocusable(element);
+  (firstFocusable as HTMLElement)?.focus();
+};
+
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
     {
@@ -51,6 +61,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
+    const [initialRender, setInitialRender] = useState(true);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
@@ -91,8 +102,22 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
+    // Focus the first focusable element in the embedded drawer when it opens.
+    useEffect(() => {
+      if (open && initialRender && displayMode === DisplayMode.Embedded) {
+        const drawerElement = ref.current;
+
+        if (drawerElement instanceof HTMLDivElement)
+          focusFirstFocusable(drawerElement);
+
+        setInitialRender(false);
+      }
+
+      if (!open) setInitialRender(true);
+    }, [ref, open]);
+
     /**
-     * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
+     * Focuses the first focusable element in the drawer when the animation ends in a standalone overlay Drawer. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
      *
      */
     const handleAnimationEnd = () => {
@@ -103,12 +128,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         return;
       }
 
-      if (open) {
-        const firstFocusable = drawerElement.querySelector(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
-        (firstFocusable as HTMLElement)?.focus();
-      }
+      if (open) focusFirstFocusable(drawerElement);
     };
 
     return (
@@ -128,6 +148,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           id={id}
           ref={drawerRef}
           onAnimationEnd={handleAnimationEnd}
+          inert={!open ? 'inert' : undefined}
           {...rest}
         >
           <div className={getDrawerShadowStyles({ theme, displayMode })}>
