@@ -86,7 +86,9 @@
 
 
 # What's changed
-- Going forward a `Drawer` + `Toolbar` is the recommended usage. If you must use a `Drawer` without a `Toolbar`, it is encouraged to wrap the `Drawer` in the new `DrawerLayout` component. This will handle the layout shift that occurs when the `Drawer` is opened and closed, ensuring a consistent user experience.
+- Going forward a `Drawer` + `Toolbar` is the recommended usage. If you must use a `Drawer` without a `Toolbar`, it is encouraged to wrap the `Drawer` in the new `DrawerLayout` component. This will handle the layout shift that occurs when the `Drawer` is opened and closed, ensuring a consistent user experience. 
+
+  _Note_: An `overlay` `Drawer` no longer uses `position: fixed` to position itself. Instead, it uses `position: absolute` to ensure that the `Drawer` is positioned relative to its parent container. 
 
   **Usage without `Toolbar`**
   ```tsx
