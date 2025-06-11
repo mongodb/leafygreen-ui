@@ -43,7 +43,7 @@ const startServer = async () => {
     },
     corsOptions: {
       withCredentials: true,
-      methods: ['GET'],
+      methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
       origin: process.env.CORS_ORIGIN || '*',
     },
     maxRequestTimeoutMs: 30000,
