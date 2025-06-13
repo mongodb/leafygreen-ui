@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { DrawerStackProvider } from '../DrawerStackContext';
-import { getTestUtils } from '../utils';
+import { getTestUtils } from '../testing';
 
 import { DisplayMode, Drawer, DrawerProps } from '.';
 
