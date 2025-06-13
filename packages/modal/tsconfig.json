@@ -20,6 +20,9 @@
   ],
   "references": [
     {
+      "path": "../button"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -38,10 +41,13 @@
       "path": "../palette"
     },
     {
-      "path": "../portal"
+      "path": "../toast"
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../tooltip"
     },
     {
       "path": "../leafygreen-provider"

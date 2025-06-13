@@ -14,7 +14,9 @@ import Code, { Panel } from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
-import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { ToastProvider, useToast } from '@leafygreen-ui/toast';
+import { spacing } from '@leafygreen-ui/tokens';
+import Tooltip from '@leafygreen-ui/tooltip';
 import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
 
 import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
@@ -92,7 +94,7 @@ const Template: StoryFn<ModalProps> = (args: ModalProps) => {
     <div
       className={css`
         height: 100vh;
-        min-height: ${breakpoints.Desktop};
+        min-height: 1024px;
       `}
     >
       <Modal {...args} />
@@ -135,7 +137,7 @@ export const DefaultSelect = (args: ModalProps) => {
     <div
       className={css`
         height: 100vh;
-        min-height: ${breakpoints.Desktop};
+        min-height: 1024px;
       `}
     >
       <Modal {...args}>
@@ -156,6 +158,7 @@ export const DefaultSelect = (args: ModalProps) => {
               name="pets"
               value={value}
               onChange={setValue}
+              renderMode="top-layer"
             >
               <OptionGroup label="Common">
                 <Option value="dog">Dog</Option>
@@ -168,6 +171,75 @@ export const DefaultSelect = (args: ModalProps) => {
       </Modal>
     </div>
   );
+};
+
+export const PortalSelect = (args: ModalProps) => {
+  const [value, setValue] = useState('cat');
+  const portalRef = React.useRef<HTMLDivElement>(null);
+  const [container, setContainer] =
+    React.useState<React.MutableRefObject<HTMLDivElement> | null>(null);
+
+  React.useEffect(() => {
+    if (portalRef.current) {
+      /* @ts-ignore mutable versus immutable ref object */
+      setContainer(portalRef);
+    }
+  }, [portalRef]);
+
+  return (
+    <div
+      className={css`
+        height: 100vh;
+        min-height: 1024px;
+      `}
+    >
+      <Modal {...args} portalRef={portalRef}>
+        <div className={margin}>
+          <Subtitle>Modal Content goes here.</Subtitle>
+          {faker.lorem
+            .paragraphs(5, '\n')
+            .split('\n')
+            .map(p => (
+              <Body>{p}</Body>
+            ))}
+
+          <div>
+            <Select
+              label="label"
+              size="small"
+              placeholder="animals"
+              name="pets"
+              value={value}
+              onChange={setValue}
+              renderMode="portal"
+              portalContainer={container?.current}
+            >
+              <OptionGroup label="Common">
+                <Option value="dog">Dog</Option>
+                <Option value="cat">Cat</Option>
+                <Option value="axolotl">Axolotl</Option>
+              </OptionGroup>
+            </Select>
+
+            <div id="test">
+              {faker.lorem
+                .paragraphs(5, '\n')
+                .split('\n')
+                .map(p => (
+                  <Body>{p}</Body>
+                ))}
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
+PortalSelect.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
 };
 
 export function CopyableModal(args: ModalProps) {
@@ -199,7 +271,7 @@ console.log(greeting('World'));
     <div
       className={css`
         height: 100vh;
-        min-height: ${breakpoints.Desktop};
+        min-height: 1024px;
       `}
     >
       <Modal {...args}>
@@ -212,6 +284,79 @@ console.log(greeting('World'));
           </Code>
         </div>
       </Modal>
+    </div>
+  );
+}
+
+export function TooltipTrigger(args: ModalProps) {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <>
+      <Tooltip
+        trigger={
+          <Button onClick={() => setOpen(curr => !curr)}>Click me</Button>
+        }
+      >
+        Lorem Ipsum
+      </Tooltip>
+      <Modal {...args} open={open} setOpen={setOpen} />
+    </>
+  );
+}
+
+TooltipTrigger.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
+};
+
+const ModalExample = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setOpen(o => !o)}>Open Modal</button>
+      <Modal
+        className={css`
+          div[role='dialog'] {
+            width: 1040px;
+          }
+        `}
+        open={open}
+        setOpen={setOpen}
+      >
+        Conent that appears inside of a modalVestibulum id ligula porta felis
+        euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
+        consectetur et. Etiam porta sem malesuada magna mollis euismod. Aenean
+        lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque
+        ornare sem lacinia quam venenatis vestibulum.
+      </Modal>
+    </div>
+  );
+};
+
+export const Container = () => {
+  const { pushToast } = useToast();
+
+  const createToast = () => {
+    pushToast({
+      title: 'Toast Title',
+      description: 'Toast Description',
+      variant: 'success',
+      timeout: null,
+    });
+  };
+
+  return <button onClick={createToast}>Create toast</button>;
+};
+
+export function Example() {
+  return (
+    <div>
+      <ModalExample />
+      <ToastProvider portalClassName="testing-classname">
+        <Container />
+      </ToastProvider>
     </div>
   );
 }
