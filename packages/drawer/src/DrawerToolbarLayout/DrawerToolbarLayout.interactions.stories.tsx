@@ -18,6 +18,9 @@ import { getTestUtils } from '../testing';
 import { DrawerToolbarLayout } from './DrawerToolbarLayout';
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 
+const SEED = 0;
+faker.seed(SEED);
+
 const excludedControls = [
   ...storybookExcludedControlParams,
   'children',

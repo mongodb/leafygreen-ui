@@ -113,5 +113,10 @@ export const InLayout: StoryFn<ToolbarProps> = (args: ToolbarProps) => {
     </div>
   );
 };
+InLayout.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Generated = () => <></>;
