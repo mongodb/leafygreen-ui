@@ -15,6 +15,11 @@ export interface BaseRichLinkProps
    * A URL for the background image of the rich link
    */
   imageUrl?: string;
+
+  /**
+   * A callback function that is called when the link is clicked.
+   */
+  onLinkClick?: (props: Omit<BaseRichLinkProps, 'onLinkClick'>) => void;
 }
 
 export interface RichLinkVariantControlProps {

@@ -11,6 +11,11 @@ export interface MessageLinksProps
   headingText?: string;
 
   /**
+   * A callback function that is called when any link is clicked.
+   */
+  onLinkClick?: RichLinkProps['onLinkClick'];
+
+  /**
    * An list of link data to render in the links section.
    */
   links: Array<RichLinkProps>;
