@@ -1,5 +1,17 @@
 # @leafygreen-ui/side-nav
 
+## 17.0.1
+
+### Patch Changes
+
+- Updated dependencies [8df5cd4ed]
+- Updated dependencies [4bd4da36a]
+- Updated dependencies [9de60ce65]
+  - @leafygreen-ui/tooltip@14.0.1
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/polymorphic@3.0.1
+  - @leafygreen-ui/typography@21.0.1
+
 ## 17.0.0
 
 ### Major Changes

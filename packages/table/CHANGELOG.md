@@ -1,5 +1,17 @@
 # @leafygreen-ui/table
 
+## 14.0.1
+
+### Patch Changes
+
+- Updated dependencies [4bd4da36a]
+- Updated dependencies [9de60ce65]
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/polymorphic@3.0.1
+  - @leafygreen-ui/checkbox@17.0.1
+  - @leafygreen-ui/icon-button@17.0.1
+  - @leafygreen-ui/typography@21.0.1
+
 ## 14.0.0
 
 ### Major Changes
