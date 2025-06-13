@@ -15,8 +15,8 @@
     "dev": "tsx src/index.ts",
     "start": "node dist/esm/index.js",
     "docker:build": "docker build -t chatbot-server --file ./Dockerfile ../..",
-    "docker:prune": "docker builder prune --filter \"label=app=chatbot-server\" -f",
-    "docker:start": "docker run -p 3030:3030 chatbot-server",
+    "docker:prune": "docker builder prune --filter \"label=chatbot-server\" -f",
+    "docker:start": "docker run -p 8080:8080 chatbot-server",
     "kanopy:init": "./scripts/init.sh",
     "kanopy:forward": "./scripts/fwd.sh"
   },

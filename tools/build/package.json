@@ -14,7 +14,7 @@
   "module": "dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build": "./scripts/build.sh",
+    "build": "rollup -c ./rollup.config.mjs",
     "tsc": "./scripts/build-ts.sh"
   },
   "dependencies": {
