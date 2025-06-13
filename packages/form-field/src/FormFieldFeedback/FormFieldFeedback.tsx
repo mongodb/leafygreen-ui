@@ -6,12 +6,12 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { color } from '@leafygreen-ui/tokens';
 import { Body, Error, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { LGIDS_FORM_FIELD } from '../constants';
 import {
   convertFormFieldStateToIconVariant,
   getFontSizeStyles,
 } from '../FormField/FormField.styles';
 import { FormFieldState } from '../FormField/FormField.types';
+import { useFormFieldContext } from '../FormFieldContext';
 
 import {
   containerStyles,
@@ -36,6 +36,7 @@ export const FormFieldFeedback = ({
   const { theme } = useDarkMode();
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const fontStyles = getFontSizeStyles({ baseFontSize, size });
+  const { lgIds } = useFormFieldContext();
 
   const isErrorState = state === FormFieldState.Error;
   const isValidState = state === FormFieldState.Valid;
@@ -53,8 +54,8 @@ export const FormFieldFeedback = ({
   return (
     <div
       id={id}
-      data-lgid={LGIDS_FORM_FIELD.feedback}
-      data-testid={LGIDS_FORM_FIELD.feedback}
+      data-lgid={lgIds.feedback}
+      data-testid={lgIds.feedback}
       className={cx(containerStyles, {
         [spacingTop]: showFormFieldFeedback,
         [hideContainerStyle]: hideFeedback,
@@ -72,16 +73,16 @@ export const FormFieldFeedback = ({
           )}
           {isErrorState ? (
             <Error
-              data-lgid={LGIDS_FORM_FIELD.errorMessage}
-              data-testid={LGIDS_FORM_FIELD.errorMessage}
+              data-lgid={lgIds.errorMessage}
+              data-testid={lgIds.errorMessage}
               className={fontStyles}
             >
               {errorMessage}
             </Error>
           ) : (
             <Body
-              data-lgid={LGIDS_FORM_FIELD.successMessage}
-              data-testid={LGIDS_FORM_FIELD.successMessage}
+              data-lgid={lgIds.successMessage}
+              data-testid={lgIds.successMessage}
               className={fontStyles}
             >
               {successMessage}

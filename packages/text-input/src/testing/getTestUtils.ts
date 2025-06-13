@@ -1,15 +1,20 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
-import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
-import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
+import { getLgIds as getLgFormFieldIds } from '@leafygreen-ui/form-field';
+import { LgIdString } from '@leafygreen-ui/lib';
+import { getLgIds as getLgTypographyLgIds } from '@leafygreen-ui/typography';
 
-import { LGIDS_TEXT_INPUT } from '../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
-  lgId: string = LGIDS_TEXT_INPUT.root,
+  lgId: LgIdString = DEFAULT_LGID_ROOT,
 ): TestUtilsReturnType => {
+  const lgIds = getLgIds(lgId);
+  const lgFormFieldIds = getLgFormFieldIds(lgIds.root);
+  const typographyLgIds = getLgTypographyLgIds(lgIds.root);
+
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
@@ -21,7 +26,7 @@ export const getTestUtils = (
    */
   const getLabel = queryBySelector<HTMLLabelElement>(
     element,
-    `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
+    `[data-lgid=${typographyLgIds.label}]`,
   );
 
   /**
@@ -29,7 +34,7 @@ export const getTestUtils = (
    */
   const getDescription = queryBySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
+    `[data-lgid=${typographyLgIds.description}]`,
   );
 
   /**
@@ -45,7 +50,7 @@ export const getTestUtils = (
    */
   const getErrorMessage = queryBySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGIDS_FORM_FIELD.errorMessage}]`,
+    `[data-lgid=${lgFormFieldIds.errorMessage}]`,
   );
 
   /**
@@ -97,7 +102,7 @@ export const getTestUtils = (
   const isOptional = () => {
     const optionalEl = queryBySelector<SVGElement>(
       element,
-      `[data-lgid=${LGIDS_FORM_FIELD.optional}]`,
+      `[data-lgid=${lgFormFieldIds.optional}]`,
     );
 
     return !!optionalEl;
