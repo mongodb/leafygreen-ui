@@ -4,10 +4,12 @@ import { axe } from 'jest-axe';
 
 import { ChartHeader } from './ChartHeader';
 
+const defaultIconTestId = 'title-icon';
 const defaultContentTestId = 'header-content';
 
 const defaultProps = {
   title: 'test',
+  titleIcon: <span data-testid={defaultIconTestId}>Icon</span>,
   headerContent: <div data-testid={defaultContentTestId}></div>,
 };
 
@@ -24,6 +26,11 @@ describe('@lg-charts/core/src/ChartHeader/ChartHeader', () => {
   test('should display title value', () => {
     renderChartHeader();
     expect(screen.getByText(defaultProps.title)).toBeInTheDocument();
+  });
+
+  test('render component passed to titleIcon', () => {
+    renderChartHeader();
+    expect(screen.getByTestId(defaultIconTestId)).toBeInTheDocument();
   });
 
   test('render component passed to headerContent', () => {

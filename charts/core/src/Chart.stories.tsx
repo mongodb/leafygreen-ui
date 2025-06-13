@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
@@ -965,6 +965,77 @@ export const WithHeaderContent: StoryObj<{}> = {
       <Chart>
         <ChartHeader
           title="Header"
+          showDivider
+          headerContent={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                height: '100%',
+              }}
+            >
+              Header Content{' '}
+            </div>
+          }
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithHeaderTitleIcon: StoryObj<{
+  headerTitle: ChartHeaderProps['title'];
+  headerTitleIcon: ChartHeaderProps['titleIcon'];
+}> = {
+  args: {
+    headerTitle: 'Header',
+    headerTitleIcon: (() => {
+      const TooltipIcon: React.FC = () => {
+        const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+        const handleMouseEnter = () => setIsTooltipVisible(true);
+        const handleMouseLeave = () => setIsTooltipVisible(false);
+
+        return (
+          <div
+            style={{ position: 'relative' }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div style={{ cursor: 'pointer' }}>🍀</div>
+            {isTooltipVisible && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  padding: '4px 8px',
+                  backgroundColor: 'black',
+                  color: 'white',
+                  borderRadius: '4px',
+                  opacity: 1,
+                }}
+              >
+                Tooltip
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      return <TooltipIcon />;
+    })(),
+  },
+  render: ({ headerTitle, headerTitleIcon }) => {
+    return (
+      <Chart>
+        <ChartHeader
+          title={headerTitle}
+          titleIcon={headerTitleIcon}
           showDivider
           headerContent={
             <div

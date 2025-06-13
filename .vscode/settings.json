@@ -12,9 +12,7 @@
   "eslint.lintTask.enable": true,
   "eslint.format.enable": true,
   "eslint.runtime": "node",
-  "eslint.workingDirectories": [
-    "./"
-  ],
+  "eslint.workingDirectories": ["./"],
   "typescript.preferences.importModuleSpecifier": "project-relative",
   "github.copilot.chat.codeGeneration.instructions": [
     {
@@ -30,5 +28,6 @@
     {
       "file": "node_modules/@lg-tools/prompt-kit/src/prompts/testGeneration.md"
     }
-  ]
+  ],
+  "cSpell.words": ["leafygreen"]
 }

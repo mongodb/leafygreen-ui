@@ -117,6 +117,7 @@ Component for rendering a header in a chart.
 | Name                         | Description                                                                                                                                           | Type              | Default |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------- |
 | `title`                      | The title to display in the chart header.                                                                                                             | `string`          |         |
+| `titleIcon` _(optional)_     | Content rendered immediately right of the title. Useful for quick contextual tooltips or other information concerning the title.                      | `React.ReactNode` |         |
 | `showDivider` _(optional)_   | When true, renders a dividing line on top of header. Useful when stacking charts, such as in a `ChartGroup`.                                          | `boolean`         |         |
 | `headerContent` _(optional)_ | Content that will be rendered to the right of the title. Useful for adding components such as `IconButton`'s that control functionality in the chart. | `React.ReactNode` |         |
 
