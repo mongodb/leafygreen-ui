@@ -1,5 +1,14 @@
 # @leafygreen-ui/text-area
 
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [4bd4da36a]
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/form-field@3.0.1
+  - @leafygreen-ui/typography@21.0.1
+
 ## 11.0.0
 
 ### Major Changes

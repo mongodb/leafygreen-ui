@@ -1,5 +1,16 @@
 # @leafygreen-ui/guide-cue
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [8df5cd4ed]
+  - @leafygreen-ui/tooltip@14.0.1
+  - @leafygreen-ui/button@24.0.1
+  - @leafygreen-ui/icon-button@17.0.1
+  - @leafygreen-ui/popover@14.0.1
+  - @leafygreen-ui/typography@21.0.1
+
 ## 8.0.0
 
 ### Major Changes
