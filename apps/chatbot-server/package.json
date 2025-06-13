@@ -14,6 +14,7 @@
     "ingest": "pnpm build && ingest all --config ./dist/esm/ingest.config.js",
     "dev": "tsx src/index.ts",
     "start": "node dist/esm/index.js",
+    "docker:prepare": "pnpm install",
     "docker:build": "docker build -t chatbot-server --file ./Dockerfile ../..",
     "docker:prune": "docker builder prune --filter \"label=chatbot-server\" -f",
     "docker:start": "docker run -p 8080:8080 chatbot-server",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
+    "@rollup/rollup-linux-arm64-musl": "^4.43.0",
     "mongodb-rag-ingest": "^0.3.1",
     "nodemon": "^3.0.1",
     "tsx": "^4.19.4",

@@ -11,6 +11,8 @@
   "include": ["./src/**/*.ts"],
   "exclude": ["node_modules", "dist"],
   "references": [
-    { "path": "../../tools/crawler" },
+    { 
+      "path": "../../tools/crawler"
+    },
   ],
 }

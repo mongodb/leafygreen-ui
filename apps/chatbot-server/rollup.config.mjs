@@ -8,6 +8,7 @@ const ingestESMConfig = {
 export default [
   {
     ...esmConfig,
+    external: [],
   },
   ingestESMConfig,
 ];
