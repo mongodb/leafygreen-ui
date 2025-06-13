@@ -1,1 +1,7 @@
-export { colors } from './colors';
+export {
+  colors,
+  type DarkColor,
+  darkColors,
+  type LightColor,
+  lightColors,
+} from './colors';

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/toast",
-  "version": "7.0.14",
+  "version": "8.0.0",
   "description": "leafyGreen UI Kit Toast",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

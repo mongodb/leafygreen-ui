@@ -41,6 +41,11 @@ const startServer = async () => {
       generateUserPrompt,
       systemPrompt,
     },
+    corsOptions: {
+      withCredentials: true,
+      methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
+      origin: process.env.CORS_ORIGIN || '*',
+    },
     maxRequestTimeoutMs: 30000,
   };
 

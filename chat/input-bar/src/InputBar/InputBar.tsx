@@ -2,7 +2,6 @@
 // This should be replaced in the future with more reusable logic.
 // https://jira.mongodb.org/browse/LG-3554
 import React, {
-  ChangeEventHandler,
   FocusEventHandler,
   FormEventHandler,
   ForwardedRef,
@@ -26,6 +25,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import {
   useAutoScroll,
   useBackdropClick,
+  useControlledValue,
   useDynamicRefs,
   useEventListener,
   useForwardedRef,
@@ -91,10 +91,19 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       prefix: 'suggested-prompt',
     });
     const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [messageBody, setMessageBody] = useState<string>(
-      textareaProps?.value?.toString() ?? '',
-    );
     const [isOpen, setOpen] = useState(false);
+
+    // Use controlled value hook to handle both controlled and uncontrolled modes
+    const {
+      value: messageBody,
+      handleChange,
+      updateValue,
+      isControlled,
+    } = useControlledValue<string>(
+      textareaProps?.value?.toString(),
+      textareaProps?.onChange,
+      '',
+    );
 
     // The index of the currently highlighted result option
     const [highlightIndex, setHighlightIndex] = useState<number | undefined>(
@@ -133,7 +142,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
             child.props.onClick?.(e); // call the child's onClick handler
 
             // Update the input value so the submit event has a target.value
-            setMessageBody(textValue);
+            updateValue(textValue, textareaRef);
             // allow the state update to be consumed in submit
             const submitTimeout = setTimeout(() => {
               formRef?.current?.requestSubmit();
@@ -172,9 +181,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
         resultsCount,
         updatedChildren,
       };
-      // FIXME:
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [children, highlightIndex, textareaRef, promptRefs, setMessageBody]);
+    }, [children, promptRefs, highlightIndex, updateValue, formRef]);
 
     const { updatedChildren, resultsCount } = useMemo(
       () => processChildren(),
@@ -188,14 +195,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       if (newState !== shouldRenderButtonText) {
         setShouldRenderButtonText(newState);
       }
-      // FIXME:
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [containerWidth]);
-
-    const handleChange: ChangeEventHandler<HTMLTextAreaElement> = e => {
-      setMessageBody(e.target.value);
-      textareaProps?.onChange && textareaProps?.onChange?.(e);
-    };
+    }, [containerWidth, shouldRenderButtonText]);
 
     type Direction = 'next' | 'prev' | 'first' | 'last';
     const updateHighlight = (direction: Direction) => {
@@ -254,11 +254,12 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                 formRef.current?.requestSubmit();
               } else if (e.ctrlKey || e.shiftKey) {
                 // ctrlKey + Enter doesn't enter a \n by default. Add character manually
+                const newValue = messageBody + '\n';
                 setReactTextAreaValue(
                   textareaRef?.current as HTMLTextAreaElement,
-                  messageBody + '\n',
+                  newValue,
                 );
-                setMessageBody(messageBody + '\n');
+                updateValue(newValue, textareaRef);
                 const changeEvent = new Event('change', { bubbles: true });
                 textareaRef.current?.dispatchEvent(changeEvent);
               }
@@ -320,7 +321,9 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       if (!isSendButtonDisabled()) {
         if (onMessageSend && messageBody) {
           onMessageSend(messageBody, e);
-          setMessageBody('');
+          if (!isControlled) {
+            updateValue('', textareaRef);
+          }
         }
         onSubmit?.(e);
       }

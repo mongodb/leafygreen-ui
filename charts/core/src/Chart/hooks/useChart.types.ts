@@ -5,6 +5,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import type { EChartsInstance, EChartZoomSelectionEvent } from '../../Echart';
 import { ChartStates } from '../Chart.types';
 
+import { UseTooltipVisibilityReturnObj } from './useTooltipVisibility.types';
+
 export type ZoomSelect =
   | {
       xAxis: boolean;
@@ -18,6 +20,11 @@ export type ZoomSelect =
 
 export interface ChartHookProps {
   theme: Theme;
+
+  /**
+   * The id of the chart.
+   */
+  chartId?: string;
 
   /**
    * Charts with the same `groupId` will have their tooltips synced across charts.
@@ -47,6 +54,8 @@ export interface ChartHookProps {
 
 export interface ChartInstance
   extends EChartsInstance,
-    Pick<ChartHookProps, 'state'> {
+    Pick<ChartHookProps, 'state'>,
+    UseTooltipVisibilityReturnObj {
+  id: string;
   ref: RefCallback<HTMLDivElement>;
 }

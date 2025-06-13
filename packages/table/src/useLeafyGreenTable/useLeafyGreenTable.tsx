@@ -30,7 +30,10 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   allowSelectAll = true,
   ...rest
 }: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
-  const [expanded, setExpanded] = useState<ExpandedState>({});
+  const [expanded, setExpanded] = useState<ExpandedState>(
+    (rest.initialState?.expanded as ExpandedState) ?? {},
+  );
+
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
    */

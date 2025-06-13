@@ -428,7 +428,9 @@ describe('packages/combobox', () => {
         });
         waitFor(() => {
           const allChips = queryChipsByName(['Apple', 'Banana']);
-          allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+          allChips?.forEach((chip: HTMLElement) =>
+            expect(chip).toBeInTheDocument(),
+          );
           expect(queryAllChips()).toHaveLength(2);
         });
       });
@@ -450,7 +452,9 @@ describe('packages/combobox', () => {
           const { openMenu } = renderCombobox('multiple', { initialValue });
           const { selectedElements } = openMenu();
           expect(
-            selectedElements?.every(element => element?.querySelector('input')),
+            selectedElements?.every((element: HTMLElement) =>
+              element?.querySelector('input'),
+            ),
           ).toBeTruthy();
         },
       );
@@ -547,13 +551,17 @@ describe('packages/combobox', () => {
             });
           waitFor(() => {
             const allChips = queryChipsByName(['Apple', 'Banana']);
-            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+            allChips?.forEach((chip: HTMLElement) =>
+              expect(chip).toBeInTheDocument(),
+            );
             expect(queryAllChips()).toHaveLength(2);
             value = ['banana', 'carrot'];
             rerenderCombobox({ value });
             waitFor(() => {
               const allChips = queryChipsByName(['Carrot', 'Banana']);
-              allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+              allChips?.forEach((chip: HTMLElement) =>
+                expect(chip).toBeInTheDocument(),
+              );
               expect(queryAllChips()).toHaveLength(2);
             });
           });
@@ -566,7 +574,9 @@ describe('packages/combobox', () => {
           });
           waitFor(() => {
             const allChips = queryChipsByName(['Apple']);
-            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+            allChips?.forEach((chip: HTMLElement) =>
+              expect(chip).toBeInTheDocument(),
+            );
             expect(queryChipsByName('Jellybean')).not.toBeInTheDocument();
             expect(queryAllChips()).toHaveLength(1);
           });
@@ -872,7 +882,9 @@ describe('packages/combobox', () => {
           await waitFor(() => {
             expect(appleChip).not.toBeInTheDocument();
             const allChips = queryChipsByName(['Banana', 'Carrot']);
-            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+            allChips?.forEach((chip: HTMLElement) =>
+              expect(chip).toBeInTheDocument(),
+            );
             expect(queryAllChips()).toHaveLength(2);
           });
         });

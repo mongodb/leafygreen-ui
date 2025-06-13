@@ -1,5 +1,8 @@
 /* eslint-disable no-console */
-import { recursiveCrawlFromBaseURL } from '@lg-tools/crawler';
+import {
+  type CrawlerCallback,
+  recursiveCrawlFromBaseURL,
+} from '@lg-tools/crawler';
 import { trimEnd } from 'lodash-es';
 import { Page } from 'mongodb-rag-core';
 import { type DataSource } from 'mongodb-rag-core/dataSources';
@@ -29,28 +32,27 @@ export async function webSourceConstructor(
       verbose && console.log(`🐶 Fetching source ${source}`);
       const pages: Array<Page> = [];
 
-      await recursiveCrawlFromBaseURL(
-        ({ document, title, href }) => {
-          verbose && console.log(`🪲 Crawled page ${title} - ${href}`);
-          pages.push({
-            url: href,
-            title,
-            body: document.pageContent,
-            format: 'txt',
-            sourceName: source,
-            metadata: {
-              id: document.id,
-              ...document.metadata,
-            },
-          });
-        },
-        {
-          baseUrl: source,
-          maxDepth,
-          verbose,
-          enableRecursion: true,
-        },
-      );
+      const crawlerCallback: CrawlerCallback = ({ document, title, href }) => {
+        verbose && console.log(`🪲 Crawled page ${title} - ${href}`);
+        pages.push({
+          url: href,
+          title,
+          body: document.pageContent,
+          format: 'txt',
+          sourceName: source,
+          metadata: {
+            id: document.id,
+            ...document.metadata,
+          },
+        });
+      };
+
+      await recursiveCrawlFromBaseURL(crawlerCallback, {
+        baseUrl: source,
+        maxDepth,
+        verbose,
+        enableRecursion: true,
+      });
 
       return pages;
     },
