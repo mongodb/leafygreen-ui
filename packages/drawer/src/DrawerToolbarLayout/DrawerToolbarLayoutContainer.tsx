@@ -100,6 +100,8 @@ export const DrawerToolbarLayoutContainer = forwardRef<
             onClose={handleOnClose}
             title={title}
             data-lgid={`${dataLgId}`}
+            aria-live="polite"
+            aria-atomic="true"
           >
             {content}
           </Drawer>

@@ -1,10 +1,11 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
 
-import { getTestUtils, Toolbar, ToolbarIconButton, ToolbarProps } from '.';
+import { getTestUtils } from './testing';
+import { Toolbar, ToolbarIconButton, ToolbarProps } from '.';
 
 export default {
   title: 'Components/Toolbar/Interactions',
@@ -16,7 +17,7 @@ export default {
     },
   },
   decorators: [
-    Story => (
+    (Story: StoryFn) => (
       <div style={{ position: 'relative', height: '40vh' }}>
         <Button data-testid="test-button-1">Tab</Button>
         <Story />
@@ -37,7 +38,7 @@ export default {
 const Template: StoryFn<typeof Toolbar> = props => <Toolbar {...props} />;
 
 // Hovering over the icon button should show the tooltip
-export const ShowTooltipOnHover = {
+export const ShowTooltipOnHover: StoryObj<ToolbarProps> = {
   render: (args: ToolbarProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -55,7 +56,7 @@ export const ShowTooltipOnHover = {
 };
 
 // Pressing Tab key should focus the first icon button
-export const FocusFirstIconButtonOnTab = {
+export const FocusFirstIconButtonOnTab: StoryObj<ToolbarProps> = {
   render: (args: ToolbarProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -79,7 +80,7 @@ export const FocusFirstIconButtonOnTab = {
 };
 
 // Pressing down arrow key should focus the next icon button
-export const FocusNextIconButtonOnArrowDown = {
+export const FocusNextIconButtonOnArrowDown: StoryObj<ToolbarProps> = {
   render: (args: ToolbarProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -108,7 +109,7 @@ export const FocusNextIconButtonOnArrowDown = {
 };
 
 // Pressing the down arrow key on the last icon button should focus the first icon button
-export const WrapFocusToFirstIconButtonOnArrowDown = {
+export const WrapFocusToFirstIconButtonOnArrowDown: StoryObj<ToolbarProps> = {
   render: (args: ToolbarProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -142,7 +143,7 @@ export const WrapFocusToFirstIconButtonOnArrowDown = {
 };
 
 // Pressing the up arrow key on the first icon button should focus the last icon button
-export const WrapFocusToLastIconButtonOnArrowUp = {
+export const WrapFocusToLastIconButtonOnArrowUp: StoryObj<ToolbarProps> = {
   render: (args: ToolbarProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -172,7 +173,7 @@ export const WrapFocusToLastIconButtonOnArrowUp = {
 };
 
 // Pressing tab twice should focus the second testing button
-export const FocusSecondButtonAfterTwoTabs = {
+export const FocusSecondButtonAfterTwoTabs: StoryObj<ToolbarProps> = {
   render: (args: ToolbarProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -201,7 +202,7 @@ export const FocusSecondButtonAfterTwoTabs = {
 };
 
 // Pressing Shift+Tab key should focus the first testing button
-export const ReverseFocusToFirstButtonWithShiftTab = {
+export const ReverseFocusToFirstButtonWithShiftTab: StoryObj<ToolbarProps> = {
   render: (args: ToolbarProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

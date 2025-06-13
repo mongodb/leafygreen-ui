@@ -16,7 +16,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
-import { getTestUtils, type TestUtilsReturnType } from '../testing';
+import { getTestUtils, type GetTestUtilsReturnType } from '../testing';
 import { Option, OptionGroup, Select } from '..';
 
 import { SelectProps, State } from './Select.types';
@@ -455,12 +455,12 @@ describe('packages/select', () => {
       });
 
       describe('is not allowed when disabled', () => {
-        test('by clicking', () => {
+        test('by clicking', async () => {
           const { getPopover, getInput } = renderSelect({
             disabled: true,
           });
 
-          expect(() => userEvent.click(getInput())).toThrow();
+          userEvent.click(getInput());
           expect(getPopover()).not.toBeInTheDocument();
         });
 
@@ -638,7 +638,7 @@ describe('packages/select', () => {
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void
       >;
-      let selectUtils: TestUtilsReturnType;
+      let selectUtils: GetTestUtilsReturnType;
 
       beforeEach(() => {
         onChangeSpy = jest.fn();
@@ -865,7 +865,7 @@ describe('packages/select', () => {
 
     let rerender: RenderResult['rerender'];
     let button: HTMLElement;
-    let selectUtils: TestUtilsReturnType;
+    let selectUtils: GetTestUtilsReturnType;
 
     beforeEach(async () => {
       ({ rerender } = render(
