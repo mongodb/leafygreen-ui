@@ -45,11 +45,9 @@ FROM base as build
   # Build the server app project
   RUN pnpm run build --filter="lg-chatbot-server"
 
-FROM base as production
-
-  COPY --from=build --chown=node:node ./ ./
+  RUN chown -R node:node /app
   USER node
-  
+
   # Set the working directory to the chatbot-server
   WORKDIR ./app/apps/chatbot-server
 
