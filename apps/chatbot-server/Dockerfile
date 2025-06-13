@@ -45,12 +45,15 @@ FROM base as build
   # Build the server app project
   RUN pnpm run build --filter="lg-chatbot-server"
 
-# FROM base as production
-#   COPY --from=build ./ ./
-#   # Set the working directory to the chatbot-server
-#   WORKDIR ./apps/chatbot-server
+FROM base as production
+  COPY --from=build ./ ./
+  RUN pwd
+  RUN ls ./
 
-#   EXPOSE $PORT
+  # Set the working directory to the chatbot-server
+  WORKDIR ./app/apps/chatbot-server
 
-#   # Start the server
-#   CMD ["pnpm", "start"]
+  EXPOSE $PORT
+
+  # Start the server
+  CMD ["pnpm", "start"]
