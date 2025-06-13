@@ -14,8 +14,8 @@
   "module": "dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build": "rollup -c ./rollup.config.mjs",
-    "tsc": "./scripts/build-ts.sh"
+    "build": "node ./scripts/build.js",
+    "tsc": "node ./scripts/build-ts.js"
   },
   "dependencies": {
     "@babel/core": "7.24.3",
