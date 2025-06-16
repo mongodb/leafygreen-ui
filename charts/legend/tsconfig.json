@@ -19,9 +19,6 @@
   ],
   "references": [
     {
-      "path": "../colors"
-    },
-    {
       "path": "../series-provider"
     },
     {

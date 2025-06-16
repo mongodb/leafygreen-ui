@@ -24,7 +24,6 @@ export interface CalloutProps extends HTMLElementProps<'div'>, DarkModeProps {
    */
   title?: string;
 
-  // TODO: Make sure this prop generates a Storybook control.
   /**
    * The base font size of the title and text rendered in children.
    */

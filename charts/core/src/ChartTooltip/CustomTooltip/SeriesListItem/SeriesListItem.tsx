@@ -32,12 +32,12 @@ export const SeriesListItem = ({
   }
 
   return (
-    <div className={containerStyle}>
+    <li className={containerStyle}>
       <div className={nameStyle}>
         <SeriesListItemColorDot color={color} />
         {name}
       </div>
       <div className={valueStyle}>{value}</div>
-    </div>
+    </li>
   );
 };

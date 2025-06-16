@@ -23,6 +23,9 @@ Be concise in your answers.
 
 // Start the server and clean up resources on SIGINT.
 const PORT = process.env.PORT || 3030;
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : [];
 
 const startServer = async () => {
   const {
@@ -40,6 +43,12 @@ const startServer = async () => {
       conversations,
       generateUserPrompt,
       systemPrompt,
+    },
+    corsOptions: {
+      credentials: true,
+      withCredentials: true,
+      methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
+      origin: allowedOrigins,
     },
     maxRequestTimeoutMs: 30000,
   };

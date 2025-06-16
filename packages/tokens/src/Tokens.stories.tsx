@@ -1,12 +1,14 @@
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { type StoryObj } from '@storybook/react';
+import { within } from '@storybook/test';
 import startCase from 'lodash/startCase';
 
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { Mode } from './mode';
+import { scrollbarColor } from './scrollbars';
 import {
   addOverflowShadow,
   borderRadius,
@@ -19,28 +21,38 @@ import {
   spacing,
   transitionDuration,
   typeScales,
+  Variant,
 } from '.';
 
-const Card = ({
+const DemoCard = ({
   children,
   darkMode,
+  className,
+  ...rest
 }: {
   children: React.ReactNode;
   darkMode: boolean;
+  className?: string;
+  [key: string]: any;
 }) => {
   const theme = darkMode ? Theme.Dark : Theme.Light;
 
   return (
     <div
-      className={css`
-        padding: 24px;
-        min-height: 68px; // 48px + 20px (padding + line-height)
-        border-radius: 24px;
-        color: ${color[theme].text.primary.default};
-        background-color: ${color[theme].background.primary.default};
-        border: 1px solid ${color[theme].border.secondary.default};
-        box-shadow: ${darkMode ? shadow.dark[100] : shadow.light[100]};
-      `}
+      className={cx(
+        css`
+          padding: ${spacing[600]}px;
+          min-height: ${spacing[1200] + typeScales.body1.lineHeight}px;
+          border-radius: ${spacing[600]}px;
+          color: ${color[theme].text.primary.default};
+          background-color: ${color[theme].background.primary.default};
+          border: 1px solid ${color[theme].border.secondary.default};
+          box-shadow: ${darkMode ? shadow.dark[100] : shadow.light[100]};
+        `,
+        className,
+      )}
+      data-testid={`demo-card`}
+      {...rest}
     >
       {children}
     </div>
@@ -100,7 +112,7 @@ export const OverflowShadows = () => {
         return (
           <div
             className={css`
-              padding: 24px;
+              padding: ${spacing[600]}px;
               color: ${color[theme].text.primary.default};
               background-color: ${backgroundColor};
               border: 1px solid ${color[theme].border.secondary.default};
@@ -270,7 +282,7 @@ export const FontFamilies = () => (
 const generateTable = (theme: Theme) => {
   const isDarkMode = !!(theme === Theme.Dark);
   return (
-    <Card darkMode={isDarkMode}>
+    <DemoCard darkMode={isDarkMode}>
       <h3
         className={css`
           color: ${color[theme].text.primary.default};
@@ -286,7 +298,7 @@ const generateTable = (theme: Theme) => {
         `}
       >
         {Object.keys(color[theme]).map(type => (
-          <Card darkMode={isDarkMode} key={`color-${theme}-${type}`}>
+          <DemoCard darkMode={isDarkMode} key={`color-${theme}-${type}`}>
             <table
               className={css`
                 border-spacing: ${spacing[400]}px;
@@ -330,6 +342,7 @@ const generateTable = (theme: Theme) => {
                   </th>
                 </tr>
               </thead>
+              {/* @ts-expect-error */}
               {Object.keys(color[theme][type]).map(variant => (
                 <tbody
                   key={`color-${theme}-${type}-${variant}`}
@@ -342,6 +355,7 @@ const generateTable = (theme: Theme) => {
                       <code>{variant}</code>
                     </td>
 
+                    {/* @ts-expect-error */}
                     {Object.keys(color[theme][type][variant]).map(state => (
                       <td key={`color-${theme}-${type}-${variant}-${state}`}>
                         <div
@@ -349,6 +363,7 @@ const generateTable = (theme: Theme) => {
                             aspect-ratio: 1/1;
                             border: 1px solid
                               ${color[theme].border.primary.default};
+                            // @ts-expect-error
                             background-color: ${color[theme][type][variant][
                               state
                             ]};
@@ -361,44 +376,118 @@ const generateTable = (theme: Theme) => {
                 </tbody>
               ))}
             </table>
-          </Card>
+          </DemoCard>
         ))}
       </div>
-    </Card>
+    </DemoCard>
   );
 };
 
-export const Colors = () => {
-  return (
-    <div
-      className={css`
-        display: flex;
-        flex-direction: column;
-        gap: ${spacing[400]}px;
-      `}
-    >
-      <h2>Color Tokens</h2>
-      {Object.values(Theme).map(theme => generateTable(theme))}
-    </div>
-  );
+export const Colors = {
+  render: () => {
+    return (
+      <div
+        className={css`
+          display: flex;
+          flex-direction: column;
+          gap: ${spacing[400]}px;
+        `}
+      >
+        <h2>Color Tokens</h2>
+        {Object.values(Theme).map(theme => generateTable(theme))}
+      </div>
+    );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
-Colors.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+export const Scrollbars: StoryObj = {
+  parameters: {
+    chromatic: {
+      // TODO: skipping for now until we can get Chromatic to snapshot the scrollbars
+      // https://github.com/storybookjs/storybook/discussions/31691#discussion-8425494
+      disableSnapshot: true,
+    },
+  },
+  render: () => {
+    return (
+      <div
+        className={css`
+          display: grid;
+          gap: ${spacing[400]}px;
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+        `}
+      >
+        {Object.values(Theme).map((theme: Theme) => {
+          const isDarkMode = theme === Theme.Dark;
+
+          return [Variant.Primary, Variant.Secondary].map(variant => {
+            const thumbColor = scrollbarColor[theme].thumb[variant].default;
+            const trackColor = scrollbarColor[theme].track[variant].default;
+            return (
+              <DemoCard
+                darkMode={isDarkMode}
+                key={theme}
+                className={css`
+                  color: ${color[theme].text[variant].default};
+                  background-color: ${color[theme].background[variant].default};
+                `}
+              >
+                <div
+                  data-testid="scrollable"
+                  className={css`
+                    max-height: 144px;
+                    max-width: 144px;
+                    overflow: scroll;
+                    scrollbar-color: ${thumbColor} ${trackColor};
+                  `}
+                >
+                  <div
+                    className={css`
+                      height: 256px;
+                      width: 256px;
+                    `}
+                  >
+                    <h3>{theme} Mode</h3>
+                    <h4>{variant}</h4>
+                  </div>
+                </div>
+              </DemoCard>
+            );
+          });
+        })}
+      </div>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const cards = within(canvasElement).getAllByTestId('demo-card');
+    cards.forEach(card => {
+      const scrollable = within(card).getByTestId('scrollable');
+      scrollable.scrollTo({
+        top: 12,
+        left: 12,
+        behavior: 'smooth',
+      });
+    });
   },
 };
 
 export const InteractionRings = () => {
-  const invertMode = (mode: Mode): Mode => (mode === 'dark' ? 'light' : 'dark');
+  const invertTheme = (theme: Theme): Theme =>
+    theme === 'dark' ? 'light' : 'dark';
 
-  const modeWrapper = (mode: Mode) => css`
+  const themeWrapper = (theme: Theme) => css`
     display: flex;
     gap: ${spacing[200]}px;
-    color: ${mode === 'dark' ? palette.white : palette.black};
-    background-color: ${mode === 'dark' ? palette.black : palette.white};
+    color: ${theme === 'dark' ? palette.white : palette.black};
+    background-color: ${theme === 'dark' ? palette.black : palette.white};
     border: 1px solid
-      ${mode === 'dark' ? palette.gray.light3 : palette.gray.dark3};
+      ${theme === 'dark' ? palette.gray.light3 : palette.gray.dark3};
     border-radius: ${spacing[400]}px;
     padding: ${spacing[600]}px;
     margin: ${spacing[400]}px 0;
@@ -420,22 +509,22 @@ export const InteractionRings = () => {
     <div>
       <h2>Interaction States</h2>
       <div>
-        {Object.values(Mode).map((mode: Mode) => (
-          <div key={mode} className={modeWrapper(mode)}>
-            {Object.keys(hoverRing[mode]).map(_color => {
+        {Object.values(Theme).map((theme: Theme) => (
+          <div key={theme} className={themeWrapper(theme)}>
+            {Object.keys(hoverRing[theme]).map(_color => {
               const color = _color as HoverRingColor;
               return (
                 <button
                   key={color}
                   className={css`
                     ${buttonBase};
-                    background-color: ${palette[color][`${mode}3`]};
-                    color: ${palette[color][`${invertMode(mode)}2`]};
+                    background-color: ${palette[color][`${theme}3`]};
+                    color: ${palette[color][`${invertTheme(theme)}2`]};
                     &:hover {
-                      box-shadow: ${hoverRing[mode][color]};
+                      box-shadow: ${hoverRing[theme][color]};
                     }
                     &:focus {
-                      box-shadow: ${focusRing[mode].default};
+                      box-shadow: ${focusRing[theme].default};
                     }
                   `}
                 >
@@ -448,12 +537,12 @@ export const InteractionRings = () => {
               placeholder="Input"
               className={css`
                 ${buttonBase};
-                border: 1px solid ${palette.gray[`${mode}1`]};
+                border: 1px solid ${palette.gray[`${theme}1`]};
                 &:hover {
-                  box-shadow: ${hoverRing[mode].gray};
+                  box-shadow: ${hoverRing[theme].gray};
                 }
                 &:focus {
-                  box-shadow: ${focusRing[mode].input};
+                  box-shadow: ${focusRing[theme].input};
                 }
               `}
             />

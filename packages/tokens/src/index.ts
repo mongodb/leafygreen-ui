@@ -12,6 +12,13 @@ export { default as fontFamilies } from './fontFamilies';
 export { default as fontWeights } from './fontWeights';
 export { default as hoverRing } from './hoverRing';
 export { Mode } from './mode';
+export {
+  addScrollbarStyles,
+  scrollbarColor,
+  type ScrollbarColorRecord,
+  ScrollbarProperty,
+  type ScrollbarVariant,
+} from './scrollbars';
 export { addOverflowShadow, shadow, Side } from './shadows';
 export { Size } from './size';
 export { default as spacing } from './spacing';
