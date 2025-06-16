@@ -9,7 +9,8 @@ import {
   baseStyles,
   headerStyles,
   headerValueStyles,
-  progressBarStyles,
+  progressBarFillStyles,
+  progressBarTrackStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps } from './ProgressBar.types';
 
@@ -52,12 +53,15 @@ export function ProgressBar({
 
       <div
         role="progressbar"
-        className={cx(progressBarStyles)}
         aria-label={label}
         aria-valuenow={value}
         aria-valuemin={0}
         aria-valuemax={maxValue}
-      ></div>
+      >
+        <div className={cx(progressBarTrackStyles)}>
+          <div className={cx(progressBarFillStyles)}></div>
+        </div>
+      </div>
 
       <Description>{description}</Description>
     </div>

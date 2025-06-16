@@ -19,9 +19,16 @@ export const headerValueStyles = css`
   gap: ${spacing[100]}px;
 `;
 
-export const progressBarStyles = css`
+export const progressBarTrackStyles = css`
   width: 100%;
   height: 8px; // temporary
   border-radius: 4px; // temporary
   background-color: rgba(0, 0, 0, 0.1); // temporary
+`;
+
+export const progressBarFillStyles = css`
+  height: 100%;
+  width: 80%; // temporary
+  border-radius: 4px; // temporary
+  background-color: rgba(0, 0, 0, 0.5); // temporary
 `;
