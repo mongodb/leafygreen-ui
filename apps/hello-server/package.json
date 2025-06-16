@@ -1,0 +1,17 @@
+{
+  "name": "lg-hello-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "docker:build": "docker build -t hello-server --file ./Dockerfile ../..",
+    "docker:start": "docker run -p 3333:3333 hello-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -48,6 +48,7 @@ const startServer = async () => {
     },
     corsOptions: {
       credentials: true,
+      withCredentials: true,
       methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
       origin: allowedOrigins,
     },
