@@ -24,3 +24,11 @@ export const getHeaderIcon = (
       return <InfoWithCircleIcon {...props} />;
   }
 };
+
+export const getPercentage = (value: number, maxValue: number): number => {
+  if (maxValue === 0) {
+    return 0;
+  }
+
+  return Math.round((value / maxValue) * 100);
+};

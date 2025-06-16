@@ -38,7 +38,7 @@ interface BaseProgressBarProps {
   valueUnits?: string;
 
   /**
-   * Value may or may not be displayed.
+   * Value may or may not be displayed even if internally calculated.
    */
   showValue?: boolean;
 

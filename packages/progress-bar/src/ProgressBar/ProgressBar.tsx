@@ -18,7 +18,11 @@ import {
   progressBarTrackStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps } from './ProgressBar.types';
-import { getHeaderIcon, iconsOnCompletion } from './ProgressBar.utils';
+import {
+  getHeaderIcon,
+  getPercentage,
+  iconsOnCompletion,
+} from './ProgressBar.utils';
 
 export function ProgressBar({
   type,
@@ -42,8 +46,8 @@ export function ProgressBar({
     ? valueType === 'fraction'
       ? `${value}/${maxValue}`
       : valueType === 'percentage'
-      ? `${Math.round((value / maxValue) * 100)}`
-      : `${value}`
+      ? getPercentage(value, maxValue)
+      : value
     : '';
 
   const valueUnitsDisplay = valueType === 'percentage' ? '%' : valueUnits || '';
@@ -84,7 +88,7 @@ export function ProgressBar({
               getProgressBarFillStyles(theme, variant, size),
               type === 'determinate' &&
                 getDeterminateProgressBarFillStyles(
-                  Math.round((value / maxValue) * 100), // cleaner way to do this?
+                  getPercentage(value, maxValue),
                 ),
             )}
           ></div>
