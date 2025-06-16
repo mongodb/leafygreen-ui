@@ -49,6 +49,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/polymorphic',
   '@leafygreen-ui/popover',
   '@leafygreen-ui/portal',
+  '@leafygreen-ui/progress-bar',
   '@leafygreen-ui/radio-box-group',
   '@leafygreen-ui/radio-group',
   '@leafygreen-ui/ripple',
