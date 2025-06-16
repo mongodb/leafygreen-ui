@@ -31,17 +31,6 @@ FROM base as build
   RUN pnpm install -w --prefer-offline --unsafe-perm
   ENV PATH="/app/node_modules/.bin:/app/tools/build/node_modules/.bin:${PATH}"
 
-  # RUN pwd
-  # RUN pnpm --version
-  # RUN turbo --version
-  # RUN pnpm tsc --version
-  # RUN ls ./
-  # RUN ls ./node_modules
-  # RUN ls ./tools/build/node_modules
-  # RUN ls ./tools/crawler/node_modules
-  # RUN ls ./apps/chatbot-server/node_modules
-  # RUN ls ./node_modules/.bin/lg-build
-
   # Build the server app project
   RUN pnpm run build --filter="lg-chatbot-server"
 

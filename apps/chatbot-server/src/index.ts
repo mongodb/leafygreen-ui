@@ -23,6 +23,11 @@ Be concise in your answers.
 
 // Start the server and clean up resources on SIGINT.
 const PORT = process.env.PORT || 3030;
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://mongodb.design',
+  'https://staging.mongodb.design',
+];
 
 const startServer = async () => {
   const {
@@ -42,9 +47,9 @@ const startServer = async () => {
       systemPrompt,
     },
     corsOptions: {
-      withCredentials: true,
+      credentials: true,
       methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
-      origin: process.env.CORS_ORIGIN || '*',
+      origin: allowedOrigins,
     },
     maxRequestTimeoutMs: 30000,
   };
