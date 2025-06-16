@@ -26,7 +26,7 @@ export function ChartHeader({
         <Body weight="regular" baseFontSize={BaseFontSize.Body1}>
           {title}
         </Body>
-        <div>{titleIcon}</div>
+        {titleIcon && <div>{titleIcon}</div>}
       </div>
       <div>{headerContent}</div>
     </div>
