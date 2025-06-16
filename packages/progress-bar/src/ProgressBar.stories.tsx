@@ -20,7 +20,7 @@ TestExample.args = {
   maxValue: 200,
   valueType: 'percentage',
   size: 'default',
-  variant: 'success',
+  variant: 'warning',
   showIcon: true,
   description: 'Helper text',
 };

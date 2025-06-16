@@ -89,6 +89,10 @@ export const getHeaderValueStyles = (theme: Theme) => css`
   color: ${color[theme].text.secondary.default};
 `;
 
+export const headerIconStyles = css`
+  margin-bottom: 2px; // align icon with text baseline
+`;
+
 export const getHeaderIconStyles = (
   theme: Theme,
   variant: ProgressBarVariant,

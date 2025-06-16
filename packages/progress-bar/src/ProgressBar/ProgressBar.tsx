@@ -12,6 +12,7 @@ import {
   getHeaderValueStyles,
   getProgressBarFillStyles,
   getProgressBarTrackStyles,
+  headerIconStyles,
   headerStyles,
   headerValueStyles,
   progressBarFillStyles,
@@ -64,7 +65,10 @@ export function ProgressBar({
           {showValue && `${valueDisplay}${valueUnitsDisplay}`}
           {showIcon &&
             getHeaderIcon(variant, {
-              className: cx(getHeaderIconStyles(theme, variant)),
+              className: cx(
+                headerIconStyles,
+                getHeaderIconStyles(theme, variant),
+              ),
             })}
         </Body>
       </div>
