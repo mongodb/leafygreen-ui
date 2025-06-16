@@ -60,17 +60,19 @@ export function ProgressBar({
   return (
     <div className={cx(containerStyles)}>
       <div className={cx(headerStyles)}>
-        <Label htmlFor={`progress bar for ${label}`}>{label}</Label>
-        <Body className={cx(headerValueStyles, getHeaderValueStyles(theme))}>
-          {showValue && `${valueDisplay}${valueUnitsDisplay}`}
-          {showIcon &&
-            getHeaderIcon(variant, {
-              className: cx(
-                headerIconStyles,
-                getHeaderIconStyles(theme, variant),
-              ),
-            })}
-        </Body>
+        {label && <Label htmlFor={`progress bar for ${label}`}>{label}</Label>}
+        {(showValue || showIcon) && (
+          <Body className={cx(headerValueStyles, getHeaderValueStyles(theme))}>
+            {showValue && `${valueDisplay}${valueUnitsDisplay}`}
+            {showIcon &&
+              getHeaderIcon(variant, {
+                className: cx(
+                  headerIconStyles,
+                  getHeaderIconStyles(theme, variant),
+                ),
+              })}
+          </Body>
+        )}
       </div>
 
       <div
@@ -99,7 +101,7 @@ export function ProgressBar({
         </div>
       </div>
 
-      <Description>{description}</Description>
+      {description && <Description>{description}</Description>}
     </div>
   );
 }
