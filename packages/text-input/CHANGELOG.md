@@ -1,5 +1,16 @@
 # @leafygreen-ui/text-input
 
+## 15.0.1
+
+### Patch Changes
+
+- Updated dependencies [caaaeeb]
+- Updated dependencies [4bd4da3]
+  - @lg-tools/test-harnesses@0.3.1
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/form-field@3.0.1
+  - @leafygreen-ui/typography@21.0.1
+
 ## 15.0.0
 
 ### Major Changes

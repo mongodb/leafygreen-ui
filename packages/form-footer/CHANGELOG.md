@@ -1,5 +1,12 @@
 # @leafygreen-ui/form-footer
 
+## 7.0.1
+
+### Patch Changes
+
+- @leafygreen-ui/button@24.0.1
+- @leafygreen-ui/banner@10.0.1
+
 ## 7.0.0
 
 ### Major Changes
