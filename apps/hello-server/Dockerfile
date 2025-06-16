@@ -1,6 +1,6 @@
 # Use Node.js 18 as the base image
 FROM node:18-alpine as base
-ENV PORT=3333
+ENV PORT=8080
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable

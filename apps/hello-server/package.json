@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "docker:build": "docker build -t hello-server --file ./Dockerfile ../..",
-    "docker:start": "docker run -p 3333:3333 hello-server"
+    "docker:start": "docker run -p 8080:8080 hello-server"
   },
   "keywords": [],
   "author": "",
