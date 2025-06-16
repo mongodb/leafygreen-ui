@@ -1,5 +1,12 @@
 # @leafygreen-ui/popover
 
+## 14.0.1
+
+### Patch Changes
+
+- Updated dependencies [4bd4da3]
+  - @leafygreen-ui/tokens@3.1.0
+
 ## 14.0.0
 
 ### Major Changes

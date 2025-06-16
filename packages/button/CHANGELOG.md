@@ -1,5 +1,17 @@
 # @leafygreen-ui/button
 
+## 24.0.1
+
+### Patch Changes
+
+- Updated dependencies [caaaeeb]
+- Updated dependencies [4bd4da3]
+- Updated dependencies [9de60ce]
+  - @lg-tools/test-harnesses@0.3.1
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/polymorphic@3.0.1
+  - @leafygreen-ui/ripple@2.0.1
+
 ## 24.0.0
 
 ### Major Changes

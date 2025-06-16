@@ -1,5 +1,18 @@
 # @leafygreen-ui/tabs
 
+## 15.0.1
+
+### Patch Changes
+
+- Updated dependencies [caaaeeb]
+- Updated dependencies [4bd4da3]
+- Updated dependencies [9de60ce]
+  - @lg-tools/test-harnesses@0.3.1
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/polymorphic@3.0.1
+  - @leafygreen-ui/typography@21.0.1
+  - @leafygreen-ui/descendants@3.0.0
+
 ## 15.0.0
 
 ### Major Changes

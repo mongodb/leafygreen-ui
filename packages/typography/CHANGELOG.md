@@ -1,5 +1,14 @@
 # @leafygreen-ui/typography
 
+## 21.0.1
+
+### Patch Changes
+
+- Updated dependencies [4bd4da3]
+- Updated dependencies [9de60ce]
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/polymorphic@3.0.1
+
 ## 21.0.0
 
 ### Major Changes
