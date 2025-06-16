@@ -1,7 +1,7 @@
 env:
   PORT: 8080
   NAMESPACE: ux-foundations
-  ALLOWED_ORIGINS: http://localhost:3000/,https://mongodb.design/,https://staging.mongodb.design/'
+  ALLOWED_ORIGINS: http://localhost:3000/,https://mongodb.design/,https://staging.mongodb.design/
   MONGODB_USER: adam
   MONGODB_APP_NAME: LeafyGreenAI
   VECTOR_SEARCH_INDEX_NAME: vector_index
@@ -18,3 +18,13 @@ envSecrets:
   AZURE_OPENAI_ENDPOINT: lg-secrets
   AZURE_OPENAI_API_EMBEDDING_DEPLOYMENT_URL: lg-secrets
   AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_URL: lg-secrets
+
+# Pod resources
+replicaCount: 2
+resources:
+  limits:
+    cpu: 2
+    memory: 2Gi
+  requests:
+    cpu: 1000m
+    memory: 1Gi
