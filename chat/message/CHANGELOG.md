@@ -1,5 +1,18 @@
 # @lg-chat/message
 
+## 6.0.1
+
+### Patch Changes
+
+- Updated dependencies [4bd4da3]
+- Updated dependencies [9de60ce]
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/polymorphic@3.0.1
+  - @lg-chat/lg-markdown@4.0.1
+  - @lg-chat/rich-links@3.0.1
+  - @leafygreen-ui/banner@10.0.1
+  - @leafygreen-ui/typography@21.0.1
+
 ## 6.0.0
 
 ### Major Changes

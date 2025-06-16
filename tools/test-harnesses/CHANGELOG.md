@@ -1,5 +1,11 @@
 # @lg-tools/test-harnesses
 
+## 0.3.1
+
+### Patch Changes
+
+- caaaeeb: Exports `RenderAsyncTestReturnType` type.
+
 ## 0.3.0
 
 ### Minor Changes

@@ -1,5 +1,14 @@
 # @lg-tools/storybook-addon
 
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [4bd4da3]
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/typography@21.0.1
+  - @lg-tools/storybook-decorators@1.0.1
+
 ## 0.5.0
 
 ### Minor Changes

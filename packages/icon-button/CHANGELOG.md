@@ -1,5 +1,15 @@
 # @leafygreen-ui/icon-button
 
+## 17.0.1
+
+### Patch Changes
+
+- caaaeeb: Updates CSS selectors for Storybook testing
+- Updated dependencies [4bd4da3]
+- Updated dependencies [9de60ce]
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/polymorphic@3.0.1
+
 ## 17.0.0
 
 ### Major Changes

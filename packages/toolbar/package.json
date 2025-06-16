@@ -1,23 +1,22 @@
-  
 {
   "name": "@leafygreen-ui/toolbar",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "LeafyGreen UI Kit Toolbar",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
   "exports": {
-  ".": {
-    "require": "./dist/umd/index.js",
-    "import": "./dist/esm/index.js",
-    "types": "./dist/types/index.d.ts"
-  },
-  "./testing": {
-    "require": "./dist/umd/testing/index.js",
-    "import": "./dist/esm/testing/index.js",
-    "types": "./dist/types/testing/index.d.ts"
-  }
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
   },
   "scripts": {
     "build": "lg-build bundle",

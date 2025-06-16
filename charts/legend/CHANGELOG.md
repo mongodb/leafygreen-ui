@@ -1,5 +1,13 @@
 # @lg-charts/legend
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [4bd4da3]
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/checkbox@17.0.1
+
 ## 1.0.0
 
 ### Minor Changes
