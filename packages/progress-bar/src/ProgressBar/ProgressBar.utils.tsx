@@ -7,15 +7,18 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
 import { ProgressBarVariant } from './ProgressBar.types';
 
-export const getProgressBarIcon = (variant: ProgressBarVariant) => {
+export const getHeaderIcon = (
+  variant: ProgressBarVariant,
+  props?: Record<string, any>,
+) => {
   switch (variant) {
     case 'success':
-      return <CheckmarkWithCircleIcon />;
+      return <CheckmarkWithCircleIcon {...props} />;
     case 'warning':
-      return <ImportantWithCircleIcon />;
+      return <ImportantWithCircleIcon {...props} />;
     case 'error':
-      return <WarningIcon />; // design uses warning icon for error variant
+      return <WarningIcon {...props} />; // design uses warning icon for error variant
     default:
-      return <InfoWithCircleIcon />;
+      return <InfoWithCircleIcon {...props} />;
   }
 };

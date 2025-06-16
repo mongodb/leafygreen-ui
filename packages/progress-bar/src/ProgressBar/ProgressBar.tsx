@@ -7,6 +7,7 @@ import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
   containerStyles,
+  getHeaderIconStyles,
   getProgressBarFillStyles,
   getProgressBarTrackStyles,
   headerStyles,
@@ -15,7 +16,7 @@ import {
   progressBarTrackStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps } from './ProgressBar.types';
-import { getProgressBarIcon } from './ProgressBar.utils';
+import { getHeaderIcon } from './ProgressBar.utils';
 
 export function ProgressBar({
   type,
@@ -28,11 +29,11 @@ export function ProgressBar({
   showIcon = false,
   size = Size.Default,
   description,
-  darkMode: darkModeProp = false,
+  darkMode = false,
   disabled = false,
   ...rest
 }: ProgressBarProps) {
-  const { theme, darkMode } = useDarkMode(darkModeProp);
+  const { theme } = useDarkMode(darkMode);
 
   const valueDisplay = value
     ? valueType === 'fraction'
@@ -50,7 +51,10 @@ export function ProgressBar({
         <Label htmlFor={'temporary'}>{label}</Label>
         <Body className={cx(headerValueStyles)}>
           {`${valueDisplay}${valueUnitsDisplay}`}
-          {showIcon && getProgressBarIcon(variant)}
+          {showIcon &&
+            getHeaderIcon(variant, {
+              className: cx(getHeaderIconStyles(theme, variant)),
+            })}
         </Body>
       </div>
 

@@ -18,7 +18,7 @@ TestExample.args = {
   value: 50,
   maxValue: 100,
   size: 'default',
-  variant: 'success',
+  variant: 'error',
   showIcon: true,
   description: 'Helper text',
 };

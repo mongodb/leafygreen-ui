@@ -79,6 +79,13 @@ export const headerValueStyles = css`
   gap: ${spacing[100]}px;
 `;
 
+export const getHeaderIconStyles = (
+  theme: Theme,
+  variant: ProgressBarVariant,
+) => css`
+  color: ${progressBarVariantStyles[theme][variant].iconColor};
+`;
+
 export const progressBarTrackStyles = css`
   width: 100%;
 `;
