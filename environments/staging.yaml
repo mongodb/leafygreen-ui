@@ -28,3 +28,21 @@ resources:
   requests:
     cpu: 1000m
     memory: 1Gi
+
+# Health checks
+probes:
+  enabled: true
+  path: /health
+  headers: {}
+  liveness:
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+  readiness:
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
