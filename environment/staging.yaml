@@ -1,0 +1,8 @@
+env:
+  PORT: 8080
+  NAMESPACE: ux-foundations
+  ALLOWED_ORIGINS: http://localhost:3000/,https://mongodb.design/,https://staging.mongodb.design/'
+  MONGODB_USER: adam
+  MONGODB_APP_NAME: LeafyGreenAI
+  VECTOR_SEARCH_INDEX_NAME: vector_index
+  MONGODB_DATABASE_NAME: lgai-chatbot-rag
