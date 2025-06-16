@@ -1,2 +1,1 @@
-export { default } from './ExpandableCard/ExpandableCard';
-export { type ExpandableCardProps } from './ExpandableCard/ExpandableCard.types';
+export { default, type ExpandableCardProps } from './ExpandableCard';
