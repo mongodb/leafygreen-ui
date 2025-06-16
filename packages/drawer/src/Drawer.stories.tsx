@@ -9,12 +9,13 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
+import { color, spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
+import { DrawerLayout } from './DrawerLayout';
 import { DrawerStackProvider } from './DrawerStackContext';
-import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -25,17 +26,28 @@ const defaultExcludedControls = [
   'open',
 ];
 
+const snapshotStoryExcludedControlParams = [
+  ...defaultExcludedControls,
+  'darkMode',
+  'displayMode',
+  'title',
+];
+
 export default {
   title: 'Components/Drawer',
   component: Drawer,
   decorators: [
-    StoryFn => (
+    (StoryFn, ctx) => (
       <div
         className={css`
           height: 100%;
-          width: 100%;
           display: flex;
           align-items: center;
+          margin: -100px;
+          width: 100vw;
+          border: 1px solid
+            ${color[ctx?.args?.darkMode ? Theme.Dark : Theme.Light].border
+              .secondary.default};
         `}
       >
         <StoryFn />
@@ -69,7 +81,7 @@ export default {
 const LongContent = () => {
   const paragraphs = useMemo(() => {
     return faker.lorem
-      .paragraphs(20, '\n')
+      .paragraphs(30, '\n')
       .split('\n')
       .map((p, i) => <Body key={i}>{p}</Body>);
   }, []);
@@ -88,7 +100,7 @@ const LongContent = () => {
 };
 
 const TemplateComponent: StoryFn<DrawerProps> = ({
-  displayMode,
+  displayMode = DisplayMode.Overlay,
   initialOpen,
   ...rest
 }: DrawerProps & {
@@ -111,35 +123,30 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     />
   );
 
-  return displayMode === DisplayMode.Embedded ? (
+  return (
     <DrawerStackProvider>
-      <EmbeddedDrawerLayout
+      <div
         className={css`
           height: 500px;
+          width: 100%;
         `}
-        isDrawerOpen={open}
       >
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: ${spacing[200]}px;
-          `}
-        >
-          {renderTrigger()}
-          <LongContent />
-        </main>
-        {renderDrawer()}
-      </EmbeddedDrawerLayout>
-    </DrawerStackProvider>
-  ) : (
-    <DrawerStackProvider>
-      <div>
-        {renderTrigger()}
-        {renderDrawer()}
+        <DrawerLayout displayMode={displayMode} isDrawerOpen={open}>
+          <main
+            className={css`
+              padding: ${spacing[400]}px;
+              overflow: auto;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: ${spacing[200]}px;
+            `}
+          >
+            {renderTrigger()}
+            <LongContent />
+          </main>
+          {renderDrawer()}
+        </DrawerLayout>
       </div>
     </DrawerStackProvider>
   );
@@ -149,7 +156,6 @@ export const LiveExample: StoryObj<DrawerProps> = {
   render: TemplateComponent,
   args: {
     children: <LongContent />,
-    initialOpen: false,
   },
   parameters: {
     chromatic: {
@@ -167,49 +173,59 @@ const MultipleDrawersComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   const [openC, setOpenC] = useState(false);
 
   return (
-    <DrawerStackProvider>
-      <div
-        className={css`
-          display: flex;
-          flex-direction: column;
-          gap: ${spacing[400]}px;
-        `}
-      >
-        <Button onClick={() => setOpenA(prevOpen => !prevOpen)}>
-          Toggle Drawer A
-        </Button>
-        <Button onClick={() => setOpenB(prevOpen => !prevOpen)}>
-          Toggle Drawer B
-        </Button>
-        <Drawer
-          {...args}
-          open={openA}
-          onClose={() => setOpenA(false)}
-          title="Drawer A"
+    <DrawerLayout
+      displayMode={DisplayMode.Overlay}
+      isDrawerOpen={openA || openB || openC}
+      className={css`
+        height: 500px;
+      `}
+    >
+      <DrawerStackProvider>
+        <div
+          className={css`
+            display: flex;
+            flex-direction: column;
+            gap: ${spacing[400]}px;
+          `}
         >
-          <LongContent />
-        </Drawer>
-        <Drawer
-          {...args}
-          open={openB}
-          onClose={() => setOpenB(false)}
-          title="Drawer B"
-        >
-          <Button onClick={() => setOpenC(prevOpen => !prevOpen)}>
-            Toggle Drawer C
+          <Button onClick={() => setOpenA(prevOpen => !prevOpen)}>
+            Toggle Drawer A
           </Button>
-          <LongContent />
-        </Drawer>
-        <Drawer
-          {...args}
-          open={openC}
-          onClose={() => setOpenC(false)}
-          title="Drawer C"
-        >
-          <LongContent />
-        </Drawer>
-      </div>
-    </DrawerStackProvider>
+          <Button onClick={() => setOpenB(prevOpen => !prevOpen)}>
+            Toggle Drawer B
+          </Button>
+        </div>
+        <div>
+          <Drawer
+            {...args}
+            open={openA}
+            onClose={() => setOpenA(false)}
+            title="Drawer A"
+          >
+            <LongContent />
+          </Drawer>
+          <Drawer
+            {...args}
+            open={openB}
+            onClose={() => setOpenB(false)}
+            title="Drawer B"
+          >
+            <Button onClick={() => setOpenC(prevOpen => !prevOpen)}>
+              Toggle Drawer C
+            </Button>
+            <LongContent />
+          </Drawer>
+          <Drawer
+            {...args}
+            open={openC}
+            onClose={() => setOpenC(false)}
+            title="Drawer C"
+          >
+            <LongContent />
+          </Drawer>
+        </div>
+      </DrawerStackProvider>
+    </DrawerLayout>
   );
 };
 
@@ -227,13 +243,6 @@ export const MultipleDrawers: StoryObj<DrawerProps> = {
     },
   },
 };
-
-const snapshotStoryExcludedControlParams = [
-  ...defaultExcludedControls,
-  'darkMode',
-  'displayMode',
-  'title',
-];
 
 export const LightModeOverlay: StoryObj<DrawerProps> = {
   render: TemplateComponent,

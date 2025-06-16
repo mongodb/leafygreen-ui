@@ -1,8 +1,10 @@
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
 import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
+import { getTestUtils as getDrawerToolbarTestUtils } from '@leafygreen-ui/toolbar/testing';
 
-import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
+
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = <T extends HTMLElement = HTMLElement>(
@@ -36,23 +38,24 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
 
   /**
    * Checks the `aria-hidden` attribute and that the drawer element is visible based on CSS
-   * properties for `display`, `opacity`, `transform`, and `visibility`
+   * properties for `display`, `opacity`, and `visibility`
    */
   const isOpen = () => {
     const element = getDrawer();
 
     const isAriaVisible = element.getAttribute('aria-hidden') === 'false';
-    const { display, opacity, transform, visibility } =
-      window.getComputedStyle(element);
+    const { display, opacity, visibility } = window.getComputedStyle(element);
 
     const isCSSVisible =
-      display !== 'none' &&
-      opacity === '1' &&
-      transform === 'none' &&
-      visibility !== 'hidden';
+      display !== 'none' && opacity === '1' && visibility !== 'hidden';
 
     return isAriaVisible && isCSSVisible;
   };
+
+  /**
+   * Returns the toolbar test utils for the drawer toolbar.
+   */
+  const getToolbarTestUtils = () => getDrawerToolbarTestUtils(lgIds.toolbar);
 
   return {
     findDrawer,
@@ -60,5 +63,6 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
     queryDrawer,
     getCloseButtonUtils,
     isOpen,
+    getToolbarTestUtils,
   };
 };
