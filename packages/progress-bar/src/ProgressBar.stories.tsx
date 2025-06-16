@@ -17,7 +17,8 @@ TestExample.args = {
   label: 'Label',
   value: 50,
   maxValue: 100,
-  variant: 'info',
+  size: 'default',
+  variant: 'success',
   showIcon: true,
   description: 'Helper text',
 };

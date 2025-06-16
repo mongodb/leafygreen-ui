@@ -1,18 +1,21 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size, Variant } from '@leafygreen-ui/tokens';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
-  baseStyles,
+  containerStyles,
+  getProgressBarFillStyles,
+  getProgressBarTrackStyles,
   headerStyles,
   headerValueStyles,
   progressBarFillStyles,
   progressBarTrackStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps } from './ProgressBar.types';
+import { getProgressBarIcon } from './ProgressBar.utils';
 
 export function ProgressBar({
   type,
@@ -25,10 +28,12 @@ export function ProgressBar({
   showIcon = false,
   size = Size.Default,
   description,
-  darkMode = false,
+  darkMode: darkModeProp = false,
   disabled = false,
   ...rest
 }: ProgressBarProps) {
+  const { theme, darkMode } = useDarkMode(darkModeProp);
+
   const valueDisplay = value
     ? valueType === 'fraction'
       ? `${value}/${maxValue}`
@@ -40,14 +45,12 @@ export function ProgressBar({
   const valueUnitsDisplay = valueUnits ? ` ${valueUnits}` : '';
 
   return (
-    <div className={cx(baseStyles)}>
+    <div className={cx(containerStyles)}>
       <div className={cx(headerStyles)}>
         <Label htmlFor={'temporary'}>{label}</Label>
         <Body className={cx(headerValueStyles)}>
           {`${valueDisplay}${valueUnitsDisplay}`}
-
-          {/* temporary */}
-          {showIcon && <InfoWithCircleIcon />}
+          {showIcon && getProgressBarIcon(variant)}
         </Body>
       </div>
 
@@ -58,8 +61,18 @@ export function ProgressBar({
         aria-valuemin={0}
         aria-valuemax={maxValue}
       >
-        <div className={cx(progressBarTrackStyles)}>
-          <div className={cx(progressBarFillStyles)}></div>
+        <div
+          className={cx(
+            progressBarTrackStyles,
+            getProgressBarTrackStyles(theme, size),
+          )}
+        >
+          <div
+            className={cx(
+              progressBarFillStyles,
+              getProgressBarFillStyles(theme, variant, size),
+            )}
+          ></div>
         </div>
       </div>
 

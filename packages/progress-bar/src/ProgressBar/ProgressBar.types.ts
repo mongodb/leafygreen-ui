@@ -1,5 +1,10 @@
 import { Size, Variant } from '@leafygreen-ui/tokens';
 
+export type ProgressBarSize =
+  | typeof Size.Default
+  | typeof Size.Large
+  | typeof Size.Small;
+
 export type ProgressBarVariant =
   | typeof Variant.Info
   | typeof Variant.Success
@@ -38,7 +43,7 @@ interface BaseProgressBarProps {
    */
   showIcon?: boolean;
 
-  size?: Size;
+  size?: ProgressBarSize;
   description?: string;
   darkMode?: boolean;
   disabled?: boolean;
