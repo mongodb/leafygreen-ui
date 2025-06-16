@@ -120,7 +120,6 @@ export interface EChartsInstance {
   _getOptions: () => Partial<EChartOptions>;
   addSeries: (series: EChartSeriesOption) => void;
   addToGroup: (groupId: string) => void;
-  disableZoom: () => void;
   enableZoom: () => void;
   error: Error | null;
   hideTooltip: () => void;
@@ -138,5 +137,6 @@ export interface EChartsInstance {
 export interface EChartHookProps {
   container: HTMLDivElement | null;
   initialOptions?: Partial<EChartOptions>;
+  shouldEnableZoom?: boolean;
   theme: Theme;
 }
