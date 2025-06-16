@@ -1,7 +1,13 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { borderRadius, Size, spacing, Variant } from '@leafygreen-ui/tokens';
+import {
+  borderRadius,
+  color,
+  Size,
+  spacing,
+  Variant,
+} from '@leafygreen-ui/tokens';
 
 import { ProgressBarSize, ProgressBarVariant } from './ProgressBar.types';
 
@@ -79,6 +85,10 @@ export const headerValueStyles = css`
   gap: ${spacing[100]}px;
 `;
 
+export const getHeaderValueStyles = (theme: Theme) => css`
+  color: ${color[theme].text.secondary.default};
+`;
+
 export const getHeaderIconStyles = (
   theme: Theme,
   variant: ProgressBarVariant,
@@ -101,7 +111,6 @@ export const getProgressBarTrackStyles = (
 
 export const progressBarFillStyles = css`
   height: 100%;
-  width: 80%; // temporary
 `;
 
 export const getProgressBarFillStyles = (
@@ -111,4 +120,8 @@ export const getProgressBarFillStyles = (
 ) => css`
   border-radius: ${progressBarSizeStyles[size].borderRadius};
   background-color: ${progressBarVariantStyles[theme][variant].barColor};
+`;
+
+export const getDeterminateProgressBarFillStyles = (progress: number) => css`
+  width: ${progress}%;
 `;

@@ -7,6 +7,8 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
 import { ProgressBarVariant } from './ProgressBar.types';
 
+export const iconsOnCompletion = ['success'];
+
 export const getHeaderIcon = (
   variant: ProgressBarVariant,
   props?: Record<string, any>,

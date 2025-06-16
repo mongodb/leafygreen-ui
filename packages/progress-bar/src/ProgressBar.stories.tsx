@@ -14,11 +14,13 @@ const Template: StoryFn<typeof ProgressBar> = props => (
 
 export const TestExample = Template.bind({});
 TestExample.args = {
+  type: 'determinate',
   label: 'Label',
-  value: 50,
-  maxValue: 100,
+  value: 27,
+  maxValue: 200,
+  valueType: 'percentage',
   size: 'default',
-  variant: 'error',
+  variant: 'success',
   showIcon: true,
   description: 'Helper text',
 };

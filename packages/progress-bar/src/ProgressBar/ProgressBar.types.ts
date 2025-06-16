@@ -38,6 +38,11 @@ interface BaseProgressBarProps {
   valueUnits?: string;
 
   /**
+   * Value may or may not be displayed.
+   */
+  showValue?: boolean;
+
+  /**
    * Optional icon displayed next to the value in the progress bar based on the variant.
    * If not provided, no icon will be displayed.
    */

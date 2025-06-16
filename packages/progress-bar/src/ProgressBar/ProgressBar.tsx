@@ -7,7 +7,9 @@ import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
   containerStyles,
+  getDeterminateProgressBarFillStyles,
   getHeaderIconStyles,
+  getHeaderValueStyles,
   getProgressBarFillStyles,
   getProgressBarTrackStyles,
   headerStyles,
@@ -16,7 +18,7 @@ import {
   progressBarTrackStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps } from './ProgressBar.types';
-import { getHeaderIcon } from './ProgressBar.utils';
+import { getHeaderIcon, iconsOnCompletion } from './ProgressBar.utils';
 
 export function ProgressBar({
   type,
@@ -26,7 +28,8 @@ export function ProgressBar({
   valueType = 'fraction',
   maxValue = 100,
   valueUnits,
-  showIcon = false,
+  showValue = true,
+  showIcon: showIconProps = false,
   size = Size.Default,
   description,
   darkMode = false,
@@ -39,18 +42,22 @@ export function ProgressBar({
     ? valueType === 'fraction'
       ? `${value}/${maxValue}`
       : valueType === 'percentage'
-      ? `${Math.round((value / maxValue) * 100)}%`
+      ? `${Math.round((value / maxValue) * 100)}`
       : `${value}`
     : '';
 
-  const valueUnitsDisplay = valueUnits ? ` ${valueUnits}` : '';
+  const valueUnitsDisplay = valueType === 'percentage' ? '%' : valueUnits || '';
+
+  const showIcon = iconsOnCompletion.includes(variant)
+    ? showIconProps && value === maxValue
+    : showIconProps;
 
   return (
     <div className={cx(containerStyles)}>
       <div className={cx(headerStyles)}>
-        <Label htmlFor={'temporary'}>{label}</Label>
-        <Body className={cx(headerValueStyles)}>
-          {`${valueDisplay}${valueUnitsDisplay}`}
+        <Label htmlFor={`progress bar for ${label}`}>{label}</Label>
+        <Body className={cx(headerValueStyles, getHeaderValueStyles(theme))}>
+          {showValue && `${valueDisplay}${valueUnitsDisplay}`}
           {showIcon &&
             getHeaderIcon(variant, {
               className: cx(getHeaderIconStyles(theme, variant)),
@@ -75,6 +82,10 @@ export function ProgressBar({
             className={cx(
               progressBarFillStyles,
               getProgressBarFillStyles(theme, variant, size),
+              type === 'determinate' &&
+                getDeterminateProgressBarFillStyles(
+                  Math.round((value / maxValue) * 100), // cleaner way to do this?
+                ),
             )}
           ></div>
         </div>
