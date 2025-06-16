@@ -24,9 +24,9 @@ Be concise in your answers.
 // Start the server and clean up resources on SIGINT.
 const PORT = process.env.PORT || 3030;
 const allowedOrigins = [
-  'http://localhost:3000',
-  'https://mongodb.design',
-  'https://staging.mongodb.design',
+  'http://localhost:3000/',
+  'https://mongodb.design/',
+  'https://staging.mongodb.design/',
 ];
 
 const startServer = async () => {
