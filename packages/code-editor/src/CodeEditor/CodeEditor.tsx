@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -19,7 +20,8 @@ import CodeMirror, {
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
-import { createDiagnosticsTooltipExtension } from './utils/createTooltipExtension';
+import { createCodeMirrorLanguageExtension } from './utils/createCodeMirrorLanguageExtension';
+import { createCodeMirrorTooltipsExtension } from './utils/createCodeMirrorTooltipsExtension';
 import {
   type CodeEditorProps,
   type CodeMirrorExtension,
@@ -27,7 +29,6 @@ import {
   IndentUnits,
 } from './CodeEditor.types';
 
-const CODE_MIRROR_HEIGHT = '200px';
 const CODE_MIRROR_WIDTH = '100%';
 
 export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
@@ -40,19 +41,23 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       enableLineNumbers = true,
       enableLineWrapping = true,
       forceParsing: forceParsingProp = false,
+      language,
       onChange: onChangeProp,
       placeholder,
       readOnly = false,
       indentUnit = IndentUnits.Space,
       indentSize = 2,
       tooltips = [],
-      extensions: customExtensions = [],
+      extensions: consumerExtensions = [],
       ...rest
     },
     forwardedRef,
   ) => {
     const [value, setValue] = useState(defaultValue || '');
+    const [languageExtension, setLanguageExtension] =
+      useState<CodeMirrorExtension>([]);
     const editorRef = useRef<CodeMirrorRef>(null);
+    const ref = useMergeRefs([editorRef, forwardedRef]);
 
     const onChange = useCallback(
       (val: string) => {
@@ -93,7 +98,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       [],
     );
 
-    const extensions = useMemo(() => {
+    const customExtensions = useMemo(() => {
       const extensions: Array<CodeMirrorExtension> = [];
 
       /**
@@ -119,7 +124,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         // Use diagnostics-based tooltips if any tooltips are provided
         tooltipCompartment.of(
           tooltips.length > 0
-            ? [createDiagnosticsTooltipExtension(tooltips)]
+            ? [createCodeMirrorTooltipsExtension(tooltips)]
             : [],
         ),
       );
@@ -134,18 +139,34 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       tooltips,
     ]);
 
+    /**
+     * Handles setting up language support. This is done separately because
+     * it is an asynchronous operation that requires dynamic imports.
+     */
+    useEffect(() => {
+      async function setupLanguageExtension() {
+        const languageCompartment = new Compartment();
+        setLanguageExtension(
+          languageCompartment.of(
+            language ? await createCodeMirrorLanguageExtension(language) : [],
+          ),
+        );
+      }
+      setupLanguageExtension();
+    }, [language]);
+
     return (
       <CodeMirror
         value={value}
-        height={CODE_MIRROR_HEIGHT}
         width={CODE_MIRROR_WIDTH}
         onChange={onChange}
         onCreateEditor={onCreateEditor}
         readOnly={readOnly}
         placeholder={placeholder}
         extensions={[
-          ...customExtensions.map(extension => Prec.highest(extension)),
-          ...extensions,
+          ...consumerExtensions.map(extension => Prec.highest(extension)),
+          ...customExtensions,
+          languageExtension,
         ]}
         basicSetup={{
           allowMultipleSelections: true,
@@ -154,7 +175,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
           highlightActiveLineGutter: enableActiveLineHighlighting,
           lineNumbers: enableLineNumbers,
         }}
-        ref={useMergeRefs([editorRef, forwardedRef])}
+        ref={ref}
         {...rest}
       />
     );
