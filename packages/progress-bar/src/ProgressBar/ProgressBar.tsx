@@ -2,6 +2,7 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Size, Variant } from '@leafygreen-ui/tokens';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
@@ -34,7 +35,7 @@ export function ProgressBar({
   valueDisplayFormat = 'fraction',
   maxValue = 100,
   valueUnits,
-  showValue = true,
+  showValue = false,
   showIcon: showIconProps = false,
   size = Size.Default,
   description,
@@ -44,7 +45,7 @@ export function ProgressBar({
 }: ProgressBarProps) {
   const { theme } = useDarkMode(darkMode);
 
-  const id = `progress-bar-${label || 'default'}`;
+  const progressBarId = `progress-bar-${label || 'default'}`;
 
   const showIcon = iconsOnCompletion.includes(variant)
     ? showIconProps && value === maxValue
@@ -53,11 +54,19 @@ export function ProgressBar({
   return (
     <div className={cx(containerStyles)}>
       <div className={cx(headerStyles)}>
-        {label && <Label htmlFor={id}>{label}</Label>}
+        {/* Label is rendered even if empty for layout purposes */}
+        <Label htmlFor={progressBarId} darkMode={darkMode}>
+          {label}
+        </Label>
+
         {(showValue || showIcon) && (
-          <Body className={cx(headerValueStyles, getHeaderValueStyles(theme))}>
+          <Body
+            className={cx(headerValueStyles, getHeaderValueStyles(theme))}
+            darkMode={darkMode}
+          >
             {showValue &&
               getValueDisplay(value, maxValue, valueDisplayFormat, valueUnits)}
+
             {showIcon &&
               getHeaderIcon(variant, {
                 className: cx(
@@ -71,8 +80,8 @@ export function ProgressBar({
 
       <div
         role="progressbar"
-        id={id}
-        aria-label={label}
+        id={progressBarId}
+        aria-label={getNodeTextContent(label)}
         aria-valuenow={value}
         aria-valuemin={0}
         aria-valuemax={maxValue}
@@ -96,7 +105,9 @@ export function ProgressBar({
         </div>
       </div>
 
-      {description && <Description>{description}</Description>}
+      {description && (
+        <Description darkMode={darkMode}>{description}</Description>
+      )}
     </div>
   );
 }

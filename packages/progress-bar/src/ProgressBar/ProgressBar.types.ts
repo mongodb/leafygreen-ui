@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Size, Variant } from '@leafygreen-ui/tokens';
 
 export type ProgressBarSize =
@@ -18,7 +20,7 @@ interface BaseProgressBarProps {
   /**
    * The descriptive label for the progress bar.
    */
-  label?: string;
+  label?: React.ReactNode;
 
   /**
    * The format of the value displayed in the progress bar next to the label.
@@ -49,7 +51,8 @@ interface BaseProgressBarProps {
   showIcon?: boolean;
 
   size?: ProgressBarSize;
-  description?: string;
+  description?: React.ReactNode;
+
   darkMode?: boolean;
   disabled?: boolean;
 }

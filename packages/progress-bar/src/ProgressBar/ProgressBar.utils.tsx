@@ -39,13 +39,15 @@ export const getValueDisplay = (
 ): string => {
   if (!value) return '';
 
+  const units = valueUnits ? ` ${valueUnits}` : '';
+
   switch (valueDisplayFormat) {
     case 'fraction':
-      return `${value}/${maxValue}` + (valueUnits || '');
+      return `${value}/${maxValue}` + units;
     case 'percentage':
       return `${getPercentage(value, maxValue || 100)}%`;
     case 'number':
-      return value.toString() + (valueUnits || '');
+      return value.toString() + units;
     default:
       return '';
   }
