@@ -1,9 +1,9 @@
 import { forceParsing } from '@codemirror/language';
-import { act } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import { EditorState } from '@uiw/react-codemirror';
 
 import { renderCodeEditor } from './CodeEditor.testUtils';
-import { CodeEditorSelectors } from '.';
+import { CodeEditorSelectors, LanguageName } from '.';
 
 global.MutationObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -198,5 +198,43 @@ describe('packages/code-editor', () => {
       extensions: [EditorState.readOnly.of(true)],
     });
     expect(editor.isReadOnly()).toBe(true);
+  });
+
+  test.each(
+    /**
+     * Excluding C# because it's 3rd party and doesn't add a testable attribute.
+     * Will test tsx and jsx separately.
+     */
+    Object.values(LanguageName).filter(
+      lang =>
+        lang !== LanguageName.csharp &&
+        lang !== LanguageName.tsx &&
+        lang !== LanguageName.jsx,
+    ),
+  )('adds language support for %p', async language => {
+    const { container } = renderCodeEditor({ language });
+    await waitFor(() => {
+      expect(
+        container.querySelector(`[data-language="${language}"]`),
+      ).toBeInTheDocument();
+    });
+  });
+
+  test('adds language support for tsx', async () => {
+    const { container } = renderCodeEditor({ language: LanguageName.tsx });
+    await waitFor(() => {
+      expect(
+        container.querySelector(`[data-language="typescript"]`),
+      ).toBeInTheDocument();
+    });
+  });
+
+  test('adds language support for jsx', async () => {
+    const { container } = renderCodeEditor({ language: LanguageName.jsx });
+    await waitFor(() => {
+      expect(
+        container.querySelector(`[data-language="javascript"]`),
+      ).toBeInTheDocument();
+    });
   });
 });
