@@ -1370,15 +1370,6 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
-  packages/context-drawer:
-    dependencies:
-      '@leafygreen-ui/emotion':
-        specifier: workspace:^
-        version: link:../emotion
-      '@leafygreen-ui/lib':
-        specifier: workspace:^
-        version: link:../lib
-
   packages/copyable:
     dependencies:
       '@leafygreen-ui/button':
