@@ -23,6 +23,7 @@ import * as utils from './utils';
 export function useEchart({
   container,
   initialOptions,
+  shouldEnableZoom = false,
   theme,
 }: EChartHookProps): EChartsInstance {
   const echartsCoreRef = useRef<typeof import('echarts/core') | null>(null);
@@ -144,20 +145,6 @@ export function useEchart({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
       dataZoomSelectActive: true,
-    });
-  }, []);
-
-  const disableZoom = useCallback(() => {
-    const echartsInstance = echartsInstanceRef.current;
-
-    if (!echartsInstance) {
-      return;
-    }
-
-    echartsInstance.dispatchAction({
-      type: 'takeGlobalCursor',
-      key: 'dataZoomSelect',
-      dataZoomSelectActive: false,
     });
   }, []);
 
@@ -432,14 +419,17 @@ export function useEchart({
     echartsInstance.setOption(options, {
       notMerge: true,
     });
-  }, [options, previousOptions]);
+
+    if (shouldEnableZoom) {
+      enableZoom();
+    }
+  }, [enableZoom, options, previousOptions, shouldEnableZoom]);
 
   return {
     _getEChartsInstance: () => echartsInstanceRef.current,
     _getOptions: () => options,
     addSeries,
     addToGroup,
-    disableZoom,
     enableZoom,
     error,
     hideTooltip,

@@ -55,7 +55,10 @@ export interface ChartHookProps {
 export interface ChartInstance
   extends EChartsInstance,
     Pick<ChartHookProps, 'state'>,
-    UseTooltipVisibilityReturnObj {
+    Pick<
+      UseTooltipVisibilityReturnObj,
+      'isChartHovered' | 'setTooltipMounted' | 'tooltipPinned'
+    > {
   id: string;
   ref: RefCallback<HTMLDivElement>;
 }

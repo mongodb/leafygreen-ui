@@ -17,4 +17,9 @@ export interface UseTooltipVisibilityReturnObj {
    * Whether the tooltip is visible and pinned.
    */
   tooltipPinned: boolean;
+
+  /**
+   * Callback to hide the tooltip and set the `tooltipPinned` state to false.
+   */
+  unpinTooltip: () => void;
 }

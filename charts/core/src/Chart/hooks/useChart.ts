@@ -33,6 +33,7 @@ export function useChart({
   const echart = useEchart({
     container,
     initialOptions,
+    shouldEnableZoom: zoomSelect?.xAxis || zoomSelect?.yAxis,
     theme,
   });
 
@@ -54,7 +55,7 @@ export function useChart({
     onChartReady();
   }, [ready, onChartReady]);
 
-  const { isChartHovered, setTooltipMounted, tooltipPinned } =
+  const { isChartHovered, setTooltipMounted, tooltipPinned, unpinTooltip } =
     useTooltipVisibility({
       chartId: id,
       container,
@@ -101,13 +102,14 @@ export function useChart({
   }, [enableZoom, off, on, ready, setupZoomSelect, zoomSelect]);
 
   useEffect(() => {
-    if (!ready || !onZoomSelect) {
+    if (!ready) {
       return;
     }
     on(EChartEvents.ZoomSelect, zoomEventResponse => {
-      onZoomSelect(zoomEventResponse);
+      unpinTooltip();
+      onZoomSelect?.(zoomEventResponse);
     });
-  }, [ready, onZoomSelect, on]);
+  }, [ready, onZoomSelect, on, unpinTooltip]);
 
   const initialRenderRef = useRef(true);
 
@@ -122,30 +124,8 @@ export function useChart({
       return;
     }
 
-    if (zoomSelect && (zoomSelect.xAxis || zoomSelect.yAxis)) {
-      /**
-       * If the chart has been resized, the chart appears to reset zoom, which
-       * disables it. We need to re-enable it after the resize however, doing so
-       * immediately doesn't work. To work around this, we listen for the `finished`
-       * event, which is triggered after the chart has been rendered, and then
-       * execute the re-enable zoom logic after all tasks on the queue have been
-       * processed.
-       *
-       * TODO(LG-4818): Investigate why this is necessary
-       */
-      function reEnableZoom() {
-        function reEnableZoomCallback() {
-          enableZoom();
-          off('finished', reEnableZoom);
-        }
-        setTimeout(reEnableZoomCallback, 0);
-      }
-
-      on('finished', reEnableZoom);
-    }
-
     resize();
-  }, [enableZoom, off, on, ready, resize, zoomSelect]);
+  }, [ready, resize]);
 
   useEffect(() => {
     if (!ready || !container) {
