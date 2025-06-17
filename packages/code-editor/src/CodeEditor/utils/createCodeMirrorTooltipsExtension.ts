@@ -13,13 +13,13 @@ import { CodeEditorTooltip, CodeMirrorExtension } from '../CodeEditor.types';
  *
  * @example
  * ```tsx
- * const tooltipExtension = createDiagnosticsTooltipExtension([
+ * const tooltipExtension = createCodeMirrorTooltipsExtension([
  *   { line: 2, column: 5, length: 4, content: <div>Tooltip 1</div> },
  *   { line: 3, column: 2, length: 2, content: <div>Tooltip 2</div> },
  * ]);
  * ```
  */
-export function createDiagnosticsTooltipExtension(
+export function createCodeMirrorTooltipsExtension(
   tooltips: Array<CodeEditorTooltip>,
 ): CodeMirrorExtension {
   return linter(view => {
