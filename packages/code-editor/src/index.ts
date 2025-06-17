@@ -19,3 +19,8 @@ export {
   IndentUnits,
   LanguageName,
 } from './CodeEditor';
+export {
+  JsonChecklistItem,
+  type JsonChecklistItemProps,
+  Status,
+} from './JsonChecklistItem';

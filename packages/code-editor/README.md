@@ -63,6 +63,22 @@ console.log(greet('MongoDB user'));`;
 | `readOnly` _(optional)_                     | Enables read only mode, making the contents uneditable.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `boolean`                    | `false`     |
 | `tooltips` _(optional)_                     | Add tooltips to the editor content that appear on hover.                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `Array<Tooltip>`             | `undefined` |
 
+### `<JsonChecklistItem>`
+
+#### Example
+
+_TODO: Add example after `ContextDrawer` implemented_
+
+#### Properties
+
+| Name                       | Description                                                                                                                                                              | Type                              | Default     |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------- | ----------- |
+| `badges` _(optional)_      | Badge(s) rendered alongside the label.                                                                                                                                   | `BadgeProps \| Array<BadgeProps>` | `undefined` |
+| `description` _(optional)_ | Additional description for the item.                                                                                                                                     | `ReactNode`                       | `undefined` |
+| `label`                    | Label for the item.                                                                                                                                                      | `ReactNode`                       |             |
+| `onAddClick` _(optional)_  | Callback invoked when clicking “Add” button. . This is only visible when `status` is `'missing'`.                                                                        | `() => void`                      |             |
+| `status`                   | Determines rendering of the status UI: <br> \* `'missing'` will render "Add" button to add missing item <br> \*`'present'` will render checkmark icon with “Added!” text | `'missing' \| 'present'`          |             |
+
 ## Types and Variables
 
 | Name                         | Description                                                                                                                                                                                               |
