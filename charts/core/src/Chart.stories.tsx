@@ -1233,6 +1233,12 @@ export const SyncedByGroupID: StoryObj<{}> = {
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
+        <Chart groupId="group1">
+          <ChartTooltip />
+          {lineData.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
       </div>
     );
   },

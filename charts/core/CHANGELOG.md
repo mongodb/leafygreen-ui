@@ -1,5 +1,29 @@
 # @lg-charts/core
 
+## 1.3.0
+
+### Minor Changes
+
+- 9175cfa: [LG-5299](https://jira.mongodb.org/browse/LG-5299): fix interaction between zoom and tooltip pinning and accurately position tooltip when resizing or scrolling
+
+## 1.2.1
+
+### Patch Changes
+
+- 9de60ce: Updates axis `formatter` prop signature to match echarts.
+  ```ts
+  {
+    formatter?: (value: number, index?: number) => string | string;
+  }
+  ```
+- Updated dependencies [4bd4da3]
+- Updated dependencies [caaaeeb]
+  - @leafygreen-ui/tokens@3.1.0
+  - @leafygreen-ui/icon-button@17.0.1
+  - @lg-charts/chart-card@1.0.1
+  - @lg-charts/colors@1.0.0
+  - @leafygreen-ui/typography@21.0.1
+
 ## 1.2.0
 
 ### Minor Changes
