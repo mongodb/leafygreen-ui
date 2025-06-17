@@ -18,7 +18,7 @@ TestExample.args = {
   label: 'Label',
   value: 27,
   maxValue: 200,
-  valueType: 'percentage',
+  valueDisplayFormat: 'percentage',
   size: 'default',
   variant: 'warning',
   showIcon: true,

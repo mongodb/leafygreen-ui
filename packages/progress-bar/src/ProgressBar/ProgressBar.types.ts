@@ -23,7 +23,7 @@ interface BaseProgressBarProps {
   /**
    * The format of the value displayed in the progress bar next to the label.
    */
-  valueType?: ProgressBarValueType;
+  valueDisplayFormat?: ProgressBarValueType;
 
   /**
    * The maximum value of the progress bar.

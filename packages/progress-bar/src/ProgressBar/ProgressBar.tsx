@@ -22,6 +22,7 @@ import { ProgressBarProps } from './ProgressBar.types';
 import {
   getHeaderIcon,
   getPercentage,
+  getValueDisplay,
   iconsOnCompletion,
 } from './ProgressBar.utils';
 
@@ -30,7 +31,7 @@ export function ProgressBar({
   value,
   variant = Variant.Info,
   label,
-  valueType = 'fraction',
+  valueDisplayFormat = 'fraction',
   maxValue = 100,
   valueUnits,
   showValue = true,
@@ -43,15 +44,7 @@ export function ProgressBar({
 }: ProgressBarProps) {
   const { theme } = useDarkMode(darkMode);
 
-  const valueDisplay = value
-    ? valueType === 'fraction'
-      ? `${value}/${maxValue}`
-      : valueType === 'percentage'
-      ? getPercentage(value, maxValue)
-      : value
-    : '';
-
-  const valueUnitsDisplay = valueType === 'percentage' ? '%' : valueUnits || '';
+  const id = `progress-bar-${label || 'default'}`;
 
   const showIcon = iconsOnCompletion.includes(variant)
     ? showIconProps && value === maxValue
@@ -60,10 +53,11 @@ export function ProgressBar({
   return (
     <div className={cx(containerStyles)}>
       <div className={cx(headerStyles)}>
-        {label && <Label htmlFor={`progress bar for ${label}`}>{label}</Label>}
+        {label && <Label htmlFor={id}>{label}</Label>}
         {(showValue || showIcon) && (
           <Body className={cx(headerValueStyles, getHeaderValueStyles(theme))}>
-            {showValue && `${valueDisplay}${valueUnitsDisplay}`}
+            {showValue &&
+              getValueDisplay(value, maxValue, valueDisplayFormat, valueUnits)}
             {showIcon &&
               getHeaderIcon(variant, {
                 className: cx(
@@ -77,6 +71,7 @@ export function ProgressBar({
 
       <div
         role="progressbar"
+        id={id}
         aria-label={label}
         aria-valuenow={value}
         aria-valuemin={0}

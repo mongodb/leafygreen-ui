@@ -26,9 +26,27 @@ export const getHeaderIcon = (
 };
 
 export const getPercentage = (value: number, maxValue: number): number => {
-  if (maxValue === 0) {
-    return 0;
-  }
+  if (maxValue === 0) return 0;
 
   return Math.round((value / maxValue) * 100);
+};
+
+export const getValueDisplay = (
+  value?: number,
+  maxValue?: number,
+  valueDisplayFormat?: string,
+  valueUnits?: string,
+): string => {
+  if (!value) return '';
+
+  switch (valueDisplayFormat) {
+    case 'fraction':
+      return `${value}/${maxValue}` + (valueUnits || '');
+    case 'percentage':
+      return `${getPercentage(value, maxValue || 100)}%`;
+    case 'number':
+      return value.toString() + (valueUnits || '');
+    default:
+      return '';
+  }
 };
