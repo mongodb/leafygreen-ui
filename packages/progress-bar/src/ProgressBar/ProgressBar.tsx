@@ -97,10 +97,12 @@ export function ProgressBar({
     return getDeterminateProgressBarFillStyles(getPercentage(value, maxValue));
   };
 
-  const progressBarId = `progress-bar-${label || 'default'}`;
+  const progressBarId = `progress-bar-${
+    getNodeTextContent(label) || 'default'
+  }`;
 
   return (
-    <div className={cx(containerStyles)}>
+    <div className={cx(containerStyles)} aria-disabled={disabled}>
       <div className={cx(headerStyles)}>
         <Label htmlFor={progressBarId} darkMode={darkMode} disabled={disabled}>
           {label}
@@ -115,12 +117,14 @@ export function ProgressBar({
         {...getAriaAttributes()}
       >
         <div
+          data-testid="progress-bar-track"
           className={cx(
             progressBarTrackStyles,
             getProgressBarTrackStyles(theme, size),
           )}
         >
           <div
+            data-testid="progress-bar-fill"
             className={cx(
               progressBarFillStyles,
               getProgressBarFillStyles(theme, variant, disabled),
