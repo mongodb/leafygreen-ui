@@ -86,7 +86,6 @@ export const createCodeMirrorTheme = (
         caretColor: colors[9],
         fontFamily: fontFamilies.code,
         fontSize: `${fontSize}px`,
-        padding: '12px',
       },
       [`&${CodeEditorSelectors.Focused} ${CodeEditorSelectors.Cursor}`]: {
         borderLeftColor: colors[9],
@@ -109,6 +108,9 @@ export const createCodeMirrorTheme = (
         {
           width: '52px',
         },
+      [CodeEditorSelectors.Line]: {
+        paddingLeft: '12px',
+      },
     },
     { dark: theme === Theme.Dark },
   );
