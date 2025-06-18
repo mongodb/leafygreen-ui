@@ -96,7 +96,7 @@ export const getHeaderValueStyles = (theme: Theme, disabled?: boolean) => css`
 `;
 
 export const headerIconStyles = css`
-  margin-bottom: 2px; // align icon with text baseline
+  margin-bottom: ${spacing[50]}px; // align icon with text baseline
 `;
 
 export const getHeaderIconStyles = (
