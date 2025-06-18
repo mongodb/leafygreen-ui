@@ -106,7 +106,7 @@ export const createCodeMirrorTheme = (
       },
       [`${CodeEditorSelectors.LineNumbers} ${CodeEditorSelectors.GutterElement}`]:
         {
-          width: '40px',
+          width: '52px',
         },
     },
     { dark: theme === Theme.Dark },
