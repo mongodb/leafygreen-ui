@@ -6,7 +6,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { renderToString } from 'react-dom/server';
 import {
+  foldGutter,
   forceParsing,
   indentUnit as indentUnitFacet,
 } from '@codemirror/language';
@@ -18,7 +20,9 @@ import CodeMirror, {
   Prec,
 } from '@uiw/react-codemirror';
 
+import { css } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
+import Icon from '@leafygreen-ui/icon';
 import {
   useBaseFontSize,
   useDarkMode,
@@ -120,6 +124,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       const lineWrappingCompartment = new Compartment();
       const indentExtensionCompartment = new Compartment();
       const tooltipCompartment = new Compartment();
+      const foldGutterCompartment = new Compartment();
 
       extensions.push(
         hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
@@ -135,12 +140,43 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
             ? [createCodeMirrorTooltipsExtension(tooltips)]
             : [],
         ),
+        foldGutterCompartment.of(
+          enableCodeFolding
+            ? foldGutter({
+                markerDOM: (open: boolean) => {
+                  const icon = document.createElement('span');
+                  icon.className = 'cm-custom-fold-marker';
+                  icon.innerHTML = renderToString(
+                    open ? (
+                      <Icon
+                        glyph="ChevronDown"
+                        size="small"
+                        className={css`
+                          margin-top: 2px;
+                        `}
+                      />
+                    ) : (
+                      <Icon
+                        glyph="ChevronRight"
+                        size="small"
+                        className={css`
+                          margin-top: 2px;
+                        `}
+                      />
+                    ),
+                  );
+                  return icon;
+                },
+              })
+            : [],
+        ),
       );
 
       return extensions;
     }, [
       createIndentExtension,
       enableClickableUrls,
+      enableCodeFolding,
       enableLineWrapping,
       indentUnit,
       indentSize,
@@ -179,7 +215,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         ]}
         basicSetup={{
           allowMultipleSelections: true,
-          foldGutter: enableCodeFolding,
+          foldGutter: false, // Custom fold gutter is used instead
           highlightActiveLine: enableActiveLineHighlighting,
           highlightActiveLineGutter: enableActiveLineHighlighting,
           lineNumbers: enableLineNumbers,
