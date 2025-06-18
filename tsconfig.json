@@ -1,9 +1,9 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src"
+    "paths": {
+      "@lg-private/*": ["../*/src"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.*", "**/*.story.*"],
