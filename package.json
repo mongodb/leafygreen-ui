@@ -2,9 +2,16 @@
   "name": "@lg-private/vertical-stepper",
   "version": "3.0.0",
   "description": "LeafyGreen UI Kit Vertical Stepper",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
   "license": "Apache-2.0",
   "scripts": {
     "build": "lg build-package",
@@ -28,7 +35,8 @@
     "@leafygreen-ui/leafygreen-provider": "^4.0.0"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@lg-tools/build": "0.8.0",
+    "@lg-tools/storybook-utils": "^0.3.0"
   },
   "homepage": "https://github.com/10gen/leafygreen-ui-private/tree/main/packages/vertical-stepper",
   "repository": {
