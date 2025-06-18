@@ -10,41 +10,21 @@ const meta: StoryMetaType<typeof ProgressBar> = {
   parameters: {
     default: 'LiveExample',
     generate: {
+      storyNames: ['Determinate', 'Indeterminate'],
       args: {
         label: <span key="label">Label</span>,
         description: <span key="description">Helper text</span>,
-        value: 0.49,
-        formatValue: 'percentage',
-        showIcon: true,
       },
       combineArgs: {
-        isIndeterminate: [false, true],
-        darkMode: [false, true],
         variant: ['info', 'success', 'warning', 'error'],
-        size: ['default', 'small', 'large'],
+        size: ['small', 'default', 'large'],
         disabled: [false, true],
+        darkMode: [false, true],
       },
       excludeCombinations: [
-        [
-          'value',
-          {
-            isIndeterminate: true,
-          },
-        ],
-        [
-          'formatValue',
-          {
-            isIndeterminate: true,
-          },
-        ],
-        [
-          'showIcon',
-          {
-            isIndeterminate: true,
-          },
-        ],
         {
-          variant: ['success', 'warning', 'error'], // minimize redundancy
+          // to minimize redundancy in disabled states
+          variant: ['success', 'warning', 'error'],
           disabled: [true],
         },
       ],
@@ -74,12 +54,6 @@ LiveExample.args = {
   description: <span>Helper text</span>,
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  ...LiveExample.args,
-  disabled: true,
-};
-
 export const Basic = Template.bind({});
 Basic.args = {
   value: 27,
@@ -98,16 +72,30 @@ WithValueDisplay.args = {
   formatValue: 'percentage',
 };
 
-export const WithValueIcon = Template.bind({});
-WithValueIcon.args = {
-  ...WithValueDisplay.args,
-  showIcon: true,
-};
-
 export const WithDescription = Template.bind({});
 WithDescription.args = {
   ...Basic.args,
   description: <span>Helper text</span>,
 };
 
-export const Generated = () => {};
+export const Determinate = Template.bind({});
+Determinate.parameters = {
+  generate: {
+    args: {
+      isIndeterminate: false,
+      value: 47,
+      maxValue: 200,
+      formatValue: 'fraction',
+      showIcon: true,
+    },
+  },
+};
+
+export const Indeterminate = Template.bind({});
+Indeterminate.parameters = {
+  generate: {
+    args: {
+      isIndeterminate: true,
+    },
+  },
+};
