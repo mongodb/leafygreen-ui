@@ -1235,6 +1235,9 @@ importers:
       '@leafygreen-ui/hooks':
         specifier: workspace:^
         version: link:../hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../leafygreen-provider
