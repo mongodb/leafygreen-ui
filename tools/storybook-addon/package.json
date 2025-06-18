@@ -37,6 +37,7 @@
   },
   "files": [
     "dist/**/*",
+    "static/*",
     "*.js",
     "*.d.ts",
     "README.md",
