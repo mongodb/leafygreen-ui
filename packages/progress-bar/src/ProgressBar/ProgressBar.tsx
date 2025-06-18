@@ -21,6 +21,7 @@ import {
 } from './ProgressBar.styles';
 import { ProgressBarProps } from './ProgressBar.types';
 import {
+  DEFAULT_MAX_VALUE,
   getHeaderIcon,
   getPercentage,
   getValueDisplay,
@@ -28,15 +29,8 @@ import {
 } from './ProgressBar.utils';
 
 export function ProgressBar({
-  type,
-  value,
   variant = Variant.Info,
   label,
-  valueDisplayFormat = 'fraction',
-  maxValue = 100,
-  valueUnits,
-  showValue = false,
-  showIcon: showIconProps = false,
   size = Size.Default,
   description,
   darkMode = false,
@@ -45,46 +39,69 @@ export function ProgressBar({
 }: ProgressBarProps) {
   const { theme } = useDarkMode(darkMode);
 
-  const progressBarId = `progress-bar-${label || 'default'}`;
+  const hasValue = !rest.isIndeterminate;
 
-  const showIcon = iconsOnCompletion.includes(variant)
-    ? showIconProps && value === maxValue
-    : showIconProps;
+  const renderValueDisplay = () => {
+    if (!hasValue) return null;
+
+    const {
+      value,
+      maxValue = DEFAULT_MAX_VALUE,
+      formatValue,
+      showIcon: showIconProps = false,
+      enableAnimation = false,
+    } = rest;
+
+    if (!formatValue) return null;
+
+    const showIcon = iconsOnCompletion.includes(variant)
+      ? showIconProps && value === maxValue
+      : showIconProps;
+
+    return (
+      <Body
+        className={cx(headerValueStyles, getHeaderValueStyles(theme))}
+        darkMode={darkMode}
+      >
+        {getValueDisplay(value, maxValue, formatValue)}
+
+        {showIcon &&
+          getHeaderIcon(variant, {
+            className: cx(
+              headerIconStyles,
+              getHeaderIconStyles(theme, variant),
+            ),
+          })}
+      </Body>
+    );
+  };
+
+  const getAriaAttributes = () => {
+    if (!hasValue) return {};
+
+    return {
+      'aria-valuemin': 0,
+      'aria-valuenow': rest.value,
+      'aria-valuemax': rest.maxValue ?? DEFAULT_MAX_VALUE,
+    };
+  };
+
+  const progressBarId = `progress-bar-${label || 'default'}`;
 
   return (
     <div className={cx(containerStyles)}>
       <div className={cx(headerStyles)}>
-        {/* Label is rendered even if empty for layout purposes */}
         <Label htmlFor={progressBarId} darkMode={darkMode}>
           {label}
         </Label>
-
-        {(showValue || showIcon) && (
-          <Body
-            className={cx(headerValueStyles, getHeaderValueStyles(theme))}
-            darkMode={darkMode}
-          >
-            {showValue &&
-              getValueDisplay(value, maxValue, valueDisplayFormat, valueUnits)}
-
-            {showIcon &&
-              getHeaderIcon(variant, {
-                className: cx(
-                  headerIconStyles,
-                  getHeaderIconStyles(theme, variant),
-                ),
-              })}
-          </Body>
-        )}
+        {hasValue && renderValueDisplay()}
       </div>
 
       <div
         role="progressbar"
         id={progressBarId}
         aria-label={getNodeTextContent(label)}
-        aria-valuenow={value}
-        aria-valuemin={0}
-        aria-valuemax={maxValue}
+        {...getAriaAttributes()}
       >
         <div
           className={cx(
@@ -96,9 +113,9 @@ export function ProgressBar({
             className={cx(
               progressBarFillStyles,
               getProgressBarFillStyles(theme, variant, size),
-              type === 'determinate' &&
+              hasValue &&
                 getDeterminateProgressBarFillStyles(
-                  getPercentage(value, maxValue),
+                  getPercentage(rest.value, rest.maxValue ?? DEFAULT_MAX_VALUE),
                 ),
             )}
           ></div>

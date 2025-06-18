@@ -13,63 +13,43 @@ export type ProgressBarVariant =
   | typeof Variant.Warning
   | typeof Variant.Error;
 
-export type ProgressBarValueType = 'fraction' | 'percentage' | 'number';
+export type ProgressBarValueType =
+  | 'fraction'
+  | 'percentage'
+  | 'number'
+  | ((value: number, maxValue?: number) => string);
 interface BaseProgressBarProps {
   variant?: ProgressBarVariant;
-
-  /**
-   * The descriptive label for the progress bar.
-   */
   label?: React.ReactNode;
-
-  /**
-   * The format of the value displayed in the progress bar next to the label.
-   */
-  valueDisplayFormat?: ProgressBarValueType;
-
-  /**
-   * The maximum value of the progress bar.
-   * If not provided, it defaults to 100.
-   */
-  maxValue?: number;
-
-  /**
-   * The units of the value displayed in the progress bar.
-   * If not provided, no units will be displayed.
-   */
-  valueUnits?: string;
-
-  /**
-   * Value may or may not be displayed even if internally calculated.
-   */
-  showValue?: boolean;
-
-  /**
-   * Optional icon displayed next to the value in the progress bar based on the variant.
-   * If not provided, no icon will be displayed.
-   */
-  showIcon?: boolean;
-
   size?: ProgressBarSize;
   description?: React.ReactNode;
-
   darkMode?: boolean;
   disabled?: boolean;
 }
 
-interface DeterminateProgressBarProps extends BaseProgressBarProps {
-  type: 'determinate';
+interface DeterminateProgressBarProps {
+  isIndeterminate: false;
   value: number;
+  maxValue?: number;
+
+  /**
+   * Optional format of value display. If omitted, no value will be displayed.
+   */
+  formatValue?: ProgressBarValueType;
+
+  /**
+   * Optional icon based on variant. Rendered directly right of the value
+   */
+  showIcon?: boolean;
+
   /**
    * Shimmer animation recommended for long-running tasks to provide visual feedback.
    */
   enableAnimation?: boolean;
 }
-interface IndeterminateProgressBarProps extends BaseProgressBarProps {
-  type: 'indeterminate';
-  value?: number;
+interface IndeterminateProgressBarProps {
+  isIndeterminate: true;
 }
 
-export type ProgressBarProps =
-  | DeterminateProgressBarProps
-  | IndeterminateProgressBarProps;
+export type ProgressBarProps = BaseProgressBarProps &
+  (DeterminateProgressBarProps | IndeterminateProgressBarProps);

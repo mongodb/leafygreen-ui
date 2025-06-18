@@ -5,9 +5,31 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
-import { ProgressBarVariant } from './ProgressBar.types';
+import { ProgressBarValueType, ProgressBarVariant } from './ProgressBar.types';
+
+export const DEFAULT_MAX_VALUE = 1;
 
 export const iconsOnCompletion = ['success'];
+
+export const getValueDisplay = (
+  value: number,
+  maxValue: number,
+  formatValue?: ProgressBarValueType,
+): string => {
+  if (typeof formatValue === 'function') {
+    return formatValue(value, maxValue);
+  }
+
+  switch (formatValue) {
+    case 'fraction':
+      return `${value}/${maxValue}`;
+    case 'percentage':
+      return `${getPercentage(value, maxValue)}%`;
+    case 'number':
+    default:
+      return value.toString();
+  }
+};
 
 export const getHeaderIcon = (
   variant: ProgressBarVariant,
@@ -29,26 +51,4 @@ export const getPercentage = (value: number, maxValue: number): number => {
   if (maxValue === 0) return 0;
 
   return Math.round((value / maxValue) * 100);
-};
-
-export const getValueDisplay = (
-  value?: number,
-  maxValue?: number,
-  valueDisplayFormat?: string,
-  valueUnits?: string,
-): string => {
-  if (!value) return '';
-
-  const units = valueUnits ? ` ${valueUnits}` : '';
-
-  switch (valueDisplayFormat) {
-    case 'fraction':
-      return `${value}/${maxValue}` + units;
-    case 'percentage':
-      return `${getPercentage(value, maxValue || 100)}%`;
-    case 'number':
-      return value.toString() + units;
-    default:
-      return '';
-  }
 };
