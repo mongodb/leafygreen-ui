@@ -30,4 +30,5 @@ export const getContainerStyles = (theme: Theme, showDivider?: boolean) =>
 export const titleStyles = css`
   display: flex;
   align-items: center;
+  gap: ${spacing[100]}px;
 `;
