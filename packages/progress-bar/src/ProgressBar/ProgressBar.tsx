@@ -16,6 +16,7 @@ import {
   headerIconStyles,
   headerStyles,
   headerValueStyles,
+  indeterminateProgressBarFillStyles,
   progressBarFillStyles,
   progressBarTrackStyles,
 } from './ProgressBar.styles';
@@ -60,7 +61,7 @@ export function ProgressBar({
 
     return (
       <Body
-        className={cx(headerValueStyles, getHeaderValueStyles(theme))}
+        className={cx(headerValueStyles, getHeaderValueStyles(theme, disabled))}
         darkMode={darkMode}
       >
         {getValueDisplay(value, maxValue, formatValue)}
@@ -69,7 +70,7 @@ export function ProgressBar({
           getHeaderIcon(variant, {
             className: cx(
               headerIconStyles,
-              getHeaderIconStyles(theme, variant),
+              getHeaderIconStyles(theme, variant, disabled),
             ),
           })}
       </Body>
@@ -79,11 +80,21 @@ export function ProgressBar({
   const getAriaAttributes = () => {
     if (!hasValue) return {};
 
+    const { value, maxValue = DEFAULT_MAX_VALUE } = rest;
+
     return {
       'aria-valuemin': 0,
-      'aria-valuenow': rest.value,
-      'aria-valuemax': rest.maxValue ?? DEFAULT_MAX_VALUE,
+      'aria-valuenow': value,
+      'aria-valuemax': maxValue,
     };
+  };
+
+  const getTypedProgressBarFillStyles = () => {
+    if (!hasValue) return indeterminateProgressBarFillStyles;
+
+    const { value, maxValue = DEFAULT_MAX_VALUE } = rest;
+
+    return getDeterminateProgressBarFillStyles(getPercentage(value, maxValue));
   };
 
   const progressBarId = `progress-bar-${label || 'default'}`;
@@ -112,11 +123,8 @@ export function ProgressBar({
           <div
             className={cx(
               progressBarFillStyles,
-              getProgressBarFillStyles(theme, variant, size),
-              hasValue &&
-                getDeterminateProgressBarFillStyles(
-                  getPercentage(rest.value, rest.maxValue ?? DEFAULT_MAX_VALUE),
-                ),
+              getProgressBarFillStyles(theme, variant, disabled),
+              getTypedProgressBarFillStyles(),
             )}
           ></div>
         </div>

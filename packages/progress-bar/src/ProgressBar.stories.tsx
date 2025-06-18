@@ -11,12 +11,9 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     default: 'LiveExample',
     generate: {
       combineArgs: {
-        value: [40],
-        showIcon: [true],
         darkMode: [false, true],
         variant: ['info', 'success', 'warning', 'error'],
         size: ['default', 'small', 'large'],
-        type: ['determinate', 'indeterminate'],
         disabled: [false, true],
       },
     },
@@ -30,20 +27,22 @@ const Template: StoryFn<typeof ProgressBar> = props => (
 
 export const LiveExample = Template.bind({});
 LiveExample.args = {
-  type: 'determinate',
   value: 48,
   maxValue: 200,
-  valueDisplayFormat: 'fraction',
-  valueUnits: 'units',
-  showValue: true,
+  formatValue: 'fraction',
   showIcon: true,
   label: <span>Label</span>,
   description: <span>Helper text</span>,
 };
 
+export const Disabled = Template.bind({});
+Disabled.args = {
+  ...LiveExample.args,
+  disabled: true,
+};
+
 export const Basic = Template.bind({});
 Basic.args = {
-  type: 'determinate',
   value: 27,
   maxValue: 200,
 };
@@ -57,9 +56,7 @@ WithLabel.args = {
 export const WithValueDisplay = Template.bind({});
 WithValueDisplay.args = {
   ...Basic.args,
-  valueDisplayFormat: 'percentage',
-  valueUnits: 'units',
-  showValue: true,
+  formatValue: 'percentage',
 };
 
 export const WithValueIcon = Template.bind({});

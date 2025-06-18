@@ -18,6 +18,7 @@ export type ProgressBarValueType =
   | 'percentage'
   | 'number'
   | ((value: number, maxValue?: number) => string);
+
 interface BaseProgressBarProps {
   variant?: ProgressBarVariant;
   label?: React.ReactNode;

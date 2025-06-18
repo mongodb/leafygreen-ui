@@ -29,6 +29,8 @@ const progressBarSizeStyles = {
 const progressBarVariantStyles = {
   [Theme.Light]: {
     trackColor: palette.gray.light2,
+    disabledBarColor: palette.gray.light1,
+
     [Variant.Info]: {
       barColor: palette.blue.base,
       iconColor: palette.blue.base,
@@ -48,6 +50,8 @@ const progressBarVariantStyles = {
   },
   [Theme.Dark]: {
     trackColor: palette.gray.dark2,
+    disabledBarColor: palette.gray.dark1,
+
     [Variant.Info]: {
       barColor: palette.blue.light1,
       iconColor: palette.blue.light1,
@@ -71,7 +75,7 @@ export const containerStyles = css`
   display: flex;
   flex-direction: column;
   gap: ${spacing[100]}px;
-  min-width: 600px;
+  width: 100%;
 `;
 
 export const headerStyles = css`
@@ -85,8 +89,10 @@ export const headerValueStyles = css`
   gap: ${spacing[100]}px;
 `;
 
-export const getHeaderValueStyles = (theme: Theme) => css`
-  color: ${color[theme].text.secondary.default};
+export const getHeaderValueStyles = (theme: Theme, disabled?: boolean) => css`
+  color: ${disabled
+    ? color[theme].text.disabled
+    : color[theme].text.secondary.default};
 `;
 
 export const headerIconStyles = css`
@@ -96,8 +102,11 @@ export const headerIconStyles = css`
 export const getHeaderIconStyles = (
   theme: Theme,
   variant: ProgressBarVariant,
+  disabled?: boolean,
 ) => css`
-  color: ${progressBarVariantStyles[theme][variant].iconColor};
+  color: ${disabled
+    ? color[theme].icon.disabled
+    : progressBarVariantStyles[theme][variant].iconColor};
 `;
 
 export const progressBarTrackStyles = css`
@@ -120,12 +129,20 @@ export const progressBarFillStyles = css`
 export const getProgressBarFillStyles = (
   theme: Theme,
   variant: ProgressBarVariant,
-  size: ProgressBarSize,
+  disabled?: boolean,
 ) => css`
-  border-radius: ${progressBarSizeStyles[size].borderRadius};
-  background-color: ${progressBarVariantStyles[theme][variant].barColor};
+  border-radius: inherit;
+  background-color: ${disabled
+    ? progressBarVariantStyles[theme].disabledBarColor
+    : progressBarVariantStyles[theme][variant].barColor};
 `;
 
 export const getDeterminateProgressBarFillStyles = (progress: number) => css`
   width: ${progress}%;
+  // requires additional animation
+`;
+
+export const indeterminateProgressBarFillStyles = css`
+  width: 100%; // temporary
+  // requires additional animation
 `;
