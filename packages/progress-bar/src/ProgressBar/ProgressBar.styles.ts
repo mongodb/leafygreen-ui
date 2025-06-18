@@ -91,7 +91,7 @@ export const headerValueStyles = css`
 
 export const getHeaderValueStyles = (theme: Theme, disabled?: boolean) => css`
   color: ${disabled
-    ? color[theme].text.disabled
+    ? color[theme].text.disabled.default
     : color[theme].text.secondary.default};
 `;
 
@@ -105,7 +105,7 @@ export const getHeaderIconStyles = (
   disabled?: boolean,
 ) => css`
   color: ${disabled
-    ? color[theme].icon.disabled
+    ? color[theme].icon.disabled.default
     : progressBarVariantStyles[theme][variant].iconColor};
 `;
 

@@ -67,7 +67,7 @@ export function ProgressBar({
         {getValueDisplay(value, maxValue, formatValue)}
 
         {showIcon &&
-          getHeaderIcon(variant, {
+          getHeaderIcon(variant, disabled, {
             className: cx(
               headerIconStyles,
               getHeaderIconStyles(theme, variant, disabled),
@@ -102,7 +102,7 @@ export function ProgressBar({
   return (
     <div className={cx(containerStyles)}>
       <div className={cx(headerStyles)}>
-        <Label htmlFor={progressBarId} darkMode={darkMode}>
+        <Label htmlFor={progressBarId} darkMode={darkMode} disabled={disabled}>
           {label}
         </Label>
         {hasValue && renderValueDisplay()}
@@ -131,7 +131,9 @@ export function ProgressBar({
       </div>
 
       {description && (
-        <Description darkMode={darkMode}>{description}</Description>
+        <Description darkMode={darkMode} disabled={disabled}>
+          {description}
+        </Description>
       )}
     </div>
   );

@@ -33,8 +33,13 @@ export const getValueDisplay = (
 
 export const getHeaderIcon = (
   variant: ProgressBarVariant,
+  disabled?: boolean,
   props?: Record<string, any>,
 ) => {
+  if (disabled) {
+    return <WarningIcon {...props} />;
+  }
+
   switch (variant) {
     case 'success':
       return <CheckmarkWithCircleIcon {...props} />;
