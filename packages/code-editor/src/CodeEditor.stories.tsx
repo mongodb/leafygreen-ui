@@ -94,6 +94,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     indentUnit: IndentUnits.Space,
     defaultValue: '',
     tooltips: [],
+    darkMode: false,
   },
   argTypes: {
     enableActiveLineHighlighting: {
@@ -130,6 +131,9 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     language: {
       control: { type: 'select' },
       options: Object.values(LanguageName),
+    },
+    darkMode: {
+      control: { type: 'boolean' },
     },
   },
 };

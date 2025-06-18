@@ -48,11 +48,17 @@ export const CodeEditorSelectors = {
   ActiveLine: '.cm-activeLine',
   ActiveLineGutter: '.cm-activeLineGutter',
   Content: '.cm-content',
+  Cursor: '.cm-cursor',
+  Editor: '.cm-editor',
+  Focused: '.cm-focused',
   FoldGutter: '.cm-foldGutter',
   GutterElement: '.cm-gutterElement',
+  Gutters: '.cm-gutters',
   HyperLink: '.cm-hyper-link-icon',
   Line: '.cm-line',
+  LineNumbers: '.cm-lineNumbers',
   LineWrapping: '.cm-lineWrapping',
+  SelectionBackground: '.cm-selectionBackground',
   Tooltip: '.cm-tooltip',
 } as const;
 export type CodeEditorSelectors =

@@ -19,8 +19,13 @@ import CodeMirror, {
 } from '@uiw/react-codemirror';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 
 import { createCodeMirrorLanguageExtension } from './utils/createCodeMirrorLanguageExtension';
+import { createCodeMirrorTheme } from './utils/createCodeMirrorTheme';
 import { createCodeMirrorTooltipsExtension } from './utils/createCodeMirrorTooltipsExtension';
 import {
   type CodeEditorProps,
@@ -49,10 +54,13 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       indentSize = 2,
       tooltips = [],
       extensions: consumerExtensions = [],
+      darkMode: darkModeProp,
       ...rest
     },
     forwardedRef,
   ) => {
+    const { theme } = useDarkMode(darkModeProp);
+    const baseFontSize = useBaseFontSize();
     const [value, setValue] = useState(defaultValue || '');
     const [languageExtension, setLanguageExtension] =
       useState<CodeMirrorExtension>([]);
@@ -163,6 +171,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         onCreateEditor={onCreateEditor}
         readOnly={readOnly}
         placeholder={placeholder}
+        theme={createCodeMirrorTheme(theme, baseFontSize)}
         extensions={[
           ...consumerExtensions.map(extension => Prec.highest(extension)),
           ...customExtensions,
