@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 1.4.0
+
+### Minor Changes
+
+- 2fecbc0: Ability to optionally add icon directly next to title in chart header.
+
 ## 1.3.0
 
 ### Minor Changes
