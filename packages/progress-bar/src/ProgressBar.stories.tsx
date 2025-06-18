@@ -15,6 +15,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         description: <span key="description">Helper text</span>,
         value: 0.49,
         formatValue: 'percentage',
+        showIcon: true,
       },
       combineArgs: {
         isIndeterminate: [false, true],
@@ -32,6 +33,12 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         ],
         [
           'formatValue',
+          {
+            isIndeterminate: true,
+          },
+        ],
+        [
+          'showIcon',
           {
             isIndeterminate: true,
           },
