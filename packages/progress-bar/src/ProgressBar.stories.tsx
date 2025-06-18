@@ -10,11 +10,43 @@ const meta: StoryMetaType<typeof ProgressBar> = {
   parameters: {
     default: 'LiveExample',
     generate: {
+      args: {
+        label: <span key="label">Label</span>,
+        description: <span key="description">Helper text</span>,
+        value: 0.49,
+        formatValue: 'percentage',
+      },
       combineArgs: {
+        isIndeterminate: [false, true],
         darkMode: [false, true],
         variant: ['info', 'success', 'warning', 'error'],
         size: ['default', 'small', 'large'],
         disabled: [false, true],
+      },
+      excludeCombinations: [
+        [
+          'value',
+          {
+            isIndeterminate: true,
+          },
+        ],
+        [
+          'formatValue',
+          {
+            isIndeterminate: true,
+          },
+        ],
+        {
+          variant: ['success', 'warning', 'error'], // minimize redundancy
+          disabled: [true],
+        },
+      ],
+      decorator: (InstanceFn, context) => {
+        return (
+          <div style={{ padding: '48px' }}>
+            <InstanceFn {...context?.args} />
+          </div>
+        );
       },
     },
   },
