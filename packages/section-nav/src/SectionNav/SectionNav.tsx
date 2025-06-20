@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
 
-import { Body } from '@leafygreen-ui/typography';
-
-import { type SectionNavProps } from './SectionNav.types';
-import { orderedListStyles, getTitleStyles } from './SectionNav.styles';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { Body } from '@leafygreen-ui/typography';
+
+import { getTitleStyles, orderedListStyles } from './SectionNav.styles';
+import { type SectionNavProps } from './SectionNav.types';
 
 export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(
   (

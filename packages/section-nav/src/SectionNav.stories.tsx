@@ -6,8 +6,8 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { SectionNav } from '.';
 import { SectionNavItem } from './SectionNavItem';
+import { SectionNav } from '.';
 
 const meta: StoryMetaType<typeof SectionNav> = {
   title: 'Components/SectionNav',

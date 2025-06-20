@@ -53,7 +53,7 @@ export const getBaseStyles = ({
     position: absolute;
     left: -1px;
     top: 0;
-    width: 2px;
+    width: 2px; // TODO: const
     height: 100%;
     background-color: transparent;
     border-top-right-radius: 100px;
