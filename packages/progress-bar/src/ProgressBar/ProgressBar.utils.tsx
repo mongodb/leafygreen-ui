@@ -8,6 +8,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { ProgressBarValueType, ProgressBarVariant } from './ProgressBar.types';
 
 export const DEFAULT_MAX_VALUE = 1;
+
 export const iconsVisibleOnComplete = ['success'];
 
 export const getFormattedValue = (
@@ -32,6 +33,14 @@ export const getFormattedValue = (
 
 export const getPercentage = (value: number, maxValue?: number): number => {
   return Math.round((value / (maxValue || DEFAULT_MAX_VALUE)) * 100);
+};
+
+export const getValueAriaAttributes = (value: number, maxValue?: number) => {
+  return {
+    'aria-valuemin': 0,
+    'aria-valuenow': value,
+    ...(maxValue && { 'aria-valuemax': maxValue }),
+  };
 };
 
 export const getHeaderIcon = (

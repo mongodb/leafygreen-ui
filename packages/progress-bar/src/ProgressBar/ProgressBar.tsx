@@ -26,6 +26,7 @@ import {
   getFormattedValue,
   getHeaderIcon,
   getPercentage,
+  getValueAriaAttributes,
   iconsVisibleOnComplete,
 } from './ProgressBar.utils';
 
@@ -53,16 +54,6 @@ export function ProgressBar({
   const showIcon = iconsVisibleOnComplete.includes(variant)
     ? showIconProps && isDeterminate && value === maxValue
     : showIconProps;
-
-  const getAriaAttributes = () => {
-    if (value) {
-      return {
-        'aria-valuemin': 0,
-        'aria-valuenow': value,
-        ...(isDeterminate && { 'aria-valuemax': maxValue }),
-      };
-    }
-  };
 
   const getTypedProgressBarFillStyles = () => {
     if (!isDeterminate) return indeterminateProgressBarFillStyles;
@@ -109,7 +100,7 @@ export function ProgressBar({
         role="progressbar"
         id={progressBarId}
         aria-label={progressBarId}
-        {...getAriaAttributes()}
+        {...(value && getValueAriaAttributes(value, maxValue))}
       >
         <div
           data-testid="progress-bar-track"
