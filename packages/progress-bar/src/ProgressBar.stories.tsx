@@ -10,7 +10,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: ['Determinate', 'Indeterminate'],
+      storyNames: ['DeterminateVariants', 'IndeterminateVariants'],
       args: {
         label: <span key="label">Label</span>,
         description: <span key="description">Helper text</span>,
@@ -21,9 +21,9 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         disabled: [false, true],
         darkMode: [false, true],
       },
+      // to minimize redundancy in disabled states
       excludeCombinations: [
         {
-          // to minimize redundancy in disabled states
           variant: ['success', 'warning', 'error'],
           disabled: [true],
         },
@@ -46,7 +46,7 @@ const Template: StoryFn<typeof ProgressBar> = props => (
 
 export const LiveExample = Template.bind({});
 LiveExample.args = {
-  value: 48,
+  value: 90,
   maxValue: 200,
   formatValue: 'fraction',
   showIcon: true,
@@ -83,8 +83,8 @@ WithDescription.args = {
   description: <span>Helper text</span>,
 };
 
-export const Determinate = Template.bind({});
-Determinate.parameters = {
+export const DeterminateVariants = Template.bind({});
+DeterminateVariants.parameters = {
   generate: {
     args: {
       isIndeterminate: false,
@@ -97,8 +97,8 @@ Determinate.parameters = {
   },
 };
 
-export const Indeterminate = Template.bind({});
-Indeterminate.parameters = {
+export const IndeterminateVariants = Template.bind({});
+IndeterminateVariants.parameters = {
   generate: {
     args: {
       isIndeterminate: true,

@@ -65,7 +65,7 @@ describe('packages/progress-bar', () => {
       it('renders with a custom format when given a callback', () => {
         const { getByText } = render(
           <ProgressBar
-            isIndeterminate={false}
+            isIndeterminate={true}
             value={TEST_VALUE}
             formatValue={value => `${value} units`}
           />,
@@ -73,7 +73,7 @@ describe('packages/progress-bar', () => {
         expect(getByText(`${TEST_VALUE} units`)).toBeInTheDocument();
       });
 
-      it('renders with an icon when showIcon is true', () => {
+      it('renders icon when showIcon is true', () => {
         render(
           <ProgressBar
             isIndeterminate={false}
@@ -85,24 +85,10 @@ describe('packages/progress-bar', () => {
         );
         expect(screen.getByRole('img')).toBeInTheDocument();
       });
-
-      it('does not render an icon for success variant if value is not at maxValue, even if showIcon is true', () => {
-        render(
-          <ProgressBar
-            isIndeterminate={false}
-            variant="success"
-            value={TEST_VALUE}
-            maxValue={TEST_MAX_VALUE}
-            formatValue="number"
-            showIcon={true}
-          />,
-        );
-        expect(screen.queryByRole('img')).toBeNull();
-      });
     });
 
     describe('with determinate state', () => {
-      const TEST_VALUE = 50;
+      const TEST_VALUE = 75;
       const TEST_MAX_VALUE = 100;
 
       it('renders the correct width for the progress bar fill', () => {
@@ -116,8 +102,22 @@ describe('packages/progress-bar', () => {
         const barFillElement = getByTestId('progress-bar-fill');
         expect(barFillElement).toBeInTheDocument();
         expect(barFillElement).toHaveStyle({
-          width: '50%',
+          width: '75%',
         });
+      });
+
+      it('does not render success variant icon if under maxValue, even if showIcon is true', () => {
+        render(
+          <ProgressBar
+            isIndeterminate={false}
+            variant="success"
+            value={TEST_VALUE}
+            maxValue={TEST_MAX_VALUE}
+            formatValue="number"
+            showIcon={true}
+          />,
+        );
+        expect(screen.queryByRole('img')).toBeNull();
       });
     });
   });
