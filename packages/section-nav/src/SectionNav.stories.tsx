@@ -25,6 +25,7 @@ const meta: StoryMetaType<typeof SectionNav> = {
   },
   args: {
     darkMode: false,
+    title: 'On this page',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -34,22 +35,24 @@ const meta: StoryMetaType<typeof SectionNav> = {
 export default meta;
 
 const Template: StoryFn<typeof SectionNav> = props => (
-  <SectionNav {...props}>
-    <SectionNavItem href="#section-1">Section 1</SectionNavItem>
-    <SectionNavItem active depth={2} href="#section-2">
-      Section 2
-    </SectionNavItem>
-    <SectionNavItem active href="#section-3">
-      Section 3
-    </SectionNavItem>
-    <SectionNavItem href="#section-4">Section 4</SectionNavItem>
-    <SectionNavItem depth={2} href="#section-5">
-      Section 5
-    </SectionNavItem>
-    <SectionNavItem depth={2} href="#section-6">
-      Section 6
-    </SectionNavItem>
-  </SectionNav>
+  <div style={{ width: '160px' }}>
+    <SectionNav {...props}>
+      <SectionNavItem href="#section-1">Section 1</SectionNavItem>
+      <SectionNavItem depth={2} href="#section-2">
+        Section 2
+      </SectionNavItem>
+      <SectionNavItem active href="#section-3">
+        Section 3 should wrap to the next line
+      </SectionNavItem>
+      <SectionNavItem href="#section-4">Section 4</SectionNavItem>
+      <SectionNavItem depth={2} href="#section-5">
+        Section 5
+      </SectionNavItem>
+      <SectionNavItem depth={2} href="#section-6">
+        Section 6
+      </SectionNavItem>
+    </SectionNav>
+  </div>
 );
 
 export const LiveExample = Template.bind({});
