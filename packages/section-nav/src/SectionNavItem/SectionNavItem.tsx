@@ -31,4 +31,4 @@ export const SectionNavItem = forwardRef<
 
 SectionNavItem.displayName = 'SectionNavItem';
 
-// TODO: context to make sure this cannot render outside of SectionNav
+// TODO: context to make sure this can not render outside of SectionNav

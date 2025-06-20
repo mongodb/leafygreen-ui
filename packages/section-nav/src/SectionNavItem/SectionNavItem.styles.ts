@@ -67,7 +67,8 @@ const activeWedgeColor: Record<Theme, string> = {
 };
 
 export const getFocusStyles = ({ theme }: { theme: Theme }) => css`
-  &:focus-visible {
+  &:focus-visible,
+  &[data-focus='true'] {
     color: ${color[theme].text.secondary.focus};
     background-color: ${color[theme].background.primary.focus};
 
@@ -78,7 +79,8 @@ export const getFocusStyles = ({ theme }: { theme: Theme }) => css`
 `;
 
 export const getHoverStyles = ({ theme }: { theme: Theme }) => css`
-  &:hover {
+  &:hover,
+  &[data-hover='true'] {
     background-color: ${color[theme].background.primary.hover};
   }
 `;
