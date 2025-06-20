@@ -13,7 +13,7 @@ import {
 } from '@leafygreen-ui/typography';
 
 import { Check } from '../Check';
-import { LGIDS_CHECKBOX } from '../constants';
+import { getLgIds } from '../utils/getLgIds';
 
 import {
   checkWrapperClassName,
@@ -45,7 +45,7 @@ const Checkbox = React.forwardRef(
       checked: checkedProp,
       className,
       darkMode: darkModeProp,
-      'data-lgid': dataLgId = LGIDS_CHECKBOX.root,
+      'data-lgid': dataLgId,
       description,
       disabled = false,
       id: idProp,
@@ -62,6 +62,8 @@ const Checkbox = React.forwardRef(
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+
+    const lgIds = getLgIds(dataLgId);
 
     const [checked, setChecked] = React.useState(defaultChecked);
     const isChecked = React.useMemo(
@@ -124,7 +126,7 @@ const Checkbox = React.forwardRef(
             },
             className,
           )}
-          data-lgid={dataLgId}
+          data-lgid={lgIds.root}
           style={style}
         >
           <Label
@@ -134,6 +136,7 @@ const Checkbox = React.forwardRef(
             className={cx(labelStyle, labelHoverStyle[theme], {
               [disabledLabelStyle]: disabled,
             })}
+            data-lgid={lgIds.root}
           >
             <input
               {...rest}
@@ -178,7 +181,11 @@ const Checkbox = React.forwardRef(
           </Label>
 
           {description && (
-            <Description className={descriptionStyle} disabled={disabled}>
+            <Description
+              className={descriptionStyle}
+              disabled={disabled}
+              data-lgid={lgIds.root}
+            >
               {description}
             </Description>
           )}

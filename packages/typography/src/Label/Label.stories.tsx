@@ -7,7 +7,11 @@ import Label from './Label';
 import { LabelProps } from './Label.types';
 
 export const Basic = ({ children, ...rest }: LabelProps) => {
-  return <Label {...rest}>{children}</Label>;
+  return (
+    <Label data-lgid="lg-hello" {...rest}>
+      {children}
+    </Label>
+  );
 };
 
 const meta: StoryMetaType<typeof Label> = {

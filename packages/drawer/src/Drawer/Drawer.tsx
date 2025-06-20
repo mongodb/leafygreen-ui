@@ -16,7 +16,7 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { useDrawerStackContext } from '../DrawerStackContext';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
+import { getLgIds } from '../utils';
 
 import {
   drawerTransitionDuration,
@@ -34,7 +34,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     {
       children,
       className,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId,
       displayMode = DisplayMode.Overlay,
       id: idProp,
       onClose,

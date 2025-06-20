@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { LGIDS } from '../constants';
 import { useTableContext } from '../TableContext';
 
 import {
@@ -26,10 +25,10 @@ const InternalCellBase = forwardRef<HTMLTableCellElement, InternalCellProps>(
     }: InternalCellProps,
     fwdRref,
   ) => {
-    const { verticalAlignment } = useTableContext();
+    const { verticalAlignment, lgIds } = useTableContext();
     return (
       <td
-        data-lgid={LGIDS.cell}
+        data-lgid={lgIds.cell}
         className={cx(getBaseCellStyles(verticalAlignment), className)}
         ref={fwdRref}
         {...rest}

@@ -7,9 +7,13 @@ import React, {
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
+import { getLgIds } from '../utils';
+
 import { type CodeProviderProps } from './CodeContext.types';
 
-export const CodeContext = createContext<Partial<CodeProviderProps>>({});
+export const CodeContext = createContext<Partial<CodeProviderProps>>({
+  lgIds: getLgIds(),
+});
 
 export const useCodeContext = () =>
   useContext<CodeProviderProps>(
@@ -23,7 +27,7 @@ const CodeContextProvider = ({
   language,
   isLoading,
   showPanel,
-  lgids,
+  lgIds = getLgIds(),
 }: PropsWithChildren<CodeProviderProps>) => {
   const CodeProvider = (CodeContext as React.Context<CodeProviderProps>)
     .Provider;
@@ -34,9 +38,9 @@ const CodeContextProvider = ({
       language,
       showPanel,
       isLoading,
-      lgids,
+      lgIds,
     };
-  }, [contents, language, showPanel, isLoading, lgids]);
+  }, [contents, language, showPanel, isLoading, lgIds]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

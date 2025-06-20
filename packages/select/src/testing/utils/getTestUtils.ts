@@ -1,10 +1,11 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
-import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
+import { getLgIds as getLgFormFieldIds } from '@leafygreen-ui/form-field';
+import { LgIdString } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
-import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
+import { getLgIds as getLgTypographyLgIds } from '@leafygreen-ui/typography';
 
-import { LGIDS_SELECT } from '../../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../../utils/getLgIds';
 
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 
@@ -12,21 +13,26 @@ export function waitForSelectTransitionDuration() {
   return new Promise(res => setTimeout(res, transitionDuration.slower));
 }
 
+const lgFormFieldIds = getLgFormFieldIds();
+
 export const getTestUtils = (
-  lgId: string = LGIDS_SELECT.root,
+  lgId: LgIdString = DEFAULT_LGID_ROOT,
 ): GetTestUtilsReturnType => {
+  const lgIds = getLgIds(lgId);
+  const typographyLgIds = getLgTypographyLgIds(lgIds.root);
+
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
    */
-  const element = getByLgId!(lgId);
+  const element = getByLgId!(lgIds.root);
 
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
    */
   const getLabel = queryBySelector<HTMLLabelElement>(
     element,
-    `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
+    `[data-lgid=${typographyLgIds.label}]`,
   );
 
   /**
@@ -34,7 +40,7 @@ export const getTestUtils = (
    */
   const getDescription = queryBySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
+    `[data-lgid=${typographyLgIds.description}]`,
   );
 
   /**
@@ -50,7 +56,7 @@ export const getTestUtils = (
    */
   const getErrorMessage = queryBySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGIDS_FORM_FIELD.errorMessage}]`,
+    `[data-lgid=${lgFormFieldIds.errorMessage}]`,
   );
 
   /**
@@ -72,7 +78,7 @@ export const getTestUtils = (
   const getSelectValue = () => {
     const selectTriggerTextContainer = queryBySelector<HTMLDivElement>(
       getSelectTrigger,
-      `[data-lgid=${LGIDS_SELECT.buttonText}]`,
+      `[data-lgid=${lgIds.buttonText}]`,
     ) as HTMLDivElement;
     return selectTriggerTextContainer.textContent || '';
   };
@@ -93,7 +99,7 @@ export const getTestUtils = (
   const getPopover = () =>
     queryBySelector<HTMLDivElement>(
       document.body,
-      `[data-lgid=${LGIDS_SELECT.popover}]`,
+      `[data-lgid=${lgIds.popover}]`,
     );
 
   const getAllOptions = (): Array<HTMLLIElement> => {
@@ -102,7 +108,7 @@ export const getTestUtils = (
 
     if (!popover)
       throw new Error(
-        `Unable to find an element by: [data-lgid=${LGIDS_SELECT.popover}]`,
+        `Unable to find an element by: [data-lgid=${lgIds.popover}]`,
       );
 
     // Find all options

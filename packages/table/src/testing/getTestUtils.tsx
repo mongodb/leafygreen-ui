@@ -1,21 +1,25 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
-import { LGIDS } from '../constants';
+import { LgIdString } from '@leafygreen-ui/lib';
+
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
-  lgId: string = LGIDS.root,
+  lgId: LgIdString = DEFAULT_LGID_ROOT,
 ): TestUtilsReturnType => {
+  const lgIds = getLgIds(lgId);
+
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
    */
-  const element: HTMLTableElement = getByLgId!(lgId);
+  const element: HTMLTableElement = getByLgId!(lgIds.root);
 
   const getAllHeaders = (): Array<HTMLTableCellElement> => {
     const allHeaders = element.querySelectorAll<HTMLTableCellElement>(
-      `[data-lgid=${LGIDS.header}]`,
+      `[data-lgid=${lgIds.header}]`,
     );
 
     if (!allHeaders.length)
@@ -32,7 +36,7 @@ export const getTestUtils = (
     const getSortIcon = () =>
       queryBySelector<HTMLButtonElement>(
         header,
-        `[data-lgid=${LGIDS.sortIcon}]`,
+        `[data-lgid=${lgIds.sortIcon}]`,
       );
 
     return {
@@ -44,7 +48,7 @@ export const getTestUtils = (
   const getSelectAllCheckbox = () => {
     const checkbox = queryBySelector<HTMLInputElement>(
       element,
-      `[data-lgid=${LGIDS.selectAllCheckbox}] input`,
+      `[data-lgid=${lgIds.selectAllCheckbox}] input`,
     );
 
     return checkbox;
@@ -52,7 +56,7 @@ export const getTestUtils = (
 
   const getAllVisibleRows = () => {
     const allRows = element.querySelectorAll<HTMLTableRowElement>(
-      `[data-lgid=${LGIDS.row}]`,
+      `[data-lgid=${lgIds.row}]`,
     );
 
     if (!allRows.length)
@@ -68,7 +72,7 @@ export const getTestUtils = (
 
     const getAllCells = () => {
       const allCells = row.querySelectorAll<HTMLTableCellElement>(
-        `[data-lgid=${LGIDS.cell}]`,
+        `[data-lgid=${lgIds.cell}]`,
       );
 
       if (!allCells.length)
@@ -80,13 +84,13 @@ export const getTestUtils = (
     const getCheckbox = () =>
       queryBySelector<HTMLInputElement>(
         row,
-        `[data-lgid=${LGIDS.checkbox}] input`,
+        `[data-lgid=${lgIds.checkbox}] input`,
       );
 
     const getExpandButton = () =>
       queryBySelector<HTMLButtonElement>(
         row,
-        `[data-lgid=${LGIDS.expandButton}]`,
+        `[data-lgid=${lgIds.expandButton}]`,
       );
 
     const isExpanded = () => row.matches(`[data-expanded="true"]`);
@@ -106,7 +110,7 @@ export const getTestUtils = (
 
   const getAllVisibleSelectedRows = () => {
     const allRows = element.querySelectorAll<HTMLTableRowElement>(
-      `[data-lgid=${LGIDS.row}][data-selected="true"]`,
+      `[data-lgid=${lgIds.row}][data-selected="true"]`,
     );
 
     return Array.from(allRows);
