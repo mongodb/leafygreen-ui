@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, ReactText } from 'react';
+import { FunctionComponent, ReactElement, ReactNode, ReactText } from 'react';
 
 /**
  * Returns the text string of a React node
@@ -12,14 +12,23 @@ export default function getNodeTextContent(node?: ReactNode): string {
     return node.map(getNodeTextContent).join(' ').trim();
   }
 
-  if (hasChildren(node)) {
+  if (isReactElement(node)) {
+    if (isFunctionalComponent(node)) {
+      const Component = node.type as FunctionComponent<any>;
+      return getNodeTextContent(Component(node.props));
+    }
+
     return getNodeTextContent(node.props.children);
   }
 
   return '';
 }
 
-function hasChildren(item?: any): item is ReactElement {
+function isFunctionalComponent(item?: any): item is FunctionComponent<any> {
+  return isReactElement(item) && typeof item.type === 'function';
+}
+
+function isReactElement(item?: any): item is ReactElement {
   return item && typeof item === 'object' && item.props;
 }
 
