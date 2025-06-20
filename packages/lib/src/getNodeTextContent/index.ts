@@ -13,23 +13,27 @@ export default function getNodeTextContent(node?: ReactNode): string {
   }
 
   if (isReactElement(node)) {
-    if (isRendered(node)) {
-      return getNodeTextContent(node.props.children);
+    if (isFunctionalComponent(node)) {
+      const Component = node.type as FunctionComponent<any>;
+      return getNodeTextContent(Component(node.props));
     }
 
-    const Component = node.type as FunctionComponent<any>;
-    return getNodeTextContent(Component(node.props));
+    return getNodeTextContent(node.props.children);
   }
 
   return '';
 }
 
-function isReactElement(item?: any): item is ReactElement {
-  return item && typeof item === 'object' && item.props;
+function isFunctionalComponent(item?: any): item is FunctionComponent<any> {
+  return (
+    isReactElement(item) &&
+    typeof item.type === 'function' &&
+    !item.props.children
+  );
 }
 
-function isRendered(item?: any): boolean {
-  return isReactElement(item) && item.props.children;
+function isReactElement(item?: any): item is ReactElement {
+  return item && typeof item === 'object' && item.props;
 }
 
 function isText(item?: any): item is ReactText {
