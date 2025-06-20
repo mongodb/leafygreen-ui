@@ -94,3 +94,13 @@ ExplicitlyUndefinedVariant.args = {
   children: 'Example Link (variant undefined)',
   variant: undefined,
 };
+
+export const ClickHandler = Template.bind({});
+ClickHandler.args = {
+  href: 'https://example.com',
+  children: 'Example Link (variant undefined)',
+  variant: undefined,
+  onLinkClick: props => {
+    alert(`Link clicked: ${props.href}`);
+  },
+};
