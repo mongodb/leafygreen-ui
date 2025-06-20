@@ -85,7 +85,8 @@ Determinate.parameters = {
       isIndeterminate: false,
       value: 47,
       maxValue: 200,
-      formatValue: 'fraction',
+      formatValue: (value: number, maxValue?: number) =>
+        `${value} / ${maxValue} GB`,
       showIcon: true,
     },
   },
@@ -96,6 +97,9 @@ Indeterminate.parameters = {
   generate: {
     args: {
       isIndeterminate: true,
+      value: 12,
+      formatValue: (value: number) => `${value} MBs`,
+      showIcon: true,
     },
   },
 };

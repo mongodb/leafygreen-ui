@@ -11,9 +11,9 @@ export const DEFAULT_MAX_VALUE = 1;
 
 export const iconsOnCompletion = ['success'];
 
-export const getValueDisplay = (
+export const getFormattedValue = (
   value: number,
-  maxValue: number,
+  maxValue?: number,
   formatValue?: ProgressBarValueType,
 ): string => {
   if (typeof formatValue === 'function') {
@@ -29,6 +29,12 @@ export const getValueDisplay = (
     default:
       return value.toString();
   }
+};
+
+export const getPercentage = (value: number, maxValue?: number): number => {
+  if (maxValue === 0) return 0;
+
+  return Math.round((value / (maxValue ?? DEFAULT_MAX_VALUE)) * 100);
 };
 
 export const getHeaderIcon = (
@@ -50,10 +56,4 @@ export const getHeaderIcon = (
     default:
       return <InfoWithCircleIcon {...props} />;
   }
-};
-
-export const getPercentage = (value: number, maxValue: number): number => {
-  if (maxValue === 0) return 0;
-
-  return Math.round((value / maxValue) * 100);
 };

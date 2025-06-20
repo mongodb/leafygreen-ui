@@ -24,14 +24,9 @@ interface BaseProgressBarProps {
   label?: React.ReactNode;
   size?: ProgressBarSize;
   description?: React.ReactNode;
+
   darkMode?: boolean;
   disabled?: boolean;
-}
-
-interface DeterminateProgressBarProps {
-  isIndeterminate: false;
-  value: number;
-  maxValue?: number;
 
   /**
    * Optional format of value display. If omitted, no value will be displayed.
@@ -42,6 +37,12 @@ interface DeterminateProgressBarProps {
    * Optional icon based on variant. Rendered directly right of the value
    */
   showIcon?: boolean;
+}
+
+interface DeterminateProgressBarProps {
+  isIndeterminate: false;
+  value: number;
+  maxValue?: number;
 
   /**
    * Shimmer animation recommended for long-running tasks to provide visual feedback.
@@ -50,6 +51,7 @@ interface DeterminateProgressBarProps {
 }
 interface IndeterminateProgressBarProps {
   isIndeterminate: true;
+  value?: number;
 }
 
 export type ProgressBarProps = BaseProgressBarProps &

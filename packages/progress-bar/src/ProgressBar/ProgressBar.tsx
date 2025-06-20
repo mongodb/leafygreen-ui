@@ -23,9 +23,9 @@ import {
 import { ProgressBarProps } from './ProgressBar.types';
 import {
   DEFAULT_MAX_VALUE,
+  getFormattedValue,
   getHeaderIcon,
   getPercentage,
-  getValueDisplay,
   iconsOnCompletion,
 } from './ProgressBar.utils';
 
@@ -36,65 +36,41 @@ export function ProgressBar({
   description,
   darkMode = false,
   disabled = false,
+  formatValue,
+  showIcon: showIconProps = false,
   ...rest
 }: ProgressBarProps) {
   const { theme } = useDarkMode(darkMode);
 
-  const hasValue = !rest.isIndeterminate;
+  const isDeterminate = !rest.isIndeterminate;
 
-  const renderValueDisplay = () => {
-    if (!hasValue) return null;
+  const value = rest.value ?? undefined;
 
-    const {
-      value,
-      maxValue = DEFAULT_MAX_VALUE,
-      formatValue,
-      showIcon: showIconProps = false,
-      enableAnimation = false,
-    } = rest;
+  const maxValue = isDeterminate
+    ? rest.maxValue ?? DEFAULT_MAX_VALUE
+    : undefined;
 
-    if (!formatValue) return null;
-
-    const showIcon = iconsOnCompletion.includes(variant)
-      ? showIconProps && value === maxValue
-      : showIconProps;
-
-    return (
-      <Body
-        className={cx(headerValueStyles, getHeaderValueStyles(theme, disabled))}
-        darkMode={darkMode}
-      >
-        {getValueDisplay(value, maxValue, formatValue)}
-
-        {showIcon &&
-          getHeaderIcon(variant, disabled, {
-            className: cx(
-              headerIconStyles,
-              getHeaderIconStyles(theme, variant, disabled),
-            ),
-          })}
-      </Body>
-    );
-  };
+  const showIcon = iconsOnCompletion.includes(variant)
+    ? showIconProps && isDeterminate && value === maxValue
+    : showIconProps;
 
   const getAriaAttributes = () => {
-    if (!hasValue) return {};
-
-    const { value, maxValue = DEFAULT_MAX_VALUE } = rest;
-
-    return {
-      'aria-valuemin': 0,
-      'aria-valuenow': value,
-      'aria-valuemax': maxValue,
-    };
+    if (value) {
+      return {
+        'aria-valuemin': 0,
+        'aria-valuenow': value,
+        ...(isDeterminate && { 'aria-valuemax': maxValue }),
+      };
+    }
   };
 
   const getTypedProgressBarFillStyles = () => {
-    if (!hasValue) return indeterminateProgressBarFillStyles;
+    if (!isDeterminate) return indeterminateProgressBarFillStyles;
 
-    const { value, maxValue = DEFAULT_MAX_VALUE } = rest;
-
-    return getDeterminateProgressBarFillStyles(getPercentage(value, maxValue));
+    if (value)
+      return getDeterminateProgressBarFillStyles(
+        getPercentage(value, maxValue),
+      );
   };
 
   const progressBarId = `progress-bar-${
@@ -107,13 +83,32 @@ export function ProgressBar({
         <Label htmlFor={progressBarId} darkMode={darkMode} disabled={disabled}>
           {label}
         </Label>
-        {hasValue && renderValueDisplay()}
+
+        {formatValue && (
+          <Body
+            className={cx(
+              headerValueStyles,
+              getHeaderValueStyles(theme, disabled),
+            )}
+            darkMode={darkMode}
+          >
+            {value && getFormattedValue(value, maxValue, formatValue)}
+
+            {showIcon &&
+              getHeaderIcon(variant, disabled, {
+                className: cx(
+                  headerIconStyles,
+                  getHeaderIconStyles(theme, variant, disabled),
+                ),
+              })}
+          </Body>
+        )}
       </div>
 
       <div
         role="progressbar"
         id={progressBarId}
-        aria-label={getNodeTextContent(label)}
+        aria-label={progressBarId}
         {...getAriaAttributes()}
       >
         <div
