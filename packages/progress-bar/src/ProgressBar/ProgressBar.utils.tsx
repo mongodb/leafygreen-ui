@@ -35,10 +35,10 @@ export const getPercentage = (value: number, maxValue?: number): number => {
   return Math.round((value / (maxValue || DEFAULT_MAX_VALUE)) * 100);
 };
 
-export const getValueAriaAttributes = (value: number, maxValue?: number) => {
+export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
   return {
     'aria-valuemin': 0,
-    'aria-valuenow': value,
+    ...(value && { 'aria-valuenow': value }),
     ...(maxValue && { 'aria-valuemax': maxValue }),
   };
 };

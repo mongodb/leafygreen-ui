@@ -94,7 +94,7 @@ export function ProgressBar({
         role="progressbar"
         id={progressBarId}
         aria-label={progressBarId}
-        {...(value && getValueAriaAttributes(value, maxValue))}
+        {...getValueAriaAttributes(value, maxValue)}
       >
         <div
           data-testid="progress-bar-track"
