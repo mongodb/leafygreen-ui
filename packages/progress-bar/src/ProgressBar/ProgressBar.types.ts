@@ -34,7 +34,7 @@ interface BaseProgressBarProps {
   formatValue?: ProgressBarValueType;
 
   /**
-   * Optional icon based on variant. Rendered directly right of the value
+   * Optional icon based on variant. Rendered directly right of the value.
    */
   showIcon?: boolean;
 }
@@ -45,7 +45,7 @@ interface DeterminateProgressBarProps {
   maxValue?: number;
 
   /**
-   * Shimmer animation recommended for long-running tasks to provide visual feedback.
+   * Shimmer animation recommended for long-running tasks to provide additional visual feedback.
    */
   enableAnimation?: boolean;
 }

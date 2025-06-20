@@ -14,11 +14,91 @@ describe('packages/progress-bar', () => {
     });
 
     it('renders with a description', () => {
-      const TEST_DESCRIPTION = 'This is a test description.';
+      const TEST_DESCRIPTION = 'placeholder description';
       const { getByText } = render(
         <ProgressBar isIndeterminate={true} description={TEST_DESCRIPTION} />,
       );
       expect(getByText(TEST_DESCRIPTION)).toBeInTheDocument();
+    });
+
+    describe('with value format', () => {
+      const TEST_VALUE = 50;
+      const TEST_MAX_VALUE = 100;
+
+      it('renders a plain number when formatValue is "number"', () => {
+        const { getByText } = render(
+          <ProgressBar
+            isIndeterminate={true}
+            value={TEST_VALUE}
+            formatValue="number"
+          />,
+        );
+        expect(getByText(TEST_VALUE.toString())).toBeInTheDocument();
+      });
+
+      it('renders a fraction when formatValue is "fraction"', () => {
+        const { getByText } = render(
+          <ProgressBar
+            isIndeterminate={false}
+            value={TEST_VALUE}
+            maxValue={TEST_MAX_VALUE}
+            formatValue="fraction"
+          />,
+        );
+        expect(
+          getByText(`${TEST_VALUE}/${TEST_MAX_VALUE}`),
+        ).toBeInTheDocument();
+      });
+
+      it('renders a percentage when formatValue is "percentage"', () => {
+        const { getByText } = render(
+          <ProgressBar
+            isIndeterminate={false}
+            value={TEST_VALUE}
+            maxValue={TEST_MAX_VALUE}
+            formatValue="percentage"
+          />,
+        );
+        expect(getByText(`${TEST_VALUE}%`)).toBeInTheDocument();
+      });
+
+      it('renders with a custom format when given a callback', () => {
+        const { getByText } = render(
+          <ProgressBar
+            isIndeterminate={false}
+            value={TEST_VALUE}
+            formatValue={value => `${value} units`}
+          />,
+        );
+        expect(getByText(`${TEST_VALUE} units`)).toBeInTheDocument();
+      });
+
+      it('renders with an icon when showIcon is true', () => {
+        render(
+          <ProgressBar
+            isIndeterminate={false}
+            value={TEST_VALUE}
+            maxValue={TEST_MAX_VALUE}
+            formatValue="number"
+            showIcon={true}
+          />,
+        );
+        expect(screen.getByRole('img')).toBeInTheDocument();
+      });
+
+      it('does not render an icon for success variant if value is not at maxValue, even if showIcon is true', () => {
+        render(
+          <ProgressBar
+            isIndeterminate={false}
+            variant="success"
+            value={TEST_VALUE}
+            maxValue={TEST_MAX_VALUE}
+            formatValue="number"
+            showIcon={true}
+          />,
+        );
+        expect(screen.queryByRole('img')).toBeNull();
+      });
     });
 
     describe('with determinate state', () => {
@@ -37,83 +117,6 @@ describe('packages/progress-bar', () => {
         expect(barFillElement).toBeInTheDocument();
         expect(barFillElement).toHaveStyle({
           width: '50%',
-        });
-      });
-
-      describe('with value format', () => {
-        it('renders a plain number when formatValue is "number"', () => {
-          const { getByText } = render(
-            <ProgressBar
-              isIndeterminate={false}
-              value={TEST_VALUE}
-              formatValue="number"
-            />,
-          );
-          expect(getByText(TEST_VALUE.toString())).toBeInTheDocument();
-        });
-
-        it('renders a fraction when formatValue is "fraction"', () => {
-          const { getByText } = render(
-            <ProgressBar
-              isIndeterminate={false}
-              value={TEST_VALUE}
-              maxValue={TEST_MAX_VALUE}
-              formatValue="fraction"
-            />,
-          );
-          expect(
-            getByText(`${TEST_VALUE}/${TEST_MAX_VALUE}`),
-          ).toBeInTheDocument();
-        });
-
-        it('renders a percentage when formatValue is "percentage"', () => {
-          const { getByText } = render(
-            <ProgressBar
-              isIndeterminate={false}
-              value={TEST_VALUE}
-              maxValue={TEST_MAX_VALUE}
-              formatValue="percentage"
-            />,
-          );
-          expect(getByText(`${TEST_VALUE}%`)).toBeInTheDocument();
-        });
-
-        it('renders with a custom format when given a callback', () => {
-          const { getByText } = render(
-            <ProgressBar
-              isIndeterminate={false}
-              value={TEST_VALUE}
-              formatValue={value => `${value} units`}
-            />,
-          );
-          expect(getByText(`${TEST_VALUE} units`)).toBeInTheDocument();
-        });
-
-        it('renders with an icon when showIcon is true', () => {
-          render(
-            <ProgressBar
-              isIndeterminate={false}
-              value={TEST_VALUE}
-              maxValue={TEST_MAX_VALUE}
-              formatValue="number"
-              showIcon={true}
-            />,
-          );
-          expect(screen.getByRole('img')).toBeInTheDocument();
-        });
-
-        it('does not render an icon for success variant if value is not at maxValue, even if showIcon is true', () => {
-          render(
-            <ProgressBar
-              isIndeterminate={false}
-              variant="success"
-              value={TEST_VALUE}
-              maxValue={TEST_MAX_VALUE}
-              formatValue="number"
-              showIcon={true}
-            />,
-          );
-          expect(screen.queryByRole('img')).toBeNull();
         });
       });
     });

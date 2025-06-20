@@ -54,27 +54,32 @@ LiveExample.args = {
   description: <span>Helper text</span>,
 };
 
-export const Basic = Template.bind({});
-Basic.args = {
+export const BasicDeterminate = Template.bind({});
+BasicDeterminate.args = {
   value: 27,
   maxValue: 200,
 };
 
-export const WithLabel = Basic.bind({});
+export const BasicIndeterminate = Template.bind({});
+BasicIndeterminate.args = {
+  isIndeterminate: true,
+};
+
+export const WithLabel = BasicDeterminate.bind({});
 WithLabel.args = {
-  ...Basic.args,
+  ...BasicDeterminate.args,
   label: <span>Label</span>,
 };
 
 export const WithValueDisplay = Template.bind({});
 WithValueDisplay.args = {
-  ...Basic.args,
+  ...BasicDeterminate.args,
   formatValue: 'percentage',
 };
 
 export const WithDescription = Template.bind({});
 WithDescription.args = {
-  ...Basic.args,
+  ...BasicDeterminate.args,
   description: <span>Helper text</span>,
 };
 

@@ -8,8 +8,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { ProgressBarValueType, ProgressBarVariant } from './ProgressBar.types';
 
 export const DEFAULT_MAX_VALUE = 1;
-
-export const iconsOnCompletion = ['success'];
+export const iconsVisibleOnComplete = ['success'];
 
 export const getFormattedValue = (
   value: number,
@@ -32,9 +31,7 @@ export const getFormattedValue = (
 };
 
 export const getPercentage = (value: number, maxValue?: number): number => {
-  if (maxValue === 0) return 0;
-
-  return Math.round((value / (maxValue ?? DEFAULT_MAX_VALUE)) * 100);
+  return Math.round((value / (maxValue || DEFAULT_MAX_VALUE)) * 100);
 };
 
 export const getHeaderIcon = (
@@ -42,9 +39,7 @@ export const getHeaderIcon = (
   disabled?: boolean,
   props?: Record<string, any>,
 ) => {
-  if (disabled) {
-    return <WarningIcon {...props} />;
-  }
+  if (disabled) return <WarningIcon {...props} />;
 
   switch (variant) {
     case 'success':
@@ -53,6 +48,7 @@ export const getHeaderIcon = (
       return <ImportantWithCircleIcon {...props} />;
     case 'error':
       return <WarningIcon {...props} />; // design uses warning icon for error variant
+    case 'info':
     default:
       return <InfoWithCircleIcon {...props} />;
   }

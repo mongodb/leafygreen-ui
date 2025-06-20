@@ -26,7 +26,7 @@ import {
   getFormattedValue,
   getHeaderIcon,
   getPercentage,
-  iconsOnCompletion,
+  iconsVisibleOnComplete,
 } from './ProgressBar.utils';
 
 export function ProgressBar({
@@ -50,7 +50,7 @@ export function ProgressBar({
     ? rest.maxValue ?? DEFAULT_MAX_VALUE
     : undefined;
 
-  const showIcon = iconsOnCompletion.includes(variant)
+  const showIcon = iconsVisibleOnComplete.includes(variant)
     ? showIconProps && isDeterminate && value === maxValue
     : showIconProps;
 
