@@ -17,7 +17,12 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/lib": "workspace:^"
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/progress-bar",
   "repository": {
