@@ -83,20 +83,13 @@ export const headerStyles = css`
   justify-content: space-between;
 `;
 
-export const headerValueStyles = css`
+export const getHeaderValueStyles = (theme: Theme, disabled?: boolean) => css`
   display: flex;
   align-items: center;
   gap: ${spacing[100]}px;
-`;
-
-export const getHeaderValueStyles = (theme: Theme, disabled?: boolean) => css`
   color: ${disabled
     ? color[theme].text.disabled.default
     : color[theme].text.secondary.default};
-`;
-
-export const headerIconStyles = css`
-  margin-bottom: ${spacing[50]}px; // align icon with text baseline
 `;
 
 export const getHeaderIconStyles = (
@@ -104,26 +97,20 @@ export const getHeaderIconStyles = (
   variant: ProgressBarVariant,
   disabled?: boolean,
 ) => css`
+  margin-bottom: ${spacing[50]}px; // align icon with text baseline
   color: ${disabled
     ? color[theme].icon.disabled.default
     : progressBarVariantStyles[theme][variant].iconColor};
-`;
-
-export const progressBarTrackStyles = css`
-  width: 100%;
 `;
 
 export const getProgressBarTrackStyles = (
   theme: Theme,
   size: ProgressBarSize,
 ) => css`
+  width: 100%;
   height: ${progressBarSizeStyles[size].height};
   border-radius: ${progressBarSizeStyles[size].borderRadius};
   background-color: ${progressBarVariantStyles[theme].trackColor};
-`;
-
-export const progressBarFillStyles = css`
-  height: 100%;
 `;
 
 export const getProgressBarFillStyles = (
@@ -131,6 +118,7 @@ export const getProgressBarFillStyles = (
   variant: ProgressBarVariant,
   disabled?: boolean,
 ) => css`
+  height: 100%;
   border-radius: inherit;
   background-color: ${disabled
     ? progressBarVariantStyles[theme].disabledBarColor

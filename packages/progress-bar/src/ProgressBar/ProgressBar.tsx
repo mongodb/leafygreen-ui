@@ -13,12 +13,8 @@ import {
   getHeaderValueStyles,
   getProgressBarFillStyles,
   getProgressBarTrackStyles,
-  headerIconStyles,
   headerStyles,
-  headerValueStyles,
   indeterminateProgressBarFillStyles,
-  progressBarFillStyles,
-  progressBarTrackStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps } from './ProgressBar.types';
 import {
@@ -77,20 +73,14 @@ export function ProgressBar({
 
         {formatValue && (
           <Body
-            className={cx(
-              headerValueStyles,
-              getHeaderValueStyles(theme, disabled),
-            )}
+            className={cx(getHeaderValueStyles(theme, disabled))}
             darkMode={darkMode}
           >
             {value && getFormattedValue(value, maxValue, formatValue)}
 
             {showIcon &&
               getHeaderIcon(variant, disabled, {
-                className: cx(
-                  headerIconStyles,
-                  getHeaderIconStyles(theme, variant, disabled),
-                ),
+                className: cx(getHeaderIconStyles(theme, variant, disabled)),
               })}
           </Body>
         )}
@@ -104,15 +94,11 @@ export function ProgressBar({
       >
         <div
           data-testid="progress-bar-track"
-          className={cx(
-            progressBarTrackStyles,
-            getProgressBarTrackStyles(theme, size),
-          )}
+          className={cx(getProgressBarTrackStyles(theme, size))}
         >
           <div
             data-testid="progress-bar-fill"
             className={cx(
-              progressBarFillStyles,
               getProgressBarFillStyles(theme, variant, disabled),
               getTypedProgressBarFillStyles(),
             )}
