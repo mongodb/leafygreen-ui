@@ -43,11 +43,15 @@ export const getValueAriaAttributes = (value: number, maxValue?: number) => {
   };
 };
 
-export const getHeaderIcon = (
-  variant: ProgressBarVariant,
-  disabled?: boolean,
-  props?: Record<string, any>,
-) => {
+export const getHeaderIcon = ({
+  variant,
+  disabled = false,
+  props = {},
+}: {
+  variant: ProgressBarVariant;
+  disabled?: boolean;
+  props?: Record<string, any>;
+}) => {
   if (disabled) return <WarningIcon {...props} />;
 
   switch (variant) {

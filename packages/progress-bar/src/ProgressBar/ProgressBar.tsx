@@ -8,13 +8,13 @@ import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
   containerStyles,
-  getDeterminateProgressBarFillStyles,
+  getBarFillStyles,
+  getBarTrackStyles,
+  getDeterminateBarFillStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
-  getProgressBarFillStyles,
-  getProgressBarTrackStyles,
+  getIndeterminateBarFillStyles,
   headerStyles,
-  indeterminateProgressBarFillStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps } from './ProgressBar.types';
 import {
@@ -52,12 +52,10 @@ export function ProgressBar({
     : showIconProps;
 
   const getTypedProgressBarFillStyles = () => {
-    if (!isDeterminate) return indeterminateProgressBarFillStyles;
+    if (!isDeterminate) return getIndeterminateBarFillStyles();
 
     if (value)
-      return getDeterminateProgressBarFillStyles(
-        getPercentage(value, maxValue),
-      );
+      return getDeterminateBarFillStyles(getPercentage(value, maxValue));
   };
 
   const progressBarId = `progress-bar-${
@@ -73,14 +71,20 @@ export function ProgressBar({
 
         {formatValue && (
           <Body
-            className={cx(getHeaderValueStyles(theme, disabled))}
+            className={cx(getHeaderValueStyles({ theme, disabled }))}
             darkMode={darkMode}
           >
             {value && getFormattedValue(value, maxValue, formatValue)}
 
             {showIcon &&
-              getHeaderIcon(variant, disabled, {
-                className: cx(getHeaderIconStyles(theme, variant, disabled)),
+              getHeaderIcon({
+                variant,
+                disabled,
+                props: {
+                  className: cx(
+                    getHeaderIconStyles({ theme, variant, disabled }),
+                  ),
+                },
               })}
           </Body>
         )}
@@ -94,12 +98,12 @@ export function ProgressBar({
       >
         <div
           data-testid="progress-bar-track"
-          className={cx(getProgressBarTrackStyles(theme, size))}
+          className={cx(getBarTrackStyles({ theme, size }))}
         >
           <div
             data-testid="progress-bar-fill"
             className={cx(
-              getProgressBarFillStyles(theme, variant, disabled),
+              getBarFillStyles({ theme, variant, disabled }),
               getTypedProgressBarFillStyles(),
             )}
           ></div>

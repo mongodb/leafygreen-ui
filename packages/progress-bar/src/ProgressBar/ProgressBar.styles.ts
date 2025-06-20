@@ -83,7 +83,13 @@ export const headerStyles = css`
   justify-content: space-between;
 `;
 
-export const getHeaderValueStyles = (theme: Theme, disabled?: boolean) => css`
+export const getHeaderValueStyles = ({
+  theme,
+  disabled,
+}: {
+  theme: Theme;
+  disabled?: boolean;
+}) => css`
   display: flex;
   align-items: center;
   gap: ${spacing[100]}px;
@@ -92,32 +98,43 @@ export const getHeaderValueStyles = (theme: Theme, disabled?: boolean) => css`
     : color[theme].text.secondary.default};
 `;
 
-export const getHeaderIconStyles = (
-  theme: Theme,
-  variant: ProgressBarVariant,
-  disabled?: boolean,
-) => css`
+export const getHeaderIconStyles = ({
+  theme,
+  variant,
+  disabled,
+}: {
+  theme: Theme;
+  variant: ProgressBarVariant;
+  disabled?: boolean;
+}) => css`
   margin-bottom: ${spacing[50]}px; // align icon with text baseline
   color: ${disabled
     ? color[theme].icon.disabled.default
     : progressBarVariantStyles[theme][variant].iconColor};
 `;
 
-export const getProgressBarTrackStyles = (
-  theme: Theme,
-  size: ProgressBarSize,
-) => css`
+export const getBarTrackStyles = ({
+  theme,
+  size,
+}: {
+  theme: Theme;
+  size: ProgressBarSize;
+}) => css`
   width: 100%;
   height: ${progressBarSizeStyles[size].height};
   border-radius: ${progressBarSizeStyles[size].borderRadius};
   background-color: ${progressBarVariantStyles[theme].trackColor};
 `;
 
-export const getProgressBarFillStyles = (
-  theme: Theme,
-  variant: ProgressBarVariant,
-  disabled?: boolean,
-) => css`
+export const getBarFillStyles = ({
+  theme,
+  variant,
+  disabled,
+}: {
+  theme: Theme;
+  variant: ProgressBarVariant;
+  disabled?: boolean;
+}) => css`
   height: 100%;
   border-radius: inherit;
   background-color: ${disabled
@@ -125,12 +142,12 @@ export const getProgressBarFillStyles = (
     : progressBarVariantStyles[theme][variant].barColor};
 `;
 
-export const getDeterminateProgressBarFillStyles = (progress: number) => css`
+export const getDeterminateBarFillStyles = (progress: number) => css`
   width: ${progress}%;
   // requires additional animation
 `;
 
-export const indeterminateProgressBarFillStyles = css`
+export const getIndeterminateBarFillStyles = () => css`
   width: 100%; // temporary
   // requires additional animation
 `;
