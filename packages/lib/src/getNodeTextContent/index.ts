@@ -25,11 +25,7 @@ export default function getNodeTextContent(node?: ReactNode): string {
 }
 
 function isFunctionalComponent(item?: any): item is FunctionComponent<any> {
-  return (
-    isReactElement(item) &&
-    typeof item.type === 'function' &&
-    !item.props.children
-  );
+  return isReactElement(item) && typeof item.type === 'function';
 }
 
 function isReactElement(item?: any): item is ReactElement {
