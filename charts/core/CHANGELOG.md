@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 1.3.0
+
+### Minor Changes
+
+- 9175cfa: [LG-5299](https://jira.mongodb.org/browse/LG-5299): fix interaction between zoom and tooltip pinning and accurately position tooltip when resizing or scrolling
+
 ## 1.2.1
 
 ### Patch Changes

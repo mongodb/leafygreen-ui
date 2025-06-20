@@ -98,7 +98,6 @@ export const chartWrapperStyles = css`
 export const chartStyles = css`
   height: 100%;
   width: 100%;
-  z-index: 0;
 `;
 
 export const getLoadingOverlayStyles = (theme: Theme) => css`

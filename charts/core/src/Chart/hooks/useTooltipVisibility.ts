@@ -267,7 +267,7 @@ export const useTooltipVisibility = ({
    * is rendered and in the DOM
    */
   useEffect(() => {
-    if (!tooltipPinned) {
+    if (!tooltipPinnedRef.current) {
       return;
     }
 
@@ -303,5 +303,6 @@ export const useTooltipVisibility = ({
     isChartHovered,
     setTooltipMounted,
     tooltipPinned,
+    unpinTooltip,
   };
 };

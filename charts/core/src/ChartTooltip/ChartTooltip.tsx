@@ -46,7 +46,6 @@ export function ChartTooltip({
       tooltip: {
         /* LOGIC PROPERTIES */
         alwaysShowContent: tooltipPinned,
-        appendTo: 'body',
         confine: true,
         enterable: tooltipPinned,
         renderMode: 'html',

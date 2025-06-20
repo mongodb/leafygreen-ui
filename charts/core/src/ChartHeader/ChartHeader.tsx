@@ -10,6 +10,7 @@ import { ChartHeaderProps } from './ChartHeader.types';
 
 export function ChartHeader({
   title,
+  titleIcon,
   showDivider,
   headerContent,
   className,
@@ -25,6 +26,7 @@ export function ChartHeader({
         <Body weight="regular" baseFontSize={BaseFontSize.Body1}>
           {title}
         </Body>
+        {titleIcon && <div>{titleIcon}</div>}
       </div>
       <div>{headerContent}</div>
     </div>
