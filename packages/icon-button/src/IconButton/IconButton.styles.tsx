@@ -42,7 +42,9 @@ export const baseIconButtonStyle = css`
 
   &:active:before,
   &:hover:before,
-  &:focus:before {
+  &:focus:before,
+  &[data-hover='true']:before,
+  &[data-focus='true']:before {
     transform: scale(1);
   }
 
@@ -71,7 +73,8 @@ export const iconButtonMode: Record<Theme, string> = {
     color: ${palette.gray.dark1};
 
     &:active,
-    &:hover {
+    &:hover,
+    &[data-hover='true'] {
       color: ${palette.black};
 
       &:before {
@@ -83,7 +86,8 @@ export const iconButtonMode: Record<Theme, string> = {
     color: ${palette.gray.light1};
 
     &:active,
-    &:hover {
+    &:hover,
+    &[data-hover='true'] {
       color: ${palette.gray.light3};
 
       &:before {
@@ -95,7 +99,8 @@ export const iconButtonMode: Record<Theme, string> = {
 
 export const focusStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus-visible {
+    &:focus-visible,
+    &[data-focus='true'] {
       color: ${palette.black};
       box-shadow: ${focusRing[Theme.Light].default};
 
@@ -105,7 +110,8 @@ export const focusStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    &:focus-visible {
+    &:focus-visible,
+    &[data-focus='true'] {
       color: ${palette.gray.light3};
       box-shadow: ${focusRing[Theme.Dark].default};
 
@@ -123,7 +129,8 @@ export const disabledStyle: Record<Theme, string> = {
     background-color: rgba(255, 255, 255, 0);
 
     &:active,
-    &:hover {
+    &:hover,
+    &[data-hover='true'] {
       color: ${palette.gray.light1};
 
       &:before {
@@ -131,7 +138,8 @@ export const disabledStyle: Record<Theme, string> = {
       }
     }
 
-    &:focus {
+    &:focus,
+    &[data-focus='true'] {
       color: ${palette.gray.light1};
 
       &:before {
@@ -146,7 +154,8 @@ export const disabledStyle: Record<Theme, string> = {
     background-color: rgba(255, 255, 255, 0);
 
     &:active,
-    &:hover {
+    &:hover,
+    &[data-hover='true'] {
       color: ${palette.gray.dark1};
 
       &:before {
@@ -154,7 +163,8 @@ export const disabledStyle: Record<Theme, string> = {
       }
     }
 
-    &:focus {
+    &:focus,
+    &[data-focus='true'] {
       color: ${palette.gray.dark1};
 
       &:before {
