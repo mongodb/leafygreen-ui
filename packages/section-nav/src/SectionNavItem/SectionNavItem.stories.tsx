@@ -48,7 +48,10 @@ export default {
 } satisfies StoryMetaType<typeof SectionNavItem>;
 
 export const LiveExample: StoryObj<typeof SectionNavItem> = {
-  render: args => <SectionNavItem {...args}></SectionNavItem>,
+  // @ts-expect-error - darkMode is not a valid prop for SectionNavItem
+  render: ({ darkMode, ...args }) => (
+    <SectionNavItem {...args}></SectionNavItem>
+  ),
 };
 
 export const Generated = () => {};
