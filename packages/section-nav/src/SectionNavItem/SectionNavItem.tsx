@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { getItemStyles, getLinkStyles } from './SectionNavItem.styles';
 import { SectionNavItemProps } from './SectionNavItem.types';
+import { useSectionNavContext } from '../Context/SectionNavContext';
 
 export const SectionNavItem = forwardRef<
   HTMLAnchorElement,
@@ -15,11 +15,21 @@ export const SectionNavItem = forwardRef<
     forwardedRef,
   ) => {
     const { theme } = useDarkMode();
+    const { lgIds, inContext } = useSectionNavContext();
+
+    if (!inContext) {
+      console.error(
+        'SectionNavItem must be used within a SectionNav component',
+      );
+    }
+
     return (
       <li className={getItemStyles({ theme })}>
         <a
-          className={cx(getLinkStyles({ depth, active, theme }), className)}
+          className={getLinkStyles({ depth, active, theme, className })}
           ref={forwardedRef}
+          data-testid={`${lgIds.item}`}
+          data-lgid={`${lgIds.item}`}
           {...rest}
         >
           {children}
@@ -30,5 +40,3 @@ export const SectionNavItem = forwardRef<
 );
 
 SectionNavItem.displayName = 'SectionNavItem';
-
-// TODO: context to make sure this can not render outside of SectionNav

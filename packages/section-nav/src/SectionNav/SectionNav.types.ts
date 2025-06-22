@@ -1,8 +1,9 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export interface SectionNavProps
   extends HTMLElementProps<'nav'>,
-    DarkModeProps {
+    DarkModeProps,
+    LgIdProps {
   /**
    * The title
    */

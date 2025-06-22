@@ -7,6 +7,19 @@
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
+  "typesVersions": {},
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
@@ -18,7 +31,13 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^"
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/section-nav",
   "repository": {

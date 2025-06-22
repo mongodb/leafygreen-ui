@@ -12,10 +12,12 @@ export const getLinkStyles = ({
   depth = 1,
   active = false,
   theme = Theme.Light,
+  className,
 }: {
   depth?: number;
   active?: boolean;
   theme?: Theme;
+  className?: string;
 }) =>
   cx(
     css`
@@ -28,6 +30,7 @@ export const getLinkStyles = ({
     css`
       ${getFocusStyles({ theme })};
     `,
+    className,
   );
 
 export const getBaseStyles = ({
