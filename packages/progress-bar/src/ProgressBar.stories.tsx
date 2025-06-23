@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
+import { within } from '@testing-library/react';
 
-import { ProgressBar } from '.';
+import { ProgressBar, ProgressBarProps } from '.';
 
 const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
@@ -106,5 +107,51 @@ IndeterminateVariants.parameters = {
       formatValue: (value: number) => `${value} MBs`,
       showIcon: true,
     },
+  },
+};
+
+// TEMPORARY FOR NOW
+export const WidthAnimation: StoryObj<typeof ProgressBar> = {
+  args: {
+    value: 10,
+    maxValue: 200,
+  },
+  render: (props: ProgressBarProps) => {
+    const [value, setValue] = useState(props.value || 0);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setValue(200);
+      }, 500);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }, [props.value]);
+
+    return <ProgressBar {...props} value={value} />;
+  },
+};
+
+export const ShimmerAnimation: StoryObj<typeof ProgressBar> = {
+  args: {
+    value: 80,
+    maxValue: 200,
+    enableAnimation: true,
+  },
+  render: (props: ProgressBarProps) => {
+    const [value, setValue] = useState(props.value || 0);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setValue(200);
+      }, 3500);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }, [props.value]);
+
+    return <ProgressBar {...props} value={value} />;
   },
 };

@@ -55,7 +55,10 @@ export function ProgressBar({
     if (!isDeterminate) return getIndeterminateBarFillStyles();
 
     if (value)
-      return getDeterminateBarFillStyles(getPercentage(value, maxValue));
+      return getDeterminateBarFillStyles(
+        getPercentage(value, maxValue),
+        rest.enableAnimation,
+      );
   };
 
   const progressBarId = `progress-bar-${

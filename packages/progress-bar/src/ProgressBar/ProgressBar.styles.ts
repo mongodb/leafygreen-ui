@@ -142,9 +142,41 @@ export const getBarFillStyles = ({
     : progressBarVariantStyles[theme][variant].barColor};
 `;
 
-export const getDeterminateBarFillStyles = (progress: number) => css`
+export const getDeterminateBarFillStyles = (
+  progress: number,
+  enableAnimation?: boolean,
+) => css`
   width: ${progress}%;
-  // requires additional animation
+  transition: width 0.5s ease-in-out;
+  ${enableAnimation && shimmerAnimation}
+`;
+
+const shimmerAnimation = css`
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.5) 50%,
+      transparent 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
 `;
 
 export const getIndeterminateBarFillStyles = () => css`
