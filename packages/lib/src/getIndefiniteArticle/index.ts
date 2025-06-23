@@ -1,0 +1,1 @@
+export { getIndefiniteArticle } from './getIndefiniteArticle';
