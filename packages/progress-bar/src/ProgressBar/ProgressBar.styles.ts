@@ -205,11 +205,11 @@ export const getIndeterminateBarFillStyles = ({
     width: 33%;
     background: linear-gradient(
       90deg,
-      ${palette.white}${OPACITY_50} 0%,
+      ${palette.transparent} 0%,
       ${progressBarVariantStyles[theme][variant].barColor}${OPACITY_75} 25%,
       ${progressBarVariantStyles[theme][variant].barColor}${OPACITY_100} 50%,
       ${progressBarVariantStyles[theme][variant].barColor}${OPACITY_75} 75%,
-      ${palette.white}${OPACITY_50} 100%
+      ${palette.transparent} 100%
     );
     animation: cycle 1.5s linear infinite;
   }

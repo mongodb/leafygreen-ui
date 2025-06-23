@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
-import { within } from '@testing-library/react';
 
 import { ProgressBar, ProgressBarProps } from '.';
 
