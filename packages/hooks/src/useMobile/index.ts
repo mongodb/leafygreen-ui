@@ -1,0 +1,1 @@
+export { useMobile } from './useMobile';

@@ -11,6 +11,7 @@ export { useForwardedRef, useObservedRef } from './useForwardedRef';
 export { default as useIdAllocator } from './useIdAllocator';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 export { useMergeRefs } from './useMergeRefs';
+export { useMobile } from './useMobile';
 export { default as useMutationObserver } from './useMutationObserver';
 export { default as useObjectDependency } from './useObjectDependency';
 export { default as usePoller } from './usePoller';
