@@ -1,12 +1,4 @@
-import Tooltip, {
-  Align,
-  DismissMode,
-  hoverDelay,
-  Justify,
-  RenderMode,
-  type TooltipProps,
-  TriggerEvent,
-} from './Tooltip';
+import Tooltip from './Tooltip';
 
 export {
   Align,
@@ -16,5 +8,11 @@ export {
   RenderMode,
   type TooltipProps,
   TriggerEvent,
-};
-export default Tooltip;
+} from './Tooltip';
+export {
+  createTooltipTriggerEventHandlers,
+  useTooltipTriggerEventHandlers,
+} from './Tooltip/utils/createTooltipTriggerEventHandlers';
+
+export { Tooltip }; // named
+export default Tooltip; // default
