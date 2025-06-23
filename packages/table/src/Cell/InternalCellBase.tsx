@@ -29,6 +29,7 @@ const InternalCellBase = forwardRef<HTMLTableCellElement, InternalCellProps>(
     return (
       <td
         data-lgid={lgIds.cell}
+        data-testid={lgIds.cell}
         className={cx(getBaseCellStyles(verticalAlignment), className)}
         ref={fwdRref}
         {...rest}

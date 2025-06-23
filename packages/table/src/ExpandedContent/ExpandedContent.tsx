@@ -39,6 +39,7 @@ const ExpandedContentWithRef = <T extends RowData>(
         colSpan={row.getVisibleCells().length}
         className={cx(baseStyles)}
         data-lgid={lgIds.cell}
+        data-testid={lgIds.cell}
       >
         <div className={expandedContentThemeStyles[theme]}>
           <div>{content}</div>

@@ -73,6 +73,7 @@ function Toggle({
         buttonSizeStyles[size],
       )}
       data-lgid={lgIds.root}
+      data-testid={lgIds.root}
       {...rest}
     >
       <div

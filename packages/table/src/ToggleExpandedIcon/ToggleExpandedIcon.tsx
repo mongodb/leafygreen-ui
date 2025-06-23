@@ -38,6 +38,7 @@ const ToggleExpandedIcon = ({
         iconButtonTransitionStyles,
       )}
       data-lgid={lgIds.expandButton}
+      data-testid={lgIds.expandButton}
       {...rest}
     >
       <Icon

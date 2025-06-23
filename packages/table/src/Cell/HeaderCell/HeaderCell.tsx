@@ -33,6 +33,7 @@ const HeaderCellWithRef = <T extends LGRowData>(
   return (
     <th
       data-lgid={lgIds.header}
+      data-testid={lgIds.header}
       className={cx(
         getBaseHeaderCellStyles(header?.getSize() ?? 0, isSelectable),
         className,
@@ -54,7 +55,7 @@ const HeaderCellWithRef = <T extends LGRowData>(
             sortState={sortState}
             onSortIconClick={onSortIconClick}
             aria-label={`Sort by ${columnName}`}
-            data-testid="lg-table-sort-icon-button"
+            data-testid={lgIds.sortIcon}
             data-lgid={lgIds.sortIcon}
           />
         )}

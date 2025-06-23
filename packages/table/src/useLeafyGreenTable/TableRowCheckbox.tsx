@@ -35,6 +35,7 @@ export const TableRowCheckbox = <T extends LGRowData>({
       // Don't animate if _all_ rows have been checked (usually, if header row is clicked). Not the _best_ check, but it mostly works
       animate={!table.getIsAllRowsSelected()}
       data-lgid={lgIds.checkbox}
+      data-testid={lgIds.checkbox}
     />
   );
 };

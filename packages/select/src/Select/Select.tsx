@@ -517,12 +517,14 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           ref={containerRef}
           className={cx(wrapperStyle, className)}
           data-lgid={lgIds.root}
+          data-testid={lgIds.root}
         >
           {(label || description) && (
             <div className={labelDescriptionContainerStyle}>
               {label && (
                 <Label
                   data-lgid={lgIds.root}
+                  data-testid={lgIds.root}
                   htmlFor={menuButtonId}
                   id={labelId}
                   darkMode={darkMode}
@@ -554,6 +556,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               {description && (
                 <Description
                   data-lgid={lgIds.root}
+                  data-testid={lgIds.root}
                   id={descriptionId}
                   darkMode={darkMode}
                   disabled={disabled}

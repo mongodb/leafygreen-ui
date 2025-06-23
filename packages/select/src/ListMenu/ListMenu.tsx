@@ -72,6 +72,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <ul
           data-lgid={lgIds.popover}
+          data-testid={lgIds.popover}
           aria-labelledby={labelId}
           role="listbox"
           ref={ref}

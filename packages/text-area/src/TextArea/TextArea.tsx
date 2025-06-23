@@ -116,6 +116,7 @@ export const TextArea: TextArea = forwardRef<
     className,
     darkMode,
     'data-lgid': lgIds.root,
+    'data-testid': lgIds.root,
     description,
     disabled,
     errorMessage,

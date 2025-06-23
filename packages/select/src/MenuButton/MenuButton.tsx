@@ -120,6 +120,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
         <div className={menuButtonTextWrapperStyle}>
           <div
             data-lgid={lgIds.buttonText}
+            data-testid={lgIds.buttonText}
             className={cx(menuButtonTextClassName, menuButtonTextStyle)}
           >
             {text}

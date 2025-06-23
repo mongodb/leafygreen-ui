@@ -152,6 +152,7 @@ const ModalView = React.forwardRef(
                         <IconButton
                           id={closeId}
                           data-testid={lgIds.close}
+                          data-lgid={lgIds.close}
                           onClick={handleClose}
                           aria-label="Close modal"
                           className={cx(

@@ -30,6 +30,7 @@ export const TableHeaderCheckbox = <T extends LGRowData>({
       onChange={table.getToggleAllRowsSelectedHandler()}
       aria-label="Select all rows"
       data-lgid={lgIds.selectAllCheckbox}
+      data-testid={lgIds.selectAllCheckbox}
     />
   );
 };

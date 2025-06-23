@@ -127,6 +127,7 @@ const Checkbox = React.forwardRef(
             className,
           )}
           data-lgid={lgIds.root}
+          data-testid={lgIds.root}
           style={style}
         >
           <Label
@@ -137,6 +138,7 @@ const Checkbox = React.forwardRef(
               [disabledLabelStyle]: disabled,
             })}
             data-lgid={lgIds.root}
+            data-testid={lgIds.root}
           >
             <input
               {...rest}
@@ -185,6 +187,7 @@ const Checkbox = React.forwardRef(
               className={descriptionStyle}
               disabled={disabled}
               data-lgid={lgIds.root}
+              data-testid={lgIds.root}
             >
               {description}
             </Description>

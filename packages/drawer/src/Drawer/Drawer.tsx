@@ -125,6 +125,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             zIndex: 1000 + drawerIndex,
           })}
           data-lgid={lgIds.root}
+          data-testid={lgIds.root}
           id={id}
           ref={drawerRef}
           onAnimationEnd={handleAnimationEnd}
@@ -154,6 +155,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                   <IconButton
                     aria-label="Close drawer"
                     data-lgid={lgIds.closeButton}
+                    data-testid={lgIds.closeButton}
                     onClick={onClose}
                   >
                     <XIcon />

@@ -84,6 +84,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             className={cx(fontStyles, className)}
             ref={fwdRef}
             data-lgid={lgIds.root}
+            data-testid={lgIds.root}
             {...rest}
           >
             <div
@@ -94,6 +95,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               {label && (
                 <Label
                   data-lgid={lgIds.root}
+                  data-testid={lgIds.root}
                   className={fontStyles}
                   htmlFor={inputId}
                   id={labelId}
@@ -105,6 +107,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               {description && (
                 <Description
                   data-lgid={lgIds.root}
+                  data-testid={lgIds.root}
                   className={fontStyles}
                   id={descriptionId}
                   disabled={disabled}

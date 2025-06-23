@@ -32,6 +32,7 @@ export const GalleryIndicator = React.forwardRef<
         ref={forwardRef}
         className={getGalleryIndicatorStyles({ className })}
         data-lgid={lgIds.root}
+        data-testid={lgIds.root}
         {...rest}
       >
         {Array.from({ length: length }, (_, i) => {

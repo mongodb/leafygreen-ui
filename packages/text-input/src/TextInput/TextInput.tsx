@@ -150,6 +150,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       className,
       darkMode,
       'data-lgid': lgIds.root,
+      'data-testid': lgIds.root,
       description,
       disabled,
       errorMessage,

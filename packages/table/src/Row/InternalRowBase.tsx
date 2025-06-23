@@ -21,6 +21,7 @@ const InternalRowBase = forwardRef<HTMLTableRowElement, InternalRowBaseProps>(
       <tr
         ref={forwardedRef}
         data-lgid={lgIds.row}
+        data-testid={lgIds.row}
         onClick={onClick}
         aria-disabled={disabled}
         tabIndex={onClick ? 0 : undefined}

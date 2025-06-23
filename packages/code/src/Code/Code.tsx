@@ -190,6 +190,7 @@ function Code({
         className={getWrapperStyles({ theme, className })}
         data-language={languageProp}
         data-lgid={lgIds.root}
+        data-testid={lgIds.root}
       >
         <div
           className={getCodeStyles({
@@ -202,6 +203,7 @@ function Code({
         >
           {!isLoading && (
             <pre
+              data-lgid={lgIds.pre}
               data-testid={lgIds.pre}
               {...(rest as DetailedElementProps<HTMLPreElement>)}
               className={getCodeWrapperStyles({

@@ -208,11 +208,17 @@ const Tabs = <SelectedType extends number | string>(
               size,
             }}
           >
-            <div {...rest} className={className} data-lgid={lgIds.root}>
+            <div
+              data-testid={lgIds.root}
+              data-lgid={lgIds.root}
+              {...rest}
+              className={className}
+            >
               <div className={getTabContainerStyles(theme)} id={id}>
                 <div
                   className={tabListStyles}
                   data-lgid={lgIds.tabList}
+                  data-testid={lgIds.tabList}
                   role="tablist"
                   aria-orientation="horizontal"
                   {...accessibilityProps}
@@ -228,6 +234,7 @@ const Tabs = <SelectedType extends number | string>(
               <div
                 className={tabPanelsElementClassName}
                 data-lgid={lgIds.tabPanels}
+                data-testid={lgIds.tabPanels}
               >
                 {renderedTabPanels}
               </div>

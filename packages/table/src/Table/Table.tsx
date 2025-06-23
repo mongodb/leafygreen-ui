@@ -77,6 +77,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
               getTableStyles(theme, baseFontSize, isVirtual, shouldTruncate),
             )}
             data-lgid={lgIds.root}
+            data-testid={lgIds.root}
             data-is-sticky={!inView}
             {...rest}
           >
