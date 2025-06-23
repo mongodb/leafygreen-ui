@@ -10,6 +10,12 @@ export { getClosestFocusableElement } from './getClosestFocusableElement';
 export { getIndefiniteArticle } from './getIndefiniteArticle';
 export { getMobileMediaQuery } from './getMobileMediaQuery';
 export * from './helpers';
+export {
+  focusableElementSelector,
+  queryAllFocusableElements,
+  queryFirstFocusableElement,
+  queryLastFocusableElement,
+} from './queryFocusableElements';
 export type {
   Concat,
   DeepKeys,
