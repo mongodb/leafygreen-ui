@@ -96,7 +96,7 @@ describe('packages/section-nav-item', () => {
 
     const { getSectionNavItemByText } = getTestUtils();
     const item = getSectionNavItemByText('Section 1');
-    userEvent.click(item.getElement()!);
+    userEvent.click(item?.getElement()!);
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
