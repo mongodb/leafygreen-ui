@@ -9,19 +9,19 @@ export const getItemStyles = ({ theme = Theme.Light }: { theme: Theme }) => css`
 `;
 
 export const getLinkStyles = ({
-  depth = 1,
+  level = 1,
   active = false,
   theme = Theme.Light,
   className,
 }: {
-  depth?: number;
+  level?: number;
   active?: boolean;
   theme?: Theme;
   className?: string;
 }) =>
   cx(
     css`
-      ${getBaseStyles({ depth, theme })};
+      ${getBaseStyles({ level, theme })};
       ${getHoverStyles({ theme })}
     `,
     {
@@ -34,17 +34,17 @@ export const getLinkStyles = ({
   );
 
 export const getBaseStyles = ({
-  depth,
+  level,
   theme,
 }: {
-  depth: number;
+  level: number;
   theme: Theme;
 }) => css`
   all: unset;
   cursor: pointer;
   display: block;
   color: ${color[theme].text.secondary.default};
-  padding-inline: ${depth * spacing[400]}px ${spacing[400]}px;
+  padding-inline: ${level * spacing[400]}px ${spacing[400]}px;
   padding-block: ${spacing[150]}px;
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;

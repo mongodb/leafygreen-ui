@@ -7,10 +7,10 @@ export interface SectionNavItemProps extends HTMLElementProps<'a'> {
   active?: boolean;
 
   /**
-   * The depth of the item in the section nav hierarchy.
+   * The level of the item in the section nav hierarchy.
    * This is used to determine the indentation of the item.
    *
    * @default 1
    */
-  depth?: number;
+  level?: number;
 }

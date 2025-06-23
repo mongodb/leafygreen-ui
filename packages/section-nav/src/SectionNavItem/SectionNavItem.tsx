@@ -11,7 +11,13 @@ export const SectionNavItem = forwardRef<
   SectionNavItemProps
 >(
   (
-    { className, children, active, depth, ...rest }: SectionNavItemProps,
+    {
+      className,
+      children,
+      active = false,
+      level = 1,
+      ...rest
+    }: SectionNavItemProps,
     forwardedRef,
   ) => {
     const { theme } = useDarkMode();
@@ -26,8 +32,10 @@ export const SectionNavItem = forwardRef<
     return (
       <li className={getItemStyles({ theme })}>
         <a
-          className={getLinkStyles({ depth, active, theme, className })}
+          className={getLinkStyles({ level, active, theme, className })}
           ref={forwardedRef}
+          data-active={active}
+          data-level={level}
           data-testid={`${lgIds.item}`}
           data-lgid={`${lgIds.item}`}
           {...rest}
