@@ -55,18 +55,57 @@ LiveExample.args = {
   description: <span>Helper text</span>,
 };
 
-export const BasicDeterminate = Template.bind({});
-BasicDeterminate.args = {
-  value: 27,
-  maxValue: 200,
+export const BasicDeterminate: StoryObj<typeof ProgressBar> = {
+  args: {
+    value: 10,
+    maxValue: 200,
+  },
+  render: (props: ProgressBarProps) => {
+    const [value, setValue] = useState(props.value || 0);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setValue(200);
+      }, 500);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }, [props.value]);
+
+    return <ProgressBar {...props} value={value} />;
+  },
 };
 
-export const BasicIndeterminate = Template.bind({});
-BasicIndeterminate.args = {
+export const ShimmerDeterminate: StoryObj<typeof ProgressBar> = {
+  args: {
+    value: 80,
+    maxValue: 200,
+    enableAnimation: true,
+  },
+  render: (props: ProgressBarProps) => {
+    const [value, setValue] = useState(props.value || 0);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setValue(200);
+      }, 3500);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }, [props.value]);
+
+    return <ProgressBar {...props} value={value} />;
+  },
+};
+
+export const Indeterminate = Template.bind({});
+Indeterminate.args = {
   isIndeterminate: true,
 };
 
-export const WithLabel = BasicDeterminate.bind({});
+export const WithLabel = Template.bind({});
 WithLabel.args = {
   ...BasicDeterminate.args,
   label: <span>Label</span>,
@@ -107,51 +146,5 @@ IndeterminateVariants.parameters = {
       formatValue: (value: number) => `${value} MBs`,
       showIcon: true,
     },
-  },
-};
-
-// TEMPORARY FOR NOW
-export const WidthAnimation: StoryObj<typeof ProgressBar> = {
-  args: {
-    value: 10,
-    maxValue: 200,
-  },
-  render: (props: ProgressBarProps) => {
-    const [value, setValue] = useState(props.value || 0);
-
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setValue(200);
-      }, 500);
-
-      return () => {
-        clearTimeout(timer);
-      };
-    }, [props.value]);
-
-    return <ProgressBar {...props} value={value} />;
-  },
-};
-
-export const ShimmerAnimation: StoryObj<typeof ProgressBar> = {
-  args: {
-    value: 80,
-    maxValue: 200,
-    enableAnimation: true,
-  },
-  render: (props: ProgressBarProps) => {
-    const [value, setValue] = useState(props.value || 0);
-
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setValue(200);
-      }, 3500);
-
-      return () => {
-        clearTimeout(timer);
-      };
-    }, [props.value]);
-
-    return <ProgressBar {...props} value={value} />;
   },
 };

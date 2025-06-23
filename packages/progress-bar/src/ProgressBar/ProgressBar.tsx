@@ -52,7 +52,8 @@ export function ProgressBar({
     : showIconProps;
 
   const getTypedProgressBarFillStyles = () => {
-    if (!isDeterminate) return getIndeterminateBarFillStyles();
+    if (!isDeterminate)
+      return getIndeterminateBarFillStyles({ theme, variant });
 
     if (value)
       return getDeterminateBarFillStyles(

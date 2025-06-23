@@ -11,6 +11,10 @@ import {
 
 import { ProgressBarSize, ProgressBarVariant } from './ProgressBar.types';
 
+const OPACITY_50 = '80';
+const OPACITY_75 = 'BF';
+const OPACITY_100 = 'FF';
+
 const progressBarSizeStyles = {
   [Size.Small]: {
     height: '4px',
@@ -137,6 +141,7 @@ export const getBarFillStyles = ({
 }) => css`
   height: 100%;
   border-radius: inherit;
+  overflow: hidden;
   background-color: ${disabled
     ? progressBarVariantStyles[theme].disabledBarColor
     : progressBarVariantStyles[theme][variant].barColor};
@@ -162,7 +167,7 @@ const shimmerAnimation = css`
     background: linear-gradient(
       90deg,
       transparent 25%,
-      rgba(255, 255, 255, 0.5) 50%,
+      ${palette.white}${OPACITY_50} 50%,
       transparent 75%
     );
     background-size: 200% 100%;
@@ -179,7 +184,56 @@ const shimmerAnimation = css`
   }
 `;
 
-export const getIndeterminateBarFillStyles = () => css`
-  width: 100%; // temporary
-  // requires additional animation
+export const getIndeterminateBarFillStyles = ({
+  theme,
+  variant,
+}: {
+  theme: Theme;
+  variant: ProgressBarVariant;
+}) => css`
+  position: relative;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -33%;
+    height: 100%;
+    width: 33%;
+    background: linear-gradient(
+      90deg,
+      ${palette.white}${OPACITY_50} 0%,
+      ${progressBarVariantStyles[theme][variant].barColor}${OPACITY_75} 25%,
+      ${progressBarVariantStyles[theme][variant].barColor}${OPACITY_100} 50%,
+      ${progressBarVariantStyles[theme][variant].barColor}${OPACITY_75} 75%,
+      ${palette.white}${OPACITY_50} 100%
+    );
+    animation: cycle 1.5s linear infinite;
+  }
+
+  @keyframes cycle {
+    0% {
+      left: -33%;
+      width: 33%;
+    }
+    25% {
+      left: 0%;
+      width: 33%;
+    }
+    50% {
+      left: 17%;
+      width: 66%;
+    }
+    75% {
+      left: 67%;
+      width: 33%;
+    }
+    100% {
+      left: 100%;
+      width: 33%;
+    }
+  }
 `;
