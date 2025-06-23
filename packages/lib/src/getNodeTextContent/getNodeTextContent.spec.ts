@@ -48,5 +48,24 @@ describe('packages/lib/src/getNodeTextContent', () => {
 
       expect(result).toBe('title: leafy green');
     });
+
+    test('returns text content for nested functional components', () => {
+      const FunctionalComponent = ({ title }: { title: string }) => {
+        return React.createElement(
+          'div',
+          null,
+          'title: ',
+          React.createElement('span', null, title),
+        );
+      };
+
+      const element = React.createElement(FunctionalComponent, {
+        title: 'leafy green',
+      });
+
+      const result = getNodeTextContent(element);
+
+      expect(result).toBe('title: leafy green');
+    });
   });
 });
