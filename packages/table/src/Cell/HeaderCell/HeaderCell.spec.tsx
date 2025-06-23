@@ -11,9 +11,14 @@ import { axe } from 'jest-axe';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import useLeafyGreenTable, { LGTableDataType } from '../../useLeafyGreenTable';
+import { getLgIds } from '../../utils/getLgIds';
 import { Person } from '../../utils/makeData.testutils';
 
 import HeaderCell, { HeaderCellProps } from '.';
+
+const lgids = getLgIds();
+
+const headerCellSortIconTestId = lgids.sortIcon;
 
 function renderSimpleHeaderCell(props: HeaderCellProps<unknown>) {
   return render(
@@ -111,7 +116,7 @@ describe('packages/table/HeaderCell', () => {
   describe('sort prop', () => {
     test('sort prop renders sort icon button', async () => {
       const { getAllByTestId } = render(<TestSortableHeaderCell />);
-      const sortIconButtons = getAllByTestId('lg-table-sort-icon-button');
+      const sortIconButtons = getAllByTestId(headerCellSortIconTestId);
       expect(sortIconButtons[0]).toBeInTheDocument();
       expect(sortIconButtons[1]).toBeInTheDocument();
     });
@@ -131,7 +136,7 @@ describe('packages/table/HeaderCell', () => {
         secondSort: 'Ascending',
       },
     ])('for $dataType data', ({ columnIndex, initialSort, secondSort }) => {
-      const iconButtonTestId = 'lg-table-sort-icon-button';
+      const iconButtonTestId = headerCellSortIconTestId;
 
       test('initial state of sort icon is unsorted', async () => {
         const { queryAllByLabelText } = render(<TestSortableHeaderCell />);
