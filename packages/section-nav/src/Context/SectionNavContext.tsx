@@ -13,7 +13,7 @@ import { SectionNavProviderProps } from './SectionNavContext.types';
 
 export const SectionNavContext = createContext<SectionNavProviderProps>({
   lgIds: getLgIds(),
-  inContext: false,
+  hasContext: false,
 });
 
 export const useSectionNavContext = () =>
@@ -24,7 +24,7 @@ export const useSectionNavContext = () =>
 export const SectionNavContextProvider = ({
   children,
   lgIds,
-  inContext,
+  hasContext,
   darkMode = false,
 }: PropsWithChildren<SectionNavProviderProps>) => {
   const ToolbarProvider = (
@@ -34,7 +34,7 @@ export const SectionNavContextProvider = ({
   const toolbarProviderData = useMemo(() => {
     return {
       lgIds,
-      inContext,
+      hasContext,
     };
   }, [lgIds]);
 

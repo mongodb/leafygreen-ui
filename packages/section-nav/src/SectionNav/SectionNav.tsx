@@ -23,7 +23,7 @@ export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(
     const lgIds = getLgIds(dataLgId);
 
     return (
-      <SectionNavContextProvider darkMode={darkMode} lgIds={lgIds} inContext>
+      <SectionNavContextProvider darkMode={darkMode} lgIds={lgIds} hasContext>
         <nav
           data-lgid={lgIds.root}
           data-testid={lgIds.root}

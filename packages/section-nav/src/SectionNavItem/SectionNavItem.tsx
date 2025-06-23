@@ -15,9 +15,9 @@ export const SectionNavItem = forwardRef<
     forwardedRef,
   ) => {
     const { theme } = useDarkMode();
-    const { lgIds, inContext } = useSectionNavContext();
+    const { lgIds, hasContext } = useSectionNavContext();
 
-    if (!inContext) {
+    if (!hasContext) {
       console.error(
         'SectionNavItem must be used within a SectionNav component',
       );

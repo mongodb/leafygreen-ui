@@ -11,5 +11,5 @@ export type SectionNavProviderProps = DarkModeProps & {
   /**
    * Whether or not the component is within a SectionNav component.
    */
-  inContext: boolean;
+  hasContext: boolean;
 };
