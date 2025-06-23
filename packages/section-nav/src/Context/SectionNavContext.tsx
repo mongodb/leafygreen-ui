@@ -36,7 +36,7 @@ export const SectionNavContextProvider = ({
       lgIds,
       hasContext,
     };
-  }, [lgIds]);
+  }, [hasContext, lgIds]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

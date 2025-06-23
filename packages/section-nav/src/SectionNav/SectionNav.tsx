@@ -3,10 +3,11 @@ import React, { forwardRef } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
+import { SectionNavContextProvider } from '../Context/SectionNavContext';
+import { getLgIds } from '../utils/getLgIds';
+
 import { getTitleStyles, orderedListStyles } from './SectionNav.styles';
 import { type SectionNavProps } from './SectionNav.types';
-import { getLgIds } from '../utils/getLgIds';
-import { SectionNavContextProvider } from '../Context/SectionNavContext';
 
 export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(
   (

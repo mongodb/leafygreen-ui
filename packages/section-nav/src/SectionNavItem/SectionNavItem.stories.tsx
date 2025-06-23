@@ -6,8 +6,9 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
-import { SectionNavItem } from './SectionNavItem';
 import { SectionNav } from '../SectionNav';
+
+import { SectionNavItem } from './SectionNavItem';
 
 const decoratorWrapper = (Story: StoryFn, context: any) => (
   <div style={{ width: '200px' }}>

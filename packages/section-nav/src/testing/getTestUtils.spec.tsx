@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import { SectionNav } from '../SectionNav';
+
 import { getTestUtils } from './getTestUtils';
 import { renderSectionNav, renderSectionNavItems } from './render.testUtils';
-
-import { SectionNav } from '../SectionNav';
 
 describe('packages/toolbar/getTestUtils', () => {
   describe('single Toolbar', () => {

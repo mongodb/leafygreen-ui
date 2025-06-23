@@ -2,9 +2,10 @@ import React, { forwardRef } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { useSectionNavContext } from '../Context/SectionNavContext';
+
 import { getItemStyles, getLinkStyles } from './SectionNavItem.styles';
 import { SectionNavItemProps } from './SectionNavItem.types';
-import { useSectionNavContext } from '../Context/SectionNavContext';
 
 export const SectionNavItem = forwardRef<
   HTMLAnchorElement,

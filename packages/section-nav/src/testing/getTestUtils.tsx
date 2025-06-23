@@ -30,7 +30,7 @@ export const getTestUtils = (
   /**
    * Returns an array of all SectionNavItem
    */
-  const getAllSectionNavItems = (): HTMLAnchorElement[] => {
+  const getAllSectionNavItems = (): Array<HTMLAnchorElement> => {
     const element = getSectionNav();
 
     return Array.from(
