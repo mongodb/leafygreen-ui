@@ -71,6 +71,20 @@ describe('packages/toolbar/getTestUtils', () => {
       });
     });
 
+    describe('getTitle', () => {
+      test('returns the title element', () => {
+        renderSectionNav({ title: 'On this page' });
+        const { getTitle } = getTestUtils();
+        expect(getTitle()?.textContent).toBe('On this page');
+      });
+
+      test('returns null', () => {
+        renderSectionNav({});
+        const { getTitle } = getTestUtils();
+        expect(getTitle()).toBeNull();
+      });
+    });
+
     describe('getAllToolbarIconButtons', () => {
       test('returns all toolbar icon buttons', () => {
         renderSectionNav({});

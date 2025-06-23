@@ -1,11 +1,18 @@
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithRef } from 'react';
+
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export interface SectionNavProps
-  extends HTMLElementProps<'nav'>,
+  extends ComponentPropsWithRef<'nav'>,
     DarkModeProps,
     LgIdProps {
   /**
    * The title
    */
   title?: string;
+
+  /**
+   * The content of the section nav
+   */
+  children: React.ReactNode;
 }

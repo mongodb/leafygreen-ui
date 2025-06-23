@@ -28,6 +28,16 @@ export const getTestUtils = (
   const querySectionNav = () => queryByLgId!<HTMLElement>(lgIds.root);
 
   /**
+   * Returns the title element of the SectionNav.
+   */
+  const getTitle = () => {
+    const element = getSectionNav();
+    return element.querySelector<HTMLParagraphElement>(
+      `[data-lgid=${lgIds.title}]`,
+    );
+  };
+
+  /**
    * Returns an array of all SectionNavItem
    */
   const getAllSectionNavItems = (): Array<HTMLAnchorElement> => {
@@ -57,7 +67,7 @@ export const getTestUtils = (
     return {
       getElement: () => item,
       isActive: () => item?.getAttribute('data-active') === 'true',
-      getLevel: () => Number(item?.getAttribute('data-depth')),
+      getLevel: () => Number(item?.getAttribute('data-level')),
     };
   };
 
@@ -75,6 +85,7 @@ export const getTestUtils = (
     findSectionNav,
     getSectionNav,
     querySectionNav,
+    getTitle: () => getTitle(),
     getAllSectionNavItems: () => getAllSectionNavItems(),
     getSectionNavItemByText: (text: string) => getSectionNavItemByText(text),
     getActiveSectionNavItem: () => getActiveSectionNavItem(),

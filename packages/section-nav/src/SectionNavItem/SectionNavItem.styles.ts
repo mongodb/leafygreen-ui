@@ -3,9 +3,10 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, fontWeights, spacing, typeScales } from '@leafygreen-ui/tokens';
 
-export const getItemStyles = ({ theme = Theme.Light }: { theme: Theme }) => css`
+import { WEDGE_BORDER_RADIUS, WEDGE_WIDTH } from './SectionNavItem.constants';
+
+export const itemStyles = css`
   list-style: none;
-  /* border-left: 1px solid ${color[theme].border.secondary.default}; */
 `;
 
 export const getLinkStyles = ({
@@ -56,11 +57,11 @@ export const getBaseStyles = ({
     position: absolute;
     left: -1px;
     top: 0;
-    width: 2px; // TODO: const
+    width: ${WEDGE_WIDTH}px;
     height: 100%;
     background-color: transparent;
-    border-top-right-radius: 100px;
-    border-bottom-right-radius: 100px;
+    border-top-right-radius: ${WEDGE_BORDER_RADIUS}px;
+    border-bottom-right-radius: ${WEDGE_BORDER_RADIUS}px;
   }
 `;
 

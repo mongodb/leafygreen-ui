@@ -4,7 +4,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useSectionNavContext } from '../Context/SectionNavContext';
 
-import { getItemStyles, getLinkStyles } from './SectionNavItem.styles';
+import { getLinkStyles, itemStyles } from './SectionNavItem.styles';
 import { SectionNavItemProps } from './SectionNavItem.types';
 
 export const SectionNavItem = forwardRef<
@@ -31,7 +31,7 @@ export const SectionNavItem = forwardRef<
     }
 
     return (
-      <li className={getItemStyles({ theme })}>
+      <li className={itemStyles}>
         <a
           className={getLinkStyles({ level, active, theme, className })}
           ref={forwardedRef}

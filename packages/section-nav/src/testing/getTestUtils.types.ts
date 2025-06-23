@@ -35,6 +35,11 @@ export interface TestUtilsReturnType {
   querySectionNav: () => HTMLElement | null;
 
   /**
+   * Returns the title element of the SectionNav.
+   */
+  getTitle: () => HTMLParagraphElement | null;
+
+  /**
    * Returns an array of all SectionNavItems
    */
   getAllSectionNavItems: () => Array<HTMLAnchorElement>;
