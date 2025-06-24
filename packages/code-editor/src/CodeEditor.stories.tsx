@@ -82,7 +82,6 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     ),
   ],
   args: {
-    enableActiveLineHighlighting: true,
     enableClickableUrls: true,
     enableCodeFolding: true,
     enableLineNumbers: true,
@@ -97,9 +96,6 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     darkMode: false,
   },
   argTypes: {
-    enableActiveLineHighlighting: {
-      control: { type: 'boolean' },
-    },
     enableClickableUrls: {
       control: { type: 'boolean' },
     },

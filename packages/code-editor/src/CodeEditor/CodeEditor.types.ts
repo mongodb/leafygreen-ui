@@ -119,11 +119,6 @@ export interface CodeEditorProps extends DarkModeProps {
   defaultValue?: string;
 
   /**
-   * Enables highlighting of the active line.
-   */
-  enableActiveLineHighlighting?: boolean;
-
-  /**
    * Renders URLs as clickable links in the editor.
    */
   enableClickableUrls?: boolean;

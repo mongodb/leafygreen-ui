@@ -72,30 +72,6 @@ describe('packages/code-editor', () => {
     ).not.toBeInTheDocument();
   });
 
-  test('Active line highlighting renders when enabled', () => {
-    const { editor } = renderCodeEditor({ enableActiveLineHighlighting: true });
-    expect(
-      editor.getBySelector(CodeEditorSelectors.ActiveLine),
-    ).toBeInTheDocument();
-    expect(
-      editor.getBySelector(CodeEditorSelectors.ActiveLineGutter, { text: '1' }),
-    ).toBeInTheDocument();
-  });
-
-  test('Active line highlighting does not render when disabled', () => {
-    const { editor } = renderCodeEditor({
-      enableActiveLineHighlighting: false,
-    });
-    expect(
-      editor.queryBySelector(CodeEditorSelectors.ActiveLine),
-    ).not.toBeInTheDocument();
-    expect(
-      editor.queryBySelector(CodeEditorSelectors.ActiveLineGutter, {
-        text: '1',
-      }),
-    ).not.toBeInTheDocument();
-  });
-
   test('Clickable URLs render when enabled', () => {
     const { editor } = renderCodeEditor({
       defaultValue: 'https://mongodb.design',

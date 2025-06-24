@@ -49,11 +49,6 @@ export const createCodeMirrorTheme = (
         fontSize: `${fontSize}px`,
       },
 
-      [CodeEditorSelectors.ActiveLineGutter]: {
-        backgroundColor:
-          color[theme].background[Variant.Primary][InteractionState.Default],
-      },
-
       [`${CodeEditorSelectors.LineNumbers} ${CodeEditorSelectors.GutterElement}`]:
         {
           width: '48px',
@@ -61,6 +56,10 @@ export const createCodeMirrorTheme = (
 
       [CodeEditorSelectors.Line]: {
         paddingLeft: '12px',
+      },
+
+      [CodeEditorSelectors.SelectionBackground]: {
+        background: 'rgba(1, 107, 248, 0.25) !important',
       },
     },
     { dark: theme === Theme.Dark },

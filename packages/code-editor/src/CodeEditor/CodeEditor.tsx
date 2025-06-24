@@ -48,7 +48,6 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
   (
     {
       defaultValue,
-      enableActiveLineHighlighting = true,
       enableClickableUrls = true,
       enableCodeFolding = true,
       enableLineNumbers = true,
@@ -213,6 +212,10 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
             onCreateEditor={onCreateEditor}
             readOnly={readOnly}
             placeholder={placeholder}
+            /**
+             * `theme` prop is used instead of just adding these to extensions
+             * list because it automates updating on theme change.
+             */
             theme={[
               createCodeMirrorTheme(theme, baseFontSize),
               createCodeMirrorHighlightStyleExtension(theme),
@@ -225,8 +228,8 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
             basicSetup={{
               allowMultipleSelections: true,
               foldGutter: false, // Custom fold gutter is used instead
-              highlightActiveLine: enableActiveLineHighlighting,
-              highlightActiveLineGutter: enableActiveLineHighlighting,
+              highlightActiveLine: false,
+              highlightActiveLineGutter: false,
               lineNumbers: enableLineNumbers,
             }}
             ref={ref}
