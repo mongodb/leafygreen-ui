@@ -15,9 +15,7 @@ import { CodeMirrorExtension } from '../CodeEditor.types';
  * The styles applied are meant to approximate the scheme defined for the `Code`
  * component syntax, defined in packages/code/src/globalStyles.tsx
  */
-export const createCodeMirrorHighlightStyleExtension = (
-  theme: Theme,
-): CodeMirrorExtension => {
+export const createHighlightExtension = (theme: Theme): CodeMirrorExtension => {
   /**
    * For more information on styling CodeMirror, see: https://codemirror.net/examples/styling/
    * For list of all tags, see: https://lezer.codemirror.net/docs/ref/#highlight.tags

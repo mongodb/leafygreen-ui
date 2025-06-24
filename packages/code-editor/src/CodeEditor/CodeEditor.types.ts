@@ -8,7 +8,7 @@ import type {
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-import { type LanguageName } from './utils/createCodeMirrorLanguageExtension';
+import { type LanguageName } from './codeMirrorExtensions/createLanguageExtension';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.

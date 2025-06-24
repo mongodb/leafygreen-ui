@@ -29,10 +29,10 @@ import {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { createCodeMirrorHighlightStyleExtension } from './utils/createCodeMirrorHighlightStyleExtension';
-import { createCodeMirrorLanguageExtension } from './utils/createCodeMirrorLanguageExtension';
-import { createCodeMirrorTheme } from './utils/createCodeMirrorTheme';
-import { createCodeMirrorTooltipsExtension } from './utils/createCodeMirrorTooltipsExtension';
+import { createHighlightExtension } from './codeMirrorExtensions/createHighlightExtension';
+import { createLanguageExtension } from './codeMirrorExtensions/createLanguageExtension';
+import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
+import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
 import {
   editorInnerWrapperStyles,
   getEditorOuterWrapperBaseStyles,
@@ -140,9 +140,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         ),
         // Use diagnostics-based tooltips if any tooltips are provided
         tooltipCompartment.of(
-          tooltips.length > 0
-            ? [createCodeMirrorTooltipsExtension(tooltips)]
-            : [],
+          tooltips.length > 0 ? [createTooltipsExtension(tooltips)] : [],
         ),
         foldGutterCompartment.of(
           enableCodeFolding
@@ -196,7 +194,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         const languageCompartment = new Compartment();
         setLanguageExtension(
           languageCompartment.of(
-            language ? await createCodeMirrorLanguageExtension(language) : [],
+            language ? await createLanguageExtension(language) : [],
           ),
         );
       }
@@ -217,8 +215,8 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
              * list because it automates updating on theme change.
              */
             theme={[
-              createCodeMirrorTheme(theme, baseFontSize),
-              createCodeMirrorHighlightStyleExtension(theme),
+              createThemeExtension(theme, baseFontSize),
+              createHighlightExtension(theme),
             ]}
             extensions={[
               ...consumerExtensions.map(extension => Prec.highest(extension)),

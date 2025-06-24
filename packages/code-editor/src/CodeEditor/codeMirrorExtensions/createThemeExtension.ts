@@ -15,7 +15,7 @@ import { CodeEditorSelectors, CodeMirrorExtension } from '../CodeEditor.types';
  * The styles applied are meant to approximate the scheme defined for the `Code`
  * component syntax, defined in packages/code/src/globalStyles.tsx
  */
-export const createCodeMirrorTheme = (
+export const createThemeExtension = (
   theme: Theme,
   fontSize: number,
 ): CodeMirrorExtension => {

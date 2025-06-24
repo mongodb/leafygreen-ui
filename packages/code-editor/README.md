@@ -271,12 +271,17 @@ utils or extensions that are used internally are also exported from this package
 
 ### Utils
 
+#### `createCodeMirrorHighlightExtension(theme: Theme): CodeMirrorExtension`
+
+Utility method that will create the CodeMirror extension used for syntax
+highlighting in `CodeEditor`.
+
 #### `createCodeMirrorLanguageExtensions(language: LanguageName): CodeMirrorExtension`
 
 Utility method that will load the language extension used in `CodeEditor` for
 any supported `LanguageName`.
 
-##### Usage
+##### Example
 
 ```ts
 import { createCodeMirrorLanuageExtension, LanguageName } from "@leafygreen-ui/code-editor";
@@ -285,4 +290,21 @@ import { EditorState } from "@codemirror/state"
 let state = EditorState.create({extensions: [
   createCodeMirrorLanuageExtension(LanguageName.javascript);
 ]});
+```
+
+#### `createCodeMirrorHighlightExtension(theme: Theme, fontSize: number): CodeMirrorExtension`
+
+Utility method that will create the CodeMirror extension used for the theme in `CodeEditor`.
+
+#### `createCodeMirrorTooltipsExtension(tooltipConfigs): CodeMirrorExtension`
+
+Creates a CodeMirror extension that displays multiple tooltips as diagnostics.
+
+##### Example
+
+```ts
+const tooltipExtension = createTooltipsExtension([
+  { line: 2, column: 5, length: 4, content: <div>Tooltip 1</div> },
+  { line: 3, column: 2, length: 2, content: <div>Tooltip 2</div> },
+]);
 ```

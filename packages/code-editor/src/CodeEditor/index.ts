@@ -11,8 +11,11 @@ export {
   type CodeMirrorView,
   IndentUnits,
 } from './CodeEditor.types';
-export { codeSnippets } from './utils/codeSnippets';
 export {
-  createCodeMirrorLanguageExtension,
+  createHighlightExtension as createCodeMirrorHighlightExtension,
+  createLanguageExtension as createCodeMirrorLanguageExtension,
+  createThemeExtension as createCodeMirrorThemeExtension,
+  createTooltipsExtension as createCodeMirrorTooltipsExtension,
   LanguageName,
-} from './utils/createCodeMirrorLanguageExtension';
+} from './codeMirrorExtensions';
+export { codeSnippets } from './utils/codeSnippets';
