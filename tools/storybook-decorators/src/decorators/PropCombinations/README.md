@@ -53,7 +53,7 @@ const meta: StoryMeta<typeof Button> = {
   ...
   parameters: {
     generate: {
-      stories: ['LargeSize', 'DefaultSize'],
+      storyNames: ['LargeSize', 'DefaultSize'],
       combineArgs: { ... },
     },
   }
