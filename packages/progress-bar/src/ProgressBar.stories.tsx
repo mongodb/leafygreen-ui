@@ -2,7 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
+import { Variant } from '@leafygreen-ui/tokens';
+
 import { ProgressBar, ProgressBarProps } from '.';
+
+const unsupportedAnimationCombinations = {
+  variant: [Variant.Warning, Variant.Error],
+  enableAnimation: [true],
+};
+
+const redundantDisabledCombinations = {
+  variant: [Variant.Warning, Variant.Error, Variant.Success],
+  disabled: [true],
+};
 
 const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
@@ -16,18 +28,11 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         description: <span key="description">Helper text</span>,
       },
       combineArgs: {
-        variant: ['info', 'success', 'warning', 'error'],
         size: ['small', 'default', 'large'],
         disabled: [false, true],
         darkMode: [false, true],
       },
-      // to minimize redundancy in disabled states
-      excludeCombinations: [
-        {
-          variant: ['success', 'warning', 'error'],
-          disabled: [true],
-        },
-      ],
+      excludeCombinations: [redundantDisabledCombinations],
       decorator: (InstanceFn, context) => {
         return (
           <div style={{ padding: '48px' }}>
@@ -125,6 +130,10 @@ WithDescription.args = {
 export const DeterminateVariants = Template.bind({});
 DeterminateVariants.parameters = {
   generate: {
+    combineArgs: {
+      variant: ['info', 'success', 'warning', 'error'],
+      enableAnimation: [false, true],
+    },
     args: {
       isIndeterminate: false,
       value: 47,
@@ -133,12 +142,19 @@ DeterminateVariants.parameters = {
         `${value} / ${maxValue} GB`,
       showIcon: true,
     },
+    excludeCombinations: [
+      unsupportedAnimationCombinations,
+      redundantDisabledCombinations,
+    ],
   },
 };
 
 export const IndeterminateVariants = Template.bind({});
 IndeterminateVariants.parameters = {
   generate: {
+    combineArgs: {
+      variant: ['info', 'success'],
+    },
     args: {
       isIndeterminate: true,
       value: 12,

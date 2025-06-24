@@ -10,6 +10,7 @@ import { ProgressBarValueType, ProgressBarVariant } from './ProgressBar.types';
 export const DEFAULT_MAX_VALUE = 1;
 
 export const iconsVisibleOnComplete = ['success'];
+export const variantsWithAnimation = ['info', 'success'];
 
 export const getFormattedValue = (
   value: number,

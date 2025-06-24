@@ -24,6 +24,7 @@ import {
   getPercentage,
   getValueAriaAttributes,
   iconsVisibleOnComplete,
+  variantsWithAnimation,
 } from './ProgressBar.utils';
 
 export function ProgressBar({
@@ -41,6 +42,20 @@ export function ProgressBar({
 
   const isDeterminate = !rest.isIndeterminate;
 
+  if (!isDeterminate) {
+    if (!variantsWithAnimation.includes(variant)) {
+      console.warn(
+        `ProgressBar: The 'isIndeterminate' prop is set to true, but the variant '${variant}' does not support indeterminate animation. Consider using a different variant.`,
+      );
+    }
+  } else {
+    if (rest.enableAnimation && !variantsWithAnimation.includes(variant)) {
+      console.warn(
+        `ProgressBar: The 'enableAnimation' prop is set to true, but the variant '${variant}' does not support determinate animation. Consider using a different variant.`,
+      );
+    }
+  }
+
   const value = rest.value ?? undefined;
 
   const maxValue = isDeterminate
@@ -55,11 +70,16 @@ export function ProgressBar({
     if (!isDeterminate)
       return getIndeterminateBarFillStyles({ theme, variant });
 
-    if (value)
-      return getDeterminateBarFillStyles(
-        getPercentage(value, maxValue),
-        rest.enableAnimation,
-      );
+    if (value) {
+      const enableAnimation = rest.enableAnimation;
+
+      return getDeterminateBarFillStyles({
+        theme,
+        variant,
+        enableAnimation,
+        progress: getPercentage(value, maxValue),
+      });
+    }
   };
 
   const progressBarId = `progress-bar-${

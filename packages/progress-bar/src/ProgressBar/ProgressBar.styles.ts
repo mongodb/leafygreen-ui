@@ -10,10 +10,16 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { ProgressBarSize, ProgressBarVariant } from './ProgressBar.types';
+import { variantsWithAnimation } from './ProgressBar.utils';
 
 const OPACITY_50 = '80';
 const OPACITY_75 = 'BF';
 const OPACITY_100 = 'FF';
+
+const customPalette = {
+  blueFade: '#C3E7FE',
+  greenFade: '#C0FAE6',
+};
 
 const progressBarSizeStyles = {
   [Size.Small]: {
@@ -38,10 +44,12 @@ const progressBarVariantStyles = {
     [Variant.Info]: {
       barColor: palette.blue.base,
       iconColor: palette.blue.base,
+      shimmerFadeColor: customPalette.blueFade + OPACITY_50,
     },
     [Variant.Success]: {
       barColor: palette.green.dark1,
       iconColor: palette.green.dark1,
+      shimmerFadeColor: customPalette.greenFade + OPACITY_50,
     },
     [Variant.Warning]: {
       barColor: palette.yellow.base,
@@ -52,6 +60,7 @@ const progressBarVariantStyles = {
       iconColor: palette.red.base,
     },
   },
+
   [Theme.Dark]: {
     trackColor: palette.gray.dark2,
     disabledBarColor: palette.gray.dark1,
@@ -59,10 +68,12 @@ const progressBarVariantStyles = {
     [Variant.Info]: {
       barColor: palette.blue.light1,
       iconColor: palette.blue.light1,
+      shimmerFadeColor: customPalette.blueFade + OPACITY_75,
     },
     [Variant.Success]: {
       barColor: palette.green.base,
       iconColor: palette.green.base,
+      shimmerFadeColor: customPalette.greenFade + OPACITY_75,
     },
     [Variant.Warning]: {
       barColor: palette.yellow.base,
@@ -139,6 +150,7 @@ export const getBarFillStyles = ({
   variant: ProgressBarVariant;
   disabled?: boolean;
 }) => css`
+  position: relative;
   height: 100%;
   border-radius: inherit;
   overflow: hidden;
@@ -147,42 +159,56 @@ export const getBarFillStyles = ({
     : progressBarVariantStyles[theme][variant].barColor};
 `;
 
-export const getDeterminateBarFillStyles = (
-  progress: number,
-  enableAnimation?: boolean,
-) => css`
-  width: ${progress}%;
-  transition: width 0.5s ease-in-out;
-  ${enableAnimation && shimmerAnimation}
-`;
+export const getDeterminateBarFillStyles = ({
+  theme,
+  variant,
+  progress,
+  enableAnimation,
+}: {
+  theme: Theme;
+  variant: ProgressBarVariant;
+  progress: number;
+  enableAnimation?: boolean;
+}) => {
+  const variantStyles = progressBarVariantStyles[theme][variant];
+  const hasAnimation = 'shimmerFadeColor' in variantStyles;
 
-const shimmerAnimation = css`
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent 25%,
-      ${palette.white}${OPACITY_50} 50%,
-      transparent 75%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 3s linear infinite;
-  }
+  return css`
+    width: ${progress}%;
+    transition: width 0.5s ease-in-out;
 
-  @keyframes shimmer {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
-  }
-`;
+    ${enableAnimation &&
+    hasAnimation &&
+    css`
+      background-color: transparent;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(
+          90deg,
+          ${variantStyles.barColor} 0%,
+          ${variantStyles.shimmerFadeColor} 50%,
+          ${variantStyles.barColor} 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 3s linear infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+    `}
+  `;
+};
 
 export const getIndeterminateBarFillStyles = ({
   theme,
@@ -190,50 +216,56 @@ export const getIndeterminateBarFillStyles = ({
 }: {
   theme: Theme;
   variant: ProgressBarVariant;
-}) => css`
-  position: relative;
-  background-color: transparent;
-  height: 100%;
-  width: 100%;
+}) => {
+  const variantStyles = progressBarVariantStyles[theme][variant];
+  const hasAnimation = variantsWithAnimation.includes(variant);
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -33%;
-    height: 100%;
-    width: 33%;
-    background: linear-gradient(
-      90deg,
-      ${palette.transparent} 0%,
-      ${progressBarVariantStyles[theme][variant].barColor}${OPACITY_75} 25%,
-      ${progressBarVariantStyles[theme][variant].barColor}${OPACITY_100} 50%,
-      ${progressBarVariantStyles[theme][variant].barColor}${OPACITY_75} 75%,
-      ${palette.transparent} 100%
-    );
-    animation: cycle 1.5s linear infinite;
-  }
+  return (
+    hasAnimation &&
+    css`
+      width: 100%;
+      background-color: transparent;
 
-  @keyframes cycle {
-    0% {
-      left: -33%;
-      width: 33%;
-    }
-    25% {
-      left: 0%;
-      width: 33%;
-    }
-    50% {
-      left: 17%;
-      width: 66%;
-    }
-    75% {
-      left: 67%;
-      width: 33%;
-    }
-    100% {
-      left: 100%;
-      width: 33%;
-    }
-  }
-`;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -33%;
+        height: 100%;
+        width: 33%;
+        background: linear-gradient(
+          90deg,
+          ${palette.transparent} 0%,
+          ${variantStyles.barColor}${OPACITY_75} 25%,
+          ${variantStyles.barColor}${OPACITY_100} 50%,
+          ${variantStyles.barColor}${OPACITY_75} 75%,
+          ${palette.transparent} 100%
+        );
+        animation: cycle 1.5s linear infinite;
+      }
+
+      @keyframes cycle {
+        0% {
+          left: -33%;
+          width: 33%;
+        }
+        25% {
+          left: 0%;
+          width: 33%;
+        }
+        50% {
+          left: 17%;
+          width: 66%;
+        }
+        75% {
+          left: 67%;
+          width: 33%;
+        }
+        100% {
+          left: 100%;
+          width: 33%;
+        }
+      }
+    `
+  );
+};
