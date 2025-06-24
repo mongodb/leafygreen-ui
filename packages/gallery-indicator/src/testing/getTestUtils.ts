@@ -1,23 +1,27 @@
 import { getByLgId } from '@lg-tools/test-harnesses';
 
-import { LGIDs } from '../constants';
+import { LgIdString } from '@leafygreen-ui/lib';
+
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
-  lgId: string = LGIDs.root,
+  lgId: LgIdString = DEFAULT_LGID_ROOT,
 ): TestUtilsReturnType => {
+  const lgIds = getLgIds(lgId);
+
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
    */
-  const element: HTMLElement = getByLgId!(lgId);
+  const element: HTMLElement = getByLgId!(lgIds.root);
 
   /**
    * Returns a nodelist of all indicators/dots in the gallery indicator
    */
   const getAllIndicators = () =>
-    element.querySelectorAll<HTMLElement>(`[data-lgid=${LGIDs.indicator}]`);
+    element.querySelectorAll<HTMLElement>(`[data-lgid=${lgIds.indicator}]`);
 
   /**
    * Returns the number of indicators/dots in the gallery indicator

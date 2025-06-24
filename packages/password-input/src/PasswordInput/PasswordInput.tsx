@@ -10,6 +10,7 @@ import { Label } from '@leafygreen-ui/typography';
 
 import { PasswordInputFeedback } from '../PasswordInputFeedback';
 import { PasswordToggle } from '../PasswordToggle';
+import { getLgIds } from '../utils';
 
 import {
   getInputDisabledStyles,
@@ -48,6 +49,7 @@ export const PasswordInput = React.forwardRef<
       stateNotifications = [],
       disabled = false,
       autoComplete = 'new-password',
+      'data-lgid': dataLgId,
       className,
       label,
       ...rest
@@ -63,6 +65,7 @@ export const PasswordInput = React.forwardRef<
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
+    const lgIds = getLgIds(dataLgId);
 
     if (!label && !ariaLabelledbyProp && !ariaLabelProp) {
       console.warn(
@@ -105,7 +108,12 @@ export const PasswordInput = React.forwardRef<
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div className={className} ref={forwardedRef}>
+        <div
+          className={className}
+          ref={forwardedRef}
+          data-lgid={lgIds.root}
+          data-test={lgIds.root}
+        >
           {label && (
             <Label
               className={cx(labelBaseStyles, {
@@ -113,6 +121,8 @@ export const PasswordInput = React.forwardRef<
               })}
               htmlFor={inputId}
               disabled={disabled}
+              data-lgid={lgIds.root}
+              data-testid={lgIds.root}
             >
               {label}
             </Label>
@@ -155,6 +165,7 @@ export const PasswordInput = React.forwardRef<
             hasStateNotifications={hasStateNotifications}
             notifications={stateNotifications as Array<NotificationProps>}
             formFieldFeedbackProps={formFieldFeedbackProps}
+            data-lgid={lgIds.stateNotifications}
           />
         </div>
       </LeafyGreenProvider>

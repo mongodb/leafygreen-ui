@@ -1,5 +1,5 @@
 import { BaseButtonProps, type Variant } from '@leafygreen-ui/button';
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 
 import { PrimaryButtonProps } from './PrimaryButton';
 
@@ -19,7 +19,8 @@ export type CustomPrimaryButtonProps = ButtonPropsOmittingVariant &
 
 export interface FormFooterProps
   extends HTMLElementProps<'footer'>,
-    DarkModeProps {
+    DarkModeProps,
+    LgIdProps {
   /**
    * The primary (right-most) button.
    * Defined as a `<Button>` element, or as an object with the shape:

@@ -1,4 +1,3 @@
-export * from './constants';
 export { Footer } from './Footer';
 export {
   CloseIconColor,
@@ -7,4 +6,4 @@ export {
   ModalSize,
   ModalView,
 } from './Modal';
-export { getTestUtils } from './utils';
+export { getLgIds, getTestUtils } from './utils';
