@@ -15,7 +15,10 @@ export {
   type CodeMirrorState,
   type CodeMirrorView,
   codeSnippets,
-  createLanguageExtension,
+  createCodeMirrorHighlightExtension,
+  createCodeMirrorLanguageExtension,
+  createCodeMirrorThemeExtension,
+  createCodeMirrorTooltipsExtension,
   IndentUnits,
   LanguageName,
 } from './CodeEditor';

@@ -276,7 +276,7 @@ utils or extensions that are used internally are also exported from this package
 Utility method that will create the CodeMirror extension used for syntax
 highlighting in `CodeEditor`.
 
-#### `createCodeMirrorLanguageExtensions(language: LanguageName): CodeMirrorExtension`
+#### `createCodeMirrorLanguageExtension(language: LanguageName): CodeMirrorExtension`
 
 Utility method that will load the language extension used in `CodeEditor` for
 any supported `LanguageName`.

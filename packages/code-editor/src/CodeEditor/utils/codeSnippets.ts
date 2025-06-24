@@ -102,12 +102,12 @@ public class Greeter {
 `,
 
   javascript: `// CodeEditor
-  function greet(name) {
-    console.log(\`Greetings, \${name}!\`);
-  }
+function greet(name) {
+  console.log(\`Greetings, \${name}!\`);
+}
 
-  greet('Earthlings');
-  `,
+greet('Earthlings');
+`,
 
   json: `{
   "contactId": "ZR-20250606-WBG",
