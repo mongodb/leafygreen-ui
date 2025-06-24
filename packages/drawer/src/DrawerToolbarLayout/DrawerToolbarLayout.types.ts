@@ -8,7 +8,7 @@ import { DrawerProps } from '../Drawer/Drawer.types';
 type PickedOptionalDrawerProps = Pick<DrawerProps, 'onClose' | 'displayMode'>;
 type PickedRequiredToolbarIconButtonProps = Pick<
   ToolbarIconButtonProps,
-  'glyph' | 'label' | 'onClick'
+  'glyph' | 'label' | 'onClick' | 'disabled'
 >;
 
 interface LayoutBase extends PickedRequiredToolbarIconButtonProps {
