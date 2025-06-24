@@ -106,11 +106,11 @@ export function createComponent({
       contents: styles,
     },
     {
-      name: `src/testing/getTestUtils.ts`,
+      name: `src/testing/getTestUtils.tsx`,
       contents: testing(),
     },
     {
-      name: `src/testing/getTestUtils.spec.ts`,
+      name: `src/testing/getTestUtils.spec.tsx`,
       contents: testingSpec({ packageNamePascal, packageNameKebab }),
     },
     {
