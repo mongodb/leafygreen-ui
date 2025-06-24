@@ -213,11 +213,13 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
             onCreateEditor={onCreateEditor}
             readOnly={readOnly}
             placeholder={placeholder}
+            theme={[
+              createCodeMirrorTheme(theme, baseFontSize),
+              createCodeMirrorHighlightStyleExtension(theme),
+            ]}
             extensions={[
               ...consumerExtensions.map(extension => Prec.highest(extension)),
               ...customExtensions,
-              createCodeMirrorTheme(theme, baseFontSize),
-              createCodeMirrorHighlightStyleExtension(theme),
               languageExtension,
             ]}
             basicSetup={{
