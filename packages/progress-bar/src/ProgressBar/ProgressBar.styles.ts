@@ -152,29 +152,27 @@ export const getDeterminateBarFillStyles = ({
   theme,
   variant,
   disabled,
-  progress,
+  width,
   enableAnimation,
 }: {
   theme: Theme;
   variant: ProgressBarVariant;
   disabled: boolean;
-  progress: number;
+  width: number;
   enableAnimation?: boolean;
 }) => {
   const variantStyles = progressBarVariantStyles[theme][variant];
-  const hasAnimation = 'shimmerFadeColor' in variantStyles;
+  const hasAnimation =
+    !disabled && enableAnimation && 'shimmerFadeColor' in variantStyles;
 
   return css`
-    width: ${progress}%;
+    width: ${width}%;
     transition: width 0.5s ease-in-out;
-
     background-color: ${disabled
       ? progressBarVariantStyles[theme].disabledBarColor
       : progressBarVariantStyles[theme][variant].barColor};
 
-    ${!disabled &&
-    enableAnimation &&
-    hasAnimation &&
+    ${hasAnimation &&
     css`
       background-color: transparent;
 

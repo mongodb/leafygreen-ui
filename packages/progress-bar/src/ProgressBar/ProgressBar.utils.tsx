@@ -67,3 +67,27 @@ export const getHeaderIcon = ({
       return <InfoWithCircleIcon {...props} />;
   }
 };
+
+export const validateVariantUsage = ({
+  variant,
+  isDeterminate,
+  enableAnimation,
+}: {
+  variant: ProgressBarVariant;
+  isDeterminate: boolean;
+  enableAnimation?: boolean;
+}) => {
+  if (!variantsWithAnimation.includes(variant)) {
+    if (!isDeterminate) {
+      console.warn(
+        `ProgressBar: The variant '${variant}' does not support indeterminate animation. Consider using a different variant.`,
+      );
+    }
+
+    if (enableAnimation) {
+      console.warn(
+        `ProgressBar: The variant '${variant}' does not support determinate animation. Consider using a different variant.`,
+      );
+    }
+  }
+};
