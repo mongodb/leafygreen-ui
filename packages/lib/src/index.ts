@@ -2,7 +2,7 @@ import createUniqueClassName from './createUniqueClassName';
 import DarkModeProps, { Theme } from './DarkModeProps';
 import getNodeTextContent from './getNodeTextContent';
 import getTheme from './getTheme';
-import { type LgIdProps } from './LgIdProps';
+import { type LgIdProps, type LgIdString } from './LgIdProps';
 import * as typeIs from './typeIs';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export { deepMapValues } from './deepMapValues';
@@ -34,7 +34,7 @@ export type {
 export { isComponentType, validateChildren } from './validateChildren';
 
 export { createUniqueClassName, getNodeTextContent, getTheme, Theme, typeIs };
-export type { DarkModeProps, LgIdProps };
+export type { DarkModeProps, LgIdProps, LgIdString };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
