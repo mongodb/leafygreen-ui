@@ -9,13 +9,13 @@
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/chat-disclaimer
+yarn add @lg-chat/chat-disclaimer
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/chat-disclaimer
+npm install @lg-chat/chat-disclaimer
 ```
 
 ### Properties
