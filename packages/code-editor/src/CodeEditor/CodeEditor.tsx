@@ -28,11 +28,15 @@ import {
   useBaseFontSize,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { borderRadius } from '@leafygreen-ui/tokens';
 
+import { createCodeMirrorHighlightStyleExtension } from './utils/createCodeMirrorHighlightStyleExtension';
 import { createCodeMirrorLanguageExtension } from './utils/createCodeMirrorLanguageExtension';
 import { createCodeMirrorTheme } from './utils/createCodeMirrorTheme';
 import { createCodeMirrorTooltipsExtension } from './utils/createCodeMirrorTooltipsExtension';
+import {
+  editorInnerWrapperStyles,
+  getEditorOuterWrapperBaseStyles,
+} from './CodeEditor.styles';
 import {
   type CodeEditorProps,
   type CodeMirrorExtension,
@@ -201,30 +205,19 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     }, [language]);
 
     return (
-      <div
-        className={cx(css`
-          overflow: hidden;
-          border-radius: ${borderRadius[300]}px;
-          border: 1px solid green;
-          height: 200px;
-        `)}
-      >
-        <div
-          className={css`
-            height: 100%;
-            overflow-y: auto;
-          `}
-        >
+      <div className={cx(getEditorOuterWrapperBaseStyles(theme), className)}>
+        <div className={editorInnerWrapperStyles}>
           <CodeMirror
             value={value}
             onChange={onChange}
             onCreateEditor={onCreateEditor}
             readOnly={readOnly}
             placeholder={placeholder}
-            theme={createCodeMirrorTheme(theme, baseFontSize)}
             extensions={[
               ...consumerExtensions.map(extension => Prec.highest(extension)),
               ...customExtensions,
+              createCodeMirrorTheme(theme, baseFontSize),
+              createCodeMirrorHighlightStyleExtension(theme),
               languageExtension,
             ]}
             basicSetup={{
