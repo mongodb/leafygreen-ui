@@ -18,7 +18,6 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { LGIDs } from '../constants';
 import {
   MenuDescendantsContext,
   SubMenuProvider,
@@ -57,7 +56,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
     const { active, disabled } = rest;
 
-    const { highlight, setHighlight, theme } = useMenuContext();
+    const { highlight, setHighlight, theme, lgIds } = useMenuContext();
     const {
       index: descendantIndex,
       ref: descendantRef,
@@ -183,8 +182,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
         <li
           role="none"
           className={cx(subMenuContainerClassName, subMenuContainerStyles)}
-          data-testid={LGIDs.submenu}
-          data-lgid={LGIDs.submenu}
+          data-testid={lgIds.submenu}
+          data-lgid={lgIds.submenu}
         >
           <InternalMenuItemContent
             as={as}
@@ -201,8 +200,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             {title}
           </InternalMenuItemContent>
           <IconButton
-            data-testid={LGIDs.submenuToggle}
-            data-lgid={LGIDs.submenuToggle}
+            data-testid={lgIds.submenuToggle}
+            data-lgid={lgIds.submenuToggle}
             ref={submenuTriggerRef}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
             onClick={handleToggleClick}
