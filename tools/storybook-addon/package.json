@@ -32,10 +32,12 @@
       "import": "./dist/esm/preview.js"
     },
     "./preset": "./preset.js",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./static": "./static"
   },
   "files": [
     "dist/**/*",
+    "static/*",
     "*.js",
     "*.d.ts",
     "README.md",
