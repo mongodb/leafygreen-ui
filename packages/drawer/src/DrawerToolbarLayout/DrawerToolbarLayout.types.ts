@@ -22,7 +22,7 @@ interface LayoutWithContent extends LayoutBase {
   /**
    * The title of the drawer. This is not required if the toolbar item should not open a drawer.
    */
-  title: string;
+  title: React.ReactNode;
 
   /**
    * The content of the drawer. This is not required if the toolbar item should not open a drawer.
