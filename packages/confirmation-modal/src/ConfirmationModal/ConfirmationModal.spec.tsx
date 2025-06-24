@@ -260,7 +260,7 @@ describe('packages/confirmation-modal', () => {
     const buttonClickCases = [
       { testCase: 'on cancel', testId: lgIds.cancel },
       { testCase: 'on confirm', testId: lgIds.confirm },
-      { testCase: 'on modal close', testId: getLgModalIds().close },
+      { testCase: 'on modal close', testId: getLgModalIds(lgIds.root).close },
     ];
 
     describe.each(requiredInputTextCases)(
