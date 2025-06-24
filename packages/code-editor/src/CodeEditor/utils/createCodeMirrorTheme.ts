@@ -15,11 +15,13 @@ import { CodeEditorSelectors, CodeMirrorExtension } from '../CodeEditor.types';
  * The styles applied are meant to approximate the scheme defined for the `Code`
  * component syntax, defined in packages/code/src/globalStyles.tsx
  */
-
 export const createCodeMirrorTheme = (
   theme: Theme,
   fontSize: number,
 ): CodeMirrorExtension => {
+  /**
+   * For more information on styling CodeMirror, see: https://codemirror.net/examples/styling/
+   */
   return EditorView.theme(
     {
       '&': {
