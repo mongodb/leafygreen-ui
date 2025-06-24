@@ -147,3 +147,28 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
     },
   },
 };
+
+export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
+  args: {
+    isIndeterminate: true,
+  },
+  render: function TransitioningProgressBar(props: ProgressBarProps) {
+    const [newProps, setNewProps] = useState({});
+
+    useEffect(() => {
+      const indeterminateTimer = setTimeout(() => {
+        setNewProps({ isIndeterminate: false, value: 1, maxValue: 200 });
+
+        const valueTimer = setTimeout(() => {
+          setNewProps({ isIndeterminate: false, value: 200, maxValue: 200 });
+        }, 1500);
+
+        return () => clearTimeout(valueTimer);
+      }, 3000);
+
+      return () => clearTimeout(indeterminateTimer);
+    }, [props.value]);
+
+    return <ProgressBar {...props} {...newProps} />;
+  },
+};
