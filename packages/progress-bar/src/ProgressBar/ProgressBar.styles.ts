@@ -141,32 +141,23 @@ export const getBarTrackStyles = ({
   background-color: ${progressBarVariantStyles[theme].trackColor};
 `;
 
-export const getBarFillStyles = ({
-  theme,
-  variant,
-  disabled,
-}: {
-  theme: Theme;
-  variant: ProgressBarVariant;
-  disabled?: boolean;
-}) => css`
+export const getBarFillStyles = () => css`
   position: relative;
   height: 100%;
   border-radius: inherit;
   overflow: hidden;
-  background-color: ${disabled
-    ? progressBarVariantStyles[theme].disabledBarColor
-    : progressBarVariantStyles[theme][variant].barColor};
 `;
 
 export const getDeterminateBarFillStyles = ({
   theme,
   variant,
+  disabled,
   progress,
   enableAnimation,
 }: {
   theme: Theme;
   variant: ProgressBarVariant;
+  disabled: boolean;
   progress: number;
   enableAnimation?: boolean;
 }) => {
@@ -177,7 +168,12 @@ export const getDeterminateBarFillStyles = ({
     width: ${progress}%;
     transition: width 0.5s ease-in-out;
 
-    ${enableAnimation &&
+    background-color: ${disabled
+      ? progressBarVariantStyles[theme].disabledBarColor
+      : progressBarVariantStyles[theme][variant].barColor};
+
+    ${!disabled &&
+    enableAnimation &&
     hasAnimation &&
     css`
       background-color: transparent;

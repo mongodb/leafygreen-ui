@@ -24,9 +24,7 @@ interface BaseProgressBarProps {
   label?: React.ReactNode;
   size?: ProgressBarSize;
   description?: React.ReactNode;
-
   darkMode?: boolean;
-  disabled?: boolean;
 
   /**
    * Optional format of value display. If omitted, no value will be displayed.
@@ -43,6 +41,7 @@ interface DeterminateProgressBarProps {
   isIndeterminate: false;
   value: number;
   maxValue?: number;
+  disabled?: boolean;
 
   /**
    * Shimmer animation recommended for long-running tasks to provide additional visual feedback.

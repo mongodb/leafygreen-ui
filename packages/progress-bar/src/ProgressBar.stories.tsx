@@ -2,19 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
-import { Variant } from '@leafygreen-ui/tokens';
-
 import { ProgressBar, ProgressBarProps } from '.';
-
-const unsupportedAnimationCombinations = {
-  variant: [Variant.Warning, Variant.Error],
-  enableAnimation: [true],
-};
-
-const redundantDisabledCombinations = {
-  variant: [Variant.Warning, Variant.Error, Variant.Success],
-  disabled: [true],
-};
 
 const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
@@ -29,10 +17,8 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       },
       combineArgs: {
         size: ['small', 'default', 'large'],
-        disabled: [false, true],
         darkMode: [false, true],
       },
-      excludeCombinations: [redundantDisabledCombinations],
       decorator: (InstanceFn, context) => {
         return (
           <div style={{ padding: '48px' }}>
@@ -133,6 +119,7 @@ DeterminateVariants.parameters = {
     combineArgs: {
       variant: ['info', 'success', 'warning', 'error'],
       enableAnimation: [false, true],
+      disabled: [false, true],
     },
     args: {
       isIndeterminate: false,
@@ -143,8 +130,14 @@ DeterminateVariants.parameters = {
       showIcon: true,
     },
     excludeCombinations: [
-      unsupportedAnimationCombinations,
-      redundantDisabledCombinations,
+      {
+        variant: ['warning', 'error'],
+        enableAnimation: [true],
+      },
+      {
+        variant: ['success', 'warning', 'error'],
+        disabled: [true],
+      },
     ],
   },
 };

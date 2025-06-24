@@ -33,7 +33,6 @@ export function ProgressBar({
   size = Size.Default,
   description,
   darkMode = false,
-  disabled = false,
   formatValue,
   showIcon: showIconProps = false,
   ...rest
@@ -62,6 +61,8 @@ export function ProgressBar({
     ? rest.maxValue ?? DEFAULT_MAX_VALUE
     : undefined;
 
+  const disabled = (isDeterminate && rest.disabled) ?? false;
+
   const showIcon = iconsVisibleOnComplete.includes(variant)
     ? showIconProps && isDeterminate && value === maxValue
     : showIconProps;
@@ -78,6 +79,7 @@ export function ProgressBar({
         variant,
         enableAnimation,
         progress: getPercentage(value, maxValue),
+        disabled,
       });
     }
   };
@@ -126,10 +128,7 @@ export function ProgressBar({
         >
           <div
             data-testid="progress-bar-fill"
-            className={cx(
-              getBarFillStyles({ theme, variant, disabled }),
-              getTypedProgressBarFillStyles(),
-            )}
+            className={cx(getBarFillStyles(), getTypedProgressBarFillStyles())}
           ></div>
         </div>
       </div>
