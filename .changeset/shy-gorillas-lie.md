@@ -10,8 +10,8 @@
 '@leafygreen-ui/text-area': major
 '@leafygreen-ui/checkbox': major
 '@leafygreen-ui/select': major
-'@leafygreen-ui/toggle': major
 '@leafygreen-ui/table': major
+'@leafygreen-ui/modal': major
 '@leafygreen-ui/menu': major
 '@leafygreen-ui/tabs': major
 ---

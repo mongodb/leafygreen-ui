@@ -99,6 +99,8 @@ export const ConfirmationModal = React.forwardRef(
 
     return (
       <Modal
+        data-testid={lgIds.root}
+        data-lgid={lgIds.root}
         {...modalProps}
         contentClassName={baseModalStyle}
         setOpen={handleCancel}
