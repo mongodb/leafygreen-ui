@@ -109,6 +109,11 @@ export interface CodeEditorTooltip {
 
 export interface CodeEditorProps extends DarkModeProps {
   /**
+   * Styling prop
+   */
+  className?: string;
+
+  /**
    * Initial value to render in the editor.
    */
   defaultValue?: string;

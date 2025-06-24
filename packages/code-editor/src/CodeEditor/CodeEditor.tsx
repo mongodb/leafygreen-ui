@@ -20,6 +20,7 @@ import CodeMirror, {
   Prec,
 } from '@uiw/react-codemirror';
 
+import { cx } from '@leafygreen-ui/emotion';
 import { css } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
@@ -27,6 +28,7 @@ import {
   useBaseFontSize,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { borderRadius } from '@leafygreen-ui/tokens';
 
 import { createCodeMirrorLanguageExtension } from './utils/createCodeMirrorLanguageExtension';
 import { createCodeMirrorTheme } from './utils/createCodeMirrorTheme';
@@ -37,8 +39,6 @@ import {
   type CodeMirrorRef,
   IndentUnits,
 } from './CodeEditor.types';
-
-const CODE_MIRROR_WIDTH = '100%';
 
 export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
   (
@@ -59,6 +59,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       tooltips = [],
       extensions: consumerExtensions = [],
       darkMode: darkModeProp,
+      className,
       ...rest
     },
     forwardedRef,
@@ -200,29 +201,44 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     }, [language]);
 
     return (
-      <CodeMirror
-        value={value}
-        width={CODE_MIRROR_WIDTH}
-        onChange={onChange}
-        onCreateEditor={onCreateEditor}
-        readOnly={readOnly}
-        placeholder={placeholder}
-        theme={createCodeMirrorTheme(theme, baseFontSize)}
-        extensions={[
-          ...consumerExtensions.map(extension => Prec.highest(extension)),
-          ...customExtensions,
-          languageExtension,
-        ]}
-        basicSetup={{
-          allowMultipleSelections: true,
-          foldGutter: false, // Custom fold gutter is used instead
-          highlightActiveLine: enableActiveLineHighlighting,
-          highlightActiveLineGutter: enableActiveLineHighlighting,
-          lineNumbers: enableLineNumbers,
-        }}
-        ref={ref}
-        {...rest}
-      />
+      <div
+        className={cx(css`
+          overflow: hidden;
+          border-radius: ${borderRadius[300]}px;
+          border: 1px solid green;
+          height: 200px;
+        `)}
+      >
+        <div
+          className={css`
+            height: 100%;
+            overflow-y: auto;
+          `}
+        >
+          <CodeMirror
+            value={value}
+            onChange={onChange}
+            onCreateEditor={onCreateEditor}
+            readOnly={readOnly}
+            placeholder={placeholder}
+            theme={createCodeMirrorTheme(theme, baseFontSize)}
+            extensions={[
+              ...consumerExtensions.map(extension => Prec.highest(extension)),
+              ...customExtensions,
+              languageExtension,
+            ]}
+            basicSetup={{
+              allowMultipleSelections: true,
+              foldGutter: false, // Custom fold gutter is used instead
+              highlightActiveLine: enableActiveLineHighlighting,
+              highlightActiveLineGutter: enableActiveLineHighlighting,
+              lineNumbers: enableLineNumbers,
+            }}
+            ref={ref}
+            {...rest}
+          />
+        </div>
+      </div>
     );
   },
 );
