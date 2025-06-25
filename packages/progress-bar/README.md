@@ -52,7 +52,7 @@ const processUpload = () => {...}
 
 ## Properties
 
-### Props
+The`ProgressBar` component supports two modes: determinate, where progress is represented by a specific value that increases over time, and indeterminate, where progress is ongoing without a fixed value, shown as a looping animation. Pick the appropriate mode based on whether or not you know the total possible progress.
 
 | Prop name          | Type                                                                                                   | Default    | Mode             | Description                                                                                                                      |
 | ------------------ | ------------------------------------------------------------------------------------------------------ | ---------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------- |
