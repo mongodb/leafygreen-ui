@@ -65,11 +65,15 @@ describe('packages/code-editor', () => {
     ).toBeInTheDocument();
   });
 
-  test('Line numbers do not renders when disabled', () => {
+  test('Line numbers do not render when disabled', () => {
     const { editor } = renderCodeEditor({ enableLineNumbers: false });
+    /**
+     * When the custom caret was used it appears the line number still gets
+     * rendered but is done so with visibility: hidden
+     */
     expect(
       editor.queryBySelector(CodeEditorSelectors.GutterElement, { text: '1' }),
-    ).not.toBeInTheDocument();
+    ).toHaveStyle('visibility: hidden');
   });
 
   test('Clickable URLs render when enabled', () => {
