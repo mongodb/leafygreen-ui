@@ -28,7 +28,6 @@ export function ProgressBar({
   size = Size.Default,
   description,
   darkMode = false,
-  disabled = false,
   formatValue,
   showIcon: showIconProps = false,
   ...rest
@@ -42,6 +41,8 @@ export function ProgressBar({
   const maxValue = isDeterminate
     ? rest.maxValue ?? DEFAULT_MAX_VALUE
     : undefined;
+
+  const disabled = isDeterminate ? rest.disabled ?? false : false;
 
   const showIcon = iconsVisibleOnComplete.includes(variant)
     ? showIconProps && isDeterminate && value === maxValue
