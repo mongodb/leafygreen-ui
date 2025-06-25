@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
+import { expect, waitFor, within } from '@storybook/test';
 
 import { ProgressBar, ProgressBarProps } from '.';
+
+const TEST_MAX_VALUE = 200;
 
 const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
@@ -36,7 +39,7 @@ const SimulatedProgressBar = (props: ProgressBarProps) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setValue(200);
+      setValue(TEST_MAX_VALUE);
     }, 1500);
 
     return () => {
@@ -50,21 +53,51 @@ const SimulatedProgressBar = (props: ProgressBarProps) => {
 export const LiveExample: StoryObj<typeof ProgressBar> = {
   args: {
     value: 90,
-    maxValue: 200,
+    maxValue: TEST_MAX_VALUE,
     formatValue: 'fraction',
     showIcon: true,
     label: <span>Label</span>,
     description: <span>Helper text</span>,
   },
   render: SimulatedProgressBar,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
+
+    expect(progressBar).toHaveAttribute('aria-valuenow', '90');
+
+    await waitFor(
+      () => {
+        expect(progressBar.getAttribute('aria-valuenow')).toBe(
+          TEST_MAX_VALUE.toString(),
+        );
+      },
+      { timeout: 2000 },
+    );
+  },
 };
 
 export const BasicDeterminate: StoryObj<typeof ProgressBar> = {
   args: {
     value: 80,
-    maxValue: 200,
+    maxValue: TEST_MAX_VALUE,
   },
   render: SimulatedProgressBar,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
+
+    expect(progressBar).toHaveAttribute('aria-valuenow', '80');
+
+    await waitFor(
+      () => {
+        expect(progressBar.getAttribute('aria-valuenow')).toBe(
+          TEST_MAX_VALUE.toString(),
+        );
+      },
+      { timeout: 2000 },
+    );
+  },
 };
 
 export const Indeterminate: StoryObj<typeof ProgressBar> = {
@@ -105,7 +138,7 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
       args: {
         isIndeterminate: false,
         value: 47,
-        maxValue: 200,
+        maxValue: TEST_MAX_VALUE,
         formatValue: (value: number, maxValue?: number) =>
           `${value} / ${maxValue} GB`,
         showIcon: true,

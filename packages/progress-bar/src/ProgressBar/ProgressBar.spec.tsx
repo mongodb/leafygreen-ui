@@ -86,7 +86,7 @@ describe('packages/progress-bar', () => {
     });
   });
 
-  describe('getFormattedValue', () => {
+  describe('getFormattedValue util', () => {
     test('renders a fraction correctly', () => {
       expect(getFormattedValue(50, 100, 'fraction')).toBe('50/100');
     });
