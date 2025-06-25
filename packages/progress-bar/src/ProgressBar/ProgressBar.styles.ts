@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { ProgressBarSize, ProgressBarVariant } from './ProgressBar.types';
+import { getPercentage } from './ProgressBar.utils';
 
 const progressBarSizeStyles = {
   [Size.Small]: {
@@ -126,7 +127,7 @@ export const getBarTrackStyles = ({
   background-color: ${progressBarVariantStyles[theme].trackColor};
 `;
 
-export const getBarFillStyles = ({
+const getBaseBarFillStyles = ({
   theme,
   variant,
   disabled,
@@ -142,12 +143,42 @@ export const getBarFillStyles = ({
     : progressBarVariantStyles[theme][variant].barColor};
 `;
 
-export const getDeterminateBarFillStyles = (progress: number) => css`
+const getDeterminateBarFillStyles = (progress: number) => css`
   width: ${progress}%;
   // requires additional animation
 `;
 
-export const getIndeterminateBarFillStyles = () => css`
+const getIndeterminateBarFillStyles = () => css`
   width: 100%; // temporary
   // requires additional animation
 `;
+
+export const getBarFillStyles = ({
+  theme,
+  variant,
+  disabled,
+  isDeterminate,
+  value,
+  maxValue,
+}: {
+  theme: Theme;
+  variant: ProgressBarVariant;
+  isDeterminate: boolean;
+  disabled?: boolean;
+  value?: number;
+  maxValue?: number;
+}) => {
+  let typedBarFillStyles;
+
+  if (!isDeterminate) typedBarFillStyles = getIndeterminateBarFillStyles();
+
+  if (value && maxValue)
+    typedBarFillStyles = getDeterminateBarFillStyles(
+      getPercentage(value, maxValue),
+    );
+
+  return cx(
+    getBaseBarFillStyles({ theme, variant, disabled }),
+    typedBarFillStyles,
+  );
+};

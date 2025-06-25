@@ -67,14 +67,6 @@ export const BasicDeterminate: StoryObj<typeof ProgressBar> = {
   render: SimulatedProgressBar,
 };
 
-export const ShimmerDeterminate: StoryObj<typeof ProgressBar> = {
-  args: {
-    ...BasicDeterminate.args,
-    enableAnimation: true,
-  },
-  render: SimulatedProgressBar,
-};
-
 export const Indeterminate: StoryObj<typeof ProgressBar> = {
   args: {
     isIndeterminate: true,

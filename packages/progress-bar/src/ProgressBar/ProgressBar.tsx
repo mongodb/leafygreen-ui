@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Size, Variant } from '@leafygreen-ui/tokens';
@@ -10,10 +9,8 @@ import {
   containerStyles,
   getBarFillStyles,
   getBarTrackStyles,
-  getDeterminateBarFillStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
-  getIndeterminateBarFillStyles,
   headerStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps } from './ProgressBar.types';
@@ -21,7 +18,6 @@ import {
   DEFAULT_MAX_VALUE,
   getFormattedValue,
   getHeaderIcon,
-  getPercentage,
   getValueAriaAttributes,
   iconsVisibleOnComplete,
 } from './ProgressBar.utils';
@@ -51,27 +47,20 @@ export function ProgressBar({
     ? showIconProps && isDeterminate && value === maxValue
     : showIconProps;
 
-  const getTypedProgressBarFillStyles = () => {
-    if (!isDeterminate) return getIndeterminateBarFillStyles();
-
-    if (value)
-      return getDeterminateBarFillStyles(getPercentage(value, maxValue));
-  };
-
   const progressBarId = `progress-bar-${
     getNodeTextContent(label) || 'default'
   }`;
 
   return (
-    <div className={cx(containerStyles)} aria-disabled={disabled}>
-      <div className={cx(headerStyles)}>
+    <div className={containerStyles} aria-disabled={disabled}>
+      <div className={headerStyles}>
         <Label htmlFor={progressBarId} darkMode={darkMode} disabled={disabled}>
           {label}
         </Label>
 
         {formatValue && (
           <Body
-            className={cx(getHeaderValueStyles({ theme, disabled }))}
+            className={getHeaderValueStyles({ theme, disabled })}
             darkMode={darkMode}
           >
             {value && getFormattedValue(value, maxValue, formatValue)}
@@ -81,9 +70,7 @@ export function ProgressBar({
                 variant,
                 disabled,
                 props: {
-                  className: cx(
-                    getHeaderIconStyles({ theme, variant, disabled }),
-                  ),
+                  className: getHeaderIconStyles({ theme, variant, disabled }),
                 },
               })}
           </Body>
@@ -98,14 +85,18 @@ export function ProgressBar({
       >
         <div
           data-testid="progress-bar-track"
-          className={cx(getBarTrackStyles({ theme, size }))}
+          className={getBarTrackStyles({ theme, size })}
         >
           <div
             data-testid="progress-bar-fill"
-            className={cx(
-              getBarFillStyles({ theme, variant, disabled }),
-              getTypedProgressBarFillStyles(),
-            )}
+            className={getBarFillStyles({
+              theme,
+              variant,
+              disabled,
+              isDeterminate,
+              value,
+              maxValue,
+            })}
           ></div>
         </div>
       </div>

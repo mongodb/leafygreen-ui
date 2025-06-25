@@ -11,6 +11,10 @@ export const DEFAULT_MAX_VALUE = 1;
 
 export const iconsVisibleOnComplete = ['success'];
 
+export const getPercentage = (value: number, maxValue?: number): number => {
+  return Math.round((value / (maxValue || DEFAULT_MAX_VALUE)) * 100);
+};
+
 export const getFormattedValue = (
   value: number,
   maxValue?: number,
@@ -29,10 +33,6 @@ export const getFormattedValue = (
     default:
       return value.toString();
   }
-};
-
-export const getPercentage = (value: number, maxValue?: number): number => {
-  return Math.round((value / (maxValue || DEFAULT_MAX_VALUE)) * 100);
 };
 
 export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
