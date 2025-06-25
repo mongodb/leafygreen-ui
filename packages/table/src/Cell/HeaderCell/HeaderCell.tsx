@@ -2,7 +2,6 @@ import React, { ForwardedRef, PropsWithChildren } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { LGIDS } from '../../constants';
 import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
 
@@ -27,13 +26,14 @@ const HeaderCellWithRef = <T extends LGRowData>(
   }: PropsWithChildren<HeaderCellProps<T>>,
   ref: ForwardedRef<HTMLTableCellElement>,
 ) => {
-  const { isSelectable } = useTableContext();
+  const { isSelectable, lgIds } = useTableContext();
 
   const { columnName, sortState, onSortIconClick } = getHeaderCellState(header);
 
   return (
     <th
-      data-lgid={LGIDS.header}
+      data-lgid={lgIds.header}
+      data-testid={lgIds.header}
       className={cx(
         getBaseHeaderCellStyles(header?.getSize() ?? 0, isSelectable),
         className,
@@ -55,8 +55,8 @@ const HeaderCellWithRef = <T extends LGRowData>(
             sortState={sortState}
             onSortIconClick={onSortIconClick}
             aria-label={`Sort by ${columnName}`}
-            data-testid="lg-table-sort-icon-button"
-            data-lgid={LGIDS.sortIcon}
+            data-testid={lgIds.sortIcon}
+            data-lgid={lgIds.sortIcon}
           />
         )}
       </div>

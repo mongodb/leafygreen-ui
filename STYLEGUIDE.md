@@ -18,6 +18,8 @@
   - [Passing darkMode to children](#passing-darkMode-to-children)
   - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
   - [API Patterns](#api-patterns)
+    - [Input errors](#input-errors)
+  - [getLgIds](#getlgids)
 - [References](#references)
 
 # Contribution Guide
@@ -636,6 +638,81 @@ return (
 - Use `state='error'` to show the input with a warning icon and red border. This property must be set to `error` in order for an `errorMessage` to render, otherwise the `errorMessage` will be ignored.
 - Use `errorMessage` prop to set the error message that is displayed next to the input.
 - If `state='error'` but `errorMessage` is not defined, require `aria-describedby`
+
+## getLgIds
+
+The `getLgIds` utility function generates test IDs for components in the LeafyGreen UI library.
+
+The function accepts an optional root identifier, allowing consumers to set a unique base ID for each instance of a component. This base is then used to generate, scoped test IDs, ensuring predictable targeting in tests.
+
+#### Usage
+
+Each component includes a `getLgIds.ts` file that exports the `getLgIds` utility. This function returns an object containing IDs for each trackable element within the component.
+
+For more information on naming test IDs, [check out the section on BEM-ish patterns](#follow-bem-ish-patterns-when-hard-coding-a-data-testid-or-data-lgid).
+
+```js
+// getLgIds.ts
+
+export const DEFAULT_LGID_ROOT = 'lg-component';
+
+export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
+  const ids = {
+    root,
+    button: `${root}-button`,
+    input: `${root}-input`,
+  } as const;
+  return ids;
+};
+
+export type GetLgIdsReturnType = ReturnType<typeof getLgIds>;
+```
+
+Inside the component you can use the test IDs by calling `getLgIds()`:
+
+```js
+// Component.tsx
+
+const lgIds = getLgIds();
+
+// lgIds.root = 'lg-component'
+// lgIds.button = 'lg-component-button'
+// lgIds.input -> 'lg-component-input'
+```
+
+#### Component.tsx
+
+```js
+export const Component = forwardRef<
+  HTMLDivElement,
+  ComponentProps,
+>(
+  (
+    {
+      'data-lgid': dataLgId,
+      ...rest
+    },
+    fwdRef: React.Ref<any>,
+  ) => {
+    const lgIds = getLgIds(dataLgId);
+
+    return (
+      <div
+        data-testid={lgIds.root}
+        data-lgid={lgIds.root}
+        ref={fwdRef}
+      >
+        <button
+          data-testid={lgIds.button}
+          data-lgid={lgIds.button}
+        >
+          Click Me I'm Irish
+       </button>
+      </div>
+    );
+  },
+);
+```
 
 ## References
 

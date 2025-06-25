@@ -21,12 +21,12 @@ import Popover, {
   RenderMode,
 } from '@leafygreen-ui/popover';
 
-import { LGIDs } from '../constants';
 import { useHighlightReducer } from '../HighlightReducer';
 import {
   MenuContext,
   MenuDescendantsContext,
 } from '../MenuContext/MenuContext';
+import { getLgIds } from '../utils';
 
 import { useMenuHeight } from './utils/useMenuHeight';
 import {
@@ -67,6 +67,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
     renderDarkMenu = true,
+    'data-lgid': dataLgId,
     children,
     className,
     refEl,
@@ -82,6 +83,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   forwardRef,
 ) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const lgIds = getLgIds(dataLgId);
 
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const defaultTriggerRef = useRef<HTMLElement>(null);
@@ -217,6 +219,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           setHighlight,
           moveHighlight,
           renderDarkMenu,
+          lgIds,
         }}
       >
         <Popover
@@ -227,8 +230,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           refEl={triggerRef}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
-          data-testid={LGIDs.root}
-          data-lgid={LGIDs.root}
           ref={popoverRef}
           {...popoverProps}
         >
@@ -253,6 +254,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
             <ul
               {...rest}
+              data-testid={lgIds.root}
+              data-lgid={lgIds.root}
               className={scrollContainerStyle}
               role="menu"
               onClick={e => e.stopPropagation()}

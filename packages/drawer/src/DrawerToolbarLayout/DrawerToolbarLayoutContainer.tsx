@@ -70,7 +70,7 @@ export const DrawerToolbarLayoutContainer = forwardRef<
           displayMode={displayMode}
           isDrawerOpen={isDrawerOpen}
         >
-          <Toolbar data-lgid={lgIds.toolbar}>
+          <Toolbar data-lgid={lgIds.toolbar} data-testid={lgIds.toolbar}>
             {toolbarData?.map(toolbarItem => (
               <ToolbarIconButton
                 key={toolbarItem.glyph}
@@ -100,6 +100,7 @@ export const DrawerToolbarLayoutContainer = forwardRef<
             onClose={handleOnClose}
             title={title}
             data-lgid={`${dataLgId}`}
+            data-testid={`${dataLgId}`}
             aria-live="polite"
             aria-atomic="true"
           >
