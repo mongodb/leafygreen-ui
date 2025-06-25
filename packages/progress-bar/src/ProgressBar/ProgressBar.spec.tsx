@@ -5,27 +5,27 @@ import { ProgressBar } from '.';
 
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
-    it('renders with a label', () => {
+    test('renders with a label', () => {
       const TEST_LABEL = 'placeholder label';
       const { getByText } = render(
         <ProgressBar isIndeterminate={true} label={TEST_LABEL} />,
       );
-      expect(getByText(TEST_LABEL)).toBeInTheDocument();
+      expect(getByText(TEST_LABEL)).toBeVisible();
     });
 
-    it('renders with a description', () => {
+    test('renders with a description', () => {
       const TEST_DESCRIPTION = 'placeholder description';
       const { getByText } = render(
         <ProgressBar isIndeterminate={true} description={TEST_DESCRIPTION} />,
       );
-      expect(getByText(TEST_DESCRIPTION)).toBeInTheDocument();
+      expect(getByText(TEST_DESCRIPTION)).toBeVisible();
     });
 
     describe('with value format', () => {
       const TEST_VALUE = 50;
       const TEST_MAX_VALUE = 100;
 
-      it('renders a plain number when formatValue is "number"', () => {
+      test('renders a plain number when formatValue is "number"', () => {
         const { getByText } = render(
           <ProgressBar
             isIndeterminate={true}
@@ -33,10 +33,10 @@ describe('packages/progress-bar', () => {
             formatValue="number"
           />,
         );
-        expect(getByText(TEST_VALUE.toString())).toBeInTheDocument();
+        expect(getByText(TEST_VALUE.toString())).toBeVisible();
       });
 
-      it('renders a fraction when formatValue is "fraction"', () => {
+      test('renders a fraction when formatValue is "fraction"', () => {
         const { getByText } = render(
           <ProgressBar
             isIndeterminate={false}
@@ -45,12 +45,10 @@ describe('packages/progress-bar', () => {
             formatValue="fraction"
           />,
         );
-        expect(
-          getByText(`${TEST_VALUE}/${TEST_MAX_VALUE}`),
-        ).toBeInTheDocument();
+        expect(getByText(`${TEST_VALUE}/${TEST_MAX_VALUE}`)).toBeVisible();
       });
 
-      it('renders a percentage when formatValue is "percentage"', () => {
+      test('renders a percentage when formatValue is "percentage"', () => {
         const { getByText } = render(
           <ProgressBar
             isIndeterminate={false}
@@ -59,10 +57,10 @@ describe('packages/progress-bar', () => {
             formatValue="percentage"
           />,
         );
-        expect(getByText(`${TEST_VALUE}%`)).toBeInTheDocument();
+        expect(getByText(`${TEST_VALUE}%`)).toBeVisible();
       });
 
-      it('renders with a custom format when given a callback', () => {
+      test('renders with a custom format when given a callback', () => {
         const { getByText } = render(
           <ProgressBar
             isIndeterminate={true}
@@ -70,10 +68,10 @@ describe('packages/progress-bar', () => {
             formatValue={value => `${value} units`}
           />,
         );
-        expect(getByText(`${TEST_VALUE} units`)).toBeInTheDocument();
+        expect(getByText(`${TEST_VALUE} units`)).toBeVisible();
       });
 
-      it('renders icon when showIcon is true', () => {
+      test('renders icon when showIcon is true', () => {
         render(
           <ProgressBar
             isIndeterminate={false}
@@ -83,7 +81,7 @@ describe('packages/progress-bar', () => {
             showIcon={true}
           />,
         );
-        expect(screen.getByRole('img')).toBeInTheDocument();
+        expect(screen.getByRole('img')).toBeVisible();
       });
     });
 
@@ -91,7 +89,7 @@ describe('packages/progress-bar', () => {
       const TEST_VALUE = 75;
       const TEST_MAX_VALUE = 100;
 
-      it('renders the correct width for the progress bar fill', () => {
+      test('renders the correct width for the progress bar fill', () => {
         const { getByTestId } = render(
           <ProgressBar
             isIndeterminate={false}
@@ -106,7 +104,7 @@ describe('packages/progress-bar', () => {
         });
       });
 
-      it('does not render success variant icon if under maxValue, even if showIcon is true', () => {
+      test('does not render success variant icon if under maxValue, even if showIcon is true', () => {
         render(
           <ProgressBar
             isIndeterminate={false}

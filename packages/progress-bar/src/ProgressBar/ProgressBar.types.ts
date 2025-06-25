@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { Size, Variant } from '@leafygreen-ui/tokens';
 
 export type ProgressBarSize =
@@ -19,13 +20,12 @@ export type ProgressBarValueType =
   | 'number'
   | ((value: number, maxValue?: number) => string);
 
-interface BaseProgressBarProps {
+interface BaseProgressBarProps extends DarkModeProps {
   variant?: ProgressBarVariant;
   label?: React.ReactNode;
   size?: ProgressBarSize;
   description?: React.ReactNode;
 
-  darkMode?: boolean;
   disabled?: boolean;
 
   /**
