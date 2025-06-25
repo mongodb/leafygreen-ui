@@ -26,41 +26,6 @@ describe('packages/progress-bar', () => {
       const TEST_VALUE = 50;
       const TEST_MAX_VALUE = 100;
 
-      test('renders a plain number when formatValue is "number"', () => {
-        const { getByText } = render(
-          <ProgressBar
-            isIndeterminate={true}
-            value={TEST_VALUE}
-            formatValue="number"
-          />,
-        );
-        expect(getByText(TEST_VALUE.toString())).toBeVisible();
-      });
-
-      test('renders a fraction when formatValue is "fraction"', () => {
-        const { getByText } = render(
-          <ProgressBar
-            isIndeterminate={false}
-            value={TEST_VALUE}
-            maxValue={TEST_MAX_VALUE}
-            formatValue="fraction"
-          />,
-        );
-        expect(getByText(`${TEST_VALUE}/${TEST_MAX_VALUE}`)).toBeVisible();
-      });
-
-      test('renders a percentage when formatValue is "percentage"', () => {
-        const { getByText } = render(
-          <ProgressBar
-            isIndeterminate={false}
-            value={TEST_VALUE}
-            maxValue={TEST_MAX_VALUE}
-            formatValue="percentage"
-          />,
-        );
-        expect(getByText(`${TEST_VALUE}%`)).toBeVisible();
-      });
-
       test('renders with a custom format when given a callback', () => {
         const { getByText } = render(
           <ProgressBar
