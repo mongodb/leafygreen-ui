@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
+import { getFormattedValue } from './ProgressBar.utils';
 import { ProgressBar } from '.';
 
 describe('packages/progress-bar', () => {
@@ -117,6 +118,30 @@ describe('packages/progress-bar', () => {
         );
         expect(screen.queryByRole('img')).toBeNull();
       });
+    });
+  });
+
+  describe('getFormattedValue', () => {
+    test('renders a fraction correctly', () => {
+      expect(getFormattedValue(50, 100, 'fraction')).toBe('50/100');
+    });
+
+    test('renders a percentage correctly', () => {
+      expect(getFormattedValue(50, 100, 'percentage')).toBe('50%');
+    });
+
+    test('renders a plain number correctly', () => {
+      expect(getFormattedValue(50, 100, 'number')).toBe('50');
+    });
+
+    test('renders a custom format correctly', () => {
+      expect(
+        getFormattedValue(
+          50,
+          100,
+          (value, maxValue) => `${value}/${maxValue} units`,
+        ),
+      ).toBe('50/100 units');
     });
   });
 });
