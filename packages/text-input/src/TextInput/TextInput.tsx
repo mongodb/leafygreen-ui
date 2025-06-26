@@ -6,7 +6,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { LGIDS_TEXT_INPUT } from '../constants';
+import { getLgIds } from '../utils';
 
 import { textInputStyle } from './TextInput.styles';
 import {
@@ -65,7 +65,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       sizeVariant: size = SizeVariant.Default,
       handleValidation,
       baseFontSize: baseFontSizeProp,
-      'data-lgid': dataLgId = LGIDS_TEXT_INPUT.root,
+      'data-lgid': dataLgId,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledby,
       'aria-invalid': ariaInvalid,
@@ -79,6 +79,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     const [uncontrolledValue, setValue] = useState(defaultValue ?? '');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+    const lgIds = getLgIds(dataLgId);
 
     const handleContainerClick = () => {
       if (!disabled) {
@@ -148,7 +149,8 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       baseFontSize,
       className,
       darkMode,
-      'data-lgid': dataLgId,
+      'data-lgid': lgIds.root,
+      'data-testid': lgIds.root,
       description,
       disabled,
       errorMessage,

@@ -8,3 +8,4 @@ export {
   TextInputFontSize,
   TextInputType,
 } from './TextInput';
+export { DEFAULT_LGID_ROOT, getLgIds } from './utils/getLgIds';

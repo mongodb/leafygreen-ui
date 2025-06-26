@@ -9,13 +9,13 @@
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/message-feedback
+yarn add @lg-chat/message-feedback
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/message-feedback
+npm install @lg-chat/message-feedback
 ```
 
 ## Examples
