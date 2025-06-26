@@ -7,7 +7,6 @@ import * as typeIs from './typeIs';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export { deepMapValues } from './deepMapValues';
 export { getClosestFocusableElement } from './getClosestFocusableElement';
-export { getIndefiniteArticle } from './getIndefiniteArticle';
 export { getMobileMediaQuery } from './getMobileMediaQuery';
 export * from './helpers';
 export {
