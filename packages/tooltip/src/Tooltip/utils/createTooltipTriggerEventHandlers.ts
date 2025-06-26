@@ -3,10 +3,7 @@ import {
   FocusEventHandler,
   MouseEvent,
   MouseEventHandler,
-  useCallback,
-  useEffect,
   useMemo,
-  useRef,
 } from 'react';
 import { flushSync } from 'react-dom';
 import debounce from 'lodash/debounce';
@@ -97,52 +94,9 @@ export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
 export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
   args: CreateTooltipEventsArgs<Trigger>,
 ): TooltipEventHandlers<Trigger> {
-  // Ensure we have a stable way
-  // of checking if the tooltip is enabled from within the callbacks
-  // without creating a new callback on each render
-  const isEnabledRef = useRef(args.isEnabled);
-  useEffect(() => {
-    isEnabledRef.current = args.isEnabled;
-  }, [args.isEnabled]);
-  const getIsEnabled = useCallback(() => isEnabledRef.current, []);
+  const callbacks: TooltipEventHandlers<Trigger> = useMemo(() => {
+    return createTooltipTriggerEventHandlers({ ...args });
+  }, [args]);
 
-  const callbacks = useMemo(
-    () =>
-      createTooltipTriggerEventHandlers({ ...args, isEnabled: getIsEnabled() }),
-    [args, getIsEnabled],
-  );
-
-  return callbacks as TooltipEventHandlers<Trigger>;
-
-  // return {
-  //   onMouseEnter: useMemo(
-  //     () =>
-  //       triggerEvent === TriggerEvent.Hover
-  //         ? callbacks.onMouseEnter
-  //         : undefined,
-  //     [callbacks.onMouseEnter, triggerEvent],
-  //   ),
-  //   onMouseLeave: useMemo(
-  //     () =>
-  //       triggerEvent === TriggerEvent.Hover
-  //         ? callbacks.onMouseLeave
-  //         : undefined,
-  //     [callbacks.onMouseLeave, triggerEvent],
-  //   ),
-  //   onFocus: useMemo(
-  //     () =>
-  //       triggerEvent === TriggerEvent.Hover ? callbacks.onFocus : undefined,
-  //     [callbacks.onFocus, triggerEvent],
-  //   ),
-  //   onBlur: useMemo(
-  //     () =>
-  //       triggerEvent === TriggerEvent.Hover ? callbacks.onBlur : undefined,
-  //     [callbacks.onBlur, triggerEvent],
-  //   ),
-  //   onClick: useMemo(
-  //     () =>
-  //       triggerEvent === TriggerEvent.Click ? callbacks.onClick : undefined,
-  //     [triggerEvent, callbacks.onClick],
-  //   ),
-  // } as TooltipEventHandlers<Trigger>;
+  return callbacks;
 }
