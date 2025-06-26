@@ -1,18 +1,14 @@
 import React from 'react';
-import { Decorator } from '@storybook/react';
+import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
+import { getDarkModeFromContext } from './utils/getDarkModeFromContext';
+
 export const withDarkMode =
   // eslint-disable-next-line react/display-name
-  (): Decorator => (StoryFn: any, context: any) => {
-    const globalTheme = context.globals?.theme;
-    const darkMode = globalTheme?.darkMode;
-
-    console.log('`withDarkMode` decorator', {
-      globalTheme,
-      darkMode,
-    });
+  (): Decorator => (StoryFn: StoryFn, context: StoryContext<any>) => {
+    const darkMode = getDarkModeFromContext(context);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>

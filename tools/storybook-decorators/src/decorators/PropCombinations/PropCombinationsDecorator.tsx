@@ -22,6 +22,8 @@ import isUndefined from 'lodash/isUndefined';
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
+import { getDarkModeFromContext } from '../utils/getDarkModeFromContext';
+
 import { Err, PropCombinations } from './components';
 import { PARAM_NAME } from './constants';
 import { generatedStoryWrapper } from './PropCombinations.styles';
@@ -38,7 +40,7 @@ type ContextType<T extends React.ComponentType<any>> = StoryContext<T> &
  */
 const PropCombinationsDecorator: Decorator = (
   StoryFn: StoryFn,
-  context: StoryContext<unknown>,
+  context: StoryContext<any>,
 ) => {
   const { component } = context;
 
@@ -58,8 +60,7 @@ const PropCombinationsDecorator: Decorator = (
         decorator,
       } = decoratorConfig;
 
-      const globalTheme = context.globals?.theme;
-      const darkMode = generatedArgs?.darkMode ?? globalTheme?.darkMode;
+      const darkMode = getDarkModeFromContext(context);
 
       if (isGeneratedStory(context)) {
         // Check for props
