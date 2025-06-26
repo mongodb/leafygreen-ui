@@ -2,6 +2,11 @@ import React from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
+export const Type = {
+  Meter: 'meter',
+  Loader: 'loader',
+} as const;
+
 export const Size = {
   Small: 'small',
   Default: 'default',
@@ -29,10 +34,7 @@ export type FormatValueType =
   | (typeof FormatValueType)[keyof typeof FormatValueType]
   | ((value: number, maxValue?: number) => string);
 
-interface BaseProgressBarProps extends DarkModeProps {
-  /** Optional color theme. */
-  variant?: Variant;
-
+interface BaseProps extends DarkModeProps {
   /** Optional label text displayed directly above the progress bar. */
   label?: React.ReactNode;
 
@@ -52,45 +54,34 @@ interface BaseProgressBarProps extends DarkModeProps {
   showIcon?: boolean;
 }
 
-interface DeterminateProgressBarProps {
-  /**
-   * Enables indeterminate mode.
-   * When `true`, progress appears as an infinite looping animation.
-   */
-  isIndeterminate: false;
-
-  /**
-   * Current progress value.
-   * Optional **only** if `isIndeterminate` is true.
-   */
+interface MeterProps {
+  type: typeof Type.Meter;
   value: number;
-
-  /** Optional total progress value. */
   maxValue?: number;
-
-  /** If true, enables shimmer animation to indicate progression for longer-running tasks. */
-  enableAnimation?: boolean;
-
-  /** If true, pauses the progress bar and renders it in a gray color. */
   disabled?: boolean;
+  status?: 'healthy' | 'warning' | 'error';
 }
-interface IndeterminateProgressBarProps {
-  /**
-   * Enables indeterminate mode.
-   * When `true`, progress appears as an infinite looping animation.
-   */
+
+interface BaseLoaderProps {
+  type: typeof Type.Loader;
+}
+
+interface DeterminateLoaderProps {
+  isIndeterminate: false;
+  value: number;
+  maxValue?: number;
+  disabled?: boolean;
+  variant?: Variant;
+  enableAnimation?: boolean;
+}
+
+interface IndeterminateLoaderProps {
   isIndeterminate: true;
-
-  /**
-   * Current progress value.
-   * Optional **only** if `isIndeterminate` is true.
-   */
   value?: number;
+  variant?: typeof Variant.Info | typeof Variant.Success;
 }
 
-/**
- * Props for the `ProgressBar` component.
- * Use `isIndeterminate: true` for indeterminate mode, or `false` for determinate.
- */
-export type ProgressBarProps = BaseProgressBarProps &
-  (DeterminateProgressBarProps | IndeterminateProgressBarProps);
+type LoaderProps = BaseLoaderProps &
+  (DeterminateLoaderProps | IndeterminateLoaderProps);
+
+export type ProgressBarProps = BaseProps & (MeterProps | LoaderProps);

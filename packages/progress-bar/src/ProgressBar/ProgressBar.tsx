@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
-import { Size, Variant } from '@leafygreen-ui/tokens';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
@@ -13,36 +12,29 @@ import {
   getHeaderValueStyles,
   headerStyles,
 } from './ProgressBar.styles';
-import { ProgressBarProps } from './ProgressBar.types';
+import { ProgressBarProps, Size } from './ProgressBar.types';
 import {
-  DEFAULT_MAX_VALUE,
   getFormattedValue,
   getHeaderIcon,
   getValueAriaAttributes,
   iconsVisibleOnComplete,
+  resolveProps,
 } from './ProgressBar.utils';
+export function ProgressBar(props: ProgressBarProps) {
+  const { value, maxValue, disabled, variant, isDeterminate } =
+    resolveProps(props);
 
-export function ProgressBar({
-  variant = Variant.Info,
-  label,
-  size = Size.Default,
-  description,
-  darkMode = false,
-  formatValue,
-  showIcon: showIconProps = false,
-  ...rest
-}: ProgressBarProps) {
+  const {
+    type,
+    label,
+    size = Size.Default,
+    description,
+    darkMode = false,
+    formatValue,
+    showIcon: showIconProps = false,
+  } = props;
+
   const { theme } = useDarkMode(darkMode);
-
-  const isDeterminate = !rest.isIndeterminate;
-
-  const value = rest.value ?? undefined;
-
-  const maxValue = isDeterminate
-    ? rest.maxValue ?? DEFAULT_MAX_VALUE
-    : undefined;
-
-  const disabled = isDeterminate ? rest.disabled ?? false : false;
 
   const showIcon = iconsVisibleOnComplete.includes(variant)
     ? showIconProps && isDeterminate && value === maxValue
@@ -79,7 +71,7 @@ export function ProgressBar({
       </div>
 
       <div
-        role="progressbar"
+        role={type}
         id={progressBarId}
         aria-label={progressBarId}
         {...getValueAriaAttributes(value, maxValue)}

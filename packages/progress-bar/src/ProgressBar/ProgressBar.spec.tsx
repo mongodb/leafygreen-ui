@@ -8,14 +8,20 @@ describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
     test('renders with a label', () => {
       const TEST_LABEL = 'placeholder label';
-      render(<ProgressBar isIndeterminate={true} label={TEST_LABEL} />);
+      render(
+        <ProgressBar type="loader" isIndeterminate={true} label={TEST_LABEL} />,
+      );
       expect(screen.getByText(TEST_LABEL)).toBeVisible();
     });
 
     test('renders with a description', () => {
       const TEST_DESCRIPTION = 'placeholder description';
       render(
-        <ProgressBar isIndeterminate={true} description={TEST_DESCRIPTION} />,
+        <ProgressBar
+          type="loader"
+          isIndeterminate={true}
+          description={TEST_DESCRIPTION}
+        />,
       );
       expect(screen.getByText(TEST_DESCRIPTION)).toBeVisible();
     });
@@ -27,6 +33,7 @@ describe('packages/progress-bar', () => {
       test('renders with a custom format when given a callback', () => {
         render(
           <ProgressBar
+            type="loader"
             isIndeterminate={true}
             value={TEST_VALUE}
             formatValue={value => `${value} units`}
@@ -38,6 +45,7 @@ describe('packages/progress-bar', () => {
       test('renders icon when showIcon is true', () => {
         render(
           <ProgressBar
+            type="loader"
             isIndeterminate={false}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
@@ -56,6 +64,7 @@ describe('packages/progress-bar', () => {
       test('renders the correct width for the progress bar fill', () => {
         render(
           <ProgressBar
+            type="loader"
             isIndeterminate={false}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
@@ -71,6 +80,7 @@ describe('packages/progress-bar', () => {
       test('does not render success variant icon if under maxValue, even if showIcon is true', () => {
         render(
           <ProgressBar
+            type="loader"
             isIndeterminate={false}
             variant="success"
             value={TEST_VALUE}

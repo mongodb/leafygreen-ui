@@ -5,11 +5,53 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
-import { FormatValueType, Variant } from './ProgressBar.types';
+import {
+  FormatValueType,
+  ProgressBarProps,
+  Variant,
+} from './ProgressBar.types';
 
 export const DEFAULT_MAX_VALUE = 1;
 
 export const iconsVisibleOnComplete = ['success'];
+
+export const resolveProps = (
+  props: ProgressBarProps,
+): {
+  value: number | undefined;
+  maxValue: number | undefined;
+  disabled: boolean;
+  variant: Variant;
+  isDeterminate: boolean;
+} => {
+  if (props.type === 'meter') {
+    return {
+      value: props.value,
+      maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
+      disabled: props.disabled ?? false,
+      variant: Variant.Info, // temporary
+      isDeterminate: true,
+    };
+  }
+
+  if (props.isIndeterminate) {
+    return {
+      value: props.value,
+      maxValue: undefined,
+      disabled: false,
+      variant: props.variant ?? Variant.Info,
+      isDeterminate: false,
+    };
+  } else {
+    return {
+      value: props.value,
+      maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
+      disabled: props.disabled ?? false,
+      variant: props.variant ?? Variant.Info,
+      isDeterminate: true,
+    };
+  }
+};
 
 export const getPercentage = (value: number, maxValue?: number): number => {
   return Math.round((value / (maxValue || DEFAULT_MAX_VALUE)) * 100);
