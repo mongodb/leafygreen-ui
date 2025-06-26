@@ -94,6 +94,12 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     defaultValue: '',
     tooltips: [],
     darkMode: false,
+    height: '',
+    maxHeight: '',
+    maxWidth: '',
+    minHeight: '',
+    minWidth: '',
+    width: '100%',
   },
   argTypes: {
     enableClickableUrls: {
@@ -130,6 +136,24 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     },
     darkMode: {
       control: { type: 'boolean' },
+    },
+    height: {
+      control: { type: 'text' },
+    },
+    maxHeight: {
+      control: { type: 'text' },
+    },
+    maxWidth: {
+      control: { type: 'text' },
+    },
+    minHeight: {
+      control: { type: 'text' },
+    },
+    minWidth: {
+      control: { type: 'text' },
+    },
+    width: {
+      control: { type: 'text' },
     },
   },
 };

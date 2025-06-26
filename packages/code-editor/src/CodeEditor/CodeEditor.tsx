@@ -35,6 +35,7 @@ import { createThemeExtension } from './codeMirrorExtensions/createThemeExtensio
 import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
 import {
   type CodeEditorProps,
+  CodeEditorSelectors,
   type CodeMirrorExtension,
   type CodeMirrorRef,
   IndentUnits,
@@ -213,22 +214,34 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         className={cx(
           {
             [css`
-              height: ${height};
+              ${CodeEditorSelectors.Editor} {
+                height: ${height};
+              }
             `]: !!height,
             [css`
-              max-height: ${maxHeight};
+              ${CodeEditorSelectors.Editor} {
+                max-height: ${maxHeight};
+              }
             `]: !!maxHeight,
             [css`
-              max-width: ${maxWidth};
+              ${CodeEditorSelectors.Editor} {
+                max-width: ${maxWidth};
+              }
             `]: !!maxWidth,
             [css`
-              min-height: ${minHeight};
+              ${CodeEditorSelectors.Editor} {
+                min-height: ${minHeight};
+              }
             `]: !!minHeight,
             [css`
-              min-width: ${minWidth};
+              ${CodeEditorSelectors.Editor} {
+                min-width: ${minWidth};
+              }
             `]: !!minWidth,
             [css`
-              width: ${width};
+              ${CodeEditorSelectors.Editor} {
+                width: ${width};
+              }
             `]: !!width,
           },
           className, // class styles override inline styles
