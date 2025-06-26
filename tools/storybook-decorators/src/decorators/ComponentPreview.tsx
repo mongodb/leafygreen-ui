@@ -20,7 +20,9 @@ const darkModeStyle = css`
 `;
 
 const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext<any>) => {
-  const { darkMode, baseFontSize } = context.args;
+  const { darkMode: darkModeArg, baseFontSize } = context.args;
+  const globalTheme = context.globals?.theme;
+  const darkMode = darkModeArg ?? globalTheme?.darkMode;
 
   return (
     <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
@@ -34,6 +36,8 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext<any>) => {
         )}
       >
         <StoryFn darkMode={darkMode} {...context} />
+
+        <code>globals={JSON.stringify(context.globals)}</code>
       </div>
     </LeafyGreenProvider>
   );

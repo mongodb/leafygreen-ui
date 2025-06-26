@@ -3,6 +3,7 @@ import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
 import { glyphs } from '@leafygreen-ui/icon';
+import { Theme } from '@leafygreen-ui/lib';
 
 import { AvatarProps, AvatarSize, Format } from './Avatar/Avatar.types';
 import { getInitials } from './utils/getInitials';
@@ -19,7 +20,6 @@ export default {
     generate: {
       storyNames: ['MongoAvatar', 'TextAvatar', 'IconAvatar', 'ImageAvatar'],
       combineArgs: {
-        darkMode: [false, true],
         size: Object.values(AvatarSize),
         sizeOverride: [undefined, 64],
       },
@@ -29,6 +29,16 @@ export default {
           sizeOverride: 64,
         },
       ],
+    },
+    chromatic: {
+      modes: {
+        Light: {
+          theme: Theme.Light,
+        },
+        Dark: {
+          theme: Theme.Dark,
+        },
+      },
     },
   },
   args: {

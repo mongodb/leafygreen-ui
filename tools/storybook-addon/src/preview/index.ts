@@ -9,6 +9,8 @@ import {
 } from '@lg-tools/storybook-utils';
 import type { Preview } from '@storybook/react';
 
+import { Theme } from '@leafygreen-ui/lib';
+import { breakpoints } from '@leafygreen-ui/tokens';
 import {
   Body,
   H1,
@@ -19,7 +21,7 @@ import {
   Subtitle,
 } from '@leafygreen-ui/typography';
 
-import { darkTheme, lightTheme } from '../themes';
+// import { darkTheme, lightTheme } from '../themes';
 
 const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -49,10 +51,53 @@ const parameters = {
     },
     source: { type: 'code' },
   },
-  darkMode: {
-    dark: { ...darkTheme },
-    light: { ...lightTheme },
+
+  /**
+   * Modes
+   */
+  viewport: {
+    viewports: {
+      desktop: {
+        name: 'Desktop',
+        styles: {
+          width: breakpoints.XLDesktop + 1 + 'px',
+          height: '1080px',
+        },
+      },
+      tablet: {
+        name: 'Tablet',
+        styles: {
+          width: breakpoints.Tablet + 'px',
+          height: '1024px',
+        },
+      },
+      mobile: {
+        name: 'Mobile',
+        styles: {
+          width: '375px',
+          height: '667px',
+        },
+      },
+    },
   },
+  theme: {
+    themes: {
+      [Theme.Light]: {
+        name: 'Light',
+        theme: Theme.Light,
+        darkMode: false,
+      },
+      [Theme.Dark]: {
+        name: 'Dark',
+        theme: Theme.Dark,
+        darkMode: true,
+      },
+    },
+  },
+  // darkMode: {
+  //   dark: { ...darkTheme },
+  //   light: { ...lightTheme },
+  // },
 };
 
 const preview: Preview = {
