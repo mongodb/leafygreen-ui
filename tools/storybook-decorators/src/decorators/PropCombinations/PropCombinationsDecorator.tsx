@@ -20,6 +20,7 @@ import entries from 'lodash/entries';
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { Err, PropCombinations } from './components';
 import { PARAM_NAME } from './constants';
@@ -57,6 +58,9 @@ const PropCombinationsDecorator: Decorator = (
         decorator,
       } = decoratorConfig;
 
+      const globalTheme = context.globals?.theme;
+      const darkMode = generatedArgs?.darkMode ?? globalTheme?.darkMode;
+
       if (isGeneratedStory(context)) {
         // Check for props
         if (!combineArgs || entries(combineArgs).length === 0) {
@@ -74,15 +78,17 @@ const PropCombinationsDecorator: Decorator = (
         const variables = entries(combineArgs).sort(sortDarkMode);
 
         const GeneratedStory: StoryType<typeof component> = () => (
-          <div className={cx(generatedStoryWrapper, 'generated-stories')}>
-            <PropCombinations
-              component={component}
-              variables={variables}
-              args={{ ...metaArgs, ...generatedArgs }}
-              exclude={excludeCombinations}
-              decorator={decorator}
-            />
-          </div>
+          <LeafyGreenProvider darkMode={darkMode}>
+            <div className={cx(generatedStoryWrapper, 'generated-stories')}>
+              <PropCombinations
+                component={component}
+                variables={variables}
+                args={{ ...metaArgs, ...generatedArgs }}
+                exclude={excludeCombinations}
+                decorator={decorator}
+              />
+            </div>
+          </LeafyGreenProvider>
         );
         return <GeneratedStory />;
       }
