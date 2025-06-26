@@ -15,7 +15,13 @@ import {
   languageOptions,
   LanguageSwitcherWithPanelExample,
 } from './LanguageSwitcher/LanguageSwitcherExample';
-import Code, { CodeProps, CopyButtonAppearance, Language, Panel } from '.';
+import Code, {
+  CodeProps,
+  CopyButton,
+  CopyButtonAppearance,
+  Language,
+  Panel,
+} from '.';
 
 const customActionButtons = [
   <IconButton onClick={() => {}} aria-label="label" key="1">
@@ -383,4 +389,15 @@ Loading.parameters = {
       );
     },
   },
+};
+
+export const CopyButtonExample = () => {
+  return (
+    <CopyButton
+      contents={jsSnippet}
+      onCopy={() => {
+        console.log('Code copied!');
+      }}
+    />
+  );
 };

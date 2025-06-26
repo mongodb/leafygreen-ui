@@ -8,5 +8,5 @@ export type { SyntaxProps } from './Syntax/Syntax.types';
 export type { LineHighlightingDefinition } from './types';
 export { Language } from './types';
 export { getLgIds, type GetLgIdsReturnType } from './utils';
-
+export { CopyButton } from './CopyButton';
 export default Code;
