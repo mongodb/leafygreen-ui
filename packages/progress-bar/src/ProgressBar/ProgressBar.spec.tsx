@@ -8,18 +8,16 @@ describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
     test('renders with a label', () => {
       const TEST_LABEL = 'placeholder label';
-      const { getByText } = render(
-        <ProgressBar isIndeterminate={true} label={TEST_LABEL} />,
-      );
-      expect(getByText(TEST_LABEL)).toBeVisible();
+      render(<ProgressBar isIndeterminate={true} label={TEST_LABEL} />);
+      expect(screen.getByText(TEST_LABEL)).toBeVisible();
     });
 
     test('renders with a description', () => {
       const TEST_DESCRIPTION = 'placeholder description';
-      const { getByText } = render(
+      render(
         <ProgressBar isIndeterminate={true} description={TEST_DESCRIPTION} />,
       );
-      expect(getByText(TEST_DESCRIPTION)).toBeVisible();
+      expect(screen.getByText(TEST_DESCRIPTION)).toBeVisible();
     });
 
     describe('with value format', () => {
@@ -27,14 +25,14 @@ describe('packages/progress-bar', () => {
       const TEST_MAX_VALUE = 100;
 
       test('renders with a custom format when given a callback', () => {
-        const { getByText } = render(
+        render(
           <ProgressBar
             isIndeterminate={true}
             value={TEST_VALUE}
             formatValue={value => `${value} units`}
           />,
         );
-        expect(getByText(`${TEST_VALUE} units`)).toBeVisible();
+        expect(screen.getByText(`${TEST_VALUE} units`)).toBeVisible();
       });
 
       test('renders icon when showIcon is true', () => {
@@ -56,14 +54,14 @@ describe('packages/progress-bar', () => {
       const TEST_MAX_VALUE = 100;
 
       test('renders the correct width for the progress bar fill', () => {
-        const { getByTestId } = render(
+        render(
           <ProgressBar
             isIndeterminate={false}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
           />,
         );
-        const barFillElement = getByTestId('progress-bar-fill');
+        const barFillElement = screen.getByTestId('progress-bar-fill');
         expect(barFillElement).toBeInTheDocument();
         expect(barFillElement).toHaveStyle({
           width: '75%',
