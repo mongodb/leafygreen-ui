@@ -1,5 +1,6 @@
-import { useViewportSize } from '@leafygreen-ui/hooks';
 import { breakpoints } from '@leafygreen-ui/tokens';
+
+import useViewportSize from '../useViewportSize';
 
 /**
  * Returns whether the viewport is mobile-sized
