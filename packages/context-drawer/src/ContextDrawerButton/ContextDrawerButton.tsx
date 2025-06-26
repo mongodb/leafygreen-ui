@@ -25,7 +25,7 @@ export const ContextDrawerButton = forwardRef<
         ref={ref}
         rightGlyph={<ChevronDown />}
         size={Size.XSmall}
-        className={getButtonStyles({ className, theme })}
+        className={getButtonStyles({ className, isOpen, theme })}
         {...rest}
       >
         <ButtonCorner side={Side.Left} />
