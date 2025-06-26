@@ -17,10 +17,13 @@ import type {
 } from './tooltipHandlers.types';
 
 /**
- * Creates the appropriate event handlers
- * for a given Tooltip triggerEvent.
+ * Creates the appropriate event handlers for a given Tooltip triggerEvent.
  *
  * Spread the returned object onto the tooltip trigger element
+ *
+ * When `triggerEvent` is `hover`, it will create handlers for mouse enter, mouse leave, focus, and blur events.
+ * When `triggerEvent` is `click`, it will create a handler for click events.
+ *
  */
 export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
   args: CreateTooltipEventsArgs<Trigger>,
@@ -104,6 +107,13 @@ export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
   }
 }
 
+/**
+ * Hook to create the appropriate event handlers for a given Tooltip triggerEvent.
+ * This is a convenience wrapper around `createTooltipTriggerEventHandlers`.
+ *
+ * When `triggerEvent` is `hover`, it will create handlers for mouse enter, mouse leave, focus, and blur events.
+ * When `triggerEvent` is `click`, it will create a handler for click events.
+ */
 export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
   args: CreateTooltipEventsArgs<Trigger>,
 ): TooltipEventHandlers<Trigger> {
