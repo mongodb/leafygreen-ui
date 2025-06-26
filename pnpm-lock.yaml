@@ -1286,6 +1286,43 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  packages/context-drawer:
+    dependencies:
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+    devDependencies:
+      '@faker-js/faker':
+        specifier: ^8.0.2
+        version: 8.0.2
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
+      '@storybook/test':
+        specifier: 8.5.3
+        version: 8.5.3(storybook@8.6.14(prettier@2.8.8))
+
   packages/copyable:
     dependencies:
       '@leafygreen-ui/button':
