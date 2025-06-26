@@ -1,15 +1,9 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import {
-  borderRadius,
-  color,
-  Size,
-  spacing,
-  Variant,
-} from '@leafygreen-ui/tokens';
+import { borderRadius, color, spacing } from '@leafygreen-ui/tokens';
 
-import { ProgressBarSize, ProgressBarVariant } from './ProgressBar.types';
+import { Size, Variant } from './ProgressBar.types';
 import { getPercentage } from './ProgressBar.utils';
 
 const progressBarSizeStyles = {
@@ -105,7 +99,7 @@ export const getHeaderIconStyles = ({
   disabled,
 }: {
   theme: Theme;
-  variant: ProgressBarVariant;
+  variant: Variant;
   disabled?: boolean;
 }) => css`
   margin-bottom: ${spacing[50]}px; // align icon with text baseline
@@ -119,7 +113,7 @@ export const getBarTrackStyles = ({
   size,
 }: {
   theme: Theme;
-  size: ProgressBarSize;
+  size: Size;
 }) => css`
   width: 100%;
   height: ${progressBarSizeStyles[size].height};
@@ -133,7 +127,7 @@ const getBaseBarFillStyles = ({
   disabled,
 }: {
   theme: Theme;
-  variant: ProgressBarVariant;
+  variant: Variant;
   disabled?: boolean;
 }) => css`
   height: 100%;
@@ -162,7 +156,7 @@ export const getBarFillStyles = ({
   maxValue,
 }: {
   theme: Theme;
-  variant: ProgressBarVariant;
+  variant: Variant;
   isDeterminate: boolean;
   disabled?: boolean;
   value?: number;

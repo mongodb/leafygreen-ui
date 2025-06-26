@@ -5,7 +5,7 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
-import { ProgressBarValueType, ProgressBarVariant } from './ProgressBar.types';
+import { FormatValueType, Variant } from './ProgressBar.types';
 
 export const DEFAULT_MAX_VALUE = 1;
 
@@ -18,7 +18,7 @@ export const getPercentage = (value: number, maxValue?: number): number => {
 export const getFormattedValue = (
   value: number,
   maxValue?: number,
-  formatValue?: ProgressBarValueType,
+  formatValue?: FormatValueType,
 ): string => {
   if (typeof formatValue === 'function') {
     return formatValue(value, maxValue);
@@ -48,7 +48,7 @@ export const getHeaderIcon = ({
   disabled = false,
   props = {},
 }: {
-  variant: ProgressBarVariant;
+  variant: Variant;
   disabled?: boolean;
   props?: Record<string, any>;
 }) => {

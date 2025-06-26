@@ -1,52 +1,49 @@
 import React from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { Size, Variant } from '@leafygreen-ui/tokens';
 
-export const ProgressBarSize = {
-  small: Size.Small,
-  default: Size.Default,
-  large: Size.Large,
+export const Size = {
+  Small: 'small',
+  Default: 'default',
+  Large: 'large',
 } as const;
 
-export type ProgressBarSize =
-  (typeof ProgressBarSize)[keyof typeof ProgressBarSize];
+export type Size = (typeof Size)[keyof typeof Size];
 
-export const ProgressBarVariant = {
-  info: Variant.Info,
-  success: Variant.Success,
-  warning: Variant.Warning,
-  error: Variant.Error,
+export const Variant = {
+  Info: 'info',
+  Success: 'success',
+  Warning: 'warning',
+  Error: 'error',
 } as const;
 
-export type ProgressBarVariant =
-  (typeof ProgressBarVariant)[keyof typeof ProgressBarVariant];
+export type Variant = (typeof Variant)[keyof typeof Variant];
 
-export const ProgressBarValueType = {
+export const FormatValueType = {
   fraction: 'fraction',
   percentage: 'percentage',
   number: 'number',
 } as const;
 
-export type ProgressBarValueType =
-  | (typeof ProgressBarValueType)[keyof typeof ProgressBarValueType]
+export type FormatValueType =
+  | (typeof FormatValueType)[keyof typeof FormatValueType]
   | ((value: number, maxValue?: number) => string);
 
 interface BaseProgressBarProps extends DarkModeProps {
   /** Optional color theme. */
-  variant?: ProgressBarVariant;
+  variant?: Variant;
 
   /** Optional label text displayed directly above the progress bar. */
   label?: React.ReactNode;
 
   /** Optional size (thickness) of the progress bar. */
-  size?: ProgressBarSize;
+  size?: Size;
 
   /** Optional descriptive text below the progress bar. */
   description?: React.ReactNode;
 
   /** Optional formatting of progress value text. If not defined, progress value is not displayed. */
-  formatValue?: ProgressBarValueType;
+  formatValue?: FormatValueType;
 
   /**
    * If true, displays icon next to progress value.
