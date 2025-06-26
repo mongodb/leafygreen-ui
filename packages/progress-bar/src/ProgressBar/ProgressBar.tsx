@@ -25,7 +25,7 @@ export function ProgressBar(props: ProgressBarProps) {
     resolveProps(props);
 
   const {
-    type,
+    type: role,
     label,
     size = Size.Default,
     description,
@@ -71,7 +71,7 @@ export function ProgressBar(props: ProgressBarProps) {
       </div>
 
       <div
-        role={type}
+        role={role}
         id={progressBarId}
         aria-label={progressBarId}
         {...getValueAriaAttributes(value, maxValue)}

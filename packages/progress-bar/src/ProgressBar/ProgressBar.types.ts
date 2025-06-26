@@ -7,12 +7,18 @@ export const Type = {
   Loader: 'loader',
 } as const;
 
+export const MeterStatus = {
+  Healthy: 'healthy',
+  Warning: 'warning',
+  Error: 'error',
+} as const;
+export type MeterStatus = (typeof MeterStatus)[keyof typeof MeterStatus];
+
 export const Size = {
   Small: 'small',
   Default: 'default',
   Large: 'large',
 } as const;
-
 export type Size = (typeof Size)[keyof typeof Size];
 
 export const Variant = {
@@ -21,9 +27,7 @@ export const Variant = {
   Warning: 'warning',
   Error: 'error',
 } as const;
-
 export type Variant = (typeof Variant)[keyof typeof Variant];
-
 export type AnimatedVariant = Exclude<Variant, 'warning' | 'error'>;
 
 export const FormatValueType = {
@@ -56,10 +60,6 @@ interface BaseProps extends DarkModeProps {
   showIcon?: boolean;
 }
 
-interface BaseLoaderProps {
-  type: typeof Type.Loader;
-}
-
 interface BaseDeterminateLoaderProps {
   isIndeterminate?: false;
   value: number;
@@ -79,7 +79,9 @@ interface AnimatedDeterminateLoaderProps {
 
 type DeterminateLoaderProps = BaseDeterminateLoaderProps &
   (PlainDeterminateLoaderProps | AnimatedDeterminateLoaderProps);
-
+interface BaseLoaderProps {
+  type: typeof Type.Loader;
+}
 interface IndeterminateLoaderProps {
   isIndeterminate: true;
   value?: number;
@@ -94,7 +96,7 @@ interface MeterProps {
   value: number;
   maxValue?: number;
   disabled?: boolean;
-  status?: 'healthy' | 'warning' | 'error';
+  status?: MeterStatus;
 }
 
 export type ProgressBarProps = BaseProps & (MeterProps | LoaderProps);

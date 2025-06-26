@@ -7,6 +7,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
 import {
   FormatValueType,
+  MeterStatus,
   ProgressBarProps,
   Variant,
 } from './ProgressBar.types';
@@ -15,6 +16,19 @@ export const DEFAULT_MAX_VALUE = 1;
 export const DEFAULT_VARIANT = Variant.Info;
 
 export const iconsVisibleOnComplete = ['success'];
+
+const getMeterStatusVariant = (status?: MeterStatus): Variant => {
+  switch (status) {
+    case MeterStatus.Healthy:
+      return Variant.Success;
+    case MeterStatus.Warning:
+      return Variant.Warning;
+    case MeterStatus.Error:
+      return Variant.Error;
+    default:
+      return Variant.Info;
+  }
+};
 
 export const resolveProps = (
   props: ProgressBarProps,
@@ -30,7 +44,7 @@ export const resolveProps = (
       value: props.value,
       maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
       disabled: props.disabled ?? false,
-      variant: DEFAULT_VARIANT, // temporary
+      variant: getMeterStatusVariant(props.status),
       isDeterminate: true,
     };
   }

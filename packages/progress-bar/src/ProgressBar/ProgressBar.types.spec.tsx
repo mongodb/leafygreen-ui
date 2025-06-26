@@ -42,10 +42,10 @@ test.skip('Indeterminate and variant compatibility', () => {
       variant: Variant.Warning,
     };
 
-    const _AnimatedDeterminateCannotError: ProgressBarProps = {
+    const _AnimatedDeterminateCannotBeError: ProgressBarProps = {
       type: 'loader',
       enableAnimation: true,
-      // @ts-expect-error - animated determinate loader should not use warning variant
+      // @ts-expect-error - animated determinate loader should not use error variant
       variant: Variant.Error,
     };
   }
