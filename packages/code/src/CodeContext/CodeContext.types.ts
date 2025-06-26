@@ -28,5 +28,5 @@ export type CodeProviderProps = DarkModeProps & {
   /**
    * LGIDs for the code snippet.
    */
-  lgids: GetLgIdsReturnType;
+  lgIds: GetLgIdsReturnType;
 };

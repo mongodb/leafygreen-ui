@@ -20,7 +20,6 @@ import Tooltip, {
 } from '@leafygreen-ui/tooltip';
 
 import { useCodeContext } from '../CodeContext/CodeContext';
-import { getLgIds } from '../utils';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { getCopyButtonStyles } from './CopyButton.styles';
@@ -37,9 +36,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
-  const { showPanel, isLoading } = useCodeContext();
-
-  const lgids = getLgIds();
+  const { showPanel, isLoading, lgIds } = useCodeContext();
 
   /**
    * toggles `tooltipOpen` state
@@ -129,8 +126,8 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
 
   const sharedButtonProps = {
     'aria-label': COPY_TEXT,
-    'data-testid': lgids.copyButton,
-    'data-lgid': lgids.copyButton,
+    'data-testid': lgIds.copyButton,
+    'data-lgid': lgIds.copyButton,
     className: getCopyButtonStyles({
       theme,
       copied,
@@ -149,7 +146,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   return (
     <Tooltip
       align={Align.Top}
-      data-testid={lgids.copyTooltip}
+      data-testid={lgIds.copyTooltip}
       justify={Justify.Middle}
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}

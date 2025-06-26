@@ -9,13 +9,13 @@
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/message-prompts
+yarn add @lg-chat/message-prompts
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/message-prompts
+npm install @lg-chat/message-prompts
 ```
 
 ## MessagePrompt Properties

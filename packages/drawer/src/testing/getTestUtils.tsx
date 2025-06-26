@@ -1,6 +1,7 @@
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
 import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
+import { LgIdString } from '@leafygreen-ui/lib';
 import { getTestUtils as getDrawerToolbarTestUtils } from '@leafygreen-ui/toolbar/testing';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
@@ -8,7 +9,7 @@ import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = <T extends HTMLElement = HTMLElement>(
-  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
+  lgId: LgIdString = DEFAULT_LGID_ROOT,
 ): GetTestUtilsReturnType<T> => {
   const lgIds = getLgIds(lgId);
 
