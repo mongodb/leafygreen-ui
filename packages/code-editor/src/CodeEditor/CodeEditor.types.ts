@@ -156,6 +156,12 @@ export interface CodeEditorProps extends DarkModeProps {
   forceParsing?: boolean;
 
   /**
+   * Sets the editor's height. If not set, the editor will automatically adjust
+   * its height based on the content.
+   */
+  height?: string;
+
+  /**
    * Sets the editor's indent size on tab click.
    */
   indentSize?: number;
@@ -169,6 +175,26 @@ export interface CodeEditorProps extends DarkModeProps {
    * Language to use for syntax highlighting. Will have no highlighting if not set.
    */
   language?: LanguageName;
+
+  /**
+   * Sets the editor's max height.
+   */
+  maxHeight?: string;
+
+  /**
+   * Sets the editor's max width.
+   */
+  maxWidth?: string;
+
+  /**
+   * Sets the editor's minimum height.
+   */
+  minHeight?: string;
+
+  /**
+   * Sets the editor's minimum width.
+   */
+  minWidth?: string;
 
   /**
    * Callback that receives the updated editor value when changes are made.
@@ -189,4 +215,10 @@ export interface CodeEditorProps extends DarkModeProps {
    * Add tooltips to the editor content.
    */
   tooltips?: Array<CodeEditorTooltip>;
+
+  /**
+   * Sets the editor's width. If not set, the editor will be 100% width of its
+   * parent container.
+   */
+  width?: string;
 }

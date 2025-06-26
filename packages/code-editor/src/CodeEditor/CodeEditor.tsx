@@ -34,10 +34,6 @@ import { createLanguageExtension } from './codeMirrorExtensions/createLanguageEx
 import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
 import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
 import {
-  editorInnerWrapperStyles,
-  getEditorOuterWrapperBaseStyles,
-} from './CodeEditor.styles';
-import {
   type CodeEditorProps,
   type CodeMirrorExtension,
   type CodeMirrorRef,
@@ -63,6 +59,12 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       extensions: consumerExtensions = [],
       darkMode: darkModeProp,
       className,
+      height,
+      maxHeight,
+      maxWidth,
+      minHeight,
+      minWidth,
+      width,
       ...rest
     },
     forwardedRef,
@@ -202,39 +204,58 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     }, [language]);
 
     return (
-      <div className={cx(getEditorOuterWrapperBaseStyles(theme), className)}>
-        <div className={editorInnerWrapperStyles}>
-          <CodeMirror
-            value={value}
-            onChange={onChange}
-            onCreateEditor={onCreateEditor}
-            readOnly={readOnly}
-            placeholder={placeholder}
-            /**
-             * `theme` prop is used instead of just adding these to extensions
-             * list because it automates updating on theme change.
-             */
-            theme={[
-              createThemeExtension(theme, baseFontSize),
-              createHighlightExtension(theme),
-            ]}
-            extensions={[
-              ...consumerExtensions.map(extension => Prec.highest(extension)),
-              ...customExtensions,
-              languageExtension,
-            ]}
-            basicSetup={{
-              allowMultipleSelections: true,
-              foldGutter: false, // Custom fold gutter is used instead
-              highlightActiveLine: false,
-              highlightActiveLineGutter: false,
-              lineNumbers: enableLineNumbers,
-            }}
-            ref={ref}
-            {...rest}
-          />
-        </div>
-      </div>
+      <CodeMirror
+        value={value}
+        onChange={onChange}
+        onCreateEditor={onCreateEditor}
+        readOnly={readOnly}
+        placeholder={placeholder}
+        className={cx(
+          {
+            [css`
+              height: ${height};
+            `]: !!height,
+            [css`
+              max-height: ${maxHeight};
+            `]: !!maxHeight,
+            [css`
+              max-width: ${maxWidth};
+            `]: !!maxWidth,
+            [css`
+              min-height: ${minHeight};
+            `]: !!minHeight,
+            [css`
+              min-width: ${minWidth};
+            `]: !!minWidth,
+            [css`
+              width: ${width};
+            `]: !!width,
+          },
+          className, // class styles override inline styles
+        )}
+        /**
+         * `theme` prop is used instead of just adding these to extensions
+         * list because it automates updating on theme change.
+         */
+        theme={[
+          createThemeExtension(theme, baseFontSize),
+          createHighlightExtension(theme),
+        ]}
+        extensions={[
+          ...consumerExtensions.map(extension => Prec.highest(extension)),
+          ...customExtensions,
+          languageExtension,
+        ]}
+        basicSetup={{
+          allowMultipleSelections: true,
+          foldGutter: false, // Custom fold gutter is used instead
+          highlightActiveLine: false,
+          highlightActiveLineGutter: false,
+          lineNumbers: enableLineNumbers,
+        }}
+        ref={ref}
+        {...rest}
+      />
     );
   },
 );

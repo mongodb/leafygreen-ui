@@ -28,11 +28,15 @@ export const createThemeExtension = (
         backgroundColor:
           color[theme].background[Variant.Primary][InteractionState.Default],
         color: color[theme].text[Variant.Primary][InteractionState.Default],
-        border: 'none',
+        border: `1px solid
+    ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
+        borderRadius: `${borderRadius[300]}px`,
       },
 
       [`&${CodeEditorSelectors.Focused}`]: {
         outline: 'none',
+        border: `1px solid
+    ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
       },
 
       [CodeEditorSelectors.Content]: {
