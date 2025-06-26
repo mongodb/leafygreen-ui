@@ -34,11 +34,13 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/tokens": "workspace:^"
+    "@leafygreen-ui/tokens": "workspace:^",
+    "react-intersection-observer": "^8.25.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
     "@storybook/test": "8.5.3",
+    "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
