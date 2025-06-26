@@ -5,6 +5,11 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getFill, getWrapperStyles } from './ButtonCorner.styles';
 import { Side } from './ButtonCorner.types';
 
+/**
+ * @returns component that renders the visually rounded sides of the ContextDrawerButton.
+ *
+ * @internal
+ */
 export const ButtonCorner = ({ side }: { side: Side }) => {
   const { theme } = useDarkMode();
 
