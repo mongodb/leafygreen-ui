@@ -9,13 +9,12 @@ import { flushSync } from 'react-dom';
 import debounce from 'lodash/debounce';
 
 import { TriggerEvent } from '../Tooltip.types';
+import { CALLBACK_DEBOUNCE, DEFAULT_HOVER_DELAY } from '../tooltipConstants';
 
 import type {
   CreateTooltipEventsArgs,
   TooltipEventHandlers,
 } from './tooltipHandlers.types';
-
-export const CALLBACK_DEBOUNCE = 35; // ms
 
 /**
  * Creates the appropriate event handlers
@@ -26,7 +25,15 @@ export const CALLBACK_DEBOUNCE = 35; // ms
 export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
   args: CreateTooltipEventsArgs<Trigger>,
 ): TooltipEventHandlers<Trigger> {
-  const { setState, triggerEvent, tooltipRef, isEnabled = true } = args;
+  const {
+    delay = DEFAULT_HOVER_DELAY,
+    setState,
+    triggerEvent,
+    tooltipRef,
+    isEnabled = true,
+  } = args;
+
+  let timeout: NodeJS.Timeout | null = null;
 
   // switch (triggerEvent) {
   if (triggerEvent === TriggerEvent.Hover) {
@@ -37,7 +44,9 @@ export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
           // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
           // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
           flushSync(() => {
-            setState(true);
+            timeout = setTimeout(() => {
+              setState(true);
+            }, delay);
           });
         }
       },
@@ -49,6 +58,10 @@ export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
         if (isEnabled) {
           args.onMouseLeave?.(e);
           setState(false);
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+          }
         }
       },
       CALLBACK_DEBOUNCE,

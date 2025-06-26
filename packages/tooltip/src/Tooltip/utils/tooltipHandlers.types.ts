@@ -12,6 +12,11 @@ export interface CreateTooltipEventsBaseArgs {
    * Whether the tooltip event handlers should be enabled
    */
   isEnabled?: boolean;
+
+  /**
+   * The delay in milliseconds before the tooltip opens on hover.
+   */
+  delay?: number;
 }
 
 export interface CreateTooltipEventsArgsHover {

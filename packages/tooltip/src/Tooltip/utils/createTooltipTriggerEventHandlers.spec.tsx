@@ -2,9 +2,9 @@ import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { TriggerEvent } from '../Tooltip.types';
+import { CALLBACK_DEBOUNCE, DEFAULT_HOVER_DELAY } from '../tooltipConstants';
 
 import {
-  CALLBACK_DEBOUNCE,
   createTooltipTriggerEventHandlers,
   useTooltipTriggerEventHandlers,
 } from './createTooltipTriggerEventHandlers';
@@ -69,7 +69,7 @@ describe('packages/tooltip/createTooltipTriggerEventHandlers', () => {
         handlers.onMouseEnter(mockMouseEvent);
 
         // Since the handler uses debounce, we need to fast-forward timers
-        jest.advanceTimersByTime(CALLBACK_DEBOUNCE);
+        jest.advanceTimersByTime(CALLBACK_DEBOUNCE + DEFAULT_HOVER_DELAY);
 
         expect(onMouseEnterMock).toHaveBeenCalledWith(mockMouseEvent);
         expect(setState).toHaveBeenCalledWith(true);
@@ -230,7 +230,7 @@ describe('packages/tooltip/createTooltipTriggerEventHandlers', () => {
       // Initial render with isEnabled=true
 
       result.current.onMouseEnter(mockMouseEvent);
-      jest.advanceTimersByTime(CALLBACK_DEBOUNCE);
+      jest.advanceTimersByTime(CALLBACK_DEBOUNCE + DEFAULT_HOVER_DELAY);
       expect(setState).toHaveBeenCalledWith(true);
 
       // Update props with isEnabled=false
