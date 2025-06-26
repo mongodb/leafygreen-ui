@@ -60,6 +60,17 @@ describe('queryFocusableElements', () => {
       expect(elements[0]).toBeInstanceOf(HTMLInputElement);
     });
 
+    test('excludes disabled inputs', () => {
+      container.innerHTML = `
+      <input type="text" />
+      <input type="text" disabled />
+    `;
+
+      const elements = queryAllFocusableElements(container);
+      expect(elements).toHaveLength(1);
+      expect(elements[0]).toBeInstanceOf(HTMLInputElement);
+    });
+
     test('uses document.body as default container', () => {
       const spy = jest.spyOn(document.body, 'querySelectorAll');
       queryAllFocusableElements();

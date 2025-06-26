@@ -1,12 +1,33 @@
 import last from 'lodash/last';
 
-export const focusableElementSelector =
-  'button, a, input:not([type="hidden"]), select, textarea, [tabindex]:not([tabindex="-1"])' as const;
+const notNegativeTabIndex = ':not([tabindex="-1"])';
+const notHidden = ':not([type="hidden"])';
+const notDisabled = ':not([disabled])';
+
+/**
+ * Selectors for focusable elements in the DOM.
+ *
+ * Each of these elements can receive tab-focus,
+ * and is not hidden or disabled.
+ */
+const baseFocusableElementSelectors = [
+  'button',
+  'a',
+  'input',
+  'select',
+  'textarea',
+  '[tabindex]',
+] as const;
+export const focusableElementSelector = baseFocusableElementSelectors
+  .map(
+    selector => `${selector}${notNegativeTabIndex}${notHidden}${notDisabled}`,
+  )
+  .join(',');
 
 /**
  * Returns all focusable elements within a given element
  *
- * Focusable elements defined in the constant {@link focusableElementSelector}
+ * Focusable elements defined in the constant {@link baseFocusableElementSelectors}
  */
 export const queryAllFocusableElements = (
   root: HTMLElement = document.body,
@@ -18,7 +39,7 @@ export const queryAllFocusableElements = (
 /**
  * Returns the first focusable element within a given element
  *
- * Focusable elements defined in the constant {@link focusableElementSelector}
+ * Focusable elements defined in the constant {@link baseFocusableElementSelectors}
  */
 export const queryFirstFocusableElement = (
   root: HTMLElement = document.body,
@@ -30,7 +51,7 @@ export const queryFirstFocusableElement = (
 /**
  * Returns the last focusable element within a given element
  *
- * Focusable elements defined in the constant {@link focusableElementSelector}
+ * Focusable elements defined in the constant {@link baseFocusableElementSelectors}
  */
 export const queryLastFocusableElement = (
   root: HTMLElement = document.body,
