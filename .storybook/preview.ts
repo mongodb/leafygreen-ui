@@ -1,3 +1,4 @@
+import { withDarkMode } from '@lg-tools/storybook-decorators';
 import { Preview } from '@storybook/react';
 
 const parameters = {
@@ -22,6 +23,7 @@ const parameters = {
 
 const preview: Preview = {
   parameters,
+  decorators: [withDarkMode()],
 };
 
 export default preview;

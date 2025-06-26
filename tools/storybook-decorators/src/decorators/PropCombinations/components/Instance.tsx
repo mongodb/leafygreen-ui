@@ -21,6 +21,7 @@ export function Instance<T extends React.ComponentType<any>>({
       React.createElement(component, {
         ...instanceProps,
         ...extraArgs,
+        'data-generated': true,
       }),
     { args: { ...instanceProps } },
   );

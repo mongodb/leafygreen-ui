@@ -6,3 +6,4 @@ export {
   default as PropCombinations,
 } from './decorators/PropCombinations';
 export { default as ReactStrictMode } from './decorators/ReactStrictMode';
+export { withDarkMode } from './decorators/withDarkMode';
