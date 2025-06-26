@@ -392,12 +392,5 @@ Loading.parameters = {
 };
 
 export const CopyButtonExample = () => {
-  return (
-    <CopyButton
-      contents={jsSnippet}
-      onCopy={() => {
-        console.log('Code copied!');
-      }}
-    />
-  );
+  return <CopyButton contents={jsSnippet} />;
 };
