@@ -12,6 +12,7 @@ import {
 } from './ProgressBar.types';
 
 export const DEFAULT_MAX_VALUE = 1;
+export const DEFAULT_VARIANT = Variant.Info;
 
 export const iconsVisibleOnComplete = ['success'];
 
@@ -29,7 +30,7 @@ export const resolveProps = (
       value: props.value,
       maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
       disabled: props.disabled ?? false,
-      variant: Variant.Info, // temporary
+      variant: DEFAULT_VARIANT, // temporary
       isDeterminate: true,
     };
   }
@@ -39,7 +40,7 @@ export const resolveProps = (
       value: props.value,
       maxValue: undefined,
       disabled: false,
-      variant: props.variant ?? Variant.Info,
+      variant: props.variant ?? DEFAULT_VARIANT,
       isDeterminate: false,
     };
   } else {
@@ -47,7 +48,7 @@ export const resolveProps = (
       value: props.value,
       maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
       disabled: props.disabled ?? false,
-      variant: props.variant ?? Variant.Info,
+      variant: props.variant ?? DEFAULT_VARIANT,
       isDeterminate: true,
     };
   }

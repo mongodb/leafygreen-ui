@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, jest/no-disabled-tests */
+/* eslint-disable jest/no-disabled-tests */
 import { ProgressBarProps, Variant } from './ProgressBar.types';
 
 test.skip('Indeterminate and variant compatibility', () => {
@@ -32,6 +32,20 @@ test.skip('Indeterminate and variant compatibility', () => {
       type: 'loader',
       isIndeterminate: true,
       // @ts-expect-error - error variant should not be used with indeterminate
+      variant: Variant.Error,
+    };
+
+    const _AnimatedDeterminateCannotBeWarning: ProgressBarProps = {
+      type: 'loader',
+      enableAnimation: true,
+      // @ts-expect-error - animated determinate loader should not use warning variant
+      variant: Variant.Warning,
+    };
+
+    const _AnimatedDeterminateCannotError: ProgressBarProps = {
+      type: 'loader',
+      enableAnimation: true,
+      // @ts-expect-error - animated determinate loader should not use warning variant
       variant: Variant.Error,
     };
   }

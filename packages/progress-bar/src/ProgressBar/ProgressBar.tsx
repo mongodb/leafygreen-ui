@@ -56,7 +56,7 @@ export function ProgressBar(props: ProgressBarProps) {
             className={getHeaderValueStyles({ theme, disabled })}
             darkMode={darkMode}
           >
-            {value && getFormattedValue(value, maxValue, formatValue)}
+            {value != null && getFormattedValue(value, maxValue, formatValue)}
 
             {showIcon &&
               getHeaderIcon({

@@ -24,6 +24,8 @@ export const Variant = {
 
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
+export type AnimatedVariant = Exclude<Variant, 'warning' | 'error'>;
+
 export const FormatValueType = {
   fraction: 'fraction',
   percentage: 'percentage',
@@ -54,26 +56,29 @@ interface BaseProps extends DarkModeProps {
   showIcon?: boolean;
 }
 
-interface MeterProps {
-  type: typeof Type.Meter;
-  value: number;
-  maxValue?: number;
-  disabled?: boolean;
-  status?: 'healthy' | 'warning' | 'error';
-}
-
 interface BaseLoaderProps {
   type: typeof Type.Loader;
 }
 
-interface DeterminateLoaderProps {
-  isIndeterminate: false;
+interface BaseDeterminateLoaderProps {
+  isIndeterminate?: false;
   value: number;
   maxValue?: number;
   disabled?: boolean;
-  variant?: Variant;
-  enableAnimation?: boolean;
 }
+
+interface PlainDeterminateLoaderProps {
+  variant?: Variant;
+  enableAnimation?: false;
+}
+
+interface AnimatedDeterminateLoaderProps {
+  variant?: AnimatedVariant;
+  enableAnimation: true;
+}
+
+type DeterminateLoaderProps = BaseDeterminateLoaderProps &
+  (PlainDeterminateLoaderProps | AnimatedDeterminateLoaderProps);
 
 interface IndeterminateLoaderProps {
   isIndeterminate: true;
@@ -83,5 +88,13 @@ interface IndeterminateLoaderProps {
 
 type LoaderProps = BaseLoaderProps &
   (DeterminateLoaderProps | IndeterminateLoaderProps);
+
+interface MeterProps {
+  type: typeof Type.Meter;
+  value: number;
+  maxValue?: number;
+  disabled?: boolean;
+  status?: 'healthy' | 'warning' | 'error';
+}
 
 export type ProgressBarProps = BaseProps & (MeterProps | LoaderProps);
