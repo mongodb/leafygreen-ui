@@ -94,7 +94,6 @@ export const ALL_PACKAGES = [
   '@lg-tools/build',
   '@lg-tools/cli',
   '@lg-tools/codemods',
-  '@lg-tools/crawler',
   '@lg-tools/create',
   '@lg-tools/install',
   '@lg-tools/link',
