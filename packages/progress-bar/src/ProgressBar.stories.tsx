@@ -16,7 +16,11 @@ const meta: StoryMetaType<typeof ProgressBar> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: ['DeterminateVariants', 'IndeterminateVariants'],
+      storyNames: [
+        'DeterminateVariants',
+        'IndeterminateVariants',
+        'MeterVariants',
+      ],
       args: {
         label: <span key="label">Label</span>,
         description: <span key="description">Helper text</span>,
@@ -53,8 +57,33 @@ const SimulatedProgressBar = (props: ProgressBarProps) => {
   return <ProgressBar {...props} value={value} />;
 };
 
+const testSimulatedProgressToCompletion = async ({
+  role,
+  canvas,
+}: {
+  role: 'meter' | 'progressbar';
+  canvas: ReturnType<typeof within>;
+}) => {
+  const progressBar = canvas.getByRole(role);
+
+  expect(progressBar).toHaveAttribute(
+    'aria-valuenow',
+    testValues.value.toString(),
+  );
+
+  await waitFor(
+    () => {
+      expect(progressBar.getAttribute('aria-valuenow')).toBe(
+        testValues.maxValue.toString(),
+      );
+    },
+    { timeout: 2000 },
+  );
+};
+
 export const LiveExample: StoryObj<typeof ProgressBar> = {
   args: {
+    type: 'loader',
     value: testValues.value,
     maxValue: testValues.maxValue,
     formatValue: 'fraction',
@@ -63,75 +92,70 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     description: <span>Helper text</span>,
   },
   render: SimulatedProgressBar,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
-    const progressBar = canvas.getByRole('progressbar');
-
-    expect(progressBar).toHaveAttribute(
-      'aria-valuenow',
-      testValues.value.toString(),
-    );
-
-    await waitFor(
-      () => {
-        expect(progressBar.getAttribute('aria-valuenow')).toBe(
-          testValues.maxValue.toString(),
-        );
-      },
-      { timeout: 2000 },
-    );
+    await testSimulatedProgressToCompletion({
+      role: 'progressbar',
+      canvas,
+    });
   },
 };
 
-export const BasicDeterminate: StoryObj<typeof ProgressBar> = {
+export const DeterminateLoader: StoryObj<typeof ProgressBar> = {
   args: {
+    type: 'loader',
     value: testValues.value,
     maxValue: testValues.maxValue,
   },
   render: SimulatedProgressBar,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
-    const progressBar = canvas.getByRole('progressbar');
-
-    expect(progressBar).toHaveAttribute(
-      'aria-valuenow',
-      testValues.value.toString(),
-    );
-
-    await waitFor(
-      () => {
-        expect(progressBar.getAttribute('aria-valuenow')).toBe(
-          testValues.maxValue.toString(),
-        );
-      },
-      { timeout: 2000 },
-    );
+    await testSimulatedProgressToCompletion({
+      role: 'progressbar',
+      canvas,
+    });
   },
 };
 
-export const Indeterminate: StoryObj<typeof ProgressBar> = {
+export const IndeterminateLoader: StoryObj<typeof ProgressBar> = {
   args: {
     isIndeterminate: true,
   },
 };
 
+export const Meter: StoryObj<typeof ProgressBar> = {
+  args: {
+    type: 'meter',
+    value: testValues.value,
+    maxValue: testValues.maxValue,
+  },
+  render: SimulatedProgressBar,
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+    await testSimulatedProgressToCompletion({
+      role: 'meter',
+      canvas,
+    });
+  },
+};
+
 export const WithLabel: StoryObj<typeof ProgressBar> = {
   args: {
-    ...BasicDeterminate.args,
+    ...DeterminateLoader.args,
     label: <span>Label</span>,
   },
 };
 
 export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   args: {
-    ...BasicDeterminate.args,
+    ...DeterminateLoader.args,
     formatValue: 'percentage',
   },
 };
 
 export const WithDescription: StoryObj<typeof ProgressBar> = {
   args: {
-    ...BasicDeterminate.args,
+    ...DeterminateLoader.args,
     description: <span>Helper text</span>,
   },
 };
@@ -145,6 +169,7 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
         disabled: [false, true],
       },
       args: {
+        type: 'loader',
         isIndeterminate: false,
         value: testValues.value,
         maxValue: testValues.maxValue,
@@ -173,11 +198,37 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
         variant: ['info', 'success'],
       },
       args: {
+        type: 'loader',
         isIndeterminate: true,
         value: testValues.value,
         formatValue: (value: number) => `${value} MBs`,
         showIcon: true,
       },
+    },
+  },
+};
+
+export const MeterVariants: StoryObj<typeof ProgressBar> = {
+  parameters: {
+    generate: {
+      combineArgs: {
+        status: [undefined, 'healthy', 'warning', 'error'],
+        disabled: [false, true],
+      },
+      args: {
+        type: 'meter',
+        value: testValues.value,
+        maxValue: testValues.maxValue,
+        formatValue: (value: number, maxValue?: number) =>
+          `${value} / ${maxValue} GB`,
+        showIcon: true,
+      },
+      excludeCombinations: [
+        {
+          status: ['healthy', 'warning', 'error'],
+          disabled: [true],
+        },
+      ],
     },
   },
 };

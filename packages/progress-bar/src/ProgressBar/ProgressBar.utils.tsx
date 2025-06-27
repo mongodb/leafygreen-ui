@@ -5,11 +5,73 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
-import { FormatValueType, Variant } from './ProgressBar.types';
+import {
+  FormatValueType,
+  MeterStatus,
+  ProgressBarProps,
+  ResolvedProgressBarProps,
+  Type,
+  Variant,
+} from './ProgressBar.types';
 
 export const DEFAULT_MAX_VALUE = 1;
-
+export const DEFAULT_VARIANT = Variant.Info;
 export const iconsVisibleOnComplete = ['success'];
+
+const getMeterStatusVariant = (status?: MeterStatus): Variant => {
+  switch (status) {
+    case MeterStatus.Healthy:
+      return Variant.Success;
+    case MeterStatus.Warning:
+      return Variant.Warning;
+    case MeterStatus.Error:
+      return Variant.Error;
+    default:
+      return Variant.Info;
+  }
+};
+
+export const resolveProgressBarProps = (
+  props: ProgressBarProps,
+): ResolvedProgressBarProps => {
+  // baseline for all types of progress bars
+  const baseProps = {
+    value: props.value,
+    maxValue: undefined,
+    disabled: false,
+    variant: DEFAULT_VARIANT,
+    isIndeterminate: false,
+    enableAnimation: false,
+  };
+
+  // meter type progress bar
+  if (props.type === Type.Meter) {
+    return {
+      ...baseProps,
+      maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
+      disabled: props.disabled ?? false,
+      variant: getMeterStatusVariant(props.status),
+    };
+  }
+
+  // indeterminate loader progress bar
+  if (props.isIndeterminate) {
+    return {
+      ...baseProps,
+      isIndeterminate: true,
+      variant: props.variant ?? DEFAULT_VARIANT,
+    };
+  }
+
+  // determinate loader progress bar
+  return {
+    ...baseProps,
+    maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
+    disabled: props.disabled ?? false,
+    variant: props.variant ?? DEFAULT_VARIANT,
+    enableAnimation: props.enableAnimation ?? false,
+  };
+};
 
 export const getPercentage = (value: number, maxValue?: number): number => {
   return Math.round((value / (maxValue || DEFAULT_MAX_VALUE)) * 100);
