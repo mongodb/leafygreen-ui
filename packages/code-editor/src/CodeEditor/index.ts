@@ -1,5 +1,4 @@
 export { CodeEditor } from './CodeEditor';
-export { renderCodeEditor } from './CodeEditor.testUtils';
 export {
   type CodeEditorProps,
   CodeEditorSelectors,
@@ -11,8 +10,10 @@ export {
   type CodeMirrorView,
   IndentUnits,
 } from './CodeEditor.types';
-export { codeSnippets } from './utils/codeSnippets';
 export {
-  createCodeMirrorLanguageExtension,
+  createHighlightExtension as createCodeMirrorHighlightExtension,
+  createLanguageExtension as createCodeMirrorLanguageExtension,
+  createThemeExtension as createCodeMirrorThemeExtension,
+  createTooltipsExtension as createCodeMirrorTooltipsExtension,
   LanguageName,
-} from './utils/createCodeMirrorLanguageExtension';
+} from './codeMirrorExtensions';
