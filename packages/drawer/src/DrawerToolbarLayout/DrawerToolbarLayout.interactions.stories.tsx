@@ -194,6 +194,9 @@ export const OverlaySwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> = {
 
     userEvent.click(dashboardButton!);
 
+    // Pause so the tooltip is in the correct position in the snapshot
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     await waitFor(() => {
       expect(canvas.getByText('Dashboard Title')).toBeVisible();
       expect(getDrawer().textContent).toContain('Dashboard Title');
@@ -226,6 +229,9 @@ export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
 
     userEvent.click(closeButton);
 
+    // Pause so the tooltip is in the correct position in the snapshot
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     await waitFor(() => expect(isOpen()).toBe(false));
   },
 };
@@ -245,6 +251,9 @@ export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
       expect(isOpen()).toBe(false);
 
       userEvent.click(codeButton!);
+
+      // Pause so the tooltip is in the correct position in the snapshot
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       await waitFor(() => {
         expect(isOpen()).toBe(true);
@@ -282,6 +291,9 @@ export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> =
 
       userEvent.click(dashboardButton!);
 
+      // Pause so the tooltip is in the correct position in the snapshot
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       await waitFor(() =>
         expect(canvas.getByText('Dashboard Title')).toBeVisible(),
       );
@@ -312,6 +324,9 @@ export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     userEvent.click(closeButton!);
+
+    // Pause so the tooltip is in the correct position in the snapshot
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     await waitFor(() => expect(isOpen()).toBe(false));
   },
