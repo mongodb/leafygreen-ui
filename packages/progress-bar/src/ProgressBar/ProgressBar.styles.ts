@@ -263,3 +263,9 @@ export const getIndeterminateBarFillStyles = ({
     `
   );
 };
+
+export const getFadeOutBarFillStyles = () => css`
+  opacity: 0;
+  width: 0%;
+  transition: opacity 0.5s ease-out, width 0.1s ease-out 0.4s;
+`;
