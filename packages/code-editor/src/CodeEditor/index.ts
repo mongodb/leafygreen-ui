@@ -17,4 +17,3 @@ export {
   createTooltipsExtension as createCodeMirrorTooltipsExtension,
   LanguageName,
 } from './codeMirrorExtensions';
-export { codeSnippets } from './utils/codeSnippets';

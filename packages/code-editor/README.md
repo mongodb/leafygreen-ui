@@ -86,6 +86,8 @@ console.log(greet('MongoDB user'));`;
 
 ## Test Utlities
 
+Test utility helpers imported from `@leafygreen-ui/code-editor/testing`;
+
 ### `codeSnippets`
 
 Code snippets for all supported languages.
@@ -203,7 +205,7 @@ Has the following interface:
 #### Test selector has rendered
 
 ```tsx
-import { TestUtils } from '@leafygreen-ui/code-editor';
+import { TestUtils } from '@leafygreen-ui/code-editor/testing';
 
 const { renderEditor } = TestUtils;
 
@@ -223,7 +225,7 @@ test('Line numbers rendered', () => {
 #### Test selector has not rendered
 
 ```tsx
-import { TestUtils } from '@leafygreen-ui/code-editor';
+import { TestUtils } from '@leafygreen-ui/code-editor/testing';
 
 const { renderEditor } = TestUtils;
 
@@ -239,7 +241,7 @@ test('Fold gutter does not render', () => {
 #### Test user interaction
 
 ```tsx
-import { TestUtils } from '@leafygreen-ui/code-editor';
+import { TestUtils } from '@leafygreen-ui/code-editor/testing';
 
 const { renderEditor } = TestUtils;
 
