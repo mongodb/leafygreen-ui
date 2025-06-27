@@ -6,7 +6,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { renderToString } from 'react-dom/server';
 import {
+  foldGutter,
   forceParsing,
   indentUnit as indentUnitFacet,
 } from '@codemirror/language';
@@ -18,10 +20,20 @@ import CodeMirror, {
   Prec,
 } from '@uiw/react-codemirror';
 
+import { cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
+import Icon from '@leafygreen-ui/icon';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 
-import { createCodeMirrorLanguageExtension } from './utils/createCodeMirrorLanguageExtension';
-import { createCodeMirrorTooltipsExtension } from './utils/createCodeMirrorTooltipsExtension';
+import { createHighlightExtension } from './codeMirrorExtensions/createHighlightExtension';
+import { createLanguageExtension } from './codeMirrorExtensions/createLanguageExtension';
+import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
+import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
+import { getEditorStyles } from './CodeEditor.styles';
 import {
   type CodeEditorProps,
   type CodeMirrorExtension,
@@ -29,13 +41,10 @@ import {
   IndentUnits,
 } from './CodeEditor.types';
 
-const CODE_MIRROR_WIDTH = '100%';
-
 export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
   (
     {
       defaultValue,
-      enableActiveLineHighlighting = true,
       enableClickableUrls = true,
       enableCodeFolding = true,
       enableLineNumbers = true,
@@ -49,10 +58,20 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       indentSize = 2,
       tooltips = [],
       extensions: consumerExtensions = [],
+      darkMode: darkModeProp,
+      className,
+      height,
+      maxHeight,
+      maxWidth,
+      minHeight,
+      minWidth,
+      width,
       ...rest
     },
     forwardedRef,
   ) => {
+    const { theme } = useDarkMode(darkModeProp);
+    const baseFontSize = useBaseFontSize();
     const [value, setValue] = useState(defaultValue || '');
     const [languageExtension, setLanguageExtension] =
       useState<CodeMirrorExtension>([]);
@@ -112,6 +131,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       const lineWrappingCompartment = new Compartment();
       const indentExtensionCompartment = new Compartment();
       const tooltipCompartment = new Compartment();
+      const foldGutterCompartment = new Compartment();
 
       extensions.push(
         hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
@@ -123,8 +143,36 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         ),
         // Use diagnostics-based tooltips if any tooltips are provided
         tooltipCompartment.of(
-          tooltips.length > 0
-            ? [createCodeMirrorTooltipsExtension(tooltips)]
+          tooltips.length > 0 ? [createTooltipsExtension(tooltips)] : [],
+        ),
+        foldGutterCompartment.of(
+          enableCodeFolding
+            ? foldGutter({
+                markerDOM: (open: boolean) => {
+                  const icon = document.createElement('span');
+                  icon.className = 'cm-custom-fold-marker';
+                  icon.innerHTML = renderToString(
+                    open ? (
+                      <Icon
+                        glyph="ChevronDown"
+                        size="small"
+                        className={css`
+                          margin-top: 2px;
+                        `}
+                      />
+                    ) : (
+                      <Icon
+                        glyph="ChevronRight"
+                        size="small"
+                        className={css`
+                          margin-top: 2px;
+                        `}
+                      />
+                    ),
+                  );
+                  return icon;
+                },
+              })
             : [],
         ),
       );
@@ -133,6 +181,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     }, [
       createIndentExtension,
       enableClickableUrls,
+      enableCodeFolding,
       enableLineWrapping,
       indentUnit,
       indentSize,
@@ -148,7 +197,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         const languageCompartment = new Compartment();
         setLanguageExtension(
           languageCompartment.of(
-            language ? await createCodeMirrorLanguageExtension(language) : [],
+            language ? await createLanguageExtension(language) : [],
           ),
         );
       }
@@ -158,11 +207,29 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     return (
       <CodeMirror
         value={value}
-        width={CODE_MIRROR_WIDTH}
         onChange={onChange}
         onCreateEditor={onCreateEditor}
         readOnly={readOnly}
         placeholder={placeholder}
+        className={cx(
+          getEditorStyles({
+            width,
+            minWidth,
+            maxWidth,
+            height,
+            minHeight,
+            maxHeight,
+          }),
+          className, // class styles override inline styles
+        )}
+        /**
+         * `theme` prop is used instead of just adding these to extensions
+         * list because it automates updating on theme change.
+         */
+        theme={[
+          createThemeExtension(theme, baseFontSize),
+          createHighlightExtension(theme),
+        ]}
         extensions={[
           ...consumerExtensions.map(extension => Prec.highest(extension)),
           ...customExtensions,
@@ -170,9 +237,9 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         ]}
         basicSetup={{
           allowMultipleSelections: true,
-          foldGutter: enableCodeFolding,
-          highlightActiveLine: enableActiveLineHighlighting,
-          highlightActiveLineGutter: enableActiveLineHighlighting,
+          foldGutter: false, // Custom fold gutter is used instead
+          highlightActiveLine: false,
+          highlightActiveLineGutter: false,
           lineNumbers: enableLineNumbers,
         }}
         ref={ref}

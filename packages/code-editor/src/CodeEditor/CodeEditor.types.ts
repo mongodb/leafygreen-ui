@@ -8,7 +8,7 @@ import type {
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-import { type LanguageName } from './utils/createCodeMirrorLanguageExtension';
+import { type LanguageName } from './codeMirrorExtensions/createLanguageExtension';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
@@ -48,11 +48,17 @@ export const CodeEditorSelectors = {
   ActiveLine: '.cm-activeLine',
   ActiveLineGutter: '.cm-activeLineGutter',
   Content: '.cm-content',
+  Cursor: '.cm-cursor',
+  Editor: '.cm-editor',
+  Focused: '.cm-focused',
   FoldGutter: '.cm-foldGutter',
   GutterElement: '.cm-gutterElement',
+  Gutters: '.cm-gutters',
   HyperLink: '.cm-hyper-link-icon',
   Line: '.cm-line',
+  LineNumbers: '.cm-lineNumbers',
   LineWrapping: '.cm-lineWrapping',
+  SelectionBackground: '.cm-selectionBackground',
   Tooltip: '.cm-tooltip',
 } as const;
 export type CodeEditorSelectors =
@@ -103,14 +109,14 @@ export interface CodeEditorTooltip {
 
 export interface CodeEditorProps extends DarkModeProps {
   /**
+   * Styling prop
+   */
+  className?: string;
+
+  /**
    * Initial value to render in the editor.
    */
   defaultValue?: string;
-
-  /**
-   * Enables highlighting of the active line.
-   */
-  enableActiveLineHighlighting?: boolean;
 
   /**
    * Renders URLs as clickable links in the editor.
@@ -150,6 +156,12 @@ export interface CodeEditorProps extends DarkModeProps {
   forceParsing?: boolean;
 
   /**
+   * Sets the editor's height. If not set, the editor will automatically adjust
+   * its height based on the content.
+   */
+  height?: string;
+
+  /**
    * Sets the editor's indent size on tab click.
    */
   indentSize?: number;
@@ -163,6 +175,26 @@ export interface CodeEditorProps extends DarkModeProps {
    * Language to use for syntax highlighting. Will have no highlighting if not set.
    */
   language?: LanguageName;
+
+  /**
+   * Sets the editor's max height.
+   */
+  maxHeight?: string;
+
+  /**
+   * Sets the editor's max width.
+   */
+  maxWidth?: string;
+
+  /**
+   * Sets the editor's minimum height.
+   */
+  minHeight?: string;
+
+  /**
+   * Sets the editor's minimum width.
+   */
+  minWidth?: string;
 
   /**
    * Callback that receives the updated editor value when changes are made.
@@ -183,4 +215,10 @@ export interface CodeEditorProps extends DarkModeProps {
    * Add tooltips to the editor content.
    */
   tooltips?: Array<CodeEditorTooltip>;
+
+  /**
+   * Sets the editor's width. If not set, the editor will be 100% width of its
+   * parent container.
+   */
+  width?: string;
 }
