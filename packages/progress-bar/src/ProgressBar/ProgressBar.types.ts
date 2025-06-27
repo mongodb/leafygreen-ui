@@ -6,6 +6,7 @@ export const Type = {
   Meter: 'meter',
   Loader: 'loader',
 } as const;
+export type Type = (typeof Type)[keyof typeof Type];
 
 export const MeterStatus = {
   Healthy: 'healthy',
