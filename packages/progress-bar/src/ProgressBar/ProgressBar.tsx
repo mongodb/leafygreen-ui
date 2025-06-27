@@ -37,7 +37,7 @@ export function ProgressBar(props: ProgressBarProps) {
   const { theme } = useDarkMode(darkMode);
 
   const showIcon = iconsVisibleOnComplete.includes(variant)
-    ? showIconProps && isDeterminate && value === maxValue
+    ? showIconProps && value === maxValue
     : showIconProps;
 
   const progressBarId = `progress-bar-${

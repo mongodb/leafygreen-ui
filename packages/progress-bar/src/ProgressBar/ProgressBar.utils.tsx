@@ -10,6 +10,7 @@ import {
   MeterStatus,
   ProgressBarProps,
   ResolvedProgressBarProps,
+  Type,
   Variant,
 } from './ProgressBar.types';
 
@@ -43,7 +44,7 @@ export const resolveProgressBarProps = (
     enableAnimation: false,
   };
 
-  if (props.type === 'meter') {
+  if (props.type === Type.Meter) {
     return {
       ...baseProps,
       value: props.value,
