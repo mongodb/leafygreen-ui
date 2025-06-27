@@ -11,19 +11,19 @@ import { SectionNav } from '.';
 
 const children = (
   <>
-    <SectionNavItem href="#section-1">Section 1</SectionNavItem>
-    <SectionNavItem level={2} href="#section-2">
-      Section 2
+    <SectionNavItem href="#section-1" label="Section 1">
+      <SectionNavItem href="#section-2" label="Section 2" />
     </SectionNavItem>
-    <SectionNavItem active href="#section-3">
-      Section 3 should wrap to the next line
-    </SectionNavItem>
-    <SectionNavItem href="#section-4">Section 4</SectionNavItem>
-    <SectionNavItem level={2} href="#section-5">
-      Section 5
-    </SectionNavItem>
-    <SectionNavItem level={2} href="#section-6">
-      Section 6
+    <SectionNavItem
+      active
+      href="#section-3"
+      label="Section 3 should wrap to the next line"
+    />
+    <SectionNavItem href="#section-4" label="Section 4">
+      <SectionNavItem href="#section-5" label="Section 5" />
+      <SectionNavItem href="#section-6" label="Section 6">
+        <SectionNavItem href="#section-7" label="Section 7" />
+      </SectionNavItem>
     </SectionNavItem>
   </>
 );

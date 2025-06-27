@@ -6,7 +6,7 @@ import { Body } from '@leafygreen-ui/typography';
 import { SectionNavContextProvider } from '../Context/SectionNavContext';
 import { getLgIds } from '../utils/getLgIds';
 
-import { getTitleStyles, orderedListStyles } from './SectionNav.styles';
+import { getTitleStyles, getOrderedListStyles } from './SectionNav.styles';
 import { type SectionNavProps } from './SectionNav.types';
 
 export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(
@@ -40,7 +40,7 @@ export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(
               {title}
             </Body>
           )}
-          <ol className={orderedListStyles}>{children}</ol>
+          <ol className={getOrderedListStyles({ theme })}>{children}</ol>
         </nav>
       </SectionNavContextProvider>
     );

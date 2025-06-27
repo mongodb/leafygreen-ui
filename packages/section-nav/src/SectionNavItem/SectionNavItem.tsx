@@ -4,7 +4,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useSectionNavContext } from '../Context/SectionNavContext';
 
-import { getLinkStyles, itemStyles } from './SectionNavItem.styles';
+import { getLinkStyles, itemStyles, listSyles } from './SectionNavItem.styles';
 import { SectionNavItemProps } from './SectionNavItem.types';
 
 export const SectionNavItem = forwardRef<
@@ -17,6 +17,7 @@ export const SectionNavItem = forwardRef<
       children,
       active = false,
       level = 1,
+      label,
       ...rest
     }: SectionNavItemProps,
     forwardedRef,
@@ -41,8 +42,9 @@ export const SectionNavItem = forwardRef<
           data-lgid={`${lgIds.item}`}
           {...rest}
         >
-          {children}
+          {label}
         </a>
+        <ol className={listSyles}>{children}</ol>
       </li>
     );
   },

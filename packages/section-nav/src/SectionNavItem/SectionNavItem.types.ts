@@ -13,4 +13,9 @@ export interface SectionNavItemProps extends HTMLElementProps<'a'> {
    * @default 1
    */
   level?: number;
+
+  /**
+   * The heading label.
+   */
+  label: React.ReactNode;
 }

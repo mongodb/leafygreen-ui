@@ -7,6 +7,8 @@ import { WEDGE_BORDER_RADIUS, WEDGE_WIDTH } from './SectionNavItem.constants';
 
 export const itemStyles = css`
   list-style: none;
+  --current-depth: calc(var(--depth) + 1);
+  --current-plus: var(--plus);
 `;
 
 export const getLinkStyles = ({
@@ -45,12 +47,20 @@ export const getBaseStyles = ({
   cursor: pointer;
   display: block;
   color: ${color[theme].text.secondary.default};
-  padding-inline: ${level * spacing[400]}px ${spacing[400]}px;
   padding-block: ${spacing[150]}px;
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
-  border-left: 1px solid ${color[theme].border.secondary.default};
   position: relative;
+
+  /* padding-inline: calc(
+      ${spacing[400]}px * var(--current-depth)
+    )
+    ${spacing[400]}px; */
+
+  padding-inline: calc(
+      (${spacing[400]} * var(--current-depth) + var(--current-plus)) * 1px
+    )
+    ${spacing[400]}px;
 
   &::before {
     content: '';
@@ -96,4 +106,11 @@ export const getActiveStyles = ({ theme }: { theme: Theme }) => css`
   &::before {
     background-color: ${activeWedgeColor[theme]};
   }
+`;
+
+export const listSyles = css`
+  padding: 0;
+  margin: 0;
+  --depth: var(--current-depth);
+  --plus: calc(var(--current-plus) + 6);
 `;

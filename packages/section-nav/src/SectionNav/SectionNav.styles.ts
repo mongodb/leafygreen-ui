@@ -4,8 +4,16 @@ import { color, fontWeights, spacing } from '@leafygreen-ui/tokens';
 
 export const navStyles = css``;
 
-export const orderedListStyles = css`
-  all: unset;
+export const getOrderedListStyles = ({
+  theme = Theme.Light,
+}: {
+  theme: Theme;
+}) => css`
+  padding: 0;
+  margin: 0;
+  border-left: 1px solid ${color[theme].border.secondary.default};
+  --depth: 0;
+  --plus: 0;
 `;
 
 export const getTitleStyles = ({
