@@ -1,5 +1,19 @@
 # @leafygreen-ui/hooks
 
+## 9.1.0
+
+### Minor Changes
+
+- 3bef1e7: Exports `useFirstRender`: Returns whether this is the first render of a component.
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 9.0.0
 
 ### Major Changes

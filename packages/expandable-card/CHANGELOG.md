@@ -1,5 +1,28 @@
 # @leafygreen-ui/expandable-card
 
+## 5.0.2
+
+### Patch Changes
+
+- da277d5: [LG-5290](https://jira.mongodb.org/browse/LG-5290): add and export test utils
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+- Updated dependencies [da277d5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/typography@22.0.0
+  - @leafygreen-ui/icon@14.1.0
+  - @lg-tools/test-harnesses@0.3.2
+  - @leafygreen-ui/card@13.0.2
+  - @leafygreen-ui/icon-button@17.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 5.0.1
 
 ### Patch Changes

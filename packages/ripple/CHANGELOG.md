@@ -1,5 +1,11 @@
 # @leafygreen-ui/ripple
 
+## 2.0.2
+
+### Patch Changes
+
+- @leafygreen-ui/tokens@3.1.1
+
 ## 2.0.1
 
 ### Patch Changes

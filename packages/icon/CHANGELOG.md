@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 14.1.0
+
+### Minor Changes
+
+- 1eafbb5: Adds `Shield` to glyph set
+
 ## 14.0.0
 
 ### Major Changes
