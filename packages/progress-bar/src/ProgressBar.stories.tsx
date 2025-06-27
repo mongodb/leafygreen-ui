@@ -10,6 +10,29 @@ const testValues = {
   maxValue: 200,
 };
 
+const testSimulatedProgressToCompletion = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  const canvas = within(canvasElement);
+  const progressBar = canvas.getByRole('progressbar');
+
+  expect(progressBar).toHaveAttribute(
+    'aria-valuenow',
+    testValues.value.toString(),
+  );
+
+  await waitFor(
+    () => {
+      expect(progressBar.getAttribute('aria-valuenow')).toBe(
+        testValues.maxValue.toString(),
+      );
+    },
+    { timeout: 2000 },
+  );
+};
+
 const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
   component: ProgressBar,
@@ -68,24 +91,7 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     description: <span>Helper text</span>,
   },
   render: SimulatedProgressBar,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const progressBar = canvas.getByRole('progressbar');
-
-    expect(progressBar).toHaveAttribute(
-      'aria-valuenow',
-      testValues.value.toString(),
-    );
-
-    await waitFor(
-      () => {
-        expect(progressBar.getAttribute('aria-valuenow')).toBe(
-          testValues.maxValue.toString(),
-        );
-      },
-      { timeout: 2000 },
-    );
-  },
+  play: testSimulatedProgressToCompletion,
 };
 
 export const DeterminateLoader: StoryObj<typeof ProgressBar> = {
@@ -95,24 +101,7 @@ export const DeterminateLoader: StoryObj<typeof ProgressBar> = {
     maxValue: testValues.maxValue,
   },
   render: SimulatedProgressBar,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const progressBar = canvas.getByRole('progressbar');
-
-    expect(progressBar).toHaveAttribute(
-      'aria-valuenow',
-      testValues.value.toString(),
-    );
-
-    await waitFor(
-      () => {
-        expect(progressBar.getAttribute('aria-valuenow')).toBe(
-          testValues.maxValue.toString(),
-        );
-      },
-      { timeout: 2000 },
-    );
-  },
+  play: testSimulatedProgressToCompletion,
 };
 
 export const IndeterminateLoader: StoryObj<typeof ProgressBar> = {
@@ -126,8 +115,9 @@ export const Meter: StoryObj<typeof ProgressBar> = {
     type: 'meter',
     value: testValues.value,
     maxValue: testValues.maxValue,
-    status: 'healthy',
   },
+  render: SimulatedProgressBar,
+  play: testSimulatedProgressToCompletion,
 };
 
 export const WithLabel: StoryObj<typeof ProgressBar> = {
