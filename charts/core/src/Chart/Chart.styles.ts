@@ -16,8 +16,9 @@ const getBaseContainerStyles = (theme: Theme) => css`
   grid-template-areas:
     'chartHeader'
     'chart';
+  height: 316px; // 280px + 36px for header
   grid-template-columns: 100%;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto 1fr;
   width: 100%;
 `;
 
@@ -93,7 +94,6 @@ const baseChartWrapperStyles = css`
   position: relative;
   display: block;
   grid-area: chart;
-  height: 280px;
   width: 100%;
 `;
 
