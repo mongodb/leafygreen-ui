@@ -114,4 +114,25 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
     // Handlers should be the same objects (memoized)
     expect(result.current).toBe(initialHandlers);
   });
+
+  test('only changes identity when args change', () => {
+    const hoverArgs: CreateTooltipEventsArgs<typeof TriggerEvent.Hover> = {
+      setState,
+      triggerEvent: TriggerEvent.Hover,
+    };
+
+    const { result, rerender } = renderHook(
+      args => useTooltipTriggerEventHandlers(args),
+      {
+        initialProps: hoverArgs,
+      },
+    );
+    const initialHandlers = result.current;
+
+    // Rerender with the same props
+    rerender({ ...hoverArgs, delay: 0 });
+
+    // Handlers should be the same objects (memoized)
+    expect(result.current).not.toBe(initialHandlers);
+  });
 });

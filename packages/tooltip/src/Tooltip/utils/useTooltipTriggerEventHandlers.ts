@@ -3,6 +3,7 @@ import {
   FocusEventHandler,
   MouseEvent,
   MouseEventHandler,
+  useMemo,
   useRef,
 } from 'react';
 import { flushSync } from 'react-dom';
@@ -36,70 +37,72 @@ export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  if (triggerEvent === TriggerEvent.Hover) {
-    const onMouseEnter: MouseEventHandler = debounce(
-      (e: MouseEvent<HTMLElement>) => {
-        if (isEnabled) {
-          args.onMouseEnter?.(e);
-          // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
-          // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
-          flushSync(() => {
-            timeoutRef.current = setTimeout(() => {
-              setState(true);
-            }, delay);
-          });
-        }
-      },
-      CALLBACK_DEBOUNCE,
-    );
+  return useMemo(() => {
+    if (triggerEvent === TriggerEvent.Hover) {
+      const onMouseEnter: MouseEventHandler = debounce(
+        (e: MouseEvent<HTMLElement>) => {
+          if (isEnabled) {
+            args.onMouseEnter?.(e);
+            // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
+            // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
+            flushSync(() => {
+              timeoutRef.current = setTimeout(() => {
+                setState(true);
+              }, delay);
+            });
+          }
+        },
+        CALLBACK_DEBOUNCE,
+      );
 
-    const onMouseLeave: MouseEventHandler = debounce(
-      (e: MouseEvent<HTMLElement>) => {
+      const onMouseLeave: MouseEventHandler = debounce(
+        (e: MouseEvent<HTMLElement>) => {
+          if (isEnabled) {
+            args.onMouseLeave?.(e);
+            setState(false);
+            if (timeoutRef.current) {
+              clearTimeout(timeoutRef.current);
+              timeoutRef.current = null;
+            }
+          }
+        },
+        CALLBACK_DEBOUNCE,
+      );
+
+      const onFocus: FocusEventHandler = (e: FocusEvent<HTMLElement>) => {
         if (isEnabled) {
-          args.onMouseLeave?.(e);
+          args.onFocus?.(e);
+          setState(true);
+        }
+      };
+
+      const onBlur: FocusEventHandler = (e: FocusEvent<HTMLElement>) => {
+        if (isEnabled) {
+          args.onBlur?.(e);
           setState(false);
-          if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = null;
+        }
+      };
+
+      return {
+        onMouseEnter,
+        onMouseLeave,
+        onFocus,
+        onBlur,
+      } as TooltipEventHandlers<Trigger>;
+    } else {
+      const onClick = (e: MouseEvent<HTMLElement>) => {
+        if (isEnabled) {
+          // ensure that we don't close the tooltip when content inside tooltip is clicked
+          if (e.target !== tooltipRef?.current) {
+            args.onClick?.(e);
+            setState(curr => !curr);
           }
         }
-      },
-      CALLBACK_DEBOUNCE,
-    );
+      };
 
-    const onFocus: FocusEventHandler = (e: FocusEvent<HTMLElement>) => {
-      if (isEnabled) {
-        args.onFocus?.(e);
-        setState(true);
-      }
-    };
-
-    const onBlur: FocusEventHandler = (e: FocusEvent<HTMLElement>) => {
-      if (isEnabled) {
-        args.onBlur?.(e);
-        setState(false);
-      }
-    };
-
-    return {
-      onMouseEnter,
-      onMouseLeave,
-      onFocus,
-      onBlur,
-    } as TooltipEventHandlers<Trigger>;
-  } else {
-    const onClick = (e: MouseEvent<HTMLElement>) => {
-      if (isEnabled) {
-        // ensure that we don't close the tooltip when content inside tooltip is clicked
-        if (e.target !== tooltipRef?.current) {
-          args.onClick?.(e);
-          setState(curr => !curr);
-        }
-      }
-    };
-
-    return {
-      onClick,
-    } as TooltipEventHandlers<Trigger>;
-  }
+      return {
+        onClick,
+      } as TooltipEventHandlers<Trigger>;
+    }
+  }, [args, delay, isEnabled, setState, tooltipRef, triggerEvent]);
 }
