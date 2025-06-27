@@ -100,13 +100,16 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
       triggerEvent: TriggerEvent.Hover,
     };
 
-    const { result, rerender } = renderHook(() =>
-      useTooltipTriggerEventHandlers(hoverArgs),
+    const { result, rerender } = renderHook(
+      args => useTooltipTriggerEventHandlers(args),
+      {
+        initialProps: hoverArgs,
+      },
     );
     const initialHandlers = result.current;
 
     // Rerender with the same props
-    rerender(() => useTooltipTriggerEventHandlers(hoverArgs));
+    rerender(hoverArgs);
 
     // Handlers should be the same objects (memoized)
     expect(result.current).toBe(initialHandlers);
