@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -11,6 +11,7 @@ import {
   getBarFillStyles,
   getBarTrackStyles,
   getDeterminateBarFillStyles,
+  getFadeOutBarFillStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
   getIndeterminateBarFillStyles,
@@ -39,6 +40,23 @@ export function ProgressBar({
 }: ProgressBarProps) {
   const { theme } = useDarkMode(darkMode);
 
+  const [mode, setMode] = useState(
+    rest.isIndeterminate ? 'indeterminate' : 'determinate',
+  );
+
+  useEffect(() => {
+    if (!rest.isIndeterminate && mode === 'indeterminate') {
+      setMode('fading');
+
+      const fadeTimeout = setTimeout(() => {
+        setMode('determinate');
+      }, 500);
+
+      return () => clearTimeout(fadeTimeout);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rest.isIndeterminate]);
+
   const isDeterminate = !rest.isIndeterminate;
 
   const value = rest.value ?? undefined;
@@ -54,10 +72,17 @@ export function ProgressBar({
     : showIconProps;
 
   const getTypedProgressBarFillStyles = () => {
-    if (!isDeterminate)
+    if (mode === 'fading') {
+      return cx(
+        getIndeterminateBarFillStyles({ theme, variant }),
+        getFadeOutBarFillStyles(),
+      );
+    }
+
+    if (!isDeterminate && mode === 'indeterminate')
       return getIndeterminateBarFillStyles({ theme, variant });
 
-    if (value) {
+    if (value && mode === 'determinate') {
       return getDeterminateBarFillStyles({
         theme,
         variant,

@@ -160,7 +160,7 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
         setNewProps({ isIndeterminate: false, value: 1, maxValue: 200 });
 
         const valueTimer = setTimeout(() => {
-          setNewProps({ isIndeterminate: false, value: 200, maxValue: 200 });
+          setNewProps({ isIndeterminate: false, value: 100, maxValue: 200 });
         }, 1500);
 
         return () => clearTimeout(valueTimer);
