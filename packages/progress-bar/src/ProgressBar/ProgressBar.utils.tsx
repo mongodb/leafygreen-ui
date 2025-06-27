@@ -16,7 +16,6 @@ import {
 
 export const DEFAULT_MAX_VALUE = 1;
 export const DEFAULT_VARIANT = Variant.Info;
-
 export const iconsVisibleOnComplete = ['success'];
 
 const getMeterStatusVariant = (status?: MeterStatus): Variant => {
@@ -35,36 +34,38 @@ const getMeterStatusVariant = (status?: MeterStatus): Variant => {
 export const resolveProgressBarProps = (
   props: ProgressBarProps,
 ): ResolvedProgressBarProps => {
+  // baseline for all types of progress bars
   const baseProps = {
     value: props.value,
     maxValue: undefined,
     disabled: false,
     variant: DEFAULT_VARIANT,
-    isDeterminate: true,
+    isIndeterminate: false,
     enableAnimation: false,
   };
 
+  // meter type progress bar
   if (props.type === Type.Meter) {
     return {
       ...baseProps,
-      value: props.value,
       maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
       disabled: props.disabled ?? false,
       variant: getMeterStatusVariant(props.status),
     };
   }
 
+  // indeterminate loader progress bar
   if (props.isIndeterminate) {
     return {
       ...baseProps,
-      isDeterminate: false,
+      isIndeterminate: true,
       variant: props.variant ?? DEFAULT_VARIANT,
     };
   }
 
+  // determinate loader progress bar
   return {
     ...baseProps,
-    value: props.value,
     maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
     disabled: props.disabled ?? false,
     variant: props.variant ?? DEFAULT_VARIANT,

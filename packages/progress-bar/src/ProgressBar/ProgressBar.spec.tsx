@@ -130,7 +130,7 @@ describe('packages/progress-bar', () => {
           maxValue: 100,
           disabled: false,
           variant: 'warning',
-          isDeterminate: true,
+          isIndeterminate: false,
           enableAnimation: false,
         });
       });
@@ -151,7 +151,7 @@ describe('packages/progress-bar', () => {
           maxValue: 100,
           disabled: false,
           variant: 'success',
-          isDeterminate: true,
+          isIndeterminate: false,
           enableAnimation: true,
         });
       });
@@ -168,7 +168,7 @@ describe('packages/progress-bar', () => {
           maxValue: undefined,
           disabled: false,
           variant: 'info',
-          isDeterminate: false,
+          isIndeterminate: true,
           enableAnimation: false,
         });
       });

@@ -21,7 +21,7 @@ import {
   resolveProgressBarProps,
 } from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const { value, maxValue, disabled, variant, isDeterminate } =
+  const { value, maxValue, disabled, variant, isIndeterminate } =
     resolveProgressBarProps(props);
 
   const {
@@ -40,9 +40,7 @@ export function ProgressBar(props: ProgressBarProps) {
     ? showIconProps && value === maxValue
     : showIconProps;
 
-  const progressBarId = `progress-bar-${
-    getNodeTextContent(label) || 'default'
-  }`;
+  const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
 
   return (
     <div className={containerStyles} aria-disabled={disabled}>
@@ -86,7 +84,7 @@ export function ProgressBar(props: ProgressBarProps) {
               theme,
               variant,
               disabled,
-              isDeterminate,
+              isIndeterminate,
               value,
               maxValue,
             })}

@@ -151,20 +151,20 @@ export const getBarFillStyles = ({
   theme,
   variant,
   disabled,
-  isDeterminate,
+  isIndeterminate,
   value,
   maxValue,
 }: {
   theme: Theme;
   variant: Variant;
-  isDeterminate: boolean;
+  isIndeterminate: boolean;
   disabled?: boolean;
   value?: number;
   maxValue?: number;
 }) => {
   let typedBarFillStyles;
 
-  if (!isDeterminate) typedBarFillStyles = getIndeterminateBarFillStyles();
+  if (isIndeterminate) typedBarFillStyles = getIndeterminateBarFillStyles();
 
   if (value && maxValue)
     typedBarFillStyles = getDeterminateBarFillStyles(

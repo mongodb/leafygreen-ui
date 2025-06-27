@@ -145,7 +145,7 @@ export interface ResolvedProgressBarProps {
   variant: Variant;
 
   /** When `true`, shows an infinite looping animation along the bar. */
-  isDeterminate: boolean;
+  isIndeterminate: boolean;
 
   /** When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. */
   enableAnimation: boolean;
