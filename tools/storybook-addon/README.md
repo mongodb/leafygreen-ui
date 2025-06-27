@@ -20,6 +20,18 @@ export default {
 };
 ```
 
+## Features
+
+### Theme Toggle
+
+This addon includes a theme toggle button in the Storybook toolbar that allows you to switch between light and dark themes.
+
+- Click the sun/moon icon in the toolbar to toggle themes
+- Use the keyboard shortcut `T` to toggle themes
+- The theme state is global and persists across all stories
+
+For more details, see [README-THEME-TOGGLE.md](./README-THEME-TOGGLE.md)
+
 Most parameters `preview.ts` will be automatically populated by the addon. However you may want to customize certain things like section ordering:
 
 ```js

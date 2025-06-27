@@ -14,3 +14,8 @@ export {
   typescript,
   webpackFinal,
 } from './main';
+
+// Export theme toggle constants
+export { ADDON_ID } from './constants';
+export { PARAM_KEY, THEME_VALUES, TOOL_ID } from './globalThemeToggle';
+export { ThemeToggle, withGlobalTheme } from './globalThemeToggle';

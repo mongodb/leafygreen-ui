@@ -21,7 +21,7 @@ import {
   Subtitle,
 } from '@leafygreen-ui/typography';
 
-// import { darkTheme, lightTheme } from '../themes';
+import { PARAM_KEY, withGlobalTheme } from '../globalThemeToggle';
 
 const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -80,7 +80,7 @@ const parameters = {
       },
     },
   },
-  theme: {
+  [PARAM_KEY]: {
     themes: {
       [Theme.Light]: {
         name: 'Light',
@@ -94,15 +94,16 @@ const parameters = {
       },
     },
   },
-  // darkMode: {
-  //   dark: { ...darkTheme },
-  //   light: { ...lightTheme },
-  // },
 };
 
 const preview: Preview = {
   parameters,
-  decorators: [ReactStrictMode, ComponentPreview, PropCombinations],
+  decorators: [
+    withGlobalTheme,
+    ReactStrictMode,
+    ComponentPreview,
+    PropCombinations,
+  ],
 };
 
 export default preview;
