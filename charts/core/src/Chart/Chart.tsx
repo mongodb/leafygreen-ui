@@ -8,7 +8,7 @@
 import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
