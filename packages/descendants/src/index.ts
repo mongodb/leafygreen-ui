@@ -18,9 +18,11 @@ export {
   type Direction,
   type HighlightChangeHandler,
   type HighlightContextProps,
+  type HighlightContextType,
   type HighlightHookReturnType,
   HighlightProvider,
   type Index,
   useHighlight,
   useHighlightContext,
+  type UseHighlightOptions,
 } from './Highlight';
