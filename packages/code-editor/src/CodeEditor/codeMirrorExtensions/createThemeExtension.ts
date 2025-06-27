@@ -73,7 +73,7 @@ export const createThemeExtension = (
          * for some reason our background color was getting applied correctly
          * as soon as I'd select text and pull it up in devtools. ¯\_(ツ)_/¯
          */
-        background: 'rgba(1, 107, 248, 0.25)',
+        background: 'rgba(1, 107, 248, 0.25) !important',
       },
     },
     { dark: theme === Theme.Dark },
