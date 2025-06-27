@@ -11,6 +11,11 @@
       "require": "./dist/umd/index.js",
       "import": "./dist/esm/index.js",
       "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
     }
   },
   "scripts": {
@@ -37,12 +42,22 @@
     "@codemirror/lint": "^6.8.5",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/leafygreen-provider": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@lezer/highlight": "^1.2.1",
     "@replit/codemirror-lang-csharp": "^6.2.0",
     "@uiw/codemirror-extensions-hyper-link": "^4.23.12",
     "@uiw/react-codemirror": "^4.23.10"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@storybook/test": "^8.6.14"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/code-editor",
   "repository": {
@@ -51,9 +66,5 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/LG/summary"
-  },
-  "devDependencies": {
-    "@lg-tools/build": "workspace:^",
-    "@storybook/test": "^8.6.14"
   }
 }
