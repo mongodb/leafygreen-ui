@@ -70,6 +70,11 @@ export interface MessageProps
    * The heading text to display for the links section.
    */
   linksHeading?: string;
+
+  /**
+   * A callback function that is called when any link is clicked.
+   */
+  onLinkClick?: RichLinkProps['onLinkClick'];
 }
 
 export interface VerificationInfo {

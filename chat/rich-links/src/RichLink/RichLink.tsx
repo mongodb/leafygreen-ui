@@ -18,7 +18,7 @@ import { RichLinkBadge } from './RichLinkBadge';
 import { richLinkVariants } from './richLinkVariants';
 
 export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
-  ({ darkMode: darkModeProp, ...props }, ref) => {
+  ({ darkMode: darkModeProp, onLinkClick, ...props }, ref) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
     const richLinkVariantProps =
@@ -64,6 +64,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
           [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
         })}
         {...conditionalProps}
+        onClick={() => onLinkClick?.(props)}
       >
         <Body className={richLinkTextClassName} darkMode={darkMode}>
           {children}

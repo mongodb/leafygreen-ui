@@ -49,6 +49,7 @@ export const Message = forwardRef(
       componentOverrides,
       links,
       linksHeading,
+      onLinkClick,
       markdownProps,
       verified,
       darkMode: darkModeProp,
@@ -146,6 +147,7 @@ export const Message = forwardRef(
                   as={componentOverrides?.MessageLinks ?? MessageLinks}
                   headingText={linksHeading}
                   links={links}
+                  onLinkClick={onLinkClick}
                 />
               ) : null}
               {children}
