@@ -16,7 +16,11 @@ const meta: StoryMetaType<typeof ProgressBar> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: ['DeterminateVariants', 'IndeterminateVariants'],
+      storyNames: [
+        'DeterminateVariants',
+        'IndeterminateVariants',
+        'MeterVariants',
+      ],
       args: {
         label: <span key="label">Label</span>,
         description: <span key="description">Helper text</span>,
@@ -55,6 +59,7 @@ const SimulatedProgressBar = (props: ProgressBarProps) => {
 
 export const LiveExample: StoryObj<typeof ProgressBar> = {
   args: {
+    type: 'loader',
     value: testValues.value,
     maxValue: testValues.maxValue,
     formatValue: 'fraction',
@@ -83,8 +88,9 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
   },
 };
 
-export const BasicDeterminate: StoryObj<typeof ProgressBar> = {
+export const DeterminateLoader: StoryObj<typeof ProgressBar> = {
   args: {
+    type: 'loader',
     value: testValues.value,
     maxValue: testValues.maxValue,
   },
@@ -109,29 +115,38 @@ export const BasicDeterminate: StoryObj<typeof ProgressBar> = {
   },
 };
 
-export const Indeterminate: StoryObj<typeof ProgressBar> = {
+export const IndeterminateLoader: StoryObj<typeof ProgressBar> = {
   args: {
     isIndeterminate: true,
   },
 };
 
+export const Meter: StoryObj<typeof ProgressBar> = {
+  args: {
+    type: 'meter',
+    value: testValues.value,
+    maxValue: testValues.maxValue,
+    status: 'healthy',
+  },
+};
+
 export const WithLabel: StoryObj<typeof ProgressBar> = {
   args: {
-    ...BasicDeterminate.args,
+    ...DeterminateLoader.args,
     label: <span>Label</span>,
   },
 };
 
 export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   args: {
-    ...BasicDeterminate.args,
+    ...DeterminateLoader.args,
     formatValue: 'percentage',
   },
 };
 
 export const WithDescription: StoryObj<typeof ProgressBar> = {
   args: {
-    ...BasicDeterminate.args,
+    ...DeterminateLoader.args,
     description: <span>Helper text</span>,
   },
 };
@@ -145,6 +160,7 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
         disabled: [false, true],
       },
       args: {
+        type: 'loader',
         isIndeterminate: false,
         value: testValues.value,
         maxValue: testValues.maxValue,
@@ -173,11 +189,37 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
         variant: ['info', 'success'],
       },
       args: {
+        type: 'loader',
         isIndeterminate: true,
         value: testValues.value,
         formatValue: (value: number) => `${value} MBs`,
         showIcon: true,
       },
+    },
+  },
+};
+
+export const MeterVariants: StoryObj<typeof ProgressBar> = {
+  parameters: {
+    generate: {
+      combineArgs: {
+        status: [undefined, 'healthy', 'warning', 'error'],
+        disabled: [false, true],
+      },
+      args: {
+        type: 'meter',
+        value: testValues.value,
+        maxValue: testValues.maxValue,
+        formatValue: (value: number, maxValue?: number) =>
+          `${value} / ${maxValue} GB`,
+        showIcon: true,
+      },
+      excludeCombinations: [
+        {
+          status: ['warning', 'error'],
+          disabled: [true],
+        },
+      ],
     },
   },
 };
