@@ -6,6 +6,7 @@ import {
   color,
   fontFamilies,
   InteractionState,
+  spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
 
@@ -61,11 +62,18 @@ export const createThemeExtension = (
         },
 
       [CodeEditorSelectors.Line]: {
-        paddingLeft: '12px',
+        paddingLeft: `${spacing[300]}px`,
       },
 
       [CodeEditorSelectors.SelectionBackground]: {
-        background: 'rgba(1, 107, 248, 0.25) !important',
+        /**
+         * The background was not getting applied correctly without !important.
+         * I'm not entirely sure why, but there must be a sheet being applied
+         * higher or with greater specificity. It was hard to track down because
+         * for some reason our background color was getting applied correctly
+         * as soon as I'd select text and pull it up in devtools. ¯\_(ツ)_/¯
+         */
+        background: 'rgba(1, 107, 248, 0.25)',
       },
     },
     { dark: theme === Theme.Dark },
