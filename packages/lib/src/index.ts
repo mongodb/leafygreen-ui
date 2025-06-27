@@ -5,9 +5,16 @@ import getTheme from './getTheme';
 import { type LgIdProps, type LgIdString } from './LgIdProps';
 import * as typeIs from './typeIs';
 export { createSyntheticEvent } from './createSyntheticEvent';
+export { deepMapValues } from './deepMapValues';
 export { getClosestFocusableElement } from './getClosestFocusableElement';
 export { getMobileMediaQuery } from './getMobileMediaQuery';
 export * from './helpers';
+export {
+  focusableElementSelector,
+  queryAllFocusableElements,
+  queryFirstFocusableElement,
+  queryLastFocusableElement,
+} from './queryFocusableElements';
 export type {
   Concat,
   DeepKeys,
