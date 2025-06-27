@@ -206,7 +206,7 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
       },
       excludeCombinations: [
         {
-          status: ['warning', 'error'],
+          status: ['healthy', 'warning', 'error'],
           disabled: [true],
         },
       ],
