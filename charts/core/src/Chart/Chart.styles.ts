@@ -1,10 +1,12 @@
 import { CSS, Transform } from '@dnd-kit/utilities';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 import { ChartStates } from './Chart.types';
+
+export const chartWrapperClassName = createUniqueClassName('chart-wrapper');
 
 const getBaseContainerStyles = (theme: Theme) => css`
   background: ${color[theme].background[Variant.Primary][
@@ -87,13 +89,18 @@ export const getChartHeaderContainerStyles = ({
     },
   );
 
-export const chartWrapperStyles = css`
+const baseChartWrapperStyles = css`
   position: relative;
   display: block;
   grid-area: chart;
   height: 280px;
   width: 100%;
 `;
+
+export const chartWrapperStyles = cx(
+  baseChartWrapperStyles,
+  chartWrapperClassName,
+);
 
 export const chartStyles = css`
   height: 100%;
