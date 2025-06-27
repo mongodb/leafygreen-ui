@@ -33,9 +33,9 @@ import { createHighlightExtension } from './codeMirrorExtensions/createHighlight
 import { createLanguageExtension } from './codeMirrorExtensions/createLanguageExtension';
 import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
 import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
+import { getEditorStyles } from './CodeEditor.styles';
 import {
   type CodeEditorProps,
-  CodeEditorSelectors,
   type CodeMirrorExtension,
   type CodeMirrorRef,
   IndentUnits,
@@ -212,38 +212,14 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         readOnly={readOnly}
         placeholder={placeholder}
         className={cx(
-          {
-            [css`
-              ${CodeEditorSelectors.Editor} {
-                height: ${height};
-              }
-            `]: !!height,
-            [css`
-              ${CodeEditorSelectors.Editor} {
-                max-height: ${maxHeight};
-              }
-            `]: !!maxHeight,
-            [css`
-              ${CodeEditorSelectors.Editor} {
-                max-width: ${maxWidth};
-              }
-            `]: !!maxWidth,
-            [css`
-              ${CodeEditorSelectors.Editor} {
-                min-height: ${minHeight};
-              }
-            `]: !!minHeight,
-            [css`
-              ${CodeEditorSelectors.Editor} {
-                min-width: ${minWidth};
-              }
-            `]: !!minWidth,
-            [css`
-              ${CodeEditorSelectors.Editor} {
-                width: ${width};
-              }
-            `]: !!width,
-          },
+          getEditorStyles({
+            width,
+            minWidth,
+            maxWidth,
+            height,
+            minHeight,
+            maxHeight,
+          }),
           className, // class styles override inline styles
         )}
         /**
