@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
@@ -102,6 +103,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     width: '100%',
   },
   argTypes: {
+    darkMode: storybookArgTypes.darkMode,
     enableClickableUrls: {
       control: { type: 'boolean' },
     },
@@ -133,9 +135,6 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     language: {
       control: { type: 'select' },
       options: Object.values(LanguageName),
-    },
-    darkMode: {
-      control: { type: 'boolean' },
     },
     height: {
       control: { type: 'text' },
