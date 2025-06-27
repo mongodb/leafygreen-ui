@@ -1,5 +1,4 @@
 export { CodeEditor } from './CodeEditor';
-export { renderCodeEditor } from './CodeEditor.testUtils';
 export {
   type CodeEditorProps,
   CodeEditorSelectors,

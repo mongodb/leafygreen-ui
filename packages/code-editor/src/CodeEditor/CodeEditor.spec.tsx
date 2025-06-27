@@ -2,7 +2,7 @@ import { forceParsing } from '@codemirror/language';
 import { act, waitFor } from '@testing-library/react';
 import { EditorState } from '@uiw/react-codemirror';
 
-import { renderCodeEditor } from './CodeEditor.testUtils';
+import { renderCodeEditor } from './testing/testUtils';
 import { CodeEditorSelectors, LanguageName } from '.';
 
 global.MutationObserver = jest.fn().mockImplementation(() => ({
