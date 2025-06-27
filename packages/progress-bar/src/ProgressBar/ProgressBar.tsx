@@ -18,11 +18,11 @@ import {
   getHeaderIcon,
   getValueAriaAttributes,
   iconsVisibleOnComplete,
-  resolveProps,
+  resolveProgressBarProps,
 } from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
   const { value, maxValue, disabled, variant, isDeterminate } =
-    resolveProps(props);
+    resolveProgressBarProps(props);
 
   const {
     type: role,

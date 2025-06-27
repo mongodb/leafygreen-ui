@@ -60,6 +60,9 @@ interface BaseProps extends DarkModeProps {
   showIcon?: boolean;
 }
 
+interface BaseLoaderProps {
+  type: typeof Type.Loader;
+}
 interface BaseDeterminateLoaderProps {
   isIndeterminate?: false;
   value: number;
@@ -79,9 +82,6 @@ interface AnimatedDeterminateLoaderProps {
 
 type DeterminateLoaderProps = BaseDeterminateLoaderProps &
   (PlainDeterminateLoaderProps | AnimatedDeterminateLoaderProps);
-interface BaseLoaderProps {
-  type: typeof Type.Loader;
-}
 interface IndeterminateLoaderProps {
   isIndeterminate: true;
   value?: number;
@@ -100,3 +100,12 @@ interface MeterProps {
 }
 
 export type ProgressBarProps = BaseProps & (MeterProps | LoaderProps);
+
+export interface ResolvedProgressBarProps {
+  value: number | undefined;
+  maxValue: number | undefined;
+  disabled: boolean;
+  variant: Variant;
+  isDeterminate: boolean;
+  enableAnimation: boolean;
+}

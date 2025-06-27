@@ -9,6 +9,7 @@ import {
   FormatValueType,
   MeterStatus,
   ProgressBarProps,
+  ResolvedProgressBarProps,
   Variant,
 } from './ProgressBar.types';
 
@@ -30,42 +31,43 @@ const getMeterStatusVariant = (status?: MeterStatus): Variant => {
   }
 };
 
-export const resolveProps = (
+export const resolveProgressBarProps = (
   props: ProgressBarProps,
-): {
-  value: number | undefined;
-  maxValue: number | undefined;
-  disabled: boolean;
-  variant: Variant;
-  isDeterminate: boolean;
-} => {
+): ResolvedProgressBarProps => {
+  const baseProps = {
+    value: props.value,
+    maxValue: undefined,
+    disabled: false,
+    variant: DEFAULT_VARIANT,
+    isDeterminate: true,
+    enableAnimation: false,
+  };
+
   if (props.type === 'meter') {
     return {
+      ...baseProps,
       value: props.value,
       maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
       disabled: props.disabled ?? false,
       variant: getMeterStatusVariant(props.status),
-      isDeterminate: true,
     };
   }
 
   if (props.isIndeterminate) {
     return {
-      value: props.value,
-      maxValue: undefined,
-      disabled: false,
-      variant: props.variant ?? DEFAULT_VARIANT,
+      ...baseProps,
       isDeterminate: false,
     };
-  } else {
-    return {
-      value: props.value,
-      maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
-      disabled: props.disabled ?? false,
-      variant: props.variant ?? DEFAULT_VARIANT,
-      isDeterminate: true,
-    };
   }
+
+  return {
+    ...baseProps,
+    value: props.value,
+    maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
+    disabled: props.disabled ?? false,
+    variant: props.variant ?? DEFAULT_VARIANT,
+    enableAnimation: props.enableAnimation ?? false,
+  };
 };
 
 export const getPercentage = (value: number, maxValue?: number): number => {
