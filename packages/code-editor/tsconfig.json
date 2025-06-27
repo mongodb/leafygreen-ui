@@ -19,6 +19,9 @@
       "path": "../lib"
     },
     {
+      "path": "../palette"
+    },
+    {
       "path": "../tokens"
     },
     {
