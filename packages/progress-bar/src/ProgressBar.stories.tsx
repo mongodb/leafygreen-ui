@@ -164,7 +164,7 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
         }, 1500);
 
         return () => clearTimeout(valueTimer);
-      }, 3000);
+      }, 3500);
 
       return () => clearTimeout(indeterminateTimer);
     }, [props.value]);
