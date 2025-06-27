@@ -1,5 +1,5 @@
 export {
-  baseFocusableElementSelectors as focusableElementSelector,
+  focusableElementSelector,
   queryAllFocusableElements,
   queryFirstFocusableElement,
   queryLastFocusableElement,
