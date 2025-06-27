@@ -1,5 +1,20 @@
 # @lg-tools/storybook-addon
 
+## 0.5.2
+
+### Patch Changes
+
+- dd94a14: Adds missing `./static` directory to package exports
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/typography@22.0.0
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.1
+  - @lg-tools/storybook-decorators@1.0.2
+
 ## 0.5.1
 
 ### Patch Changes

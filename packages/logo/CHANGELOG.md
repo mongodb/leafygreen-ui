@@ -1,5 +1,15 @@
 # @leafygreen-ui/logo
 
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/palette@5.0.0
+
 ## 11.0.0
 
 ### Major Changes
