@@ -25,7 +25,7 @@ export function ProgressBar(props: ProgressBarProps) {
     resolveProgressBarProps(props);
 
   const {
-    type: role,
+    type,
     label,
     size = Size.Default,
     description,
@@ -39,6 +39,8 @@ export function ProgressBar(props: ProgressBarProps) {
   const showIcon = iconsVisibleOnComplete.includes(variant)
     ? showIconProps && value === maxValue
     : showIconProps;
+
+  const role = type === 'meter' ? 'meter' : 'progressbar';
 
   const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
 
