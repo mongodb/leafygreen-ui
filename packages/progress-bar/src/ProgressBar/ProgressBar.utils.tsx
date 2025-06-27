@@ -58,6 +58,7 @@ export const resolveProgressBarProps = (
     return {
       ...baseProps,
       isDeterminate: false,
+      variant: props.variant ?? DEFAULT_VARIANT,
     };
   }
 
