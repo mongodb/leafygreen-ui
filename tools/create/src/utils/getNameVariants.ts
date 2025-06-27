@@ -1,5 +1,6 @@
 import camelCase from 'lodash/camelCase';
 import kebabCase from 'lodash/kebabCase';
+import snakeCase from 'lodash/snakeCase';
 import startCase from 'lodash/startCase';
 
 export function getNameVariants(name: string) {
@@ -11,6 +12,12 @@ export function getNameVariants(name: string) {
   const packageNamePascal = camelCase(component).replace(/^\w/, c =>
     c.toUpperCase(),
   );
+  const packageNameSnake = snakeCase(component);
 
-  return { packageNameKebab, packageNameTitle, packageNamePascal };
+  return {
+    packageNameKebab,
+    packageNameTitle,
+    packageNamePascal,
+    packageNameSnake,
+  };
 }

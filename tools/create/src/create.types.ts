@@ -11,4 +11,5 @@ export interface TemplateParameters {
   packageNameKebab: string;
   packageNameTitle: string;
   packageNamePascal: string;
+  packageNameSnake: string;
 }
