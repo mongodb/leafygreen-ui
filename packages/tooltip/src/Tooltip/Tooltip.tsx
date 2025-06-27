@@ -24,7 +24,7 @@ import {
 
 import SvgNotch from '../Notch';
 
-import { useTooltipTriggerEventHandlers } from './utils/createTooltipTriggerEventHandlers';
+import { useTooltipTriggerEventHandlers } from './utils/useTooltipTriggerEventHandlers';
 import {
   baseStyles,
   baseTypeStyle,

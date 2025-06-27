@@ -3,7 +3,7 @@ import {
   FocusEventHandler,
   MouseEvent,
   MouseEventHandler,
-  useMemo,
+  useRef,
 } from 'react';
 import { flushSync } from 'react-dom';
 import debounce from 'lodash/debounce';
@@ -17,15 +17,13 @@ import type {
 } from './tooltipHandlers.types';
 
 /**
- * Creates the appropriate event handlers for a given Tooltip triggerEvent.
- *
+ * Hook to create the appropriate event handlers for a given Tooltip triggerEvent.
  * Spread the returned object onto the tooltip trigger element
  *
  * When `triggerEvent` is `hover`, it will create handlers for mouse enter, mouse leave, focus, and blur events.
  * When `triggerEvent` is `click`, it will create a handler for click events.
- *
  */
-export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
+export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
   args: CreateTooltipEventsArgs<Trigger>,
 ): TooltipEventHandlers<Trigger> {
   const {
@@ -36,9 +34,8 @@ export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
     isEnabled = true,
   } = args;
 
-  let timeout: NodeJS.Timeout | null = null;
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // switch (triggerEvent) {
   if (triggerEvent === TriggerEvent.Hover) {
     const onMouseEnter: MouseEventHandler = debounce(
       (e: MouseEvent<HTMLElement>) => {
@@ -47,7 +44,7 @@ export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
           // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
           // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
           flushSync(() => {
-            timeout = setTimeout(() => {
+            timeoutRef.current = setTimeout(() => {
               setState(true);
             }, delay);
           });
@@ -61,9 +58,9 @@ export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
         if (isEnabled) {
           args.onMouseLeave?.(e);
           setState(false);
-          if (timeout) {
-            clearTimeout(timeout);
-            timeout = null;
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
           }
         }
       },
@@ -105,21 +102,4 @@ export function createTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
       onClick,
     } as TooltipEventHandlers<Trigger>;
   }
-}
-
-/**
- * Hook to create the appropriate event handlers for a given Tooltip triggerEvent.
- * This is a convenience wrapper around `createTooltipTriggerEventHandlers`.
- *
- * When `triggerEvent` is `hover`, it will create handlers for mouse enter, mouse leave, focus, and blur events.
- * When `triggerEvent` is `click`, it will create a handler for click events.
- */
-export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
-  args: CreateTooltipEventsArgs<Trigger>,
-): TooltipEventHandlers<Trigger> {
-  const callbacks: TooltipEventHandlers<Trigger> = useMemo(() => {
-    return createTooltipTriggerEventHandlers({ ...args });
-  }, [args]);
-
-  return callbacks;
 }

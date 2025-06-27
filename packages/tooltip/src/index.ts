@@ -9,10 +9,7 @@ export {
   type TooltipProps,
   TriggerEvent,
 } from './Tooltip';
-export {
-  createTooltipTriggerEventHandlers,
-  useTooltipTriggerEventHandlers,
-} from './Tooltip/utils/createTooltipTriggerEventHandlers';
+export { useTooltipTriggerEventHandlers } from './Tooltip/utils/useTooltipTriggerEventHandlers';
 
 export { Tooltip }; // named
 export default Tooltip; // default
