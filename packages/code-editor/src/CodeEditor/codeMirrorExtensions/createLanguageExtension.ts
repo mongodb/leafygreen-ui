@@ -76,6 +76,6 @@ export const LanguageName = Object.keys(codeMirrorLanguageExtensions).reduce(
   {} as Record<LanguageName, LanguageName>,
 );
 
-export function createCodeMirrorLanguageExtension(language: LanguageName) {
+export function createLanguageExtension(language: LanguageName) {
   return codeMirrorLanguageExtensions[language]();
 }
