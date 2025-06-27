@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
@@ -8,7 +9,8 @@ import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
 
-import { codeSnippets, IndentUnits, LanguageName } from './CodeEditor';
+import { codeSnippets } from './CodeEditor/testing';
+import { IndentUnits, LanguageName } from './CodeEditor';
 import { CodeEditor } from '.';
 
 const MyTooltip = ({
@@ -82,7 +84,6 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     ),
   ],
   args: {
-    enableActiveLineHighlighting: true,
     enableClickableUrls: true,
     enableCodeFolding: true,
     enableLineNumbers: true,
@@ -94,11 +95,16 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     indentUnit: IndentUnits.Space,
     defaultValue: '',
     tooltips: [],
+    darkMode: false,
+    height: '',
+    maxHeight: '',
+    maxWidth: '',
+    minHeight: '',
+    minWidth: '',
+    width: '100%',
   },
   argTypes: {
-    enableActiveLineHighlighting: {
-      control: { type: 'boolean' },
-    },
+    darkMode: storybookArgTypes.darkMode,
     enableClickableUrls: {
       control: { type: 'boolean' },
     },
@@ -130,6 +136,24 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     language: {
       control: { type: 'select' },
       options: Object.values(LanguageName),
+    },
+    height: {
+      control: { type: 'text' },
+    },
+    maxHeight: {
+      control: { type: 'text' },
+    },
+    maxWidth: {
+      control: { type: 'text' },
+    },
+    minHeight: {
+      control: { type: 'text' },
+    },
+    minWidth: {
+      control: { type: 'text' },
+    },
+    width: {
+      control: { type: 'text' },
     },
   },
 };

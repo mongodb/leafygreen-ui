@@ -2,7 +2,7 @@ import { forceParsing } from '@codemirror/language';
 import { act, waitFor } from '@testing-library/react';
 import { EditorState } from '@uiw/react-codemirror';
 
-import { renderCodeEditor } from './CodeEditor.testUtils';
+import { renderCodeEditor } from './testing/testUtils';
 import { CodeEditorSelectors, LanguageName } from '.';
 
 global.MutationObserver = jest.fn().mockImplementation(() => ({
@@ -65,34 +65,14 @@ describe('packages/code-editor', () => {
     ).toBeInTheDocument();
   });
 
-  test('Line numbers do not renders when disabled', () => {
+  test('Line numbers do not render when disabled', () => {
     const { editor } = renderCodeEditor({ enableLineNumbers: false });
+    /**
+     * When the custom caret was used it appears the line number still gets
+     * rendered but is done so with visibility: hidden
+     */
     expect(
-      editor.queryBySelector(CodeEditorSelectors.GutterElement, { text: '1' }),
-    ).not.toBeInTheDocument();
-  });
-
-  test('Active line highlighting renders when enabled', () => {
-    const { editor } = renderCodeEditor({ enableActiveLineHighlighting: true });
-    expect(
-      editor.getBySelector(CodeEditorSelectors.ActiveLine),
-    ).toBeInTheDocument();
-    expect(
-      editor.getBySelector(CodeEditorSelectors.ActiveLineGutter, { text: '1' }),
-    ).toBeInTheDocument();
-  });
-
-  test('Active line highlighting does not render when disabled', () => {
-    const { editor } = renderCodeEditor({
-      enableActiveLineHighlighting: false,
-    });
-    expect(
-      editor.queryBySelector(CodeEditorSelectors.ActiveLine),
-    ).not.toBeInTheDocument();
-    expect(
-      editor.queryBySelector(CodeEditorSelectors.ActiveLineGutter, {
-        text: '1',
-      }),
+      editor.queryBySelector(CodeEditorSelectors.LineNumbers),
     ).not.toBeInTheDocument();
   });
 
