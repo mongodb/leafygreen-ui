@@ -95,7 +95,7 @@ export const useTooltipVisibility = ({
    * so it has to be added manually.
    */
   const addUnpinCallbackToCloseButton = useCallback(() => {
-    const btn = document.querySelector(`[data-chartid="${chartId}"]`);
+    const btn = document.querySelector(`button[data-chartid="${chartId}"]`);
 
     if (btn instanceof HTMLElement && !btn.dataset.bound) {
       btn.addEventListener('click', unpinTooltip);
