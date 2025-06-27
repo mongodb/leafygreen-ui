@@ -72,8 +72,8 @@ describe('packages/code-editor', () => {
      * rendered but is done so with visibility: hidden
      */
     expect(
-      editor.queryBySelector(CodeEditorSelectors.GutterElement, { text: '1' }),
-    ).toHaveStyle('visibility: hidden');
+      editor.queryBySelector(CodeEditorSelectors.LineNumbers),
+    ).not.toBeInTheDocument();
   });
 
   test('Clickable URLs render when enabled', () => {
