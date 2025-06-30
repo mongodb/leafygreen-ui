@@ -57,7 +57,7 @@ export const PreviewCard = forwardRef<HTMLDivElement, PreviewCardProps>(
     };
 
     /**
-     * User-friendly enhancement to move focus to first focusable element when it opens.
+     * Following a11y guidance, first focusable element is focused when card expands.
      */
     useEffect(() => {
       if (!isOpen || !contentRef.current) {

@@ -80,7 +80,30 @@ describe('packages/preview-card', () => {
     ).toBeInTheDocument();
   });
 
-  test('moves focus to the first focusable element when opened', async () => {
+  // JSDOM doesn't fully support inert: https://github.com/jsdom/jsdom/issues/3605
+  // this test is used as a stopgap until the below skipped test can be used
+  test('drawer is inert when collapsed', () => {
+    renderPreviewCard();
+    const drawer = screen.getByRole('button', {
+      name: 'Focusable',
+    }).parentElement;
+    expect(drawer).toHaveAttribute('inert');
+  });
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('focuses the toggle button first when collapsed', () => {
+    renderPreviewCard();
+
+    userEvent.tab();
+
+    const toggleButton = screen.getByRole('button', { name: 'View more' });
+    const focusableButton = screen.getByRole('button', {
+      name: 'Focusable',
+    });
+    expect(toggleButton).toHaveFocus();
+    expect(focusableButton).not.toHaveFocus();
+  });
+
+  test('moves focus to the first focusable element when expanded', async () => {
     renderPreviewCard();
 
     const toggleButton = screen.getByRole('button', { name: 'View more' });
