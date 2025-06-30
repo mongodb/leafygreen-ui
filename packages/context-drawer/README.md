@@ -61,13 +61,12 @@ import {
 
 ### ContextDrawer
 
-| Prop                             | Type                                                             | Description                                                                                                                             | Default |
-| -------------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `content`                        | `ReactElement`                                                   | The content to be displayed within the drawer.                                                                                          |         |
-| `defaultOpen`                    | `boolean`                                                        | The default open state of the drawer when it is uncontrolled.                                                                           | `false` |
-| `expandedHeight`                 | `number \| string`                                               | The maximum height of the content area when expanded. Can be a number (in pixels) or a string (e.g., '50%').                            | `160`   |
-| `isOpen`                         | `boolean`                                                        | The open state of the drawer. Providing this prop will switch the                                                                       |
-| \* component to controlled mode. |                                                                  |
-| `onOpenChange`                   | `ChangeEventHandler<boolean>`                                    | Event handler called when the open state of the drawer changes.                                                                         |         |
-| `reference`                      | `ReactElement`                                                   | The element that the drawer is positioned relative to.                                                                                  |         |
-| `trigger`                        | `ReactElement` or `(props: { isOpen: boolean }) => ReactElement` | The element that triggers the opening and closing of the drawer. Can be a React element or a function that receives the `isOpen` state. |         |
+| Prop             | Type                                                             | Description                                                                                                                             | Default |
+| ---------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `content`        | `ReactElement`                                                   | The content to be displayed within the drawer.                                                                                          |         |
+| `defaultOpen`    | `boolean`                                                        | The default open state of the drawer when it is uncontrolled.                                                                           | `false` |
+| `expandedHeight` | `number \| string`                                               | The maximum height of the content area when expanded. Can be a number (in pixels) or a string (e.g., '50%').                            | `160`   |
+| `isOpen`         | `boolean`                                                        | The open state of the drawer. Providing this prop will switch the component to controlled mode.                                         |         |
+| `onOpenChange`   | `ChangeEventHandler<boolean>`                                    | Event handler called when the open state of the drawer changes.                                                                         |         |
+| `reference`      | `ReactElement`                                                   | The element that the drawer is positioned relative to.                                                                                  |         |
+| `trigger`        | `ReactElement` or `(props: { isOpen: boolean }) => ReactElement` | The element that triggers the opening and closing of the drawer. Can be a React element or a function that receives the `isOpen` state. |         |
