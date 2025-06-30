@@ -19,7 +19,7 @@ describe('formatCssSize', () => {
     expect(formatCssSize('100')).toBe('100px');
     expect(formatCssSize('0')).toBe('0px');
     expect(formatCssSize('-5')).toBe('-5px');
-    expect(formatCssSize(' 42 ')).toBe(' 42 px'); // This will actually return ' 42 px', which may not be intended
+    expect(formatCssSize(' 42 ')).toBe('42px');
   });
 
   test('returns string with units as is', () => {
@@ -34,7 +34,7 @@ describe('formatCssSize', () => {
 
   test('handles edge cases for string input', () => {
     expect(formatCssSize('')).toBe('');
-    expect(formatCssSize(' ')).toBe(' ');
+    expect(formatCssSize(' ')).toBe('');
     expect(formatCssSize('px')).toBe('px');
     expect(formatCssSize('100 px')).toBe('100 px');
     expect(formatCssSize('100.5')).toBe('100.5px');
@@ -42,7 +42,7 @@ describe('formatCssSize', () => {
     expect(formatCssSize('-.5')).toBe('-.5px');
   });
 
-  test('does not append px to non-numeric strings', () => {
+  test('does not append px to non-numeric stripnngs', () => {
     expect(formatCssSize('foo')).toBe('foo');
     expect(formatCssSize('barpx')).toBe('barpx');
     expect(formatCssSize('100abc')).toBe('100abc');

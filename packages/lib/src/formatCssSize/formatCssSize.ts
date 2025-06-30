@@ -30,18 +30,20 @@ export const formatCssSize = (
     return `${value}px`;
   }
 
+  const trimmedValue = value.trim();
+
   // If the value is a string, check if it's purely numeric.
   // `isFinite` is used to correctly handle string-to-number conversion
   // and reject strings that already have units (e.g., "100px").
   if (
-    typeof value === 'string' &&
-    !isNaN(parseFloat(value)) &&
-    isFinite(Number(value))
+    typeof trimmedValue === 'string' &&
+    !isNaN(parseFloat(trimmedValue)) &&
+    isFinite(Number(trimmedValue))
   ) {
-    return `${value}px`;
+    return `${trimmedValue}px`;
   }
 
   // If it's a string that's not purely numeric (e.g., "5rem", "auto"),
   // return it directly, assuming it's a valid CSS value.
-  return value;
+  return trimmedValue;
 };
