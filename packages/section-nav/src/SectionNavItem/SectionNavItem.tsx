@@ -35,7 +35,7 @@ export const SectionNavItem = forwardRef<
       );
     }
 
-    // This is a warning for developers to know that the component currently only supports 2 levels of nesting.
+    // This is a warning for consumers to know that the component currently only supports 2 levels of nesting.
     if (level > 2) {
       console.warn(
         'This component currently only supports 2 levels of nesting.',
