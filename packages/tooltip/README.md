@@ -78,3 +78,30 @@ import Tooltip from '@leafygreen-ui/tooltip';
 | `popoverZIndex`   | `number`                                  | Sets the z-index CSS property for the popover.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |                                             |
 | `baseFontSize`    | `13` \| `16`                              | font-size applied to typography element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | default to value set by LeafyGreen Provider |
 | ...               | native `div` attributes                   | Any other props will be spread on the root `div` element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |                                             |
+
+### External tooltip triggers
+
+When defining a tooltip trigger as a separate element, ensure the `refEl` is defined on the `<Tooltip>` element, and use the `useTooltipTriggerEventHandlers` hook to create tooltip event handlers.
+
+```tsx
+const triggerRef = useRef();
+const [open, setOpen] = useState(false);
+const tooltipEventHandlers = useTooltipTriggerEventHandlers({
+  triggerEvent: TriggerEvent.Hover,
+  setState: setOpen,
+  onFocus: e => {
+    console.log(e);
+  }, // side effects called on focus of the trigger
+});
+
+return (
+  <>
+    <Button ref={triggerRef} {...tooltipEventHandlers}>
+      Button
+    </Button>
+    <Tooltip refEl={triggerRef} open={open} setOpen={setOpen}>
+      Content
+    </Tooltip>
+  </>
+);
+```

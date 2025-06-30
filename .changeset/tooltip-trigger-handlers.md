@@ -2,7 +2,7 @@
 '@leafygreen-ui/tooltip': minor
 ---
 
-Exports utilities (`createTooltipTriggerEventHandlers` & `useTooltipTriggerEventHandlers`) to enable handling external tooltip triggers.
+Exports `useTooltipTriggerEventHandlers` to enable handling external tooltip triggers.
 
 ```tsx
 const [open, setOpen] = useState(false);

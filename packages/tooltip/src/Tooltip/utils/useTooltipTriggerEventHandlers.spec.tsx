@@ -90,7 +90,7 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
 
     // After rerender with isEnabled=false, handlers should be disabled
     result.current.onMouseEnter(mockMouseEvent);
-    jest.advanceTimersByTime(CALLBACK_DEBOUNCE);
+    jest.advanceTimersByTime(CALLBACK_DEBOUNCE + DEFAULT_HOVER_DELAY);
     expect(setState).not.toHaveBeenCalled();
   });
 

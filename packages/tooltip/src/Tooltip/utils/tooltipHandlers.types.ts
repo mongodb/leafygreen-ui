@@ -2,7 +2,7 @@ import { FocusEventHandler, MouseEventHandler, RefObject } from 'react';
 
 import type { TriggerEvent } from '../Tooltip.types';
 
-export interface CreateTooltipEventsBaseArgs {
+export interface UseTooltipEventsBaseArgs {
   /**
    *  The `useState` dispatch method to toggle the tooltip state
    */
@@ -65,7 +65,7 @@ export interface CreateTooltipEventsArgsClick {
 }
 
 export type CreateTooltipEventsArgs<Trigger extends TriggerEvent> =
-  CreateTooltipEventsBaseArgs &
+  UseTooltipEventsBaseArgs &
     (Trigger extends 'hover'
       ? CreateTooltipEventsArgsHover
       : Trigger extends 'click'
