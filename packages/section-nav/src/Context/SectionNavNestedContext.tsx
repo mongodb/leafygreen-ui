@@ -7,7 +7,7 @@ import React, {
 
 export interface SectionNavNestedProviderProps {
   /**
-   * LGIDs for SectionNav components.
+   * The level of the SectionNavItem.
    */
   level: number;
 }
