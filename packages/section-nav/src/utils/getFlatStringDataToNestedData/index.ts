@@ -1,0 +1,1 @@
+export { getFlatStringDataToNestedData } from './getFlatStringDataToNestedData';
