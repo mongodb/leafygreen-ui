@@ -1,5 +1,35 @@
 # @lg-charts/core
 
+## 1.4.0
+
+### Minor Changes
+
+- ae6b41d: [LG-5321](https://jira.mongodb.org/browse/LG-5321): add and export `chartWrapperClassName` for customizing `Chart` styling
+- ca86113: Allow `null` and `undefined` values in data points
+- 2fecbc0: Ability to optionally add icon directly next to title in chart header.
+
+### Patch Changes
+
+- 94eb7e3: Allow consumers to adjust height on Charts
+- 0698bd7: [LG-5334](https://jira.mongodb.org/browse/LG-5334): Fixes an issue where the scroll position in `ChartTooltip` would reset when a user moused out of the chart. With this update, the scroll position is now preserved
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/typography@22.0.0
+  - @leafygreen-ui/icon@14.1.0
+  - @lg-charts/chart-card@1.0.2
+  - @lg-charts/colors@1.0.1
+  - @lg-charts/series-provider@1.0.1
+  - @leafygreen-ui/icon-button@17.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 1.3.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @leafygreen-ui/portal
 
+## 7.0.1
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/hooks@9.1.0
+
 ## 7.0.0
 
 ### Major Changes

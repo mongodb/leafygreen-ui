@@ -1,5 +1,28 @@
 # @lg-chat/message
 
+## 6.1.0
+
+### Minor Changes
+
+- 12ff299: Add the onLinkClick prop to support callbacks whenever a rich link is clicked
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [12ff299]
+- Updated dependencies [164b15f]
+  - @leafygreen-ui/lib@15.1.0
+  - @lg-chat/rich-links@3.1.0
+  - @leafygreen-ui/typography@22.0.0
+  - @lg-chat/lg-markdown@4.0.2
+  - @leafygreen-ui/banner@10.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.2
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 6.0.1
 
 ### Patch Changes
