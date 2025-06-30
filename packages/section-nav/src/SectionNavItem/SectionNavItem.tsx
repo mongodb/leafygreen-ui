@@ -3,6 +3,10 @@ import React, { forwardRef } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useSectionNavContext } from '../Context/SectionNavContext';
+import {
+  SectionNavNestedContextProvider,
+  useSectionNavNestedContext,
+} from '../Context/SectionNavNestedContext';
 
 import { getLinkStyles, itemStyles, listSyles } from './SectionNavItem.styles';
 import { SectionNavItemProps } from './SectionNavItem.types';
@@ -23,6 +27,7 @@ export const SectionNavItem = forwardRef<
   ) => {
     const { theme } = useDarkMode();
     const { lgIds, hasContext } = useSectionNavContext();
+    const { level } = useSectionNavNestedContext();
 
     if (!hasContext) {
       console.error(
@@ -30,19 +35,26 @@ export const SectionNavItem = forwardRef<
       );
     }
 
+    if (level > 2) {
+      console.warn('This component only supports 2 levels of nesting.');
+    }
+
     return (
       <li className={itemStyles}>
         <a
-          className={getLinkStyles({ active, theme, className })}
+          className={getLinkStyles({ active, theme, className, level })}
           ref={forwardedRef}
           data-active={active}
           data-testid={`${lgIds.item}`}
           data-lgid={`${lgIds.item}`}
+          data-level={level}
           {...rest}
         >
           {label}
         </a>
-        <ol className={listSyles}>{children}</ol>
+        <SectionNavNestedContextProvider level={level + 1}>
+          <ol className={listSyles}>{children}</ol>
+        </SectionNavNestedContextProvider>
       </li>
     );
   },
