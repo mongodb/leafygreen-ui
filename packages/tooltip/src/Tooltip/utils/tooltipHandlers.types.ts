@@ -19,7 +19,7 @@ export interface UseTooltipEventsBaseArgs {
   delay?: number;
 }
 
-export interface CreateTooltipEventsArgsHover {
+export interface UseTooltipEventsArgsHover {
   /**
    * Whether the tooltip will open/close on `hover` or `click` events.
    * Note: must match the value passed onto `tooltip`
@@ -45,7 +45,7 @@ export interface CreateTooltipEventsArgsHover {
   onBlur?: FocusEventHandler<HTMLElement>;
 }
 
-export interface CreateTooltipEventsArgsClick {
+export interface UseTooltipEventsArgsClick {
   /**
    * Whether the tooltip will open/close on `hover` or `click` events.
    * Note: must match the value passed onto `tooltip`
@@ -67,9 +67,9 @@ export interface CreateTooltipEventsArgsClick {
 export type CreateTooltipEventsArgs<Trigger extends TriggerEvent> =
   UseTooltipEventsBaseArgs &
     (Trigger extends 'hover'
-      ? CreateTooltipEventsArgsHover
+      ? UseTooltipEventsArgsHover
       : Trigger extends 'click'
-      ? CreateTooltipEventsArgsClick
+      ? UseTooltipEventsArgsClick
       : never);
 
 export interface TooltipHoverEvents {
