@@ -103,7 +103,7 @@ export const contentScrollContainerStyles = css`
 
 export const bottomInterceptStyles = css`
   // Ensures bottom intercept is visible when end of scroll container is reached.
-  padding-bottom: ${spacing[25]}px;
+  padding-bottom: 1px;
 `;
 
 export const triggerWrapperStyles = css`
