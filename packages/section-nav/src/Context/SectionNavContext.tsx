@@ -27,11 +27,11 @@ export const SectionNavContextProvider = ({
   hasContext,
   darkMode = false,
 }: PropsWithChildren<SectionNavProviderProps>) => {
-  const ToolbarProvider = (
+  const SectionNavProvider = (
     SectionNavContext as React.Context<SectionNavProviderProps>
   ).Provider;
 
-  const toolbarProviderData = useMemo(() => {
+  const SectionNavProviderData = useMemo(() => {
     return {
       lgIds,
       hasContext,
@@ -40,7 +40,9 @@ export const SectionNavContextProvider = ({
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <ToolbarProvider value={toolbarProviderData}>{children}</ToolbarProvider>
+      <SectionNavProvider value={SectionNavProviderData}>
+        {children}
+      </SectionNavProvider>
     </LeafyGreenProvider>
   );
 };

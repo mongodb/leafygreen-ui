@@ -52,9 +52,11 @@ export const SectionNavItem = forwardRef<
         >
           {label}
         </a>
-        <SectionNavNestedContextProvider level={level + 1}>
-          <ol className={listSyles}>{children}</ol>
-        </SectionNavNestedContextProvider>
+        {children && (
+          <SectionNavNestedContextProvider level={level + 1}>
+            <ol className={listSyles}>{children}</ol>
+          </SectionNavNestedContextProvider>
+        )}
       </li>
     );
   },
