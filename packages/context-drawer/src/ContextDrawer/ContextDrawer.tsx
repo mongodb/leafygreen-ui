@@ -12,6 +12,7 @@ import {
   getContentWrapperStyles,
   getInnerContainerStyles,
   getOuterContainerStyles,
+  referenceWrapperStyles,
   triggerWrapperStyles,
 } from './ContextDrawer.styles';
 import { ContextDrawerProps } from './ContextDrawer.types';
@@ -94,10 +95,8 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
           ref={fwdRef}
           {...rest}
         >
-          <div
-            className={getInnerContainerStyles({ showBorder: !!isOpen, theme })}
-          >
-            {reference}
+          <div className={getInnerContainerStyles({ theme })}>
+            <div className={referenceWrapperStyles}>{reference}</div>
             <div
               aria-labelledby={triggerId}
               className={getContentWrapperStyles({

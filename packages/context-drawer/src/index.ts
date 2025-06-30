@@ -1,4 +1,8 @@
-export { ContextDrawer, type ContextDrawerProps } from './ContextDrawer';
+export {
+  ContextDrawer,
+  type ContextDrawerProps,
+  referenceWrapperClassName,
+} from './ContextDrawer';
 export {
   ContextDrawerButton,
   type ContextDrawerButtonProps,

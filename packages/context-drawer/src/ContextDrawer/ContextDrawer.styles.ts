@@ -1,5 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import {
   addOverflowShadow,
   borderRadius,
@@ -12,6 +12,12 @@ import {
 
 import { TRANSITION_DURATION } from '../constants';
 
+const BORDER_WIDTH = 1;
+
+export const referenceWrapperClassName = createUniqueClassName(
+  'context_drawer-reference_wrapper',
+);
+
 const baseOuterContainerStyles = css`
   display: flex;
   flex-direction: column;
@@ -23,35 +29,33 @@ export const getOuterContainerStyles = ({
   className?: string;
 }) => cx(baseOuterContainerStyles, className);
 
-const baseInnerContainerStyles = css`
+export const getInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
   display: flex;
   flex-direction: column;
   border-radius: ${borderRadius[400]}px;
-  border: 1px solid transparent;
+  border: ${BORDER_WIDTH}px solid
+    ${color[theme].border[Variant.Secondary][InteractionState.Default]};
   border-bottom-width: 0;
   transition: border ${TRANSITION_DURATION}ms ease-in-out;
 `;
 
-const getOpenContainerStyles = ({ theme }: { theme: Theme }) => css`
-  border: 1px solid
-    ${color[theme].border[Variant.Secondary][InteractionState.Default]};
-`;
-
-export const getInnerContainerStyles = ({
-  showBorder,
-  theme,
-}: {
-  showBorder: boolean;
-  theme: Theme;
-}) =>
-  cx(baseInnerContainerStyles, {
-    [getOpenContainerStyles({ theme })]: showBorder,
-  });
+/**
+ * Negative margins are used to offset the border width of the inner container so
+ * that the reference element and content element appear to be flush with the border.
+ */
+export const referenceWrapperStyles = cx(
+  css`
+    margin-top: -${BORDER_WIDTH}px;
+    margin-left: -${BORDER_WIDTH}px;
+    margin-right: -${BORDER_WIDTH}px;
+  `,
+  referenceWrapperClassName,
+);
 
 const contentWrapperStyles = css`
   position: relative;
   overflow: hidden;
-  transition-property: height, opacity;
+  transition-property: height, opacity, visibility;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
   height: 0;
@@ -63,14 +67,11 @@ const contentWrapperStyles = css`
   }
 `;
 
-const getExpandedContentStyles = (height: number | string) => {
-  const expandedHeight = typeof height === 'number' ? `${height}px` : height;
-  return css`
-    height: ${expandedHeight};
-    opacity: 1;
-    visibility: visible;
-  `;
-};
+const getExpandedContentStyles = (height: string) => css`
+  height: ${height};
+  opacity: 1;
+  visibility: visible;
+`;
 
 export const getContentWrapperStyles = ({
   hasBottomShadow,
@@ -81,7 +82,7 @@ export const getContentWrapperStyles = ({
 }: {
   hasBottomShadow: boolean;
   hasTopShadow: boolean;
-  height: number | string;
+  height: string;
   isOpen: boolean;
   theme: Theme;
 }) =>
