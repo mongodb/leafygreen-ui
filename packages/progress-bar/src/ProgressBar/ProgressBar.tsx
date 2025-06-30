@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
@@ -12,7 +12,7 @@ import {
   getHeaderValueStyles,
   headerStyles,
 } from './ProgressBar.styles';
-import { ProgressBarProps, Size } from './ProgressBar.types';
+import { AnimationMode, ProgressBarProps, Size } from './ProgressBar.types';
 import {
   getFormattedValue,
   getHeaderIcon,
@@ -21,8 +21,14 @@ import {
   resolveProgressBarProps,
 } from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const { value, maxValue, disabled, variant, isIndeterminate } =
-    resolveProgressBarProps(props);
+  const {
+    value,
+    maxValue,
+    disabled,
+    variant,
+    isIndeterminate,
+    enableAnimation,
+  } = resolveProgressBarProps(props);
 
   const {
     type,
@@ -36,18 +42,35 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const { theme } = useDarkMode(darkMode);
 
+  const role = type === 'meter' ? 'meter' : 'progressbar';
+  const id = `${role}-${getNodeTextContent(label) || 'default'}`;
+
   const showIcon = iconsVisibleOnComplete.includes(variant)
     ? showIconProps && value === maxValue
     : showIconProps;
 
-  const role = type === 'meter' ? 'meter' : 'progressbar';
+  const [animationMode, setAnimationMode] = useState<AnimationMode>(
+    isIndeterminate ? AnimationMode.Indeterminate : AnimationMode.Determinate,
+  );
 
-  const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
+  // if progress bar was previously indeterminate and is now determinate, apply animated transition
+  useEffect(() => {
+    if (!isIndeterminate && animationMode === AnimationMode.Indeterminate) {
+      setAnimationMode(AnimationMode.Transition);
+
+      const id = setTimeout(() => {
+        setAnimationMode(AnimationMode.Determinate);
+      }, 500);
+
+      return () => clearTimeout(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isIndeterminate]);
 
   return (
     <div className={containerStyles} aria-disabled={disabled}>
       <div className={headerStyles}>
-        <Label htmlFor={progressBarId} darkMode={darkMode} disabled={disabled}>
+        <Label htmlFor={id} darkMode={darkMode} disabled={disabled}>
           {label}
         </Label>
 
@@ -72,8 +95,8 @@ export function ProgressBar(props: ProgressBarProps) {
 
       <div
         role={role}
-        id={progressBarId}
-        aria-label={progressBarId}
+        id={id}
+        aria-label={id}
         {...getValueAriaAttributes(value, maxValue)}
       >
         <div
@@ -83,12 +106,13 @@ export function ProgressBar(props: ProgressBarProps) {
           <div
             data-testid="progress-bar-fill"
             className={getBarFillStyles({
+              animationMode,
               theme,
               variant,
               disabled,
-              isIndeterminate,
               value,
               maxValue,
+              enableAnimation,
             })}
           ></div>
         </div>

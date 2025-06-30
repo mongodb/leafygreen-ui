@@ -3,8 +3,19 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { borderRadius, color, spacing } from '@leafygreen-ui/tokens';
 
-import { Size, Variant } from './ProgressBar.types';
+import { AnimationMode, Size, Variant } from './ProgressBar.types';
 import { getPercentage } from './ProgressBar.utils';
+
+const opacityAlphaChannels = {
+  50: '80',
+  75: 'BF',
+  100: 'FF',
+};
+
+const fadePalette = {
+  blue: '#C3E7FE',
+  green: '#C0FAE6',
+};
 
 const progressBarSizeStyles = {
   [Size.Small]: {
@@ -29,10 +40,12 @@ const progressBarVariantStyles = {
     [Variant.Info]: {
       barColor: palette.blue.base,
       iconColor: palette.blue.base,
+      shimmerFadeColor: `${fadePalette.blue}${opacityAlphaChannels[50]}`,
     },
     [Variant.Success]: {
       barColor: palette.green.dark1,
       iconColor: palette.green.dark1,
+      shimmerFadeColor: `${fadePalette.green}${opacityAlphaChannels[50]}`,
     },
     [Variant.Warning]: {
       barColor: palette.yellow.base,
@@ -50,10 +63,12 @@ const progressBarVariantStyles = {
     [Variant.Info]: {
       barColor: palette.blue.light1,
       iconColor: palette.blue.light1,
+      shimmerFadeColor: `${fadePalette.blue}${opacityAlphaChannels[75]}`,
     },
     [Variant.Success]: {
       barColor: palette.green.base,
       iconColor: palette.green.base,
+      shimmerFadeColor: `${fadePalette.green}${opacityAlphaChannels[75]}`,
     },
     [Variant.Warning]: {
       barColor: palette.yellow.base,
@@ -121,58 +136,170 @@ export const getBarTrackStyles = ({
   background-color: ${progressBarVariantStyles[theme].trackColor};
 `;
 
-const getBaseBarFillStyles = ({
+const getBaseBarFillStyles = () => css`
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border-radius: inherit;
+`;
+
+const getDeterminateBarFillStyles = ({
   theme,
   variant,
   disabled,
+  width,
+  enableAnimation,
 }: {
   theme: Theme;
   variant: Variant;
   disabled?: boolean;
-}) => css`
-  height: 100%;
-  border-radius: inherit;
-  background-color: ${disabled
-    ? progressBarVariantStyles[theme].disabledBarColor
-    : progressBarVariantStyles[theme][variant].barColor};
-`;
+  width: number;
+  enableAnimation: boolean;
+}) => {
+  const variantStyles = progressBarVariantStyles[theme][variant];
+  const hasAnimation =
+    !disabled && enableAnimation && 'shimmerFadeColor' in variantStyles;
 
-const getDeterminateBarFillStyles = (progress: number) => css`
-  width: ${progress}%;
-  // requires additional animation
-`;
+  return css`
+    width: ${width}%;
+    transition: width 0.5s ease-in-out;
+    background-color: ${disabled
+      ? progressBarVariantStyles[theme].disabledBarColor
+      : progressBarVariantStyles[theme][variant].barColor};
 
-const getIndeterminateBarFillStyles = () => css`
-  width: 100%; // temporary
-  // requires additional animation
+    ${hasAnimation &&
+    css`
+      background-color: transparent;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(
+          90deg,
+          ${variantStyles.barColor} 0%,
+          ${variantStyles.shimmerFadeColor} 50%,
+          ${variantStyles.barColor} 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 3s linear infinite;
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+    `}
+  `;
+};
+
+const getIndeterminateBarFillStyles = ({
+  theme,
+  variant,
+}: {
+  theme: Theme;
+  variant: Variant;
+}) => {
+  const variantStyles = progressBarVariantStyles[theme][variant];
+
+  return css`
+    width: 100%;
+    background-color: transparent;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -33%;
+      height: 100%;
+      width: 33%;
+      background: linear-gradient(
+        90deg,
+        ${palette.transparent} 0%,
+        ${variantStyles.barColor}${opacityAlphaChannels[75]} 25%,
+        ${variantStyles.barColor}${opacityAlphaChannels[100]} 50%,
+        ${variantStyles.barColor}${opacityAlphaChannels[75]} 75%,
+        ${palette.transparent} 100%
+      );
+      animation: cycle 1.5s linear infinite;
+    }
+    @keyframes cycle {
+      0% {
+        left: -33%;
+        width: 33%;
+      }
+      25% {
+        left: 0%;
+        width: 33%;
+      }
+      50% {
+        left: 17%;
+        width: 66%;
+      }
+      75% {
+        left: 67%;
+        width: 33%;
+      }
+      100% {
+        left: 100%;
+        width: 33%;
+      }
+    }
+  `;
+};
+
+export const getFadeOutBarFillStyles = () => css`
+  opacity: 0;
+  width: 0%;
+  transition: opacity 0.5s ease-out, width 0.1s ease-out 0.4s;
 `;
 
 export const getBarFillStyles = ({
+  animationMode,
   theme,
   variant,
   disabled,
-  isIndeterminate,
-  value,
+  value = 0,
   maxValue,
+  enableAnimation = false,
 }: {
+  animationMode: AnimationMode;
   theme: Theme;
   variant: Variant;
-  isIndeterminate: boolean;
   disabled?: boolean;
   value?: number;
   maxValue?: number;
+  enableAnimation?: boolean;
 }) => {
   let typedBarFillStyles;
 
-  if (isIndeterminate) typedBarFillStyles = getIndeterminateBarFillStyles();
+  switch (animationMode) {
+    case AnimationMode.Transition:
+      typedBarFillStyles = cx(
+        getFadeOutBarFillStyles(),
+        getIndeterminateBarFillStyles({ theme, variant }),
+      );
+      break;
 
-  if (value && maxValue)
-    typedBarFillStyles = getDeterminateBarFillStyles(
-      getPercentage(value, maxValue),
-    );
+    case AnimationMode.Indeterminate:
+      typedBarFillStyles = getIndeterminateBarFillStyles({ theme, variant });
+      break;
 
-  return cx(
-    getBaseBarFillStyles({ theme, variant, disabled }),
-    typedBarFillStyles,
-  );
+    case AnimationMode.Determinate:
+      typedBarFillStyles = getDeterminateBarFillStyles({
+        theme,
+        variant,
+        disabled,
+        width: getPercentage(value, maxValue),
+        enableAnimation,
+      });
+      break;
+  }
+
+  return cx(getBaseBarFillStyles(), typedBarFillStyles);
 };
