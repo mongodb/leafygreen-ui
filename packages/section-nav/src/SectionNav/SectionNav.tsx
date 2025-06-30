@@ -6,7 +6,7 @@ import { Body } from '@leafygreen-ui/typography';
 import { SectionNavContextProvider } from '../Context/SectionNavContext';
 import { getLgIds } from '../utils/getLgIds';
 
-import { getTitleStyles, getOrderedListStyles } from './SectionNav.styles';
+import { getOrderedListStyles, getTitleStyles } from './SectionNav.styles';
 import { type SectionNavProps } from './SectionNav.types';
 
 export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(

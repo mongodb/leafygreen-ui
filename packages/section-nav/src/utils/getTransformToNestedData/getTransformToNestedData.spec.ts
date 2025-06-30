@@ -1,11 +1,12 @@
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { getFlatStringDataToNestedData } from '../getFlatStringDataToNestedData';
+
+import { getTransformToNestedData } from './getTransformToNestedData';
 import {
   FlatData,
   GetTransformToNestedDataArgs,
 } from './getTransformToNestedData.types';
-import { getTransformToNestedData } from './getTransformToNestedData';
 
 jest.mock('../getFlatStringDataToNestedData', () => ({
   getFlatStringDataToNestedData: jest.fn(),

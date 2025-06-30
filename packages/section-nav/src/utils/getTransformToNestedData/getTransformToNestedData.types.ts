@@ -6,27 +6,27 @@ export const DataType = {
 export type Data = (typeof DataType)[keyof typeof DataType];
 
 // Flat data structure used for transformation
-export type FlatData = {
+export type FlatData = Array<{
   level: number;
   id: string;
   label: string;
-}[];
+}>;
 
 // The sturture of each item in the nested data
-export type NestedDataItem = {
+export interface NestedDataItem {
   id: string;
   label: string;
-  children: NestedDataItem[];
-};
+  children: Array<NestedDataItem>;
+}
 
 // Nested data structure resulting from the transformation
-export type NestedData = NestedDataItem[];
+export type NestedData = Array<NestedDataItem>;
 
 // If we introduce more data types, we can make this a discriminated union
-export type GetTransformToNestedDataArgs = {
+export interface GetTransformToNestedDataArgs {
   data: FlatData;
   type: typeof DataType.FlatString;
-};
+}
 
 // Signature type that transforms flat data to nested data
 export type GetTransformToNestedDataReturn = (
