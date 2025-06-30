@@ -199,9 +199,6 @@ WithRichLinks.args = {
   messageBody: MongoText,
   avatar: <Avatar variant="mongo" />,
   children: <MessageFeedback />,
-  onLinkClick: props => {
-    alert(`Link clicked: ${props.href}`);
-  },
   links: [
     {
       href: 'https://mongodb.design',
