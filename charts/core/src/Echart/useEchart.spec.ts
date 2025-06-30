@@ -74,7 +74,6 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     expect(result.current).toHaveProperty('addSeries');
     expect(result.current).toHaveProperty('addToGroup');
-    expect(result.current).toHaveProperty('disableZoom');
     expect(result.current).toHaveProperty('enableZoom');
     expect(result.current).toHaveProperty('error');
     expect(result.current).toHaveProperty('hideTooltip');

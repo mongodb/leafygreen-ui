@@ -95,7 +95,7 @@ export const useTooltipVisibility = ({
    * so it has to be added manually.
    */
   const addUnpinCallbackToCloseButton = useCallback(() => {
-    const btn = document.querySelector(`[data-chartid="${chartId}"]`);
+    const btn = document.querySelector(`button[data-chartid="${chartId}"]`);
 
     if (btn instanceof HTMLElement && !btn.dataset.bound) {
       btn.addEventListener('click', unpinTooltip);
@@ -267,7 +267,7 @@ export const useTooltipVisibility = ({
    * is rendered and in the DOM
    */
   useEffect(() => {
-    if (!tooltipPinned) {
+    if (!tooltipPinnedRef.current) {
       return;
     }
 
@@ -303,5 +303,6 @@ export const useTooltipVisibility = ({
     isChartHovered,
     setTooltipMounted,
     tooltipPinned,
+    unpinTooltip,
   };
 };

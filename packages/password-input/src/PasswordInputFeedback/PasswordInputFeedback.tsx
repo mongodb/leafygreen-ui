@@ -12,13 +12,21 @@ export const PasswordInputFeedback = ({
   hasStateNotifications,
   notifications,
   formFieldFeedbackProps,
+  'data-lgid': dataLgId,
 }: PasswordInputFeedbackProps) => {
   if (hasCustomDescription) {
     return null;
   }
 
   if (hasStateNotifications) {
-    return <StateNotifications id={id} notifications={notifications} />;
+    return (
+      <StateNotifications
+        data-testid={dataLgId}
+        data-lgid={dataLgId}
+        id={id}
+        notifications={notifications}
+      />
+    );
   }
 
   return <FormFieldFeedback id={id} {...formFieldFeedbackProps} />;

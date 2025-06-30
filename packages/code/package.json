@@ -29,6 +29,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  },
   "dependencies": {
     "@leafygreen-ui/a11y": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",

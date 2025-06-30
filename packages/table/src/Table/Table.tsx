@@ -6,10 +6,10 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { LGIDS } from '../constants';
 import { TableContextProvider } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable/useLeafyGreenVirtualTable.types';
+import { getLgIds } from '../utils';
 
 import {
   getTableContainerStyles,
@@ -30,13 +30,14 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       shouldTruncate = false,
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
-      'data-lgid': lgidProp = LGIDS.root,
+      'data-lgid': dataLgId,
       ...rest
     }: TableProps<T>,
     containerRef: ForwardedRef<HTMLDivElement>,
   ) => {
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const { theme, darkMode } = useDarkMode(darkModeProp);
+    const lgIds = getLgIds(dataLgId);
 
     const isVirtual = Boolean((table as LeafyGreenVirtualTable<T>)?.virtual);
     const virtualTable = isVirtual
@@ -68,13 +69,15 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           shouldTruncate={shouldTruncate}
           virtualTable={virtualTable}
           verticalAlignment={verticalAlignment}
+          lgIds={lgIds}
         >
           <table
             className={cx(
               tableClassName,
               getTableStyles(theme, baseFontSize, isVirtual, shouldTruncate),
             )}
-            data-lgid={lgidProp}
+            data-lgid={lgIds.root}
+            data-testid={lgIds.root}
             data-is-sticky={!inView}
             {...rest}
           >
