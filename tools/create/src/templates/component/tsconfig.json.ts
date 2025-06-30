@@ -17,6 +17,9 @@ export const tsConfig = (scope: string) => {
     },
     {
       "path": "${pathToPackagesRoot}/lib"
+    },
+    {
+      "path": "../../tools/test-harnesses"
     }
   ]
 }
