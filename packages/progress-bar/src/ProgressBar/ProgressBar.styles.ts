@@ -6,6 +6,8 @@ import { borderRadius, color, spacing } from '@leafygreen-ui/tokens';
 import { AnimationMode, Size, Variant } from './ProgressBar.types';
 import { getPercentage } from './ProgressBar.utils';
 
+export const FADEOUT_DURATION = 500;
+
 const opacityAlphaChannels = {
   50: '80',
   75: 'BF',
@@ -256,7 +258,8 @@ const getIndeterminateBarFillStyles = ({
 export const getFadeOutBarFillStyles = () => css`
   opacity: 0;
   width: 0%;
-  transition: opacity 0.5s ease-out, width 0.1s ease-out 0.4s;
+  transition: opacity ${FADEOUT_DURATION}ms ease-out,
+    width 100ms ease-out ${FADEOUT_DURATION - 100}ms;
 `;
 
 export const getBarFillStyles = ({
@@ -281,8 +284,8 @@ export const getBarFillStyles = ({
   switch (animationMode) {
     case AnimationMode.Transition:
       typedBarFillStyles = cx(
-        getFadeOutBarFillStyles(),
         getIndeterminateBarFillStyles({ theme, variant }),
+        getFadeOutBarFillStyles(),
       );
       break;
 

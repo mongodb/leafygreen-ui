@@ -6,6 +6,7 @@ import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
   containerStyles,
+  FADEOUT_DURATION,
   getBarFillStyles,
   getBarTrackStyles,
   getHeaderIconStyles,
@@ -58,11 +59,11 @@ export function ProgressBar(props: ProgressBarProps) {
     if (!isIndeterminate && animationMode === AnimationMode.Indeterminate) {
       setAnimationMode(AnimationMode.Transition);
 
-      const id = setTimeout(() => {
+      const timeout = setTimeout(() => {
         setAnimationMode(AnimationMode.Determinate);
-      }, 500);
+      }, FADEOUT_DURATION);
 
-      return () => clearTimeout(id);
+      return () => clearTimeout(timeout);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isIndeterminate]);
