@@ -12,11 +12,6 @@ export interface UseTooltipEventsBaseArgs {
    * Whether the tooltip event handlers should be enabled
    */
   isEnabled?: boolean;
-
-  /**
-   * The delay in milliseconds before the tooltip opens on hover.
-   */
-  delay?: number;
 }
 
 export interface UseTooltipEventsArgsHover {
@@ -64,7 +59,7 @@ export interface UseTooltipEventsArgsClick {
   onClick?: MouseEventHandler<HTMLElement>;
 }
 
-export type CreateTooltipEventsArgs<Trigger extends TriggerEvent> =
+export type UseTooltipEventsArgs<Trigger extends TriggerEvent> =
   UseTooltipEventsBaseArgs &
     (Trigger extends 'hover'
       ? UseTooltipEventsArgsHover

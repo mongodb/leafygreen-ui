@@ -4,7 +4,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { TriggerEvent } from '../Tooltip.types';
 import { CALLBACK_DEBOUNCE, DEFAULT_HOVER_DELAY } from '../tooltipConstants';
 
-import { CreateTooltipEventsArgs } from './tooltipHandlers.types';
+import { UseTooltipEventsArgs } from './tooltipHandlers.types';
 import { useTooltipTriggerEventHandlers } from './useTooltipTriggerEventHandlers';
 
 const mockMouseEvent = {
@@ -27,7 +27,7 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
   const tooltipRef = { current: document.createElement('div') };
 
   test('returns hover event handlers for hover trigger event', () => {
-    const hoverArgs: CreateTooltipEventsArgs<typeof TriggerEvent.Hover> = {
+    const hoverArgs: UseTooltipEventsArgs<typeof TriggerEvent.Hover> = {
       setState,
       triggerEvent: TriggerEvent.Hover,
     };
@@ -44,7 +44,7 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
   });
 
   test('returns click event handler for click trigger event', () => {
-    const clickArgs: CreateTooltipEventsArgs<typeof TriggerEvent.Click> = {
+    const clickArgs: UseTooltipEventsArgs<typeof TriggerEvent.Click> = {
       setState,
       triggerEvent: TriggerEvent.Click,
       tooltipRef,
@@ -63,7 +63,7 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
 
   test('updates isEnabled ref when isEnabled changes', () => {
     let isEnabled = true;
-    const hoverArgs: CreateTooltipEventsArgs<typeof TriggerEvent.Hover> = {
+    const hoverArgs: UseTooltipEventsArgs<typeof TriggerEvent.Hover> = {
       setState,
       triggerEvent: TriggerEvent.Hover,
       isEnabled,
@@ -95,7 +95,7 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
   });
 
   test('memoizes handlers to prevent unnecessary re-renders', () => {
-    const hoverArgs: CreateTooltipEventsArgs<typeof TriggerEvent.Hover> = {
+    const hoverArgs: UseTooltipEventsArgs<typeof TriggerEvent.Hover> = {
       setState,
       triggerEvent: TriggerEvent.Hover,
     };
@@ -116,7 +116,7 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
   });
 
   test('only changes identity when args change', () => {
-    const hoverArgs: CreateTooltipEventsArgs<typeof TriggerEvent.Hover> = {
+    const hoverArgs: UseTooltipEventsArgs<typeof TriggerEvent.Hover> = {
       setState,
       triggerEvent: TriggerEvent.Hover,
     };
@@ -130,7 +130,9 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
     const initialHandlers = result.current;
 
     // Rerender with the same props
-    rerender({ ...hoverArgs, delay: 0 });
+    rerender({ ...hoverArgs });
+
+    jest.advanceTimersByTime(CALLBACK_DEBOUNCE + DEFAULT_HOVER_DELAY);
 
     // Handlers should not be the same objects
     expect(result.current).not.toBe(initialHandlers);

@@ -13,8 +13,8 @@ import { TriggerEvent } from '../Tooltip.types';
 import { CALLBACK_DEBOUNCE, DEFAULT_HOVER_DELAY } from '../tooltipConstants';
 
 import type {
-  CreateTooltipEventsArgs,
   TooltipEventHandlers,
+  UseTooltipEventsArgs,
 } from './tooltipHandlers.types';
 
 /**
@@ -25,15 +25,9 @@ import type {
  * When `triggerEvent` is `click`, it will create a handler for click events.
  */
 export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
-  args: CreateTooltipEventsArgs<Trigger>,
+  args: UseTooltipEventsArgs<Trigger>,
 ): TooltipEventHandlers<Trigger> {
-  const {
-    delay = DEFAULT_HOVER_DELAY,
-    setState,
-    triggerEvent,
-    tooltipRef,
-    isEnabled = true,
-  } = args;
+  const { setState, triggerEvent, tooltipRef, isEnabled = true } = args;
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -48,7 +42,7 @@ export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
             flushSync(() => {
               timeoutRef.current = setTimeout(() => {
                 setState(true);
-              }, delay);
+              }, DEFAULT_HOVER_DELAY);
             });
           }
         },
@@ -104,5 +98,5 @@ export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
         onClick,
       } as TooltipEventHandlers<Trigger>;
     }
-  }, [args, delay, isEnabled, setState, tooltipRef, triggerEvent]);
+  }, [args, isEnabled, setState, tooltipRef, triggerEvent]);
 }
