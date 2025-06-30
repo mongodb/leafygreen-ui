@@ -114,63 +114,63 @@ describe('packages/progress-bar', () => {
         ),
       ).toBe('50/100 units');
     });
+  });
 
-    describe('resolveProgressBarProps', () => {
-      test('it correctly resolves props for a meter type', () => {
-        const props = {
-          type: 'meter',
-          value: 50,
-          maxValue: 100,
-          status: 'warning',
-        } as const;
+  describe('resolveProgressBarProps', () => {
+    test('it correctly resolves props for a meter type', () => {
+      const props = {
+        type: 'meter',
+        value: 50,
+        maxValue: 100,
+        status: 'warning',
+      } as const;
 
-        const resolvedProps = resolveProgressBarProps(props);
-        expect(resolvedProps).toEqual({
-          value: 50,
-          maxValue: 100,
-          disabled: false,
-          variant: 'warning',
-          isIndeterminate: false,
-          enableAnimation: false,
-        });
+      const resolvedProps = resolveProgressBarProps(props);
+      expect(resolvedProps).toEqual({
+        value: 50,
+        maxValue: 100,
+        disabled: false,
+        variant: 'warning',
+        isIndeterminate: false,
+        enableAnimation: false,
       });
+    });
 
-      test('it correctly resolves props for a determinate loader type', () => {
-        const props = {
-          type: 'loader',
-          isIndeterminate: false,
-          value: 50,
-          maxValue: 100,
-          variant: 'success',
-          enableAnimation: true,
-        } as const;
+    test('it correctly resolves props for a determinate loader type', () => {
+      const props = {
+        type: 'loader',
+        isIndeterminate: false,
+        value: 50,
+        maxValue: 100,
+        variant: 'success',
+        enableAnimation: true,
+      } as const;
 
-        const resolvedProps = resolveProgressBarProps(props);
-        expect(resolvedProps).toEqual({
-          value: 50,
-          maxValue: 100,
-          disabled: false,
-          variant: 'success',
-          isIndeterminate: false,
-          enableAnimation: true,
-        });
+      const resolvedProps = resolveProgressBarProps(props);
+      expect(resolvedProps).toEqual({
+        value: 50,
+        maxValue: 100,
+        disabled: false,
+        variant: 'success',
+        isIndeterminate: false,
+        enableAnimation: true,
       });
+    });
 
-      test('it correctly resolves props for an indeterminate loader type', () => {
-        const props = {
-          type: 'loader',
-          isIndeterminate: true,
-        } as const;
+    test('it correctly resolves props for an indeterminate loader type', () => {
+      const props = {
+        type: 'loader',
+        isIndeterminate: true,
+      } as const;
 
-        const resolvedProps = resolveProgressBarProps(props);
-        expect(resolvedProps).toEqual({
-          value: undefined,
-          maxValue: undefined,
-          disabled: false,
-          variant: 'info',
-          isIndeterminate: true,
-          enableAnimation: false,
-        });
+      const resolvedProps = resolveProgressBarProps(props);
+      expect(resolvedProps).toEqual({
+        value: undefined,
+        maxValue: undefined,
+        disabled: false,
+        variant: 'info',
+        isIndeterminate: true,
+        enableAnimation: false,
       });
     });
   });
