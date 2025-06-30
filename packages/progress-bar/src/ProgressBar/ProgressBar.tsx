@@ -31,14 +31,14 @@ export function ProgressBar(props: ProgressBarProps) {
     description,
     darkMode = false,
     formatValue,
-    showIcon: showIconProps = false,
+    showIcon: showIconProp = false,
   } = props;
 
   const { theme } = useDarkMode(darkMode);
 
   const showIcon = iconsVisibleOnComplete.includes(variant)
-    ? showIconProps && value === maxValue
-    : showIconProps;
+    ? showIconProp && value === maxValue
+    : showIconProp;
 
   const role = type === 'meter' ? 'meter' : 'progressbar';
 

@@ -117,13 +117,13 @@ export const getHeaderIcon = ({
   if (disabled) return <WarningIcon {...props} />;
 
   switch (variant) {
-    case 'success':
+    case Variant.Success:
       return <CheckmarkWithCircleIcon {...props} />;
-    case 'warning':
+    case Variant.Warning:
       return <ImportantWithCircleIcon {...props} />;
-    case 'error':
+    case Variant.Error:
       return <WarningIcon {...props} />; // design uses warning icon for error variant
-    case 'info':
+    case Variant.Info:
     default:
       return <InfoWithCircleIcon {...props} />;
   }

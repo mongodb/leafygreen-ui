@@ -4,6 +4,15 @@
 
 #### [View on MongoDB.design](https://www.mongodb.design/component/progress-bar/live-example/)
 
+## Description
+
+The `ProgressBar` component supports two types:
+
+- **Loader**, which supports determinate and indeterminate modes. Determinate loaders dynamically approach a maximum; indeterminate loaders loop infinitely.
+- **Meter**, which displays a static snapshot of progress at some point in time. Meters are by default determinate only.
+
+Use a meter when you want to show precise progress alongside a health status (e.g., amount of disk space used). Use loaders when you want to show progress towards completion or ongoing activity (e.g., file upload progress).
+
 ## Installation
 
 ### PNPM
@@ -26,14 +35,14 @@ npm install @leafygreen-ui/progress-bar
 
 ## Example
 
+### Determinate Loader
+
 ```js
 import ProgressBar from '@leafygreen-ui/progress-bar';
 
 const [uploaded, setUploaded] = useState(0);
 const [paused, setPaused] = useState(false);
 const total = 100;
-
-const processUpload = () => {...}
 
 <ProgressBar
   type="loader"
@@ -51,14 +60,45 @@ const processUpload = () => {...}
 />;
 ```
 
+### Indeterminate Loader
+
+```js
+import ProgressBar from '@leafygreen-ui/progress-bar';
+
+const [uploaded, setUploaded] = useState(0);
+const [paused, setPaused] = useState(false);
+
+<ProgressBar
+  type="loader"
+  isIndeterminate={true}
+  label="Files Downloading"
+  description="Your data is uploading!"
+  formatValue={(value: number) => `${value} files downloaded`}
+  value={uploaded}
+/>;
+```
+
+### Meter
+
+```js
+import ProgressBar from '@leafygreen-ui/progress-bar';
+
+const [used, setUsed] = useState(14);
+const totalSpaceAvailable = 128
+
+<ProgressBar
+  type="meter"
+  status="healthy"
+  label="Disk Space Used"
+  formatValue={(value: number, maxValue: number) =>
+    `${value}/${maxValue} GB used`
+  }
+  value={used}
+  maxValue={totalSpaceAvailable}
+/>;
+```
+
 ## Properties
-
-The `ProgressBar` component supports two types:
-
-- **Meter**, which displays a static snapshot of progress at some point in time.
-- **Loader**, which supports determinate and indeterminate modes. Determinate loaders dynamically approach a maximum; indeterminate loaders loop infinitely.
-
-Use a meter when you want to show precise progress alongside a health status (e.g., amount of disk space used). Use loaders when you want to show progress towards completion or ongoing activity (e.g., file upload progress).
 
 | Prop name          | Type                                                                                           | Default     | Type                           | Description                                                                                                                                |
 | ------------------ | ---------------------------------------------------------------------------------------------- | ----------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |

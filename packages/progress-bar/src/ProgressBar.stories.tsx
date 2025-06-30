@@ -3,7 +3,7 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 import { expect, waitFor, within } from '@storybook/test';
 
-import { ProgressBar, ProgressBarProps } from '.';
+import { ProgressBar, ProgressBarProps, Type, Variant } from '.';
 
 const testValues = {
   value: 53,
@@ -83,7 +83,7 @@ const testSimulatedProgressToCompletion = async ({
 
 export const LiveExample: StoryObj<typeof ProgressBar> = {
   args: {
-    type: 'loader',
+    type: Type.Loader,
     value: testValues.value,
     maxValue: testValues.maxValue,
     formatValue: 'fraction',
@@ -103,7 +103,7 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
 
 export const DeterminateLoader: StoryObj<typeof ProgressBar> = {
   args: {
-    type: 'loader',
+    type: Type.Loader,
     value: testValues.value,
     maxValue: testValues.maxValue,
   },
@@ -125,7 +125,7 @@ export const IndeterminateLoader: StoryObj<typeof ProgressBar> = {
 
 export const Meter: StoryObj<typeof ProgressBar> = {
   args: {
-    type: 'meter',
+    type: Type.Meter,
     value: testValues.value,
     maxValue: testValues.maxValue,
   },
@@ -164,12 +164,17 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        variant: ['info', 'success', 'warning', 'error'],
+        variant: [
+          Variant.Info,
+          Variant.Success,
+          Variant.Warning,
+          Variant.Error,
+        ],
         enableAnimation: [false, true],
         disabled: [false, true],
       },
       args: {
-        type: 'loader',
+        type: Type.Loader,
         isIndeterminate: false,
         value: testValues.value,
         maxValue: testValues.maxValue,
@@ -179,11 +184,11 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
       },
       excludeCombinations: [
         {
-          variant: ['warning', 'error'],
+          variant: [Variant.Warning, Variant.Error],
           enableAnimation: [true],
         },
         {
-          variant: ['success', 'warning', 'error'],
+          variant: [Variant.Success, Variant.Warning, Variant.Error],
           disabled: [true],
         },
       ],
@@ -195,10 +200,10 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        variant: ['info', 'success'],
+        variant: [Variant.Info, Variant.Success],
       },
       args: {
-        type: 'loader',
+        type: Type.Loader,
         isIndeterminate: true,
         value: testValues.value,
         formatValue: (value: number) => `${value} MBs`,
@@ -216,7 +221,7 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
         disabled: [false, true],
       },
       args: {
-        type: 'meter',
+        type: Type.Meter,
         value: testValues.value,
         maxValue: testValues.maxValue,
         formatValue: (value: number, maxValue?: number) =>

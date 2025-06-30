@@ -5,14 +5,18 @@ import {
   getFormattedValue,
   resolveProgressBarProps,
 } from './ProgressBar.utils';
-import { ProgressBar } from '.';
+import { ProgressBar, Type, Variant } from '.';
 
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
     test('renders with a label', () => {
       const TEST_LABEL = 'placeholder label';
       render(
-        <ProgressBar type="loader" isIndeterminate={true} label={TEST_LABEL} />,
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={true}
+          label={TEST_LABEL}
+        />,
       );
       expect(screen.getByText(TEST_LABEL)).toBeVisible();
     });
@@ -21,7 +25,7 @@ describe('packages/progress-bar', () => {
       const TEST_DESCRIPTION = 'placeholder description';
       render(
         <ProgressBar
-          type="loader"
+          type={Type.Loader}
           isIndeterminate={true}
           description={TEST_DESCRIPTION}
         />,
@@ -36,7 +40,7 @@ describe('packages/progress-bar', () => {
       test('renders with a custom format when given a callback', () => {
         render(
           <ProgressBar
-            type="loader"
+            type={Type.Loader}
             isIndeterminate={true}
             value={TEST_VALUE}
             formatValue={value => `${value} units`}
@@ -48,7 +52,7 @@ describe('packages/progress-bar', () => {
       test('renders icon when showIcon is true', () => {
         render(
           <ProgressBar
-            type="loader"
+            type={Type.Loader}
             isIndeterminate={false}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
@@ -62,7 +66,7 @@ describe('packages/progress-bar', () => {
       test('renders the correct width for the progress bar fill', () => {
         render(
           <ProgressBar
-            type="loader"
+            type={Type.Loader}
             isIndeterminate={false}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
@@ -78,7 +82,7 @@ describe('packages/progress-bar', () => {
       test('does not render success variant icon if under maxValue, even if showIcon is true', () => {
         render(
           <ProgressBar
-            type="loader"
+            type={Type.Loader}
             isIndeterminate={false}
             variant="success"
             value={TEST_VALUE}
@@ -119,7 +123,7 @@ describe('packages/progress-bar', () => {
   describe('resolveProgressBarProps', () => {
     test('it correctly resolves props for a meter type', () => {
       const props = {
-        type: 'meter',
+        type: Type.Meter,
         value: 50,
         maxValue: 100,
         status: 'warning',
@@ -130,7 +134,7 @@ describe('packages/progress-bar', () => {
         value: 50,
         maxValue: 100,
         disabled: false,
-        variant: 'warning',
+        variant: Variant.Warning,
         isIndeterminate: false,
         enableAnimation: false,
       });
@@ -138,11 +142,11 @@ describe('packages/progress-bar', () => {
 
     test('it correctly resolves props for a determinate loader type', () => {
       const props = {
-        type: 'loader',
+        type: Type.Loader,
         isIndeterminate: false,
         value: 50,
         maxValue: 100,
-        variant: 'success',
+        variant: Variant.Success,
         enableAnimation: true,
       } as const;
 
@@ -151,7 +155,7 @@ describe('packages/progress-bar', () => {
         value: 50,
         maxValue: 100,
         disabled: false,
-        variant: 'success',
+        variant: Variant.Success,
         isIndeterminate: false,
         enableAnimation: true,
       });
@@ -159,7 +163,7 @@ describe('packages/progress-bar', () => {
 
     test('it correctly resolves props for an indeterminate loader type', () => {
       const props = {
-        type: 'loader',
+        type: Type.Loader,
         isIndeterminate: true,
       } as const;
 
@@ -168,7 +172,7 @@ describe('packages/progress-bar', () => {
         value: undefined,
         maxValue: undefined,
         disabled: false,
-        variant: 'info',
+        variant: Variant.Info,
         isIndeterminate: true,
         enableAnimation: false,
       });
