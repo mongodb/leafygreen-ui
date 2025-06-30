@@ -1,2 +1,2 @@
 export { FormFieldInputContainer } from './FormFieldInputContainer';
-export { FormFieldInputContainerProps } from './FormFieldInputContainer.types';
+export { type FormFieldInputContainerProps } from './FormFieldInputContainer.types';

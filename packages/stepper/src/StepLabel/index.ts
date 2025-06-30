@@ -1,2 +1,2 @@
 export { StepLabel } from './StepLabel';
-export { StepLabelProps } from './StepLabel.types';
+export { type StepLabelProps } from './StepLabel.types';
