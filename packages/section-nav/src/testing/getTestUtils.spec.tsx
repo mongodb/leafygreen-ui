@@ -6,8 +6,8 @@ import { SectionNav } from '../SectionNav';
 import { getTestUtils } from './getTestUtils';
 import { renderSectionNav, renderSectionNavItems } from './render.testUtils';
 
-describe('packages/toolbar/getTestUtils', () => {
-  describe('single Toolbar', () => {
+describe('packages/section-nav/getTestUtils', () => {
+  describe('single SectionNav', () => {
     describe('getSectionNav', () => {
       test('throws error if not found', () => {
         renderSectionNav({ 'data-lgid': 'lg-different-id' });
@@ -26,7 +26,7 @@ describe('packages/toolbar/getTestUtils', () => {
         }
       });
 
-      test('returns toolbar if found', () => {
+      test('returns SectionNav if found', () => {
         renderSectionNav({});
         const { getSectionNav } = getTestUtils();
         expect(getSectionNav()).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('packages/toolbar/getTestUtils', () => {
         }
       });
 
-      test('returns toolbar if found', async () => {
+      test('returns SectionNav if found', async () => {
         renderSectionNav({});
         const { findSectionNav } = getTestUtils();
         expect(await findSectionNav()).toBeInTheDocument();
@@ -64,7 +64,7 @@ describe('packages/toolbar/getTestUtils', () => {
         expect(querySectionNav()).not.toBeInTheDocument();
       });
 
-      test('returns toolbar if found', () => {
+      test('returns SectionNav if found', () => {
         renderSectionNav({});
         const { querySectionNav } = getTestUtils();
         expect(querySectionNav()).toBeInTheDocument();
@@ -90,16 +90,16 @@ describe('packages/toolbar/getTestUtils', () => {
         renderSectionNav({});
         const { getAllSectionNavItems } = getTestUtils();
         const items = getAllSectionNavItems();
-        expect(items.length).toBe(6);
+        expect(items.length).toBe(7);
       });
     });
 
-    describe('getToolbarIconButtonByLabel', () => {
+    describe('getSectionNavItemByLabel', () => {
       test('throws error if text is not found', () => {
         renderSectionNav({});
         try {
-          const { getSectionNavItemByText } = getTestUtils();
-          const _ = getSectionNavItemByText('Hello');
+          const { getSectionNavItemByLabel } = getTestUtils();
+          const _ = getSectionNavItemByLabel('Hello');
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
@@ -114,10 +114,10 @@ describe('packages/toolbar/getTestUtils', () => {
       describe('getElement', () => {
         test('returns the element', () => {
           renderSectionNav({});
-          const { getSectionNavItemByText } = getTestUtils();
+          const { getSectionNavItemByLabel } = getTestUtils();
 
           expect(
-            getSectionNavItemByText('Section 1')?.getElement(),
+            getSectionNavItemByLabel('Section 1')?.getElement(),
           ).toBeInTheDocument();
         });
       });
@@ -125,34 +125,20 @@ describe('packages/toolbar/getTestUtils', () => {
       describe('isActive', () => {
         test('returns false', () => {
           renderSectionNav({});
-          const { getSectionNavItemByText } = getTestUtils();
-          expect(getSectionNavItemByText('Section 2')?.isActive()).toBeFalsy();
+          const { getSectionNavItemByLabel } = getTestUtils();
+          expect(getSectionNavItemByLabel('Section 2')?.isActive()).toBeFalsy();
         });
         test('returns true', () => {
           renderSectionNav({});
-          const { getSectionNavItemByText } = getTestUtils();
-          expect(getSectionNavItemByText('Section 3')?.isActive()).toBeTruthy();
-        });
-      });
-
-      describe('getLevel', () => {
-        test('returns the default level', () => {
-          renderSectionNav({});
-          const { getSectionNavItemByText } = getTestUtils();
-
-          expect(getSectionNavItemByText('Section 1')?.getLevel()).toEqual(1);
-        });
-
-        test('returns the defined level', () => {
-          renderSectionNav({});
-          const { getSectionNavItemByText } = getTestUtils();
-
-          expect(getSectionNavItemByText('Section 2')?.getLevel()).toEqual(2);
+          const { getSectionNavItemByLabel } = getTestUtils();
+          expect(
+            getSectionNavItemByLabel('Section 3')?.isActive(),
+          ).toBeTruthy();
         });
       });
     });
 
-    describe('getActiveToolbarIconButton', () => {
+    describe('getActiveSectionNavItem', () => {
       test('returns the active ToolbarIconButton', () => {
         renderSectionNav({});
         const { getActiveSectionNavItem } = getTestUtils();

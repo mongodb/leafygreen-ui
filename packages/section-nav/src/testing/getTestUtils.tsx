@@ -51,7 +51,7 @@ export const getTestUtils = (
   /**
    * Returns the SectionNavItem based on the text
    */
-  const getSectionNavItemByText = (text: string) => {
+  const getSectionNavItemByLabel = (text: string) => {
     if (!text) throw new Error('text cannot be empty');
 
     const item = getAllSectionNavItems().find(
@@ -67,7 +67,6 @@ export const getTestUtils = (
     return {
       getElement: () => item,
       isActive: () => item?.getAttribute('data-active') === 'true',
-      getLevel: () => Number(item?.getAttribute('data-level')),
     };
   };
 
@@ -87,7 +86,8 @@ export const getTestUtils = (
     querySectionNav,
     getTitle: () => getTitle(),
     getAllSectionNavItems: () => getAllSectionNavItems(),
-    getSectionNavItemByText: (text: string) => getSectionNavItemByText(text),
+    getSectionNavItemByLabel: (label: string) =>
+      getSectionNavItemByLabel(label),
     getActiveSectionNavItem: () => getActiveSectionNavItem(),
   };
 };

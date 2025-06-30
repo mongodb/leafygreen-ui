@@ -40,8 +40,9 @@ export default {
   decorators: [decoratorWrapper],
   args: {
     darkMode: false,
-    children: 'Section Nav Item',
+    label: 'Section Nav Item 1',
     active: false,
+    href: '#section-1',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -53,6 +54,19 @@ export const LiveExample: StoryObj<typeof SectionNavItem> = {
   render: ({ darkMode, ...args }) => (
     <SectionNavItem {...args}></SectionNavItem>
   ),
+};
+
+export const Nested: StoryObj<typeof SectionNavItem> = {
+  // @ts-expect-error - darkMode is not a valid prop for SectionNavItem
+  render: ({ darkMode, ...args }) => (
+    <SectionNavItem label="Section Nav Item 1" href="#section-1">
+      <SectionNavItem {...args} />
+    </SectionNavItem>
+  ),
+  args: {
+    label: 'Section Nav Item 1.1',
+    href: '#section-1.1',
+  },
 };
 
 export const Generated = () => {};

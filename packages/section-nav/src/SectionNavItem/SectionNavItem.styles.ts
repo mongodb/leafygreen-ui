@@ -12,19 +12,17 @@ export const itemStyles = css`
 `;
 
 export const getLinkStyles = ({
-  level = 1,
   active = false,
   theme = Theme.Light,
   className,
 }: {
-  level?: number;
   active?: boolean;
   theme?: Theme;
   className?: string;
 }) =>
   cx(
     css`
-      ${getBaseStyles({ level, theme })};
+      ${getBaseStyles({ theme })};
       ${getHoverStyles({ theme })}
     `,
     {
@@ -36,13 +34,7 @@ export const getLinkStyles = ({
     className,
   );
 
-export const getBaseStyles = ({
-  level,
-  theme,
-}: {
-  level: number;
-  theme: Theme;
-}) => css`
+export const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   all: unset;
   cursor: pointer;
   display: block;

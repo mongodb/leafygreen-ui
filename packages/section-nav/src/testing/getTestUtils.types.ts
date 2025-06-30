@@ -8,11 +8,6 @@ interface SectionNavItemUtils {
    * Returns whether the SectionNavItem is active.
    */
   isActive: () => boolean | undefined;
-
-  /**
-   * Returns the depth level of the SectionNavItem.
-   */
-  getLevel: () => number | undefined;
 }
 
 export interface TestUtilsReturnType {
@@ -45,9 +40,9 @@ export interface TestUtilsReturnType {
   getAllSectionNavItems: () => Array<HTMLAnchorElement>;
 
   /**
-   * Returns the SectionNavItem based on the text
+   * Returns the SectionNavItem based on the label text
    */
-  getSectionNavItemByText: (text: string) => SectionNavItemUtils | null;
+  getSectionNavItemByLabel: (label: string) => SectionNavItemUtils | null;
 
   /**
    * Returns the first active SectionNavItem

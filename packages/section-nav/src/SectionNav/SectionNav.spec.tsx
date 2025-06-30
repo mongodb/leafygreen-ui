@@ -25,7 +25,7 @@ describe('packages/section-nav', () => {
     renderSectionNav({});
     const { getAllSectionNavItems } = getTestUtils();
     const items = getAllSectionNavItems();
-    expect(items.length).toBe(6);
+    expect(items.length).toBe(7);
   });
 
   test('accepts a ref', () => {
@@ -42,8 +42,8 @@ describe('packages/section-nav', () => {
       <SectionNav />;{/* @ts-expect-error - children are required */}
       <SectionNav title={'On this page'} />;
       <SectionNav title={'On this page'}>
-        <SectionNavItem href="#section-1">Section 1</SectionNavItem>
-        <SectionNavItem href="#section-2">Section 2</SectionNavItem>
+        <SectionNavItem href="#section-1" label="Section 1" />
+        <SectionNavItem href="#section-2" label="Section 2" />
       </SectionNav>
     </>;
   });

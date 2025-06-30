@@ -12,9 +12,7 @@ describe('packages/section-nav-item', () => {
     const ref = createRef<HTMLAnchorElement>();
     render(
       <SectionNav>
-        <SectionNavItem href="#section-1" ref={ref}>
-          Section 1
-        </SectionNavItem>
+        <SectionNavItem href="#section-1" ref={ref} label="Section 1" />
       </SectionNav>,
     );
     expect(ref.current).toBeDefined();
@@ -22,64 +20,30 @@ describe('packages/section-nav-item', () => {
   });
 
   describe('active', () => {
-    test('is true active prop is true', () => {
+    test('is true', () => {
       render(
         <SectionNav>
-          <SectionNavItem active href="#section-1">
-            Section 1
-          </SectionNavItem>
-          <SectionNavItem href="#section-2">Section 2</SectionNavItem>
+          <SectionNavItem active href="#section-1" label="Section 1" />
+          <SectionNavItem href="#section-2" label="Section 2" />
         </SectionNav>,
       );
 
-      const { getSectionNavItemByText } = getTestUtils();
-      const activeItem = getSectionNavItemByText('Section 1');
+      const { getSectionNavItemByLabel } = getTestUtils();
+      const activeItem = getSectionNavItemByLabel('Section 1');
       expect(activeItem?.isActive()).toBeTruthy();
     });
 
-    test('is false active prop is true', () => {
+    test('is false', () => {
       render(
         <SectionNav>
-          <SectionNavItem active href="#section-1">
-            Section 1
-          </SectionNavItem>
-          <SectionNavItem href="#section-2">Section 2</SectionNavItem>
+          <SectionNavItem active href="#section-1" label="Section 1" />
+          <SectionNavItem href="#section-2" label="Section 2" />
         </SectionNav>,
       );
 
-      const { getSectionNavItemByText } = getTestUtils();
-      const activeItem = getSectionNavItemByText('Section 2');
+      const { getSectionNavItemByLabel } = getTestUtils();
+      const activeItem = getSectionNavItemByLabel('Section 2');
       expect(activeItem?.isActive()).toBeFalsy();
-    });
-  });
-
-  describe('level', () => {
-    test('is 1 by default', () => {
-      render(
-        <SectionNav>
-          <SectionNavItem href="#section-1">Section 1</SectionNavItem>
-          <SectionNavItem href="#section-2">Section 2</SectionNavItem>
-        </SectionNav>,
-      );
-
-      const { getSectionNavItemByText } = getTestUtils();
-      const item = getSectionNavItemByText('Section 1');
-      expect(item?.getLevel()).toBe(1);
-    });
-
-    test('is 2', () => {
-      render(
-        <SectionNav>
-          <SectionNavItem level={2} href="#section-1">
-            Section 1
-          </SectionNavItem>
-          <SectionNavItem href="#section-2">Section 2</SectionNavItem>
-        </SectionNav>,
-      );
-
-      const { getSectionNavItemByText } = getTestUtils();
-      const item = getSectionNavItemByText('Section 1');
-      expect(item?.getLevel()).toBe(2);
     });
   });
 
@@ -87,15 +51,13 @@ describe('packages/section-nav-item', () => {
     const onClick = jest.fn();
     render(
       <SectionNav>
-        <SectionNavItem onClick={onClick} level={2} href="#section-1">
-          Section 1
-        </SectionNavItem>
-        <SectionNavItem href="#section-2">Section 2</SectionNavItem>
+        <SectionNavItem onClick={onClick} href="#section-1" label="Section 1" />
+        <SectionNavItem href="#section-2" label="Section 2" />
       </SectionNav>,
     );
 
-    const { getSectionNavItemByText } = getTestUtils();
-    const item = getSectionNavItemByText('Section 1');
+    const { getSectionNavItemByLabel } = getTestUtils();
+    const item = getSectionNavItemByLabel('Section 1');
     userEvent.click(item?.getElement()!);
     expect(onClick).toHaveBeenCalledTimes(1);
   });
@@ -103,9 +65,9 @@ describe('packages/section-nav-item', () => {
   /* eslint-disable jest/no-disabled-tests */
   test.skip('types behave as expected', () => {
     <>
-      <SectionNavItem href="#section-1" active={false} level={2}>
-        Section 1
-      </SectionNavItem>
+      {/* @ts-expect-error - label is required */}
+      <SectionNavItem href="#section-1" active={false} level={2} />
+      <SectionNavItem href="#section-1" active={false} label="Section 1" />
     </>;
   });
 });

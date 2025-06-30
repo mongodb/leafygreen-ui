@@ -16,7 +16,6 @@ export const SectionNavItem = forwardRef<
       className,
       children,
       active = false,
-      level = 1,
       label,
       ...rest
     }: SectionNavItemProps,
@@ -34,10 +33,9 @@ export const SectionNavItem = forwardRef<
     return (
       <li className={itemStyles}>
         <a
-          className={getLinkStyles({ level, active, theme, className })}
+          className={getLinkStyles({ active, theme, className })}
           ref={forwardedRef}
           data-active={active}
-          data-level={level}
           data-testid={`${lgIds.item}`}
           data-lgid={`${lgIds.item}`}
           {...rest}

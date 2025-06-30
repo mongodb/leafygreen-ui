@@ -7,14 +7,6 @@ export interface SectionNavItemProps extends HTMLElementProps<'a'> {
   active?: boolean;
 
   /**
-   * The level of the item in the section nav hierarchy.
-   * This is used to determine the indentation of the item.
-   *
-   * @default 1
-   */
-  level?: number;
-
-  /**
    * The heading label.
    */
   label: React.ReactNode;
