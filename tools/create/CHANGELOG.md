@@ -1,5 +1,11 @@
 # @lg-tools/create
 
+## 0.4.0
+
+### Minor Changes
+
+- d2bec61: Update `createComponents.ts` to create `testing` and `utils` directories.
+
 ## 0.3.3
 
 ### Patch Changes
