@@ -36,6 +36,7 @@ const total = 100;
 const processUpload = () => {...}
 
 <ProgressBar
+  type="loader"
   variant="success"
   label="File Upload"
   size="small"
@@ -52,10 +53,10 @@ const processUpload = () => {...}
 
 ## Properties
 
-The `ProgressBar` component supports two main types:
+The `ProgressBar` component supports two types:
 
 - **Meter**, which displays a static snapshot of progress at some point in time.
-- **Loader**, which supports both determinate and indeterminate modes. Determinate loaders dynamically increase towards a maximum; indeterminate loaders loop infinitely.
+- **Loader**, which supports determinate and indeterminate modes. Determinate loaders dynamically approach a maximum; indeterminate loaders loop infinitely.
 
 Use a meter when you want to show precise progress alongside a health status (e.g., amount of disk space used). Use loaders when you want to show progress towards completion or ongoing activity (e.g., file upload progress).
 
