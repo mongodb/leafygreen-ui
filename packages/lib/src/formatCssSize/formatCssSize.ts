@@ -17,14 +17,7 @@
  * formatCssSize("auto");    // "auto"
  * formatCssSize(undefined); // undefined
  */
-export const formatCssSize = (
-  value: number | string | null | undefined,
-): string | undefined => {
-  // Return early if the value is null or undefined.
-  if (value == null || value === undefined) {
-    return undefined;
-  }
-
+export const formatCssSize = (value: number | string): string => {
   // If the value is a number, simply append 'px'.
   if (typeof value === 'number') {
     return `${value}px`;

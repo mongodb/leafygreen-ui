@@ -1,14 +1,6 @@
 import { formatCssSize } from './formatCssSize';
 
 describe('formatCssSize', () => {
-  test('returns undefined for undefined', () => {
-    expect(formatCssSize(undefined)).toBeUndefined();
-  });
-
-  test('returns undefined for null', () => {
-    expect(formatCssSize(null)).toBeUndefined();
-  });
-
   test('appends px to number input', () => {
     expect(formatCssSize(100)).toBe('100px');
     expect(formatCssSize(0)).toBe('0px');
