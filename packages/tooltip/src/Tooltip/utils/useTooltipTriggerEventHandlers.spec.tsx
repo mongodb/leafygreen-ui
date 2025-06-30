@@ -132,7 +132,7 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
     // Rerender with the same props
     rerender({ ...hoverArgs, delay: 0 });
 
-    // Handlers should not be the same objects 
+    // Handlers should not be the same objects
     expect(result.current).not.toBe(initialHandlers);
   });
 });
