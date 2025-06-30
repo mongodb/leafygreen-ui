@@ -8,6 +8,7 @@ import { ProgressBar, ProgressBarProps } from '.';
 const testValues = {
   value: 53,
   maxValue: 200,
+  progressDuration: 1500,
 };
 
 const meta: StoryMetaType<typeof ProgressBar> = {
@@ -47,7 +48,7 @@ const SimulatedProgressBar = (props: ProgressBarProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setValue(testValues.maxValue);
-    }, 1500);
+    }, testValues.progressDuration);
 
     return () => {
       clearTimeout(timer);
@@ -77,7 +78,7 @@ const testSimulatedProgressToCompletion = async ({
         testValues.maxValue.toString(),
       );
     },
-    { timeout: 2000 },
+    { timeout: testValues.progressDuration + 500 },
   );
 };
 
@@ -235,25 +236,42 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
 
 export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
   args: {
+    type: 'loader',
     isIndeterminate: true,
   },
   render: function TransitioningProgressBar(props: ProgressBarProps) {
     const [newProps, setNewProps] = useState({});
 
     useEffect(() => {
-      const indeterminateTimer = setTimeout(() => {
-        setNewProps({ isIndeterminate: false, value: 1, maxValue: 200 });
-
-        const valueTimer = setTimeout(() => {
-          setNewProps({ isIndeterminate: false, value: 100, maxValue: 200 });
-        }, 1500);
-
-        return () => clearTimeout(valueTimer);
+      const timeout = setTimeout(() => {
+        setNewProps({
+          type: 'loader',
+          isIndeterminate: false,
+          value: 200,
+          maxValue: 200,
+        });
       }, 3500);
 
-      return () => clearTimeout(indeterminateTimer);
+      return () => {
+        clearTimeout(timeout);
+      };
     }, [props.value]);
 
     return <ProgressBar {...props} {...newProps} />;
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
+
+    expect(progressBar).not.toHaveAttribute('aria-valuenow');
+
+    await waitFor(
+      () => {
+        expect(progressBar.getAttribute('aria-valuenow')).toBe(
+          testValues.maxValue.toString(),
+        );
+      },
+      { timeout: 4000 },
+    );
   },
 };
