@@ -1,7 +1,7 @@
 import { SeriesName } from '@lg-charts/series-provider';
 
-type XValue = string | number | Date;
-type YValue = string | number | Date;
+type XValue = string | number | Date | null | undefined;
+type YValue = string | number | Date | null | undefined;
 
 export interface LineProps {
   /**
