@@ -1,5 +1,5 @@
 export { FocusableMenuItem } from './FocusableMenuItem';
-export { Menu, type MenuProps } from './Menu';
+export { Menu, type MenuProps, MenuVariant } from './Menu';
 export {
   type MenuContextData,
   MenuDescendantsContext,

@@ -12,7 +12,7 @@ import { InternalMenuItemProps } from './MenuItem.types';
 
 export const MenuItem = InferredPolymorphic<InternalMenuItemProps, 'button'>(
   (
-    { as, disabled = false, active = false, onClick, ...rest },
+    { as, disabled = false, active = false, onClick, variant, ...rest },
     fwdRef: React.Ref<any>,
   ) => {
     const { lgIds } = useMenuContext();

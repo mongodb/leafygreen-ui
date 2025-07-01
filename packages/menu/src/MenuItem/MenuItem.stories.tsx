@@ -5,7 +5,7 @@ import { StoryObj } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 
-import { MenuProps } from '../Menu';
+import { MenuProps, MenuVariant } from '../Menu';
 import { withMenuContext } from '../testUtils/withMenuContextDecorator.testutils';
 
 import { MenuItem, Variant } from '.';
