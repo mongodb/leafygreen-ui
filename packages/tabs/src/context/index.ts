@@ -6,4 +6,8 @@ export {
   TabPanelDescendantsContext,
   useTabPanelDescendantsContext,
 } from './TabPanelDescendantsContext';
-export { TabsContext, TabsContextProps, useTabsContext } from './TabsContext';
+export {
+  TabsContext,
+  type TabsContextProps,
+  useTabsContext,
+} from './TabsContext';

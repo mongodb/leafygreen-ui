@@ -829,6 +829,26 @@ export const Basic: StoryObj<{}> = {
   },
 };
 
+export const NullValues: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <Line
+          name={'My Data'}
+          data={[
+            [new Date(2020, 1, 1), 0],
+            [new Date(2020, 1, 2), 1],
+            [new Date(2020, 1, 3), null], // line should visually skip this point
+            [new Date(2020, 1, 4), 3],
+            [new Date(2020, 1, 5), 4],
+          ]}
+        />
+        <ChartTooltip />
+      </Chart>
+    );
+  },
+};
+
 export const WithTooltip: StoryObj<{}> = {
   render: () => {
     return (

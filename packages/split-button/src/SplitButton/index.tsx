@@ -2,7 +2,7 @@ export { SplitButton } from './SplitButton';
 export {
   Align,
   Justify,
-  MenuItemType,
+  type MenuItemType,
   type SplitButtonProps,
   Variant,
 } from './SplitButton.types';

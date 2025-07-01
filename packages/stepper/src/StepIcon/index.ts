@@ -1,2 +1,2 @@
 export { StepIcon } from './StepIcon';
-export { StepIconProps } from './StepIcon.types';
+export { type StepIconProps } from './StepIcon.types';

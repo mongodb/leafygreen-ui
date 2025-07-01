@@ -1,4 +1,5 @@
 export { Chart } from './Chart';
+export { chartWrapperClassName } from './Chart.styles';
 export {
   type ChartOptions,
   type ChartProps,

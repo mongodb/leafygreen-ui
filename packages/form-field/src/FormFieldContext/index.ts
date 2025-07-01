@@ -1,7 +1,7 @@
 export {
   defaultFormFieldContext,
   FormFieldContext,
-  FormFieldContextProps,
+  type FormFieldContextProps,
   FormFieldProvider,
   useFormFieldContext,
 } from './FormFieldContext';
