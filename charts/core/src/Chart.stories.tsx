@@ -1235,25 +1235,30 @@ export const WithZoomAndTooltip: StoryObj<{}> = {
   },
 };
 
-export const SyncedByGroupID: StoryObj<{}> = {
+export const SyncedByGroupIDWithTooltipSync: StoryObj<{}> = {
   render: () => {
     return (
       <div
-        style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          width: '100%',
+          gap: '8px',
+        }}
       >
-        <Chart groupId="group1">
+        <Chart groupId="group1" enableGroupTooltipSync>
           <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-        <Chart groupId="group1">
+        <Chart groupId="group1" enableGroupTooltipSync>
           <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-        <Chart groupId="group1">
+        <Chart groupId="group1" enableGroupTooltipSync>
           <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
@@ -1261,5 +1266,49 @@ export const SyncedByGroupID: StoryObj<{}> = {
         </Chart>
       </div>
     );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+
+export const SyncedByGroupIDWithoutTooltipSync: StoryObj<{}> = {
+  render: () => {
+    return (
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          width: '100%',
+          gap: '8px',
+        }}
+      >
+        <Chart groupId="group1" enableGroupTooltipSync={false}>
+          <ChartTooltip />
+          {lineData.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+        <Chart groupId="group1" enableGroupTooltipSync={false}>
+          <ChartTooltip />
+          {lineData.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+        <Chart groupId="group1" enableGroupTooltipSync={false}>
+          <ChartTooltip />
+          {lineData.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+      </div>
+    );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
