@@ -143,6 +143,6 @@ const {
 | `querySectionNav()`          | Returns the element using the `data-lgid` data attribute or `null` if no elements match. Will throw if more than one match is found.                                  | `() => HTMLButtonElement \| null`      |
 | `getAllSectionNavItems()`    | Returns an array of all `<SectionNavItem    />`                                                                                                                       | `() => Array<HTMLButtonElement>`       |
 | `getSectionNavItemByLabel()` | Returns the `<SectionNavItem />` based on the label                                                                                                                   | interface SectionNavItemUtils {        |
-|  |
+|                              |
 | `getActiveSectionNavItem()`  | Returns the first active `<SectionNavItem />`                                                                                                                         | `() => HTMLButtonElement \| undefined` |
 | `getTitle()`                 | Returns the title of the SectionNav component                                                                                                                         | `() => HTMLHeadingElement \| null`     |
