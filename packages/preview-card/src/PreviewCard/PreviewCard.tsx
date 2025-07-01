@@ -8,6 +8,8 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { queryFirstFocusableElement } from '@leafygreen-ui/lib';
 
+import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
+
 import {
   getButtonStyles,
   getCardStyles,
@@ -29,6 +31,7 @@ export const PreviewCard = forwardRef<HTMLDivElement, PreviewCardProps>(
       onOpenChange,
       viewLessText = 'View less',
       viewMoreText = 'View more',
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
     },
     fwdRef,
@@ -39,6 +42,7 @@ export const PreviewCard = forwardRef<HTMLDivElement, PreviewCardProps>(
       onOpenChange,
       defaultOpen,
     );
+    const lgIds = getLgIds(dataLgId);
 
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -80,9 +84,10 @@ export const PreviewCard = forwardRef<HTMLDivElement, PreviewCardProps>(
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div
-          ref={fwdRef}
-          id={id}
           className={getCardStyles({ className, theme })}
+          data-lgid={lgIds.root}
+          id={id}
+          ref={fwdRef}
           {...rest}
         >
           <div
@@ -92,6 +97,7 @@ export const PreviewCard = forwardRef<HTMLDivElement, PreviewCardProps>(
               isOpen: !!isOpen,
               theme,
             })}
+            data-lgid={lgIds.content}
             id={contentId}
             // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
             inert={isOpen ? undefined : ''}
@@ -104,6 +110,7 @@ export const PreviewCard = forwardRef<HTMLDivElement, PreviewCardProps>(
             aria-controls={contentId}
             aria-expanded={isOpen}
             className={getButtonStyles({ theme, isOpen: !!isOpen })}
+            data-lgid={lgIds.toggle}
             id={buttonId}
             onClick={handleToggle}
             rightGlyph={<ChevronDown />}
