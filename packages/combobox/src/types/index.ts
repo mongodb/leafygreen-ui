@@ -1,12 +1,12 @@
 export {
   ComboboxElement,
   ComboboxSize,
-  DiffObject,
+  type DiffObject,
   getNullSelection,
-  onChangeType,
+  type onChangeType,
   Overflow,
   SearchState,
-  SelectValueType,
+  type SelectValueType,
   State,
 } from './Combobox.types';
 export { TruncationLocation } from '@leafygreen-ui/chip';

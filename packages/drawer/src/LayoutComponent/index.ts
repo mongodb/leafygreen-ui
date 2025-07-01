@@ -1,2 +1,2 @@
 export { LayoutComponent } from './LayoutComponent';
-export { LayoutComponentProps } from './LayoutComponent.types';
+export { type LayoutComponentProps } from './LayoutComponent.types';
