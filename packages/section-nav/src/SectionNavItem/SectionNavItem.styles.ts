@@ -60,7 +60,8 @@ export const getBaseStyles = ({
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
   position: relative;
-  padding-inline: calc(${getIndentation(level)}px + 2px) ${spacing[400]}px;
+  padding-inline: calc(${getIndentation(level)}px + ${WEDGE_WIDTH}px)
+    ${spacing[400]}px;
 
   &::before {
     content: '';

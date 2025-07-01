@@ -66,7 +66,11 @@ describe('packages/section-nav-item', () => {
   test.skip('types behave as expected', () => {
     <>
       {/* @ts-expect-error - label is required */}
-      <SectionNavItem href="#section-1" active={false} level={2} />
+      <SectionNavItem href="#section-1" active={false} />
+
+      {/* @ts-expect-error - href is required */}
+      <SectionNavItem active={false} label="Section 1" />
+
       <SectionNavItem href="#section-1" active={false} label="Section 1" />
     </>;
   });

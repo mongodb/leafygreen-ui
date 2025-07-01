@@ -80,7 +80,6 @@ describe('packages/section-nav/getTestUtils', () => {
 
       test('returns null', () => {
         renderSectionNav({});
-        s;
         const { getTitle } = getTestUtils();
         expect(getTitle()).toBeNull();
       });
