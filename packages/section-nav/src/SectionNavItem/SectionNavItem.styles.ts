@@ -5,6 +5,7 @@ import { color, fontWeights, spacing, typeScales } from '@leafygreen-ui/tokens';
 
 import {
   INDENTATION,
+  TRANSITION_DURATION,
   WEDGE_BORDER_RADIUS,
   WEDGE_WIDTH,
 } from './SectionNavItem.constants';
@@ -58,10 +59,15 @@ export const getBaseStyles = ({
   color: ${color[theme].text.secondary.default};
   padding-block: ${spacing[150]}px;
   font-size: ${typeScales.body1.fontSize}px;
+  font-weight: ${fontWeights.regular};
   line-height: ${typeScales.body1.lineHeight}px;
   position: relative;
   padding-inline: calc(${getIndentation(level)}px + ${WEDGE_WIDTH}px)
     ${spacing[400]}px;
+
+  transition-property: font-weight;
+  transition-duration: ${TRANSITION_DURATION}ms;
+  transition-timing-function: ease-in-out;
 
   &::before {
     content: '';
