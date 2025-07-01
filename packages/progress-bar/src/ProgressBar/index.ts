@@ -1,2 +1,10 @@
 export { ProgressBar } from './ProgressBar';
-export { type ProgressBarProps } from './ProgressBar.types';
+export {
+  AnimatedLoaderVariant,
+  FormatValueType,
+  LoaderVariant,
+  MeterStatus,
+  ProgressBarProps,
+  Size,
+  Type,
+} from './ProgressBar.types';
