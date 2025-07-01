@@ -33,6 +33,7 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^",
     "polished": "^4.2.2"
   },
   "devDependencies": {
