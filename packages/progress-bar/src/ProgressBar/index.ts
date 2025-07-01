@@ -4,7 +4,7 @@ export {
   FormatValueType,
   LoaderVariant,
   MeterStatus,
-  ProgressBarProps,
+  type ProgressBarProps,
   Size,
   Type,
 } from './ProgressBar.types';
