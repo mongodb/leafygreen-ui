@@ -17,7 +17,7 @@ import {
 
 export const DEFAULT_MAX_VALUE = 1;
 export const DEFAULT_COLOR = Color.Blue;
-export const iconsPendingCompletion = [Color.Green];
+export const iconsPendingCompletion: Array<Color> = [Color.Green];
 
 const getMeterStatusColor = (status?: MeterStatus): Color => {
   switch (status) {
