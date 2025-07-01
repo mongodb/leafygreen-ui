@@ -262,7 +262,7 @@ const getIndeterminateBarFillStyles = ({
   `;
 };
 
-export const getFadeOutBarFillStyles = () => css`
+export const getFadingIndeterminateBarFillStyles = () => css`
   opacity: 0;
   width: 0%;
   transition: opacity ${FADEOUT_DURATION}ms ease-out,
@@ -302,7 +302,7 @@ export const getBarFillStyles = ({
 
   switch (animationMode) {
     case AnimationMode.Transition:
-      addOnStyles = cx(indeterminate, getFadeOutBarFillStyles());
+      addOnStyles = cx(indeterminate, getFadingIndeterminateBarFillStyles());
       break;
     case AnimationMode.Indeterminate:
       addOnStyles = indeterminate;
