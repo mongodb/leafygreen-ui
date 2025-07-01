@@ -6,6 +6,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { queryFirstFocusableElement } from '@leafygreen-ui/lib';
+import { formatCssSize } from '@leafygreen-ui/lib';
 
 import { TRANSITION_DURATION } from '../constants';
 
@@ -116,10 +117,7 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
               className={getContentWrapperStyles({
                 hasBottomShadow: !isBottomInView,
                 hasTopShadow: !isTopInView,
-                height:
-                  typeof expandedHeight === 'number'
-                    ? `${expandedHeight}px`
-                    : expandedHeight,
+                height: formatCssSize(expandedHeight),
                 isOpen: !!isOpen,
                 theme,
               })}
