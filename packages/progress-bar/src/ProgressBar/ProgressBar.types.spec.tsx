@@ -1,12 +1,17 @@
 /* eslint-disable jest/no-disabled-tests */
-import { ProgressBarProps, Type, Variant } from './ProgressBar.types';
+import {
+  LoaderVariant,
+  MeterStatus,
+  ProgressBarProps,
+  Type,
+} from './ProgressBar.types';
 
 test.skip('Type errors for incompatible prop combinations', () => {
   {
     const _MeterCannotUseVariantProp: ProgressBarProps = {
       type: Type.Meter,
       // @ts-expect-error - meter type should not have variant prop
-      variant: Variant.Warning,
+      variant: LoaderVariant.Info,
     };
 
     const _MeterCannotUseIsIndeterminateProp: ProgressBarProps = {
@@ -18,21 +23,21 @@ test.skip('Type errors for incompatible prop combinations', () => {
     const _LoaderCannotUseStatusProp: ProgressBarProps = {
       type: Type.Loader,
       // @ts-expect-error - loader type should not have status prop
-      status: 'healthy',
+      status: MeterStatus.Warning,
     };
 
     const _IndeterminateLoaderCannotBeWarning: ProgressBarProps = {
       type: Type.Loader,
       isIndeterminate: true,
       // @ts-expect-error - warning variant should not be used with indeterminate
-      variant: Variant.Warning,
+      variant: LoaderVariant.Warning,
     };
 
     const _IndeterminateLoaderCannotBeError: ProgressBarProps = {
       type: Type.Loader,
       isIndeterminate: true,
       // @ts-expect-error - error variant should not be used with indeterminate
-      variant: Variant.Error,
+      variant: LoaderVariant.Error,
     };
 
     const _IndeterminateLoaderCannotBeDisabled: ProgressBarProps = {
@@ -53,14 +58,14 @@ test.skip('Type errors for incompatible prop combinations', () => {
       type: Type.Loader,
       enableAnimation: true,
       // @ts-expect-error - animated determinate loader should not use warning variant
-      variant: Variant.Warning,
+      variant: LoaderVariant.Warning,
     };
 
     const _AnimatedDeterminateLoaderCannotBeError: ProgressBarProps = {
       type: Type.Loader,
       enableAnimation: true,
       // @ts-expect-error - animated determinate loader should not use error variant
-      variant: Variant.Error,
+      variant: LoaderVariant.Error,
     };
   }
 });

@@ -5,7 +5,7 @@ import {
   getFormattedValue,
   resolveProgressBarProps,
 } from './ProgressBar.utils';
-import { ProgressBar, Type, Variant } from '.';
+import { Color, LoaderVariant, MeterStatus, ProgressBar, Type } from '.';
 
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
@@ -84,7 +84,7 @@ describe('packages/progress-bar', () => {
           <ProgressBar
             type={Type.Loader}
             isIndeterminate={false}
-            variant="success"
+            variant={LoaderVariant.Success}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
             formatValue="number"
@@ -126,7 +126,7 @@ describe('packages/progress-bar', () => {
         type: Type.Meter,
         value: 50,
         maxValue: 100,
-        status: 'warning',
+        status: MeterStatus.Warning,
       } as const;
 
       const resolvedProps = resolveProgressBarProps(props);
@@ -134,7 +134,7 @@ describe('packages/progress-bar', () => {
         value: 50,
         maxValue: 100,
         disabled: false,
-        variant: Variant.Warning,
+        color: Color.Yellow,
         isIndeterminate: false,
         enableAnimation: false,
       });
@@ -146,7 +146,7 @@ describe('packages/progress-bar', () => {
         isIndeterminate: false,
         value: 50,
         maxValue: 100,
-        variant: Variant.Success,
+        variant: LoaderVariant.Success,
         enableAnimation: true,
       } as const;
 
@@ -155,7 +155,7 @@ describe('packages/progress-bar', () => {
         value: 50,
         maxValue: 100,
         disabled: false,
-        variant: Variant.Success,
+        color: Color.Green,
         isIndeterminate: false,
         enableAnimation: true,
       });
@@ -172,7 +172,7 @@ describe('packages/progress-bar', () => {
         value: undefined,
         maxValue: undefined,
         disabled: false,
-        variant: Variant.Info,
+        color: Color.Blue,
         isIndeterminate: true,
         enableAnimation: false,
       });

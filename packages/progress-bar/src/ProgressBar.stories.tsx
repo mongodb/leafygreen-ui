@@ -3,7 +3,15 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 import { expect, waitFor, within } from '@storybook/test';
 
-import { ProgressBar, ProgressBarProps, Type, Variant } from '.';
+import {
+  AnimatedLoaderVariant,
+  LoaderVariant,
+  MeterStatus,
+  ProgressBar,
+  ProgressBarProps,
+  Size,
+  Type,
+} from '.';
 
 const testValues = {
   value: 53,
@@ -26,7 +34,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         description: <span key="description">Helper text</span>,
       },
       combineArgs: {
-        size: ['small', 'default', 'large'],
+        size: Object.values(Size),
         darkMode: [false, true],
       },
       decorator: (InstanceFn, context) => {
@@ -164,12 +172,7 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        variant: [
-          Variant.Info,
-          Variant.Success,
-          Variant.Warning,
-          Variant.Error,
-        ],
+        variant: [...Object.values(LoaderVariant)],
         enableAnimation: [false, true],
         disabled: [false, true],
       },
@@ -184,11 +187,15 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
       },
       excludeCombinations: [
         {
-          variant: [Variant.Warning, Variant.Error],
+          variant: Object.values(LoaderVariant).filter(
+            v => !Object.values(AnimatedLoaderVariant).includes(v),
+          ),
           enableAnimation: [true],
         },
         {
-          variant: [Variant.Success, Variant.Warning, Variant.Error],
+          variant: Object.values(LoaderVariant).filter(
+            v => v !== LoaderVariant.Info,
+          ),
           disabled: [true],
         },
       ],
@@ -200,7 +207,7 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        variant: [Variant.Info, Variant.Success],
+        variant: Object.values(AnimatedLoaderVariant),
       },
       args: {
         type: Type.Loader,
@@ -217,7 +224,7 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        status: [undefined, 'healthy', 'warning', 'error'],
+        status: [undefined, ...Object.values(MeterStatus)],
         disabled: [false, true],
       },
       args: {
@@ -230,7 +237,7 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
       },
       excludeCombinations: [
         {
-          status: ['healthy', 'warning', 'error'],
+          status: Object.values(MeterStatus),
           disabled: [true],
         },
       ],

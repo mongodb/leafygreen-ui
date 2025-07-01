@@ -6,28 +6,43 @@ import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
 import {
+  Color,
   FormatValueType,
+  LoaderVariant,
   MeterStatus,
   ProgressBarProps,
   ResolvedProgressBarProps,
   Type,
-  Variant,
 } from './ProgressBar.types';
 
 export const DEFAULT_MAX_VALUE = 1;
-export const DEFAULT_VARIANT = Variant.Info;
-export const iconsVisibleOnComplete = ['success'];
+export const DEFAULT_COLOR = Color.Blue;
+export const iconsPendingCompletion = [Color.Green];
 
-const getMeterStatusVariant = (status?: MeterStatus): Variant => {
+const getMeterStatusColor = (status?: MeterStatus): Color => {
   switch (status) {
     case MeterStatus.Healthy:
-      return Variant.Success;
+      return Color.Green;
     case MeterStatus.Warning:
-      return Variant.Warning;
-    case MeterStatus.Error:
-      return Variant.Error;
+      return Color.Yellow;
+    case MeterStatus.Danger:
+      return Color.Red;
     default:
-      return Variant.Info;
+      return Color.Blue;
+  }
+};
+
+const getLoaderVariantColor = (variant?: LoaderVariant): Color => {
+  switch (variant) {
+    case LoaderVariant.Success:
+      return Color.Green;
+    case LoaderVariant.Warning:
+      return Color.Yellow;
+    case LoaderVariant.Error:
+      return Color.Red;
+    case LoaderVariant.Info:
+    default:
+      return Color.Blue;
   }
 };
 
@@ -39,7 +54,7 @@ export const resolveProgressBarProps = (
     value: props.value,
     maxValue: undefined,
     disabled: false,
-    variant: DEFAULT_VARIANT,
+    color: DEFAULT_COLOR,
     isIndeterminate: false,
     enableAnimation: false,
   };
@@ -50,7 +65,7 @@ export const resolveProgressBarProps = (
       ...baseProps,
       maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
       disabled: props.disabled ?? false,
-      variant: getMeterStatusVariant(props.status),
+      color: getMeterStatusColor(props.status),
     };
   }
 
@@ -59,7 +74,7 @@ export const resolveProgressBarProps = (
     return {
       ...baseProps,
       isIndeterminate: true,
-      variant: props.variant ?? DEFAULT_VARIANT,
+      color: getLoaderVariantColor(props.variant),
     };
   }
 
@@ -68,7 +83,7 @@ export const resolveProgressBarProps = (
     ...baseProps,
     maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
     disabled: props.disabled ?? false,
-    variant: props.variant ?? DEFAULT_VARIANT,
+    color: getLoaderVariantColor(props.variant),
     enableAnimation: props.enableAnimation ?? false,
   };
 };
@@ -106,24 +121,24 @@ export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
 };
 
 export const getHeaderIcon = ({
-  variant,
+  color,
   disabled = false,
   props = {},
 }: {
-  variant: Variant;
+  color: Color;
   disabled?: boolean;
   props?: Record<string, any>;
 }) => {
   if (disabled) return <WarningIcon {...props} />;
 
-  switch (variant) {
-    case Variant.Success:
+  switch (color) {
+    case Color.Green:
       return <CheckmarkWithCircleIcon {...props} />;
-    case Variant.Warning:
+    case Color.Yellow:
       return <ImportantWithCircleIcon {...props} />;
-    case Variant.Error:
-      return <WarningIcon {...props} />; // design uses warning icon for error variant
-    case Variant.Info:
+    case Color.Red:
+      return <WarningIcon {...props} />;
+    case Color.Blue:
     default:
       return <InfoWithCircleIcon {...props} />;
   }

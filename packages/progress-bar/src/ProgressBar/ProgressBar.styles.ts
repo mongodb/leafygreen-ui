@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { borderRadius, color, spacing } from '@leafygreen-ui/tokens';
 
-import { Size, Variant } from './ProgressBar.types';
+import { Color, Size } from './ProgressBar.types';
 import { getPercentage } from './ProgressBar.utils';
 
 const progressBarSizeStyles = {
@@ -21,47 +21,47 @@ const progressBarSizeStyles = {
   },
 };
 
-const progressBarVariantStyles = {
+const progressBarColorStyles = {
   [Theme.Light]: {
-    trackColor: palette.gray.light2,
-    disabledBarColor: palette.gray.light1,
+    track: palette.gray.light2,
+    disabledBar: palette.gray.light1,
 
-    [Variant.Info]: {
-      barColor: palette.blue.base,
-      iconColor: palette.blue.base,
+    [Color.Blue]: {
+      bar: palette.blue.base,
+      icon: palette.blue.base,
     },
-    [Variant.Success]: {
-      barColor: palette.green.dark1,
-      iconColor: palette.green.dark1,
+    [Color.Green]: {
+      bar: palette.green.dark1,
+      icon: palette.green.dark1,
     },
-    [Variant.Warning]: {
-      barColor: palette.yellow.base,
-      iconColor: palette.yellow.dark2,
+    [Color.Yellow]: {
+      bar: palette.yellow.base,
+      icon: palette.yellow.dark2,
     },
-    [Variant.Error]: {
-      barColor: palette.red.base,
-      iconColor: palette.red.base,
+    [Color.Red]: {
+      bar: palette.red.base,
+      icon: palette.red.base,
     },
   },
   [Theme.Dark]: {
-    trackColor: palette.gray.dark2,
-    disabledBarColor: palette.gray.dark1,
+    track: palette.gray.dark2,
+    disabledBar: palette.gray.dark1,
 
-    [Variant.Info]: {
-      barColor: palette.blue.light1,
-      iconColor: palette.blue.light1,
+    [Color.Blue]: {
+      bar: palette.blue.light1,
+      icon: palette.blue.light1,
     },
-    [Variant.Success]: {
-      barColor: palette.green.base,
-      iconColor: palette.green.base,
+    [Color.Green]: {
+      bar: palette.green.base,
+      icon: palette.green.base,
     },
-    [Variant.Warning]: {
-      barColor: palette.yellow.base,
-      iconColor: palette.yellow.base,
+    [Color.Yellow]: {
+      bar: palette.yellow.base,
+      icon: palette.yellow.base,
     },
-    [Variant.Error]: {
-      barColor: palette.red.light1,
-      iconColor: palette.red.light1,
+    [Color.Red]: {
+      bar: palette.red.light1,
+      icon: palette.red.light1,
     },
   },
 };
@@ -95,17 +95,17 @@ export const getHeaderValueStyles = ({
 
 export const getHeaderIconStyles = ({
   theme,
-  variant,
+  color,
   disabled,
 }: {
   theme: Theme;
-  variant: Variant;
+  color: Color;
   disabled?: boolean;
 }) => css`
   margin-bottom: ${spacing[50]}px; // align icon with text baseline
   color: ${disabled
-    ? color[theme].icon.disabled.default
-    : progressBarVariantStyles[theme][variant].iconColor};
+    ? color[theme]?.icon.disabled.default
+    : progressBarColorStyles[theme][color].icon};
 `;
 
 export const getBarTrackStyles = ({
@@ -118,23 +118,23 @@ export const getBarTrackStyles = ({
   width: 100%;
   height: ${progressBarSizeStyles[size].height};
   border-radius: ${progressBarSizeStyles[size].borderRadius};
-  background-color: ${progressBarVariantStyles[theme].trackColor};
+  background-color: ${progressBarColorStyles[theme].track};
 `;
 
 const getBaseBarFillStyles = ({
   theme,
-  variant,
+  color,
   disabled,
 }: {
   theme: Theme;
-  variant: Variant;
+  color: Color;
   disabled?: boolean;
 }) => css`
   height: 100%;
   border-radius: inherit;
   background-color: ${disabled
-    ? progressBarVariantStyles[theme].disabledBarColor
-    : progressBarVariantStyles[theme][variant].barColor};
+    ? progressBarColorStyles[theme].disabledBar
+    : progressBarColorStyles[theme][color].bar};
 `;
 
 const getDeterminateBarFillStyles = (progress: number) => css`
@@ -149,14 +149,14 @@ const getIndeterminateBarFillStyles = () => css`
 
 export const getBarFillStyles = ({
   theme,
-  variant,
+  color,
   disabled,
   isIndeterminate,
   value,
   maxValue,
 }: {
   theme: Theme;
-  variant: Variant;
+  color: Color;
   isIndeterminate: boolean;
   disabled?: boolean;
   value?: number;
@@ -172,7 +172,7 @@ export const getBarFillStyles = ({
     );
 
   return cx(
-    getBaseBarFillStyles({ theme, variant, disabled }),
+    getBaseBarFillStyles({ theme, color, disabled }),
     typedBarFillStyles,
   );
 };

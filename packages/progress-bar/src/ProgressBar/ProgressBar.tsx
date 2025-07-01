@@ -17,11 +17,11 @@ import {
   getFormattedValue,
   getHeaderIcon,
   getValueAriaAttributes,
-  iconsVisibleOnComplete,
+  iconsPendingCompletion,
   resolveProgressBarProps,
 } from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const { value, maxValue, disabled, variant, isIndeterminate } =
+  const { value, maxValue, disabled, color, isIndeterminate } =
     resolveProgressBarProps(props);
 
   const {
@@ -36,7 +36,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const { theme } = useDarkMode(darkMode);
 
-  const showIcon = iconsVisibleOnComplete.includes(variant)
+  const showIcon = iconsPendingCompletion.includes(color)
     ? showIconProp && value === maxValue
     : showIconProp;
 
@@ -60,10 +60,10 @@ export function ProgressBar(props: ProgressBarProps) {
 
             {showIcon &&
               getHeaderIcon({
-                variant,
+                color,
                 disabled,
                 props: {
-                  className: getHeaderIconStyles({ theme, variant, disabled }),
+                  className: getHeaderIconStyles({ theme, color, disabled }),
                 },
               })}
           </Body>
@@ -84,7 +84,7 @@ export function ProgressBar(props: ProgressBarProps) {
             data-testid="progress-bar-fill"
             className={getBarFillStyles({
               theme,
-              variant,
+              color,
               disabled,
               isIndeterminate,
               value,
