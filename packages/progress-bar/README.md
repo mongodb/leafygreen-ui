@@ -8,10 +8,10 @@
 
 The `ProgressBar` component supports two types:
 
-- **Loader**, which supports determinate and indeterminate modes. Determinate loaders dynamically approach a maximum; indeterminate loaders loop infinitely.
-- **Meter**, which displays a static snapshot of progress at some point in time. Meters are by default determinate only.
+- **Loader**, which has determinate and indeterminate modes. Determinate loaders dynamically approach a maximum; indeterminate loaders loop infinitely.
+- **Meter**, which displays a static snapshot of progress at some point in time. By default, meters are determinate only.
 
-Use a meter when you want to show precise progress alongside a health status (e.g., amount of disk space used). Use loaders when you want to show progress towards completion or ongoing activity (e.g., file upload progress).
+Use a meter when you want to show precise progress alongside a health status (e.g., amount of disk space used). Use loaders when you want to show progress towards completion of ongoing activity (e.g., file upload progress).
 
 ## Installation
 
@@ -112,7 +112,7 @@ const totalSpaceAvailable = 128
 | `value`            | `number`                                                                                       |             | both                           | Current progress value. **Optional only if `isIndeterminate` is `true` for loaders**.                                                      |
 | `maxValue?`        | `number`                                                                                       | `1`         | meter, determinate loader only | Optional maximum progress value. Not available if `isIndeterminate` is `true` for loaders.                                                 |
 | `disabled?`        | `boolean`                                                                                      | `false`     | meter, determinate loader only | Pauses progress and shows a disabled style. Not available if `isIndeterminate` is `true` for loaders.                                      |
-| `status?`          | `'healthy'` \| `'warning'` \| `'error'`                                                        |             | meter only                     | Status color for meter type indicating health or error state.                                                                              |
-| `variant?`         | `'info'` \| `'success'` \| `'warning'` \| `'error'`                                            | `'info'`    | loader only                    | Color variant for loader type. Animation is only available for `'info'` or `'success'` variants.                                           |
+| `status?`          | `'healthy'` \| `'warning'` \| `'danger'`                                                       |             | meter only                     | Status for meter type indicating health or error state. If not provided, defaults to blue.                                                 |
+| `variant?`         | `'info'` \| `'success'` \| `'warning'` \| `'error'`                                            | `'info'`    | loader only                    | Variant for loader type. Animation is only available for `'info'` or `'success'` variants.                                                 |
 | `isIndeterminate?` | `boolean`                                                                                      | `false`     | loader only                    | When `true`, shows an infinite looping animation along the bar.                                                                            |
 | `enableAnimation?` | `boolean`                                                                                      | `false`     | determinate loader only        | When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. |

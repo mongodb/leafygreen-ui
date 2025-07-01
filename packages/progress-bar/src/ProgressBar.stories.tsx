@@ -172,7 +172,7 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        variant: [...Object.values(LoaderVariant)],
+        variant: Object.values(LoaderVariant),
         enableAnimation: [false, true],
         disabled: [false, true],
       },
