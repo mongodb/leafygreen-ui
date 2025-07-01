@@ -1,7 +1,11 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { borderRadius, color, spacing } from '@leafygreen-ui/tokens';
+import {
+  borderRadius,
+  color as colorToken,
+  spacing as spacingToken,
+} from '@leafygreen-ui/tokens';
 
 import { Color, Size } from './ProgressBar.types';
 import { getPercentage } from './ProgressBar.utils';
@@ -69,7 +73,7 @@ const progressBarColorStyles = {
 export const containerStyles = css`
   display: flex;
   flex-direction: column;
-  gap: ${spacing[100]}px;
+  gap: ${spacingToken[100]}px;
   width: 100%;
 `;
 
@@ -87,10 +91,10 @@ export const getHeaderValueStyles = ({
 }) => css`
   display: flex;
   align-items: center;
-  gap: ${spacing[100]}px;
+  gap: ${spacingToken[100]}px;
   color: ${disabled
-    ? color[theme].text.disabled.default
-    : color[theme].text.secondary.default};
+    ? colorToken[theme].text.disabled.default
+    : colorToken[theme].text.secondary.default};
 `;
 
 export const getHeaderIconStyles = ({
@@ -102,9 +106,9 @@ export const getHeaderIconStyles = ({
   color: Color;
   disabled?: boolean;
 }) => css`
-  margin-bottom: ${spacing[50]}px; // align icon with text baseline
+  margin-bottom: ${spacingToken[50]}px; // align icon with text baseline
   color: ${disabled
-    ? color[theme]?.icon.disabled.default
+    ? colorToken[theme].icon.disabled.default
     : progressBarColorStyles[theme][color].icon};
 `;
 
