@@ -137,7 +137,7 @@ describe('packages/context-drawer', () => {
     expect(focusableButton).not.toHaveFocus();
   });
 
-  test('first focusable element receives focus when opened', async () => {
+  test('first focusable element receives focus when opened and tabbing moves focus through drawer and back to the trigger', async () => {
     renderContextDrawer({
       reference: <div>Reference content</div>,
       content: (
@@ -156,7 +156,10 @@ describe('packages/context-drawer', () => {
     const focusableButton = await screen.findByRole('button', {
       name: 'Focusable',
     });
-    waitFor(() => expect(focusableButton).toHaveFocus());
+    await waitFor(() => expect(focusableButton).toHaveFocus());
+
+    userEvent.tab();
+    expect(triggerButton).toHaveFocus();
   });
 
   test('opens and closes when trigger is clicked', async () => {
