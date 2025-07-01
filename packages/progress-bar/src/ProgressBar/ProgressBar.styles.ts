@@ -162,16 +162,16 @@ const getDeterminateBarFillStyles = ({
   width: number;
   enableAnimation: boolean;
 }) => {
-  const variantStyles = progressBarColorStyles[theme][color];
+  const colorStyles = progressBarColorStyles[theme][color];
   const hasAnimation =
-    !disabled && enableAnimation && 'shimmerFade' in variantStyles;
+    !disabled && enableAnimation && 'shimmerFade' in colorStyles;
 
   return css`
     width: ${width}%;
     transition: width 0.5s ease-in-out;
     background-color: ${disabled
       ? progressBarColorStyles[theme].disabledBar
-      : progressBarColorStyles[theme][color].bar};
+      : colorStyles.bar};
     ${hasAnimation &&
     css`
       background-color: transparent;
@@ -183,9 +183,9 @@ const getDeterminateBarFillStyles = ({
         width: 100%;
         background: linear-gradient(
           90deg,
-          ${variantStyles.bar} 0%,
-          ${variantStyles.shimmerFade} 50%,
-          ${variantStyles.bar} 100%
+          ${colorStyles.bar} 0%,
+          ${colorStyles.shimmerFade} 50%,
+          ${colorStyles.bar} 100%
         );
         background-size: 200% 100%;
         animation: shimmer 3s linear infinite;
@@ -209,7 +209,7 @@ const getIndeterminateBarFillStyles = ({
   theme: Theme;
   color: Color;
 }) => {
-  const variantStyles = progressBarColorStyles[theme][color];
+  const colorStyles = progressBarColorStyles[theme][color];
 
   return css`
     width: 100%;
@@ -224,9 +224,9 @@ const getIndeterminateBarFillStyles = ({
       background: linear-gradient(
         90deg,
         ${palette.transparent} 0%,
-        ${variantStyles.bar}${opacityAlphaChannels[75]} 25%,
-        ${variantStyles.bar}${opacityAlphaChannels[100]} 50%,
-        ${variantStyles.bar}${opacityAlphaChannels[75]} 75%,
+        ${colorStyles.bar}${opacityAlphaChannels[75]} 25%,
+        ${colorStyles.bar}${opacityAlphaChannels[100]} 50%,
+        ${colorStyles.bar}${opacityAlphaChannels[75]} 75%,
         ${palette.transparent} 100%
       );
       animation: cycle 1.5s linear infinite;
