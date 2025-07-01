@@ -18,6 +18,11 @@ const testValues = {
   maxValue: 200,
 };
 
+const SIZES = Object.values(Size);
+const LOADER_VARIANTS = Object.values(LoaderVariant);
+const ANIMATED_LOADER_VARIANTS = Object.values(AnimatedLoaderVariant);
+const METER_STATUSES = Object.values(MeterStatus);
+
 const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
   component: ProgressBar,
@@ -34,7 +39,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         description: <span key="description">Helper text</span>,
       },
       combineArgs: {
-        size: Object.values(Size),
+        size: SIZES,
         darkMode: [false, true],
       },
       decorator: (InstanceFn, context) => {
@@ -172,7 +177,7 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        variant: Object.values(LoaderVariant),
+        variant: LOADER_VARIANTS,
         enableAnimation: [false, true],
         disabled: [false, true],
       },
@@ -187,18 +192,14 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
       },
       excludeCombinations: [
         {
-          variant: Object.values(LoaderVariant).filter(
+          variant: LOADER_VARIANTS.filter(
             v =>
-              !(
-                Object.values(AnimatedLoaderVariant) as Array<LoaderVariant>
-              ).includes(v),
+              !(ANIMATED_LOADER_VARIANTS as Array<LoaderVariant>).includes(v),
           ),
           enableAnimation: [true],
         },
         {
-          variant: Object.values(LoaderVariant).filter(
-            v => v !== LoaderVariant.Info,
-          ),
+          variant: LOADER_VARIANTS.filter(v => v !== LoaderVariant.Info),
           disabled: [true],
         },
       ],
@@ -210,7 +211,7 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        variant: Object.values(AnimatedLoaderVariant),
+        variant: ANIMATED_LOADER_VARIANTS,
       },
       args: {
         type: Type.Loader,
@@ -227,7 +228,7 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        status: [undefined, ...Object.values(MeterStatus)],
+        status: [undefined, ...METER_STATUSES],
         disabled: [false, true],
       },
       args: {
@@ -240,7 +241,7 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
       },
       excludeCombinations: [
         {
-          status: Object.values(MeterStatus),
+          status: METER_STATUSES,
           disabled: [true],
         },
       ],

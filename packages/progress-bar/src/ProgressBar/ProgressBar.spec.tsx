@@ -1,11 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
+import { ProgressBar } from './ProgressBar';
+import { Color, LoaderVariant, MeterStatus, Type } from './ProgressBar.types';
 import {
   getFormattedValue,
   resolveProgressBarProps,
 } from './ProgressBar.utils';
-import { Color, LoaderVariant, MeterStatus, ProgressBar, Type } from '.';
 
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
