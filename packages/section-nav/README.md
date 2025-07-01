@@ -66,6 +66,79 @@ import {SectionNav, SectionNavItem} from `@leafygreen-ui/section-nav`;
 
 \+ other HTML `a` element props
 
+## `getTransformedToNestedData`
+
+The recommended way to use `SectionNav` is to map through a nested data structure and render `SectionNavItem` components based on that data. This allows for a more dynamic and flexible navigation structure.
+
+```tsx
+const data = [
+  { label: 'Introduction', href: '#intro', children: [] },
+  {
+    label: 'Installation',
+    href: '#installation',
+    children: [
+      { label: 'Why', href: '#why', children: [] },
+      { label: 'How to Install', href: '#how', children: [] },
+    ],
+  },
+  { label: 'Usage', href: '#usage', children: [] },
+];
+```
+
+The `getTransformedToNestedData` utility function is provided to help with this transformation.
+
+Currently, it supports transforming a flat array of objects into a nested structure based on a `level` key.
+
+```tsx
+const originalFlatStringData = [
+  { level: 1, id: 'intro', label: 'Introduction' },
+  { level: 1, id: 'installation', label: 'Installation' },
+  { level: 2, id: 'why', label: 'Why' },
+  { level: 2, id: 'how', label: 'How to Install' },
+  { level: 1, id: 'usage', label: 'Usage' },
+];
+```
+
+### Usage
+
+```tsx
+// Original data with level, href, and label
+const flatStringInput = [
+  { level: 1, id: 'intro', label: 'Introduction' },
+  { level: 1, id: 'installation', label: 'Installation' },
+  { level: 2, id: 'why', label: 'Why' },
+  { level: 2, id: 'how', label: 'How to Install' },
+  { level: 1, id: 'usage', label: 'Usage' },
+];
+
+const { nestedData } = getTranformToNestedData({
+  type: 'flatString',
+  data: flatStringInput,
+});
+
+return (
+  <SectionNav title="On this page">
+    {nestedData.map(item => (
+      <SectionNavItem
+        active={currentActiveSectionId === item.id}
+        href={item.id}
+        label={item.label}
+      >
+        {item.children &&
+          item.children.length > 0 &&
+          item.children.map(subItem => (
+            <SectionNavItem
+              active={currentActiveSectionId === item.id}
+              href={subItem.id}
+              label={subItem.label}
+            />
+          ))}
+      </SectionNavItem>
+    ))}
+  </SectionNav>
+);
+```
+
 ## Test Harnesses
 
 ### getTestUtils()
@@ -136,13 +209,12 @@ const {
 } = getTestUtils();
 ```
 
-| Util                         | Description                                                                                                                                                           | Returns                                |
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `findSectionNav()`           | Returns a promise that resolves to the element using the `data-lgid` data attribute. The promise is rejected if no elements match or if more than one match is found. | `() => Promise<HTMLButtonElement>`     |
-| `getSectionNav()`            | Returns the element using the `data-lgid` data attribute. Will throw if no elements match or if more than one match is found.                                         | `() => HTMLButtonElement`              |
-| `querySectionNav()`          | Returns the element using the `data-lgid` data attribute or `null` if no elements match. Will throw if more than one match is found.                                  | `() => HTMLButtonElement \| null`      |
-| `getAllSectionNavItems()`    | Returns an array of all `<SectionNavItem    />`                                                                                                                       | `() => Array<HTMLButtonElement>`       |
-| `getSectionNavItemByLabel()` | Returns the `<SectionNavItem />` based on the label                                                                                                                   | interface SectionNavItemUtils {        |
-|                              |
-| `getActiveSectionNavItem()`  | Returns the first active `<SectionNavItem />`                                                                                                                         | `() => HTMLButtonElement \| undefined` |
-| `getTitle()`                 | Returns the title of the SectionNav component                                                                                                                         | `() => HTMLHeadingElement \| null`     |
+| Util                         | Description                                                                                                                                                           | Returns                                  |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `findSectionNav()`           | Returns a promise that resolves to the element using the `data-lgid` data attribute. The promise is rejected if no elements match or if more than one match is found. | `() => Promise<HTMLElement>`             |
+| `getSectionNav()`            | Returns the element using the `data-lgid` data attribute. Will throw if no elements match or if more than one match is found.                                         | `() => HTMLElement`                      |
+| `querySectionNav()`          | Returns the element using the `data-lgid` data attribute or `null` if no elements match. Will throw if more than one match is found.                                  | `() => HTMLElement \| null`              |
+| `getAllSectionNavItems()`    | Returns an array of all `<SectionNavItem    />`                                                                                                                       | `() => Array<HTMLAnchorElement>`         |
+| `getSectionNavItemByLabel()` | Returns the `<SectionNavItem />` based on the label                                                                                                                   | `(label: string) => SectionNavItemUtils` |
+| `getActiveSectionNavItem()`  | Returns the first active `<SectionNavItem />`                                                                                                                         | `() => HTMLAnchorElement \| undefined`   |
+| `getTitle()`                 | Returns the title of the SectionNav component                                                                                                                         | `() => HTMLHeadingElement \| null`       |
