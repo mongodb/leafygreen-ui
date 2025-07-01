@@ -23,7 +23,7 @@ const fadePalette = {
   green: '#C0FAE6',
 };
 
-const progressBarSizeStyles = {
+const barSizeStyles = {
   [Size.Small]: {
     height: '4px',
     borderRadius: borderRadius[100] + 'px',
@@ -38,7 +38,7 @@ const progressBarSizeStyles = {
   },
 };
 
-const progressBarColorStyles = {
+const barColorStyles = {
   [Theme.Light]: {
     track: palette.gray.light2,
     disabledBar: palette.gray.light1,
@@ -126,7 +126,7 @@ export const getHeaderIconStyles = ({
   margin-bottom: ${spacingToken[50]}px; // align icon with text baseline
   color: ${disabled
     ? colorToken[theme].icon.disabled.default
-    : progressBarColorStyles[theme][color].icon};
+    : barColorStyles[theme][color].icon};
 `;
 
 export const getBarTrackStyles = ({
@@ -137,9 +137,9 @@ export const getBarTrackStyles = ({
   size: Size;
 }) => css`
   width: 100%;
-  height: ${progressBarSizeStyles[size].height};
-  border-radius: ${progressBarSizeStyles[size].borderRadius};
-  background-color: ${progressBarColorStyles[theme].track};
+  height: ${barSizeStyles[size].height};
+  border-radius: ${barSizeStyles[size].borderRadius};
+  background-color: ${barColorStyles[theme].track};
 `;
 
 const getBaseBarFillStyles = () => css`
@@ -162,16 +162,16 @@ const getDeterminateBarFillStyles = ({
   width: number;
   enableAnimation: boolean;
 }) => {
-  const colorStyles = progressBarColorStyles[theme][color];
+  const selectedColorStyle = barColorStyles[theme][color];
   const hasAnimation =
-    !disabled && enableAnimation && 'shimmerFade' in colorStyles;
+    !disabled && enableAnimation && 'shimmerFade' in selectedColorStyle;
 
   return css`
     width: ${width}%;
     transition: width 0.5s ease-in-out;
     background-color: ${disabled
-      ? progressBarColorStyles[theme].disabledBar
-      : colorStyles.bar};
+      ? barColorStyles[theme].disabledBar
+      : selectedColorStyle.bar};
     ${hasAnimation &&
     css`
       background-color: transparent;
@@ -183,9 +183,9 @@ const getDeterminateBarFillStyles = ({
         width: 100%;
         background: linear-gradient(
           90deg,
-          ${colorStyles.bar} 0%,
-          ${colorStyles.shimmerFade} 50%,
-          ${colorStyles.bar} 100%
+          ${selectedColorStyle.bar} 0%,
+          ${selectedColorStyle.shimmerFade} 50%,
+          ${selectedColorStyle.bar} 100%
         );
         background-size: 200% 100%;
         animation: shimmer 3s linear infinite;
@@ -209,7 +209,7 @@ const getIndeterminateBarFillStyles = ({
   theme: Theme;
   color: Color;
 }) => {
-  const colorStyles = progressBarColorStyles[theme][color];
+  const selectedColorStyle = barColorStyles[theme][color];
 
   return css`
     width: 100%;
@@ -224,9 +224,9 @@ const getIndeterminateBarFillStyles = ({
       background: linear-gradient(
         90deg,
         ${palette.transparent} 0%,
-        ${colorStyles.bar}${opacityAlphaChannels[75]} 25%,
-        ${colorStyles.bar}${opacityAlphaChannels[100]} 50%,
-        ${colorStyles.bar}${opacityAlphaChannels[75]} 75%,
+        ${selectedColorStyle.bar}${opacityAlphaChannels[75]} 25%,
+        ${selectedColorStyle.bar}${opacityAlphaChannels[100]} 50%,
+        ${selectedColorStyle.bar}${opacityAlphaChannels[75]} 75%,
         ${palette.transparent} 100%
       );
       animation: cycle 1.5s linear infinite;
