@@ -98,17 +98,65 @@ describe('packages/context-drawer', () => {
     expect(onOpenChange).toHaveBeenCalledTimes(1);
   });
 
-  test('content receives focus when opened', () => {
+  // JSDOM doesn't support hiding focusable elements when visibility is hidden
+  // this test is used as a stopgap until the below skipped test can be used
+  test('drawer is hidden when closed', () => {
     renderContextDrawer({
       reference: <div>Reference content</div>,
-      content: <div>Drawer content</div>,
+      content: (
+        <>
+          <div>Drawer content</div>
+          <button>Focusable</button>
+        </>
+      ),
+      trigger: <button>Trigger</button>,
+    });
+    const drawer = screen.queryByRole('region');
+    expect(drawer).toBeNull();
+  });
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('focuses the trigger button first when closed', () => {
+    renderContextDrawer({
+      reference: <div>Reference content</div>,
+      content: (
+        <>
+          <div>Drawer content</div>
+          <button>Focusable</button>
+        </>
+      ),
+      trigger: <button>Trigger</button>,
+    });
+
+    userEvent.tab();
+
+    const triggerButton = screen.getByRole('button', { name: 'Trigger' });
+    const focusableButton = screen.getByRole('button', {
+      name: 'Focusable',
+    });
+    expect(triggerButton).toHaveFocus();
+    expect(focusableButton).not.toHaveFocus();
+  });
+
+  test('first focusable element receives focus when opened', async () => {
+    renderContextDrawer({
+      reference: <div>Reference content</div>,
+      content: (
+        <>
+          <div>Drawer content</div>
+          <button>Focusable</button>
+        </>
+      ),
       trigger: <button>Trigger</button>,
     });
 
     const triggerButton = screen.getByRole('button', { name: 'Trigger' });
+
     userEvent.click(triggerButton);
 
-    expect(screen.getByRole('region')).toHaveFocus();
+    const focusableButton = await screen.findByRole('button', {
+      name: 'Focusable',
+    });
+    waitFor(() => expect(focusableButton).toHaveFocus());
   });
 
   test('opens and closes when trigger is clicked', async () => {

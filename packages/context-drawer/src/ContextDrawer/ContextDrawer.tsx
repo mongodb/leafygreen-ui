@@ -5,6 +5,9 @@ import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { queryFirstFocusableElement } from '@leafygreen-ui/lib';
+
+import { TRANSITION_DURATION } from '../constants';
 
 import {
   bottomInterceptStyles,
@@ -65,7 +68,18 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
       if (!isOpen || contentRef.current === null) {
         return;
       }
-      contentRef.current.focus();
+
+      const firstFocusableElement = queryFirstFocusableElement(
+        contentRef.current,
+      );
+
+      if (!firstFocusableElement) {
+        return;
+      }
+
+      setTimeout(() => {
+        firstFocusableElement.focus();
+      }, TRANSITION_DURATION);
     }, [isOpen]);
 
     const handleTriggerClick = (e: React.MouseEvent) => {
@@ -112,7 +126,6 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
               id={contentId}
               ref={contentRef}
               role="region"
-              tabIndex={-1}
             >
               <div
                 className={contentScrollContainerStyles}

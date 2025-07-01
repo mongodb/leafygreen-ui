@@ -35,7 +35,6 @@ export const getInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
   border-radius: ${borderRadius[400]}px;
   border: ${BORDER_WIDTH}px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]};
-  border-bottom-width: 0;
   transition: border ${TRANSITION_DURATION}ms ease-in-out;
 `;
 
@@ -45,9 +44,7 @@ export const getInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
  */
 export const referenceWrapperStyles = cx(
   css`
-    margin-top: -${BORDER_WIDTH}px;
-    margin-left: -${BORDER_WIDTH}px;
-    margin-right: -${BORDER_WIDTH}px;
+    margin: -${BORDER_WIDTH}px;
   `,
   referenceWrapperClassName,
 );
