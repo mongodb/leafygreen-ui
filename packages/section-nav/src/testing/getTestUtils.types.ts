@@ -1,6 +1,6 @@
 interface SectionNavItemUtils {
   /**
-   * Returns the HTMLAnchorElement for the SectionNavItem.
+   * Returns the HTML element for the SectionNavItem.
    */
   getElement: () => HTMLAnchorElement | undefined;
 

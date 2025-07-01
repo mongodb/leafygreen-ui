@@ -138,11 +138,17 @@ const {
 
 | Util                         | Description                                                                                                                                                           | Returns                                |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `findSectionNav()`           | Returns a promise that resolves to the element using the `data-lgid` data attribute. The promise is rejected if no elements match or if more than one match is found. | `() => Promise<HTMLButtonElement>`     |
-| `getSectionNav()`            | Returns the element using the `data-lgid` data attribute. Will throw if no elements match or if more than one match is found.                                         | `() => HTMLButtonElement`              |
-| `querySectionNav()`          | Returns the element using the `data-lgid` data attribute or `null` if no elements match. Will throw if more than one match is found.                                  | `() => HTMLButtonElement \| null`      |
-| `getAllSectionNavItems()`    | Returns an array of all `<SectionNavItem    />`                                                                                                                       | `() => Array<HTMLButtonElement>`       |
-| `getSectionNavItemByLabel()` | Returns the `<SectionNavItem />` based on the label                                                                                                                   | interface SectionNavItemUtils {        |
-|                              |
-| `getActiveSectionNavItem()`  | Returns the first active `<SectionNavItem />`                                                                                                                         | `() => HTMLButtonElement \| undefined` |
-| `getTitle()`                 | Returns the title of the SectionNav component                                                                                                                         | `() => HTMLHeadingElement \| null`     |
+| `findSectionNav()`           | Returns a promise that resolves to the element using the `data-lgid` data attribute. The promise is rejected if no elements match or if more than one match is found. | `() => Promise<HTMLElement>`           |
+| `getSectionNav()`            | Returns the element using the `data-lgid` data attribute. Will throw if no elements match or if more than one match is found.                                         | `() => HTMLElement`                    |
+| `querySectionNav()`          | Returns the element using the `data-lgid` data attribute or `null` if no elements match. Will throw if more than one match is found.                                  | `() => HTMLElement \| null`            |
+| `getAllSectionNavItems()`    | Returns an array of all `<SectionNavItem    />`                                                                                                                       | `() => Array<HTMLAnchorElement>`       |
+| `getSectionNavItemByLabel()` | Returns the `<SectionNavItem />` based on the label                                                                                                                   | `SectionNavItemUtils`                  |
+| `getActiveSectionNavItem()`  | Returns the first active `<SectionNavItem />`                                                                                                                         | `() => HTMLAnchorElement \| undefined` |
+| `getTitle()`                 | Returns the title of the `SectionNav` component                                                                                                                       | `() => HTMLHeadingElement \| null`     |
+
+### SectionNavItemUtils
+
+| Util           | Description                                     | Returns                            |
+| -------------- | ----------------------------------------------- | ---------------------------------- |
+| `getElement()` | Returns the HTML element for the SectionNavItem | `HTMLAnchorElement` \| `undefined` |
+| `isActive()`   | Returns whether the SectionNavItem is active.   | `boolean`                          |
