@@ -1,2 +1,2 @@
 export { FormFieldFeedback } from './FormFieldFeedback';
-export { FormFieldFeedbackProps } from './FormFieldFeedback.types';
+export { type FormFieldFeedbackProps } from './FormFieldFeedback.types';

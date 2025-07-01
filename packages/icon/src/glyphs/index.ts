@@ -142,6 +142,7 @@ import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
 import ShardedCluster from './ShardedCluster.svg';
 import Shell from './Shell.svg';
+import Shield from './Shield.svg';
 import Shirt from './Shirt.svg';
 import SMS from './SMS.svg';
 import SortAscending from './SortAscending.svg';
@@ -323,6 +324,7 @@ const _glyphs = {
   Settings,
   ShardedCluster,
   Shell,
+  Shield,
   Shirt,
   SortAscending,
   SortDescending,

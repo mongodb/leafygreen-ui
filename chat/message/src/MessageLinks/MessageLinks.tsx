@@ -16,6 +16,7 @@ export function MessageLinks({
   darkMode: darkModeProp,
   headingText = 'Related Resources',
   links,
+  onLinkClick,
   ...divProps
 }: MessageLinksProps) {
   const { theme } = useDarkMode(darkModeProp);
@@ -23,7 +24,7 @@ export function MessageLinks({
     <div className={cx(baseStyles)} {...divProps}>
       <hr className={cx(dividingLineStyles[theme])} />
       <Subtitle className={cx(linksHeadingStyles)}>{headingText}</Subtitle>
-      <RichLinksArea links={links} />
+      <RichLinksArea links={links} onLinkClick={onLinkClick} />
     </div>
   );
 }

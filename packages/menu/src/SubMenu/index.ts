@@ -3,4 +3,4 @@ export {
   subMenuContainerClassName,
   subMenuToggleClassName,
 } from './SubMenu.styles';
-export { InternalSubMenuProps, SubMenuProps } from './SubMenu.types';
+export { type InternalSubMenuProps, type SubMenuProps } from './SubMenu.types';

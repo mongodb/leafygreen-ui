@@ -5,8 +5,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { flushSync } from 'react-dom';
-import debounce from 'lodash/debounce';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
@@ -26,6 +24,7 @@ import {
 
 import SvgNotch from '../Notch';
 
+import { useTooltipTriggerEventHandlers } from './utils/useTooltipTriggerEventHandlers';
 import {
   baseStyles,
   baseTypeStyle,
@@ -40,7 +39,6 @@ import {
   TooltipProps,
   TriggerEvent,
 } from './Tooltip.types';
-import { hoverDelay } from './tooltipConstants';
 import { notchPositionStyles } from './tooltipUtils';
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
@@ -111,7 +109,6 @@ function Tooltip({
   const setOpen =
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const existingId = id ?? tooltipRef.current?.id;
@@ -127,13 +124,8 @@ function Tooltip({
     }
   }, [trigger]);
 
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [timeoutRef]);
+  const triggerComponent =
+    typeof trigger === 'function' ? trigger({}) : trigger;
 
   const handleClose = useCallback(() => {
     if (typeof shouldClose !== 'function' || shouldClose()) {
@@ -142,68 +134,18 @@ function Tooltip({
     }
   }, [setOpen, shouldClose, onClose]);
 
-  const createTriggerProps = useCallback(
-    (triggerEvent: TriggerEvent, triggerProps?: any) => {
-      switch (triggerEvent) {
-        case TriggerEvent.Hover:
-          return {
-            onMouseEnter: debounce((e: MouseEvent) => {
-              userTriggerHandler('onMouseEnter', e);
-              // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
-              // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
-              flushSync(() => {
-                timeoutRef.current = setTimeout(() => {
-                  setOpen(true);
-                }, hoverDelay);
-              });
-            }, 35),
-            onMouseLeave: debounce((e: MouseEvent) => {
-              userTriggerHandler('onMouseLeave', e);
-              if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-                timeoutRef.current = null;
-              }
-              handleClose();
-            }, 35),
-            onFocus: (e: MouseEvent) => {
-              userTriggerHandler('onFocus', e);
-              setOpen(true);
-            },
-            onBlur: (e: MouseEvent) => {
-              userTriggerHandler('onBlur', e);
-              handleClose();
-            },
-          };
-        case TriggerEvent.Click:
-        default:
-          return {
-            onClick: (e: MouseEvent) => {
-              // ensure that we don't close the tooltip when content inside tooltip is clicked
-              if (e.target !== tooltipRef.current) {
-                userTriggerHandler('onClick', e);
-                setOpen((curr: boolean) => !curr);
-              }
-            },
-          };
-      }
-
-      function userTriggerHandler(handler: string, e: MouseEvent): void {
-        // call any click handlers already on the trigger
-        if (
-          triggerProps &&
-          triggerProps[handler] &&
-          typeof triggerProps[handler] == 'function'
-        )
-          triggerProps[handler](e);
-      }
-    },
-    [handleClose, setOpen, tooltipRef],
-  );
-
   useEscapeKey(handleClose, { enabled: open });
 
   useBackdropClick(handleClose, [tooltipRef], {
     enabled: open && triggerEvent === 'click',
+  });
+
+  const triggerEventHandlers = useTooltipTriggerEventHandlers({
+    setState: setOpen,
+    triggerEvent,
+    tooltipRef,
+    isEnabled: enabled,
+    ...triggerComponent?.props,
   });
 
   const popoverProps = {
@@ -291,20 +233,17 @@ function Tooltip({
     </Popover>
   );
 
-  if (trigger) {
-    const originalTrigger =
-      typeof trigger === 'function' ? trigger({}) : trigger;
-
-    return React.cloneElement(originalTrigger, {
-      ...createTriggerProps(triggerEvent, originalTrigger.props),
+  if (triggerComponent) {
+    return React.cloneElement(triggerComponent, {
+      ...triggerEventHandlers,
       'aria-describedby': active ? tooltipId : undefined,
       children: (
         <>
-          {originalTrigger.props.children}
+          {triggerComponent.props.children}
           {tooltip}
         </>
       ),
-      className: cx(positionRelative, originalTrigger.props.className),
+      className: cx(positionRelative, triggerComponent.props.className),
     });
   }
 

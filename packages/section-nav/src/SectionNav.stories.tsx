@@ -17,9 +17,7 @@ const children = (
     <SectionNavItem href="#section-2" label="Section 2" />
     <SectionNavItem active href="#section-3" label="Section 3">
       <SectionNavItem href="#section-3.1" label="Section 3.1" />
-      <SectionNavItem href="#section-3.2" label="Section 3.2">
-        <SectionNavItem href="#section-3.2.1" label="Section 3.2.1" />
-      </SectionNavItem>
+      <SectionNavItem href="#section-3.2" label="Section 3.2" />
     </SectionNavItem>
   </>
 );
@@ -30,7 +28,7 @@ export default {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [...storybookExcludedControlParams],
+      exclude: [...storybookExcludedControlParams, 'children'],
     },
   },
   decorators: [

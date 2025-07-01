@@ -85,8 +85,8 @@ describe('packages/section-nav/getTestUtils', () => {
       });
     });
 
-    describe('getAllToolbarIconButtons', () => {
-      test('returns all toolbar icon buttons', () => {
+    describe('getAllSectionNavItems', () => {
+      test('returns all SectionNavItems', () => {
         renderSectionNav({});
         const { getAllSectionNavItems } = getTestUtils();
         const items = getAllSectionNavItems();
@@ -139,7 +139,7 @@ describe('packages/section-nav/getTestUtils', () => {
     });
 
     describe('getActiveSectionNavItem', () => {
-      test('returns the active ToolbarIconButton', () => {
+      test('returns the active SectionNavItem', () => {
         renderSectionNav({});
         const { getActiveSectionNavItem } = getTestUtils();
 

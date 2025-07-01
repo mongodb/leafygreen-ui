@@ -26,9 +26,10 @@ export function SeriesList({
   sort,
   theme,
   tooltipPinned,
+  ...rest
 }: SeriesListProps) {
   return (
-    <ul className={getSeriesListStyles({ theme, tooltipPinned })}>
+    <ul className={getSeriesListStyles({ theme, tooltipPinned })} {...rest}>
       {seriesData
         .sort((a, b) => {
           const [nameA, valueA] = a.data;

@@ -9,12 +9,17 @@ import { CreatePackageOptions } from './create.types';
 import {
   component,
   componentIndex,
+  getLgIds,
   index,
   pkgJson,
   readMe,
   spec,
   story,
   styles,
+  testing,
+  testingIndex,
+  testingSpec,
+  testingTypes,
   tsConfig,
   types,
 } from './templates';
@@ -34,8 +39,12 @@ export function createComponent({
 }: CreateComponentArgs) {
   const rootDir = process.cwd();
 
-  const { packageNameKebab, packageNameTitle, packageNamePascal } =
-    getNameVariants(name);
+  const {
+    packageNameKebab,
+    packageNameTitle,
+    packageNamePascal,
+    packageNameSnake,
+  } = getNameVariants(name);
 
   console.log(
     chalk.green(
@@ -95,6 +104,26 @@ export function createComponent({
     {
       name: `src/${packageNamePascal}/${packageNamePascal}.styles.ts`,
       contents: styles,
+    },
+    {
+      name: `src/testing/getTestUtils.tsx`,
+      contents: testing(),
+    },
+    {
+      name: `src/testing/getTestUtils.spec.tsx`,
+      contents: testingSpec({ packageNamePascal, packageNameKebab }),
+    },
+    {
+      name: `src/testing/getTestUtils.types.ts`,
+      contents: testingTypes(),
+    },
+    {
+      name: `src/testing/index.ts`,
+      contents: testingIndex(),
+    },
+    {
+      name: `src/utils/getLgIds.ts`,
+      contents: getLgIds({ packageNameSnake }),
     },
   ];
 

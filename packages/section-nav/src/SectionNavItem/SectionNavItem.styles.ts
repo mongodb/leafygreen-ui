@@ -3,26 +3,37 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, fontWeights, spacing, typeScales } from '@leafygreen-ui/tokens';
 
-import { WEDGE_BORDER_RADIUS, WEDGE_WIDTH } from './SectionNavItem.constants';
+import {
+  INDENTATION,
+  WEDGE_BORDER_RADIUS,
+  WEDGE_WIDTH,
+} from './SectionNavItem.constants';
+
+// This component currenly only supports two levels of indentation.
+// If more levels are needed, this function can be extended.
+const getIndentation = (level: number) => {
+  if (level === 1) return INDENTATION[1];
+  return INDENTATION[2];
+};
 
 export const itemStyles = css`
   list-style: none;
-  --current-depth: calc(var(--depth) + 1);
-  --current-plus: var(--plus);
 `;
 
 export const getLinkStyles = ({
   active = false,
   theme = Theme.Light,
   className,
+  level,
 }: {
   active?: boolean;
   theme?: Theme;
   className?: string;
+  level: number;
 }) =>
   cx(
     css`
-      ${getBaseStyles({ theme })};
+      ${getBaseStyles({ theme, level })};
       ${getHoverStyles({ theme })}
     `,
     {
@@ -34,7 +45,13 @@ export const getLinkStyles = ({
     className,
   );
 
-export const getBaseStyles = ({ theme }: { theme: Theme }) => css`
+export const getBaseStyles = ({
+  theme,
+  level,
+}: {
+  theme: Theme;
+  level: number;
+}) => css`
   all: unset;
   cursor: pointer;
   display: block;
@@ -43,15 +60,7 @@ export const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
   position: relative;
-
-  /* padding-inline: calc(
-      ${spacing[400]}px * var(--current-depth)
-    )
-    ${spacing[400]}px; */
-
-  padding-inline: calc(
-      (${spacing[400]} * var(--current-depth) + var(--current-plus)) * 1px
-    )
+  padding-inline: calc(${getIndentation(level)}px + ${WEDGE_WIDTH}px)
     ${spacing[400]}px;
 
   &::before {
@@ -103,6 +112,4 @@ export const getActiveStyles = ({ theme }: { theme: Theme }) => css`
 export const listSyles = css`
   padding: 0;
   margin: 0;
-  --depth: var(--current-depth);
-  --plus: calc(var(--current-plus) + 6);
 `;

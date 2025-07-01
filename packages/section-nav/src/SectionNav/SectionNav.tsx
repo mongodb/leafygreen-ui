@@ -36,6 +36,7 @@ export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(
               data-lgid={lgIds.title}
               data-testid={lgIds.title}
               className={getTitleStyles({ theme })}
+              as="h2"
             >
               {title}
             </Body>

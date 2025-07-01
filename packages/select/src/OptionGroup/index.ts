@@ -1,6 +1,6 @@
 export {
   InternalOptionGroup,
   OptionGroup,
-  OptionGroupElement,
+  type OptionGroupElement,
 } from './OptionGroup';
-export { OptionGroupProps } from './OptionGroup.types';
+export { type OptionGroupProps } from './OptionGroup.types';

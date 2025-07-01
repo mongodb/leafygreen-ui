@@ -1,2 +1,2 @@
 export { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
-export { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
+export { type EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';

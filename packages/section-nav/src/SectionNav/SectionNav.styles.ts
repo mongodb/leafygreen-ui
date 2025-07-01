@@ -12,8 +12,6 @@ export const getOrderedListStyles = ({
   padding: 0;
   margin: 0;
   border-left: 1px solid ${color[theme].border.secondary.default};
-  --depth: 0;
-  --plus: 0;
 `;
 
 export const getTitleStyles = ({
