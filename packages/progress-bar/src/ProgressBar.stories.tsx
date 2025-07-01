@@ -188,7 +188,10 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
       excludeCombinations: [
         {
           variant: Object.values(LoaderVariant).filter(
-            v => !Object.values(AnimatedLoaderVariant).includes(v),
+            v =>
+              !(
+                Object.values(AnimatedLoaderVariant) as Array<LoaderVariant>
+              ).includes(v),
           ),
           enableAnimation: [true],
         },
