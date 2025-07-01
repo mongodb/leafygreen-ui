@@ -15,6 +15,7 @@ import {
 } from './ProgressBar.styles';
 import { AnimationMode, ProgressBarProps, Size } from './ProgressBar.types';
 import {
+  getAnimationMode,
   getFormattedValue,
   getHeaderIcon,
   getValueAriaAttributes,
@@ -47,19 +48,30 @@ export function ProgressBar(props: ProgressBarProps) {
 
   // if progress bar was previously indeterminate and is turning determinate, apply fadeout transition
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
-    isIndeterminate ? AnimationMode.Indeterminate : AnimationMode.Determinate,
+    getAnimationMode({
+      type,
+      isIndeterminate,
+      enableAnimation,
+    }),
   );
 
   useEffect(() => {
-    if (!isIndeterminate && animationMode === AnimationMode.Indeterminate) {
-      setAnimationMode(AnimationMode.Transition);
+    const shouldTransitionOut =
+      animationMode === AnimationMode.Indeterminate && !isIndeterminate;
 
-      const timeout = setTimeout(() => {
-        setAnimationMode(AnimationMode.Determinate);
-      }, FADEOUT_DURATION);
+    if (!shouldTransitionOut) return;
 
-      return () => clearTimeout(timeout);
-    }
+    setAnimationMode(AnimationMode.Transition);
+
+    const timeout = setTimeout(() => {
+      setAnimationMode(
+        enableAnimation
+          ? AnimationMode.AnimatedDeterminate
+          : AnimationMode.BaseDeterminate,
+      );
+    }, FADEOUT_DURATION);
+
+    return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isIndeterminate]);
 
@@ -108,7 +120,6 @@ export function ProgressBar(props: ProgressBarProps) {
               value,
               maxValue,
               animationMode,
-              enableAnimation,
             })}
           ></div>
         </div>

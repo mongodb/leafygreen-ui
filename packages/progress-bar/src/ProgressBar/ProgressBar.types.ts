@@ -166,8 +166,9 @@ export interface ResolvedProgressBarProps {
 }
 
 export const AnimationMode = {
-  Determinate: 'determinate',
+  BaseDeterminate: 'none',
+  AnimatedDeterminate: 'animated-determinate',
   Indeterminate: 'indeterminate',
-  Transition: 'transition',
+  Transition: 'indeterminate-to-determinate-transition',
 };
 export type AnimationMode = (typeof AnimationMode)[keyof typeof AnimationMode];

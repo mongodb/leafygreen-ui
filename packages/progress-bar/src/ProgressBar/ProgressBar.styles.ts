@@ -154,27 +154,33 @@ const getDeterminateBarFillStyles = ({
   color,
   disabled,
   width,
-  enableAnimation,
 }: {
   theme: Theme;
   color: Color;
   disabled?: boolean;
   width: number;
-  enableAnimation: boolean;
+}) => css`
+  width: ${width}%;
+  transition: width 0.5s ease-in-out;
+  background-color: ${disabled
+    ? barColorStyles[theme].disabledBar
+    : barColorStyles[theme][color].bar};
+`;
+
+const getAnimatedDeterminateBarFillStyles = ({
+  theme,
+  color,
+}: {
+  theme: Theme;
+  color: Color;
 }) => {
   const selectedColorStyle = barColorStyles[theme][color];
-  const hasAnimation =
-    !disabled && enableAnimation && 'shimmerFade' in selectedColorStyle;
 
-  return css`
-    width: ${width}%;
-    transition: width 0.5s ease-in-out;
-    background-color: ${disabled
-      ? barColorStyles[theme].disabledBar
-      : selectedColorStyle.bar};
-    ${hasAnimation &&
+  return (
+    'shimmerFade' in selectedColorStyle &&
     css`
       background-color: transparent;
+
       &::before {
         content: '';
         position: absolute;
@@ -198,8 +204,8 @@ const getDeterminateBarFillStyles = ({
           background-position: -200% 0;
         }
       }
-    `}
-  `;
+    `
+  );
 };
 
 const getIndeterminateBarFillStyles = ({
@@ -270,7 +276,6 @@ export const getBarFillStyles = ({
   disabled,
   value = 0,
   maxValue,
-  enableAnimation = false,
 }: {
   animationMode: AnimationMode;
   theme: Theme;
@@ -278,32 +283,38 @@ export const getBarFillStyles = ({
   disabled?: boolean;
   value?: number;
   maxValue?: number;
-  enableAnimation?: boolean;
 }) => {
-  let typedBarFillStyles;
+  const baseStyles = getBaseBarFillStyles();
+  let addOnStyles;
+
+  const determinate = getDeterminateBarFillStyles({
+    theme,
+    color,
+    disabled,
+    width: getPercentage(value, maxValue),
+  });
+
+  const animatedDeterminate = !disabled
+    ? getAnimatedDeterminateBarFillStyles({ theme, color })
+    : null;
+
+  const indeterminate = getIndeterminateBarFillStyles({ theme, color });
 
   switch (animationMode) {
     case AnimationMode.Transition:
-      typedBarFillStyles = cx(
-        getIndeterminateBarFillStyles({ theme, color }),
-        getFadeOutBarFillStyles(),
-      );
+      addOnStyles = cx(indeterminate, getFadeOutBarFillStyles());
       break;
-
     case AnimationMode.Indeterminate:
-      typedBarFillStyles = getIndeterminateBarFillStyles({ theme, color });
+      addOnStyles = indeterminate;
       break;
-
-    case AnimationMode.Determinate:
-      typedBarFillStyles = getDeterminateBarFillStyles({
-        theme,
-        color,
-        disabled,
-        width: getPercentage(value, maxValue),
-        enableAnimation,
-      });
+    case AnimationMode.AnimatedDeterminate:
+      addOnStyles = cx(determinate, animatedDeterminate);
+      break;
+    case AnimationMode.BaseDeterminate:
+    default:
+      addOnStyles = determinate;
       break;
   }
 
-  return cx(getBaseBarFillStyles(), typedBarFillStyles);
+  return cx(baseStyles, addOnStyles);
 };

@@ -6,6 +6,7 @@ import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
 import {
+  AnimationMode,
   Color,
   FormatValueType,
   LoaderVariant,
@@ -86,6 +87,23 @@ export const resolveProgressBarProps = (
     color: getLoaderVariantColor(props.variant),
     enableAnimation: props.enableAnimation ?? false,
   };
+};
+
+export const getAnimationMode = ({
+  type,
+  isIndeterminate,
+  enableAnimation,
+}: {
+  type: Type;
+  isIndeterminate: boolean;
+  enableAnimation: boolean;
+}): AnimationMode => {
+  if (type === Type.Meter) return AnimationMode.BaseDeterminate;
+  if (isIndeterminate) return AnimationMode.Indeterminate;
+
+  return enableAnimation
+    ? AnimationMode.AnimatedDeterminate
+    : AnimationMode.BaseDeterminate;
 };
 
 export const getPercentage = (value: number, maxValue?: number): number => {
