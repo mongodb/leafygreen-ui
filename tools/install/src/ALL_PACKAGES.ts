@@ -54,6 +54,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/radio-group',
   '@leafygreen-ui/ripple',
   '@leafygreen-ui/search-input',
+  '@leafygreen-ui/section-nav',
   '@leafygreen-ui/segmented-control',
   '@leafygreen-ui/select',
   '@leafygreen-ui/side-nav',
