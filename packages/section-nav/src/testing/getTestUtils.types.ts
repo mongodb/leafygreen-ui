@@ -42,7 +42,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the SectionNavItem based on the label text
    */
-  getSectionNavItemByLabel: (label: string) => SectionNavItemUtils | null;
+  getSectionNavItemByLabel: (label: string) => SectionNavItemUtils;
 
   /**
    * Returns the first active SectionNavItem
