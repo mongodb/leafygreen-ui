@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
@@ -6,13 +6,14 @@ import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
   containerStyles,
+  FADEOUT_DURATION,
   getBarFillStyles,
   getBarTrackStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
   headerStyles,
 } from './ProgressBar.styles';
-import { ProgressBarProps, Size } from './ProgressBar.types';
+import { AnimationMode, ProgressBarProps, Size } from './ProgressBar.types';
 import {
   getFormattedValue,
   getHeaderIcon,
@@ -21,7 +22,7 @@ import {
   resolveProgressBarProps,
 } from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const { value, maxValue, disabled, color, isIndeterminate } =
+  const { value, maxValue, disabled, color, isIndeterminate, enableAnimation } =
     resolveProgressBarProps(props);
 
   const {
@@ -40,9 +41,27 @@ export function ProgressBar(props: ProgressBarProps) {
     ? showIconProp && value === maxValue
     : showIconProp;
 
+  // set HTML attributes based on type
   const role = type === 'meter' ? 'meter' : 'progressbar';
-
   const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
+
+  // if progress bar was previously indeterminate and is turning determinate, apply fadeout transition
+  const [animationMode, setAnimationMode] = useState<AnimationMode>(
+    isIndeterminate ? AnimationMode.Indeterminate : AnimationMode.Determinate,
+  );
+
+  useEffect(() => {
+    if (!isIndeterminate && animationMode === AnimationMode.Indeterminate) {
+      setAnimationMode(AnimationMode.Transition);
+
+      const timeout = setTimeout(() => {
+        setAnimationMode(AnimationMode.Determinate);
+      }, FADEOUT_DURATION);
+
+      return () => clearTimeout(timeout);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isIndeterminate]);
 
   return (
     <div className={containerStyles} aria-disabled={disabled}>
@@ -86,9 +105,10 @@ export function ProgressBar(props: ProgressBarProps) {
               theme,
               color,
               disabled,
-              isIndeterminate,
               value,
               maxValue,
+              animationMode,
+              enableAnimation,
             })}
           ></div>
         </div>

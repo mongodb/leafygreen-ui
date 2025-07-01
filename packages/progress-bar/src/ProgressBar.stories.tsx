@@ -248,3 +248,45 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
     },
   },
 };
+
+export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
+  args: {
+    type: Type.Loader,
+    isIndeterminate: true,
+  },
+  render: function TransitioningProgressBar(props: ProgressBarProps) {
+    const [newProps, setNewProps] = useState({});
+
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        setNewProps({
+          type: Type.Loader,
+          isIndeterminate: false,
+          value: 200,
+          maxValue: 200,
+        });
+      }, 3500);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }, [props.value]);
+
+    return <ProgressBar {...props} {...newProps} />;
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
+
+    expect(progressBar).not.toHaveAttribute('aria-valuenow');
+
+    await waitFor(
+      () => {
+        expect(progressBar.getAttribute('aria-valuenow')).toBe(
+          testValues.maxValue.toString(),
+        );
+      },
+      { timeout: 4000 },
+    );
+  },
+};
