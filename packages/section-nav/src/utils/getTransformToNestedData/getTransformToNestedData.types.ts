@@ -1,9 +1,10 @@
 // Types of data supported by the getTransformToNestedData function
-export const DataType = {
+export const TransformDataType = {
   FlatString: 'flatString',
 } as const;
 
-export type Data = (typeof DataType)[keyof typeof DataType];
+export type TransformDataType =
+  (typeof TransformDataType)[keyof typeof TransformDataType];
 
 // Flat data structure used for transformation
 export type FlatData = Array<{
@@ -25,7 +26,7 @@ export type NestedData = Array<NestedDataItem>;
 // If we introduce more data types, we can make this a discriminated union
 export interface GetTransformToNestedDataArgs {
   data: FlatData;
-  type: typeof DataType.FlatString;
+  type: typeof TransformDataType.FlatString;
 }
 
 // Signature type that transforms flat data to nested data

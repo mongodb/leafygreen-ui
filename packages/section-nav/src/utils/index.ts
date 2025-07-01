@@ -1,2 +1,5 @@
 export { getLgIds } from './getLgIds';
-export { getTransformToNestedData } from './getTransformToNestedData';
+export {
+  getTransformToNestedData,
+  type TransformDataType,
+} from './getTransformToNestedData';

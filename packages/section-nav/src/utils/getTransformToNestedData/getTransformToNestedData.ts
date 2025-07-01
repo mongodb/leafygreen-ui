@@ -1,6 +1,9 @@
 import { getFlatStringDataToNestedData } from '../getFlatStringDataToNestedData';
 
-import { GetTransformToNestedDataReturn } from './getTransformToNestedData.types';
+import {
+  GetTransformToNestedDataReturn,
+  TransformDataType,
+} from './getTransformToNestedData.types';
 
 /**
  * Converts data into a nested tree structure.
@@ -14,7 +17,7 @@ export const getTransformToNestedData: GetTransformToNestedDataReturn = ({
   data,
 }) => {
   switch (type) {
-    case 'flatString':
+    case TransformDataType.FlatString:
       return getFlatStringDataToNestedData(data);
     default:
       throw new Error(`Unsupported data type: ${type}`);
