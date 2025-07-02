@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -21,6 +21,7 @@ export function ChartTooltip({
 }: ChartTooltipProps) {
   const {
     chart: {
+      enableGroupTooltipSync,
       id: chartId,
       isChartHovered,
       ready,
@@ -30,6 +31,65 @@ export function ChartTooltip({
     },
   } = useChartContext();
   const { darkMode, theme } = useDarkMode();
+
+  const formatTooltip = useCallback(
+    (seriesData: Array<CallbackSeriesDataPoint>) => {
+      return renderToString(
+        <CustomTooltip
+          chartId={chartId}
+          darkMode={darkMode}
+          headerFormatter={headerFormatter}
+          seriesData={seriesData}
+          seriesNameFormatter={seriesNameFormatter}
+          seriesValueFormatter={seriesValueFormatter}
+          sort={sort}
+          tooltipPinned={tooltipPinned}
+        />,
+      );
+    },
+    [
+      chartId,
+      darkMode,
+      headerFormatter,
+      seriesNameFormatter,
+      seriesValueFormatter,
+      sort,
+      tooltipPinned,
+    ],
+  );
+
+  const formatPinnedTooltip = useCallback(
+    (seriesData: Array<CallbackSeriesDataPoint>) => {
+      /**
+       * 1. Get the scrollable list in pinned tooltip before `renderToString` is called
+       * to preserve the scroll position.
+       */
+      const scrollEl = document.querySelector(`ul[data-chartid="${chartId}"]`);
+      const scrollTop = scrollEl ? scrollEl.scrollTop : 0;
+
+      /**
+       * 2. Render the new custom tooltip HTML. Doing this will always reset the scroll
+       * position of the scrollable list, so we need to restore it after rendering.
+       */
+      const html = formatTooltip(seriesData);
+
+      /**
+       * 3. After render, re-apply stored scroll position to the scrollable list
+       */
+      requestAnimationFrame(() => {
+        const newScrollEl = document.querySelector(
+          `ul[data-chartid="${chartId}"]`,
+        );
+
+        if (newScrollEl) {
+          newScrollEl.scrollTop = scrollTop;
+        }
+      });
+
+      return html;
+    },
+    [chartId, formatTooltip],
+  );
 
   useEffect(() => {
     setTooltipMounted(true);
@@ -45,11 +105,11 @@ export function ChartTooltip({
     updateOptions({
       tooltip: {
         /* LOGIC PROPERTIES */
-        alwaysShowContent: tooltipPinned,
+        alwaysShowContent: enableGroupTooltipSync || tooltipPinned,
         confine: true,
         enterable: tooltipPinned,
         renderMode: 'html',
-        showContent: isChartHovered || tooltipPinned,
+        showContent: enableGroupTooltipSync || isChartHovered || tooltipPinned,
         trigger: 'axis',
         triggerOn: 'none',
 
@@ -72,22 +132,7 @@ export function ChartTooltip({
          * See https://echarts.apache.org/en/option.html#tooltip.formatter
          * for more info.
          */
-        formatter: (seriesData: Array<CallbackSeriesDataPoint>) => {
-          const seriesDataArr = seriesData;
-
-          return renderToString(
-            <CustomTooltip
-              chartId={chartId}
-              darkMode={darkMode}
-              headerFormatter={headerFormatter}
-              seriesData={seriesDataArr}
-              seriesNameFormatter={seriesNameFormatter}
-              seriesValueFormatter={seriesValueFormatter}
-              sort={sort}
-              tooltipPinned={tooltipPinned}
-            />,
-          );
-        },
+        formatter: tooltipPinned ? formatPinnedTooltip : formatTooltip,
       },
     });
 
@@ -95,14 +140,11 @@ export function ChartTooltip({
       updateOptions({ ...DEFAULT_TOOLTIP_OPTIONS });
     };
   }, [
-    chartId,
-    darkMode,
-    headerFormatter,
+    enableGroupTooltipSync,
+    formatPinnedTooltip,
+    formatTooltip,
     isChartHovered,
     ready,
-    seriesNameFormatter,
-    seriesValueFormatter,
-    sort,
     theme,
     tooltipPinned,
     updateOptions,

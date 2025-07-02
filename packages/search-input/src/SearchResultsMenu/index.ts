@@ -1,2 +1,2 @@
 export { SearchResultsMenu } from './SearchResultsMenu';
-export { SearchResultsMenuProps } from './SearchResultsMenu.types';
+export { type SearchResultsMenuProps } from './SearchResultsMenu.types';

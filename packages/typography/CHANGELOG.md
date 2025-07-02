@@ -1,5 +1,32 @@
 # @leafygreen-ui/typography
 
+## 22.0.0
+
+### Major Changes
+
+- 164b15f: Updates `data-lgid` and `data-testid` to use scope based test IDs. These test IDs are generated using the helper utility `getLgIds`. For more information [check out the section in the styleguide about getLgIds](https://github.com/mongodb/leafygreen-ui/blob/main/STYLEGUIDE.md#getlgids).
+
+  Removes public exports for:
+
+  - `LGIDs`
+  - `LGIDS_CHECKBOX`
+  - `LGIDS_FORM_FIELD`
+  - `LGIDS_SELECT`
+  - `LGIDS_TYPOGRAPHY`
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [1eafbb5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.2
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 21.0.1
 
 ### Patch Changes

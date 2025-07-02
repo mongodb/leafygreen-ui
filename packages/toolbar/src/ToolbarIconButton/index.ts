@@ -1,2 +1,2 @@
 export { ToolbarIconButton } from './ToolbarIconButton';
-export { ToolbarIconButtonProps } from './ToolbarIconButton.types';
+export { type ToolbarIconButtonProps } from './ToolbarIconButton.types';

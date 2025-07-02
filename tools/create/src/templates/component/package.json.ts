@@ -16,6 +16,18 @@ export const pkgJson = ({
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
@@ -26,7 +38,8 @@ export const pkgJson = ({
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/lib": "workspace:^"
+    "@leafygreen-ui/lib": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/${packageNameKebab}",
   "repository": {

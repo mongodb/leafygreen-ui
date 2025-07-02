@@ -1,4 +1,9 @@
-export { Chart, type ChartProps, ChartStates } from './Chart';
+export {
+  Chart,
+  type ChartProps,
+  ChartStates,
+  chartWrapperClassName,
+} from './Chart';
 export { ChartGrid, type ChartGridProps } from './ChartGrid';
 export { ChartHeader, type ChartHeaderProps } from './ChartHeader';
 export {

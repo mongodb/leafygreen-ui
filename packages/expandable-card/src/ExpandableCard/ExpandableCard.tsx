@@ -11,6 +11,8 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
+import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
+
 import {
   cardStyle,
   childrenWrapperStyle,
@@ -38,10 +40,12 @@ const ExpandableCard = ({
   id: idProp,
   flagText,
   contentClassName,
+  'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   ...rest
 }: ExpandableCardProps) => {
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const isControlled = isControlledOpen !== undefined;
+  const lgIds = getLgIds(dataLgId);
 
   // Always start open
   const [isOpen, setIsOpen] = useState(isControlledOpen ?? defaultOpen);
@@ -88,6 +92,7 @@ const ExpandableCard = ({
       setChildrenHeight(childrenInnerRef.current.offsetHeight);
     }
   };
+
   useEffect(
     updateHeight,
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,12 +101,18 @@ const ExpandableCard = ({
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <Card className={cx(cardStyle(darkMode), className)} id={id} {...rest}>
+      <Card
+        className={cx(cardStyle(darkMode), className)}
+        data-lgid={lgIds.root}
+        id={id}
+        {...rest}
+      >
         {/* HTML `button` elements can't be used as a grid parent */}
         <div
           role="button"
           aria-expanded={isOpen}
           aria-controls={contentId}
+          data-lgid={lgIds.toggle}
           id={summaryId}
           className={summaryStyle}
           onClick={onClick}

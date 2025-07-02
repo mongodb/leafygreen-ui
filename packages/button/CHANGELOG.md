@@ -1,5 +1,22 @@
 # @leafygreen-ui/button
 
+## 24.0.2
+
+### Patch Changes
+
+- 164b15f: Use `LgIdString` type and remove setting `DEFAULT_LGID_ROOT`.
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [da277d5]
+  - @leafygreen-ui/lib@15.1.0
+  - @lg-tools/test-harnesses@0.3.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.2
+  - @leafygreen-ui/tokens@3.1.1
+  - @leafygreen-ui/ripple@2.0.2
+
 ## 24.0.1
 
 ### Patch Changes

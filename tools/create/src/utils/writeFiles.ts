@@ -32,8 +32,9 @@ export function writeFiles(
 
   // Make the directory src and src/Component if necessary
   if (needsSrcDir && !dry) {
-    fse.mkdirSync(path.resolve(dir, 'src', packageNamePascal), {
-      recursive: true,
+    // Create src and src/Component, src/testing, and src/utils directories
+    [packageNamePascal, 'testing', 'utils'].forEach(subDir => {
+      fse.mkdirSync(path.resolve(dir, 'src', subDir), { recursive: true });
     });
   }
 

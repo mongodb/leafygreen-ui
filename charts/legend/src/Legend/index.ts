@@ -1,2 +1,2 @@
 export { Legend } from './Legend';
-export { LegendProps } from './Legend.types';
+export { type LegendProps } from './Legend.types';
