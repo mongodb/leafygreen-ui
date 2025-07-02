@@ -1,24 +1,45 @@
-import { screen } from '@testing-library/react';
+import { getByLgId } from '@lg-tools/test-harnesses';
+import { within } from '@testing-library/react';
 
-// TODO: take lg-id in case consumer wants to test multiple progress bars on screen!
-export const PROGRESS_BAR_TEST_IDS = {
-  fill: 'progress-bar-fill',
-  track: 'progress-bar-track',
+export const DEFAULT_LGID_ROOT = 'lg-progress-bar';
+
+export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
+  return {
+    root,
+    track: `${root}-track`,
+    fill: `${root}-fill`,
+  } as const;
 };
 
-export const getTestUtils = () => {
-  const loaderElement = screen.queryByRole('progressbar');
-  const meterElement = screen.queryByRole('meter');
+export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
+  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
+): GetTestUtilsReturnType<T> => {
+  const lgIds = getLgIds(lgId);
+  const parent = getByLgId!<T>(lgIds.root);
 
-  const barFillElement = screen.queryByTestId(PROGRESS_BAR_TEST_IDS.fill);
-  const barTrackElement = screen.queryByTestId(PROGRESS_BAR_TEST_IDS.track);
-  const iconElement = screen.queryByRole('img');
+  const queryLoaderElement = () =>
+    within(parent).queryByRole('progressbar') as T | null;
+  const queryMeterElement = () =>
+    within(parent).queryByRole('meter') as T | null;
+
+  const getBarFillElement = () => getByLgId!<T>(lgIds.fill) as T | null;
+  const getBarTrackElement = () => getByLgId!<T>(lgIds.track) as T | null;
+
+  const getIconElement = () => within(parent).queryByRole('img') as T | null;
 
   return {
-    getLoaderElement: () => loaderElement,
-    getMeterElement: () => meterElement,
-    getBarFillElement: () => barFillElement,
-    getBarTrackElement: () => barTrackElement,
-    getIconElement: () => iconElement,
+    queryLoaderElement,
+    queryMeterElement,
+    getBarFillElement,
+    getBarTrackElement,
+    getIconElement,
   };
 };
+
+interface GetTestUtilsReturnType<T extends HTMLDivElement = HTMLDivElement> {
+  queryLoaderElement: () => T | null;
+  queryMeterElement: () => T | null;
+  getBarFillElement: () => T | null;
+  getBarTrackElement: () => T | null;
+  getIconElement: () => T | null;
+}

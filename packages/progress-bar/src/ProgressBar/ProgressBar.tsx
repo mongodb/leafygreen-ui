@@ -5,8 +5,10 @@ import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
+  DEFAULT_LGID_ROOT,
   getFormattedValue,
   getHeaderIcon,
+  getLgIds,
   getValueAriaAttributes,
   iconsPendingCompletion,
   resolveProgressBarProps,
@@ -33,6 +35,7 @@ export function ProgressBar(props: ProgressBarProps) {
     darkMode = false,
     formatValue,
     showIcon: showIconProp = false,
+    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   } = props;
 
   const { theme } = useDarkMode(darkMode);
@@ -45,8 +48,14 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
 
+  const lgIds = getLgIds(dataLgId);
+
   return (
-    <div className={containerStyles} aria-disabled={disabled}>
+    <div
+      className={containerStyles}
+      aria-disabled={disabled}
+      data-lgid={lgIds.root}
+    >
       <div className={headerStyles}>
         <Label htmlFor={progressBarId} darkMode={darkMode} disabled={disabled}>
           {label}
@@ -78,11 +87,11 @@ export function ProgressBar(props: ProgressBarProps) {
         {...getValueAriaAttributes(value, maxValue)}
       >
         <div
-          data-testid="progress-bar-track"
+          data-lgid={lgIds.track}
           className={getBarTrackStyles({ theme, size })}
         >
           <div
-            data-testid="progress-bar-fill"
+            data-lgid={lgIds.fill}
             className={getBarFillStyles({
               theme,
               color,

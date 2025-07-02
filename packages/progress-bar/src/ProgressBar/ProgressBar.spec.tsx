@@ -1,10 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
+import { getTestUtils } from '../utils';
+
 import { ProgressBar } from './ProgressBar';
 import { LoaderVariant, Type } from './ProgressBar.types';
 
-// TODO: use test utils
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
     test('renders with a label', () => {
@@ -58,7 +59,8 @@ describe('packages/progress-bar', () => {
             showIcon={true}
           />,
         );
-        expect(screen.getByRole('img')).toBeVisible();
+        const { getIconElement } = getTestUtils();
+        expect(getIconElement()).toBeVisible();
       });
 
       test('renders the correct width for the progress bar fill', () => {
@@ -70,9 +72,9 @@ describe('packages/progress-bar', () => {
             maxValue={TEST_MAX_VALUE}
           />,
         );
-        const barFillElement = screen.getByTestId('progress-bar-fill');
-        expect(barFillElement).toBeInTheDocument();
-        expect(barFillElement).toHaveStyle({
+        const { getBarFillElement } = getTestUtils();
+        expect(getBarFillElement()).toBeInTheDocument();
+        expect(getBarFillElement()).toHaveStyle({
           width: '50%',
         });
       });
@@ -89,7 +91,8 @@ describe('packages/progress-bar', () => {
             showIcon={true}
           />,
         );
-        expect(screen.queryByRole('img')).toBeNull();
+        const { getIconElement } = getTestUtils();
+        expect(getIconElement()).toBeNull();
       });
     });
   });
