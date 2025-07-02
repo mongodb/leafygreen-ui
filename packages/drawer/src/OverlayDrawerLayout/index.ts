@@ -1,2 +1,2 @@
 export { OverlayDrawerLayout } from './OverlayDrawerLayout';
-export { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
+export { type OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';

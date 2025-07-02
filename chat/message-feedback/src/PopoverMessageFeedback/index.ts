@@ -1,2 +1,2 @@
 export { PopoverMessageFeedback } from './PopoverMessageFeedback';
-export { PopoverMessageFeedbackProps } from './PopoverMessageFeedback.types';
+export { type PopoverMessageFeedbackProps } from './PopoverMessageFeedback.types';

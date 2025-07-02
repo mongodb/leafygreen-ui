@@ -1,9 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { RichLinkVariantName } from '../../dist';
-
-import { RichLink } from '.';
+import { RichLink, type RichLinkVariantName } from '.';
 
 describe('@lg-chat/rich-links', () => {
   describe('RichLink', () => {
@@ -94,6 +93,47 @@ describe('@lg-chat/rich-links', () => {
       );
 
       expect(screen.queryByText('Undefined Variant Link')).toBeInTheDocument();
+    });
+
+    it('calls the onLinkClick prop when the link is clicked', () => {
+      const onLinkClick = jest.fn();
+      render(
+        <>
+          <RichLink
+            href="https://mongodb.design/built-in"
+            onLinkClick={onLinkClick}
+            variant="Website"
+          >
+            Built-in Variant Link
+          </RichLink>
+          <RichLink
+            href="https://mongodb.design/custom"
+            onLinkClick={onLinkClick}
+            badgeGlyph="ArrowRight"
+            badgeLabel="Custom Label"
+            badgeColor="blue"
+          >
+            Custom Link
+          </RichLink>
+        </>,
+      );
+      const link = screen.getByText('Built-in Variant Link');
+      userEvent.click(link);
+      expect(onLinkClick).toHaveBeenCalledWith({
+        href: 'https://mongodb.design/built-in',
+        children: 'Built-in Variant Link',
+        variant: 'Website',
+      });
+
+      const customLink = screen.getByText('Custom Link');
+      userEvent.click(customLink);
+      expect(onLinkClick).toHaveBeenCalledWith({
+        href: 'https://mongodb.design/custom',
+        children: 'Custom Link',
+        badgeGlyph: 'ArrowRight',
+        badgeLabel: 'Custom Label',
+        badgeColor: 'blue',
+      });
     });
   });
 });

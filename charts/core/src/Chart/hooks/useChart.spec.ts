@@ -39,7 +39,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     });
 
     const { rerender } = renderHook(() =>
-      useChart({ theme: 'dark', onChartReady }),
+      useChart({ enableGroupTooltipSync: true, theme: 'dark', onChartReady }),
     );
 
     expect(onChartReady).not.toHaveBeenCalled();
@@ -75,7 +75,9 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       yAxis: false,
     };
 
-    renderHook(() => useChart({ theme: 'dark', zoomSelect }));
+    renderHook(() =>
+      useChart({ enableGroupTooltipSync: true, theme: 'dark', zoomSelect }),
+    );
 
     expect(setupZoomSelect).toHaveBeenCalledWith({
       xAxis: true,
@@ -96,7 +98,9 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       on,
     });
 
-    renderHook(() => useChart({ theme: 'dark', onZoomSelect }));
+    renderHook(() =>
+      useChart({ enableGroupTooltipSync: true, theme: 'dark', onZoomSelect }),
+    );
 
     expect(on).toHaveBeenCalledWith(
       EChartEventsMock.ZoomSelect,
@@ -127,14 +131,22 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     (useEchart as jest.Mock).mockReturnValue(mockEchartInstance);
 
+    const groupId = 'test-group';
+
     const { result } = renderHook(() =>
-      useChart({ chartId: 'test-chart-id', theme: 'dark' }),
+      useChart({
+        chartId: 'test-chart-id',
+        enableGroupTooltipSync: true,
+        groupId,
+        theme: 'dark',
+      }),
     );
 
     expect(result.current).toEqual({
       ...mockEchartInstance,
+      enableGroupTooltipSync: true,
       id: 'test-chart-id',
-      isChartHovered: true,
+      isChartHovered: false,
       ref: expect.any(Function),
       setTooltipMounted: expect.any(Function),
       state: undefined,
@@ -156,7 +168,9 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     const groupId = 'test-group';
 
-    renderHook(() => useChart({ theme: 'dark', groupId }));
+    renderHook(() =>
+      useChart({ enableGroupTooltipSync: true, theme: 'dark', groupId }),
+    );
 
     expect(addToGroup).toHaveBeenCalledWith(groupId);
   });
@@ -175,7 +189,9 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     const groupId = 'test-group';
 
-    const { unmount } = renderHook(() => useChart({ theme: 'dark', groupId }));
+    const { unmount } = renderHook(() =>
+      useChart({ enableGroupTooltipSync: true, theme: 'dark', groupId }),
+    );
 
     unmount();
 

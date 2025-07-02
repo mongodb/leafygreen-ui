@@ -13,6 +13,7 @@ import { type RichLinksAreaProps } from './RichLinksArea.types';
 export function RichLinksArea({
   links,
   darkMode: darkModeProp,
+  onLinkClick,
   ...props
 }: RichLinksAreaProps) {
   const { darkMode } = useDarkMode(darkModeProp);
@@ -20,7 +21,13 @@ export function RichLinksArea({
     <LeafygreenProvider darkMode={darkMode}>
       <div className={cx(baseStyles)} {...props}>
         {links.map(richLinkProps => {
-          return <RichLink key={richLinkProps.href} {...richLinkProps} />;
+          return (
+            <RichLink
+              key={richLinkProps.href}
+              onClick={() => onLinkClick?.(richLinkProps)}
+              {...richLinkProps}
+            />
+          );
         })}
       </div>
     </LeafygreenProvider>

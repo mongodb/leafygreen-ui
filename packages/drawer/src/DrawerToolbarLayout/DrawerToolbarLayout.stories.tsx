@@ -197,6 +197,12 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
       console.log('Plus clicked, does not update drawer');
     },
   },
+  {
+    id: 'Sparkle',
+    label: 'Disabled item',
+    glyph: 'Sparkle',
+    disabled: true,
+  },
 ];
 
 const Component: StoryFn<DrawerLayoutProps> = ({

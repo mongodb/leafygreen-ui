@@ -1,2 +1,2 @@
 export { InternalStep } from './InternalStep';
-export { InternalStepProps } from './InternalStep.types';
+export { type InternalStepProps } from './InternalStep.types';
