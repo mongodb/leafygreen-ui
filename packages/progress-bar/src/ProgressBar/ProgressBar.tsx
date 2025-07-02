@@ -21,6 +21,7 @@ import {
   getHeaderIconStyles,
   getHeaderValueStyles,
   headerStyles,
+  truncatedTextStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps, Size } from './ProgressBar.types';
 export function ProgressBar(props: ProgressBarProps) {
@@ -57,7 +58,12 @@ export function ProgressBar(props: ProgressBarProps) {
       data-lgid={lgIds.root}
     >
       <div className={headerStyles}>
-        <Label htmlFor={progressBarId} darkMode={darkMode} disabled={disabled}>
+        <Label
+          htmlFor={progressBarId}
+          darkMode={darkMode}
+          disabled={disabled}
+          className={truncatedTextStyles}
+        >
           {label}
         </Label>
 

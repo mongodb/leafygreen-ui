@@ -159,6 +159,20 @@ export const WithLabel: StoryObj<typeof ProgressBar> = {
   },
 };
 
+export const WithLongTextLabel: StoryObj<typeof ProgressBar> = {
+  args: {
+    ...DeterminateLoader.args,
+    label: (
+      <span>
+        Label with a very long label that will be truncated, probably. Honestly
+        if you shrink your screen small enough I am expecting so. Never mind,
+        somehow it is still short enough. But if I add just another sentence
+        perhaps, the rest of this will be truncated.
+      </span>
+    ),
+  },
+};
+
 export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   args: {
     ...DeterminateLoader.args,

@@ -46,12 +46,22 @@ const getLoaderVariantColor = (variant?: LoaderVariant): Color => {
   }
 };
 
+const getValidValue = (value?: number) => {
+  if (value === undefined || value >= 0) return value;
+  return 0;
+};
+
+const getValidMaxValue = (maxValue?: number) => {
+  if (maxValue === undefined || maxValue <= 0) return DEFAULT_MAX_VALUE;
+  return maxValue;
+};
+
 export const resolveProgressBarProps = (
   props: ProgressBarProps,
 ): ResolvedProgressBarProps => {
   // baseline for all types of progress bars
   const baseProps = {
-    value: props.value,
+    value: getValidValue(props.value),
     maxValue: undefined,
     disabled: false,
     color: DEFAULT_COLOR,
@@ -63,7 +73,7 @@ export const resolveProgressBarProps = (
   if (props.type === Type.Meter) {
     return {
       ...baseProps,
-      maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
+      maxValue: getValidMaxValue(props.maxValue),
       disabled: props.disabled ?? false,
       color: getMeterStatusColor(props.status),
     };
@@ -81,7 +91,7 @@ export const resolveProgressBarProps = (
   // determinate loader progress bar
   return {
     ...baseProps,
-    maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
+    maxValue: getValidMaxValue(props.maxValue),
     disabled: props.disabled ?? false,
     color: getLoaderVariantColor(props.variant),
     enableAnimation: props.enableAnimation ?? false,

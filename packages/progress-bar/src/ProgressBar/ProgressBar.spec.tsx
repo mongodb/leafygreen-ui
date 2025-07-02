@@ -94,6 +94,76 @@ describe('packages/progress-bar', () => {
         const { getIconElement } = getTestUtils();
         expect(getIconElement()).toBeNull();
       });
+
+      describe('with unexpected input', () => {
+        test('renders width 0% when value is less than 0', () => {
+          render(
+            <ProgressBar
+              type={Type.Loader}
+              isIndeterminate={false}
+              value={-5}
+              maxValue={100}
+            />,
+          );
+          const { getBarFillElement } = getTestUtils();
+          expect(getBarFillElement()).toBeInTheDocument();
+          expect(getBarFillElement()).toHaveStyle({
+            width: '0%',
+          });
+        });
+
+        test('defaults to maxValue of 1 when maxValue is less than 0', () => {
+          render(
+            <ProgressBar
+              type={Type.Loader}
+              isIndeterminate={false}
+              value={1}
+              maxValue={-10}
+            />,
+          );
+          const { getBarFillElement } = getTestUtils();
+          expect(getBarFillElement()).toBeInTheDocument();
+          expect(getBarFillElement()).toHaveStyle({
+            width: '100%',
+          });
+        });
+
+        test('defaults to maxValue of 1 when maxValue is 0', () => {
+          render(
+            <ProgressBar
+              type={Type.Loader}
+              isIndeterminate={false}
+              value={1}
+              maxValue={0}
+            />,
+          );
+          const { getBarFillElement } = getTestUtils();
+          expect(getBarFillElement()).toBeInTheDocument();
+          expect(getBarFillElement()).toHaveStyle({
+            width: '100%',
+          });
+        });
+      });
+    });
+
+    describe('when disabled', () => {
+      test('renders no animation even if enableAnimation is true', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            enableAnimation={true}
+            value={50}
+            maxValue={100}
+            disabled={true}
+          />,
+        );
+        const { getBarFillElement } = getTestUtils();
+        expect(getBarFillElement()).toBeInTheDocument();
+        expect(getBarFillElement()).not.toHaveStyle({
+          animation: expect.any(String),
+        });
+      });
     });
   });
 });

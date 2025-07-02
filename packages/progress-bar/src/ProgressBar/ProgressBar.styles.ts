@@ -83,6 +83,13 @@ export const headerStyles = css`
   justify-content: space-between;
 `;
 
+export const truncatedTextStyles = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+`;
+
 export const getHeaderValueStyles = ({
   theme,
   disabled,
@@ -171,7 +178,7 @@ export const getBarFillStyles = ({
 
   if (isIndeterminate) typedBarFillStyles = getIndeterminateBarFillStyles();
 
-  if (value && maxValue)
+  if (value != null && maxValue)
     typedBarFillStyles = getDeterminateBarFillStyles(
       getPercentage(value, maxValue),
     );
