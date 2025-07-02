@@ -91,6 +91,7 @@ export const DrawerToolbarLayoutContainer = forwardRef<
                   );
                 }}
                 active={toolbarItem.id === id}
+                disabled={toolbarItem.disabled}
               />
             ))}
           </Toolbar>
