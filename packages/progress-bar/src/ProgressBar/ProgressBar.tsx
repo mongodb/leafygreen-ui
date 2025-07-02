@@ -5,21 +5,25 @@ import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
+  DEFAULT_LGID_ROOT,
+  getFormattedValue,
+  getHeaderIcon,
+  getLgIds,
+  getValueAriaAttributes,
+  iconsPendingCompletion,
+  resolveProgressBarProps,
+} from '../utils';
+
+import {
   containerStyles,
   getBarFillStyles,
   getBarTrackStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
   headerStyles,
+  truncatedTextStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps, Size } from './ProgressBar.types';
-import {
-  getFormattedValue,
-  getHeaderIcon,
-  getValueAriaAttributes,
-  iconsPendingCompletion,
-  resolveProgressBarProps,
-} from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
   const { value, maxValue, disabled, color, isIndeterminate } =
     resolveProgressBarProps(props);
@@ -32,6 +36,7 @@ export function ProgressBar(props: ProgressBarProps) {
     darkMode = false,
     formatValue,
     showIcon: showIconProp = false,
+    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   } = props;
 
   const { theme } = useDarkMode(darkMode);
@@ -44,10 +49,21 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
 
+  const lgIds = getLgIds(dataLgId);
+
   return (
-    <div className={containerStyles} aria-disabled={disabled}>
+    <div
+      className={containerStyles}
+      aria-disabled={disabled}
+      data-lgid={lgIds.root}
+    >
       <div className={headerStyles}>
-        <Label htmlFor={progressBarId} darkMode={darkMode} disabled={disabled}>
+        <Label
+          htmlFor={progressBarId}
+          darkMode={darkMode}
+          disabled={disabled}
+          className={truncatedTextStyles}
+        >
           {label}
         </Label>
 
@@ -77,11 +93,11 @@ export function ProgressBar(props: ProgressBarProps) {
         {...getValueAriaAttributes(value, maxValue)}
       >
         <div
-          data-testid="progress-bar-track"
+          data-lgid={lgIds.track}
           className={getBarTrackStyles({ theme, size })}
         >
           <div
-            data-testid="progress-bar-fill"
+            data-lgid={lgIds.fill}
             className={getBarFillStyles({
               theme,
               color,

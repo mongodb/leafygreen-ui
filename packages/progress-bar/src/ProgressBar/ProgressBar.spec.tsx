@@ -1,12 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
+import { getTestUtils } from '../utils';
+
 import { ProgressBar } from './ProgressBar';
-import { Color, LoaderVariant, MeterStatus, Type } from './ProgressBar.types';
-import {
-  getFormattedValue,
-  resolveProgressBarProps,
-} from './ProgressBar.utils';
+import { LoaderVariant, Type } from './ProgressBar.types';
 
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
@@ -61,7 +59,8 @@ describe('packages/progress-bar', () => {
             showIcon={true}
           />,
         );
-        expect(screen.getByRole('img')).toBeVisible();
+        const { getIconElement } = getTestUtils();
+        expect(getIconElement()).toBeVisible();
       });
 
       test('renders the correct width for the progress bar fill', () => {
@@ -73,9 +72,9 @@ describe('packages/progress-bar', () => {
             maxValue={TEST_MAX_VALUE}
           />,
         );
-        const barFillElement = screen.getByTestId('progress-bar-fill');
-        expect(barFillElement).toBeInTheDocument();
-        expect(barFillElement).toHaveStyle({
+        const { getBarFillElement } = getTestUtils();
+        expect(getBarFillElement()).toBeInTheDocument();
+        expect(getBarFillElement()).toHaveStyle({
           width: '50%',
         });
       });
@@ -92,90 +91,78 @@ describe('packages/progress-bar', () => {
             showIcon={true}
           />,
         );
-        expect(screen.queryByRole('img')).toBeNull();
+        const { getIconElement } = getTestUtils();
+        expect(getIconElement()).toBeNull();
       });
-    });
-  });
 
-  describe('getFormattedValue', () => {
-    test('renders a fraction correctly', () => {
-      expect(getFormattedValue(50, 100, 'fraction')).toBe('50/100');
-    });
+      describe('with unexpected input', () => {
+        test('renders width 0% when value is less than 0', () => {
+          render(
+            <ProgressBar
+              type={Type.Loader}
+              isIndeterminate={false}
+              value={-5}
+              maxValue={100}
+            />,
+          );
+          const { getBarFillElement } = getTestUtils();
+          expect(getBarFillElement()).toBeInTheDocument();
+          expect(getBarFillElement()).toHaveStyle({
+            width: '0%',
+          });
+        });
 
-    test('renders a percentage correctly', () => {
-      expect(getFormattedValue(50, 100, 'percentage')).toBe('50%');
-    });
+        test('defaults to maxValue of 1 when maxValue is less than 0', () => {
+          render(
+            <ProgressBar
+              type={Type.Loader}
+              isIndeterminate={false}
+              value={1}
+              maxValue={-10}
+            />,
+          );
+          const { getBarFillElement } = getTestUtils();
+          expect(getBarFillElement()).toBeInTheDocument();
+          expect(getBarFillElement()).toHaveStyle({
+            width: '100%',
+          });
+        });
 
-    test('renders a plain number correctly', () => {
-      expect(getFormattedValue(50, 100, 'number')).toBe('50');
-    });
-
-    test('renders a custom format correctly', () => {
-      expect(
-        getFormattedValue(
-          50,
-          100,
-          (value, maxValue) => `${value}/${maxValue} units`,
-        ),
-      ).toBe('50/100 units');
-    });
-  });
-
-  describe('resolveProgressBarProps', () => {
-    test('it correctly resolves props for a meter type', () => {
-      const props = {
-        type: Type.Meter,
-        value: 50,
-        maxValue: 100,
-        status: MeterStatus.Warning,
-      } as const;
-
-      const resolvedProps = resolveProgressBarProps(props);
-      expect(resolvedProps).toEqual({
-        value: 50,
-        maxValue: 100,
-        disabled: false,
-        color: Color.Yellow,
-        isIndeterminate: false,
-        enableAnimation: false,
-      });
-    });
-
-    test('it correctly resolves props for a determinate loader type', () => {
-      const props = {
-        type: Type.Loader,
-        isIndeterminate: false,
-        value: 50,
-        maxValue: 100,
-        variant: LoaderVariant.Success,
-        enableAnimation: true,
-      } as const;
-
-      const resolvedProps = resolveProgressBarProps(props);
-      expect(resolvedProps).toEqual({
-        value: 50,
-        maxValue: 100,
-        disabled: false,
-        color: Color.Green,
-        isIndeterminate: false,
-        enableAnimation: true,
+        test('defaults to maxValue of 1 when maxValue is 0', () => {
+          render(
+            <ProgressBar
+              type={Type.Loader}
+              isIndeterminate={false}
+              value={1}
+              maxValue={0}
+            />,
+          );
+          const { getBarFillElement } = getTestUtils();
+          expect(getBarFillElement()).toBeInTheDocument();
+          expect(getBarFillElement()).toHaveStyle({
+            width: '100%',
+          });
+        });
       });
     });
 
-    test('it correctly resolves props for an indeterminate loader type', () => {
-      const props = {
-        type: Type.Loader,
-        isIndeterminate: true,
-      } as const;
-
-      const resolvedProps = resolveProgressBarProps(props);
-      expect(resolvedProps).toEqual({
-        value: undefined,
-        maxValue: undefined,
-        disabled: false,
-        color: Color.Blue,
-        isIndeterminate: true,
-        enableAnimation: false,
+    describe('when disabled', () => {
+      test('renders no animation even if enableAnimation is true', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            enableAnimation={true}
+            value={50}
+            maxValue={100}
+            disabled={true}
+          />,
+        );
+        const { getBarFillElement } = getTestUtils();
+        expect(getBarFillElement()).toBeInTheDocument();
+        expect(getBarFillElement()).not.toHaveStyle({
+          animation: expect.any(String),
+        });
       });
     });
   });

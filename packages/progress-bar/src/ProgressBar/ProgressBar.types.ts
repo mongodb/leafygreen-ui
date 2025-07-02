@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export const Type = {
   Meter: 'meter',
@@ -55,7 +55,7 @@ export const Color = {
 } as const;
 export type Color = (typeof Color)[keyof typeof Color];
 
-interface BaseProps extends DarkModeProps {
+interface BaseProps extends DarkModeProps, LgIdProps {
   /** Optional label text displayed directly above the progress bar. */
   label?: React.ReactNode;
 

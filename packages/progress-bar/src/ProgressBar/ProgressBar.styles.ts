@@ -7,8 +7,9 @@ import {
   spacing as spacingToken,
 } from '@leafygreen-ui/tokens';
 
+import { getPercentage } from '../utils';
+
 import { Color, Size } from './ProgressBar.types';
-import { getPercentage } from './ProgressBar.utils';
 
 const progressBarSizeStyles = {
   [Size.Small]: {
@@ -80,6 +81,13 @@ export const containerStyles = css`
 export const headerStyles = css`
   display: flex;
   justify-content: space-between;
+`;
+
+export const truncatedTextStyles = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 `;
 
 export const getHeaderValueStyles = ({
@@ -170,7 +178,7 @@ export const getBarFillStyles = ({
 
   if (isIndeterminate) typedBarFillStyles = getIndeterminateBarFillStyles();
 
-  if (value && maxValue)
+  if (value != null && maxValue)
     typedBarFillStyles = getDeterminateBarFillStyles(
       getPercentage(value, maxValue),
     );
