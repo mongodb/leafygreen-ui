@@ -5,6 +5,14 @@ import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
+  getFormattedValue,
+  getHeaderIcon,
+  getValueAriaAttributes,
+  iconsPendingCompletion,
+  resolveProgressBarProps,
+} from '../utils';
+
+import {
   containerStyles,
   getBarFillStyles,
   getBarTrackStyles,
@@ -13,13 +21,6 @@ import {
   headerStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps, Size } from './ProgressBar.types';
-import {
-  getFormattedValue,
-  getHeaderIcon,
-  getValueAriaAttributes,
-  iconsPendingCompletion,
-  resolveProgressBarProps,
-} from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
   const { value, maxValue, disabled, color, isIndeterminate } =
     resolveProgressBarProps(props);

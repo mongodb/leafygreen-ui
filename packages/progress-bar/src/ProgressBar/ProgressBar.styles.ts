@@ -7,8 +7,9 @@ import {
   spacing as spacingToken,
 } from '@leafygreen-ui/tokens';
 
+import { getPercentage } from '../utils';
+
 import { Color, Size } from './ProgressBar.types';
-import { getPercentage } from './ProgressBar.utils';
 
 const progressBarSizeStyles = {
   [Size.Small]: {
