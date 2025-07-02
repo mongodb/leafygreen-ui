@@ -65,9 +65,11 @@ export function ProgressBar(props: ProgressBarProps) {
 
     const timeout = setTimeout(() => {
       setAnimationMode(
-        enableAnimation
-          ? AnimationMode.AnimatedDeterminate
-          : AnimationMode.BaseDeterminate,
+        getAnimationMode({
+          type,
+          isIndeterminate,
+          enableAnimation,
+        }),
       );
     }, FADEOUT_DURATION);
 

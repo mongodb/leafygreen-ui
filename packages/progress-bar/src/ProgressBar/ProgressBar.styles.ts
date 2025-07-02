@@ -170,14 +170,17 @@ const getDeterminateBarFillStyles = ({
 const getAnimatedDeterminateBarFillStyles = ({
   theme,
   color,
+  disabled,
 }: {
   theme: Theme;
   color: Color;
+  disabled?: boolean;
 }) => {
   const selectedColorStyle = barColorStyles[theme][color];
+  const hasAnimation = !disabled && 'shimmerFade' in selectedColorStyle;
 
   return (
-    'shimmerFade' in selectedColorStyle &&
+    hasAnimation &&
     css`
       background-color: transparent;
 
@@ -285,6 +288,7 @@ export const getBarFillStyles = ({
   maxValue?: number;
 }) => {
   const baseStyles = getBaseBarFillStyles();
+
   let addOnStyles;
 
   const determinate = getDeterminateBarFillStyles({
@@ -294,9 +298,11 @@ export const getBarFillStyles = ({
     width: getPercentage(value, maxValue),
   });
 
-  const animatedDeterminate = !disabled
-    ? getAnimatedDeterminateBarFillStyles({ theme, color })
-    : null;
+  const animatedDeterminate = getAnimatedDeterminateBarFillStyles({
+    theme,
+    color,
+    disabled,
+  });
 
   const indeterminate = getIndeterminateBarFillStyles({ theme, color });
 
