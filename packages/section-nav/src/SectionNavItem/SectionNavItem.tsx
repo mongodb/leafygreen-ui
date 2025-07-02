@@ -17,10 +17,10 @@ export const SectionNavItem = forwardRef<
 >(
   (
     {
-      className,
       children,
-      active = false,
+      className,
       label,
+      active = false,
       ...rest
     }: SectionNavItemProps,
     forwardedRef,
