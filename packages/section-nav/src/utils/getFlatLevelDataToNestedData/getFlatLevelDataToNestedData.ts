@@ -57,14 +57,15 @@ export const getFlatLevelDataToNestedData = (data: FlatLevelData) => {
   const stack: NestedData = [];
 
   data.forEach(item => {
+    const { level, ...rest } = item;
+
     // create the new format that should be added to results
     const newItem: NestedDataItem = {
-      id: item.id,
-      label: item.label,
+      ...rest,
       children: [],
     };
 
-    if (item.level === 1) {
+    if (level === 1) {
       // if level 1 then add it to the results array
       results.push(newItem);
       // reset the stack array
@@ -74,7 +75,7 @@ export const getFlatLevelDataToNestedData = (data: FlatLevelData) => {
     } else {
       // The length of the stack reflects the level of the previous item. If there is one item in the stack then that items is a level 1 item. If there are two items in the stack then the last item was a level 2 item.
       // With this loop, if the length is greater or equal to the current item level then we should remove the last item because that indicates that the last item is the same level as the current item.
-      while (stack && stack.length >= item.level) {
+      while (stack && stack.length >= level) {
         stack.pop();
       }
 
