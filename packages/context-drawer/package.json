@@ -34,6 +34,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^",
     "react-intersection-observer": "^8.25.1"
   },
   "devDependencies": {
