@@ -19,7 +19,7 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   } as const;
 };
 
-const MockContextDrawer = (props: Partial<ContextDrawerProps> = {}) => {
+export const MockContextDrawer = (props: Partial<ContextDrawerProps> = {}) => {
   return (
     <ContextDrawer
       reference={<div>Reference</div>}
