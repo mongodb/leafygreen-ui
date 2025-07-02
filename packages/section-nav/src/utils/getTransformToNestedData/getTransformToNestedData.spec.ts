@@ -1,15 +1,15 @@
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { getFlatStringDataToNestedData } from '../getFlatStringDataToNestedData';
+import { getFlatLevelDataToNestedData } from '../getFlatLevelDataToNestedData';
 
 import { getTransformToNestedData } from './getTransformToNestedData';
 import {
-  FlatData,
+  FlatLevelData,
   GetTransformToNestedDataArgs,
 } from './getTransformToNestedData.types';
 
-jest.mock('../getFlatStringDataToNestedData', () => ({
-  getFlatStringDataToNestedData: jest.fn(),
+jest.mock('../getFlatLevelDataToNestedData', () => ({
+  getFlatLevelDataToNestedData: jest.fn(),
 }));
 
 describe('getTransformToNestedData', () => {
@@ -25,9 +25,9 @@ describe('getTransformToNestedData', () => {
     return getTransformToNestedData(params);
   };
 
-  test('calls getFlatStringDataToNestedData when type is "flatString"', () => {
+  test('calls getFlatLevelDataToNestedData when type is "flatLevel"', () => {
     // Setup test data
-    const flatStringInput: FlatData = [
+    const flatLevelInput: FlatLevelData = [
       { level: 1, id: '1', label: 'Item 1' },
       { level: 2, id: '1.1', label: 'Item 1.1' },
     ];
@@ -35,13 +35,13 @@ describe('getTransformToNestedData', () => {
     // Call the function through our test hook
     renderHook(() =>
       useTestHook({
-        type: 'flatString',
-        data: flatStringInput,
+        type: 'flatLevel',
+        data: flatLevelInput,
       }),
     );
 
     // Verify the correct transformer function was called with the input data
-    expect(getFlatStringDataToNestedData).toHaveBeenCalledWith(flatStringInput);
+    expect(getFlatLevelDataToNestedData).toHaveBeenCalledWith(flatLevelInput);
   });
 
   test('throws error for unsupported data type', () => {

@@ -66,9 +66,11 @@ import {SectionNav, SectionNavItem} from `@leafygreen-ui/section-nav`;
 
 \+ other HTML `a` element props
 
-## `getTransformedToNestedData`
+## `getTranformToNestedData`
 
-The recommended way to use `SectionNav` is to map through a nested data structure and render `SectionNavItem` components based on that data. This allows for a more dynamic and flexible navigation structure.
+The recommended way to use `SectionNav` is to map through a nested data structure and render `SectionNavItem` components based on that data.
+
+**Recommended data structure**:
 
 ```tsx
 const data = [
@@ -85,36 +87,39 @@ const data = [
 ];
 ```
 
-The `getTransformedToNestedData` utility function is provided to help with this transformation.
+The `getTranformToNestedData` utility function is provided to help with this transformation.
 
-Currently, it supports transforming a flat array of objects into a nested structure based on a `level` key.
-
-```tsx
-const originalFlatStringData = [
-  { level: 1, id: 'intro', label: 'Introduction' },
-  { level: 1, id: 'installation', label: 'Installation' },
-  { level: 2, id: 'why', label: 'Why' },
-  { level: 2, id: 'how', label: 'How to Install' },
-  { level: 1, id: 'usage', label: 'Usage' },
-];
-```
+Currently, it supports transforming a flat array of objects with key-value pairs into a nested structure based on a **required** `level` key.
 
 ### Usage
 
 ```tsx
 // Original data with level, href, and label
-const flatStringInput = [
-  { level: 1, id: 'intro', label: 'Introduction' },
-  { level: 1, id: 'installation', label: 'Installation' },
-  { level: 2, id: 'why', label: 'Why' },
-  { level: 2, id: 'how', label: 'How to Install' },
-  { level: 1, id: 'usage', label: 'Usage' },
+const flatLevelInput = [
+  { level: 1, id: '#intro', label: 'Introduction' },
+  { level: 1, id: '#installation', label: 'Installation' },
+  { level: 2, id: '#why', label: 'Why' },
+  { level: 2, id: '#how', label: 'How to Install' },
+  { level: 1, id: '#usage', label: 'Usage' },
 ];
 
 const { nestedData } = getTranformToNestedData({
-  type: 'flatString',
-  data: flatStringInput,
+  type: 'flatLevel',
+  data: flatLevelInput,
 });
+
+// const nestedData = [
+//   { label: 'Introduction', id: '#intro', children: [] },
+//   {
+//     label: 'Installation',
+//     id: '#installation',
+//     children: [
+//       { label: 'Why', id: '#why', children: [] },
+//       { label: 'How to Install', id: '#how', children: [] },
+//     ],
+//   },
+//   { label: 'Usage', id: '#usage', children: [] },
+// ];
 
 return (
   <SectionNav title="On this page">

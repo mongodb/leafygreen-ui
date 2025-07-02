@@ -1,19 +1,19 @@
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import {
-  FlatData,
+  FlatLevelData,
   NestedData,
 } from '../getTransformToNestedData/getTransformToNestedData.types';
 
-import { getFlatStringDataToNestedData } from './getFlatStringDataToNestedData';
+import { getFlatLevelDataToNestedData } from './getFlatLevelDataToNestedData';
 
-describe('getFlatStringDataToNestedData', () => {
+describe('getFlatLevelDataToNestedData', () => {
   /**
    * Helper function to create a wrapper that returns the result of calling
-   * getFlatStringDataToNestedData with the provided data.
+   * getFlatLevelDataToNestedData with the provided data.
    */
-  const useTestHook = (data: FlatData) => {
-    return getFlatStringDataToNestedData(data);
+  const useTestHook = (data: FlatLevelData) => {
+    return getFlatLevelDataToNestedData(data);
   };
 
   test('transforms empty data into empty array', () => {
@@ -22,9 +22,11 @@ describe('getFlatStringDataToNestedData', () => {
   });
 
   test('transforms single level 1 item', () => {
-    const flatData: FlatData = [{ level: 1, id: '1', label: 'Item 1' }];
+    const flatLevelData: FlatLevelData = [
+      { level: 1, id: '1', label: 'Item 1' },
+    ];
 
-    const { result } = renderHook(() => useTestHook(flatData));
+    const { result } = renderHook(() => useTestHook(flatLevelData));
 
     const expectedData: NestedData = [
       { id: '1', label: 'Item 1', children: [] },
@@ -34,13 +36,13 @@ describe('getFlatStringDataToNestedData', () => {
   });
 
   test('transforms level 1 and level 2 items', () => {
-    const flatData: FlatData = [
+    const flatLevelData: FlatLevelData = [
       { level: 1, id: '1', label: 'Item 1' },
       { level: 2, id: '1.1', label: 'Item 1.1' },
       { level: 2, id: '1.2', label: 'Item 1.2' },
     ];
 
-    const { result } = renderHook(() => useTestHook(flatData));
+    const { result } = renderHook(() => useTestHook(flatLevelData));
 
     const expectedData: NestedData = [
       {
@@ -57,14 +59,14 @@ describe('getFlatStringDataToNestedData', () => {
   });
 
   test('transforms multiple level 1 items with nested children', () => {
-    const flatData: FlatData = [
+    const flatLevelData: FlatLevelData = [
       { level: 1, id: '1', label: 'Item 1' },
       { level: 2, id: '1.1', label: 'Item 1.1' },
       { level: 1, id: '2', label: 'Item 2' },
       { level: 2, id: '2.1', label: 'Item 2.1' },
     ];
 
-    const { result } = renderHook(() => useTestHook(flatData));
+    const { result } = renderHook(() => useTestHook(flatLevelData));
 
     const expectedData: NestedData = [
       {
@@ -83,7 +85,7 @@ describe('getFlatStringDataToNestedData', () => {
   });
 
   test('transforms deeply nested structure with multiple levels', () => {
-    const flatData: FlatData = [
+    const flatLevelData: FlatLevelData = [
       { level: 1, id: '1', label: 'Item 1' },
       { level: 2, id: '1.1', label: 'Item 1.1' },
       { level: 3, id: '1.1.1', label: 'Item 1.1.1' },
@@ -94,7 +96,7 @@ describe('getFlatStringDataToNestedData', () => {
       { level: 3, id: '2.1.1', label: 'Item 2.1.1' },
     ];
 
-    const { result } = renderHook(() => useTestHook(flatData));
+    const { result } = renderHook(() => useTestHook(flatLevelData));
 
     const expectedData: NestedData = [
       {
@@ -129,14 +131,14 @@ describe('getFlatStringDataToNestedData', () => {
   });
 
   test('handles sibling transitions correctly', () => {
-    const flatData: FlatData = [
+    const flatLevelData: FlatLevelData = [
       { level: 1, id: '1', label: 'Item 1' },
       { level: 2, id: '1.1', label: 'Item 1.1' },
       { level: 3, id: '1.1.1', label: 'Item 1.1.1' },
       { level: 2, id: '1.2', label: 'Item 1.2' }, // Back to level 2
     ];
 
-    const { result } = renderHook(() => useTestHook(flatData));
+    const { result } = renderHook(() => useTestHook(flatLevelData));
 
     const expectedData: NestedData = [
       {
@@ -157,12 +159,12 @@ describe('getFlatStringDataToNestedData', () => {
   });
 
   test('handles skipped level transitions', () => {
-    const flatData: FlatData = [
+    const flatLevelData: FlatLevelData = [
       { level: 1, id: '1', label: 'Item 1' },
       { level: 3, id: '1.0.1', label: 'Item 1.0.1' }, // Skipped level 2
     ];
 
-    const { result } = renderHook(() => useTestHook(flatData));
+    const { result } = renderHook(() => useTestHook(flatLevelData));
 
     // When level 2 is skipped, the level 3 item should still be added to level 1's children
     const expectedData: NestedData = [

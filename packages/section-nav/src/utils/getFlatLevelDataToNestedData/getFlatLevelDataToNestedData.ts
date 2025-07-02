@@ -1,5 +1,5 @@
 import {
-  FlatData,
+  FlatLevelData,
   NestedData,
   NestedDataItem,
 } from '../getTransformToNestedData/getTransformToNestedData.types';
@@ -50,8 +50,10 @@ import {
  * ]
  * ```
  */
-export const getFlatStringDataToNestedData = (data: FlatData) => {
+export const getFlatLevelDataToNestedData = (data: FlatLevelData) => {
   const results: NestedData = [];
+  // This stack will be used to keep track of the current parent items as we traverse the data.
+  // It will help us determine where to add the current item based on its level.
   const stack: NestedData = [];
 
   data.forEach(item => {
