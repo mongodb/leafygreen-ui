@@ -5,8 +5,8 @@ import { axe } from 'jest-axe';
 
 import {
   getTestUtils,
-  MockContextDrawer,
   renderContextDrawer,
+  TestContextDrawer,
 } from '../testing';
 
 describe('packages/context-drawer', () => {
@@ -177,7 +177,7 @@ describe('packages/context-drawer', () => {
       expect(onOpenChange).toHaveBeenCalledTimes(1);
       expect(isOpen()).toBeFalsy(); // should not change state since isOpen is controlled
 
-      rerender(<MockContextDrawer isOpen={true} onOpenChange={onOpenChange} />);
+      rerender(<TestContextDrawer isOpen={true} onOpenChange={onOpenChange} />);
       expect(isOpen()).toBeTruthy();
 
       userEvent.click(toggleButton);

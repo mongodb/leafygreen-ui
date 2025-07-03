@@ -19,7 +19,7 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   } as const;
 };
 
-export const MockContextDrawer = (props: Partial<ContextDrawerProps> = {}) => {
+export const TestContextDrawer = (props: Partial<ContextDrawerProps> = {}) => {
   return (
     <ContextDrawer
       reference={<div>Reference</div>}
@@ -33,23 +33,23 @@ export const MockContextDrawer = (props: Partial<ContextDrawerProps> = {}) => {
 export const renderAsyncContextDrawer = (
   props: Partial<ContextDrawerProps> = {},
 ): RenderAsyncTestReturnType => {
-  return renderAsyncTest(<MockContextDrawer {...props} />, render);
+  return renderAsyncTest(<TestContextDrawer {...props} />, render);
 };
 
 export const renderContextDrawer = (
   props: Partial<ContextDrawerProps> = {},
 ): RenderResult => {
-  return render(<MockContextDrawer {...props} />);
+  return render(<TestContextDrawer {...props} />);
 };
 
 export const renderMultipleContextDrawers = (): RenderResult => {
   return render(
     <>
-      <MockContextDrawer
+      <TestContextDrawer
         data-lgid="lg-context_drawer-1"
         trigger={<ContextDrawerButton>Trigger 1</ContextDrawerButton>}
       />
-      <MockContextDrawer
+      <TestContextDrawer
         data-lgid="lg-context_drawer-2"
         trigger={<ContextDrawerButton>Trigger 2</ContextDrawerButton>}
       />
