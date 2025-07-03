@@ -28,6 +28,7 @@
     "@leafygreen-ui/popover": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
+    "@storybook/test": "^8.6.14",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
