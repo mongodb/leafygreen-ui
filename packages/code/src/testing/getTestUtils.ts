@@ -1,6 +1,6 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
-import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
+import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button/testing';
 import { LgIdString } from '@leafygreen-ui/lib';
 import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select/testing';
 
