@@ -1,5 +1,15 @@
 # @leafygreen-ui/gallery-indicator
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.2
+
 ## 3.0.0
 
 ### Major Changes

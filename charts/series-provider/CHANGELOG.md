@@ -1,5 +1,14 @@
 # @lg-charts/series-provider
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @lg-charts/colors@1.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+
 ## 1.0.1
 
 ### Patch Changes

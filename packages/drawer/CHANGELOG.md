@@ -1,5 +1,47 @@
 # @leafygreen-ui/drawer
 
+## 4.0.2
+
+### Patch Changes
+
+- cbe691c: - Updates `DrawerLayout` to accept the `disabled` property in `toolbarData` prop
+
+  ```js
+  <DrawerLayout
+    toolbarData={[
+      {
+        ...,
+        disabled: true, // This drawer item is disabled
+      },
+    ]}
+  ```
+
+  - Updates `DrawerLayout` to support `ReactNode` for the `title` property in `toolbarData` prop
+
+    ```js
+    <DrawerLayout
+      toolbarData={[
+        {
+          ...,
+          title: <span>Custom Title</span>, // This allows for custom React nodes as titles
+        },
+      ]}
+    ```
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/button@24.0.3
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/icon-button@17.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.3
+  - @leafygreen-ui/tabs@16.0.1
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/toolbar@1.0.2
+  - @leafygreen-ui/typography@22.0.1
+
 ## 4.0.1
 
 ### Patch Changes

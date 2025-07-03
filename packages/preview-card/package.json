@@ -1,7 +1,6 @@
-  
 {
   "name": "@leafygreen-ui/preview-card",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "LeafyGreen UI Kit Preview Card",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
