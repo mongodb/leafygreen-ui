@@ -90,6 +90,7 @@ const testSimulatedProgressToCompletion = async ({
         testValues.maxValue.toString(),
       );
     },
+    // component timeout with buffer time of 500ms
     { timeout: 2000 },
   );
 };
@@ -265,6 +266,7 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
           value: 200,
           maxValue: 200,
         });
+        // let indeterminate animation play for a bit before switching
       }, 3500);
 
       return () => {
@@ -286,6 +288,7 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
           testValues.maxValue.toString(),
         );
       },
+      // component timeout with buffer time of 500ms
       { timeout: 4000 },
     );
   },
