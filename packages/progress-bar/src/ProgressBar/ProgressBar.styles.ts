@@ -7,10 +7,15 @@ import {
   spacing as spacingToken,
 } from '@leafygreen-ui/tokens';
 
+import {
+  INDETERMINATE_ANIMATION_DURATION_MS,
+  SHIMMER_ANIMATION_DURATION_MS,
+  TRANSITION_ANIMATION_DURATION,
+  WIDTH_ANIMATION_DURATION,
+} from '../constants';
+
 import { AnimationMode, Color, Size } from './ProgressBar.types';
 import { getPercentage } from './ProgressBar.utils';
-
-export const FADEOUT_DURATION = 500;
 
 const opacityAlphaChannels = {
   50: '80',
@@ -161,7 +166,7 @@ const getDeterminateBarFillStyles = ({
   width: number;
 }) => css`
   width: ${width}%;
-  transition: width 0.5s ease-in-out;
+  transition: width ${WIDTH_ANIMATION_DURATION}ms ease-in-out;
   background-color: ${disabled
     ? barColorStyles[theme].disabledBar
     : barColorStyles[theme][color].bar};
@@ -197,7 +202,7 @@ const getAnimatedDeterminateBarFillStyles = ({
           ${selectedColorStyle.bar} 100%
         );
         background-size: 200% 100%;
-        animation: shimmer 3s linear infinite;
+        animation: shimmer ${SHIMMER_ANIMATION_DURATION_MS}ms linear infinite;
       }
       @keyframes shimmer {
         0% {
@@ -238,7 +243,7 @@ const getIndeterminateBarFillStyles = ({
         ${selectedColorStyle.bar}${opacityAlphaChannels[75]} 75%,
         ${palette.transparent} 100%
       );
-      animation: cycle 1.5s linear infinite;
+      animation: cycle ${INDETERMINATE_ANIMATION_DURATION_MS}ms linear infinite;
     }
     @keyframes cycle {
       0% {
@@ -268,8 +273,8 @@ const getIndeterminateBarFillStyles = ({
 export const getFadingIndeterminateBarFillStyles = () => css`
   opacity: 0;
   width: 0%;
-  transition: opacity ${FADEOUT_DURATION}ms ease-out,
-    width 100ms ease-out ${FADEOUT_DURATION - 100}ms;
+  transition: opacity ${TRANSITION_ANIMATION_DURATION}ms ease-out,
+    width 100ms ease-out ${TRANSITION_ANIMATION_DURATION - 100}ms;
 `;
 
 export const getBarFillStyles = ({

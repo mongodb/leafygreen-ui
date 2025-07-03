@@ -5,8 +5,12 @@ import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
+  ICONS_PENDING_COMPLETION,
+  TRANSITION_ANIMATION_DURATION,
+} from '../constants';
+
+import {
   containerStyles,
-  FADEOUT_DURATION,
   getBarFillStyles,
   getBarTrackStyles,
   getHeaderIconStyles,
@@ -19,7 +23,6 @@ import {
   getFormattedValue,
   getHeaderIcon,
   getValueAriaAttributes,
-  iconsPendingCompletion,
   resolveProgressBarProps,
 } from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
@@ -38,7 +41,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const { theme } = useDarkMode(darkMode);
 
-  const showIcon = iconsPendingCompletion.includes(color)
+  const showIcon = ICONS_PENDING_COMPLETION.includes(color)
     ? showIconProp && value === maxValue
     : showIconProp;
 
@@ -71,7 +74,7 @@ export function ProgressBar(props: ProgressBarProps) {
           enableAnimation,
         }),
       );
-    }, FADEOUT_DURATION);
+    }, TRANSITION_ANIMATION_DURATION);
 
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
