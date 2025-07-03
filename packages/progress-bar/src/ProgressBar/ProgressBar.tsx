@@ -59,24 +59,9 @@ export function ProgressBar(props: ProgressBarProps) {
   );
 
   useEffect(() => {
-    const shouldTransitionOut =
-      animationMode === AnimationMode.Indeterminate && !isIndeterminate;
-
-    if (!shouldTransitionOut) return;
-
-    setAnimationMode(AnimationMode.Transition);
-
-    const timeout = setTimeout(() => {
-      setAnimationMode(
-        getAnimationMode({
-          type,
-          isIndeterminate,
-          enableAnimation,
-        }),
-      );
-    }, TRANSITION_ANIMATION_DURATION);
-
-    return () => clearTimeout(timeout);
+    if (animationMode === AnimationMode.Indeterminate && !isIndeterminate) {
+      setAnimationMode(AnimationMode.Transition);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isIndeterminate]);
 
@@ -126,6 +111,17 @@ export function ProgressBar(props: ProgressBarProps) {
               maxValue,
               animationMode,
             })}
+            onTransitionEnd={() => {
+              if (animationMode === AnimationMode.Transition) {
+                setAnimationMode(
+                  getAnimationMode({
+                    type,
+                    isIndeterminate,
+                    enableAnimation,
+                  }),
+                );
+              }
+            }}
           ></div>
         </div>
       </div>
