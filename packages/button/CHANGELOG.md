@@ -1,5 +1,17 @@
 # @leafygreen-ui/button
 
+## 24.0.3
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.3
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/ripple@2.0.3
+
 ## 24.0.2
 
 ### Patch Changes

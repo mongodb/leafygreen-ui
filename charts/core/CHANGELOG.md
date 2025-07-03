@@ -1,5 +1,34 @@
 # @lg-charts/core
 
+## 2.0.0
+
+### Major Changes
+
+- 7537bad: Add `enableGroupTooltipSync` prop to `Chart` component to turn on/off tooltip syncing for grouped charts.
+
+  Previously, all charts only synced axis pointers and did not sync tooltips. This was done to prevent longer tooltips from visually colliding with other long tooltips.
+
+  `enableGroupTooltipSync` defaults to `true` and will always sync tooltips. The prop can be explicitly set to `false` to achieve the previous behavior of only syncing axis pointers and not syncing tooltips.
+
+### Minor Changes
+
+- 19992c4: [LG-5341](https://jira.mongodb.org/browse/LG-5341): add exit interaction for closing pinned `ChartTooltip`. Clicking on chart wrapper outside of pinned `ChartTooltip` instance will close the tooltip.
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @lg-charts/chart-card@1.0.3
+  - @lg-charts/colors@1.0.2
+  - @lg-charts/series-provider@1.0.2
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/icon-button@17.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
 ## 1.4.0
 
 ### Minor Changes
