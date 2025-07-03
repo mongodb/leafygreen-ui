@@ -1,4 +1,4 @@
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -91,6 +91,38 @@ const barColorStyles = {
     },
   },
 };
+
+const shimmerKeyframes = keyframes`
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+`;
+
+const cycleKeyframes = keyframes`
+  0% {
+    left: -33%;
+    width: 33%;
+  }
+  25% {
+    left: 0%;
+    width: 33%;
+  }
+  50% {
+    left: 17%;
+    width: 66%;
+  }
+  75% {
+    left: 67%;
+    width: 33%;
+  }
+  100% {
+    left: 100%;
+    width: 33%;
+  }
+`;
 
 export const containerStyles = css`
   display: flex;
@@ -202,15 +234,8 @@ const getAnimatedDeterminateBarFillStyles = ({
           ${selectedColorStyle.bar} 100%
         );
         background-size: 200% 100%;
-        animation: shimmer ${SHIMMER_ANIMATION_DURATION_MS}ms linear infinite;
-      }
-      @keyframes shimmer {
-        0% {
-          background-position: 200% 0;
-        }
-        100% {
-          background-position: -200% 0;
-        }
+        animation: ${shimmerKeyframes} ${SHIMMER_ANIMATION_DURATION_MS}ms linear
+          infinite;
       }
     `
   );
@@ -243,34 +268,13 @@ const getIndeterminateBarFillStyles = ({
         ${selectedColorStyle.bar}${opacityAlphaChannels[75]} 75%,
         ${palette.transparent} 100%
       );
-      animation: cycle ${INDETERMINATE_ANIMATION_DURATION_MS}ms linear infinite;
-    }
-    @keyframes cycle {
-      0% {
-        left: -33%;
-        width: 33%;
-      }
-      25% {
-        left: 0%;
-        width: 33%;
-      }
-      50% {
-        left: 17%;
-        width: 66%;
-      }
-      75% {
-        left: 67%;
-        width: 33%;
-      }
-      100% {
-        left: 100%;
-        width: 33%;
-      }
+      animation: ${cycleKeyframes} ${INDETERMINATE_ANIMATION_DURATION_MS}ms
+        linear infinite;
     }
   `;
 };
 
-export const getFadingIndeterminateBarFillStyles = () => css`
+export const getTransitioningBarFillStyles = () => css`
   opacity: 0;
   width: 0%;
   transition: opacity ${TRANSITION_ANIMATION_DURATION}ms ease-out,
@@ -313,7 +317,7 @@ export const getBarFillStyles = ({
 
   switch (animationMode) {
     case AnimationMode.Transition:
-      addOnStyles = cx(indeterminate, getFadingIndeterminateBarFillStyles());
+      addOnStyles = cx(indeterminate, getTransitioningBarFillStyles());
       break;
     case AnimationMode.Indeterminate:
       addOnStyles = indeterminate;
