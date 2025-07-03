@@ -9,6 +9,8 @@ import {
 
 import {
   INDETERMINATE_ANIMATION_DURATION_MS,
+  INDETERMINATE_BAR_POSITIONS,
+  INDETERMINATE_BAR_WIDTHS,
   SHIMMER_ANIMATION_DURATION_MS,
   TRANSITION_ANIMATION_DURATION,
   WIDTH_ANIMATION_DURATION,
@@ -103,32 +105,32 @@ const shimmerKeyframes = keyframes`
 
 const cycleKeyframes = keyframes`
   0% {
-    left: -33%;
-    width: 33%;
+    left: ${INDETERMINATE_BAR_POSITIONS.start};
+    width: ${INDETERMINATE_BAR_WIDTHS.narrow};
   }
   25% {
-    left: 0%;
-    width: 33%;
+    left: ${INDETERMINATE_BAR_POSITIONS.quarter};
+    width: ${INDETERMINATE_BAR_WIDTHS.narrow};
   }
   47% {
-    left: 17%;
-    width: 66%;
+    left: ${INDETERMINATE_BAR_POSITIONS.half};
+    width: ${INDETERMINATE_BAR_WIDTHS.wide};
   }
   50% {
-    left: 17%;
-    width: 66%;
+    left: ${INDETERMINATE_BAR_POSITIONS.half};
+    width: ${INDETERMINATE_BAR_WIDTHS.wide};
   }
   53% {
-    left: 17%;
-    width: 66%;
+    left: ${INDETERMINATE_BAR_POSITIONS.half};
+    width: ${INDETERMINATE_BAR_WIDTHS.wide};
   }
   75% {
-    left: 67%;
-    width: 33%;
+    left: ${INDETERMINATE_BAR_POSITIONS.threeQuarters};
+    width: ${INDETERMINATE_BAR_WIDTHS.narrow};
   }
   100% {
-    left: 100%;
-    width: 33%;
+    left: ${INDETERMINATE_BAR_POSITIONS.end};
+    width: ${INDETERMINATE_BAR_WIDTHS.narrow};
   }
 `;
 
@@ -265,9 +267,9 @@ const getIndeterminateBarFillStyles = ({
       content: '';
       position: absolute;
       top: 0;
-      left: -33%;
+      left: ${INDETERMINATE_BAR_POSITIONS.start};
       height: 100%;
-      width: 33%;
+      width: ${INDETERMINATE_BAR_WIDTHS.narrow};
       background: linear-gradient(
         90deg,
         ${palette.transparent} 0%,
