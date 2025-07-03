@@ -164,3 +164,11 @@ export interface ResolvedProgressBarProps {
   /** When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. */
   enableAnimation: boolean;
 }
+
+export const AnimationMode = {
+  BaseDeterminate: 'none',
+  AnimatedDeterminate: 'animated-determinate',
+  Indeterminate: 'indeterminate',
+  Transition: 'indeterminate-to-determinate-transition',
+};
+export type AnimationMode = (typeof AnimationMode)[keyof typeof AnimationMode];

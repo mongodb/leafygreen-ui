@@ -90,6 +90,7 @@ const testSimulatedProgressToCompletion = async ({
         testValues.maxValue.toString(),
       );
     },
+    // component timeout with buffer time of 500ms
     { timeout: 2000 },
   );
 };
@@ -166,10 +167,48 @@ export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   },
 };
 
-export const WithDescription: StoryObj<typeof ProgressBar> = {
+export const WithDescriptions: StoryObj<typeof ProgressBar> = {
   args: {
     ...DeterminateLoader.args,
     description: <span>Helper text</span>,
+  },
+  render: function TransitioningProgressBar(props: ProgressBarProps) {
+    const [newProps, setNewProps] = useState({});
+
+    useEffect(() => {
+      const timeout1 = setTimeout(() => {
+        setNewProps({
+          ...DeterminateLoader.args,
+          description: <span>New helper text...</span>,
+        });
+
+        timeout2 = setTimeout(() => {
+          setNewProps({
+            ...DeterminateLoader.args,
+            description: <span>Even newer helper text...!</span>,
+          });
+        }, 2000);
+      }, 1500);
+
+      let timeout2: ReturnType<typeof setTimeout>;
+
+      return () => {
+        clearTimeout(timeout1);
+        clearTimeout(timeout2);
+      };
+    }, [props.value]);
+
+    return <ProgressBar {...props} {...newProps} />;
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+
+    const finalText = await waitFor(
+      () => canvas.getByText('Even newer helper text...!'),
+      { timeout: 4000 },
+    );
+
+    expect(finalText).toBeInTheDocument();
   },
 };
 
@@ -246,5 +285,49 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
         },
       ],
     },
+  },
+};
+
+export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
+  args: {
+    type: Type.Loader,
+    isIndeterminate: true,
+  },
+  render: function TransitioningProgressBar(props: ProgressBarProps) {
+    const [newProps, setNewProps] = useState({});
+
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        setNewProps({
+          type: Type.Loader,
+          isIndeterminate: false,
+          value: 200,
+          maxValue: 200,
+        });
+        // let indeterminate animation play for a bit before switching
+      }, 3500);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }, [props.value]);
+
+    return <ProgressBar {...props} {...newProps} />;
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
+
+    expect(progressBar).not.toHaveAttribute('aria-valuenow');
+
+    await waitFor(
+      () => {
+        expect(progressBar.getAttribute('aria-valuenow')).toBe(
+          testValues.maxValue.toString(),
+        );
+      },
+      // component timeout with buffer time of 500ms
+      { timeout: 4000 },
+    );
   },
 };

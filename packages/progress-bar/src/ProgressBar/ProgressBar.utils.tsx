@@ -5,7 +5,10 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
+import { DEFAULT_COLOR, DEFAULT_MAX_VALUE } from '../constants';
+
 import {
+  AnimationMode,
   Color,
   FormatValueType,
   LoaderVariant,
@@ -14,10 +17,6 @@ import {
   ResolvedProgressBarProps,
   Type,
 } from './ProgressBar.types';
-
-export const DEFAULT_MAX_VALUE = 1;
-export const DEFAULT_COLOR = Color.Blue;
-export const iconsPendingCompletion: Array<Color> = [Color.Green];
 
 const getMeterStatusColor = (status?: MeterStatus): Color => {
   switch (status) {
@@ -86,6 +85,23 @@ export const resolveProgressBarProps = (
     color: getLoaderVariantColor(props.variant),
     enableAnimation: props.enableAnimation ?? false,
   };
+};
+
+export const getAnimationMode = ({
+  type,
+  isIndeterminate,
+  enableAnimation,
+}: {
+  type: Type;
+  isIndeterminate: boolean;
+  enableAnimation: boolean;
+}): AnimationMode => {
+  if (type === Type.Meter) return AnimationMode.BaseDeterminate;
+  if (isIndeterminate) return AnimationMode.Indeterminate;
+
+  return enableAnimation
+    ? AnimationMode.AnimatedDeterminate
+    : AnimationMode.BaseDeterminate;
 };
 
 export const getPercentage = (value: number, maxValue?: number): number => {
