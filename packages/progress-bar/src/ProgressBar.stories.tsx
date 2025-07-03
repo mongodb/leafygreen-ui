@@ -167,10 +167,48 @@ export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   },
 };
 
-export const WithDescription: StoryObj<typeof ProgressBar> = {
+export const WithDescriptions: StoryObj<typeof ProgressBar> = {
   args: {
     ...DeterminateLoader.args,
     description: <span>Helper text</span>,
+  },
+  render: function TransitioningProgressBar(props: ProgressBarProps) {
+    const [newProps, setNewProps] = useState({});
+
+    useEffect(() => {
+      const timeout1 = setTimeout(() => {
+        setNewProps({
+          ...DeterminateLoader.args,
+          description: <span>New helper text...</span>,
+        });
+
+        timeout2 = setTimeout(() => {
+          setNewProps({
+            ...DeterminateLoader.args,
+            description: <span>Even newer helper text...!</span>,
+          });
+        }, 2000);
+      }, 1500);
+
+      let timeout2: ReturnType<typeof setTimeout>;
+
+      return () => {
+        clearTimeout(timeout1);
+        clearTimeout(timeout2);
+      };
+    }, [props.value]);
+
+    return <ProgressBar {...props} {...newProps} />;
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+
+    const finalText = await waitFor(
+      () => canvas.getByText('Even newer helper text...!'),
+      { timeout: 4000 },
+    );
+
+    expect(finalText).toBeInTheDocument();
   },
 };
 

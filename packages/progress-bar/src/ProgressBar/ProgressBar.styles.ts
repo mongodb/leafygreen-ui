@@ -134,6 +134,11 @@ const cycleKeyframes = keyframes`
   }
 `;
 
+const fadeFromWhiteKeyframes = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
 export const containerStyles = css`
   display: flex;
   flex-direction: column;
@@ -174,6 +179,15 @@ export const getHeaderIconStyles = ({
   color: ${disabled
     ? colorToken[theme].icon.disabled.default
     : barColorStyles[theme][color].icon};
+`;
+
+export const getAnimatedTextStyles = (isNewDescription: boolean) => css`
+  ${isNewDescription &&
+  css`
+    opacity: 0;
+    animation: ${fadeFromWhiteKeyframes} ${TRANSITION_ANIMATION_DURATION}ms
+      ease-in-out forwards;
+  `}
 `;
 
 export const getBarTrackStyles = ({

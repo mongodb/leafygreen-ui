@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
-import {
-  ICONS_PENDING_COMPLETION,
-  TRANSITION_ANIMATION_DURATION,
-} from '../constants';
+import { ICONS_PENDING_COMPLETION } from '../constants';
 
 import {
   containerStyles,
+  getAnimatedTextStyles,
   getBarFillStyles,
   getBarTrackStyles,
   getHeaderIconStyles,
@@ -49,7 +47,7 @@ export function ProgressBar(props: ProgressBarProps) {
   const role = type === 'meter' ? 'meter' : 'progressbar';
   const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
 
-  // if progress bar was previously indeterminate and is turning determinate, apply fadeout transition
+  // if progress bar was previously indeterminate and is turning determinate, apply fade-out transition
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
     getAnimationMode({
       type,
@@ -64,6 +62,17 @@ export function ProgressBar(props: ProgressBarProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isIndeterminate]);
+
+  // if description is changed, apply fade-in transition
+  const [isNewDescription, setIsNewDescription] = useState(false);
+  const prevDescription = useRef(description);
+
+  useEffect(() => {
+    if (description !== prevDescription.current) {
+      setIsNewDescription(true);
+      prevDescription.current = description;
+    }
+  }, [description]);
 
   return (
     <div className={containerStyles} aria-disabled={disabled}>
@@ -127,7 +136,12 @@ export function ProgressBar(props: ProgressBarProps) {
       </div>
 
       {description && (
-        <Description darkMode={darkMode} disabled={disabled}>
+        <Description
+          darkMode={darkMode}
+          disabled={disabled}
+          className={getAnimatedTextStyles(isNewDescription)}
+          onAnimationEnd={() => setIsNewDescription(false)}
+        >
           {description}
         </Description>
       )}
