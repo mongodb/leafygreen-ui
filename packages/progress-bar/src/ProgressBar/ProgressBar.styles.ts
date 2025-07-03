@@ -110,7 +110,15 @@ const cycleKeyframes = keyframes`
     left: 0%;
     width: 33%;
   }
+  47% {
+    left: 17%;
+    width: 66%;
+  }
   50% {
+    left: 17%;
+    width: 66%;
+  }
+  53% {
     left: 17%;
     width: 66%;
   }
