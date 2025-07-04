@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "24.0.3",
+  "version": "25.0.0",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
