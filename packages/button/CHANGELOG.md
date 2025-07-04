@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 25.0.0
+
+### Major Changes
+
+- 2adba55: Update button testing exports from `@leafygreen-ui/button` to `@leafygreen-ui/button/testing`
+
 ## 24.0.3
 
 ### Patch Changes
