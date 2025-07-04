@@ -1,6 +1,7 @@
 export interface BaseTabTitleProps {
   children?: React.ReactNode;
   className?: string;
+  default?: boolean;
   disabled?: boolean;
   index?: number;
   name: React.ReactNode;

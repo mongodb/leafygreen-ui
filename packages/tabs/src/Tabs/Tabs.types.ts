@@ -59,26 +59,32 @@ export interface TabsProps<SelectedType extends number | string>
   forceRenderAllTabPanels?: boolean;
 
   /**
-   * Content that will appear inline after the `<Tab />` components. `inlineChildren` are wrapped in a flexbox container.
+   * Content that will appear inline after the `<Tab />` components.
+   * `inlineChildren` are wrapped in a flexbox container.
    */
   inlineChildren?: React.ReactNode;
 
   /**
-   * Index or name of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
+   * Event handler called when the selected tab changes. This is only invoked if the
+   * `value` prop is defined.
    */
-  selected?: SelectedType;
+  onValueChange?: (value: SelectedType) => void;
 
   /**
-   * Callback to be executed when Tab is selected. Receives index or name of activated Tab as the first argument.
-   */
-  setSelected?: React.Dispatch<React.SetStateAction<SelectedType>>;
-
-  /**
-   * The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`
+   * The size of the title. `size='small'` overrides `baseFontSize` to
+   * `BaseFontSize.Body1`
    *
    * @default 'default'
    */
   size?: Size;
+
+  /**
+   * Index or name of the selected tab. If using the name, pass the text content from
+   * the `Tab` instance's `name` prop. Providing this prop will switch the `Tabs`
+   * instance to controlled mode. If a value that cannot be found is provided, nothing
+   * will be selected.
+   */
+  value?: SelectedType;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';

@@ -20,30 +20,55 @@ npm install @leafygreen-ui/tabs
 
 ## Example
 
-```js
+### Uncontrolled
+
+```tsx
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 
-const [selected, setSelected] = useState(0)
+<Tabs aria-label="Uncontrolled tabs example">
+  <Tab name="Tab one" default>
+    Tab one content
+  </Tab>
+  <Tab name="Tab two">Tab two content</Tab>
+  <Tab name="Tab three">Tab three content</Tab>
+</Tabs>;
+```
 
-<Tabs setSelected={setSelected} selected={selected}>
-  <Tab name="Tab One">Tab Content One</Tab>
-  <Tab name="Tab Two">Tab Content Two</Tab>
-  <Tab name="Tab Three">Tab Content Three</Tab>
-</Tabs>
+### Controlled
+
+```tsx
+import { useState } from 'react';
+import { Tabs, Tab } from '@leafygreen-ui/tabs';
+
+const [value, setValue] = useState(0);
+
+const handleValueChange = (val: number) => {
+  setValue(val);
+};
+
+<Tabs
+  aria-label="Controlled tabs example"
+  value={value}
+  onValueChange={handleValueChange}
+>
+  <Tab name="Tab one">Tab one content</Tab>
+  <Tab name="Tab two">Tab two content</Tab>
+  <Tab name="Tab three">Tab three content</Tab>
+</Tabs>;
 ```
 
 ## Properties
 
-| Prop           | Type                     | Description                                                                                                                                                                                                                                                                                                    | Default     |
-| -------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `as`           | `React.ElementType`      | Sets the root element of all `<Tab />` components in `<Tabs />`. For example, setting as to `Link` will render each tab as a `<Link />` component rather than as a button.                                                                                                                                     | `button`    |
-| `baseFontSize` | `13` \| `16`             | Determines `font-size` for Tabs Component                                                                                                                                                                                                                                                                      | `13`        |
-| `children`     | `node`                   | `<Tab />` components that will be supplied to `<Tabs />` component.                                                                                                                                                                                                                                            |             |
-| `className`    | `string`                 | Adds a className to the root element.                                                                                                                                                                                                                                                                          |             |
-| `darkMode`     | `boolean`                | Determines whether or not the component will appear in DarkMode                                                                                                                                                                                                                                                | `false`     |
-| `selected`     | `'number'` \| `'string'` | Index or name of the Tab that should appear active. If using the name, pass the text content from the `Tab` `name` prop. If selected is undefined, the `<Tabs />` component will behave as an uncontrolled component. If selected is passed a string or number that cannot be found, nothing will be selected. |             |
-| `setSelected`  | `function`               | A callback that receives the index or name of the tab a user is switching to when clicking, or via keyboard navigation. Usually this is used to set the selected prop to the correct index or name. The function is only invoked if the selected prop is set.                                                  |             |
-| `size`         | `'small'` \| `'default'` | Determines `size` for Tabs Component                                                                                                                                                                                                                                                                           | `'default'` |
+| Prop            | Type                                 | Description                                                                                                                                                                                                                                                       | Default     |
+| --------------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `as`            | `React.ElementType`                  | Sets the root element of all `<Tab />` components in `<Tabs />`. For example, setting as to `Link` will render each tab as a `<Link />` component rather than as a button.                                                                                        | `button`    |
+| `baseFontSize`  | `13` \| `16`                         | Determines `font-size` for Tabs Component                                                                                                                                                                                                                         | `13`        |
+| `children`      | `node`                               | `<Tab />` components that will be supplied to `<Tabs />` component.                                                                                                                                                                                               |             |
+| `className`     | `string`                             | Adds a className to the root element.                                                                                                                                                                                                                             |             |
+| `darkMode`      | `boolean`                            | Determines whether or not the component will appear in DarkMode                                                                                                                                                                                                   | `false`     |
+| `onValueChange` | `(value: number \| string) => void;` | Event handler called when the selected tab changes. This is only invoked if the `value` prop is defined.                                                                                                                                                          |             |
+| `size`          | `'small'` \| `'default'`             | Determines `size` for Tabs Component                                                                                                                                                                                                                              | `'default'` |
+| `value`         | `'number'` \| `'string'`             | Index or name of the selected tab. If using the name, pass the text content from the `Tab` instance's `name` prop. Providing this prop will switch the `Tabs` instance to controlled mode. If a value that cannot be found is provided, nothing will be selected. |             |
 
 _Any other properties supplied will be spread on the root element._
 

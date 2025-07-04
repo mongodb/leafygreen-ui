@@ -168,10 +168,10 @@ describe('packages/tabs', () => {
 
   describe('when controlled', () => {
     test(`renders "${tabsClassName}" to the tabs classList`, () => {
-      const setSelected = jest.fn();
+      const onValueChange = jest.fn();
       renderTabs({
-        setSelected,
-        selected: 1,
+        onValueChange,
+        value: 1,
         className: tabsClassName,
       });
 
@@ -180,10 +180,10 @@ describe('packages/tabs', () => {
     });
 
     test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-      const setSelected = jest.fn();
+      const onValueChange = jest.fn();
       const { getTabUtilsByName } = renderTabs({
-        setSelected,
-        selected: 1,
+        onValueChange,
+        value: 1,
         as: 'a',
       });
 
@@ -192,10 +192,10 @@ describe('packages/tabs', () => {
     });
 
     test('renders correct number of elements in the tablist', () => {
-      const setSelected = jest.fn();
+      const onValueChange = jest.fn();
       const { getAllTabsInTabList } = renderTabs({
-        setSelected,
-        selected: 1,
+        onValueChange,
+        value: 1,
       });
 
       const tabs = getAllTabsInTabList();
@@ -203,10 +203,10 @@ describe('packages/tabs', () => {
     });
 
     test('renders only one tabpanel at a time', () => {
-      const setSelected = jest.fn();
+      const onValueChange = jest.fn();
       renderTabs({
-        setSelected,
-        selected: 1,
+        onValueChange,
+        value: 1,
       });
 
       expect(screen.getByText('Content 2')).toBeInTheDocument();
@@ -215,18 +215,18 @@ describe('packages/tabs', () => {
 
     describe('passing an index', () => {
       test('selected tab panel is active on first render', () => {
-        const setSelected = jest.fn();
-        const { getSelectedPanel } = renderTabs({ setSelected, selected: 1 });
+        const onValueChange = jest.fn();
+        const { getSelectedPanel } = renderTabs({ onValueChange, value: 1 });
         const selectedPanel = getSelectedPanel();
         expect(selectedPanel).toHaveTextContent('Content 2');
         expect(selectedPanel?.dataset.testid).toEqual('second-tab-panel');
       });
 
       test('returns a number when a tab is clicked', () => {
-        const setSelected = jest.fn();
+        const onValueChange = jest.fn();
         const { getTabUtilsByName } = renderTabs({
-          setSelected,
-          selected: 1,
+          onValueChange,
+          value: 1,
         });
 
         const tabUtils = getTabUtilsByName('First');
@@ -235,24 +235,26 @@ describe('packages/tabs', () => {
           userEvent.click(tabUtils.getTab());
         }
 
-        expect(setSelected).toHaveBeenCalledWith(0);
+        expect(onValueChange).toHaveBeenCalledTimes(1);
+        expect(onValueChange).toHaveBeenCalledWith(0);
       });
 
       test('returns a number and then a string', () => {
-        const setSelected = jest.fn();
+        const onValueChange = jest.fn();
         const { getTabUtilsByName, rerender } = renderTabs({
-          setSelected,
-          selected: 1,
+          onValueChange,
+          value: 1,
         });
 
         const firstTab = getTabUtilsByName('First');
         userEvent.click(firstTab!.getTab());
-        expect(setSelected).toHaveBeenCalledWith(0);
+        expect(onValueChange).toHaveBeenCalledTimes(1);
+        expect(onValueChange).toHaveBeenCalledWith(0);
 
         rerender(
           <Tabs
-            setSelected={setSelected}
-            selected={'First'}
+            onValueChange={onValueChange}
+            value={'First'}
             data-testid={tabsTestId}
             aria-label="Testing tabs"
           >
@@ -270,16 +272,17 @@ describe('packages/tabs', () => {
         );
 
         userEvent.click(firstTab!.getTab());
-        expect(setSelected).toHaveBeenCalledWith('First');
+        expect(onValueChange).toHaveBeenCalledTimes(2);
+        expect(onValueChange).toHaveBeenCalledWith('First');
       });
     });
 
     describe('passing a string', () => {
       test('selected tab panel is active on first render', () => {
-        const setSelected = jest.fn();
+        const onValueChange = jest.fn();
         const { getSelectedPanel } = renderTabs({
-          setSelected,
-          selected: 'Second',
+          onValueChange,
+          value: 'Second',
         });
         const selectedPanel = getSelectedPanel();
         expect(selectedPanel).toHaveTextContent('Content 2');
@@ -287,10 +290,10 @@ describe('packages/tabs', () => {
       });
 
       test('returns a string when a tab is clicked', () => {
-        const setSelected = jest.fn();
+        const onValueChange = jest.fn();
         const { getTabUtilsByName } = renderTabs({
-          setSelected,
-          selected: 'Second',
+          onValueChange,
+          value: 'Second',
         });
 
         const tabUtils = getTabUtilsByName('First');
@@ -299,24 +302,26 @@ describe('packages/tabs', () => {
           userEvent.click(tabUtils.getTab());
         }
 
-        expect(setSelected).toHaveBeenCalledWith('First');
+        expect(onValueChange).toHaveBeenCalledTimes(1);
+        expect(onValueChange).toHaveBeenCalledWith('First');
       });
 
       test('returns a string and then a number', () => {
-        const setSelected = jest.fn();
+        const onValueChange = jest.fn();
         const { getTabUtilsByName, rerender } = renderTabs({
-          setSelected,
-          selected: 'Second',
+          onValueChange,
+          value: 'Second',
         });
 
         const firstTab = getTabUtilsByName('First');
         userEvent.click(firstTab!.getTab());
-        expect(setSelected).toHaveBeenCalledWith('First');
+        expect(onValueChange).toHaveBeenCalledTimes(1);
+        expect(onValueChange).toHaveBeenCalledWith('First');
 
         rerender(
           <Tabs
-            setSelected={setSelected}
-            selected={2}
+            onValueChange={onValueChange}
+            value={2}
             data-testid={tabsTestId}
             aria-label="Testing tabs"
           >
@@ -334,17 +339,18 @@ describe('packages/tabs', () => {
         );
 
         userEvent.click(firstTab!.getTab());
-        expect(setSelected).toHaveBeenCalledWith(0);
+        expect(onValueChange).toHaveBeenCalledTimes(2);
+        expect(onValueChange).toHaveBeenCalledWith(0);
       });
     });
 
     test('multiple tabs with the same name will resolve the first tab as active', () => {
-      const setSelected = jest.fn();
+      const onValueChange = jest.fn();
 
       render(
         <Tabs
-          setSelected={setSelected}
-          selected={'Third'}
+          onValueChange={onValueChange}
+          value={'Third'}
           data-testid={tabsTestId}
           aria-label="Testing tabs"
         >
@@ -372,21 +378,21 @@ describe('packages/tabs', () => {
       expect(selectedPanel).toHaveTextContent('Content 3');
     });
 
-    test('clicking a tab fires setSelected callback', () => {
-      const setSelected = jest.fn();
-      const { getTabUtilsByName } = renderTabs({ setSelected, selected: 1 });
+    test('clicking a tab fires onValueChange callback', () => {
+      const onValueChange = jest.fn();
+      const { getTabUtilsByName } = renderTabs({ onValueChange, value: 1 });
       const tabUtils = getTabUtilsByName('Second');
 
       if (tabUtils) {
         userEvent.click(tabUtils.getTab());
       }
-      expect(setSelected).toHaveBeenCalled();
+      expect(onValueChange).toHaveBeenCalled();
     });
-    test('clicking a tab does not update selected index and calls setSelected callback', () => {
-      const setSelected = jest.fn();
+    test('clicking a tab does not update selected index and calls onValueChange callback', () => {
+      const onValueChange = jest.fn();
       const { getTabUtilsByName, getSelectedPanel } = renderTabs({
-        setSelected,
-        selected: 1,
+        onValueChange,
+        value: 1,
       });
       const tabUtils = getTabUtilsByName('First');
 
@@ -396,14 +402,14 @@ describe('packages/tabs', () => {
 
       const selectedPanel = getSelectedPanel();
       expect(selectedPanel).toHaveTextContent('Content 2');
-      expect(setSelected).toHaveBeenCalled();
+      expect(onValueChange).toHaveBeenCalled();
     });
 
-    test('keying down arrow keys does not update selected index and calls setSelected callback', () => {
-      const setSelected = jest.fn();
+    test('keying down arrow keys does not update selected index and calls onValueChange callback', () => {
+      const onValueChange = jest.fn();
       const { getTabUtilsByName, getSelectedPanel } = renderTabs({
-        setSelected,
-        selected: 1,
+        onValueChange,
+        value: 1,
       });
       const tabUtils = getTabUtilsByName('Second');
       const activeTab = getSelectedPanel();
@@ -413,7 +419,7 @@ describe('packages/tabs', () => {
       }
 
       expect(activeTab).toBeVisible();
-      expect(setSelected).toHaveBeenCalled();
+      expect(onValueChange).toHaveBeenCalled();
     });
   });
 
@@ -654,47 +660,47 @@ describe.skip('Prop Types behave as expected', () => {
     render(<Tabs aria-labelledby="tabs">Test</Tabs>);
   });
 
-  describe('`selected`', () => {
+  describe('`value` prop', () => {
     it('accepts a string', () => {
       render(
-        <Tabs aria-label="tabs" selected="red">
+        <Tabs aria-label="tabs" value="red">
           Test
         </Tabs>,
       );
     });
     it('accepts a number', () => {
       render(
-        <Tabs aria-label="tabs" selected={1}>
+        <Tabs aria-label="tabs" value={1}>
           Test
         </Tabs>,
       );
     });
   });
-  describe('`setSelected`', () => {
+  describe('`onValueChange` prop', () => {
     it('accepts a generic function', () => {
-      const setSelected = index => {
+      const onValueChange = (index: number) => {
         index;
       };
       render(
-        <Tabs aria-label="tabs" setSelected={setSelected}>
+        <Tabs aria-label="tabs" onValueChange={onValueChange}>
           Test
         </Tabs>,
       );
     });
 
     it('accepts a React.Dispatch function', () => {
-      const [_, setSelected] = useState(0);
+      const [value, setValue] = useState(0);
       render(
-        <Tabs aria-label="tabs" setSelected={setSelected}>
+        <Tabs aria-label="tabs" value={value} onValueChange={setValue}>
           Test
         </Tabs>,
       );
     });
 
     it('accepts a React.Dispatch function with a string', () => {
-      const [_, setSelected] = useState('one');
+      const [value, setValue] = useState('one');
       render(
-        <Tabs aria-label="tabs" setSelected={setSelected}>
+        <Tabs aria-label="tabs" value={value} onValueChange={setValue}>
           Test
         </Tabs>,
       );

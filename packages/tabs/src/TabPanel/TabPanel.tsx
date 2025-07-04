@@ -21,13 +21,13 @@ const TabPanel = ({
     index: indexProp,
   });
   const { tabDescendants } = useTabDescendantsContext();
-  const { forceRenderAllTabPanels, selected } = useTabsContext();
+  const { forceRenderAllTabPanels, selectedIndex } = useTabsContext();
 
   const relatedTab = useMemo(() => {
     return tabDescendants.find(tabDescendant => tabDescendant.index === index);
   }, [tabDescendants, index]);
 
-  const isSelected = index === selected;
+  const isSelected = index === selectedIndex;
 
   const shouldRender = !disabled && (forceRenderAllTabPanels || isSelected);
 

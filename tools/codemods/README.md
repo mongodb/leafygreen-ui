@@ -4,6 +4,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @lg-tools/codemods
+```
+
 ### Yarn
 
 ```shell
@@ -18,8 +24,8 @@ npm install @lg-tools/codemods
 
 ## Usage
 
-```jsx
-yarn lg codemod <codemod-name> <path> [...options]
+```shell
+pnpm lg codemod <codemod-name> <path> [...options]
 ```
 
 ### Arguments
@@ -42,40 +48,40 @@ files or directory to transform
 
 Glob patterns to ignore
 
-```js
-yarn lg codemod <codemod-name> <path> --ignore **/node_modules/** **/.next/**
+```shell
+pnpm lg codemod <codemod-name> <path> --ignore **/node_modules/** **/.next/**
 ```
 
 #### `-d or --dry`
 
 Dry run (no changes to files are made)
 
-```js
-yarn lg codemod <codemod-name> <path> --dry
+```shell
+pnpm lg codemod <codemod-name> <path> --dry
 ```
 
 #### `-p or --print`
 
 Print transformed files to stdout and changes are also made to files
 
-```js
-yarn lg codemod <codemod-name> <path> --print
+```shell
+pnpm lg codemod <codemod-name> <path> --print
 ```
 
 #### `-f or --force`
 
 Bypass Git safety checks and forcibly run codemods.
 
-```js
-yarn lg codemod <codemod-name> <path> --force
+```shell
+pnpm lg codemod <codemod-name> <path> --force
 ```
 
 #### `--packages`
 
 Restrict the codemod to certain packages
 
-```js
-yarn lg codemod <codemod-name> <path> --packages @leafygreen-ui/popover @leafygreen-ui/select
+```shell
+pnpm lg codemod <codemod-name> <path> --packages @leafygreen-ui/popover @leafygreen-ui/select
 ```
 
 ## Codemods
@@ -123,8 +129,8 @@ This codemod does the following:
 - `@leafygreen-ui/popover`
 - `@leafygreen-ui/tooltip`
 
-```js
-yarn lg codemod popover-v12 <path> --packages @leafygreen-ui/combobox @leafygreen-ui/code @leafygreen-ui/info-sprinkle @leafygreen-ui/copyable
+```shell
+pnpm lg codemod popover-v12 <path> --packages @leafygreen-ui/combobox @leafygreen-ui/code @leafygreen-ui/info-sprinkle @leafygreen-ui/copyable
 ```
 
 **Before**:
@@ -158,7 +164,7 @@ import Tooltip from '@leafygreen-ui/tooltip';
 
 **After**:
 
-```jsx
+```tsx
 import LeafyGreenCode from '@leafygreen-ui/code';
 import { Combobox as LGCombobox } from '@leafygreen-ui/combobox';
 import { DatePicker } from '@leafygreen-ui/date-picker';
@@ -182,4 +188,36 @@ import Copyable from '@leafygreen-ui/copyable';
 
 <Menu justify="middle" renderMode="top-layer" />
 <Tooltip justify="middle" renderMode="top-layer" />
+```
+
+### `tabs-v17`
+
+This codemod can be used to get started in upgrading LG `Tabs` instances to v17 of `@leafygreen-ui/tabs`.
+
+In LG `Tabs` instances, this codemod will rename the `selected` prop to `value` and the `setSelected` prop to `onValueChange`.
+
+```shell
+pnpm lg codemod tabs-v17 <path>
+```
+
+**Before**:
+
+```tsx
+import { Tabs, Tab } from '@leafygreen-ui/tabs';
+
+<Tabs selected={0} setSelected={() => {}}>
+  <Tab name="Tab 1">Tab 1</Tab>
+  <Tab name="Tab 2">Tab 2</Tab>
+</Tabs>;
+```
+
+**After**:
+
+```tsx
+import { Tabs, Tab } from '@leafygreen-ui/tabs';
+
+<Tabs value={0} onValueChange={() => {}}>
+  <Tab name="Tab 1">Tab 1</Tab>
+  <Tab name="Tab 2">Tab 2</Tab>
+</Tabs>;
 ```
