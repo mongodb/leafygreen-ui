@@ -71,7 +71,7 @@ describe('packages/input-bar', () => {
 
     test('fires when enter is clicked', () => {
       const textarea = screen.getByRole('textbox');
-      const sendButton = screen.getByRole('button');
+      const sendButton = screen.getByTitle('Send message');
       userEvent.type(textarea, testText);
       userEvent.click(sendButton);
 
