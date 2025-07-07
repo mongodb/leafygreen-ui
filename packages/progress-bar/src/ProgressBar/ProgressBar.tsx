@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import {
@@ -15,6 +14,7 @@ import {
 } from './ProgressBar.styles';
 import { ProgressBarProps, Size, Type } from './ProgressBar.types';
 import {
+  getDivAriaAttributes,
   getFormattedValue,
   getHeaderIcon,
   getLastAnnouncedThresholdIndex,
@@ -44,12 +44,10 @@ export function ProgressBar(props: ProgressBarProps) {
     ? showIconProp && value === maxValue
     : showIconProp;
 
-  const role = type === 'meter' ? 'meter' : 'progressbar';
+  const { role, rootId, labelId, descId } = getDivAriaAttributes(type, label);
 
-  const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
-
-  // automatically announces live once past 50% and 100% progress
-  // otherwise, only heard when user reaches the bar via virtual cursor
+  // automatically announces live once past 50% and 100% progress for minimal disturbance
+  // otherwise, progress only head if user reaches the bar via virtual cursor
   const [screenReaderMessage, setScreenReaderMessage] = useState<string>('');
   const lastAnnouncedThresholdIndex = useRef(-1);
 
@@ -70,7 +68,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
     const announceStatus = shouldAnnounceStatus(color);
 
-    const baseMessage = `Current progress is ${getPercentage(
+    const baseMessage = `Update: current progress is ${getPercentage(
       value,
       maxValue,
     )}% (${value} out of ${maxValue}).`;
@@ -86,7 +84,12 @@ export function ProgressBar(props: ProgressBarProps) {
   return (
     <div className={containerStyles} aria-disabled={disabled}>
       <div className={headerStyles}>
-        <Label htmlFor={progressBarId} darkMode={darkMode} disabled={disabled}>
+        <Label
+          id={labelId}
+          htmlFor={rootId}
+          darkMode={darkMode}
+          disabled={disabled}
+        >
           {label}
         </Label>
 
@@ -111,8 +114,10 @@ export function ProgressBar(props: ProgressBarProps) {
 
       <div
         role={role}
-        id={progressBarId}
-        aria-label={progressBarId}
+        id={rootId}
+        aria-labelledby={label ? labelId : undefined}
+        aria-label={!label ? role : undefined}
+        aria-describedby={descId}
         {...getValueAriaAttributes(value, maxValue)}
       >
         <div
@@ -134,7 +139,7 @@ export function ProgressBar(props: ProgressBarProps) {
       </div>
 
       {description && (
-        <Description darkMode={darkMode} disabled={disabled}>
+        <Description id={descId} darkMode={darkMode} disabled={disabled}>
           {description}
         </Description>
       )}
