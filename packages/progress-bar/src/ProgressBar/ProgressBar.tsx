@@ -4,15 +4,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
-import {
-  DEFAULT_LGID_ROOT,
-  getFormattedValue,
-  getHeaderIcon,
-  getLgIds,
-  getValueAriaAttributes,
-  iconsPendingCompletion,
-  resolveProgressBarProps,
-} from '../utils';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
 
 import {
   containerStyles,
@@ -24,6 +16,13 @@ import {
   truncatedTextStyles,
 } from './ProgressBar.styles';
 import { ProgressBarProps, Size } from './ProgressBar.types';
+import {
+  getFormattedValue,
+  getHeaderIcon,
+  getValueAriaAttributes,
+  iconsPendingCompletion,
+  resolveProgressBarProps,
+} from './utils';
 export function ProgressBar(props: ProgressBarProps) {
   const { value, maxValue, disabled, color, isIndeterminate } =
     resolveProgressBarProps(props);

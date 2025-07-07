@@ -13,7 +13,7 @@ import {
   ProgressBarProps,
   ResolvedProgressBarProps,
   Type,
-} from '../ProgressBar/ProgressBar.types';
+} from '../ProgressBar.types';
 
 export const DEFAULT_MAX_VALUE = 1;
 export const DEFAULT_COLOR = Color.Blue;

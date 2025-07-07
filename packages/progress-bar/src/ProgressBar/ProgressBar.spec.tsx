@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { getTestUtils } from '../utils';
+import { getTestUtils } from '../testing';
 
 import { ProgressBar } from './ProgressBar';
 import { LoaderVariant, Type } from './ProgressBar.types';

@@ -1,9 +1,4 @@
-import {
-  Color,
-  LoaderVariant,
-  MeterStatus,
-  Type,
-} from '../ProgressBar/ProgressBar.types';
+import { Color, LoaderVariant, MeterStatus, Type } from '../ProgressBar.types';
 
 import { getFormattedValue, resolveProgressBarProps } from './utils';
 
@@ -25,7 +20,7 @@ describe('getFormattedValue', () => {
       getFormattedValue(
         50,
         100,
-        (value, maxValue) => `${value}/${maxValue} units`,
+        (value: number, maxValue?: number) => `${value}/${maxValue} units`,
       ),
     ).toBe('50/100 units');
   });
