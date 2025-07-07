@@ -123,7 +123,7 @@ export const getDivAriaAttributes = (type: Type, label?: React.ReactNode) => {
 
   return {
     role,
-    rootId: progressBarId,
+    barId: progressBarId,
     labelId: `label for ${progressBarId}`,
     descId: `description for ${progressBarId}`,
   };

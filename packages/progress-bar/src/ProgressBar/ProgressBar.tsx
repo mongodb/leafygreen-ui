@@ -44,7 +44,7 @@ export function ProgressBar(props: ProgressBarProps) {
     ? showIconProp && value === maxValue
     : showIconProp;
 
-  const { role, rootId, labelId, descId } = getDivAriaAttributes(type, label);
+  const { role, barId, labelId, descId } = getDivAriaAttributes(type, label);
 
   // automatically announces live once past 50% and 100% progress for minimal disturbance
   // otherwise, progress only head if user reaches the bar via virtual cursor
@@ -86,7 +86,7 @@ export function ProgressBar(props: ProgressBarProps) {
       <div className={headerStyles}>
         <Label
           id={labelId}
-          htmlFor={rootId}
+          htmlFor={barId}
           darkMode={darkMode}
           disabled={disabled}
         >
@@ -114,7 +114,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
       <div
         role={role}
-        id={rootId}
+        id={barId}
         aria-labelledby={label ? labelId : undefined}
         aria-label={!label ? role : undefined}
         aria-describedby={description ? descId : undefined}
