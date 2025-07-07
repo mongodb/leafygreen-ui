@@ -21,4 +21,7 @@ export interface GetTestUtilsReturnType<
 
   /** Returns the description element, if present. */
   getDescriptionElement: () => T | null;
+
+  /** Returns the value text element, if present. */
+  getValueTextElement: () => T | null;
 }

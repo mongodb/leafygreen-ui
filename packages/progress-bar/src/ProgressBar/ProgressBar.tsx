@@ -72,6 +72,7 @@ export function ProgressBar(props: ProgressBarProps) {
           <Body
             className={getHeaderValueStyles({ theme, disabled })}
             darkMode={darkMode}
+            data-lgid={lgIds.valueText}
           >
             {value != null && getFormattedValue(value, maxValue, formatValue)}
 

@@ -13,6 +13,7 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
     icon: `${root}-icon`,
     label: `${root}-label`,
     description: `${root}-description`,
+    valueText: `${root}-value-text`,
   } as const;
 };
 
@@ -34,6 +35,8 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
   const getLabelElement = () => queryByLgId!<T>(lgIds.label) as T | null;
   const getDescriptionElement = () =>
     queryByLgId!<T>(lgIds.description) as T | null;
+  const getValueTextElement = () =>
+    queryByLgId!<T>(lgIds.valueText) as T | null;
 
   return {
     queryLoaderElement,
@@ -43,5 +46,6 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
     getIconElement,
     getLabelElement,
     getDescriptionElement,
+    getValueTextElement,
   };
 };

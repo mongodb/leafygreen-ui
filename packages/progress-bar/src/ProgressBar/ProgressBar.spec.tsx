@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import { getTestUtils } from '../utils';
 
@@ -49,7 +49,9 @@ describe('packages/progress-bar', () => {
             formatValue={value => `${value} units`}
           />,
         );
-        expect(screen.getByText(`${TEST_VALUE} units`)).toBeVisible();
+        const { getValueTextElement } = getTestUtils();
+        expect(getValueTextElement()).toBeVisible();
+        expect(getValueTextElement()).toHaveTextContent('50 units');
       });
 
       test('renders icon when showIcon is true', () => {
