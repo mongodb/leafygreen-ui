@@ -1,5 +1,11 @@
 # @lg-tools/codemods
 
+## 0.3.0
+
+### Minor Changes
+
+- 95f7c12: Add `tabs-v17` codemod which can be used to rename props when upgrading to `@leafygreen-ui/tabs` v17+
+
 ## 0.2.0
 
 ### Minor Changes

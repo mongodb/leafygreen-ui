@@ -1,5 +1,11 @@
 # @lg-chat/chat-disclaimer
 
+## 4.0.4
+
+### Patch Changes
+
+- @leafygreen-ui/marketing-modal@6.0.4
+
 ## 4.0.3
 
 ### Patch Changes
