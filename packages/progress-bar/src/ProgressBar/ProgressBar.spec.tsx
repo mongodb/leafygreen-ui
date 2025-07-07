@@ -17,7 +17,9 @@ describe('packages/progress-bar', () => {
           label={TEST_LABEL}
         />,
       );
-      expect(screen.getByText(TEST_LABEL)).toBeVisible();
+      const { getLabelElement } = getTestUtils();
+      expect(getLabelElement()).toBeVisible();
+      expect(getLabelElement()).toHaveTextContent(TEST_LABEL);
     });
 
     test('renders with a description', () => {
@@ -29,7 +31,9 @@ describe('packages/progress-bar', () => {
           description={TEST_DESCRIPTION}
         />,
       );
-      expect(screen.getByText(TEST_DESCRIPTION)).toBeVisible();
+      const { getDescriptionElement } = getTestUtils();
+      expect(getDescriptionElement()).toBeVisible();
+      expect(getDescriptionElement()).toHaveTextContent(TEST_DESCRIPTION);
     });
 
     describe('with value format', () => {
