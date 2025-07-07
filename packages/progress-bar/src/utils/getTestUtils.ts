@@ -41,10 +41,13 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
 
   return {
     queryContainerElement,
+
     queryLoaderElement,
     queryMeterElement,
+
     getBarFillElement,
     getBarTrackElement,
+
     getIconElement,
     getLabelElement,
     getDescriptionElement,

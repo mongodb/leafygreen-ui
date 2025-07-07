@@ -159,9 +159,16 @@ export const WithLabel: StoryObj<typeof ProgressBar> = {
   },
 };
 
-export const WithLongTextLabel: StoryObj<typeof ProgressBar> = {
+export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   args: {
     ...DeterminateLoader.args,
+    formatValue: 'percentage',
+  },
+};
+
+export const WithLongLabelAndValueDisplay: StoryObj<typeof ProgressBar> = {
+  args: {
+    ...WithValueDisplay.args,
     label: (
       <span>
         Label with a very long label that will be truncated, probably. Honestly
@@ -170,13 +177,6 @@ export const WithLongTextLabel: StoryObj<typeof ProgressBar> = {
         perhaps, the rest of this will be truncated.
       </span>
     ),
-  },
-};
-
-export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
-  args: {
-    ...DeterminateLoader.args,
-    formatValue: 'percentage',
   },
 };
 

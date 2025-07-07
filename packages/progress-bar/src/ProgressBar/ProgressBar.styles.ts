@@ -81,6 +81,7 @@ export const containerStyles = css`
 export const headerStyles = css`
   display: flex;
   justify-content: space-between;
+  gap: ${spacingToken[100]}px;
 `;
 
 export const truncatedTextStyles = css`
@@ -100,6 +101,8 @@ export const getHeaderValueStyles = ({
   display: flex;
   align-items: center;
   gap: ${spacingToken[100]}px;
+  white-space: nowrap;
+
   color: ${disabled
     ? colorToken[theme].text.disabled.default
     : colorToken[theme].text.secondary.default};
