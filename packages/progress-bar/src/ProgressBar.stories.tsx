@@ -166,7 +166,14 @@ export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   },
 };
 
-export const WithLongLabelAndValueDisplay: StoryObj<typeof ProgressBar> = {
+export const WithDescription: StoryObj<typeof ProgressBar> = {
+  args: {
+    ...DeterminateLoader.args,
+    description: <span>Helper text</span>,
+  },
+};
+
+export const WithHeaderTruncation: StoryObj<typeof ProgressBar> = {
   args: {
     ...WithValueDisplay.args,
     label: (
@@ -177,13 +184,6 @@ export const WithLongLabelAndValueDisplay: StoryObj<typeof ProgressBar> = {
         perhaps, the rest of this will be truncated.
       </span>
     ),
-  },
-};
-
-export const WithDescription: StoryObj<typeof ProgressBar> = {
-  args: {
-    ...DeterminateLoader.args,
-    description: <span>Helper text</span>,
   },
 };
 
