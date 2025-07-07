@@ -14,6 +14,7 @@ import {
   indeterminateBarPositions,
   indeterminateBarWidths,
   SHIMMER_ANIMATION_DURATION_MS,
+  TEXT_ANIMATION_DURATION,
   TRANSITION_ANIMATION_DURATION,
   WIDTH_ANIMATION_DURATION,
 } from './ProgressBar.constants';
@@ -111,7 +112,7 @@ export const getAnimatedTextStyles = (isNewDescription: boolean) => css`
   ${isNewDescription &&
   css`
     opacity: 0;
-    animation: ${fadeFromWhiteKeyframes} ${TRANSITION_ANIMATION_DURATION}ms
+    animation: ${fadeFromWhiteKeyframes} ${TEXT_ANIMATION_DURATION}ms
       ease-in-out forwards;
   `}
 `;

@@ -23,6 +23,28 @@ const LOADER_VARIANTS = Object.values(LoaderVariant);
 const ANIMATED_LOADER_VARIANTS = Object.values(AnimatedLoaderVariant);
 const METER_STATUSES = Object.values(MeterStatus);
 
+const DynamicProgressBar = ({
+  transitions,
+  ...initialProps
+}: ProgressBarProps & {
+  transitions?: Array<[number, ProgressBarProps]>;
+}) => {
+  const [currentProps, setCurrentProps] =
+    useState<ProgressBarProps>(initialProps);
+
+  useEffect(() => {
+    const timers = transitions?.map(([delay, newProps]) =>
+      setTimeout(() => {
+        setCurrentProps(newProps);
+      }, delay),
+    );
+
+    return () => timers?.forEach(clearTimeout);
+  }, [transitions]);
+
+  return <ProgressBar {...currentProps} />;
+};
+
 const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
   component: ProgressBar,
@@ -54,23 +76,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
 };
 export default meta;
 
-const SimulatedProgressBar = (props: ProgressBarProps) => {
-  const [value, setValue] = useState(props.value ?? 0);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setValue(testValues.maxValue);
-    }, 1500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [props.value]);
-
-  return <ProgressBar {...props} value={value} />;
-};
-
-const testSimulatedProgressToCompletion = async ({
+const testProgressReachedCompletion = async ({
   role,
   canvas,
 }: {
@@ -105,10 +111,15 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     label: <span>Label</span>,
     description: <span>Helper text</span>,
   },
-  render: SimulatedProgressBar,
+  render: initialArgs => (
+    <DynamicProgressBar
+      transitions={[[1500, { ...initialArgs, value: testValues.maxValue }]]}
+      {...initialArgs}
+    />
+  ),
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
-    await testSimulatedProgressToCompletion({
+    await testProgressReachedCompletion({
       role: 'progressbar',
       canvas,
     });
@@ -121,10 +132,15 @@ export const DeterminateLoader: StoryObj<typeof ProgressBar> = {
     value: testValues.value,
     maxValue: testValues.maxValue,
   },
-  render: SimulatedProgressBar,
+  render: initialArgs => (
+    <DynamicProgressBar
+      transitions={[[1500, { ...initialArgs, value: testValues.maxValue }]]}
+      {...initialArgs}
+    />
+  ),
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
-    await testSimulatedProgressToCompletion({
+    await testProgressReachedCompletion({
       role: 'progressbar',
       canvas,
     });
@@ -143,10 +159,15 @@ export const Meter: StoryObj<typeof ProgressBar> = {
     value: testValues.value,
     maxValue: testValues.maxValue,
   },
-  render: SimulatedProgressBar,
+  render: initialArgs => (
+    <DynamicProgressBar
+      transitions={[[1500, { ...initialArgs, value: testValues.maxValue }]]}
+      {...initialArgs}
+    />
+  ),
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
-    await testSimulatedProgressToCompletion({
+    await testProgressReachedCompletion({
       role: 'meter',
       canvas,
     });
@@ -172,34 +193,24 @@ export const WithDescriptions: StoryObj<typeof ProgressBar> = {
     ...DeterminateLoader.args,
     description: <span>Helper text</span>,
   },
-  render: function TransitioningProgressBar(props: ProgressBarProps) {
-    const [newProps, setNewProps] = useState({});
-
-    useEffect(() => {
-      const timeout1 = setTimeout(() => {
-        setNewProps({
-          ...DeterminateLoader.args,
-          description: <span>New helper text...</span>,
-        });
-
-        timeout2 = setTimeout(() => {
-          setNewProps({
-            ...DeterminateLoader.args,
+  render: initialArgs => (
+    <DynamicProgressBar
+      transitions={[
+        [
+          1500,
+          { ...initialArgs, description: <span>New helper text...</span> },
+        ],
+        [
+          3500,
+          {
+            ...initialArgs,
             description: <span>Even newer helper text...!</span>,
-          });
-        }, 2000);
-      }, 1500);
-
-      let timeout2: ReturnType<typeof setTimeout>;
-
-      return () => {
-        clearTimeout(timeout1);
-        clearTimeout(timeout2);
-      };
-    }, [props.value]);
-
-    return <ProgressBar {...props} {...newProps} />;
-  },
+          },
+        ],
+      ]}
+      {...initialArgs}
+    />
+  ),
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
 
@@ -293,27 +304,22 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
     type: Type.Loader,
     isIndeterminate: true,
   },
-  render: function TransitioningProgressBar(props: ProgressBarProps) {
-    const [newProps, setNewProps] = useState({});
-
-    useEffect(() => {
-      const timeout = setTimeout(() => {
-        setNewProps({
-          type: Type.Loader,
-          isIndeterminate: false,
-          value: 200,
-          maxValue: 200,
-        });
-        // let indeterminate animation play for a bit before switching
-      }, 3500);
-
-      return () => {
-        clearTimeout(timeout);
-      };
-    }, [props.value]);
-
-    return <ProgressBar {...props} {...newProps} />;
-  },
+  render: initialArgs => (
+    <DynamicProgressBar
+      transitions={[
+        [
+          3500,
+          {
+            type: Type.Loader,
+            isIndeterminate: false,
+            value: testValues.maxValue,
+            maxValue: testValues.maxValue,
+          },
+        ],
+      ]}
+      {...initialArgs}
+    />
+  ),
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
     const progressBar = canvas.getByRole('progressbar');
