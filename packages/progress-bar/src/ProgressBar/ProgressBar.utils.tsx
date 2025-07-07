@@ -96,12 +96,12 @@ export const getAnimationMode = ({
   isIndeterminate: boolean;
   enableAnimation: boolean;
 }): AnimationMode => {
-  if (type === Type.Meter) return AnimationMode.BaseDeterminate;
+  if (type === Type.Meter) return AnimationMode.DeterminateBase;
   if (isIndeterminate) return AnimationMode.Indeterminate;
 
   return enableAnimation
-    ? AnimationMode.AnimatedDeterminate
-    : AnimationMode.BaseDeterminate;
+    ? AnimationMode.DeterminateAnimated
+    : AnimationMode.DeterminateBase;
 };
 
 export const getPercentage = (value: number, maxValue?: number): number => {

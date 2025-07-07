@@ -21,7 +21,8 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "@leafygreen-ui/icon": "workspace:^"
+    "@leafygreen-ui/icon": "workspace:^",
+    "polished": "^4.2.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

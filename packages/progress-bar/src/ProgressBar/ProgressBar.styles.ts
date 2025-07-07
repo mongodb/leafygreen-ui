@@ -1,98 +1,24 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import {
-  borderRadius,
   color as colorToken,
   spacing as spacingToken,
 } from '@leafygreen-ui/tokens';
 
 import {
+  barColorStyles,
+  barSizeStyles,
+  getDeterminateAnimatedGradient,
+  getIndeterminateGradient,
   INDETERMINATE_ANIMATION_DURATION_MS,
-  INDETERMINATE_BAR_POSITIONS,
-  INDETERMINATE_BAR_WIDTHS,
+  indeterminateBarPositions,
+  indeterminateBarWidths,
   SHIMMER_ANIMATION_DURATION_MS,
   TRANSITION_ANIMATION_DURATION,
   WIDTH_ANIMATION_DURATION,
-} from '../constants';
-
+} from './ProgressBar.constants';
 import { AnimationMode, Color, Size } from './ProgressBar.types';
 import { getPercentage } from './ProgressBar.utils';
-
-const opacityAlphaChannels = {
-  50: '80',
-  75: 'BF',
-  100: 'FF',
-};
-
-const fadePalette = {
-  blue: '#C3E7FE',
-  green: '#C0FAE6',
-};
-
-const barSizeStyles = {
-  [Size.Small]: {
-    height: '4px',
-    borderRadius: borderRadius[100] + 'px',
-  },
-  [Size.Default]: {
-    height: '8px',
-    borderRadius: borderRadius[100] + 'px',
-  },
-  [Size.Large]: {
-    height: '16px',
-    borderRadius: borderRadius[200] + 'px',
-  },
-};
-
-const barColorStyles = {
-  [Theme.Light]: {
-    track: palette.gray.light2,
-    disabledBar: palette.gray.light1,
-
-    [Color.Blue]: {
-      bar: palette.blue.base,
-      icon: palette.blue.base,
-      shimmerFade: `${fadePalette.blue}${opacityAlphaChannels[50]}`,
-    },
-    [Color.Green]: {
-      bar: palette.green.dark1,
-      icon: palette.green.dark1,
-      shimmerFade: `${fadePalette.green}${opacityAlphaChannels[50]}`,
-    },
-    [Color.Yellow]: {
-      bar: palette.yellow.base,
-      icon: palette.yellow.dark2,
-    },
-    [Color.Red]: {
-      bar: palette.red.base,
-      icon: palette.red.base,
-    },
-  },
-  [Theme.Dark]: {
-    track: palette.gray.dark2,
-    disabledBar: palette.gray.dark1,
-
-    [Color.Blue]: {
-      bar: palette.blue.light1,
-      icon: palette.blue.light1,
-      shimmerFade: `${fadePalette.blue}${opacityAlphaChannels[75]}`,
-    },
-    [Color.Green]: {
-      bar: palette.green.base,
-      icon: palette.green.base,
-      shimmerFade: `${fadePalette.green}${opacityAlphaChannels[75]}`,
-    },
-    [Color.Yellow]: {
-      bar: palette.yellow.base,
-      icon: palette.yellow.base,
-    },
-    [Color.Red]: {
-      bar: palette.red.light1,
-      icon: palette.red.light1,
-    },
-  },
-};
 
 const shimmerKeyframes = keyframes`
   0% {
@@ -105,32 +31,32 @@ const shimmerKeyframes = keyframes`
 
 const cycleKeyframes = keyframes`
   0% {
-    left: ${INDETERMINATE_BAR_POSITIONS.start};
-    width: ${INDETERMINATE_BAR_WIDTHS.narrow};
+    left: ${indeterminateBarPositions.start};
+    width: ${indeterminateBarWidths.narrow};
   }
   25% {
-    left: ${INDETERMINATE_BAR_POSITIONS.quarter};
-    width: ${INDETERMINATE_BAR_WIDTHS.narrow};
+    left: ${indeterminateBarPositions.quarter};
+    width: ${indeterminateBarWidths.narrow};
   }
   47% {
-    left: ${INDETERMINATE_BAR_POSITIONS.half};
-    width: ${INDETERMINATE_BAR_WIDTHS.wide};
+    left: ${indeterminateBarPositions.half};
+    width: ${indeterminateBarWidths.wide};
   }
   50% {
-    left: ${INDETERMINATE_BAR_POSITIONS.half};
-    width: ${INDETERMINATE_BAR_WIDTHS.wide};
+    left: ${indeterminateBarPositions.half};
+    width: ${indeterminateBarWidths.wide};
   }
   53% {
-    left: ${INDETERMINATE_BAR_POSITIONS.half};
-    width: ${INDETERMINATE_BAR_WIDTHS.wide};
+    left: ${indeterminateBarPositions.half};
+    width: ${indeterminateBarWidths.wide};
   }
   75% {
-    left: ${INDETERMINATE_BAR_POSITIONS.threeQuarters};
-    width: ${INDETERMINATE_BAR_WIDTHS.narrow};
+    left: ${indeterminateBarPositions.threeQuarters};
+    width: ${indeterminateBarWidths.narrow};
   }
   100% {
-    left: ${INDETERMINATE_BAR_POSITIONS.end};
-    width: ${INDETERMINATE_BAR_WIDTHS.narrow};
+    left: ${indeterminateBarPositions.end};
+    width: ${indeterminateBarWidths.narrow};
   }
 `;
 
@@ -228,7 +154,7 @@ const getDeterminateBarFillStyles = ({
     : barColorStyles[theme][color].bar};
 `;
 
-const getAnimatedDeterminateBarFillStyles = ({
+const getDeterminateAnimatedBarFillStyles = ({
   theme,
   color,
   disabled,
@@ -251,12 +177,7 @@ const getAnimatedDeterminateBarFillStyles = ({
         top: 0;
         height: 100%;
         width: 100%;
-        background: linear-gradient(
-          90deg,
-          ${selectedColorStyle.bar} 0%,
-          ${selectedColorStyle.shimmerFade} 50%,
-          ${selectedColorStyle.bar} 100%
-        );
+        background: ${getDeterminateAnimatedGradient(selectedColorStyle)};
         background-size: 200% 100%;
         animation: ${shimmerKeyframes} ${SHIMMER_ANIMATION_DURATION_MS}ms linear
           infinite;
@@ -281,17 +202,10 @@ const getIndeterminateBarFillStyles = ({
       content: '';
       position: absolute;
       top: 0;
-      left: ${INDETERMINATE_BAR_POSITIONS.start};
+      left: ${indeterminateBarPositions.start};
       height: 100%;
-      width: ${INDETERMINATE_BAR_WIDTHS.narrow};
-      background: linear-gradient(
-        90deg,
-        ${palette.transparent} 0%,
-        ${selectedColorStyle.bar}${opacityAlphaChannels[75]} 25%,
-        ${selectedColorStyle.bar}${opacityAlphaChannels[100]} 50%,
-        ${selectedColorStyle.bar}${opacityAlphaChannels[75]} 75%,
-        ${palette.transparent} 100%
-      );
+      width: ${indeterminateBarWidths.narrow};
+      background: ${getIndeterminateGradient(selectedColorStyle)};
       animation: ${cycleKeyframes} ${INDETERMINATE_ANIMATION_DURATION_MS}ms
         linear infinite;
     }
@@ -331,7 +245,7 @@ export const getBarFillStyles = ({
     width: getPercentage(value, maxValue),
   });
 
-  const animatedDeterminate = getAnimatedDeterminateBarFillStyles({
+  const determinateAnimated = getDeterminateAnimatedBarFillStyles({
     theme,
     color,
     disabled,
@@ -346,10 +260,10 @@ export const getBarFillStyles = ({
     case AnimationMode.Indeterminate:
       addOnStyles = indeterminate;
       break;
-    case AnimationMode.AnimatedDeterminate:
-      addOnStyles = cx(determinate, animatedDeterminate);
+    case AnimationMode.DeterminateAnimated:
+      addOnStyles = cx(determinate, determinateAnimated);
       break;
-    case AnimationMode.BaseDeterminate:
+    case AnimationMode.DeterminateBase:
     default:
       addOnStyles = determinate;
       break;
