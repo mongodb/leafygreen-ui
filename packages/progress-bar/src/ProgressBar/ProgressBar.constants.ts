@@ -97,12 +97,12 @@ export const barColorStyles = {
     [Color.Blue]: {
       bar: palette.blue.light1,
       icon: palette.blue.light1,
-      shimmerFade: transparentize(0.75, customFadePalette.blue),
+      shimmerFade: transparentize(0.25, customFadePalette.blue),
     },
     [Color.Green]: {
       bar: palette.green.base,
       icon: palette.green.base,
-      shimmerFade: transparentize(0.75, customFadePalette.green),
+      shimmerFade: transparentize(0.25, customFadePalette.green),
     },
     [Color.Yellow]: {
       bar: palette.yellow.base,
