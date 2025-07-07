@@ -63,6 +63,7 @@ export function ProgressBar(props: ProgressBarProps) {
           darkMode={darkMode}
           disabled={disabled}
           className={truncatedTextStyles}
+          data-lgid={lgIds.label}
         >
           {label}
         </Label>
@@ -80,6 +81,7 @@ export function ProgressBar(props: ProgressBarProps) {
                 disabled,
                 props: {
                   className: getHeaderIconStyles({ theme, color, disabled }),
+                  'data-lgid': lgIds.icon,
                 },
               })}
           </Body>
@@ -111,7 +113,11 @@ export function ProgressBar(props: ProgressBarProps) {
       </div>
 
       {description && (
-        <Description darkMode={darkMode} disabled={disabled}>
+        <Description
+          darkMode={darkMode}
+          disabled={disabled}
+          data-lgid={lgIds.description}
+        >
           {description}
         </Description>
       )}

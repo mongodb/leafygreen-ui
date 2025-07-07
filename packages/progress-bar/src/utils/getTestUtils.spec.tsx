@@ -23,6 +23,7 @@ describe('getTestUtils', () => {
       getBarFillElement,
       getBarTrackElement,
       getIconElement,
+      getLabelElement,
     } = getTestUtils();
 
     expect(queryLoaderElement()).toBeInTheDocument();
@@ -31,6 +32,7 @@ describe('getTestUtils', () => {
     expect(getBarFillElement()).toBeInTheDocument();
     expect(getBarTrackElement()).toBeInTheDocument();
     expect(getIconElement()).toBeInTheDocument();
+    expect(getLabelElement()).toBeInTheDocument();
   });
 
   it('returns all expected elements when meter type is rendered', () => {
@@ -38,7 +40,7 @@ describe('getTestUtils', () => {
       <ProgressBar
         type="meter"
         value={50}
-        label="My Progress"
+        description="Yada yada..."
         formatValue="number"
       />,
     );
@@ -49,6 +51,7 @@ describe('getTestUtils', () => {
       getBarFillElement,
       getBarTrackElement,
       getIconElement,
+      getDescriptionElement,
     } = getTestUtils();
 
     expect(queryLoaderElement()).toBeNull();
@@ -57,6 +60,7 @@ describe('getTestUtils', () => {
     expect(getBarFillElement()).toBeInTheDocument();
     expect(getBarTrackElement()).toBeInTheDocument();
     expect(getIconElement()).toBeNull();
+    expect(getDescriptionElement()).toBeInTheDocument();
   });
 
   it('can differentiate multiple progress bars using lgId', () => {
