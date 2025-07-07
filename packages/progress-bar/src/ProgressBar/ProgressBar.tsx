@@ -117,7 +117,7 @@ export function ProgressBar(props: ProgressBarProps) {
         id={rootId}
         aria-labelledby={label ? labelId : undefined}
         aria-label={!label ? role : undefined}
-        aria-describedby={descId}
+        aria-describedby={description ? descId : undefined}
         {...getValueAriaAttributes(value, maxValue)}
       >
         <div

@@ -135,7 +135,7 @@ describe('packages/progress-bar', () => {
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
-        `Current progress is ${TEST_VALUE_OVER_50}% (${TEST_VALUE_OVER_50} out of 100).`,
+        `Update: current progress is ${TEST_VALUE_OVER_50}% (${TEST_VALUE_OVER_50} out of 100).`,
       );
     });
 
@@ -149,7 +149,7 @@ describe('packages/progress-bar', () => {
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
-        'Current progress is 100% (100 out of 100).',
+        'Update: current progress is 100% (100 out of 100).',
       );
     });
 
@@ -164,8 +164,72 @@ describe('packages/progress-bar', () => {
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
-        `Current progress is ${TEST_VALUE_OVER_50}% (${TEST_VALUE_OVER_50} out of 100). Status is yellow.`,
+        `Update: current progress is ${TEST_VALUE_OVER_50}% (${TEST_VALUE_OVER_50} out of 100). Status is yellow.`,
       );
+    });
+  });
+
+  describe('aria attributes', () => {
+    test('renders with aria-labelledby and aria-describedby', () => {
+      const LABEL_TEXT = 'Test Progress Bar';
+      const DESCRIPTION_TEXT = 'Test description for the progress bar.';
+
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={true}
+          label={LABEL_TEXT}
+          description={DESCRIPTION_TEXT}
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-labelledby');
+      expect(progressBar).toHaveAttribute('aria-describedby');
+    });
+
+    test('renders with aria-label when no label is provided', () => {
+      render(<ProgressBar type={Type.Loader} isIndeterminate={true} />);
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-label', 'progressbar');
+    });
+
+    test('renders with aria-value attributes if value and maxValue are provided', () => {
+      const TEST_VALUE = 75;
+      const TEST_MAX_VALUE = 100;
+
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE}
+          maxValue={TEST_MAX_VALUE}
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-valuemin', '0');
+      expect(progressBar).toHaveAttribute(
+        'aria-valuemax',
+        String(TEST_MAX_VALUE),
+      );
+      expect(progressBar).toHaveAttribute('aria-valuenow', String(TEST_VALUE));
+    });
+
+    test('renders with aria-valuetext if maxValue is not provided', () => {
+      const TEST_VALUE = 50;
+
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={true}
+          value={TEST_VALUE}
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-valuetext', String(TEST_VALUE));
     });
   });
 

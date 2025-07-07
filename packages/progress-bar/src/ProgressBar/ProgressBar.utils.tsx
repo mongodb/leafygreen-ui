@@ -139,7 +139,7 @@ export const getValueAriaAttributes = (value?: number, maxValue?: number) => ({
         'aria-valuenow': value,
       }
     : {
-        'aria-valuetext': `${value}`,
+        'aria-valuetext': value.toString(),
       }),
 });
 
