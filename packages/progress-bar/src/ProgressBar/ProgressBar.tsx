@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
@@ -10,15 +10,19 @@ import {
   getBarTrackStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
+  getInvisibleStyles,
   headerStyles,
 } from './ProgressBar.styles';
-import { ProgressBarProps, Size } from './ProgressBar.types';
+import { ProgressBarProps, Size, Type } from './ProgressBar.types';
 import {
   getFormattedValue,
   getHeaderIcon,
+  getLastAnnouncedThresholdIndex,
+  getPercentage,
   getValueAriaAttributes,
   iconsPendingCompletion,
   resolveProgressBarProps,
+  shouldAnnounceStatus,
 } from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
   const { value, maxValue, disabled, color, isIndeterminate } =
@@ -43,6 +47,41 @@ export function ProgressBar(props: ProgressBarProps) {
   const role = type === 'meter' ? 'meter' : 'progressbar';
 
   const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
+
+  // automatically announces live once past 50% and 100% progress
+  // otherwise, only heard when user reaches the bar via virtual cursor
+  const [screenReaderMessage, setScreenReaderMessage] = useState<string>('');
+  const lastAnnouncedThresholdIndex = useRef(-1);
+
+  useEffect(() => {
+    if (value == null) {
+      setScreenReaderMessage('');
+      lastAnnouncedThresholdIndex.current = -1;
+      return;
+    }
+
+    const newThresholdIndex = getLastAnnouncedThresholdIndex(value, maxValue);
+
+    if (newThresholdIndex === lastAnnouncedThresholdIndex.current) {
+      return;
+    } else {
+      lastAnnouncedThresholdIndex.current = newThresholdIndex;
+    }
+
+    const announceStatus = shouldAnnounceStatus(color);
+
+    const baseMessage = `Current progress is ${getPercentage(
+      value,
+      maxValue,
+    )}% (${value} out of ${maxValue}).`;
+
+    const message =
+      announceStatus && color
+        ? `${baseMessage} Status is ${color}.`
+        : baseMessage;
+
+    setScreenReaderMessage(message);
+  }, [setScreenReaderMessage, value, maxValue, type, color]);
 
   return (
     <div className={containerStyles} aria-disabled={disabled}>
@@ -98,6 +137,17 @@ export function ProgressBar(props: ProgressBarProps) {
         <Description darkMode={darkMode} disabled={disabled}>
           {description}
         </Description>
+      )}
+
+      {type === Type.Loader && (
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className={getInvisibleStyles()}
+        >
+          {screenReaderMessage}
+        </div>
       )}
     </div>
   );

@@ -97,6 +97,78 @@ describe('packages/progress-bar', () => {
     });
   });
 
+  describe('screen reader behavior', () => {
+    const TEST_VALUE_UNDER_50 = 43;
+    const TEST_VALUE_OVER_50 = 57;
+    const TEST_MAX_VALUE = 100;
+
+    test('does not have a live region for meter types', () => {
+      render(
+        <ProgressBar
+          type={Type.Meter}
+          value={TEST_VALUE_OVER_50}
+          maxValue={TEST_MAX_VALUE}
+        />,
+      );
+      expect(screen.queryByRole('status')).toBeNull();
+    });
+
+    test('does not announce if progress under 50%', () => {
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_UNDER_50}
+          maxValue={TEST_MAX_VALUE}
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent('');
+    });
+
+    test('announces if 50% threshold passed', () => {
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_OVER_50}
+          maxValue={TEST_MAX_VALUE}
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        `Current progress is ${TEST_VALUE_OVER_50}% (${TEST_VALUE_OVER_50} out of 100).`,
+      );
+    });
+
+    test('announces if 100% threshold passed', () => {
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_MAX_VALUE}
+          maxValue={TEST_MAX_VALUE}
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        'Current progress is 100% (100 out of 100).',
+      );
+    });
+
+    test('additionally announces color if yellow or red', () => {
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_OVER_50}
+          maxValue={TEST_MAX_VALUE}
+          variant={LoaderVariant.Warning}
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        `Current progress is ${TEST_VALUE_OVER_50}% (${TEST_VALUE_OVER_50} out of 100). Status is yellow.`,
+      );
+    });
+  });
+
   describe('getFormattedValue', () => {
     test('renders a fraction correctly', () => {
       expect(getFormattedValue(50, 100, 'fraction')).toBe('50/100');
