@@ -116,3 +116,73 @@ const totalSpaceAvailable = 128
 | `variant?`         | `'info'` \| `'success'` \| `'warning'` \| `'error'`                                            | `'info'`    | loader only                    | Variant for loader type. Animation is only available for `'info'` or `'success'` variants.                                                 |
 | `isIndeterminate?` | `boolean`                                                                                      | `false`     | loader only                    | When `true`, shows an infinite looping animation along the bar.                                                                            |
 | `enableAnimation?` | `boolean`                                                                                      | `false`     | determinate loader only        | When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. |
+
+## Test Harnesses
+
+### `getTestUtils`
+
+`getTestUtils()` allows you to interact with the `ProgressBar` component in test suites. If the `ProgressBar` instance cannot be found, an error will be thrown.
+
+#### Single `ProgressBar`
+
+```tsx
+import {
+  getTestUtils,
+  renderProgressBar,
+} from '@leafygreen-ui/progress-bar/testing';
+
+test('renders single progress bar', () => {
+  // ...code to render a single progress bar
+
+  const { queryContainerElement } = getTestUtils();
+
+  expect(queryContainerElement()).toBeInTheDocument();
+});
+```
+
+#### Multiple `ProgressBar` components
+
+```tsx
+import {
+  getTestUtils,
+  renderMultipleProgressBars,
+} from '@leafygreen-ui/progress-bar/testing';
+
+test('renders multiple progress bars', () => {
+  // ...code to render multiple progress bars
+
+  const utilsOne = getTestUtils('lg-progress_bar-1');
+  const utilsTwo = getTestUtils('lg-progress_bar-2');
+
+  expect(utilsOne.queryContainerElement()).toBeInTheDocument();
+  expect(utilsTwo.queryContainerElement()).toBeInTheDocument();
+});
+```
+
+### Test Utils
+
+```tsx
+const {
+  queryContainerElement,
+  queryLoaderElement,
+  queryMeterElement,
+  getBarFillElement,
+  getBarTrackElement,
+  getIconElement,
+  getLabelElement,
+  getDescriptionElement,
+  getValueTextElement,
+} = getTestUtils();
+```
+
+| Util                    | Description                                                                     | Returns                  |
+| ----------------------- | ------------------------------------------------------------------------------- | ------------------------ |
+| `queryContainerElement` | Returns the root element containing the progress bar and all accompanying text. | `HTMLDivElement \| null` |
+| `queryLoaderElement`    | Returns the element with role 'progressbar', if present.                        | `HTMLDivElement \| null` |
+| `queryMeterElement`     | Returns the element with role 'meter', if present.                              | `HTMLDivElement \| null` |
+| `getBarFillElement`     | Returns the fill element of the bar.                                            | `HTMLDivElement \| null` |
+| `getBarTrackElement`    | Returns the track element of the bar.                                           | `HTMLDivElement \| null` |
+| `getIconElement`        | Returns the icon element, if present.                                           | `HTMLDivElement \| null` |
+| `getLabelElement`       | Returns the label element, if present.                                          | `HTMLDivElement \| null` |
+| `getDescriptionElement` | Returns the description element, if present.                                    | `HTMLDivElement \| null` |
+| `getValueTextElement`   | Returns the value text element, if present.                                     | `HTMLDivElement \| null` |
