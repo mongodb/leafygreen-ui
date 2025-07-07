@@ -76,3 +76,78 @@ const [isOpen, setIsOpen] = useState(false);
 | `onOpenChange`    | `ChangeEventHandler<boolean>` | The event handler called when the open state of the card changes.                                   |               |
 | `viewLessText`    | `React.ReactNode`             | The button text displayed when the card is expanded.                                                | `"View less"` |
 | `viewMoreText`    | `React.ReactNode`             | The button text displayed when the card is collapsed.                                               | `"View more"` |
+
+## Test Harnesses
+
+### `getTestUtils`
+
+`getTestUtils()` is a util that allows consumers to reliably interact with LG `PreviewCard` in a product test suite. If the `PreviewCard` instance cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import { getTestUtils } from '@leafygreen-ui/preview-card/testing';
+
+const utils = getTestUtils(lgId?: `lg-${string}`); // lgId refers to the custom `data-lgid` attribute passed to a `PreviewCard` instance. It defaults to `lg-preview_card` if undefined.
+```
+
+#### Single `PreviewCard`
+
+```tsx
+import { getTestUtils, renderPreviewCard } from '@leafygreen-ui/preview-card/testing';
+
+...
+
+test('single preview card', () => {
+  renderPreviewCard();
+  const { getPreviewCard } = getTestUtils();
+
+  expect(getPreviewCard()).toBeInTheDocument();
+});
+```
+
+#### Multiple `PreviewCard` components
+
+When testing multiple `PreviewCard` components it is recommended to add the custom `data-lgid` attribute to each `PreviewCard`.
+
+```tsx
+import { getTestUtils, renderMultiplePreviewCards } from '@leafygreen-ui/preview-card/testing';
+
+...
+
+test('multiple preview cards', () => {
+  renderMultiplePreviewCards();
+  const utilsOne = getTestUtils('lg-preview_card-1');
+  const utilsTwo = getTestUtils('lg-preview_card-2');
+
+  // First PreviewCard
+  expect(utilsOne.getPreviewCard()).toBeInTheDocument();
+  expect(utilsOne.isExpanded()).toBeFalsy();
+
+  // Second PreviewCard
+  expect(utilsTwo.getPreviewCard()).toBeInTheDocument();
+  expect(utilsTwo.isExpanded()).toBeTruthy();
+});
+```
+
+### Test Utils
+
+```tsx
+const {
+  findPreviewCard,
+  getContent,
+  getPreviewCard,
+  getToggle,
+  isExpanded,
+  queryPreviewCard,
+} = getTestUtils();
+```
+
+| Util               | Description                                                      | Returns                   |
+| ------------------ | ---------------------------------------------------------------- | ------------------------- |
+| `findPreviewCard`  | Returns a promise that resolves to the component's root element. | `Promise<HTMLDivElement>` |
+| `getContent`       | Returns the component's content element.                         | `HTMLDivElement`          |
+| `getPreviewCard`   | Returns the component's root element.                            | `HTMLDivElement`          |
+| `getToggle`        | Returns the component's toggle button element.                   | `HTMLButtonElement`       |
+| `isExpanded`       | Returns a boolean indicating whether the card is expanded.       | `boolean`                 |
+| `queryPreviewCard` | Returns the component's root element or null if not found.       | `HTMLDivElement \| null`  |

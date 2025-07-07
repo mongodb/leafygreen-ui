@@ -1,22 +1,11 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { PreviewCard } from './PreviewCard';
-import { PreviewCardProps } from './PreviewCard.types';
+import { getTestUtils, renderPreviewCard } from '../testing';
 
-const renderPreviewCard = (props: PreviewCardProps = {}) =>
-  render(
-    <PreviewCard {...props}>
-      {props?.children ?? (
-        <>
-          <div>Content</div>
-          <button>Focusable</button>
-        </>
-      )}
-    </PreviewCard>,
-  );
+import { PreviewCard } from './PreviewCard';
 
 describe('packages/preview-card', () => {
   describe('a11y', () => {
@@ -30,28 +19,30 @@ describe('packages/preview-card', () => {
 
   test('renders with default props', () => {
     renderPreviewCard();
-    expect(screen.getByText('Content')).toBeInTheDocument();
-    const toggleButton = screen.getByRole('button', { name: 'View more' });
-    expect(toggleButton).toBeInTheDocument();
+    const { getContent, getToggle } = getTestUtils();
+    const toggleButton = getToggle();
+
+    expect(getContent()).toBeVisible();
+    expect(toggleButton).toBeVisible();
     expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
   });
 
   test('expands and collapses in uncontrolled mode', () => {
     renderPreviewCard();
+    const { getToggle } = getTestUtils();
+    const toggleButton = getToggle();
 
-    const toggleButton = screen.getByRole('button', { name: 'View more' });
+    expect(toggleButton).toHaveTextContent('View more');
+    expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
+
     userEvent.click(toggleButton);
 
-    expect(
-      screen.getByRole('button', { name: 'View less' }),
-    ).toBeInTheDocument();
+    expect(toggleButton).toHaveTextContent('View less');
     expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
 
     userEvent.click(toggleButton);
 
-    expect(
-      screen.getByRole('button', { name: 'View more' }),
-    ).toBeInTheDocument();
+    expect(toggleButton).toHaveTextContent('View more');
     expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
   });
 
@@ -61,41 +52,42 @@ describe('packages/preview-card', () => {
       isOpen: false,
       onOpenChange,
     });
+    const { getToggle } = getTestUtils();
+    let toggleButton = getToggle();
 
-    const toggleButton = screen.getByRole('button', { name: 'View more' });
     userEvent.click(toggleButton);
 
     expect(onOpenChange).toHaveBeenCalledTimes(1);
-    expect(
-      screen.getByRole('button', { name: 'View more' }),
-    ).toBeInTheDocument();
+    expect(toggleButton).toHaveTextContent('View more');
+    expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
 
     rerender(
       <PreviewCard isOpen={true} onOpenChange={onOpenChange}>
         Content
       </PreviewCard>,
     );
-    expect(
-      screen.getByRole('button', { name: 'View less' }),
-    ).toBeInTheDocument();
+    toggleButton = getToggle();
+
+    expect(toggleButton).toHaveTextContent('View less');
+    expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
   });
 
   // JSDOM doesn't fully support inert: https://github.com/jsdom/jsdom/issues/3605
   // this test is used as a stopgap until the below skipped test can be used
-  test('drawer is inert when collapsed', () => {
+  test('card is inert when collapsed', () => {
     renderPreviewCard();
-    const drawer = screen.getByRole('button', {
-      name: 'Focusable',
-    }).parentElement;
-    expect(drawer).toHaveAttribute('inert');
+    const { getContent } = getTestUtils();
+    const card = getContent();
+    expect(card).toHaveAttribute('inert');
   });
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('focuses the toggle button first when collapsed', () => {
     renderPreviewCard();
+    const { getToggle } = getTestUtils();
 
     userEvent.tab();
 
-    const toggleButton = screen.getByRole('button', { name: 'View more' });
+    const toggleButton = getToggle();
     const focusableButton = screen.getByRole('button', {
       name: 'Focusable',
     });
@@ -105,8 +97,9 @@ describe('packages/preview-card', () => {
 
   test('moves focus to the first focusable element when expanded', async () => {
     renderPreviewCard();
+    const { getToggle } = getTestUtils();
+    const toggleButton = getToggle();
 
-    const toggleButton = screen.getByRole('button', { name: 'View more' });
     userEvent.click(toggleButton);
 
     const focusableButton = await screen.findByRole('button', {
@@ -120,19 +113,26 @@ describe('packages/preview-card', () => {
       viewMoreText: 'Show',
       viewLessText: 'Hide',
     });
-    const toggleButton = screen.getByRole('button', { name: 'Show' });
-    expect(toggleButton).toBeInTheDocument();
+
+    const { getToggle } = getTestUtils();
+    const toggleButton = getToggle();
+
+    expect(toggleButton).toBeVisible();
+    expect(toggleButton).toHaveTextContent('Show');
 
     userEvent.click(toggleButton);
-    expect(screen.getByRole('button', { name: 'Hide' })).toBeInTheDocument();
+
+    expect(toggleButton).toBeVisible();
+    expect(toggleButton).toHaveTextContent('Hide');
   });
 
   test('has correct aria attributes', () => {
-    renderPreviewCard({ children: 'Content' });
-    const toggleButton = screen.getByRole('button', { name: 'View more' });
-    const content = screen.getByText('Content');
+    renderPreviewCard({ children: 'Content', isOpen: true });
+    const { getContent, getToggle } = getTestUtils();
+    const content = getContent();
+    const toggleButton = getToggle();
 
-    expect(content).toBeInTheDocument();
+    expect(content).toBeVisible();
     expect(toggleButton).toHaveAttribute('aria-controls', content?.id);
     expect(content).toHaveAttribute('aria-labelledby', toggleButton.id);
     expect(content).toHaveAttribute('role', 'region');
