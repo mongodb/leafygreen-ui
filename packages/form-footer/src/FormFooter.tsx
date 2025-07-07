@@ -7,7 +7,6 @@ import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
 
 import {
   bannerStyle,
@@ -17,11 +16,9 @@ import {
   footerThemeStyle,
 } from './FormFooter.styles';
 import { FormFooterProps } from './FormFooter.types';
-import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
 import { getLgIds } from './utils';
 
 export default function FormFooter({
-  primaryButton,
   primaryButtonProps,
   cancelButtonProps,
   backButtonProps,
@@ -35,7 +32,6 @@ export default function FormFooter({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const showBackButton = backButtonProps;
   const showCancelButton = cancelButtonProps;
-  const showDeprecatedPrimaryButton = primaryButton;
   const lgIds = getLgIds(dataLgId);
 
   return (
@@ -71,24 +67,11 @@ export default function FormFooter({
                 {cancelButtonProps?.children || 'Cancel'}
               </Button>
             )}
-            {showDeprecatedPrimaryButton ? (
-              isComponentType(primaryButton as React.ReactElement, 'Button') ? (
-                React.cloneElement(primaryButton as React.ReactElement, {
-                  ['data-testid']: lgIds.primaryButton,
-                })
-              ) : (
-                <PrimaryButton
-                  data-testid={lgIds.primaryButton}
-                  {...(primaryButton as PrimaryButtonProps)}
-                />
-              )
-            ) : (
-              <Button
-                variant={ButtonVariant.Primary}
-                data-testid={lgIds.primaryButton}
-                {...primaryButtonProps}
-              />
-            )}
+            <Button
+              variant={ButtonVariant.Primary}
+              data-testid={lgIds.primaryButton}
+              {...primaryButtonProps}
+            />
           </div>
         </div>
       </footer>
