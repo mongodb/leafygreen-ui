@@ -1,5 +1,16 @@
 # @leafygreen-ui/context-drawer
 
+## 0.2.0
+
+### Minor Changes
+
+- 2adba55: [LG-5298](https://jira.mongodb.org/browse/LG-5298): add test harnesses exported from `@leafygreen-ui/context-drawer/testing`
+
+### Patch Changes
+
+- Updated dependencies [2adba55]
+  - @leafygreen-ui/button@25.0.0
+
 ## 0.1.1
 
 ### Patch Changes
