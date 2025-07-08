@@ -8,6 +8,10 @@ import {
   resolveProgressBarProps,
 } from './ProgressBar.utils';
 
+const getAnnouncementMessage = (value: number, maxValue: number): string => {
+  return `Update: current progress is ${value}% (${value} out of ${maxValue}).`;
+};
+
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
     test('renders with a label', () => {
@@ -113,8 +117,8 @@ describe('packages/progress-bar', () => {
       expect(screen.queryByRole('status')).toBeNull();
     });
 
-    test('does not announce if progress under 50%', () => {
-      render(
+    test('announces initial progress, but not any further changes if next threshold is not met', () => {
+      const { rerender } = render(
         <ProgressBar
           type={Type.Loader}
           isIndeterminate={false}
@@ -122,11 +126,37 @@ describe('packages/progress-bar', () => {
           maxValue={TEST_MAX_VALUE}
         />,
       );
-      expect(screen.queryByRole('status')).toHaveTextContent('');
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        getAnnouncementMessage(TEST_VALUE_UNDER_50, TEST_MAX_VALUE),
+      );
+
+      rerender(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_UNDER_50 + 1}
+          maxValue={TEST_MAX_VALUE}
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        getAnnouncementMessage(TEST_VALUE_UNDER_50, TEST_MAX_VALUE),
+      );
     });
 
     test('announces if 50% threshold passed', () => {
-      render(
+      const { rerender } = render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_UNDER_50}
+          maxValue={TEST_MAX_VALUE}
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        getAnnouncementMessage(TEST_VALUE_UNDER_50, TEST_MAX_VALUE),
+      );
+
+      rerender(
         <ProgressBar
           type={Type.Loader}
           isIndeterminate={false}
@@ -135,12 +165,24 @@ describe('packages/progress-bar', () => {
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
-        `Update: current progress is ${TEST_VALUE_OVER_50}% (${TEST_VALUE_OVER_50} out of 100).`,
+        getAnnouncementMessage(TEST_VALUE_OVER_50, TEST_MAX_VALUE),
       );
     });
 
     test('announces if 100% threshold passed', () => {
-      render(
+      const { rerender } = render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_UNDER_50}
+          maxValue={TEST_MAX_VALUE}
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        getAnnouncementMessage(TEST_VALUE_UNDER_50, TEST_MAX_VALUE),
+      );
+
+      rerender(
         <ProgressBar
           type={Type.Loader}
           isIndeterminate={false}
@@ -149,11 +191,11 @@ describe('packages/progress-bar', () => {
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
-        'Update: current progress is 100% (100 out of 100).',
+        getAnnouncementMessage(TEST_MAX_VALUE, TEST_MAX_VALUE),
       );
     });
 
-    test('additionally announces color if yellow or red', () => {
+    test('additionally announces variant if yellow or red', () => {
       render(
         <ProgressBar
           type={Type.Loader}
@@ -164,7 +206,10 @@ describe('packages/progress-bar', () => {
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
-        `Update: current progress is ${TEST_VALUE_OVER_50}% (${TEST_VALUE_OVER_50} out of 100). Status is yellow.`,
+        `${getAnnouncementMessage(
+          TEST_VALUE_OVER_50,
+          TEST_MAX_VALUE,
+        )} Status is ${Color.Yellow}.`,
       );
     });
   });

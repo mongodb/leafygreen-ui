@@ -19,7 +19,6 @@ import {
 export const DEFAULT_MAX_VALUE = 1;
 export const DEFAULT_COLOR = Color.Blue;
 export const iconsPendingCompletion: Array<Color> = [Color.Green];
-export const screenReaderMessageThresholds = [0.5, 1.0];
 
 const getMeterStatusColor = (status?: MeterStatus): Color => {
   switch (status) {
@@ -114,25 +113,25 @@ export const getFormattedValue = (
   }
 };
 
-export const getDivAriaAttributes = (type: Type, label?: React.ReactNode) => {
+export const getDivAttributes = (type: Type, label?: React.ReactNode) => {
   const role = type === Type.Meter ? 'meter' : 'progressbar';
 
   const progressBarId = label
-    ? `${role} for ${getNodeTextContent(label)}`
+    ? `${role}-for-${getNodeTextContent(label)}`
     : role;
 
   return {
     role,
     barId: progressBarId,
-    labelId: `label for ${progressBarId}`,
-    descId: `description for ${progressBarId}`,
+    labelId: `label-for-${progressBarId}`,
+    descId: `desc-for-${progressBarId}`,
   };
 };
 
 export const getValueAriaAttributes = (value?: number, maxValue?: number) => ({
-  ...(value == null
+  ...(value == undefined
     ? { 'aria-busy': true }
-    : maxValue != null
+    : maxValue != undefined
     ? {
         'aria-valuemin': 0,
         'aria-valuemax': maxValue,
@@ -165,23 +164,4 @@ export const getHeaderIcon = ({
     default:
       return <InfoWithCircleIcon {...props} />;
   }
-};
-
-export const shouldAnnounceStatus = (color: Color): boolean =>
-  color === Color.Yellow || color === Color.Red;
-
-export const getLastAnnouncedThresholdIndex = (
-  value: number,
-  maxValue?: number,
-): number => {
-  const percentage =
-    maxValue == null ? value : getPercentage(value, maxValue) / 100;
-
-  for (let i = 0; i < screenReaderMessageThresholds.length; i++) {
-    if (percentage >= screenReaderMessageThresholds[i]) {
-      return i;
-    }
-  }
-
-  return -1;
 };
