@@ -23,6 +23,7 @@ export function useScreenReaderAnnouncer({
   const [message, setMessage] = useState('');
 
   useEffect(() => {
+    // no live region messages for non-loader types or if value is undefined
     if (type !== Type.Loader || value == undefined) {
       thresholdIndexRef.current = -1;
       setMessage('');
@@ -31,6 +32,7 @@ export function useScreenReaderAnnouncer({
 
     const percentage = maxValue ? getPercentage(value, maxValue) : value * 100;
 
+    // determinate largest threshold passed by current percentage
     let newThresholdIndex = -1;
 
     for (let i = 0; i < announcementThresholds.length; i++) {
@@ -40,6 +42,8 @@ export function useScreenReaderAnnouncer({
     }
 
     if (newThresholdIndex === thresholdIndexRef.current) return;
+
+    // if new threshold was passed, update live region message
     thresholdIndexRef.current = newThresholdIndex;
 
     const baseMessage = `Update: current progress is ${getPercentage(
