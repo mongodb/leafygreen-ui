@@ -1,8 +1,6 @@
 import { BaseButtonProps, type Variant } from '@leafygreen-ui/button';
 import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 
-import { PrimaryButtonProps } from './PrimaryButton';
-
 type ButtonPropsOmittingVariant = Omit<BaseButtonProps, 'variant'>;
 type ButtonPropsWithRequiredChildren = Required<
   Pick<BaseButtonProps, 'children'>
@@ -21,25 +19,6 @@ export interface FormFooterProps
   extends HTMLElementProps<'footer'>,
     DarkModeProps,
     LgIdProps {
-  /**
-   * The primary (right-most) button.
-   * Defined as a `<Button>` element, or as an object with the shape:
-   *
-   * ```ts
-   * interface PrimaryButtonProps {
-   *  text: string;
-   *  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-   *  variant?: 'primary' | 'danger';
-   *  disabled?: boolean;
-   *  type?: 'button' | 'submit';
-   * }
-   * ```
-   *
-   * darkMode is handled internally so you do not have to pass the darkMode prop.
-   * @deprecated since 4.0.0 - use `primaryButtonProps`
-   */
-  primaryButton?: React.ReactElement | PrimaryButtonProps;
-
   /**
    * The primary (right-most) button.
    * An object that accepts all `Button` props but `variant` is limited to `primary` and `danger`
