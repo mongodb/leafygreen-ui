@@ -47,7 +47,7 @@ const getTriggerStyles = (theme: Theme) => {
 const getGlyphStyles = ({ isOpen, theme }: { isOpen: boolean; theme: Theme }) =>
   cx(
     css`
-      & svg {
+      & svg[role='presentation'] {
         color: ${palette.blue[theme === Theme.Dark ? 'light2' : 'dark2']};
         transition: transform ${TRANSITION_DURATION}ms ease-in-out;
         transform: rotate(0deg);
@@ -55,7 +55,7 @@ const getGlyphStyles = ({ isOpen, theme }: { isOpen: boolean; theme: Theme }) =>
     `,
     {
       [css`
-        & svg {
+        & svg[role='presentation'] {
           transform: rotate(180deg);
         }
       `]: isOpen,
