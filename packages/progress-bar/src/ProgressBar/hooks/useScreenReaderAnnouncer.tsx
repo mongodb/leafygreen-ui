@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 
 import { isDefined } from '@leafygreen-ui/lib';
 
@@ -22,19 +22,17 @@ export function useScreenReaderAnnouncer({
   color,
 }: UseScreenReaderAnnouncerProps): string {
   const thresholdIndexRef = useRef(-1);
-  const [message, setMessage] = useState('');
 
-  useEffect(() => {
+  const message = useMemo(() => {
     // no live region messages for non-loader types or if value is undefined
     if (type !== Type.Loader || !isDefined(value)) {
       thresholdIndexRef.current = -1;
-      setMessage('');
-      return;
+      return '';
     }
 
     const percentage = maxValue ? getPercentage(value, maxValue) : value * 100;
 
-    // determinate largest threshold passed by current percentage
+    // find largest threshold passed by current percentage
     let newThresholdIndex = -1;
 
     for (let i = 0; i < announcementThresholds.length; i++) {
@@ -43,7 +41,7 @@ export function useScreenReaderAnnouncer({
       }
     }
 
-    if (newThresholdIndex === thresholdIndexRef.current) return;
+    if (newThresholdIndex === thresholdIndexRef.current) return '';
 
     // if new threshold was passed, update live region message
     thresholdIndexRef.current = newThresholdIndex;
@@ -58,7 +56,7 @@ export function useScreenReaderAnnouncer({
         ? `${baseMessage} Status is ${color}.`
         : baseMessage;
 
-    setMessage(newMessage);
+    return newMessage;
   }, [type, value, maxValue, color]);
 
   return message;

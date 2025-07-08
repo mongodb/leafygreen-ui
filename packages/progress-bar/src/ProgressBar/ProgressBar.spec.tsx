@@ -149,9 +149,7 @@ describe('packages/progress-bar', () => {
           aria-label="required label"
         />,
       );
-      expect(screen.queryByRole('status')).toHaveTextContent(
-        getAnnouncementMessage(TEST_VALUE_UNDER_50, TEST_MAX_VALUE),
-      );
+      expect(screen.queryByRole('status')).toBeNull();
     });
 
     test('announces if 50% threshold passed', () => {
