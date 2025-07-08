@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import { useScreenReaderAnnouncer } from './hooks';
@@ -15,9 +16,9 @@ import {
 } from './ProgressBar.styles';
 import { ProgressBarProps, Size } from './ProgressBar.types';
 import {
-  getDivAttributes,
   getFormattedValue,
   getHeaderIcon,
+  getProgressBarIdentifiers,
   getValueAriaAttributes,
   iconsPendingCompletion,
   resolveProgressBarProps,
@@ -29,6 +30,7 @@ export function ProgressBar(props: ProgressBarProps) {
   const {
     type,
     label,
+    'aria-label': ariaLabel,
     size = Size.Default,
     description,
     darkMode = false,
@@ -38,7 +40,10 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const { theme } = useDarkMode(darkMode);
 
-  const { role, barId, labelId, descId } = getDivAttributes(type, label);
+  const { role, barId, labelId, descId, liveId } = getProgressBarIdentifiers(
+    type,
+    label,
+  );
 
   const showIcon = iconsPendingCompletion.includes(color)
     ? showIconProp && value === maxValue
@@ -68,7 +73,7 @@ export function ProgressBar(props: ProgressBarProps) {
             className={getHeaderValueStyles({ theme, disabled })}
             darkMode={darkMode}
           >
-            {value != undefined &&
+            {isDefined(value) &&
               getFormattedValue(value, maxValue, formatValue)}
 
             {showIcon &&
@@ -87,8 +92,9 @@ export function ProgressBar(props: ProgressBarProps) {
         role={role}
         id={barId}
         aria-labelledby={label ? labelId : undefined}
-        aria-label={!label ? role : undefined}
+        aria-label={!label ? ariaLabel : undefined}
         aria-describedby={description ? descId : undefined}
+        aria-controls={liveId}
         {...getValueAriaAttributes(value, maxValue)}
       >
         <div
@@ -118,6 +124,7 @@ export function ProgressBar(props: ProgressBarProps) {
       {screenReaderMessage && (
         <div
           role="status"
+          id={liveId}
           aria-live="polite"
           aria-atomic="true"
           className={getInvisibleStyles()}

@@ -37,6 +37,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       args: {
         label: <span key="label">Label</span>,
         description: <span key="description">Helper text</span>,
+        'aria-label': 'required label',
       },
       combineArgs: {
         size: SIZES,
@@ -103,6 +104,7 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     showIcon: true,
     label: <span>Label</span>,
     description: <span>Helper text</span>,
+    'aria-label': 'required label',
   },
   render: SimulatedProgressBar,
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
@@ -119,6 +121,7 @@ export const DeterminateLoader: StoryObj<typeof ProgressBar> = {
     type: Type.Loader,
     value: testValues.value,
     maxValue: testValues.maxValue,
+    'aria-label': 'required label',
   },
   render: SimulatedProgressBar,
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {

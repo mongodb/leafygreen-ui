@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const Type = {
@@ -55,25 +56,23 @@ export const Color = {
 } as const;
 export type Color = (typeof Color)[keyof typeof Color];
 
-interface BaseProps extends DarkModeProps {
-  /** Optional label text displayed directly above the progress bar. */
-  label?: React.ReactNode;
+type BaseProps = DarkModeProps &
+  AriaLabelPropsWithLabel & {
+    /** Optional size (thickness) of the progress bar. */
+    size?: Size;
 
-  /** Optional size (thickness) of the progress bar. */
-  size?: Size;
+    /** Optional descriptive text below the progress bar. */
+    description?: React.ReactNode;
 
-  /** Optional descriptive text below the progress bar. */
-  description?: React.ReactNode;
+    /** Optional formatting of progress value text. If not defined, progress value is not displayed. */
+    formatValue?: FormatValueType;
 
-  /** Optional formatting of progress value text. If not defined, progress value is not displayed. */
-  formatValue?: FormatValueType;
-
-  /**
-   * If true, displays icon next to progress value.
-   * If `variant` is `'success'` or `status` is `'healthy'`, the icon only appears when progress reaches 100%.
-   */
-  showIcon?: boolean;
-}
+    /**
+     * If true, displays icon next to progress value.
+     * If `variant` is `'success'` or `status` is `'healthy'`, the icon only appears when progress reaches 100%.
+     */
+    showIcon?: boolean;
+  };
 
 interface BaseLoaderProps {
   /** Specifies whether the progress bar is a meter or loader. */

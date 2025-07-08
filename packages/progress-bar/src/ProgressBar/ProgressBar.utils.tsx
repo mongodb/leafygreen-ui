@@ -4,7 +4,7 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
+import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
 
 import {
   Color,
@@ -113,7 +113,10 @@ export const getFormattedValue = (
   }
 };
 
-export const getDivAttributes = (type: Type, label?: React.ReactNode) => {
+export const getProgressBarIdentifiers = (
+  type: Type,
+  label?: React.ReactNode,
+) => {
   const role = type === Type.Meter ? 'meter' : 'progressbar';
 
   const progressBarId = label
@@ -125,13 +128,14 @@ export const getDivAttributes = (type: Type, label?: React.ReactNode) => {
     barId: progressBarId,
     labelId: `label-for-${progressBarId}`,
     descId: `desc-for-${progressBarId}`,
+    liveId: `live-region-for-${progressBarId}`,
   };
 };
 
 export const getValueAriaAttributes = (value?: number, maxValue?: number) => ({
   ...(value == undefined
     ? { 'aria-busy': true }
-    : maxValue != undefined
+    : isDefined(maxValue)
     ? {
         'aria-valuemin': 0,
         'aria-valuemax': maxValue,

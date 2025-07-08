@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { isDefined } from '@leafygreen-ui/lib';
+
 import { Color, Type } from '../ProgressBar.types';
 import { getPercentage } from '../ProgressBar.utils';
 
 const announcementThresholds = [0, 50, 100];
-const variantsAnnounced = [Color.Yellow, Color.Red] as Array<Color>;
+const variantsAnnounced = [Color.Yellow, Color.Red] as Array<Color>; // TODO: will be refactored to variant names instead of colors
 
 interface UseScreenReaderAnnouncerProps {
   type: Type;
@@ -24,7 +26,7 @@ export function useScreenReaderAnnouncer({
 
   useEffect(() => {
     // no live region messages for non-loader types or if value is undefined
-    if (type !== Type.Loader || value == undefined) {
+    if (type !== Type.Loader || !isDefined(value)) {
       thresholdIndexRef.current = -1;
       setMessage('');
       return;
