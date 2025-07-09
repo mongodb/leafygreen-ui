@@ -4,7 +4,7 @@ import {
 } from '@leafygreen-ui/button';
 import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 import {
-  InternalSplitButtonProps,
+  type InternalSplitButtonProps,
   type Variant as SplitButtonVariant,
 } from '@leafygreen-ui/split-button';
 

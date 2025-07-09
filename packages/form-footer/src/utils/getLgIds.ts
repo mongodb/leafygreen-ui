@@ -11,7 +11,7 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
     cancelButton: `${root}-cancel_button`,
     cancelSplitButton: `${root}-cancel_split_button`,
     primaryButton: `${root}-primary_button`,
-    primarySplitButton: `${root}-primary_button`,
+    primarySplitButton: `${root}-primary_split_button`,
   } as const;
   return ids;
 };
