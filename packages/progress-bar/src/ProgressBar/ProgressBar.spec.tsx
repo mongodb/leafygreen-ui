@@ -118,6 +118,22 @@ describe('packages/progress-bar', () => {
           });
         });
 
+        test('renders width capped at 100% when value is over maxValue', () => {
+          render(
+            <ProgressBar
+              type={Type.Loader}
+              isIndeterminate={false}
+              value={105}
+              maxValue={100}
+            />,
+          );
+          const { getBarFill } = getTestUtils();
+          expect(getBarFill()).toBeInTheDocument();
+          expect(getBarFill()).toHaveStyle({
+            width: '100%',
+          });
+        });
+
         test('defaults to maxValue of 1 when maxValue is less than 0', () => {
           render(
             <ProgressBar
