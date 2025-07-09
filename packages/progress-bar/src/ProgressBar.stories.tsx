@@ -76,7 +76,10 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     },
     formatValue: {
       control: { type: 'select' },
-      options: [...FORMAT_VALUE_TYPES, undefined],
+      options: [...FORMAT_VALUE_TYPES, 'custom example', undefined],
+      mapping: {
+        'custom example': (value: number) => `Currently at ${value} GB`,
+      },
     },
     isIndeterminate: {
       if: { arg: 'type', eq: Type.Loader },
@@ -86,7 +89,8 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       // if: { arg: 'type', eq: Type.Meter } OR { arg: 'isIndeterminate', eq: false }, // TODO: not supported
       description:
         '**Not available** if both type=loader and isIndeterminate=true',
-      control: { type: 'number' },
+      control: { type: 'none' },
+      defaultValue: testValues.maxValue,
     },
     variant: {
       if: { arg: 'type', eq: Type.Loader },
@@ -102,9 +106,15 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       // if: { arg: 'type', neq: Type.Meter } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
       description:
         '**Not available** if either type="meter" or isIndeterminate=true',
-      control: { type: 'boolean' },
+      control: { type: 'none' },
+      defaultValue: false,
     },
   },
+  decorators: [
+    (Story, context) => {
+      return <Story {...context} />;
+    },
+  ],
 };
 export default meta;
 

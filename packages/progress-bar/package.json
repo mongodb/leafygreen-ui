@@ -22,6 +22,7 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
