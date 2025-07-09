@@ -14,6 +14,7 @@ import {
   ResolvedProgressBarProps,
   Type,
 } from '../ProgressBar.types';
+import { isDefined } from '@leafygreen-ui/lib';
 
 export const DEFAULT_MAX_VALUE = 1;
 export const DEFAULT_COLOR = Color.Blue;
@@ -47,12 +48,12 @@ const getLoaderVariantColor = (variant?: LoaderVariant): Color => {
 };
 
 const getValidValue = (value?: number) => {
-  if (value === undefined || value >= 0) return value;
+  if (!isDefined(value) || value >= 0) return value;
   return 0;
 };
 
 const getValidMaxValue = (maxValue?: number) => {
-  if (maxValue === undefined || maxValue <= 0) return DEFAULT_MAX_VALUE;
+  if (!isDefined(maxValue) || maxValue <= 0) return DEFAULT_MAX_VALUE;
   return maxValue;
 };
 

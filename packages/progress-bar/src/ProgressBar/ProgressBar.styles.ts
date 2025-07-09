@@ -1,5 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { isDefined, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   borderRadius,
@@ -180,7 +180,7 @@ export const getBarFillStyles = ({
 
   if (isIndeterminate) typedBarFillStyles = getIndeterminateBarFillStyles();
 
-  if (value != null && maxValue)
+  if (isDefined(value))
     typedBarFillStyles = getDeterminateBarFillStyles(
       getPercentage(value, maxValue),
     );

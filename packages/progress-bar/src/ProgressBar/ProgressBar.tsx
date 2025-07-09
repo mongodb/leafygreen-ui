@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
+import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
@@ -73,7 +73,8 @@ export function ProgressBar(props: ProgressBarProps) {
             darkMode={darkMode}
             data-lgid={lgIds.valueText}
           >
-            {value != null && getFormattedValue(value, maxValue, formatValue)}
+            {isDefined(value) &&
+              getFormattedValue(value, maxValue, formatValue)}
 
             {showIcon &&
               getHeaderIcon({
