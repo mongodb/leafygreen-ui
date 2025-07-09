@@ -1,4 +1,4 @@
-export const DEFAULT_LGID_ROOT = 'lg-section-nav';
+export const DEFAULT_LGID_ROOT = 'lg-section_nav';
 
 export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) =>
   ({

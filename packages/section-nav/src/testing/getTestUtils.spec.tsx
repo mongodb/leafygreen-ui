@@ -20,7 +20,7 @@ describe('packages/section-nav/getTestUtils', () => {
           expect(error).toHaveProperty(
             'message',
             expect.stringMatching(
-              /Unable to find an element by: \[data-lgid="lg-section-nav"\]/,
+              /Unable to find an element by: \[data-lgid="lg-section_nav"\]/,
             ),
           );
         }
@@ -44,7 +44,7 @@ describe('packages/section-nav/getTestUtils', () => {
           expect(error).toHaveProperty(
             'message',
             expect.stringMatching(
-              /Unable to find an element by: \[data-lgid="lg-section-nav"\]/,
+              /Unable to find an element by: \[data-lgid="lg-section_nav"\]/,
             ),
           );
         }
