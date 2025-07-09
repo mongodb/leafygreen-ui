@@ -10,7 +10,6 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
     root,
     track: `${root}-track`,
     fill: `${root}-fill`,
-    icon: `${root}-icon`,
     label: `${root}-label`,
     description: `${root}-description`,
     valueText: `${root}-value_text`,
@@ -33,10 +32,14 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
   const getBarFill = () => getByLgId!<T>(lgIds.fill);
   const getBarTrack = () => getByLgId!<T>(lgIds.track);
 
-  const queryIcon = () => queryByLgId!<T>(lgIds.icon);
   const queryLabel = () => queryByLgId!<T>(lgIds.label);
   const queryDescription = () => queryByLgId!<T>(lgIds.description);
   const queryValueText = () => queryByLgId!<T>(lgIds.valueText);
+
+  const queryIcon = () => {
+    const valueText = queryValueText();
+    return within(valueText).queryByRole('img') as T;
+  };
 
   return {
     getContainer,
@@ -45,9 +48,9 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
     getBarFill,
     getBarTrack,
 
-    queryIcon,
     queryLabel,
     queryDescription,
     queryValueText,
+    queryIcon,
   };
 };

@@ -4,6 +4,7 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { isDefined } from '@leafygreen-ui/lib';
 
 import {
   Color,
@@ -14,7 +15,6 @@ import {
   ResolvedProgressBarProps,
   Type,
 } from '../ProgressBar.types';
-import { isDefined } from '@leafygreen-ui/lib';
 
 export const DEFAULT_MAX_VALUE = 1;
 export const DEFAULT_COLOR = Color.Blue;

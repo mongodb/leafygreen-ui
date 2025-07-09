@@ -82,7 +82,6 @@ export function ProgressBar(props: ProgressBarProps) {
                 disabled,
                 props: {
                   className: getHeaderIconStyles({ theme, color, disabled }),
-                  'data-lgid': lgIds.icon,
                 },
               })}
           </Body>

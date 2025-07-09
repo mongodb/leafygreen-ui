@@ -63,29 +63,32 @@ describe('getTestUtils', () => {
           value={0.3}
           label="First Progress"
           formatValue="number"
-          data-lgid="lg-progress-1"
+          data-lgid="lg-progress_1"
         />
         <ProgressBar
           type="meter"
           value={0.7}
           label="Second Progress"
           formatValue="number"
-          data-lgid="lg-progress-2"
+          data-lgid="lg-progress_2"
+          showIcon={true}
         />
       </>,
     );
 
-    const first = getTestUtils('lg-progress-1');
-    const second = getTestUtils('lg-progress-2');
+    const first = getTestUtils('lg-progress_1');
+    const second = getTestUtils('lg-progress_2');
 
     expect(first.getBar()).toBeInTheDocument();
     expect(first.getBar()).toHaveAttribute('role', 'progressbar');
     expect(first.getBarFill()).toBeInTheDocument();
-    expect(first.getBarTrack()).toBeInTheDocument();
+    expect(first.getBarFill()).toHaveStyle({ width: '30%' });
+    expect(first.queryIcon()).toBeNull();
 
     expect(second.getBar()).toBeInTheDocument();
     expect(second.getBar()).toHaveAttribute('role', 'meter');
     expect(second.getBarFill()).toBeInTheDocument();
-    expect(second.getBarTrack()).toBeInTheDocument();
+    expect(second.getBarFill()).toHaveStyle({ width: '70%' });
+    expect(second.queryIcon()).toBeInTheDocument();
   });
 });

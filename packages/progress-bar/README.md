@@ -121,7 +121,7 @@ const totalSpaceAvailable = 128
 
 ### `getTestUtils`
 
-`getTestUtils()` exposes helper functions to access inner elements of the `ProgressBar` component for test suites.
+`getTestUtils()` exposes helper functions to access inner elements of the `ProgressBar` component for testing.
 
 #### Single `ProgressBar`
 
@@ -151,8 +151,8 @@ import {
 test('renders multiple progress bars', () => {
   renderMultipleProgressBars();
 
-  const utilsOne = getTestUtils('lg-progress_bar-1');
-  const utilsTwo = getTestUtils('lg-progress_bar-2');
+  const utilsOne = getTestUtils('lg-progress_bar_1');
+  const utilsTwo = getTestUtils('lg-progress_bar_2');
 
   expect(utilsOne.getBar()).toBeInTheDocument();
   expect(utilsTwo.getBar()).toBeInTheDocument();
