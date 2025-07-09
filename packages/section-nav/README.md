@@ -48,7 +48,7 @@ import {SectionNav, SectionNavItem} from `@leafygreen-ui/section-nav`;
 | Prop        | Type              | Description                                              | Default          |
 | ----------- | ----------------- | -------------------------------------------------------- | ---------------- |
 | `darkMode`  | `boolean`         | Determines if the component will render in dark mode     | `false`          |
-| `data-lgid` | `lg-${string}`    | Custom testid to pass to getTestUtils                    | `lg-section-nav` |
+| `data-lgid` | `lg-${string}`    | Custom testid to pass to getTestUtils                    | `lg-section_nav` |
 | `children`  | `React.ReactNode` | Child elements to render inside the SectionNav component | `null`           |
 
 \+ other HTML `nav` element props
@@ -155,7 +155,7 @@ return (
 ```tsx
 import {getTestUtils} from '@leafygreen-ui/section-nav/testing';
 
-const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `SectionNav`. It defaults to 'lg-section-nav' if left empty.
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `SectionNav`. It defaults to 'lg-section_nav' if left empty.
 
 ```
 
@@ -185,7 +185,7 @@ test('SectionNav', () => {
     findSectionNav,
     getSectionNav,
     querySectionNav,
-    getTitle,
+    getSectionTitle,
     getAllSectionNavItems,
     getSectionNavItemByLabel,
     getActiveSectionNavItem
@@ -207,7 +207,7 @@ const {
   findSectionNav,
   getSectionNav,
   querySectionNav,
-  getTitle,
+  getSectionTitle,
   getAllSectionNavItems,
   getSectionNavItemByLabel,
   getActiveSectionNavItem,
@@ -222,7 +222,7 @@ const {
 | `getAllSectionNavItems()`    | Returns an array of all `<SectionNavItem    />`                                                                                                                       | `() => Array<HTMLAnchorElement>`       |
 | `getSectionNavItemByLabel()` | Returns the `<SectionNavItem />` based on the label                                                                                                                   | `SectionNavItemUtils`                  |
 | `getActiveSectionNavItem()`  | Returns the first active `<SectionNavItem />`                                                                                                                         | `() => HTMLAnchorElement \| undefined` |
-| `getTitle()`                 | Returns the title of the `SectionNav` component                                                                                                                       | `() => HTMLHeadingElement \| null`     |
+| `getSectionTitle()`          | Returns the title of the `SectionNav` component                                                                                                                       | `() => HTMLHeadingElement \| null`     |
 
 ### SectionNavItemUtils
 

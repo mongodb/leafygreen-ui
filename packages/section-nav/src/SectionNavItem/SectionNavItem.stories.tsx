@@ -54,6 +54,11 @@ export const LiveExample: StoryObj<typeof SectionNavItem> = {
   render: ({ darkMode, ...args }) => (
     <SectionNavItem {...args}></SectionNavItem>
   ),
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
 export const Nested: StoryObj<typeof SectionNavItem> = {

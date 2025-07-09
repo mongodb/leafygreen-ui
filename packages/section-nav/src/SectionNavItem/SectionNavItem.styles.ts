@@ -10,7 +10,7 @@ import {
   WEDGE_WIDTH,
 } from './SectionNavItem.constants';
 
-// This component currenly only supports two levels of indentation.
+// This component currently only supports two levels of indentation.
 // If more levels are needed, this function can be extended.
 const getIndentation = (level: number) => {
   if (level === 1) return INDENTATION[1];
@@ -115,7 +115,7 @@ export const getActiveStyles = ({ theme }: { theme: Theme }) => css`
   }
 `;
 
-export const listSyles = css`
+export const listStyles = css`
   padding: 0;
   margin: 0;
 `;

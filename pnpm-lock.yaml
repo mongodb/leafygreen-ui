@@ -2622,6 +2622,9 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens

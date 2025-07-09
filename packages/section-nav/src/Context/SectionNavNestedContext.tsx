@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useMemo,
-} from 'react';
+import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 export interface SectionNavNestedProviderProps {
   /**
@@ -30,11 +25,9 @@ export const SectionNavNestedContextProvider = ({
     SectionNavNestedContext as React.Context<SectionNavNestedProviderProps>
   ).Provider;
 
-  const sectionNavNestedData = useMemo(() => {
-    return {
-      level,
-    };
-  }, [level]);
+  const sectionNavNestedData = {
+    level,
+  };
 
   return (
     <SectionNavNestedProvider value={sectionNavNestedData}>

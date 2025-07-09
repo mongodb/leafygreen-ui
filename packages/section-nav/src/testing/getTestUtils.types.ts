@@ -32,7 +32,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the title element of the SectionNav.
    */
-  getTitle: () => HTMLHeadingElement | null;
+  getSectionTitle: () => HTMLHeadingElement | null;
 
   /**
    * Returns an array of all SectionNavItems
