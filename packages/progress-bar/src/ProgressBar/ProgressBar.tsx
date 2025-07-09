@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { usePrevious } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
@@ -47,7 +48,6 @@ export function ProgressBar(props: ProgressBarProps) {
   const role = type === 'meter' ? 'meter' : 'progressbar';
   const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
 
-  // if progress bar was previously indeterminate and is turning determinate, apply fade-out transition
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
     getAnimationMode({
       type,
@@ -64,6 +64,7 @@ export function ProgressBar(props: ProgressBarProps) {
         enableAnimation,
       });
 
+      // if previously indeterminate and now turning determinate, apply fade-out transition
       if (currentMode === AnimationMode.Indeterminate && !isIndeterminate) {
         return AnimationMode.Transition;
       }
@@ -74,14 +75,13 @@ export function ProgressBar(props: ProgressBarProps) {
 
   // if description is changed, apply fade-in transition
   const [isNewDescription, setIsNewDescription] = useState(false);
-  const prevDescription = useRef(description);
+  const prevDescription = usePrevious(description);
 
   useEffect(() => {
-    if (description !== prevDescription.current) {
+    if (description !== prevDescription) {
       setIsNewDescription(true);
-      prevDescription.current = description;
     }
-  }, [description]);
+  }, [description, prevDescription]);
 
   return (
     <div className={containerStyles} aria-disabled={disabled}>
@@ -129,6 +129,7 @@ export function ProgressBar(props: ProgressBarProps) {
               maxValue,
               animationMode,
             })}
+            // if on fade-out transition, revert back to base mode
             onTransitionEnd={() => {
               if (animationMode === AnimationMode.Transition) {
                 setAnimationMode(
@@ -149,6 +150,7 @@ export function ProgressBar(props: ProgressBarProps) {
           darkMode={darkMode}
           disabled={disabled}
           className={getAnimatedTextStyles(isNewDescription)}
+          // if on fade-in transition, reset state after animation ends
           onAnimationEnd={() => setIsNewDescription(false)}
         >
           {description}
