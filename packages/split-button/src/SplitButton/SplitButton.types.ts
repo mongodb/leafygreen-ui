@@ -130,11 +130,6 @@ export interface InternalSplitButtonProps
    * The text that will appear inside of the primary button.
    */
   label: string;
-
-  /**
-   * A test id put onto the root element.
-   */
-  'data-testid'?: string;
 }
 
 // External only
