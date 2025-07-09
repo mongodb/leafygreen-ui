@@ -37,6 +37,9 @@
       "path": "../lib"
     },
     {
+      "path": "../menu"
+    },
+    {
       "path": "../palette"
     },
     {

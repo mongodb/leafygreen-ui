@@ -17,32 +17,26 @@ type SplitButtonPropsOmittingVariant = Omit<
   InternalSplitButtonProps,
   'variant'
 >;
-type SplitButtonPropsWithRequiredChildren = Required<
-  Pick<InternalSplitButtonProps, 'children'>
->;
 
 type BackStandardButtonProps = ButtonPropsOmittingVariant & {
   variant?: Extract<ButtonVariant, 'default' | 'dangerOutline'>;
 };
-type BackSplitButtonProps = SplitButtonPropsOmittingVariant &
-  SplitButtonPropsWithRequiredChildren & {
-    variant?: Extract<SplitButtonVariant, 'default' | 'danger'>;
-  };
+type BackSplitButtonProps = SplitButtonPropsOmittingVariant & {
+  variant?: Extract<SplitButtonVariant, 'default' | 'danger'>;
+};
 type BackButtonProps = BackStandardButtonProps | BackSplitButtonProps;
 
 type CancelStandardButtonProps = ButtonPropsOmittingVariant;
-type CancelSplitButtonProps = SplitButtonPropsOmittingVariant &
-  SplitButtonPropsWithRequiredChildren;
+type CancelSplitButtonProps = SplitButtonPropsOmittingVariant;
 type CancelButtonProps = CancelStandardButtonProps | CancelSplitButtonProps;
 
 type PrimaryStandardButtonProps = ButtonPropsOmittingVariant &
   ButtonPropsWithRequiredChildren & {
     variant?: Extract<ButtonVariant, 'primary' | 'danger'>;
   };
-type PrimarySplitButtonProps = SplitButtonPropsOmittingVariant &
-  SplitButtonPropsWithRequiredChildren & {
-    variant?: Extract<SplitButtonVariant, 'primary' | 'danger'>;
-  };
+type PrimarySplitButtonProps = SplitButtonPropsOmittingVariant & {
+  variant?: Extract<SplitButtonVariant, 'primary' | 'danger'>;
+};
 type PrimaryButtonProps = PrimaryStandardButtonProps | PrimarySplitButtonProps;
 
 export interface FormFooterProps

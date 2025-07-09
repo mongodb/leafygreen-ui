@@ -5,9 +5,11 @@ import {
   StoryMetaType,
   StoryType,
 } from '@lg-tools/storybook-utils';
+import { StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import { MenuItem } from '@leafygreen-ui/menu';
 
 import FormFooter, { FormFooterProps } from '.';
 
@@ -78,23 +80,43 @@ const Template: StoryType<typeof FormFooter> = ({
   />
 );
 
-export const LiveExample: StoryType<typeof FormFooter> = Template.bind({});
-LiveExample.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+export const LiveExample: StoryObj<FormFooterProps> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+  args: {
+    backButtonProps: { children: 'Back' },
+    cancelButtonProps: { children: 'Cancel' },
   },
 };
-LiveExample.args = {
-  backButtonProps: { children: 'Back' },
-  cancelButtonProps: { children: 'Cancel' },
+
+export const CustomSplitButton: StoryObj<typeof FormFooter> = {
+  render: Template,
+  args: {
+    cancelButtonProps: {
+      label: 'More options',
+      menuItems: [
+        <MenuItem key="0">Menu Item 1</MenuItem>,
+        <MenuItem key="1">Menu Item 2</MenuItem>,
+        <MenuItem key="2">Menu Item 3</MenuItem>,
+      ],
+    },
+  },
 };
 
-export const LightMode: StoryType<typeof FormFooter> = () => <></>;
-LightMode.args = {
-  darkMode: false,
+export const LightMode: StoryObj<typeof FormFooter> = {
+  render: Template,
+  args: {
+    darkMode: false,
+  },
 };
 
-export const DarkMode: StoryType<typeof FormFooter> = () => <></>;
-DarkMode.args = {
-  darkMode: true,
+export const DarkMode: StoryObj<typeof FormFooter> = {
+  render: Template,
+  args: {
+    darkMode: true,
+  },
 };
