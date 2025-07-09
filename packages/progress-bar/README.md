@@ -126,13 +126,10 @@ const totalSpaceAvailable = 128
 #### Single `ProgressBar`
 
 ```tsx
-import {
-  getTestUtils,
-  renderProgressBar,
-} from '@leafygreen-ui/progress-bar/testing';
+import { getTestUtils } from '@leafygreen-ui/progress-bar/testing';
 
 test('renders single progress bar', () => {
-  renderProgressBar();
+  // ...code to render a progress bar
 
   const { getBar } = getTestUtils();
 
@@ -149,7 +146,7 @@ import {
 } from '@leafygreen-ui/progress-bar/testing';
 
 test('renders multiple progress bars', () => {
-  renderMultipleProgressBars();
+  // ...code to render multiple progress bars
 
   const utilsOne = getTestUtils('lg-progress_bar_1');
   const utilsTwo = getTestUtils('lg-progress_bar_2');
