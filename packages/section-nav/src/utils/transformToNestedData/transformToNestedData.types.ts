@@ -1,4 +1,4 @@
-// Types of data supported by the getTransformToNestedData function
+// Types of data supported by the transformToNestedData function
 export const TransformDataType = {
   FlatLevel: 'flatLevel',
 } as const;
@@ -12,7 +12,7 @@ export type FlatLevelData = Array<{
   [key: string]: any; // Allows for additional properties
 }>;
 
-// The sturture of each item in the nested data
+// The structure of each item in the nested data
 export interface NestedDataItem {
   children: Array<NestedDataItem>;
   [key: string]: any; // Allows for additional properties
@@ -22,12 +22,12 @@ export interface NestedDataItem {
 export type NestedData = Array<NestedDataItem>;
 
 // If we introduce more data types, we can make this a discriminated union
-export interface GetTransformToNestedDataArgs {
+export interface TransformToNestedDataArgs {
   data: FlatLevelData;
   type: typeof TransformDataType.FlatLevel;
 }
 
 // Signature type that transforms flat data to nested data
-export type GetTransformToNestedDataReturn = (
-  args: GetTransformToNestedDataArgs,
+export type TransformToNestedDataReturn = (
+  args: TransformToNestedDataArgs,
 ) => NestedData;

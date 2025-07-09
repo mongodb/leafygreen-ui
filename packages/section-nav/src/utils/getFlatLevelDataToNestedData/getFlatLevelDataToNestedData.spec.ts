@@ -3,7 +3,7 @@ import { renderHook } from '@leafygreen-ui/testing-lib';
 import {
   FlatLevelData,
   NestedData,
-} from '../getTransformToNestedData/getTransformToNestedData.types';
+} from '../transformToNestedData/transformToNestedData.types';
 
 import { getFlatLevelDataToNestedData } from './getFlatLevelDataToNestedData';
 

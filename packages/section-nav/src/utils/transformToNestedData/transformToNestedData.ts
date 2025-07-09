@@ -1,9 +1,9 @@
 import { getFlatLevelDataToNestedData } from '../getFlatLevelDataToNestedData';
 
 import {
-  GetTransformToNestedDataReturn,
   TransformDataType,
-} from './getTransformToNestedData.types';
+  TransformToNestedDataReturn,
+} from './transformToNestedData.types';
 
 /**
  * Converts data into a nested tree structure.
@@ -12,7 +12,7 @@ import {
  * @returns A nested data structure where each item can have `children`, determined by its level.
  *
  */
-export const getTransformToNestedData: GetTransformToNestedDataReturn = ({
+export const transformToNestedData: TransformToNestedDataReturn = ({
   type,
   data,
 }) => {

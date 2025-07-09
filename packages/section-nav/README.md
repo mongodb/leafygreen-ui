@@ -66,7 +66,7 @@ import {SectionNav, SectionNavItem} from `@leafygreen-ui/section-nav`;
 
 \+ other HTML `a` element props
 
-## `getTranformToNestedData`
+## `transformToNestedData`
 
 The recommended way to use `SectionNav` is to map through a nested data structure and render `SectionNavItem` components based on that data.
 
@@ -87,7 +87,7 @@ const data = [
 ];
 ```
 
-The `getTranformToNestedData` utility function is provided to help with this transformation.
+The `transformToNestedData` utility function is provided to help with this transformation.
 
 Currently, it supports transforming a flat array of objects with key-value pairs into a nested structure based on a **required** `level` key.
 
@@ -103,7 +103,7 @@ const flatLevelInput = [
   { level: 1, id: '#usage', label: 'Usage' },
 ];
 
-const { nestedData } = getTranformToNestedData({
+const nestedData = transformToNestedData({
   type: 'flatLevel',
   data: flatLevelInput,
 });

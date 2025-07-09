@@ -2,7 +2,7 @@ import {
   FlatLevelData,
   NestedData,
   NestedDataItem,
-} from '../getTransformToNestedData/getTransformToNestedData.types';
+} from '../transformToNestedData/transformToNestedData.types';
 
 /**
  * Converts a flat array of items with level information into a nested tree structure.

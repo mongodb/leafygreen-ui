@@ -2,14 +2,14 @@ import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { getFlatLevelDataToNestedData } from '../getFlatLevelDataToNestedData';
 
-import { getTransformToNestedData } from './getTransformToNestedData';
-import { FlatLevelData } from './getTransformToNestedData.types';
+import { transformToNestedData } from './transformToNestedData';
+import { FlatLevelData } from './transformToNestedData.types';
 
 jest.mock('../getFlatLevelDataToNestedData', () => ({
   getFlatLevelDataToNestedData: jest.fn(),
 }));
 
-describe('getTransformToNestedData', () => {
+describe('transformToNestedData', () => {
   // Reset mocks before each test
   beforeEach(() => {
     jest.clearAllMocks();
@@ -24,7 +24,7 @@ describe('getTransformToNestedData', () => {
 
     // Call the function through our test hook
     renderHook(() =>
-      getTransformToNestedData({
+      transformToNestedData({
         type: 'flatLevel',
         data: flatLevelInput,
       }),
@@ -38,7 +38,7 @@ describe('getTransformToNestedData', () => {
     const renderWithInvalidType = () => {
       renderHook(() =>
         // @ts-expect-error Testing with invalid type
-        getTransformToNestedData({ type: 'invalidType', data: {} }),
+        transformToNestedData({ type: 'invalidType', data: {} }),
       );
     };
 
