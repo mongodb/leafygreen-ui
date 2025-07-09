@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
+import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import { iconsPendingCompletion } from '../constants';
@@ -78,7 +78,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
   useEffect(() => {
     // if description is changed, apply fade-in transition
-    if (description !== prevDescription) {
+    if (isDefined(prevDescription) && description !== prevDescription) {
       setIsNewDescription(true);
     }
   }, [description, prevDescription]);
