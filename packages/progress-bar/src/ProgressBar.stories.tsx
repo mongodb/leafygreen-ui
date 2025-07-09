@@ -83,7 +83,9 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       control: { type: 'boolean' },
     },
     maxValue: {
-      if: { arg: 'isIndeterminate', neq: true }, // TODO: FIX THIS FOR METERS
+      // if: { arg: 'type', eq: Type.Meter } OR { arg: 'isIndeterminate', eq: false }, // TODO: not supported
+      description:
+        '**Not available** if both type=loader and isIndeterminate=true',
       control: { type: 'number' },
     },
     variant: {
@@ -97,12 +99,9 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       options: [...METER_STATUSES, undefined],
     },
     enableAnimation: {
-      if: {
-        and: [
-          { arg: 'isIndeterminate', eq: false },
-          { arg: 'type', eq: Type.Loader }, // TODO: FIX THIS FOR METERS
-        ],
-      },
+      // if: { arg: 'type', neq: Type.Meter } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
+      description:
+        '**Not available** if either type="meter" or isIndeterminate=true',
       control: { type: 'boolean' },
     },
   },
