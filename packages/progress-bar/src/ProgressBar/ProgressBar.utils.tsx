@@ -4,6 +4,7 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { isDefined } from '@leafygreen-ui/lib';
 
 import { DEFAULT_COLOR, DEFAULT_MAX_VALUE } from '../constants';
 
@@ -119,6 +120,10 @@ export const getFormattedValue = (
 
   switch (formatValue) {
     case 'fraction':
+      if (!isDefined(maxValue)) {
+        return value.toString();
+      }
+
       return `${value}/${maxValue}`;
     case 'percentage':
       return `${getPercentage(value, maxValue)}%`;
