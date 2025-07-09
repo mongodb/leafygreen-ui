@@ -1,47 +1,79 @@
-import { BaseButtonProps, type Variant } from '@leafygreen-ui/button';
+import {
+  BaseButtonProps,
+  type Variant as ButtonVariant,
+} from '@leafygreen-ui/button';
 import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import {
+  InternalSplitButtonProps,
+  type Variant as SplitButtonVariant,
+} from '@leafygreen-ui/split-button';
 
 type ButtonPropsOmittingVariant = Omit<BaseButtonProps, 'variant'>;
 type ButtonPropsWithRequiredChildren = Required<
   Pick<BaseButtonProps, 'children'>
 >;
 
-export type CustomCancelButtonProps = ButtonPropsOmittingVariant;
-export type CustomBackButtonProps = ButtonPropsOmittingVariant & {
-  variant?: Extract<Variant, 'default' | 'dangerOutline'>;
+type SplitButtonPropsOmittingVariant = Omit<
+  InternalSplitButtonProps,
+  'variant'
+>;
+type SplitButtonPropsWithRequiredChildren = Required<
+  Pick<InternalSplitButtonProps, 'children'>
+>;
+
+type BackStandardButtonProps = ButtonPropsOmittingVariant & {
+  variant?: Extract<ButtonVariant, 'default' | 'dangerOutline'>;
 };
-export type CustomPrimaryButtonProps = ButtonPropsOmittingVariant &
-  ButtonPropsWithRequiredChildren & {
-    variant?: Extract<Variant, 'primary' | 'danger'>;
+type BackSplitButtonProps = SplitButtonPropsOmittingVariant &
+  SplitButtonPropsWithRequiredChildren & {
+    variant?: Extract<SplitButtonVariant, 'default' | 'danger'>;
   };
+type BackButtonProps = BackStandardButtonProps | BackSplitButtonProps;
+
+type CancelStandardButtonProps = ButtonPropsOmittingVariant;
+type CancelSplitButtonProps = SplitButtonPropsOmittingVariant &
+  SplitButtonPropsWithRequiredChildren;
+type CancelButtonProps = CancelStandardButtonProps | CancelSplitButtonProps;
+
+type PrimaryStandardButtonProps = ButtonPropsOmittingVariant &
+  ButtonPropsWithRequiredChildren & {
+    variant?: Extract<ButtonVariant, 'primary' | 'danger'>;
+  };
+type PrimarySplitButtonProps = SplitButtonPropsOmittingVariant &
+  SplitButtonPropsWithRequiredChildren & {
+    variant?: Extract<SplitButtonVariant, 'primary' | 'danger'>;
+  };
+type PrimaryButtonProps = PrimaryStandardButtonProps | PrimarySplitButtonProps;
 
 export interface FormFooterProps
   extends HTMLElementProps<'footer'>,
     DarkModeProps,
     LgIdProps {
   /**
-   * The primary (right-most) button.
-   * An object that accepts all `Button` props but `variant` is limited to `primary` and `danger`
+   * The back button, the left-most button, will only appear if backButtonProps is defined.
+   * An object that accepts one of the following:
+   * - `Button` props but `variant` is limited to `'default'` and `'dangerOutline'`
+   * - `SplitButton` props but `variant` is limited to `'default'` and `'danger'`
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  primaryButtonProps?: CustomPrimaryButtonProps;
+  backButtonProps?: BackButtonProps;
 
   /**
    * The cancel button, to the left of the primary button, will only appear if cancelButtonProps is defined.
-   * An object that accepts all `Button` props except for the `variant` prop. The variant is `default`.
+   * An object that accepts one of the following:
+   * - `Button` props except for the `variant` prop. The variant is `'default'`.
+   * - `SplitButton` props except for the `variant` prop. The variant is `'default'`.
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  cancelButtonProps?: CustomCancelButtonProps;
+  cancelButtonProps?: CancelButtonProps;
 
   /**
-   * The back button, the left-most button, will only appear if backButtonProps is defined.
-   * An object that accepts all `Button` props but `variant` is limited to `default` and `dangerOutline`
-   *
-   * darkMode is handled internally so you do not have to pass the darkMode prop.
+   * Styling prop for the first child <div> of <footer>
+   * Useful for setting left and right margins, or max-width
    */
-  backButtonProps?: CustomBackButtonProps;
+  contentClassName?: string;
 
   /**
    * Text within the error banner. The banner will only appear if an error message is defined.
@@ -49,8 +81,12 @@ export interface FormFooterProps
   errorMessage?: string;
 
   /**
-   * Styling prop for the first child <div> of <footer>
-   * Useful for setting left and right margins, or max-width
+   * The primary (right-most) button.
+   * An object that accepts one of the following:
+   * - `Button` props but `variant` is limited to `'primary'` and `'danger'`
+   * - `SplitButton` props but `variant` is limited to `'primary'` and `'danger'`
+   *
+   * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  contentClassName?: string;
+  primaryButtonProps: PrimaryButtonProps;
 }
