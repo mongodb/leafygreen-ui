@@ -5,7 +5,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
-import { ICONS_PENDING_COMPLETION } from '../constants';
+import { iconsPendingCompletion } from '../constants';
 
 import {
   containerStyles,
@@ -40,7 +40,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const { theme } = useDarkMode(darkMode);
 
-  const showIcon = ICONS_PENDING_COMPLETION.includes(color)
+  const showIcon = iconsPendingCompletion.includes(color)
     ? showIconProp && value === maxValue
     : showIconProp;
 
@@ -73,11 +73,11 @@ export function ProgressBar(props: ProgressBarProps) {
     });
   }, [type, isIndeterminate, enableAnimation]);
 
-  // if description is changed, apply fade-in transition
   const [isNewDescription, setIsNewDescription] = useState(false);
   const prevDescription = usePrevious(description);
 
   useEffect(() => {
+    // if description is changed, apply fade-in transition
     if (description !== prevDescription) {
       setIsNewDescription(true);
     }
