@@ -10,27 +10,23 @@ describe('getTestUtils', () => {
     render(
       <ProgressBar
         type="loader"
-        value={50}
+        value={0.5}
         label="My Progress"
         formatValue="number"
         showIcon
       />,
     );
 
-    const {
-      queryLoader,
-      queryMeter,
-      getBarFill,
-      getBarTrack,
-      queryIcon,
-      queryLabel,
-    } = getTestUtils();
+    const { getBar, getBarFill, getBarTrack, queryIcon, queryLabel } =
+      getTestUtils();
 
-    expect(queryLoader()).toBeInTheDocument();
-    expect(queryMeter()).toBeNull();
+    expect(getBar()).toBeInTheDocument();
+    expect(getBar()).toHaveAttribute('role', 'progressbar');
 
     expect(getBarFill()).toBeInTheDocument();
+    expect(getBarFill()).toHaveStyle({ width: '50%' });
     expect(getBarTrack()).toBeInTheDocument();
+
     expect(queryIcon()).toBeInTheDocument();
     expect(queryLabel()).toBeInTheDocument();
   });
@@ -39,26 +35,22 @@ describe('getTestUtils', () => {
     render(
       <ProgressBar
         type="meter"
-        value={50}
-        description="Yada yada..."
+        value={0.5}
+        description="Sample description"
         formatValue="number"
       />,
     );
 
-    const {
-      queryLoader,
-      queryMeter,
-      getBarFill,
-      getBarTrack,
-      queryIcon,
-      queryDescription,
-    } = getTestUtils();
+    const { getBar, getBarFill, getBarTrack, queryIcon, queryDescription } =
+      getTestUtils();
 
-    expect(queryLoader()).toBeNull();
-    expect(queryMeter()).toBeInTheDocument();
+    expect(getBar()).toBeInTheDocument();
+    expect(getBar()).toHaveAttribute('role', 'meter');
 
     expect(getBarFill()).toBeInTheDocument();
+    expect(getBarFill()).toHaveStyle({ width: '50%' });
     expect(getBarTrack()).toBeInTheDocument();
+
     expect(queryIcon()).toBeNull();
     expect(queryDescription()).toBeInTheDocument();
   });
@@ -68,14 +60,14 @@ describe('getTestUtils', () => {
       <>
         <ProgressBar
           type="loader"
-          value={30}
+          value={0.3}
           label="First Progress"
           formatValue="number"
           data-lgid="lg-progress-1"
         />
         <ProgressBar
           type="meter"
-          value={70}
+          value={0.7}
           label="Second Progress"
           formatValue="number"
           data-lgid="lg-progress-2"
@@ -86,13 +78,13 @@ describe('getTestUtils', () => {
     const first = getTestUtils('lg-progress-1');
     const second = getTestUtils('lg-progress-2');
 
-    expect(first.queryLoader()).toBeInTheDocument();
-    expect(first.queryMeter()).toBeNull();
+    expect(first.getBar()).toBeInTheDocument();
+    expect(first.getBar()).toHaveAttribute('role', 'progressbar');
     expect(first.getBarFill()).toBeInTheDocument();
     expect(first.getBarTrack()).toBeInTheDocument();
 
-    expect(second.queryLoader()).toBeNull();
-    expect(second.queryMeter()).toBeInTheDocument();
+    expect(second.getBar()).toBeInTheDocument();
+    expect(second.getBar()).toHaveAttribute('role', 'meter');
     expect(second.getBarFill()).toBeInTheDocument();
     expect(second.getBarTrack()).toBeInTheDocument();
   });

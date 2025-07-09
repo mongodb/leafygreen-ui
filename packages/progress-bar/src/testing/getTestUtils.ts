@@ -24,10 +24,11 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
 
   const getContainer = () => getByLgId!<T>(lgIds.root);
 
-  const queryLoader = () =>
-    within(getContainer()).queryByRole('progressbar') as T | null;
-  const queryMeter = () =>
-    within(getContainer()).queryByRole('meter') as T | null;
+  const getBar = () => {
+    const container = getContainer();
+    return (within(container).queryByRole('progressbar') ??
+      within(container).queryByRole('meter')) as T;
+  };
 
   const getBarFill = () => getByLgId!<T>(lgIds.fill);
   const getBarTrack = () => getByLgId!<T>(lgIds.track);
@@ -40,9 +41,7 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
   return {
     getContainer,
 
-    queryLoader,
-    queryMeter,
-
+    getBar,
     getBarFill,
     getBarTrack,
 

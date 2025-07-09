@@ -134,9 +134,9 @@ import {
 test('renders single progress bar', () => {
   renderProgressBar();
 
-  const { getContainer } = getTestUtils();
+  const { getBar } = getTestUtils();
 
-  expect(getContainer()).toBeInTheDocument();
+  expect(getBar()).toBeInTheDocument();
 });
 ```
 
@@ -154,8 +154,8 @@ test('renders multiple progress bars', () => {
   const utilsOne = getTestUtils('lg-progress_bar-1');
   const utilsTwo = getTestUtils('lg-progress_bar-2');
 
-  expect(utilsOne.getContainer()).toBeInTheDocument();
-  expect(utilsTwo.getContainer()).toBeInTheDocument();
+  expect(utilsOne.getBar()).toBeInTheDocument();
+  expect(utilsTwo.getBar()).toBeInTheDocument();
 });
 ```
 
@@ -164,8 +164,7 @@ test('renders multiple progress bars', () => {
 ```tsx
 const {
   getContainer,
-  queryLoader,
-  queryMeter,
+  getBar,
   getBarFill,
   getBarTrack,
   queryIcon,
@@ -175,14 +174,13 @@ const {
 } = getTestUtils();
 ```
 
-| Util               | Description                                                                     | Returns                  |
-| ------------------ | ------------------------------------------------------------------------------- | ------------------------ |
-| `getContainer`     | Returns the root element containing the progress bar and all accompanying text. | `HTMLDivElement \| null` |
-| `queryLoader`      | Returns the element with role 'progressbar', if present.                        | `HTMLDivElement \| null` |
-| `queryMeter`       | Returns the element with role 'meter', if present.                              | `HTMLDivElement \| null` |
-| `getBarFill`       | Returns the fill element of the bar.                                            | `HTMLDivElement \| null` |
-| `getBarTrack`      | Returns the track element of the bar.                                           | `HTMLDivElement \| null` |
-| `queryIcon`        | Returns the icon element, if present.                                           | `HTMLDivElement \| null` |
-| `queryLabel`       | Returns the label element, if present.                                          | `HTMLDivElement \| null` |
-| `queryDescription` | Returns the description element, if present.                                    | `HTMLDivElement \| null` |
-| `queryValueText`   | Returns the value text element, if present.                                     | `HTMLDivElement \| null` |
+| Util               | Description                                                                                                        | Returns                  |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------ |
+| `getContainer`     | Returns the root element containing the progress bar and all accompanying text.                                    | `HTMLDivElement`         |
+| `getBar`           | Returns the progress bar element, which can be either a loader (`role="progressbar"`) or a meter (`role="meter"`). | `HTMLDivElement`         |
+| `getBarFill`       | Returns the fill element of the progress bar.                                                                      | `HTMLDivElement`         |
+| `getBarTrack`      | Returns the track element of the progress bar.                                                                     | `HTMLDivElement`         |
+| `queryIcon`        | Returns the icon element, if present.                                                                              | `HTMLDivElement \| null` |
+| `queryLabel`       | Returns the label element, if present.                                                                             | `HTMLDivElement \| null` |
+| `queryDescription` | Returns the description element, if present.                                                                       | `HTMLDivElement \| null` |
+| `queryValueText`   | Returns the value text element, if present.                                                                        | `HTMLDivElement \| null` |
