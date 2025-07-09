@@ -57,11 +57,20 @@ export function ProgressBar(props: ProgressBarProps) {
   );
 
   useEffect(() => {
-    if (animationMode === AnimationMode.Indeterminate && !isIndeterminate) {
-      setAnimationMode(AnimationMode.Transition);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isIndeterminate]);
+    setAnimationMode(currentMode => {
+      const newMode = getAnimationMode({
+        type,
+        isIndeterminate,
+        enableAnimation,
+      });
+
+      if (currentMode === AnimationMode.Indeterminate && !isIndeterminate) {
+        return AnimationMode.Transition;
+      }
+
+      return currentMode === newMode ? currentMode : newMode;
+    });
+  }, [type, isIndeterminate, enableAnimation]);
 
   // if description is changed, apply fade-in transition
   const [isNewDescription, setIsNewDescription] = useState(false);

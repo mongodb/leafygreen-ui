@@ -83,7 +83,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       control: { type: 'boolean' },
     },
     maxValue: {
-      if: { arg: 'isIndeterminate', neq: true },
+      if: { arg: 'isIndeterminate', neq: true }, // TODO: FIX THIS FOR METERS
       control: { type: 'number' },
     },
     variant: {
@@ -99,8 +99,8 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     enableAnimation: {
       if: {
         and: [
-          { arg: 'type', eq: Type.Loader },
           { arg: 'isIndeterminate', eq: false },
+          { arg: 'type', eq: Type.Loader }, // TODO: FIX THIS FOR METERS
         ],
       },
       control: { type: 'boolean' },
@@ -116,6 +116,7 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     showIcon: true,
     label: 'Label',
     description: 'Helper text',
+    isIndeterminate: false,
   },
 };
 
