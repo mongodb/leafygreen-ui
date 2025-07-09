@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 import { expect, waitFor, within } from '@storybook/test';
 
@@ -31,13 +32,14 @@ const DynamicProgressBar = ({
   return <ProgressBar {...currentProps} />;
 };
 
-export default {
+const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar/Interactions',
   component: ProgressBar,
   parameters: {
     default: 'LiveExample',
   },
 };
+export default meta;
 
 export const WithChangingValue: StoryObj<typeof ProgressBar> = {
   args: {

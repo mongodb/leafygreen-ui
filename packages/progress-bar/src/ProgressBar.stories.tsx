@@ -4,6 +4,7 @@ import { StoryObj } from '@storybook/react';
 
 import {
   AnimatedLoaderVariant,
+  FormatValueType,
   LoaderVariant,
   MeterStatus,
   ProgressBar,
@@ -23,7 +24,9 @@ const defaultArgs: ProgressBarProps = {
   maxValue: testValues.maxValue,
 };
 
+const TYPES = Object.values(Type);
 const SIZES = Object.values(Size);
+const FORMAT_VALUE_TYPES = Object.values(FormatValueType);
 const LOADER_VARIANTS = Object.values(LoaderVariant);
 const ANIMATED_LOADER_VARIANTS = Object.values(AnimatedLoaderVariant);
 const METER_STATUSES = Object.values(MeterStatus);
@@ -56,6 +59,53 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       },
     },
   },
+  argTypes: {
+    type: {
+      control: { type: 'select' },
+      options: TYPES,
+    },
+    size: {
+      control: { type: 'select' },
+      options: SIZES,
+    },
+    label: {
+      control: { type: 'text' },
+    },
+    description: {
+      control: { type: 'text' },
+    },
+    formatValue: {
+      control: { type: 'select' },
+      options: [...FORMAT_VALUE_TYPES, undefined],
+    },
+    isIndeterminate: {
+      if: { arg: 'type', eq: Type.Loader },
+      control: { type: 'boolean' },
+    },
+    maxValue: {
+      if: { arg: 'isIndeterminate', neq: true },
+      control: { type: 'number' },
+    },
+    variant: {
+      if: { arg: 'type', eq: Type.Loader },
+      control: { type: 'select' },
+      options: [...LOADER_VARIANTS, undefined],
+    },
+    status: {
+      if: { arg: 'type', eq: Type.Meter },
+      control: { type: 'select' },
+      options: [...METER_STATUSES, undefined],
+    },
+    enableAnimation: {
+      if: {
+        and: [
+          { arg: 'type', eq: Type.Loader },
+          { arg: 'isIndeterminate', eq: false },
+        ],
+      },
+      control: { type: 'boolean' },
+    },
+  },
 };
 export default meta;
 
@@ -64,15 +114,15 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     ...defaultArgs,
     formatValue: 'fraction',
     showIcon: true,
-    label: <span>Label</span>,
-    description: <span>Helper text</span>,
+    label: 'Label',
+    description: 'Helper text',
   },
 };
 
 export const WithLabel: StoryObj<typeof ProgressBar> = {
   args: {
     ...defaultArgs,
-    label: <span>Label</span>,
+    label: 'Label',
   },
 };
 
@@ -86,7 +136,7 @@ export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
 export const WithDescription: StoryObj<typeof ProgressBar> = {
   args: {
     ...defaultArgs,
-    description: <span>Helper text</span>,
+    description: 'Helper text',
   },
 };
 
