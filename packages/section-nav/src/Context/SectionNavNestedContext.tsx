@@ -30,11 +30,9 @@ export const SectionNavNestedContextProvider = ({
     SectionNavNestedContext as React.Context<SectionNavNestedProviderProps>
   ).Provider;
 
-  const sectionNavNestedData = useMemo(() => {
-    return {
-      level,
-    };
-  }, [level]);
+  const sectionNavNestedData = {
+    level,
+  };
 
   return (
     <SectionNavNestedProvider value={sectionNavNestedData}>

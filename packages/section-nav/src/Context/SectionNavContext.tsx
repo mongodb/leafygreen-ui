@@ -17,9 +17,7 @@ export const SectionNavContext = createContext<SectionNavProviderProps>({
 });
 
 export const useSectionNavContext = () =>
-  useContext<SectionNavProviderProps>(
-    SectionNavContext as React.Context<SectionNavProviderProps>,
-  );
+  useContext<SectionNavProviderProps>(SectionNavContext);
 
 export const SectionNavContextProvider = ({
   children,
@@ -27,20 +25,16 @@ export const SectionNavContextProvider = ({
   hasContext,
   darkMode = false,
 }: PropsWithChildren<SectionNavProviderProps>) => {
-  const SectionNavProvider = (
-    SectionNavContext as React.Context<SectionNavProviderProps>
-  ).Provider;
+  const SectionNavProvider = SectionNavContext.Provider;
 
-  const SectionNavProviderData = useMemo(() => {
-    return {
-      lgIds,
-      hasContext,
-    };
-  }, [hasContext, lgIds]);
+  const sectionNavProviderData = {
+    lgIds,
+    hasContext,
+  };
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <SectionNavProvider value={SectionNavProviderData}>
+      <SectionNavProvider value={sectionNavProviderData}>
         {children}
       </SectionNavProvider>
     </LeafyGreenProvider>

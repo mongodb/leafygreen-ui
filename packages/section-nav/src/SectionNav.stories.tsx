@@ -50,6 +50,11 @@ export default {
 
 export const LiveExample: StoryObj<typeof SectionNav> = {
   render: args => <SectionNav {...args}></SectionNav>,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
 export const LightMode: StoryObj<typeof SectionNav> = {
