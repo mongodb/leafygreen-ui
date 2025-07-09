@@ -30,7 +30,7 @@ export const getTestUtils = (
   /**
    * Returns the title element of the SectionNav.
    */
-  const getTitle = () => {
+  const getSectionTitle = () => {
     const element = getSectionNav();
     return element.querySelector<HTMLParagraphElement>(
       `[data-lgid=${lgIds.title}]`,
@@ -84,7 +84,7 @@ export const getTestUtils = (
     findSectionNav,
     getSectionNav,
     querySectionNav,
-    getTitle: () => getTitle(),
+    getSectionTitle: () => getSectionTitle(),
     getAllSectionNavItems: () => getAllSectionNavItems(),
     getSectionNavItemByLabel: (label: string) =>
       getSectionNavItemByLabel(label),

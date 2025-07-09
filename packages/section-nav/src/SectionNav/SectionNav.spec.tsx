@@ -17,8 +17,8 @@ describe('packages/section-nav', () => {
 
   test('renders the title', async () => {
     renderSectionNav({ title: 'On this page' });
-    const { getTitle } = getTestUtils();
-    expect(getTitle()?.textContent).toBe('On this page');
+    const { getSectionTitle } = getTestUtils();
+    expect(getSectionTitle()?.textContent).toBe('On this page');
   });
 
   test('renders the correct number of items', () => {

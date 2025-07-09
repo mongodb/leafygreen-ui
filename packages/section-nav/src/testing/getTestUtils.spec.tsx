@@ -74,14 +74,14 @@ describe('packages/section-nav/getTestUtils', () => {
     describe('getTitle', () => {
       test('returns the title element', () => {
         renderSectionNav({ title: 'On this page' });
-        const { getTitle } = getTestUtils();
-        expect(getTitle()?.textContent).toBe('On this page');
+        const { getSectionTitle } = getTestUtils();
+        expect(getSectionTitle()?.textContent).toBe('On this page');
       });
 
       test('returns null', () => {
         renderSectionNav({});
-        const { getTitle } = getTestUtils();
-        expect(getTitle()).toBeNull();
+        const { getSectionTitle } = getTestUtils();
+        expect(getSectionTitle()).toBeNull();
       });
     });
 

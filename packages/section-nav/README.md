@@ -107,7 +107,7 @@ test('SectionNav', () => {
     findSectionNav,
     getSectionNav,
     querySectionNav,
-    getTitle,
+    getSectionTitle,
     getAllSectionNavItems,
     getSectionNavItemByLabel,
     getActiveSectionNavItem
@@ -129,7 +129,7 @@ const {
   findSectionNav,
   getSectionNav,
   querySectionNav,
-  getTitle,
+  getSectionTitle,
   getAllSectionNavItems,
   getSectionNavItemByLabel,
   getActiveSectionNavItem,
@@ -144,7 +144,7 @@ const {
 | `getAllSectionNavItems()`    | Returns an array of all `<SectionNavItem    />`                                                                                                                       | `() => Array<HTMLAnchorElement>`       |
 | `getSectionNavItemByLabel()` | Returns the `<SectionNavItem />` based on the label                                                                                                                   | `SectionNavItemUtils`                  |
 | `getActiveSectionNavItem()`  | Returns the first active `<SectionNavItem />`                                                                                                                         | `() => HTMLAnchorElement \| undefined` |
-| `getTitle()`                 | Returns the title of the `SectionNav` component                                                                                                                       | `() => HTMLHeadingElement \| null`     |
+| `getSectionTitle()`          | Returns the title of the `SectionNav` component                                                                                                                       | `() => HTMLHeadingElement \| null`     |
 
 ### SectionNavItemUtils
 
