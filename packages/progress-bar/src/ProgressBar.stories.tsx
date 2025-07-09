@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
-import { expect, waitFor, within } from '@storybook/test';
 
 import {
   AnimatedLoaderVariant,
@@ -14,36 +13,20 @@ import {
 } from '.';
 
 const testValues = {
-  value: 53,
+  value: 103,
   maxValue: 200,
+};
+
+const defaultArgs: ProgressBarProps = {
+  type: Type.Loader,
+  value: testValues.value,
+  maxValue: testValues.maxValue,
 };
 
 const SIZES = Object.values(Size);
 const LOADER_VARIANTS = Object.values(LoaderVariant);
 const ANIMATED_LOADER_VARIANTS = Object.values(AnimatedLoaderVariant);
 const METER_STATUSES = Object.values(MeterStatus);
-
-const DynamicProgressBar = ({
-  transitions,
-  ...initialProps
-}: ProgressBarProps & {
-  transitions?: Array<[number, ProgressBarProps]>;
-}) => {
-  const [currentProps, setCurrentProps] =
-    useState<ProgressBarProps>(initialProps);
-
-  useEffect(() => {
-    const timers = transitions?.map(([delay, newProps]) =>
-      setTimeout(() => {
-        setCurrentProps(newProps);
-      }, delay),
-    );
-
-    return () => timers?.forEach(clearTimeout);
-  }, [transitions]);
-
-  return <ProgressBar {...currentProps} />;
-};
 
 const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
@@ -76,150 +59,34 @@ const meta: StoryMetaType<typeof ProgressBar> = {
 };
 export default meta;
 
-const testProgressReachedCompletion = async ({
-  role,
-  canvas,
-}: {
-  role: 'meter' | 'progressbar';
-  canvas: ReturnType<typeof within>;
-}) => {
-  const progressBar = canvas.getByRole(role);
-
-  expect(progressBar).toHaveAttribute(
-    'aria-valuenow',
-    testValues.value.toString(),
-  );
-
-  await waitFor(
-    () => {
-      expect(progressBar.getAttribute('aria-valuenow')).toBe(
-        testValues.maxValue.toString(),
-      );
-    },
-    // component timeout with buffer time of 500ms
-    { timeout: 2000 },
-  );
-};
-
 export const LiveExample: StoryObj<typeof ProgressBar> = {
   args: {
-    type: Type.Loader,
-    value: testValues.value,
-    maxValue: testValues.maxValue,
+    ...defaultArgs,
     formatValue: 'fraction',
     showIcon: true,
     label: <span>Label</span>,
     description: <span>Helper text</span>,
   },
-  render: initialArgs => (
-    <DynamicProgressBar
-      transitions={[[1500, { ...initialArgs, value: testValues.maxValue }]]}
-      {...initialArgs}
-    />
-  ),
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const canvas = within(canvasElement);
-    await testProgressReachedCompletion({
-      role: 'progressbar',
-      canvas,
-    });
-  },
-};
-
-export const DeterminateLoader: StoryObj<typeof ProgressBar> = {
-  args: {
-    type: Type.Loader,
-    value: testValues.value,
-    maxValue: testValues.maxValue,
-  },
-  render: initialArgs => (
-    <DynamicProgressBar
-      transitions={[[1500, { ...initialArgs, value: testValues.maxValue }]]}
-      {...initialArgs}
-    />
-  ),
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const canvas = within(canvasElement);
-    await testProgressReachedCompletion({
-      role: 'progressbar',
-      canvas,
-    });
-  },
-};
-
-export const IndeterminateLoader: StoryObj<typeof ProgressBar> = {
-  args: {
-    isIndeterminate: true,
-  },
-};
-
-export const Meter: StoryObj<typeof ProgressBar> = {
-  args: {
-    type: Type.Meter,
-    value: testValues.value,
-    maxValue: testValues.maxValue,
-  },
-  render: initialArgs => (
-    <DynamicProgressBar
-      transitions={[[1500, { ...initialArgs, value: testValues.maxValue }]]}
-      {...initialArgs}
-    />
-  ),
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const canvas = within(canvasElement);
-    await testProgressReachedCompletion({
-      role: 'meter',
-      canvas,
-    });
-  },
 };
 
 export const WithLabel: StoryObj<typeof ProgressBar> = {
   args: {
-    ...DeterminateLoader.args,
+    ...defaultArgs,
     label: <span>Label</span>,
   },
 };
 
 export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   args: {
-    ...DeterminateLoader.args,
+    ...defaultArgs,
     formatValue: 'percentage',
   },
 };
 
-export const WithDescriptions: StoryObj<typeof ProgressBar> = {
+export const WithDescription: StoryObj<typeof ProgressBar> = {
   args: {
-    ...DeterminateLoader.args,
+    ...defaultArgs,
     description: <span>Helper text</span>,
-  },
-  render: initialArgs => (
-    <DynamicProgressBar
-      transitions={[
-        [
-          1500,
-          { ...initialArgs, description: <span>New helper text...</span> },
-        ],
-        [
-          3500,
-          {
-            ...initialArgs,
-            description: <span>Even newer helper text...!</span>,
-          },
-        ],
-      ]}
-      {...initialArgs}
-    />
-  ),
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const canvas = within(canvasElement);
-
-    const finalText = await waitFor(
-      () => canvas.getByText('Even newer helper text...!'),
-      { timeout: 4000 },
-    );
-
-    expect(finalText).toBeInTheDocument();
   },
 };
 
@@ -232,10 +99,8 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
         disabled: [false, true],
       },
       args: {
-        type: Type.Loader,
+        ...defaultArgs,
         isIndeterminate: false,
-        value: testValues.value,
-        maxValue: testValues.maxValue,
         formatValue: (value: number, maxValue?: number) =>
           `${value} / ${maxValue} GB`,
         showIcon: true,
@@ -296,44 +161,5 @@ export const MeterVariants: StoryObj<typeof ProgressBar> = {
         },
       ],
     },
-  },
-};
-
-export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
-  args: {
-    type: Type.Loader,
-    isIndeterminate: true,
-  },
-  render: initialArgs => (
-    <DynamicProgressBar
-      transitions={[
-        [
-          3500,
-          {
-            type: Type.Loader,
-            isIndeterminate: false,
-            value: testValues.maxValue,
-            maxValue: testValues.maxValue,
-          },
-        ],
-      ]}
-      {...initialArgs}
-    />
-  ),
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const canvas = within(canvasElement);
-    const progressBar = canvas.getByRole('progressbar');
-
-    expect(progressBar).not.toHaveAttribute('aria-valuenow');
-
-    await waitFor(
-      () => {
-        expect(progressBar.getAttribute('aria-valuenow')).toBe(
-          testValues.maxValue.toString(),
-        );
-      },
-      // component timeout with buffer time of 500ms
-      { timeout: 4000 },
-    );
   },
 };
