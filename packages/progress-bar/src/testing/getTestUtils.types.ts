@@ -2,7 +2,7 @@ export interface GetTestUtilsReturnType<
   T extends HTMLDivElement = HTMLDivElement,
 > {
   /** Returns the root element containing the progress bar and all accompanying text. */
-  getContainer: () => T | null;
+  getContainer: () => T;
 
   /** Returns the element with role 'progressbar', if present. */
   queryLoader: () => T | null;
@@ -11,10 +11,10 @@ export interface GetTestUtilsReturnType<
   queryMeter: () => T | null;
 
   /** Returns the fill element of the progress bar */
-  getBarFill: () => T | null;
+  getBarFill: () => T;
 
   /** Returns the track element of the progress bar */
-  getBarTrack: () => T | null;
+  getBarTrack: () => T;
 
   /** Returns the icon element, if present. */
   queryIcon: () => T | null;

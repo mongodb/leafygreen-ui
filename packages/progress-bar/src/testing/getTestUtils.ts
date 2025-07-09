@@ -29,13 +29,13 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
   const queryMeter = () =>
     within(getContainer()).queryByRole('meter') as T | null;
 
-  const getBarFill = () => getByLgId!<T>(lgIds.fill) as T | null;
-  const getBarTrack = () => getByLgId!<T>(lgIds.track) as T | null;
+  const getBarFill = () => getByLgId!<T>(lgIds.fill);
+  const getBarTrack = () => getByLgId!<T>(lgIds.track);
 
-  const queryIcon = () => queryByLgId!<T>(lgIds.icon) as T | null;
-  const queryLabel = () => queryByLgId!<T>(lgIds.label) as T | null;
-  const queryDescription = () => queryByLgId!<T>(lgIds.description) as T | null;
-  const queryValueText = () => queryByLgId!<T>(lgIds.valueText) as T | null;
+  const queryIcon = () => queryByLgId!<T>(lgIds.icon);
+  const queryLabel = () => queryByLgId!<T>(lgIds.label);
+  const queryDescription = () => queryByLgId!<T>(lgIds.description);
+  const queryValueText = () => queryByLgId!<T>(lgIds.valueText);
 
   return {
     getContainer,
