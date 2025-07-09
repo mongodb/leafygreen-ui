@@ -90,7 +90,6 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       description:
         '**Not available** if both type=loader and isIndeterminate=true',
       control: { type: 'none' },
-      defaultValue: testValues.maxValue,
     },
     variant: {
       if: { arg: 'type', eq: Type.Loader },
@@ -107,7 +106,6 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       description:
         '**Not available** if either type="meter" or isIndeterminate=true',
       control: { type: 'none' },
-      defaultValue: false,
     },
   },
   decorators: [
@@ -126,6 +124,7 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     label: 'Label',
     description: 'Helper text',
     isIndeterminate: false,
+    enableAnimation: false,
   },
 };
 
