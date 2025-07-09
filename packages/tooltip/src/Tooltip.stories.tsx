@@ -261,7 +261,8 @@ export const AlignmentTest: StoryObj<TooltipProps> = {
               initialOpen
               trigger={<Button size={Size.XSmall} />}
             >
-              {a}, {j}
+              <Body>{a}</Body>
+              <Body>{j}</Body>
             </Tooltip>
           )),
         )}
