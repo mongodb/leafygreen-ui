@@ -1,6 +1,8 @@
+import { LgIdString } from '@leafygreen-ui/lib';
+
 export const DEFAULT_LGID_ROOT = 'lg-section_nav';
 
-export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) =>
+export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) =>
   ({
     root,
     title: `${root}-title`,

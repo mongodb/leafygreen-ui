@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useMemo,
-} from 'react';
+import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 export interface SectionNavNestedProviderProps {
   /**
