@@ -18,21 +18,21 @@ describe('getTestUtils', () => {
     );
 
     const {
-      queryLoaderElement,
-      queryMeterElement,
-      getBarFillElement,
-      getBarTrackElement,
-      getIconElement,
-      getLabelElement,
+      queryLoader,
+      queryMeter,
+      getBarFill,
+      getBarTrack,
+      queryIcon,
+      queryLabel,
     } = getTestUtils();
 
-    expect(queryLoaderElement()).toBeInTheDocument();
-    expect(queryMeterElement()).toBeNull();
+    expect(queryLoader()).toBeInTheDocument();
+    expect(queryMeter()).toBeNull();
 
-    expect(getBarFillElement()).toBeInTheDocument();
-    expect(getBarTrackElement()).toBeInTheDocument();
-    expect(getIconElement()).toBeInTheDocument();
-    expect(getLabelElement()).toBeInTheDocument();
+    expect(getBarFill()).toBeInTheDocument();
+    expect(getBarTrack()).toBeInTheDocument();
+    expect(queryIcon()).toBeInTheDocument();
+    expect(queryLabel()).toBeInTheDocument();
   });
 
   it('returns all expected elements when meter type is rendered', () => {
@@ -46,21 +46,21 @@ describe('getTestUtils', () => {
     );
 
     const {
-      queryLoaderElement,
-      queryMeterElement,
-      getBarFillElement,
-      getBarTrackElement,
-      getIconElement,
-      getDescriptionElement,
+      queryLoader,
+      queryMeter,
+      getBarFill,
+      getBarTrack,
+      queryIcon,
+      queryDescription,
     } = getTestUtils();
 
-    expect(queryLoaderElement()).toBeNull();
-    expect(queryMeterElement()).toBeInTheDocument();
+    expect(queryLoader()).toBeNull();
+    expect(queryMeter()).toBeInTheDocument();
 
-    expect(getBarFillElement()).toBeInTheDocument();
-    expect(getBarTrackElement()).toBeInTheDocument();
-    expect(getIconElement()).toBeNull();
-    expect(getDescriptionElement()).toBeInTheDocument();
+    expect(getBarFill()).toBeInTheDocument();
+    expect(getBarTrack()).toBeInTheDocument();
+    expect(queryIcon()).toBeNull();
+    expect(queryDescription()).toBeInTheDocument();
   });
 
   it('can differentiate multiple progress bars using lgId', () => {
@@ -86,14 +86,14 @@ describe('getTestUtils', () => {
     const first = getTestUtils('lg-progress-1');
     const second = getTestUtils('lg-progress-2');
 
-    expect(first.queryLoaderElement()).toBeInTheDocument();
-    expect(first.queryMeterElement()).toBeNull();
-    expect(first.getBarFillElement()).toBeInTheDocument();
-    expect(first.getBarTrackElement()).toBeInTheDocument();
+    expect(first.queryLoader()).toBeInTheDocument();
+    expect(first.queryMeter()).toBeNull();
+    expect(first.getBarFill()).toBeInTheDocument();
+    expect(first.getBarTrack()).toBeInTheDocument();
 
-    expect(second.queryLoaderElement()).toBeNull();
-    expect(second.queryMeterElement()).toBeInTheDocument();
-    expect(second.getBarFillElement()).toBeInTheDocument();
-    expect(second.getBarTrackElement()).toBeInTheDocument();
+    expect(second.queryLoader()).toBeNull();
+    expect(second.queryMeter()).toBeInTheDocument();
+    expect(second.getBarFill()).toBeInTheDocument();
+    expect(second.getBarTrack()).toBeInTheDocument();
   });
 });

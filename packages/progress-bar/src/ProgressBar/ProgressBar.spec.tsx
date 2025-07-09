@@ -17,9 +17,9 @@ describe('packages/progress-bar', () => {
           label={TEST_LABEL}
         />,
       );
-      const { getLabelElement } = getTestUtils();
-      expect(getLabelElement()).toBeVisible();
-      expect(getLabelElement()).toHaveTextContent(TEST_LABEL);
+      const { queryLabel } = getTestUtils();
+      expect(queryLabel()).toBeVisible();
+      expect(queryLabel()).toHaveTextContent(TEST_LABEL);
     });
 
     test('renders with a description', () => {
@@ -31,9 +31,9 @@ describe('packages/progress-bar', () => {
           description={TEST_DESCRIPTION}
         />,
       );
-      const { getDescriptionElement } = getTestUtils();
-      expect(getDescriptionElement()).toBeVisible();
-      expect(getDescriptionElement()).toHaveTextContent(TEST_DESCRIPTION);
+      const { queryDescription } = getTestUtils();
+      expect(queryDescription()).toBeVisible();
+      expect(queryDescription()).toHaveTextContent(TEST_DESCRIPTION);
     });
 
     describe('with value format', () => {
@@ -49,9 +49,9 @@ describe('packages/progress-bar', () => {
             formatValue={value => `${value} units`}
           />,
         );
-        const { getValueTextElement } = getTestUtils();
-        expect(getValueTextElement()).toBeVisible();
-        expect(getValueTextElement()).toHaveTextContent('50 units');
+        const { queryValueText } = getTestUtils();
+        expect(queryValueText()).toBeVisible();
+        expect(queryValueText()).toHaveTextContent('50 units');
       });
 
       test('renders icon when showIcon is true', () => {
@@ -65,8 +65,8 @@ describe('packages/progress-bar', () => {
             showIcon={true}
           />,
         );
-        const { getIconElement } = getTestUtils();
-        expect(getIconElement()).toBeVisible();
+        const { queryIcon } = getTestUtils();
+        expect(queryIcon()).toBeVisible();
       });
 
       test('renders the correct width for the progress bar fill', () => {
@@ -78,9 +78,9 @@ describe('packages/progress-bar', () => {
             maxValue={TEST_MAX_VALUE}
           />,
         );
-        const { getBarFillElement } = getTestUtils();
-        expect(getBarFillElement()).toBeInTheDocument();
-        expect(getBarFillElement()).toHaveStyle({
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
           width: '50%',
         });
       });
@@ -97,8 +97,8 @@ describe('packages/progress-bar', () => {
             showIcon={true}
           />,
         );
-        const { getIconElement } = getTestUtils();
-        expect(getIconElement()).toBeNull();
+        const { queryIcon } = getTestUtils();
+        expect(queryIcon()).toBeNull();
       });
 
       describe('with unexpected input', () => {
@@ -111,9 +111,9 @@ describe('packages/progress-bar', () => {
               maxValue={100}
             />,
           );
-          const { getBarFillElement } = getTestUtils();
-          expect(getBarFillElement()).toBeInTheDocument();
-          expect(getBarFillElement()).toHaveStyle({
+          const { getBarFill } = getTestUtils();
+          expect(getBarFill()).toBeInTheDocument();
+          expect(getBarFill()).toHaveStyle({
             width: '0%',
           });
         });
@@ -127,9 +127,9 @@ describe('packages/progress-bar', () => {
               maxValue={-10}
             />,
           );
-          const { getBarFillElement } = getTestUtils();
-          expect(getBarFillElement()).toBeInTheDocument();
-          expect(getBarFillElement()).toHaveStyle({
+          const { getBarFill } = getTestUtils();
+          expect(getBarFill()).toBeInTheDocument();
+          expect(getBarFill()).toHaveStyle({
             width: '100%',
           });
         });
@@ -143,9 +143,9 @@ describe('packages/progress-bar', () => {
               maxValue={0}
             />,
           );
-          const { getBarFillElement } = getTestUtils();
-          expect(getBarFillElement()).toBeInTheDocument();
-          expect(getBarFillElement()).toHaveStyle({
+          const { getBarFill } = getTestUtils();
+          expect(getBarFill()).toBeInTheDocument();
+          expect(getBarFill()).toHaveStyle({
             width: '100%',
           });
         });
@@ -164,9 +164,9 @@ describe('packages/progress-bar', () => {
             disabled={true}
           />,
         );
-        const { getBarFillElement } = getTestUtils();
-        expect(getBarFillElement()).toBeInTheDocument();
-        expect(getBarFillElement()).not.toHaveStyle({
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).not.toHaveStyle({
           animation: expect.any(String),
         });
       });
