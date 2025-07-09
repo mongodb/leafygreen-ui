@@ -20,14 +20,14 @@ export function useScreenReaderAnnouncer({
   value,
   maxValue,
   color,
-}: UseScreenReaderAnnouncerProps): string {
+}: UseScreenReaderAnnouncerProps): string | undefined {
   const thresholdIndexRef = useRef(-1);
 
   const message = useMemo(() => {
     // no live region messages for non-loader types or if value is undefined
     if (type !== Type.Loader || !isDefined(value)) {
       thresholdIndexRef.current = -1;
-      return '';
+      return;
     }
 
     const percentage = maxValue ? getPercentage(value, maxValue) : value * 100;
@@ -41,7 +41,9 @@ export function useScreenReaderAnnouncer({
       }
     }
 
-    if (newThresholdIndex === thresholdIndexRef.current) return '';
+    if (newThresholdIndex === thresholdIndexRef.current) {
+      return;
+    }
 
     // if new threshold was passed, update live region message
     thresholdIndexRef.current = newThresholdIndex;

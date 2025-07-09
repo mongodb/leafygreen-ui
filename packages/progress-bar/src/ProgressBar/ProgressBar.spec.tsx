@@ -126,7 +126,7 @@ describe('packages/progress-bar', () => {
       expect(screen.queryByRole('status')).toBeNull();
     });
 
-    test('announces initial progress, but not any further changes if next threshold is not met', () => {
+    test('updates live region text for initial value, but not for any further changes if next threshold is not met', () => {
       const { rerender } = render(
         <ProgressBar
           type={Type.Loader}
@@ -152,7 +152,7 @@ describe('packages/progress-bar', () => {
       expect(screen.queryByRole('status')).toBeNull();
     });
 
-    test('announces if 50% threshold passed', () => {
+    test('updates live region text if 50% threshold passed', () => {
       const { rerender } = render(
         <ProgressBar
           type={Type.Loader}
@@ -180,7 +180,7 @@ describe('packages/progress-bar', () => {
       );
     });
 
-    test('announces if 100% threshold passed', () => {
+    test('updates live region text if 100% threshold passed', () => {
       const { rerender } = render(
         <ProgressBar
           type={Type.Loader}
@@ -208,7 +208,7 @@ describe('packages/progress-bar', () => {
       );
     });
 
-    test('additionally announces variant if yellow or red', () => {
+    test('additionally updates live region text to include variant if yellow or red', () => {
       render(
         <ProgressBar
           type={Type.Loader}

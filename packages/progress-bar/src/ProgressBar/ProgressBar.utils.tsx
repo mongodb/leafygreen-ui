@@ -116,6 +116,7 @@ export const getFormattedValue = (
 export const getProgressBarIdentifiers = (
   type: Type,
   label?: React.ReactNode,
+  description?: React.ReactNode,
 ) => {
   const role = type === Type.Meter ? 'meter' : 'progressbar';
 
@@ -126,8 +127,8 @@ export const getProgressBarIdentifiers = (
   return {
     role,
     barId: progressBarId,
-    labelId: `label-for-${progressBarId}`,
-    descId: `desc-for-${progressBarId}`,
+    labelId: label ? `label-for-${progressBarId}` : undefined,
+    descId: description ? `desc-for-${progressBarId}` : undefined,
     liveId: `live-region-for-${progressBarId}`,
   };
 };

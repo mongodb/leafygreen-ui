@@ -43,6 +43,7 @@ export function ProgressBar(props: ProgressBarProps) {
   const { role, barId, labelId, descId, liveId } = getProgressBarIdentifiers(
     type,
     label,
+    description,
   );
 
   const showIcon = iconsPendingCompletion.includes(color)
@@ -91,9 +92,9 @@ export function ProgressBar(props: ProgressBarProps) {
       <div
         role={role}
         id={barId}
-        aria-labelledby={label ? labelId : undefined}
-        aria-label={!label ? ariaLabel : undefined}
-        aria-describedby={description ? descId : undefined}
+        aria-labelledby={labelId}
+        aria-label={ariaLabel}
+        aria-describedby={descId}
         aria-controls={liveId}
         {...getValueAriaAttributes(value, maxValue)}
       >
