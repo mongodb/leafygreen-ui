@@ -38,7 +38,7 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
 
   const queryIcon = () => {
     const valueText = queryValueText();
-    return within(valueText).queryByRole('img') as T;
+    return valueText && (within(valueText).queryByRole('img') as T);
   };
 
   return {
