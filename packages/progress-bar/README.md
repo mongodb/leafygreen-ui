@@ -140,10 +140,7 @@ test('renders single progress bar', () => {
 #### Multiple `ProgressBar` components
 
 ```tsx
-import {
-  getTestUtils,
-  renderMultipleProgressBars,
-} from '@leafygreen-ui/progress-bar/testing';
+import { getTestUtils } from '@leafygreen-ui/progress-bar/testing';
 
 test('renders multiple progress bars', () => {
   // ...code to render multiple progress bars
