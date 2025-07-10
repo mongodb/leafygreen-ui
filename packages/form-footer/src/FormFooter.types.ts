@@ -13,28 +13,28 @@ type ButtonPropsWithRequiredChildren = Required<
   Pick<BaseButtonProps, 'children'>
 >;
 
-type SplitButtonPropsOmittingVariant = Omit<
+type OmittedSplitButtonProps = Omit<
   InternalSplitButtonProps,
-  'variant'
+  'children' | 'variant'
 >;
 
 type BackStandardButtonProps = ButtonPropsOmittingVariant & {
   variant?: Extract<ButtonVariant, 'default' | 'dangerOutline'>;
 };
-type BackSplitButtonProps = SplitButtonPropsOmittingVariant & {
+type BackSplitButtonProps = OmittedSplitButtonProps & {
   variant?: Extract<SplitButtonVariant, 'default' | 'danger'>;
 };
 type BackButtonProps = BackStandardButtonProps | BackSplitButtonProps;
 
 type CancelStandardButtonProps = ButtonPropsOmittingVariant;
-type CancelSplitButtonProps = SplitButtonPropsOmittingVariant;
+type CancelSplitButtonProps = OmittedSplitButtonProps;
 type CancelButtonProps = CancelStandardButtonProps | CancelSplitButtonProps;
 
 type PrimaryStandardButtonProps = ButtonPropsOmittingVariant &
   ButtonPropsWithRequiredChildren & {
     variant?: Extract<ButtonVariant, 'primary' | 'danger'>;
   };
-type PrimarySplitButtonProps = SplitButtonPropsOmittingVariant & {
+type PrimarySplitButtonProps = OmittedSplitButtonProps & {
   variant?: Extract<SplitButtonVariant, 'primary' | 'danger'>;
 };
 type PrimaryButtonProps = PrimaryStandardButtonProps | PrimarySplitButtonProps;
