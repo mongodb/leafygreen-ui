@@ -1724,10 +1724,16 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
+      '@leafygreen-ui/split-button':
+        specifier: workspace:^
+        version: link:../split-button
       polished:
         specifier: ^4.2.2
         version: 4.3.1
     devDependencies:
+      '@leafygreen-ui/menu':
+        specifier: workspace:^
+        version: link:../menu
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
