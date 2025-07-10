@@ -1,5 +1,6 @@
 export {
   Align,
+  type InternalSplitButtonProps,
   Justify,
   SplitButton,
   type SplitButtonProps,
