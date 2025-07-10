@@ -1,5 +1,20 @@
 # @leafygreen-ui/form-footer
 
+## 9.0.0
+
+### Major Changes
+
+- 4b306ae: [LG-5038](https://jira.mongodb.org/browse/LG-5038): remove deprecated `primaryButton` prop and make `primaryButtonProps` required. Please migrate to using the `primaryButtonProps` prop.
+
+### Minor Changes
+
+- ee7d80d: [LG-5039](https://jira.mongodb.org/browse/LG-5039): `backButtonProps`, `cancelButtonProps`, and `primaryButtonProps` can be used to render `SplitButton` instances.
+
+### Patch Changes
+
+- Updated dependencies [ee7d80d]
+  - @leafygreen-ui/split-button@6.1.0
+
 ## 8.0.2
 
 ### Patch Changes
