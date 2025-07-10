@@ -46,7 +46,7 @@ describe('packages/form-footer', () => {
     test('renders as SplitButton instance if menuItems is defined', () => {
       renderFooter({
         backButtonProps: {
-          children: 'Back',
+          label: 'Back',
           menuItems: testMenuItems,
         },
       });
@@ -102,7 +102,7 @@ describe('packages/form-footer', () => {
     test('renders as SplitButton instance if menuItems is defined', () => {
       renderFooter({
         cancelButtonProps: {
-          children: 'Cancel',
+          label: 'Cancel',
           menuItems: testMenuItems,
         },
       });
@@ -158,7 +158,7 @@ describe('packages/form-footer', () => {
     test('renders as SplitButton instance if menuItems is defined', () => {
       renderFooter({
         primaryButtonProps: {
-          children: 'Test button',
+          label: 'Test button',
           menuItems: testMenuItems,
         },
       });
@@ -220,18 +220,18 @@ describe('packages/form-footer', () => {
 
       <FormFooter
         primaryButtonProps={{ children: 'Confirm' }}
-        backButtonProps={{ children: 'Back', menuItems: testMenuItems }}
+        backButtonProps={{ label: 'Back', menuItems: testMenuItems }}
         cancelButtonProps={{ children: 'Cancel' }}
       />
       <FormFooter
-        primaryButtonProps={{ children: 'Confirm', menuItems: testMenuItems }}
+        primaryButtonProps={{ label: 'Confirm', menuItems: testMenuItems }}
         backButtonProps={{ children: 'Back' }}
         cancelButtonProps={{ children: 'Cancel' }}
       />
       <FormFooter
         primaryButtonProps={{ children: 'Confirm' }}
         backButtonProps={{ children: 'Back' }}
-        cancelButtonProps={{ children: 'Cancel', menuItems: testMenuItems }}
+        cancelButtonProps={{ label: 'Cancel', menuItems: testMenuItems }}
       />
     </>;
   });
