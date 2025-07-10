@@ -31,13 +31,19 @@
       "path": "../icon"
     },
     {
+      "path": "../leafygreen-provider"
+    },
+    {
       "path": "../lib"
+    },
+    {
+      "path": "../menu"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../leafygreen-provider"
+      "path": "../split-button"
     }
   ]
 }

@@ -21,6 +21,7 @@ export function ChartTooltip({
 }: ChartTooltipProps) {
   const {
     chart: {
+      enableGroupTooltipSync,
       id: chartId,
       isChartHovered,
       ready,
@@ -104,11 +105,11 @@ export function ChartTooltip({
     updateOptions({
       tooltip: {
         /* LOGIC PROPERTIES */
-        alwaysShowContent: tooltipPinned,
+        alwaysShowContent: enableGroupTooltipSync || tooltipPinned,
         confine: true,
         enterable: tooltipPinned,
         renderMode: 'html',
-        showContent: isChartHovered || tooltipPinned,
+        showContent: enableGroupTooltipSync || isChartHovered || tooltipPinned,
         trigger: 'axis',
         triggerOn: 'none',
 
@@ -139,6 +140,7 @@ export function ChartTooltip({
       updateOptions({ ...DEFAULT_TOOLTIP_OPTIONS });
     };
   }, [
+    enableGroupTooltipSync,
     formatPinnedTooltip,
     formatTooltip,
     isChartHovered,

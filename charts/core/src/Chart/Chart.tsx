@@ -30,26 +30,28 @@ import { useChart } from './hooks';
 
 export function Chart({
   children,
-  darkMode: darkModeProp,
-  onChartReady,
-  zoomSelect,
-  onZoomSelect,
-  groupId,
   className,
-  state = ChartStates.Unset,
+  darkMode: darkModeProp,
   dragId = '',
+  enableGroupTooltipSync = true,
+  groupId,
   id: idProp,
+  onChartReady,
+  onZoomSelect,
+  state = ChartStates.Unset,
+  zoomSelect,
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
   const chart = useChart({
-    theme,
-    onChartReady,
-    zoomSelect,
-    onZoomSelect,
     chartId: idProp,
+    enableGroupTooltipSync,
     groupId,
+    onChartReady,
+    onZoomSelect,
     state,
+    theme,
+    zoomSelect,
   });
   const { attributes, listeners, setNodeRef, transform, transition, items } =
     useSortable({ id: dragId });

@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 15.2.0
+
+### Minor Changes
+
+- b67497a: Adds `formatCssSize` util for properly formatting a number or string into a valid css value
+
 ## 15.1.0
 
 ### Minor Changes

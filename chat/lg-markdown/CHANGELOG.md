@@ -1,5 +1,23 @@
 # @lg-chat/lg-markdown
 
+## 4.0.4
+
+### Patch Changes
+
+- Updated dependencies [2adba55]
+  - @leafygreen-ui/code@20.0.2
+
+## 4.0.3
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/code@20.0.1
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
 ## 4.0.2
 
 ### Patch Changes

@@ -10,8 +10,8 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { ButtonContent } from '../ButtonContent/ButtonContent';
 import { ButtonClassName } from '../styles';
+import { getLgIds } from '../testing';
 import { BaseButtonProps, Size, Variant } from '../types';
-import { getLgIds } from '../utils';
 
 import { getClassName } from './Button.styles';
 

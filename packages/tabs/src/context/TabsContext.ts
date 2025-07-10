@@ -5,15 +5,17 @@ import { TabsProps } from '../Tabs';
 export type TabsContextProps = Required<
   Pick<
     TabsProps<number | string>,
-    'as' | 'darkMode' | 'forceRenderAllTabPanels' | 'selected' | 'size'
+    'as' | 'darkMode' | 'forceRenderAllTabPanels' | 'size'
   >
->;
+> & {
+  selectedIndex: number;
+};
 
 export const TabsContext = createContext<TabsContextProps>({
   as: 'button',
   darkMode: false,
   forceRenderAllTabPanels: false,
-  selected: 0,
+  selectedIndex: 0,
   size: 'default',
 });
 

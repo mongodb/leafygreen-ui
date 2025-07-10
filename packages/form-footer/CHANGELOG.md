@@ -1,5 +1,24 @@
 # @leafygreen-ui/form-footer
 
+## 8.0.2
+
+### Patch Changes
+
+- Updated dependencies [2adba55]
+  - @leafygreen-ui/button@25.0.0
+
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/banner@10.0.3
+  - @leafygreen-ui/button@24.0.3
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+
 ## 8.0.0
 
 ### Major Changes

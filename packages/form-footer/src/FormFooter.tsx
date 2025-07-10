@@ -7,7 +7,7 @@ import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { SplitButton } from '@leafygreen-ui/split-button';
 
 import {
   bannerStyle,
@@ -17,11 +17,9 @@ import {
   footerThemeStyle,
 } from './FormFooter.styles';
 import { FormFooterProps } from './FormFooter.types';
-import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
 import { getLgIds } from './utils';
 
 export default function FormFooter({
-  primaryButton,
   primaryButtonProps,
   cancelButtonProps,
   backButtonProps,
@@ -33,10 +31,15 @@ export default function FormFooter({
   ...rest
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const showBackButton = backButtonProps;
-  const showCancelButton = cancelButtonProps;
-  const showDeprecatedPrimaryButton = primaryButton;
   const lgIds = getLgIds(dataLgId);
+
+  const showBackButton = backButtonProps !== undefined;
+  const isStandardBackButton =
+    showBackButton && !('menuItems' in backButtonProps);
+  const showCancelButton = cancelButtonProps !== undefined;
+  const isStandardCancelButton =
+    showCancelButton && !('menuItems' in cancelButtonProps);
+  const isStandardPrimaryButton = !('menuItems' in primaryButtonProps);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
@@ -46,46 +49,55 @@ export default function FormFooter({
         {...rest}
       >
         <div className={cx(contentStyle, contentClassName)}>
-          {showBackButton && (
-            <Button
-              variant={ButtonVariant.Default}
-              leftGlyph={<ArrowLeftIcon data-testid={lgIds.backButtonIcon} />}
-              data-testid={lgIds.backButton}
-              {...backButtonProps}
-            >
-              {backButtonProps?.children || 'Back'}
-            </Button>
-          )}
+          {showBackButton &&
+            (isStandardBackButton ? (
+              <Button
+                variant={ButtonVariant.Default}
+                leftGlyph={<ArrowLeftIcon data-testid={lgIds.backButtonIcon} />}
+                data-testid={lgIds.backButton}
+                {...backButtonProps}
+              >
+                {backButtonProps?.children || 'Back'}
+              </Button>
+            ) : (
+              <SplitButton
+                data-testid={lgIds.backSplitButton}
+                variant={ButtonVariant.Default}
+                {...backButtonProps}
+              />
+            ))}
           <div className={flexEndContent}>
             {errorMessage && (
               <Banner className={bannerStyle} variant={BannerVariant.Danger}>
                 {errorMessage}
               </Banner>
             )}
-            {showCancelButton && (
-              <Button
-                data-testid={lgIds.cancelButton}
-                {...cancelButtonProps}
-                variant={ButtonVariant.Default}
-              >
-                {cancelButtonProps?.children || 'Cancel'}
-              </Button>
-            )}
-            {showDeprecatedPrimaryButton ? (
-              isComponentType(primaryButton as React.ReactElement, 'Button') ? (
-                React.cloneElement(primaryButton as React.ReactElement, {
-                  ['data-testid']: lgIds.primaryButton,
-                })
+            {showCancelButton &&
+              (isStandardCancelButton ? (
+                <Button
+                  data-testid={lgIds.cancelButton}
+                  {...cancelButtonProps}
+                  variant={ButtonVariant.Default}
+                >
+                  {cancelButtonProps?.children || 'Cancel'}
+                </Button>
               ) : (
-                <PrimaryButton
-                  data-testid={lgIds.primaryButton}
-                  {...(primaryButton as PrimaryButtonProps)}
+                <SplitButton
+                  data-testid={lgIds.cancelSplitButton}
+                  {...cancelButtonProps}
+                  variant={ButtonVariant.Default}
                 />
-              )
-            ) : (
+              ))}
+            {isStandardPrimaryButton ? (
               <Button
-                variant={ButtonVariant.Primary}
                 data-testid={lgIds.primaryButton}
+                variant={ButtonVariant.Primary}
+                {...primaryButtonProps}
+              />
+            ) : (
+              <SplitButton
+                data-testid={lgIds.primarySplitButton}
+                variant={ButtonVariant.Primary}
                 {...primaryButtonProps}
               />
             )}
