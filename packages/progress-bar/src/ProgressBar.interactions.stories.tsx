@@ -36,7 +36,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar/Interactions',
   component: ProgressBar,
   parameters: {
-    default: 'LiveExample',
+    default: null,
   },
 };
 export default meta;
