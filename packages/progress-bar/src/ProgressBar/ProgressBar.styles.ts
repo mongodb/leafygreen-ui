@@ -108,13 +108,10 @@ export const getHeaderIconStyles = ({
     : barColorStyles[theme][color].icon};
 `;
 
-export const getAnimatedTextStyles = (isNewDescription: boolean) => css`
-  ${isNewDescription &&
-  css`
-    opacity: 0;
-    animation: ${fadeFromWhiteKeyframes} ${TEXT_ANIMATION_DURATION}ms
-      ease-in-out forwards;
-  `}
+export const getAnimatedTextStyles = () => css`
+  opacity: 0;
+  animation: ${fadeFromWhiteKeyframes} ${TEXT_ANIMATION_DURATION}ms ease-in-out
+    forwards;
 `;
 
 export const getBarTrackStyles = ({

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
@@ -149,7 +150,7 @@ export function ProgressBar(props: ProgressBarProps) {
         <Description
           darkMode={darkMode}
           disabled={disabled}
-          className={getAnimatedTextStyles(isNewDescription)}
+          className={cx({ [getAnimatedTextStyles()]: isNewDescription })}
           // if on fade-in transition, reset state after animation ends
           onAnimationEnd={() => setIsNewDescription(false)}
         >

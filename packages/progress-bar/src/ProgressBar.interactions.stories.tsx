@@ -8,6 +8,7 @@ import { ProgressBar, ProgressBarProps, Type } from '.';
 const testValues = {
   value: 53,
   maxValue: 200,
+  timeoutBuffer: 500,
 };
 
 const DynamicProgressBar = ({
@@ -46,7 +47,7 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
     type: Type.Loader,
     value: testValues.value,
     maxValue: testValues.maxValue,
-    formatValue: 'percentage',
+    formatValue: 'fraction',
   },
   render: initialArgs => (
     <DynamicProgressBar
@@ -69,8 +70,7 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
           testValues.maxValue.toString(),
         );
       },
-      // transition timeout with buffer time of 500ms
-      { timeout: 2000 },
+      { timeout: 1500 + testValues.timeoutBuffer },
     );
   },
 };
@@ -103,8 +103,7 @@ export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
 
     const finalText = await waitFor(
       () => canvas.getByText('Even newer helper text...!'),
-      // transition timeout with buffer time of 500ms
-      { timeout: 4000 },
+      { timeout: 3500 + testValues.timeoutBuffer },
     );
 
     expect(finalText).toBeInTheDocument();
@@ -144,8 +143,7 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
           testValues.maxValue.toString(),
         );
       },
-      // transition timeout with buffer time of 500ms
-      { timeout: 4000 },
+      { timeout: 3500 + testValues.timeoutBuffer },
     );
   },
 };
