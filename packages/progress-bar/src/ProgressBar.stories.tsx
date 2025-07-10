@@ -88,7 +88,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     maxValue: {
       // if: { arg: 'type', eq: Type.Meter } OR { arg: 'isIndeterminate', eq: false }, // TODO: not supported
       description:
-        '**Not available** if both type=loader and isIndeterminate=true',
+        '**Not available** if both type=loader and isIndeterminate=true (fixed to 200 in this example).',
       control: { type: 'none' },
     },
     variant: {
@@ -104,7 +104,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     enableAnimation: {
       // if: { arg: 'type', neq: Type.Meter } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
       description:
-        '**Not available** if either type="meter" or isIndeterminate=true',
+        '**Not available** if either type="meter" or isIndeterminate=true (fixed to false in this example).',
       control: { type: 'none' },
     },
   },
