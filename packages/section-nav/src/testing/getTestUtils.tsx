@@ -56,8 +56,8 @@ export const getTestUtils = (
   const getSectionNavItemByLabel = (text: string) => {
     if (!text) throw new Error('text cannot be empty');
 
-    const item = getAllSectionNavItems().find(
-      item => item.textContent === text,
+    const item = getAllSectionNavItems().find(item =>
+      item.textContent?.includes(text),
     );
 
     if (!item) {

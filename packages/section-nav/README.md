@@ -66,6 +66,84 @@ import {SectionNav, SectionNavItem} from `@leafygreen-ui/section-nav`;
 
 \+ other HTML `a` element props
 
+## `transformToNestedData`
+
+The recommended way to use `SectionNav` is to map through a nested data structure and render `SectionNavItem` components based on that data.
+
+**Recommended data structure**:
+
+```tsx
+const data = [
+  { label: 'Introduction', href: '#intro', children: [] },
+  {
+    label: 'Installation',
+    href: '#installation',
+    children: [
+      { label: 'Why', href: '#why', children: [] },
+      { label: 'How to Install', href: '#how', children: [] },
+    ],
+  },
+  { label: 'Usage', href: '#usage', children: [] },
+];
+```
+
+The `transformToNestedData` utility function is provided to help with this transformation.
+
+Currently, it supports transforming a flat array of objects with key-value pairs into a nested structure based on a **required** `level` key.
+
+### Usage
+
+```tsx
+// Original data with level, href, and label
+const flatLevelInput = [
+  { level: 1, id: '#intro', label: 'Introduction' },
+  { level: 1, id: '#installation', label: 'Installation' },
+  { level: 2, id: '#why', label: 'Why' },
+  { level: 2, id: '#how', label: 'How to Install' },
+  { level: 1, id: '#usage', label: 'Usage' },
+];
+
+const nestedData = transformToNestedData({
+  type: 'flatLevel',
+  data: flatLevelInput,
+});
+
+// const nestedData = [
+//   { label: 'Introduction', id: '#intro', children: [] },
+//   {
+//     label: 'Installation',
+//     id: '#installation',
+//     children: [
+//       { label: 'Why', id: '#why', children: [] },
+//       { label: 'How to Install', id: '#how', children: [] },
+//     ],
+//   },
+//   { label: 'Usage', id: '#usage', children: [] },
+// ];
+
+return (
+  <SectionNav title="On this page">
+    {nestedData.map(item => (
+      <SectionNavItem
+        active={currentActiveSectionId === item.id}
+        href={item.id}
+        label={item.label}
+      >
+        {item.children &&
+          item.children.length > 0 &&
+          item.children.map(subItem => (
+            <SectionNavItem
+              active={currentActiveSectionId === item.id}
+              href={subItem.id}
+              label={subItem.label}
+            />
+          ))}
+      </SectionNavItem>
+    ))}
+  </SectionNav>
+);
+```
+
 ## Test Harnesses
 
 ### getTestUtils()
