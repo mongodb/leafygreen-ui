@@ -1,5 +1,11 @@
 # @leafygreen-ui/split-button
 
+## 6.1.0
+
+### Minor Changes
+
+- ee7d80d: [LG-5039](https://jira.mongodb.org/browse/LG-5039): export `InternalSplitButtonProps` and remove explicit `data-testid` type
+
 ## 6.0.2
 
 ### Patch Changes

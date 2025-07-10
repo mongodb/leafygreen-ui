@@ -1,5 +1,11 @@
 # @leafygreen-ui/context-drawer
 
+## 0.2.1
+
+### Patch Changes
+
+- ec90bda: Fix `ContextDrawerButton` styles
+
 ## 0.2.0
 
 ### Minor Changes
