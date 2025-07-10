@@ -1,7 +1,6 @@
-  
 {
   "name": "@leafygreen-ui/context-drawer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "LeafyGreen UI Kit Context Drawer",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -35,6 +34,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^",
     "react-intersection-observer": "^8.25.1"
   },
   "devDependencies": {

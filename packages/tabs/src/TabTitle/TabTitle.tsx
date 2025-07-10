@@ -23,6 +23,7 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
     {
       children,
       className,
+      default: defaultProp,
       disabled = false,
       index: indexProp,
       name,
@@ -33,14 +34,15 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
   ) => {
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
     const { index, ref, id } = useDescendant(TabDescendantsContext, fwdRef, {
+      default: defaultProp,
       index: indexProp,
     });
     const { tabPanelDescendants } = useTabPanelDescendantsContext();
-    const { as, darkMode, selected, size } = useTabsContext();
+    const { as, darkMode, selectedIndex, size } = useTabsContext();
     const { Component } = useInferredPolymorphic(as, rest, 'button');
 
     const theme = darkMode ? Theme.Dark : Theme.Light;
-    const isSelected = index === selected;
+    const isSelected = index === selectedIndex;
 
     const relatedTabPanel = useMemo(() => {
       return tabPanelDescendants.find(

@@ -1,5 +1,23 @@
 # @leafygreen-ui/search-input
 
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/a11y@3.0.2
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/icon-button@17.0.3
+  - @leafygreen-ui/input-option@4.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.3
+  - @leafygreen-ui/popover@14.0.3
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
 ## 6.0.2
 
 ### Patch Changes

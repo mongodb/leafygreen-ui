@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 
@@ -30,35 +29,6 @@ describe('packages/form-footer', () => {
   });
 
   describe('rendering', () => {
-    //TODO: remove - primaryButton is deprecated
-    describe('deprecated', () => {
-      test('renders basic primary button', () => {
-        const { getByText, queryByText } = renderFooter({
-          primaryButton: { text: 'Test button' },
-          primaryButtonProps: { children: "I'm new" },
-        });
-        const ButtonElement = getByText('Test button');
-        const ButtonElementNew = queryByText("I'm new");
-        expect(ButtonElement).toBeInTheDocument();
-        expect(ButtonElementNew).not.toBeInTheDocument();
-      });
-
-      test('renders JSX primary button', () => {
-        const { getByText, queryByText } = render(
-          <FormFooter
-            primaryButton={
-              <Button data-testid="test-button">Test button</Button>
-            }
-            primaryButtonProps={{ children: "I'm new" }}
-          />,
-        );
-        const ButtonElement = getByText('Test button');
-        const ButtonElementNew = queryByText("I'm new");
-        expect(ButtonElement).toBeInTheDocument();
-        expect(ButtonElementNew).not.toBeInTheDocument();
-      });
-    });
-
     test('renders basic primary button', () => {
       const { getByText } = renderFooter({
         primaryButtonProps: { children: 'Test button' },

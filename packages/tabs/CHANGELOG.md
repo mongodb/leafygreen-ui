@@ -1,5 +1,30 @@
 # @leafygreen-ui/tabs
 
+## 17.0.0
+
+### Major Changes
+
+- 95f7c12: [LG-4696](https://jira.mongodb.org/browse/LG-4696): Rename `selected` prop to `value` and `setSelected` prop to `onValueChange` and update `onValueChange` type signature to `(number | string) => void;`
+
+### Patch Changes
+
+- @leafygreen-ui/descendants@3.0.2
+
+## 16.0.1
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/a11y@3.0.2
+  - @leafygreen-ui/descendants@3.0.2
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.3
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
 ## 16.0.0
 
 ### Major Changes

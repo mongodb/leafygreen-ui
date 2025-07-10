@@ -1,5 +1,13 @@
 # @leafygreen-ui/a11y
 
+## 3.0.2
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/hooks@9.1.1
+
 ## 3.0.1
 
 ### Patch Changes

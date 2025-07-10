@@ -9,6 +9,7 @@ import { queryFirstFocusableElement } from '@leafygreen-ui/lib';
 import { formatCssSize } from '@leafygreen-ui/lib';
 
 import { TRANSITION_DURATION } from '../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
 
 import {
   bottomInterceptStyles,
@@ -33,6 +34,7 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
       onOpenChange,
       reference,
       trigger,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
     },
     fwdRef,
@@ -43,6 +45,7 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
       onOpenChange,
       defaultOpen,
     );
+    const lgIds = getLgIds(dataLgId);
 
     const contentRef = useRef<HTMLDivElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -100,6 +103,7 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
         onClick: handleTriggerClick,
         'aria-expanded': isOpen,
         'aria-controls': contentId,
+        'data-lgid': lgIds.toggleButton,
       });
     };
 
@@ -113,6 +117,7 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
           <div className={getInnerContainerStyles({ theme })}>
             <div className={referenceWrapperStyles}>{reference}</div>
             <div
+              aria-hidden={!isOpen}
               aria-labelledby={triggerId}
               className={getContentWrapperStyles({
                 hasBottomShadow: !isBottomInView,
@@ -121,6 +126,7 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
                 isOpen: !!isOpen,
                 theme,
               })}
+              data-lgid={lgIds.root}
               id={contentId}
               ref={contentRef}
               role="region"
