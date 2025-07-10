@@ -5,6 +5,6 @@ export const WEDGE_BORDER_RADIUS = 100;
 export const TRANSITION_DURATION = transitionDuration.default;
 
 export const INDENTATION = {
-  1: spacing[400],
-  2: spacing[900],
+  level1: spacing[400],
+  level2: spacing[900],
 };

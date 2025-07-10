@@ -13,8 +13,8 @@ import {
 // This component currently only supports two levels of indentation.
 // If more levels are needed, this function can be extended.
 const getIndentation = (level: number) => {
-  if (level === 1) return INDENTATION[1];
-  return INDENTATION[2];
+  if (level === 1) return INDENTATION['level1'];
+  return INDENTATION['level2'];
 };
 
 export const itemStyles = css`
