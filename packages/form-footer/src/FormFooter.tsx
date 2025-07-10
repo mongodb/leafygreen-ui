@@ -7,6 +7,7 @@ import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { SplitButton } from '@leafygreen-ui/split-button';
 
 import {
   bannerStyle,
@@ -30,9 +31,15 @@ export default function FormFooter({
   ...rest
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const showBackButton = backButtonProps;
-  const showCancelButton = cancelButtonProps;
   const lgIds = getLgIds(dataLgId);
+
+  const showBackButton = backButtonProps !== undefined;
+  const isStandardBackButton =
+    showBackButton && !('menuItems' in backButtonProps);
+  const showCancelButton = cancelButtonProps !== undefined;
+  const isStandardCancelButton =
+    showCancelButton && !('menuItems' in cancelButtonProps);
+  const isStandardPrimaryButton = !('menuItems' in primaryButtonProps);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
@@ -42,36 +49,58 @@ export default function FormFooter({
         {...rest}
       >
         <div className={cx(contentStyle, contentClassName)}>
-          {showBackButton && (
-            <Button
-              variant={ButtonVariant.Default}
-              leftGlyph={<ArrowLeftIcon data-testid={lgIds.backButtonIcon} />}
-              data-testid={lgIds.backButton}
-              {...backButtonProps}
-            >
-              {backButtonProps?.children || 'Back'}
-            </Button>
-          )}
+          {showBackButton &&
+            (isStandardBackButton ? (
+              <Button
+                variant={ButtonVariant.Default}
+                leftGlyph={<ArrowLeftIcon data-testid={lgIds.backButtonIcon} />}
+                data-testid={lgIds.backButton}
+                {...backButtonProps}
+              >
+                {backButtonProps?.children || 'Back'}
+              </Button>
+            ) : (
+              <SplitButton
+                data-testid={lgIds.backSplitButton}
+                variant={ButtonVariant.Default}
+                {...backButtonProps}
+              />
+            ))}
           <div className={flexEndContent}>
             {errorMessage && (
               <Banner className={bannerStyle} variant={BannerVariant.Danger}>
                 {errorMessage}
               </Banner>
             )}
-            {showCancelButton && (
+            {showCancelButton &&
+              (isStandardCancelButton ? (
+                <Button
+                  data-testid={lgIds.cancelButton}
+                  {...cancelButtonProps}
+                  variant={ButtonVariant.Default}
+                >
+                  {cancelButtonProps?.children || 'Cancel'}
+                </Button>
+              ) : (
+                <SplitButton
+                  data-testid={lgIds.cancelSplitButton}
+                  {...cancelButtonProps}
+                  variant={ButtonVariant.Default}
+                />
+              ))}
+            {isStandardPrimaryButton ? (
               <Button
-                data-testid={lgIds.cancelButton}
-                {...cancelButtonProps}
-                variant={ButtonVariant.Default}
-              >
-                {cancelButtonProps?.children || 'Cancel'}
-              </Button>
+                data-testid={lgIds.primaryButton}
+                variant={ButtonVariant.Primary}
+                {...primaryButtonProps}
+              />
+            ) : (
+              <SplitButton
+                data-testid={lgIds.primarySplitButton}
+                variant={ButtonVariant.Primary}
+                {...primaryButtonProps}
+              />
             )}
-            <Button
-              variant={ButtonVariant.Primary}
-              data-testid={lgIds.primaryButton}
-              {...primaryButtonProps}
-            />
           </div>
         </div>
       </footer>
