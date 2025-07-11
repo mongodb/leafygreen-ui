@@ -15,7 +15,7 @@ import {
 } from '../constants';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
 
-import { useScreenReaderAnnouncer } from './hooks';
+import { useIdIdentifiers, useScreenReaderAnnouncer } from './hooks';
 import {
   containerStyles,
   getAnimatedTextStyles,
@@ -32,7 +32,6 @@ import {
   getAnimationMode,
   getFormattedValue,
   getHeaderIcon,
-  getProgressBarIdentifiers,
   getValueAriaAttributes,
   resolveProgressBarProps,
 } from './utils';
@@ -54,7 +53,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const { theme } = useDarkMode(darkMode);
 
-  const { barId, labelId, descId, liveId } = getProgressBarIdentifiers(
+  const { barId, labelId, descId, liveId } = useIdIdentifiers(
     role,
     label,
     description,
@@ -148,7 +147,6 @@ export function ProgressBar(props: ProgressBarProps) {
           aria-labelledby={labelId}
           aria-label={ariaLabel}
           aria-describedby={descId}
-          aria-controls={liveId}
           {...getValueAriaAttributes(value, maxValue)}
         >
           <div
@@ -179,6 +177,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
         {description && (
           <Description
+            id={descId}
             disabled={disabled}
             data-lgid={lgIds.description}
             className={cx({ [getAnimatedTextStyles()]: isNewDescription })}

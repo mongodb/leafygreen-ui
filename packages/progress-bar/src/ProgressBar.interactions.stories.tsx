@@ -47,6 +47,7 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
     value: testValues.value,
     maxValue: testValues.maxValue,
     formatValue: 'fraction',
+    'aria-label': 'required label',
   },
   render: initialArgs => (
     <DynamicProgressBar
@@ -112,6 +113,7 @@ export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
 export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
   args: {
     isIndeterminate: true,
+    'aria-label': 'required label',
   },
   render: initialArgs => (
     <DynamicProgressBar

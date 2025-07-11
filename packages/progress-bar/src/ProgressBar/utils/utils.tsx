@@ -4,7 +4,7 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
+import { isDefined } from '@leafygreen-ui/lib';
 
 import { DEFAULT_MAX_VALUE } from '../../constants';
 import {
@@ -142,45 +142,6 @@ export const getFormattedValue = (
     default:
       return value.toString();
   }
-};
-
-/**
- * Generates ID strings for aria-labeling and accessibility.
- *
- * @param role - Role of the progress bar ("progressbar" or "meter")
- * @param label - Optional consumer-provided label
- * @param description - Optional consumer-provided description
- * @returns {{
- *   barId: string;
- *   labelId?: string;
- *   descId?: string;
- *   liveId: string;
- * }} An object containing:
- * - `barId`: The unique ID for the progress bar element.
- * - `labelId`: The unique ID for the label element, if a label is provided.
- * - `descId`: The unique ID for the description element, if a description is provided.
- * - `liveId`: The unique ID for the live region element associated with the progress bar.
- */
-export const getProgressBarIdentifiers = (
-  role: Role,
-  label?: React.ReactNode,
-  description?: React.ReactNode,
-): {
-  barId: string;
-  labelId?: string;
-  descId?: string;
-  liveId: string;
-} => {
-  const progressBarId = label
-    ? `${role}-for-${getNodeTextContent(label)}`
-    : role;
-
-  return {
-    barId: progressBarId,
-    labelId: label ? `label-for-${progressBarId}` : undefined,
-    descId: description ? `desc-for-${progressBarId}` : undefined,
-    liveId: `live-region-for-${progressBarId}`,
-  };
 };
 
 /**
