@@ -85,25 +85,20 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     },
     maxValue: {
       control: { type: 'number' },
-      if: { arg: 'isIndeterminate', eq: false },
+      if: { arg: 'isIndeterminate', neq: true },
     },
     roleType: {
       control: { type: 'select' },
       options: ROLES,
-      if: { arg: 'isIndeterminate', eq: false },
+      if: { arg: 'isIndeterminate', neq: true },
     },
     enableAnimation: {
       description:
         '**Only available** if roleType="progressbar" and isIndeterminate=true (fixed to false in this example).',
       control: { type: 'none' },
-      // if: { arg: 'roleType', eq: Role.Progress } AND { arg: 'isIndeterminate', eq: false }, // TODO: not supported
+      // if: { arg: 'roleType', eq: Role.Progress } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
     },
   },
-  decorators: [
-    (Story, context) => {
-      return <Story {...context} />;
-    },
-  ],
 };
 export default meta;
 
@@ -114,8 +109,6 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     showIcon: true,
     label: 'Label',
     description: 'Helper text',
-    isIndeterminate: false,
-    enableAnimation: false,
   },
 };
 

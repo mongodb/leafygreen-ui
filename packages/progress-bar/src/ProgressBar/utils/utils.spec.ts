@@ -48,7 +48,6 @@ describe('resolveProgressBarProps', () => {
 
   test('it correctly resolves props for determinate with progress role', () => {
     const props = {
-      isIndeterminate: false,
       value: 50,
       maxValue: 100,
       enableAnimation: true,
