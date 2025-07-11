@@ -280,7 +280,7 @@ export const getBarFillStyles = ({
   return cx(baseStyles, addOnStyles);
 };
 
-export const getInvisibleStyles = () => css`
+export const getHiddenStyles = () => css`
   position: absolute;
   width: 0;
   height: 0;

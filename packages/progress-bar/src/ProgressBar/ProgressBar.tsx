@@ -17,7 +17,7 @@ import {
   getBarTrackStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
-  getInvisibleStyles,
+  getHiddenStyles,
   headerStyles,
   truncatedTextStyles,
 } from './ProgressBar.styles';
@@ -94,6 +94,7 @@ export function ProgressBar(props: ProgressBarProps) {
       setIsNewDescription(true);
     }
   }, [description, prevDescription]);
+
   const screenReaderMessage = useScreenReaderAnnouncer({
     type,
     value,
@@ -198,7 +199,7 @@ export function ProgressBar(props: ProgressBarProps) {
           id={liveId}
           aria-live="polite"
           aria-atomic="true"
-          className={getInvisibleStyles()}
+          className={getHiddenStyles()}
         >
           {screenReaderMessage}
         </div>

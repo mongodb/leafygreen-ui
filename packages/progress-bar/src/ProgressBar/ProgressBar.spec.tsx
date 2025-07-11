@@ -37,7 +37,7 @@ describe('packages/progress-bar', () => {
       expect(queryDescription()).toHaveTextContent(TEST_DESCRIPTION);
     });
 
-    describe('with value format', () => {
+    describe('with formatValue', () => {
       const TEST_VALUE = 50;
       const TEST_MAX_VALUE = 100;
 
@@ -105,74 +105,74 @@ describe('packages/progress-bar', () => {
         const { queryIcon } = getTestUtils();
         expect(queryIcon()).toBeNull();
       });
+    });
 
-      describe('with unexpected input', () => {
-        test('renders width 0% when value is less than 0', () => {
-          render(
-            <ProgressBar
-              type={Type.Loader}
-              isIndeterminate={false}
-              value={-5}
-              maxValue={100}
-              aria-label="required label"
-            />,
-          );
-          const { getBarFill } = getTestUtils();
-          expect(getBarFill()).toBeInTheDocument();
-          expect(getBarFill()).toHaveStyle({
-            width: '0%',
-          });
+    describe('with unexpected input', () => {
+      test('renders width 0% when value is less than 0', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            value={-5}
+            maxValue={100}
+            aria-label="required label"
+          />,
+        );
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
+          width: '0%',
         });
+      });
 
-        test('renders width capped at 100% when value is over maxValue', () => {
-          render(
-            <ProgressBar
-              type={Type.Loader}
-              isIndeterminate={false}
-              value={105}
-              maxValue={100}
-              aria-label="required label"
-            />,
-          );
-          const { getBarFill } = getTestUtils();
-          expect(getBarFill()).toBeInTheDocument();
-          expect(getBarFill()).toHaveStyle({
-            width: '100%',
-          });
+      test('renders width capped at 100% when value is over maxValue', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            value={105}
+            maxValue={100}
+            aria-label="required label"
+          />,
+        );
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
+          width: '100%',
         });
+      });
 
-        test('defaults to maxValue of 1 when maxValue is less than 0', () => {
-          render(
-            <ProgressBar
-              type={Type.Loader}
-              isIndeterminate={false}
-              value={1}
-              maxValue={-10}
-              aria-label="required label"
-            />,
-          );
-          const { getBarFill } = getTestUtils();
-          expect(getBarFill()).toBeInTheDocument();
-          expect(getBarFill()).toHaveStyle({
-            width: '100%',
-          });
+      test('defaults to maxValue of 1 when maxValue is less than 0', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            value={1}
+            maxValue={-10}
+            aria-label="required label"
+          />,
+        );
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
+          width: '100%',
         });
+      });
 
-        test('defaults to maxValue of 1 when maxValue is 0', () => {
-          render(
-            <ProgressBar
-              type={Type.Loader}
-              isIndeterminate={false}
-              value={1}
-              maxValue={0}
-              aria-label="required label"
-            />,
-          );
-          const { getBarFill } = getTestUtils();
-          expect(getBarFill()).toBeInTheDocument();
-          expect(getBarFill()).toHaveStyle({
-            width: '100%',
-          });
+      test('defaults to maxValue of 1 when maxValue is 0', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            value={1}
+            maxValue={0}
+            aria-label="required label"
+          />,
+        );
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
+          width: '100%',
         });
       });
     });

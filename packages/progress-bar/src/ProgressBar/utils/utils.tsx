@@ -115,8 +115,8 @@ export const getAnimationMode = ({
 };
 
 export const getPercentage = (value: number, maxValue?: number): number => {
-  const percentage = (value / (maxValue || DEFAULT_MAX_VALUE)) * 100;
-  return Math.min(Math.max(percentage, 0), 100);
+  const rawPercentage = (value / (maxValue || DEFAULT_MAX_VALUE)) * 100;
+  return Math.min(Math.max(Math.round(rawPercentage), 0), 100);
 };
 
 export const getFormattedValue = (

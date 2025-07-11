@@ -6,7 +6,7 @@ import { ProgressBar } from '../ProgressBar';
 import { getTestUtils } from './getTestUtils';
 
 describe('getTestUtils', () => {
-  it('returns all expected elements when loader type is rendered', () => {
+  test('returns all expected elements when loader type is rendered', () => {
     render(
       <ProgressBar
         type="loader"
@@ -31,13 +31,14 @@ describe('getTestUtils', () => {
     expect(queryLabel()).toBeInTheDocument();
   });
 
-  it('returns all expected elements when meter type is rendered', () => {
+  test('returns all expected elements when meter type is rendered', () => {
     render(
       <ProgressBar
         type="meter"
         value={0.5}
         description="Sample description"
         formatValue="number"
+        aria-label="required label"
       />,
     );
 
@@ -55,7 +56,7 @@ describe('getTestUtils', () => {
     expect(queryDescription()).toBeInTheDocument();
   });
 
-  it('can differentiate multiple progress bars using lgId', () => {
+  test('can differentiate multiple progress bars using lgId', () => {
     render(
       <>
         <ProgressBar

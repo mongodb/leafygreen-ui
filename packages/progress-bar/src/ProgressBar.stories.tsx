@@ -84,30 +84,30 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       },
     },
     isIndeterminate: {
-      if: { arg: 'type', eq: Type.Loader },
       control: { type: 'boolean' },
+      if: { arg: 'type', eq: Type.Loader },
     },
     maxValue: {
-      // if: { arg: 'type', eq: Type.Meter } OR { arg: 'isIndeterminate', eq: false }, // TODO: not supported
       description:
         '**Not available** if both type=loader and isIndeterminate=true (fixed to 200 in this example).',
       control: { type: 'none' },
+      // if: { arg: 'type', eq: Type.Meter } OR { arg: 'isIndeterminate', eq: false }, // TODO: not supported
     },
     variant: {
-      if: { arg: 'type', eq: Type.Loader },
       control: { type: 'select' },
       options: [...LOADER_VARIANTS, undefined],
+      if: { arg: 'type', eq: Type.Loader },
     },
     status: {
-      if: { arg: 'type', eq: Type.Meter },
       control: { type: 'select' },
       options: [...METER_STATUSES, undefined],
+      if: { arg: 'type', eq: Type.Meter },
     },
     enableAnimation: {
-      // if: { arg: 'type', neq: Type.Meter } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
       description:
         '**Not available** if either type="meter" or isIndeterminate=true (fixed to false in this example).',
       control: { type: 'none' },
+      // if: { arg: 'type', neq: Type.Meter } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
     },
   },
   decorators: [
@@ -127,7 +127,6 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     description: 'Helper text',
     isIndeterminate: false,
     enableAnimation: false,
-    'aria-label': 'required label',
   },
 };
 
