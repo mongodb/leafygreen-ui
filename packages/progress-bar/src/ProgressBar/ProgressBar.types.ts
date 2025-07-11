@@ -49,34 +49,51 @@ type BaseProps = DarkModeProps &
     /** Optional descriptive text below the progress bar. */
     description?: React.ReactNode;
 
-    /** Optional formatting of progress value text. If not defined, progress value is not displayed. */
+    /**
+     * Optional formatting of progress value text.
+     * If undefined, no progress value is displayed.
+     */
     formatValue?: FormatValueType;
 
     /**
-     * If true, displays icon next to progress value.
-     * If `variant` is `'success'` or `status` is `'healthy'`, the icon only appears when progress reaches 100%.
+     * When `true`, displays icon next to progress value.
+     * If `variant` is `'success'`, the icon only appears when progress reaches 100%.
      */
     showIcon?: boolean;
   };
 
 interface BaseDeterminateProps {
+  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. */
   isIndeterminate?: false;
+
+  /** Current progress value. Optional only if isIndeterminate is `true`. */
   value: number;
+
+  /** Maximum progress value. */
   maxValue?: number;
+
+  /** When `true`, shows a disabled style and pauses animation. */
   disabled?: boolean;
 }
 
 interface BaseDeterminateProgressProps {
+  /** Specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar". */
   roleType?: typeof Role.Progress;
 }
 
 interface DeterminatePlainProgressProps {
+  /** Optional variant of the progress bar. Defaults to "info". */
   variant?: Variant;
+
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". */
   enableAnimation?: false;
 }
 
 interface DeterminateAnimatedProgressProps {
+  /** Optional variant of the progress bar. Defaults to "info". */
   variant?: AnimatedVariant;
+
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". */
   enableAnimation: true;
 }
 
@@ -84,7 +101,10 @@ type DeterminateProgressProps = BaseDeterminateProgressProps &
   (DeterminatePlainProgressProps | DeterminateAnimatedProgressProps);
 
 interface DeterminateMeterProps {
+  /** Role type of the progress bar ("progressbar" or "meter"). */
   roleType: typeof Role.Meter;
+
+  /** Optional variant of the progress bar. Defaults to "info". */
   variant?: Variant;
 }
 
@@ -92,8 +112,13 @@ type DeterminateProps = BaseDeterminateProps &
   (DeterminateMeterProps | DeterminateProgressProps);
 
 interface IndeterminateProps {
+  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. */
   isIndeterminate: true;
+
+  /** Current progress value. Optional only if isIndeterminate is `true`. */
   value?: number;
+
+  /** Optional variant of the progress bar. Defaults to "info". */
   variant?: AnimatedVariant;
 }
 
@@ -101,28 +126,29 @@ export type ProgressBarProps = BaseProps &
   (DeterminateProps | IndeterminateProps);
 
 export interface ResolvedProgressBarProps {
-  /** Current progress value. Optional only if `isIndeterminate` is `true` for a loader type. */
+  /** Resolved role of the progress bar ("progressbar" or "meter"). */
+  role: Role;
+
+  /** Current progress value. Optional only if isIndeterminate is `true`. */
   value: number | undefined;
 
-  /** Optional maximum progress value. Not available if `isIndeterminate` is `true` for loaders. */
+  /** Maximum progress value. */
   maxValue: number | undefined;
 
-  /** Pauses progress and shows a disabled style. Not available if `isIndeterminate` is `true` for loaders. */
+  /** When `true`, shows a disabled style and pauses animation. */
   disabled: boolean;
 
-  /** When `true`, shows an infinite looping animation along the bar. */
+  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. */
   isIndeterminate: boolean;
 
-  /** When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. */
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". */
   enableAnimation: boolean;
-
-  role: Role;
 }
 
 export const AnimationMode = {
+  Indeterminate: 'indeterminate',
   DeterminatePlain: 'determinate-plain',
   DeterminateAnimated: 'determinate-animated',
-  Indeterminate: 'indeterminate',
   Transition: 'indeterminate-to-determinate-transition',
 };
 export type AnimationMode = (typeof AnimationMode)[keyof typeof AnimationMode];
