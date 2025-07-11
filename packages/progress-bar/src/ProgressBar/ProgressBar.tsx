@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
@@ -105,107 +107,110 @@ export function ProgressBar(props: ProgressBarProps) {
   });
 
   return (
-    <div
-      className={containerStyles}
-      aria-disabled={disabled}
-      data-lgid={lgIds.root}
-    >
-      <div className={headerStyles}>
-        <Label
-          id={labelId}
-          htmlFor={barId}
-          darkMode={darkMode}
-          disabled={disabled}
-          className={truncatedTextStyles}
-          data-lgid={lgIds.label}
-        >
-          {label}
-        </Label>
-
-        {formatValue && (
-          <Body
-            className={getHeaderValueStyles({ theme, disabled })}
-            darkMode={darkMode}
-            data-lgid={lgIds.valueText}
-          >
-            {isDefined(value) &&
-              getFormattedValue(value, maxValue, formatValue)}
-
-            {showIcon &&
-              getHeaderIcon({
-                variant,
-                disabled,
-                props: {
-                  className: getHeaderIconStyles({ theme, variant, disabled }),
-                },
-              })}
-          </Body>
-        )}
-      </div>
-
+    <LeafyGreenProvider darkMode={darkMode}>
       <div
-        role={role}
-        id={barId}
-        aria-labelledby={labelId}
-        aria-label={ariaLabel}
-        aria-describedby={descId}
-        aria-controls={liveId}
-        {...getValueAriaAttributes(value, maxValue)}
+        className={containerStyles}
+        aria-disabled={disabled}
+        data-lgid={lgIds.root}
       >
+        <div className={headerStyles}>
+          <Label
+            id={labelId}
+            htmlFor={barId}
+            disabled={disabled}
+            className={truncatedTextStyles}
+            data-lgid={lgIds.label}
+          >
+            {label}
+          </Label>
+
+          {formatValue && (
+            <Body
+              className={getHeaderValueStyles({ theme, disabled })}
+              data-lgid={lgIds.valueText}
+            >
+              {isDefined(value) &&
+                getFormattedValue(value, maxValue, formatValue)}
+
+              {showIcon &&
+                getHeaderIcon({
+                  variant,
+                  disabled,
+                  props: {
+                    className: getHeaderIconStyles({
+                      theme,
+                      variant,
+                      disabled,
+                    }),
+                  },
+                })}
+            </Body>
+          )}
+        </div>
+
         <div
-          data-lgid={lgIds.track}
-          className={getBarTrackStyles({ theme, size })}
+          role={role}
+          id={barId}
+          aria-labelledby={labelId}
+          aria-label={ariaLabel}
+          aria-describedby={descId}
+          aria-controls={liveId}
+          {...getValueAriaAttributes(value, maxValue)}
         >
           <div
-            data-lgid={lgIds.fill}
-            className={getBarFillStyles({
-              theme,
-              variant,
-              disabled,
-              value,
-              maxValue,
-              animationMode,
-            })}
-            // if on fade-out transition, revert back to base mode
-            onTransitionEnd={() => {
-              if (animationMode === AnimationMode.Transition) {
-                setAnimationMode(
-                  getAnimationMode({
-                    isIndeterminate,
-                    enableAnimation,
-                  }),
-                );
-              }
-            }}
-          ></div>
+            data-lgid={lgIds.track}
+            className={getBarTrackStyles({ theme, size })}
+          >
+            <div
+              data-lgid={lgIds.fill}
+              className={getBarFillStyles({
+                theme,
+                variant,
+                disabled,
+                value,
+                maxValue,
+                animationMode,
+              })}
+              // if on fade-out transition, revert back to base mode
+              onTransitionEnd={() => {
+                if (animationMode === AnimationMode.Transition) {
+                  setAnimationMode(
+                    getAnimationMode({
+                      isIndeterminate,
+                      enableAnimation,
+                    }),
+                  );
+                }
+              }}
+            ></div>
+          </div>
         </div>
+
+        {description && (
+          <Description
+            disabled={disabled}
+            data-lgid={lgIds.description}
+            className={cx({ [getAnimatedTextStyles()]: isNewDescription })}
+            // if on fade-in transition, reset state after animation ends
+            onAnimationEnd={() => setIsNewDescription(false)}
+          >
+            {description}
+          </Description>
+        )}
+
+        {!disabled && screenReaderMessage && (
+          <div
+            role="status"
+            id={liveId}
+            aria-live="polite"
+            aria-atomic="true"
+            className={getHiddenStyles()}
+          >
+            {screenReaderMessage}
+          </div>
+        )}
       </div>
-
-      {description && (
-        <Description
-          darkMode={darkMode}
-          disabled={disabled}
-          data-lgid={lgIds.description}
-          className={cx({ [getAnimatedTextStyles()]: isNewDescription })}
-          // if on fade-in transition, reset state after animation ends
-          onAnimationEnd={() => setIsNewDescription(false)}
-        >
-          {description}
-        </Description>
-      )}
-
-      {screenReaderMessage && (
-        <div
-          role="status"
-          id={liveId}
-          aria-live="polite"
-          aria-atomic="true"
-          className={getHiddenStyles()}
-        >
-          {screenReaderMessage}
-        </div>
-      )}
-    </div>
+    </LeafyGreenProvider>
   );
 }
 
