@@ -1,5 +1,5 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { isDefined, Theme } from '@leafygreen-ui/lib';
 import {
   color as colorToken,
   spacing as spacingToken,
@@ -86,6 +86,15 @@ export const truncatedTextStyles = css`
   width: 100%;
 `;
 
+export const hiddenStyles = css`
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+`;
+
 export const getHeaderValueStyles = ({
   theme,
   disabled,
@@ -144,7 +153,7 @@ const getBaseBarFillStyles = () => css`
   border-radius: inherit;
 `;
 
-const getDeterminateBarFillStyles = ({
+const getDeterminateFillStyles = ({
   theme,
   variant,
   disabled,
@@ -162,7 +171,7 @@ const getDeterminateBarFillStyles = ({
     : barColorStyles[theme][variant].bar};
 `;
 
-const getDeterminateAnimatedBarFillStyles = ({
+const getDeterminateAnimatedFillStyles = ({
   theme,
   variant,
   disabled,
@@ -194,7 +203,7 @@ const getDeterminateAnimatedBarFillStyles = ({
   );
 };
 
-const getIndeterminateBarFillStyles = ({
+const getIndeterminateFillStyles = ({
   theme,
   variant,
 }: {
@@ -220,7 +229,7 @@ const getIndeterminateBarFillStyles = ({
   `;
 };
 
-export const getTransitioningBarFillStyles = () => css`
+export const transitioningFillStyles = css`
   opacity: 0;
   width: 0%;
   transition: opacity ${TRANSITION_ANIMATION_DURATION}ms ease-out,
@@ -232,7 +241,7 @@ export const getBarFillStyles = ({
   theme,
   variant,
   disabled,
-  value = 0,
+  value,
   maxValue,
 }: {
   animationMode: AnimationMode;
@@ -246,24 +255,26 @@ export const getBarFillStyles = ({
 
   let addOnStyles;
 
-  const determinate = getDeterminateBarFillStyles({
+  const determinate =
+    isDefined(value) &&
+    getDeterminateFillStyles({
+      theme,
+      variant,
+      disabled,
+      width: getPercentage(value, maxValue),
+    });
+
+  const determinateAnimated = getDeterminateAnimatedFillStyles({
     theme,
     variant,
     disabled,
-    width: getPercentage(value, maxValue),
   });
 
-  const determinateAnimated = getDeterminateAnimatedBarFillStyles({
-    theme,
-    variant,
-    disabled,
-  });
-
-  const indeterminate = getIndeterminateBarFillStyles({ theme, variant });
+  const indeterminate = getIndeterminateFillStyles({ theme, variant });
 
   switch (animationMode) {
     case AnimationMode.Transition:
-      addOnStyles = cx(indeterminate, getTransitioningBarFillStyles());
+      addOnStyles = cx(indeterminate, transitioningFillStyles);
       break;
     case AnimationMode.Indeterminate:
       addOnStyles = indeterminate;
@@ -279,12 +290,3 @@ export const getBarFillStyles = ({
 
   return cx(baseStyles, addOnStyles);
 };
-
-export const getHiddenStyles = () => css`
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-`;

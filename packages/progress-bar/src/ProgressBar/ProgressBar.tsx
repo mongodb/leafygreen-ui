@@ -23,8 +23,8 @@ import {
   getBarTrackStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
-  getHiddenStyles,
   headerStyles,
+  hiddenStyles,
   truncatedTextStyles,
 } from './ProgressBar.styles';
 import { AnimationMode, ProgressBarProps } from './ProgressBar.types';
@@ -67,18 +67,12 @@ export function ProgressBar(props: ProgressBarProps) {
     : showIconProp;
 
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
-    getAnimationMode({
-      isIndeterminate,
-      enableAnimation,
-    }),
+    getAnimationMode(isIndeterminate, enableAnimation),
   );
 
   useEffect(() => {
     setAnimationMode(currentMode => {
-      const newMode = getAnimationMode({
-        isIndeterminate,
-        enableAnimation,
-      });
+      const newMode = getAnimationMode(isIndeterminate, enableAnimation);
 
       // if previously indeterminate and now turning determinate, apply fade-out transition
       if (currentMode === AnimationMode.Indeterminate && !isIndeterminate) {
@@ -175,10 +169,7 @@ export function ProgressBar(props: ProgressBarProps) {
               onTransitionEnd={() => {
                 if (animationMode === AnimationMode.Transition) {
                   setAnimationMode(
-                    getAnimationMode({
-                      isIndeterminate,
-                      enableAnimation,
-                    }),
+                    getAnimationMode(isIndeterminate, enableAnimation),
                   );
                 }
               }}
@@ -204,7 +195,7 @@ export function ProgressBar(props: ProgressBarProps) {
             id={liveId}
             aria-live="polite"
             aria-atomic="true"
-            className={getHiddenStyles()}
+            className={hiddenStyles}
           >
             {screenReaderMessage}
           </div>

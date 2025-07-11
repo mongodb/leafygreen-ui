@@ -16,16 +16,36 @@ import {
   Variant,
 } from '../ProgressBar.types';
 
+/**
+ * Returns a valid progress value.
+ * If undefined or greater than 0, returns as-is. If under 0, returns 0.
+ */
 const getValidValue = (value?: number) => {
   if (!isDefined(value) || value >= 0) return value;
   return 0;
 };
 
+/**
+ * Returns a valid maximum progress value.
+ * Defaults to 1 if the input is undefined or less than or equal to 0.
+ */
 const getValidMaxValue = (maxValue?: number) => {
   if (!isDefined(maxValue) || maxValue <= 0) return DEFAULT_MAX_VALUE;
   return maxValue;
 };
 
+/**
+ * Resolves the full set of progress bar props based on provided props.
+ *
+ * @param props - Input props from the consumer
+ * @returns {ResolvedProgressBarProps} Fully resolved progress bar props with:
+ * - `value`: Current progress value
+ * - `maxValue`: Maximum progress value
+ * - `disabled`: Whether the progress bar is disabled
+ * - `isIndeterminate`: Whether the bar is in indeterminate mode
+ * - `enableAnimation`: Whether animation is enabled
+ * - `role`: ARIA role string
+ */
 export const resolveProgressBarProps = (
   props: ProgressBarProps,
 ): ResolvedProgressBarProps => {
@@ -67,13 +87,17 @@ export const resolveProgressBarProps = (
   };
 };
 
-export const getAnimationMode = ({
-  isIndeterminate,
-  enableAnimation,
-}: {
-  isIndeterminate: boolean;
-  enableAnimation: boolean;
-}): AnimationMode => {
+/**
+ * Determines the animation mode based on progress bar state.
+ *
+ * @param isIndeterminate - Whether the progress bar is indeterminate
+ * @param enableAnimation - Whether animation is enabled
+ * @returns The animation mode const value
+ */
+export const getAnimationMode = (
+  isIndeterminate: boolean,
+  enableAnimation: boolean,
+): AnimationMode => {
   if (isIndeterminate) return AnimationMode.Indeterminate;
 
   return enableAnimation
@@ -81,11 +105,21 @@ export const getAnimationMode = ({
     : AnimationMode.DeterminatePlain;
 };
 
+/**
+ * Computes the progress percentage given value and maxValue.
+ *
+ * @param value - Current progress value
+ * @param maxValue - Maximum progress value (optional)
+ * @returns Percentage between 0 and 100 (inclusive)
+ */
 export const getPercentage = (value: number, maxValue?: number): number => {
   const rawPercentage = (value / (maxValue || DEFAULT_MAX_VALUE)) * 100;
   return Math.min(Math.max(Math.round(rawPercentage), 0), 100);
 };
 
+/**
+ * Formats the progress value as a string based on format type.
+ */
 export const getFormattedValue = (
   value: number,
   maxValue?: number,
@@ -110,11 +144,33 @@ export const getFormattedValue = (
   }
 };
 
+/**
+ * Generates ID strings for aria-labeling and accessibility.
+ *
+ * @param role - Role of the progress bar ("progressbar" or "meter")
+ * @param label - Optional consumer-provided label
+ * @param description - Optional consumer-provided description
+ * @returns {{
+ *   barId: string;
+ *   labelId?: string;
+ *   descId?: string;
+ *   liveId: string;
+ * }} An object containing:
+ * - `barId`: The unique ID for the progress bar element.
+ * - `labelId`: The unique ID for the label element, if a label is provided.
+ * - `descId`: The unique ID for the description element, if a description is provided.
+ * - `liveId`: The unique ID for the live region element associated with the progress bar.
+ */
 export const getProgressBarIdentifiers = (
   role: Role,
   label?: React.ReactNode,
   description?: React.ReactNode,
-) => {
+): {
+  barId: string;
+  labelId?: string;
+  descId?: string;
+  liveId: string;
+} => {
   const progressBarId = label
     ? `${role}-for-${getNodeTextContent(label)}`
     : role;
@@ -127,20 +183,39 @@ export const getProgressBarIdentifiers = (
   };
 };
 
-export const getValueAriaAttributes = (value?: number, maxValue?: number) => ({
-  ...(value == undefined
-    ? { 'aria-busy': true }
-    : isDefined(maxValue)
-    ? {
-        'aria-valuemin': 0,
-        'aria-valuemax': maxValue,
-        'aria-valuenow': value,
-      }
-    : {
-        'aria-valuetext': value.toString(),
-      }),
-});
+/**
+ * Returns appropriate ARIA attributes based on value and maxValue.
+ *
+ * - If `value` is undefined: `{ 'aria-busy': true }`
+ * - If `maxValue` is defined: `aria-valuemin`, `aria-valuemax`, `aria-valuenow`
+ * - Otherwise: `aria-valuetext`
+ *
+ * @param value - Current progress value
+ * @param maxValue - Maximum progress value
+ * @returns ARIA attributes object
+ */
+export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
+  if (!isDefined(value)) {
+    return { 'aria-busy': true };
+  }
 
+  if (isDefined(maxValue)) {
+    return {
+      'aria-valuemin': 0,
+      'aria-valuemax': maxValue,
+      'aria-valuenow': value,
+    };
+  }
+
+  return {
+    'aria-valuetext': value.toString(),
+  };
+};
+
+/**
+ * Returns an appropriate status icon for the header, based on variant and disabled state.
+ * Additionally applies any extra props passed in to the icon.
+ */
 export const getHeaderIcon = ({
   variant,
   disabled = false,
