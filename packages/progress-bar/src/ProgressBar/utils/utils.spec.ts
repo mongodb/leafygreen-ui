@@ -1,4 +1,4 @@
-import { Color, LoaderVariant, MeterStatus, Type } from '../ProgressBar.types';
+import { Role } from '../ProgressBar.types';
 
 import { getFormattedValue, resolveProgressBarProps } from './utils';
 
@@ -27,61 +27,57 @@ describe('getFormattedValue', () => {
 });
 
 describe('resolveProgressBarProps', () => {
-  test('it correctly resolves props for a meter type', () => {
+  test('it correctly resolves props for determinate with meter role', () => {
     const props = {
-      type: Type.Meter,
+      roleType: Role.Meter,
       value: 50,
       maxValue: 100,
-      status: MeterStatus.Warning,
       'aria-label': 'required label',
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
     expect(resolvedProps).toEqual({
+      role: Role.Meter,
       value: 50,
       maxValue: 100,
       disabled: false,
-      color: Color.Yellow,
       isIndeterminate: false,
       enableAnimation: false,
     });
   });
 
-  test('it correctly resolves props for a determinate loader type', () => {
+  test('it correctly resolves props for determinate with progress role', () => {
     const props = {
-      type: Type.Loader,
       isIndeterminate: false,
       value: 50,
       maxValue: 100,
-      variant: LoaderVariant.Success,
       enableAnimation: true,
       'aria-label': 'required label',
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
     expect(resolvedProps).toEqual({
+      role: Role.Progress,
       value: 50,
       maxValue: 100,
       disabled: false,
-      color: Color.Green,
       isIndeterminate: false,
       enableAnimation: true,
     });
   });
 
-  test('it correctly resolves props for an indeterminate loader type', () => {
+  test('it correctly resolves props for indeterminate', () => {
     const props = {
-      type: Type.Loader,
       isIndeterminate: true,
       'aria-label': 'required label',
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
     expect(resolvedProps).toEqual({
+      role: Role.Progress,
       value: undefined,
       maxValue: undefined,
       disabled: false,
-      color: Color.Blue,
       isIndeterminate: true,
       enableAnimation: false,
     });

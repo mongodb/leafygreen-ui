@@ -1,10 +1,9 @@
 export { ProgressBar } from './ProgressBar';
 export {
-  AnimatedLoaderVariant,
+  AnimatedVariant,
   FormatValueType,
-  LoaderVariant,
-  MeterStatus,
   type ProgressBarProps,
+  Role,
   Size,
-  Type,
+  Variant,
 } from './ProgressBar.types';

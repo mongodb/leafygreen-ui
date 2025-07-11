@@ -1,71 +1,95 @@
 /* eslint-disable jest/no-disabled-tests */
-import {
-  LoaderVariant,
-  MeterStatus,
-  ProgressBarProps,
-  Type,
-} from './ProgressBar.types';
+import { ProgressBarProps, Role, Variant } from './ProgressBar.types';
+
+const requiredAriaLabel = { 'aria-label': 'required label' };
 
 test.skip('Type errors for incompatible prop combinations', () => {
   {
-    const _MeterCannotUseVariantProp: ProgressBarProps = {
-      type: Type.Meter,
-      // @ts-expect-error - meter type should not have variant prop
-      variant: LoaderVariant.Info,
-    };
-
-    const _MeterCannotUseIsIndeterminateProp: ProgressBarProps = {
-      type: Type.Meter,
-      // @ts-expect-error - meter type should not have isIndeterminate prop
-      isIndeterminate: false,
-    };
-
-    const _LoaderCannotUseStatusProp: ProgressBarProps = {
-      type: Type.Loader,
-      // @ts-expect-error - loader type should not have status prop
-      status: MeterStatus.Warning,
-    };
-
-    const _IndeterminateLoaderCannotBeWarning: ProgressBarProps = {
-      type: Type.Loader,
+    /*
+     * restrictions on indeterminate bars
+     */
+    const _IndeterminateCannotUseRoleType: ProgressBarProps = {
       isIndeterminate: true,
-      // @ts-expect-error - warning variant should not be used with indeterminate
-      variant: LoaderVariant.Warning,
+      // @ts-expect-error - indeterminate cannot use roleType prop
+      roleType: Role.Progress,
+      ...requiredAriaLabel,
     };
 
-    const _IndeterminateLoaderCannotBeError: ProgressBarProps = {
-      type: Type.Loader,
+    const _IndeterminateCannotBeDisabled: ProgressBarProps = {
       isIndeterminate: true,
-      // @ts-expect-error - error variant should not be used with indeterminate
-      variant: LoaderVariant.Error,
-    };
-
-    const _IndeterminateLoaderCannotBeDisabled: ProgressBarProps = {
-      type: Type.Loader,
-      isIndeterminate: true,
-      // @ts-expect-error - indeterminate loader should not be disabled
+      // @ts-expect-error - indeterminate cannot be disabled
       disabled: true,
+      ...requiredAriaLabel,
     };
 
-    const _IndeterminateLoaderCannotUseEnableAnimation: ProgressBarProps = {
-      type: Type.Loader,
+    // @ts-expect-error - indeterminate cannot be warning variant
+    const _IndeterminateCannotBeWarning: ProgressBarProps = {
       isIndeterminate: true,
-      // @ts-expect-error - enableAnimation should not be used with indeterminate
-      enableAnimation: true,
+      variant: Variant.Warning,
+      ...requiredAriaLabel,
     };
 
-    const _DeterminateAnimatedLoaderCannotBeWarning: ProgressBarProps = {
-      type: Type.Loader,
-      enableAnimation: true,
-      // @ts-expect-error - animated determinate loader should not use warning variant
-      variant: LoaderVariant.Warning,
+    // @ts-expect-error - indeterminate cannot be error variant
+    const _IndeterminateCannotBeError: ProgressBarProps = {
+      isIndeterminate: true,
+      variant: Variant.Error,
+      ...requiredAriaLabel,
     };
 
-    const _DeterminateAnimatedLoaderCannotBeError: ProgressBarProps = {
-      type: Type.Loader,
+    /*
+     * restrictions on determinate bars with progress role AND have animation enabled
+     */
+    // @ts-expect-error - animated progress cannot be warning variant
+    const _DeterminateProgressCannotBeWarningIfAnimated: ProgressBarProps = {
+      roleType: Role.Progress,
+      value: 50,
       enableAnimation: true,
-      // @ts-expect-error - animated determinate loader should not use error variant
-      variant: LoaderVariant.Error,
+      variant: Variant.Warning,
+      ...requiredAriaLabel,
+    };
+
+    // @ts-expect-error - animated progress cannot be error variant
+    const _DeterminateProgressCannotBeWarningIfError: ProgressBarProps = {
+      roleType: Role.Progress,
+      value: 50,
+      enableAnimation: true,
+      variant: Variant.Error,
+      ...requiredAriaLabel,
+    };
+
+    /*
+     * restrictions on determinate bars with meter role
+     */
+    const _DeterminateMeterCannotUseEnableAnimation: ProgressBarProps = {
+      roleType: Role.Meter,
+      value: 10,
+      // @ts-expect-error - meter cannot enable animation
+      enableAnimation: true,
+      ...requiredAriaLabel,
+    };
+
+    /*
+     * valid base cases
+     */
+    const _ValidIndeterminate: ProgressBarProps = {
+      isIndeterminate: true,
+      variant: Variant.Info,
+      ...requiredAriaLabel,
+    };
+
+    const _ValidDeterminateMeter: ProgressBarProps = {
+      roleType: Role.Meter,
+      value: 10,
+      variant: Variant.Warning,
+      ...requiredAriaLabel,
+    };
+
+    const _ValidDeterminateProgress: ProgressBarProps = {
+      roleType: Role.Progress,
+      value: 30,
+      enableAnimation: true,
+      variant: Variant.Success,
+      ...requiredAriaLabel,
     };
   }
 });

@@ -18,7 +18,7 @@ import {
   TRANSITION_ANIMATION_DURATION,
   WIDTH_ANIMATION_DURATION,
 } from './ProgressBar.constants';
-import { AnimationMode, Color, Size } from './ProgressBar.types';
+import { AnimationMode, Size, Variant } from './ProgressBar.types';
 import { getPercentage } from './utils';
 
 const shimmerKeyframes = keyframes`
@@ -105,17 +105,17 @@ export const getHeaderValueStyles = ({
 
 export const getHeaderIconStyles = ({
   theme,
-  color,
+  variant,
   disabled,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
 }) => css`
   margin-bottom: ${spacingToken[50]}px; // align icon with text baseline
   color: ${disabled
     ? colorToken[theme].icon.disabled.default
-    : barColorStyles[theme][color].icon};
+    : barColorStyles[theme][variant].icon};
 `;
 
 export const getAnimatedTextStyles = () => css`
@@ -146,12 +146,12 @@ const getBaseBarFillStyles = () => css`
 
 const getDeterminateBarFillStyles = ({
   theme,
-  color,
+  variant,
   disabled,
   width,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
   width: number;
 }) => css`
@@ -159,19 +159,19 @@ const getDeterminateBarFillStyles = ({
   transition: width ${WIDTH_ANIMATION_DURATION}ms ease-in-out;
   background-color: ${disabled
     ? barColorStyles[theme].disabledBar
-    : barColorStyles[theme][color].bar};
+    : barColorStyles[theme][variant].bar};
 `;
 
 const getDeterminateAnimatedBarFillStyles = ({
   theme,
-  color,
+  variant,
   disabled,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
 }) => {
-  const selectedColorStyle = barColorStyles[theme][color];
+  const selectedColorStyle = barColorStyles[theme][variant];
   const hasAnimation = !disabled && 'shimmerFade' in selectedColorStyle;
 
   return (
@@ -196,12 +196,12 @@ const getDeterminateAnimatedBarFillStyles = ({
 
 const getIndeterminateBarFillStyles = ({
   theme,
-  color,
+  variant,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
 }) => {
-  const selectedColorStyle = barColorStyles[theme][color];
+  const selectedColorStyle = barColorStyles[theme][variant];
 
   return css`
     width: 100%;
@@ -230,14 +230,14 @@ export const getTransitioningBarFillStyles = () => css`
 export const getBarFillStyles = ({
   animationMode,
   theme,
-  color,
+  variant,
   disabled,
   value = 0,
   maxValue,
 }: {
   animationMode: AnimationMode;
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
   value?: number;
   maxValue?: number;
@@ -248,18 +248,18 @@ export const getBarFillStyles = ({
 
   const determinate = getDeterminateBarFillStyles({
     theme,
-    color,
+    variant,
     disabled,
     width: getPercentage(value, maxValue),
   });
 
   const determinateAnimated = getDeterminateAnimatedBarFillStyles({
     theme,
-    color,
+    variant,
     disabled,
   });
 
-  const indeterminate = getIndeterminateBarFillStyles({ theme, color });
+  const indeterminate = getIndeterminateBarFillStyles({ theme, variant });
 
   switch (animationMode) {
     case AnimationMode.Transition:
@@ -271,7 +271,7 @@ export const getBarFillStyles = ({
     case AnimationMode.DeterminateAnimated:
       addOnStyles = cx(determinate, determinateAnimated);
       break;
-    case AnimationMode.DeterminateBase:
+    case AnimationMode.DeterminatePlain:
     default:
       addOnStyles = determinate;
       break;

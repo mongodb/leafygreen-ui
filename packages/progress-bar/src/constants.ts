@@ -1,6 +1,7 @@
-import { Color } from './ProgressBar/ProgressBar.types';
+import { Size, Variant } from './ProgressBar/ProgressBar.types';
 
+export const DEFAULT_VARIANT = Variant.Info;
+export const DEFAULT_SIZE = Size.Default;
 export const DEFAULT_MAX_VALUE = 1;
-export const DEFAULT_COLOR = Color.Blue;
 
-export const iconsPendingCompletion: Array<Color> = [Color.Green];
+export const iconsPendingCompletion: Array<Variant> = [Variant.Success];

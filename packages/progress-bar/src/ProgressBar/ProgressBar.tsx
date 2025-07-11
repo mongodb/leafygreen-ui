@@ -6,7 +6,11 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
-import { iconsPendingCompletion } from '../constants';
+import {
+  DEFAULT_SIZE,
+  DEFAULT_VARIANT,
+  iconsPendingCompletion,
+} from '../constants';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
 
 import { useScreenReaderAnnouncer } from './hooks';
@@ -21,7 +25,7 @@ import {
   headerStyles,
   truncatedTextStyles,
 } from './ProgressBar.styles';
-import { AnimationMode, ProgressBarProps, Size } from './ProgressBar.types';
+import { AnimationMode, ProgressBarProps } from './ProgressBar.types';
 import {
   getAnimationMode,
   getFormattedValue,
@@ -31,38 +35,37 @@ import {
   resolveProgressBarProps,
 } from './utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const { value, maxValue, disabled, color, isIndeterminate, enableAnimation } =
+  const { value, maxValue, disabled, isIndeterminate, role, enableAnimation } =
     resolveProgressBarProps(props);
 
   const {
-    type,
+    size = DEFAULT_SIZE,
     label,
-    'aria-label': ariaLabel,
-    size = Size.Default,
     description,
+    variant = DEFAULT_VARIANT,
     darkMode = false,
     formatValue,
     showIcon: showIconProp = false,
+    'aria-label': ariaLabel,
     'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   } = props;
 
   const { theme } = useDarkMode(darkMode);
 
-  const { role, barId, labelId, descId, liveId } = getProgressBarIdentifiers(
-    type,
+  const { barId, labelId, descId, liveId } = getProgressBarIdentifiers(
+    role,
     label,
     description,
   );
 
   const lgIds = getLgIds(dataLgId);
 
-  const showIcon = iconsPendingCompletion.includes(color)
+  const showIcon = iconsPendingCompletion.includes(variant)
     ? showIconProp && value === maxValue
     : showIconProp;
 
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
     getAnimationMode({
-      type,
       isIndeterminate,
       enableAnimation,
     }),
@@ -71,7 +74,6 @@ export function ProgressBar(props: ProgressBarProps) {
   useEffect(() => {
     setAnimationMode(currentMode => {
       const newMode = getAnimationMode({
-        type,
         isIndeterminate,
         enableAnimation,
       });
@@ -83,7 +85,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
       return currentMode === newMode ? currentMode : newMode;
     });
-  }, [type, isIndeterminate, enableAnimation]);
+  }, [isIndeterminate, enableAnimation]);
 
   const [isNewDescription, setIsNewDescription] = useState(false);
   const prevDescription = usePrevious(description);
@@ -96,10 +98,10 @@ export function ProgressBar(props: ProgressBarProps) {
   }, [description, prevDescription]);
 
   const screenReaderMessage = useScreenReaderAnnouncer({
-    type,
+    role,
     value,
     maxValue,
-    color,
+    variant,
   });
 
   return (
@@ -131,10 +133,10 @@ export function ProgressBar(props: ProgressBarProps) {
 
             {showIcon &&
               getHeaderIcon({
-                color,
+                variant,
                 disabled,
                 props: {
-                  className: getHeaderIconStyles({ theme, color, disabled }),
+                  className: getHeaderIconStyles({ theme, variant, disabled }),
                 },
               })}
           </Body>
@@ -158,7 +160,7 @@ export function ProgressBar(props: ProgressBarProps) {
             data-lgid={lgIds.fill}
             className={getBarFillStyles({
               theme,
-              color,
+              variant,
               disabled,
               value,
               maxValue,
@@ -169,7 +171,6 @@ export function ProgressBar(props: ProgressBarProps) {
               if (animationMode === AnimationMode.Transition) {
                 setAnimationMode(
                   getAnimationMode({
-                    type,
                     isIndeterminate,
                     enableAnimation,
                   }),
