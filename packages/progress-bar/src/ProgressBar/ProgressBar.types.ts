@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export const Type = {
@@ -55,25 +56,24 @@ export const Color = {
 } as const;
 export type Color = (typeof Color)[keyof typeof Color];
 
-interface BaseProps extends DarkModeProps, LgIdProps {
-  /** Optional label text displayed directly above the progress bar. */
-  label?: React.ReactNode;
+type BaseProps = DarkModeProps &
+  AriaLabelPropsWithLabel &
+  LgIdProps & {
+    /** Optional size (thickness) of the progress bar. */
+    size?: Size;
 
-  /** Optional size (thickness) of the progress bar. */
-  size?: Size;
+    /** Optional descriptive text below the progress bar. */
+    description?: React.ReactNode;
 
-  /** Optional descriptive text below the progress bar. */
-  description?: React.ReactNode;
+    /** Optional formatting of progress value text. If not defined, progress value is not displayed. */
+    formatValue?: FormatValueType;
 
-  /** Optional formatting of progress value text. If not defined, progress value is not displayed. */
-  formatValue?: FormatValueType;
-
-  /**
-   * If true, displays icon next to progress value.
-   * If `variant` is `'success'` or `status` is `'healthy'`, the icon only appears when progress reaches 100%.
-   */
-  showIcon?: boolean;
-}
+    /**
+     * If true, displays icon next to progress value.
+     * If `variant` is `'success'` or `status` is `'healthy'`, the icon only appears when progress reaches 100%.
+     */
+    showIcon?: boolean;
+  };
 
 interface BaseLoaderProps {
   /** Specifies whether the progress bar is a meter or loader. */
@@ -93,7 +93,7 @@ interface BaseDeterminateLoaderProps {
   disabled?: boolean;
 }
 
-interface PlainDeterminateLoaderProps {
+interface DeterminatePlainLoaderProps {
   /** Variant for loader type. Animation is only available for `info` or `success` variants. */
   variant?: LoaderVariant;
 
@@ -101,7 +101,7 @@ interface PlainDeterminateLoaderProps {
   enableAnimation?: false;
 }
 
-interface AnimatedDeterminateLoaderProps {
+interface DeterminateAnimatedLoaderProps {
   /** Variant for loader type. Animation is only available for `info` or `success` variants. */
   variant?: AnimatedLoaderVariant;
 
@@ -110,7 +110,7 @@ interface AnimatedDeterminateLoaderProps {
 }
 
 type DeterminateLoaderProps = BaseDeterminateLoaderProps &
-  (PlainDeterminateLoaderProps | AnimatedDeterminateLoaderProps);
+  (DeterminatePlainLoaderProps | DeterminateAnimatedLoaderProps);
 
 interface IndeterminateLoaderProps {
   /** When `true`, shows an infinite looping animation along the bar. */
@@ -164,3 +164,11 @@ export interface ResolvedProgressBarProps {
   /** When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. */
   enableAnimation: boolean;
 }
+
+export const AnimationMode = {
+  DeterminateBase: 'determinate-base',
+  DeterminateAnimated: 'determinate-animated',
+  Indeterminate: 'indeterminate',
+  Transition: 'indeterminate-to-determinate-transition',
+};
+export type AnimationMode = (typeof AnimationMode)[keyof typeof AnimationMode];

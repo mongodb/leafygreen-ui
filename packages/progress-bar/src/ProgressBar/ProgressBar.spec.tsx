@@ -1,10 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import { getTestUtils } from '../testing';
 
 import { ProgressBar } from './ProgressBar';
-import { LoaderVariant, Type } from './ProgressBar.types';
+import { Color, LoaderVariant, Type } from './ProgressBar.types';
 
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
@@ -29,6 +29,7 @@ describe('packages/progress-bar', () => {
           type={Type.Loader}
           isIndeterminate={true}
           description={TEST_DESCRIPTION}
+          aria-label="required label"
         />,
       );
       const { queryDescription } = getTestUtils();
@@ -47,6 +48,7 @@ describe('packages/progress-bar', () => {
             isIndeterminate={true}
             value={TEST_VALUE}
             formatValue={value => `${value} units`}
+            aria-label="required label"
           />,
         );
         const { queryValueText } = getTestUtils();
@@ -63,6 +65,7 @@ describe('packages/progress-bar', () => {
             maxValue={TEST_MAX_VALUE}
             formatValue="number"
             showIcon={true}
+            aria-label="required label"
           />,
         );
         const { queryIcon } = getTestUtils();
@@ -76,6 +79,7 @@ describe('packages/progress-bar', () => {
             isIndeterminate={false}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
+            aria-label="required label"
           />,
         );
         const { getBarFill } = getTestUtils();
@@ -95,6 +99,7 @@ describe('packages/progress-bar', () => {
             maxValue={TEST_MAX_VALUE}
             formatValue="number"
             showIcon={true}
+            aria-label="required label"
           />,
         );
         const { queryIcon } = getTestUtils();
@@ -109,6 +114,7 @@ describe('packages/progress-bar', () => {
               isIndeterminate={false}
               value={-5}
               maxValue={100}
+              aria-label="required label"
             />,
           );
           const { getBarFill } = getTestUtils();
@@ -125,6 +131,7 @@ describe('packages/progress-bar', () => {
               isIndeterminate={false}
               value={105}
               maxValue={100}
+              aria-label="required label"
             />,
           );
           const { getBarFill } = getTestUtils();
@@ -141,6 +148,7 @@ describe('packages/progress-bar', () => {
               isIndeterminate={false}
               value={1}
               maxValue={-10}
+              aria-label="required label"
             />,
           );
           const { getBarFill } = getTestUtils();
@@ -157,6 +165,7 @@ describe('packages/progress-bar', () => {
               isIndeterminate={false}
               value={1}
               maxValue={0}
+              aria-label="required label"
             />,
           );
           const { getBarFill } = getTestUtils();
@@ -167,25 +176,224 @@ describe('packages/progress-bar', () => {
         });
       });
     });
+  });
 
-    describe('when disabled', () => {
-      test('renders no animation even if enableAnimation is true', () => {
-        render(
-          <ProgressBar
-            type={Type.Loader}
-            isIndeterminate={false}
-            enableAnimation={true}
-            value={50}
-            maxValue={100}
-            disabled={true}
-          />,
-        );
-        const { getBarFill } = getTestUtils();
-        expect(getBarFill()).toBeInTheDocument();
-        expect(getBarFill()).not.toHaveStyle({
-          animation: expect.any(String),
-        });
+  describe('disabled state', () => {
+    test('renders no animation even if enableAnimation is true', () => {
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          enableAnimation={true}
+          value={50}
+          maxValue={100}
+          disabled={true}
+          aria-label="required label"
+        />,
+      );
+      const { getBarFill } = getTestUtils();
+      expect(getBarFill()).toBeInTheDocument();
+      expect(getBarFill()).not.toHaveStyle({
+        animation: expect.any(String),
       });
+    });
+  });
+
+  describe('aria attributes', () => {
+    test('renders with aria-labelledby and aria-describedby', () => {
+      const LABEL_TEXT = 'Test Progress Bar';
+      const DESCRIPTION_TEXT = 'Test description for the progress bar.';
+
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={true}
+          label={LABEL_TEXT}
+          description={DESCRIPTION_TEXT}
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-labelledby');
+      expect(progressBar).toHaveAttribute('aria-describedby');
+    });
+
+    test('renders with aria-label when no label is provided', () => {
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={true}
+          aria-label="required label"
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-label', 'required label');
+    });
+
+    test('renders with aria-value attributes if value and maxValue are provided', () => {
+      const TEST_VALUE = 75;
+      const TEST_MAX_VALUE = 100;
+
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE}
+          maxValue={TEST_MAX_VALUE}
+          aria-label="required label"
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-valuemin', '0');
+      expect(progressBar).toHaveAttribute(
+        'aria-valuemax',
+        String(TEST_MAX_VALUE),
+      );
+      expect(progressBar).toHaveAttribute('aria-valuenow', String(TEST_VALUE));
+    });
+
+    test('renders with aria-valuetext if maxValue is not provided', () => {
+      const TEST_VALUE = 50;
+
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={true}
+          value={TEST_VALUE}
+          aria-label="required label"
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-valuetext', String(TEST_VALUE));
+    });
+  });
+
+  describe('screen reader behavior', () => {
+    const TEST_VALUE_UNDER_50 = 43;
+    const TEST_VALUE_OVER_50 = 57;
+    const TEST_MAX_VALUE = 100;
+
+    const getAnnouncementMessage = (
+      value: number,
+      maxValue: number,
+    ): string => {
+      return `Update: current progress is ${value}% (${value} out of ${maxValue}).`;
+    };
+
+    test('does not have a live region for meter types', () => {
+      render(
+        <ProgressBar
+          type={Type.Meter}
+          value={TEST_VALUE_OVER_50}
+          maxValue={TEST_MAX_VALUE}
+          aria-label="required label"
+        />,
+      );
+      expect(screen.queryByRole('status')).toBeNull();
+    });
+
+    test('updates live region text for initial value, but not for any further changes if next threshold is not met', () => {
+      const { rerender } = render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_UNDER_50}
+          maxValue={TEST_MAX_VALUE}
+          aria-label="required label"
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        getAnnouncementMessage(TEST_VALUE_UNDER_50, TEST_MAX_VALUE),
+      );
+
+      rerender(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_UNDER_50 + 1}
+          maxValue={TEST_MAX_VALUE}
+          aria-label="required label"
+        />,
+      );
+      expect(screen.queryByRole('status')).toBeNull();
+    });
+
+    test('updates live region text if 50% threshold passed', () => {
+      const { rerender } = render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_UNDER_50}
+          maxValue={TEST_MAX_VALUE}
+          aria-label="required label"
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        getAnnouncementMessage(TEST_VALUE_UNDER_50, TEST_MAX_VALUE),
+      );
+
+      rerender(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_OVER_50}
+          maxValue={TEST_MAX_VALUE}
+          aria-label="required label"
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        getAnnouncementMessage(TEST_VALUE_OVER_50, TEST_MAX_VALUE),
+      );
+    });
+
+    test('updates live region text if 100% threshold passed', () => {
+      const { rerender } = render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_UNDER_50}
+          maxValue={TEST_MAX_VALUE}
+          aria-label="required label"
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        getAnnouncementMessage(TEST_VALUE_UNDER_50, TEST_MAX_VALUE),
+      );
+
+      rerender(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_MAX_VALUE}
+          maxValue={TEST_MAX_VALUE}
+          aria-label="required label"
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        getAnnouncementMessage(TEST_MAX_VALUE, TEST_MAX_VALUE),
+      );
+    });
+
+    test('additionally updates live region text to include variant if yellow or red', () => {
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE_OVER_50}
+          maxValue={TEST_MAX_VALUE}
+          variant={LoaderVariant.Warning}
+          aria-label="required label"
+        />,
+      );
+      expect(screen.queryByRole('status')).toHaveTextContent(
+        `${getAnnouncementMessage(
+          TEST_VALUE_OVER_50,
+          TEST_MAX_VALUE,
+        )} Status is ${Color.Yellow}.`,
+      );
     });
   });
 });

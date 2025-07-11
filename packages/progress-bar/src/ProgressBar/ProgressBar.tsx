@@ -1,35 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { cx } from '@leafygreen-ui/emotion';
+import { usePrevious } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
+import { isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
+import { iconsPendingCompletion } from '../constants';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
 
+import { useScreenReaderAnnouncer } from './hooks';
 import {
   containerStyles,
+  getAnimatedTextStyles,
   getBarFillStyles,
   getBarTrackStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
+  getInvisibleStyles,
   headerStyles,
   truncatedTextStyles,
 } from './ProgressBar.styles';
-import { ProgressBarProps, Size } from './ProgressBar.types';
+import { AnimationMode, ProgressBarProps, Size } from './ProgressBar.types';
 import {
+  getAnimationMode,
   getFormattedValue,
   getHeaderIcon,
+  getProgressBarIdentifiers,
   getValueAriaAttributes,
-  iconsPendingCompletion,
   resolveProgressBarProps,
 } from './utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const { value, maxValue, disabled, color, isIndeterminate } =
+  const { value, maxValue, disabled, color, isIndeterminate, enableAnimation } =
     resolveProgressBarProps(props);
 
   const {
     type,
     label,
+    'aria-label': ariaLabel,
     size = Size.Default,
     description,
     darkMode = false,
@@ -40,15 +48,58 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const { theme } = useDarkMode(darkMode);
 
+  const { role, barId, labelId, descId, liveId } = getProgressBarIdentifiers(
+    type,
+    label,
+    description,
+  );
+
+  const lgIds = getLgIds(dataLgId);
+
   const showIcon = iconsPendingCompletion.includes(color)
     ? showIconProp && value === maxValue
     : showIconProp;
 
-  const role = type === 'meter' ? 'meter' : 'progressbar';
+  const [animationMode, setAnimationMode] = useState<AnimationMode>(
+    getAnimationMode({
+      type,
+      isIndeterminate,
+      enableAnimation,
+    }),
+  );
 
-  const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
+  useEffect(() => {
+    setAnimationMode(currentMode => {
+      const newMode = getAnimationMode({
+        type,
+        isIndeterminate,
+        enableAnimation,
+      });
 
-  const lgIds = getLgIds(dataLgId);
+      // if previously indeterminate and now turning determinate, apply fade-out transition
+      if (currentMode === AnimationMode.Indeterminate && !isIndeterminate) {
+        return AnimationMode.Transition;
+      }
+
+      return currentMode === newMode ? currentMode : newMode;
+    });
+  }, [type, isIndeterminate, enableAnimation]);
+
+  const [isNewDescription, setIsNewDescription] = useState(false);
+  const prevDescription = usePrevious(description);
+
+  useEffect(() => {
+    // if description is changed, apply fade-in transition
+    if (isDefined(prevDescription) && description !== prevDescription) {
+      setIsNewDescription(true);
+    }
+  }, [description, prevDescription]);
+  const screenReaderMessage = useScreenReaderAnnouncer({
+    type,
+    value,
+    maxValue,
+    color,
+  });
 
   return (
     <div
@@ -58,7 +109,8 @@ export function ProgressBar(props: ProgressBarProps) {
     >
       <div className={headerStyles}>
         <Label
-          htmlFor={progressBarId}
+          id={labelId}
+          htmlFor={barId}
           darkMode={darkMode}
           disabled={disabled}
           className={truncatedTextStyles}
@@ -90,8 +142,11 @@ export function ProgressBar(props: ProgressBarProps) {
 
       <div
         role={role}
-        id={progressBarId}
-        aria-label={progressBarId}
+        id={barId}
+        aria-labelledby={labelId}
+        aria-label={ariaLabel}
+        aria-describedby={descId}
+        aria-controls={liveId}
         {...getValueAriaAttributes(value, maxValue)}
       >
         <div
@@ -104,10 +159,22 @@ export function ProgressBar(props: ProgressBarProps) {
               theme,
               color,
               disabled,
-              isIndeterminate,
               value,
               maxValue,
+              animationMode,
             })}
+            // if on fade-out transition, revert back to base mode
+            onTransitionEnd={() => {
+              if (animationMode === AnimationMode.Transition) {
+                setAnimationMode(
+                  getAnimationMode({
+                    type,
+                    isIndeterminate,
+                    enableAnimation,
+                  }),
+                );
+              }
+            }}
           ></div>
         </div>
       </div>
@@ -117,9 +184,24 @@ export function ProgressBar(props: ProgressBarProps) {
           darkMode={darkMode}
           disabled={disabled}
           data-lgid={lgIds.description}
+          className={cx({ [getAnimatedTextStyles()]: isNewDescription })}
+          // if on fade-in transition, reset state after animation ends
+          onAnimationEnd={() => setIsNewDescription(false)}
         >
           {description}
         </Description>
+      )}
+
+      {screenReaderMessage && (
+        <div
+          role="status"
+          id={liveId}
+          aria-live="polite"
+          aria-atomic="true"
+          className={getInvisibleStyles()}
+        >
+          {screenReaderMessage}
+        </div>
       )}
     </div>
   );

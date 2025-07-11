@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
-import { expect, waitFor, within } from '@storybook/test';
 
 import {
   AnimatedLoaderVariant,
+  FormatValueType,
   LoaderVariant,
   MeterStatus,
   ProgressBar,
@@ -14,11 +14,20 @@ import {
 } from '.';
 
 const testValues = {
-  value: 53,
+  value: 103,
   maxValue: 200,
 };
 
+const defaultArgs: ProgressBarProps = {
+  type: Type.Loader,
+  value: testValues.value,
+  maxValue: testValues.maxValue,
+  'aria-label': 'required label',
+};
+
+const TYPES = Object.values(Type);
 const SIZES = Object.values(Size);
+const FORMAT_VALUE_TYPES = Object.values(FormatValueType);
 const LOADER_VARIANTS = Object.values(LoaderVariant);
 const ANIMATED_LOADER_VARIANTS = Object.values(AnimatedLoaderVariant);
 const METER_STATUSES = Object.values(MeterStatus);
@@ -37,6 +46,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       args: {
         label: <span key="label">Label</span>,
         description: <span key="description">Helper text</span>,
+        'aria-label': 'required label',
       },
       combineArgs: {
         size: SIZES,
@@ -51,125 +61,94 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       },
     },
   },
+  argTypes: {
+    type: {
+      control: { type: 'select' },
+      options: TYPES,
+    },
+    size: {
+      control: { type: 'select' },
+      options: SIZES,
+    },
+    label: {
+      control: { type: 'text' },
+    },
+    description: {
+      control: { type: 'text' },
+    },
+    formatValue: {
+      control: { type: 'select' },
+      options: [...FORMAT_VALUE_TYPES, 'custom example', undefined],
+      mapping: {
+        'custom example': (value: number) => `Currently at ${value} GB`,
+      },
+    },
+    isIndeterminate: {
+      if: { arg: 'type', eq: Type.Loader },
+      control: { type: 'boolean' },
+    },
+    maxValue: {
+      // if: { arg: 'type', eq: Type.Meter } OR { arg: 'isIndeterminate', eq: false }, // TODO: not supported
+      description:
+        '**Not available** if both type=loader and isIndeterminate=true (fixed to 200 in this example).',
+      control: { type: 'none' },
+    },
+    variant: {
+      if: { arg: 'type', eq: Type.Loader },
+      control: { type: 'select' },
+      options: [...LOADER_VARIANTS, undefined],
+    },
+    status: {
+      if: { arg: 'type', eq: Type.Meter },
+      control: { type: 'select' },
+      options: [...METER_STATUSES, undefined],
+    },
+    enableAnimation: {
+      // if: { arg: 'type', neq: Type.Meter } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
+      description:
+        '**Not available** if either type="meter" or isIndeterminate=true (fixed to false in this example).',
+      control: { type: 'none' },
+    },
+  },
+  decorators: [
+    (Story, context) => {
+      return <Story {...context} />;
+    },
+  ],
 };
 export default meta;
 
-const SimulatedProgressBar = (props: ProgressBarProps) => {
-  const [value, setValue] = useState(props.value ?? 0);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setValue(testValues.maxValue);
-    }, 1500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [props.value]);
-
-  return <ProgressBar {...props} value={value} />;
-};
-
-const testSimulatedProgressToCompletion = async ({
-  role,
-  canvas,
-}: {
-  role: 'meter' | 'progressbar';
-  canvas: ReturnType<typeof within>;
-}) => {
-  const progressBar = canvas.getByRole(role);
-
-  expect(progressBar).toHaveAttribute(
-    'aria-valuenow',
-    testValues.value.toString(),
-  );
-
-  await waitFor(
-    () => {
-      expect(progressBar.getAttribute('aria-valuenow')).toBe(
-        testValues.maxValue.toString(),
-      );
-    },
-    { timeout: 2000 },
-  );
-};
-
 export const LiveExample: StoryObj<typeof ProgressBar> = {
   args: {
-    type: Type.Loader,
-    value: testValues.value,
-    maxValue: testValues.maxValue,
+    ...defaultArgs,
     formatValue: 'fraction',
     showIcon: true,
-    label: <span>Label</span>,
-    description: <span>Helper text</span>,
-  },
-  render: SimulatedProgressBar,
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const canvas = within(canvasElement);
-    await testSimulatedProgressToCompletion({
-      role: 'progressbar',
-      canvas,
-    });
-  },
-};
-
-export const DeterminateLoader: StoryObj<typeof ProgressBar> = {
-  args: {
-    type: Type.Loader,
-    value: testValues.value,
-    maxValue: testValues.maxValue,
-  },
-  render: SimulatedProgressBar,
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const canvas = within(canvasElement);
-    await testSimulatedProgressToCompletion({
-      role: 'progressbar',
-      canvas,
-    });
-  },
-};
-
-export const IndeterminateLoader: StoryObj<typeof ProgressBar> = {
-  args: {
-    isIndeterminate: true,
-  },
-};
-
-export const Meter: StoryObj<typeof ProgressBar> = {
-  args: {
-    type: Type.Meter,
-    value: testValues.value,
-    maxValue: testValues.maxValue,
-  },
-  render: SimulatedProgressBar,
-  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
-    const canvas = within(canvasElement);
-    await testSimulatedProgressToCompletion({
-      role: 'meter',
-      canvas,
-    });
+    label: 'Label',
+    description: 'Helper text',
+    isIndeterminate: false,
+    enableAnimation: false,
+    'aria-label': 'required label',
   },
 };
 
 export const WithLabel: StoryObj<typeof ProgressBar> = {
   args: {
-    ...DeterminateLoader.args,
-    label: <span>Label</span>,
+    ...defaultArgs,
+    label: 'Label',
   },
 };
 
 export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   args: {
-    ...DeterminateLoader.args,
+    ...defaultArgs,
     formatValue: 'percentage',
   },
 };
 
 export const WithDescription: StoryObj<typeof ProgressBar> = {
   args: {
-    ...DeterminateLoader.args,
-    description: <span>Helper text</span>,
+    ...defaultArgs,
+    description: 'Helper text',
   },
 };
 
@@ -196,10 +175,8 @@ export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
         disabled: [false, true],
       },
       args: {
-        type: Type.Loader,
+        ...defaultArgs,
         isIndeterminate: false,
-        value: testValues.value,
-        maxValue: testValues.maxValue,
         formatValue: (value: number, maxValue?: number) =>
           `${value} / ${maxValue} GB`,
         showIcon: true,

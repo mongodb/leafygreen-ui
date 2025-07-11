@@ -10,6 +10,9 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -29,6 +32,9 @@
     },
     {
       "path": "../../tools/test-harnesses"
-    }
+    },
+    {
+      "path": "../hooks"
+    },
   ]
 }

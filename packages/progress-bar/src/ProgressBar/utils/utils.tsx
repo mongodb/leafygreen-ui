@@ -4,9 +4,11 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { isDefined } from '@leafygreen-ui/lib';
+import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
 
+import { DEFAULT_COLOR, DEFAULT_MAX_VALUE } from '../../constants';
 import {
+  AnimationMode,
   Color,
   FormatValueType,
   LoaderVariant,
@@ -15,10 +17,6 @@ import {
   ResolvedProgressBarProps,
   Type,
 } from '../ProgressBar.types';
-
-export const DEFAULT_MAX_VALUE = 1;
-export const DEFAULT_COLOR = Color.Blue;
-export const iconsPendingCompletion: Array<Color> = [Color.Green];
 
 const getMeterStatusColor = (status?: MeterStatus): Color => {
   switch (status) {
@@ -99,6 +97,23 @@ export const resolveProgressBarProps = (
   };
 };
 
+export const getAnimationMode = ({
+  type,
+  isIndeterminate,
+  enableAnimation,
+}: {
+  type: Type;
+  isIndeterminate: boolean;
+  enableAnimation: boolean;
+}): AnimationMode => {
+  if (type === Type.Meter) return AnimationMode.DeterminateBase;
+  if (isIndeterminate) return AnimationMode.Indeterminate;
+
+  return enableAnimation
+    ? AnimationMode.DeterminateAnimated
+    : AnimationMode.DeterminateBase;
+};
+
 export const getPercentage = (value: number, maxValue?: number): number => {
   const percentage = (value / (maxValue || DEFAULT_MAX_VALUE)) * 100;
   return Math.min(Math.max(percentage, 0), 100);
@@ -115,6 +130,10 @@ export const getFormattedValue = (
 
   switch (formatValue) {
     case 'fraction':
+      if (!isDefined(maxValue)) {
+        return value.toString();
+      }
+
       return `${value}/${maxValue}`;
     case 'percentage':
       return `${getPercentage(value, maxValue)}%`;
@@ -124,13 +143,39 @@ export const getFormattedValue = (
   }
 };
 
-export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
+export const getProgressBarIdentifiers = (
+  type: Type,
+  label?: React.ReactNode,
+  description?: React.ReactNode,
+) => {
+  const role = type === Type.Meter ? 'meter' : 'progressbar';
+
+  const progressBarId = label
+    ? `${role}-for-${getNodeTextContent(label)}`
+    : role;
+
   return {
-    'aria-valuemin': 0,
-    ...(value && { 'aria-valuenow': value }),
-    ...(maxValue && { 'aria-valuemax': maxValue }),
+    role,
+    barId: progressBarId,
+    labelId: label ? `label-for-${progressBarId}` : undefined,
+    descId: description ? `desc-for-${progressBarId}` : undefined,
+    liveId: `live-region-for-${progressBarId}`,
   };
 };
+
+export const getValueAriaAttributes = (value?: number, maxValue?: number) => ({
+  ...(value == undefined
+    ? { 'aria-busy': true }
+    : isDefined(maxValue)
+    ? {
+        'aria-valuemin': 0,
+        'aria-valuemax': maxValue,
+        'aria-valuenow': value,
+      }
+    : {
+        'aria-valuetext': value.toString(),
+      }),
+});
 
 export const getHeaderIcon = ({
   color,

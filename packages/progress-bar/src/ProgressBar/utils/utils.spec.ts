@@ -33,6 +33,7 @@ describe('resolveProgressBarProps', () => {
       value: 50,
       maxValue: 100,
       status: MeterStatus.Warning,
+      'aria-label': 'required label',
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
@@ -54,6 +55,7 @@ describe('resolveProgressBarProps', () => {
       maxValue: 100,
       variant: LoaderVariant.Success,
       enableAnimation: true,
+      'aria-label': 'required label',
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
@@ -71,6 +73,7 @@ describe('resolveProgressBarProps', () => {
     const props = {
       type: Type.Loader,
       isIndeterminate: true,
+      'aria-label': 'required label',
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);

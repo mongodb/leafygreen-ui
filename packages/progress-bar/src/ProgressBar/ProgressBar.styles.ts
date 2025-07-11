@@ -1,74 +1,70 @@
-import { css, cx } from '@leafygreen-ui/emotion';
-import { isDefined, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import {
-  borderRadius,
   color as colorToken,
   spacing as spacingToken,
 } from '@leafygreen-ui/tokens';
 
-import { Color, Size } from './ProgressBar.types';
+import {
+  barColorStyles,
+  barSizeStyles,
+  getDeterminateAnimatedGradient,
+  getIndeterminateGradient,
+  INDETERMINATE_ANIMATION_DURATION_MS,
+  indeterminateBarPositions,
+  indeterminateBarWidths,
+  SHIMMER_ANIMATION_DURATION_MS,
+  TEXT_ANIMATION_DURATION,
+  TRANSITION_ANIMATION_DURATION,
+  WIDTH_ANIMATION_DURATION,
+} from './ProgressBar.constants';
+import { AnimationMode, Color, Size } from './ProgressBar.types';
 import { getPercentage } from './utils';
 
-const progressBarSizeStyles = {
-  [Size.Small]: {
-    height: '4px',
-    borderRadius: borderRadius[100] + 'px',
-  },
-  [Size.Default]: {
-    height: '8px',
-    borderRadius: borderRadius[100] + 'px',
-  },
-  [Size.Large]: {
-    height: '16px',
-    borderRadius: borderRadius[200] + 'px',
-  },
-};
+const shimmerKeyframes = keyframes`
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+`;
 
-const progressBarColorStyles = {
-  [Theme.Light]: {
-    track: palette.gray.light2,
-    disabledBar: palette.gray.light1,
+const cycleKeyframes = keyframes`
+  0% {
+    left: ${indeterminateBarPositions.start};
+    width: ${indeterminateBarWidths.narrow};
+  }
+  25% {
+    left: ${indeterminateBarPositions.quarter};
+    width: ${indeterminateBarWidths.narrow};
+  }
+  47% {
+    left: ${indeterminateBarPositions.half};
+    width: ${indeterminateBarWidths.wide};
+  }
+  50% {
+    left: ${indeterminateBarPositions.half};
+    width: ${indeterminateBarWidths.wide};
+  }
+  53% {
+    left: ${indeterminateBarPositions.half};
+    width: ${indeterminateBarWidths.wide};
+  }
+  75% {
+    left: ${indeterminateBarPositions.threeQuarters};
+    width: ${indeterminateBarWidths.narrow};
+  }
+  100% {
+    left: ${indeterminateBarPositions.end};
+    width: ${indeterminateBarWidths.narrow};
+  }
+`;
 
-    [Color.Blue]: {
-      bar: palette.blue.base,
-      icon: palette.blue.base,
-    },
-    [Color.Green]: {
-      bar: palette.green.dark1,
-      icon: palette.green.dark1,
-    },
-    [Color.Yellow]: {
-      bar: palette.yellow.base,
-      icon: palette.yellow.dark2,
-    },
-    [Color.Red]: {
-      bar: palette.red.base,
-      icon: palette.red.base,
-    },
-  },
-  [Theme.Dark]: {
-    track: palette.gray.dark2,
-    disabledBar: palette.gray.dark1,
-
-    [Color.Blue]: {
-      bar: palette.blue.light1,
-      icon: palette.blue.light1,
-    },
-    [Color.Green]: {
-      bar: palette.green.base,
-      icon: palette.green.base,
-    },
-    [Color.Yellow]: {
-      bar: palette.yellow.base,
-      icon: palette.yellow.base,
-    },
-    [Color.Red]: {
-      bar: palette.red.light1,
-      icon: palette.red.light1,
-    },
-  },
-};
+const fadeFromWhiteKeyframes = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
 
 export const containerStyles = css`
   display: flex;
@@ -119,7 +115,13 @@ export const getHeaderIconStyles = ({
   margin-bottom: ${spacingToken[50]}px; // align icon with text baseline
   color: ${disabled
     ? colorToken[theme].icon.disabled.default
-    : progressBarColorStyles[theme][color].icon};
+    : barColorStyles[theme][color].icon};
+`;
+
+export const getAnimatedTextStyles = () => css`
+  opacity: 0;
+  animation: ${fadeFromWhiteKeyframes} ${TEXT_ANIMATION_DURATION}ms ease-in-out
+    forwards;
 `;
 
 export const getBarTrackStyles = ({
@@ -130,12 +132,37 @@ export const getBarTrackStyles = ({
   size: Size;
 }) => css`
   width: 100%;
-  height: ${progressBarSizeStyles[size].height};
-  border-radius: ${progressBarSizeStyles[size].borderRadius};
-  background-color: ${progressBarColorStyles[theme].track};
+  height: ${barSizeStyles[size].height};
+  border-radius: ${barSizeStyles[size].borderRadius};
+  background-color: ${barColorStyles[theme].track};
 `;
 
-const getBaseBarFillStyles = ({
+const getBaseBarFillStyles = () => css`
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border-radius: inherit;
+`;
+
+const getDeterminateBarFillStyles = ({
+  theme,
+  color,
+  disabled,
+  width,
+}: {
+  theme: Theme;
+  color: Color;
+  disabled?: boolean;
+  width: number;
+}) => css`
+  width: ${width}%;
+  transition: width ${WIDTH_ANIMATION_DURATION}ms ease-in-out;
+  background-color: ${disabled
+    ? barColorStyles[theme].disabledBar
+    : barColorStyles[theme][color].bar};
+`;
+
+const getDeterminateAnimatedBarFillStyles = ({
   theme,
   color,
   disabled,
@@ -143,50 +170,121 @@ const getBaseBarFillStyles = ({
   theme: Theme;
   color: Color;
   disabled?: boolean;
-}) => css`
-  height: 100%;
-  border-radius: inherit;
-  background-color: ${disabled
-    ? progressBarColorStyles[theme].disabledBar
-    : progressBarColorStyles[theme][color].bar};
-`;
+}) => {
+  const selectedColorStyle = barColorStyles[theme][color];
+  const hasAnimation = !disabled && 'shimmerFade' in selectedColorStyle;
 
-const getDeterminateBarFillStyles = (progress: number) => css`
-  width: ${progress}%;
-  // requires additional animation
-`;
+  return (
+    hasAnimation &&
+    css`
+      background-color: transparent;
 
-const getIndeterminateBarFillStyles = () => css`
-  width: 100%; // temporary
-  // requires additional animation
-`;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: ${getDeterminateAnimatedGradient(selectedColorStyle)};
+        background-size: 200% 100%;
+        animation: ${shimmerKeyframes} ${SHIMMER_ANIMATION_DURATION_MS}ms linear
+          infinite;
+      }
+    `
+  );
+};
 
-export const getBarFillStyles = ({
+const getIndeterminateBarFillStyles = ({
   theme,
   color,
-  disabled,
-  isIndeterminate,
-  value,
-  maxValue,
 }: {
   theme: Theme;
   color: Color;
-  isIndeterminate: boolean;
+}) => {
+  const selectedColorStyle = barColorStyles[theme][color];
+
+  return css`
+    width: 100%;
+    background-color: transparent;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: ${indeterminateBarPositions.start};
+      height: 100%;
+      width: ${indeterminateBarWidths.narrow};
+      background: ${getIndeterminateGradient(selectedColorStyle)};
+      animation: ${cycleKeyframes} ${INDETERMINATE_ANIMATION_DURATION_MS}ms
+        linear infinite;
+    }
+  `;
+};
+
+export const getTransitioningBarFillStyles = () => css`
+  opacity: 0;
+  width: 0%;
+  transition: opacity ${TRANSITION_ANIMATION_DURATION}ms ease-out,
+    width 100ms ease-out ${TRANSITION_ANIMATION_DURATION - 100}ms;
+`;
+
+export const getBarFillStyles = ({
+  animationMode,
+  theme,
+  color,
+  disabled,
+  value = 0,
+  maxValue,
+}: {
+  animationMode: AnimationMode;
+  theme: Theme;
+  color: Color;
   disabled?: boolean;
   value?: number;
   maxValue?: number;
 }) => {
-  let typedBarFillStyles;
+  const baseStyles = getBaseBarFillStyles();
 
-  if (isIndeterminate) typedBarFillStyles = getIndeterminateBarFillStyles();
+  let addOnStyles;
 
-  if (isDefined(value))
-    typedBarFillStyles = getDeterminateBarFillStyles(
-      getPercentage(value, maxValue),
-    );
+  const determinate = getDeterminateBarFillStyles({
+    theme,
+    color,
+    disabled,
+    width: getPercentage(value, maxValue),
+  });
 
-  return cx(
-    getBaseBarFillStyles({ theme, color, disabled }),
-    typedBarFillStyles,
-  );
+  const determinateAnimated = getDeterminateAnimatedBarFillStyles({
+    theme,
+    color,
+    disabled,
+  });
+
+  const indeterminate = getIndeterminateBarFillStyles({ theme, color });
+
+  switch (animationMode) {
+    case AnimationMode.Transition:
+      addOnStyles = cx(indeterminate, getTransitioningBarFillStyles());
+      break;
+    case AnimationMode.Indeterminate:
+      addOnStyles = indeterminate;
+      break;
+    case AnimationMode.DeterminateAnimated:
+      addOnStyles = cx(determinate, determinateAnimated);
+      break;
+    case AnimationMode.DeterminateBase:
+    default:
+      addOnStyles = determinate;
+      break;
+  }
+
+  return cx(baseStyles, addOnStyles);
 };
+
+export const getInvisibleStyles = () => css`
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+`;
