@@ -269,3 +269,12 @@ export const getBarFillStyles = ({
 
   return cx(baseStyles, addOnStyles);
 };
+
+export const getInvisibleStyles = () => css`
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+`;

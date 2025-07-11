@@ -4,7 +4,7 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { isDefined } from '@leafygreen-ui/lib';
+import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
 
 import { DEFAULT_COLOR, DEFAULT_MAX_VALUE } from '../constants';
 
@@ -133,13 +133,39 @@ export const getFormattedValue = (
   }
 };
 
-export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
+export const getProgressBarIdentifiers = (
+  type: Type,
+  label?: React.ReactNode,
+  description?: React.ReactNode,
+) => {
+  const role = type === Type.Meter ? 'meter' : 'progressbar';
+
+  const progressBarId = label
+    ? `${role}-for-${getNodeTextContent(label)}`
+    : role;
+
   return {
-    'aria-valuemin': 0,
-    ...(value && { 'aria-valuenow': value }),
-    ...(maxValue && { 'aria-valuemax': maxValue }),
+    role,
+    barId: progressBarId,
+    labelId: label ? `label-for-${progressBarId}` : undefined,
+    descId: description ? `desc-for-${progressBarId}` : undefined,
+    liveId: `live-region-for-${progressBarId}`,
   };
 };
+
+export const getValueAriaAttributes = (value?: number, maxValue?: number) => ({
+  ...(value == undefined
+    ? { 'aria-busy': true }
+    : isDefined(maxValue)
+    ? {
+        'aria-valuemin': 0,
+        'aria-valuemax': maxValue,
+        'aria-valuenow': value,
+      }
+    : {
+        'aria-valuetext': value.toString(),
+      }),
+});
 
 export const getHeaderIcon = ({
   color,

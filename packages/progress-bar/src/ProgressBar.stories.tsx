@@ -22,6 +22,7 @@ const defaultArgs: ProgressBarProps = {
   type: Type.Loader,
   value: testValues.value,
   maxValue: testValues.maxValue,
+  'aria-label': 'required label',
 };
 
 const TYPES = Object.values(Type);
@@ -45,6 +46,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       args: {
         label: <span key="label">Label</span>,
         description: <span key="description">Helper text</span>,
+        'aria-label': 'required label',
       },
       combineArgs: {
         size: SIZES,
@@ -125,6 +127,7 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
     description: 'Helper text',
     isIndeterminate: false,
     enableAnimation: false,
+    'aria-label': 'required label',
   },
 };
 

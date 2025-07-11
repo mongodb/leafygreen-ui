@@ -125,6 +125,7 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
             isIndeterminate: false,
             value: testValues.maxValue,
             maxValue: testValues.maxValue,
+            'aria-label': 'required label',
           },
         ],
       ]}
