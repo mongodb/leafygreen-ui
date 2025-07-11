@@ -2,30 +2,30 @@ import { useMemo, useRef } from 'react';
 
 import { isDefined } from '@leafygreen-ui/lib';
 
-import { Color, Type } from '../ProgressBar.types';
+import { Role, Variant } from '../ProgressBar.types';
 import { getPercentage } from '../utils';
 
 const announcementThresholds = [0, 50, 100];
-const variantsAnnounced = [Color.Yellow, Color.Red] as Array<Color>; // TODO: will be refactored to variant names instead of colors
+const variantsAnnounced = [Variant.Warning, Variant.Error] as Array<Variant>;
 
 interface UseScreenReaderAnnouncerProps {
-  type: Type;
+  role: Role;
   value?: number;
   maxValue?: number;
-  color?: Color;
+  variant?: Variant;
 }
 
 export function useScreenReaderAnnouncer({
-  type,
+  role,
   value,
   maxValue,
-  color,
+  variant,
 }: UseScreenReaderAnnouncerProps): string | undefined {
   const thresholdIndexRef = useRef(-1);
 
   const message = useMemo(() => {
     // no live region messages for non-loader types or if value is undefined
-    if (type !== Type.Loader || !isDefined(value)) {
+    if (role === Role.Meter || !isDefined(value)) {
       thresholdIndexRef.current = -1;
       return;
     }
@@ -54,12 +54,12 @@ export function useScreenReaderAnnouncer({
     )}% (${value} out of ${maxValue}).`;
 
     const newMessage =
-      color && variantsAnnounced.includes(color)
-        ? `${baseMessage} Status is ${color}.`
+      variant && variantsAnnounced.includes(variant)
+        ? `${baseMessage} Status is ${variant}.`
         : baseMessage;
 
     return newMessage;
-  }, [type, value, maxValue, color]);
+  }, [role, value, maxValue, variant]);
 
   return message;
 }

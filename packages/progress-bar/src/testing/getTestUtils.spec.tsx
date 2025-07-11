@@ -1,15 +1,31 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { ProgressBar } from '../ProgressBar';
+import { ProgressBar, Role } from '../ProgressBar';
 
 import { getTestUtils } from './getTestUtils';
 
 describe('getTestUtils', () => {
-  test('returns all expected elements when loader type is rendered', () => {
+  test('returns all expected elements when indeterminate ', () => {
+    render(<ProgressBar isIndeterminate label="My Progress" />);
+
+    const { getBar, getBarFill, getBarTrack, queryIcon, queryLabel } =
+      getTestUtils();
+
+    expect(getBar()).toBeInTheDocument();
+    expect(getBar()).toHaveAttribute('role', 'progressbar');
+
+    expect(getBarFill()).toBeInTheDocument();
+    expect(getBarFill()).toHaveStyle({ width: '100%' });
+    expect(getBarTrack()).toBeInTheDocument();
+
+    expect(queryIcon()).toBeNull();
+    expect(queryLabel()).toBeInTheDocument();
+  });
+
+  test('returns all expected elements when determinate with role progressbar', () => {
     render(
       <ProgressBar
-        type="loader"
         value={0.5}
         label="My Progress"
         formatValue="number"
@@ -31,10 +47,10 @@ describe('getTestUtils', () => {
     expect(queryLabel()).toBeInTheDocument();
   });
 
-  test('returns all expected elements when meter type is rendered', () => {
+  test('returns all expected elements when determinate with role meter', () => {
     render(
       <ProgressBar
-        type="meter"
+        roleType={Role.Meter}
         value={0.5}
         description="Sample description"
         formatValue="number"
@@ -60,14 +76,13 @@ describe('getTestUtils', () => {
     render(
       <>
         <ProgressBar
-          type="loader"
           value={0.3}
           label="First Progress"
           formatValue="number"
           data-lgid="lg-progress_1"
         />
         <ProgressBar
-          type="meter"
+          roleType={Role.Meter}
           value={0.7}
           label="Second Progress"
           formatValue="number"

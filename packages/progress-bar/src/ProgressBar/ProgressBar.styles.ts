@@ -1,5 +1,5 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { isDefined, Theme } from '@leafygreen-ui/lib';
 import {
   color as colorToken,
   spacing as spacingToken,
@@ -18,7 +18,7 @@ import {
   TRANSITION_ANIMATION_DURATION,
   WIDTH_ANIMATION_DURATION,
 } from './ProgressBar.constants';
-import { AnimationMode, Color, Size } from './ProgressBar.types';
+import { AnimationMode, Size, Variant } from './ProgressBar.types';
 import { getPercentage } from './utils';
 
 const shimmerKeyframes = keyframes`
@@ -86,6 +86,15 @@ export const truncatedTextStyles = css`
   width: 100%;
 `;
 
+export const hiddenStyles = css`
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+`;
+
 export const getHeaderValueStyles = ({
   theme,
   disabled,
@@ -105,17 +114,17 @@ export const getHeaderValueStyles = ({
 
 export const getHeaderIconStyles = ({
   theme,
-  color,
+  variant,
   disabled,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
 }) => css`
   margin-bottom: ${spacingToken[50]}px; // align icon with text baseline
   color: ${disabled
     ? colorToken[theme].icon.disabled.default
-    : barColorStyles[theme][color].icon};
+    : barColorStyles[theme][variant].icon};
 `;
 
 export const getAnimatedTextStyles = () => css`
@@ -144,14 +153,14 @@ const getBaseBarFillStyles = () => css`
   border-radius: inherit;
 `;
 
-const getDeterminateBarFillStyles = ({
+const getDeterminateFillStyles = ({
   theme,
-  color,
+  variant,
   disabled,
   width,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
   width: number;
 }) => css`
@@ -159,19 +168,19 @@ const getDeterminateBarFillStyles = ({
   transition: width ${WIDTH_ANIMATION_DURATION}ms ease-in-out;
   background-color: ${disabled
     ? barColorStyles[theme].disabledBar
-    : barColorStyles[theme][color].bar};
+    : barColorStyles[theme][variant].bar};
 `;
 
-const getDeterminateAnimatedBarFillStyles = ({
+const getDeterminateAnimatedFillStyles = ({
   theme,
-  color,
+  variant,
   disabled,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
 }) => {
-  const selectedColorStyle = barColorStyles[theme][color];
+  const selectedColorStyle = barColorStyles[theme][variant];
   const hasAnimation = !disabled && 'shimmerFade' in selectedColorStyle;
 
   return (
@@ -194,14 +203,14 @@ const getDeterminateAnimatedBarFillStyles = ({
   );
 };
 
-const getIndeterminateBarFillStyles = ({
+const getIndeterminateFillStyles = ({
   theme,
-  color,
+  variant,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
 }) => {
-  const selectedColorStyle = barColorStyles[theme][color];
+  const selectedColorStyle = barColorStyles[theme][variant];
 
   return css`
     width: 100%;
@@ -220,7 +229,7 @@ const getIndeterminateBarFillStyles = ({
   `;
 };
 
-export const getTransitioningBarFillStyles = () => css`
+export const transitioningFillStyles = css`
   opacity: 0;
   width: 0%;
   transition: opacity ${TRANSITION_ANIMATION_DURATION}ms ease-out,
@@ -230,14 +239,14 @@ export const getTransitioningBarFillStyles = () => css`
 export const getBarFillStyles = ({
   animationMode,
   theme,
-  color,
+  variant,
   disabled,
-  value = 0,
+  value,
   maxValue,
 }: {
   animationMode: AnimationMode;
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
   value?: number;
   maxValue?: number;
@@ -246,24 +255,26 @@ export const getBarFillStyles = ({
 
   let addOnStyles;
 
-  const determinate = getDeterminateBarFillStyles({
+  const determinate =
+    isDefined(value) &&
+    getDeterminateFillStyles({
+      theme,
+      variant,
+      disabled,
+      width: getPercentage(value, maxValue),
+    });
+
+  const determinateAnimated = getDeterminateAnimatedFillStyles({
     theme,
-    color,
+    variant,
     disabled,
-    width: getPercentage(value, maxValue),
   });
 
-  const determinateAnimated = getDeterminateAnimatedBarFillStyles({
-    theme,
-    color,
-    disabled,
-  });
-
-  const indeterminate = getIndeterminateBarFillStyles({ theme, color });
+  const indeterminate = getIndeterminateFillStyles({ theme, variant });
 
   switch (animationMode) {
     case AnimationMode.Transition:
-      addOnStyles = cx(indeterminate, getTransitioningBarFillStyles());
+      addOnStyles = cx(indeterminate, transitioningFillStyles);
       break;
     case AnimationMode.Indeterminate:
       addOnStyles = indeterminate;
@@ -271,7 +282,7 @@ export const getBarFillStyles = ({
     case AnimationMode.DeterminateAnimated:
       addOnStyles = cx(determinate, determinateAnimated);
       break;
-    case AnimationMode.DeterminateBase:
+    case AnimationMode.DeterminatePlain:
     default:
       addOnStyles = determinate;
       break;
@@ -279,12 +290,3 @@ export const getBarFillStyles = ({
 
   return cx(baseStyles, addOnStyles);
 };
-
-export const getHiddenStyles = () => css`
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-`;

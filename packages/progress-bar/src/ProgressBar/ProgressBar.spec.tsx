@@ -4,19 +4,14 @@ import { render, screen } from '@testing-library/react';
 import { getTestUtils } from '../testing';
 
 import { ProgressBar } from './ProgressBar';
-import { Color, LoaderVariant, Type } from './ProgressBar.types';
+import { Role, Variant } from './ProgressBar.types';
 
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
     test('renders with a label', () => {
       const TEST_LABEL = 'placeholder label';
-      render(
-        <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={true}
-          label={TEST_LABEL}
-        />,
-      );
+      render(<ProgressBar isIndeterminate label={TEST_LABEL} />);
+
       const { queryLabel } = getTestUtils();
       expect(queryLabel()).toBeVisible();
       expect(queryLabel()).toHaveTextContent(TEST_LABEL);
@@ -26,12 +21,12 @@ describe('packages/progress-bar', () => {
       const TEST_DESCRIPTION = 'placeholder description';
       render(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={true}
+          isIndeterminate
           description={TEST_DESCRIPTION}
           aria-label="required label"
         />,
       );
+
       const { queryDescription } = getTestUtils();
       expect(queryDescription()).toBeVisible();
       expect(queryDescription()).toHaveTextContent(TEST_DESCRIPTION);
@@ -44,13 +39,13 @@ describe('packages/progress-bar', () => {
       test('renders with a custom format when given a callback', () => {
         render(
           <ProgressBar
-            type={Type.Loader}
-            isIndeterminate={true}
+            isIndeterminate
             value={TEST_VALUE}
             formatValue={value => `${value} units`}
             aria-label="required label"
           />,
         );
+
         const { queryValueText } = getTestUtils();
         expect(queryValueText()).toBeVisible();
         expect(queryValueText()).toHaveTextContent('50 units');
@@ -59,15 +54,14 @@ describe('packages/progress-bar', () => {
       test('renders icon when showIcon is true', () => {
         render(
           <ProgressBar
-            type={Type.Loader}
-            isIndeterminate={false}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
             formatValue="number"
-            showIcon={true}
+            showIcon
             aria-label="required label"
           />,
         );
+
         const { queryIcon } = getTestUtils();
         expect(queryIcon()).toBeVisible();
       });
@@ -75,13 +69,12 @@ describe('packages/progress-bar', () => {
       test('renders the correct width for the progress bar fill', () => {
         render(
           <ProgressBar
-            type={Type.Loader}
-            isIndeterminate={false}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
             aria-label="required label"
           />,
         );
+
         const { getBarFill } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
         expect(getBarFill()).toHaveStyle({
@@ -92,16 +85,15 @@ describe('packages/progress-bar', () => {
       test('does not render success variant icon if under maxValue, even if showIcon is true', () => {
         render(
           <ProgressBar
-            type={Type.Loader}
-            isIndeterminate={false}
-            variant={LoaderVariant.Success}
+            variant={Variant.Success}
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
             formatValue="number"
-            showIcon={true}
+            showIcon
             aria-label="required label"
           />,
         );
+
         const { queryIcon } = getTestUtils();
         expect(queryIcon()).toBeNull();
       });
@@ -110,14 +102,9 @@ describe('packages/progress-bar', () => {
     describe('with unexpected input', () => {
       test('renders width 0% when value is less than 0', () => {
         render(
-          <ProgressBar
-            type={Type.Loader}
-            isIndeterminate={false}
-            value={-5}
-            maxValue={100}
-            aria-label="required label"
-          />,
+          <ProgressBar value={-5} maxValue={100} aria-label="required label" />,
         );
+
         const { getBarFill } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
         expect(getBarFill()).toHaveStyle({
@@ -128,13 +115,12 @@ describe('packages/progress-bar', () => {
       test('renders width capped at 100% when value is over maxValue', () => {
         render(
           <ProgressBar
-            type={Type.Loader}
-            isIndeterminate={false}
             value={105}
             maxValue={100}
             aria-label="required label"
           />,
         );
+
         const { getBarFill } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
         expect(getBarFill()).toHaveStyle({
@@ -144,14 +130,9 @@ describe('packages/progress-bar', () => {
 
       test('defaults to maxValue of 1 when maxValue is less than 0', () => {
         render(
-          <ProgressBar
-            type={Type.Loader}
-            isIndeterminate={false}
-            value={1}
-            maxValue={-10}
-            aria-label="required label"
-          />,
+          <ProgressBar value={1} maxValue={-10} aria-label="required label" />,
         );
+
         const { getBarFill } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
         expect(getBarFill()).toHaveStyle({
@@ -161,14 +142,9 @@ describe('packages/progress-bar', () => {
 
       test('defaults to maxValue of 1 when maxValue is 0', () => {
         render(
-          <ProgressBar
-            type={Type.Loader}
-            isIndeterminate={false}
-            value={1}
-            maxValue={0}
-            aria-label="required label"
-          />,
+          <ProgressBar value={1} maxValue={0} aria-label="required label" />,
         );
+
         const { getBarFill } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
         expect(getBarFill()).toHaveStyle({
@@ -182,15 +158,14 @@ describe('packages/progress-bar', () => {
     test('renders no animation even if enableAnimation is true', () => {
       render(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
-          enableAnimation={true}
+          enableAnimation
           value={50}
           maxValue={100}
-          disabled={true}
+          disabled
           aria-label="required label"
         />,
       );
+
       const { getBarFill } = getTestUtils();
       expect(getBarFill()).toBeInTheDocument();
       expect(getBarFill()).not.toHaveStyle({
@@ -206,29 +181,22 @@ describe('packages/progress-bar', () => {
 
       render(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={true}
+          isIndeterminate
           label={LABEL_TEXT}
           description={DESCRIPTION_TEXT}
         />,
       );
 
-      const progressBar = screen.getByRole('progressbar');
-      expect(progressBar).toHaveAttribute('aria-labelledby');
-      expect(progressBar).toHaveAttribute('aria-describedby');
+      const { getBar } = getTestUtils();
+      expect(getBar()).toHaveAttribute('aria-labelledby');
+      expect(getBar()).toHaveAttribute('aria-describedby');
     });
 
     test('renders with aria-label when no label is provided', () => {
-      render(
-        <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={true}
-          aria-label="required label"
-        />,
-      );
+      render(<ProgressBar isIndeterminate aria-label="required label" />);
 
-      const progressBar = screen.getByRole('progressbar');
-      expect(progressBar).toHaveAttribute('aria-label', 'required label');
+      const { getBar } = getTestUtils();
+      expect(getBar()).toHaveAttribute('aria-label', 'required label');
     });
 
     test('renders with aria-value attributes if value and maxValue are provided', () => {
@@ -237,21 +205,16 @@ describe('packages/progress-bar', () => {
 
       render(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
           value={TEST_VALUE}
           maxValue={TEST_MAX_VALUE}
           aria-label="required label"
         />,
       );
 
-      const progressBar = screen.getByRole('progressbar');
-      expect(progressBar).toHaveAttribute('aria-valuemin', '0');
-      expect(progressBar).toHaveAttribute(
-        'aria-valuemax',
-        String(TEST_MAX_VALUE),
-      );
-      expect(progressBar).toHaveAttribute('aria-valuenow', String(TEST_VALUE));
+      const { getBar } = getTestUtils();
+      expect(getBar()).toHaveAttribute('aria-valuemin', '0');
+      expect(getBar()).toHaveAttribute('aria-valuemax', String(TEST_MAX_VALUE));
+      expect(getBar()).toHaveAttribute('aria-valuenow', String(TEST_VALUE));
     });
 
     test('renders with aria-valuetext if maxValue is not provided', () => {
@@ -259,15 +222,14 @@ describe('packages/progress-bar', () => {
 
       render(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={true}
+          isIndeterminate
           value={TEST_VALUE}
           aria-label="required label"
         />,
       );
 
-      const progressBar = screen.getByRole('progressbar');
-      expect(progressBar).toHaveAttribute('aria-valuetext', String(TEST_VALUE));
+      const { getBar } = getTestUtils();
+      expect(getBar()).toHaveAttribute('aria-valuetext', String(TEST_VALUE));
     });
   });
 
@@ -286,7 +248,7 @@ describe('packages/progress-bar', () => {
     test('does not have a live region for meter types', () => {
       render(
         <ProgressBar
-          type={Type.Meter}
+          roleType={Role.Meter}
           value={TEST_VALUE_OVER_50}
           maxValue={TEST_MAX_VALUE}
           aria-label="required label"
@@ -295,11 +257,9 @@ describe('packages/progress-bar', () => {
       expect(screen.queryByRole('status')).toBeNull();
     });
 
-    test('updates live region text for initial value, but not for any further changes if next threshold is not met', () => {
+    test('updates live region text for initial value; ignores further changes until next threshold met', () => {
       const { rerender } = render(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
           value={TEST_VALUE_UNDER_50}
           maxValue={TEST_MAX_VALUE}
           aria-label="required label"
@@ -311,8 +271,6 @@ describe('packages/progress-bar', () => {
 
       rerender(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
           value={TEST_VALUE_UNDER_50 + 1}
           maxValue={TEST_MAX_VALUE}
           aria-label="required label"
@@ -324,8 +282,6 @@ describe('packages/progress-bar', () => {
     test('updates live region text if 50% threshold passed', () => {
       const { rerender } = render(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
           value={TEST_VALUE_UNDER_50}
           maxValue={TEST_MAX_VALUE}
           aria-label="required label"
@@ -337,8 +293,6 @@ describe('packages/progress-bar', () => {
 
       rerender(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
           value={TEST_VALUE_OVER_50}
           maxValue={TEST_MAX_VALUE}
           aria-label="required label"
@@ -352,8 +306,6 @@ describe('packages/progress-bar', () => {
     test('updates live region text if 100% threshold passed', () => {
       const { rerender } = render(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
           value={TEST_VALUE_UNDER_50}
           maxValue={TEST_MAX_VALUE}
           aria-label="required label"
@@ -365,8 +317,6 @@ describe('packages/progress-bar', () => {
 
       rerender(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
           value={TEST_MAX_VALUE}
           maxValue={TEST_MAX_VALUE}
           aria-label="required label"
@@ -377,14 +327,12 @@ describe('packages/progress-bar', () => {
       );
     });
 
-    test('additionally updates live region text to include variant if yellow or red', () => {
+    test('additionally updates live region text to include variant if warning or error', () => {
       render(
         <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
           value={TEST_VALUE_OVER_50}
           maxValue={TEST_MAX_VALUE}
-          variant={LoaderVariant.Warning}
+          variant={Variant.Warning}
           aria-label="required label"
         />,
       );
@@ -392,7 +340,7 @@ describe('packages/progress-bar', () => {
         `${getAnnouncementMessage(
           TEST_VALUE_OVER_50,
           TEST_MAX_VALUE,
-        )} Status is ${Color.Yellow}.`,
+        )} Status is ${Variant.Warning}.`,
       );
     });
   });

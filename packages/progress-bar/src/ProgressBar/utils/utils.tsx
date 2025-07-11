@@ -4,121 +4,122 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
+import { isDefined } from '@leafygreen-ui/lib';
 
-import { DEFAULT_COLOR, DEFAULT_MAX_VALUE } from '../../constants';
+import { DEFAULT_MAX_VALUE } from '../../constants';
 import {
   AnimationMode,
-  Color,
   FormatValueType,
-  LoaderVariant,
-  MeterStatus,
   ProgressBarProps,
   ResolvedProgressBarProps,
-  Type,
+  Role,
+  Variant,
 } from '../ProgressBar.types';
 
-const getMeterStatusColor = (status?: MeterStatus): Color => {
-  switch (status) {
-    case MeterStatus.Healthy:
-      return Color.Green;
-    case MeterStatus.Warning:
-      return Color.Yellow;
-    case MeterStatus.Danger:
-      return Color.Red;
-    default:
-      return Color.Blue;
-  }
-};
-
-const getLoaderVariantColor = (variant?: LoaderVariant): Color => {
-  switch (variant) {
-    case LoaderVariant.Success:
-      return Color.Green;
-    case LoaderVariant.Warning:
-      return Color.Yellow;
-    case LoaderVariant.Error:
-      return Color.Red;
-    case LoaderVariant.Info:
-    default:
-      return Color.Blue;
-  }
-};
-
+/**
+ * Returns a valid progress value.
+ * If undefined or greater than 0, returns as-is. If under 0, returns 0.
+ */
 const getValidValue = (value?: number) => {
   if (!isDefined(value) || value >= 0) return value;
   return 0;
 };
 
+/**
+ * Returns a valid maximum progress value.
+ * Defaults to 1 if the input is undefined or less than or equal to 0.
+ */
 const getValidMaxValue = (maxValue?: number) => {
   if (!isDefined(maxValue) || maxValue <= 0) return DEFAULT_MAX_VALUE;
   return maxValue;
 };
 
+/**
+ * Resolves the full set of progress bar props based on provided props.
+ *
+ * @param props - Input props from the consumer
+ * @returns {ResolvedProgressBarProps} Fully resolved progress bar props with:
+ * - `value`: Current progress value
+ * - `maxValue`: Maximum progress value
+ * - `disabled`: Whether the progress bar is disabled
+ * - `isIndeterminate`: Whether the bar is in indeterminate mode
+ * - `enableAnimation`: Whether animation is enabled
+ * - `role`: ARIA role string
+ */
 export const resolveProgressBarProps = (
   props: ProgressBarProps,
 ): ResolvedProgressBarProps => {
-  // baseline for all types of progress bars
+  // baseline common for all progress bars
   const baseProps = {
     value: getValidValue(props.value),
     maxValue: undefined,
     disabled: false,
-    color: DEFAULT_COLOR,
     isIndeterminate: false,
     enableAnimation: false,
   };
 
-  // meter type progress bar
-  if (props.type === Type.Meter) {
-    return {
-      ...baseProps,
-      maxValue: getValidMaxValue(props.maxValue),
-      disabled: props.disabled ?? false,
-      color: getMeterStatusColor(props.status),
-    };
-  }
-
-  // indeterminate loader progress bar
+  // indeterminate
   if (props.isIndeterminate) {
     return {
       ...baseProps,
+      role: Role.Progress,
       isIndeterminate: true,
-      color: getLoaderVariantColor(props.variant),
     };
   }
 
-  // determinate loader progress bar
+  // determinate with role "meter"
+  if (props.roleType === Role.Meter) {
+    return {
+      ...baseProps,
+      role: Role.Meter,
+      maxValue: getValidMaxValue(props.maxValue),
+      disabled: props.disabled ?? false,
+    };
+  }
+
+  // determinate with role "progressbar"
   return {
     ...baseProps,
+    role: Role.Progress,
     maxValue: getValidMaxValue(props.maxValue),
     disabled: props.disabled ?? false,
-    color: getLoaderVariantColor(props.variant),
     enableAnimation: props.enableAnimation ?? false,
   };
 };
 
-export const getAnimationMode = ({
-  type,
-  isIndeterminate,
-  enableAnimation,
-}: {
-  type: Type;
-  isIndeterminate: boolean;
-  enableAnimation: boolean;
-}): AnimationMode => {
-  if (type === Type.Meter) return AnimationMode.DeterminateBase;
+/**
+ * Determines the animation mode based on progress bar state.
+ *
+ * @param isIndeterminate - Whether the progress bar is indeterminate
+ * @param enableAnimation - Whether animation is enabled
+ * @returns The animation mode const value
+ */
+export const getAnimationMode = (
+  isIndeterminate: boolean,
+  enableAnimation: boolean,
+): AnimationMode => {
   if (isIndeterminate) return AnimationMode.Indeterminate;
 
   return enableAnimation
     ? AnimationMode.DeterminateAnimated
-    : AnimationMode.DeterminateBase;
+    : AnimationMode.DeterminatePlain;
 };
 
+/**
+ * Computes the progress percentage given value and maxValue.
+ *
+ * @param value - Current progress value
+ * @param maxValue - Maximum progress value (optional)
+ * @returns Percentage between 0 and 100 (inclusive)
+ */
 export const getPercentage = (value: number, maxValue?: number): number => {
   const rawPercentage = (value / (maxValue || DEFAULT_MAX_VALUE)) * 100;
   return Math.min(Math.max(Math.round(rawPercentage), 0), 100);
 };
 
+/**
+ * Formats the progress value as a string based on format type.
+ */
 export const getFormattedValue = (
   value: number,
   maxValue?: number,
@@ -143,59 +144,58 @@ export const getFormattedValue = (
   }
 };
 
-export const getProgressBarIdentifiers = (
-  type: Type,
-  label?: React.ReactNode,
-  description?: React.ReactNode,
-) => {
-  const role = type === Type.Meter ? 'meter' : 'progressbar';
+/**
+ * Returns appropriate ARIA attributes based on value and maxValue.
+ *
+ * - If `value` is undefined: `{ 'aria-busy': true }`
+ * - If `maxValue` is defined: `aria-valuemin`, `aria-valuemax`, `aria-valuenow`
+ * - Otherwise: `aria-valuetext`
+ *
+ * @param value - Current progress value
+ * @param maxValue - Maximum progress value
+ * @returns ARIA attributes object
+ */
+export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
+  if (!isDefined(value)) {
+    return { 'aria-busy': true };
+  }
 
-  const progressBarId = label
-    ? `${role}-for-${getNodeTextContent(label)}`
-    : role;
+  if (isDefined(maxValue)) {
+    return {
+      'aria-valuemin': 0,
+      'aria-valuemax': maxValue,
+      'aria-valuenow': value,
+    };
+  }
 
   return {
-    role,
-    barId: progressBarId,
-    labelId: label ? `label-for-${progressBarId}` : undefined,
-    descId: description ? `desc-for-${progressBarId}` : undefined,
-    liveId: `live-region-for-${progressBarId}`,
+    'aria-valuetext': value.toString(),
   };
 };
 
-export const getValueAriaAttributes = (value?: number, maxValue?: number) => ({
-  ...(value == undefined
-    ? { 'aria-busy': true }
-    : isDefined(maxValue)
-    ? {
-        'aria-valuemin': 0,
-        'aria-valuemax': maxValue,
-        'aria-valuenow': value,
-      }
-    : {
-        'aria-valuetext': value.toString(),
-      }),
-});
-
+/**
+ * Returns an appropriate status icon for the header, based on variant and disabled state.
+ * Additionally applies any extra props passed in to the icon.
+ */
 export const getHeaderIcon = ({
-  color,
+  variant,
   disabled = false,
   props = {},
 }: {
-  color: Color;
+  variant?: Variant;
   disabled?: boolean;
   props?: Record<string, any>;
 }) => {
   if (disabled) return <WarningIcon {...props} />;
 
-  switch (color) {
-    case Color.Green:
+  switch (variant) {
+    case Variant.Success:
       return <CheckmarkWithCircleIcon {...props} />;
-    case Color.Yellow:
+    case Variant.Warning:
       return <ImportantWithCircleIcon {...props} />;
-    case Color.Red:
+    case Variant.Error:
       return <WarningIcon {...props} />;
-    case Color.Blue:
+    case Variant.Info:
     default:
       return <InfoWithCircleIcon {...props} />;
   }

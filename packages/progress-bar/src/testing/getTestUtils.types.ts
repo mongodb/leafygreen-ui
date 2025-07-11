@@ -4,7 +4,7 @@ export interface GetTestUtilsReturnType<
   /** Returns the root element containing the progress bar and all accompanying text. */
   getContainer: () => T;
 
-  /** Returns the progress bar element, which can be either a loader or a meter. */
+  /** Returns the progress bar element, which may have role "progressbar" or "meter". */
   getBar: () => T;
 
   /** Returns the fill of the progress bar element */

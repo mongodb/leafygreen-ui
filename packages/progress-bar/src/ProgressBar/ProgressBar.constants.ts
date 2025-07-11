@@ -4,7 +4,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { borderRadius } from '@leafygreen-ui/tokens';
 
-import { Color, Size } from './ProgressBar.types';
+import { Size, Variant } from './ProgressBar.types';
 
 export const WIDTH_ANIMATION_DURATION = 500;
 export const SHIMMER_ANIMATION_DURATION_MS = 3000;
@@ -71,21 +71,21 @@ export const barColorStyles = {
     track: palette.gray.light2,
     disabledBar: palette.gray.light1,
 
-    [Color.Blue]: {
+    [Variant.Info]: {
       bar: palette.blue.base,
       icon: palette.blue.base,
       shimmerFade: transparentize(0.5, customFadePalette.blue),
     },
-    [Color.Green]: {
+    [Variant.Success]: {
       bar: palette.green.dark1,
       icon: palette.green.dark1,
       shimmerFade: transparentize(0.5, customFadePalette.green),
     },
-    [Color.Yellow]: {
+    [Variant.Warning]: {
       bar: palette.yellow.base,
       icon: palette.yellow.dark2,
     },
-    [Color.Red]: {
+    [Variant.Error]: {
       bar: palette.red.base,
       icon: palette.red.base,
     },
@@ -94,21 +94,21 @@ export const barColorStyles = {
     track: palette.gray.dark2,
     disabledBar: palette.gray.dark1,
 
-    [Color.Blue]: {
+    [Variant.Info]: {
       bar: palette.blue.light1,
       icon: palette.blue.light1,
       shimmerFade: transparentize(0.25, customFadePalette.blue),
     },
-    [Color.Green]: {
+    [Variant.Success]: {
       bar: palette.green.base,
       icon: palette.green.base,
       shimmerFade: transparentize(0.25, customFadePalette.green),
     },
-    [Color.Yellow]: {
+    [Variant.Warning]: {
       bar: palette.yellow.base,
       icon: palette.yellow.base,
     },
-    [Color.Red]: {
+    [Variant.Error]: {
       bar: palette.red.light1,
       icon: palette.red.light1,
     },
