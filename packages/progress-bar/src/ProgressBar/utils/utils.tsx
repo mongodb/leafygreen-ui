@@ -6,8 +6,7 @@ import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
 
-import { DEFAULT_COLOR, DEFAULT_MAX_VALUE } from '../constants';
-
+import { DEFAULT_COLOR, DEFAULT_MAX_VALUE } from '../../constants';
 import {
   AnimationMode,
   Color,
@@ -17,7 +16,7 @@ import {
   ProgressBarProps,
   ResolvedProgressBarProps,
   Type,
-} from './ProgressBar.types';
+} from '../ProgressBar.types';
 
 const getMeterStatusColor = (status?: MeterStatus): Color => {
   switch (status) {
@@ -46,12 +45,22 @@ const getLoaderVariantColor = (variant?: LoaderVariant): Color => {
   }
 };
 
+const getValidValue = (value?: number) => {
+  if (!isDefined(value) || value >= 0) return value;
+  return 0;
+};
+
+const getValidMaxValue = (maxValue?: number) => {
+  if (!isDefined(maxValue) || maxValue <= 0) return DEFAULT_MAX_VALUE;
+  return maxValue;
+};
+
 export const resolveProgressBarProps = (
   props: ProgressBarProps,
 ): ResolvedProgressBarProps => {
   // baseline for all types of progress bars
   const baseProps = {
-    value: props.value,
+    value: getValidValue(props.value),
     maxValue: undefined,
     disabled: false,
     color: DEFAULT_COLOR,
@@ -63,7 +72,7 @@ export const resolveProgressBarProps = (
   if (props.type === Type.Meter) {
     return {
       ...baseProps,
-      maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
+      maxValue: getValidMaxValue(props.maxValue),
       disabled: props.disabled ?? false,
       color: getMeterStatusColor(props.status),
     };
@@ -81,7 +90,7 @@ export const resolveProgressBarProps = (
   // determinate loader progress bar
   return {
     ...baseProps,
-    maxValue: props.maxValue ?? DEFAULT_MAX_VALUE,
+    maxValue: getValidMaxValue(props.maxValue),
     disabled: props.disabled ?? false,
     color: getLoaderVariantColor(props.variant),
     enableAnimation: props.enableAnimation ?? false,
@@ -106,7 +115,8 @@ export const getAnimationMode = ({
 };
 
 export const getPercentage = (value: number, maxValue?: number): number => {
-  return Math.round((value / (maxValue || DEFAULT_MAX_VALUE)) * 100);
+  const rawPercentage = (value / (maxValue || DEFAULT_MAX_VALUE)) * 100;
+  return Math.min(Math.max(Math.round(rawPercentage), 0), 100);
 };
 
 export const getFormattedValue = (

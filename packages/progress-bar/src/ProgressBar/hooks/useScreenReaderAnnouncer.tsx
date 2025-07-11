@@ -3,7 +3,7 @@ import { useMemo, useRef } from 'react';
 import { isDefined } from '@leafygreen-ui/lib';
 
 import { Color, Type } from '../ProgressBar.types';
-import { getPercentage } from '../ProgressBar.utils';
+import { getPercentage } from '../utils';
 
 const announcementThresholds = [0, 50, 100];
 const variantsAnnounced = [Color.Yellow, Color.Red] as Array<Color>; // TODO: will be refactored to variant names instead of colors

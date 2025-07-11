@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export const Type = {
   Meter: 'meter',
@@ -57,7 +57,8 @@ export const Color = {
 export type Color = (typeof Color)[keyof typeof Color];
 
 type BaseProps = DarkModeProps &
-  AriaLabelPropsWithLabel & {
+  AriaLabelPropsWithLabel &
+  LgIdProps & {
     /** Optional size (thickness) of the progress bar. */
     size?: Size;
 

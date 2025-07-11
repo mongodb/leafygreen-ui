@@ -19,7 +19,7 @@ import {
   WIDTH_ANIMATION_DURATION,
 } from './ProgressBar.constants';
 import { AnimationMode, Color, Size } from './ProgressBar.types';
-import { getPercentage } from './ProgressBar.utils';
+import { getPercentage } from './utils';
 
 const shimmerKeyframes = keyframes`
   0% {
@@ -76,6 +76,14 @@ export const containerStyles = css`
 export const headerStyles = css`
   display: flex;
   justify-content: space-between;
+  gap: ${spacingToken[100]}px;
+`;
+
+export const truncatedTextStyles = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 `;
 
 export const getHeaderValueStyles = ({
@@ -88,6 +96,8 @@ export const getHeaderValueStyles = ({
   display: flex;
   align-items: center;
   gap: ${spacingToken[100]}px;
+  white-space: nowrap;
+
   color: ${disabled
     ? colorToken[theme].text.disabled.default
     : colorToken[theme].text.secondary.default};
@@ -270,7 +280,7 @@ export const getBarFillStyles = ({
   return cx(baseStyles, addOnStyles);
 };
 
-export const getInvisibleStyles = () => css`
+export const getHiddenStyles = () => css`
   position: absolute;
   width: 0;
   height: 0;

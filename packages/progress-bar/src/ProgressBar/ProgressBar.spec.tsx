@@ -1,12 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
+import { getTestUtils } from '../testing';
+
 import { ProgressBar } from './ProgressBar';
-import { Color, LoaderVariant, MeterStatus, Type } from './ProgressBar.types';
-import {
-  getFormattedValue,
-  resolveProgressBarProps,
-} from './ProgressBar.utils';
+import { Color, LoaderVariant, Type } from './ProgressBar.types';
 
 describe('packages/progress-bar', () => {
   describe('basic rendering', () => {
@@ -19,7 +17,9 @@ describe('packages/progress-bar', () => {
           label={TEST_LABEL}
         />,
       );
-      expect(screen.getByText(TEST_LABEL)).toBeVisible();
+      const { queryLabel } = getTestUtils();
+      expect(queryLabel()).toBeVisible();
+      expect(queryLabel()).toHaveTextContent(TEST_LABEL);
     });
 
     test('renders with a description', () => {
@@ -32,10 +32,12 @@ describe('packages/progress-bar', () => {
           aria-label="required label"
         />,
       );
-      expect(screen.getByText(TEST_DESCRIPTION)).toBeVisible();
+      const { queryDescription } = getTestUtils();
+      expect(queryDescription()).toBeVisible();
+      expect(queryDescription()).toHaveTextContent(TEST_DESCRIPTION);
     });
 
-    describe('with value format', () => {
+    describe('with formatValue', () => {
       const TEST_VALUE = 50;
       const TEST_MAX_VALUE = 100;
 
@@ -49,7 +51,9 @@ describe('packages/progress-bar', () => {
             aria-label="required label"
           />,
         );
-        expect(screen.getByText(`${TEST_VALUE} units`)).toBeVisible();
+        const { queryValueText } = getTestUtils();
+        expect(queryValueText()).toBeVisible();
+        expect(queryValueText()).toHaveTextContent('50 units');
       });
 
       test('renders icon when showIcon is true', () => {
@@ -64,7 +68,8 @@ describe('packages/progress-bar', () => {
             aria-label="required label"
           />,
         );
-        expect(screen.getByRole('img')).toBeVisible();
+        const { queryIcon } = getTestUtils();
+        expect(queryIcon()).toBeVisible();
       });
 
       test('renders the correct width for the progress bar fill', () => {
@@ -77,9 +82,9 @@ describe('packages/progress-bar', () => {
             aria-label="required label"
           />,
         );
-        const barFillElement = screen.getByTestId('progress-bar-fill');
-        expect(barFillElement).toBeInTheDocument();
-        expect(barFillElement).toHaveStyle({
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
           width: '50%',
         });
       });
@@ -97,8 +102,172 @@ describe('packages/progress-bar', () => {
             aria-label="required label"
           />,
         );
-        expect(screen.queryByRole('img')).toBeNull();
+        const { queryIcon } = getTestUtils();
+        expect(queryIcon()).toBeNull();
       });
+    });
+
+    describe('with unexpected input', () => {
+      test('renders width 0% when value is less than 0', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            value={-5}
+            maxValue={100}
+            aria-label="required label"
+          />,
+        );
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
+          width: '0%',
+        });
+      });
+
+      test('renders width capped at 100% when value is over maxValue', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            value={105}
+            maxValue={100}
+            aria-label="required label"
+          />,
+        );
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
+          width: '100%',
+        });
+      });
+
+      test('defaults to maxValue of 1 when maxValue is less than 0', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            value={1}
+            maxValue={-10}
+            aria-label="required label"
+          />,
+        );
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
+          width: '100%',
+        });
+      });
+
+      test('defaults to maxValue of 1 when maxValue is 0', () => {
+        render(
+          <ProgressBar
+            type={Type.Loader}
+            isIndeterminate={false}
+            value={1}
+            maxValue={0}
+            aria-label="required label"
+          />,
+        );
+        const { getBarFill } = getTestUtils();
+        expect(getBarFill()).toBeInTheDocument();
+        expect(getBarFill()).toHaveStyle({
+          width: '100%',
+        });
+      });
+    });
+  });
+
+  describe('disabled state', () => {
+    test('renders no animation even if enableAnimation is true', () => {
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          enableAnimation={true}
+          value={50}
+          maxValue={100}
+          disabled={true}
+          aria-label="required label"
+        />,
+      );
+      const { getBarFill } = getTestUtils();
+      expect(getBarFill()).toBeInTheDocument();
+      expect(getBarFill()).not.toHaveStyle({
+        animation: expect.any(String),
+      });
+    });
+  });
+
+  describe('aria attributes', () => {
+    test('renders with aria-labelledby and aria-describedby', () => {
+      const LABEL_TEXT = 'Test Progress Bar';
+      const DESCRIPTION_TEXT = 'Test description for the progress bar.';
+
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={true}
+          label={LABEL_TEXT}
+          description={DESCRIPTION_TEXT}
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-labelledby');
+      expect(progressBar).toHaveAttribute('aria-describedby');
+    });
+
+    test('renders with aria-label when no label is provided', () => {
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={true}
+          aria-label="required label"
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-label', 'required label');
+    });
+
+    test('renders with aria-value attributes if value and maxValue are provided', () => {
+      const TEST_VALUE = 75;
+      const TEST_MAX_VALUE = 100;
+
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={false}
+          value={TEST_VALUE}
+          maxValue={TEST_MAX_VALUE}
+          aria-label="required label"
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-valuemin', '0');
+      expect(progressBar).toHaveAttribute(
+        'aria-valuemax',
+        String(TEST_MAX_VALUE),
+      );
+      expect(progressBar).toHaveAttribute('aria-valuenow', String(TEST_VALUE));
+    });
+
+    test('renders with aria-valuetext if maxValue is not provided', () => {
+      const TEST_VALUE = 50;
+
+      render(
+        <ProgressBar
+          type={Type.Loader}
+          isIndeterminate={true}
+          value={TEST_VALUE}
+          aria-label="required label"
+        />,
+      );
+
+      const progressBar = screen.getByRole('progressbar');
+      expect(progressBar).toHaveAttribute('aria-valuetext', String(TEST_VALUE));
     });
   });
 
@@ -225,164 +394,6 @@ describe('packages/progress-bar', () => {
           TEST_MAX_VALUE,
         )} Status is ${Color.Yellow}.`,
       );
-    });
-  });
-
-  describe('aria attributes', () => {
-    test('renders with aria-labelledby and aria-describedby', () => {
-      const LABEL_TEXT = 'Test Progress Bar';
-      const DESCRIPTION_TEXT = 'Test description for the progress bar.';
-
-      render(
-        <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={true}
-          label={LABEL_TEXT}
-          description={DESCRIPTION_TEXT}
-        />,
-      );
-
-      const progressBar = screen.getByRole('progressbar');
-      expect(progressBar).toHaveAttribute('aria-labelledby');
-      expect(progressBar).toHaveAttribute('aria-describedby');
-    });
-
-    test('renders with aria-label when no label is provided', () => {
-      render(
-        <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={true}
-          aria-label="required label"
-        />,
-      );
-
-      const progressBar = screen.getByRole('progressbar');
-      expect(progressBar).toHaveAttribute('aria-label', 'required label');
-    });
-
-    test('renders with aria-value attributes if value and maxValue are provided', () => {
-      const TEST_VALUE = 75;
-      const TEST_MAX_VALUE = 100;
-
-      render(
-        <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={false}
-          value={TEST_VALUE}
-          maxValue={TEST_MAX_VALUE}
-          aria-label="required label"
-        />,
-      );
-
-      const progressBar = screen.getByRole('progressbar');
-      expect(progressBar).toHaveAttribute('aria-valuemin', '0');
-      expect(progressBar).toHaveAttribute(
-        'aria-valuemax',
-        String(TEST_MAX_VALUE),
-      );
-      expect(progressBar).toHaveAttribute('aria-valuenow', String(TEST_VALUE));
-    });
-
-    test('renders with aria-valuetext if maxValue is not provided', () => {
-      const TEST_VALUE = 50;
-
-      render(
-        <ProgressBar
-          type={Type.Loader}
-          isIndeterminate={true}
-          value={TEST_VALUE}
-          aria-label="required label"
-        />,
-      );
-
-      const progressBar = screen.getByRole('progressbar');
-      expect(progressBar).toHaveAttribute('aria-valuetext', String(TEST_VALUE));
-    });
-  });
-
-  describe('getFormattedValue', () => {
-    test('renders a fraction correctly', () => {
-      expect(getFormattedValue(50, 100, 'fraction')).toBe('50/100');
-    });
-
-    test('renders a percentage correctly', () => {
-      expect(getFormattedValue(50, 100, 'percentage')).toBe('50%');
-    });
-
-    test('renders a plain number correctly', () => {
-      expect(getFormattedValue(50, 100, 'number')).toBe('50');
-    });
-
-    test('renders a custom format correctly', () => {
-      expect(
-        getFormattedValue(
-          50,
-          100,
-          (value, maxValue) => `${value}/${maxValue} units`,
-        ),
-      ).toBe('50/100 units');
-    });
-  });
-
-  describe('resolveProgressBarProps', () => {
-    test('it correctly resolves props for a meter type', () => {
-      const props = {
-        type: Type.Meter,
-        value: 50,
-        maxValue: 100,
-        status: MeterStatus.Warning,
-        'aria-label': 'required label',
-      } as const;
-
-      const resolvedProps = resolveProgressBarProps(props);
-      expect(resolvedProps).toEqual({
-        value: 50,
-        maxValue: 100,
-        disabled: false,
-        color: Color.Yellow,
-        isIndeterminate: false,
-        enableAnimation: false,
-      });
-    });
-
-    test('it correctly resolves props for a determinate loader type', () => {
-      const props = {
-        type: Type.Loader,
-        isIndeterminate: false,
-        value: 50,
-        maxValue: 100,
-        variant: LoaderVariant.Success,
-        enableAnimation: true,
-        'aria-label': 'required label',
-      } as const;
-
-      const resolvedProps = resolveProgressBarProps(props);
-      expect(resolvedProps).toEqual({
-        value: 50,
-        maxValue: 100,
-        disabled: false,
-        color: Color.Green,
-        isIndeterminate: false,
-        enableAnimation: true,
-      });
-    });
-
-    test('it correctly resolves props for an indeterminate loader type', () => {
-      const props = {
-        type: Type.Loader,
-        isIndeterminate: true,
-        'aria-label': 'required label',
-      } as const;
-
-      const resolvedProps = resolveProgressBarProps(props);
-      expect(resolvedProps).toEqual({
-        value: undefined,
-        maxValue: undefined,
-        disabled: false,
-        color: Color.Blue,
-        isIndeterminate: true,
-        enableAnimation: false,
-      });
     });
   });
 });

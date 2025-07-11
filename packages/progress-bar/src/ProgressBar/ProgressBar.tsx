@@ -7,6 +7,7 @@ import { isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import { iconsPendingCompletion } from '../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
 
 import { useScreenReaderAnnouncer } from './hooks';
 import {
@@ -16,8 +17,9 @@ import {
   getBarTrackStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
-  getInvisibleStyles,
+  getHiddenStyles,
   headerStyles,
+  truncatedTextStyles,
 } from './ProgressBar.styles';
 import { AnimationMode, ProgressBarProps, Size } from './ProgressBar.types';
 import {
@@ -27,7 +29,7 @@ import {
   getProgressBarIdentifiers,
   getValueAriaAttributes,
   resolveProgressBarProps,
-} from './ProgressBar.utils';
+} from './utils';
 export function ProgressBar(props: ProgressBarProps) {
   const { value, maxValue, disabled, color, isIndeterminate, enableAnimation } =
     resolveProgressBarProps(props);
@@ -41,6 +43,7 @@ export function ProgressBar(props: ProgressBarProps) {
     darkMode = false,
     formatValue,
     showIcon: showIconProp = false,
+    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   } = props;
 
   const { theme } = useDarkMode(darkMode);
@@ -50,6 +53,8 @@ export function ProgressBar(props: ProgressBarProps) {
     label,
     description,
   );
+
+  const lgIds = getLgIds(dataLgId);
 
   const showIcon = iconsPendingCompletion.includes(color)
     ? showIconProp && value === maxValue
@@ -89,6 +94,7 @@ export function ProgressBar(props: ProgressBarProps) {
       setIsNewDescription(true);
     }
   }, [description, prevDescription]);
+
   const screenReaderMessage = useScreenReaderAnnouncer({
     type,
     value,
@@ -97,13 +103,19 @@ export function ProgressBar(props: ProgressBarProps) {
   });
 
   return (
-    <div className={containerStyles} aria-disabled={disabled}>
+    <div
+      className={containerStyles}
+      aria-disabled={disabled}
+      data-lgid={lgIds.root}
+    >
       <div className={headerStyles}>
         <Label
           id={labelId}
           htmlFor={barId}
           darkMode={darkMode}
           disabled={disabled}
+          className={truncatedTextStyles}
+          data-lgid={lgIds.label}
         >
           {label}
         </Label>
@@ -112,6 +124,7 @@ export function ProgressBar(props: ProgressBarProps) {
           <Body
             className={getHeaderValueStyles({ theme, disabled })}
             darkMode={darkMode}
+            data-lgid={lgIds.valueText}
           >
             {isDefined(value) &&
               getFormattedValue(value, maxValue, formatValue)}
@@ -138,11 +151,11 @@ export function ProgressBar(props: ProgressBarProps) {
         {...getValueAriaAttributes(value, maxValue)}
       >
         <div
-          data-testid="progress-bar-track"
+          data-lgid={lgIds.track}
           className={getBarTrackStyles({ theme, size })}
         >
           <div
-            data-testid="progress-bar-fill"
+            data-lgid={lgIds.fill}
             className={getBarFillStyles({
               theme,
               color,
@@ -171,6 +184,7 @@ export function ProgressBar(props: ProgressBarProps) {
         <Description
           darkMode={darkMode}
           disabled={disabled}
+          data-lgid={lgIds.description}
           className={cx({ [getAnimatedTextStyles()]: isNewDescription })}
           // if on fade-in transition, reset state after animation ends
           onAnimationEnd={() => setIsNewDescription(false)}
@@ -185,7 +199,7 @@ export function ProgressBar(props: ProgressBarProps) {
           id={liveId}
           aria-live="polite"
           aria-atomic="true"
-          className={getInvisibleStyles()}
+          className={getHiddenStyles()}
         >
           {screenReaderMessage}
         </div>

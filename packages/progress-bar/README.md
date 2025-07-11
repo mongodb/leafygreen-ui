@@ -116,3 +116,65 @@ const totalSpaceAvailable = 128
 | `variant?`         | `'info'` \| `'success'` \| `'warning'` \| `'error'`                                            | `'info'`    | loader only                    | Variant for loader type. Animation is only available for `'info'` or `'success'` variants.                                                 |
 | `isIndeterminate?` | `boolean`                                                                                      | `false`     | loader only                    | When `true`, shows an infinite looping animation along the bar.                                                                            |
 | `enableAnimation?` | `boolean`                                                                                      | `false`     | determinate loader only        | When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. |
+
+## Test Harnesses
+
+### `getTestUtils`
+
+`getTestUtils()` exposes helper functions to access inner elements of the `ProgressBar` component for testing.
+
+#### Single `ProgressBar`
+
+```tsx
+import { getTestUtils } from '@leafygreen-ui/progress-bar/testing';
+
+test('renders single progress bar', () => {
+  // ...code to render a progress bar
+
+  const { getBar } = getTestUtils();
+
+  expect(getBar()).toBeInTheDocument();
+});
+```
+
+#### Multiple `ProgressBar` components
+
+```tsx
+import { getTestUtils } from '@leafygreen-ui/progress-bar/testing';
+
+test('renders multiple progress bars', () => {
+  // ...code to render multiple progress bars
+
+  const utilsOne = getTestUtils('lg-progress_bar_1');
+  const utilsTwo = getTestUtils('lg-progress_bar_2');
+
+  expect(utilsOne.getBar()).toBeInTheDocument();
+  expect(utilsTwo.getBar()).toBeInTheDocument();
+});
+```
+
+### Test Utils
+
+```tsx
+const {
+  getContainer,
+  getBar,
+  getBarFill,
+  getBarTrack,
+  queryIcon,
+  queryLabel,
+  queryDescription,
+  queryValueText,
+} = getTestUtils();
+```
+
+| Util               | Description                                                                                                        | Returns                  |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------ |
+| `getContainer`     | Returns the root element containing the progress bar and all accompanying text.                                    | `HTMLDivElement`         |
+| `getBar`           | Returns the progress bar element, which can be either a loader (`role="progressbar"`) or a meter (`role="meter"`). | `HTMLDivElement`         |
+| `getBarFill`       | Returns the fill element of the progress bar.                                                                      | `HTMLDivElement`         |
+| `getBarTrack`      | Returns the track element of the progress bar.                                                                     | `HTMLDivElement`         |
+| `queryIcon`        | Returns the icon element, if present.                                                                              | `HTMLDivElement \| null` |
+| `queryLabel`       | Returns the label element, if present.                                                                             | `HTMLDivElement \| null` |
+| `queryDescription` | Returns the description element, if present.                                                                       | `HTMLDivElement \| null` |
+| `queryValueText`   | Returns the value text element, if present.                                                                        | `HTMLDivElement \| null` |

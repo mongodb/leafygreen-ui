@@ -2475,9 +2475,16 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
       polished:
         specifier: ^4.2.2
         version: 4.3.1
+    devDependencies:
+      '@storybook/test':
+        specifier: ^8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   packages/radio-box-group:
     dependencies:
