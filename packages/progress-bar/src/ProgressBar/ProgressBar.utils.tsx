@@ -6,7 +6,10 @@ import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
 
+import { DEFAULT_COLOR, DEFAULT_MAX_VALUE } from '../constants';
+
 import {
+  AnimationMode,
   Color,
   FormatValueType,
   LoaderVariant,
@@ -15,10 +18,6 @@ import {
   ResolvedProgressBarProps,
   Type,
 } from './ProgressBar.types';
-
-export const DEFAULT_MAX_VALUE = 1;
-export const DEFAULT_COLOR = Color.Blue;
-export const iconsPendingCompletion: Array<Color> = [Color.Green];
 
 const getMeterStatusColor = (status?: MeterStatus): Color => {
   switch (status) {
@@ -89,6 +88,23 @@ export const resolveProgressBarProps = (
   };
 };
 
+export const getAnimationMode = ({
+  type,
+  isIndeterminate,
+  enableAnimation,
+}: {
+  type: Type;
+  isIndeterminate: boolean;
+  enableAnimation: boolean;
+}): AnimationMode => {
+  if (type === Type.Meter) return AnimationMode.DeterminateBase;
+  if (isIndeterminate) return AnimationMode.Indeterminate;
+
+  return enableAnimation
+    ? AnimationMode.DeterminateAnimated
+    : AnimationMode.DeterminateBase;
+};
+
 export const getPercentage = (value: number, maxValue?: number): number => {
   return Math.round((value / (maxValue || DEFAULT_MAX_VALUE)) * 100);
 };
@@ -104,6 +120,10 @@ export const getFormattedValue = (
 
   switch (formatValue) {
     case 'fraction':
+      if (!isDefined(maxValue)) {
+        return value.toString();
+      }
+
       return `${value}/${maxValue}`;
     case 'percentage':
       return `${getPercentage(value, maxValue)}%`;

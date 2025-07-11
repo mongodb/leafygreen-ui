@@ -54,14 +54,14 @@ test.skip('Type errors for incompatible prop combinations', () => {
       enableAnimation: true,
     };
 
-    const _AnimatedDeterminateLoaderCannotBeWarning: ProgressBarProps = {
+    const _DeterminateAnimatedLoaderCannotBeWarning: ProgressBarProps = {
       type: Type.Loader,
       enableAnimation: true,
       // @ts-expect-error - animated determinate loader should not use warning variant
       variant: LoaderVariant.Warning,
     };
 
-    const _AnimatedDeterminateLoaderCannotBeError: ProgressBarProps = {
+    const _DeterminateAnimatedLoaderCannotBeError: ProgressBarProps = {
       type: Type.Loader,
       enableAnimation: true,
       // @ts-expect-error - animated determinate loader should not use error variant
