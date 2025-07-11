@@ -3,7 +3,7 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 import { expect, waitFor, within } from '@storybook/test';
 
-import { ProgressBar, ProgressBarProps, Type } from '.';
+import { ProgressBar, ProgressBarProps } from '.';
 
 const testValues = {
   value: 53,
@@ -44,7 +44,6 @@ export default meta;
 
 export const WithChangingValue: StoryObj<typeof ProgressBar> = {
   args: {
-    type: Type.Loader,
     value: testValues.value,
     maxValue: testValues.maxValue,
     formatValue: 'fraction',
@@ -112,7 +111,6 @@ export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
 
 export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
   args: {
-    type: Type.Loader,
     isIndeterminate: true,
   },
   render: initialArgs => (
@@ -121,7 +119,6 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
         [
           3500,
           {
-            type: Type.Loader,
             isIndeterminate: false,
             value: testValues.maxValue,
             maxValue: testValues.maxValue,

@@ -3,14 +3,13 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
 import {
-  AnimatedLoaderVariant,
+  AnimatedVariant,
   FormatValueType,
-  LoaderVariant,
-  MeterStatus,
   ProgressBar,
   ProgressBarProps,
+  Role,
   Size,
-  Type,
+  Variant,
 } from '.';
 
 const testValues = {
@@ -19,18 +18,16 @@ const testValues = {
 };
 
 const defaultArgs: ProgressBarProps = {
-  type: Type.Loader,
   value: testValues.value,
   maxValue: testValues.maxValue,
   'aria-label': 'required label',
 };
 
-const TYPES = Object.values(Type);
+const ROLES = Object.values(Role);
 const SIZES = Object.values(Size);
 const FORMAT_VALUE_TYPES = Object.values(FormatValueType);
-const LOADER_VARIANTS = Object.values(LoaderVariant);
-const ANIMATED_LOADER_VARIANTS = Object.values(AnimatedLoaderVariant);
-const METER_STATUSES = Object.values(MeterStatus);
+const VARIANTS = Object.values(Variant);
+const ANIMATED_VARIANTS = Object.values(AnimatedVariant);
 
 const meta: StoryMetaType<typeof ProgressBar> = {
   title: 'Components/ProgressBar',
@@ -39,9 +36,9 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     default: 'LiveExample',
     generate: {
       storyNames: [
-        'DeterminateVariants',
         'IndeterminateVariants',
-        'MeterVariants',
+        'DeterminateProgressVariants',
+        'DeterminateMeterVariants',
       ],
       args: {
         label: <span key="label">Label</span>,
@@ -62,9 +59,8 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     },
   },
   argTypes: {
-    type: {
-      control: { type: 'select' },
-      options: TYPES,
+    isIndeterminate: {
+      control: { type: 'boolean' },
     },
     size: {
       control: { type: 'select' },
@@ -83,31 +79,24 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         'custom example': (value: number) => `Currently at ${value} GB`,
       },
     },
-    isIndeterminate: {
-      control: { type: 'boolean' },
-      if: { arg: 'type', eq: Type.Loader },
-    },
-    maxValue: {
-      description:
-        '**Not available** if both type=loader and isIndeterminate=true (fixed to 200 in this example).',
-      control: { type: 'none' },
-      // if: { arg: 'type', eq: Type.Meter } OR { arg: 'isIndeterminate', eq: false }, // TODO: not supported
-    },
     variant: {
       control: { type: 'select' },
-      options: [...LOADER_VARIANTS, undefined],
-      if: { arg: 'type', eq: Type.Loader },
+      options: [...VARIANTS, undefined],
     },
-    status: {
+    maxValue: {
+      control: { type: 'number' },
+      if: { arg: 'isIndeterminate', eq: false },
+    },
+    roleType: {
       control: { type: 'select' },
-      options: [...METER_STATUSES, undefined],
-      if: { arg: 'type', eq: Type.Meter },
+      options: ROLES,
+      if: { arg: 'isIndeterminate', eq: false },
     },
     enableAnimation: {
       description:
-        '**Not available** if either type="meter" or isIndeterminate=true (fixed to false in this example).',
+        '**Only available** if roleType="progressbar" and isIndeterminate=true (fixed to false in this example).',
       control: { type: 'none' },
-      // if: { arg: 'type', neq: Type.Meter } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
+      // if: { arg: 'roleType', eq: Role.Progress } AND { arg: 'isIndeterminate', eq: false }, // TODO: not supported
     },
   },
   decorators: [
@@ -165,46 +154,13 @@ export const WithHeaderTruncation: StoryObj<typeof ProgressBar> = {
   },
 };
 
-export const DeterminateVariants: StoryObj<typeof ProgressBar> = {
-  parameters: {
-    generate: {
-      combineArgs: {
-        variant: LOADER_VARIANTS,
-        enableAnimation: [false, true],
-        disabled: [false, true],
-      },
-      args: {
-        ...defaultArgs,
-        isIndeterminate: false,
-        formatValue: (value: number, maxValue?: number) =>
-          `${value} / ${maxValue} GB`,
-        showIcon: true,
-      },
-      excludeCombinations: [
-        {
-          variant: LOADER_VARIANTS.filter(
-            v =>
-              !(ANIMATED_LOADER_VARIANTS as Array<LoaderVariant>).includes(v),
-          ),
-          enableAnimation: [true],
-        },
-        {
-          variant: LOADER_VARIANTS.filter(v => v !== LoaderVariant.Info),
-          disabled: [true],
-        },
-      ],
-    },
-  },
-};
-
 export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        variant: ANIMATED_LOADER_VARIANTS,
+        variant: ANIMATED_VARIANTS,
       },
       args: {
-        type: Type.Loader,
         isIndeterminate: true,
         value: testValues.value,
         formatValue: (value: number) => `${value} MBs`,
@@ -214,24 +170,53 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
   },
 };
 
-export const MeterVariants: StoryObj<typeof ProgressBar> = {
+export const DeterminateProgressVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        status: [undefined, ...METER_STATUSES],
+        variant: VARIANTS,
+        enableAnimation: [false, true],
         disabled: [false, true],
       },
       args: {
-        type: Type.Meter,
-        value: testValues.value,
-        maxValue: testValues.maxValue,
+        ...defaultArgs,
         formatValue: (value: number, maxValue?: number) =>
           `${value} / ${maxValue} GB`,
         showIcon: true,
       },
       excludeCombinations: [
         {
-          status: METER_STATUSES,
+          variant: VARIANTS.filter(
+            v => !(ANIMATED_VARIANTS as Array<Variant>).includes(v),
+          ),
+          enableAnimation: [true],
+        },
+        {
+          variant: VARIANTS.filter(v => v !== Variant.Info),
+          disabled: [true],
+        },
+      ],
+    },
+  },
+};
+
+export const DeterminateMeterVariants: StoryObj<typeof ProgressBar> = {
+  parameters: {
+    generate: {
+      combineArgs: {
+        variant: [undefined, ...VARIANTS],
+        disabled: [false, true],
+      },
+      args: {
+        ...defaultArgs,
+        roleType: Role.Meter,
+        formatValue: (value: number, maxValue?: number) =>
+          `${value} / ${maxValue} GB`,
+        showIcon: true,
+      },
+      excludeCombinations: [
+        {
+          variant: VARIANTS,
           disabled: [true],
         },
       ],
