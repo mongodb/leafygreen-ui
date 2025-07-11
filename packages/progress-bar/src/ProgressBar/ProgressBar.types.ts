@@ -93,7 +93,7 @@ interface BaseDeterminateLoaderProps {
   disabled?: boolean;
 }
 
-interface PlainDeterminateLoaderProps {
+interface DeterminatePlainLoaderProps {
   /** Variant for loader type. Animation is only available for `info` or `success` variants. */
   variant?: LoaderVariant;
 
@@ -101,7 +101,7 @@ interface PlainDeterminateLoaderProps {
   enableAnimation?: false;
 }
 
-interface AnimatedDeterminateLoaderProps {
+interface DeterminateAnimatedLoaderProps {
   /** Variant for loader type. Animation is only available for `info` or `success` variants. */
   variant?: AnimatedLoaderVariant;
 
@@ -110,7 +110,7 @@ interface AnimatedDeterminateLoaderProps {
 }
 
 type DeterminateLoaderProps = BaseDeterminateLoaderProps &
-  (PlainDeterminateLoaderProps | AnimatedDeterminateLoaderProps);
+  (DeterminatePlainLoaderProps | DeterminateAnimatedLoaderProps);
 
 interface IndeterminateLoaderProps {
   /** When `true`, shows an infinite looping animation along the bar. */
@@ -164,3 +164,11 @@ export interface ResolvedProgressBarProps {
   /** When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. */
   enableAnimation: boolean;
 }
+
+export const AnimationMode = {
+  DeterminateBase: 'determinate-base',
+  DeterminateAnimated: 'determinate-animated',
+  Indeterminate: 'indeterminate',
+  Transition: 'indeterminate-to-determinate-transition',
+};
+export type AnimationMode = (typeof AnimationMode)[keyof typeof AnimationMode];

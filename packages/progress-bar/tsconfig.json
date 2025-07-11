@@ -26,6 +26,9 @@
     },
     {
       "path": "../leafygreen-provider"
-    }
+    },
+    {
+      "path": "../hooks"
+    },
   ]
 }

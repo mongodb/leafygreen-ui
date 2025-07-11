@@ -1,27 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { cx } from '@leafygreen-ui/emotion';
+import { usePrevious } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
+import { getNodeTextContent, isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
+
+import { iconsPendingCompletion } from '../constants';
 
 import {
   containerStyles,
+  getAnimatedTextStyles,
   getBarFillStyles,
   getBarTrackStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
   headerStyles,
 } from './ProgressBar.styles';
-import { ProgressBarProps, Size } from './ProgressBar.types';
+import { AnimationMode, ProgressBarProps, Size } from './ProgressBar.types';
 import {
+  getAnimationMode,
   getFormattedValue,
   getHeaderIcon,
   getValueAriaAttributes,
-  iconsPendingCompletion,
   resolveProgressBarProps,
 } from './ProgressBar.utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const { value, maxValue, disabled, color, isIndeterminate } =
+  const { value, maxValue, disabled, color, isIndeterminate, enableAnimation } =
     resolveProgressBarProps(props);
 
   const {
@@ -40,9 +45,44 @@ export function ProgressBar(props: ProgressBarProps) {
     ? showIconProp && value === maxValue
     : showIconProp;
 
+  // set HTML attributes based on type
   const role = type === 'meter' ? 'meter' : 'progressbar';
-
   const progressBarId = `${role}-${getNodeTextContent(label) || 'default'}`;
+
+  const [animationMode, setAnimationMode] = useState<AnimationMode>(
+    getAnimationMode({
+      type,
+      isIndeterminate,
+      enableAnimation,
+    }),
+  );
+
+  useEffect(() => {
+    setAnimationMode(currentMode => {
+      const newMode = getAnimationMode({
+        type,
+        isIndeterminate,
+        enableAnimation,
+      });
+
+      // if previously indeterminate and now turning determinate, apply fade-out transition
+      if (currentMode === AnimationMode.Indeterminate && !isIndeterminate) {
+        return AnimationMode.Transition;
+      }
+
+      return currentMode === newMode ? currentMode : newMode;
+    });
+  }, [type, isIndeterminate, enableAnimation]);
+
+  const [isNewDescription, setIsNewDescription] = useState(false);
+  const prevDescription = usePrevious(description);
+
+  useEffect(() => {
+    // if description is changed, apply fade-in transition
+    if (isDefined(prevDescription) && description !== prevDescription) {
+      setIsNewDescription(true);
+    }
+  }, [description, prevDescription]);
 
   return (
     <div className={containerStyles} aria-disabled={disabled}>
@@ -86,16 +126,34 @@ export function ProgressBar(props: ProgressBarProps) {
               theme,
               color,
               disabled,
-              isIndeterminate,
               value,
               maxValue,
+              animationMode,
             })}
+            // if on fade-out transition, revert back to base mode
+            onTransitionEnd={() => {
+              if (animationMode === AnimationMode.Transition) {
+                setAnimationMode(
+                  getAnimationMode({
+                    type,
+                    isIndeterminate,
+                    enableAnimation,
+                  }),
+                );
+              }
+            }}
           ></div>
         </div>
       </div>
 
       {description && (
-        <Description darkMode={darkMode} disabled={disabled}>
+        <Description
+          darkMode={darkMode}
+          disabled={disabled}
+          className={cx({ [getAnimatedTextStyles()]: isNewDescription })}
+          // if on fade-in transition, reset state after animation ends
+          onAnimationEnd={() => setIsNewDescription(false)}
+        >
           {description}
         </Description>
       )}
