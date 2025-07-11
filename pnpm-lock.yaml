@@ -3371,6 +3371,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
+      '@storybook/test':
+        specifier: ^8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   packages/typography:
     dependencies:
