@@ -94,8 +94,8 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     },
     enableAnimation: {
       description:
-        '**Only available** if roleType="progressbar" and isIndeterminate=true (fixed to false in this example).',
-      control: { type: 'none' },
+        '**Only available** if roleType="progressbar" and isIndeterminate=true.',
+      control: { type: 'boolean' },
       // if: { arg: 'roleType', eq: Role.Progress } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
     },
   },
