@@ -51,6 +51,21 @@ const meta: StoryMetaType<typeof Table> = {
       source: { type: 'code' },
     },
   },
+  decorators: [
+    Story => (
+      <div
+        data-testid="scroll-container"
+        style={{
+          width: '100%',
+          height: '300px',
+          overflow: 'auto',
+          border: '1px solid blue',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 };
 export default meta;
 
@@ -134,7 +149,6 @@ const Template: StoryFn<StoryTableProps> = args => {
         table={table}
         className={css`
           width: 1100px;
-          border: blue 1px solid;
         `}
         data-testid="lg-table"
         {...args}
@@ -189,6 +203,15 @@ const Template: StoryFn<StoryTableProps> = args => {
 export const StickyHeader = {
   parameters: {
     chromatic: { delay: 2000 },
+    /* viewport: {
+      options: {
+        name: 'Small viewport',
+        styles: {
+          width: '200px',
+          height: '800px',
+        },
+      },
+    }, */
   },
   render: (args: StoryTableProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
@@ -197,10 +220,18 @@ export const StickyHeader = {
 
     expect(table).toHaveAttribute('data-is-sticky', 'false');
 
+    const scrollContainer = canvas.getByTestId('scroll-container');
+    scrollContainer.scrollTo({
+      top: 1000,
+      behavior: 'smooth',
+    });
+
+    /*
     window.scrollTo({
       top: 1000,
       behavior: 'smooth',
     });
+    */
 
     await waitFor(async () => {
       expect(table).toHaveAttribute('data-is-sticky', 'true');

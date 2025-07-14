@@ -51,6 +51,8 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       initialInView: true,
     });
 
+    console.log(inView);
+
     return (
       <div
         ref={containerRef}
