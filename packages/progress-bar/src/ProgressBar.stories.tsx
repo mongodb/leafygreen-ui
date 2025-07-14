@@ -2,7 +2,7 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
-import { storyValues } from './test.constants';
+import { requiredA11yArgs, storyValues } from './test.constants';
 import {
   AnimatedVariant,
   FormatValueType,
@@ -16,7 +16,7 @@ import {
 const sharedDeterminateArgs: ProgressBarProps = {
   value: storyValues.value,
   maxValue: storyValues.maxValue,
-  'aria-label': 'required label',
+  ...requiredA11yArgs,
 };
 
 const ROLES = Object.values(Role);
