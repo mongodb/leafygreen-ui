@@ -54,10 +54,10 @@ const meta: StoryMetaType<typeof Table> = {
   decorators: [
     Story => (
       <div
-        data-testid="scroll-container"
+        data-testid="wrapper-container"
         style={{
           width: '100%',
-          height: '400px', // force small viewport to enable scroll for snapshots
+          height: '400px', // force shorter container to guarantee scroll for snapshots
           overflow: 'auto',
         }}
       >
@@ -200,15 +200,14 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 export const StickyHeader = {
   render: (args: StoryTableProps) => <Template {...args} />,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
-
+    const container = await canvas.findByTestId('wrapper-container');
     const table = await canvas.findByTestId('lg-table');
-    const container = await canvas.findByTestId('scroll-container');
 
     expect(table).toHaveAttribute('data-is-sticky', 'false');
 
-    container.scrollTo(0, 1000);
+    container.scrollTo(0, 400);
 
     await waitFor(async () => {
       expect(table).toHaveAttribute('data-is-sticky', 'true');
