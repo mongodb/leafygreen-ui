@@ -134,7 +134,7 @@ const Template: StoryFn<StoryTableProps> = args => {
         table={table}
         className={css`
           width: 1100px;
-          border: red 1px solid;
+          border: blue 1px solid;
         `}
         data-testid="lg-table"
         {...args}
@@ -187,17 +187,23 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 // TODO: fix this test https://jira.mongodb.org/browse/LG-4867
 export const StickyHeader = {
+  parameters: {
+    chromatic: { delay: 2000 },
+  },
   render: (args: StoryTableProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const table = await canvas.findByTestId('lg-table');
 
-    window.scrollTo(0, 1000);
+    expect(table).toHaveAttribute('data-is-sticky', 'false');
+
+    window.scrollTo({
+      top: 1000,
+      behavior: 'smooth',
+    });
 
     await waitFor(async () => {
       expect(table).toHaveAttribute('data-is-sticky', 'true');
     });
-
-    await new Promise(resolve => setTimeout(resolve, 2000));
   },
 };
