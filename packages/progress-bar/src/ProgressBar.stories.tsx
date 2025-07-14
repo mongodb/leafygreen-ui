@@ -37,9 +37,9 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         'DeterminateMeterVariants',
       ],
       args: {
+        ...requiredA11yArgs,
         label: <span key="label">Label</span>,
         description: <span key="description">Helper text</span>,
-        'aria-label': 'required label',
       },
       combineArgs: {
         size: SIZES,
@@ -150,9 +150,9 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
         variant: ANIMATED_VARIANTS,
       },
       args: {
+        ...requiredA11yArgs,
         isIndeterminate: true,
         value: storyValues.value,
-        'aria-label': 'required label',
         formatValue: (value: number) => `${value} MBs`,
         showIcon: true,
       },

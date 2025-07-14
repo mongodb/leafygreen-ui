@@ -3,12 +3,12 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 import { expect, waitFor, within } from '@storybook/test';
 
-import { STORY_TIMEOUT_BUFFER, storyValues } from './test.constants';
+import {
+  requiredA11yArgs,
+  STORY_TIMEOUT_BUFFER,
+  storyValues,
+} from './test.constants';
 import { ProgressBar, ProgressBarProps } from '.';
-
-const requiredA11yArgs = {
-  'aria-label': 'required label',
-};
 
 const DynamicProgressBar = ({
   transitions,

@@ -54,7 +54,7 @@ describe('getTestUtils', () => {
         value={0.5}
         description="Sample description"
         formatValue="number"
-        aria-label="required label"
+        aria-label="stand-in label"
       />,
     );
 
