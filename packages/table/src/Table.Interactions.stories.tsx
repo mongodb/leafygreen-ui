@@ -57,9 +57,8 @@ const meta: StoryMetaType<typeof Table> = {
         data-testid="scroll-container"
         style={{
           width: '100%',
-          height: '300px',
+          height: '400px', // force small viewport to enable scroll for snapshots
           overflow: 'auto',
-          border: '1px solid blue',
         }}
       >
         <Story />
@@ -199,39 +198,17 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
-// TODO: fix this test https://jira.mongodb.org/browse/LG-4867
 export const StickyHeader = {
-  parameters: {
-    chromatic: { delay: 2000 },
-    /* viewport: {
-      options: {
-        name: 'Small viewport',
-        styles: {
-          width: '200px',
-          height: '800px',
-        },
-      },
-    }, */
-  },
   render: (args: StoryTableProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
+
     const table = await canvas.findByTestId('lg-table');
+    const container = await canvas.findByTestId('scroll-container');
 
     expect(table).toHaveAttribute('data-is-sticky', 'false');
 
-    const scrollContainer = canvas.getByTestId('scroll-container');
-    scrollContainer.scrollTo({
-      top: 1000,
-      behavior: 'smooth',
-    });
-
-    /*
-    window.scrollTo({
-      top: 1000,
-      behavior: 'smooth',
-    });
-    */
+    container.scrollTo(0, 1000);
 
     await waitFor(async () => {
       expect(table).toHaveAttribute('data-is-sticky', 'true');
