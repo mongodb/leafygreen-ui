@@ -204,6 +204,7 @@ export const StickyHeader = {
     const canvas = within(canvasElement);
     const container = await canvas.findByTestId('wrapper-container');
     const table = await canvas.findByTestId('lg-table');
+    const headerCells = await canvas.findAllByTestId('lg-table-header');
 
     expect(table).toHaveAttribute('data-is-sticky', 'false');
 
@@ -211,6 +212,10 @@ export const StickyHeader = {
 
     await waitFor(async () => {
       expect(table).toHaveAttribute('data-is-sticky', 'true');
+
+      for (const headerCell of headerCells) {
+        expect(headerCell).toBeVisible();
+      }
     });
   },
 };
