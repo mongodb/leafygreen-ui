@@ -1,4 +1,4 @@
-import { Size, Variant } from './ProgressBar/ProgressBar.types';
+import { Size, Variant } from '../ProgressBar.types';
 
 export const DEFAULT_VARIANT = Variant.Info;
 export const DEFAULT_SIZE = Size.Default;

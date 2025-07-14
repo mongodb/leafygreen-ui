@@ -8,13 +8,13 @@ import LeafyGreenProvider, {
 import { isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
+import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
+
 import {
   DEFAULT_SIZE,
   DEFAULT_VARIANT,
   iconsPendingCompletion,
-} from '../constants';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
-
+} from './constants';
 import { useIdIdentifiers, useScreenReaderAnnouncer } from './hooks';
 import {
   containerStyles,
@@ -36,7 +36,7 @@ import {
   resolveProgressBarProps,
 } from './utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const { value, maxValue, disabled, isIndeterminate, role, enableAnimation } =
+  const { role, value, maxValue, disabled, isIndeterminate, enableAnimation } =
     resolveProgressBarProps(props);
 
   const {
@@ -102,25 +102,25 @@ export function ProgressBar(props: ProgressBarProps) {
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div
+        data-lgid={lgIds.root}
         className={containerStyles}
         aria-disabled={disabled}
-        data-lgid={lgIds.root}
       >
         <div className={headerStyles}>
           <Label
+            data-lgid={lgIds.label}
             id={labelId}
             htmlFor={barId}
-            disabled={disabled}
             className={truncatedTextStyles}
-            data-lgid={lgIds.label}
+            disabled={disabled}
           >
             {label}
           </Label>
 
           {formatValue && (
             <Body
-              className={getHeaderValueStyles({ theme, disabled })}
               data-lgid={lgIds.valueText}
+              className={getHeaderValueStyles({ theme, disabled })}
             >
               {isDefined(value) &&
                 getFormattedValue(value, maxValue, formatValue)}

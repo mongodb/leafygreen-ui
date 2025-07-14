@@ -6,7 +6,7 @@ import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { isDefined } from '@leafygreen-ui/lib';
 
-import { DEFAULT_MAX_VALUE } from '../../constants';
+import { DEFAULT_MAX_VALUE } from '../constants';
 import {
   AnimationMode,
   FormatValueType,

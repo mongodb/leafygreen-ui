@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
+import { requiredA11yArgs } from '../test.constants';
 import { getTestUtils } from '../testing';
 
 import { ProgressBar } from './ProgressBar';
@@ -23,7 +24,7 @@ describe('packages/progress-bar', () => {
         <ProgressBar
           isIndeterminate
           description={TEST_DESCRIPTION}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
 
@@ -42,7 +43,7 @@ describe('packages/progress-bar', () => {
             isIndeterminate
             value={TEST_VALUE}
             formatValue={value => `${value} units`}
-            aria-label="required label"
+            {...requiredA11yArgs}
           />,
         );
 
@@ -58,7 +59,7 @@ describe('packages/progress-bar', () => {
             maxValue={TEST_MAX_VALUE}
             formatValue="number"
             showIcon
-            aria-label="required label"
+            {...requiredA11yArgs}
           />,
         );
 
@@ -71,7 +72,7 @@ describe('packages/progress-bar', () => {
           <ProgressBar
             value={TEST_VALUE}
             maxValue={TEST_MAX_VALUE}
-            aria-label="required label"
+            {...requiredA11yArgs}
           />,
         );
 
@@ -90,7 +91,7 @@ describe('packages/progress-bar', () => {
             maxValue={TEST_MAX_VALUE}
             formatValue="number"
             showIcon
-            aria-label="required label"
+            {...requiredA11yArgs}
           />,
         );
 
@@ -101,9 +102,7 @@ describe('packages/progress-bar', () => {
 
     describe('with unexpected input', () => {
       test('renders width 0% when value is less than 0', () => {
-        render(
-          <ProgressBar value={-5} maxValue={100} aria-label="required label" />,
-        );
+        render(<ProgressBar value={-5} maxValue={100} {...requiredA11yArgs} />);
 
         const { getBarFill } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
@@ -114,11 +113,7 @@ describe('packages/progress-bar', () => {
 
       test('renders width capped at 100% when value is over maxValue', () => {
         render(
-          <ProgressBar
-            value={105}
-            maxValue={100}
-            aria-label="required label"
-          />,
+          <ProgressBar value={105} maxValue={100} {...requiredA11yArgs} />,
         );
 
         const { getBarFill } = getTestUtils();
@@ -129,9 +124,7 @@ describe('packages/progress-bar', () => {
       });
 
       test('defaults to maxValue of 1 when maxValue is less than 0', () => {
-        render(
-          <ProgressBar value={1} maxValue={-10} aria-label="required label" />,
-        );
+        render(<ProgressBar value={1} maxValue={-10} {...requiredA11yArgs} />);
 
         const { getBarFill } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
@@ -141,9 +134,7 @@ describe('packages/progress-bar', () => {
       });
 
       test('defaults to maxValue of 1 when maxValue is 0', () => {
-        render(
-          <ProgressBar value={1} maxValue={0} aria-label="required label" />,
-        );
+        render(<ProgressBar value={1} maxValue={0} {...requiredA11yArgs} />);
 
         const { getBarFill } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
@@ -162,7 +153,7 @@ describe('packages/progress-bar', () => {
           value={50}
           maxValue={100}
           disabled
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
 
@@ -176,8 +167,8 @@ describe('packages/progress-bar', () => {
 
   describe('aria attributes', () => {
     test('renders with aria-labelledby and aria-describedby', () => {
-      const LABEL_TEXT = 'Test Progress Bar';
-      const DESCRIPTION_TEXT = 'Test description for the progress bar.';
+      const LABEL_TEXT = 'My Progress Bar';
+      const DESCRIPTION_TEXT = 'Here is my lovely helper text.';
 
       render(
         <ProgressBar
@@ -207,7 +198,7 @@ describe('packages/progress-bar', () => {
         <ProgressBar
           value={TEST_VALUE}
           maxValue={TEST_MAX_VALUE}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
 
@@ -224,7 +215,7 @@ describe('packages/progress-bar', () => {
         <ProgressBar
           isIndeterminate
           value={TEST_VALUE}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
 
@@ -251,7 +242,7 @@ describe('packages/progress-bar', () => {
           roleType={Role.Meter}
           value={TEST_VALUE_OVER_50}
           maxValue={TEST_MAX_VALUE}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
       expect(screen.queryByRole('status')).toBeNull();
@@ -262,7 +253,7 @@ describe('packages/progress-bar', () => {
         <ProgressBar
           value={TEST_VALUE_UNDER_50}
           maxValue={TEST_MAX_VALUE}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
@@ -273,7 +264,7 @@ describe('packages/progress-bar', () => {
         <ProgressBar
           value={TEST_VALUE_UNDER_50 + 1}
           maxValue={TEST_MAX_VALUE}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
       expect(screen.queryByRole('status')).toBeNull();
@@ -284,7 +275,7 @@ describe('packages/progress-bar', () => {
         <ProgressBar
           value={TEST_VALUE_UNDER_50}
           maxValue={TEST_MAX_VALUE}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
@@ -295,7 +286,7 @@ describe('packages/progress-bar', () => {
         <ProgressBar
           value={TEST_VALUE_OVER_50}
           maxValue={TEST_MAX_VALUE}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
@@ -308,7 +299,7 @@ describe('packages/progress-bar', () => {
         <ProgressBar
           value={TEST_VALUE_UNDER_50}
           maxValue={TEST_MAX_VALUE}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
@@ -319,7 +310,7 @@ describe('packages/progress-bar', () => {
         <ProgressBar
           value={TEST_MAX_VALUE}
           maxValue={TEST_MAX_VALUE}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(
@@ -333,7 +324,7 @@ describe('packages/progress-bar', () => {
           value={TEST_VALUE_OVER_50}
           maxValue={TEST_MAX_VALUE}
           variant={Variant.Warning}
-          aria-label="required label"
+          {...requiredA11yArgs}
         />,
       );
       expect(screen.queryByRole('status')).toHaveTextContent(

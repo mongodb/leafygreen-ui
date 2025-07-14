@@ -75,13 +75,10 @@ interface BaseDeterminateProps {
   /** When `true`, shows a disabled style and pauses animation. */
   disabled?: boolean;
 }
-
-interface BaseDeterminateProgressProps {
+interface DeterminatePlainProgressProps {
   /** Specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar". */
   roleType?: typeof Role.Progress;
-}
 
-interface DeterminatePlainProgressProps {
   /** Optional variant of the progress bar. Defaults to "info". */
   variant?: Variant;
 
@@ -90,6 +87,9 @@ interface DeterminatePlainProgressProps {
 }
 
 interface DeterminateAnimatedProgressProps {
+  /** Specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar". */
+  roleType?: typeof Role.Progress;
+
   /** Optional variant of the progress bar. Defaults to "info". */
   variant?: AnimatedVariant;
 
@@ -97,8 +97,9 @@ interface DeterminateAnimatedProgressProps {
   enableAnimation: true;
 }
 
-type DeterminateProgressProps = BaseDeterminateProgressProps &
-  (DeterminatePlainProgressProps | DeterminateAnimatedProgressProps);
+type DeterminateProgressProps =
+  | DeterminatePlainProgressProps
+  | DeterminateAnimatedProgressProps;
 
 interface DeterminateMeterProps {
   /** Role type of the progress bar ("progressbar" or "meter"). */

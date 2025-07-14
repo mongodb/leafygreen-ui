@@ -6,7 +6,7 @@ import { ProgressBar, Role } from '../ProgressBar';
 import { getTestUtils } from './getTestUtils';
 
 describe('getTestUtils', () => {
-  test('returns all expected elements when indeterminate ', () => {
+  test('returns all expected elements when indeterminate', () => {
     render(<ProgressBar isIndeterminate label="My Progress" />);
 
     const { getBar, getBarFill, getBarTrack, queryIcon, queryLabel } =
@@ -23,7 +23,7 @@ describe('getTestUtils', () => {
     expect(queryLabel()).toBeInTheDocument();
   });
 
-  test('returns all expected elements when determinate with role progressbar', () => {
+  test('returns all expected elements when determinate with role "progressbar"', () => {
     render(
       <ProgressBar
         value={0.5}
@@ -47,7 +47,7 @@ describe('getTestUtils', () => {
     expect(queryLabel()).toBeInTheDocument();
   });
 
-  test('returns all expected elements when determinate with role meter', () => {
+  test('returns all expected elements when determinate with role "meter"', () => {
     render(
       <ProgressBar
         roleType={Role.Meter}

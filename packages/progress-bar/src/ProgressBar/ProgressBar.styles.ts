@@ -17,7 +17,7 @@ import {
   TEXT_ANIMATION_DURATION,
   TRANSITION_ANIMATION_DURATION,
   WIDTH_ANIMATION_DURATION,
-} from './ProgressBar.constants';
+} from './constants';
 import { AnimationMode, Size, Variant } from './ProgressBar.types';
 import { getPercentage } from './utils';
 

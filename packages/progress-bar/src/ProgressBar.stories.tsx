@@ -2,6 +2,7 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
+import { storyValues } from './test.constants';
 import {
   AnimatedVariant,
   FormatValueType,
@@ -12,14 +13,9 @@ import {
   Variant,
 } from '.';
 
-const testValues = {
-  value: 103,
-  maxValue: 200,
-};
-
-const defaultArgs: ProgressBarProps = {
-  value: testValues.value,
-  maxValue: testValues.maxValue,
+const sharedDeterminateArgs: ProgressBarProps = {
+  value: storyValues.value,
+  maxValue: storyValues.maxValue,
   'aria-label': 'required label',
 };
 
@@ -94,7 +90,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     },
     enableAnimation: {
       description:
-        '**Only available** if roleType="progressbar" and isIndeterminate=true.',
+        '**Only available** if roleType="progressbar" and isIndeterminate=false. **Only available** for `info` and `success` variants.',
       control: { type: 'boolean' },
       // if: { arg: 'roleType', eq: Role.Progress } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
     },
@@ -104,7 +100,7 @@ export default meta;
 
 export const LiveExample: StoryObj<typeof ProgressBar> = {
   args: {
-    ...defaultArgs,
+    ...sharedDeterminateArgs,
     formatValue: 'fraction',
     showIcon: true,
     label: 'Label',
@@ -114,21 +110,21 @@ export const LiveExample: StoryObj<typeof ProgressBar> = {
 
 export const WithLabel: StoryObj<typeof ProgressBar> = {
   args: {
-    ...defaultArgs,
+    ...sharedDeterminateArgs,
     label: 'Label',
   },
 };
 
 export const WithValueDisplay: StoryObj<typeof ProgressBar> = {
   args: {
-    ...defaultArgs,
+    ...sharedDeterminateArgs,
     formatValue: 'percentage',
   },
 };
 
 export const WithDescription: StoryObj<typeof ProgressBar> = {
   args: {
-    ...defaultArgs,
+    ...sharedDeterminateArgs,
     description: 'Helper text',
   },
 };
@@ -155,7 +151,8 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
       },
       args: {
         isIndeterminate: true,
-        value: testValues.value,
+        value: storyValues.value,
+        'aria-label': 'required label',
         formatValue: (value: number) => `${value} MBs`,
         showIcon: true,
       },
@@ -172,7 +169,7 @@ export const DeterminateProgressVariants: StoryObj<typeof ProgressBar> = {
         disabled: [false, true],
       },
       args: {
-        ...defaultArgs,
+        ...sharedDeterminateArgs,
         formatValue: (value: number, maxValue?: number) =>
           `${value} / ${maxValue} GB`,
         showIcon: true,
@@ -201,7 +198,7 @@ export const DeterminateMeterVariants: StoryObj<typeof ProgressBar> = {
         disabled: [false, true],
       },
       args: {
-        ...defaultArgs,
+        ...sharedDeterminateArgs,
         roleType: Role.Meter,
         formatValue: (value: number, maxValue?: number) =>
           `${value} / ${maxValue} GB`,

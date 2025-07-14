@@ -1,3 +1,4 @@
+import { requiredA11yArgs } from '../../test.constants';
 import { Role } from '../ProgressBar.types';
 
 import { getFormattedValue, resolveProgressBarProps } from './utils';
@@ -27,12 +28,12 @@ describe('getFormattedValue', () => {
 });
 
 describe('resolveProgressBarProps', () => {
-  test('it correctly resolves props for determinate with meter role', () => {
+  test('it correctly resolves props for determinate with "meter"', () => {
     const props = {
       roleType: Role.Meter,
       value: 50,
       maxValue: 100,
-      'aria-label': 'required label',
+      ...requiredA11yArgs,
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
@@ -46,12 +47,12 @@ describe('resolveProgressBarProps', () => {
     });
   });
 
-  test('it correctly resolves props for determinate with progress role', () => {
+  test('it correctly resolves props for determinate with role "progressbar"', () => {
     const props = {
       value: 50,
       maxValue: 100,
       enableAnimation: true,
-      'aria-label': 'required label',
+      ...requiredA11yArgs,
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
@@ -68,7 +69,7 @@ describe('resolveProgressBarProps', () => {
   test('it correctly resolves props for indeterminate', () => {
     const props = {
       isIndeterminate: true,
-      'aria-label': 'required label',
+      ...requiredA11yArgs,
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
