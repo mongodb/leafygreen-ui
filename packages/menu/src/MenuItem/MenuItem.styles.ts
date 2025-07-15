@@ -33,6 +33,9 @@ interface MenuItemStyleArgs {
   menuVariant: MenuVariant;
 }
 
+const DEFAULT_MENU_ITEM_PADDING = spacing[200];
+const COMPACT_MENU_ITEM_PADDING = spacing[150];
+
 export const getMenuItemStyles = ({
   active,
   disabled,
@@ -49,8 +52,8 @@ export const getMenuItemStyles = ({
       min-height: ${spacing[800]}px;
       background-color: ${menuColor[theme].background.default};
       padding: ${menuVariant === MenuVariant.Default
-          ? spacing[200]
-          : spacing[150]}px
+          ? DEFAULT_MENU_ITEM_PADDING
+          : COMPACT_MENU_ITEM_PADDING}px
         ${spacing[300]}px;
 
       .${titleClassName} {

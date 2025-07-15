@@ -14,12 +14,17 @@ export interface MenuStyleArgs {
   variant: MenuVariant;
 }
 
+const DEFAULT_MENU_PADDING = spacing[300];
+const COMPACT_MENU_PADDING = spacing[150];
+
 export const getMenuStyles = ({ theme, variant }: MenuStyleArgs) => {
   return css`
     width: 210px;
     border-radius: ${spacing[300]}px;
     overflow: auto;
-    padding: ${variant === MenuVariant.Default ? spacing[300] : spacing[150]}px
+    padding: ${variant === MenuVariant.Default
+        ? DEFAULT_MENU_PADDING
+        : COMPACT_MENU_PADDING}px
       0;
 
     background-color: ${menuColor[theme].background.default};
