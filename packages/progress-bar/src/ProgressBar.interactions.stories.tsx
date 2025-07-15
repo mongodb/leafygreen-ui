@@ -48,12 +48,22 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
     maxValue: storyValues.maxValue,
     formatValue: 'fraction',
   },
-  render: initialArgs => (
-    <DynamicProgressBar
-      transitions={[[1500, { ...initialArgs, value: storyValues.maxValue }]]}
-      {...initialArgs}
-    />
-  ),
+  render: initialArgs => {
+    const startValue = storyValues.value;
+    const endValue = storyValues.maxValue;
+
+    const stepDuration = 30;
+    const transitions: Array<[number, ProgressBarProps]> = [];
+
+    for (let i = 1; i <= endValue - startValue; i++) {
+      transitions.push([
+        i * stepDuration,
+        { ...initialArgs, value: startValue + i },
+      ]);
+    }
+
+    return <DynamicProgressBar transitions={transitions} {...initialArgs} />;
+  },
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
     const progressBar = canvas.getByRole('progressbar');
@@ -69,7 +79,11 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
           storyValues.maxValue.toString(),
         );
       },
-      { timeout: 1500 + STORY_TIMEOUT_BUFFER },
+      {
+        timeout:
+          (storyValues.maxValue - storyValues.value) * 30 +
+          STORY_TIMEOUT_BUFFER,
+      },
     );
   },
 };

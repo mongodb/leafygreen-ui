@@ -15,8 +15,13 @@ import {
   DEFAULT_SIZE,
   DEFAULT_VARIANT,
   iconsPendingCompletion,
+  WIDTH_ANIMATION_SPEED,
 } from './constants';
-import { useIdIdentifiers, useScreenReaderAnnouncer } from './hooks';
+import {
+  useComputedTransitionDuration,
+  useIdIdentifiers,
+  useScreenReaderAnnouncer,
+} from './hooks';
 import {
   containerStyles,
   getAnimatedTextStyles,
@@ -33,6 +38,7 @@ import {
   getAnimationMode,
   getFormattedValue,
   getHeaderIcon,
+  getPercentage,
   getValueAriaAttributes,
   resolveProgressBarProps,
 } from './utils';
@@ -101,6 +107,13 @@ export function ProgressBar(props: ProgressBarProps) {
     variant,
   });
 
+  const width = value ? getPercentage(value, maxValue) : undefined;
+
+  const widthAnimationDuration = useComputedTransitionDuration({
+    speed: WIDTH_ANIMATION_SPEED,
+    currentValue: width,
+  });
+
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div
@@ -161,8 +174,8 @@ export function ProgressBar(props: ProgressBarProps) {
                 theme,
                 variant,
                 disabled,
-                value,
-                maxValue,
+                width,
+                widthAnimationDuration,
                 animationMode,
               })}
               // if on fade-out transition, revert back to base mode

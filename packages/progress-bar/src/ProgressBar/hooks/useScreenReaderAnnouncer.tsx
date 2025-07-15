@@ -15,12 +15,12 @@ interface UseScreenReaderAnnouncerProps {
   variant?: Variant;
 }
 
-export function useScreenReaderAnnouncer({
+export const useScreenReaderAnnouncer = ({
   role,
   value,
   maxValue,
   variant,
-}: UseScreenReaderAnnouncerProps): string | undefined {
+}: UseScreenReaderAnnouncerProps): string | undefined => {
   const thresholdIndexRef = useRef(-1);
 
   const message = useMemo(() => {
@@ -62,4 +62,4 @@ export function useScreenReaderAnnouncer({
   }, [role, value, maxValue, variant]);
 
   return message;
-}
+};

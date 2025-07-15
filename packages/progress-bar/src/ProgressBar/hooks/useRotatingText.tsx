@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-export function useRotatingText(
+export const useRotatingText = (
   textInput: React.ReactNode | Array<React.ReactNode>,
   interval = 2000,
-) {
+) => {
   const texts = useMemo(
     () => (Array.isArray(textInput) ? textInput : [textInput]),
     [textInput],
@@ -22,4 +22,4 @@ export function useRotatingText(
   }, [texts, interval]);
 
   return texts[index];
-}
+};

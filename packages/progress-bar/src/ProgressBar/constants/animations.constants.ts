@@ -2,7 +2,8 @@ import { transparentize } from 'polished';
 
 import { palette } from '@leafygreen-ui/palette';
 
-export const WIDTH_ANIMATION_DURATION = 500;
+export const DEFAULT_WIDTH_ANIMATION_DURATION = 500;
+export const WIDTH_ANIMATION_SPEED = 5; // width of 5% per second
 export const SHIMMER_ANIMATION_DURATION_MS = 3000;
 export const INDETERMINATE_ANIMATION_DURATION_MS = 1500;
 export const TRANSITION_ANIMATION_DURATION = 500;

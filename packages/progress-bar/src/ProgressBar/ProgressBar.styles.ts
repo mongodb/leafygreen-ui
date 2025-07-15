@@ -8,6 +8,7 @@ import {
 import {
   barColorStyles,
   barSizeStyles,
+  DEFAULT_WIDTH_ANIMATION_DURATION,
   getDeterminateAnimatedGradient,
   getIndeterminateGradient,
   INDETERMINATE_ANIMATION_DURATION_MS,
@@ -16,10 +17,8 @@ import {
   SHIMMER_ANIMATION_DURATION_MS,
   TEXT_ANIMATION_DURATION,
   TRANSITION_ANIMATION_DURATION,
-  WIDTH_ANIMATION_DURATION,
 } from './constants';
 import { AnimationMode, Size, Variant } from './ProgressBar.types';
-import { getPercentage } from './utils';
 
 const shimmerKeyframes = keyframes`
   0% {
@@ -158,14 +157,17 @@ const getDeterminateFillStyles = ({
   variant,
   disabled,
   width,
+  widthAnimationDuration,
 }: {
   theme: Theme;
   variant: Variant;
   disabled?: boolean;
   width: number;
+  widthAnimationDuration?: number;
 }) => css`
   width: ${width}%;
-  transition: width ${WIDTH_ANIMATION_DURATION}ms ease-in-out;
+  transition: width
+    ${widthAnimationDuration || DEFAULT_WIDTH_ANIMATION_DURATION}ms ease-in-out;
   background-color: ${disabled
     ? barColorStyles[theme].disabledBar
     : barColorStyles[theme][variant].bar};
@@ -241,27 +243,28 @@ export const getBarFillStyles = ({
   theme,
   variant,
   disabled,
-  value,
-  maxValue,
+  width,
+  widthAnimationDuration,
 }: {
   animationMode: AnimationMode;
   theme: Theme;
   variant: Variant;
   disabled?: boolean;
-  value?: number;
-  maxValue?: number;
+  width?: number;
+  widthAnimationDuration?: number;
 }) => {
   const baseStyles = getBaseBarFillStyles();
 
   let addOnStyles;
 
   const determinate =
-    isDefined(value) &&
+    isDefined(width) &&
     getDeterminateFillStyles({
       theme,
       variant,
       disabled,
-      width: getPercentage(value, maxValue),
+      width,
+      widthAnimationDuration,
     });
 
   const determinateAnimated = getDeterminateAnimatedFillStyles({
