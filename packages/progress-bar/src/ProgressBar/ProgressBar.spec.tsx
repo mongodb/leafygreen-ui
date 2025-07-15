@@ -68,6 +68,20 @@ describe('packages/progress-bar', () => {
       jest.useRealTimers();
     });
 
+    test('renders with a custom className', () => {
+      const TEST_CLASSNAME = 'test-classname';
+      render(
+        <ProgressBar
+          isIndeterminate
+          className={TEST_CLASSNAME}
+          {...requiredA11yArgs}
+        />,
+      );
+
+      const { getContainer } = getTestUtils();
+      expect(getContainer()).toHaveClass(TEST_CLASSNAME);
+    });
+
     describe('with formatValue', () => {
       const TEST_VALUE = 50;
       const TEST_MAX_VALUE = 100;

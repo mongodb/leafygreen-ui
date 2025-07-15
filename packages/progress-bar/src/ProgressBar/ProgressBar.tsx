@@ -23,10 +23,10 @@ import {
   useScreenReaderAnnouncer,
 } from './hooks';
 import {
-  containerStyles,
   getAnimatedTextStyles,
   getBarFillStyles,
   getBarTrackStyles,
+  getContainerStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
   headerStyles,
@@ -56,6 +56,8 @@ export function ProgressBar(props: ProgressBarProps) {
     showIcon: showIconProp = false,
     'aria-label': ariaLabel,
     'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+    className,
+    ...rest
   } = props;
 
   const { theme } = useDarkMode(darkMode);
@@ -107,7 +109,7 @@ export function ProgressBar(props: ProgressBarProps) {
     variant,
   });
 
-  const width = value ? getPercentage(value, maxValue) : undefined;
+  const width = isDefined(value) ? getPercentage(value, maxValue) : undefined;
 
   const widthAnimationDuration = useComputedTransitionDuration({
     speed: WIDTH_ANIMATION_SPEED,
@@ -118,8 +120,9 @@ export function ProgressBar(props: ProgressBarProps) {
     <LeafyGreenProvider darkMode={darkMode}>
       <div
         data-lgid={lgIds.root}
-        className={containerStyles}
         aria-disabled={disabled}
+        className={getContainerStyles(className)}
+        {...rest}
       >
         <div className={headerStyles}>
           <Label

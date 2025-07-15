@@ -65,12 +65,16 @@ const fadeFromWhiteKeyframes = keyframes`
   to { opacity: 1; }
 `;
 
-export const containerStyles = css`
-  display: flex;
-  flex-direction: column;
-  gap: ${spacingToken[100]}px;
-  width: 100%;
-`;
+export const getContainerStyles = (className?: string) => {
+  const baseStyles = css`
+    display: flex;
+    flex-direction: column;
+    gap: ${spacingToken[100]}px;
+    width: 100%;
+  `;
+
+  return cx(baseStyles, className);
+};
 
 export const headerStyles = css`
   display: flex;
