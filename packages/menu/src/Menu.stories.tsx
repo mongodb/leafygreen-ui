@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
-  StoryMetaType,
+  type StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
@@ -42,7 +42,7 @@ const getDecoratorStyles = (args: Partial<MenuProps>) => {
   `;
 };
 
-export default {
+const meta: StoryMetaType<typeof Menu> = {
   title: 'Components/Menu',
   component: Menu,
   decorators: [
@@ -117,7 +117,9 @@ export default {
       control: { type: 'select' },
     },
   },
-} as StoryMetaType<typeof Menu>;
+};
+
+export default meta;
 
 export const LiveExample = {
   render: ({ open, darkMode, ...args }) => {
