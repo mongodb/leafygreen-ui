@@ -46,7 +46,10 @@ type BaseProps = DarkModeProps &
     /** Optional size (thickness) of the progress bar. */
     size?: Size;
 
-    /** Optional descriptive text below the progress bar. */
+    /** Optional descriptive text below the progress bar.
+     * If multiple items are provided in an array, they will be automatically rotated every 2000 milliseconds (default: 2000 ms).
+     * Single items are returned as-is without rotation.
+     */
     description?: React.ReactNode | Array<React.ReactNode>;
 
     /**
