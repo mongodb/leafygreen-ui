@@ -41,12 +41,46 @@ const meta: StoryMetaType<typeof ProgressBar> = {
 };
 export default meta;
 
-export const WithChangingValue: StoryObj<typeof ProgressBar> = {
+export const WithLargeChangingValue: StoryObj<typeof ProgressBar> = {
   args: {
     ...requiredA11yArgs,
     value: storyValues.value,
     maxValue: storyValues.maxValue,
     formatValue: 'fraction',
+  },
+  render: initialArgs => {
+    return (
+      <DynamicProgressBar
+        transitions={[[1500, { ...initialArgs, value: storyValues.maxValue }]]}
+        {...initialArgs}
+      />
+    );
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
+
+    expect(progressBar).toHaveAttribute(
+      'aria-valuenow',
+      storyValues.value.toString(),
+    );
+
+    await waitFor(
+      () => {
+        expect(progressBar.getAttribute('aria-valuenow')).toBe(
+          storyValues.maxValue.toString(),
+        );
+      },
+      {
+        timeout: 1500 + STORY_TIMEOUT_BUFFER,
+      },
+    );
+  },
+};
+
+export const WithIncrementallyChangingValue: StoryObj<typeof ProgressBar> = {
+  args: {
+    ...WithLargeChangingValue.args,
   },
   render: initialArgs => {
     const startValue = storyValues.value;
@@ -90,7 +124,7 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
 
 export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
   args: {
-    ...WithChangingValue.args,
+    ...WithLargeChangingValue.args,
     description: <span>Helper text</span>,
   },
   render: initialArgs => (

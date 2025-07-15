@@ -11,9 +11,11 @@ import { usePrevious } from '@leafygreen-ui/hooks';
 export const useComputedTransitionDuration = ({
   speed,
   currentValue,
+  maximumTransitionDuration = 750,
 }: {
   speed: number;
   currentValue?: number;
+  maximumTransitionDuration?: number;
 }) => {
   const previousValue = usePrevious(currentValue);
 
@@ -31,5 +33,5 @@ export const useComputedTransitionDuration = ({
     return (magnitude / speed) * 1000;
   }, [speed, previousValue, currentValue]);
 
-  return transitionDuration;
+  return Math.min(transitionDuration, maximumTransitionDuration);
 };
