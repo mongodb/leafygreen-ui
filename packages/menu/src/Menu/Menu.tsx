@@ -34,7 +34,7 @@ import {
   getMenuStyles,
   scrollContainerStyle,
 } from './Menu.styles';
-import { MenuProps } from './Menu.types';
+import { MenuProps, MenuVariant } from './Menu.types';
 
 /**
  *
@@ -73,6 +73,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     refEl,
     trigger,
     renderMode = RenderMode.TopLayer,
+    variant = MenuVariant.Default,
     portalClassName,
     portalContainer,
     portalRef,
@@ -220,6 +221,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           moveHighlight,
           renderDarkMenu,
           lgIds,
+          variant,
         }}
       >
         <Popover
@@ -236,7 +238,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           <div
             data-theme={theme}
             className={cx(
-              getMenuStyles({ theme }),
+              getMenuStyles({ theme, variant }),
               css`
                 max-height: ${maxMenuHeightValue};
               `,

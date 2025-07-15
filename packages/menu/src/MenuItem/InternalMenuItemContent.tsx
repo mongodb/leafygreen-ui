@@ -9,6 +9,7 @@ import {
 } from '@leafygreen-ui/polymorphic';
 import { color } from '@leafygreen-ui/tokens';
 
+import { MenuVariant } from '../Menu/Menu.types';
 import {
   useMenuContext,
   useMenuGroupContext,
@@ -55,7 +56,13 @@ export const InternalMenuItemContent = React.forwardRef<
   ) => {
     const { as } = useInferredPolymorphic(asProp, rest, 'button');
 
-    const { theme, darkMode, highlight, renderDarkMenu } = useMenuContext();
+    const {
+      theme,
+      darkMode,
+      highlight,
+      renderDarkMenu,
+      variant: menuVariant,
+    } = useMenuContext();
     const { depth: submenuDepth, hasIcon: submenuHasIcon } =
       useSubMenuContext();
     const { depth: groupDepth, hasIcon: groupHasIcon } = useMenuGroupContext();
@@ -96,6 +103,7 @@ export const InternalMenuItemContent = React.forwardRef<
             highlighted,
             theme,
             variant,
+            menuVariant: menuVariant || MenuVariant.Default,
           }),
 
           {
@@ -115,6 +123,7 @@ export const InternalMenuItemContent = React.forwardRef<
               highlighted,
               theme,
               variant,
+              menuVariant: menuVariant || MenuVariant.Default,
             })]: theme === 'light' && renderDarkMenu,
             [css`
               &:after {
@@ -129,7 +138,7 @@ export const InternalMenuItemContent = React.forwardRef<
       >
         <InputOptionContent
           leftGlyph={glyph}
-          description={description}
+          description={menuVariant === MenuVariant.Default ? description : ''}
           rightGlyph={rightGlyph}
           preserveIconSpace={false}
         >

@@ -7,17 +7,20 @@ import { color, spacing } from '@leafygreen-ui/tokens';
 
 import { menuColor } from '../styles';
 
+import { MenuVariant } from './Menu.types';
+
 export interface MenuStyleArgs {
   theme: Theme;
+  variant: MenuVariant;
 }
 
-export const getMenuStyles = ({ theme }: MenuStyleArgs) => {
+export const getMenuStyles = ({ theme, variant }: MenuStyleArgs) => {
   return css`
     width: 210px;
     border-radius: ${spacing[300]}px;
     overflow: auto;
-    // FIXME: Should this really be 14px?
-    padding: ${spacing[300] + spacing[50]}px 0;
+    padding: ${variant === MenuVariant.Default ? spacing[300] : spacing[150]}px
+      0;
 
     background-color: ${menuColor[theme].background.default};
     border: 1px solid ${menuColor[theme].border.default};

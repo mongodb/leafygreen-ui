@@ -6,7 +6,7 @@ import noop from 'lodash/noop';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 
-import { Menu } from '../Menu';
+import { Menu, MenuVariant } from '../Menu';
 import { MenuContext } from '../MenuContext';
 import { MenuItem } from '../MenuItem';
 import { getLgIds } from '../utils';
@@ -54,6 +54,7 @@ export const withMenuContext =
             moveHighlight,
             setHighlight,
             lgIds,
+            variant: MenuVariant.Default,
           }}
         >
           <Instance />
