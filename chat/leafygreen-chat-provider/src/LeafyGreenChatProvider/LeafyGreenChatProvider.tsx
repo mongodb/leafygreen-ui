@@ -1,16 +1,21 @@
 import React, { createContext, useContext, useState } from 'react';
 import useResizeObserver from 'use-resize-observer';
 
-import { LeafyGreenChatContextProps } from './LeafyGreenChatProvider.types';
-import { LeafyGreenChatProviderProps } from '.';
+import {
+  LeafyGreenChatContextProps,
+  LeafyGreenChatProviderProps,
+  Variant,
+} from './LeafyGreenChatProvider.types';
 
 const LeafyGreenChatContext = createContext<LeafyGreenChatContextProps>({
   containerWidth: undefined,
+  variant: Variant.Spacious,
 });
 export const useLeafyGreenChatContext = () => useContext(LeafyGreenChatContext);
 
 export function LeafyGreenChatProvider({
   children,
+  variant = Variant.Spacious,
 }: LeafyGreenChatProviderProps) {
   const [containerWidth, setContainerWidth] = useState<number>();
 
@@ -24,6 +29,7 @@ export function LeafyGreenChatProvider({
     <LeafyGreenChatContext.Provider
       value={{
         containerWidth,
+        variant,
       }}
     >
       <div style={{ width: '100%' }} ref={resizeRef}>
