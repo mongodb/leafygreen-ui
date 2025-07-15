@@ -113,7 +113,7 @@ const meta: StoryMetaType<typeof Menu> = {
     },
     variant: {
       description: 'The variant of the menu',
-      options: MenuVariant,
+      options: Object.values(MenuVariant),
       control: { type: 'select' },
     },
   },
