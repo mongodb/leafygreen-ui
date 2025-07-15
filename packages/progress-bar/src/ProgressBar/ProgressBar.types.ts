@@ -47,7 +47,7 @@ type BaseProps = DarkModeProps &
     size?: Size;
 
     /** Optional descriptive text below the progress bar. */
-    description?: React.ReactNode;
+    description?: React.ReactNode | Array<React.ReactNode>;
 
     /**
      * Optional formatting of progress value text.

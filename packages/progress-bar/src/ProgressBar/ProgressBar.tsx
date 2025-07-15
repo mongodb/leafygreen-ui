@@ -10,6 +10,7 @@ import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
 
+import { useRotatingText } from './hooks/useRotatingText';
 import {
   DEFAULT_SIZE,
   DEFAULT_VARIANT,
@@ -42,7 +43,7 @@ export function ProgressBar(props: ProgressBarProps) {
   const {
     size = DEFAULT_SIZE,
     label,
-    description,
+    description: descriptionProp,
     variant = DEFAULT_VARIANT,
     darkMode = false,
     formatValue,
@@ -56,7 +57,7 @@ export function ProgressBar(props: ProgressBarProps) {
   const { barId, labelId, descId, liveId } = useIdIdentifiers(
     role,
     label,
-    description,
+    descriptionProp,
   );
 
   const lgIds = getLgIds(dataLgId);
@@ -82,8 +83,9 @@ export function ProgressBar(props: ProgressBarProps) {
     });
   }, [isIndeterminate, enableAnimation]);
 
-  const [isNewDescription, setIsNewDescription] = useState(false);
+  const description = useRotatingText(descriptionProp);
   const prevDescription = usePrevious(description);
+  const [isNewDescription, setIsNewDescription] = useState(false);
 
   useEffect(() => {
     // if description is changed, apply fade-in transition

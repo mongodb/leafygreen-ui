@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 
 import { requiredA11yArgs } from '../test.constants';
 import { getTestUtils } from '../testing';
@@ -18,7 +18,7 @@ describe('packages/progress-bar', () => {
       expect(queryLabel()).toHaveTextContent(TEST_LABEL);
     });
 
-    test('renders with a description', () => {
+    test('renders with a single description', () => {
       const TEST_DESCRIPTION = 'placeholder description';
       render(
         <ProgressBar
@@ -31,6 +31,41 @@ describe('packages/progress-bar', () => {
       const { queryDescription } = getTestUtils();
       expect(queryDescription()).toBeVisible();
       expect(queryDescription()).toHaveTextContent(TEST_DESCRIPTION);
+    });
+
+    test('renders with rotating descriptions', () => {
+      jest.useFakeTimers();
+
+      const TEST_DESCRIPTIONS = ['First', 'Second', 'Third'];
+
+      render(
+        <ProgressBar
+          isIndeterminate
+          description={TEST_DESCRIPTIONS}
+          {...requiredA11yArgs}
+        />,
+      );
+
+      const { queryDescription } = getTestUtils();
+
+      expect(queryDescription()).toHaveTextContent('First');
+
+      act(() => {
+        jest.advanceTimersByTime(2000);
+      });
+      expect(queryDescription()).toHaveTextContent('Second');
+
+      act(() => {
+        jest.advanceTimersByTime(2000);
+      });
+      expect(queryDescription()).toHaveTextContent('Third');
+
+      act(() => {
+        jest.advanceTimersByTime(2000);
+      });
+      expect(queryDescription()).toHaveTextContent('First');
+
+      jest.useRealTimers();
     });
 
     describe('with formatValue', () => {
