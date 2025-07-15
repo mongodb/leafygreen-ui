@@ -52,7 +52,7 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
     const startValue = storyValues.value;
     const endValue = storyValues.maxValue;
 
-    const stepDuration = 30;
+    const stepDuration = 25;
     const transitions: Array<[number, ProgressBarProps]> = [];
 
     for (let i = 1; i <= endValue - startValue; i++) {
@@ -81,7 +81,7 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
       },
       {
         timeout:
-          (storyValues.maxValue - storyValues.value) * 30 +
+          (storyValues.maxValue - storyValues.value) * 25 +
           STORY_TIMEOUT_BUFFER,
       },
     );

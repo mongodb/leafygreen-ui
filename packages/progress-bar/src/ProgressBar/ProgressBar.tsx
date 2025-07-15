@@ -62,6 +62,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const { theme } = useDarkMode(darkMode);
 
+  // get identifiers for ARIA attributes and testing
   const { barId, labelId, descId, liveId } = useIdIdentifiers(
     role,
     label,
@@ -70,10 +71,12 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const lgIds = getLgIds(dataLgId);
 
+  // determine if icon should be shown
   const showIcon = iconsPendingCompletion.includes(variant)
     ? showIconProp && value === maxValue
     : showIconProp;
 
+  // track animation mode changes
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
     getAnimationMode(isIndeterminate, enableAnimation),
   );
@@ -91,6 +94,7 @@ export function ProgressBar(props: ProgressBarProps) {
     });
   }, [isIndeterminate, enableAnimation]);
 
+  // track description text changes
   const description = useRotatingText(descriptionProp);
   const prevDescription = usePrevious(description);
   const [isNewDescription, setIsNewDescription] = useState(false);
@@ -102,18 +106,22 @@ export function ProgressBar(props: ProgressBarProps) {
     }
   }, [description, prevDescription]);
 
+  // get width and animation duration for determinate progress bars
+  const displayWidth = isDefined(value)
+    ? getPercentage(value, maxValue)
+    : undefined;
+
+  const widthAnimationDuration = useComputedTransitionDuration({
+    speed: WIDTH_ANIMATION_SPEED,
+    currentValue: displayWidth,
+  });
+
+  // get screen reader message at fixed thresholds
   const screenReaderMessage = useScreenReaderAnnouncer({
     role,
     value,
     maxValue,
     variant,
-  });
-
-  const width = isDefined(value) ? getPercentage(value, maxValue) : undefined;
-
-  const widthAnimationDuration = useComputedTransitionDuration({
-    speed: WIDTH_ANIMATION_SPEED,
-    currentValue: width,
   });
 
   return (
@@ -177,7 +185,7 @@ export function ProgressBar(props: ProgressBarProps) {
                 theme,
                 variant,
                 disabled,
-                width,
+                width: displayWidth,
                 widthAnimationDuration,
                 animationMode,
               })}

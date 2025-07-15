@@ -171,7 +171,7 @@ const getDeterminateFillStyles = ({
 }) => css`
   width: ${width}%;
   transition: width
-    ${widthAnimationDuration || DEFAULT_WIDTH_ANIMATION_DURATION}ms ease-in-out;
+    ${widthAnimationDuration || DEFAULT_WIDTH_ANIMATION_DURATION}ms ease;
   background-color: ${disabled
     ? barColorStyles[theme].disabledBar
     : barColorStyles[theme][variant].bar};
