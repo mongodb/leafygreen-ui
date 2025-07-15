@@ -138,7 +138,9 @@ export const InternalMenuItemContent = React.forwardRef<
       >
         <InputOptionContent
           leftGlyph={glyph}
-          description={menuVariant === MenuVariant.Default ? description : ''}
+          description={
+            menuVariant === MenuVariant.Default ? description : undefined
+          }
           rightGlyph={rightGlyph}
           preserveIconSpace={false}
         >
