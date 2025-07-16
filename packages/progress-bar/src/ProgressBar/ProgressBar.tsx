@@ -53,12 +53,7 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const { theme } = useDarkMode(darkMode);
 
-  const { barId, labelId, descId, liveId } = useIdIdentifiers(
-    role,
-    label,
-    description,
-  );
-
+  const { barId, labelId, descId } = useIdIdentifiers(role, label, description);
   const lgIds = getLgIds(dataLgId);
 
   const showIcon = iconsPendingCompletion.includes(variant)
@@ -68,6 +63,12 @@ export function ProgressBar(props: ProgressBarProps) {
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
     getAnimationMode(isIndeterminate, enableAnimation),
   );
+
+  const endTransitionAnimation = () => {
+    if (animationMode === AnimationMode.Transition) {
+      setAnimationMode(getAnimationMode(isIndeterminate, enableAnimation));
+    }
+  };
 
   useEffect(() => {
     setAnimationMode(currentMode => {
@@ -164,13 +165,7 @@ export function ProgressBar(props: ProgressBarProps) {
                 animationMode,
               })}
               // if on fade-out transition, revert back to base mode
-              onTransitionEnd={() => {
-                if (animationMode === AnimationMode.Transition) {
-                  setAnimationMode(
-                    getAnimationMode(isIndeterminate, enableAnimation),
-                  );
-                }
-              }}
+              onTransitionEnd={endTransitionAnimation}
             ></div>
           </div>
         </div>
@@ -191,7 +186,6 @@ export function ProgressBar(props: ProgressBarProps) {
         {!disabled && screenReaderMessage && (
           <div
             role="status"
-            id={liveId}
             aria-live="polite"
             aria-atomic="true"
             className={hiddenStyles}

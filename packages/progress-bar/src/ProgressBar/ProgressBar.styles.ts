@@ -274,19 +274,19 @@ export const getBarFillStyles = ({
 
   switch (animationMode) {
     case AnimationMode.Transition:
-      addOnStyles = cx(indeterminate, transitioningFillStyles);
+      addOnStyles = [indeterminate, transitioningFillStyles];
       break;
     case AnimationMode.Indeterminate:
-      addOnStyles = indeterminate;
+      addOnStyles = [indeterminate];
       break;
     case AnimationMode.DeterminateAnimated:
-      addOnStyles = cx(determinate, determinateAnimated);
+      addOnStyles = [determinate, determinateAnimated];
       break;
     case AnimationMode.DeterminatePlain:
     default:
-      addOnStyles = determinate;
+      addOnStyles = [determinate];
       break;
   }
 
-  return cx(baseStyles, addOnStyles);
+  return cx(baseStyles, ...addOnStyles);
 };

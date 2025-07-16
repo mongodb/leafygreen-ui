@@ -8,11 +8,19 @@ export const INDETERMINATE_ANIMATION_DURATION_MS = 1500;
 export const TRANSITION_ANIMATION_DURATION = 500;
 export const TEXT_ANIMATION_DURATION = 250;
 
+/**
+ * Widths for animated segments in indeterminate progress bars,
+ * used to control the bar's size at keyframes.
+ */
 export const indeterminateBarWidths = {
   narrow: '33%',
   wide: '66%',
 };
 
+/**
+ * Positions for the indeterminate bar's left offset at keyframes
+ * for smooth horizontal movement in the animation cycle.
+ */
 export const indeterminateBarPositions = {
   start: '-33%',
   quarter: '0%',

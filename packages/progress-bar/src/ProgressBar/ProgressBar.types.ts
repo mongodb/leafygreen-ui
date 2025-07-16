@@ -27,6 +27,10 @@ export const Variant = {
 } as const;
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
+/**
+ * `AnimatedVariant` is a constrained subset of `Variant` permitted in animated contexts.
+ * Strictly ensures only animation-safe variants can be passed into props when animation logic exists.
+ */
 export const AnimatedVariant = {
   Info: Variant.Info,
   Success: Variant.Success,
@@ -34,6 +38,10 @@ export const AnimatedVariant = {
 export type AnimatedVariant =
   (typeof AnimatedVariant)[keyof typeof AnimatedVariant];
 
+/**
+ * `Role` defines valid ARIA role values for the progress bar.
+ * Passed directly to the `role` attribute to ensure accessibility.
+ */
 export const Role = {
   Meter: 'meter',
   Progress: 'progressbar',
@@ -126,6 +134,12 @@ interface IndeterminateProps {
 export type ProgressBarProps = BaseProps &
   (DeterminateProps | IndeterminateProps);
 
+/**
+ * Internal, flattened form of `ProgressBarProps` used within the ProgressBar implementation.
+ *
+ * Collapses the discriminated union into a uniform shape with resolved and normalized values,
+ * eliminating the need for runtime narrowing or conditional logic.
+ */
 export interface ResolvedProgressBarProps {
   /** Resolved role of the progress bar ("progressbar" or "meter"). */
   role: Role;
@@ -146,10 +160,16 @@ export interface ResolvedProgressBarProps {
   enableAnimation: boolean;
 }
 
+/**
+ * Internal enum-like type representing resolved animation state,
+ * derived from props like `isIndeterminate`, `enableAnimation`, and `role`.
+ *
+ * Centralizes animation logic to avoid repeated condition checks in rendering.
+ */
 export const AnimationMode = {
   Indeterminate: 'indeterminate',
   DeterminatePlain: 'determinate-plain',
   DeterminateAnimated: 'determinate-animated',
   Transition: 'indeterminate-to-determinate-transition',
-};
+} as const;
 export type AnimationMode = (typeof AnimationMode)[keyof typeof AnimationMode];
