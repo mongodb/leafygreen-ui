@@ -12,8 +12,8 @@ import {
   getDeterminateAnimatedGradient,
   getIndeterminateGradient,
   INDETERMINATE_ANIMATION_DURATION_MS,
-  indeterminateBarPositions,
-  indeterminateBarWidths,
+  indeterminateLeftOffset,
+  indeterminateWidth,
   SHIMMER_ANIMATION_DURATION_MS,
   TEXT_ANIMATION_DURATION,
   TRANSITION_ANIMATION_DURATION,
@@ -33,32 +33,32 @@ const shimmerKeyframes = keyframes`
 
 const cycleKeyframes = keyframes`
   0% {
-    left: ${indeterminateBarPositions.start};
-    width: ${indeterminateBarWidths.narrow};
+    left: ${indeterminateLeftOffset.start};
+    width: ${indeterminateWidth.narrow};
   }
   25% {
-    left: ${indeterminateBarPositions.quarter};
-    width: ${indeterminateBarWidths.narrow};
+    left: ${indeterminateLeftOffset.quarter};
+    width: ${indeterminateWidth.narrow};
   }
   47% {
-    left: ${indeterminateBarPositions.half};
-    width: ${indeterminateBarWidths.wide};
+    left: ${indeterminateLeftOffset.half};
+    width: ${indeterminateWidth.wide};
   }
   50% {
-    left: ${indeterminateBarPositions.half};
-    width: ${indeterminateBarWidths.wide};
+    left: ${indeterminateLeftOffset.half};
+    width: ${indeterminateWidth.wide};
   }
   53% {
-    left: ${indeterminateBarPositions.half};
-    width: ${indeterminateBarWidths.wide};
+    left: ${indeterminateLeftOffset.half};
+    width: ${indeterminateWidth.wide};
   }
   75% {
-    left: ${indeterminateBarPositions.threeQuarters};
-    width: ${indeterminateBarWidths.narrow};
+    left: ${indeterminateLeftOffset.threeQuarters};
+    width: ${indeterminateWidth.narrow};
   }
   100% {
-    left: ${indeterminateBarPositions.end};
-    width: ${indeterminateBarWidths.narrow};
+    left: ${indeterminateLeftOffset.end};
+    width: ${indeterminateWidth.narrow};
   }
 `;
 
@@ -233,16 +233,16 @@ const getIndeterminateFillStyles = ({
       content: '';
       position: absolute;
       top: 0;
-      left: ${indeterminateBarPositions.start};
+      left: ${indeterminateLeftOffset.start};
       height: 100%;
-      width: ${indeterminateBarWidths.narrow};
+      width: ${indeterminateWidth.narrow};
       background: ${getIndeterminateGradient(selectedColorStyle)};
       animation: ${cycleKeyframes} ${INDETERMINATE_ANIMATION_DURATION_MS}ms
         linear infinite;
 
       ${prefersReducedMotion(`
         animation: none;
-        left: ${indeterminateBarPositions.half};
+        left: ${indeterminateLeftOffset.half};
       `)}
     }
   `;

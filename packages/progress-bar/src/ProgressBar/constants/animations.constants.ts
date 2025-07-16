@@ -12,7 +12,7 @@ export const TEXT_ANIMATION_DURATION = 250;
  * Widths for animated segments in indeterminate progress bars,
  * used to control the bar's size at keyframes.
  */
-export const indeterminateBarWidths = {
+export const indeterminateWidth = {
   narrow: '33%',
   wide: '66%',
 };
@@ -21,7 +21,7 @@ export const indeterminateBarWidths = {
  * Positions for the indeterminate bar's left offset at keyframes
  * for smooth horizontal movement in the animation cycle.
  */
-export const indeterminateBarPositions = {
+export const indeterminateLeftOffset = {
   start: '-33%',
   quarter: '0%',
   half: '17%',

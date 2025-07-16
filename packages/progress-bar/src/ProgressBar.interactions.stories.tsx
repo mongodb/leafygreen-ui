@@ -10,6 +10,11 @@ import {
 } from './test.constants';
 import { ProgressBar, ProgressBarProps } from '.';
 
+const interactionWaitTimes = {
+  short: 1500,
+  medium: 3500,
+};
+
 const DynamicProgressBar = ({
   transitions,
   ...initialProps
@@ -50,7 +55,12 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
   },
   render: initialArgs => (
     <DynamicProgressBar
-      transitions={[[1500, { ...initialArgs, value: storyValues.maxValue }]]}
+      transitions={[
+        [
+          interactionWaitTimes.short,
+          { ...initialArgs, value: storyValues.maxValue },
+        ],
+      ]}
       {...initialArgs}
     />
   ),
@@ -69,7 +79,7 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
           storyValues.maxValue.toString(),
         );
       },
-      { timeout: 1500 + STORY_TIMEOUT_BUFFER },
+      { timeout: interactionWaitTimes.short + STORY_TIMEOUT_BUFFER },
     );
   },
 };
@@ -83,11 +93,11 @@ export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
     <DynamicProgressBar
       transitions={[
         [
-          1500,
+          interactionWaitTimes.short,
           { ...initialArgs, description: <span>New helper text...</span> },
         ],
         [
-          3500,
+          interactionWaitTimes.medium,
           {
             ...initialArgs,
             description: <span>Even newer helper text...!</span>,
@@ -102,7 +112,7 @@ export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
 
     const finalText = await waitFor(
       () => canvas.getByText('Even newer helper text...!'),
-      { timeout: 3500 + STORY_TIMEOUT_BUFFER },
+      { timeout: interactionWaitTimes.medium + STORY_TIMEOUT_BUFFER },
     );
 
     expect(finalText).toBeInTheDocument();
@@ -118,7 +128,7 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
     <DynamicProgressBar
       transitions={[
         [
-          3500,
+          interactionWaitTimes.medium,
           {
             ...requiredA11yArgs,
             isIndeterminate: false,
@@ -142,7 +152,7 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
           storyValues.maxValue.toString(),
         );
       },
-      { timeout: 3500 + STORY_TIMEOUT_BUFFER },
+      { timeout: interactionWaitTimes.medium + STORY_TIMEOUT_BUFFER },
     );
   },
 };
