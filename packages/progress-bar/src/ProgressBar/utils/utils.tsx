@@ -21,8 +21,8 @@ import {
  * - If `maxValue` is undefined, null, or less than or equal to 0, returns `DEFAULT_MAX_VALUE`.
  * - Otherwise, returns `maxValue` as-is.
  *
- * @param {number} [maxValue] - The input maximum value to validate.
- * @returns {number} - The valid maximum value.
+ * @param maxValue - The input maximum value to validate.
+ * @returns The valid maximum value.
  */
 const getValidMaxValue = (maxValue?: number) => {
   if (!isDefined(maxValue) || maxValue <= 0) {
@@ -38,9 +38,9 @@ const getValidMaxValue = (maxValue?: number) => {
  * - If `maxValue` is defined, clamps `value` between 0 and maxValue.
  * - Otherwise, clamps `value` to be at least 0.
  *
- * @param {number} [value] - The current value.
- * @param {number} [maxValue] - The optional upper bound.
- * @returns {number | undefined} - The clamped value, or undefined if value is undefined.
+ * @param value - The current value.
+ * @param maxValue - The optional upper bound.
+ * @returns The clamped value, or undefined if value is undefined.
  */
 const getValidValue = (value?: number, maxValue?: number) => {
   if (!isDefined(value)) {
@@ -58,7 +58,7 @@ const getValidValue = (value?: number, maxValue?: number) => {
  * Resolves the full set of progress bar props based on provided props.
  *
  * @param props - Input props from the consumer
- * @returns {ResolvedProgressBarProps} Fully resolved progress bar props with:
+ * @returns Fully resolved progress bar props with:
  * - `value`: Current progress value
  * - `maxValue`: Maximum progress value
  * - `disabled`: Whether the progress bar is disabled
@@ -216,7 +216,6 @@ export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
  * @param variant - The visual variant representing the status (optional).
  * @param disabled - If true, overrides variant and returns a warning icon (default: false).
  * @param props - Additional props to apply to the icon (e.g., className, size).
- *
  * @returns A React element representing the appropriate status icon.
  */
 export const getHeaderIcon = ({
