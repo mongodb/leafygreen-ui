@@ -3,9 +3,13 @@ import { useMemo } from 'react';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 /**
- * Computes the transition duration based on the change in value and a specified speed.
+ * Computes the total transition duration for a CSS animation based on the
+ * magnitude of change in value and a specified speed.
+ *
  * @param {number} speed - Desired change in units per second
  * @param {number} currentValue - Current value in units
+ * @param {number} [minimumTransitionDuration=150] - minimum duration in milliseconds
+ * @param {number} [maximumTransitionDuration=750] - maximum duration in milliseconds
  * @returns {number} Duration in milliseconds
  */
 export const useComputedTransitionDuration = ({

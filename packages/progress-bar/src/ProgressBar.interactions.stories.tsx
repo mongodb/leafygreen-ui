@@ -72,9 +72,7 @@ export const WithSuddenChangingValue: StoryObj<typeof ProgressBar> = {
         );
       },
       {
-        timeout:
-          (storyValues.maxValue - storyValues.value) * 25 +
-          STORY_TIMEOUT_BUFFER,
+        timeout: 1500 + STORY_TIMEOUT_BUFFER,
       },
     );
   },
