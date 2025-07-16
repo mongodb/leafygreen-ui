@@ -2,7 +2,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
 import { GRID_AREA } from '../constants';
-import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../constants';
+import {
+  PANEL_WIDTH,
+  TOOLBAR_WIDTH,
+  PANEL_WITH_TOOLBAR_WIDTH,
+} from '../constants';
 import { MOBILE_BREAKPOINT } from '../Drawer';
 import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
@@ -16,6 +20,10 @@ const baseStyles = css`
   overflow: hidden;
   position: relative;
   height: 100%;
+
+  /* --drawerWidth: 0px; */
+
+  position: relative; // TODO: will this break safari and FF?
 `;
 
 const drawerBaseStyles = css`
@@ -29,6 +37,8 @@ const drawerBaseStyles = css`
 const drawerOpenStyles = css`
   grid-template-columns: auto ${PANEL_WIDTH}px;
 
+  /* grid-template-columns: auto var(--drawerWidth); */
+
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-rows: 50% 50%;
   }
@@ -41,7 +51,9 @@ const withToolbarBaseStyles = css`
 
 // If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + panel width;
 const withToolbarOpenStyles = css`
-  grid-template-columns: auto ${PANEL_WIDTH + TOOLBAR_WIDTH}px;
+  grid-template-columns: auto ${PANEL_WITH_TOOLBAR_WIDTH + TOOLBAR_WIDTH}px;
+
+  /* grid-template-columns: auto calc(var(--drawerWidth) + ${TOOLBAR_WIDTH}px); */
 
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
     grid-template-columns: auto ${TOOLBAR_WIDTH}px;

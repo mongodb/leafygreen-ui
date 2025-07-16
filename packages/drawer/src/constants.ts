@@ -1,3 +1,4 @@
+import { TOOLBAR_WIDTH } from '@leafygreen-ui/toolbar';
 export { TOOLBAR_WIDTH } from '@leafygreen-ui/toolbar';
 
 export const GRID_AREA = {
@@ -8,3 +9,4 @@ export const GRID_AREA = {
 };
 
 export const PANEL_WIDTH = 432;
+export const PANEL_WITH_TOOLBAR_WIDTH = PANEL_WIDTH - TOOLBAR_WIDTH;

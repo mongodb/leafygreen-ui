@@ -60,6 +60,8 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   overflow: hidden;
   box-sizing: border-box;
 
+  position: relative; // TODO: only for embedded?
+
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     max-width: 100%;
     height: 50vh;

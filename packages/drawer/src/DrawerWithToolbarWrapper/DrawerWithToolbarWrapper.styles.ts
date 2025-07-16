@@ -1,9 +1,14 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
+import {
+  addOverflowShadow,
+  breakpoints,
+  Side,
+  // transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
-import { GRID_AREA } from '../constants';
+import { GRID_AREA, PANEL_WITH_TOOLBAR_WIDTH } from '../constants';
 import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../constants';
 import {
   drawerClassName,
@@ -16,17 +21,17 @@ const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
 const drawerIn = keyframes`
   from {
-    // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work.
+    // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work when the Drawer is embedded.
     grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
   }
   to {
-    grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WIDTH}px;
+    grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WITH_TOOLBAR_WIDTH}px;
   }
 `;
 
 const drawerOut = keyframes`
   from {
-    grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WIDTH}px;
+    grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WITH_TOOLBAR_WIDTH}px;
   }
   to {
     grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
@@ -68,7 +73,7 @@ const drawerPaddingOut = keyframes`
   }
 `;
 
-const openStyles = css`
+const openOverlayStyles = css`
   animation-name: ${drawerIn};
   animation-fill-mode: forwards;
 
@@ -77,12 +82,36 @@ const openStyles = css`
   }
 `;
 
-const closedStyles = css`
+const closedOverlayStyles = css`
   animation-name: ${drawerOut};
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     animation-name: ${drawerOutMobile};
   }
+`;
+
+const openEmbeddedStyles = css`
+  grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WITH_TOOLBAR_WIDTH}px;
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    animation-name: ${drawerInMobile};
+    animation-fill-mode: forwards;
+  }
+`;
+
+const closedEmbeddedStyles = css`
+  grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    animation-name: ${drawerOutMobile};
+    animation-fill-mode: forwards;
+  }
+`;
+
+const baseEmbeddedStyles = css`
+  transition-property: grid-template-columns;
+  transition-duration: ${drawerTransitionDuration}ms;
+  transition-timing-function: linear;
 `;
 
 const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
@@ -111,6 +140,8 @@ const baseStyles = css`
   z-index: 0;
   height: 100%;
   overflow: hidden;
+
+  position: relative; // TODO: will this break safari and FF?
 
   .${toolbarClassName} {
     grid-area: ${GRID_AREA.toolbar};
@@ -164,8 +195,14 @@ export const getDrawerWithToolbarWrapperStyles = ({
       [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
       [closedDrawerShadowStyles]:
         displayMode === DisplayMode.Overlay && !isDrawerOpen,
-      [openStyles]: isDrawerOpen,
-      [closedStyles]: !isDrawerOpen && shouldAnimate, // This ensures that the drawer does not animate closed on initial render
+      [openOverlayStyles]: isDrawerOpen && displayMode === DisplayMode.Overlay, // TODO: is this only needed for overlay?
+      [closedOverlayStyles]:
+        !isDrawerOpen && shouldAnimate && displayMode === DisplayMode.Overlay, // This ensures that the drawer does not animate closed on initial render
+      [openEmbeddedStyles]:
+        isDrawerOpen && displayMode === DisplayMode.Embedded, // TODO: is this only needed for overlay?
+      [closedEmbeddedStyles]:
+        !isDrawerOpen && displayMode === DisplayMode.Embedded, // This ensures that the drawer does not animate closed on initial render
+      [baseEmbeddedStyles]: displayMode === DisplayMode.Embedded,
     },
     className,
   );

@@ -28,6 +28,8 @@ import {
   innerChildrenContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
+import { useResizable } from '../utils/useResizable/useResizable';
+import { PANEL_WIDTH, PANEL_WITH_TOOLBAR_WIDTH } from '../constants';
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
@@ -52,7 +54,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       useDrawerStackContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
-    const drawerRef = useMergeRefs([fwdRef, ref]);
+    const drawerRef = useMergeRefs([fwdRef, ref, resizableRef]);
 
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
@@ -91,6 +93,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
+    useEffect(() => {
+      if (open) {
+        registerDrawer(id);
+      } else {
+        setTimeout(() => unregisterDrawer(id), drawerTransitionDuration);
+      }
+    }, [open]);
+
     /**
      * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
      *
@@ -111,6 +121,22 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     };
 
+    // console.log('🧰', {
+    //   isEnabled: open && displayMode === DisplayMode.Embedded,
+    //   open,
+    //   displayMode,
+    // });
+
+    const { resizableRef, size, setSize, getResizerProps } = useResizable({
+      enabled: open && displayMode === DisplayMode.Embedded,
+      initialSize: open ? { width: PANEL_WITH_TOOLBAR_WIDTH } : { width: 0 },
+      minSize: { width: 120 },
+      maxSize: { width: 120 },
+      maxViewportPercentages: { width: 60 },
+    });
+
+    console.log('🐳', { size });
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <Component
@@ -130,8 +156,25 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           ref={drawerRef}
           onAnimationEnd={handleAnimationEnd}
           inert={!open ? 'inert' : undefined}
+          // style={{
+          //   '--drawerWidth': size.width ? `${size.width}px` : '0px',
+          // }}
           {...rest}
         >
+          {displayMode === DisplayMode.Embedded && (
+            <div
+              {...getResizerProps('left')}
+              style={{
+                position: 'absolute',
+                height: '100%',
+                width: '2px',
+                backgroundColor: 'red',
+                zIndex: 1100,
+                left: 0,
+                cursor: 'col-resize',
+              }}
+            />
+          )}
           <div className={getDrawerShadowStyles({ theme, displayMode })}>
             <div
               className={getInnerContainerStyles({
