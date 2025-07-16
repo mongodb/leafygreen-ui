@@ -8,7 +8,6 @@ import { isDefined } from '@leafygreen-ui/lib';
 
 import { DEFAULT_MAX_VALUE } from '../constants';
 import {
-  AnimatedVariant,
   AnimationMode,
   FormatValueType,
   ProgressBarProps,
@@ -16,6 +15,12 @@ import {
   Role,
   Variant,
 } from '../ProgressBar.types';
+
+import {
+  warnAnimatedVariant,
+  warnEnableAnimationFlag,
+  warnMeterRole,
+} from './warningUtils';
 
 /**
  * Returns a valid maximum value.
@@ -81,20 +86,8 @@ export const resolveProgressBarProps = (
 
   // indeterminate
   if (props.isIndeterminate) {
-    // @ts-expect-error -- roleType is not defined on indeterminate bars
-    if (props.roleType === Role.Meter)
-      console.warn(
-        'Indeterminate progress bars by default are set to "progressbar" role.',
-      );
-
-    if (
-      props.variant &&
-      !Object.values(AnimatedVariant).includes(props.variant)
-    ) {
-      console.warn(
-        "Indeterminate progress bars only support 'info' and 'success' variants.",
-      );
-    }
+    warnMeterRole(props);
+    warnAnimatedVariant(props);
 
     return {
       ...baseProps,
@@ -106,11 +99,7 @@ export const resolveProgressBarProps = (
 
   // determinate with role "meter"
   if (props.roleType === Role.Meter) {
-    // @ts-expect-error -- enableAnimation is not defined on determinate bars with role "meter"
-    if (props.enableAnimation === true)
-      console.warn(
-        'Determinate progress bars with role "meter" do not support animation.',
-      );
+    warnEnableAnimationFlag(props);
 
     return {
       ...baseProps,
@@ -122,15 +111,7 @@ export const resolveProgressBarProps = (
   }
 
   // determinate with role "progressbar"
-  if (
-    props.enableAnimation &&
-    props.variant &&
-    !Object.values(AnimatedVariant).includes(props.variant)
-  ) {
-    console.warn(
-      "Determinate animation is only supported for 'info' and 'success' variants.",
-    );
-  }
+  if (props.enableAnimation) warnAnimatedVariant(props);
 
   return {
     ...baseProps,
