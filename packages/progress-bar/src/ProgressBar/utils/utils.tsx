@@ -48,7 +48,7 @@ const getValidValue = (value?: number, maxValue?: number) => {
   }
 
   if (isDefined(maxValue)) {
-    return Math.max(0, Math.min(value, maxValue));
+    return Math.max(0, Math.min(value, getValidMaxValue(maxValue)));
   }
 
   return Math.max(0, value);
