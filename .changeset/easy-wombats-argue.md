@@ -1,5 +1,6 @@
 ---
-'@leafygreen-ui/menu': minor
+'@leafygreen-ui/menu': major
 ---
 
-Adds compact variant option to `Menu`
+- Adds compact variant option to `Menu`
+- Fixes default `Menu` and `MenuItem` padding to align with designs 
