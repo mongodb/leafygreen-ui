@@ -30,6 +30,8 @@ const meta: StoryMetaType<typeof ProgressBar> = {
   component: ProgressBar,
   parameters: {
     default: 'LiveExample',
+    // pause animations at the first frame for chromatic snapshots to accommodate infinite looping animations
+    chromatic: { pauseAnimationAtEnd: false },
     generate: {
       storyNames: [
         'IndeterminateVariants',
@@ -45,6 +47,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         size: SIZES,
         darkMode: [false, true],
       },
+
       decorator: (InstanceFn, context) => {
         return (
           <div style={{ padding: '48px' }}>
