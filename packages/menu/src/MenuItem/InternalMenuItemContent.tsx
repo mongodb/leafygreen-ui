@@ -61,7 +61,7 @@ export const InternalMenuItemContent = React.forwardRef<
       darkMode,
       highlight,
       renderDarkMenu,
-      variant: menuVariant,
+      variant: menuVariant = MenuVariant.Default,
     } = useMenuContext();
     const { depth: submenuDepth, hasIcon: submenuHasIcon } =
       useSubMenuContext();
@@ -103,7 +103,7 @@ export const InternalMenuItemContent = React.forwardRef<
             highlighted,
             theme,
             variant,
-            menuVariant: menuVariant || MenuVariant.Default,
+            menuVariant: menuVariant,
           }),
 
           {
@@ -123,7 +123,7 @@ export const InternalMenuItemContent = React.forwardRef<
               highlighted,
               theme,
               variant,
-              menuVariant: menuVariant || MenuVariant.Default,
+              menuVariant: menuVariant,
             })]: theme === 'light' && renderDarkMenu,
             [css`
               &:after {
