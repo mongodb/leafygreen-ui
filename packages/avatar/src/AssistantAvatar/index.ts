@@ -1,0 +1,1 @@
+export { AssistantAvatar } from './AssistantAvatar';
