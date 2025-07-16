@@ -1,3 +1,4 @@
+import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { isDefined, Theme } from '@leafygreen-ui/lib';
 import {
@@ -134,6 +135,11 @@ export const getAnimatedTextStyles = () => css`
   opacity: 0;
   animation: ${fadeFromWhiteKeyframes} ${TEXT_ANIMATION_DURATION}ms ease-in-out
     forwards;
+
+  ${prefersReducedMotion(`
+    animation: none;
+    opacity: 1;
+  `)}
 `;
 
 export const getBarTrackStyles = ({
@@ -177,6 +183,10 @@ const getDeterminateFillStyles = ({
   background-color: ${disabled
     ? barColorStyles[theme].disabledBar
     : barColorStyles[theme][variant].bar};
+
+  ${prefersReducedMotion(`
+    transition: none;
+  `)}
 `;
 
 const getDeterminateAnimatedFillStyles = ({
@@ -206,6 +216,10 @@ const getDeterminateAnimatedFillStyles = ({
         background-size: 200% 100%;
         animation: ${shimmerKeyframes} ${SHIMMER_ANIMATION_DURATION_MS}ms linear
           infinite;
+
+        ${prefersReducedMotion(`
+          animation: none;
+        `)}
       }
     `
   );
@@ -236,6 +250,11 @@ const getIndeterminateFillStyles = ({
       background: ${getIndeterminateGradient(selectedColorStyle)};
       animation: ${cycleKeyframes} ${INDETERMINATE_ANIMATION_DURATION_MS}ms
         linear infinite;
+
+      ${prefersReducedMotion(`
+        animation: none;
+        left: ${indeterminateBarPositions.half};
+      `)}
     }
   `;
 };
@@ -287,19 +306,19 @@ export const getBarFillStyles = ({
 
   switch (animationMode) {
     case AnimationMode.Transition:
-      addOnStyles = cx(indeterminate, transitioningFillStyles);
+      addOnStyles = [indeterminate, transitioningFillStyles];
       break;
     case AnimationMode.Indeterminate:
-      addOnStyles = indeterminate;
+      addOnStyles = [indeterminate];
       break;
     case AnimationMode.DeterminateAnimated:
-      addOnStyles = cx(determinate, determinateAnimated);
+      addOnStyles = [determinate, determinateAnimated];
       break;
     case AnimationMode.DeterminatePlain:
     default:
-      addOnStyles = determinate;
+      addOnStyles = [determinate];
       break;
   }
 
-  return cx(baseStyles, addOnStyles);
+  return cx(baseStyles, ...addOnStyles);
 };

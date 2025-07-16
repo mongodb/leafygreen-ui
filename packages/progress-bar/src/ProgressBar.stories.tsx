@@ -30,6 +30,8 @@ const meta: StoryMetaType<typeof ProgressBar> = {
   component: ProgressBar,
   parameters: {
     default: 'LiveExample',
+    // pause animations at the first frame for chromatic snapshots to accommodate infinite looping animations
+    chromatic: { pauseAnimationAtEnd: false },
     generate: {
       storyNames: [
         'IndeterminateVariants',
@@ -45,6 +47,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         size: SIZES,
         darkMode: [false, true],
       },
+
       decorator: (InstanceFn, context) => {
         return (
           <div style={{ padding: '48px' }}>
@@ -182,6 +185,7 @@ export const DeterminateProgressVariants: StoryObj<typeof ProgressBar> = {
           enableAnimation: [true],
         },
         {
+          // to reduce redundancy, we only generate disabled styles for one variant
           variant: VARIANTS.filter(v => v !== Variant.Info),
           disabled: [true],
         },
@@ -194,7 +198,7 @@ export const DeterminateMeterVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
       combineArgs: {
-        variant: [undefined, ...VARIANTS],
+        variant: VARIANTS,
         disabled: [false, true],
       },
       args: {
@@ -206,7 +210,8 @@ export const DeterminateMeterVariants: StoryObj<typeof ProgressBar> = {
       },
       excludeCombinations: [
         {
-          variant: VARIANTS,
+          // to reduce redundancy, we only generate disabled styles for one variant
+          variant: VARIANTS.filter(v => v !== Variant.Info),
           disabled: [true],
         },
       ],

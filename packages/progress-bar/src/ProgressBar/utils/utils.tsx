@@ -151,6 +151,11 @@ export const getFormattedValue = (
  * - If `maxValue` is defined: `aria-valuemin`, `aria-valuemax`, `aria-valuenow`
  * - Otherwise: `aria-valuetext`
  *
+ * See {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-valuenow aria-valuenow} for details.
+ * See {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-valuemax aria-valuemax} for details.
+ * See {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-valuemin aria-valuemin} for details.
+ * See {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label aria-label} for details.
+ *
  * @param value - Current progress value
  * @param maxValue - Maximum progress value
  * @returns ARIA attributes object

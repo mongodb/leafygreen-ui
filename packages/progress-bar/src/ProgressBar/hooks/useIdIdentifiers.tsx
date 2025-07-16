@@ -10,7 +10,6 @@ export const useIdIdentifiers = (
   barId: string;
   labelId?: string;
   descId?: string;
-  liveId: string;
 } => {
   const baseId = useIdAllocator({
     prefix: role,
@@ -20,6 +19,5 @@ export const useIdIdentifiers = (
     barId: baseId,
     labelId: label ? `label-for-${baseId}` : undefined,
     descId: description ? `desc-for-${baseId}` : undefined,
-    liveId: `live-region-for-${baseId}`,
   };
 };
