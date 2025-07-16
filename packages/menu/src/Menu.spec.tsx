@@ -90,6 +90,32 @@ function renderMenu(
 }
 
 describe('packages/menu', () => {
+  describe('data-testid', () => {
+    test('has default testid', async () => {
+      const { getByTestId } = renderMenu({
+        initialOpen: true,
+      });
+
+      await waitFor(() => {
+        const menu = getByTestId(lgIds.root);
+        expect(menu).toBeInTheDocument();
+      });
+    });
+
+    test('respects custom testid', async () => {
+      const customTestId = 'custom-menu-test-id';
+      const { getByTestId } = renderMenu({
+        'data-testid': customTestId,
+        initialOpen: true,
+      });
+
+      await waitFor(() => {
+        const menu = getByTestId(customTestId);
+        expect(menu).toBeInTheDocument();
+      });
+    });
+  });
+
   describe('Rendering', () => {
     test.todo('trigger renders as a function');
     test.todo('trigger renders as a JSX element');
