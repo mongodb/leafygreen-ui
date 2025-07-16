@@ -253,8 +253,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
             <ul
-              {...rest}
               data-testid={lgIds.root}
+              {...rest}
               data-lgid={lgIds.root}
               className={scrollContainerStyle}
               role="menu"
