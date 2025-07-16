@@ -20,7 +20,8 @@ import { DatePicker } from '.';
  * Interaction tests:
  * Tests that assert some behavior following user interaction.
  * Generally, this type of tests should _only_ exist in a test file for user-facing components.
- * These are broken into separate sub-spec files (keyboard, mouse, typing) in order to mitigate long-running tests.
+ *
+ * These are broken into separate spec files (keyboard*, mouse*, typing*) in order to mitigate long-running tests.
  */
 
 // Set the current time to noon UTC on 2023-12-25
