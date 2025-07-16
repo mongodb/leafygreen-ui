@@ -41,7 +41,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
 };
 export default meta;
 
-export const WithLargeChangingValue: StoryObj<typeof ProgressBar> = {
+export const WithSuddenChangingValue: StoryObj<typeof ProgressBar> = {
   args: {
     ...requiredA11yArgs,
     value: storyValues.value,
@@ -72,15 +72,20 @@ export const WithLargeChangingValue: StoryObj<typeof ProgressBar> = {
         );
       },
       {
-        timeout: 1500 + STORY_TIMEOUT_BUFFER,
+        timeout:
+          (storyValues.maxValue - storyValues.value) * 25 +
+          STORY_TIMEOUT_BUFFER,
       },
     );
   },
 };
 
-export const WithIncrementallyChangingValue: StoryObj<typeof ProgressBar> = {
+export const WithIncrementalChangingValue: StoryObj<typeof ProgressBar> = {
   args: {
-    ...WithLargeChangingValue.args,
+    ...requiredA11yArgs,
+    value: storyValues.value,
+    maxValue: storyValues.maxValue,
+    formatValue: 'fraction',
   },
   render: initialArgs => {
     const startValue = storyValues.value;
@@ -124,7 +129,7 @@ export const WithIncrementallyChangingValue: StoryObj<typeof ProgressBar> = {
 
 export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
   args: {
-    ...WithLargeChangingValue.args,
+    ...WithSuddenChangingValue.args,
     description: <span>Helper text</span>,
   },
   render: initialArgs => (

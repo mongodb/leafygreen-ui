@@ -112,13 +112,13 @@ export function ProgressBar(props: ProgressBarProps) {
   }, [description, prevDescription]);
 
   // get width and animation duration for determinate progress bars
-  const displayWidthFraction = isDefined(value)
-    ? getPercentage(value, maxValue) / 100
+  const displayWidth = isDefined(value)
+    ? getPercentage(value, maxValue)
     : undefined;
 
   const widthAnimationDuration = useComputedTransitionDuration({
     speed: WIDTH_ANIMATION_SPEED,
-    currentValue: displayWidthFraction,
+    currentValue: displayWidth,
   });
 
   // get screen reader message at fixed thresholds
@@ -190,7 +190,7 @@ export function ProgressBar(props: ProgressBarProps) {
                 theme,
                 variant,
                 disabled,
-                width: displayWidthFraction,
+                width: displayWidth,
                 widthAnimationDuration,
                 animationMode,
               })}

@@ -14,7 +14,7 @@ import {
   getIndeterminateGradient,
   INDETERMINATE_ANIMATION_DURATION_MS,
   indeterminateBarPositions,
-  indeterminateBarWidthFractions,
+  indeterminateBarWidths,
   SHIMMER_ANIMATION_DURATION_MS,
   TEXT_ANIMATION_DURATION,
   TRANSITION_ANIMATION_DURATION,
@@ -33,31 +33,31 @@ const shimmerKeyframes = keyframes`
 const cycleKeyframes = keyframes`
   0% {
     left: ${indeterminateBarPositions.start};
-    transform: scaleX(${indeterminateBarWidthFractions.narrow});
+    width: ${indeterminateBarWidths.narrow};
   }
   25% {
     left: ${indeterminateBarPositions.quarter};
-    transform: scaleX(${indeterminateBarWidthFractions.narrow});
+    width: ${indeterminateBarWidths.narrow};
   }
   47% {
     left: ${indeterminateBarPositions.half};
-    transform: scaleX(${indeterminateBarWidthFractions.wide});
+    width: ${indeterminateBarWidths.wide};
   }
   50% {
     left: ${indeterminateBarPositions.half};
-    transform: scaleX(${indeterminateBarWidthFractions.wide});
+    width: ${indeterminateBarWidths.wide};
   }
   53% {
     left: ${indeterminateBarPositions.half};
-    transform: scaleX(${indeterminateBarWidthFractions.wide});
+    width: ${indeterminateBarWidths.wide};
   }
   75% {
     left: ${indeterminateBarPositions.threeQuarters};
-    transform: scaleX(${indeterminateBarWidthFractions.narrow});
+    width: ${indeterminateBarWidths.narrow};
   }
   100% {
     left: ${indeterminateBarPositions.end};
-    transform: scaleX(${indeterminateBarWidthFractions.narrow});
+    width: ${indeterminateBarWidths.narrow};
   }
 `;
 
@@ -153,14 +153,13 @@ export const getBarTrackStyles = ({
   height: ${barSizeStyles[size].height};
   border-radius: ${barSizeStyles[size].borderRadius};
   background-color: ${barColorStyles[theme].track};
-  overflow: hidden;
 `;
 
 const getBaseBarFillStyles = () => css`
   position: relative;
   overflow: hidden;
   height: 100%;
-  /* border-radius: inherit; */
+  border-radius: inherit;
 `;
 
 const getDeterminateFillStyles = ({
@@ -176,9 +175,8 @@ const getDeterminateFillStyles = ({
   width: number;
   widthAnimationDuration?: number;
 }) => css`
-  transform: scaleX(${width});
-  transform-origin: 0 center;
-  transition: transform
+  width: ${width}%;
+  transition: width
     ${widthAnimationDuration || DEFAULT_WIDTH_ANIMATION_DURATION}ms ease;
   background-color: ${disabled
     ? barColorStyles[theme].disabledBar
@@ -237,16 +235,13 @@ const getIndeterminateFillStyles = ({
   return css`
     width: 100%;
     background-color: transparent;
-
     &::before {
       content: '';
       position: absolute;
       top: 0;
       left: ${indeterminateBarPositions.start};
       height: 100%;
-      width: 100%;
-      transform: scaleX(${indeterminateBarWidthFractions.narrow});
-      transform-origin: 0 center;
+      width: ${indeterminateBarWidths.narrow};
       background: ${getIndeterminateGradient(selectedColorStyle)};
       animation: ${cycleKeyframes} ${INDETERMINATE_ANIMATION_DURATION_MS}ms
         linear infinite;
@@ -261,10 +256,9 @@ const getIndeterminateFillStyles = ({
 
 export const transitioningFillStyles = css`
   opacity: 0;
-  transform: scaleX(0);
+  width: 0%;
   transition: opacity ${TRANSITION_ANIMATION_DURATION}ms ease-out,
-    // wait until opacity has faded before reverting to width of 0
-    transform 0ms ease-out ${TRANSITION_ANIMATION_DURATION - 100}ms;
+    width 100ms ease-out ${TRANSITION_ANIMATION_DURATION - 100}ms;
 `;
 
 export const getBarFillStyles = ({

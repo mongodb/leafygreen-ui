@@ -3,7 +3,7 @@ import { transparentize } from 'polished';
 import { palette } from '@leafygreen-ui/palette';
 
 export const DEFAULT_WIDTH_ANIMATION_DURATION = 500;
-export const WIDTH_ANIMATION_SPEED = 0.05; // this is equivalent to 5% per second
+export const WIDTH_ANIMATION_SPEED = 3;
 export const SHIMMER_ANIMATION_DURATION_MS = 3000;
 export const INDETERMINATE_ANIMATION_DURATION_MS = 1500;
 export const TRANSITION_ANIMATION_DURATION = 500;
@@ -13,9 +13,9 @@ export const TEXT_ANIMATION_DURATION = 250;
  * Widths for animated segments in indeterminate progress bars,
  * used to control the bar's size at keyframes.
  */
-export const indeterminateBarWidthFractions = {
-  narrow: 0.33,
-  wide: 0.66,
+export const indeterminateBarWidths = {
+  narrow: '33%',
+  wide: '66%',
 };
 
 /**
