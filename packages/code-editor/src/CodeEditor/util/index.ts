@@ -1,0 +1,1 @@
+export { useCodeMirrorExtensionCompartment } from './useCodeMirrorExtensionCompartment';
