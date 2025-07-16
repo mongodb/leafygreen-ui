@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
-  StoryMetaType,
+  type StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
@@ -26,6 +26,7 @@ import {
   MenuItem,
   MenuProps,
   MenuSeparator,
+  MenuVariant,
   SubMenu,
 } from '.';
 
@@ -41,7 +42,7 @@ const getDecoratorStyles = (args: Partial<MenuProps>) => {
   `;
 };
 
-export default {
+const meta: StoryMetaType<typeof Menu> = {
   title: 'Components/Menu',
   component: Menu,
   decorators: [
@@ -86,7 +87,7 @@ export default {
       ],
       decorator: (Instance, ctx) => (
         <LeafyGreenProvider darkMode={ctx?.args?.darkMode}>
-          <div className={getDecoratorStyles(ctx?.args)}>
+          <div className={getDecoratorStyles(ctx?.args ?? {})}>
             <Instance />
           </div>
         </LeafyGreenProvider>
@@ -98,6 +99,7 @@ export default {
     renderMode: RenderMode.TopLayer,
     darkMode: false,
     renderDarkMenu: false,
+    variant: MenuVariant.Default,
   },
   argTypes: {
     open: {
@@ -109,8 +111,15 @@ export default {
         'Whether the menu should always render dark, regardless of the theme context',
       control: 'boolean',
     },
+    variant: {
+      description: 'The variant of the menu',
+      options: Object.values(MenuVariant),
+      control: { type: 'select' },
+    },
   },
-} satisfies StoryMetaType<typeof Menu>;
+};
+
+export default meta;
 
 export const LiveExample = {
   render: ({ open, darkMode, ...args }) => {
@@ -184,9 +193,53 @@ export const InitialOpen = {
         trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
         {...args}
       >
-        <MenuItem>Lorem</MenuItem>
-        <MenuItem>Ipsum</MenuItem>
-        <MenuItem>Adipiscing</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem description="I am also a description" glyph={<CloudIcon />}>
+          Menu Item
+        </MenuItem>
+        <MenuItem disabled description="I am a description">
+          Disabled Menu Item
+        </MenuItem>
+        <MenuItem
+          disabled
+          description="I am a description"
+          glyph={<CloudIcon />}
+        >
+          Disabled Menu Item
+        </MenuItem>
+      </Menu>
+    );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+} satisfies StoryObj<typeof Menu>;
+
+export const InitialOpenCompact = {
+  render: args => {
+    return (
+      <Menu
+        initialOpen
+        trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+        {...args}
+        variant={MenuVariant.Compact}
+      >
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem description="I am also a description" glyph={<CloudIcon />}>
+          Menu Item
+        </MenuItem>
+        <MenuItem disabled description="I am a description">
+          Disabled Menu Item
+        </MenuItem>
+        <MenuItem
+          disabled
+          description="I am a description"
+          glyph={<CloudIcon />}
+        >
+          Disabled Menu Item
+        </MenuItem>
       </Menu>
     );
   },
@@ -334,8 +387,16 @@ export const DarkModeRightAlign = {
   },
 };
 
-export const InitialLongMenuOpen = {
-  render: () => {
+interface InitialLongMenuOpenArgs extends MenuProps {}
+
+interface InitialLongMenuOpenStory {
+  render: (args: InitialLongMenuOpenArgs) => JSX.Element;
+  play: (ctx: { canvasElement: HTMLElement }) => Promise<void>;
+  decorators: [(StoryFn: React.FC, _ctx: any) => JSX.Element];
+}
+
+export const InitialLongMenuOpen: InitialLongMenuOpenStory = {
+  render: (args: InitialLongMenuOpenArgs) => {
     return (
       <Menu
         trigger={
@@ -344,6 +405,7 @@ export const InitialLongMenuOpen = {
           </Button>
         }
         open={true}
+        {...args}
       >
         <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
         <MenuItem description="I am also a description" glyph={<CloudIcon />}>
@@ -396,13 +458,13 @@ export const InitialLongMenuOpen = {
       </Menu>
     );
   },
-  play: async ctx => {
+  play: async (ctx: { canvasElement: HTMLElement }) => {
     const { findByTestId } = within(ctx.canvasElement.parentElement!);
     const trigger = await findByTestId('menu-test-trigger');
     userEvent.click(trigger);
   },
   decorators: [
-    (StoryFn, _ctx) => (
+    (StoryFn: React.FC, _ctx: any) => (
       <div
         className={css`
           height: 100vh;

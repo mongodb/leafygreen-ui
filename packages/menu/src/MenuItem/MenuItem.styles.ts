@@ -9,6 +9,7 @@ import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing } from '@leafygreen-ui/tokens';
 
+import { MenuVariant } from '../Menu/Menu.types';
 import { menuColor } from '../styles';
 import { getLgIds } from '../utils';
 
@@ -29,7 +30,11 @@ interface MenuItemStyleArgs {
   highlighted: boolean;
   theme: Theme;
   variant: Variant;
+  menuVariant: MenuVariant;
 }
+
+const DEFAULT_MENU_ITEM_PADDING = spacing[200];
+const COMPACT_MENU_ITEM_PADDING = spacing[150];
 
 export const getMenuItemStyles = ({
   active,
@@ -37,6 +42,7 @@ export const getMenuItemStyles = ({
   highlighted,
   theme,
   variant,
+  menuVariant,
 }: MenuItemStyleArgs) =>
   cx(
     // Base styles
@@ -45,6 +51,10 @@ export const getMenuItemStyles = ({
       width: 100%;
       min-height: ${spacing[800]}px;
       background-color: ${menuColor[theme].background.default};
+      padding: ${menuVariant === MenuVariant.Default
+          ? DEFAULT_MENU_ITEM_PADDING
+          : COMPACT_MENU_ITEM_PADDING}px
+        ${spacing[300]}px;
 
       .${titleClassName} {
         color: ${menuColor[theme].text.default};
