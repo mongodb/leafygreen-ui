@@ -80,6 +80,12 @@ export const resolveProgressBarProps = (
 
   // indeterminate
   if (props.isIndeterminate) {
+    // @ts-expect-error -- roleType is not defined on indeterminate bars
+    if (props.roleType === Role.Meter)
+      console.warn(
+        'Indeterminate progress bars by default are set to "progressbar" role.',
+      );
+
     return {
       ...baseProps,
       role: Role.Progress,
@@ -90,6 +96,12 @@ export const resolveProgressBarProps = (
 
   // determinate with role "meter"
   if (props.roleType === Role.Meter) {
+    // @ts-expect-error -- enableAnimation is not defined on determinate bars with role "meter"
+    if (props.enableAnimation === true)
+      console.warn(
+        'Determinate progress bars with role "meter" do not support animation.',
+      );
+
     return {
       ...baseProps,
       role: Role.Meter,
