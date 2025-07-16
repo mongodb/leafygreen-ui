@@ -71,7 +71,7 @@ type BaseProps = DarkModeProps &
   };
 
 interface BaseDeterminateProps {
-  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. */
+  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. Only available for `info` and `success` variants. */
   isIndeterminate?: false;
 
   /** Current progress value. Optional only if isIndeterminate is `true`. */
@@ -90,7 +90,7 @@ interface DeterminatePlainProgressProps {
   /** Optional variant of the progress bar. Defaults to "info". */
   variant?: Variant;
 
-  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". */
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". Only available for `info` and `success` variants. */
   enableAnimation?: false;
 }
 
@@ -101,7 +101,7 @@ interface DeterminateAnimatedProgressProps {
   /** Optional variant of the progress bar. Defaults to "info". */
   variant?: AnimatedVariant;
 
-  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". */
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". Only available for `info` and `success` variants. */
   enableAnimation: true;
 }
 
@@ -121,7 +121,7 @@ type DeterminateProps = BaseDeterminateProps &
   (DeterminateMeterProps | DeterminateProgressProps);
 
 interface IndeterminateProps {
-  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. */
+  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. Only available for `info` and `success` variants. */
   isIndeterminate: true;
 
   /** Current progress value. Optional only if isIndeterminate is `true`. */

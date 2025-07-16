@@ -8,6 +8,7 @@ import { isDefined } from '@leafygreen-ui/lib';
 
 import { DEFAULT_MAX_VALUE } from '../constants';
 import {
+  AnimatedVariant,
   AnimationMode,
   FormatValueType,
   ProgressBarProps,
@@ -86,6 +87,15 @@ export const resolveProgressBarProps = (
         'Indeterminate progress bars by default are set to "progressbar" role.',
       );
 
+    if (
+      props.variant &&
+      !Object.values(AnimatedVariant).includes(props.variant)
+    ) {
+      console.warn(
+        "Indeterminate progress bars only support 'info' and 'success' variants.",
+      );
+    }
+
     return {
       ...baseProps,
       role: Role.Progress,
@@ -112,6 +122,16 @@ export const resolveProgressBarProps = (
   }
 
   // determinate with role "progressbar"
+  if (
+    props.enableAnimation &&
+    props.variant &&
+    !Object.values(AnimatedVariant).includes(props.variant)
+  ) {
+    console.warn(
+      "Determinate animation is only supported for 'info' and 'success' variants.",
+    );
+  }
+
   return {
     ...baseProps,
     role: Role.Progress,
