@@ -92,7 +92,7 @@ export const WithIncrementalChangingValue: StoryObj<typeof ProgressBar> = {
     formatValue: 'fraction',
   },
   render: initialArgs => {
-    const stepDuration = 25;
+    const stepDuration = 50;
     const { value: startValue, maxValue: endValue } = storyValues;
 
     // create transitions array containing each individual step
@@ -124,7 +124,7 @@ export const WithIncrementalChangingValue: StoryObj<typeof ProgressBar> = {
       },
       {
         timeout:
-          (storyValues.maxValue - storyValues.value) * 25 +
+          (storyValues.maxValue - storyValues.value) * 50 +
           STORY_TIMEOUT_BUFFER,
       },
     );
