@@ -19,9 +19,7 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
 /**
  * Returns a set of utility functions to query and get parts of a progress bar component for testing.
  * @param lgId - The base LeafyGreen ID prefix for the progress bar. Defaults to `DEFAULT_LGID_ROOT`.
- * @returns {{
- *   GetTestUtilsReturnType<T extends HTMLDivElement = HTMLDivElement>
- * }} An object containing utility functions:
+ * @returns An object containing utility functions:
  * - `getContainer`: Returns the main container element of the progress bar.
  * - `getBar`: Returns the element with role "progressbar" or "meter" inside the container, or `null` if not found.
  * - `getBarFill`: Returns the element representing the fill (progress indicator) of the bar.

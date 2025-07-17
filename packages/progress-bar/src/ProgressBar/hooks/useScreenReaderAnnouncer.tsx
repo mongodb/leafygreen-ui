@@ -15,6 +15,15 @@ interface UseScreenReaderAnnouncerProps {
   variant?: Variant;
 }
 
+/**
+ * Generates an accessible live region message for screen readers when progress bar updates cross defined thresholds.
+ *
+ * @param param.role - ARIA role of the component (e.g., progressbar, meter). If the role is `meter`, no message is generated.
+ * @param param.value - Current progress value. No message is generated if this is `undefined`.
+ * @param param.maxValue - Maximum progress value.
+ * @param param.variant - Variant of the progress bar (e.g., 'success', 'error'), which is included in the message if relevant.
+ * @returns Screen reader-friendly message string announcing progress updates, or `undefined` if no announcement is needed.
+ */
 export const useScreenReaderAnnouncer = ({
   role,
   value,

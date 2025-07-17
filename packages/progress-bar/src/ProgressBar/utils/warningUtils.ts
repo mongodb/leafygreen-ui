@@ -1,10 +1,12 @@
 import { AnimatedVariant, Role } from '../ProgressBar.types';
 
+/** Warns if role "meter" is assigned improperly. */
 export const warnMeterRole = (props: any): void => {
   if (props.roleType === Role.Meter)
     console.warn('Only determinate bars support role "meter".');
 };
 
+/** Warns if `enableAnimation` flag is used improperly. */
 export const warnEnableAnimationFlag = (props: any): void => {
   if (props.enableAnimation) {
     console.warn(
@@ -13,6 +15,7 @@ export const warnEnableAnimationFlag = (props: any): void => {
   }
 };
 
+/** Warns if non-animated variants are used improperly. */
 export const warnAnimatedVariant = (props: any): void => {
   if (
     props.variant &&

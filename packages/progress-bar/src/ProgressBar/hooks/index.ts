@@ -1,4 +1,4 @@
 export { useComputedTransitionDuration } from './useComputedTransitionDuration';
 export { useIdIdentifiers } from './useIdIdentifiers';
-export { useRotatingText } from './useRotatingText';
+export { useRotatingItems } from './useRotatingItems';
 export { useScreenReaderAnnouncer } from './useScreenReaderAnnouncer';

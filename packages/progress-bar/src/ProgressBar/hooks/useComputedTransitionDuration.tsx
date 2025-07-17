@@ -6,11 +6,11 @@ import { usePrevious } from '@leafygreen-ui/hooks';
  * Computes the total transition duration for a CSS animation based on the
  * magnitude of change in value and a specified speed.
  *
- * @param {number} speed - Desired change in units per second
- * @param {number} currentValue - Current value in units
- * @param {number} [minimumTransitionDuration=150] - minimum duration in milliseconds
- * @param {number} [maximumTransitionDuration=750] - maximum duration in milliseconds
- * @returns {number} Duration in milliseconds
+ * @param param.speed - Desired change in units per second.
+ * @param param.currentValue - Current value in units.
+ * @param [param.minimumTransitionDuration=150] - Minimum duration in milliseconds.
+ * @param [param.maximumTransitionDuration=750] - Maximum duration in milliseconds.
+ * @returns Duration in milliseconds.
  */
 export const useComputedTransitionDuration = ({
   speed,

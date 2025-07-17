@@ -10,7 +10,7 @@ import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
 
-import { useRotatingText } from './hooks/useRotatingText';
+import { useRotatingItems } from './hooks/useRotatingItems';
 import {
   DEFAULT_SIZE,
   DEFAULT_VARIANT,
@@ -100,7 +100,7 @@ export function ProgressBar(props: ProgressBarProps) {
   }, [isIndeterminate, enableAnimation]);
 
   // track description text changes
-  const description = useRotatingText(descriptionProp);
+  const description = useRotatingItems(descriptionProp);
   const prevDescription = usePrevious(description);
   const [isNewDescription, setIsNewDescription] = useState(false);
 
