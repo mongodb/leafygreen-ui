@@ -10,7 +10,6 @@ import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
 
-import { useRotatingItems } from './hooks/useRotatingItems';
 import {
   DEFAULT_SIZE,
   DEFAULT_VARIANT,
@@ -20,6 +19,7 @@ import {
 import {
   useComputedTransitionDuration,
   useIdIdentifiers,
+  useRotatingItems,
   useScreenReaderAnnouncer,
 } from './hooks';
 import {
