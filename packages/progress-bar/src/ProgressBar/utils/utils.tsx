@@ -16,29 +16,55 @@ import {
   Variant,
 } from '../ProgressBar.types';
 
+import {
+  warnAnimatedVariant,
+  warnEnableAnimationFlag,
+  warnMeterRole,
+} from './warningUtils';
+
 /**
- * Returns a valid progress value.
- * If undefined or greater than 0, returns as-is. If under 0, returns 0.
+ * Returns a valid maximum value.
+ * - If `maxValue` is undefined, null, or less than or equal to 0, returns `DEFAULT_MAX_VALUE`.
+ * - Otherwise, returns `maxValue` as-is.
+ *
+ * @param maxValue - The input maximum value to validate.
+ * @returns The valid maximum value.
  */
-const getValidValue = (value?: number) => {
-  if (!isDefined(value) || value >= 0) return value;
-  return 0;
+const getValidMaxValue = (maxValue?: number) => {
+  if (!isDefined(maxValue) || maxValue <= 0) {
+    return DEFAULT_MAX_VALUE;
+  }
+
+  return maxValue;
 };
 
 /**
- * Returns a valid maximum progress value.
- * Defaults to 1 if the input is undefined or less than or equal to 0.
+ * Clamps the given value between 0 and maxValue (if defined).
+ * - If `value` is undefined, returns undefined.
+ * - If `maxValue` is defined, clamps `value` between 0 and maxValue.
+ * - Otherwise, clamps `value` to be at least 0.
+ *
+ * @param value - The current value.
+ * @param maxValue - The optional upper bound.
+ * @returns The clamped value, or undefined if value is undefined.
  */
-const getValidMaxValue = (maxValue?: number) => {
-  if (!isDefined(maxValue) || maxValue <= 0) return DEFAULT_MAX_VALUE;
-  return maxValue;
+const getValidValue = (value?: number, maxValue?: number) => {
+  if (!isDefined(value)) {
+    return value;
+  }
+
+  if (isDefined(maxValue)) {
+    return Math.max(0, Math.min(value, getValidMaxValue(maxValue)));
+  }
+
+  return Math.max(0, value);
 };
 
 /**
  * Resolves the full set of progress bar props based on provided props.
  *
  * @param props - Input props from the consumer
- * @returns {ResolvedProgressBarProps} Fully resolved progress bar props with:
+ * @returns Fully resolved progress bar props with:
  * - `value`: Current progress value
  * - `maxValue`: Maximum progress value
  * - `disabled`: Whether the progress bar is disabled
@@ -51,7 +77,7 @@ export const resolveProgressBarProps = (
 ): ResolvedProgressBarProps => {
   // baseline common for all progress bars
   const baseProps = {
-    value: getValidValue(props.value),
+    value: undefined,
     maxValue: undefined,
     disabled: false,
     isIndeterminate: false,
@@ -60,27 +86,37 @@ export const resolveProgressBarProps = (
 
   // indeterminate
   if (props.isIndeterminate) {
+    warnMeterRole(props);
+    warnAnimatedVariant(props);
+
     return {
       ...baseProps,
       role: Role.Progress,
+      value: getValidValue(props.value),
       isIndeterminate: true,
     };
   }
 
   // determinate with role "meter"
   if (props.roleType === Role.Meter) {
+    warnEnableAnimationFlag(props);
+
     return {
       ...baseProps,
       role: Role.Meter,
+      value: getValidValue(props.value, props.maxValue),
       maxValue: getValidMaxValue(props.maxValue),
       disabled: props.disabled ?? false,
     };
   }
 
   // determinate with role "progressbar"
+  if (props.enableAnimation) warnAnimatedVariant(props);
+
   return {
     ...baseProps,
     role: Role.Progress,
+    value: getValidValue(props.value, props.maxValue),
     maxValue: getValidMaxValue(props.maxValue),
     disabled: props.disabled ?? false,
     enableAnimation: props.enableAnimation ?? false,
@@ -118,7 +154,12 @@ export const getPercentage = (value: number, maxValue?: number): number => {
 };
 
 /**
- * Formats the progress value as a string based on format type.
+ * Returns a formatted string representation of a progress value.
+ *
+ * @param value - The current progress value.
+ * @param maxValue - The maximum possible value (optional).
+ * @param formatValue - Determines how the value is formatted. Can be `percentage`, `fraction`, `number`, or a custom function.
+ * @returns A string formatted according to the specified format type.
  */
 export const getFormattedValue = (
   value: number,
@@ -179,8 +220,16 @@ export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
 };
 
 /**
- * Returns an appropriate status icon for the header, based on variant and disabled state.
- * Additionally applies any extra props passed in to the icon.
+ * Returns the appropriate status icon to display in a header.
+ *
+ * The icon is determined by the `variant` (e.g., success, warning, error, info),
+ * or defaults to a disabled warning icon if `disabled` is true.
+ * Any additional props provided are spread onto the returned icon component.
+ *
+ * @param variant - The visual variant representing the status (optional).
+ * @param disabled - If true, overrides variant and returns a warning icon (default: false).
+ * @param props - Additional props to apply to the icon (e.g., className, size).
+ * @returns A React element representing the appropriate status icon.
  */
 export const getHeaderIcon = ({
   variant,

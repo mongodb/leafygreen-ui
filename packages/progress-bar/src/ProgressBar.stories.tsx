@@ -80,7 +80,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     },
     variant: {
       control: { type: 'select' },
-      options: [...VARIANTS, undefined],
+      options: VARIANTS,
     },
     maxValue: {
       control: { type: 'number' },

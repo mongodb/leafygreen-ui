@@ -28,25 +28,6 @@ describe('getFormattedValue', () => {
 });
 
 describe('resolveProgressBarProps', () => {
-  test('it correctly resolves props for determinate with "meter"', () => {
-    const props = {
-      roleType: Role.Meter,
-      value: 50,
-      maxValue: 100,
-      ...requiredA11yArgs,
-    } as const;
-
-    const resolvedProps = resolveProgressBarProps(props);
-    expect(resolvedProps).toEqual({
-      role: Role.Meter,
-      value: 50,
-      maxValue: 100,
-      disabled: false,
-      isIndeterminate: false,
-      enableAnimation: false,
-    });
-  });
-
   test('it correctly resolves props for determinate with role "progressbar"', () => {
     const props = {
       value: 50,
@@ -66,6 +47,42 @@ describe('resolveProgressBarProps', () => {
     });
   });
 
+  test('it correctly resolves props for determinate with role "meter"', () => {
+    const props = {
+      roleType: Role.Meter,
+      value: 50,
+      maxValue: 100,
+      ...requiredA11yArgs,
+    } as const;
+
+    const resolvedProps = resolveProgressBarProps(props);
+    expect(resolvedProps).toEqual({
+      role: Role.Meter,
+      value: 50,
+      maxValue: 100,
+      disabled: false,
+      isIndeterminate: false,
+      enableAnimation: false,
+    });
+  });
+
+  test('it ignores invalid props for determinate with role "meter"', () => {
+    const props = {
+      roleType: Role.Meter,
+      value: 50,
+      maxValue: 100,
+      enableAnimation: true,
+      ...requiredA11yArgs,
+    } as const;
+
+    const resolvedProps = resolveProgressBarProps(props);
+    expect(resolvedProps).toEqual(
+      expect.objectContaining({
+        enableAnimation: false,
+      }),
+    );
+  });
+
   test('it correctly resolves props for indeterminate', () => {
     const props = {
       isIndeterminate: true,
@@ -81,5 +98,22 @@ describe('resolveProgressBarProps', () => {
       isIndeterminate: true,
       enableAnimation: false,
     });
+  });
+
+  test('it ignores invalid props for indeterminate', () => {
+    const props = {
+      isIndeterminate: true,
+      roleType: Role.Meter,
+      enableAnimation: true,
+      ...requiredA11yArgs,
+    } as const;
+
+    const resolvedProps = resolveProgressBarProps(props);
+    expect(resolvedProps).toEqual(
+      expect.objectContaining({
+        role: Role.Progress,
+        enableAnimation: false,
+      }),
+    );
   });
 });
