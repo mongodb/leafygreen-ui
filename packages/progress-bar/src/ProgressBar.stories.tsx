@@ -14,9 +14,9 @@ import {
 } from '.';
 
 const sharedDeterminateArgs: ProgressBarProps = {
+  ...requiredA11yArgs,
   value: storyValues.value,
   maxValue: storyValues.maxValue,
-  ...requiredA11yArgs,
 };
 
 const ROLES = Object.values(Role);

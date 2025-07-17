@@ -53,19 +53,17 @@ export const WithSuddenChangingValue: StoryObj<typeof ProgressBar> = {
     maxValue: storyValues.maxValue,
     formatValue: 'fraction',
   },
-  render: initialArgs => {
-    return (
-      <DynamicProgressBar
-        transitions={[
-          [
-            interactionWaitTimes.short,
-            { ...initialArgs, value: storyValues.maxValue },
-          ],
-        ]}
-        {...initialArgs}
-      />
-    );
-  },
+  render: initialArgs => (
+    <DynamicProgressBar
+      transitions={[
+        [
+          interactionWaitTimes.short,
+          { ...initialArgs, value: storyValues.maxValue },
+        ],
+      ]}
+      {...initialArgs}
+    />
+  ),
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
     const progressBar = canvas.getByRole('progressbar');
@@ -81,9 +79,7 @@ export const WithSuddenChangingValue: StoryObj<typeof ProgressBar> = {
           storyValues.maxValue.toString(),
         );
       },
-      {
-        timeout: interactionWaitTimes.short + STORY_TIMEOUT_BUFFER,
-      },
+      { timeout: interactionWaitTimes.short + STORY_TIMEOUT_BUFFER },
     );
   },
 };
@@ -96,18 +92,18 @@ export const WithIncrementalChangingValue: StoryObj<typeof ProgressBar> = {
     formatValue: 'fraction',
   },
   render: initialArgs => {
-    const startValue = storyValues.value;
-    const endValue = storyValues.maxValue;
-
     const stepDuration = 25;
-    const transitions: Array<[number, ProgressBarProps]> = [];
+    const { value: startValue, maxValue: endValue } = storyValues;
 
-    for (let i = 1; i <= endValue - startValue; i++) {
-      transitions.push([
-        i * stepDuration,
-        { ...initialArgs, value: startValue + i },
-      ]);
-    }
+    // create transitions array containing each individual step
+    const transitions = Array.from(
+      { length: endValue - startValue },
+      (_, i) =>
+        [
+          (i + 1) * stepDuration,
+          { ...initialArgs, value: startValue + i + 1 },
+        ] as [number, ProgressBarProps],
+    );
 
     return <DynamicProgressBar transitions={transitions} {...initialArgs} />;
   },

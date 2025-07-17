@@ -117,11 +117,11 @@ export function ProgressBar(props: ProgressBarProps) {
     : undefined;
 
   const widthAnimationDuration = useComputedTransitionDuration({
-    speed: WIDTH_ANIMATION_SPEED,
     currentValue: displayWidth,
+    speed: WIDTH_ANIMATION_SPEED,
   });
 
-  // get screen reader message at fixed thresholds
+  // get screen reader message based on value changes
   const screenReaderMessage = useScreenReaderAnnouncer({
     role,
     value,
