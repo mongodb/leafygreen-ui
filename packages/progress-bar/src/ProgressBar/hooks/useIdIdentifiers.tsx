@@ -5,9 +5,9 @@ import { Role } from '../ProgressBar.types';
 /**
  * Generates unique DOM IDs for progress bar accessibility attributes.
  *
- * @param param.role - ARIA role of the component (e.g., progressbar, meter).
- * @param [param.label] - Optional React node used to generate a corresponding label ID (e.g., for `aria-labelledby`).
- * @param [param.description] - Optional React node used to generate a corresponding description ID (e.g., for `aria-describedby`).
+ * @param role - ARIA role of the component (e.g., progressbar, meter).
+ * @param [label] - Optional React node used to generate a corresponding label ID (e.g., for `aria-labelledby`).
+ * @param [description] - Optional React node used to generate a corresponding description ID (e.g., for `aria-describedby`).
  * @returns An object containing:
  * - `barId`: base unique ID string for the bar element.
  * - `labelId`: derived ID string for the label, or `undefined` if no label is provided.

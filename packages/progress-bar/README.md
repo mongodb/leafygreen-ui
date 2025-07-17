@@ -69,7 +69,7 @@ const [used, setUsed] = useState(96);
 const totalSpaceAvailable = 128
 
 <ProgressBar
-  roleType="meter"
+  role="meter"
   variant="warning"
   label="Disk Space Used"
   formatValue={(value: number, maxValue: number) =>
@@ -102,7 +102,7 @@ import ProgressBar from '@leafygreen-ui/progress-bar';
 | `showIcon?`        | `boolean`                                                                                      | `false`         | all                                      | When `true`, displays icon next to progress value. If `variant` is `'success'`, the icon only appears when progress reaches 100%.                                                                           |
 | `variant?`         | `'info'` \| `'success'` \| `'warning'` \| `'error'`                                            | `'info'`        | all                                      | Optional variant of the progress bar. Defaults to `'info'`.                                                                                                                                                 |
 | `isIndeterminate?` | `boolean`                                                                                      | `false`         | all                                      | When `true`, shows an infinite looping animation along the bar instead of a specific width. **Only available for `info` and `success` variants**.                                                           |
-| `roleType?`        | `'progressbar'` \| `'meter'`                                                                   | `'progressbar'` | determinate only                         | If determinate, specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar".                                                                                                     |
+| `role?`            | `'progressbar'` \| `'meter'`                                                                   | `'progressbar'` | determinate only                         | If determinate, specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar".                                                                                                     |
 | `value`            | `number`                                                                                       |                 | all                                      | Current progress value. **Optional only if isIndeterminate is `true`.**                                                                                                                                     |
 | `maxValue?`        | `number`                                                                                       |                 | determinate only                         | If determinate, specify maximum progress value.                                                                                                                                                             |
 | `enableAnimation?` | `boolean`                                                                                      | `false`         | determinate with role "progressbar" only | When `true`, enables shimmer animation for longer-running processes. **Only available for determinate bars with role "progressbar".** **Only available for `info` and `success` variants.**                 |

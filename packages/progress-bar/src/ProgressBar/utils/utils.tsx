@@ -98,7 +98,7 @@ export const resolveProgressBarProps = (
   }
 
   // determinate with role "meter"
-  if (props.roleType === Role.Meter) {
+  if (props.role === Role.Meter) {
     warnEnableAnimationFlag(props);
 
     return {
@@ -121,6 +121,28 @@ export const resolveProgressBarProps = (
     disabled: props.disabled ?? false,
     enableAnimation: props.enableAnimation ?? false,
   };
+};
+
+/**
+ * Omits resolved props from the original props object.
+ *
+ * @param obj - Original props object
+ * @param resolved - Resolved props to omit
+ * @returns New object with resolved props omitted
+ */
+export const omitProps = (
+  obj: ProgressBarProps,
+  resolved: ResolvedProgressBarProps,
+): Omit<ProgressBarProps, keyof ResolvedProgressBarProps> => {
+  const clone = { ...obj };
+
+  for (const key of Object.keys(resolved) as Array<
+    keyof ResolvedProgressBarProps
+  >) {
+    delete clone[key as keyof ProgressBarProps];
+  }
+
+  return clone;
 };
 
 /**

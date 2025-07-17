@@ -2,7 +2,7 @@ import { AnimatedVariant, Role } from '../ProgressBar.types';
 
 /** Warns if role "meter" is assigned improperly. */
 export const warnMeterRole = (props: any): void => {
-  if (props.roleType === Role.Meter)
+  if (props.role === Role.Meter)
     console.warn('Only determinate bars support role "meter".');
 };
 

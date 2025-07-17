@@ -288,7 +288,7 @@ describe('packages/progress-bar', () => {
     test('does not have a live region for meter types', () => {
       render(
         <ProgressBar
-          roleType={Role.Meter}
+          role={Role.Meter}
           value={TEST_VALUE_OVER_50}
           maxValue={TEST_MAX_VALUE}
           {...requiredA11yArgs}

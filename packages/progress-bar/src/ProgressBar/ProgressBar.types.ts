@@ -89,7 +89,7 @@ interface BaseDeterminateProps {
 }
 interface DeterminatePlainProgressProps {
   /** Specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar". */
-  roleType?: typeof Role.Progress;
+  role?: typeof Role.Progress;
 
   /** Optional variant of the progress bar. Defaults to "info". */
   variant?: Variant;
@@ -100,7 +100,7 @@ interface DeterminatePlainProgressProps {
 
 interface DeterminateAnimatedProgressProps {
   /** Specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar". */
-  roleType?: typeof Role.Progress;
+  role?: typeof Role.Progress;
 
   /** Optional variant of the progress bar. Defaults to "info". */
   variant?: AnimatedVariant;
@@ -115,7 +115,7 @@ type DeterminateProgressProps =
 
 interface DeterminateMeterProps {
   /** Role type of the progress bar ("progressbar" or "meter"). */
-  roleType: typeof Role.Meter;
+  role: typeof Role.Meter;
 
   /** Optional variant of the progress bar. Defaults to "info". */
   variant?: Variant;

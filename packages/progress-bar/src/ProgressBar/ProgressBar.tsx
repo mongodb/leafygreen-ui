@@ -40,11 +40,14 @@ import {
   getHeaderIcon,
   getPercentage,
   getValueAriaAttributes,
+  omitProps,
   resolveProgressBarProps,
 } from './utils';
 export function ProgressBar(props: ProgressBarProps) {
+  const resolved = resolveProgressBarProps(props);
+
   const { role, value, maxValue, disabled, isIndeterminate, enableAnimation } =
-    resolveProgressBarProps(props);
+    resolved;
 
   const {
     size = DEFAULT_SIZE,
@@ -58,7 +61,7 @@ export function ProgressBar(props: ProgressBarProps) {
     'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
     className,
     ...rest
-  } = props;
+  } = omitProps(props, resolved);
 
   const { theme } = useDarkMode(darkMode);
 
