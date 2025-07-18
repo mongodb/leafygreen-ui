@@ -19,6 +19,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 import isUndefined from 'lodash/isUndefined';
 
+import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -60,7 +61,6 @@ import {
   themedHotkeyIndicatorStyles,
 } from './InputBar.styles';
 import { ReturnIcon } from './ReturnIcon';
-import { SparkleIcon } from './SparkleIcon';
 import { InputBarProps } from '.';
 
 export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
@@ -400,7 +400,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
               )}
             >
               <div className={leftContentStyles}>
-                <SparkleIcon fill={getIconFill(theme, disabled)} />
+                <AssistantAvatar darkMode={darkMode} disabled={disabled} />
                 {badgeText && <Badge variant="blue">{badgeText}</Badge>}
               </div>
               <TextareaAutosize
