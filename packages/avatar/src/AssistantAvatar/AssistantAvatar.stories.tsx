@@ -4,7 +4,8 @@ import { StoryObj } from '@storybook/react';
 
 import { AvatarSize } from '../Avatar/Avatar.types';
 
-import { AssistantAvatar } from '.';
+import { AssistantAvatar } from './AssistantAvatar';
+import { AssistantAvatarProps } from './AssistantAvatar.types';
 
 export default {
   title: 'Components/Avatar/AssistantAvatar',
@@ -17,6 +18,7 @@ export default {
     generate: {
       combineArgs: {
         darkMode: [false, true],
+        disabled: [false, true],
         size: Object.values(AvatarSize),
       },
     },
@@ -31,7 +33,10 @@ export default {
       options: Object.values(AvatarSize),
     },
   },
-} satisfies StoryMetaType<typeof AssistantAvatar>;
+} satisfies StoryMetaType<
+  typeof AssistantAvatar,
+  Partial<AssistantAvatarProps>
+>;
 
 export const LiveExample: StoryObj<typeof AssistantAvatar> = {
   render: args => {
