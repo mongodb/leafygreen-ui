@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { usePrevious } from '@leafygreen-ui/hooks';
+import { isDefined } from '@leafygreen-ui/lib';
 
 /**
  * Computes the total transition duration for a CSS animation based on
@@ -31,16 +32,16 @@ export const useComputedTransitionDuration = ({
   const duration = useMemo(() => {
     if (
       speed <= 0 ||
-      !previousValue ||
-      !currentValue ||
+      !isDefined(previousValue) ||
+      !isDefined(currentValue) ||
       previousValue === currentValue
     ) {
-      return 0;
+      return minimumDuration;
     }
 
     const magnitude = Math.abs(currentValue - previousValue);
     return (magnitude / speed) * 1000;
-  }, [speed, previousValue, currentValue]);
+  }, [speed, previousValue, currentValue, minimumDuration]);
 
   return Math.min(Math.max(duration, minimumDuration), maximumDuration);
 };

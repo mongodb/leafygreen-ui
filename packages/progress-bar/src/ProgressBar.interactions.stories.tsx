@@ -11,6 +11,7 @@ import {
 import { ProgressBar, ProgressBarProps } from '.';
 
 const interactionWaitTimes = {
+  micro: 50,
   short: 1500,
   medium: 3500,
 };
@@ -92,7 +93,6 @@ export const WithIncrementalChangingValue: StoryObj<typeof ProgressBar> = {
     formatValue: 'fraction',
   },
   render: initialArgs => {
-    const stepDuration = 50;
     const { value: startValue, maxValue: endValue } = storyValues;
 
     // create transitions array containing each individual step
@@ -100,7 +100,7 @@ export const WithIncrementalChangingValue: StoryObj<typeof ProgressBar> = {
       { length: endValue - startValue },
       (_, i) =>
         [
-          (i + 1) * stepDuration,
+          (i + 1) * interactionWaitTimes.micro,
           { ...initialArgs, value: startValue + i + 1 },
         ] as [number, ProgressBarProps],
     );
@@ -124,7 +124,8 @@ export const WithIncrementalChangingValue: StoryObj<typeof ProgressBar> = {
       },
       {
         timeout:
-          (storyValues.maxValue - storyValues.value) * 50 +
+          (storyValues.maxValue - storyValues.value) *
+            interactionWaitTimes.micro +
           STORY_TIMEOUT_BUFFER,
       },
     );
