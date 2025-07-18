@@ -3,12 +3,16 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 import { expect, waitFor, within } from '@storybook/test';
 
-import { ProgressBar, ProgressBarProps, Type } from '.';
+import {
+  requiredA11yArgs,
+  STORY_TIMEOUT_BUFFER,
+  storyValues,
+} from './test.constants';
+import { ProgressBar, ProgressBarProps } from '.';
 
-const testValues = {
-  value: 53,
-  maxValue: 200,
-  timeoutBuffer: 500,
+const interactionWaitTimes = {
+  short: 1500,
+  medium: 3500,
 };
 
 const DynamicProgressBar = ({
@@ -44,14 +48,19 @@ export default meta;
 
 export const WithChangingValue: StoryObj<typeof ProgressBar> = {
   args: {
-    type: Type.Loader,
-    value: testValues.value,
-    maxValue: testValues.maxValue,
+    ...requiredA11yArgs,
+    value: storyValues.value,
+    maxValue: storyValues.maxValue,
     formatValue: 'fraction',
   },
   render: initialArgs => (
     <DynamicProgressBar
-      transitions={[[1500, { ...initialArgs, value: testValues.maxValue }]]}
+      transitions={[
+        [
+          interactionWaitTimes.short,
+          { ...initialArgs, value: storyValues.maxValue },
+        ],
+      ]}
       {...initialArgs}
     />
   ),
@@ -61,16 +70,16 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
 
     expect(progressBar).toHaveAttribute(
       'aria-valuenow',
-      testValues.value.toString(),
+      storyValues.value.toString(),
     );
 
     await waitFor(
       () => {
         expect(progressBar.getAttribute('aria-valuenow')).toBe(
-          testValues.maxValue.toString(),
+          storyValues.maxValue.toString(),
         );
       },
-      { timeout: 1500 + testValues.timeoutBuffer },
+      { timeout: interactionWaitTimes.short + STORY_TIMEOUT_BUFFER },
     );
   },
 };
@@ -84,11 +93,11 @@ export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
     <DynamicProgressBar
       transitions={[
         [
-          1500,
+          interactionWaitTimes.short,
           { ...initialArgs, description: <span>New helper text...</span> },
         ],
         [
-          3500,
+          interactionWaitTimes.medium,
           {
             ...initialArgs,
             description: <span>Even newer helper text...!</span>,
@@ -103,7 +112,7 @@ export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
 
     const finalText = await waitFor(
       () => canvas.getByText('Even newer helper text...!'),
-      { timeout: 3500 + testValues.timeoutBuffer },
+      { timeout: interactionWaitTimes.medium + STORY_TIMEOUT_BUFFER },
     );
 
     expect(finalText).toBeInTheDocument();
@@ -112,20 +121,19 @@ export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
 
 export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
   args: {
-    type: Type.Loader,
+    ...requiredA11yArgs,
     isIndeterminate: true,
   },
   render: initialArgs => (
     <DynamicProgressBar
       transitions={[
         [
-          3500,
+          interactionWaitTimes.medium,
           {
-            type: Type.Loader,
+            ...requiredA11yArgs,
             isIndeterminate: false,
-            value: testValues.maxValue,
-            maxValue: testValues.maxValue,
-            'aria-label': 'required label',
+            value: storyValues.maxValue,
+            maxValue: storyValues.maxValue,
           },
         ],
       ]}
@@ -141,10 +149,10 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
     await waitFor(
       () => {
         expect(progressBar.getAttribute('aria-valuenow')).toBe(
-          testValues.maxValue.toString(),
+          storyValues.maxValue.toString(),
         );
       },
-      { timeout: 3500 + testValues.timeoutBuffer },
+      { timeout: interactionWaitTimes.medium + STORY_TIMEOUT_BUFFER },
     );
   },
 };

@@ -1,4 +1,5 @@
-import { Color, LoaderVariant, MeterStatus, Type } from '../ProgressBar.types';
+import { requiredA11yArgs } from '../../test.constants';
+import { Role } from '../ProgressBar.types';
 
 import { getFormattedValue, resolveProgressBarProps } from './utils';
 
@@ -27,63 +28,92 @@ describe('getFormattedValue', () => {
 });
 
 describe('resolveProgressBarProps', () => {
-  test('it correctly resolves props for a meter type', () => {
+  test('it correctly resolves props for determinate with role "progressbar"', () => {
     const props = {
-      type: Type.Meter,
       value: 50,
       maxValue: 100,
-      status: MeterStatus.Warning,
-      'aria-label': 'required label',
+      enableAnimation: true,
+      ...requiredA11yArgs,
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
     expect(resolvedProps).toEqual({
+      role: Role.Progress,
       value: 50,
       maxValue: 100,
       disabled: false,
-      color: Color.Yellow,
+      isIndeterminate: false,
+      enableAnimation: true,
+    });
+  });
+
+  test('it correctly resolves props for determinate with role "meter"', () => {
+    const props = {
+      roleType: Role.Meter,
+      value: 50,
+      maxValue: 100,
+      ...requiredA11yArgs,
+    } as const;
+
+    const resolvedProps = resolveProgressBarProps(props);
+    expect(resolvedProps).toEqual({
+      role: Role.Meter,
+      value: 50,
+      maxValue: 100,
+      disabled: false,
       isIndeterminate: false,
       enableAnimation: false,
     });
   });
 
-  test('it correctly resolves props for a determinate loader type', () => {
+  test('it ignores invalid props for determinate with role "meter"', () => {
     const props = {
-      type: Type.Loader,
-      isIndeterminate: false,
+      roleType: Role.Meter,
       value: 50,
       maxValue: 100,
-      variant: LoaderVariant.Success,
       enableAnimation: true,
-      'aria-label': 'required label',
+      ...requiredA11yArgs,
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
-    expect(resolvedProps).toEqual({
-      value: 50,
-      maxValue: 100,
-      disabled: false,
-      color: Color.Green,
-      isIndeterminate: false,
-      enableAnimation: true,
-    });
+    expect(resolvedProps).toEqual(
+      expect.objectContaining({
+        enableAnimation: false,
+      }),
+    );
   });
 
-  test('it correctly resolves props for an indeterminate loader type', () => {
+  test('it correctly resolves props for indeterminate', () => {
     const props = {
-      type: Type.Loader,
       isIndeterminate: true,
-      'aria-label': 'required label',
+      ...requiredA11yArgs,
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
     expect(resolvedProps).toEqual({
+      role: Role.Progress,
       value: undefined,
       maxValue: undefined,
       disabled: false,
-      color: Color.Blue,
       isIndeterminate: true,
       enableAnimation: false,
     });
+  });
+
+  test('it ignores invalid props for indeterminate', () => {
+    const props = {
+      isIndeterminate: true,
+      roleType: Role.Meter,
+      enableAnimation: true,
+      ...requiredA11yArgs,
+    } as const;
+
+    const resolvedProps = resolveProgressBarProps(props);
+    expect(resolvedProps).toEqual(
+      expect.objectContaining({
+        role: Role.Progress,
+        enableAnimation: false,
+      }),
+    );
   });
 });

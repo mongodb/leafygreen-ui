@@ -8,10 +8,11 @@
 
 The `ProgressBar` component supports two types:
 
-- **Loader**, which has determinate and indeterminate modes. Determinate loaders dynamically approach a maximum; indeterminate loaders loop infinitely.
-- **Meter**, which displays a static snapshot of progress at some point in time. By default, meters are determinate only.
+- **Indeterminate** — shows an infinite looping animation to indicate ongoing activity without specifying exact progress. Useful when the duration or total work is unknown.
 
-Use a meter when you want to show precise progress alongside a health status (e.g., amount of disk space used). Use loaders when you want to show progress towards completion of ongoing activity (e.g., file upload progress).
+- **Determinate** — shows measurable progress toward a known maximum. When using a determinate progress bar, specify whether you're using it as a:
+  - **Meter** — a snapshot of current value, often with a health/status indication (e.g., disk space used).
+  - **Progress bar** — a dynamic bar that fills as a task progresses toward completion (e.g., file upload).
 
 ## Installation
 
@@ -35,7 +36,7 @@ npm install @leafygreen-ui/progress-bar
 
 ## Example
 
-### Determinate Loader
+### Determinate Bar With Progress Role (Default)
 
 ```js
 import ProgressBar from '@leafygreen-ui/progress-bar';
@@ -45,7 +46,6 @@ const [paused, setPaused] = useState(false);
 const total = 100;
 
 <ProgressBar
-  type="loader"
   variant="success"
   label="File Upload"
   size="small"
@@ -54,41 +54,23 @@ const total = 100;
   formatValue={(value: number, maxValue: number) =>
     `${value}/${maxValue} files`
   }
-  showIcon={true}
+  showIcon
   value={uploaded}
   maxValue={total}
 />;
 ```
 
-### Indeterminate Loader
+### Determinate Bar With Meter Role
 
 ```js
 import ProgressBar from '@leafygreen-ui/progress-bar';
 
-const [uploaded, setUploaded] = useState(0);
-const [paused, setPaused] = useState(false);
-
-<ProgressBar
-  type="loader"
-  isIndeterminate={true}
-  label="Files Downloading"
-  description="Your data is uploading!"
-  formatValue={(value: number) => `${value} files downloaded`}
-  value={uploaded}
-/>;
-```
-
-### Meter
-
-```js
-import ProgressBar from '@leafygreen-ui/progress-bar';
-
-const [used, setUsed] = useState(14);
+const [used, setUsed] = useState(96);
 const totalSpaceAvailable = 128
 
 <ProgressBar
-  type="meter"
-  status="healthy"
+  roleType="meter"
+  variant="warning"
   label="Disk Space Used"
   formatValue={(value: number, maxValue: number) =>
     `${value}/${maxValue} GB used`
@@ -98,24 +80,33 @@ const totalSpaceAvailable = 128
 />;
 ```
 
+### Indeterminate Bar
+
+```js
+import ProgressBar from '@leafygreen-ui/progress-bar';
+
+<ProgressBar
+  isIndeterminate
+  label="Loading report"
+  description="This might take a few seconds..."
+/>;
+```
+
 ## Properties
 
-| Prop name          | Type                                                                                           | Default     | Type                           | Description                                                                                                                                |
-| ------------------ | ---------------------------------------------------------------------------------------------- | ----------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `type`             | `'meter'` \| `'loader'`                                                                        |             | both                           | Specifies whether the progress bar is a meter or loader.                                                                                   |
-| `label?`           | `React.ReactNode`                                                                              |             | both                           | Optional label text displayed directly above the progress bar.                                                                             |
-| `size?`            | `'small'` \| `'default'` \| `'large'`                                                          | `'default'` | both                           | Optional size (thickness) of the progress bar.                                                                                             |
-| `description?`     | `React.ReactNode`                                                                              |             | both                           | Optional descriptive text displayed below the progress bar.                                                                                |
-| `darkMode?`        | `boolean`                                                                                      | `false`     | both                           | Enables dark mode styling.                                                                                                                 |
-| `formatValue?`     | `'number'` \| `'fraction'` \| `'percentage'` \| `(value: number, maxValue?: number) => string` |             | both                           | Optional formatter for the progress value text. If not provided, progress value is hidden.                                                 |
-| `showIcon?`        | `boolean`                                                                                      | `false`     | both                           | Displays an icon next to the progress value. For loaders with `'success'` variant, icon shows only at 100%.                                |
-| `value`            | `number`                                                                                       |             | both                           | Current progress value. **Optional only if `isIndeterminate` is `true` for loaders**.                                                      |
-| `maxValue?`        | `number`                                                                                       | `1`         | meter, determinate loader only | Optional maximum progress value. Not available if `isIndeterminate` is `true` for loaders.                                                 |
-| `disabled?`        | `boolean`                                                                                      | `false`     | meter, determinate loader only | Pauses progress and shows a disabled style. Not available if `isIndeterminate` is `true` for loaders.                                      |
-| `status?`          | `'healthy'` \| `'warning'` \| `'danger'`                                                       |             | meter only                     | Status for meter type indicating health or error state. If not provided, defaults to blue.                                                 |
-| `variant?`         | `'info'` \| `'success'` \| `'warning'` \| `'error'`                                            | `'info'`    | loader only                    | Variant for loader type. Animation is only available for `'info'` or `'success'` variants.                                                 |
-| `isIndeterminate?` | `boolean`                                                                                      | `false`     | loader only                    | When `true`, shows an infinite looping animation along the bar.                                                                            |
-| `enableAnimation?` | `boolean`                                                                                      | `false`     | determinate loader only        | When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. |
+| Prop               | Type                                                                                           | Default         | Applicable To                            | Description                                                                                                                                                                                 |
+| ------------------ | ---------------------------------------------------------------------------------------------- | --------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size?`            | `'small'` \| `'default'` \| `'large'`                                                          |                 | all                                      | Optional size (thickness) of the progress bar.                                                                                                                                              |
+| `description?`     | `React.ReactNode`                                                                              |                 | all                                      | Optional descriptive text below the progress bar.                                                                                                                                           |
+| `formatValue?`     | `'number'` \| `'fraction'` \| `'percentage'` \| `(value: number, maxValue?: number) => string` |                 | all                                      | Optional formatting of progress value text. If undefined, no progress value is displayed.                                                                                                   |
+| `showIcon?`        | `boolean`                                                                                      | `false`         | all                                      | When `true`, displays icon next to progress value. If `variant` is `'success'`, the icon only appears when progress reaches 100%.                                                           |
+| `variant?`         | `'info'` \| `'success'` \| `'warning'` \| `'error'`                                            | `'info'`        | all                                      | Optional variant of the progress bar. Defaults to `'info'`.                                                                                                                                 |
+| `isIndeterminate?` | `boolean`                                                                                      | `false`         | all                                      | When `true`, shows an infinite looping animation along the bar instead of a specific width. **Only available for `info` and `success` variants**.                                           |
+| `roleType?`        | `'progressbar'` \| `'meter'`                                                                   | `'progressbar'` | determinate only                         | If determinate, specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar".                                                                                     |
+| `value`            | `number`                                                                                       |                 | all                                      | Current progress value. **Optional only if isIndeterminate is `true`.**                                                                                                                     |
+| `maxValue?`        | `number`                                                                                       |                 | determinate only                         | If determinate, specify maximum progress value.                                                                                                                                             |
+| `enableAnimation?` | `boolean`                                                                                      | `false`         | determinate with role "progressbar" only | When `true`, enables shimmer animation for longer-running processes. **Only available for determinate bars with role "progressbar".** **Only available for `info` and `success` variants.** |
+| `disabled?`        | `boolean`                                                                                      | `false`         | determinate only                         | When `true`, shows a disabled style and pauses animation.                                                                                                                                   |
 
 ## Test Harnesses
 
@@ -171,7 +162,7 @@ const {
 | Util               | Description                                                                                                        | Returns                  |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------ |
 | `getContainer`     | Returns the root element containing the progress bar and all accompanying text.                                    | `HTMLDivElement`         |
-| `getBar`           | Returns the progress bar element, which can be either a loader (`role="progressbar"`) or a meter (`role="meter"`). | `HTMLDivElement`         |
+| `getBar`           | Returns the progress bar element, which can have either `role="progressbar"` or `role="meter"` depending on usage. | `HTMLDivElement`         |
 | `getBarFill`       | Returns the fill element of the progress bar.                                                                      | `HTMLDivElement`         |
 | `getBarTrack`      | Returns the track element of the progress bar.                                                                     | `HTMLDivElement`         |
 | `queryIcon`        | Returns the icon element, if present.                                                                              | `HTMLDivElement \| null` |

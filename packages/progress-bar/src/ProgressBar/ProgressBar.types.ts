@@ -3,12 +3,6 @@ import React from 'react';
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
-export const Type = {
-  Meter: 'meter',
-  Loader: 'loader',
-} as const;
-export type Type = (typeof Type)[keyof typeof Type];
-
 export const Size = {
   Small: 'small',
   Default: 'default',
@@ -21,40 +15,38 @@ export const FormatValueType = {
   percentage: 'percentage',
   number: 'number',
 } as const;
-
 export type FormatValueType =
   | (typeof FormatValueType)[keyof typeof FormatValueType]
   | ((value: number, maxValue?: number) => string);
 
-export const MeterStatus = {
-  Healthy: 'healthy',
-  Warning: 'warning',
-  Danger: 'danger',
-} as const;
-export type MeterStatus = (typeof MeterStatus)[keyof typeof MeterStatus];
-
-export const LoaderVariant = {
+export const Variant = {
   Info: 'info',
   Success: 'success',
   Warning: 'warning',
   Error: 'error',
 } as const;
-export type LoaderVariant = (typeof LoaderVariant)[keyof typeof LoaderVariant];
+export type Variant = (typeof Variant)[keyof typeof Variant];
 
-export const AnimatedLoaderVariant = {
-  Info: LoaderVariant.Info,
-  Success: LoaderVariant.Success,
+/**
+ * `AnimatedVariant` is a constrained subset of `Variant` permitted in animated contexts.
+ * Strictly ensures only animation-safe variants can be passed into props when animation logic exists.
+ */
+export const AnimatedVariant = {
+  Info: Variant.Info,
+  Success: Variant.Success,
 } as const;
-export type AnimatedLoaderVariant =
-  (typeof AnimatedLoaderVariant)[keyof typeof AnimatedLoaderVariant];
+export type AnimatedVariant =
+  (typeof AnimatedVariant)[keyof typeof AnimatedVariant];
 
-export const Color = {
-  Blue: 'blue',
-  Green: 'green',
-  Yellow: 'yellow',
-  Red: 'red',
+/**
+ * `Role` defines valid ARIA role values for the progress bar.
+ * Passed directly to the `role` attribute to ensure accessibility.
+ */
+export const Role = {
+  Meter: 'meter',
+  Progress: 'progressbar',
 } as const;
-export type Color = (typeof Color)[keyof typeof Color];
+export type Role = (typeof Role)[keyof typeof Role];
 
 type BaseProps = DarkModeProps &
   AriaLabelPropsWithLabel &
@@ -65,110 +57,119 @@ type BaseProps = DarkModeProps &
     /** Optional descriptive text below the progress bar. */
     description?: React.ReactNode;
 
-    /** Optional formatting of progress value text. If not defined, progress value is not displayed. */
+    /**
+     * Optional formatting of progress value text.
+     * If undefined, no progress value is displayed.
+     */
     formatValue?: FormatValueType;
 
     /**
-     * If true, displays icon next to progress value.
-     * If `variant` is `'success'` or `status` is `'healthy'`, the icon only appears when progress reaches 100%.
+     * When `true`, displays icon next to progress value.
+     * If `variant` is `'success'`, the icon only appears when progress reaches 100%.
      */
     showIcon?: boolean;
   };
 
-interface BaseLoaderProps {
-  /** Specifies whether the progress bar is a meter or loader. */
-  type: typeof Type.Loader;
-}
-interface BaseDeterminateLoaderProps {
-  /** When `true`, shows an infinite looping animation along the bar. */
+interface BaseDeterminateProps {
+  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. Only available for `info` and `success` variants. */
   isIndeterminate?: false;
 
-  /** Current progress value. Optional only if `isIndeterminate` is `true` for a loader type. */
+  /** Current progress value. Optional only if isIndeterminate is `true`. */
   value: number;
 
-  /** Optional maximum progress value. Not available if `isIndeterminate` is `true` for loaders. */
+  /** Maximum progress value. */
   maxValue?: number;
 
-  /** Pauses progress and shows a disabled style. Not available if `isIndeterminate` is `true` for loaders. */
+  /** When `true`, shows a disabled style and pauses animation. */
   disabled?: boolean;
 }
+interface DeterminatePlainProgressProps {
+  /** Specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar". */
+  roleType?: typeof Role.Progress;
 
-interface DeterminatePlainLoaderProps {
-  /** Variant for loader type. Animation is only available for `info` or `success` variants. */
-  variant?: LoaderVariant;
+  /** Optional variant of the progress bar. Defaults to "info". */
+  variant?: Variant;
 
-  /** When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. */
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". Only available for `info` and `success` variants. */
   enableAnimation?: false;
 }
 
-interface DeterminateAnimatedLoaderProps {
-  /** Variant for loader type. Animation is only available for `info` or `success` variants. */
-  variant?: AnimatedLoaderVariant;
+interface DeterminateAnimatedProgressProps {
+  /** Specify role of the progress bar ("progressbar" or "meter"). Defaults to "progressbar". */
+  roleType?: typeof Role.Progress;
 
-  /** When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. */
+  /** Optional variant of the progress bar. Defaults to "info". */
+  variant?: AnimatedVariant;
+
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". Only available for `info` and `success` variants. */
   enableAnimation: true;
 }
 
-type DeterminateLoaderProps = BaseDeterminateLoaderProps &
-  (DeterminatePlainLoaderProps | DeterminateAnimatedLoaderProps);
+type DeterminateProgressProps =
+  | DeterminatePlainProgressProps
+  | DeterminateAnimatedProgressProps;
 
-interface IndeterminateLoaderProps {
-  /** When `true`, shows an infinite looping animation along the bar. */
+interface DeterminateMeterProps {
+  /** Role type of the progress bar ("progressbar" or "meter"). */
+  roleType: typeof Role.Meter;
+
+  /** Optional variant of the progress bar. Defaults to "info". */
+  variant?: Variant;
+}
+
+type DeterminateProps = BaseDeterminateProps &
+  (DeterminateMeterProps | DeterminateProgressProps);
+
+interface IndeterminateProps {
+  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. Only available for `info` and `success` variants. */
   isIndeterminate: true;
 
-  /** Current progress value. Optional only if `isIndeterminate` is `true` for a loader type. */
+  /** Current progress value. Optional only if isIndeterminate is `true`. */
   value?: number;
 
-  /** Variant for loader type. Animation is only available for `info` or `success` variants. */
-  variant?: AnimatedLoaderVariant;
+  /** Optional variant of the progress bar. Defaults to "info". */
+  variant?: AnimatedVariant;
 }
 
-type LoaderProps = BaseLoaderProps &
-  (DeterminateLoaderProps | IndeterminateLoaderProps);
+export type ProgressBarProps = BaseProps &
+  (DeterminateProps | IndeterminateProps);
 
-interface MeterProps {
-  /** Specifies whether the progress bar is a meter or loader. */
-  type: typeof Type.Meter;
-
-  /** Current progress value. Optional only if `isIndeterminate` is `true` for a loader type. */
-  value: number;
-
-  /** Optional maximum progress value. Not available if `isIndeterminate` is `true` for loaders. */
-  maxValue?: number;
-
-  /** Pauses progress and shows a disabled style. Not available if `isIndeterminate` is `true` for loaders. */
-  disabled?: boolean;
-
-  /** Status for meter type indicating health state. */
-  status?: MeterStatus;
-}
-
-export type ProgressBarProps = BaseProps & (MeterProps | LoaderProps);
-
+/**
+ * Internal, flattened form of `ProgressBarProps` used within the ProgressBar implementation.
+ *
+ * Collapses the discriminated union into a uniform shape with resolved and normalized values,
+ * eliminating the need for runtime narrowing or conditional logic.
+ */
 export interface ResolvedProgressBarProps {
-  /** Current progress value. Optional only if `isIndeterminate` is `true` for a loader type. */
+  /** Resolved role of the progress bar ("progressbar" or "meter"). */
+  role: Role;
+
+  /** Current progress value. Optional only if isIndeterminate is `true`. */
   value: number | undefined;
 
-  /** Optional maximum progress value. Not available if `isIndeterminate` is `true` for loaders. */
+  /** Maximum progress value. */
   maxValue: number | undefined;
 
-  /** Pauses progress and shows a disabled style. Not available if `isIndeterminate` is `true` for loaders. */
+  /** When `true`, shows a disabled style and pauses animation. */
   disabled: boolean;
 
-  /** Color displayed for status or variant. Animation is only available for `blue` or `green` colors. */
-  color: Color;
-
-  /** When `true`, shows an infinite looping animation along the bar. */
+  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. */
   isIndeterminate: boolean;
 
-  /** When `true`, enables shimmer animation for long-running processes. Not available for meters or if `isIndeterminate` is `true` for loaders. */
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". */
   enableAnimation: boolean;
 }
 
+/**
+ * Internal enum-like type representing resolved animation state,
+ * derived from props like `isIndeterminate`, `enableAnimation`, and `role`.
+ *
+ * Centralizes animation logic to avoid repeated condition checks in rendering.
+ */
 export const AnimationMode = {
-  DeterminateBase: 'determinate-base',
-  DeterminateAnimated: 'determinate-animated',
   Indeterminate: 'indeterminate',
+  DeterminatePlain: 'determinate-plain',
+  DeterminateAnimated: 'determinate-animated',
   Transition: 'indeterminate-to-determinate-transition',
-};
+} as const;
 export type AnimationMode = (typeof AnimationMode)[keyof typeof AnimationMode];

@@ -1,5 +1,6 @@
+import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { isDefined, Theme } from '@leafygreen-ui/lib';
 import {
   color as colorToken,
   spacing as spacingToken,
@@ -11,14 +12,14 @@ import {
   getDeterminateAnimatedGradient,
   getIndeterminateGradient,
   INDETERMINATE_ANIMATION_DURATION_MS,
-  indeterminateBarPositions,
-  indeterminateBarWidths,
+  indeterminateLeftOffset,
+  indeterminateWidth,
   SHIMMER_ANIMATION_DURATION_MS,
   TEXT_ANIMATION_DURATION,
   TRANSITION_ANIMATION_DURATION,
   WIDTH_ANIMATION_DURATION,
-} from './ProgressBar.constants';
-import { AnimationMode, Color, Size } from './ProgressBar.types';
+} from './constants';
+import { AnimationMode, Size, Variant } from './ProgressBar.types';
 import { getPercentage } from './utils';
 
 const shimmerKeyframes = keyframes`
@@ -32,32 +33,32 @@ const shimmerKeyframes = keyframes`
 
 const cycleKeyframes = keyframes`
   0% {
-    left: ${indeterminateBarPositions.start};
-    width: ${indeterminateBarWidths.narrow};
+    left: ${indeterminateLeftOffset.start};
+    width: ${indeterminateWidth.narrow};
   }
   25% {
-    left: ${indeterminateBarPositions.quarter};
-    width: ${indeterminateBarWidths.narrow};
+    left: ${indeterminateLeftOffset.quarter};
+    width: ${indeterminateWidth.narrow};
   }
   47% {
-    left: ${indeterminateBarPositions.half};
-    width: ${indeterminateBarWidths.wide};
+    left: ${indeterminateLeftOffset.half};
+    width: ${indeterminateWidth.wide};
   }
   50% {
-    left: ${indeterminateBarPositions.half};
-    width: ${indeterminateBarWidths.wide};
+    left: ${indeterminateLeftOffset.half};
+    width: ${indeterminateWidth.wide};
   }
   53% {
-    left: ${indeterminateBarPositions.half};
-    width: ${indeterminateBarWidths.wide};
+    left: ${indeterminateLeftOffset.half};
+    width: ${indeterminateWidth.wide};
   }
   75% {
-    left: ${indeterminateBarPositions.threeQuarters};
-    width: ${indeterminateBarWidths.narrow};
+    left: ${indeterminateLeftOffset.threeQuarters};
+    width: ${indeterminateWidth.narrow};
   }
   100% {
-    left: ${indeterminateBarPositions.end};
-    width: ${indeterminateBarWidths.narrow};
+    left: ${indeterminateLeftOffset.end};
+    width: ${indeterminateWidth.narrow};
   }
 `;
 
@@ -86,6 +87,15 @@ export const truncatedTextStyles = css`
   width: 100%;
 `;
 
+export const hiddenStyles = css`
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+`;
+
 export const getHeaderValueStyles = ({
   theme,
   disabled,
@@ -105,23 +115,28 @@ export const getHeaderValueStyles = ({
 
 export const getHeaderIconStyles = ({
   theme,
-  color,
+  variant,
   disabled,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
 }) => css`
   margin-bottom: ${spacingToken[50]}px; // align icon with text baseline
   color: ${disabled
     ? colorToken[theme].icon.disabled.default
-    : barColorStyles[theme][color].icon};
+    : barColorStyles[theme][variant].icon};
 `;
 
 export const getAnimatedTextStyles = () => css`
   opacity: 0;
   animation: ${fadeFromWhiteKeyframes} ${TEXT_ANIMATION_DURATION}ms ease-in-out
     forwards;
+
+  ${prefersReducedMotion(`
+    animation: none;
+    opacity: 1;
+  `)}
 `;
 
 export const getBarTrackStyles = ({
@@ -144,14 +159,14 @@ const getBaseBarFillStyles = () => css`
   border-radius: inherit;
 `;
 
-const getDeterminateBarFillStyles = ({
+const getDeterminateFillStyles = ({
   theme,
-  color,
+  variant,
   disabled,
   width,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
   width: number;
 }) => css`
@@ -159,19 +174,23 @@ const getDeterminateBarFillStyles = ({
   transition: width ${WIDTH_ANIMATION_DURATION}ms ease-in-out;
   background-color: ${disabled
     ? barColorStyles[theme].disabledBar
-    : barColorStyles[theme][color].bar};
+    : barColorStyles[theme][variant].bar};
+
+  ${prefersReducedMotion(`
+    transition: none;
+  `)}
 `;
 
-const getDeterminateAnimatedBarFillStyles = ({
+const getDeterminateAnimatedFillStyles = ({
   theme,
-  color,
+  variant,
   disabled,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
 }) => {
-  const selectedColorStyle = barColorStyles[theme][color];
+  const selectedColorStyle = barColorStyles[theme][variant];
   const hasAnimation = !disabled && 'shimmerFade' in selectedColorStyle;
 
   return (
@@ -189,19 +208,23 @@ const getDeterminateAnimatedBarFillStyles = ({
         background-size: 200% 100%;
         animation: ${shimmerKeyframes} ${SHIMMER_ANIMATION_DURATION_MS}ms linear
           infinite;
+
+        ${prefersReducedMotion(`
+          animation: none;
+        `)}
       }
     `
   );
 };
 
-const getIndeterminateBarFillStyles = ({
+const getIndeterminateFillStyles = ({
   theme,
-  color,
+  variant,
 }: {
   theme: Theme;
-  color: Color;
+  variant: Variant;
 }) => {
-  const selectedColorStyle = barColorStyles[theme][color];
+  const selectedColorStyle = barColorStyles[theme][variant];
 
   return css`
     width: 100%;
@@ -210,17 +233,22 @@ const getIndeterminateBarFillStyles = ({
       content: '';
       position: absolute;
       top: 0;
-      left: ${indeterminateBarPositions.start};
+      left: ${indeterminateLeftOffset.start};
       height: 100%;
-      width: ${indeterminateBarWidths.narrow};
+      width: ${indeterminateWidth.narrow};
       background: ${getIndeterminateGradient(selectedColorStyle)};
       animation: ${cycleKeyframes} ${INDETERMINATE_ANIMATION_DURATION_MS}ms
         linear infinite;
+
+      ${prefersReducedMotion(`
+        animation: none;
+        left: ${indeterminateLeftOffset.half};
+      `)}
     }
   `;
 };
 
-export const getTransitioningBarFillStyles = () => css`
+export const transitioningFillStyles = css`
   opacity: 0;
   width: 0%;
   transition: opacity ${TRANSITION_ANIMATION_DURATION}ms ease-out,
@@ -230,14 +258,14 @@ export const getTransitioningBarFillStyles = () => css`
 export const getBarFillStyles = ({
   animationMode,
   theme,
-  color,
+  variant,
   disabled,
-  value = 0,
+  value,
   maxValue,
 }: {
   animationMode: AnimationMode;
   theme: Theme;
-  color: Color;
+  variant: Variant;
   disabled?: boolean;
   value?: number;
   maxValue?: number;
@@ -246,45 +274,38 @@ export const getBarFillStyles = ({
 
   let addOnStyles;
 
-  const determinate = getDeterminateBarFillStyles({
+  const determinate =
+    isDefined(value) &&
+    getDeterminateFillStyles({
+      theme,
+      variant,
+      disabled,
+      width: getPercentage(value, maxValue),
+    });
+
+  const determinateAnimated = getDeterminateAnimatedFillStyles({
     theme,
-    color,
+    variant,
     disabled,
-    width: getPercentage(value, maxValue),
   });
 
-  const determinateAnimated = getDeterminateAnimatedBarFillStyles({
-    theme,
-    color,
-    disabled,
-  });
-
-  const indeterminate = getIndeterminateBarFillStyles({ theme, color });
+  const indeterminate = getIndeterminateFillStyles({ theme, variant });
 
   switch (animationMode) {
     case AnimationMode.Transition:
-      addOnStyles = cx(indeterminate, getTransitioningBarFillStyles());
+      addOnStyles = [indeterminate, transitioningFillStyles];
       break;
     case AnimationMode.Indeterminate:
-      addOnStyles = indeterminate;
+      addOnStyles = [indeterminate];
       break;
     case AnimationMode.DeterminateAnimated:
-      addOnStyles = cx(determinate, determinateAnimated);
+      addOnStyles = [determinate, determinateAnimated];
       break;
-    case AnimationMode.DeterminateBase:
+    case AnimationMode.DeterminatePlain:
     default:
-      addOnStyles = determinate;
+      addOnStyles = [determinate];
       break;
   }
 
-  return cx(baseStyles, addOnStyles);
+  return cx(baseStyles, ...addOnStyles);
 };
-
-export const getHiddenStyles = () => css`
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-`;
