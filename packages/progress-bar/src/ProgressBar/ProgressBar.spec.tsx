@@ -292,6 +292,7 @@ describe('packages/progress-bar', () => {
           value={TEST_VALUE_OVER_50}
           maxValue={TEST_MAX_VALUE}
           {...requiredA11yArgs}
+          {...requiredA11yArgs}
         />,
       );
       expect(screen.queryByRole('status')).toBeNull();

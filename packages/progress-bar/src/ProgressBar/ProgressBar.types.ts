@@ -82,8 +82,10 @@ interface BaseDeterminateProps {
   value: number;
 
   /** Maximum progress value. */
+  /** Maximum progress value. */
   maxValue?: number;
 
+  /** When `true`, shows a disabled style and pauses animation. */
   /** When `true`, shows a disabled style and pauses animation. */
   disabled?: boolean;
 }
@@ -94,6 +96,7 @@ interface DeterminatePlainProgressProps {
   /** Optional variant of the progress bar. Defaults to "info". */
   variant?: Variant;
 
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". Only available for `info` and `success` variants. */
   /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". Only available for `info` and `success` variants. */
   enableAnimation?: false;
 }
