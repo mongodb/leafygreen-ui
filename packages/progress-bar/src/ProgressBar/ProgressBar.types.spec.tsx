@@ -37,7 +37,7 @@ test.skip('Type errors for incompatible prop combinations', () => {
     };
 
     /*
-     * restrictions on determinate bars with progress role AND have animation enabled
+     * restrictions on determinate bars with progress role AND with animation enabled
      */
     // @ts-expect-error - animated progress cannot be warning variant
     const _DeterminateProgressCannotBeWarningIfAnimated: ProgressBarProps = {

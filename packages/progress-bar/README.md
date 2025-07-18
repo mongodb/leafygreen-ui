@@ -9,7 +9,6 @@
 The `ProgressBar` component supports two types:
 
 - **Indeterminate** — shows an infinite looping animation to indicate ongoing activity without specifying exact progress. Useful when the duration or total work is unknown.
-
 - **Determinate** — shows measurable progress toward a known maximum. When using a determinate progress bar, specify whether you're using it as a:
   - **Meter** — a snapshot of current value, often with a health/status indication (e.g., disk space used).
   - **Progress bar** — a dynamic bar that fills as a task progresses toward completion (e.g., file upload).
@@ -75,26 +74,6 @@ const [paused, setPaused] = useState(false);
   description="Your data is uploading!"
   formatValue={(value: number) => `${value} files downloaded`}
   value={uploaded}
-/>;
-```
-
-### Meter
-
-```js
-import ProgressBar from '@leafygreen-ui/progress-bar';
-
-const [used, setUsed] = useState(14);
-const totalSpaceAvailable = 128
-
-<ProgressBar
-  role="meter"
-  variant="warning"
-  label="Disk Space Used"
-  formatValue={(value: number, maxValue: number) =>
-    `${value}/${maxValue} GB used`
-  }
-  value={used}
-  maxValue={totalSpaceAvailable}
 />;
 ```
 

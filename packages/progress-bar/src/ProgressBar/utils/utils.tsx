@@ -35,10 +35,6 @@ const getValidMaxValue = (maxValue?: number) => {
     return DEFAULT_MAX_VALUE;
   }
 
-  if (!isDefined(maxValue) || maxValue <= 0) {
-    return DEFAULT_MAX_VALUE;
-  }
-
   return maxValue;
 };
 
