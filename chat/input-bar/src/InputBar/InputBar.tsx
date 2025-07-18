@@ -271,8 +271,8 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
 
                   // Position cursor after the inserted newline
                   setTimeout(() => {
-                    textArea.selectionStart = textArea.selectionEnd =
-                      selectionStart + 1;
+                    textArea.selectionStart = selectionStart + 1;
+                    textArea.selectionEnd = selectionStart + 1;
                   });
                 }
               }
