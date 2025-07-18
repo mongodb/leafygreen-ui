@@ -1,10 +1,8 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 
+import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import { cx } from '@leafygreen-ui/emotion';
-import SparkleIcon from '@leafygreen-ui/icon/dist/Sparkle';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
@@ -21,7 +19,7 @@ export const ChatTrigger = forwardRef(
     { className, children, darkMode: darkModeProp, ...rest }: ChatTriggerProps,
     ref: ForwardedRef<HTMLButtonElement>,
   ) => {
-    const { theme } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
     return (
       <button
         className={cx(baseStyles, themeStyles[theme], className)}
@@ -29,11 +27,7 @@ export const ChatTrigger = forwardRef(
         ref={ref}
       >
         <div className={contentContainerStyles}>
-          <SparkleIcon
-            fill={
-              theme === Theme.Light ? palette.green.dark1 : palette.green.light1
-            }
-          />
+          <AssistantAvatar darkMode={darkMode} disabled={rest.disabled} />
           {children && (
             <Body
               baseFontSize={BaseFontSize.Body1}
