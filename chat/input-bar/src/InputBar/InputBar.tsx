@@ -446,6 +446,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                   className={cx({
                     [sendButtonDisabledStyles]: isSendButtonDisabled(),
                   })}
+                  title="Send message"
                 >
                   {shouldRenderButtonText && 'Enter'}
                 </Button>
