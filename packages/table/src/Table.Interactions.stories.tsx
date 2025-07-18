@@ -51,6 +51,20 @@ const meta: StoryMetaType<typeof Table> = {
       source: { type: 'code' },
     },
   },
+  decorators: [
+    Story => (
+      <div
+        data-testid="wrapper-container"
+        style={{
+          width: '100%',
+          height: '400px', // force shorter container to guarantee scroll for snapshots
+          overflow: 'auto',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 };
 export default meta;
 
@@ -184,17 +198,24 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
-// TODO: fix this test https://jira.mongodb.org/browse/LG-4867
 export const StickyHeader = {
   render: (args: StoryTableProps) => <Template {...args} />,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
+    const container = await canvas.findByTestId('wrapper-container');
     const table = await canvas.findByTestId('lg-table');
+    const headerCells = await canvas.findAllByTestId('lg-table-header');
 
-    window.scrollTo(0, 500);
+    expect(table).toHaveAttribute('data-is-sticky', 'false');
+
+    container.scrollTo(0, 400);
 
     await waitFor(async () => {
       expect(table).toHaveAttribute('data-is-sticky', 'true');
+
+      for (const headerCell of headerCells) {
+        expect(headerCell).toBeVisible();
+      }
     });
   },
 };
