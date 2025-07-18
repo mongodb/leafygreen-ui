@@ -64,16 +64,18 @@ const total = 100;
 ```js
 import ProgressBar from '@leafygreen-ui/progress-bar';
 
-const [uploaded, setUploaded] = useState(0);
-const [paused, setPaused] = useState(false);
+const [used, setUsed] = useState(96);
+const totalSpaceAvailable = 128;
 
 <ProgressBar
-  type="loader"
-  isIndeterminate={true}
-  label="Files Downloading"
-  description="Your data is uploading!"
-  formatValue={(value: number) => `${value} files downloaded`}
-  value={uploaded}
+  role="meter"
+  variant="warning"
+  label="Disk Space Used"
+  formatValue={(value: number, maxValue: number) =>
+    `${value}/${maxValue} GB used`
+  }
+  value={used}
+  maxValue={totalSpaceAvailable}
 />;
 ```
 

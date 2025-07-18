@@ -125,6 +125,7 @@ export const resolveProgressBarProps = (
 
 /**
  * Omits resolved props from the original props object.
+ * Useful for spreading the remaining props while excluding resolved ones.
  *
  * @param obj - Original props object
  * @param resolved - Resolved props to omit
