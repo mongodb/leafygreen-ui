@@ -1,5 +1,15 @@
 # @lg-chat/fixed-chat-window
 
+## 4.0.4
+
+### Patch Changes
+
+- 8db14f9: Replace gray icon with `AssistantAvatar` with gradient
+- Updated dependencies [3e8fbd7]
+  - @leafygreen-ui/avatar@3.1.0
+  - @lg-chat/chat-window@4.0.4
+  - @lg-chat/title-bar@4.0.4
+
 ## 4.0.3
 
 ### Patch Changes
