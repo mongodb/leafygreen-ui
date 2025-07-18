@@ -253,15 +253,28 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
               if (!e.ctrlKey && !e.shiftKey) {
                 formRef.current?.requestSubmit();
               } else if (e.ctrlKey || e.shiftKey) {
-                // ctrlKey + Enter doesn't enter a \n by default. Add character manually
-                const newValue = messageBody + '\n';
-                setReactTextAreaValue(
-                  textareaRef?.current as HTMLTextAreaElement,
-                  newValue,
-                );
-                updateValue(newValue, textareaRef);
-                const changeEvent = new Event('change', { bubbles: true });
-                textareaRef.current?.dispatchEvent(changeEvent);
+                const textArea = textareaRef?.current as HTMLTextAreaElement;
+
+                if (textArea) {
+                  // Insert a new line at the cursor position
+                  const { selectionStart, selectionEnd } = textArea;
+                  const newValue =
+                    messageBody?.substring(0, selectionStart) +
+                    '\n' +
+                    messageBody?.substring(selectionEnd);
+
+                  // Update the textarea value
+                  setReactTextAreaValue(textArea, newValue);
+                  updateValue(newValue, textareaRef);
+                  const changeEvent = new Event('change', { bubbles: true });
+                  textareaRef.current?.dispatchEvent(changeEvent);
+
+                  // Position cursor after the inserted newline
+                  setTimeout(() => {
+                    textArea.selectionStart = selectionStart + 1;
+                    textArea.selectionEnd = selectionStart + 1;
+                  });
+                }
               }
             }
             break;
