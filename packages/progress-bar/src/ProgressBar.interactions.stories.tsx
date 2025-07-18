@@ -11,6 +11,7 @@ import {
 import { ProgressBar, ProgressBarProps } from '.';
 
 const interactionWaitTimes = {
+  micro: 50,
   short: 1500,
   medium: 3500,
 };
@@ -46,7 +47,7 @@ const meta: StoryMetaType<typeof ProgressBar> = {
 };
 export default meta;
 
-export const WithChangingValue: StoryObj<typeof ProgressBar> = {
+export const WithSuddenChangingValue: StoryObj<typeof ProgressBar> = {
   args: {
     ...requiredA11yArgs,
     value: storyValues.value,
@@ -84,9 +85,56 @@ export const WithChangingValue: StoryObj<typeof ProgressBar> = {
   },
 };
 
+export const WithIncrementalChangingValue: StoryObj<typeof ProgressBar> = {
+  args: {
+    ...requiredA11yArgs,
+    value: storyValues.value,
+    maxValue: storyValues.maxValue,
+    formatValue: 'fraction',
+  },
+  render: initialArgs => {
+    const { value: startValue, maxValue: endValue } = storyValues;
+
+    // create transitions array containing each individual step
+    const transitions = Array.from(
+      { length: endValue - startValue },
+      (_, i) =>
+        [
+          (i + 1) * interactionWaitTimes.micro,
+          { ...initialArgs, value: startValue + i + 1 },
+        ] as [number, ProgressBarProps],
+    );
+
+    return <DynamicProgressBar transitions={transitions} {...initialArgs} />;
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
+
+    expect(progressBar).toHaveAttribute(
+      'aria-valuenow',
+      storyValues.value.toString(),
+    );
+
+    await waitFor(
+      () => {
+        expect(progressBar.getAttribute('aria-valuenow')).toBe(
+          storyValues.maxValue.toString(),
+        );
+      },
+      {
+        timeout:
+          (storyValues.maxValue - storyValues.value) *
+            interactionWaitTimes.micro +
+          STORY_TIMEOUT_BUFFER,
+      },
+    );
+  },
+};
+
 export const WithChangingDescriptions: StoryObj<typeof ProgressBar> = {
   args: {
-    ...WithChangingValue.args,
+    ...WithSuddenChangingValue.args,
     description: <span>Helper text</span>,
   },
   render: initialArgs => (

@@ -50,7 +50,7 @@ describe('getTestUtils', () => {
   test('returns all expected elements when determinate with role "meter"', () => {
     render(
       <ProgressBar
-        roleType={Role.Meter}
+        role={Role.Meter}
         value={0.5}
         description="Sample description"
         formatValue="number"
@@ -82,7 +82,7 @@ describe('getTestUtils', () => {
           data-lgid="lg-progress_1"
         />
         <ProgressBar
-          roleType={Role.Meter}
+          role={Role.Meter}
           value={0.7}
           label="Second Progress"
           formatValue="number"

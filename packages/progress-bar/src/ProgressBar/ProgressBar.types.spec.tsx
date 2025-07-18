@@ -10,8 +10,8 @@ test.skip('Type errors for incompatible prop combinations', () => {
      */
     const _IndeterminateCannotUseRoleType: ProgressBarProps = {
       isIndeterminate: true,
-      // @ts-expect-error - indeterminate cannot use roleType prop
-      roleType: Role.Progress,
+      // @ts-expect-error - indeterminate cannot use role prop
+      role: Role.Progress,
       ...requiredA11yArgs,
     };
 
@@ -37,11 +37,11 @@ test.skip('Type errors for incompatible prop combinations', () => {
     };
 
     /*
-     * restrictions on determinate bars with progress role AND have animation enabled
+     * restrictions on determinate bars with progress role AND with animation enabled
      */
     // @ts-expect-error - animated progress cannot be warning variant
     const _DeterminateProgressCannotBeWarningIfAnimated: ProgressBarProps = {
-      roleType: Role.Progress,
+      role: Role.Progress,
       value: 50,
       enableAnimation: true,
       variant: Variant.Warning,
@@ -50,7 +50,7 @@ test.skip('Type errors for incompatible prop combinations', () => {
 
     // @ts-expect-error - animated progress cannot be error variant
     const _DeterminateProgressCannotBeErrorIfAnimated: ProgressBarProps = {
-      roleType: Role.Progress,
+      role: Role.Progress,
       value: 50,
       enableAnimation: true,
       variant: Variant.Error,
@@ -61,7 +61,7 @@ test.skip('Type errors for incompatible prop combinations', () => {
      * restrictions on determinate bars with meter role
      */
     const _DeterminateMeterCannotUseEnableAnimation: ProgressBarProps = {
-      roleType: Role.Meter,
+      role: Role.Meter,
       value: 10,
       // @ts-expect-error - meter cannot enable animation
       enableAnimation: true,
@@ -78,14 +78,14 @@ test.skip('Type errors for incompatible prop combinations', () => {
     };
 
     const _ValidDeterminateMeter: ProgressBarProps = {
-      roleType: Role.Meter,
+      role: Role.Meter,
       value: 10,
       variant: Variant.Warning,
       ...requiredA11yArgs,
     };
 
     const _ValidDeterminateProgress: ProgressBarProps = {
-      roleType: Role.Progress,
+      role: Role.Progress,
       value: 30,
       enableAnimation: true,
       variant: Variant.Success,

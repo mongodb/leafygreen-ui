@@ -14,13 +14,19 @@ import {
   DEFAULT_SIZE,
   DEFAULT_VARIANT,
   iconsPendingCompletion,
+  WIDTH_ANIMATION_SPEED,
 } from './constants';
-import { useIdIdentifiers, useScreenReaderAnnouncer } from './hooks';
 import {
-  containerStyles,
+  useComputedTransitionDuration,
+  useIdIdentifiers,
+  useRotatingItems,
+  useScreenReaderAnnouncer,
+} from './hooks';
+import {
   getAnimatedTextStyles,
   getBarFillStyles,
   getBarTrackStyles,
+  getContainerStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
   headerStyles,
@@ -32,34 +38,47 @@ import {
   getAnimationMode,
   getFormattedValue,
   getHeaderIcon,
+  getPercentage,
   getValueAriaAttributes,
+  omitProps,
   resolveProgressBarProps,
 } from './utils';
 export function ProgressBar(props: ProgressBarProps) {
+  const resolved = resolveProgressBarProps(props);
+
   const { role, value, maxValue, disabled, isIndeterminate, enableAnimation } =
-    resolveProgressBarProps(props);
+    resolved;
 
   const {
     size = DEFAULT_SIZE,
     label,
-    description,
+    description: descriptionProp,
     variant = DEFAULT_VARIANT,
     darkMode = false,
     formatValue,
     showIcon: showIconProp = false,
     'aria-label': ariaLabel,
     'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
-  } = props;
+    className,
+    ...rest
+  } = omitProps(props, resolved);
 
   const { theme } = useDarkMode(darkMode);
 
-  const { barId, labelId, descId } = useIdIdentifiers(role, label, description);
+  // get identifiers for ARIA attributes and testing
+  const { barId, labelId, descId } = useIdIdentifiers(
+    role,
+    label,
+    descriptionProp,
+  );
   const lgIds = getLgIds(dataLgId);
 
+  // determine if icon should be shown
   const showIcon = iconsPendingCompletion.includes(variant)
     ? showIconProp && value === maxValue
     : showIconProp;
 
+  // track animation mode changes
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
     getAnimationMode(isIndeterminate, enableAnimation),
   );
@@ -83,8 +102,10 @@ export function ProgressBar(props: ProgressBarProps) {
     });
   }, [isIndeterminate, enableAnimation]);
 
-  const [isNewDescription, setIsNewDescription] = useState(false);
+  // track description text changes
+  const description = useRotatingItems(descriptionProp);
   const prevDescription = usePrevious(description);
+  const [isNewDescription, setIsNewDescription] = useState(false);
 
   useEffect(() => {
     // if description is changed, apply fade-in transition
@@ -93,6 +114,17 @@ export function ProgressBar(props: ProgressBarProps) {
     }
   }, [description, prevDescription]);
 
+  // get width and animation duration for determinate progress bars
+  const displayWidth = isDefined(value)
+    ? getPercentage(value, maxValue)
+    : undefined;
+
+  const widthAnimationDuration = useComputedTransitionDuration({
+    currentValue: displayWidth,
+    speed: WIDTH_ANIMATION_SPEED,
+  });
+
+  // get screen reader message based on value changes
   const screenReaderMessage = useScreenReaderAnnouncer({
     role,
     value,
@@ -104,8 +136,9 @@ export function ProgressBar(props: ProgressBarProps) {
     <LeafyGreenProvider darkMode={darkMode}>
       <div
         data-lgid={lgIds.root}
-        className={containerStyles}
         aria-disabled={disabled}
+        className={getContainerStyles(className)}
+        {...rest}
       >
         <div className={headerStyles}>
           <Label
@@ -160,8 +193,8 @@ export function ProgressBar(props: ProgressBarProps) {
                 theme,
                 variant,
                 disabled,
-                value,
-                maxValue,
+                width: displayWidth,
+                widthAnimationDuration,
                 animationMode,
               })}
               // if on fade-out transition, revert back to base mode

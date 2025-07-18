@@ -49,7 +49,7 @@ describe('resolveProgressBarProps', () => {
 
   test('it correctly resolves props for determinate with role "meter"', () => {
     const props = {
-      roleType: Role.Meter,
+      role: Role.Meter,
       value: 50,
       maxValue: 100,
       ...requiredA11yArgs,
@@ -68,7 +68,7 @@ describe('resolveProgressBarProps', () => {
 
   test('it ignores invalid props for determinate with role "meter"', () => {
     const props = {
-      roleType: Role.Meter,
+      role: Role.Meter,
       value: 50,
       maxValue: 100,
       enableAnimation: true,
@@ -103,7 +103,7 @@ describe('resolveProgressBarProps', () => {
   test('it ignores invalid props for indeterminate', () => {
     const props = {
       isIndeterminate: true,
-      roleType: Role.Meter,
+      role: Role.Meter,
       enableAnimation: true,
       ...requiredA11yArgs,
     } as const;

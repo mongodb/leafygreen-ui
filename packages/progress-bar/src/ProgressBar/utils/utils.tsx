@@ -98,7 +98,7 @@ export const resolveProgressBarProps = (
   }
 
   // determinate with role "meter"
-  if (props.roleType === Role.Meter) {
+  if (props.role === Role.Meter) {
     warnEnableAnimationFlag(props);
 
     return {
@@ -121,6 +121,29 @@ export const resolveProgressBarProps = (
     disabled: props.disabled ?? false,
     enableAnimation: props.enableAnimation ?? false,
   };
+};
+
+/**
+ * Omits resolved props from the original props object.
+ * Useful for spreading the remaining props while excluding resolved ones.
+ *
+ * @param obj - Original props object
+ * @param resolved - Resolved props to omit
+ * @returns New object with resolved props omitted
+ */
+export const omitProps = (
+  obj: ProgressBarProps,
+  resolved: ResolvedProgressBarProps,
+): Omit<ProgressBarProps, keyof ResolvedProgressBarProps> => {
+  const clone = { ...obj };
+
+  for (const key of Object.keys(resolved) as Array<
+    keyof ResolvedProgressBarProps
+  >) {
+    delete clone[key as keyof ProgressBarProps];
+  }
+
+  return clone;
 };
 
 /**
@@ -222,13 +245,9 @@ export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
 /**
  * Returns the appropriate status icon to display in a header.
  *
- * The icon is determined by the `variant` (e.g., success, warning, error, info),
- * or defaults to a disabled warning icon if `disabled` is true.
- * Any additional props provided are spread onto the returned icon component.
- *
- * @param variant - The visual variant representing the status (optional).
- * @param disabled - If true, overrides variant and returns a warning icon (default: false).
- * @param props - Additional props to apply to the icon (e.g., className, size).
+ * @param param.variant - Optional progress bar variant.
+ * @param param.disabled - If true, overrides variant and returns a warning icon (default: false).
+ * @param param.props - Additional props to spread onto the icon (e.g., className, size).
  * @returns A React element representing the appropriate status icon.
  */
 export const getHeaderIcon = ({
