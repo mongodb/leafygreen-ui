@@ -1,3 +1,12 @@
+import React from 'react';
+
+import {
+  Title,
+  Subtitle as StorybookSubtitle,
+  Description,
+  Primary,
+  Controls,
+} from '@storybook/blocks';
 import {
   ComponentPreview,
   PropCombinations,
@@ -48,6 +57,15 @@ const parameters = {
       code: InlineCode,
     },
     source: { type: 'code' },
+    page: () => (
+      <>
+        <Title />
+        <StorybookSubtitle />
+        <Description />
+        <Primary />
+        <Controls />
+      </>
+    ),
   },
   darkMode: {
     dark: { ...darkTheme },
@@ -58,6 +76,7 @@ const parameters = {
 const preview: Preview = {
   parameters,
   decorators: [ReactStrictMode, ComponentPreview, PropCombinations],
+  tags: ['autodocs'],
 };
 
 export default preview;
