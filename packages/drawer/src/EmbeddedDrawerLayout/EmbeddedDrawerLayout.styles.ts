@@ -35,7 +35,8 @@ const drawerBaseStyles = css`
 
 // If there is no toolbar and the drawer is open, we need to shift the layout by the panel width;
 const drawerOpenStyles = css`
-  grid-template-columns: auto ${PANEL_WIDTH}px;
+  /* grid-template-columns: auto ${PANEL_WIDTH}px; */
+  grid-template-columns: 1fr auto;
 
   /* grid-template-columns: auto var(--drawerWidth); */
 
@@ -51,9 +52,12 @@ const withToolbarBaseStyles = css`
 
 // If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + panel width;
 const withToolbarOpenStyles = css`
-  grid-template-columns: auto ${PANEL_WITH_TOOLBAR_WIDTH + TOOLBAR_WIDTH}px;
+  /* grid-template-columns: auto ${PANEL_WITH_TOOLBAR_WIDTH +
+  TOOLBAR_WIDTH}px; */
 
   /* grid-template-columns: auto calc(var(--drawerWidth) + ${TOOLBAR_WIDTH}px); */
+
+  grid-template-columns: 1fr auto;
 
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
     grid-template-columns: auto ${TOOLBAR_WIDTH}px;

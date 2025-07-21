@@ -54,7 +54,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       useDrawerStackContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
-    const drawerRef = useMergeRefs([fwdRef, ref, resizableRef]);
 
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
@@ -101,6 +100,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [open]);
 
+    useEffect(() => {
+      if (open) {
+        setSize({ width: PANEL_WIDTH, height: 0 });
+      } else {
+        setSize({ width: 0, height: 0 });
+      }
+    }, [open]);
+
     /**
      * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
      *
@@ -127,15 +134,31 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     //   displayMode,
     // });
 
-    const { resizableRef, size, setSize, getResizerProps } = useResizable({
-      enabled: open && displayMode === DisplayMode.Embedded,
-      initialSize: open ? { width: PANEL_WITH_TOOLBAR_WIDTH } : { width: 0 },
-      minSize: { width: 120 },
-      maxSize: { width: 120 },
-      maxViewportPercentages: { width: 60 },
-    });
+    const { resizableRef, size, setSize, getResizerProps, isResizing } =
+      useResizable({
+        enabled: open && displayMode === DisplayMode.Embedded,
+        initialSize: open ? { width: PANEL_WIDTH } : { width: 0 },
+        minSize: { width: 200 },
+        maxSize: { width: 600 }, // Allow resizing up to a reasonable size
+        maxViewportPercentages: { width: 60 },
+        closeThresholds: { width: 120 }, // Snap close if resized to less than 50px
+        onClose,
+      });
 
-    console.log('🐳', { size });
+    // Create merged ref after resizableRef is defined
+    // Use a conditional to ensure resizableRef is only included when it's needed
+    const refsToMerge = [fwdRef, ref];
+    if (displayMode === DisplayMode.Embedded) {
+      refsToMerge.push(resizableRef);
+    }
+    const drawerRef = useMergeRefs(refsToMerge);
+
+    // console.log('Drawer component refs:', {
+    //   size,
+    //   refCurrent: ref.current,
+    //   resizableRefCurrent: resizableRef.current,
+    //   refsToMerge,
+    // });
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -149,6 +172,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
+            size,
+            isResizing,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}

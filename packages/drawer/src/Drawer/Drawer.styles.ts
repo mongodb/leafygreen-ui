@@ -54,8 +54,9 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   all: unset;
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
-  width: 100%;
-  max-width: ${PANEL_WIDTH}px;
+  /* width: 100%; */
+  /* max-width: ${PANEL_WIDTH}px; */
+  width: ${PANEL_WIDTH}px;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
@@ -63,6 +64,7 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   position: relative; // TODO: only for embedded?
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    width: auto;
     max-width: 100%;
     height: 50vh;
   }
@@ -131,20 +133,39 @@ const getOverlayStyles = ({
     },
   );
 
+const getEmbeddedStyles = ({ open, size }: { open: boolean; size: number }) =>
+  cx(
+    css`
+      transition: width ${drawerTransitionDuration}ms linear;
+    `,
+    {
+      [css`
+        /* width: ${PANEL_WIDTH}px; */
+        width: ${size.width}px;
+      `]: open,
+      [css`
+        width: 0;
+      `]: !open,
+    },
+  );
+
 const getDisplayModeStyles = ({
   displayMode,
   open,
   shouldAnimate,
   zIndex,
+  size,
 }: {
   displayMode: DisplayMode;
   open: boolean;
   shouldAnimate: boolean;
   zIndex: number;
+  size: number;
 }) =>
   cx({
     [getOverlayStyles({ open, shouldAnimate, zIndex })]:
       displayMode === DisplayMode.Overlay,
+    [getEmbeddedStyles({ open, size })]: displayMode === DisplayMode.Embedded,
   });
 
 export const getDrawerStyles = ({
@@ -154,6 +175,8 @@ export const getDrawerStyles = ({
   shouldAnimate,
   theme,
   zIndex,
+  size,
+  isResizing,
 }: {
   className?: string;
   displayMode: DisplayMode;
@@ -161,12 +184,19 @@ export const getDrawerStyles = ({
   shouldAnimate: boolean;
   theme: Theme;
   zIndex: number;
+  size: number;
+  isResizing: boolean;
 }) =>
   cx(
     getBaseStyles({ theme }),
-    getDisplayModeStyles({ displayMode, open, shouldAnimate, zIndex }),
+    getDisplayModeStyles({ displayMode, open, shouldAnimate, zIndex, size }),
     className,
     drawerClassName,
+    {
+      [css`
+        transition: none;
+      `]: isResizing,
+    },
   );
 
 export const getDrawerShadowStyles = ({

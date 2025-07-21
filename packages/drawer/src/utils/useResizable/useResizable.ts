@@ -95,7 +95,7 @@ type ResizableReturn = {
   /**
    * A ref to the resizable element that can be used to attach the resizer functionality.
    */
-  resizableRef: React.RefObject<HTMLElement | null>; // TODO: not correct
+  resizableRef: React.RefObject<HTMLElement>;
 };
 
 export const useResizable = ({
@@ -108,31 +108,39 @@ export const useResizable = ({
   onResize,
   maxViewportPercentages,
 }: ResizableProps): ResizableReturn => {
+  // Use a properly typed ref
+  const resizableRef = useRef<HTMLElement>(null);
+
   const [size, setSize] = useState<Size>({
     width: initialSize?.width ?? 0,
     height: initialSize?.height ?? 0,
   });
 
+  // Update size when enabled state or initialSize changes
   useEffect(() => {
     setSize({
       width: initialSize?.width ?? minSize?.width ?? 0,
       height: initialSize?.height ?? minSize?.height ?? 0,
     });
-  }, [enabled]);
+  }, [
+    enabled,
+    initialSize?.width,
+    initialSize?.height,
+    minSize?.width,
+    minSize?.height,
+  ]);
 
-  // console.log('🌈', {
+  // console.log('useResizable hook:', {
   //   initialSize,
-  //   size,
+  //   currentSize: size,
   //   minSize,
   //   maxSize,
-  //   closeThresholds,
-  //   maxViewportPercentages,
+  //   enabled,
+  //   refCurrent: resizableRef.current,
   // });
 
   // State to track if the element is currently being resized
   const [isResizing, setIsResizing] = useState<boolean>(false);
-  // Ref to be attached to the resizable element itself
-  const resizableRef = useRef<HTMLDivElement>(null);
 
   // Refs to store initial mouse position and element size at the start of a drag
   const initialMousePos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -153,21 +161,32 @@ export const useResizable = ({
     let newHeight = initialElementSize.current.height;
     let shouldSnapClose = false;
 
+    // console.log('🐭', { initialMousePos });
+
     // The difference in mouse position from the initial position
     const deltaX = e.clientX - initialMousePos.current.x;
     const deltaY = e.clientY - initialMousePos.current.y;
 
-    console.log('🐞', { x: e.clientX, y: e.clientY, deltaX, deltaY });
+    // console.log('🐞', {
+    //   x: e.clientX,
+    //   y: e.clientY,
+    //   deltaX,
+    //   deltaY,
+    //   initialElementSize,
+    // });
 
     switch (currentHandleType.current) {
       case 'left':
         newWidth = initialElementSize.current.width - deltaX;
         // Check snap close using closeThresholds.width
+
+        console.log('🎃', { closeThresholds, newWidth });
         if (
           closeThresholds &&
           closeThresholds.width !== undefined &&
           newWidth < closeThresholds.width
         ) {
+          console.log('🥊🥊🥊🥊');
           shouldSnapClose = true;
         }
         break;
@@ -322,6 +341,12 @@ export const useResizable = ({
 
           // Capture initial mouse position and current element size
           initialMousePos.current = { x: e.clientX, y: e.clientY };
+          console.log('Resize start:', {
+            mousePosition: { x: e.clientX, y: e.clientY },
+            handleType,
+            resizableElement: resizableRef.current,
+          });
+
           if (resizableRef.current) {
             initialElementSize.current = {
               width: resizableRef.current.offsetWidth,
@@ -357,8 +382,8 @@ export const useResizable = ({
   return {
     size,
     setSize,
-    isResizing: false,
+    isResizing,
     getResizerProps,
-    resizableRef: createRef<HTMLElement>(),
+    resizableRef,
   };
 };

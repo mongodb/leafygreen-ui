@@ -91,7 +91,8 @@ const closedOverlayStyles = css`
 `;
 
 const openEmbeddedStyles = css`
-  grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WITH_TOOLBAR_WIDTH}px;
+  /* grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WITH_TOOLBAR_WIDTH}px; */
+  grid-template-columns: ${TOOLBAR_WIDTH}px auto;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     animation-name: ${drawerInMobile};
@@ -150,7 +151,7 @@ const baseStyles = css`
   .${drawerClassName} {
     grid-area: ${GRID_AREA.innerDrawer};
     position: unset;
-    transition: none;
+    /* transition: none; */
     transform: unset;
     overflow: hidden;
     opacity: 1;
