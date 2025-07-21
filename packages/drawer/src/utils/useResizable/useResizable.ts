@@ -1,7 +1,5 @@
-//@ts-nocheck
-
 import { keyMap } from '@leafygreen-ui/lib';
-import { createRef, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface Size {
   width: number;
@@ -28,7 +26,7 @@ type ResizableProps = {
    * The initial size of the resizable element.
    * If not provided, the element will take its default size.
    */
-  initialSize?: Partial<Size>;
+  initialSize: Partial<Size>;
 
   /**
    * The minimum size the resizable element can be resized to.
@@ -47,7 +45,7 @@ type ResizableProps = {
    * If the size is below this threshold, the element will close.
    * If not provided, there will be no close threshold.
    */
-  closeThresholds?: Partial<Size>;
+  closeThresholds: Partial<Size>;
 
   /**
    * Callback function that is called when the resizable element is closed.
@@ -69,6 +67,14 @@ type ResizableProps = {
   maxViewportPercentages: Partial<Size>;
 };
 
+type ResizerProps = {
+  onMouseDown?: (e: React.MouseEvent) => void;
+  tabIndex?: number;
+  onFocus?: (e: React.KeyboardEvent) => void;
+  onBlur?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
+};
+
 type ResizableReturn = {
   /**
    * The current width and height of the resizable element.
@@ -87,11 +93,9 @@ type ResizableReturn = {
   isResizing: boolean;
 
   /**
-   * A function that takes in a handle type ('left', 'right', 'top', 'bottom') and returns the props needed to be spread onto the resizer element. (e.g., onMouseDown)
+   * A function that takes in a handle type ('left', 'right', 'top', 'bottom') and returns the props needed to be spread onto the resizer element.
    */
-  getResizerProps: (handleType: HandleType) => {
-    onMouseDown: (e: React.MouseEvent) => void;
-  };
+  getResizerProps: (handleType: HandleType) => ResizerProps;
 
   /**
    * A ref to the resizable element that can be used to attach the resizer functionality.
@@ -101,10 +105,10 @@ type ResizableReturn = {
 
 export const useResizable = ({
   enabled = true,
-  initialSize,
-  minSize,
-  maxSize,
-  closeThresholds,
+  initialSize = { width: 0, height: 0 },
+  minSize = { width: 0, height: 0 },
+  maxSize = { width: 0, height: 0 },
+  closeThresholds = { width: 0, height: 0 },
   onClose,
   onResize,
   maxViewportPercentages,
@@ -112,19 +116,22 @@ export const useResizable = ({
   const resizableRef = useRef<HTMLElement>(null);
 
   const [size, setSize] = useState<Size>({
-    width: initialSize?.width ?? 0,
-    height: initialSize?.height ?? 0,
+    width: initialSize.width!,
+    height: initialSize.height!,
   });
 
-  const [widths, setWidths] = useState<number[]>([]);
-  const keyboardWidths = [initialSize.width, minSize.width, maxSize.width];
+  const keyboardWidths = [
+    initialSize.width!,
+    minSize.width ?? initialSize.width!,
+    maxSize.width ?? initialSize.width!,
+  ];
   const sortedKeyboardWidths = [...keyboardWidths].sort((a, b) => a - b);
 
   // Update size when enabled state or initialSize changes
   useEffect(() => {
     setSize({
-      width: initialSize?.width ?? minSize?.width ?? 0,
-      height: initialSize?.height ?? minSize?.height ?? 0,
+      width: initialSize?.width!,
+      height: initialSize?.height!,
     });
   }, [
     enabled,
@@ -365,12 +372,8 @@ export const useResizable = ({
     [enabled],
   );
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    getKeyboardInteraction(e, currentHandleType.current);
-  });
-
   const getKeyboardInteraction = useCallback(
-    (e: React.KeyboardEvent, handleType: HandleType | null) => {
+    (e: KeyboardEvent, handleType: HandleType | null) => {
       console.log('🪻🪻🪻 handleKeyDown', { key: e.code, handleType });
       switch (handleType) {
         case 'left': {
@@ -382,13 +385,13 @@ export const useResizable = ({
                 width => width > size.width,
               );
 
-              if (nextLargerWidth) {
+              if (nextLargerWidth !== undefined) {
                 setSize(prevSize => ({
                   ...prevSize,
                   width: nextLargerWidth,
                 }));
                 // Call onResize if provided
-                onResize?.();
+                onResize?.(size);
               }
 
               console.log({ nextLargerWidth, sortedKeyboardWidths });
@@ -404,13 +407,13 @@ export const useResizable = ({
                 .reverse()
                 .find(width => width < size.width);
 
-              if (nextSmallerWidth) {
+              if (nextSmallerWidth !== undefined) {
                 setSize(prevSize => ({
                   ...prevSize,
                   width: nextSmallerWidth,
                 }));
                 // Call onResize if provided
-                onResize?.();
+                onResize?.(size);
               } else {
                 onClose?.();
                 setIsResizing(false); // Stop the resizing state
@@ -439,13 +442,13 @@ export const useResizable = ({
                 width => width > size.width,
               );
 
-              if (nextLargerWidth) {
+              if (nextLargerWidth !== undefined) {
                 setSize(prevSize => ({
                   ...prevSize,
                   width: nextLargerWidth,
                 }));
                 // Call onResize if provided
-                onResize?.();
+                onResize?.(size);
               }
               break;
             }
@@ -456,13 +459,13 @@ export const useResizable = ({
                 .reverse()
                 .find(width => width < size.width);
 
-              if (nextSmallerWidth) {
+              if (nextSmallerWidth !== undefined) {
                 setSize(prevSize => ({
                   ...prevSize,
                   width: nextSmallerWidth,
                 }));
                 // Call onResize if provided
-                onResize?.();
+                onResize?.(size);
               } else {
                 onClose?.();
                 setIsResizing(false);
@@ -481,6 +484,14 @@ export const useResizable = ({
           break;
       }
     },
+    [size, sortedKeyboardWidths, onResize, onClose, initialSize, minSize],
+  );
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      getKeyboardInteraction(e, currentHandleType.current);
+    },
+    [getKeyboardInteraction],
   );
 
   // Effect hook to add and remove global mouse event listeners
