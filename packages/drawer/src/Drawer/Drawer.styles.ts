@@ -141,7 +141,7 @@ const getEmbeddedStyles = ({ open, size }: { open: boolean; size: number }) =>
     {
       [css`
         /* width: ${PANEL_WIDTH}px; */
-        width: ${size.width}px;
+        width: ${size}px;
       `]: open,
       [css`
         width: 0;

@@ -8,14 +8,14 @@ interface Size {
   height: number;
 }
 
-const handleTypes = {
+const handleType = {
   left: 'left',
   right: 'right',
   top: 'top',
   bottom: 'bottom',
 } as const;
 
-type HandleType = (typeof handleTypes)[keyof typeof handleTypes];
+export type HandleType = (typeof handleType)[keyof typeof handleType];
 
 type ResizableProps = {
   /**
@@ -109,7 +109,6 @@ export const useResizable = ({
   onResize,
   maxViewportPercentages,
 }: ResizableProps): ResizableReturn => {
-  // Use a properly typed ref
   const resizableRef = useRef<HTMLElement>(null);
 
   const [size, setSize] = useState<Size>({
@@ -134,15 +133,6 @@ export const useResizable = ({
     minSize?.width,
     minSize?.height,
   ]);
-
-  // console.log('useResizable hook:', {
-  //   initialSize,
-  //   currentSize: size,
-  //   minSize,
-  //   maxSize,
-  //   enabled,
-  //   refCurrent: resizableRef.current,
-  // });
 
   // State to track if the element is currently being resized
   const [isResizing, setIsResizing] = useState<boolean>(false);
@@ -171,32 +161,29 @@ export const useResizable = ({
     const deltaX = e.clientX - initialMousePos.current.x;
     const deltaY = e.clientY - initialMousePos.current.y;
 
-    // console.log('🐞', {
-    //   x: e.clientX,
-    //   y: e.clientY,
-    //   deltaX,
-    //   deltaY,
-    //   initialElementSize,
-    // });
+    console.log('🐞', {
+      x: e.clientX,
+      y: e.clientY,
+      deltaX,
+      deltaY,
+      initialElementSize,
+    });
 
     switch (currentHandleType.current) {
-      case handleTypes.left:
+      case 'left':
         newWidth = initialElementSize.current.width - deltaX;
-        // Check snap close using closeThresholds.width
 
-        console.log('🎃', { closeThresholds, newWidth });
         if (
           closeThresholds &&
           closeThresholds.width !== undefined &&
           newWidth < closeThresholds.width
         ) {
-          console.log('🥊🥊🥊🥊');
           shouldSnapClose = true;
         }
         break;
-      case handleTypes.right:
+      case 'right':
         newWidth = initialElementSize.current.width + deltaX;
-        // Check snap close using closeThresholds.width
+
         if (
           closeThresholds &&
           closeThresholds.width !== undefined &&
@@ -386,7 +373,7 @@ export const useResizable = ({
     (e: React.KeyboardEvent, handleType: HandleType | null) => {
       console.log('🪻🪻🪻 handleKeyDown', { key: e.code, handleType });
       switch (handleType) {
-        case handleTypes.left: {
+        case 'left': {
           switch (e.code) {
             case keyMap.ArrowLeft: {
               console.log('⬅️ Left arrow key pressed');
@@ -442,7 +429,7 @@ export const useResizable = ({
 
           break;
         }
-        case handleTypes.right: {
+        case 'right': {
           console.log('Right handle interaction');
           switch (e.code) {
             case keyMap.ArrowRight: {
@@ -551,3 +538,4 @@ export const useResizable = ({
 // 2. Add css to temp remove CSS transition when resizing ✅
 // 3. Move from direction to from getResizerProps to the hook. Look at other design systems
 // 4. Make resize cusor show up even when the mouse is not on top of the resizer handle
+// 5. Update DrawerLayout props
