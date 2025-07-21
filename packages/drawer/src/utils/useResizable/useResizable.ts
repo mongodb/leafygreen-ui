@@ -49,10 +49,11 @@ export const useResizable = ({
 
     let newSize = initialElementSize.current;
     let shouldSnapClose = false;
+    // Determine the effective maximum width, considering both fixed max and viewport percentage //TODO:
+    let effectiveMaxSize = maxSize;
 
     // The difference in mouse position from the initial position
     const deltaX = e.clientX - initialMousePos.current.x;
-    const deltaY = e.clientY - initialMousePos.current.y;
 
     // console.log('🐞', {
     //   x: e.clientX,
@@ -65,28 +66,20 @@ export const useResizable = ({
     switch (handleType) {
       case 'left': // TODO:
         newSize = initialElementSize.current - deltaX;
-
-        if (
-          closeThresholds &&
-          closeThresholds !== undefined &&
-          newSize < closeThresholds
-        ) {
-          shouldSnapClose = true;
-        }
         break;
       case 'right':
         newSize = initialElementSize.current + deltaX;
-
-        if (
-          closeThresholds &&
-          closeThresholds !== undefined &&
-          newSize < closeThresholds
-        ) {
-          shouldSnapClose = true;
-        }
         break;
       default:
         break;
+    }
+
+    if (
+      closeThresholds &&
+      closeThresholds !== undefined &&
+      newSize < closeThresholds
+    ) {
+      shouldSnapClose = true;
     }
 
     // console.log('🐞', { x: e.clientX, y: e.clientY, deltaX, deltaY, newSize });
@@ -104,10 +97,7 @@ export const useResizable = ({
       return;
     }
 
-    // Determine the effective maximum width, considering both fixed max and viewport percentage //TODO:
-    let effectiveMaxSize = maxSize;
-
-    if (maxViewportPercentages && maxViewportPercentages !== undefined) {
+    if (maxViewportPercentages) {
       const viewportWidthPercent = maxViewportPercentages / 100;
       effectiveMaxSize = Math.min(
         effectiveMaxSize,
@@ -329,3 +319,4 @@ export const useResizable = ({
 // 4. Make resize cusor show up even when the mouse is not on top of the resizer handle
 // 5. Update DrawerLayout props
 // 6. Figure out the correct TS and defaults for the sizes  ✅
+// 7. Add setOpen to drawer component to allow closing the drawer from inside
