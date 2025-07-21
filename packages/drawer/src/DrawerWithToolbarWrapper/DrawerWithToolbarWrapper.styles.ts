@@ -200,7 +200,7 @@ export const getDrawerWithToolbarWrapperStyles = ({
       [closedOverlayStyles]:
         !isDrawerOpen && shouldAnimate && displayMode === DisplayMode.Overlay, // This ensures that the drawer does not animate closed on initial render
       [openEmbeddedStyles]:
-        isDrawerOpen && displayMode === DisplayMode.Embedded, // TODO: is this only needed for overlay?
+        isDrawerOpen && displayMode === DisplayMode.Embedded,
       [closedEmbeddedStyles]:
         !isDrawerOpen && displayMode === DisplayMode.Embedded, // This ensures that the drawer does not animate closed on initial render
       [baseEmbeddedStyles]: displayMode === DisplayMode.Embedded,

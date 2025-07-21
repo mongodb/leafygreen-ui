@@ -140,9 +140,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         initialSize: open ? { width: PANEL_WIDTH } : { width: 0 },
         minSize: { width: 300 },
         maxSize: { width: 600 }, // Allow resizing up to a reasonable size
-        maxViewportPercentages: { width: 60 },
+        maxViewportPercentages: { width: 50 },
         closeThresholds: { width: 120 }, // Snap close if resized to less than 50px
         onClose,
+        handleType: 'left',
       });
 
     // Create merged ref after resizableRef is defined
@@ -184,7 +185,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         >
           {displayMode === DisplayMode.Embedded && ( // And resizable
             <div
-              {...getResizerProps('left')} // Move the from to the hook
+              {...getResizerProps()} // Move the from to the hook
               style={{
                 position: 'absolute',
                 height: '100%',

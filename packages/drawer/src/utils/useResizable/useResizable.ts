@@ -1,130 +1,52 @@
 import { keyMap } from '@leafygreen-ui/lib';
 import { useCallback, useEffect, useRef, useState } from 'react';
-
-interface Size {
-  width: number;
-  height: number;
-}
-
-const handleType = {
-  left: 'left',
-  right: 'right',
-  top: 'top',
-  bottom: 'bottom',
-} as const;
-
-export type HandleType = (typeof handleType)[keyof typeof handleType];
-
-type ResizableProps = {
-  /**
-   * Whether the resizable feature is enabled.
-   * @default false
-   */
-  enabled?: boolean;
-
-  /**
-   * The initial size of the resizable element.
-   * If not provided, the element will take its default size.
-   */
-  initialSize: Partial<Size>;
-
-  /**
-   * The minimum size the resizable element can be resized to.
-   * If not provided, there will be no minimum size restriction.
-   */
-  minSize: Partial<Size>;
-
-  /**
-   * The maximum size the resizable element can be resized to.
-   * If not provided, there will be no maximum size restriction.
-   */
-  maxSize: Partial<Size>;
-
-  /**
-   * The threshold for closing the resizable element.
-   * If the size is below this threshold, the element will close.
-   * If not provided, there will be no close threshold.
-   */
-  closeThresholds: Partial<Size>;
-
-  /**
-   * Callback function that is called when the resizable element is closed.
-   * This can be used to perform any cleanup or state updates.
-   */
-  onClose?: () => void;
-
-  /**
-   * Callback function that is called when the resizable element is resized.
-   * This can be used to perform any actions based on the new size.
-   */
-  onResize?: (size: { width: number; height: number }) => void;
-
-  /**
-   * The percentage of the viewport that the resizable element should occupy at maximum.
-   * This can be used to ensure the element does not exceed a certain size relative to the viewport.
-   * If provided, this percentage-based maximum will override the maxSize prop if the calculated pixel value is smaller.
-   */
-  maxViewportPercentages: Partial<Size>;
-};
-
-type ResizerProps = {
-  onMouseDown?: (e: React.MouseEvent) => void;
-  tabIndex?: number;
-  onFocus?: (e: React.KeyboardEvent) => void;
-  onBlur?: () => void;
-  onKeyDown?: (e: React.KeyboardEvent) => void;
-};
-
-type ResizableReturn = {
-  /**
-   * The current width and height of the resizable element.
-   */
-  size: Size;
-
-  /**
-   * Function to set the size of the resizable element.
-   * Accepts a Size object with width and height properties.
-   */
-  setSize: React.Dispatch<React.SetStateAction<Size>>;
-
-  /**
-   * Boolean indicating whether the resizable element is currently being resized.
-   */
-  isResizing: boolean;
-
-  /**
-   * A function that takes in a handle type ('left', 'right', 'top', 'bottom') and returns the props needed to be spread onto the resizer element.
-   */
-  getResizerProps: (handleType: HandleType) => ResizerProps;
-
-  /**
-   * A ref to the resizable element that can be used to attach the resizer functionality.
-   */
-  resizableRef: React.RefObject<HTMLElement>;
-};
+import {
+  ResizableProps,
+  ResizableReturn,
+  HandleType,
+  Size,
+} from './useResizable.types';
 
 export const useResizable = ({
   enabled = true,
   initialSize = { width: 0, height: 0 },
-  minSize = { width: 0, height: 0 },
-  maxSize = { width: 0, height: 0 },
+  minSize: minSizeProp = { width: 0, height: 0 },
+  maxSize: maxSizeProp = { width: 0, height: 0 },
   closeThresholds = { width: 0, height: 0 },
   onClose,
   onResize,
   maxViewportPercentages,
+  handleType,
 }: ResizableProps): ResizableReturn => {
   const resizableRef = useRef<HTMLElement>(null);
+  // State to track if the element is currently being resized
+  const [isResizing, setIsResizing] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+
+  // Refs to store initial mouse position and element size at the start of a drag
+  const initialMousePos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const initialElementSize = useRef<Size>({ width: 0, height: 0 });
+
+  // Ref to hold the current value of isResizing to prevent stale closures in event handlers
+  // This ref is updated synchronously in onMouseDown/onMouseUp
+  const isResizingRef = useRef<boolean>(isResizing);
 
   const [size, setSize] = useState<Size>({
     width: initialSize.width!,
     height: initialSize.height!,
   });
 
-  const keyboardWidths = [
-    initialSize.width!,
-    minSize.width ?? initialSize.width!,
-    maxSize.width ?? initialSize.width!,
-  ];
+  const minSize = {
+    width: minSizeProp.width ?? initialSize.width!,
+    height: minSizeProp.height ?? initialSize.height!,
+  };
+
+  const maxSize = {
+    width: maxSizeProp.width ?? initialSize.width!,
+    height: maxSizeProp.height ?? initialSize.height!,
+  };
+
+  const keyboardWidths = [initialSize.width!, minSize.width, maxSize.width];
   const sortedKeyboardWidths = [...keyboardWidths].sort((a, b) => a - b);
 
   // Update size when enabled state or initialSize changes
@@ -141,24 +63,9 @@ export const useResizable = ({
     minSize?.height,
   ]);
 
-  // State to track if the element is currently being resized
-  const [isResizing, setIsResizing] = useState<boolean>(false);
-  const [isFocused, setIsFocused] = useState<boolean>(false);
-
-  // Refs to store initial mouse position and element size at the start of a drag
-  const initialMousePos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const initialElementSize = useRef<Size>({ width: 0, height: 0 });
-
-  // Ref to store the type of handle currently being dragged ('left', 'right', 'top', 'bottom')
-  const currentHandleType = useRef<HandleType | null>(null);
-
-  // Ref to hold the current value of isResizing to prevent stale closures in event handlers
-  // This ref is updated synchronously in onMouseDown/onMouseUp
-  const isResizingRef = useRef<boolean>(isResizing);
-
   const handleMouseMove = (e: MouseEvent) => {
     // Only proceed if resizing is enabled and the element is currently being resized
-    if (!enabled || !isResizingRef.current) return;
+    if (!isResizingRef.current) return;
 
     let newWidth = initialElementSize.current.width;
     let newHeight = initialElementSize.current.height;
@@ -168,16 +75,16 @@ export const useResizable = ({
     const deltaX = e.clientX - initialMousePos.current.x;
     const deltaY = e.clientY - initialMousePos.current.y;
 
-    console.log('🐞', {
-      x: e.clientX,
-      y: e.clientY,
-      deltaX,
-      deltaY,
-      initialElementSize,
-    });
+    // console.log('🐞', {
+    //   x: e.clientX,
+    //   y: e.clientY,
+    //   deltaX,
+    //   deltaY,
+    //   initialElementSize,
+    // });
 
-    switch (currentHandleType.current) {
-      case 'left':
+    switch (handleType) {
+      case 'left': // TODO:
         newWidth = initialElementSize.current.width - deltaX;
 
         if (
@@ -237,7 +144,6 @@ export const useResizable = ({
         width: initialSize?.width ?? minSize?.width ?? 0,
         height: initialSize?.height ?? minSize?.height ?? 0,
       });
-      currentHandleType.current = null; // Clear the handle type
       // Reset the size to initial or minimum size
       // Use requestAnimationFrame to ensure the CSS transition for 'transform' starts
       // before 'isResizing' is set to false. This prevents an abrupt jump.
@@ -249,28 +155,24 @@ export const useResizable = ({
       //     width: initialSize?.width ?? minSize?.width ?? 0,
       //     height: initialSize?.height ?? minSize?.height ?? 0,
       //   });
-      //   currentHandleType.current = null; // Clear the handle type
       // });
       return; // Exit the function as the element is snapping closed
     }
 
-    // Determine the effective maximum width, considering both fixed max and viewport percentage
-    let effectiveMaxWidth = maxSize.width || 0;
+    // Determine the effective maximum width, considering both fixed max and viewport percentage //TODO:
+    let effectiveMaxWidth = maxSize.width;
+
     if (maxViewportPercentages && maxViewportPercentages.width !== undefined) {
+      const viewportWidthPercent = maxViewportPercentages.width / 100;
       effectiveMaxWidth = Math.min(
         effectiveMaxWidth,
-        window.innerWidth * maxViewportPercentages.width,
+        window.innerWidth * viewportWidthPercent,
       );
     }
 
     // Clamp width if the current handle type affects width
-    if (
-      currentHandleType.current === 'left' ||
-      currentHandleType.current === 'right'
-    ) {
-      if (newWidth < minSize.width) {
-        newWidth = minSize.width;
-      } else if (newWidth > effectiveMaxWidth) {
+    if (handleType === 'left' || handleType === 'right') {
+      if (newWidth > effectiveMaxWidth) {
         newWidth = effectiveMaxWidth;
       }
     }
@@ -278,20 +180,16 @@ export const useResizable = ({
     // Determine the effective maximum height, considering both fixed max and viewport percentage
     let effectiveMaxHeight = maxSize.height;
     if (maxViewportPercentages && maxViewportPercentages.height !== undefined) {
+      const viewportHeightPercent = maxViewportPercentages.height / 100;
       effectiveMaxHeight = Math.min(
         effectiveMaxHeight,
-        window.innerHeight * maxViewportPercentages.height,
+        window.innerHeight * viewportHeightPercent,
       );
     }
 
     // Clamp height if the current handle type affects height
-    if (
-      currentHandleType.current === 'top' ||
-      currentHandleType.current === 'bottom'
-    ) {
-      if (newHeight < minSize.height) {
-        newHeight = minSize.height;
-      } else if (newHeight > effectiveMaxHeight) {
+    if (handleType === 'top' || handleType === 'bottom') {
+      if (newHeight > effectiveMaxHeight) {
         newHeight = effectiveMaxHeight;
       }
     }
@@ -314,69 +212,62 @@ export const useResizable = ({
     requestAnimationFrame(() => {
       isResizingRef.current = false; // Synchronously update ref
       setIsResizing(false); // Set resizing state to false
-      currentHandleType.current = null; // Clear the handle type
     });
   }, [enabled]);
 
   // Function to generate onMouseDown props for specific handle types
-  const getResizerProps = useCallback(
-    (handleType: HandleType) => {
-      // console.log('🥎', { handleType, enabled });
+  const getResizerProps = useCallback(() => {
+    if (!enabled) {
+      return {};
+    }
 
-      if (!enabled) {
-        return {};
-      }
+    return {
+      onMouseDown: (e: React.MouseEvent) => {
+        e.preventDefault(); // Prevent default browser behavior like text selection
+        console.log('😈 onMouseDown');
 
-      return {
-        onMouseDown: (e: React.MouseEvent) => {
-          e.preventDefault(); // Prevent default browser behavior like text selection
-          console.log('😈 onMouseDown');
+        // Synchronously update the ref BEFORE setting state
+        isResizingRef.current = true;
+        setIsResizing(true); // This will trigger re-render and useEffect later
 
-          // Synchronously update the ref BEFORE setting state
-          isResizingRef.current = true;
-          setIsResizing(true); // This will trigger re-render and useEffect later
-          currentHandleType.current = handleType; // Store the type of handle being dragged
+        // Capture initial mouse position and current element size
+        initialMousePos.current = { x: e.clientX, y: e.clientY };
+        // console.log('Resize start:', {
+        //   mousePosition: { x: e.clientX, y: e.clientY },
+        //   handleType,
+        //   resizableElement: resizableRef.current,
+        // });
 
-          // Capture initial mouse position and current element size
-          initialMousePos.current = { x: e.clientX, y: e.clientY };
-          console.log('Resize start:', {
-            mousePosition: { x: e.clientX, y: e.clientY },
-            handleType,
-            resizableElement: resizableRef.current,
-          });
+        if (resizableRef.current) {
+          initialElementSize.current = {
+            width: resizableRef.current.offsetWidth,
+            height: resizableRef.current.offsetHeight,
+          };
+        }
+      },
+      tabIndex: 0, // Make the resizer focusable
+      onFocus: (e: React.KeyboardEvent) => {
+        // Handle keyboard events for resizing if needed
+        // For now, we just prevent default to avoid any unwanted behavior
+        e.preventDefault();
+        setIsFocused(true);
 
-          if (resizableRef.current) {
-            initialElementSize.current = {
-              width: resizableRef.current.offsetWidth,
-              height: resizableRef.current.offsetHeight,
-            };
-          }
-        },
-        tabIndex: 0, // Make the resizer focusable
-        onFocus: (e: React.KeyboardEvent) => {
-          // Handle keyboard events for resizing if needed
-          // For now, we just prevent default to avoid any unwanted behavior
-          e.preventDefault();
-          setIsFocused(true);
-          currentHandleType.current = handleType; // Store the type of handle being dragged
-
-          console.log('🐙🐙🐙🐙🐙Keyboard event on resizer:');
-        },
-        onBlur: () => {
-          // Handle blur event if needed, e.g., to reset styles or state
-          console.log('🌻🌻🌻🌻Blur event on resizer');
-          setIsFocused(false);
-        },
-      };
-    },
-    [enabled],
-  );
+        console.log('🐙🐙🐙🐙🐙Keyboard event on resizer:');
+      },
+      onBlur: () => {
+        // Handle blur event if needed, e.g., to reset styles or state
+        console.log('🌻🌻🌻🌻Blur event on resizer');
+        setIsFocused(false);
+      },
+    };
+  }, [enabled]);
 
   const getKeyboardInteraction = useCallback(
     (e: KeyboardEvent, handleType: HandleType | null) => {
       console.log('🪻🪻🪻 handleKeyDown', { key: e.code, handleType });
       switch (handleType) {
         case 'left': {
+          // TODO: move these to a function
           switch (e.code) {
             case keyMap.ArrowLeft: {
               console.log('⬅️ Left arrow key pressed');
@@ -422,7 +313,6 @@ export const useResizable = ({
                   width: initialSize?.width ?? minSize?.width ?? 0,
                   height: initialSize?.height ?? minSize?.height ?? 0,
                 });
-                currentHandleType.current = null; // Clear the handle type
               }
 
               console.log({ nextSmallerWidth, sortedKeyboardWidths });
@@ -473,7 +363,6 @@ export const useResizable = ({
                   width: initialSize?.width ?? minSize?.width ?? 0,
                   height: initialSize?.height ?? minSize?.height ?? 0,
                 });
-                currentHandleType.current = null;
               }
               break;
             }
@@ -489,7 +378,7 @@ export const useResizable = ({
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      getKeyboardInteraction(e, currentHandleType.current);
+      getKeyboardInteraction(e, handleType);
     },
     [getKeyboardInteraction],
   );
@@ -498,7 +387,7 @@ export const useResizable = ({
   // These listeners are added to 'window' to ensure dragging works even if the mouse
   // moves off the resizer handle during the drag.
   useEffect(() => {
-    if (isResizing) {
+    if (isResizing && enabled) {
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleMouseUp);
     } else {
@@ -512,7 +401,7 @@ export const useResizable = ({
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResizing, handleMouseMove, handleMouseUp]);
+  }, [isResizing, handleMouseMove, handleMouseUp, enabled]);
 
   useEffect(() => {
     if (isFocused && enabled) {
@@ -525,7 +414,7 @@ export const useResizable = ({
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  });
+  }, [enabled, isFocused, handleKeyDown]);
 
   useEffect(() => {
     if (isResizing) {
@@ -550,3 +439,4 @@ export const useResizable = ({
 // 3. Move from direction to from getResizerProps to the hook. Look at other design systems
 // 4. Make resize cusor show up even when the mouse is not on top of the resizer handle
 // 5. Update DrawerLayout props
+// 6. Figure out the correct TS and defaults for the sizes
