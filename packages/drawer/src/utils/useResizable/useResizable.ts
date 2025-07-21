@@ -41,14 +41,12 @@ export const useResizable = ({
   // Update size when enabled state or initialSize changes
   useEffect(() => {
     setSize(initialSize);
-  }, [enabled, initialSize, minSize]);
+  }, [enabled, initialSize]);
 
   const handleMouseMove = (e: MouseEvent) => {
     // Only proceed if resizing is enabled and the element is currently being resized
     if (!isResizingRef.current) return;
 
-    // let newWidth = initialElementSize.current.width;
-    // let newHeight = initialElementSize.current.height;
     let newSize = initialElementSize.current;
     let shouldSnapClose = false;
 
@@ -67,8 +65,6 @@ export const useResizable = ({
     switch (handleType) {
       case 'left': // TODO:
         newSize = initialElementSize.current - deltaX;
-
-        console.log('🥵', { closeThresholds, newSize });
 
         if (
           closeThresholds &&
@@ -93,28 +89,19 @@ export const useResizable = ({
         break;
     }
 
-    console.log('🐞', { x: e.clientX, y: e.clientY, deltaX, deltaY, newSize });
+    // console.log('🐞', { x: e.clientX, y: e.clientY, deltaX, deltaY, newSize });
 
     // If any snap-close condition is met, trigger onClose and reset
     if (shouldSnapClose) {
-      // console.log('🧚🏽‍♀️should snap close');
       onClose?.(); // Trigger the external close action (e.g., close the drawer)
-      setIsResizing(false); // Stop the resizing state
-      // Reset to effective initial size, handling partial initialSize input
-      setSize(0);
-      // Reset the size to initial or minimum size
       // Use requestAnimationFrame to ensure the CSS transition for 'transform' starts
       // before 'isResizing' is set to false. This prevents an abrupt jump.
       // requestAnimationFrame(() => {
-      //   isResizingRef.current = false; // Synchronously update ref
-      //   setIsResizing(false); // Stop the resizing state
-      //   // Reset to effective initial size, handling partial initialSize input
-      //   setSize({
-      //     width: initialSize?.width ?? minSize?.width ?? 0,
-      //     height: initialSize?.height ?? minSize?.height ?? 0,
-      //   });
+      isResizingRef.current = false; // Synchronously update ref
+      setIsResizing(false); // Stop the resizing state
+      setSize(0);
       // });
-      return; // Exit the function as the element is snapping closed
+      return;
     }
 
     // Determine the effective maximum width, considering both fixed max and viewport percentage //TODO:
@@ -128,21 +115,14 @@ export const useResizable = ({
       );
     }
 
-    // Clamp width if the current handle type affects width
-    // if (handleType === 'left' || handleType === 'right') {
     if (newSize < minSize) {
       newSize = minSize;
     } else if (newSize > effectiveMaxSize) {
       newSize = effectiveMaxSize;
     }
-    // }
 
     setSize(newSize);
-
-    // Call onResize prop if provided
-    if (onResize) {
-      onResize(newSize);
-    }
+    onResize?.(newSize);
   };
 
   // Callback for when the mouse button is released, ending the drag operation
@@ -211,7 +191,6 @@ export const useResizable = ({
 
               if (nextLargerWidth !== undefined) {
                 setSize(nextLargerWidth);
-                // Call onResize if provided
                 onResize?.(size);
               }
 
