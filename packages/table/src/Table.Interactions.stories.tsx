@@ -16,6 +16,7 @@ import {
   Cell,
   ExpandedContent,
   flexRender,
+  getLgIds,
   HeaderCell,
   type HeaderGroup,
   HeaderRow,
@@ -149,7 +150,6 @@ const Template: StoryFn<StoryTableProps> = args => {
         className={css`
           width: 1100px;
         `}
-        data-testid="lg-table"
         {...args}
       >
         <TableHead isSticky>
@@ -203,8 +203,10 @@ export const StickyHeader = {
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
     const container = await canvas.findByTestId('wrapper-container');
-    const table = await canvas.findByTestId('lg-table');
-    const headerRow = await canvas.findByTestId('lg-table-header_row');
+
+    const lgIds = getLgIds();
+    const table = await canvas.findByTestId(lgIds.root);
+    const headerRow = await canvas.findByTestId(lgIds.headerRow);
 
     expect(table).toHaveAttribute('data-is-sticky', 'false');
 
