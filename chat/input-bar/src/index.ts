@@ -1,7 +1,7 @@
 export {
   InputBar,
   type InputBarProps,
-  lgInputBarStyles,
+  State,
   type TextareaAutosizeProps,
 } from './InputBar';
 export { SuggestedPrompt, type SuggestedPromptProps } from './SuggestedPrompt';
