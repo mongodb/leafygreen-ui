@@ -19,7 +19,7 @@ export const getTestUtils = (
 
   const getAllHeaders = (): Array<HTMLTableCellElement> => {
     const allHeaders = element.querySelectorAll<HTMLTableCellElement>(
-      `[data-lgid=${lgIds.header}]`,
+      `[data-lgid=${lgIds.headerCell}]`,
     );
 
     if (!allHeaders.length)

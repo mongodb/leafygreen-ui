@@ -7,7 +7,9 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
     root,
     cell: `${root}-cell`,
     row: `${root}-row`,
-    header: `${root}-header`,
+    headerCell: `${root}-header_cell`,
+    headerRow: `${root}-header_row`,
+    header: `${root}-header`, // deprecating in favor of headerRow
     selectAllCheckbox: `${root}-select_all`,
     checkbox: `${root}-checkbox`,
     sortIcon: `${root}-sort_button`,
