@@ -172,7 +172,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
-            size,
+            size: size.width,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}
