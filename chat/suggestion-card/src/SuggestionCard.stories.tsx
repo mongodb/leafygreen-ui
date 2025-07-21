@@ -1,4 +1,5 @@
 import React from 'react';
+import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import SuggestionCard, { Status, SuggestionCardProps } from '.';
@@ -7,7 +8,7 @@ export default {
   title: 'Chat/SuggestionCard',
   component: SuggestionCard,
   args: {
-    status: Status.Available,
+    status: Status.Unset,
     suggestedConfigurationParameters: {
       clusterTier: 'M200',
       price: '$14.59/hour',
@@ -18,6 +19,7 @@ export default {
     },
   },
   argTypes: {
+    darkMode: storybookArgTypes.darkMode,
     status: {
       control: 'select',
       options: Object.values(Status),
@@ -28,8 +30,8 @@ export default {
   },
 };
 
-const Template: StoryFn<SuggestionCardProps> = props => (
+export const LiveExample: StoryFn<SuggestionCardProps> = props => (
   <SuggestionCard {...props} />
 );
 
-export const Basic = Template.bind({});
+export const Generated = () => {};

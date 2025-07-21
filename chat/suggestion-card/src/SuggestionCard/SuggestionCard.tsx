@@ -1,121 +1,81 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-import Banner, { Variant as BannerVariant } from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
 import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
+import { StatusBanner } from '../StatusBanner/StatusBanner';
 
 import {
-  ApplyButtonStyle,
-  BannerWrapperStyle,
-  BoldedTextStyle,
-  DividerStyle,
-  GeneralErrorContainerStyle,
-  ListStyle,
-  SuggestionCardWrapperStyle,
-  TableCellStyle,
-  TableHeaderStyle,
-  TableStyle,
+  applyButtonStyles,
+  boldedTextStyle,
+  getSuggetionCardWrapperStyles,
+  tableCellStyles,
+  tableHeaderStyles,
+  tableStyles,
 } from './SuggestionCard.styles';
 import { Status, SuggestionCardProps } from './SuggestionCard.types';
 
-const SuggestionCard = (props: SuggestionCardProps) => {
-  const { status, suggestedConfigurationParameters, handleApply, handleRetry } = props;
-  const { clusterTier, price, cloudProvider, storage, ram, vCPUs } =
-    suggestedConfigurationParameters;
+const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
+  (props, fwdRef) => {
+    const { status, suggestedConfigurationParameters, handleApply } = props;
+    const { clusterTier, price, cloudProvider, storage, ram, vCPUs } =
+      suggestedConfigurationParameters;
+    const { theme } = useDarkMode();
 
-  const clusterConfigurationBannerContent = (
-    <ul className={ListStyle}>
-      <li>
-        <u>Cloud Provider & Region</u>: {cloudProvider}
-      </li>
-      <li>
-        <u>Cluster Tier</u>: {clusterTier}
-      </li>
-    </ul>
-  );
-
-  const StatusBanner = ({ status }: { status: Status }) => {
     return (
-      <Banner
-        className={BannerWrapperStyle}
-        variant={
-          status === Status.Success
-            ? BannerVariant.Success
-            : BannerVariant.Danger
-        }
-      >
-        <div>
-          <div className={BoldedTextStyle}>
-            {status === Status.Success && (
-              <>The suggestions have been applied.</>
-            )}
-            {status === Status.ApplyError && (
-              <>
-                We ran into an error when applying the suggestion. Please
-                manually try it:
-              </>
-            )}
+      <div ref={fwdRef}>
+        <div className={getSuggetionCardWrapperStyles(theme)}>
+          <div className={boldedTextStyle}>
+            Apply configuration to your cluster?
           </div>
-          {(status === Status.Success || status === Status.ApplyError) &&
-            clusterConfigurationBannerContent}
-          {status === Status.GeneralError && (
-            <div className={GeneralErrorContainerStyle}>
-              <div>Oops....Something went wrong.</div>
-              <Button size="xsmall" onClick={handleRetry}>RETRY</Button>
-            </div>
+          <table className={tableStyles}>
+            <tr>
+              <th className={tableHeaderStyles}>Cluster Tier</th>
+              <td className={tableCellStyles}>
+                {clusterTier} ({price})
+              </td>
+            </tr>
+            <tr>
+              <th className={tableHeaderStyles}>Provider</th>
+              <td className={tableCellStyles}>{cloudProvider}</td>
+            </tr>
+            <tr>
+              <th className={tableHeaderStyles}>Storage</th>
+              <td className={tableCellStyles}>{storage}</td>
+            </tr>
+            <tr>
+              <th className={tableHeaderStyles}>RAM</th>
+              <td className={tableCellStyles}>{ram}</td>
+            </tr>
+            <tr>
+              <th className={tableHeaderStyles}>vCPUs</th>
+              <td className={tableCellStyles}>{vCPUs}</td>
+            </tr>
+          </table>
+          {status === Status.Apply && (
+            <Button
+              className={applyButtonStyles}
+              variant="primary"
+              size="small"
+              leftGlyph={<ArrowLeftIcon />}
+              onClick={handleApply}
+            >
+              Apply these suggestions
+            </Button>
           )}
         </div>
-      </Banner>
-    );
-  };
 
-  return (
-    <div className={DividerStyle}>
-      <div className={SuggestionCardWrapperStyle}>
-        <div className={BoldedTextStyle}>
-          Apply configuration to your cluster?
-        </div>
-        <table className={TableStyle}>
-          <tr>
-            <th className={TableHeaderStyle}>Cluster Tier</th>
-            <td className={TableCellStyle}>
-              {clusterTier} ({price})
-            </td>
-          </tr>
-          <tr>
-            <th className={TableHeaderStyle}>Provider</th>
-            <td className={TableCellStyle}>{cloudProvider}</td>
-          </tr>
-          <tr>
-            <th className={TableHeaderStyle}>Storage</th>
-            <td className={TableCellStyle}>{storage}</td>
-          </tr>
-          <tr>
-            <th className={TableHeaderStyle}>RAM</th>
-            <td className={TableCellStyle}>{ram}</td>
-          </tr>
-          <tr>
-            <th className={TableHeaderStyle}>vCPUs</th>
-            <td className={TableCellStyle}>{vCPUs}</td>
-          </tr>
-        </table>
-        {status === Status.Apply && (
-          <Button className={ApplyButtonStyle} variant="primary" size="small" leftGlyph={<ArrowLeftIcon />} onClick={handleApply}>
-            Apply these suggestions
-          </Button>
+        {([Status.Success, Status.Error] as Array<Status>).includes(status) && (
+          <StatusBanner
+            status={status}
+            suggestedConfigurationParameters={suggestedConfigurationParameters}
+          />
         )}
       </div>
-
-      {(
-        [
-          Status.Success,
-          Status.ApplyError,
-          Status.GeneralError,
-        ] as Array<Status>
-      ).includes(status) && <StatusBanner status={status} />}
-    </div>
-  );
-};
+    );
+  },
+);
 
 export default SuggestionCard;
 

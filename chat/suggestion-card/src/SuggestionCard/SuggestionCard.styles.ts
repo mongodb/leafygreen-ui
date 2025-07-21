@@ -1,66 +1,62 @@
 import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { fontWeights, spacing } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
+import {
+  borderRadius,
+  color,
+  fontWeights,
+  spacing,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
-export const DividerStyle = css`
-  width: 353px;
-`;
-
-export const SuggestionCardWrapperStyle = css`
-  background-color: ${palette.gray.light3};
-  border: 1px solid ${palette.gray.light2};
-  border-radius: 12px;
+export const getSuggetionCardWrapperStyles = (theme: Theme) => css`
+  background-color: ${color[theme].background.secondary.default};
+  border: 1px solid ${color[theme].border.secondary.default};
+  border-radius: ${borderRadius[300]}px;
   width: 100%;
   padding: ${spacing[300]}px;
   gap: ${spacing[200]}px;
-  font-size: 13px;
-  line-height: 20px;
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
 `;
 
-export const ApplyButtonStyle = css`
+export const applyButtonStyles = css`
   width: 100%;
   margin-top: ${spacing[200]}px;
   font-weight: ${fontWeights.regular};
 `;
 
-export const BannerWrapperStyle = css`
+export const bannerWrapperStyles = css`
   width: 100%;
   gap: ${spacing[200]}px;
-  font-size: 13px;
-  line-height: 20px;
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
   margin-top: ${spacing[400]}px;
   justify-content: space-between;
 `;
 
-export const BoldedTextStyle = css`
-  font-weight: 600;
+export const boldedTextStyle = css`
+  font-weight: ${fontWeights.bold};
 `;
 
-export const TableStyle = css`
+export const tableStyles = css`
   width: 100%;
   gap: ${spacing[200]}px;
-  line-height: 20px;
+  line-height: ${typeScales.body1.lineHeight}px;
   margin-top: ${spacing[200]}px;
 `;
 
-export const TableHeaderStyle = css`
+export const tableHeaderStyles = css`
   text-align: left;
   padding: ${spacing[50]}px 0;
 `;
 
-export const TableCellStyle = css`
+export const tableCellStyles = css`
   text-align: right;
   padding: ${spacing[50]}px 0;
 `;
 
-export const ListStyle = css`
+export const listStyles = css`
   padding-left: ${spacing[500]}px;
-  line-height: 20px;
+  line-height: ${typeScales.body1.lineHeight}px;
   margin: ${spacing[100]}px;
-`;
-
-export const GeneralErrorContainerStyle = css`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
 `;

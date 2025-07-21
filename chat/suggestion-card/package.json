@@ -30,7 +30,10 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@lg-tools/test-harnesses": "workspace:^"
+    "@lg-tools/test-harnesses": "workspace:^",
+    "@leafygreen-ui/banner": "workspace:^",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/suggestion-card",
   "repository": {
