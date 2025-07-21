@@ -29,7 +29,7 @@ import {
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 import { useResizable } from '../utils/useResizable/useResizable';
-import { PANEL_WIDTH, PANEL_WITH_TOOLBAR_WIDTH } from '../constants';
+import { PANEL_WIDTH } from '../constants';
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
@@ -181,14 +181,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           ref={drawerRef}
           onAnimationEnd={handleAnimationEnd}
           inert={!open ? 'inert' : undefined}
-          // style={{
-          //   '--drawerWidth': size.width ? `${size.width}px` : '0px',
-          // }}
           {...rest}
         >
-          {displayMode === DisplayMode.Embedded && (
+          {displayMode === DisplayMode.Embedded && ( // And resizable
             <div
-              {...getResizerProps('left')}
+              {...getResizerProps('left')} // Move the from to the hook
               style={{
                 position: 'absolute',
                 height: '100%',
