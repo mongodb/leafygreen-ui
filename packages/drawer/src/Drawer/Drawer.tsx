@@ -134,17 +134,18 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     //   displayMode,
     // });
 
-    const { resizableRef, size, setSize, getResizerProps, isResizing } =
-      useResizable({
-        enabled: open && displayMode === DisplayMode.Embedded,
-        initialSize: open ? PANEL_WIDTH : 0,
-        minSize: 300,
-        maxSize: 600, // Allow resizing up to a reasonable size
-        maxViewportPercentages: 50,
-        closeThresholds: 120, // Snap close if resized to less than 50px
-        onClose,
-        handleType: 'left',
-      });
+    const { resizableRef, size, setSize, getResizerProps } = useResizable<
+      HTMLDialogElement | HTMLDivElement
+    >({
+      enabled: open && displayMode === DisplayMode.Embedded,
+      initialSize: open ? PANEL_WIDTH : 0,
+      minSize: 300,
+      maxSize: 600, // Allow resizing up to a reasonable size
+      maxViewportPercentages: 50,
+      closeThresholds: 120, // Snap close if resized to less than 50px
+      onClose,
+      handleType: 'left',
+    });
 
     // Create merged ref after resizableRef is defined
     // Use a conditional to ensure resizableRef is only included when it's needed

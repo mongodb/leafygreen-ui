@@ -60,14 +60,14 @@ export type ResizableProps = {
 };
 
 export type ResizerProps = {
-  onMouseDown?: (e: React.MouseEvent) => void;
+  onMouseDown?: (e: React.MouseEvent | MouseEvent) => void;
   tabIndex?: number;
-  onFocus?: (e: React.KeyboardEvent) => void;
+  onFocus?: () => void;
   onBlur?: () => void;
-  onKeyDown?: (e: React.KeyboardEvent) => void;
+  onKeyDown?: (e: React.KeyboardEvent | KeyboardEvent) => void;
 };
 
-export type ResizableReturn = {
+export type ResizableReturn<T extends HTMLElement = HTMLElement> = {
   /**
    * The current width and height of the resizable element.
    */
@@ -85,12 +85,13 @@ export type ResizableReturn = {
   isResizing: boolean;
 
   /**
-   * A function that takes in a handle type ('left', 'right', 'top', 'bottom') and returns the props needed to be spread onto the resizer element.
+   * A function that returns the props needed to be spread onto the resizer element.
    */
-  getResizerProps: (handleType: HandleType) => ResizerProps;
+  getResizerProps: () => ResizerProps;
 
   /**
    * A ref to the resizable element that can be used to attach the resizer functionality.
+   * Generic type allows for specific HTML element types like HTMLDialogElement or HTMLDivElement.
    */
-  resizableRef: React.RefObject<HTMLElement>;
+  resizableRef: React.RefObject<T>;
 };

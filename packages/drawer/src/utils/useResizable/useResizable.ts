@@ -1,12 +1,12 @@
 import { keyMap } from '@leafygreen-ui/lib';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ResizableProps,
   ResizableReturn,
   HandleType,
 } from './useResizable.types';
 
-export const useResizable = ({
+export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   enabled = true,
   initialSize = 0,
   minSize: minSizeProp = 0,
@@ -16,8 +16,8 @@ export const useResizable = ({
   onResize,
   maxViewportPercentages,
   handleType,
-}: ResizableProps): ResizableReturn => {
-  const resizableRef = useRef<HTMLElement>(null);
+}: ResizableProps): ResizableReturn<T> => {
+  const resizableRef = useRef<T>(null);
   // State to track if the element is currently being resized
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -133,7 +133,7 @@ export const useResizable = ({
     }
 
     return {
-      onMouseDown: (e: React.MouseEvent) => {
+      onMouseDown: (e: MouseEvent | React.MouseEvent) => {
         e.preventDefault(); // Prevent default browser behavior like text selection
         console.log('😈 onMouseDown');
 
@@ -152,10 +152,8 @@ export const useResizable = ({
         }
       },
       tabIndex: 0, // Make the resizer focusable
-      onFocus: (e: React.KeyboardEvent) => {
-        // Handle keyboard events for resizing if needed
-        // For now, we just prevent default to avoid any unwanted behavior
-        e.preventDefault();
+      onFocus: () => {
+        // Set focus state when resizer receives focus
         setIsFocused(true);
       },
       onBlur: () => {
@@ -166,7 +164,7 @@ export const useResizable = ({
   }, [enabled]);
 
   const getKeyboardInteraction = useCallback(
-    (e: KeyboardEvent, handleType: HandleType | null) => {
+    (e: React.KeyboardEvent | KeyboardEvent, handleType: HandleType | null) => {
       console.log('🪻🪻🪻 handleKeyDown', { key: e.code, handleType });
       switch (handleType) {
         case 'left': {
@@ -181,7 +179,7 @@ export const useResizable = ({
 
               if (nextLargerWidth !== undefined) {
                 setSize(nextLargerWidth);
-                onResize?.(size);
+                onResize?.(nextLargerWidth);
               }
 
               break;
@@ -196,7 +194,7 @@ export const useResizable = ({
               if (nextSmallerWidth !== undefined) {
                 setSize(nextSmallerWidth);
                 // Call onResize if provided
-                onResize?.(size);
+                onResize?.(nextSmallerWidth);
               } else {
                 onClose?.();
                 setIsResizing(false); // Stop the resizing state
@@ -223,7 +221,7 @@ export const useResizable = ({
               if (nextLargerWidth !== undefined) {
                 setSize(nextLargerWidth);
                 // Call onResize if provided
-                onResize?.(size);
+                onResize?.(nextLargerWidth);
               }
               break;
             }
@@ -237,7 +235,7 @@ export const useResizable = ({
               if (nextSmallerWidth !== undefined) {
                 setSize(nextSmallerWidth);
                 // Call onResize if provided
-                onResize?.(size);
+                onResize?.(nextSmallerWidth);
               } else {
                 onClose?.();
                 setIsResizing(false);
@@ -256,7 +254,7 @@ export const useResizable = ({
   );
 
   const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
+    (e: React.KeyboardEvent | KeyboardEvent) => {
       getKeyboardInteraction(e, handleType);
     },
     [getKeyboardInteraction],
