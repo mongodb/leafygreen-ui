@@ -167,8 +167,6 @@ export const useResizable = ({
     let newHeight = initialElementSize.current.height;
     let shouldSnapClose = false;
 
-    // console.log('🐭', { initialMousePos });
-
     // The difference in mouse position from the initial position
     const deltaX = e.clientX - initialMousePos.current.x;
     const deltaY = e.clientY - initialMousePos.current.y;
@@ -182,7 +180,7 @@ export const useResizable = ({
     // });
 
     switch (currentHandleType.current) {
-      case 'left':
+      case handleTypes.left:
         newWidth = initialElementSize.current.width - deltaX;
         // Check snap close using closeThresholds.width
 
@@ -196,7 +194,7 @@ export const useResizable = ({
           shouldSnapClose = true;
         }
         break;
-      case 'right':
+      case handleTypes.right:
         newWidth = initialElementSize.current.width + deltaX;
         // Check snap close using closeThresholds.width
         if (
@@ -207,18 +205,18 @@ export const useResizable = ({
           shouldSnapClose = true;
         }
         break;
-      case 'top':
-        newHeight = initialElementSize.current.height - deltaY;
-        // Check snap close using closeThresholds.height
-        if (
-          closeThresholds &&
-          closeThresholds.height !== undefined &&
-          newHeight < closeThresholds.height
-        ) {
-          shouldSnapClose = true;
-        }
-        break;
-      case 'bottom':
+        // case 'top':
+        //   newHeight = initialElementSize.current.height - deltaY;
+        //   // Check snap close using closeThresholds.height
+        //   if (
+        //     closeThresholds &&
+        //     closeThresholds.height !== undefined &&
+        //     newHeight < closeThresholds.height
+        //   ) {
+        //     shouldSnapClose = true;
+        //   }
+        //   break;
+        // case 'bottom':
         newHeight = initialElementSize.current.height + deltaY;
         // Check snap close using closeThresholds.height
         if (
@@ -388,7 +386,7 @@ export const useResizable = ({
     (e: React.KeyboardEvent, handleType: HandleType | null) => {
       console.log('🪻🪻🪻 handleKeyDown', { key: e.code, handleType });
       switch (handleType) {
-        case 'left': {
+        case handleTypes.left: {
           switch (e.code) {
             case keyMap.ArrowLeft: {
               console.log('⬅️ Left arrow key pressed');
@@ -444,19 +442,52 @@ export const useResizable = ({
 
           break;
         }
-        case 'right': {
-          console.log('🐞🐞🐞 Right handle interaction');
-          // Handle right handle keyboard interactions if needed
-          break;
-        }
-        case 'top': {
-          console.log('🐞🐞🐞 Top handle interaction');
-          // Handle top handle keyboard interactions if needed
-          break;
-        }
-        case 'bottom': {
-          console.log('🐞🐞🐞 Bottom handle interaction');
-          // Handle bottom handle keyboard interactions if needed
+        case handleTypes.right: {
+          console.log('Right handle interaction');
+          switch (e.code) {
+            case keyMap.ArrowRight: {
+              console.log('➡️ Right arrow key pressed for right handle');
+              // For right handle, right arrow makes element wider
+              const nextLargerWidth = sortedKeyboardWidths.find(
+                width => width > size.width,
+              );
+
+              if (nextLargerWidth) {
+                setSize(prevSize => ({
+                  ...prevSize,
+                  width: nextLargerWidth,
+                }));
+                // Call onResize if provided
+                onResize?.();
+              }
+              break;
+            }
+            case keyMap.ArrowLeft: {
+              console.log('⬅️ Left arrow key pressed for right handle');
+              // For right handle, left arrow makes element narrower
+              const nextSmallerWidth = [...sortedKeyboardWidths]
+                .reverse()
+                .find(width => width < size.width);
+
+              if (nextSmallerWidth) {
+                setSize(prevSize => ({
+                  ...prevSize,
+                  width: nextSmallerWidth,
+                }));
+                // Call onResize if provided
+                onResize?.();
+              } else {
+                onClose?.();
+                setIsResizing(false);
+                setSize({
+                  width: initialSize?.width ?? minSize?.width ?? 0,
+                  height: initialSize?.height ?? minSize?.height ?? 0,
+                });
+                currentHandleType.current = null;
+              }
+              break;
+            }
+          }
           break;
         }
         default:
