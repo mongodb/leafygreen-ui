@@ -17,10 +17,12 @@
   "dependencies": {
     "@leafygreen-ui/avatar": "workspace:^",
     "@leafygreen-ui/badge": "workspace:^",
+    "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/input-option": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
