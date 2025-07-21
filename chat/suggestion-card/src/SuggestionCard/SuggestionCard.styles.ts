@@ -16,6 +16,7 @@ export const getSuggetionCardWrapperStyles = (theme: Theme) => css`
   padding: ${spacing[300]}px;
   gap: ${spacing[200]}px;
   font-size: ${typeScales.body1.fontSize}px;
+  color: ${color[theme].text.primary.default};
   line-height: ${typeScales.body1.lineHeight}px;
 `;
 
