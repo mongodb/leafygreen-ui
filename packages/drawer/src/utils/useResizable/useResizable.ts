@@ -1,5 +1,6 @@
 //@ts-nocheck
 
+import { keyMap } from '@leafygreen-ui/lib';
 import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 
 interface Size {
@@ -116,6 +117,10 @@ export const useResizable = ({
     height: initialSize?.height ?? 0,
   });
 
+  const [widths, setWidths] = useState<number[]>([]);
+  const keyboardWidths = [initialSize.width, minSize.width, maxSize.width];
+  const sortedKeyboardWidths = [...keyboardWidths].sort((a, b) => a - b);
+
   // Update size when enabled state or initialSize changes
   useEffect(() => {
     setSize({
@@ -141,6 +146,7 @@ export const useResizable = ({
 
   // State to track if the element is currently being resized
   const [isResizing, setIsResizing] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   // Refs to store initial mouse position and element size at the start of a drag
   const initialMousePos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -355,9 +361,108 @@ export const useResizable = ({
           }
         },
         tabIndex: 0, // Make the resizer focusable
+        onFocus: (e: React.KeyboardEvent) => {
+          // Handle keyboard events for resizing if needed
+          // For now, we just prevent default to avoid any unwanted behavior
+          e.preventDefault();
+          setIsFocused(true);
+          currentHandleType.current = handleType; // Store the type of handle being dragged
+
+          console.log('🐙🐙🐙🐙🐙Keyboard event on resizer:');
+        },
+        onBlur: () => {
+          // Handle blur event if needed, e.g., to reset styles or state
+          console.log('🌻🌻🌻🌻Blur event on resizer');
+          setIsFocused(false);
+        },
       };
     },
     [enabled],
+  );
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    getKeyboardInteraction(e, currentHandleType.current);
+  });
+
+  const getKeyboardInteraction = useCallback(
+    (e: React.KeyboardEvent, handleType: HandleType | null) => {
+      console.log('🪻🪻🪻 handleKeyDown', { key: e.code, handleType });
+      switch (handleType) {
+        case 'left': {
+          switch (e.code) {
+            case keyMap.ArrowLeft: {
+              console.log('⬅️ Left arrow key pressed');
+
+              const nextLargerWidth = sortedKeyboardWidths.find(
+                width => width > size.width,
+              );
+
+              if (nextLargerWidth) {
+                setSize(prevSize => ({
+                  ...prevSize,
+                  width: nextLargerWidth,
+                }));
+                // Call onResize if provided
+                onResize?.();
+              }
+
+              console.log({ nextLargerWidth, sortedKeyboardWidths });
+
+              break;
+            }
+            case keyMap.ArrowRight: {
+              console.log('➡️ Right arrow key pressed');
+
+              console.log({ sortedKeyboardWidths, currentSize: size.width });
+
+              const nextSmallerWidth = [...sortedKeyboardWidths]
+                .reverse()
+                .find(width => width < size.width);
+
+              if (nextSmallerWidth) {
+                setSize(prevSize => ({
+                  ...prevSize,
+                  width: nextSmallerWidth,
+                }));
+                // Call onResize if provided
+                onResize?.();
+              } else {
+                onClose?.();
+                setIsResizing(false); // Stop the resizing state
+                // Reset to effective initial size, handling partial initialSize input
+                setSize({
+                  width: initialSize?.width ?? minSize?.width ?? 0,
+                  height: initialSize?.height ?? minSize?.height ?? 0,
+                });
+                currentHandleType.current = null; // Clear the handle type
+              }
+
+              console.log({ nextSmallerWidth, sortedKeyboardWidths });
+              break;
+            }
+          }
+
+          break;
+        }
+        case 'right': {
+          console.log('🐞🐞🐞 Right handle interaction');
+          // Handle right handle keyboard interactions if needed
+          break;
+        }
+        case 'top': {
+          console.log('🐞🐞🐞 Top handle interaction');
+          // Handle top handle keyboard interactions if needed
+          break;
+        }
+        case 'bottom': {
+          console.log('🐞🐞🐞 Bottom handle interaction');
+          // Handle bottom handle keyboard interactions if needed
+          break;
+        }
+        default:
+          break;
+      }
+    },
   );
 
   // Effect hook to add and remove global mouse event listeners
@@ -379,6 +484,19 @@ export const useResizable = ({
       window.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isResizing, handleMouseMove, handleMouseUp]);
+
+  useEffect(() => {
+    if (isFocused && enabled) {
+      // Add keyboard event listeners if the resizer is focused
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  });
 
   return {
     size,

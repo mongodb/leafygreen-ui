@@ -138,7 +138,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       useResizable({
         enabled: open && displayMode === DisplayMode.Embedded,
         initialSize: open ? { width: PANEL_WIDTH } : { width: 0 },
-        minSize: { width: 200 },
+        minSize: { width: 300 },
         maxSize: { width: 600 }, // Allow resizing up to a reasonable size
         maxViewportPercentages: { width: 60 },
         closeThresholds: { width: 120 }, // Snap close if resized to less than 50px
