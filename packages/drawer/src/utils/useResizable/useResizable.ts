@@ -354,6 +354,7 @@ export const useResizable = ({
             };
           }
         },
+        tabIndex: 0, // Make the resizer focusable
       };
     },
     [enabled],
@@ -387,3 +388,8 @@ export const useResizable = ({
     resizableRef,
   };
 };
+
+// TODO:
+// 1. Add support for keyboard events to allow resizing with arrow keys
+// 2. Add css to temp remove CSS transition when resizing
+// 3. Move from direction to from getResizerProps to the hook. Look at other design systems
