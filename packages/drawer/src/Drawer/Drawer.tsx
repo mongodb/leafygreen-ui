@@ -102,9 +102,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     useEffect(() => {
       if (open) {
-        setSize({ width: PANEL_WIDTH, height: 0 });
+        setSize(PANEL_WIDTH);
       } else {
-        setSize({ width: 0, height: 0 });
+        setSize(0);
       }
     }, [open]);
 
@@ -137,11 +137,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { resizableRef, size, setSize, getResizerProps, isResizing } =
       useResizable({
         enabled: open && displayMode === DisplayMode.Embedded,
-        initialSize: open ? { width: PANEL_WIDTH } : { width: 0 },
-        minSize: { width: 300 },
-        maxSize: { width: 600 }, // Allow resizing up to a reasonable size
-        maxViewportPercentages: { width: 50 },
-        closeThresholds: { width: 120 }, // Snap close if resized to less than 50px
+        initialSize: open ? PANEL_WIDTH : 0,
+        minSize: 300,
+        maxSize: 600, // Allow resizing up to a reasonable size
+        maxViewportPercentages: 50,
+        closeThresholds: 120, // Snap close if resized to less than 50px
         onClose,
         handleType: 'left',
       });
@@ -173,7 +173,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
-            size: size.width,
+            size: size,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}

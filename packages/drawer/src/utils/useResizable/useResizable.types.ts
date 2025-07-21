@@ -1,13 +1,6 @@
-export interface Size {
-  width: number;
-  height: number;
-}
-
 export const handleType = {
   left: 'left',
   right: 'right',
-  top: 'top',
-  bottom: 'bottom',
 } as const;
 
 export type HandleType = (typeof handleType)[keyof typeof handleType];
@@ -23,26 +16,26 @@ export type ResizableProps = {
    * The initial size of the resizable element.
    * If not provided, the element will take its default size.
    */
-  initialSize: Partial<Size>;
+  initialSize: number;
 
   /**
    * The minimum size the resizable element can be resized to.
    * If not provided, there will be no minimum size restriction.
    */
-  minSize: Partial<Size>;
+  minSize: number;
 
   /**
    * The maximum size the resizable element can be resized to.
    * If not provided, there will be no maximum size restriction.
    */
-  maxSize: Partial<Size>;
+  maxSize: number;
 
   /**
    * The threshold for closing the resizable element.
    * If the size is below this threshold, the element will close.
    * If not provided, there will be no close threshold.
    */
-  closeThresholds: Partial<Size>;
+  closeThresholds: number;
 
   /**
    * Callback function that is called when the resizable element is closed.
@@ -54,14 +47,14 @@ export type ResizableProps = {
    * Callback function that is called when the resizable element is resized.
    * This can be used to perform any actions based on the new size.
    */
-  onResize?: (size: { width: number; height: number }) => void;
+  onResize?: (size: number) => void;
 
   /**
    * The percentage of the viewport that the resizable element should occupy at maximum.
    * This can be used to ensure the element does not exceed a certain size relative to the viewport.
    * If provided, this percentage-based maximum will override the maxSize prop if the calculated pixel value is smaller.
    */
-  maxViewportPercentages: Partial<Size>;
+  maxViewportPercentages: number;
 
   handleType: HandleType;
 };
@@ -78,13 +71,13 @@ export type ResizableReturn = {
   /**
    * The current width and height of the resizable element.
    */
-  size: Size;
+  size: number;
 
   /**
    * Function to set the size of the resizable element.
    * Accepts a Size object with width and height properties.
    */
-  setSize: React.Dispatch<React.SetStateAction<Size>>;
+  setSize: React.Dispatch<React.SetStateAction<number>>;
 
   /**
    * Boolean indicating whether the resizable element is currently being resized.
