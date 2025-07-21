@@ -529,6 +529,14 @@ export const useResizable = ({
     };
   });
 
+  useEffect(() => {
+    if (isResizing) {
+      resizableRef.current?.style.setProperty('transition', 'none');
+    } else {
+      resizableRef.current?.style.removeProperty('transition');
+    }
+  }, [isResizing]);
+
   return {
     size,
     setSize,
@@ -539,6 +547,7 @@ export const useResizable = ({
 };
 
 // TODO:
-// 1. Add support for keyboard events to allow resizing with arrow keys
-// 2. Add css to temp remove CSS transition when resizing
+// 1. Add support for keyboard events to allow resizing with arrow keys ✅
+// 2. Add css to temp remove CSS transition when resizing ✅
 // 3. Move from direction to from getResizerProps to the hook. Look at other design systems
+// 4. Make resize cusor show up even when the mouse is not on top of the resizer handle

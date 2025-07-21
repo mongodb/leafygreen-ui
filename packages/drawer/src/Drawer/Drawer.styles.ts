@@ -176,7 +176,6 @@ export const getDrawerStyles = ({
   theme,
   zIndex,
   size,
-  isResizing,
 }: {
   className?: string;
   displayMode: DisplayMode;
@@ -185,18 +184,12 @@ export const getDrawerStyles = ({
   theme: Theme;
   zIndex: number;
   size: number;
-  isResizing: boolean;
 }) =>
   cx(
     getBaseStyles({ theme }),
     getDisplayModeStyles({ displayMode, open, shouldAnimate, zIndex, size }),
     className,
     drawerClassName,
-    {
-      [css`
-        transition: none;
-      `]: isResizing,
-    },
   );
 
 export const getDrawerShadowStyles = ({
