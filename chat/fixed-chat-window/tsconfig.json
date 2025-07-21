@@ -19,6 +19,9 @@
   ],
   "references": [
     {
+      "path": "../../packages/avatar"
+    },
+    {
       "path": "../../packages/button"
     },
     {

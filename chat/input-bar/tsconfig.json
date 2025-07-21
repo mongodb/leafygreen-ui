@@ -22,6 +22,9 @@
       "path": "../leafygreen-chat-provider"
     },
     {
+      "path": "../../packages/avatar"
+    },
+    {
       "path": "../../packages/badge"
     },
     {

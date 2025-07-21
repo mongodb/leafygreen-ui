@@ -1,5 +1,11 @@
 # @leafygreen-ui/avatar
 
+## 3.1.0
+
+### Minor Changes
+
+- 3e8fbd7: [LG-5367](https://jira.mongodb.org/browse/LG-5367): add `AssistantAvatar`
+
 ## 3.0.3
 
 ### Patch Changes

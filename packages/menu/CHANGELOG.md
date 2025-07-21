@@ -1,5 +1,16 @@
 # @leafygreen-ui/menu
 
+## 32.0.0
+
+### Major Changes
+
+- 2d2047c: - Adds compact variant option to `Menu`
+  - Fixes default `Menu` and `MenuItem` padding to align with designs
+
+### Patch Changes
+
+- 4a5d7b8: Fix bug where custom `data-testid` was being ignored.
+
 ## 31.0.1
 
 ### Patch Changes

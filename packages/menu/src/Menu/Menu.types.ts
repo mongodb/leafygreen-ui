@@ -13,6 +13,12 @@ export type SubMenuType = ReactElement<
   InferredPolymorphicPropsWithRef<PolymorphicAs, SubMenuProps>
 >;
 
+export const MenuVariant = {
+  Default: 'default',
+  Compact: 'compact',
+} as const;
+export type MenuVariant = (typeof MenuVariant)[keyof typeof MenuVariant];
+
 export interface MenuProps
   extends Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'>,
     LgIdProps {
@@ -77,4 +83,11 @@ export interface MenuProps
    * @default {true}
    */
   renderDarkMenu?: boolean;
+
+  /**
+   * Variant of the menu to be rendered.
+   *
+   * @default 'default'
+   */
+  variant?: MenuVariant;
 }
