@@ -1,12 +1,4 @@
 import React from 'react';
-
-import {
-  Title,
-  Subtitle as StorybookSubtitle,
-  Description,
-  Primary,
-  Controls,
-} from '@storybook/blocks';
 import {
   ComponentPreview,
   PropCombinations,
@@ -16,6 +8,13 @@ import {
   storybookExcludedArgTypes,
   storybookExcludedControlParams,
 } from '@lg-tools/storybook-utils';
+import {
+  Controls,
+  Description,
+  Primary,
+  Subtitle as StorybookSubtitle,
+  Title,
+} from '@storybook/blocks';
 import type { Preview } from '@storybook/react';
 
 import {
