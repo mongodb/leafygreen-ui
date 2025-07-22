@@ -26,6 +26,7 @@ import {
   buttonContainerStyles,
   getContainerStyles,
   getHiddenStyles,
+  getIconButtonStyles,
   getIconFill,
 } from './MessageRating.styles';
 import {
@@ -119,7 +120,10 @@ export const MessageRating = forwardRef(
                 onClick={handleLikeClick}
                 active={isLiked}
                 ref={likeButtonRef}
-                className={getHiddenStyles(hideThumbsUp)}
+                className={getIconButtonStyles({
+                  isActive: isLiked,
+                  isHidden: hideThumbsUp,
+                })}
                 aria-checked={isLiked}
                 role="radio"
               >
@@ -148,7 +152,10 @@ export const MessageRating = forwardRef(
                 onClick={handleDislikeClick}
                 active={isDisliked}
                 ref={dislikeButtonRef}
-                className={getHiddenStyles(hideThumbsDown)}
+                className={getIconButtonStyles({
+                  isActive: isDisliked,
+                  isHidden: hideThumbsDown,
+                })}
                 aria-checked={isDisliked}
                 role="radio"
               >

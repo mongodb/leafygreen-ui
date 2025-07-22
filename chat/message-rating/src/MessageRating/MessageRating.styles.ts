@@ -31,6 +31,17 @@ export const getIconFill = ({
   isSelected: boolean;
 }) => (isSelected ? getSelectedIconFill(darkMode) : getBaseIconFill(darkMode));
 
+const baseActiveStyles = css`
+  &:before {
+    background-color: initial;
+  }
+`;
+
+const getActiveStyles = (isActive: boolean) =>
+  cx({
+    [baseActiveStyles]: isActive,
+  });
+
 const baseHiddenStyles = css`
   display: none;
 `;
@@ -39,3 +50,11 @@ export const getHiddenStyles = (isHidden: boolean) =>
   cx({
     [baseHiddenStyles]: isHidden,
   });
+
+export const getIconButtonStyles = ({
+  isActive,
+  isHidden,
+}: {
+  isActive: boolean;
+  isHidden: boolean;
+}) => cx(getActiveStyles(isActive), getHiddenStyles(isHidden));
