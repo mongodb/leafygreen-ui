@@ -10,10 +10,10 @@ import { SuggestionCard } from '.';
 
 const defaultSuggestedConfigurationParameters = {
   'Cluster Tier': 'M10 ($9.00/month)',
-  'Provider': 'AWS / N. Virginia (us-east-1)',
-  'Storage': '10 GB',
-  'RAM': '2 GB',
-  'vCPUs': '2 vCPUs',
+  Provider: 'AWS / N. Virginia (us-east-1)',
+  Storage: '10 GB',
+  RAM: '2 GB',
+  vCPUs: '2 vCPUs',
 };
 
 const defaultAppliedParameters = {
@@ -128,10 +128,10 @@ describe('chat/suggestion-card', () => {
     test('renders with custom configuration parameters', () => {
       const customParams = {
         'Cluster Tier': 'M30 ($31.00/month)',
-        'Provider': 'GCP / Iowa (us-central1)',
-        'Storage': '100 GB',
-        'RAM': '8 GB',
-        'vCPUs': '2 vCPUs',
+        Provider: 'GCP / Iowa (us-central1)',
+        Storage: '100 GB',
+        RAM: '8 GB',
+        vCPUs: '2 vCPUs',
       };
 
       renderSuggestionCard({
@@ -375,9 +375,7 @@ describe('chat/suggestion-card', () => {
 
       expect(listItems).toContainEqual(
         expect.objectContaining({
-          textContent: expect.stringContaining(
-            'Cluster Tier: M40',
-          ),
+          textContent: expect.stringContaining('Cluster Tier: M40'),
         }),
       );
     });
@@ -405,9 +403,7 @@ describe('chat/suggestion-card', () => {
 
       expect(listItems).toContainEqual(
         expect.objectContaining({
-          textContent: expect.stringContaining(
-            'Cluster Tier: M20',
-          ),
+          textContent: expect.stringContaining('Cluster Tier: M20'),
         }),
       );
     });

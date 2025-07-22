@@ -1,6 +1,6 @@
 export { SuggestionCard } from './SuggestionCard';
 export {
+  type ConfigurationParameters,
   Status,
-  type SuggestedConfigurationParameters,
   type SuggestionCardProps,
 } from './SuggestionCard/SuggestionCard.types';
