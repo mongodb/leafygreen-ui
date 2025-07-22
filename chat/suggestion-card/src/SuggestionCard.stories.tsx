@@ -33,10 +33,10 @@ const meta: StoryMetaType<typeof SuggestionCard> = {
     status: Status.Unset,
     suggestedConfigurationParameters: {
       'Cluster Tier': 'M200 ($14.59/hour)',
-      'Provider': 'AWS / N. Virginia (us-east-1)',
-      'Storage': '1500 GB',
-      'RAM': '256 GB',
-      'vCPUs': '64 vCPUs',
+      Provider: 'AWS / N. Virginia (us-east-1)',
+      Storage: '1500 GB',
+      RAM: '256 GB',
+      vCPUs: '64 vCPUs',
     },
     appliedParameters: {
       'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',

@@ -89,7 +89,7 @@ The `Status` enum provides the following options:
 | Prop                               | Type                      | Description                                                                                              | Default |
 | ---------------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------- | ------- |
 | `status`                           | `Status`                  | Determines the current state and rendering behavior of the suggestion card                               |         |
-| `suggestedConfigurationParameters` | `ConfigurationParameters` | Configuration parameters displayed in the main table as string key-value pairs                                  |         |
+| `suggestedConfigurationParameters` | `ConfigurationParameters` | Configuration parameters displayed in the main table as string key-value pairs                           |         |
 | `onClickApply`                     | `() => void`              | Callback fired when the user clicks the "Apply" button (shown when `status` is `Status.Apply`)           |         |
 | `appliedParameters`                | `ConfigurationParameters` | Parameters that were successfully applied, displayed in success banner when `status` is `Status.Success` |         |
 | `failedParameters`                 | `ConfigurationParameters` | Parameters that failed to apply, displayed in error banner when `status` is `Status.Error`               |         |
