@@ -825,6 +825,9 @@ importers:
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../../packages/icon
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -832,9 +835,6 @@ importers:
         specifier: workspace:^
         version: link:../../packages/tokens
     devDependencies:
-      '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses

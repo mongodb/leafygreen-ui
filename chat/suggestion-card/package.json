@@ -36,8 +36,7 @@
     "@leafygreen-ui/tokens": "workspace:^"
   },
   "devDependencies": {
-    "@lg-tools/test-harnesses": "workspace:^",
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@lg-tools/test-harnesses": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
