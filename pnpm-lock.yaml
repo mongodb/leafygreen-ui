@@ -3890,6 +3890,9 @@ importers:
       '@storybook/addon-mdx-gfm':
         specifier: 8.6.12
         version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/blocks':
+        specifier: 8.6.12
+        version: 8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
       '@storybook/components':
         specifier: 8.6.12
         version: 8.6.12(storybook@8.6.14(prettier@2.8.8))

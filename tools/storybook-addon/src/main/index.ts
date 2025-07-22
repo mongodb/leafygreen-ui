@@ -133,9 +133,10 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
 };
 
 export const typescript: StorybookConfig['typescript'] = {
+  reactDocgen: 'react-docgen',
   check: false,
 };
 
 export const docs: StorybookConfig['docs'] = {
-  autodocs: false,
+  autodocs: true,
 };
