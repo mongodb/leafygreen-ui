@@ -44,7 +44,15 @@ export interface SuggestionCardProps
    */
   suggestedConfigurationParameters: SuggestedConfigurationParameters;
   /**
+   * Parameters that were successfully applied
+   */
+  successAplyingParameters?: SuggestedConfigurationParameters;
+  /**
+   * Parameters that were not successfully applied
+   */
+  errorAplyingParameters?: SuggestedConfigurationParameters;
+  /**
    * Callback fired when the user clicks the "Apply" button
    */
-  handleApply: () => void;
+  onClickApply: () => void;
 }

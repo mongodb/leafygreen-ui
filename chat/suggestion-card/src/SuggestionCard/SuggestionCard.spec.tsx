@@ -20,7 +20,7 @@ const defaultSuggestedConfigurationParameters = {
 const defaultProps: SuggestionCardProps = {
   status: Status.Unset,
   suggestedConfigurationParameters: defaultSuggestedConfigurationParameters,
-  handleApply: jest.fn(),
+  onClickApply: jest.fn(),
 };
 
 function renderSuggestionCard(props: Partial<SuggestionCardProps> = {}) {
@@ -181,7 +181,8 @@ describe('chat/suggestion-card', () => {
         screen.getByText('The suggestions have been applied.'),
       ).toBeInTheDocument();
       expect(screen.getByText('Cloud Provider & Region')).toBeInTheDocument();
-      expect(screen.getByText('Cluster Tier')).toBeInTheDocument();
+      // Use getAllByText to handle duplicate "Cluster Tier" elements
+      expect(screen.getAllByText('Cluster Tier')).toHaveLength(2);
     });
 
     test('renders error banner when status is Error', () => {
@@ -192,43 +193,45 @@ describe('chat/suggestion-card', () => {
         ),
       ).toBeInTheDocument();
       expect(screen.getByText('Cloud Provider & Region')).toBeInTheDocument();
-      expect(screen.getByText('Cluster Tier')).toBeInTheDocument();
+      // Use getAllByText to handle duplicate "Cluster Tier" elements
+      expect(screen.getAllByText('Cluster Tier')).toHaveLength(2);
     });
   });
 
   describe('user interactions', () => {
-    test('calls handleApply when Apply button is clicked', () => {
-      const handleApply = jest.fn();
+    test('calls onClickApply when Apply button is clicked', () => {
+      const onClickApply = jest.fn();
       renderSuggestionCard({
         status: Status.Apply,
-        handleApply,
+        onClickApply,
       });
 
       const applyButton = screen.getByText('Apply these suggestions');
       fireEvent.click(applyButton);
 
-      expect(handleApply).toHaveBeenCalledTimes(1);
+      expect(onClickApply).toHaveBeenCalledTimes(1);
     });
 
-    test('calls handleApply when Apply button is activated with keyboard', async () => {
-      const handleApply = jest.fn();
+    test('calls onClickApply when Apply button is activated with keyboard', async () => {
+      const onClickApply = jest.fn();
       renderSuggestionCard({
         status: Status.Apply,
-        handleApply,
+        onClickApply,
       });
 
       const applyButton = screen.getByText('Apply these suggestions');
       await userEvent.click(applyButton);
 
-      expect(handleApply).toHaveBeenCalledTimes(1);
+      expect(onClickApply).toHaveBeenCalledTimes(1);
     });
 
     test('Apply button has correct ARIA label and structure', () => {
       renderSuggestionCard({ status: Status.Apply });
 
-      const applyButton = screen.getByText('Apply these suggestions');
+      const applyButton = screen.getByRole('button', {
+        name: 'Apply these suggestions',
+      });
       expect(applyButton).toBeInTheDocument();
-      expect(applyButton.tagName).toBe('BUTTON');
     });
   });
 
@@ -262,7 +265,14 @@ describe('chat/suggestion-card', () => {
       expect(
         screen.getByText('AWS / N. Virginia (us-east-1)'),
       ).toBeInTheDocument();
-      expect(screen.getByText('M10')).toBeInTheDocument();
+      // Use partial text matching for cluster tier since it appears in both table and banner
+      expect(
+        screen.getByText((content, element) => {
+          return (
+            element?.tagName.toLowerCase() === 'li' && content.includes('M10')
+          );
+        }),
+      ).toBeInTheDocument();
     });
 
     test('error banner shows correct configuration in banner', () => {
@@ -272,7 +282,14 @@ describe('chat/suggestion-card', () => {
       expect(
         screen.getByText('AWS / N. Virginia (us-east-1)'),
       ).toBeInTheDocument();
-      expect(screen.getByText('M10')).toBeInTheDocument();
+      // Use partial text matching for cluster tier since it appears in both table and banner
+      expect(
+        screen.getByText((content, element) => {
+          return (
+            element?.tagName.toLowerCase() === 'li' && content.includes('M10')
+          );
+        }),
+      ).toBeInTheDocument();
     });
 
     test('banner displays custom configuration parameters', () => {
@@ -291,7 +308,14 @@ describe('chat/suggestion-card', () => {
       });
 
       expect(screen.getByText('Azure / East US')).toBeInTheDocument();
-      expect(screen.getByText('M40')).toBeInTheDocument();
+      // Use partial text matching for cluster tier since it appears in both table and banner
+      expect(
+        screen.getByText((content, element) => {
+          return (
+            element?.tagName.toLowerCase() === 'li' && content.includes('M40')
+          );
+        }),
+      ).toBeInTheDocument();
     });
   });
 

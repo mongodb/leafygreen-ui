@@ -11,6 +11,7 @@ import { StatusBanner } from '../StatusBanner/StatusBanner';
 import {
   applyButtonStyles,
   boldedTextStyle,
+  dividerStyle,
   getSuggetionCardWrapperStyles,
   tableCellStyles,
   tableHeaderStyles,
@@ -23,7 +24,7 @@ const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
     const {
       status,
       suggestedConfigurationParameters,
-      handleApply,
+      onClickApply,
       darkMode: darkModeProp,
     } = props;
     const { clusterTier, price, cloudProvider, storage, ram, vCPUs } =
@@ -32,7 +33,7 @@ const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={fwdRef}>
+        <div ref={fwdRef} className={dividerStyle}>
           <div className={getSuggetionCardWrapperStyles(theme)}>
             <div className={boldedTextStyle}>
               Apply configuration to your cluster?
@@ -67,7 +68,7 @@ const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
                 variant="primary"
                 size="small"
                 leftGlyph={<ArrowLeftIcon />}
-                onClick={handleApply}
+                onClick={onClickApply}
               >
                 Apply these suggestions
               </Button>

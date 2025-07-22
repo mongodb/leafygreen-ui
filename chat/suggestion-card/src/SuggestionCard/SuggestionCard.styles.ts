@@ -8,6 +8,12 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
+const DIVIDER_WIDTH = 353;
+
+export const dividerStyle = css`
+  width: ${DIVIDER_WIDTH}px;
+`;
+
 export const getSuggetionCardWrapperStyles = (theme: Theme) => css`
   background-color: ${color[theme].background.secondary.default};
   border: 1px solid ${color[theme].border.secondary.default};

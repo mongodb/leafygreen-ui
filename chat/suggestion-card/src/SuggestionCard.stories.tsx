@@ -6,7 +6,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import SuggestionCard, { Status, SuggestionCardProps } from '.';
+import { Status, SuggestionCard, SuggestionCardProps } from '.';
 
 const meta: StoryMetaType<typeof SuggestionCard> = {
   title: 'Chat/SuggestionCard',
