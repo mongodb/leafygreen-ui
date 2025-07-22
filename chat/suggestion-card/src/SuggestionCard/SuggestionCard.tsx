@@ -24,11 +24,11 @@ const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
     const {
       status,
       suggestedConfigurationParameters,
+      appliedParameters,
+      failedParameters,
       onClickApply,
       darkMode: darkModeProp,
     } = props;
-    const { clusterTier, price, cloudProvider, storage, ram, vCPUs } =
-      suggestedConfigurationParameters;
     const { theme, darkMode } = useDarkMode(darkModeProp);
 
     return (
@@ -39,28 +39,14 @@ const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
               Apply configuration to your cluster?
             </div>
             <table className={tableStyles}>
-              <tr>
-                <th className={tableHeaderStyles}>Cluster Tier</th>
-                <td className={tableCellStyles}>
-                  {clusterTier} ({price})
-                </td>
-              </tr>
-              <tr>
-                <th className={tableHeaderStyles}>Provider</th>
-                <td className={tableCellStyles}>{cloudProvider}</td>
-              </tr>
-              <tr>
-                <th className={tableHeaderStyles}>Storage</th>
-                <td className={tableCellStyles}>{storage}</td>
-              </tr>
-              <tr>
-                <th className={tableHeaderStyles}>RAM</th>
-                <td className={tableCellStyles}>{ram}</td>
-              </tr>
-              <tr>
-                <th className={tableHeaderStyles}>vCPUs</th>
-                <td className={tableCellStyles}>{vCPUs}</td>
-              </tr>
+              {Object.entries(suggestedConfigurationParameters).map(
+                ([key, value]) => (
+                  <tr key={key}>
+                    <th className={tableHeaderStyles}>{key}</th>
+                    <td className={tableCellStyles}>{value}</td>
+                  </tr>
+                ),
+              )}
             </table>
             {status === Status.Apply && (
               <Button
@@ -80,9 +66,8 @@ const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
           ) && (
             <StatusBanner
               status={status}
-              suggestedConfigurationParameters={
-                suggestedConfigurationParameters
-              }
+              appliedParameters={appliedParameters}
+              failedParameters={failedParameters}
             />
           )}
         </div>

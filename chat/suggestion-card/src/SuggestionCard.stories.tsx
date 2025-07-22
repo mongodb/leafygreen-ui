@@ -32,14 +32,21 @@ const meta: StoryMetaType<typeof SuggestionCard> = {
   args: {
     status: Status.Unset,
     suggestedConfigurationParameters: {
-      clusterTier: 'M200',
-      price: '$14.59/hour',
-      cloudProvider: 'AWS / N. Virginia (us-east-1)',
-      storage: '1500 GB',
-      ram: '256 GB',
+      'Cluster Tier': 'M200 ($14.59/hour)',
+      Provider: 'AWS / N. Virginia (us-east-1)',
+      Storage: '1500 GB',
+      RAM: '256 GB',
       vCPUs: '64 vCPUs',
     },
-    handleApply: () => {},
+    appliedParameters: {
+      'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
+      'Cluster Tier': 'M200',
+    },
+    failedParameters: {
+      'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
+      'Cluster Tier': 'M200',
+    },
+    onClickApply: () => {},
     darkMode: false,
   },
   argTypes: {
@@ -51,8 +58,14 @@ const meta: StoryMetaType<typeof SuggestionCard> = {
     suggestedConfigurationParameters: {
       control: 'object',
     },
-    handleApply: {
-      action: 'handleApply',
+    appliedParameters: {
+      control: 'object',
+    },
+    failedParameters: {
+      control: 'object',
+    },
+    onClickApply: {
+      action: 'onClickApply',
     },
   },
 };

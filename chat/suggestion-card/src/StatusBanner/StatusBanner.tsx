@@ -8,29 +8,33 @@ import {
   listStyles,
 } from '../SuggestionCard/SuggestionCard.styles';
 import {
+  ConfigurationParameters,
   Status,
   SuggestionCardProps,
 } from '../SuggestionCard/SuggestionCard.types';
 
 export const StatusBanner = ({
   status,
-  suggestedConfigurationParameters,
+  appliedParameters,
+  failedParameters,
 }: {
   status: Status;
-  suggestedConfigurationParameters: SuggestionCardProps['suggestedConfigurationParameters'];
+  appliedParameters: SuggestionCardProps['appliedParameters'];
+  failedParameters: SuggestionCardProps['failedParameters'];
 }) => {
-  const { cloudProvider, clusterTier } = suggestedConfigurationParameters;
-
   const clusterConfigurationBannerContent = (
-    <ul className={listStyles}>
-      <li>
-        <u>Cloud Provider & Region</u>: {cloudProvider}
-      </li>
-      <li>
-        <u>Cluster Tier</u>: {clusterTier}
-      </li>
-    </ul>
-  );
+    parameters?: ConfigurationParameters,
+  ) => {
+    return (
+      <ul className={listStyles}>
+        {Object.entries(parameters ?? {}).map(([key, value]) => (
+          <li key={key}>
+            <u>{key}</u>: {value}
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
     <Banner
@@ -40,16 +44,23 @@ export const StatusBanner = ({
       }
     >
       <div>
-        <div className={boldedTextStyle}>
-          {status === Status.Success && <>The suggestions have been applied.</>}
-          {status === Status.Error && (
-            <>
+        {status === Status.Success && (
+          <>
+            <div className={boldedTextStyle}>
+              The suggestions have been applied.
+            </div>
+            {clusterConfigurationBannerContent(appliedParameters)}
+          </>
+        )}
+        {status === Status.Error && (
+          <>
+            <div className={boldedTextStyle}>
               We ran into an error when applying the suggestion. Please manually
               try it:
-            </>
-          )}
-        </div>
-        {clusterConfigurationBannerContent}
+            </div>
+            {clusterConfigurationBannerContent(failedParameters)}
+          </>
+        )}
       </div>
     </Banner>
   );

@@ -12,15 +12,10 @@ export const Status = {
 export type Status = (typeof Status)[keyof typeof Status];
 
 /**
- * Parameters for the suggested configuration
+ * Configuration parameters as key-value pairs
  */
-export interface SuggestedConfigurationParameters {
-  clusterTier: string;
-  price: string;
-  cloudProvider: string;
-  storage: string;
-  ram: string;
-  vCPUs: string;
+export interface ConfigurationParameters {
+  [key: string]: string;
 }
 
 export interface SuggestionCardProps
@@ -35,22 +30,17 @@ export interface SuggestionCardProps
    */
   status: Status;
   /**
-   * Suggested configuration parameters:
-   * - clusterTier: string
-   * - cloudProvider: string
-   * - storage: string
-   * - ram: string
-   * - vCPUs: string
+   * Suggested configuration parameters as key-value pairs
    */
-  suggestedConfigurationParameters: SuggestedConfigurationParameters;
+  suggestedConfigurationParameters: ConfigurationParameters;
   /**
    * Parameters that were successfully applied
    */
-  successAplyingParameters?: SuggestedConfigurationParameters;
+  appliedParameters?: ConfigurationParameters;
   /**
-   * Parameters that were not successfully applied
+   * Parameters that failed to apply
    */
-  errorAplyingParameters?: SuggestedConfigurationParameters;
+  failedParameters?: ConfigurationParameters;
   /**
    * Callback fired when the user clicks the "Apply" button
    */

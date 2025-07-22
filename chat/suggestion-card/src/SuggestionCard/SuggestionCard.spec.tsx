@@ -9,12 +9,21 @@ import { Status, SuggestionCardProps } from './SuggestionCard.types';
 import { SuggestionCard } from '.';
 
 const defaultSuggestedConfigurationParameters = {
-  clusterTier: 'M10',
-  price: '$9.00/month',
-  cloudProvider: 'AWS / N. Virginia (us-east-1)',
-  storage: '10 GB',
-  ram: '2 GB',
+  'Cluster Tier': 'M10 ($9.00/month)',
+  Provider: 'AWS / N. Virginia (us-east-1)',
+  Storage: '10 GB',
+  RAM: '2 GB',
   vCPUs: '2 vCPUs',
+};
+
+const defaultAppliedParameters = {
+  'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
+  'Cluster Tier': 'M10 ($9.00/month)',
+};
+
+const defaultFailedParameters = {
+  'Cloud Provider & Region': 'GCP / Iowa (us-central1)',
+  'Cluster Tier': 'M30 ($31.00/month)',
 };
 
 const defaultProps: SuggestionCardProps = {
@@ -52,13 +61,37 @@ describe('chat/suggestion-card', () => {
     });
 
     test('does not have accessibility issues with Success banner', async () => {
-      const { container } = renderSuggestionCard({ status: Status.Success });
+      const { container } = renderSuggestionCard({
+        status: Status.Success,
+        appliedParameters: defaultAppliedParameters,
+      });
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
 
     test('does not have accessibility issues with Error banner', async () => {
-      const { container } = renderSuggestionCard({ status: Status.Error });
+      const { container } = renderSuggestionCard({
+        status: Status.Error,
+        failedParameters: defaultFailedParameters,
+      });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+
+    test('does not have accessibility issues with empty parameters', async () => {
+      const { container } = renderSuggestionCard({
+        status: Status.Success,
+        appliedParameters: {},
+      });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+
+    test('does not have accessibility issues with undefined parameters', async () => {
+      const { container } = renderSuggestionCard({
+        status: Status.Error,
+        failedParameters: undefined,
+      });
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
@@ -75,14 +108,7 @@ describe('chat/suggestion-card', () => {
     test('renders all configuration parameters in table', () => {
       renderSuggestionCard();
 
-      // Check headers
-      expect(screen.getByText('Cluster Tier')).toBeInTheDocument();
-      expect(screen.getByText('Provider')).toBeInTheDocument();
-      expect(screen.getByText('Storage')).toBeInTheDocument();
-      expect(screen.getByText('RAM')).toBeInTheDocument();
-      expect(screen.getByText('vCPUs')).toBeInTheDocument();
-
-      // Check values
+      // Check values from the key-value pairs
       expect(screen.getByText('M10 ($9.00/month)')).toBeInTheDocument();
       expect(
         screen.getByText('AWS / N. Virginia (us-east-1)'),
@@ -94,11 +120,10 @@ describe('chat/suggestion-card', () => {
 
     test('renders with custom configuration parameters', () => {
       const customParams = {
-        clusterTier: 'M30',
-        price: '$31.00/month',
-        cloudProvider: 'GCP / us-central1',
-        storage: '100 GB',
-        ram: '8 GB',
+        'Cluster Tier': 'M30 ($31.00/month)',
+        Provider: 'GCP / Iowa (us-central1)',
+        Storage: '100 GB',
+        RAM: '8 GB',
         vCPUs: '2 vCPUs',
       };
 
@@ -107,7 +132,7 @@ describe('chat/suggestion-card', () => {
       });
 
       expect(screen.getByText('M30 ($31.00/month)')).toBeInTheDocument();
-      expect(screen.getByText('GCP / us-central1')).toBeInTheDocument();
+      expect(screen.getByText('GCP / Iowa (us-central1)')).toBeInTheDocument();
       expect(screen.getByText('100 GB')).toBeInTheDocument();
       expect(screen.getByText('8 GB')).toBeInTheDocument();
       expect(screen.getByText('2 vCPUs')).toBeInTheDocument();
@@ -176,7 +201,10 @@ describe('chat/suggestion-card', () => {
     });
 
     test('renders success banner when status is Success', () => {
-      renderSuggestionCard({ status: Status.Success });
+      renderSuggestionCard({
+        status: Status.Success,
+        appliedParameters: defaultAppliedParameters,
+      });
       expect(
         screen.getByText('The suggestions have been applied.'),
       ).toBeInTheDocument();
@@ -186,7 +214,10 @@ describe('chat/suggestion-card', () => {
     });
 
     test('renders error banner when status is Error', () => {
-      renderSuggestionCard({ status: Status.Error });
+      renderSuggestionCard({
+        status: Status.Error,
+        failedParameters: defaultFailedParameters,
+      });
       expect(
         screen.getByText(
           'We ran into an error when applying the suggestion. Please manually try it:',
@@ -258,64 +289,296 @@ describe('chat/suggestion-card', () => {
   });
 
   describe('status banner content', () => {
-    test('success banner shows correct configuration in banner', () => {
-      renderSuggestionCard({ status: Status.Success });
+    test('success banner shows correct applied parameters', () => {
+      renderSuggestionCard({
+        status: Status.Success,
+        appliedParameters: defaultAppliedParameters,
+      });
 
-      // Check that the banner shows the configuration details
-      expect(
-        screen.getByText('AWS / N. Virginia (us-east-1)'),
-      ).toBeInTheDocument();
-      // Use partial text matching for cluster tier since it appears in both table and banner
-      expect(
-        screen.getByText((content, element) => {
-          return (
-            element?.tagName.toLowerCase() === 'li' && content.includes('M10')
-          );
+      // Check that the banner shows the applied parameters, not the suggested ones
+      const listItems = screen.getAllByRole('listitem');
+
+      // Check for Cloud Provider & Region
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining(
+            'Cloud Provider & Region: AWS / N. Virginia (us-east-1)',
+          ),
         }),
-      ).toBeInTheDocument();
+      );
+
+      // Check for Cluster Tier
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining(
+            'Cluster Tier: M10 ($9.00/month)',
+          ),
+        }),
+      );
     });
 
-    test('error banner shows correct configuration in banner', () => {
-      renderSuggestionCard({ status: Status.Error });
+    test('error banner shows correct failed parameters', () => {
+      renderSuggestionCard({
+        status: Status.Error,
+        failedParameters: defaultFailedParameters,
+      });
 
-      // Check that the banner shows the configuration details
-      expect(
-        screen.getByText('AWS / N. Virginia (us-east-1)'),
-      ).toBeInTheDocument();
-      // Use partial text matching for cluster tier since it appears in both table and banner
-      expect(
-        screen.getByText((content, element) => {
-          return (
-            element?.tagName.toLowerCase() === 'li' && content.includes('M10')
-          );
+      // Check that the banner shows the failed parameters
+      const listItems = screen.getAllByRole('listitem');
+
+      // Check for Cloud Provider & Region
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining(
+            'Cloud Provider & Region: GCP / Iowa (us-central1)',
+          ),
         }),
-      ).toBeInTheDocument();
+      );
+
+      // Check for Cluster Tier
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining(
+            'Cluster Tier: M30 ($31.00/month)',
+          ),
+        }),
+      );
     });
 
-    test('banner displays custom configuration parameters', () => {
-      const customParams = {
-        clusterTier: 'M40',
-        price: '$15.00/month',
-        cloudProvider: 'Azure / East US',
-        storage: '40 GB',
-        ram: '4 GB',
-        vCPUs: '4 vCPUs',
+    test('success banner displays custom applied parameters', () => {
+      const customAppliedParams = {
+        'Cloud Provider & Region': 'Azure / East US',
+        'Cluster Tier': 'M40 ($15.00/month)',
+        Storage: '50 GB',
       };
 
       renderSuggestionCard({
         status: Status.Success,
-        suggestedConfigurationParameters: customParams,
+        appliedParameters: customAppliedParams,
       });
 
-      expect(screen.getByText('Azure / East US')).toBeInTheDocument();
-      // Use partial text matching for cluster tier since it appears in both table and banner
-      expect(
-        screen.getByText((content, element) => {
-          return (
-            element?.tagName.toLowerCase() === 'li' && content.includes('M40')
-          );
+      const listItems = screen.getAllByRole('listitem');
+
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining(
+            'Cloud Provider & Region: Azure / East US',
+          ),
         }),
+      );
+
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining(
+            'Cluster Tier: M40 ($15.00/month)',
+          ),
+        }),
+      );
+
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining('Storage: 50 GB'),
+        }),
+      );
+    });
+
+    test('error banner displays custom failed parameters', () => {
+      const customFailedParams = {
+        'Cloud Provider & Region': 'AWS / us-west-2',
+        'Cluster Tier': 'M20 ($20.00/month)',
+      };
+
+      renderSuggestionCard({
+        status: Status.Error,
+        failedParameters: customFailedParams,
+      });
+
+      const listItems = screen.getAllByRole('listitem');
+
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining(
+            'Cloud Provider & Region: AWS / us-west-2',
+          ),
+        }),
+      );
+
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining(
+            'Cluster Tier: M20 ($20.00/month)',
+          ),
+        }),
+      );
+    });
+
+    test('success banner handles undefined applied parameters', () => {
+      renderSuggestionCard({
+        status: Status.Success,
+        appliedParameters: undefined,
+      });
+
+      expect(
+        screen.getByText('The suggestions have been applied.'),
       ).toBeInTheDocument();
+
+      // Should render empty list when no parameters
+      const list = screen.queryByRole('list');
+      expect(list).toBeInTheDocument();
+      expect(list?.children).toHaveLength(0);
+    });
+
+    test('error banner handles undefined failed parameters', () => {
+      renderSuggestionCard({
+        status: Status.Error,
+        failedParameters: undefined,
+      });
+
+      expect(
+        screen.getByText(
+          'We ran into an error when applying the suggestion. Please manually try it:',
+        ),
+      ).toBeInTheDocument();
+
+      // Should render empty list when no parameters
+      const list = screen.queryByRole('list');
+      expect(list).toBeInTheDocument();
+      expect(list?.children).toHaveLength(0);
+    });
+
+    test('success banner handles empty applied parameters', () => {
+      renderSuggestionCard({
+        status: Status.Success,
+        appliedParameters: {},
+      });
+
+      expect(
+        screen.getByText('The suggestions have been applied.'),
+      ).toBeInTheDocument();
+
+      // Should render empty list when empty parameters
+      const list = screen.queryByRole('list');
+      expect(list).toBeInTheDocument();
+      expect(list?.children).toHaveLength(0);
+    });
+
+    test('error banner handles empty failed parameters', () => {
+      renderSuggestionCard({
+        status: Status.Error,
+        failedParameters: {},
+      });
+
+      expect(
+        screen.getByText(
+          'We ran into an error when applying the suggestion. Please manually try it:',
+        ),
+      ).toBeInTheDocument();
+
+      // Should render empty list when empty parameters
+      const list = screen.queryByRole('list');
+      expect(list).toBeInTheDocument();
+      expect(list?.children).toHaveLength(0);
+    });
+  });
+
+  describe('parameter props validation', () => {
+    test('renders table with suggestedConfigurationParameters regardless of banner status', () => {
+      renderSuggestionCard({
+        status: Status.Success,
+        appliedParameters: { 'Different Key': 'Different Value' },
+      });
+
+      // Table should always show suggested parameters
+      expect(screen.getByText('M10 ($9.00/month)')).toBeInTheDocument();
+      expect(
+        screen.getByText('AWS / N. Virginia (us-east-1)'),
+      ).toBeInTheDocument();
+      expect(screen.getByText('10 GB')).toBeInTheDocument();
+      expect(screen.getByText('2 GB')).toBeInTheDocument();
+      expect(screen.getByText('2 vCPUs')).toBeInTheDocument();
+
+      // Banner should show applied parameters
+      const listItems = screen.getAllByRole('listitem');
+      expect(listItems).toContainEqual(
+        expect.objectContaining({
+          textContent: expect.stringContaining(
+            'Different Key: Different Value',
+          ),
+        }),
+      );
+    });
+
+    test('success banner does not render when appliedParameters is provided but status is not Success', () => {
+      renderSuggestionCard({
+        status: Status.Apply,
+        appliedParameters: defaultAppliedParameters,
+      });
+
+      expect(
+        screen.queryByText('The suggestions have been applied.'),
+      ).not.toBeInTheDocument();
+      // No banner should be rendered, so no list should exist
+      expect(screen.queryByRole('list')).not.toBeInTheDocument();
+    });
+
+    test('error banner does not render when failedParameters is provided but status is not Error', () => {
+      renderSuggestionCard({
+        status: Status.Apply,
+        failedParameters: defaultFailedParameters,
+      });
+
+      expect(
+        screen.queryByText(
+          'We ran into an error when applying the suggestion. Please manually try it:',
+        ),
+      ).not.toBeInTheDocument();
+      // No banner should be rendered, so no list should exist
+      expect(screen.queryByRole('list')).not.toBeInTheDocument();
+    });
+
+    test('can handle both appliedParameters and failedParameters being provided simultaneously', () => {
+      renderSuggestionCard({
+        status: Status.Success,
+        appliedParameters: defaultAppliedParameters,
+        failedParameters: defaultFailedParameters, // Should be ignored for success status
+      });
+
+      // Should only show applied parameters in success banner
+      const listItems = screen.getAllByRole('listitem');
+      const hasAppliedContent = listItems.some(item =>
+        item.textContent?.includes('AWS / N. Virginia (us-east-1)'),
+      );
+      expect(hasAppliedContent).toBe(true);
+
+      // Should not show failed parameters content
+      const hasFailedContent = listItems.some(item =>
+        item.textContent?.includes('GCP / Iowa (us-central1)'),
+      );
+      expect(hasFailedContent).toBe(false);
+    });
+
+    test('handles special characters and long parameter values', () => {
+      const specialParams = {
+        'Special-Chars & Symbols': 'Value with "quotes" & symbols!',
+        'Very Long Parameter Name That Exceeds Normal Length':
+          'Very Long Value That Also Exceeds What Would Normally Be Expected In A Configuration Parameter',
+        'Unicode Test': 'Test with émojis 🚀 and ünicöde çharacters',
+      };
+
+      renderSuggestionCard({
+        status: Status.Success,
+        appliedParameters: specialParams,
+      });
+
+      const listItems = screen.getAllByRole('listitem');
+
+      Object.entries(specialParams).forEach(([key, value]) => {
+        expect(listItems).toContainEqual(
+          expect.objectContaining({
+            textContent: expect.stringContaining(`${key}: ${value}`),
+          }),
+        );
+      });
     });
   });
 
@@ -371,6 +634,67 @@ describe('chat/suggestion-card', () => {
         screen.getByRole('columnheader', { name: 'vCPUs' }),
       ).toBeInTheDocument();
       expect(screen.getByRole('cell', { name: '2 vCPUs' })).toBeInTheDocument();
+    });
+  });
+
+  describe('props validation', () => {
+    test('renders with minimal required props', () => {
+      const minimalProps = {
+        status: Status.Unset,
+        suggestedConfigurationParameters: { Test: 'Value' },
+        onClickApply: jest.fn(),
+      };
+
+      const { container } = render(
+        <LeafyGreenProvider>
+          <SuggestionCard {...minimalProps} />
+        </LeafyGreenProvider>,
+      );
+
+      expect(container.firstChild).toBeInTheDocument();
+      expect(screen.getByText('Test')).toBeInTheDocument();
+      expect(screen.getByText('Value')).toBeInTheDocument();
+    });
+
+    test('handles empty suggestedConfigurationParameters', () => {
+      renderSuggestionCard({
+        suggestedConfigurationParameters: {},
+      });
+
+      expect(
+        screen.getByText('Apply configuration to your cluster?'),
+      ).toBeInTheDocument();
+      const table = screen.getByRole('table');
+      expect(table).toBeInTheDocument();
+      expect(screen.queryAllByRole('columnheader')).toHaveLength(0);
+    });
+
+    test('maintains consistent behavior across different parameter counts', () => {
+      const singleParam = { 'Single Param': 'Value' };
+      const multipleParams = {
+        'Param 1': 'Value 1',
+        'Param 2': 'Value 2',
+        'Param 3': 'Value 3',
+      };
+
+      // Test single parameter
+      const { rerender } = renderSuggestionCard({
+        suggestedConfigurationParameters: singleParam,
+      });
+      expect(screen.getAllByRole('columnheader')).toHaveLength(1);
+      expect(screen.getAllByRole('cell')).toHaveLength(1);
+
+      // Test multiple parameters
+      rerender(
+        <LeafyGreenProvider>
+          <SuggestionCard
+            {...defaultProps}
+            suggestedConfigurationParameters={multipleParams}
+          />
+        </LeafyGreenProvider>,
+      );
+      expect(screen.getAllByRole('columnheader')).toHaveLength(3);
+      expect(screen.getAllByRole('cell')).toHaveLength(3);
     });
   });
 });

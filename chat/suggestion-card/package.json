@@ -33,7 +33,8 @@
     "@lg-tools/test-harnesses": "workspace:^",
     "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
-    "@leafygreen-ui/icon": "workspace:^"
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/suggestion-card",
   "repository": {
