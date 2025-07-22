@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
+const DEFAULT_ROTATION_INTERVAL = 2000;
+
 /**
  * Cycles through one or more React nodes at a fixed interval.
  *
@@ -9,7 +11,7 @@ import React, { useEffect, useMemo, useState } from 'react';
  */
 export const useRotatingItems = (
   input: React.ReactNode | Array<React.ReactNode>,
-  interval = 2000,
+  interval = DEFAULT_ROTATION_INTERVAL,
 ) => {
   const items = useMemo(
     () => (Array.isArray(input) ? input : [input]),

@@ -242,23 +242,23 @@ export const getValueAriaAttributes = (value?: number, maxValue?: number) => {
   };
 };
 
+interface GetHeaderIconParams {
+  /** Optional progress bar variant. */
+  variant?: Variant;
+  /** If true, overrides variant and returns a warning icon. */
+  disabled?: boolean;
+  /** Additional props to spread onto the icon (e.g., className, size). */
+  props?: Record<string, any>;
+}
+
 /**
  * Returns the appropriate status icon to display in a header.
- *
- * @param param.variant - Optional progress bar variant.
- * @param param.disabled - If true, overrides variant and returns a warning icon (default: false).
- * @param param.props - Additional props to spread onto the icon (e.g., className, size).
- * @returns A React element representing the appropriate status icon.
  */
 export const getHeaderIcon = ({
   variant,
   disabled = false,
   props = {},
-}: {
-  variant?: Variant;
-  disabled?: boolean;
-  props?: Record<string, any>;
-}) => {
+}: GetHeaderIconParams) => {
   if (disabled) return <WarningIcon {...props} />;
 
   switch (variant) {

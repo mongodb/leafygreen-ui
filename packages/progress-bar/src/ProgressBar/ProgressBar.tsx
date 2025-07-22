@@ -66,11 +66,12 @@ export function ProgressBar(props: ProgressBarProps) {
   const { theme } = useDarkMode(darkMode);
 
   // get identifiers for ARIA attributes and testing
-  const { barId, labelId, descId } = useIdIdentifiers(
+  const { barId, labelId, descId } = useIdIdentifiers({
     role,
     label,
-    descriptionProp,
-  );
+    description: descriptionProp,
+  });
+
   const lgIds = getLgIds(dataLgId);
 
   // determine if icon should be shown
