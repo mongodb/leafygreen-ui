@@ -313,3 +313,4 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 // 7. Add setOpen to drawer component to allow closing the drawer from inside ❌
 // 8. Add back handleType to getResizerProps
 // 9. Remove snap close logic from the hook ✅
+// 10.Disable resize on small widths

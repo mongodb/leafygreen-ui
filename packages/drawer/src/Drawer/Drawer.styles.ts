@@ -12,6 +12,7 @@ import { PANEL_WIDTH } from '../constants';
 
 import { HEADER_HEIGHT, MOBILE_BREAKPOINT } from './Drawer.constants';
 import { DisplayMode } from './Drawer.types';
+import { palette } from '@leafygreen-ui/palette';
 
 export const drawerTransitionDuration = transitionDuration.slower;
 
@@ -287,3 +288,23 @@ export const innerChildrenContainerStyles = cx(
   baseInnerChildrenContainerStyles,
   scrollContainerStyles,
 );
+
+export const resizerColors: Record<Theme, string> = {
+  [Theme.Light]: palette.blue.light1,
+  [Theme.Dark]: palette.blue.light1,
+};
+
+export const getResizerStyles = ({ theme }: { theme: Theme }) =>
+  css`
+    position: absolute;
+    height: 100%;
+    width: 2px;
+    background-color: transparent;
+    left: 0;
+    cursor: col-resize;
+
+    &:hover,
+    &:focus-visible {
+      background-color: ${palette.blue.light1};
+    }
+  `;

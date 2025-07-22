@@ -27,7 +27,6 @@ export interface DrawerProps
 
   /**
    * Determines if the Drawer is open or closed
-   * @defaultValue false
    */
   open?: boolean;
 
@@ -36,7 +35,7 @@ export interface DrawerProps
   /**
    * Event handler called on close button click. If provided, a close button will be rendered in the Drawer header.
    */
-  // onClose?: React.MouseEventHandler<HTMLButtonElement>;
+  // onClose?: React.MouseEventHandler<HTMLButtonElement>; TODO:
   onClose?: () => void;
 
   /**

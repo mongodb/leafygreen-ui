@@ -207,6 +207,7 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
 
 const Component: StoryFn<DrawerLayoutProps> = ({
   displayMode = DisplayMode.Embedded,
+  resizable = false,
   darkMode,
 }: DrawerLayoutProps) => {
   const MainContent = () => {
@@ -236,6 +237,7 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         darkMode={darkMode}
         toolbarData={DRAWER_TOOLBAR_DATA}
         displayMode={displayMode}
+        resizable={resizable}
       >
         <MainContent />
       </DrawerLayout>
@@ -245,6 +247,7 @@ const Component: StoryFn<DrawerLayoutProps> = ({
 
 const ComponentOpen: StoryFn<DrawerLayoutProps> = ({
   displayMode = DisplayMode.Embedded,
+  resizable = false,
   darkMode,
 }: DrawerLayoutProps) => {
   const MainContent = () => {
@@ -278,6 +281,7 @@ const ComponentOpen: StoryFn<DrawerLayoutProps> = ({
         darkMode={darkMode}
         toolbarData={DRAWER_TOOLBAR_DATA}
         displayMode={displayMode}
+        resizable={resizable}
       >
         <MainContent />
       </DrawerLayout>
@@ -350,6 +354,7 @@ const EmbeddedCloudNavComponent: StoryFn<DrawerLayoutProps> = (
         toolbarData={DRAWER_TOOLBAR_DATA}
         darkMode={args.darkMode}
         displayMode="embedded"
+        resizable={args.resizable}
       >
         <main
           className={css`
@@ -371,12 +376,16 @@ export const EmbeddedCloudNav: StoryObj<DrawerLayoutProps> = {
       exclude: toolbarExcludedControls,
     },
   },
+  args: {
+    resizable: true,
+  },
 };
 
 export const Embedded: StoryObj<DrawerLayoutProps> = {
   render: Component,
   args: {
     displayMode: DisplayMode.Embedded,
+    resizable: true,
   },
   parameters: {
     controls: {
@@ -389,6 +398,7 @@ export const EmbeddedOpen: StoryObj<DrawerLayoutProps> = {
   render: ComponentOpen,
   args: {
     displayMode: DisplayMode.Embedded,
+    resizable: true,
   },
   parameters: {
     controls: {

@@ -28,7 +28,11 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
     // If there is data, we render the DrawerToolbarLayout.
     if (toolbarData) {
       return (
-        <DrawerLayoutProvider isDrawerOpen={isDrawerOpen} resizable={resizable}>
+        <DrawerLayoutProvider
+          isDrawerOpen={isDrawerOpen}
+          resizable={resizable}
+          displayMode={displayMode}
+        >
           <DrawerToolbarLayout
             ref={forwardedRef}
             toolbarData={toolbarData}
@@ -48,7 +52,11 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
     // If there is no data, we render the LayoutComponent.
     // The LayoutComponent will read the displayMode and render the appropriate layout.
     return (
-      <DrawerLayoutProvider isDrawerOpen={isDrawerOpen} resizable={resizable}>
+      <DrawerLayoutProvider
+        isDrawerOpen={isDrawerOpen}
+        resizable={resizable}
+        displayMode={displayMode}
+      >
         <LayoutComponent
           ref={forwardedRef}
           displayMode={displayMode}

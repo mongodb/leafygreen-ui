@@ -25,11 +25,14 @@ import {
   getDrawerStyles,
   getHeaderStyles,
   getInnerContainerStyles,
+  getResizerStyles,
   innerChildrenContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 import { useResizable } from '../utils/useResizable/useResizable';
 import { PANEL_WIDTH } from '../constants';
+import { DRAWER_MAX_WIDTH, DRAWER_MIN_WIDTH } from './Drawer.constants';
+import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
@@ -37,23 +40,34 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       children,
       className,
       'data-lgid': dataLgId,
-      displayMode = DisplayMode.Overlay,
+      displayMode: displayModeProp,
       id: idProp,
       onClose,
-      open = false,
+      open: openProp,
       title,
       ...rest
     },
     fwdRef,
   ) => {
     const { darkMode, theme } = useDarkMode();
+
+    const { getDrawerIndex, registerDrawer, unregisterDrawer } =
+      useDrawerStackContext();
+    const {
+      isDrawerOpen,
+      resizable,
+      displayMode: displayModeContextProp,
+    } = useDrawerLayoutContext();
+    const [shouldAnimate, setShouldAnimate] = useState(false);
+    const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
+    const displayMode =
+      displayModeProp || displayModeContextProp || DisplayMode.Overlay;
+    const open = openProp || isDrawerOpen || false;
+    const isResizable =
+      displayMode === DisplayMode.Embedded && !!resizable && open;
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
     );
-    const { getDrawerIndex, registerDrawer, unregisterDrawer } =
-      useDrawerStackContext();
-    const [shouldAnimate, setShouldAnimate] = useState(false);
-    const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
 
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
@@ -100,6 +114,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [open]);
 
+    // TODO: ensure this is correct
     useEffect(() => {
       if (open) {
         setSize(PANEL_WIDTH);
@@ -128,19 +143,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     };
 
-    // console.log('🧰', {
-    //   isEnabled: open && displayMode === DisplayMode.Embedded,
-    //   open,
-    //   displayMode,
-    // });
-
     const { resizableRef, size, setSize, getResizerProps } = useResizable<
       HTMLDialogElement | HTMLDivElement
     >({
-      enabled: open && displayMode === DisplayMode.Embedded,
+      enabled: resizable && displayMode === DisplayMode.Embedded,
       initialSize: open ? PANEL_WIDTH : 0,
-      minSize: 300,
-      maxSize: 600, // Allow resizing up to a reasonable size
+      minSize: DRAWER_MIN_WIDTH,
+      maxSize: DRAWER_MAX_WIDTH, // Allow resizing up to a reasonable size
       maxViewportPercentages: 50,
       handleType: 'left',
     });
@@ -152,13 +161,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       refsToMerge.push(resizableRef);
     }
     const drawerRef = useMergeRefs(refsToMerge);
-
-    // console.log('Drawer component refs:', {
-    //   size,
-    //   refCurrent: ref.current,
-    //   resizableRefCurrent: resizableRef.current,
-    //   refsToMerge,
-    // });
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -172,7 +174,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
-            size: size,
+            size: resizable ? size : open ? PANEL_WIDTH : 0,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}
@@ -182,18 +184,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           inert={!open ? 'inert' : undefined}
           {...rest}
         >
-          {displayMode === DisplayMode.Embedded && ( // And resizable
+          {isResizable && (
             <div
-              {...getResizerProps()} // Move the from to the hook
-              style={{
-                position: 'absolute',
-                height: '100%',
-                width: '2px',
-                backgroundColor: 'red',
-                zIndex: 1100,
-                left: 0,
-                cursor: 'col-resize',
-              }}
+              {...getResizerProps()}
+              className={getResizerStyles({ theme })}
             />
           )}
           <div className={getDrawerShadowStyles({ theme, displayMode })}>
