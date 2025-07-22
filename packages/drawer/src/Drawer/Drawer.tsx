@@ -142,8 +142,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       minSize: 300,
       maxSize: 600, // Allow resizing up to a reasonable size
       maxViewportPercentages: 50,
-      closeThresholds: 120, // Snap close if resized to less than 50px
-      onClose,
       handleType: 'left',
     });
 

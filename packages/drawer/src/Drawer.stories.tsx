@@ -131,7 +131,11 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
           width: 100%;
         `}
       >
-        <DrawerLayout displayMode={displayMode} isDrawerOpen={open}>
+        <DrawerLayout
+          displayMode={displayMode}
+          isDrawerOpen={open}
+          drawer={renderDrawer()}
+        >
           <main
             className={css`
               padding: ${spacing[400]}px;
@@ -145,7 +149,6 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
             {renderTrigger()}
             <LongContent />
           </main>
-          {renderDrawer()}
         </DrawerLayout>
       </div>
     </DrawerStackProvider>

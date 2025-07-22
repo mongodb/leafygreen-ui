@@ -11,6 +11,13 @@ export interface BaseDrawerLayoutProps
     HTMLElementProps<'div'>,
     DarkModeProps {
   children: React.ReactNode;
+
+  /**
+   * Determines if the drawer is resiazable. This is only recommened for individual drawers, not stacked drawers.
+   *
+   * @defaultValue false
+   */
+  resizable?: boolean;
 }
 
 export type DrawerLayoutPropsWithoutToolbar = Omit<
@@ -30,7 +37,12 @@ export type DrawerLayoutPropsWithoutToolbar = Omit<
   /**
    * Determines if the Drawer is open. This is only needed if using the Drawer without a toolbar. This will shift the layout to the right by the width of the drawer if `displayMode` is set to 'embedded'.
    */
-  isDrawerOpen?: boolean;
+  isDrawerOpen?: boolean; // TODO: this is only needed for embedded drawers
+
+  /**
+   * The drawer
+   */
+  drawer?: React.ReactNode;
 } & BaseDrawerLayoutProps;
 
 export type DrawerLayoutPropsWithToolbar = Omit<

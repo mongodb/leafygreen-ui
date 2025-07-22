@@ -31,19 +31,6 @@ export type ResizableProps = {
   maxSize: number;
 
   /**
-   * The threshold for closing the resizable element.
-   * If the size is below this threshold, the element will close.
-   * If not provided, there will be no close threshold.
-   */
-  closeThresholds: number;
-
-  /**
-   * Callback function that is called when the resizable element is closed.
-   * This can be used to perform any cleanup or state updates.
-   */
-  onClose?: () => void;
-
-  /**
    * Callback function that is called when the resizable element is resized.
    * This can be used to perform any actions based on the new size.
    */
