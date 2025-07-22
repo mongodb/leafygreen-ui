@@ -53,14 +53,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     // The difference in mouse position from the initial position
     const deltaX = e.clientX - initialMousePos.current.x;
 
-    // console.log('🐞', {
-    //   x: e.clientX,
-    //   y: e.clientY,
-    //   deltaX,
-    //   deltaY,
-    //   initialElementSize,
-    // });
-
     switch (handleType) {
       case 'left': // TODO:
         newSize = initialElementSize.current - deltaX;
@@ -206,10 +198,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
                 setSize(nextSmallerWidth);
                 // Call onResize if provided
                 onResize?.(nextSmallerWidth);
-              } else {
-                onClose?.();
-                setIsResizing(false);
-                setSize(initialSize);
               }
               break;
             }
