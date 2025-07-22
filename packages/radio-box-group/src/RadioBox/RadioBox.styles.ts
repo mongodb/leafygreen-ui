@@ -53,7 +53,7 @@ export const getRadioDisplayStyles = ({
       padding: 16px 24px;
 
       font-size: 13px;
-      font-weight: ${fontWeights.bold};
+      font-weight: ${fontWeights.semiBold};
       text-align: center;
       overflow-wrap: break-word;
       background-color: ${darkMode ? palette.gray.dark4 : palette.white};

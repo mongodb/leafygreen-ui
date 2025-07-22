@@ -124,7 +124,7 @@ const getStyles = (theme: Theme): string => `
     }
   
     .lg-highlight-strong {
-      font-weight: ${fontWeights.bold};
+      font-weight: ${fontWeights.semiBold};
     }
   }
 `;
