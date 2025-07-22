@@ -138,6 +138,7 @@ const getEmbeddedStyles = ({ open, size }: { open: boolean; size: number }) =>
   cx(
     css`
       transition: width ${drawerTransitionDuration}ms linear;
+      /* transition: width 3000ms linear; */
     `,
     {
       [css`

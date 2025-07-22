@@ -1,15 +1,10 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import {
-  addOverflowShadow,
-  breakpoints,
-  Side,
-  // transitionDuration,
-} from '@leafygreen-ui/tokens';
+import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
 import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
 import { GRID_AREA, PANEL_WITH_TOOLBAR_WIDTH } from '../constants';
-import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../constants';
+import { TOOLBAR_WIDTH } from '../constants';
 import {
   drawerClassName,
   drawerTransitionDuration,
@@ -113,6 +108,7 @@ const baseEmbeddedStyles = css`
   transition-property: grid-template-columns;
   transition-duration: ${drawerTransitionDuration}ms;
   transition-timing-function: linear;
+  grid-template-columns: 1fr auto;
 `;
 
 const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
@@ -124,7 +120,7 @@ const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
   &::before {
     transition-property: opacity;
     transition-duration: ${drawerTransitionDuration}ms;
-    transition-timing-function: ease-in-out;
+    transition-timing-function: linear;
     opacity: 1;
     left: ${SHADOW_WIDTH}px;
   }
@@ -136,13 +132,12 @@ const baseStyles = css`
   grid-template-areas: '${GRID_AREA.toolbar} ${GRID_AREA.innerDrawer}';
   grid-area: ${GRID_AREA.drawer};
   justify-self: end;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: linear;
   animation-duration: ${drawerTransitionDuration}ms;
   z-index: 0;
   height: 100%;
   overflow: hidden;
-
-  position: relative; // TODO: will this break safari and FF?
+  position: relative;
 
   .${toolbarClassName} {
     grid-area: ${GRID_AREA.toolbar};
@@ -151,7 +146,6 @@ const baseStyles = css`
   .${drawerClassName} {
     grid-area: ${GRID_AREA.innerDrawer};
     position: unset;
-    /* transition: none; */
     transform: unset;
     overflow: hidden;
     opacity: 1;
@@ -163,6 +157,12 @@ const baseStyles = css`
     > div::before {
       box-shadow: unset;
     }
+  }
+`;
+
+const baseOverlayStyles = css`
+  .${drawerClassName} {
+    width: 100%;
   }
 `;
 
@@ -196,6 +196,7 @@ export const getDrawerWithToolbarWrapperStyles = ({
       [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
       [closedDrawerShadowStyles]:
         displayMode === DisplayMode.Overlay && !isDrawerOpen,
+      [baseOverlayStyles]: displayMode === DisplayMode.Overlay,
       [openOverlayStyles]: isDrawerOpen && displayMode === DisplayMode.Overlay, // TODO: is this only needed for overlay?
       [closedOverlayStyles]:
         !isDrawerOpen && shouldAnimate && displayMode === DisplayMode.Overlay, // This ensures that the drawer does not animate closed on initial render

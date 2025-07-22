@@ -114,15 +114,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [open]);
 
-    // TODO: ensure this is correct
-    useEffect(() => {
-      if (open) {
-        setSize(PANEL_WIDTH);
-      } else {
-        setSize(0);
-      }
-    }, [open]);
-
     /**
      * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
      *
@@ -154,6 +145,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       handleType: 'left',
     });
 
+    console.log('👿', { size });
+
     // Create merged ref after resizableRef is defined
     // Use a conditional to ensure resizableRef is only included when it's needed
     const refsToMerge = [fwdRef, ref];
@@ -175,6 +168,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             displayMode,
             zIndex: 1000 + drawerIndex,
             size: resizable ? size : open ? PANEL_WIDTH : 0,
+            // size: open ? PANEL_WIDTH : 0,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}

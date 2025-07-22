@@ -72,29 +72,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         break;
     }
 
-    // if (
-    //   closeThresholds &&
-    //   closeThresholds !== undefined &&
-    //   newSize < closeThresholds
-    // ) {
-    //   shouldSnapClose = true;
-    // }
-
-    // console.log('🐞', { x: e.clientX, y: e.clientY, deltaX, deltaY, newSize });
-
-    // If any snap-close condition is met, trigger onClose and reset
-    // if (shouldSnapClose) {
-    //   onClose?.(); // Trigger the external close action (e.g., close the drawer)
-    //   // Use requestAnimationFrame to ensure the CSS transition for 'transform' starts
-    //   // before 'isResizing' is set to false. This prevents an abrupt jump.
-    //   // requestAnimationFrame(() => {
-    //   isResizingRef.current = false; // Synchronously update ref
-    //   setIsResizing(false); // Stop the resizing state
-    //   setSize(0);
-    //   // });
-    //   return;
-    // }
-
     if (maxViewportPercentages) {
       const viewportWidthPercent = maxViewportPercentages / 100;
       effectiveMaxSize = Math.min(
@@ -308,9 +285,11 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 // 2. Add css to temp remove CSS transition when resizing ✅
 // 3. Move from direction to from getResizerProps to the hook. Look at other design systems
 // 4. Make resize cusor show up even when the mouse is not on top of the resizer handle
-// 5. Update DrawerLayout props ⏳
+// 5. Update DrawerLayout props ✅
 // 6. Figure out the correct TS and defaults for the sizes  ✅
 // 7. Add setOpen to drawer component to allow closing the drawer from inside ❌
 // 8. Add back handleType to getResizerProps
 // 9. Remove snap close logic from the hook ✅
 // 10.Disable resize on small widths
+// 11.Ensure correct a11y practices
+// 12.Fixes closing transition

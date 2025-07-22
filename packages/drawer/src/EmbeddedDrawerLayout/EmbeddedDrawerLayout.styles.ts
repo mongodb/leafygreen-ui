@@ -13,17 +13,14 @@ import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 const baseStyles = css`
   width: 100%;
   display: grid;
-  grid-template-columns: auto 0;
+  grid-template-columns: 1fr auto;
   transition-property: grid-template-columns, grid-template-rows;
   transition-timing-function: ease-in-out;
   transition-duration: ${drawerTransitionDuration}ms;
   overflow: hidden;
   position: relative;
   height: 100%;
-
-  /* --drawerWidth: 0px; */
-
-  position: relative; // TODO: will this break safari and FF?
+  position: relative;
 `;
 
 const drawerBaseStyles = css`
