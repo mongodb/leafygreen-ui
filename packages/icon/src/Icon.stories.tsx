@@ -14,7 +14,7 @@ import { GlyphName } from './glyphs';
 import Icon, { glyphs, IconProps, Size } from '.';
 
 const meta: StoryMetaType<typeof Icon> = {
-  title: 'Components/Icon',
+  title: 'Components/Display/Icon',
   component: Icon,
   parameters: {
     default: 'LiveExample',

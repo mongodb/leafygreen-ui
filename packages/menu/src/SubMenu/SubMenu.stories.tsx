@@ -14,7 +14,7 @@ import { withMenuContext } from '../testUtils/withMenuContextDecorator.testutils
 import { SubMenu } from '.';
 
 export default {
-  title: 'Components/Menu/SubMenu',
+  title: 'Components/Actions/Menu/SubMenu',
   component: SubMenu,
   args: {
     active: false,

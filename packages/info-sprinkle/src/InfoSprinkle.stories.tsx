@@ -12,7 +12,7 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Align, InfoSprinkle, Justify } from '.';
 
 const meta: StoryMetaType<typeof InfoSprinkle> = {
-  title: 'Components/InfoSprinkle',
+  title: 'Composition/Overlays/InfoSprinkle',
   component: InfoSprinkle,
   parameters: {
     default: 'LiveExample',

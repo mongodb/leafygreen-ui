@@ -4,7 +4,7 @@ import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { FormSkeleton } from '.';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Composition/Loading/SkeletonLoader',
   component: FormSkeleton,
   parameters: {
     controls: { exclude: ['darkMode', 'ref'] },

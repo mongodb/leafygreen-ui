@@ -55,7 +55,7 @@ const rowCells = (
 );
 
 const meta: StoryMetaType<typeof Row> = {
-  title: 'Components/Table/Row',
+  title: 'Composition/Data Display/Table/Row',
   component: Row,
   argTypes: {
     disabled: { control: 'boolean' },

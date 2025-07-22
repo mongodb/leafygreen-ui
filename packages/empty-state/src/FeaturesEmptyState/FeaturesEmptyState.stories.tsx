@@ -59,7 +59,7 @@ const features: Record<Theme, Array<Feature>> = {
 };
 
 const meta: StoryMetaType<typeof FeaturesEmptyState> = {
-  title: 'Components/EmptyState/Features',
+  title: 'Sections/EmptyState/Features',
   component: FeaturesEmptyState,
   args: {
     title: 'Sample title of features empty state',

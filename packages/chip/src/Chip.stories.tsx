@@ -9,7 +9,7 @@ import { TruncationLocation, Variant } from './Chip/Chip.types';
 import { Chip } from '.';
 
 const meta: StoryMetaType<typeof Chip> = {
-  title: 'Components/Chip',
+  title: 'Components/Display/Chip',
   component: Chip,
   parameters: {
     default: 'LiveExample',

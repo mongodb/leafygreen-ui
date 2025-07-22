@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import PageLoader from './PageLoader';
 
 const meta: StoryMetaType<typeof PageLoader> = {
-  title: 'Components/LoadingIndicator/PageLoader',
+  title: 'Composition/Loading/LoadingIndicator/PageLoader',
   component: PageLoader,
   argTypes: {
     description: { control: 'text' },

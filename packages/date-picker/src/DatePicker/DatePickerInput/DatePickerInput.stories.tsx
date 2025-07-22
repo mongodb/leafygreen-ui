@@ -38,7 +38,7 @@ const meta: StoryMetaType<
   typeof DatePickerInput,
   DatePickerContextProps & SharedDatePickerContextProps
 > = {
-  title: 'Components/DatePicker/DatePicker/DatePickerInput',
+  title: 'Components/Inputs/DatePicker/DatePicker/DatePickerInput',
   component: DatePickerInput,
   decorators: [ProviderWrapper],
   parameters: {

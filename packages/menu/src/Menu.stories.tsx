@@ -43,7 +43,7 @@ const getDecoratorStyles = (args: Partial<MenuProps>) => {
 };
 
 const meta: StoryMetaType<typeof Menu> = {
-  title: 'Components/Menu',
+  title: 'Components/Actions/Menu',
   component: Menu,
   decorators: [
     (StoryFn, _ctx) => (

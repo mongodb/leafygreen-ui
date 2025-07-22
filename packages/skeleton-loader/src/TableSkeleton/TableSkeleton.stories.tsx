@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import { TableSkeleton } from '..';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Composition/Loading/SkeletonLoader',
   component: TableSkeleton,
   parameters: {
     default: null,

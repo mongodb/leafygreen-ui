@@ -13,7 +13,7 @@ import { withMenuContext } from '../testUtils/withMenuContextDecorator.testutils
 import { MenuGroup } from './MenuGroup';
 
 export default {
-  title: 'Components/Menu/MenuGroup',
+  title: 'Components/Actions/Menu/MenuGroup',
   component: MenuGroup,
   parameters: {
     default: null,

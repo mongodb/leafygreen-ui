@@ -29,7 +29,7 @@ const margin = css`
 `;
 
 const meta: StoryMetaType<typeof Modal> = {
-  title: 'Components/Modals/Modal',
+  title: 'Sections/Modals/Modal',
   component: Modal,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,

@@ -30,7 +30,7 @@ import {
 } from '.';
 
 const meta: StoryMetaType<typeof Table> = {
-  title: 'Components/Table/Interactions',
+  title: 'Composition/Data Display/Table/Interactions',
   component: Table,
   parameters: {
     default: 'Template',

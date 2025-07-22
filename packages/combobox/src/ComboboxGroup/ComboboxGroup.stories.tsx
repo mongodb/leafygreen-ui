@@ -8,7 +8,7 @@ import { InternalComboboxOption } from '../ComboboxOption';
 import { InternalComboboxGroup } from './ComboboxGroup';
 
 const meta: StoryMetaType<typeof InternalComboboxGroup> = {
-  title: 'Components/Combobox/ComboboxGroup',
+  title: 'Components/Inputs/Combobox/ComboboxGroup',
   component: InternalComboboxGroup,
   parameters: {
     default: null,

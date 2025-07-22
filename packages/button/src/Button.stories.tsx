@@ -17,7 +17,7 @@ import Button, { ButtonProps, Variant } from '.';
 const { updatedBaseFontSize, ...filteredStorybookArgTypes } = storybookArgTypes;
 
 const meta: StoryMetaType<typeof Button> = {
-  title: 'Components/Button',
+  title: 'Components/Actions/Button',
   component: Button,
   parameters: {
     default: 'LiveExample',

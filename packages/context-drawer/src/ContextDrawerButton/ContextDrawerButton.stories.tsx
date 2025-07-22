@@ -11,7 +11,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { ContextDrawerButton } from './ContextDrawerButton';
 
 const meta: StoryMetaType<typeof ContextDrawerButton> = {
-  title: 'Components/ContextDrawer/ContextDrawerButton',
+  title: 'Composition/Data Display/ContextDrawer/ContextDrawerButton',
   component: ContextDrawerButton,
   parameters: {
     default: 'LiveExample',

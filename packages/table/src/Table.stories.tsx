@@ -42,7 +42,7 @@ import {
 type StoryTableProps = TableProps<any>;
 
 const meta: StoryMetaType<typeof Table> = {
-  title: 'Components/Table',
+  title: 'Composition/Data Display/Table',
   component: Table,
   argTypes: {
     shouldAlternateRowColor: { control: 'boolean', defaultValue: false },

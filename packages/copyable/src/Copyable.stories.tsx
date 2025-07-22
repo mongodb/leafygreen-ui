@@ -8,7 +8,7 @@ import {
 import Copyable from '.';
 
 const meta: StoryMetaType<typeof Copyable> = {
-  title: 'Components/Copyable',
+  title: 'Components/Actions/Copyable',
   component: Copyable,
   parameters: {
     default: 'LiveExample',

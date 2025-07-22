@@ -34,7 +34,7 @@ const snapshotStoryExcludedControlParams = [
 ];
 
 export default {
-  title: 'Components/Drawer',
+  title: 'Sections/Drawer',
   component: Drawer,
   decorators: [
     (StoryFn, ctx) => (

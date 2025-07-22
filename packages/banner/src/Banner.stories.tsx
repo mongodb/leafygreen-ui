@@ -14,7 +14,7 @@ import { Link } from '@leafygreen-ui/typography';
 import Banner, { BannerProps, Variant } from '.';
 
 const meta: StoryMetaType<typeof Banner> = {
-  title: 'Components/Banner',
+  title: 'Components/Notifications/Banner',
   component: Banner,
   parameters: {
     default: 'LiveExample',

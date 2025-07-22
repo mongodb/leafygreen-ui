@@ -11,7 +11,7 @@ import ExpandableCard, { type ExpandableCardProps } from '.';
 const loremIpsum = 'Donec id elit non mi porta gravida at eget metus.';
 
 const meta: StoryMetaType<typeof ExpandableCard> = {
-  title: 'Components/ExpandableCard',
+  title: 'Sections/Cards/ExpandableCard',
   component: ExpandableCard,
   parameters: {
     default: 'LiveExample',

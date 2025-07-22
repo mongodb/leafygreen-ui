@@ -38,7 +38,7 @@ const defaultExcludedControls = [
 ];
 
 const meta: StoryMetaType<typeof Tabs> = {
-  title: 'Components/Tabs',
+  title: 'Sections/Tabs',
   component: Tabs,
   parameters: {
     default: 'LiveExample',

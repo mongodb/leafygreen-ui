@@ -31,7 +31,7 @@ const unitOptions = [
 ];
 
 const meta: StoryMetaType<typeof NumberInput> = {
-  title: 'Components/NumberInput',
+  title: 'Components/Inputs/NumberInput',
   component: NumberInput,
   parameters: {
     default: 'LiveExample',
