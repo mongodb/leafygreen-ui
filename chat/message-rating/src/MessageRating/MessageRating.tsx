@@ -1,6 +1,5 @@
 import React, { ForwardedRef, forwardRef, useState } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import ThumbsDown from '@leafygreen-ui/icon/dist/ThumbsDown';
 import ThumbsUp from '@leafygreen-ui/icon/dist/ThumbsUp';
@@ -12,23 +11,23 @@ import { Description } from '@leafygreen-ui/typography';
 import { RadioButton } from '../RadioButton/RadioButton';
 
 import {
-  baseStyles,
   buttonContainerStyles,
+  getContainerStyles,
+  getHiddenStyles,
   getIconFill,
-  hiddenStyles,
 } from './MessageRating.styles';
 import { MessageRatingProps } from '.';
 
 export const MessageRating = forwardRef(
   (
     {
-      description = 'How was the response?',
       className,
-      value,
-      onChange: onChangeProp,
       darkMode: darkModeProp,
-      hideThumbsDown,
-      hideThumbsUp,
+      description = 'How was the response?',
+      hideThumbsDown = false,
+      hideThumbsUp = false,
+      onChange: onChangeProp,
+      value,
       ...rest
     }: MessageRatingProps,
     ref: ForwardedRef<HTMLDivElement>,
@@ -56,7 +55,7 @@ export const MessageRating = forwardRef(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div className={cx(baseStyles, className)} {...rest} ref={ref}>
+        <div className={getContainerStyles(className)} {...rest} ref={ref}>
           <Description>{description}</Description>
           <div className={buttonContainerStyles}>
             <RadioButton
@@ -66,9 +65,9 @@ export const MessageRating = forwardRef(
               value="liked"
               onChange={onChange}
               checked={isLiked}
-              className={cx({ [hiddenStyles]: hideThumbsUp })}
+              className={getHiddenStyles(hideThumbsUp)}
             >
-              <ThumbsUp fill={getIconFill(darkMode, isLiked)} />
+              <ThumbsUp fill={getIconFill({ darkMode, isSelected: isLiked })} />
             </RadioButton>
             <RadioButton
               id={`dislike-${inputName}`}
@@ -77,9 +76,11 @@ export const MessageRating = forwardRef(
               aria-label="Thumbs down this message"
               onChange={onChange}
               checked={isDisliked}
-              className={cx({ [hiddenStyles]: hideThumbsDown })}
+              className={getHiddenStyles(hideThumbsDown)}
             >
-              <ThumbsDown fill={getIconFill(darkMode, isDisliked)} />
+              <ThumbsDown
+                fill={getIconFill({ darkMode, isSelected: isDisliked })}
+              />
             </RadioButton>
           </div>
         </div>

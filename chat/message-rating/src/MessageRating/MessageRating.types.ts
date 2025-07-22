@@ -13,19 +13,16 @@ export interface MessageRatingProps
   extends HTMLElementProps<'div'>,
     DarkModeProps {
   /**
-   * Determines the currently selected value of the radio buttons.
-   * @default undefined
-   */
-  value?: MessageRatingValue;
-  /**
    * Custom description text
    * @default "How was the response?"
    */
   description?: string;
+
   /**
-   * Event handler called when the value of the underlying radio inputs are changed
+   * Hides the thumbs down button
+   * @default false
    */
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  hideThumbsDown?: boolean;
 
   /**
    * Hides the thumbs up button
@@ -34,8 +31,13 @@ export interface MessageRatingProps
   hideThumbsUp?: boolean;
 
   /**
-   * Hides the thumbs down button
-   * @default false
+   * Event handler called when the value of the underlying radio inputs are changed
    */
-  hideThumbsDown?: boolean;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * Determines the currently selected value of the radio buttons.
+   * @default undefined
+   */
+  value?: MessageRatingValue;
 }
