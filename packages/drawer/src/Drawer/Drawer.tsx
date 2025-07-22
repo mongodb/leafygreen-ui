@@ -61,8 +61,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const displayMode =
-      displayModeProp || displayModeContextProp || DisplayMode.Overlay;
-    const open = openProp || isDrawerOpen || false;
+      displayModeProp ?? displayModeContextProp ?? DisplayMode.Overlay;
+    const open = openProp ?? isDrawerOpen ?? false;
     const isResizable =
       displayMode === DisplayMode.Embedded && !!resizable && open;
     const { Component } = usePolymorphic<'dialog' | 'div'>(
@@ -134,18 +134,16 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     };
 
-    const { resizableRef, size, setSize, getResizerProps } = useResizable<
+    const { resizableRef, size, getResizerProps, isResizing } = useResizable<
       HTMLDialogElement | HTMLDivElement
     >({
       enabled: resizable && displayMode === DisplayMode.Embedded,
-      initialSize: open ? PANEL_WIDTH : 0,
+      initialSize: open ? PANEL_WIDTH : 0, // TODO: might need setSize to set the size when the drawer opens
       minSize: DRAWER_MIN_WIDTH,
       maxSize: DRAWER_MAX_WIDTH, // Allow resizing up to a reasonable size
       maxViewportPercentages: 50,
       handleType: 'left',
     });
-
-    console.log('👿', { size });
 
     // Create merged ref after resizableRef is defined
     // Use a conditional to ensure resizableRef is only included when it's needed
@@ -168,7 +166,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             displayMode,
             zIndex: 1000 + drawerIndex,
             size: resizable ? size : open ? PANEL_WIDTH : 0,
-            // size: open ? PANEL_WIDTH : 0,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}
@@ -181,7 +178,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           {isResizable && (
             <div
               {...getResizerProps()}
-              className={getResizerStyles({ theme })}
+              className={getResizerStyles({ theme, isResizing })}
             />
           )}
           <div className={getDrawerShadowStyles({ theme, displayMode })}>

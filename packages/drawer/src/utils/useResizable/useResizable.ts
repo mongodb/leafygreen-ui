@@ -280,4 +280,5 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 // 9. Remove snap close logic from the hook ✅
 // 10.Disable resize on small widths
 // 11.Ensure correct a11y practices
-// 12.Fixes closing transition
+// 12.Fixes closing transition  ✅
+// 13.Weird resize bug, the drawer goes crazy

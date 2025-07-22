@@ -295,17 +295,30 @@ export const resizerColors: Record<Theme, string> = {
   [Theme.Dark]: palette.blue.light1,
 };
 
-export const getResizerStyles = ({ theme }: { theme: Theme }) =>
-  css`
-    position: absolute;
-    height: 100%;
-    width: 2px;
-    background-color: transparent;
-    left: 0;
-    cursor: col-resize;
+export const getResizerStyles = ({
+  theme, //TODO: do i need theme
+  isResizing,
+}: {
+  theme: Theme;
+  isResizing: boolean;
+}) =>
+  cx(
+    css`
+      position: absolute;
+      height: 100%;
+      width: 2px;
+      background-color: transparent;
+      left: 0;
+      cursor: col-resize;
 
-    &:hover,
-    &:focus-visible {
-      background-color: ${palette.blue.light1};
-    }
-  `;
+      &:hover,
+      &:focus-visible {
+        background-color: ${palette.blue.light1};
+      }
+    `,
+    {
+      [css`
+        background-color: ${palette.blue.light1};
+      `]: isResizing,
+    },
+  );
