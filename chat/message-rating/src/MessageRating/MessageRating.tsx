@@ -1,11 +1,23 @@
-import React, { ForwardedRef, forwardRef, useState } from 'react';
+import React, {
+  ForwardedRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
+import {
+  useLeafyGreenChatContext,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import ThumbsDown from '@leafygreen-ui/icon/dist/ThumbsDown';
 import ThumbsUp from '@leafygreen-ui/icon/dist/ThumbsUp';
+import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce } from '@leafygreen-ui/lib';
 import { Description } from '@leafygreen-ui/typography';
 
 import { RadioButton } from '../RadioButton/RadioButton';
@@ -16,7 +28,10 @@ import {
   getHiddenStyles,
   getIconFill,
 } from './MessageRating.styles';
-import { MessageRatingProps } from '.';
+import {
+  type MessageRatingProps,
+  MessageRatingValue,
+} from './MessageRating.types';
 
 export const MessageRating = forwardRef(
   (
@@ -26,62 +41,134 @@ export const MessageRating = forwardRef(
       description = 'How was the response?',
       hideThumbsDown = false,
       hideThumbsUp = false,
-      onChange: onChangeProp,
-      value,
+      onChange,
+      value: valueProp,
       ...rest
     }: MessageRatingProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
-    const isControlled = value !== undefined;
-    const [localValue, setLocalValue] = useState<MessageRatingProps['value']>();
     const { darkMode } = useDarkMode(darkModeProp);
+    const { variant } = useLeafyGreenChatContext();
+    const isCompact = variant === Variant.Compact;
 
-    const isLiked = isControlled ? value === 'liked' : localValue === 'liked';
-    const isDisliked = isControlled
-      ? value === 'disliked'
-      : localValue === 'disliked';
+    const likeButtonRef = useRef<HTMLButtonElement>(null);
+    const dislikeButtonRef = useRef<HTMLButtonElement>(null);
 
+    const { value, handleChange, updateValue } = useControlledValue<
+      MessageRatingProps['value']
+    >(valueProp, onChange, MessageRatingValue.Unselected);
     const inputName = useIdAllocator({
       prefix: 'message-rating',
     });
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChangeProp(e);
+    const handleClick = useCallback(
+      (e: React.MouseEvent<HTMLButtonElement>, val: MessageRatingValue) => {
+        e.preventDefault();
 
-      if (!isControlled) {
-        setLocalValue(e.target.value as MessageRatingProps['value']);
+        if (!isCompact) {
+          return;
+        }
+
+        const refToUpdate =
+          val === MessageRatingValue.Liked ? likeButtonRef : dislikeButtonRef;
+
+        updateValue(val, refToUpdate);
+      },
+      [isCompact, updateValue],
+    );
+
+    const handleLikeClick = useCallback(
+      (e: React.MouseEvent<HTMLButtonElement>) => {
+        handleClick(e, MessageRatingValue.Liked);
+      },
+      [handleClick],
+    );
+
+    const handleDislikeClick = useCallback(
+      (e: React.MouseEvent<HTMLButtonElement>) => {
+        handleClick(e, MessageRatingValue.Disliked);
+      },
+      [handleClick],
+    );
+
+    useEffect(() => {
+      if (isCompact && description) {
+        consoleOnce.warn(
+          `@lg-chat/message-rating: The MessageRating component's prop 'description' is only used in the 'spacious' variant. It will not be rendered in the 'compact' variant set by the provider.`,
+        );
       }
-    };
+    }, [isCompact, description]);
+
+    const isLiked = value === 'liked';
+    const isDisliked = value === 'disliked';
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div className={getContainerStyles(className)} {...rest} ref={ref}>
-          <Description>{description}</Description>
-          <div className={buttonContainerStyles}>
-            <RadioButton
-              id={`like-${inputName}`}
-              aria-label="Thumbs up this message"
-              name={inputName}
-              value="liked"
-              onChange={onChange}
-              checked={isLiked}
-              className={getHiddenStyles(hideThumbsUp)}
-            >
-              <ThumbsUp fill={getIconFill({ darkMode, isSelected: isLiked })} />
-            </RadioButton>
-            <RadioButton
-              id={`dislike-${inputName}`}
-              name={inputName}
-              value="disliked"
-              aria-label="Thumbs down this message"
-              onChange={onChange}
-              checked={isDisliked}
-              className={getHiddenStyles(hideThumbsDown)}
-            >
-              <ThumbsDown
-                fill={getIconFill({ darkMode, isSelected: isDisliked })}
-              />
-            </RadioButton>
+          {!isCompact && <Description>{description}</Description>}
+          <div
+            aria-label="Message rating"
+            className={buttonContainerStyles}
+            role="radiogroup"
+          >
+            {isCompact ? (
+              <IconButton
+                id={`like-${inputName}`}
+                aria-label="Thumbs up this message"
+                value="liked"
+                onClick={handleLikeClick}
+                active={isLiked}
+                ref={likeButtonRef}
+                className={getHiddenStyles(hideThumbsUp)}
+                aria-checked={isLiked}
+                role="radio"
+              >
+                <ThumbsUp />
+              </IconButton>
+            ) : (
+              <RadioButton
+                id={`like-${inputName}`}
+                aria-label="Thumbs up this message"
+                name={inputName}
+                value="liked"
+                onChange={handleChange}
+                checked={isLiked}
+                className={getHiddenStyles(hideThumbsUp)}
+              >
+                <ThumbsUp
+                  fill={getIconFill({ darkMode, isSelected: isLiked })}
+                />
+              </RadioButton>
+            )}
+            {isCompact ? (
+              <IconButton
+                id={`dislike-${inputName}`}
+                aria-label="Thumbs down this message"
+                value="disliked"
+                onClick={handleDislikeClick}
+                active={isDisliked}
+                ref={dislikeButtonRef}
+                className={getHiddenStyles(hideThumbsDown)}
+                aria-checked={isDisliked}
+                role="radio"
+              >
+                <ThumbsDown />
+              </IconButton>
+            ) : (
+              <RadioButton
+                id={`dislike-${inputName}`}
+                name={inputName}
+                value="disliked"
+                aria-label="Thumbs down this message"
+                onChange={handleChange}
+                checked={isDisliked}
+                className={getHiddenStyles(hideThumbsDown)}
+              >
+                <ThumbsDown
+                  fill={getIconFill({ darkMode, isSelected: isDisliked })}
+                />
+              </RadioButton>
+            )}
           </div>
         </div>
       </LeafyGreenProvider>

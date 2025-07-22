@@ -28,40 +28,15 @@ const getBaseContainerStyles = (theme: Theme) => css`
   ]};
 
   &:hover {
-    background-color: ${theme === Theme.Dark ? palette.gray.dark1 : 'initial'};
     box-shadow: ${hoverRing[theme].gray};
+    ${theme === Theme.Dark ? `background-color: ${palette.gray.dark1}` : ''};
   }
 
   &:focus-visible {
-    background-color: ${color[theme].background[Variant.Secondary][
-      InteractionState.Focus
-    ]};
-    background-color: ${theme === Theme.Dark ? palette.gray.dark1 : 'initial'};
     box-shadow: ${focusRing[theme].default};
+    ${theme === Theme.Dark ? `background-color: ${palette.gray.dark1}` : ''};
   }
 `;
-
-export const checkedStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    border-color: ${palette.white};
-    background: ${palette.gray.light2};
-    &:hover {
-      border-color: ${palette.white};
-      background: ${palette.gray.light2};
-      box-shadow: none;
-    }
-  `,
-  [Theme.Light]: css`
-    background: ${palette.black};
-    &:hover {
-      background: ${palette.black}; // override default hover
-      box-shadow: none;
-    }
-    &:focus-visible {
-      box-shadow: none;
-    }
-  `,
-};
 
 const getCheckedStyles = (theme: Theme) => css`
   background-color: ${color[theme].background[Variant.InversePrimary][
