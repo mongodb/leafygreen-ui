@@ -7,7 +7,10 @@ import {
   PolymorphicAs,
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
-import { fontWeights as fontWeightTokens } from '@leafygreen-ui/tokens';
+import {
+  FontWeight,
+  fontWeights as fontWeightTokens,
+} from '@leafygreen-ui/tokens';
 
 import {
   baseTypographyStyles,
@@ -23,7 +26,7 @@ const Body = Polymorphic<BaseBodyProps>(
     baseFontSize: baseFontSizeOverride,
     darkMode: darkModeProp,
     className,
-    weight = 'regular',
+    weight = FontWeight.Regular,
     as = 'p' as PolymorphicAs,
     ...rest
   }) => {
@@ -36,7 +39,7 @@ const Body = Polymorphic<BaseBodyProps>(
       font-weight: ${fontWeightTokens[weight]};
       strong,
       b {
-        font-weight: ${fontWeightTokens.bold};
+        font-weight: ${fontWeightTokens.semiBold};
       }
     `;
 

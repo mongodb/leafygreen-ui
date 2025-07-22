@@ -1,10 +1,10 @@
 import { PolymorphicAs, PolymorphicProps } from '@leafygreen-ui/polymorphic';
+import { FontWeight } from '@leafygreen-ui/tokens';
 
 import { ResponsiveTypographyProps } from '../types';
 
-export type BodyFontWeight = 'regular' | 'medium';
 export type BaseBodyProps = ResponsiveTypographyProps & {
-  weight?: BodyFontWeight;
+  weight?: FontWeight;
 };
 
 // For external consumption only
