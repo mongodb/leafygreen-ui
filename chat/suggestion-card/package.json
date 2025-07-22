@@ -36,10 +36,11 @@
     "@leafygreen-ui/tokens": "workspace:^"
   },
   "devDependencies": {
-    "@lg-tools/test-harnesses": "workspace:^"
+    "@lg-tools/test-harnesses": "workspace:^",
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^1.1.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/suggestion-card",
   "repository": {
