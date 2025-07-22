@@ -22,6 +22,7 @@ const parameters = {
 
 const preview: Preview = {
   parameters,
+  tags: ['autodocs'],
 };
 
 export default preview;

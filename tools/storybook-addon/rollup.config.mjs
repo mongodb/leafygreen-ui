@@ -41,7 +41,7 @@ export default [
   },
   {
     ...esmConfig,
-    input: './src/preview/index.ts',
+    input: './src/preview/index.tsx',
     output: {
       ...esmConfig.output,
       dir: null,
@@ -50,7 +50,7 @@ export default [
   },
   {
     ...umdConfig,
-    input: './src/preview/index.ts',
+    input: './src/preview/index.tsx',
     output: {
       ...umdConfig.output,
       dir: null,
