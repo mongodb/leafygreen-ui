@@ -163,9 +163,3 @@ export const IconAvatar: StoryObj<typeof Avatar> = {
     format: Format.Icon,
   },
 };
-// export const ImageAvatar: StoryObj<typeof Avatar> = {
-//   render: () => <></>,
-//   args: {
-//     format: Format.MongoDB,
-//   },
-// };

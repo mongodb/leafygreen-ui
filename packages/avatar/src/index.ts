@@ -1,3 +1,4 @@
+export { AssistantAvatar, type AssistantAvatarProps } from './AssistantAvatar';
 export {
   Avatar,
   type AvatarProps,

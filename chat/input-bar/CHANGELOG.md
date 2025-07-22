@@ -1,5 +1,16 @@
 # @lg-chat/input-bar
 
+## 9.0.0
+
+### Patch Changes
+
+- 8db14f9: Replace gray icon with `AssistantAvatar` with gradient
+- e8f53ec: [LG-5358](https://jira.mongodb.org/browse/LG-5358): fixes issue where `ctrl + enter` and `shift + enter` was unexpectedly adding new line to the end of the message body. Now, doing so will add the new line at the cursor position.
+- Updated dependencies [3e8fbd7]
+- Updated dependencies [82d0ad2]
+  - @leafygreen-ui/avatar@3.1.0
+  - @lg-chat/leafygreen-chat-provider@4.1.0
+
 ## 8.0.5
 
 ### Patch Changes

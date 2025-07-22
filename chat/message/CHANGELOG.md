@@ -1,5 +1,12 @@
 # @lg-chat/message
 
+## 7.0.0
+
+### Patch Changes
+
+- Updated dependencies [82d0ad2]
+  - @lg-chat/leafygreen-chat-provider@4.1.0
+
 ## 6.1.2
 
 ### Patch Changes

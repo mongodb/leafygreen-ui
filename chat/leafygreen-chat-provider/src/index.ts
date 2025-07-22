@@ -3,4 +3,5 @@ export {
   LeafyGreenChatProvider,
   type LeafyGreenChatProviderProps,
   useLeafyGreenChatContext,
+  Variant,
 } from './LeafyGreenChatProvider';
