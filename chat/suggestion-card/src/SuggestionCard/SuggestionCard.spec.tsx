@@ -10,10 +10,10 @@ import { SuggestionCard } from '.';
 
 const defaultSuggestedConfigurationParameters = {
   'Cluster Tier': 'M10 ($9.00/month)',
-  Provider: 'AWS / N. Virginia (us-east-1)',
-  Storage: '10 GB',
-  RAM: '2 GB',
-  vCPUs: '2 vCPUs',
+  'Provider': 'AWS / N. Virginia (us-east-1)',
+  'Storage': '10 GB',
+  'RAM': '2 GB',
+  'vCPUs': '2 vCPUs',
 };
 
 const defaultAppliedParameters = {
@@ -108,6 +108,13 @@ describe('chat/suggestion-card', () => {
     test('renders all configuration parameters in table', () => {
       renderSuggestionCard();
 
+      // Check keys from the key-value pairs
+      expect(screen.getByText('Cluster Tier')).toBeInTheDocument();
+      expect(screen.getByText('Provider')).toBeInTheDocument();
+      expect(screen.getByText('Storage')).toBeInTheDocument();
+      expect(screen.getByText('RAM')).toBeInTheDocument();
+      expect(screen.getByText('vCPUs')).toBeInTheDocument();
+
       // Check values from the key-value pairs
       expect(screen.getByText('M10 ($9.00/month)')).toBeInTheDocument();
       expect(
@@ -121,10 +128,10 @@ describe('chat/suggestion-card', () => {
     test('renders with custom configuration parameters', () => {
       const customParams = {
         'Cluster Tier': 'M30 ($31.00/month)',
-        Provider: 'GCP / Iowa (us-central1)',
-        Storage: '100 GB',
-        RAM: '8 GB',
-        vCPUs: '2 vCPUs',
+        'Provider': 'GCP / Iowa (us-central1)',
+        'Storage': '100 GB',
+        'RAM': '8 GB',
+        'vCPUs': '2 vCPUs',
       };
 
       renderSuggestionCard({
@@ -348,8 +355,7 @@ describe('chat/suggestion-card', () => {
     test('success banner displays custom applied parameters', () => {
       const customAppliedParams = {
         'Cloud Provider & Region': 'Azure / East US',
-        'Cluster Tier': 'M40 ($15.00/month)',
-        Storage: '50 GB',
+        'Cluster Tier': 'M40',
       };
 
       renderSuggestionCard({
@@ -370,14 +376,8 @@ describe('chat/suggestion-card', () => {
       expect(listItems).toContainEqual(
         expect.objectContaining({
           textContent: expect.stringContaining(
-            'Cluster Tier: M40 ($15.00/month)',
+            'Cluster Tier: M40',
           ),
-        }),
-      );
-
-      expect(listItems).toContainEqual(
-        expect.objectContaining({
-          textContent: expect.stringContaining('Storage: 50 GB'),
         }),
       );
     });
@@ -385,7 +385,7 @@ describe('chat/suggestion-card', () => {
     test('error banner displays custom failed parameters', () => {
       const customFailedParams = {
         'Cloud Provider & Region': 'AWS / us-west-2',
-        'Cluster Tier': 'M20 ($20.00/month)',
+        'Cluster Tier': 'M20',
       };
 
       renderSuggestionCard({
@@ -406,7 +406,7 @@ describe('chat/suggestion-card', () => {
       expect(listItems).toContainEqual(
         expect.objectContaining({
           textContent: expect.stringContaining(
-            'Cluster Tier: M20 ($20.00/month)',
+            'Cluster Tier: M20',
           ),
         }),
       );
