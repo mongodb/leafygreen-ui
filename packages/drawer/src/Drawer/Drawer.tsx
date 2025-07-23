@@ -179,7 +179,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           {isResizable && (
             <div
               {...getResizerProps()}
-              className={getResizerStyles({ theme, isResizing })}
+              className={getResizerStyles({ isResizing })}
             />
           )}
           <div className={getDrawerShadowStyles({ theme, displayMode })}>

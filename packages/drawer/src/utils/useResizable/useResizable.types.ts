@@ -7,6 +7,13 @@ export const DragFrom = {
 
 export type DragFrom = (typeof DragFrom)[keyof typeof DragFrom];
 
+export const SizeGrowth = {
+  Increase: 'increase',
+  Decrease: 'decrease',
+} as const;
+
+export type SizeGrowth = (typeof SizeGrowth)[keyof typeof SizeGrowth];
+
 export type ResizableProps = {
   /**
    * Whether the resizable feature is enabled.

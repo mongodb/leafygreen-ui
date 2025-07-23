@@ -4,29 +4,30 @@ import {
   ResizableProps,
   ResizableReturn,
   DragFrom,
+  SizeGrowth,
 } from './useResizable.types';
 import { calculateNewSize } from './useResizable.utils';
 
 // Mappings for keyboard interactions based on the dragFrom direction
-const DIRECTION_KEY_MAPPINGS: Record<
+const SIZE_GROWTH_KEY_MAPPINGS: Record<
   DragFrom,
-  { [key: string]: 'larger' | 'smaller' }
+  { [key: string]: SizeGrowth }
 > = {
   left: {
-    [keyMap.ArrowLeft]: 'larger',
-    [keyMap.ArrowRight]: 'smaller',
+    [keyMap.ArrowLeft]: 'increase',
+    [keyMap.ArrowRight]: 'decrease',
   },
   right: {
-    [keyMap.ArrowRight]: 'larger',
-    [keyMap.ArrowLeft]: 'smaller',
+    [keyMap.ArrowRight]: 'increase',
+    [keyMap.ArrowLeft]: 'decrease',
   },
   top: {
-    [keyMap.ArrowUp]: 'larger',
-    [keyMap.ArrowDown]: 'smaller',
+    [keyMap.ArrowUp]: 'increase',
+    [keyMap.ArrowDown]: 'decrease',
   },
   bottom: {
-    [keyMap.ArrowDown]: 'larger',
-    [keyMap.ArrowUp]: 'smaller',
+    [keyMap.ArrowDown]: 'increase',
+    [keyMap.ArrowUp]: 'decrease',
   },
 };
 
@@ -104,12 +105,22 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    * - If dragFrom is 'left' and the right arrow key is pressed, it decreases the size.
    */
   const getKeyboardInteraction = useCallback(
-    (e: React.KeyboardEvent | KeyboardEvent, dragFrom: DragFrom | null) => {
-      const getNextSizes = (direction: 'larger' | 'smaller') => {
+    (event: React.KeyboardEvent | KeyboardEvent, dragFrom: DragFrom | null) => {
+      if (dragFrom === DragFrom.Left || dragFrom === DragFrom.Right) {
+        if (event.code == keyMap.ArrowLeft || event.code == keyMap.ArrowRight) {
+          event.preventDefault();
+        } else {
+          if (event.code == keyMap.ArrowUp || event.code == keyMap.ArrowDown) {
+            event.preventDefault();
+          }
+        }
+      }
+
+      const getNextSizes = (sizeGrowth: SizeGrowth) => {
         const currentSize = size;
         const sizes = sortedKeyboardSizes;
 
-        if (direction === 'larger') {
+        if (sizeGrowth === SizeGrowth.Increase) {
           return sizes.find(size => size > currentSize);
         } else {
           return [...sizes].reverse().find(size => size < currentSize);
@@ -123,9 +134,9 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         }
       };
 
-      if (dragFrom && e.code in DIRECTION_KEY_MAPPINGS[dragFrom]) {
-        const direction = DIRECTION_KEY_MAPPINGS[dragFrom][e.code];
-        const nextSize = getNextSizes(direction);
+      if (dragFrom && event.code in SIZE_GROWTH_KEY_MAPPINGS[dragFrom]) {
+        const sizeGrowth = SIZE_GROWTH_KEY_MAPPINGS[dragFrom][event.code];
+        const nextSize = getNextSizes(sizeGrowth);
         handleSizeChange(nextSize);
       }
     },
@@ -139,7 +150,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    */
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent) => {
-      event.preventDefault(); // Prevent default browser behavior like scrolling
       getKeyboardInteraction(event, dragFrom);
     },
     [getKeyboardInteraction],

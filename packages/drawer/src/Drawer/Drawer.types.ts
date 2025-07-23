@@ -30,8 +30,6 @@ export interface DrawerProps
    */
   open?: boolean;
 
-  // need SetOpen to call setOpen if the drawer is resiazble and it snaps shut
-
   /**
    * Event handler called on close button click. If provided, a close button will be rendered in the Drawer header.
    */
