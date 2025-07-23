@@ -8,14 +8,9 @@ import LeafyGreenProvider, {
 import { isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
-import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
+import { getLgIds } from '../testing';
 
-import {
-  DEFAULT_SIZE,
-  DEFAULT_VARIANT,
-  iconsPendingCompletion,
-  WIDTH_ANIMATION_SPEED,
-} from './constants';
+import { WIDTH_ANIMATION_SPEED } from './constants';
 import {
   useComputedTransitionDuration,
   useIdIdentifiers,
@@ -40,32 +35,32 @@ import {
   getHeaderIcon,
   getPercentage,
   getValueAriaAttributes,
-  omitProps,
   resolveProgressBarProps,
 } from './utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const resolved = resolveProgressBarProps(props);
-
-  const { role, value, maxValue, disabled, isIndeterminate, enableAnimation } =
-    resolved;
-
   const {
-    size = DEFAULT_SIZE,
+    size,
     label,
     description: descriptionProp,
-    variant = DEFAULT_VARIANT,
-    darkMode = false,
+    variant,
+    darkMode,
     formatValue,
-    showIcon: showIconProp = false,
+    showIcon,
     'aria-label': ariaLabel,
-    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+    'data-lgid': dataLgId,
     className,
+
+    role,
+    value,
+    maxValue,
+    disabled,
+    isIndeterminate,
+    enableAnimation,
     ...rest
-  } = omitProps(props, resolved);
+  } = resolveProgressBarProps(props);
 
   const { theme } = useDarkMode(darkMode);
 
-  // get identifiers for ARIA attributes and testing
   const { barId, labelId, descId } = useIdIdentifiers({
     role,
     label,
@@ -74,12 +69,14 @@ export function ProgressBar(props: ProgressBarProps) {
 
   const lgIds = getLgIds(dataLgId);
 
-  // determine if icon should be shown
-  const showIcon = iconsPendingCompletion.includes(variant)
-    ? showIconProp && value === maxValue
-    : showIconProp;
+  const screenReaderMessage = useScreenReaderAnnouncer({
+    role,
+    value,
+    maxValue,
+    variant,
+  });
 
-  // track animation mode changes
+  // track animation mode changes for animated transition
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
     getAnimationMode(isIndeterminate, enableAnimation),
   );
@@ -103,7 +100,7 @@ export function ProgressBar(props: ProgressBarProps) {
     });
   }, [isIndeterminate, enableAnimation]);
 
-  // track description text changes
+  // track description text changes for animated transition
   const description = useRotatingItems(descriptionProp);
   const prevDescription = usePrevious(description);
   const [isNewDescription, setIsNewDescription] = useState(false);
@@ -123,14 +120,6 @@ export function ProgressBar(props: ProgressBarProps) {
   const widthAnimationDuration = useComputedTransitionDuration({
     currentValue: displayWidth,
     speed: WIDTH_ANIMATION_SPEED,
-  });
-
-  // get screen reader message based on value changes
-  const screenReaderMessage = useScreenReaderAnnouncer({
-    role,
-    value,
-    maxValue,
-    variant,
   });
 
   return (

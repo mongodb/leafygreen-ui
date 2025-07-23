@@ -37,7 +37,7 @@ describe('resolveProgressBarProps', () => {
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
-    expect(resolvedProps).toEqual({
+    expect(resolvedProps).toMatchObject({
       role: Role.Progress,
       value: 50,
       maxValue: 100,
@@ -56,7 +56,7 @@ describe('resolveProgressBarProps', () => {
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
-    expect(resolvedProps).toEqual({
+    expect(resolvedProps).toMatchObject({
       role: Role.Meter,
       value: 50,
       maxValue: 100,
@@ -76,11 +76,9 @@ describe('resolveProgressBarProps', () => {
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
-    expect(resolvedProps).toEqual(
-      expect.objectContaining({
-        enableAnimation: false,
-      }),
-    );
+    expect(resolvedProps).toMatchObject({
+      enableAnimation: false,
+    });
   });
 
   test('it correctly resolves props for indeterminate', () => {
@@ -90,7 +88,7 @@ describe('resolveProgressBarProps', () => {
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
-    expect(resolvedProps).toEqual({
+    expect(resolvedProps).toMatchObject({
       role: Role.Progress,
       value: undefined,
       maxValue: undefined,
@@ -109,11 +107,9 @@ describe('resolveProgressBarProps', () => {
     } as const;
 
     const resolvedProps = resolveProgressBarProps(props);
-    expect(resolvedProps).toEqual(
-      expect.objectContaining({
-        role: Role.Progress,
-        enableAnimation: false,
-      }),
-    );
+    expect(resolvedProps).toMatchObject({
+      role: Role.Progress,
+      enableAnimation: false,
+    });
   });
 });
