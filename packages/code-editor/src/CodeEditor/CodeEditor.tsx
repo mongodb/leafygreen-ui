@@ -2,17 +2,11 @@ import React, {
   forwardRef,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
 import { renderToString } from 'react-dom/server';
-import {
-  foldGutter,
-  forceParsing,
-  indentUnit as indentUnitFacet,
-} from '@codemirror/language';
-import { hyperLink } from '@uiw/codemirror-extensions-hyper-link';
+import { forceParsing } from '@codemirror/language';
 import CodeMirror, {
   Compartment,
   EditorState,
@@ -33,6 +27,9 @@ import { createHighlightExtension } from './codeMirrorExtensions/createHighlight
 import { createLanguageExtension } from './codeMirrorExtensions/createLanguageExtension';
 import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
 import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
+import { useExtension } from './util/useExtension';
+import { useLazyModules } from './util/useLazyModules';
+import { useModuleLoaders } from './util/useModuleLoaders';
 import { getEditorStyles } from './CodeEditor.styles';
 import {
   type CodeEditorProps,
@@ -42,8 +39,8 @@ import {
 } from './CodeEditor.types';
 
 export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
-  (
-    {
+  (props, forwardedRef) => {
+    const {
       defaultValue,
       enableClickableUrls = true,
       enableCodeFolding = true,
@@ -67,9 +64,8 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       minWidth,
       width,
       ...rest
-    },
-    forwardedRef,
-  ) => {
+    } = props;
+
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useBaseFontSize();
     const [value, setValue] = useState(defaultValue || '');
@@ -77,6 +73,103 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       useState<CodeMirrorExtension>([]);
     const editorRef = useRef<CodeMirrorRef>(null);
     const ref = useMergeRefs([editorRef, forwardedRef]);
+
+    const moduleLoaders = useModuleLoaders(props);
+    const { isLoading, modules } = useLazyModules(moduleLoaders);
+
+    const hyperLinkExtension = useExtension(
+      editorRef.current?.view || null,
+      {
+        enable: enableClickableUrls,
+        module: modules['@uiw/codemirror-extensions-hyper-link'],
+      },
+      ({ enable, module }) =>
+        enable && module?.hyperLink ? module.hyperLink : [],
+    );
+
+    const lineWrapExtension = useExtension(
+      editorRef.current?.view || null,
+      {
+        enable: enableLineWrapping,
+      },
+      ({ enable }) => (enable ? EditorView.lineWrapping : []),
+    );
+
+    const indentExtension = useExtension(
+      editorRef.current?.view || null,
+      {
+        unit: indentUnit,
+        size: indentSize,
+        module: modules['@codemirror/language'],
+      },
+      ({ unit, size, module }) => {
+        if (!module || !module.indentUnit) {
+          return [];
+        }
+
+        let indentString: string;
+
+        if (unit === IndentUnits.Tab) {
+          indentString = '\t';
+        } else {
+          indentString = ' '.repeat(size);
+        }
+
+        return [
+          module.indentUnit.of(indentString),
+          EditorState.tabSize.of(size),
+        ];
+      },
+    );
+
+    const foldGutterExtension = useExtension(
+      editorRef.current?.view || null,
+      {
+        enable: enableCodeFolding,
+        module: modules['@codemirror/language'],
+      },
+      ({ enable, module }) => {
+        if (!enable || !module || !module.foldGutter) {
+          return [];
+        }
+
+        return module.foldGutter({
+          markerDOM: (open: boolean) => {
+            const icon = document.createElement('span');
+            icon.className = 'cm-custom-fold-marker';
+            icon.innerHTML = renderToString(
+              open ? (
+                <Icon
+                  glyph="ChevronDown"
+                  size="small"
+                  className={css`
+                    margin-top: 2px;
+                  `}
+                />
+              ) : (
+                <Icon
+                  glyph="ChevronRight"
+                  size="small"
+                  className={css`
+                    margin-top: 2px;
+                  `}
+                />
+              ),
+            );
+            return icon;
+          },
+        });
+      },
+    );
+
+    const tooltipExtension = useExtension(
+      editorRef.current?.view || null,
+      {
+        tooltips,
+      },
+      ({ tooltips }) =>
+        tooltips.length > 0 ? [createTooltipsExtension(tooltips)] : [],
+    );
 
     const onChange = useCallback(
       (val: string) => {
@@ -102,92 +195,6 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       [forceParsingProp],
     );
 
-    const createIndentExtension = useCallback(
-      (unit: IndentUnits, size: number) => {
-        let indentString: string;
-
-        if (unit === IndentUnits.Tab) {
-          indentString = '\t';
-        } else {
-          indentString = ' '.repeat(size);
-        }
-
-        return [indentUnitFacet.of(indentString), EditorState.tabSize.of(size)];
-      },
-      [],
-    );
-
-    const customExtensions = useMemo(() => {
-      const extensions: Array<CodeMirrorExtension> = [];
-
-      /**
-       * CodeMirror state is immutable. Once configuration is set, the entire
-       * state would need to be updated to update one facet. Compartments allow
-       * us to dynamically change parts of the configuration after
-       * initialization, without needing to recreate the entire editor state.
-       * See https://codemirror.net/examples/config/#dynamic-configuration
-       */
-      const hyperLinkCompartment = new Compartment();
-      const lineWrappingCompartment = new Compartment();
-      const indentExtensionCompartment = new Compartment();
-      const tooltipCompartment = new Compartment();
-      const foldGutterCompartment = new Compartment();
-
-      extensions.push(
-        hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
-        lineWrappingCompartment.of(
-          enableLineWrapping ? EditorView.lineWrapping : [],
-        ),
-        indentExtensionCompartment.of(
-          createIndentExtension(indentUnit, indentSize),
-        ),
-        // Use diagnostics-based tooltips if any tooltips are provided
-        tooltipCompartment.of(
-          tooltips.length > 0 ? [createTooltipsExtension(tooltips)] : [],
-        ),
-        foldGutterCompartment.of(
-          enableCodeFolding
-            ? foldGutter({
-                markerDOM: (open: boolean) => {
-                  const icon = document.createElement('span');
-                  icon.className = 'cm-custom-fold-marker';
-                  icon.innerHTML = renderToString(
-                    open ? (
-                      <Icon
-                        glyph="ChevronDown"
-                        size="small"
-                        className={css`
-                          margin-top: 2px;
-                        `}
-                      />
-                    ) : (
-                      <Icon
-                        glyph="ChevronRight"
-                        size="small"
-                        className={css`
-                          margin-top: 2px;
-                        `}
-                      />
-                    ),
-                  );
-                  return icon;
-                },
-              })
-            : [],
-        ),
-      );
-
-      return extensions;
-    }, [
-      createIndentExtension,
-      enableClickableUrls,
-      enableCodeFolding,
-      enableLineWrapping,
-      indentUnit,
-      indentSize,
-      tooltips,
-    ]);
-
     /**
      * Handles setting up language support. This is done separately because
      * it is an asynchronous operation that requires dynamic imports.
@@ -203,6 +210,26 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       }
       setupLanguageExtension();
     }, [language]);
+
+    if (isLoading) {
+      return (
+        <div
+          className={cx(
+            getEditorStyles({
+              width,
+              minWidth,
+              maxWidth,
+              height,
+              minHeight,
+              maxHeight,
+            }),
+            className,
+          )}
+        >
+          Loading...
+        </div>
+      );
+    }
 
     return (
       <CodeMirror
@@ -232,8 +259,13 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         ]}
         extensions={[
           ...consumerExtensions.map(extension => Prec.highest(extension)),
-          ...customExtensions,
+          // ...customExtensions,
           languageExtension,
+          lineWrapExtension,
+          hyperLinkExtension,
+          indentExtension,
+          foldGutterExtension,
+          tooltipExtension,
         ]}
         basicSetup={{
           allowMultipleSelections: true,
