@@ -133,7 +133,7 @@ const createResizableStory = (
               ...config.resizerBaseStyles,
               backgroundColor: palette.blue.light1,
               ...(isVertical ? { height: '100%' } : { width: '100%' }),
-              ...(resizerProps.style || {}),
+              ...(resizerProps?.style || {}),
             }}
           />
           {config.label}

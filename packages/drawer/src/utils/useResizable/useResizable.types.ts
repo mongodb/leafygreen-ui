@@ -53,11 +53,11 @@ export type ResizableProps = {
 };
 
 export type ResizerProps = {
-  onMouseDown?: (e: React.MouseEvent | MouseEvent) => void;
-  tabIndex?: number;
-  onFocus?: () => void;
-  onBlur?: () => void;
-  onKeyDown?: (e: React.KeyboardEvent | KeyboardEvent) => void;
+  onMouseDown: (e: React.MouseEvent | MouseEvent) => void;
+  tabIndex: number;
+  onFocus: () => void;
+  onBlur: () => void;
+  style: React.CSSProperties;
 };
 
 export type ResizableReturn<T extends HTMLElement = HTMLElement> = {
@@ -80,7 +80,7 @@ export type ResizableReturn<T extends HTMLElement = HTMLElement> = {
   /**
    * A function that returns the props needed to be spread onto the resizer element.
    */
-  getResizerProps: () => ResizerProps;
+  getResizerProps: () => ResizerProps | undefined;
 
   /**
    * A ref to the resizable element that can be used to attach the resizer functionality.

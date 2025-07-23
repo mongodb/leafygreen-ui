@@ -32,6 +32,7 @@ describe('useResizable', () => {
         minSize: 100,
         maxSize: 500,
         handleType: 'right',
+        maxViewportPercentages: 50,
       }),
     );
 
@@ -48,6 +49,7 @@ describe('useResizable', () => {
         minSize: 100,
         maxSize: 500,
         handleType: 'right',
+        maxViewportPercentages: 50,
       }),
     );
 
@@ -67,18 +69,18 @@ describe('useResizable', () => {
         maxSize: 500,
         handleType: 'right',
         onResize,
+        maxViewportPercentages: 50,
       }),
     );
 
-    // Override the ref to mock DOM element
-    Object.defineProperty(result.current, 'resizableRef', {
-      get: () => mockRef,
-    });
+    // current is read-only from outside the hook but for testing we can set it directly
+    (result.current.resizableRef as any).current = mockRef.current;
 
     // Start resizing
     const resizerProps = result.current.getResizerProps();
     act(() => {
-      resizerProps.onMouseDown({
+      // @ts-expect-error - onMouseDown expects all properties of MouseEvent
+      resizerProps?.onMouseDown({
         preventDefault: jest.fn(),
         clientX: 300,
         clientY: 300,
@@ -109,18 +111,19 @@ describe('useResizable', () => {
         maxSize: 500,
         handleType: 'right',
         onResize,
+        maxViewportPercentages: 50,
       }),
     );
 
     // Override the ref to mock DOM element
-    Object.defineProperty(result.current, 'resizableRef', {
-      get: () => mockRef,
-    });
+    // current is read-only from outside the hook but for testing we can set it directly
+    (result.current.resizableRef as any).current = mockRef.current;
 
     // Start resizing
     const resizerProps = result.current.getResizerProps();
     act(() => {
-      resizerProps.onMouseDown({
+      // @ts-expect-error - onMouseDown expects all properties of MouseEvent
+      resizerProps?.onMouseDown({
         preventDefault: jest.fn(),
         clientX: 300,
         clientY: 300,
@@ -152,18 +155,23 @@ describe('useResizable', () => {
         maxSize: 400,
         handleType: 'right',
         onResize,
+        maxViewportPercentages: 50,
       }),
     );
 
     // Override the ref to mock DOM element
-    Object.defineProperty(result.current, 'resizableRef', {
-      get: () => mockRef,
-    });
+    // Object.defineProperty(result.current, 'resizableRef', {
+    //   get: () => mockRef,
+    // });
+
+    // current is read-only from outside the hook but for testing we can set it directly
+    (result.current.resizableRef as any).current = mockRef.current;
 
     // Start resizing
     const resizerProps = result.current.getResizerProps();
     act(() => {
-      resizerProps.onMouseDown({
+      // @ts-expect-error - onMouseDown expects all properties of MouseEvent
+      resizerProps?.onMouseDown({
         preventDefault: jest.fn(),
         clientX: 300,
         clientY: 300,
@@ -199,15 +207,14 @@ describe('useResizable', () => {
       }),
     );
 
-    // Override the ref to mock DOM element
-    Object.defineProperty(result.current, 'resizableRef', {
-      get: () => mockRef,
-    });
+    // current is read-only from outside the hook but for testing we can set it directly
+    (result.current.resizableRef as any).current = mockRef.current;
 
     // Start resizing
     const resizerProps = result.current.getResizerProps();
     act(() => {
-      resizerProps.onMouseDown({
+      // @ts-expect-error - onMouseDown expects all properties of MouseEvent
+      resizerProps?.onMouseDown({
         preventDefault: jest.fn(),
         clientX: 300,
         clientY: 300,
@@ -230,25 +237,26 @@ describe('useResizable', () => {
     expect(onResize).toHaveBeenCalledWith(512);
   });
 
-  test('stops resizing on mouseup event', () => {
+  test('stops resizing on mouseup event', async () => {
     const { result } = renderHook(() =>
       useResizable({
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
         handleType: 'right',
+        maxViewportPercentages: 50,
       }),
     );
 
-    // Override the ref to mock DOM element
-    Object.defineProperty(result.current, 'resizableRef', {
-      get: () => mockRef,
-    });
+    // // Override the ref to mock DOM element
+    // current is read-only from outside the hook but for testing we can set it directly
+    (result.current.resizableRef as any).current = mockRef.current;
 
     // Start resizing
     const resizerProps = result.current.getResizerProps();
     act(() => {
-      resizerProps.onMouseDown({
+      // @ts-expect-error - onMouseDown expects all properties of MouseEvent
+      resizerProps?.onMouseDown({
         preventDefault: jest.fn(),
         clientX: 300,
         clientY: 300,
@@ -257,17 +265,26 @@ describe('useResizable', () => {
 
     expect(result.current.isResizing).toBe(true);
 
+    // Mock requestAnimationFrame to execute immediately
+    const originalRAF = window.requestAnimationFrame;
+    window.requestAnimationFrame = cb => {
+      return setTimeout(cb, 0);
+    };
+
     // Stop resizing
     act(() => {
       fireEvent(window, new MouseEvent('mouseup'));
     });
 
-    // Allow for rAF to complete
-    act(() => {
-      jest.runAllTimers();
+    // Wait for all pending promises to resolve (including the setTimeout that mocks rAF)
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
     });
 
     expect(result.current.isResizing).toBe(false);
+
+    // Restore original requestAnimationFrame
+    window.requestAnimationFrame = originalRAF;
   });
 
   test('handles keyboard interactions for right handle', () => {
@@ -279,13 +296,14 @@ describe('useResizable', () => {
         maxSize: 500,
         handleType: 'right',
         onResize,
+        maxViewportPercentages: 50,
       }),
     );
 
     // Focus the resizer
     const resizerProps = result.current.getResizerProps();
     act(() => {
-      resizerProps.onFocus();
+      resizerProps?.onFocus();
     });
 
     // Press right arrow to increase size
@@ -314,13 +332,14 @@ describe('useResizable', () => {
         maxSize: 500,
         handleType: 'left',
         onResize,
+        maxViewportPercentages: 50,
       }),
     );
 
     // Focus the resizer
     const resizerProps = result.current.getResizerProps();
     act(() => {
-      resizerProps.onFocus();
+      resizerProps?.onFocus();
     });
 
     // Press left arrow to increase size
@@ -350,12 +369,13 @@ describe('useResizable', () => {
         handleType: 'right',
         onResize,
         enabled: false,
+        maxViewportPercentages: 50,
       }),
     );
 
     // Check that getResizerProps returns an empty object
     const resizerProps = result.current.getResizerProps();
-    expect(Object.keys(resizerProps).length).toBe(0);
+    expect(Object.keys(resizerProps || {}).length).toBe(0);
 
     // Try to set size
     act(() => {

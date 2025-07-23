@@ -106,16 +106,19 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     if (!enabled) return;
     // Use requestAnimationFrame to ensure any final size/transform changes
     // are rendered with transitions enabled before stopping resizing.
+
+    console.log('🌈handleMouseUp called');
     requestAnimationFrame(() => {
       isResizingRef.current = false; // Synchronously update ref
       setIsResizing(false); // Set resizing state to false
+      console.log('🌈🌈🌈🌈requestAnimationFrame called');
     });
   }, [enabled]);
 
   // Function to generate onMouseDown props for specific handle types
   const getResizerProps = useCallback(() => {
     if (!enabled) {
-      return {};
+      return;
     }
 
     return {
@@ -129,11 +132,12 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         // Capture initial mouse position and current element size
         initialMousePos.current = { x: e.clientX, y: e.clientY };
 
-        console.log('onMouseDown called with handleType:', {
+        console.log('☎️☎️ onMouseDown called with handleType:', {
           x: e.clientX,
           y: e.clientY,
           isResizing,
           enabled,
+          resizableRef,
         });
 
         if (resizableRef.current) {
@@ -153,7 +157,10 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         setIsFocused(false);
       },
       style: {
-        cursor: 'col-resize', // Set cursor style for resizing
+        cursor:
+          handleType === 'left' || handleType === 'right'
+            ? 'col-resize'
+            : 'row-resize', // Set cursor style for resizing
       },
     };
   }, [enabled]);

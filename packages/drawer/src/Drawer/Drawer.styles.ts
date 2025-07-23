@@ -309,7 +309,6 @@ export const getResizerStyles = ({
       width: 2px;
       background-color: transparent;
       left: 0;
-      cursor: col-resize;
 
       &:hover,
       &:focus-visible {
