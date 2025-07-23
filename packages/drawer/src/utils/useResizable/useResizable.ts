@@ -142,150 +142,50 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
   const getKeyboardInteraction = useCallback(
     (e: React.KeyboardEvent | KeyboardEvent, handleType: HandleType | null) => {
-      console.log('🪻🪻🪻 handleKeyDown', { key: e.code, handleType });
-      switch (handleType) {
-        case 'left': {
-          // TODO: move these to a function
-          switch (e.code) {
-            case keyMap.ArrowLeft: {
-              console.log('⬅️ Left arrow key pressed');
+      const getNextSizes = (direction: 'larger' | 'smaller') => {
+        const currentSize = size;
+        const sizes = sortedKeyboardSizes;
 
-              const nextLargerWidth = sortedKeyboardSizes.find(
-                width => width > size,
-              );
-
-              if (nextLargerWidth !== undefined) {
-                setSize(nextLargerWidth);
-                onResize?.(nextLargerWidth);
-              }
-
-              break;
-            }
-            case keyMap.ArrowRight: {
-              console.log('➡️ Right arrow key pressed');
-
-              const nextSmallerWidth = [...sortedKeyboardSizes]
-                .reverse()
-                .find(width => width < size);
-
-              if (nextSmallerWidth !== undefined) {
-                setSize(nextSmallerWidth);
-                // Call onResize if provided
-                onResize?.(nextSmallerWidth);
-              }
-
-              break;
-            }
-          }
-
-          break;
+        if (direction === 'larger') {
+          return sizes.find(size => size > currentSize);
+        } else {
+          return [...sizes].reverse().find(size => size < currentSize);
         }
-        case 'right': {
-          console.log('Right handle interaction');
-          switch (e.code) {
-            case keyMap.ArrowRight: {
-              console.log('➡️ Right arrow key pressed for right handle');
-              // For right handle, right arrow makes element wider
-              const nextLargerWidth = sortedKeyboardSizes.find(
-                width => width > size,
-              );
+      };
 
-              if (nextLargerWidth !== undefined) {
-                setSize(nextLargerWidth);
-                // Call onResize if provided
-                onResize?.(nextLargerWidth);
-              }
-              break;
-            }
-            case keyMap.ArrowLeft: {
-              console.log('⬅️ Left arrow key pressed for right handle');
-              // For right handle, left arrow makes element narrower
-              const nextSmallerWidth = [...sortedKeyboardSizes]
-                .reverse()
-                .find(width => width < size);
-
-              if (nextSmallerWidth !== undefined) {
-                setSize(nextSmallerWidth);
-                // Call onResize if provided
-                onResize?.(nextSmallerWidth);
-              }
-              break;
-            }
-          }
-          break;
+      const handleSizeChange = (nextSize: number | undefined) => {
+        if (nextSize !== undefined) {
+          setSize(nextSize);
+          onResize?.(nextSize);
         }
-        case 'top': {
-          console.log('Top handle interaction');
-          switch (e.code) {
-            case keyMap.ArrowUp: {
-              console.log('⬇️ Down arrow key pressed for top handle');
-              // For top handle, down arrow makes element taller
-              const nextLargerHeight = sortedKeyboardSizes.find(
-                height => height > size,
-              );
+      };
 
-              if (nextLargerHeight !== undefined) {
-                setSize(nextLargerHeight);
-                // Call onResize if provided
-                onResize?.(nextLargerHeight);
-              }
+      const keyMappings: Record<
+        HandleType,
+        { [key: string]: 'larger' | 'smaller' }
+      > = {
+        left: {
+          [keyMap.ArrowLeft]: 'larger',
+          [keyMap.ArrowRight]: 'smaller',
+        },
+        right: {
+          [keyMap.ArrowRight]: 'larger',
+          [keyMap.ArrowLeft]: 'smaller',
+        },
+        top: {
+          [keyMap.ArrowUp]: 'larger',
+          [keyMap.ArrowDown]: 'smaller',
+        },
+        bottom: {
+          [keyMap.ArrowDown]: 'larger',
+          [keyMap.ArrowUp]: 'smaller',
+        },
+      };
 
-              break;
-            }
-            case keyMap.ArrowDown: {
-              console.log('⬆️ Up arrow key pressed for top handle');
-              // For top handle, up arrow makes element shorter
-              const nextSmallerHeight = [...sortedKeyboardSizes]
-                .reverse()
-                .find(height => height < size);
-
-              if (nextSmallerHeight !== undefined) {
-                setSize(nextSmallerHeight);
-                // Call onResize if provided
-                onResize?.(nextSmallerHeight);
-              }
-
-              break;
-            }
-          }
-          break;
-        }
-        case 'bottom': {
-          console.log('Bottom handle interaction');
-          switch (e.code) {
-            case keyMap.ArrowDown: {
-              console.log('⬆️ Up arrow key pressed for bottom handle');
-              // For bottom handle, up arrow makes element smaller
-              const nextSmallerHeight = [...sortedKeyboardSizes]
-                .reverse()
-                .find(height => height < size);
-
-              if (nextSmallerHeight !== undefined) {
-                setSize(nextSmallerHeight);
-                // Call onResize if provided
-                onResize?.(nextSmallerHeight);
-              }
-              break;
-            }
-            case keyMap.ArrowUp: {
-              console.log('⬇️ Down arrow key pressed for bottom handle');
-              // For bottom handle, down arrow makes element taller
-              const nextLargerHeight = sortedKeyboardSizes.find(
-                height => height > size,
-              );
-
-              if (nextLargerHeight !== undefined) {
-                setSize(nextLargerHeight);
-                // Call onResize if provided
-                onResize?.(nextLargerHeight);
-              }
-              break;
-            }
-          }
-          break;
-        }
-        default:
-          break;
+      if (handleType && e.code in keyMappings[handleType]) {
+        const direction = keyMappings[handleType][e.code];
+        const nextSize = getNextSizes(direction);
+        handleSizeChange(nextSize);
       }
     },
     [size, sortedKeyboardSizes, onResize, initialSize, minSize],
