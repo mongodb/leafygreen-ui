@@ -32,8 +32,8 @@ const HeaderCellWithRef = <T extends LGRowData>(
 
   return (
     <th
-      data-lgid={lgIds.headerCell}
-      data-testid={lgIds.headerCell}
+      data-lgid={lgIds.header}
+      data-testid={lgIds.header}
       className={cx(
         getBaseHeaderCellStyles(header?.getSize() ?? 0, isSelectable),
         className,
