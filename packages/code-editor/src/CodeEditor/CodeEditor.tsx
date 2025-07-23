@@ -27,9 +27,9 @@ import { createHighlightExtension } from './codeMirrorExtensions/createHighlight
 import { createLanguageExtension } from './codeMirrorExtensions/createLanguageExtension';
 import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
 import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
-import { useExtension } from './util/useExtension';
-import { useLazyModules } from './util/useLazyModules';
-import { useModuleLoaders } from './util/useModuleLoaders';
+import { useExtension } from './hooks/useExtension';
+import { useLazyModules } from './hooks/useLazyModules';
+import { useModuleLoaders } from './hooks/useModuleLoaders';
 import { getEditorStyles } from './CodeEditor.styles';
 import {
   type CodeEditorProps,
