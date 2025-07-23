@@ -33,6 +33,7 @@ import { useResizable } from '../utils/useResizable/useResizable';
 import { PANEL_WIDTH } from '../constants';
 import { DRAWER_MAX_WIDTH, DRAWER_MIN_WIDTH } from './Drawer.constants';
 import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
+import { DragFrom } from '../utils/useResizable/useResizable.types';
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
@@ -138,11 +139,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       HTMLDialogElement | HTMLDivElement
     >({
       enabled: resizable && displayMode === DisplayMode.Embedded,
-      initialSize: open ? PANEL_WIDTH : 0, // TODO: might need setSize to set the size when the drawer opens
+      initialSize: open ? PANEL_WIDTH : 0,
       minSize: DRAWER_MIN_WIDTH,
       maxSize: DRAWER_MAX_WIDTH, // Allow resizing up to a reasonable size
       maxViewportPercentages: 50,
-      dragFrom: 'left',
+      dragFrom: DragFrom.Left,
     });
 
     // Create merged ref after resizableRef is defined

@@ -16,24 +16,16 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   dragFrom,
 }: ResizableProps): ResizableReturn<T> => {
   const resizableRef = useRef<T>(null);
-  // State to track if the element is currently being resized
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
-
   // Refs to store initial mouse position and element size at the start of a drag
   const initialMousePos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const initialElementSize = useRef<number>(0);
-
   // Ref to hold the current value of isResizing to prevent stale closures in event handlers
-  // This ref is updated synchronously in onMouseDown/onMouseUp
-  // TODO: why do we need this?
   const isResizingRef = useRef<boolean>(isResizing);
-
   const [size, setSize] = useState<number>(initialSize);
-
   const minSize = minSizeProp ?? initialSize;
   const maxSize = maxSizeProp ?? initialSize;
-
   const keyboardSizes = [initialSize!, minSize, maxSize];
   const sortedKeyboardSizes = [...keyboardSizes].sort((a, b) => a - b);
 
@@ -42,17 +34,21 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     setSize(initialSize);
   }, [enabled, initialSize]);
 
-  const handleMouseMove = (e: MouseEvent) => {
+  /**
+   * Sets the current resizing state and updates the ref synchronously.
+   * @param event
+   * @returns void
+   */
+  const handleMouseMove = (event: MouseEvent) => {
     // Only proceed if resizing is enabled and the element is currently being resized
     if (!isResizingRef.current) return;
 
     let newSize = initialElementSize.current;
-    // Determine the effective maximum width, considering both fixed max and viewport percentage //TODO:
     let effectiveMaxSize = maxSize;
 
     // The difference in mouse position from the initial position
-    const deltaX = e.clientX - initialMousePos.current.x;
-    const deltaY = e.clientY - initialMousePos.current.y;
+    const deltaX = event.clientX - initialMousePos.current.x;
+    const deltaY = event.clientY - initialMousePos.current.y;
 
     switch (dragFrom) {
       case DragFrom.Left:
@@ -93,9 +89,10 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     onResize?.(newSize);
   };
 
-  // Callback for when the mouse button is released, ending the drag operation
+  /**
+   * Handles the mouse up event to stop resizing.
+   */
   const handleMouseUp = useCallback(() => {
-    if (!enabled) return;
     // Use requestAnimationFrame to ensure any final size/transform changes
     // are rendered with transitions enabled before stopping resizing.
     requestAnimationFrame(() => {
@@ -104,48 +101,10 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     });
   }, [enabled]);
 
-  // Function to generate onMouseDown props for specific handle types
-  const getResizerProps = useCallback(() => {
-    if (!enabled) {
-      return;
-    }
-
-    return {
-      onMouseDown: (e: MouseEvent | React.MouseEvent) => {
-        e.preventDefault(); // Prevent default browser behavior like text selection
-
-        // Synchronously update the ref BEFORE setting state
-        isResizingRef.current = true;
-        setIsResizing(true); // This will trigger re-render and useEffect later
-
-        // Capture initial mouse position and current element size
-        initialMousePos.current = { x: e.clientX, y: e.clientY };
-
-        if (resizableRef.current) {
-          initialElementSize.current =
-            dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
-              ? resizableRef.current.offsetWidth
-              : resizableRef.current.offsetHeight;
-        }
-      },
-      tabIndex: 0, // Make the resizer focusable
-      onFocus: () => {
-        // Set focus state when resizer receives focus
-        setIsFocused(true);
-      },
-      onBlur: () => {
-        // Handle blur event if needed, e.g., to reset styles or state
-        setIsFocused(false);
-      },
-      style: {
-        cursor:
-          dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
-            ? 'col-resize'
-            : 'row-resize', // Set cursor style for resizing
-      },
-    };
-  }, [enabled]);
-
+  /**
+   * Handles keyboard interactions for resizing.
+   * Allows resizing using arrow keys based on the dragFrom direction.
+   */
   const getKeyboardInteraction = useCallback(
     (e: React.KeyboardEvent | KeyboardEvent, dragFrom: DragFrom | null) => {
       const getNextSizes = (direction: 'larger' | 'smaller') => {
@@ -197,12 +156,64 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     [size, sortedKeyboardSizes, onResize, initialSize, minSize],
   );
 
+  /**
+   * Handles key down events for resizing.
+   * Prevents default behavior and calls getKeyboardInteraction to handle resizing.
+   * This allows resizing using arrow keys based on the dragFrom direction.
+   */
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent | KeyboardEvent) => {
-      getKeyboardInteraction(e, dragFrom);
+    (event: React.KeyboardEvent | KeyboardEvent) => {
+      event.preventDefault(); // Prevent default browser behavior like scrolling
+      getKeyboardInteraction(event, dragFrom);
     },
     [getKeyboardInteraction],
   );
+
+  /**
+   * Returns the props for the resizer element.
+   * This includes mouse down, focus, blur, and style properties.
+   * The resizer is used to initiate resizing of the element.
+   */
+  const getResizerProps = useCallback(() => {
+    if (!enabled) {
+      return;
+    }
+
+    return {
+      onMouseDown: (e: MouseEvent | React.MouseEvent) => {
+        e.preventDefault(); // Prevent default browser behavior like text selection
+
+        // Synchronously update the ref BEFORE setting state
+        isResizingRef.current = true;
+        setIsResizing(true); // This will trigger re-render and useEffect later
+
+        // Capture initial mouse position and current element size
+        initialMousePos.current = { x: e.clientX, y: e.clientY };
+
+        if (resizableRef.current) {
+          initialElementSize.current =
+            dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
+              ? resizableRef.current.offsetWidth
+              : resizableRef.current.offsetHeight;
+        }
+      },
+      tabIndex: 0, // Make the resizer focusable
+      onFocus: () => {
+        // Set focus state when resizer receives focus
+        setIsFocused(true);
+      },
+      onBlur: () => {
+        // Handle blur event if needed, e.g., to reset styles or state
+        setIsFocused(false);
+      },
+      style: {
+        cursor:
+          dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
+            ? 'col-resize'
+            : 'row-resize', // Set cursor style for resizing
+      },
+    };
+  }, [enabled]);
 
   // Effect hook to add and remove global mouse event listeners
   // These listeners are added to 'window' to ensure dragging works even if the mouse
@@ -216,17 +227,16 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       window.removeEventListener('mouseup', handleMouseUp);
     }
 
-    // Cleanup function to remove event listeners when the component unmounts
-    // or when 'isResizing' changes (e.g., resizing stops)
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isResizing, handleMouseMove, handleMouseUp, enabled]);
 
+  // Effect hook to add and remove global keydown event listener
+  // This listener is added to 'window' to allow resizing with arrow keys
   useEffect(() => {
     if (isFocused && enabled) {
-      // Add keyboard event listeners if the resizer is focused
       window.addEventListener('keydown', handleKeyDown);
     } else {
       window.removeEventListener('keydown', handleKeyDown);
@@ -237,6 +247,9 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     };
   }, [enabled, isFocused, handleKeyDown]);
 
+  // Effect hook to handle CSS transitions for resizing
+  // This is to ensure that the resizing does not have a transition effect while resizing
+  // but transitions back to the new size smoothly after resizing is done.
   useEffect(() => {
     if (isResizing) {
       resizableRef.current?.style.setProperty('transition', 'none');
@@ -264,7 +277,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 // 7. Add setOpen to drawer component to allow closing the drawer from inside ❌
 // 8. Add back dragFrom to getResizerProps ❌
 // 9. Remove snap close logic from the hook ✅
-// 10.Disable resize on small widths
+// 10.Disable resize on small widths? DO i need to
 // 11.Ensure correct a11y practices
 // 12.Fixes closing transition  ✅
 // 13.Weird resize bug, the drawer goes crazy

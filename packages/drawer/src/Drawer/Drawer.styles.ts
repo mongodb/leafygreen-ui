@@ -55,14 +55,12 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   all: unset;
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
-  /* width: 100%; */
-  /* max-width: ${PANEL_WIDTH}px; */
+  max-width: 50vw;
   width: ${PANEL_WIDTH}px;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
-
-  position: relative; // TODO: only for embedded?
+  position: relative;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     width: auto;
@@ -138,7 +136,6 @@ const getEmbeddedStyles = ({ open, size }: { open: boolean; size: number }) =>
   cx(
     css`
       transition: width ${drawerTransitionDuration}ms linear;
-      /* transition: width 3000ms linear; */
     `,
     {
       [css`
