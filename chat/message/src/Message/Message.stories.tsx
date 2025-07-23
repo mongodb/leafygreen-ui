@@ -64,7 +64,7 @@ const MessageFeedback = () => {
 };
 
 const meta: StoryMetaType<typeof Message> = {
-  title: 'Chat/Message',
+  title: 'Composition/Chat/Message',
   component: Message,
   args: {
     avatar: <Avatar variant="user" name="Sean Park" />,

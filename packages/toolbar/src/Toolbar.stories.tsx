@@ -35,7 +35,7 @@ const LongContent = () => {
 };
 
 export default {
-  title: 'Components/Toolbar',
+  title: 'Composition/Data Display/Toolbar',
   component: Toolbar,
   parameters: {
     default: 'LiveExample',

@@ -13,7 +13,7 @@ import { ToastProvider, Variant } from '..';
 import { type ControlledToastProps, Toast } from '.';
 
 const meta: StoryMetaType<typeof Toast> = {
-  title: 'Components/Toast/Controlled',
+  title: 'Components/Notifications/Toast/Controlled',
   component: Toast,
   parameters: {
     default: 'Basic',

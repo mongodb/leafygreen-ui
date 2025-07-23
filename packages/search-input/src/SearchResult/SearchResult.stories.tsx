@@ -6,7 +6,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { SearchResult, type SearchResultProps } from '.';
 
 const meta: StoryMetaType<typeof SearchResult> = {
-  title: 'Components/SearchInput/SearchResult',
+  title: 'Components/Inputs/SearchInput/SearchResult',
   component: SearchResult,
   parameters: {
     default: null,

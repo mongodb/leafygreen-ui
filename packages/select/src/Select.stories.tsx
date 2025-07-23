@@ -63,7 +63,7 @@ const childrenArray = [
 ];
 
 const meta: StoryMetaType<typeof Select> = {
-  title: 'Components/Select',
+  title: 'Components/Inputs/Select',
   component: Select,
   decorators: [
     (StoryFn, _ctx) => (

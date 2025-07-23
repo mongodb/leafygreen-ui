@@ -19,7 +19,7 @@ const wrapperStyle = css`
 `;
 
 const meta: StoryMetaType<typeof FormFooter> = {
-  title: 'Components/FormFooter',
+  title: 'Components/Inputs/FormFooter',
   component: FormFooter,
   decorators: [
     StoryFn => (

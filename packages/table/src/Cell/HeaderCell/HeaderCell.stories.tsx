@@ -10,7 +10,7 @@ import TableHead from '../../TableHead';
 import HeaderCell from './HeaderCell';
 
 const meta: StoryMetaType<typeof HeaderCell> = {
-  title: 'Components/Table/Cell/HeaderCell',
+  title: 'Composition/Data Display/Table/Cell/HeaderCell',
   component: HeaderCell,
   parameters: {
     default: null,

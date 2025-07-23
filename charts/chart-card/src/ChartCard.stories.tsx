@@ -6,7 +6,7 @@ import { HeaderProps } from '../Header/Header.types';
 import { ChartCard } from '..';
 
 export default {
-  title: 'Charts/ChartCard',
+  title: 'Composition/Charts/ChartCard',
   component: ChartCard,
   parameters: {
     generate: {

@@ -9,7 +9,7 @@ import { StoryFn } from '@storybook/react';
 import Stepper, { Step, StepperProps } from '.';
 
 const meta: StoryMetaType<typeof Stepper> = {
-  title: 'Components/Stepper',
+  title: 'Composition/Data Display/Stepper',
   component: Stepper,
   parameters: {
     default: 'LiveExample',

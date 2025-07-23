@@ -6,7 +6,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { ComboboxChip } from './ComboboxChip';
 
 const meta: StoryMetaType<typeof ComboboxChip> = {
-  title: 'Components/Combobox/ComboboxChip',
+  title: 'Components/Inputs/Combobox/ComboboxChip',
   component: ComboboxChip,
   parameters: {
     default: null,

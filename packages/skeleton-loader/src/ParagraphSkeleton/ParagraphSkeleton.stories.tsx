@@ -4,7 +4,7 @@ import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { ParagraphSkeleton } from './ParagraphSkeleton';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Composition/Loading/SkeletonLoader',
   component: ParagraphSkeleton,
   parameters: {
     controls: { exclude: ['darkMode', 'ref'] },

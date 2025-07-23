@@ -14,7 +14,7 @@ import Checkbox, { CheckboxProps } from '.';
 const descriptionText = `This is a description for the checkbox`;
 
 const meta: StoryMetaType<typeof Checkbox> = {
-  title: 'Components/Checkbox',
+  title: 'Components/Inputs/Checkbox',
   component: Checkbox,
   parameters: {
     default: 'LiveExample',

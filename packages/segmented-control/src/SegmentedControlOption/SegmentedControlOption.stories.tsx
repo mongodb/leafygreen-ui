@@ -10,7 +10,7 @@ import { SegmentedControlContext } from '../SegmentedControlContext';
 import { SegmentedControlOption } from './SegmentedControlOption';
 
 const meta: StoryMetaType<typeof SegmentedControlOption, { size: Size }> = {
-  title: 'Components/SegmentedControl/SegmentedControlOption',
+  title: 'Components/Display/SegmentedControl/SegmentedControlOption',
   component: SegmentedControlOption,
   parameters: {
     default: 'LiveExample',

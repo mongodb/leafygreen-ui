@@ -84,7 +84,7 @@ const shortJsSnippet = `
 `;
 
 const meta: StoryMetaType<typeof Code> = {
-  title: 'Components/Code',
+  title: 'Components/Display/Code',
   component: Code,
   parameters: {
     default: 'LiveExample',

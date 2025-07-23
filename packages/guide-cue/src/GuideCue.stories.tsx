@@ -17,7 +17,7 @@ import { GuideCue, GuideCueProps, TooltipAlign, TooltipJustify } from '.';
 
 // TODO: Fix component type
 const meta: StoryMetaType<any> = {
-  title: 'Components/GuideCue',
+  title: 'Composition/Overlays/GuideCue',
   component: GuideCue,
   decorators: [
     StoryFn => (

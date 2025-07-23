@@ -20,7 +20,7 @@ interface LiveExampleProps {
 }
 
 const meta: StoryMetaType<typeof SegmentedControl> = {
-  title: 'Components/SegmentedControl',
+  title: 'Components/Display/SegmentedControl',
   component: SegmentedControl,
   parameters: {
     default: 'LiveExample',

@@ -6,7 +6,7 @@ import Spinner from './Spinner';
 import { DisplayOption } from './Spinner.types';
 
 const meta: StoryMetaType<typeof Spinner> = {
-  title: 'Components/LoadingIndicator/Spinner',
+  title: 'Composition/Loading/LoadingIndicator/Spinner',
   component: Spinner,
   argTypes: {
     description: { control: 'text' },

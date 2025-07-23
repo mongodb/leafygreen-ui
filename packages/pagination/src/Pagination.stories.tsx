@@ -12,7 +12,7 @@ import Pagination, { PaginationProps } from '.';
 const fn = () => {};
 
 const meta: StoryMetaType<typeof Pagination> = {
-  title: 'Components/Pagination',
+  title: 'Composition/Data Display/Pagination',
   component: Pagination,
   decorators: [
     Story => (
