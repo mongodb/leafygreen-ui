@@ -1,0 +1,57 @@
+{/*lib.stories.mdx */}
+import { Meta } from '@storybook/addon-docs';
+import createUniqueClassName from '.';
+
+<Meta title="Lib Utilities/createUniqueClassName" component={<></>} />
+
+## createUniqueClassName
+
+`createUniqueClassName` creates a string intended to be used as a pseudo-unique className. 
+It returns a randomized 8-letter string prefixed by `lg-ui`, followed by a custom second prefix defined by the `prefix` parameter.
+
+For example, `createUniqueClassName()` returns: 
+<code>{createUniqueClassName()}</code>
+
+With prefix `ComponentName`, `createUniqueClassName('ComponentName')` returns: 
+<code>{createUniqueClassName('ComponentName')}</code>
+
+#### Why does this exist?
+
+Emotion no longer supports using the return value from `css` as a selector within other styles, which limits the ability to use things like well-scoped sibling and child selectors. The original use of selectors generated outside of emotion to workaround this limitation was actually given to us by the maintainers of Emotion themselves, as they know this is a limitation of the library.
+Traditionally we’ve used statically-named `data-` attributes to use within emotion css declarations. The intent here is to move to more performant selectors (though admittedly, that was a marginal consideration here, as are the performance benefits) that are less prone to accidental duplication.
+
+#### How it should be used
+
+```
+  import { createUniqueClassName } from '@leafygreen-ui/lib';
+
+  const checkClassName = createUniqueClassName();
+  const inputClassName = createUniqueClassName();
+
+  ...
+
+  const labelHoverStyle = css`
+    &:hover:not(:focus-within)
+      > .${inputClassName}:not([disabled])
+        + .${checkClassName} {
+      box-shadow: 0 0 0 3px ${palette.gray.light2};
+    }
+  `;
+
+  ...
+
+  return (
+    ...
+    <input
+      className={cx(inputClassName, className)}
+    />
+  );
+
+```
+
+
+The above component's render function will result in the following HTML:
+
+```
+<input class="lg-ui-31ed9431" />
+```

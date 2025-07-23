@@ -1,0 +1,57 @@
+# Locally-installed dependencies
+node_modules/
+
+# Lerna debug log
+lerna-debug.log
+
+# Dist files
+dist/
+tmp/
+*.tgz
+storybook-static
+
+# Cache directories
+.cache/
+
+# JUnit report files
+reports
+
+# OS generated files
+.DS_Store
+.DS_Store?
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# TypeScript type-checking artifact
+tsconfig.tsbuildinfo
+ts-trace/
+
+# Environment variables
+.env
+
+# test coverage 
+coverage/
+
+# Exported TSDocs example files
+parsed-docs.json
+**/tsdoc.json
+
+# Compiled story files
+**/stories.js*
+
+# Storybook/Chromatic logs
+build-storybook.log
+doctor-storybook.log
+
+.turbo
+scripts/tmp.*
+
+# 
+.changeset/pre.json
+
+TODO.md
+
+# PR train config (https://github.com/realyze/pr-train)
+.pr-train.yml
+migration-storybook.log

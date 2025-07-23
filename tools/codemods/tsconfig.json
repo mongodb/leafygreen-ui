@@ -1,0 +1,20 @@
+{
+  "extends": "@lg-tools/build/config/node.tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@lg-tools/*": [
+        "../*/src"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.input.*",
+    "**/*.output.*",
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
+  "references": []
+}

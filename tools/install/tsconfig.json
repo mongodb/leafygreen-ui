@@ -1,0 +1,21 @@
+{
+  "extends": "@lg-tools/build/config/node.tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@lg-tools/*": [
+        "../*/src"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../build"
+    },
+    {
+      "path": "../meta"
+    }
+  ]
+}

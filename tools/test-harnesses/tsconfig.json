@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {},
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"]
+}

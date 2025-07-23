@@ -1,0 +1,38 @@
+{
+  "name": "@leafygreen-ui/ordered-list",
+  "version": "3.0.3",
+  "description": "LeafyGreen UI Kit Ordered List",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/descendants": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/ordered-list",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

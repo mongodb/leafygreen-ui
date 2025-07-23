@@ -1,0 +1,16 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "noErrorTruncation": false,
+    "noUnusedLocals": false
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": ["src/Example/*", "**/*.stories.*"],
+  "references": [
+    {
+      "path": "../lib"
+    }
+  ]
+}

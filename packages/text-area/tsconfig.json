@@ -1,0 +1,43 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": [
+        "../icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../*/src"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
+  "references": [
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../form-field"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../leafygreen-provider"
+    }
+  ]
+}

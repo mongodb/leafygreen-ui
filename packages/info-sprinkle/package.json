@@ -1,0 +1,39 @@
+{
+  "name": "@leafygreen-ui/info-sprinkle",
+  "version": "5.0.3",
+  "description": "LeafyGreen UI Kit Info Sprinkle",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/info-sprinkle",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  }
+}

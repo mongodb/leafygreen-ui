@@ -1,0 +1,23 @@
+{
+  "name": "@lg-tools/create",
+  "version": "0.4.0",
+  "description": "Creates a new LeafyGreen packages",
+  "main": "./dist/umd/index.js",
+  "module": "dist/esm/index.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/meta": "workspace:^",
+    "@types/fs-extra": "11.0.1",
+    "chalk": "4.1.2",
+    "fs-extra": "11.1.1",
+    "lodash": "4.17.21"
+  }
+}

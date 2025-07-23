@@ -1,0 +1,42 @@
+{/*lib.stories.mdx */}
+import { Meta } from '@storybook/addon-docs';
+import getNodeTextContent from '.';
+
+<Meta title="Lib Utilities/getNodeTextContent" component={<></>} />
+
+## getNodeTextContent
+
+`getNodeTextContent` returns the text contents if its `children` node. If there are multiple nodes passed in its `children`, it will recursively retrieve the text content of all nodes, and return a string of all text content separated by spaces. 
+
+It is mainly used in conjunction with CSS pseudo-elements to ensure that components with `active` props don't change in width when their content's style props like font-weight change.
+
+
+#### How it should be used
+
+```
+  import { getNodeTextContent } from '@leafygreen-ui/lib';
+
+  export const titleTextStyle = css`
+  
+    #test-div {
+      font-weight: 600;
+
+      &.active {
+        font-weight: 700;
+      }
+
+      &:after {
+        content: attr(data-text);
+        visibility: hidden;
+        font-weight: 700;
+      }
+    }
+
+  return (
+    <div id="test-div" data-text={getNodeTextContent(children)}>
+      ...
+    </div
+  )
+```
+
+If the above component hadn't used `getNodeTextContent`, the `#test-div` element's width would have changed when the `active` class was applied.

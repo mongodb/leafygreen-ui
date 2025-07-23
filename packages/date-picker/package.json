@@ -1,0 +1,55 @@
+{
+  "name": "@leafygreen-ui/date-picker",
+  "version": "4.0.4",
+  "description": "LeafyGreen UI Kit Date Picker",
+  "license": "Apache-2.0",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/a11y": "workspace:^",
+    "@leafygreen-ui/date-utils": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/form-field": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/popover": "workspace:^",
+    "@leafygreen-ui/select": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
+    "date-fns": "^2.30.0",
+    "lodash": "^4.17.21",
+    "polished": "^4.2.2",
+    "weekstart": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/modal": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "@storybook/test": "^8.6.12",
+    "mockdate": "^3.0.5"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/date-picker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "@leafygreen-ui/button",
+  "version": "25.0.0",
+  "description": "leafyGreen UI Kit Button",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/polymorphic": "workspace:^",
+    "@leafygreen-ui/ripple": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^",
+    "polished": "^4.2.2"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/loading-indicator": "workspace:^",
+    "@lg-tools/build": "workspace:^"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
+  "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/button",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

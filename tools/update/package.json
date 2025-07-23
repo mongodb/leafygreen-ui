@@ -1,0 +1,25 @@
+{
+  "name": "@lg-tools/update",
+  "version": "0.1.18",
+  "description": "Updates all LeafyGreen UI packages to the latest version",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
+  },
+  "dependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/meta": "workspace:^",
+    "@types/cross-spawn": "6.0.2",
+    "@types/fs-extra": "11.0.1",
+    "chalk": "4.1.2",
+    "cross-spawn": "7.0.3",
+    "fs-extra": "11.1.1"
+  }
+}

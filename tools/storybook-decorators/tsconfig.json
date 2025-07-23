@@ -1,0 +1,29 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {},
+  "include": [
+    "src/**/*"
+  ],
+ "exclude": ["**/*.spec.*", "**/*.stories.*"],
+
+ "references": [
+    {
+      "path": "../../packages/banner"
+    },
+    {
+      "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/palette"
+    },
+    {
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../tools/build"
+    },
+    {
+      "path": "../../tools/storybook-utils"
+    },
+  ],
+}

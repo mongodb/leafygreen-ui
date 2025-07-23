@@ -1,0 +1,1 @@
+export { getMobileMediaQuery } from './getMobileMediaQuery';

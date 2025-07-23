@@ -1,0 +1,297 @@
+[
+  {
+    "tags": {},
+    "description": "",
+    "methods": [],
+    "displayName": "ChatTrigger",
+    "props": {
+      "ButtonHTMLAttributes": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button",
+      "DOMAttributes": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+      "HTMLAttributes": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+      "DarkModeProps": {
+        "darkMode": {
+          "name": "darkMode",
+          "defaultValue": {
+            "value": "false"
+          },
+          "description": "Renders the component with dark mode styles.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {
+            "default": "false"
+          }
+        }
+      },
+      "AriaAttributes": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes"
+    }
+  },
+  {
+    "tags": {},
+    "description": "",
+    "methods": [],
+    "displayName": "FixedChatWindow",
+    "props": {
+      "DOMAttributes": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+      "HTMLAttributes": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+      "TitleBarProps": {
+        "title": {
+          "name": "title",
+          "defaultValue": null,
+          "description": "Title text",
+          "required": true,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "onClose": {
+          "name": "onClose",
+          "defaultValue": null,
+          "description": "Event handler called when the close button is clicked\nEvent handler for the close button in the title bar. Only necessary when controlled.",
+          "required": false,
+          "type": {
+            "name": "MouseEventHandler<HTMLAnchorElement | HTMLButtonElement> & MouseEventHandler<HTMLButtonElement>"
+          },
+          "tags": {}
+        },
+        "align": {
+          "name": "align",
+          "defaultValue": {
+            "value": "Align.Left"
+          },
+          "description": "Alignment of the title text and badge",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "Align",
+            "value": [
+              {
+                "value": "\"center\""
+              },
+              {
+                "value": "\"left\""
+              }
+            ]
+          },
+          "tags": {
+            "default": "Align.Left"
+          }
+        },
+        "badgeText": {
+          "name": "badgeText",
+          "defaultValue": null,
+          "description": "Badge text rendered to indicate 'Beta' or 'Experimental' flags",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "iconSlot": {
+          "name": "iconSlot",
+          "defaultValue": null,
+          "description": "Slot for custom close icon",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "ReactNode",
+            "value": [
+              {
+                "value": "string"
+              },
+              {
+                "value": "number"
+              },
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              },
+              {
+                "value": "ReactElement<any, string | JSXElementConstructor<any>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "Iterable<ReactNode>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "ReactPortal",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {}
+        }
+      },
+      "DarkModeProps": {
+        "darkMode": {
+          "name": "darkMode",
+          "defaultValue": {
+            "value": "false\nfalse"
+          },
+          "description": "Renders the component with dark mode styles.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {
+            "default": "false\nfalse"
+          }
+        }
+      },
+      "AriaAttributes": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes",
+      "FixedChatWindowProps": {
+        "open": {
+          "name": "open",
+          "defaultValue": null,
+          "description": "Control the open state of the chat window. If no value is provided here, the component will function with default toggling behavior.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "defaultOpen": {
+          "name": "defaultOpen",
+          "defaultValue": {
+            "value": false
+          },
+          "description": "Define whether the chat window should be open by default when uncontrolled",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "trigger": {
+          "name": "trigger",
+          "defaultValue": null,
+          "description": "Override the default ChatTrigger component",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "ReactNode",
+            "value": [
+              {
+                "value": "string"
+              },
+              {
+                "value": "number"
+              },
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              },
+              {
+                "value": "ReactElement<any, string | JSXElementConstructor<any>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "Iterable<ReactNode>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "ReactPortal",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "triggerText": {
+          "name": "triggerText",
+          "defaultValue": null,
+          "description": "Text inside the ChatTrigger component if no custom trigger is used",
+          "required": true,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "onTriggerClick": {
+          "name": "onTriggerClick",
+          "defaultValue": null,
+          "description": "Event handler for the chat trigger button. Only necessary when controlled.",
+          "required": false,
+          "type": {
+            "name": "MouseEventHandler<HTMLButtonElement>"
+          },
+          "tags": {}
+        },
+        "popoverProps": {
+          "name": "popoverProps",
+          "defaultValue": null,
+          "description": "Props passed to the ChatWindow Popover",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "PopoverProps",
+            "value": [
+              {
+                "value": "{ children: ReactNode | ((Options: ChildrenFunctionParameters) => ReactNode); active?: boolean; className?: string; contentClassName?: string; ... 7 more ...; portalRef?: MutableRefObject<...>; } & { ...; } & TransitionLifecycleCallbacks"
+              },
+              {
+                "value": "{ children: ReactNode | ((Options: ChildrenFunctionParameters) => ReactNode); active?: boolean; className?: string; contentClassName?: string; ... 7 more ...; portalRef?: MutableRefObject<...>; } & { ...; } & TransitionLifecycleCallbacks"
+              }
+            ]
+          },
+          "tags": {}
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,1 @@
+export { getSegmentStateFromRefs } from './getSegmentStateFromRefs';

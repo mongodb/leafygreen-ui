@@ -1,0 +1,877 @@
+[
+  {
+    "tags": {
+      "deprecated": ""
+    },
+    "description": "Storybook 7.x requires a statically defined object as the default export.\n\nUse {@link StoryMetaType} (and {@link baseStoryMeta } as necessary)\n\nExample:\n\n```ts\nconst meta: StoryMetaType<typeof Component> = {\n component: Component,\n ...baseStoryMeta\n}\nexport default meta\n```",
+    "methods": [],
+    "displayName": "StoryMeta",
+    "props": {
+      "ComponentAnnotations": {
+        "title": {
+          "name": "title",
+          "defaultValue": null,
+          "description": "Title of the component which will be presented in the navigation. **Should be unique.**\n\nComponents can be organized in a nested structure using \"/\" as a separator.\n\nSince CSF 3.0 this property is optional -- it can be inferred from the filesystem path",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {
+            "example": "export default {\n  ...\n  title: 'Design System/Atoms/Button'\n}",
+            "see": "[Story Hierarchy](https://storybook.js.org/docs/basics/writing-stories/#story-hierarchy)"
+          }
+        },
+        "id": {
+          "name": "id",
+          "defaultValue": null,
+          "description": "Id of the component (prefix of the story id) which is used for URLs.\n\nBy default is inferred from sanitizing the title",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {
+            "see": "[Story Hierarchy](https://storybook.js.org/docs/basics/writing-stories/#story-hierarchy)"
+          }
+        },
+        "includeStories": {
+          "name": "includeStories",
+          "defaultValue": null,
+          "description": "Used to only include certain named exports as stories. Useful when you want to have non-story exports such as mock data or ignore a few stories.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "StoryDescriptor$1",
+            "value": [
+              {
+                "value": "RegExp",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "string[]",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {
+            "example": "includeStories: ['SimpleStory', 'ComplexStory']\nincludeStories: /.*Story$/",
+            "see": "[Non-story exports](https://storybook.js.org/docs/formats/component-story-format/#non-story-exports)"
+          }
+        },
+        "excludeStories": {
+          "name": "excludeStories",
+          "defaultValue": null,
+          "description": "Used to exclude certain named exports. Useful when you want to have non-story exports such as mock data or ignore a few stories.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "StoryDescriptor$1",
+            "value": [
+              {
+                "value": "RegExp",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "string[]",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {
+            "example": "excludeStories: ['simpleData', 'complexData']\nexcludeStories: /.*Data$/",
+            "see": "[Non-story exports](https://storybook.js.org/docs/formats/component-story-format/#non-story-exports)"
+          }
+        },
+        "subcomponents": {
+          "name": "subcomponents",
+          "defaultValue": null,
+          "description": "Auxiliary subcomponents that are part of the stories.\n\nUsed by addons for automatic prop table generation and display of other component metadata.",
+          "required": false,
+          "type": {
+            "name": "Record<string, ComponentType<unknown>>"
+          },
+          "tags": {
+            "example": "import { Button, ButtonGroup } from './components';\n\nexport default {\n  ...\n  subcomponents: { Button, ButtonGroup }\n}\n\nBy defining them each component will have its tab in the args table."
+          }
+        },
+        "play": {
+          "name": "play",
+          "defaultValue": null,
+          "description": "Function that is executed after the story is rendered.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "PlayFunction<ReactRenderer, ComponentProps<T>> | PlayFunction<ReactRenderer, T>",
+            "value": [
+              {
+                "value": "PlayFunction<ReactRenderer, ComponentProps<T>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "PlayFunction<ReactRenderer, T>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "tags": {
+          "name": "tags",
+          "defaultValue": null,
+          "description": "Named tags for a story, used to filter stories in different contexts.",
+          "required": false,
+          "type": {
+            "name": "string[]"
+          },
+          "tags": {}
+        }
+      },
+      "StoryMetaProps": {
+        "decorators": {
+          "name": "decorators",
+          "defaultValue": null,
+          "description": "Wrapper components or Storybook decorators that wrap a story.\n\nDecorators defined in Meta will be applied to every story variation.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "DecoratorFunction<ReactRenderer, Simplify<ComponentProps<T>, {}>> | DecoratorFunction<ReactRenderer, Simplify<...>>[] | DecoratorFunction<...> | DecoratorFunction<...>[]",
+            "value": [
+              {
+                "value": "DecoratorFunction<ReactRenderer, Simplify<ComponentProps<T>, {}>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "DecoratorFunction<ReactRenderer, Simplify<ComponentProps<T>, {}>>[]",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "DecoratorFunction<ReactRenderer, Simplify<T, {}>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "DecoratorFunction<ReactRenderer, Simplify<T, {}>>[]",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {
+            "see": "[Decorators](https://storybook.js.org/docs/addons/introduction/#1-decorators)"
+          }
+        },
+        "parameters": {
+          "name": "parameters",
+          "defaultValue": null,
+          "description": "Custom metadata for a story.",
+          "required": false,
+          "type": {
+            "name": "Parameters & { default: string; generate?: GeneratedStoryConfig<T, XP>; controls?: ControlsConfig; chromatic?: ChromaticConfig; }"
+          },
+          "tags": {
+            "see": "[Parameters](https://storybook.js.org/docs/basics/writing-stories/#parameters)"
+          }
+        },
+        "loaders": {
+          "name": "loaders",
+          "defaultValue": null,
+          "description": "Asynchronous functions which provide data for a story.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "LoaderFunction<ReactRenderer, ComponentProps<T>> | LoaderFunction<ReactRenderer, ComponentProps<T>>[] | LoaderFunction<...> | LoaderFunction<...>[]",
+            "value": [
+              {
+                "value": "LoaderFunction<ReactRenderer, ComponentProps<T>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "LoaderFunction<ReactRenderer, ComponentProps<T>>[]",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "LoaderFunction<ReactRenderer, T>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "LoaderFunction<ReactRenderer, T>[]",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {
+            "see": "[Loaders](https://storybook.js.org/docs/react/writing-stories/loaders)"
+          }
+        },
+        "render": {
+          "name": "render",
+          "defaultValue": null,
+          "description": "Define a custom render function for the story(ies). If not passed, a default render function by the renderer will be used.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "ArgsStoryFn<ReactRenderer, ComponentProps<T>> | ArgsStoryFn<ReactRenderer, T>",
+            "value": [
+              {
+                "value": "ArgsStoryFn<ReactRenderer, ComponentProps<T>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "ArgsStoryFn<ReactRenderer, T>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "component": {
+          "name": "component",
+          "defaultValue": null,
+          "description": "",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "ElementType<any>",
+            "value": [
+              {
+                "value": "\"symbol\""
+              },
+              {
+                "value": "\"object\""
+              },
+              {
+                "value": "\"a\""
+              },
+              {
+                "value": "\"abbr\""
+              },
+              {
+                "value": "\"address\""
+              },
+              {
+                "value": "\"area\""
+              },
+              {
+                "value": "\"article\""
+              },
+              {
+                "value": "\"aside\""
+              },
+              {
+                "value": "\"audio\""
+              },
+              {
+                "value": "\"b\""
+              },
+              {
+                "value": "\"base\""
+              },
+              {
+                "value": "\"bdi\""
+              },
+              {
+                "value": "\"bdo\""
+              },
+              {
+                "value": "\"big\""
+              },
+              {
+                "value": "\"blockquote\""
+              },
+              {
+                "value": "\"body\""
+              },
+              {
+                "value": "\"br\""
+              },
+              {
+                "value": "\"button\""
+              },
+              {
+                "value": "\"canvas\""
+              },
+              {
+                "value": "\"caption\""
+              },
+              {
+                "value": "\"center\""
+              },
+              {
+                "value": "\"cite\""
+              },
+              {
+                "value": "\"code\""
+              },
+              {
+                "value": "\"col\""
+              },
+              {
+                "value": "\"colgroup\""
+              },
+              {
+                "value": "\"data\""
+              },
+              {
+                "value": "\"datalist\""
+              },
+              {
+                "value": "\"dd\""
+              },
+              {
+                "value": "\"del\""
+              },
+              {
+                "value": "\"details\""
+              },
+              {
+                "value": "\"dfn\""
+              },
+              {
+                "value": "\"dialog\""
+              },
+              {
+                "value": "\"div\""
+              },
+              {
+                "value": "\"dl\""
+              },
+              {
+                "value": "\"dt\""
+              },
+              {
+                "value": "\"em\""
+              },
+              {
+                "value": "\"embed\""
+              },
+              {
+                "value": "\"fieldset\""
+              },
+              {
+                "value": "\"figcaption\""
+              },
+              {
+                "value": "\"figure\""
+              },
+              {
+                "value": "\"footer\""
+              },
+              {
+                "value": "\"form\""
+              },
+              {
+                "value": "\"h1\""
+              },
+              {
+                "value": "\"h2\""
+              },
+              {
+                "value": "\"h3\""
+              },
+              {
+                "value": "\"h4\""
+              },
+              {
+                "value": "\"h5\""
+              },
+              {
+                "value": "\"h6\""
+              },
+              {
+                "value": "\"head\""
+              },
+              {
+                "value": "\"header\""
+              },
+              {
+                "value": "\"hgroup\""
+              },
+              {
+                "value": "\"hr\""
+              },
+              {
+                "value": "\"html\""
+              },
+              {
+                "value": "\"i\""
+              },
+              {
+                "value": "\"iframe\""
+              },
+              {
+                "value": "\"img\""
+              },
+              {
+                "value": "\"input\""
+              },
+              {
+                "value": "\"ins\""
+              },
+              {
+                "value": "\"kbd\""
+              },
+              {
+                "value": "\"keygen\""
+              },
+              {
+                "value": "\"label\""
+              },
+              {
+                "value": "\"legend\""
+              },
+              {
+                "value": "\"li\""
+              },
+              {
+                "value": "\"link\""
+              },
+              {
+                "value": "\"main\""
+              },
+              {
+                "value": "\"map\""
+              },
+              {
+                "value": "\"mark\""
+              },
+              {
+                "value": "\"menu\""
+              },
+              {
+                "value": "\"menuitem\""
+              },
+              {
+                "value": "\"meta\""
+              },
+              {
+                "value": "\"meter\""
+              },
+              {
+                "value": "\"nav\""
+              },
+              {
+                "value": "\"noindex\""
+              },
+              {
+                "value": "\"noscript\""
+              },
+              {
+                "value": "\"ol\""
+              },
+              {
+                "value": "\"optgroup\""
+              },
+              {
+                "value": "\"option\""
+              },
+              {
+                "value": "\"output\""
+              },
+              {
+                "value": "\"p\""
+              },
+              {
+                "value": "\"param\""
+              },
+              {
+                "value": "\"picture\""
+              },
+              {
+                "value": "\"pre\""
+              },
+              {
+                "value": "\"progress\""
+              },
+              {
+                "value": "\"q\""
+              },
+              {
+                "value": "\"rp\""
+              },
+              {
+                "value": "\"rt\""
+              },
+              {
+                "value": "\"ruby\""
+              },
+              {
+                "value": "\"s\""
+              },
+              {
+                "value": "\"samp\""
+              },
+              {
+                "value": "\"search\""
+              },
+              {
+                "value": "\"slot\""
+              },
+              {
+                "value": "\"script\""
+              },
+              {
+                "value": "\"section\""
+              },
+              {
+                "value": "\"select\""
+              },
+              {
+                "value": "\"small\""
+              },
+              {
+                "value": "\"source\""
+              },
+              {
+                "value": "\"span\""
+              },
+              {
+                "value": "\"strong\""
+              },
+              {
+                "value": "\"style\""
+              },
+              {
+                "value": "\"sub\""
+              },
+              {
+                "value": "\"summary\""
+              },
+              {
+                "value": "\"sup\""
+              },
+              {
+                "value": "\"table\""
+              },
+              {
+                "value": "\"template\""
+              },
+              {
+                "value": "\"tbody\""
+              },
+              {
+                "value": "\"td\""
+              },
+              {
+                "value": "\"textarea\""
+              },
+              {
+                "value": "\"tfoot\""
+              },
+              {
+                "value": "\"th\""
+              },
+              {
+                "value": "\"thead\""
+              },
+              {
+                "value": "\"time\""
+              },
+              {
+                "value": "\"title\""
+              },
+              {
+                "value": "\"tr\""
+              },
+              {
+                "value": "\"track\""
+              },
+              {
+                "value": "\"u\""
+              },
+              {
+                "value": "\"ul\""
+              },
+              {
+                "value": "\"var\""
+              },
+              {
+                "value": "\"video\""
+              },
+              {
+                "value": "\"wbr\""
+              },
+              {
+                "value": "\"webview\""
+              },
+              {
+                "value": "\"svg\""
+              },
+              {
+                "value": "\"animate\""
+              },
+              {
+                "value": "\"animateMotion\""
+              },
+              {
+                "value": "\"animateTransform\""
+              },
+              {
+                "value": "\"circle\""
+              },
+              {
+                "value": "\"clipPath\""
+              },
+              {
+                "value": "\"defs\""
+              },
+              {
+                "value": "\"desc\""
+              },
+              {
+                "value": "\"ellipse\""
+              },
+              {
+                "value": "\"feBlend\""
+              },
+              {
+                "value": "\"feColorMatrix\""
+              },
+              {
+                "value": "\"feComponentTransfer\""
+              },
+              {
+                "value": "\"feComposite\""
+              },
+              {
+                "value": "\"feConvolveMatrix\""
+              },
+              {
+                "value": "\"feDiffuseLighting\""
+              },
+              {
+                "value": "\"feDisplacementMap\""
+              },
+              {
+                "value": "\"feDistantLight\""
+              },
+              {
+                "value": "\"feDropShadow\""
+              },
+              {
+                "value": "\"feFlood\""
+              },
+              {
+                "value": "\"feFuncA\""
+              },
+              {
+                "value": "\"feFuncB\""
+              },
+              {
+                "value": "\"feFuncG\""
+              },
+              {
+                "value": "\"feFuncR\""
+              },
+              {
+                "value": "\"feGaussianBlur\""
+              },
+              {
+                "value": "\"feImage\""
+              },
+              {
+                "value": "\"feMerge\""
+              },
+              {
+                "value": "\"feMergeNode\""
+              },
+              {
+                "value": "\"feMorphology\""
+              },
+              {
+                "value": "\"feOffset\""
+              },
+              {
+                "value": "\"fePointLight\""
+              },
+              {
+                "value": "\"feSpecularLighting\""
+              },
+              {
+                "value": "\"feSpotLight\""
+              },
+              {
+                "value": "\"feTile\""
+              },
+              {
+                "value": "\"feTurbulence\""
+              },
+              {
+                "value": "\"filter\""
+              },
+              {
+                "value": "\"foreignObject\""
+              },
+              {
+                "value": "\"g\""
+              },
+              {
+                "value": "\"image\""
+              },
+              {
+                "value": "\"line\""
+              },
+              {
+                "value": "\"linearGradient\""
+              },
+              {
+                "value": "\"marker\""
+              },
+              {
+                "value": "\"mask\""
+              },
+              {
+                "value": "\"metadata\""
+              },
+              {
+                "value": "\"mpath\""
+              },
+              {
+                "value": "\"path\""
+              },
+              {
+                "value": "\"pattern\""
+              },
+              {
+                "value": "\"polygon\""
+              },
+              {
+                "value": "\"polyline\""
+              },
+              {
+                "value": "\"radialGradient\""
+              },
+              {
+                "value": "\"rect\""
+              },
+              {
+                "value": "\"stop\""
+              },
+              {
+                "value": "\"switch\""
+              },
+              {
+                "value": "\"text\""
+              },
+              {
+                "value": "\"textPath\""
+              },
+              {
+                "value": "\"tspan\""
+              },
+              {
+                "value": "\"use\""
+              },
+              {
+                "value": "\"view\""
+              },
+              {
+                "value": "ComponentClass<any, any>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "FunctionComponent<any>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "argTypes": {
+          "name": "argTypes",
+          "defaultValue": null,
+          "description": "",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "ArgTypes<T, XP>",
+            "value": [
+              {
+                "value": "Partial<{ darkMode?: StoryArgType; baseFontSize?: StoryArgType; }>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "Partial<{ [key in keyof ComponentProps<T>]: StoryArgType; }>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "Partial<{ [key in keyof XP]: StoryArgType; }>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "args": {
+          "name": "args",
+          "defaultValue": null,
+          "description": "",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "Partial<XP | LeafyGreenProviderProps | ComponentProps<T>>",
+            "value": [
+              {
+                "value": "Partial<XP>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "Partial<LeafyGreenProviderProps>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "Partial<ComponentProps<T>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {}
+        }
+      }
+    }
+  }
+]

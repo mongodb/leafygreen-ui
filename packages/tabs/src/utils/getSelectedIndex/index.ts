@@ -1,0 +1,1 @@
+export { getSelectedIndex } from './getSelectedIndex';

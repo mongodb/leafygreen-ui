@@ -1,0 +1,15 @@
+{
+  "extends": "@lg-tools/build/config/script.tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+  },
+  "references": [
+    {
+      "path": "../../lint"
+    },
+    {
+      "path": "../../meta"
+    }
+  ]
+}

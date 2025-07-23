@@ -1,0 +1,25 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "prebuild": {
+      "dependsOn": ["^prebuild", "^build", "^tsc"]
+    },
+    "build": {
+      "dependsOn": ["^build", "^prebuild", "prebuild"],
+      "inputs": ["$TURBO_DEFAULT$", "!**/*.stories.{tsx,jsx,mdx}"],
+      "outputs": ["dist/**/*.js", "dist/**/*.js.map", "stories.js"]
+    },
+    "tsc": {
+      "dependsOn": ["^tsc", "^prebuild", "prebuild"],
+      "outputs": [
+        "dist/**/*.d.ts",
+        "dist/**/*.d.ts.map",
+        "tsconfig.tsbuildinfo"
+      ]
+    },
+    "docs": {
+      "dependsOn": ["^tsc"],
+      "outputs": ["tsdoc.json"]
+    }
+  }
+}

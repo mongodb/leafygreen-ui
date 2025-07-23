@@ -1,0 +1,1 @@
+export { isEverySegmentValueExplicit } from './isEverySegmentValueExplicit';

@@ -1,0 +1,46 @@
+{
+  "name": "@leafygreen-ui/popover",
+  "version": "14.0.3",
+  "description": "LeafyGreen UI Kit Popover",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@floating-ui/react": "^0.26.28",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/portal": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@types/react-transition-group": "^4.4.5",
+    "lodash": "^4.17.21",
+    "react-transition-group": "^4.4.5"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@lg-tools/build": "workspace:^"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
+  "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

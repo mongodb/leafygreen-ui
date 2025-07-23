@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@lg-tools/build/config/node.tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@lg-tools/*": [
+        "../*/src"
+      ]
+    }
+  },
+  "references": [
+    {
+      "path": "../build"
+    },
+    {
+      "path": "../codemods"
+    },
+    {
+      "path": "../create"
+    },
+    {
+      "path": "../install"
+    },
+    {
+      "path": "../link"
+    },
+    {
+      "path": "../lint"
+    },
+    {
+      "path": "../prompt-kit"
+    },
+    {
+      "path": "../slackbot"
+    },
+    {
+      "path": "../test"
+    },
+    {
+      "path": "../update"
+    },
+    {
+      "path": "../validate"
+    }
+  ],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ]
+}

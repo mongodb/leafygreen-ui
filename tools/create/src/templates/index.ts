@@ -1,0 +1,15 @@
+export { pkgJson } from './component/package.json';
+export { readMe } from './component/readme.md';
+export { componentIndex } from './component/src/Component/component.index.template';
+export { spec } from './component/src/Component/component.spec.template';
+export { styles } from './component/src/Component/component.styles.template';
+export { component } from './component/src/Component/component.template';
+export { types } from './component/src/Component/component.types.template';
+export { index } from './component/src/index.template';
+export { story } from './component/src/story.template';
+export { testingIndex } from './component/src/testing/getTestUtils.index.template';
+export { testingSpec } from './component/src/testing/getTestUtils.spec.template';
+export { testing } from './component/src/testing/getTestUtils.template';
+export { testingTypes } from './component/src/testing/getTestUtils.types.template';
+export { getLgIds } from './component/src/utils/getLgIds.template';
+export { tsConfig } from './component/tsconfig.json';

@@ -1,0 +1,1 @@
+export { isSameUTCMonth } from './isSameUTCMonth';

@@ -1,0 +1,1 @@
+export { createSyntheticEvent } from './createSyntheticEvent';

@@ -1,0 +1,608 @@
+[
+  {
+    "tags": {},
+    "description": "",
+    "methods": [],
+    "displayName": "SubmittedState",
+    "props": {
+      "SubmittedStateProps": {
+        "submittedMessage": {
+          "name": "submittedMessage",
+          "defaultValue": {
+            "value": "'Submitted! Thanks for your feedback.'"
+          },
+          "description": "Message rendered in submitted state",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {
+            "default": "'Submitted! Thanks for your feedback.'"
+          }
+        }
+      }
+    }
+  },
+  {
+    "tags": {},
+    "description": "",
+    "methods": [],
+    "displayName": "InlineMessageFeedback",
+    "props": {
+      "BaseTextAreaProps": {
+        "label": {
+          "name": "label",
+          "defaultValue": null,
+          "description": "Text shown in bold above the input element.\n\nOptional if `aria-labelledby` is provided",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        }
+      },
+      "DarkModeProps": {
+        "darkMode": {
+          "name": "darkMode",
+          "defaultValue": {
+            "value": "false"
+          },
+          "description": "Renders the component with dark mode styles.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {
+            "default": "false"
+          }
+        }
+      },
+      "InlineMessageFeedbackProps": {
+        "cancelButtonText": {
+          "name": "cancelButtonText",
+          "defaultValue": {
+            "value": "Cancel"
+          },
+          "description": "Text displayed inside the cancel Button",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {
+            "default": ": 'Cancel'"
+          }
+        },
+        "onCancel": {
+          "name": "onCancel",
+          "defaultValue": null,
+          "description": "Click event handler for the cancel Button",
+          "required": true,
+          "type": {
+            "name": "MouseEventHandler<HTMLElement>"
+          },
+          "tags": {}
+        },
+        "cancelButtonProps": {
+          "name": "cancelButtonProps",
+          "defaultValue": null,
+          "description": "Override props for the cancel Button",
+          "required": false,
+          "type": {
+            "name": "ButtonProps"
+          },
+          "tags": {}
+        },
+        "submitButtonText": {
+          "name": "submitButtonText",
+          "defaultValue": {
+            "value": "Submit"
+          },
+          "description": "Text displayed inside the submit Button",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {
+            "default": ": 'Submit'"
+          }
+        },
+        "submitButtonProps": {
+          "name": "submitButtonProps",
+          "defaultValue": null,
+          "description": "Override props for the submit Button",
+          "required": false,
+          "type": {
+            "name": "ButtonProps"
+          },
+          "tags": {}
+        },
+        "onSubmit": {
+          "name": "onSubmit",
+          "defaultValue": null,
+          "description": "Event handler called when the form is submitted",
+          "required": false,
+          "type": {
+            "name": "FormEventHandler<HTMLFormElement>"
+          },
+          "tags": {}
+        },
+        "textareaProps": {
+          "name": "textareaProps",
+          "defaultValue": null,
+          "description": "Props passed directly to the textarea",
+          "required": false,
+          "type": {
+            "name": "Omit<TextAreaProps, \"label\">"
+          },
+          "tags": {}
+        },
+        "isSubmitted": {
+          "name": "isSubmitted",
+          "defaultValue": {
+            "value": "false"
+          },
+          "description": "Indicates if the component should render in its submitted state",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {
+            "default": "false"
+          }
+        },
+        "submittedMessage": {
+          "name": "submittedMessage",
+          "defaultValue": {
+            "value": "Submitted! Thanks for your feedback."
+          },
+          "description": "Message rendered in submitted state",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {
+            "default": "'Submitted! Thanks for your feedback.'"
+          }
+        },
+        "onClose": {
+          "name": "onClose",
+          "defaultValue": null,
+          "description": "Event handler called on close button click. Close button will not be rendered when undefined.\n\nThis is mainly for internal use as most instances of InlineMessageFeedback should be closed solely by onCancel.",
+          "required": false,
+          "type": {
+            "name": "MouseEventHandler<HTMLButtonElement>"
+          },
+          "tags": {}
+        }
+      }
+    }
+  },
+  {
+    "tags": {},
+    "description": "",
+    "methods": [],
+    "displayName": "PopoverMessageFeedback",
+    "props": {
+      "DarkModeProps": {
+        "darkMode": {
+          "name": "darkMode",
+          "defaultValue": {
+            "value": "false"
+          },
+          "description": "Renders the component with dark mode styles.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {
+            "default": "false"
+          }
+        }
+      },
+      "BaseTextAreaProps": {
+        "label": {
+          "name": "label",
+          "defaultValue": null,
+          "description": "Text shown in bold above the input element.\n\nOptional if `aria-labelledby` is provided",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        }
+      },
+      "PopoverMessageFeedbackProps": {
+        "onCancel": {
+          "name": "onCancel",
+          "defaultValue": null,
+          "description": "Click event handler for the cancel Button",
+          "required": true,
+          "type": {
+            "name": "MouseEventHandler<HTMLElement>"
+          },
+          "tags": {}
+        },
+        "onSubmit": {
+          "name": "onSubmit",
+          "defaultValue": null,
+          "description": "Event handler called when the form is submitted",
+          "required": false,
+          "type": {
+            "name": "FormEventHandler<HTMLFormElement>"
+          },
+          "tags": {}
+        },
+        "cancelButtonText": {
+          "name": "cancelButtonText",
+          "defaultValue": {
+            "value": ": 'Cancel'"
+          },
+          "description": "Text displayed inside the cancel Button",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {
+            "default": ": 'Cancel'"
+          }
+        },
+        "cancelButtonProps": {
+          "name": "cancelButtonProps",
+          "defaultValue": null,
+          "description": "Override props for the cancel Button",
+          "required": false,
+          "type": {
+            "name": "ButtonProps"
+          },
+          "tags": {}
+        },
+        "submitButtonText": {
+          "name": "submitButtonText",
+          "defaultValue": {
+            "value": ": 'Submit'"
+          },
+          "description": "Text displayed inside the submit Button",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {
+            "default": ": 'Submit'"
+          }
+        },
+        "submitButtonProps": {
+          "name": "submitButtonProps",
+          "defaultValue": null,
+          "description": "Override props for the submit Button",
+          "required": false,
+          "type": {
+            "name": "ButtonProps"
+          },
+          "tags": {}
+        },
+        "onClose": {
+          "name": "onClose",
+          "defaultValue": null,
+          "description": "Event handler called on close button click. Close button will not be rendered when undefined.\n\nThis is mainly for internal use as most instances of InlineMessageFeedback should be closed solely by onCancel.",
+          "required": false,
+          "type": {
+            "name": "MouseEventHandler<HTMLButtonElement>"
+          },
+          "tags": {}
+        },
+        "textareaProps": {
+          "name": "textareaProps",
+          "defaultValue": null,
+          "description": "Props passed directly to the textarea",
+          "required": false,
+          "type": {
+            "name": "Omit<TextAreaProps, \"label\">"
+          },
+          "tags": {}
+        },
+        "className": {
+          "name": "className",
+          "defaultValue": null,
+          "description": "Class name applied to popover container.",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "onClick": {
+          "name": "onClick",
+          "defaultValue": null,
+          "description": "Click event handler passed to the root div element within the portal container.",
+          "required": false,
+          "type": {
+            "name": "MouseEventHandler<Element>"
+          },
+          "tags": {}
+        },
+        "popoverZIndex": {
+          "name": "popoverZIndex",
+          "defaultValue": null,
+          "description": "Number that controls the z-index of the popover element directly.\nNumber that controls the z-index of the popover",
+          "required": false,
+          "type": {
+            "name": "number"
+          },
+          "tags": {}
+        },
+        "portalClassName": {
+          "name": "portalClassName",
+          "defaultValue": null,
+          "description": "When usePortal is `true`, specifies a class name to apply to the root element of the portal.",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "portalContainer": {
+          "name": "portalContainer",
+          "defaultValue": null,
+          "description": "When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.",
+          "required": false,
+          "type": {
+            "name": "HTMLElement"
+          },
+          "tags": {}
+        },
+        "scrollContainer": {
+          "name": "scrollContainer",
+          "defaultValue": null,
+          "description": "When usePortal is `true`, specifies the scrollable element to position relative to.",
+          "required": false,
+          "type": {
+            "name": "HTMLElement"
+          },
+          "tags": {}
+        },
+        "usePortal": {
+          "name": "usePortal",
+          "defaultValue": null,
+          "description": "Specifies that the popover content should be rendered at the end of the DOM,\nrather than in the DOM tree.\n\ndefault: `true`",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "active": {
+          "name": "active",
+          "defaultValue": null,
+          "description": "Determines the active state of the popover component\n\ndefault: `false`",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "contentClassName": {
+          "name": "contentClassName",
+          "defaultValue": null,
+          "description": "Class name applied to the popover content container",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "align": {
+          "name": "align",
+          "defaultValue": null,
+          "description": "Determines the alignment of the popover content relative to the trigger element\n\ndefault: `bottom`",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "Align",
+            "value": [
+              {
+                "value": "\"top\""
+              },
+              {
+                "value": "\"bottom\""
+              },
+              {
+                "value": "\"left\""
+              },
+              {
+                "value": "\"right\""
+              },
+              {
+                "value": "\"center-vertical\""
+              },
+              {
+                "value": "\"center-horizontal\""
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "justify": {
+          "name": "justify",
+          "defaultValue": null,
+          "description": "Determines the justification of the popover content relative to the trigger element\n\ndefault: `start`",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "Justify",
+            "value": [
+              {
+                "value": "\"start\""
+              },
+              {
+                "value": "\"middle\""
+              },
+              {
+                "value": "\"end\""
+              },
+              {
+                "value": "\"fit\""
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "refEl": {
+          "name": "refEl",
+          "defaultValue": null,
+          "description": "A reference to the element against which the popover component will be positioned.",
+          "required": false,
+          "type": {
+            "name": "RefObject<HTMLElement>"
+          },
+          "tags": {}
+        },
+        "spacing": {
+          "name": "spacing",
+          "defaultValue": null,
+          "description": "Specifies the amount of spacing (in pixels) between the trigger element and the Popover content.\n\ndefault: `10`",
+          "required": false,
+          "type": {
+            "name": "number"
+          },
+          "tags": {}
+        },
+        "adjustOnMutation": {
+          "name": "adjustOnMutation",
+          "defaultValue": null,
+          "description": "Should the Popover auto adjust its content when the DOM changes (using MutationObserver).\n\ndefault: false",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "portalRef": {
+          "name": "portalRef",
+          "defaultValue": null,
+          "description": "A ref for the portal element",
+          "required": false,
+          "type": {
+            "name": "MutableRefObject<HTMLElement>"
+          },
+          "tags": {}
+        }
+      },
+      "BaseTransitionProps": {
+        "onEnter": {
+          "name": "onEnter",
+          "defaultValue": null,
+          "description": "Callback fired before the \"entering\" status is applied. An extra\nparameter `isAppearing` is supplied to indicate if the enter stage is\noccurring on the initial mount",
+          "required": false,
+          "type": {
+            "name": "(isAppearing: boolean) => void"
+          },
+          "tags": {}
+        },
+        "onEntering": {
+          "name": "onEntering",
+          "defaultValue": null,
+          "description": "Callback fired after the \"entering\" status is applied. An extra parameter\nisAppearing is supplied to indicate if the enter stage is occurring on\nthe initial mount",
+          "required": false,
+          "type": {
+            "name": "(isAppearing: boolean) => void"
+          },
+          "tags": {}
+        },
+        "onEntered": {
+          "name": "onEntered",
+          "defaultValue": null,
+          "description": "Callback fired after the \"entered\" status is applied. An extra parameter\nisAppearing is supplied to indicate if the enter stage is occurring on\nthe initial mount",
+          "required": false,
+          "type": {
+            "name": "(isAppearing: boolean) => void"
+          },
+          "tags": {}
+        },
+        "onExit": {
+          "name": "onExit",
+          "defaultValue": null,
+          "description": "Callback fired before the \"exiting\" status is applied.",
+          "required": false,
+          "type": {
+            "name": "() => void"
+          },
+          "tags": {}
+        },
+        "onExiting": {
+          "name": "onExiting",
+          "defaultValue": null,
+          "description": "Callback fired after the \"exiting\" status is applied.",
+          "required": false,
+          "type": {
+            "name": "() => void"
+          },
+          "tags": {}
+        },
+        "onExited": {
+          "name": "onExited",
+          "defaultValue": null,
+          "description": "Callback fired after the \"exited\" status is applied.",
+          "required": false,
+          "type": {
+            "name": "() => void"
+          },
+          "tags": {}
+        }
+      }
+    }
+  }
+]

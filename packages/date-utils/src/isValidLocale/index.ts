@@ -1,0 +1,1 @@
+export { isValidLocale } from './isValidLocale';
