@@ -12,7 +12,7 @@ import TextArea, { State, TextAreaProps } from '.';
 type LGProviderBaseFontSize = 14 | 16;
 
 const meta: StoryMetaType<typeof TextArea> = {
-  title: 'Components/TextArea',
+  title: 'Components/Inputs/TextArea',
   component: TextArea,
   parameters: {
     default: 'LiveExample',

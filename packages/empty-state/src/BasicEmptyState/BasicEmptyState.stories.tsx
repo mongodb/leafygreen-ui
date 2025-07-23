@@ -19,7 +19,7 @@ import LightModeSmallGraphic from '../example-graphics/LightModeSmallGraphic.svg
 import { BasicEmptyState, BasicEmptyStateProps } from '.';
 
 const meta: StoryMetaType<typeof BasicEmptyState> = {
-  title: 'Components/EmptyState/Basic',
+  title: 'Sections/EmptyState/Basic',
   component: BasicEmptyState,
   args: {
     title: 'Triggers have no dependencies yet',

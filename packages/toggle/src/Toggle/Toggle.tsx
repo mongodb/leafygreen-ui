@@ -21,6 +21,9 @@ import {
 } from './styles';
 import { Size, ToggleProps } from './types';
 
+/**
+ * A Toggle component is used to switch between two binary states, like on and off, and will take an immediate effect when selected.
+ */
 function Toggle({
   className,
   size = Size.Default,

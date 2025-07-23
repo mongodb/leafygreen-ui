@@ -60,7 +60,7 @@ const DemoCard = ({
 };
 
 const meta: StoryMetaType<any> = {
-  title: 'Components/Tokens',
+  title: 'Internal/Tokens',
   component: null,
   parameters: { default: 'Spacing' },
 };

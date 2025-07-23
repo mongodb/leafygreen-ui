@@ -34,7 +34,7 @@ const toolbarExcludedControls = [
 ];
 
 export default {
-  title: 'Components/Drawer/Toolbar',
+  title: 'Sections/Drawer/Toolbar',
   component: Drawer,
   decorators: [
     StoryFn => (

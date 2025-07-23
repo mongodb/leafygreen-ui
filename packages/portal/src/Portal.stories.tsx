@@ -27,7 +27,7 @@ function getRoot() {
 }
 
 const meta: StoryMetaType<typeof Portal> = {
-  title: 'Components/Portal',
+  title: 'Internal/Portal',
   component: Portal,
   args: {
     container: getRoot(),

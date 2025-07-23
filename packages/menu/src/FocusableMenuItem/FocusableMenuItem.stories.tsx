@@ -11,7 +11,7 @@ import { MenuItem } from '../MenuItem';
 import { FocusableMenuItem } from './FocusableMenuItem';
 
 export default {
-  title: 'Components/Menu/FocusableMenuItem',
+  title: 'Components/Actions/Menu/FocusableMenuItem',
   component: FocusableMenuItem,
   parameters: {
     default: null,

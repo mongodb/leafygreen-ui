@@ -22,7 +22,7 @@ type FormFieldStoryProps = FormFieldProps &
   FormFieldInputContainerProps & { glyph: string };
 
 const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
-  title: 'Components/FormField',
+  title: 'Internal/FormField',
   component: FormField,
   parameters: {
     default: 'LiveExample',

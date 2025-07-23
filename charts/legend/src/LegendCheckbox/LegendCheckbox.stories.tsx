@@ -27,7 +27,7 @@ const renderLabel = () => (
 );
 
 export default {
-  title: 'Charts/Legend/LegendCheckbox',
+  title: 'Composition/Charts/Legend/LegendCheckbox',
   component: LegendCheckbox,
   parameters: {
     default: 'LiveExample',

@@ -165,7 +165,7 @@ function LiveExampleComponent() {
  * STORIES
  */
 export default {
-  title: 'Charts/DragProvider',
+  title: 'Composition/Charts/DragProvider',
   component: DragProvider,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,

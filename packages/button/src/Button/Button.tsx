@@ -16,7 +16,7 @@ import { BaseButtonProps, Size, Variant } from '../types';
 import { getClassName } from './Button.styles';
 
 /**
- * Buttons allow users to take actions, and make choices, with a single tap.
+ * Buttons allow users to take actions, and make choices, with a single tap. Buttons are a type of call to action (CTA) the user can click or press.
  */
 export const Button = InferredPolymorphic<BaseButtonProps, 'button'>(
   (

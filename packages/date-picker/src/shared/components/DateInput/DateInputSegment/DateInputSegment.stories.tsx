@@ -25,7 +25,7 @@ const meta: StoryMetaType<
   typeof DateInputSegment,
   SharedDatePickerContextProps
 > = {
-  title: 'Components/DatePicker/Shared/DateInputSegment',
+  title: 'Components/Inputs/DatePicker/Shared/DateInputSegment',
   component: DateInputSegment,
   parameters: {
     default: null,

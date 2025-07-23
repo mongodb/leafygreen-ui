@@ -16,7 +16,7 @@ import { SearchResultsMenu } from '.';
 const demoChild = <SearchResult>Search Result</SearchResult>;
 
 const meta: StoryMetaType<typeof SearchResultsMenu, { state: State }> = {
-  title: 'Components/SearchInput/SearchResultsMenu',
+  title: 'Components/Inputs/SearchInput/SearchResultsMenu',
   component: SearchResultsMenu,
   parameters: {
     default: null,

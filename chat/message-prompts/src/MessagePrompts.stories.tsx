@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import { MessagePrompt, MessagePrompts } from '.';
 
 export default {
-  title: 'Chat/MessagePrompts',
+  title: 'Composition/Chat/MessagePrompts',
   component: MessagePrompts,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,

@@ -24,7 +24,7 @@ const defaultExcludedControls = [
 ];
 
 const meta: StoryMetaType<typeof PreviewCard> = {
-  title: 'Components/PreviewCard',
+  title: 'Sections/Cards/PreviewCard',
   component: PreviewCard,
   parameters: {
     default: 'LiveExample',

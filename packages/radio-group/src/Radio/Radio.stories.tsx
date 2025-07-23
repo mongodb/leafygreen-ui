@@ -6,7 +6,7 @@ import { Size } from '../types';
 import Radio from './Radio';
 
 const meta: StoryMetaType<typeof Radio> = {
-  title: 'Components/RadioGroup/Radio',
+  title: 'Components/Inputs/RadioGroup/Radio',
   component: Radio,
   parameters: {
     default: null,

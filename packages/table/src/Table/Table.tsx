@@ -19,6 +19,9 @@ import {
 import { TableProps, VerticalAlignment } from './Table.types';
 
 // Inferred generic type from component gets used in place of `any`
+/**
+ * A table is a structured set of data that is organized into rows and columns. It is used to present information in a concise and organized way, allowing users to easily compare and analyze data.
+ */
 const Table = forwardRef<HTMLDivElement, TableProps<any>>(
   <T extends LGRowData>(
     {

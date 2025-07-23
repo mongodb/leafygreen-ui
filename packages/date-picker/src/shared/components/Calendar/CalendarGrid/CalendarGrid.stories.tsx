@@ -33,7 +33,7 @@ const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
 );
 
 const meta: StoryMetaType<typeof CalendarGrid, SharedDatePickerContextProps> = {
-  title: 'Components/DatePicker/Shared/CalendarGrid',
+  title: 'Components/Inputs/DatePicker/Shared/CalendarGrid',
   component: CalendarGrid,
   parameters: {
     default: 'Demo',

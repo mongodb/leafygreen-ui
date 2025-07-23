@@ -8,6 +8,9 @@ import Tooltip, { RenderMode } from '@leafygreen-ui/tooltip';
 import { iconBaseStyles, iconThemeStyles } from './InfoSprinkle.styles';
 import { InfoSprinkleProps } from './InfoSprinkle.types';
 
+/**
+ * Info Sprinkles are used to provide additional information or context to users through the use of an Info Icon and a Tooltip. Info Sprinkles will surface a Tooltip to appear, similarly to our Inline Definition and GuideCue components.
+ */
 export const InfoSprinkle = React.forwardRef<
   HTMLButtonElement,
   InfoSprinkleProps

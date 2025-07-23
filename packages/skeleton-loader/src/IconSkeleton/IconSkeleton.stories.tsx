@@ -6,7 +6,7 @@ import { Size } from '@leafygreen-ui/icon';
 import { IconSkeleton } from '.';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Composition/Loading/SkeletonLoader',
   component: IconSkeleton,
   parameters: {
     default: null,

@@ -20,7 +20,7 @@ const { getAlign, getJustify } = TestUtils;
 import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
 
 const meta: StoryMetaType<typeof SplitButton> = {
-  title: 'Components/SplitButton',
+  title: 'Components/Actions/SplitButton',
   component: SplitButton,
 
   parameters: {

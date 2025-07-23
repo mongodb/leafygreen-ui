@@ -15,6 +15,9 @@ import TooltipContent from '../TooltipContent';
 import { beaconStyles, timeout1, timeout2 } from './GuideCue.styles';
 import { GuideCueProps, TooltipAlign, TooltipJustify } from './GuideCue.types';
 
+/**
+ * Guide Cues are used to onboard new users or introduce new features to customers.
+ */
 function GuideCue({
   open,
   setOpen,

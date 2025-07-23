@@ -8,6 +8,9 @@ import { getAvatarStyles } from './Avatar.styles';
 import { AvatarProps } from './Avatar.types';
 import { AvatarContents } from './AvatarContents';
 
+/**
+ * The Avatar component is a user interface element that represents an individual user or entity within a digital platform or application. Avatars serve as visual identifiers, often depicting a user's profile picture or a symbolic representation, such as initials or an Icon. The primary purpose of Avatars is to provide a visual cue about the identity of the associated user or entity.
+ */
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
   (props, fwdRef) => {
     const {

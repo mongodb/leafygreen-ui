@@ -26,6 +26,9 @@ import {
   MarketingModalProps,
 } from './MarketingModal.types';
 
+/**
+ * Modals can be used to display a simple task, to confirm actions, prompt users to input information, or display additional information.
+ */
 const MarketingModal = ({
   children,
   title,
