@@ -509,7 +509,10 @@ describe('chat/suggestions', () => {
       expect(
         screen.getByText('AWS / N. Virginia (us-east-1)'),
       ).toBeInTheDocument();
-      expect(screen.getByText('Different Key')).toBeInTheDocument();
+
+      // "Different Key" appears in both table and banner, so use getAllByText
+      const differentKeyElements = screen.getAllByText('Different Key');
+      expect(differentKeyElements).toHaveLength(2); // One in table, one in banner
 
       // Banner should show only success parameters
       const listItems = screen.getAllByRole('listitem');
