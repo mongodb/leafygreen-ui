@@ -34,6 +34,9 @@
       "path": "../../packages/emotion"
     },
     {
+      "path": "../../packages/hooks"
+    },
+    {
       "path": "../../packages/lib"
     },
     {
