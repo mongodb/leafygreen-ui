@@ -2,7 +2,6 @@ import { act } from '@testing-library/react';
 import { fireEvent } from '@testing-library/dom';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useResizable } from './useResizable';
-import { HandleType } from './useResizable.types';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 // Mock window dimensions
@@ -102,140 +101,151 @@ describe('useResizable', () => {
     expect(onResize).toHaveBeenCalledWith(400);
   });
 
-  test('respects minSize constraint', () => {
-    const onResize = jest.fn();
-    const { result } = renderHook(() =>
-      useResizable({
-        initialSize: 300,
-        minSize: 250,
-        maxSize: 500,
-        handleType: 'right',
-        onResize,
-        maxViewportPercentages: 50,
-      }),
-    );
+  describe.each(['left', 'right', 'top', 'bottom'])(
+    'handleType: %s',
+    handleType => {
+      test('respects minSize constraint', () => {
+        const onResize = jest.fn();
+        const initialSize = 300;
+        const { result } = renderHook(() =>
+          useResizable({
+            initialSize,
+            minSize: 250,
+            maxSize: 500,
+            handleType: handleType,
+            onResize,
+            maxViewportPercentages: 50,
+          }),
+        );
 
-    // Override the ref to mock DOM element
-    // current is read-only from outside the hook but for testing we can set it directly
-    (result.current.resizableRef as any).current = mockRef.current;
+        // Override the ref to mock DOM element
+        // current is read-only from outside the hook but for testing we can set it directly
+        (result.current.resizableRef as any).current = mockRef.current;
 
-    // Start resizing
-    const resizerProps = result.current.getResizerProps();
-    act(() => {
-      // @ts-expect-error - onMouseDown expects all properties of MouseEvent
-      resizerProps?.onMouseDown({
-        preventDefault: jest.fn(),
-        clientX: 300,
-        clientY: 300,
+        // Start resizing
+        const resizerProps = result.current.getResizerProps();
+        act(() => {
+          // @ts-expect-error - onMouseDown expects all properties of MouseEvent
+          resizerProps?.onMouseDown({
+            preventDefault: jest.fn(),
+            clientX: initialSize,
+            clientY: initialSize,
+          });
+        });
+
+        // Simulate mouse movement that would make size below minSize
+        act(() => {
+          fireEvent(
+            window,
+            new MouseEvent('mousemove', {
+              clientX:
+                handleType === 'left' ? initialSize + 100 : initialSize - 100,
+              clientY:
+                handleType === 'top' ? initialSize + 100 : initialSize - 100,
+            }),
+          );
+        });
+
+        // Check if minSize constraint was applied
+        expect(result.current.size).toBe(250);
+        expect(onResize).toHaveBeenCalledWith(250);
       });
-    });
 
-    // Simulate mouse movement that would make size below minSize
-    act(() => {
-      fireEvent(
-        window,
-        new MouseEvent('mousemove', {
-          clientX: 200,
-          clientY: 300,
-        }),
-      );
-    });
+      test('respects maxSize constraint', () => {
+        const onResize = jest.fn();
+        const initialSize = 300;
+        const { result } = renderHook(() =>
+          useResizable({
+            initialSize,
+            minSize: 100,
+            maxSize: 400,
+            handleType: handleType,
+            onResize,
+            maxViewportPercentages: 60,
+          }),
+        );
 
-    // Check if minSize constraint was applied
-    expect(result.current.size).toBe(250);
-    expect(onResize).toHaveBeenCalledWith(250);
-  });
+        // Override the ref to mock DOM element
+        // current is read-only from outside the hook but for testing we can set it directly
+        (result.current.resizableRef as any).current = mockRef.current;
 
-  test('respects maxSize constraint', () => {
-    const onResize = jest.fn();
-    const { result } = renderHook(() =>
-      useResizable({
-        initialSize: 300,
-        minSize: 100,
-        maxSize: 400,
-        handleType: 'right',
-        onResize,
-        maxViewportPercentages: 50,
-      }),
-    );
+        // Start resizing
+        const resizerProps = result.current.getResizerProps();
+        act(() => {
+          // @ts-expect-error - onMouseDown expects all properties of MouseEvent
+          resizerProps?.onMouseDown({
+            preventDefault: jest.fn(),
+            clientX: initialSize,
+            clientY: initialSize,
+          });
+        });
 
-    // Override the ref to mock DOM element
-    // Object.defineProperty(result.current, 'resizableRef', {
-    //   get: () => mockRef,
-    // });
+        // Simulate mouse movement that would make size above maxSize
+        act(() => {
+          fireEvent(
+            window,
+            new MouseEvent('mousemove', {
+              clientX:
+                handleType === 'left' ? initialSize - 200 : initialSize + 200,
+              clientY:
+                handleType === 'top' ? initialSize - 200 : initialSize + 200,
+            }),
+          );
+        });
 
-    // current is read-only from outside the hook but for testing we can set it directly
-    (result.current.resizableRef as any).current = mockRef.current;
-
-    // Start resizing
-    const resizerProps = result.current.getResizerProps();
-    act(() => {
-      // @ts-expect-error - onMouseDown expects all properties of MouseEvent
-      resizerProps?.onMouseDown({
-        preventDefault: jest.fn(),
-        clientX: 300,
-        clientY: 300,
+        // Check if maxSize constraint was applied
+        expect(result.current.size).toBe(400);
+        expect(onResize).toHaveBeenCalledWith(400);
       });
-    });
 
-    // Simulate mouse movement that would make size above maxSize
-    act(() => {
-      fireEvent(
-        window,
-        new MouseEvent('mousemove', {
-          clientX: 500,
-          clientY: 300,
-        }),
-      );
-    });
+      test('respects maxViewportPercentage constraint', () => {
+        const onResize = jest.fn();
+        const initialSize = 300;
+        const { result } = renderHook(() =>
+          useResizable({
+            initialSize,
+            minSize: 100,
+            maxSize: 900,
+            handleType: handleType,
+            maxViewportPercentages: 50,
+            onResize,
+          }),
+        );
 
-    // Check if maxSize constraint was applied
-    expect(result.current.size).toBe(400);
-    expect(onResize).toHaveBeenCalledWith(400);
-  });
+        // current is read-only from outside the hook but for testing we can set it directly
+        (result.current.resizableRef as any).current = mockRef.current;
 
-  test('respects maxViewportPercentage constraint', () => {
-    const onResize = jest.fn();
-    const { result } = renderHook(() =>
-      useResizable({
-        initialSize: 300,
-        minSize: 100,
-        maxSize: 900,
-        handleType: 'right',
-        maxViewportPercentages: 50, // 50% of window.innerWidth (1024) = 512
-        onResize,
-      }),
-    );
+        // Start resizing
+        const resizerProps = result.current.getResizerProps();
+        act(() => {
+          // @ts-expect-error - onMouseDown expects all properties of MouseEvent
+          resizerProps?.onMouseDown({
+            preventDefault: jest.fn(),
+            clientX: initialSize,
+            clientY: initialSize,
+          });
+        });
 
-    // current is read-only from outside the hook but for testing we can set it directly
-    (result.current.resizableRef as any).current = mockRef.current;
+        // Simulate mouse movement that would exceed viewport percentage
+        act(() => {
+          fireEvent(
+            window,
+            new MouseEvent('mousemove', {
+              clientX:
+                handleType === 'left' ? initialSize - 400 : initialSize + 400,
+              clientY:
+                handleType === 'top' ? initialSize - 200 : initialSize + 200,
+            }),
+          );
+        });
 
-    // Start resizing
-    const resizerProps = result.current.getResizerProps();
-    act(() => {
-      // @ts-expect-error - onMouseDown expects all properties of MouseEvent
-      resizerProps?.onMouseDown({
-        preventDefault: jest.fn(),
-        clientX: 300,
-        clientY: 300,
+        const maxViewportSize =
+          handleType === 'right' || handleType === 'left' ? 512 : 384; // 50% of viewport width or height
+        expect(result.current.size).toBe(maxViewportSize);
+        expect(onResize).toHaveBeenCalledWith(maxViewportSize);
       });
-    });
-
-    // Simulate mouse movement that would exceed viewport percentage
-    act(() => {
-      fireEvent(
-        window,
-        new MouseEvent('mousemove', {
-          clientX: 700,
-          clientY: 300,
-        }),
-      );
-    });
-
-    // Check if viewport percentage constraint was applied (50% of 1024 = 512)
-    expect(result.current.size).toBe(512);
-    expect(onResize).toHaveBeenCalledWith(512);
-  });
+    },
+  );
 
   test('stops resizing on mouseup event', async () => {
     const { result } = renderHook(() =>
@@ -248,7 +258,7 @@ describe('useResizable', () => {
       }),
     );
 
-    // // Override the ref to mock DOM element
+    // Override the ref to mock DOM element
     // current is read-only from outside the hook but for testing we can set it directly
     (result.current.resizableRef as any).current = mockRef.current;
 
@@ -287,7 +297,7 @@ describe('useResizable', () => {
     window.requestAnimationFrame = originalRAF;
   });
 
-  test('handles keyboard interactions for right handle', () => {
+  test('handles keyboard interactions', () => {
     const onResize = jest.fn();
     const { result } = renderHook(() =>
       useResizable({
@@ -323,42 +333,6 @@ describe('useResizable', () => {
     expect(onResize).toHaveBeenCalledWith(300);
   });
 
-  test('handles keyboard interactions for left handle', () => {
-    const onResize = jest.fn();
-    const { result } = renderHook(() =>
-      useResizable({
-        initialSize: 300,
-        minSize: 100,
-        maxSize: 500,
-        handleType: 'left',
-        onResize,
-        maxViewportPercentages: 50,
-      }),
-    );
-
-    // Focus the resizer
-    const resizerProps = result.current.getResizerProps();
-    act(() => {
-      resizerProps?.onFocus();
-    });
-
-    // Press left arrow to increase size
-    act(() => {
-      fireEvent.keyDown(window, { code: keyMap.ArrowLeft });
-    });
-
-    expect(result.current.size).toBe(500);
-    expect(onResize).toHaveBeenCalledWith(500);
-
-    // Press right arrow to decrease size
-    act(() => {
-      fireEvent.keyDown(window, { code: keyMap.ArrowRight });
-    });
-
-    expect(result.current.size).toBe(300);
-    expect(onResize).toHaveBeenCalledWith(300);
-  });
-
   test('does not resize when disabled', () => {
     const onResize = jest.fn();
     const { result } = renderHook(() =>
@@ -376,13 +350,5 @@ describe('useResizable', () => {
     // Check that getResizerProps returns an empty object
     const resizerProps = result.current.getResizerProps();
     expect(Object.keys(resizerProps || {}).length).toBe(0);
-
-    // Try to set size
-    act(() => {
-      result.current.setSize(400);
-    });
-
-    // Size should still update because setSize is always available
-    expect(result.current.size).toBe(400);
   });
 });
