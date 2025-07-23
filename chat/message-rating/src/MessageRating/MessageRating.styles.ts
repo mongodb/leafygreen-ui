@@ -32,7 +32,7 @@ export const getIconFill = ({
 }) => (isSelected ? getSelectedIconFill(darkMode) : getBaseIconFill(darkMode));
 
 const baseActiveStyles = css`
-  &:before {
+  &::before {
     background-color: initial;
   }
 `;

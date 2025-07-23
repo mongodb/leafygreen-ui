@@ -3,7 +3,8 @@ import {
   LeafyGreenChatProvider,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { MessageRating } from './MessageRating/MessageRating';
 import { MessageRatingProps } from './MessageRating/MessageRating.types';
@@ -30,6 +31,8 @@ const renderMessageRating = (
 };
 
 describe('packages/message-rating', () => {
+  afterEach(() => jest.clearAllMocks());
+
   describe('props behave as expected', () => {
     test('description is "description text" by default', () => {
       renderMessageRating({ onChange });
@@ -42,7 +45,10 @@ describe('packages/message-rating', () => {
     });
 
     test('description is not rendered when variant is compact', () => {
-      renderMessageRating({ onChange }, Variant.Compact);
+      renderMessageRating(
+        { onChange, description: 'Description not used' },
+        Variant.Compact,
+      );
       expect(screen.queryByText(descriptionText)).toBeNull();
     });
   });
@@ -51,10 +57,19 @@ describe('packages/message-rating', () => {
     'in variant: %s',
     variant => {
       describe('uncontrolled', () => {
+        test('is unselected by default', () => {
+          renderMessageRating({ onChange }, variant);
+          const thumbsUp = screen.getByLabelText('Thumbs up this message');
+          const thumbsDown = screen.getByLabelText('Thumbs down this message');
+          expect(thumbsUp.getAttribute('aria-checked')).toBe('false');
+          expect(thumbsDown.getAttribute('aria-checked')).toBe('false');
+        });
+
         test('onChange receives change event when thumbs up button is clicked', () => {
           renderMessageRating({ onChange }, variant);
           const thumbsUp = screen.getByLabelText('Thumbs up this message');
-          fireEvent.click(thumbsUp);
+          userEvent.click(thumbsUp);
+          expect(onChange).toHaveBeenCalledTimes(1);
           expect(onChange).toHaveBeenCalledWith(
             expect.objectContaining({
               target: expect.objectContaining({ value: 'liked' }),
@@ -65,7 +80,8 @@ describe('packages/message-rating', () => {
         test('onChange receives change event when thumbs down button is clicked', () => {
           renderMessageRating({ onChange }, variant);
           const thumbsDown = screen.getByLabelText('Thumbs down this message');
-          fireEvent.click(thumbsDown);
+          userEvent.click(thumbsDown);
+          expect(onChange).toHaveBeenCalledTimes(1);
           expect(onChange).toHaveBeenCalledWith(
             expect.objectContaining({
               target: expect.objectContaining({ value: 'disliked' }),
@@ -77,7 +93,7 @@ describe('packages/message-rating', () => {
           renderMessageRating({ onChange }, variant);
           const thumbsUp = screen.getByLabelText('Thumbs up this message');
           expect(thumbsUp.getAttribute('aria-checked')).toBe('false');
-          fireEvent.click(thumbsUp);
+          userEvent.click(thumbsUp);
           expect(thumbsUp.getAttribute('aria-checked')).toBe('true');
         });
 
@@ -85,7 +101,7 @@ describe('packages/message-rating', () => {
           renderMessageRating({ onChange }, variant);
           const thumbsDown = screen.getByLabelText('Thumbs down this message');
           expect(thumbsDown.getAttribute('aria-checked')).toBe('false');
-          fireEvent.click(thumbsDown);
+          userEvent.click(thumbsDown);
           expect(thumbsDown.getAttribute('aria-checked')).toBe('true');
         });
       });
@@ -132,7 +148,7 @@ describe('packages/message-rating', () => {
             </LeafyGreenChatProvider>,
           );
           const thumbsUp = screen.getByLabelText('Thumbs up this message');
-          fireEvent.click(thumbsUp);
+          userEvent.click(thumbsUp);
           expect(thumbsUp.getAttribute('aria-checked')).toBe('false');
           const thumbsDown = screen.getByLabelText('Thumbs down this message');
           expect(thumbsDown.getAttribute('aria-checked')).toBe('true');
@@ -141,7 +157,8 @@ describe('packages/message-rating', () => {
         test('onChange gets called with the appropriate event target when button is clicked', () => {
           renderControlled();
           const thumbsUp = screen.getByLabelText('Thumbs up this message');
-          fireEvent.click(thumbsUp);
+          userEvent.click(thumbsUp);
+          expect(onChange).toHaveBeenCalledTimes(1);
           expect(onChange).toHaveBeenCalledWith(
             expect.objectContaining({
               target: expect.objectContaining({ value: 'liked' }),
