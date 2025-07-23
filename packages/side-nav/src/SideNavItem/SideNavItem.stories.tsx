@@ -9,7 +9,7 @@ import SideNavContext from '../SideNav/SideNavContext';
 import SideNavItem from './SideNavItem';
 
 const meta: StoryMetaType<typeof SideNavItem> = {
-  title: 'Components/SideNav/SideNavItem',
+  title: 'Composition/Data Display/SideNav/SideNavItem',
   component: SideNavItem,
   parameters: {
     default: null,

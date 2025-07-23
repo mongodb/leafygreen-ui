@@ -12,7 +12,7 @@ import { Body, H3, Link } from '@leafygreen-ui/typography';
 import InlineDefinition, { InlineDefinitionProps } from '.';
 
 const meta: StoryMetaType<typeof InlineDefinition> = {
-  title: 'Components/InlineDefinition',
+  title: 'Components/Typography/InlineDefinition',
   component: InlineDefinition,
   parameters: {
     default: 'LiveExample',

@@ -18,7 +18,7 @@ import { MessageFields } from './utils';
 import { MessageFeed } from '.';
 
 const meta: StoryMetaType<typeof MessageFeed> = {
-  title: 'Chat/MessageFeed',
+  title: 'Composition/Chat/MessageFeed',
   component: MessageFeed,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,

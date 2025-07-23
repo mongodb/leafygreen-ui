@@ -7,7 +7,7 @@ import { borderRadius, color, spacing } from '@leafygreen-ui/tokens';
 import { colors } from './colors';
 
 export default {
-  title: 'Charts/Colors',
+  title: 'Composition/Charts/Colors',
   component: null,
 };
 

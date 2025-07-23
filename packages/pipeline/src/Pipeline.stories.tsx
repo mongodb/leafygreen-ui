@@ -11,7 +11,7 @@ import { Stage } from './Stage';
 import { type PipelineProps, Size } from './types';
 
 const meta: StoryMetaType<typeof Pipeline> = {
-  title: 'Components/Pipeline',
+  title: 'Composition/Data Display/Pipeline',
   component: Pipeline,
   parameters: {
     default: 'LiveExample',

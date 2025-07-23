@@ -30,7 +30,7 @@ const wrapperStyle = css`
 const multiValue = ['apple', 'banana'];
 
 const meta: StoryMetaType<typeof Combobox> = {
-  title: 'Components/Combobox',
+  title: 'Components/Inputs/Combobox',
   component: Combobox,
   decorators: [
     StoryFn => (

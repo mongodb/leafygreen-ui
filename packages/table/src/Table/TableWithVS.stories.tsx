@@ -44,7 +44,7 @@ import { VerticalAlignment } from './Table.types';
 type StoryTableProps = TableProps<unknown>;
 
 const meta: StoryMetaType<typeof Table> = {
-  title: 'Components/Table/With Virtualized Scrolling',
+  title: 'Composition/Data Display/Table/With Virtualized Scrolling',
   component: Table,
   argTypes: {
     children: { control: 'none' },

@@ -4,7 +4,7 @@ import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { Size, Skeleton } from '.';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Composition/Loading/SkeletonLoader',
   component: Skeleton,
   parameters: {
     controls: { exclude: ['darkMode', 'ref', 'size'] },

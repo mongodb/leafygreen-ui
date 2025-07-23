@@ -13,7 +13,7 @@ import { CloseIconColor } from '@leafygreen-ui/modal';
 import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
 
 const meta: StoryMetaType<typeof ConfirmationModal> = {
-  title: 'Components/Modals/ConfirmationModal',
+  title: 'Sections/Modals/ConfirmationModal',
   component: ConfirmationModal,
   parameters: {
     default: 'LiveExample',

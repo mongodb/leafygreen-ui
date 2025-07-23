@@ -33,7 +33,7 @@ const _withInputOptionDecorator: InstanceDecorator<
 };
 
 export default {
-  title: 'Components/InputOption/Content',
+  title: 'Internal/InputOption/Content',
   component: InputOptionContent,
   parameters: {
     default: 'Basic',

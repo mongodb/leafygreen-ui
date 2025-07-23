@@ -12,7 +12,7 @@ import { defaultContext } from '../ComboboxContext/ComboboxContext';
 import { ComboboxMenu } from './ComboboxMenu';
 
 const meta: StoryMetaType<typeof ComboboxMenu> = {
-  title: 'Components/Combobox/ComboboxMenu',
+  title: 'Components/Inputs/Combobox/ComboboxMenu',
   component: ComboboxMenu,
   parameters: {
     default: null,

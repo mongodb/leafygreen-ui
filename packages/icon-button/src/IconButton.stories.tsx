@@ -12,7 +12,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 import IconButton, { AccessibleIconButtonProps, Size } from './IconButton';
 
 const meta: StoryMetaType<typeof IconButton> = {
-  title: 'Components/IconButton',
+  title: 'Components/Actions/IconButton',
   component: IconButton,
   parameters: {
     default: 'LiveExample',
