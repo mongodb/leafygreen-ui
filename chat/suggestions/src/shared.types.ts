@@ -9,15 +9,15 @@ export const Status = {
 export type Status = (typeof Status)[keyof typeof Status];
 
 /**
- * Configuration parameters as key-value pairs
+ * A single configuration parameter with its key, value, and current status
  */
-export interface ConfigurationParameters {
-  [key: string]: string;
+export interface ConfigurationParameter {
+  key: string;
+  value: string;
+  status?: Status; // Defaults to 'apply' if not specified
 }
 
 /**
- * Configuration parameters organized by their status
+ * Array of configuration parameters, each with their own status.
  */
-export type ParametersByStatus = {
-  [status in Status]?: ConfigurationParameters;
-};
+export type ConfigurationParameters = Array<ConfigurationParameter>;

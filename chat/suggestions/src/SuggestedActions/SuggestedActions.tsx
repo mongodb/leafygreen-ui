@@ -30,6 +30,14 @@ const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
     } = props;
     const { theme, darkMode } = useDarkMode(darkModeProp);
 
+    // Filter parameters by status
+    const successParameters = configurationParameters.filter(
+      param => param.status === Status.Success,
+    );
+    const errorParameters = configurationParameters.filter(
+      param => param.status === Status.Error,
+    );
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div ref={fwdRef} className={dividerStyles}>
@@ -38,14 +46,12 @@ const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
               Apply configuration to your cluster?
             </div>
             <table className={tableStyles}>
-              {Object.entries(configurationParameters.apply ?? {}).map(
-                ([key, value]) => (
-                  <tr key={key}>
-                    <th className={tableHeaderStyles}>{key}</th>
-                    <td className={tableCellStyles}>{value}</td>
-                  </tr>
-                ),
-              )}
+              {configurationParameters.map(param => (
+                <tr key={param.key}>
+                  <th className={tableHeaderStyles}>{param.key}</th>
+                  <td className={tableCellStyles}>{param.value}</td>
+                </tr>
+              ))}
             </table>
             {status === Status.Apply && (
               <Button
@@ -65,8 +71,8 @@ const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
           ) && (
             <StatusBanner
               status={status}
-              appliedParameters={configurationParameters.success}
-              failedParameters={configurationParameters.error}
+              appliedParameters={successParameters}
+              failedParameters={errorParameters}
             />
           )}
         </div>

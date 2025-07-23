@@ -29,46 +29,42 @@ npm install @lg-chat/suggestions
 ```tsx
 import { SuggestedActions, Status } from '@lg-chat/suggestions';
 
-const configurationParameters = {
-  'Cluster Tier': 'M10 ($9.00/month)',
-  'Provider': 'AWS / N. Virginia (us-east-1)',
-  'Storage': '10 GB',
-  'RAM': '2 GB',
-  'vCPUs': '2 vCPUs',
-};
+const configurationParameters = [
+  { key: 'Cluster Tier', value: 'M10 ($9.00/month)' },
+  { key: 'Provider', value: 'AWS / N. Virginia (us-east-1)' },
+  { key: 'Storage', value: '10 GB' },
+  { key: 'RAM', value: '2 GB' },
+  { key: 'vCPUs', value: '2 vCPUs' },
+];
 
-const appliedParameters = {
-  'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
-  'Cluster Tier': 'M10 ($9.00/month)',
-};
-
-// Basic suggestion card
-<SuggestedActions
-  status={Status.Unset}
-  suggestedConfigurationParameters={configurationParameters}
-  onClickApply={() => console.log('Apply clicked')}
-/>
-
-// With apply button
+// Basic suggestion card with apply button
 <SuggestedActions
   status={Status.Apply}
-  suggestedConfigurationParameters={configurationParameters}
+  configurationParameters={configurationParameters}
   onClickApply={() => console.log('Apply clicked')}
 />
 
 // Success state with applied parameters
 <SuggestedActions
   status={Status.Success}
-  suggestedConfigurationParameters={configurationParameters}
-  appliedParameters={appliedParameters}
+  configurationParameters={[
+    { key: 'Cluster Tier', value: 'M10 ($9.00/month)' }, // still applying
+    { key: 'Provider', value: 'AWS / N. Virginia (us-east-1)' },
+    { key: 'Cloud Provider & Region', value: 'AWS / N. Virginia (us-east-1)', status: Status.Success },
+    { key: 'Cluster Tier', value: 'M10 ($9.00/month)', status: Status.Success },
+  ]}
   onClickApply={() => console.log('Apply clicked')}
 />
 
 // Error state with failed parameters
 <SuggestedActions
   status={Status.Error}
-  suggestedConfigurationParameters={configurationParameters}
-  failedParameters={appliedParameters}
+  configurationParameters={[
+    { key: 'Cluster Tier', value: 'M30 ($31.00/month)' }, // still applying
+    { key: 'Provider', value: 'GCP / Iowa (us-central1)' },
+    { key: 'Cloud Provider & Region', value: 'GCP / Iowa (us-central1)', status: Status.Error },
+    { key: 'Cluster Tier', value: 'M30 ($31.00/month)', status: Status.Error },
+  ]}
   onClickApply={() => console.log('Apply clicked')}
 />
 ```
@@ -77,21 +73,36 @@ const appliedParameters = {
 
 The `Status` enum provides the following options:
 
-| Status    | Value       | Description                                                           |
-| --------- | ----------- | --------------------------------------------------------------------- |
-| `Unset`   | `'unset'`   | Default state showing configuration suggestions only                  |
-| `Apply`   | `'apply'`   | Shows configuration suggestions with an "Apply" button                |
-| `Success` | `'success'` | Shows success banner with applied parameters from `appliedParameters` |
-| `Error`   | `'error'`   | Shows error banner with failed parameters from `failedParameters`     |
+| Status    | Value       | Description                                            |
+| --------- | ----------- | ------------------------------------------------------ |
+| `Apply`   | `'apply'`   | Shows configuration suggestions with an "Apply" button |
+| `Success` | `'success'` | Shows success banner with applied parameters           |
+| `Error`   | `'error'`   | Shows error banner with failed parameters              |
+
+## Configuration Parameters
+
+Each configuration parameter is an object with the following structure:
+
+```tsx
+interface ConfigurationParameter {
+  key: string; // The parameter name
+  value: string; // The parameter value
+  status?: Status; // The parameter status (defaults to 'apply')
+}
+```
+
+The component automatically filters and displays parameters based on their status:
+
+- **Table**: Shows parameters with `apply` status (or no status)
+- **Success Banner**: Shows parameters with `success` status
+- **Error Banner**: Shows parameters with `error` status
 
 ## Properties
 
-| Prop                               | Type                      | Description                                                                                              | Default |
-| ---------------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------- | ------- |
-| `status`                           | `Status`                  | Determines the current state and rendering behavior of the suggestion card                               |         |
-| `suggestedConfigurationParameters` | `ConfigurationParameters` | Configuration parameters displayed in the main table as string key-value pairs                           |         |
-| `onClickApply`                     | `() => void`              | Callback fired when the user clicks the "Apply" button (shown when `status` is `Status.Apply`)           |         |
-| `appliedParameters`                | `ConfigurationParameters` | Parameters that were successfully applied, displayed in success banner when `status` is `Status.Success` |         |
-| `failedParameters`                 | `ConfigurationParameters` | Parameters that failed to apply, displayed in error banner when `status` is `Status.Error`               |         |
-| `darkMode`                         | `boolean`                 | Determines if the component is rendered in dark mode                                                     | `false` |
-| `...`                              | `HTMLElementProps<'div'>` | Props spread on root element                                                                             |         |
+| Prop                      | Type                      | Description                                                                                    | Default |
+| ------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------- | ------- |
+| `status`                  | `Status`                  | Determines the current state and rendering behavior of the suggestion card                     |         |
+| `configurationParameters` | `ConfigurationParameters` | Array of configuration parameters, each with key, value, and optional status                   |         |
+| `onClickApply`            | `() => void`              | Callback fired when the user clicks the "Apply" button (shown when `status` is `Status.Apply`) |         |
+| `darkMode`                | `boolean`                 | Determines if the component is rendered in dark mode                                           | `false` |
+| `...`                     | `HTMLElementProps<'div'>` | Props spread on root element                                                                   |         |

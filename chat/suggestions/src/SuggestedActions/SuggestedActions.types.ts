@@ -1,6 +1,6 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { ParametersByStatus, Status } from '../shared.types';
+import { ConfigurationParameters, Status } from '../shared.types';
 
 export interface SuggestedActionsProps
   extends HTMLElementProps<'div'>,
@@ -13,9 +13,10 @@ export interface SuggestedActionsProps
    */
   status: Status;
   /**
-   * Configuration parameters organized by their status
+   * Configuration parameters with their individual status values.
+   * Each parameter includes a key, value, and status (apply/success/error).
    */
-  configurationParameters: ParametersByStatus;
+  configurationParameters: ConfigurationParameters;
   /**
    * Callback fired when the user clicks the "Apply" button
    */

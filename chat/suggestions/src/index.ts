@@ -1,9 +1,7 @@
 export {
+  type ConfigurationParameter,
   type ConfigurationParameters,
-  type ParametersByStatus,
   Status,
 } from './shared.types';
-export {
-  SuggestedActions,
-  type SuggestedActionsProps,
-} from './SuggestedActions';
+export { SuggestedActions } from './SuggestedActions';
+export { type SuggestedActionsProps } from './SuggestedActions/SuggestedActions.types';

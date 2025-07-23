@@ -5,58 +5,48 @@ import { axe } from 'jest-axe';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { ParametersByStatus, Status } from '../shared.types';
+import { ConfigurationParameters, Status } from '../shared.types';
 
+import { SuggestedActionsProps } from './SuggestedActions.types';
 import { SuggestedActions } from '.';
 
-interface TestSuggestedActionsProps {
-  status: Status;
-  configurationParameters: ParametersByStatus;
-  onClickApply: () => void;
-  darkMode?: boolean;
-}
+const defaultConfigurationParameters: ConfigurationParameters = [
+  { key: 'Cluster Tier', value: 'M10 ($9.00/month)' },
+  { key: 'Provider', value: 'AWS / N. Virginia (us-east-1)' },
+  { key: 'Storage', value: '10 GB' },
+  { key: 'RAM', value: '2 GB' },
+  { key: 'vCPUs', value: '2 vCPUs' },
+];
 
-const defaultConfigurationParameters: ParametersByStatus = {
-  apply: {
-    'Cluster Tier': 'M10 ($9.00/month)',
-    Provider: 'AWS / N. Virginia (us-east-1)',
-    Storage: '10 GB',
-    RAM: '2 GB',
-    vCPUs: '2 vCPUs',
+const successConfigurationParameters: ConfigurationParameters = [
+  { key: 'Cluster Tier', value: 'M10 ($9.00/month)' },
+  { key: 'Provider', value: 'AWS / N. Virginia (us-east-1)' },
+  {
+    key: 'Cloud Provider & Region',
+    value: 'AWS / N. Virginia (us-east-1)',
+    status: Status.Success,
   },
-};
+  { key: 'Cluster Tier', value: 'M10 ($9.00/month)', status: Status.Success },
+];
 
-const successConfigurationParameters: ParametersByStatus = {
-  apply: {
-    'Cluster Tier': 'M10 ($9.00/month)',
-    Provider: 'AWS / N. Virginia (us-east-1)',
+const errorConfigurationParameters: ConfigurationParameters = [
+  { key: 'Cluster Tier', value: 'M30 ($31.00/month)' },
+  { key: 'Provider', value: 'GCP / Iowa (us-central1)' },
+  {
+    key: 'Cloud Provider & Region',
+    value: 'GCP / Iowa (us-central1)',
+    status: Status.Error,
   },
-  success: {
-    'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
-    'Cluster Tier': 'M10 ($9.00/month)',
-  },
-};
+  { key: 'Cluster Tier', value: 'M30 ($31.00/month)', status: Status.Error },
+];
 
-const errorConfigurationParameters: ParametersByStatus = {
-  apply: {
-    'Cluster Tier': 'M30 ($31.00/month)',
-    Provider: 'GCP / Iowa (us-central1)',
-  },
-  error: {
-    'Cloud Provider & Region': 'GCP / Iowa (us-central1)',
-    'Cluster Tier': 'M30 ($31.00/month)',
-  },
-};
-
-const defaultProps: TestSuggestedActionsProps = {
+const defaultProps: SuggestedActionsProps = {
   status: Status.Apply,
   configurationParameters: defaultConfigurationParameters,
   onClickApply: jest.fn(),
 };
 
-function renderSuggestedActions(
-  props: Partial<TestSuggestedActionsProps> = {},
-) {
+function renderSuggestedActions(props: Partial<SuggestedActionsProps> = {}) {
   const allProps = { ...defaultProps, ...props };
   const utils = render(
     <LeafyGreenProvider>
@@ -132,15 +122,13 @@ describe('chat/suggestions', () => {
     });
 
     test('renders with custom configuration parameters', () => {
-      const customParams = {
-        apply: {
-          'Cluster Tier': 'M30 ($31.00/month)',
-          Provider: 'GCP / Iowa (us-central1)',
-          Storage: '100 GB',
-          RAM: '8 GB',
-          vCPUs: '2 vCPUs',
-        },
-      };
+      const customParams = [
+        { key: 'Cluster Tier', value: 'M30 ($31.00/month)' },
+        { key: 'Provider', value: 'GCP / Iowa (us-central1)' },
+        { key: 'Storage', value: '100 GB' },
+        { key: 'RAM', value: '8 GB' },
+        { key: 'vCPUs', value: '2 vCPUs' },
+      ];
 
       renderSuggestedActions({
         configurationParameters: customParams,
@@ -155,7 +143,7 @@ describe('chat/suggestions', () => {
 
     test('handles empty configuration parameters', () => {
       renderSuggestedActions({
-        configurationParameters: { apply: {} },
+        configurationParameters: [],
       });
 
       expect(
@@ -166,17 +154,31 @@ describe('chat/suggestions', () => {
       expect(screen.queryAllByRole('columnheader')).toHaveLength(0);
     });
 
-    test('handles undefined apply parameters', () => {
+    test('renders parameters with mixed status values', () => {
+      const mixedParams = [
+        { key: 'Cluster Tier', value: 'M10 ($9.00/month)' }, // defaults to apply
+        {
+          key: 'Provider',
+          value: 'AWS / N. Virginia (us-east-1)',
+          status: Status.Apply,
+        },
+        {
+          key: 'Success Param',
+          value: 'Success Value',
+          status: Status.Success,
+        },
+        { key: 'Error Param', value: 'Error Value', status: Status.Error },
+      ];
+
       renderSuggestedActions({
-        configurationParameters: {},
+        configurationParameters: mixedParams,
       });
 
-      expect(
-        screen.getByText('Apply configuration to your cluster?'),
-      ).toBeInTheDocument();
-      const table = screen.getByRole('table');
-      expect(table).toBeInTheDocument();
-      expect(screen.queryAllByRole('columnheader')).toHaveLength(0);
+      // Should render all parameters in table
+      expect(screen.getByText('Cluster Tier')).toBeInTheDocument();
+      expect(screen.getByText('Provider')).toBeInTheDocument();
+      expect(screen.getByText('Success Param')).toBeInTheDocument();
+      expect(screen.getByText('Error Param')).toBeInTheDocument();
     });
   });
 
@@ -281,10 +283,10 @@ describe('chat/suggestions', () => {
       );
     });
 
-    test('handles undefined success parameters', () => {
+    test('handles empty success parameters', () => {
       renderSuggestedActions({
         status: Status.Success,
-        configurationParameters: { apply: {} },
+        configurationParameters: [],
       });
 
       expect(
@@ -297,10 +299,10 @@ describe('chat/suggestions', () => {
       expect(list?.children).toHaveLength(0);
     });
 
-    test('handles undefined error parameters', () => {
+    test('handles empty error parameters', () => {
       renderSuggestedActions({
         status: Status.Error,
-        configurationParameters: { apply: {} },
+        configurationParameters: [],
       });
 
       expect(
@@ -314,12 +316,69 @@ describe('chat/suggestions', () => {
       expect(list).toBeInTheDocument();
       expect(list?.children).toHaveLength(0);
     });
+
+    test('filters parameters correctly for success banner', () => {
+      const mixedParams = [
+        { key: 'Apply Param', value: 'Apply Value' },
+        {
+          key: 'Success Param 1',
+          value: 'Success Value 1',
+          status: Status.Success,
+        },
+        {
+          key: 'Success Param 2',
+          value: 'Success Value 2',
+          status: Status.Success,
+        },
+        { key: 'Error Param', value: 'Error Value', status: Status.Error },
+      ];
+
+      renderSuggestedActions({
+        status: Status.Success,
+        configurationParameters: mixedParams,
+      });
+
+      const listItems = screen.getAllByRole('listitem');
+
+      // Should only show success parameters
+      expect(listItems).toHaveLength(2);
+      expect(listItems[0]).toHaveTextContent(
+        'Success Param 1: Success Value 1',
+      );
+      expect(listItems[1]).toHaveTextContent(
+        'Success Param 2: Success Value 2',
+      );
+    });
+
+    test('filters parameters correctly for error banner', () => {
+      const mixedParams = [
+        { key: 'Apply Param', value: 'Apply Value' },
+        {
+          key: 'Success Param',
+          value: 'Success Value',
+          status: Status.Success,
+        },
+        { key: 'Error Param 1', value: 'Error Value 1', status: Status.Error },
+        { key: 'Error Param 2', value: 'Error Value 2', status: Status.Error },
+      ];
+
+      renderSuggestedActions({
+        status: Status.Error,
+        configurationParameters: mixedParams,
+      });
+
+      const listItems = screen.getAllByRole('listitem');
+
+      // Should only show error parameters
+      expect(listItems).toHaveLength(2);
+      expect(listItems[0]).toHaveTextContent('Error Param 1: Error Value 1');
+      expect(listItems[1]).toHaveTextContent('Error Param 2: Error Value 2');
+    });
   });
 
   describe('dark mode', () => {
     test('renders in light mode by default', () => {
       const { container } = renderSuggestedActions();
-      // Check that the component renders without dark mode classes
       expect(container.firstChild).toBeInTheDocument();
     });
 
@@ -331,12 +390,16 @@ describe('chat/suggestions', () => {
 
   describe('parameter edge cases', () => {
     test('renders with special characters in parameter names and values', () => {
-      const specialParams = {
-        apply: {
-          'Special-Chars & Symbols': 'Value with "quotes" & symbols!',
-          'Unicode Test': 'Test with émojis 🚀 and ünicöde çharacters',
+      const specialParams = [
+        {
+          key: 'Special-Chars & Symbols',
+          value: 'Value with "quotes" & symbols!',
         },
-      };
+        {
+          key: 'Unicode Test',
+          value: 'Test with émojis 🚀 and ünicöde çharacters',
+        },
+      ];
 
       renderSuggestedActions({
         configurationParameters: specialParams,
@@ -353,12 +416,13 @@ describe('chat/suggestions', () => {
     });
 
     test('handles very long parameter names and values', () => {
-      const longParams = {
-        apply: {
-          'Very Long Parameter Name That Exceeds Normal Length':
+      const longParams = [
+        {
+          key: 'Very Long Parameter Name That Exceeds Normal Length',
+          value:
             'Very Long Value That Also Exceeds What Would Normally Be Expected In A Configuration Parameter',
         },
-      };
+      ];
 
       renderSuggestedActions({
         configurationParameters: longParams,
@@ -375,9 +439,7 @@ describe('chat/suggestions', () => {
     });
 
     test('maintains table structure with varying parameter counts', () => {
-      const singleParam = {
-        apply: { 'Single Param': 'Value' },
-      };
+      const singleParam = [{ key: 'Single Param', value: 'Value' }];
 
       const { rerender } = renderSuggestedActions({
         configurationParameters: singleParam,
@@ -386,13 +448,11 @@ describe('chat/suggestions', () => {
       expect(screen.getAllByRole('columnheader')).toHaveLength(1);
       expect(screen.getAllByRole('cell')).toHaveLength(1);
 
-      const multipleParams = {
-        apply: {
-          'Param 1': 'Value 1',
-          'Param 2': 'Value 2',
-          'Param 3': 'Value 3',
-        },
-      };
+      const multipleParams = [
+        { key: 'Param 1', value: 'Value 1' },
+        { key: 'Param 2', value: 'Value 2' },
+        { key: 'Param 3', value: 'Value 3' },
+      ];
 
       rerender(
         <LeafyGreenProvider>
@@ -406,38 +466,55 @@ describe('chat/suggestions', () => {
       expect(screen.getAllByRole('columnheader')).toHaveLength(3);
       expect(screen.getAllByRole('cell')).toHaveLength(3);
     });
+
+    test('handles parameters with default status correctly', () => {
+      const defaultStatusParams = [
+        { key: 'Default Status', value: 'Should be apply' },
+        {
+          key: 'Explicit Apply',
+          value: 'Explicit apply',
+          status: Status.Apply,
+        },
+        { key: 'Success Status', value: 'Success', status: Status.Success },
+      ];
+
+      renderSuggestedActions({
+        configurationParameters: defaultStatusParams,
+      });
+
+      // All parameters should be visible in table
+      expect(screen.getByText('Default Status')).toBeInTheDocument();
+      expect(screen.getByText('Explicit Apply')).toBeInTheDocument();
+      expect(screen.getByText('Success Status')).toBeInTheDocument();
+    });
   });
 
   describe('integration', () => {
-    test('table shows apply parameters regardless of banner status', () => {
+    test('table shows all parameters regardless of banner status', () => {
       renderSuggestedActions({
         status: Status.Success,
-        configurationParameters: {
-          apply: {
-            'Cluster Tier': 'M10 ($9.00/month)',
-            Provider: 'AWS / N. Virginia (us-east-1)',
+        configurationParameters: [
+          { key: 'Cluster Tier', value: 'M10 ($9.00/month)' },
+          { key: 'Provider', value: 'AWS / N. Virginia (us-east-1)' },
+          {
+            key: 'Different Key',
+            value: 'Different Value',
+            status: Status.Success,
           },
-          success: {
-            'Different Key': 'Different Value',
-          },
-        },
+        ],
       });
 
-      // Table should always show apply parameters
+      // Table should show all parameters
       expect(screen.getByText('M10 ($9.00/month)')).toBeInTheDocument();
       expect(
         screen.getByText('AWS / N. Virginia (us-east-1)'),
       ).toBeInTheDocument();
+      expect(screen.getByText('Different Key')).toBeInTheDocument();
 
-      // Banner should show success parameters
+      // Banner should show only success parameters
       const listItems = screen.getAllByRole('listitem');
-      expect(listItems).toContainEqual(
-        expect.objectContaining({
-          textContent: expect.stringContaining(
-            'Different Key: Different Value',
-          ),
-        }),
-      );
+      expect(listItems).toHaveLength(1);
+      expect(listItems[0]).toHaveTextContent('Different Key: Different Value');
     });
 
     test('component forwards ref correctly', () => {
@@ -456,7 +533,7 @@ describe('chat/suggestions', () => {
     test('renders with minimal required props', () => {
       const minimalProps = {
         status: Status.Apply,
-        configurationParameters: { apply: { Test: 'Value' } },
+        configurationParameters: [{ key: 'Test', value: 'Value' }],
         onClickApply: jest.fn(),
       };
 
@@ -469,6 +546,23 @@ describe('chat/suggestions', () => {
       expect(container.firstChild).toBeInTheDocument();
       expect(screen.getByText('Test')).toBeInTheDocument();
       expect(screen.getByText('Value')).toBeInTheDocument();
+    });
+
+    test('handles different status enum values correctly', () => {
+      // Test each status value
+      Object.values(Status).forEach(statusValue => {
+        const { unmount } = renderSuggestedActions({
+          status: statusValue,
+          configurationParameters: [
+            { key: 'Test', value: 'Value' },
+            { key: 'Success Test', value: 'Success', status: Status.Success },
+            { key: 'Error Test', value: 'Error', status: Status.Error },
+          ],
+        });
+
+        expect(screen.getByText('Test')).toBeInTheDocument();
+        unmount();
+      });
     });
   });
 });
