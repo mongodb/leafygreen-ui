@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/table': patch
+'@leafygreen-ui/table': minor
 ---
 
 - Patches table header interaction test to scroll in Chromatic snapshots.
