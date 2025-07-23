@@ -42,6 +42,9 @@ import {
 } from './Copyable.styles';
 import { CopyableProps, Size } from './Copyable.types';
 
+/**
+ * Copyable components provide users with an easy way to quickly copy code.
+ */
 export default function Copyable({
   children,
   className,
