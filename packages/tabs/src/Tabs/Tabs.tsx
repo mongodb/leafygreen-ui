@@ -27,6 +27,9 @@ import {
 } from './Tabs.styles';
 import { AccessibleTabsProps } from './Tabs.types';
 
+/**
+ * Tabs are used to organize content by grouping similar or related information on a single UI, allowing content to be viewed without having the user navigate externally.
+ */
 const Tabs = <SelectedType extends number | string>(
   props: AccessibleTabsProps<SelectedType>,
 ) => {

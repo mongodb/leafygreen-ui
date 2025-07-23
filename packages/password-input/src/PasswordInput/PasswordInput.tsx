@@ -30,6 +30,9 @@ import {
 } from './PasswordInput.types';
 import { convertStateToFormFieldState, getStateFromArray } from './utils';
 
+/**
+ * A password input protects user’s sensitive information and prevents unauthorized access to a page or product. It features an icon button that allows the user to toggle the visibility of the input field. This provides them with the opportunity to view any typing errors and confirm their input.
+ */
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
   PasswordInputProps
