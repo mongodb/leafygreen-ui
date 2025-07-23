@@ -9,7 +9,7 @@ export const disabledTableRowCheckStyles: Record<Theme, string> = {
       background-color: ${palette.gray.light2};
     }
     input[aria-checked='true'] + div {
-      &:before {
+      &::before {
         background-color: ${palette.gray.light1};
       }
       & path {
@@ -23,7 +23,7 @@ export const disabledTableRowCheckStyles: Record<Theme, string> = {
       background-color: ${palette.gray.dark2};
     }
     input[aria-checked='true'] + div {
-      &:before {
+      &::before {
         background-color: ${palette.gray.dark1};
       }
       & path {

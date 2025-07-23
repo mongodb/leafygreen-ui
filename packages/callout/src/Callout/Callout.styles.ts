@@ -77,7 +77,7 @@ export const getBaseStyles = (theme: Theme, variant: Variant) =>
     padding-inline-start: ${spacing[300]}px;
     position: relative;
 
-    &:after {
+    &::after {
       content: '';
       position: absolute;
       width: 3px;

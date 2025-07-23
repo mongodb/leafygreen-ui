@@ -112,7 +112,7 @@ export const getContainerStyles = ({
       /* 
       * Adds the divider line to unselected segments 
       */
-      &:before {
+      &::before {
         --divider-width: ${spacing[25]}px;
         content: '';
         position: absolute;

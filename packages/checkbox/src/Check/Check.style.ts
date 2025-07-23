@@ -18,7 +18,7 @@ export const checkBorderSizePx = 2;
 
 export const disableAnimation = css`
   &,
-  &:before {
+  &::before {
     transition: unset;
     transition-delay: 0ms;
     transition-duration: 0ms;
@@ -47,7 +47,7 @@ export const wrapperBaseStyle = css`
   /**
    * The animated background circle
    */
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     inset: ${insetPct}%;
@@ -64,14 +64,14 @@ export const wrapperThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     border-color: ${palette.gray.dark2};
 
-    &:before {
+    &::before {
       background-color: ${palette.blue.base};
     }
   `,
   [Theme.Dark]: css`
     border-color: ${palette.gray.base};
 
-    &:before {
+    &::before {
       background-color: ${palette.blue.light1};
     }
   `,
@@ -81,7 +81,7 @@ export const wrapperCheckedBaseStyle = css`
   // Delay background transition in
   transition-delay: 0ms, ${checkAnimationDuration}ms, 0ms;
 
-  &:before {
+  &::before {
     transform: scale(1);
     // No delay on enter
     transition-delay: 0ms;
@@ -105,7 +105,7 @@ export const wrapperDisabledStyle: Record<Theme, string> = {
     background-color: ${palette.gray.light3};
     box-shadow: unset;
 
-    &:before {
+    &::before {
       background-color: ${palette.gray.light3};
     }
   `,
@@ -115,7 +115,7 @@ export const wrapperDisabledStyle: Record<Theme, string> = {
     background-color: ${palette.gray.dark3};
     box-shadow: unset;
 
-    &:before {
+    &::before {
       background-color: ${palette.gray.dark3};
     }
   `,
@@ -125,14 +125,14 @@ export const wrapperCheckedDisabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${palette.gray.light2};
 
-    &:before {
+    &::before {
       background-color: ${palette.gray.light2};
     }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark2};
 
-    &:before {
+    &::before {
       background-color: ${palette.gray.dark2};
     }
   `,

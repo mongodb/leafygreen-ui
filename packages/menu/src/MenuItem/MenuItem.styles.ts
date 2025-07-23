@@ -70,7 +70,7 @@ export const getMenuItemStyles = ({
         &:hover {
           background-color: ${menuColor[theme].background.active};
 
-          &:before {
+          &::before {
             transform: scaleY(1) translateY(-50%);
             background-color: ${menuColor[theme].border.active};
           }
@@ -93,7 +93,7 @@ export const getMenuItemStyles = ({
         &:focus-visible {
           background-color: ${menuColor[theme].background.focus};
 
-          &:before {
+          &::before {
             transform: scaleY(1) translateY(-50%);
             background-color: ${menuColor[theme].border.focus};
           }
@@ -180,7 +180,7 @@ export const getNestedMenuItemStyles = ({
     {
       // The inset border for submenu items
       [css`
-        &:after {
+        &::after {
           content: '';
           position: absolute;
           top: 0;

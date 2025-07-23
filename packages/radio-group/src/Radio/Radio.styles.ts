@@ -56,7 +56,7 @@ export const inputThemeStyles: Record<Theme, string> = {
         background-color: ${palette.blue.base};
         border-color: ${palette.blue.base};
 
-        &:after {
+        &::after {
           transform: scale(1);
         }
       }
@@ -65,7 +65,7 @@ export const inputThemeStyles: Record<Theme, string> = {
         background-color: ${palette.gray.light2};
         border-color: ${palette.gray.light2};
 
-        &:after {
+        &::after {
           background-color: ${palette.gray.light3};
           transform: scale(1);
         }
@@ -82,7 +82,7 @@ export const inputThemeStyles: Record<Theme, string> = {
       border-color: ${palette.gray.light2};
       background-color: ${palette.gray.light3};
 
-      &:after {
+      &::after {
         transform: scale(1);
         background-color: ${palette.gray.light3};
       }
@@ -95,7 +95,7 @@ export const inputThemeStyles: Record<Theme, string> = {
         background-color: ${palette.blue.light1};
         border-color: ${palette.blue.light1};
 
-        &:after {
+        &::after {
           transform: scale(1);
         }
       }
@@ -103,7 +103,7 @@ export const inputThemeStyles: Record<Theme, string> = {
       &:disabled + .${inputDisplayWrapperClassName} .${inputDisplayClassName} {
         border-color: ${palette.gray.dark3};
 
-        &:after {
+        &::after {
           background-color: ${palette.gray.dark2};
           transform: scale(1);
         }
@@ -120,7 +120,7 @@ export const inputThemeStyles: Record<Theme, string> = {
       border-color: ${palette.gray.dark2};
       background-color: ${palette.gray.dark3};
 
-      &:after {
+      &::after {
         transform: scale(1);
         background-color: ${palette.gray.dark3};
       }
@@ -176,13 +176,13 @@ export const inputDisplayBaseStyle = css`
   border-radius: 100%;
   border-style: solid;
 
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     border-radius: 100%;
   }
 
-  &:after {
+  &::after {
     content: '';
     background-color: white;
     border-radius: 100%;
@@ -190,7 +190,7 @@ export const inputDisplayBaseStyle = css`
   }
 
   .${inputClassName}:disabled + .${inputDisplayWrapperClassName} & {
-    &:after {
+    &::after {
       box-shadow: none;
     }
   }
@@ -200,7 +200,7 @@ export const inputDisplaySizeStyles: Omit<Record<Size, string>, 'xsmall'> = {
   [Size.Small]: css`
     border-width: 2px;
 
-    &:after {
+    &::after {
       width: 6px;
       height: 6px;
       transition: transform ${transitionDuration.default}ms
@@ -211,7 +211,7 @@ export const inputDisplaySizeStyles: Omit<Record<Size, string>, 'xsmall'> = {
   [Size.Default]: css`
     border-width: 3px;
 
-    &:after {
+    &::after {
       width: 8px;
       height: 8px;
       transition: transform ${transitionDuration.default}ms

@@ -11,7 +11,7 @@ export const baseStyles = css`
   flex-direction: column;
   align-items: center;
   padding-bottom: ${spacing[1]}px;
-  position: relative; // for the :after line
+  position: relative; // for the ::after line
 
   &:focus-visible {
     outline: none;
@@ -38,7 +38,7 @@ export const themeStyles: Record<Theme, string> = {
 };
 
 export const lineStyles = (iconSize: number, darkMode: boolean) => css`
-  &:after {
+  &::after {
     content: '';
     height: 1px;
     width: 100%;
@@ -52,12 +52,12 @@ export const lineStyles = (iconSize: number, darkMode: boolean) => css`
 
 export const completedLineStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
-    &:after {
+    &::after {
       background-color: ${palette.green.base};
     }
   `,
   [Theme.Light]: css`
-    &:after {
+    &::after {
       background-color: ${palette.green.dark1};
     }
   `,
