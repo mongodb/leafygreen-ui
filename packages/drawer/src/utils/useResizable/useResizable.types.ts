@@ -1,6 +1,8 @@
 export const handleType = {
   left: 'left',
   right: 'right',
+  top: 'top',
+  bottom: 'bottom',
 } as const;
 
 export type HandleType = (typeof handleType)[keyof typeof handleType];

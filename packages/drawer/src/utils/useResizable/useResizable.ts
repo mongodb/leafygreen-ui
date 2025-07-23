@@ -26,15 +26,16 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
   // Ref to hold the current value of isResizing to prevent stale closures in event handlers
   // This ref is updated synchronously in onMouseDown/onMouseUp
+  // TODO: why do we need this?
   const isResizingRef = useRef<boolean>(isResizing);
 
   const [size, setSize] = useState<number>(initialSize);
 
-  const minSize = minSizeProp ?? initialSize!;
-  const maxSize = maxSizeProp ?? initialSize!;
+  const minSize = minSizeProp ?? initialSize;
+  const maxSize = maxSizeProp ?? initialSize;
 
-  const keyboardWidths = [initialSize!, minSize, maxSize];
-  const sortedKeyboardWidths = [...keyboardWidths].sort((a, b) => a - b);
+  const keyboardSizes = [initialSize!, minSize, maxSize];
+  const sortedKeyboardSizes = [...keyboardSizes].sort((a, b) => a - b);
 
   // Update size when enabled state or initialSize changes
   useEffect(() => {
@@ -46,29 +47,39 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     if (!isResizingRef.current) return;
 
     let newSize = initialElementSize.current;
-    let shouldSnapClose = false;
     // Determine the effective maximum width, considering both fixed max and viewport percentage //TODO:
     let effectiveMaxSize = maxSize;
 
     // The difference in mouse position from the initial position
     const deltaX = e.clientX - initialMousePos.current.x;
+    const deltaY = e.clientY - initialMousePos.current.y;
 
     switch (handleType) {
-      case 'left': // TODO:
+      case 'left': // TODO: use var
         newSize = initialElementSize.current - deltaX;
         break;
       case 'right':
         newSize = initialElementSize.current + deltaX;
+        break;
+      case 'top':
+        newSize = initialElementSize.current - deltaY;
+        break;
+      case 'bottom':
+        newSize = initialElementSize.current + deltaY;
         break;
       default:
         break;
     }
 
     if (maxViewportPercentages) {
-      const viewportWidthPercent = maxViewportPercentages / 100;
+      const viewportPercent = maxViewportPercentages / 100;
+      const viewPortInnerSize =
+        handleType === 'left' || handleType === 'right'
+          ? window.innerWidth
+          : window.innerHeight;
       effectiveMaxSize = Math.min(
         effectiveMaxSize,
-        window.innerWidth * viewportWidthPercent,
+        viewPortInnerSize * viewportPercent,
       );
     }
 
@@ -102,7 +113,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     return {
       onMouseDown: (e: MouseEvent | React.MouseEvent) => {
         e.preventDefault(); // Prevent default browser behavior like text selection
-        console.log('😈 onMouseDown');
 
         // Synchronously update the ref BEFORE setting state
         isResizingRef.current = true;
@@ -140,7 +150,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
             case keyMap.ArrowLeft: {
               console.log('⬅️ Left arrow key pressed');
 
-              const nextLargerWidth = sortedKeyboardWidths.find(
+              const nextLargerWidth = sortedKeyboardSizes.find(
                 width => width > size,
               );
 
@@ -154,7 +164,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
             case keyMap.ArrowRight: {
               console.log('➡️ Right arrow key pressed');
 
-              const nextSmallerWidth = [...sortedKeyboardWidths]
+              const nextSmallerWidth = [...sortedKeyboardSizes]
                 .reverse()
                 .find(width => width < size);
 
@@ -176,7 +186,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
             case keyMap.ArrowRight: {
               console.log('➡️ Right arrow key pressed for right handle');
               // For right handle, right arrow makes element wider
-              const nextLargerWidth = sortedKeyboardWidths.find(
+              const nextLargerWidth = sortedKeyboardSizes.find(
                 width => width > size,
               );
 
@@ -190,7 +200,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
             case keyMap.ArrowLeft: {
               console.log('⬅️ Left arrow key pressed for right handle');
               // For right handle, left arrow makes element narrower
-              const nextSmallerWidth = [...sortedKeyboardWidths]
+              const nextSmallerWidth = [...sortedKeyboardSizes]
                 .reverse()
                 .find(width => width < size);
 
@@ -204,11 +214,81 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
           }
           break;
         }
+        case 'top': {
+          console.log('Top handle interaction');
+          switch (e.code) {
+            case keyMap.ArrowUp: {
+              console.log('⬇️ Down arrow key pressed for top handle');
+              // For top handle, down arrow makes element taller
+              const nextLargerHeight = sortedKeyboardSizes.find(
+                height => height > size,
+              );
+
+              if (nextLargerHeight !== undefined) {
+                setSize(nextLargerHeight);
+                // Call onResize if provided
+                onResize?.(nextLargerHeight);
+              }
+
+              break;
+            }
+            case keyMap.ArrowDown: {
+              console.log('⬆️ Up arrow key pressed for top handle');
+              // For top handle, up arrow makes element shorter
+              const nextSmallerHeight = [...sortedKeyboardSizes]
+                .reverse()
+                .find(height => height < size);
+
+              if (nextSmallerHeight !== undefined) {
+                setSize(nextSmallerHeight);
+                // Call onResize if provided
+                onResize?.(nextSmallerHeight);
+              }
+
+              break;
+            }
+          }
+          break;
+        }
+        case 'bottom': {
+          console.log('Bottom handle interaction');
+          switch (e.code) {
+            case keyMap.ArrowDown: {
+              console.log('⬆️ Up arrow key pressed for bottom handle');
+              // For bottom handle, up arrow makes element smaller
+              const nextSmallerHeight = [...sortedKeyboardSizes]
+                .reverse()
+                .find(height => height < size);
+
+              if (nextSmallerHeight !== undefined) {
+                setSize(nextSmallerHeight);
+                // Call onResize if provided
+                onResize?.(nextSmallerHeight);
+              }
+              break;
+            }
+            case keyMap.ArrowUp: {
+              console.log('⬇️ Down arrow key pressed for bottom handle');
+              // For bottom handle, down arrow makes element taller
+              const nextLargerHeight = sortedKeyboardSizes.find(
+                height => height > size,
+              );
+
+              if (nextLargerHeight !== undefined) {
+                setSize(nextLargerHeight);
+                // Call onResize if provided
+                onResize?.(nextLargerHeight);
+              }
+              break;
+            }
+          }
+          break;
+        }
         default:
           break;
       }
     },
-    [size, sortedKeyboardWidths, onResize, initialSize, minSize],
+    [size, sortedKeyboardSizes, onResize, initialSize, minSize],
   );
 
   const handleKeyDown = useCallback(
@@ -282,3 +362,4 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 // 11.Ensure correct a11y practices
 // 12.Fixes closing transition  ✅
 // 13.Weird resize bug, the drawer goes crazy
+// 14.Toolbar interaction story is still flakey
