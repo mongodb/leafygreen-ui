@@ -45,6 +45,10 @@ export type ResizableProps = {
    */
   maxViewportPercentages: number;
 
+  /**
+   * The type of handle used for resizing.
+   * This determines which edge of the element can be dragged to resize it.
+   */
   handleType: HandleType;
 };
 

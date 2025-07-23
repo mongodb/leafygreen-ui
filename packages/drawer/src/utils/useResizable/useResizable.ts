@@ -83,6 +83,14 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       );
     }
 
+    console.log('🌈handleMouseMove', {
+      initialElementSize,
+      initialMousePos,
+      isResizing,
+      deltaX,
+      newSize,
+    });
+
     if (newSize < minSize) {
       newSize = minSize;
     } else if (newSize > effectiveMaxSize) {
@@ -121,6 +129,13 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         // Capture initial mouse position and current element size
         initialMousePos.current = { x: e.clientX, y: e.clientY };
 
+        console.log('onMouseDown called with handleType:', {
+          x: e.clientX,
+          y: e.clientY,
+          isResizing,
+          enabled,
+        });
+
         if (resizableRef.current) {
           initialElementSize.current =
             handleType === 'left' || handleType === 'right'
@@ -136,6 +151,9 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       onBlur: () => {
         // Handle blur event if needed, e.g., to reset styles or state
         setIsFocused(false);
+      },
+      style: {
+        cursor: 'col-resize', // Set cursor style for resizing
       },
     };
   }, [enabled]);
