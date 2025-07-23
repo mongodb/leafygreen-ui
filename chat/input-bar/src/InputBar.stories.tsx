@@ -14,7 +14,7 @@ import {
   SuggestedPrompts,
 } from '.';
 
-export default {
+const meta: StoryMetaType<typeof InputBar> = {
   title: 'Composition/Chat/InputBar',
   component: InputBar,
   parameters: {
