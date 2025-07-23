@@ -179,15 +179,6 @@ export type ResolvedProgressBarProps = InheritedProps & {
   /** Resolved size (thickness) of the progress bar. */
   size: Size;
 
-  /** Resolved variant of the progress bar. Defaults to "info". */
-  variant: Variant;
-
-  /**
-   * When `true`, displays icon next to progress value.
-   * If `variant` is `'success'`, the icon only appears when progress reaches 100%.
-   */
-  showIcon: boolean;
-
   /** Optional descriptive text below the progress bar.
    * If multiple items are provided in an array, they will be automatically rotated every 2000 milliseconds.
    * Single items are returned as-is without rotation.
@@ -199,4 +190,13 @@ export type ResolvedProgressBarProps = InheritedProps & {
    * If undefined, no progress value is displayed.
    */
   formatValue?: FormatValueType;
+
+  /**
+   * When `true`, displays icon next to progress value.
+   * If `variant` is `'success'`, the icon only appears when progress reaches 100%.
+   */
+  showIcon: boolean;
+
+  /** Resolved variant of the progress bar. Defaults to "info". */
+  variant: Variant;
 };
