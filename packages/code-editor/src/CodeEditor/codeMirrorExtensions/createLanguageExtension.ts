@@ -1,106 +1,68 @@
-import { type CodeEditorModules } from '../util/useModuleLoaders';
-
 const codeMirrorLanguageExtensions = {
-  cpp: (modules: CodeEditorModules) => {
-    const { cpp } = modules[
-      '@codemirror/lang-cpp'
-    ] as typeof import('@codemirror/lang-cpp');
+  cpp: async () => {
+    const { cpp } = await import('@codemirror/lang-cpp');
     return cpp();
   },
-  csharp: (modules: CodeEditorModules) => {
-    const { csharp } = modules[
-      '@replit/codemirror-lang-csharp'
-    ] as typeof import('@replit/codemirror-lang-csharp');
+  csharp: async () => {
+    const { csharp } = await import('@replit/codemirror-lang-csharp');
     return csharp();
   },
-  css: (modules: CodeEditorModules) => {
-    const { css } = modules[
-      '@codemirror/lang-css'
-    ] as typeof import('@codemirror/lang-css');
+  css: async () => {
+    const { css } = await import('@codemirror/lang-css');
     return css();
   },
-  go: (modules: CodeEditorModules) => {
-    const { go } = modules[
-      '@codemirror/lang-go'
-    ] as typeof import('@codemirror/lang-go');
+  go: async () => {
+    const { go } = await import('@codemirror/lang-go');
     return go();
   },
-  html: (modules: CodeEditorModules) => {
-    const { html } = modules[
-      '@codemirror/lang-html'
-    ] as typeof import('@codemirror/lang-html');
+  html: async () => {
+    const { html } = await import('@codemirror/lang-html');
     return html();
   },
-  java: (modules: CodeEditorModules) => {
-    const { java } = modules[
-      '@codemirror/lang-java'
-    ] as typeof import('@codemirror/lang-java');
+  java: async () => {
+    const { java } = await import('@codemirror/lang-java');
     return java();
   },
-  javascript: (modules: CodeEditorModules) => {
-    const { javascript } = modules[
-      '@codemirror/lang-javascript'
-    ] as typeof import('@codemirror/lang-javascript');
+  javascript: async () => {
+    const { javascript } = await import('@codemirror/lang-javascript');
     return javascript({ jsx: false, typescript: false });
   },
-  jsx: (modules: CodeEditorModules) => {
-    const { javascript } = modules[
-      '@codemirror/lang-javascript'
-    ] as typeof import('@codemirror/lang-javascript');
+  jsx: async () => {
+    const { javascript } = await import('@codemirror/lang-javascript');
     return javascript({ jsx: true, typescript: false });
   },
-  json: (modules: CodeEditorModules) => {
-    const { json } = modules[
-      '@codemirror/lang-json'
-    ] as typeof import('@codemirror/lang-json');
+  json: async () => {
+    const { json } = await import('@codemirror/lang-json');
     return json();
   },
-  kotlin: (modules: CodeEditorModules) => {
-    const { StreamLanguage } = modules[
-      '@codemirror/language'
-    ] as typeof import('@codemirror/language');
-    const { kotlin } = modules[
-      '@codemirror/legacy-modes/mode/clike'
-    ] as typeof import('@codemirror/legacy-modes/mode/clike');
+  kotlin: async () => {
+    const { StreamLanguage } = await import('@codemirror/language');
+    const { kotlin } = await import('@codemirror/legacy-modes/mode/clike');
     return StreamLanguage.define(kotlin);
   },
-  php: (modules: CodeEditorModules) => {
-    const { php } = modules[
-      '@codemirror/lang-php'
-    ] as typeof import('@codemirror/lang-php');
+  php: async () => {
+    const { php } = await import('@codemirror/lang-php');
     return php();
   },
-  python: (modules: CodeEditorModules) => {
-    const { python } = modules[
-      '@codemirror/lang-python'
-    ] as typeof import('@codemirror/lang-python');
+  python: async () => {
+    const { python } = await import('@codemirror/lang-python');
     return python();
   },
-  ruby: (modules: CodeEditorModules) => {
-    const { StreamLanguage } = modules[
-      '@codemirror/language'
-    ] as typeof import('@codemirror/language');
-    const { ruby } = modules[
-      '@codemirror/legacy-modes/mode/ruby'
-    ] as typeof import('@codemirror/legacy-modes/mode/ruby');
+  ruby: async () => {
+    const { StreamLanguage } = await import('@codemirror/language');
+    const { ruby } = await import('@codemirror/legacy-modes/mode/ruby');
     return StreamLanguage.define(ruby);
   },
-  rust: (modules: CodeEditorModules) => {
-    const { rust } = modules[
-      '@codemirror/lang-rust'
-    ] as typeof import('@codemirror/lang-rust');
+  rust: async () => {
+    const { rust } = await import('@codemirror/lang-rust');
     return rust();
   },
-  typescript: (modules: CodeEditorModules) => {
-    const { javascript } = modules[
-      '@codemirror/lang-javascript'
-    ] as typeof import('@codemirror/lang-javascript');
+  typescript: async () => {
+    const { javascript } = await import('@codemirror/lang-javascript');
     return javascript({ jsx: false, typescript: true });
   },
-  tsx: (modules: CodeEditorModules) => {
-    const { javascript } = modules[
-      '@codemirror/lang-javascript'
-    ] as typeof import('@codemirror/lang-javascript');
+  tsx: async () => {
+    const { javascript } = await import('@codemirror/lang-javascript');
     return javascript({ jsx: true, typescript: true });
   },
 } as const;
@@ -114,9 +76,6 @@ export const LanguageName = Object.keys(codeMirrorLanguageExtensions).reduce(
   {} as Record<LanguageName, LanguageName>,
 );
 
-export function createLanguageExtension(
-  language: LanguageName,
-  modules: CodeEditorModules,
-) {
-  return codeMirrorLanguageExtensions[language](modules);
+export function createLanguageExtension(language: LanguageName) {
+  return codeMirrorLanguageExtensions[language]();
 }
