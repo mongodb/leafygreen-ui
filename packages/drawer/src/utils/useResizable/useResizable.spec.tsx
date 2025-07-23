@@ -3,6 +3,7 @@ import { fireEvent } from '@testing-library/dom';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useResizable } from './useResizable';
 import { renderHook } from '@leafygreen-ui/testing-lib';
+import { DragFrom } from './useResizable.types';
 
 // Mock window dimensions
 Object.defineProperty(window, 'innerWidth', { value: 1024 });
@@ -30,7 +31,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        handleType: 'right',
+        dragFrom: DragFrom.Right,
         maxViewportPercentages: 50,
       }),
     );
@@ -47,7 +48,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        handleType: 'right',
+        dragFrom: DragFrom.Right,
         maxViewportPercentages: 50,
       }),
     );
@@ -66,7 +67,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        handleType: 'right',
+        dragFrom: DragFrom.Right,
         onResize,
         maxViewportPercentages: 50,
       }),
@@ -101,9 +102,9 @@ describe('useResizable', () => {
     expect(onResize).toHaveBeenCalledWith(400);
   });
 
-  describe.each(['left', 'right', 'top', 'bottom'])(
-    'handleType: %s',
-    handleType => {
+  describe.each([DragFrom.Bottom, DragFrom.Top, DragFrom.Left, DragFrom.Right])(
+    'dragFrom: %s',
+    dragFrom => {
       test('respects minSize constraint', () => {
         const onResize = jest.fn();
         const initialSize = 300;
@@ -112,7 +113,7 @@ describe('useResizable', () => {
             initialSize,
             minSize: 250,
             maxSize: 500,
-            handleType: handleType,
+            dragFrom: dragFrom as DragFrom,
             onResize,
             maxViewportPercentages: 50,
           }),
@@ -139,9 +140,13 @@ describe('useResizable', () => {
             window,
             new MouseEvent('mousemove', {
               clientX:
-                handleType === 'left' ? initialSize + 100 : initialSize - 100,
+                dragFrom === DragFrom.Left
+                  ? initialSize + 100
+                  : initialSize - 100,
               clientY:
-                handleType === 'top' ? initialSize + 100 : initialSize - 100,
+                dragFrom === DragFrom.Top
+                  ? initialSize + 100
+                  : initialSize - 100,
             }),
           );
         });
@@ -159,7 +164,7 @@ describe('useResizable', () => {
             initialSize,
             minSize: 100,
             maxSize: 400,
-            handleType: handleType,
+            dragFrom: dragFrom as DragFrom,
             onResize,
             maxViewportPercentages: 60,
           }),
@@ -186,9 +191,13 @@ describe('useResizable', () => {
             window,
             new MouseEvent('mousemove', {
               clientX:
-                handleType === 'left' ? initialSize - 200 : initialSize + 200,
+                dragFrom === DragFrom.Left
+                  ? initialSize - 200
+                  : initialSize + 200,
               clientY:
-                handleType === 'top' ? initialSize - 200 : initialSize + 200,
+                dragFrom === DragFrom.Top
+                  ? initialSize - 200
+                  : initialSize + 200,
             }),
           );
         });
@@ -206,7 +215,7 @@ describe('useResizable', () => {
             initialSize,
             minSize: 100,
             maxSize: 900,
-            handleType: handleType,
+            dragFrom: dragFrom as DragFrom,
             maxViewportPercentages: 50,
             onResize,
           }),
@@ -232,15 +241,19 @@ describe('useResizable', () => {
             window,
             new MouseEvent('mousemove', {
               clientX:
-                handleType === 'left' ? initialSize - 400 : initialSize + 400,
+                dragFrom === DragFrom.Left
+                  ? initialSize - 400
+                  : initialSize + 400,
               clientY:
-                handleType === 'top' ? initialSize - 200 : initialSize + 200,
+                dragFrom === DragFrom.Top
+                  ? initialSize - 200
+                  : initialSize + 200,
             }),
           );
         });
 
         const maxViewportSize =
-          handleType === 'right' || handleType === 'left' ? 512 : 384; // 50% of viewport width or height
+          dragFrom === DragFrom.Right || dragFrom === DragFrom.Left ? 512 : 384; // 50% of viewport width or height
         expect(result.current.size).toBe(maxViewportSize);
         expect(onResize).toHaveBeenCalledWith(maxViewportSize);
       });
@@ -253,7 +266,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        handleType: 'right',
+        dragFrom: DragFrom.Right,
         maxViewportPercentages: 50,
       }),
     );
@@ -304,7 +317,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        handleType: 'right',
+        dragFrom: DragFrom.Right,
         onResize,
         maxViewportPercentages: 50,
       }),
@@ -340,7 +353,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        handleType: 'right',
+        dragFrom: DragFrom.Right,
         onResize,
         enabled: false,
         maxViewportPercentages: 50,

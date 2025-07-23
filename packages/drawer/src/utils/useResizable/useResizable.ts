@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ResizableProps,
   ResizableReturn,
-  HandleType,
+  DragFrom,
 } from './useResizable.types';
 
 export const useResizable = <T extends HTMLElement = HTMLDivElement>({
@@ -13,7 +13,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   maxSize: maxSizeProp = 0,
   onResize,
   maxViewportPercentages,
-  handleType,
+  dragFrom,
 }: ResizableProps): ResizableReturn<T> => {
   const resizableRef = useRef<T>(null);
   // State to track if the element is currently being resized
@@ -54,17 +54,17 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     const deltaX = e.clientX - initialMousePos.current.x;
     const deltaY = e.clientY - initialMousePos.current.y;
 
-    switch (handleType) {
-      case 'left': // TODO: use var
+    switch (dragFrom) {
+      case DragFrom.Left:
         newSize = initialElementSize.current - deltaX;
         break;
-      case 'right':
+      case DragFrom.Right:
         newSize = initialElementSize.current + deltaX;
         break;
-      case 'top':
+      case DragFrom.Top:
         newSize = initialElementSize.current - deltaY;
         break;
-      case 'bottom':
+      case DragFrom.Bottom:
         newSize = initialElementSize.current + deltaY;
         break;
       default:
@@ -74,7 +74,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     if (maxViewportPercentages) {
       const viewportPercent = maxViewportPercentages / 100;
       const viewPortInnerSize =
-        handleType === 'left' || handleType === 'right'
+        dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
           ? window.innerWidth
           : window.innerHeight;
       effectiveMaxSize = Math.min(
@@ -82,14 +82,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         viewPortInnerSize * viewportPercent,
       );
     }
-
-    console.log('🌈handleMouseMove', {
-      initialElementSize,
-      initialMousePos,
-      isResizing,
-      deltaX,
-      newSize,
-    });
 
     if (newSize < minSize) {
       newSize = minSize;
@@ -131,7 +123,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
         if (resizableRef.current) {
           initialElementSize.current =
-            handleType === 'left' || handleType === 'right'
+            dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
               ? resizableRef.current.offsetWidth
               : resizableRef.current.offsetHeight;
         }
@@ -147,7 +139,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       },
       style: {
         cursor:
-          handleType === 'left' || handleType === 'right'
+          dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
             ? 'col-resize'
             : 'row-resize', // Set cursor style for resizing
       },
@@ -155,7 +147,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   }, [enabled]);
 
   const getKeyboardInteraction = useCallback(
-    (e: React.KeyboardEvent | KeyboardEvent, handleType: HandleType | null) => {
+    (e: React.KeyboardEvent | KeyboardEvent, dragFrom: DragFrom | null) => {
       const getNextSizes = (direction: 'larger' | 'smaller') => {
         const currentSize = size;
         const sizes = sortedKeyboardSizes;
@@ -175,7 +167,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       };
 
       const keyMappings: Record<
-        HandleType,
+        DragFrom,
         { [key: string]: 'larger' | 'smaller' }
       > = {
         left: {
@@ -196,8 +188,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         },
       };
 
-      if (handleType && e.code in keyMappings[handleType]) {
-        const direction = keyMappings[handleType][e.code];
+      if (dragFrom && e.code in keyMappings[dragFrom]) {
+        const direction = keyMappings[dragFrom][e.code];
         const nextSize = getNextSizes(direction);
         handleSizeChange(nextSize);
       }
@@ -207,7 +199,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent | KeyboardEvent) => {
-      getKeyboardInteraction(e, handleType);
+      getKeyboardInteraction(e, dragFrom);
     },
     [getKeyboardInteraction],
   );
@@ -270,7 +262,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 // 5. Update DrawerLayout props ✅
 // 6. Figure out the correct TS and defaults for the sizes  ✅
 // 7. Add setOpen to drawer component to allow closing the drawer from inside ❌
-// 8. Add back handleType to getResizerProps
+// 8. Add back dragFrom to getResizerProps ❌
 // 9. Remove snap close logic from the hook ✅
 // 10.Disable resize on small widths
 // 11.Ensure correct a11y practices

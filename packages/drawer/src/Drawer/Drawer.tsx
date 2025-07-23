@@ -142,7 +142,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       minSize: DRAWER_MIN_WIDTH,
       maxSize: DRAWER_MAX_WIDTH, // Allow resizing up to a reasonable size
       maxViewportPercentages: 50,
-      handleType: 'left',
+      dragFrom: 'left',
     });
 
     // Create merged ref after resizableRef is defined

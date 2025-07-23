@@ -1,11 +1,11 @@
-export const handleType = {
-  left: 'left',
-  right: 'right',
-  top: 'top',
-  bottom: 'bottom',
+export const DragFrom = {
+  Left: 'left',
+  Right: 'right',
+  Top: 'top',
+  Bottom: 'bottom',
 } as const;
 
-export type HandleType = (typeof handleType)[keyof typeof handleType];
+export type DragFrom = (typeof DragFrom)[keyof typeof DragFrom];
 
 export type ResizableProps = {
   /**
@@ -49,7 +49,7 @@ export type ResizableProps = {
    * The type of handle used for resizing.
    * This determines which edge of the element can be dragged to resize it.
    */
-  handleType: HandleType;
+  dragFrom: DragFrom;
 };
 
 export type ResizerProps = {

@@ -5,7 +5,7 @@ import { useResizable } from './useResizable';
 import { palette } from '@leafygreen-ui/palette';
 
 export default {
-  title: 'hooks/useResizable/handleType',
+  title: 'hooks/useResizable/dragFrom',
   parameters: {
     default: null,
     chromatic: {
@@ -19,7 +19,7 @@ interface WrapperProps {
 }
 
 interface HandleConfig {
-  handleType: 'left' | 'right' | 'top' | 'bottom';
+  dragFrom: 'left' | 'right' | 'top' | 'bottom';
   containerStyles: React.CSSProperties;
   resizerBaseStyles: React.CSSProperties;
   label: string;
@@ -27,7 +27,7 @@ interface HandleConfig {
 
 const HANDLE_CONFIGS: Record<string, HandleConfig> = {
   left: {
-    handleType: 'left',
+    dragFrom: 'left',
     containerStyles: {
       right: 0,
       top: 0,
@@ -40,7 +40,7 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
     label: 'Resizable from the left edge of the element',
   },
   right: {
-    handleType: 'right',
+    dragFrom: 'right',
     containerStyles: {
       left: 0,
       top: 0,
@@ -53,7 +53,7 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
     label: 'Resizable from the right edge of the element',
   },
   top: {
-    handleType: 'top',
+    dragFrom: 'top',
     containerStyles: {
       left: 0,
       bottom: 0,
@@ -66,7 +66,7 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
     label: 'Resizable from the top of the element',
   },
   bottom: {
-    handleType: 'bottom',
+    dragFrom: 'bottom',
     containerStyles: {
       left: 0,
       top: 0,
@@ -96,9 +96,9 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
 };
 
 const createResizableStory = (
-  handleType: 'left' | 'right' | 'top' | 'bottom',
+  dragFrom: 'left' | 'right' | 'top' | 'bottom',
 ) => {
-  const config = HANDLE_CONFIGS[handleType];
+  const config = HANDLE_CONFIGS[dragFrom];
 
   return () => {
     const { getResizerProps, size, resizableRef } = useResizable({
@@ -107,13 +107,12 @@ const createResizableStory = (
       minSize: 200,
       maxSize: 600,
       maxViewportPercentages: 50,
-      handleType: config.handleType,
+      dragFrom: config.dragFrom,
     });
 
     const resizerProps = getResizerProps();
-    const configHandleType = config.handleType;
-    const isVertical =
-      configHandleType === 'left' || configHandleType === 'right';
+    const configDragFrom = config.dragFrom;
+    const isVertical = configDragFrom === 'left' || configDragFrom === 'right';
 
     const containerStyles = {
       ...config.containerStyles,
