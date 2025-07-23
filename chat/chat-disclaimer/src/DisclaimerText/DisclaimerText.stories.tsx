@@ -6,7 +6,7 @@ import { Link } from '@leafygreen-ui/typography';
 import { DisclaimerText } from '.';
 
 export default {
-  title: 'Chat/Disclaimer/DisclaimerText',
+  title: 'Composition/Chat/Disclaimer/DisclaimerText',
   component: DisclaimerText,
   args: {
     title: 'Terms and Conditions',

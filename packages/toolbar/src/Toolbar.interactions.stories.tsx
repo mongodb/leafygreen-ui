@@ -8,7 +8,7 @@ import { getTestUtils } from './testing';
 import { Toolbar, ToolbarIconButton, ToolbarProps } from '.';
 
 export default {
-  title: 'Components/Toolbar/Interactions',
+  title: 'Composition/Data Display/Toolbar/Interactions',
   component: Toolbar,
   parameters: {
     default: 'LiveExample',

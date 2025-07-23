@@ -70,7 +70,7 @@ const defaultExcludedControls = [
 ];
 
 const meta: StoryMetaType<typeof Popover> = {
-  title: 'Components/Popover',
+  title: 'Composition/Overlays/Popover',
   component: Popover,
   parameters: {
     default: 'LiveExample',

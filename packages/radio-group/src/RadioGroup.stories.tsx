@@ -9,7 +9,7 @@ import { StoryFn } from '@storybook/react';
 import { Radio, RadioGroup, RadioGroupProps, Size } from '.';
 
 const meta: StoryMetaType<typeof RadioGroup> = {
-  title: 'Components/RadioGroup',
+  title: 'Components/Inputs/RadioGroup',
   component: RadioGroup,
   parameters: {
     controls: {

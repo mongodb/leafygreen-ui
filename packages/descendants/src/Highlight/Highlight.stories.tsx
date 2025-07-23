@@ -13,7 +13,7 @@ import { useHighlightContext } from './useHighlightContext';
 import { createHighlightContext, useHighlight } from '.';
 
 export default {
-  title: 'Hooks/useHighlight',
+  title: 'Internal/Hooks/useHighlight',
   parameters: {
     default: null,
     chromatic: {

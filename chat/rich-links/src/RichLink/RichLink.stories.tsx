@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 import { RichLink } from '.';
 
 export default {
-  title: 'Chat/RichLink',
+  title: 'Composition/Chat/RichLink',
   component: RichLink,
 };
 

@@ -6,7 +6,7 @@ import { type StoryMetaType } from '@leafygreen-ui/lib';
 import { MessageBanner } from '.';
 
 const meta: StoryMetaType<typeof MessageBanner> = {
-  title: 'Chat/MessageBanner',
+  title: 'Composition/Chat/MessageBanner',
   component: MessageBanner,
   args: {
     children: 'This is a message banner',

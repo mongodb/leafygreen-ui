@@ -9,7 +9,7 @@ import { StoryFn } from '@storybook/react';
 import { GalleryIndicator } from '.';
 
 const meta: StoryMetaType<typeof GalleryIndicator> = {
-  title: 'Components/GalleryIndicator',
+  title: 'Components/Display/GalleryIndicator',
   component: GalleryIndicator,
   parameters: {
     default: 'LiveExample',

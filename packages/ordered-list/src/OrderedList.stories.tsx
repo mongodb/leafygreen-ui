@@ -8,7 +8,7 @@ import { OrderedListProps } from '../OrderedList.types';
 import { OrderedList, OrderedListItem } from '.';
 
 const meta: StoryMetaType<typeof OrderedList> = {
-  title: 'Components/OrderedList',
+  title: 'Components/Typography/OrderedList',
   component: OrderedList,
   parameters: {
     default: 'LiveExample',

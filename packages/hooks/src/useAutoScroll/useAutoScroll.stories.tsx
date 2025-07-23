@@ -11,7 +11,7 @@ import { testItemHeight } from './constants.test';
 const testItems = 16;
 
 const meta: StoryMetaType<any> = {
-  title: 'hooks/useAutoScroll',
+  title: 'Internal/hooks/useAutoScroll',
   component: undefined,
   argTypes: {
     selected: {

@@ -9,7 +9,7 @@ import { Toolbar } from '../Toolbar/Toolbar';
 import { ToolbarIconButton, ToolbarIconButtonProps } from '.';
 
 export default {
-  title: 'Components/Toolbar/ToolbarIconButton',
+  title: 'Composition/Data Display/Toolbar/ToolbarIconButton',
   component: ToolbarIconButton,
   parameters: {
     default: 'LiveExample',

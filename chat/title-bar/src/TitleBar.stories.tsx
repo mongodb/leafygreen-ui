@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import { TitleBar } from '.';
 
 export default {
-  title: 'Chat/TitleBar',
+  title: 'Composition/Chat/TitleBar',
   component: TitleBar,
   args: {
     title: 'LeafyGreen Chat',

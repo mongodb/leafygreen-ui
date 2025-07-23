@@ -6,7 +6,7 @@ import { StoryFn } from '@storybook/react';
 import { InputBar, InputBarProps, SuggestedPrompt, SuggestedPrompts } from '.';
 
 export default {
-  title: 'Chat/InputBar',
+  title: 'Composition/Chat/InputBar',
   component: InputBar,
   args: {
     onMessageSend: (messageBody: string) => {

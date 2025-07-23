@@ -12,7 +12,7 @@ import baseMessages from './utils/baseMessages';
 import { ChatWindow } from '.';
 
 const meta: StoryMetaType<typeof ChatWindow> = {
-  title: 'Chat/ChatWindow',
+  title: 'Composition/ChatWindow',
   component: ChatWindow,
   args: {
     title: 'LG Chat Demo',

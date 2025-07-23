@@ -12,7 +12,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { InlineMessageFeedback } from '.';
 
 export default {
-  title: 'Chat/MessageFeedback/InlineMessageFeedback',
+  title: 'Composition/Chat/MessageFeedback/InlineMessageFeedback',
   component: InlineMessageFeedback,
   args: {
     label: 'What did you think?',

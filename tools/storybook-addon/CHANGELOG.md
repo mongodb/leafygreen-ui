@@ -1,5 +1,11 @@
 # @lg-tools/storybook-addon
 
+## 0.6.0
+
+### Minor Changes
+
+- 221b35a: Adds autodocs to config
+
 ## 0.5.3
 
 ### Patch Changes
