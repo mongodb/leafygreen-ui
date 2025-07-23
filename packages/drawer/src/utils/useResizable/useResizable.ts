@@ -5,6 +5,30 @@ import {
   ResizableReturn,
   DragFrom,
 } from './useResizable.types';
+import { calculateNewSize } from './useResizable.utils';
+
+// Mappings for keyboard interactions based on the dragFrom direction
+const DIRECTION_KEY_MAPPINGS: Record<
+  DragFrom,
+  { [key: string]: 'larger' | 'smaller' }
+> = {
+  left: {
+    [keyMap.ArrowLeft]: 'larger',
+    [keyMap.ArrowRight]: 'smaller',
+  },
+  right: {
+    [keyMap.ArrowRight]: 'larger',
+    [keyMap.ArrowLeft]: 'smaller',
+  },
+  top: {
+    [keyMap.ArrowUp]: 'larger',
+    [keyMap.ArrowDown]: 'smaller',
+  },
+  bottom: {
+    [keyMap.ArrowDown]: 'larger',
+    [keyMap.ArrowUp]: 'smaller',
+  },
+};
 
 export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   enabled = true,
@@ -26,6 +50,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   const [size, setSize] = useState<number>(initialSize);
   const minSize = minSizeProp ?? initialSize;
   const maxSize = maxSizeProp ?? initialSize;
+
+  // Keeps track of all the sizes that can be used for resizing with keyboard
   const keyboardSizes = [initialSize!, minSize, maxSize];
   const sortedKeyboardSizes = [...keyboardSizes].sort((a, b) => a - b);
 
@@ -35,7 +61,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   }, [enabled, initialSize]);
 
   /**
-   * Sets the current resizing state and updates the ref synchronously.
+   * Calculates and sets the current resizing state and updates the ref synchronously.
    * @param event
    * @returns void
    */
@@ -43,47 +69,15 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     // Only proceed if resizing is enabled and the element is currently being resized
     if (!isResizingRef.current) return;
 
-    let newSize = initialElementSize.current;
-    let effectiveMaxSize = maxSize;
-
-    // The difference in mouse position from the initial position
-    const deltaX = event.clientX - initialMousePos.current.x;
-    const deltaY = event.clientY - initialMousePos.current.y;
-
-    switch (dragFrom) {
-      case DragFrom.Left:
-        newSize = initialElementSize.current - deltaX;
-        break;
-      case DragFrom.Right:
-        newSize = initialElementSize.current + deltaX;
-        break;
-      case DragFrom.Top:
-        newSize = initialElementSize.current - deltaY;
-        break;
-      case DragFrom.Bottom:
-        newSize = initialElementSize.current + deltaY;
-        break;
-      default:
-        break;
-    }
-
-    if (maxViewportPercentages) {
-      const viewportPercent = maxViewportPercentages / 100;
-      const viewPortInnerSize =
-        dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
-          ? window.innerWidth
-          : window.innerHeight;
-      effectiveMaxSize = Math.min(
-        effectiveMaxSize,
-        viewPortInnerSize * viewportPercent,
-      );
-    }
-
-    if (newSize < minSize) {
-      newSize = minSize;
-    } else if (newSize > effectiveMaxSize) {
-      newSize = effectiveMaxSize;
-    }
+    let newSize = calculateNewSize(
+      event,
+      initialElementSize.current,
+      initialMousePos.current,
+      dragFrom,
+      minSize,
+      maxSize,
+      maxViewportPercentages,
+    );
 
     setSize(newSize);
     onResize?.(newSize);
@@ -104,6 +98,10 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   /**
    * Handles keyboard interactions for resizing.
    * Allows resizing using arrow keys based on the dragFrom direction.
+   *
+   * For example:
+   * - If dragFrom is 'left' and the left arrow key is pressed, it increases the size.
+   * - If dragFrom is 'left' and the right arrow key is pressed, it decreases the size.
    */
   const getKeyboardInteraction = useCallback(
     (e: React.KeyboardEvent | KeyboardEvent, dragFrom: DragFrom | null) => {
@@ -125,30 +123,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         }
       };
 
-      const keyMappings: Record<
-        DragFrom,
-        { [key: string]: 'larger' | 'smaller' }
-      > = {
-        left: {
-          [keyMap.ArrowLeft]: 'larger',
-          [keyMap.ArrowRight]: 'smaller',
-        },
-        right: {
-          [keyMap.ArrowRight]: 'larger',
-          [keyMap.ArrowLeft]: 'smaller',
-        },
-        top: {
-          [keyMap.ArrowUp]: 'larger',
-          [keyMap.ArrowDown]: 'smaller',
-        },
-        bottom: {
-          [keyMap.ArrowDown]: 'larger',
-          [keyMap.ArrowUp]: 'smaller',
-        },
-      };
-
-      if (dragFrom && e.code in keyMappings[dragFrom]) {
-        const direction = keyMappings[dragFrom][e.code];
+      if (dragFrom && e.code in DIRECTION_KEY_MAPPINGS[dragFrom]) {
+        const direction = DIRECTION_KEY_MAPPINGS[dragFrom][e.code];
         const nextSize = getNextSizes(direction);
         handleSizeChange(nextSize);
       }
@@ -219,31 +195,38 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   // These listeners are added to 'window' to ensure dragging works even if the mouse
   // moves off the resizer handle during the drag.
   useEffect(() => {
+    const cleanupListeners = () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+
     if (isResizing && enabled) {
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleMouseUp);
     } else {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      cleanupListeners();
     }
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      cleanupListeners();
     };
   }, [isResizing, handleMouseMove, handleMouseUp, enabled]);
 
   // Effect hook to add and remove global keydown event listener
   // This listener is added to 'window' to allow resizing with arrow keys
   useEffect(() => {
+    const cleanupListeners = () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+
     if (isFocused && enabled) {
       window.addEventListener('keydown', handleKeyDown);
     } else {
-      window.removeEventListener('keydown', handleKeyDown);
+      cleanupListeners();
     }
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      cleanupListeners();
     };
   }, [enabled, isFocused, handleKeyDown]);
 
@@ -251,11 +234,19 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   // This is to ensure that the resizing does not have a transition effect while resizing
   // but transitions back to the new size smoothly after resizing is done.
   useEffect(() => {
+    const cleanupStyles = () => {
+      resizableRef.current?.style.removeProperty('transition');
+    };
+
     if (isResizing) {
       resizableRef.current?.style.setProperty('transition', 'none');
     } else {
-      resizableRef.current?.style.removeProperty('transition');
+      cleanupStyles();
     }
+
+    return () => {
+      cleanupStyles();
+    };
   }, [isResizing]);
 
   return {
