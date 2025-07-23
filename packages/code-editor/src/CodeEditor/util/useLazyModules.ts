@@ -12,7 +12,7 @@ class ModuleError extends Error {
   }
 }
 
-export const useLazyModules = <T extends Record<string, unknown>>(
+export const useLazyModules = <T extends object>(
   loaders: LoadersMap<Partial<T>>,
 ) => {
   const [modules, setModules] = useState<Partial<T>>({});
