@@ -48,31 +48,33 @@ export const Role = {
 } as const;
 export type Role = (typeof Role)[keyof typeof Role];
 
-type BaseProps = DarkModeProps &
+type InheritedProps = DarkModeProps &
   AriaLabelPropsWithLabel &
   LgIdProps &
-  Omit<HTMLElementProps<'div'>, 'children' | 'role'> & {
-    /** Optional size (thickness) of the progress bar. */
-    size?: Size;
+  Omit<HTMLElementProps<'div'>, 'children' | 'role'>;
 
-    /** Optional descriptive text below the progress bar.
-     * If multiple items are provided in an array, they will be automatically rotated every 2000 milliseconds.
-     * Single items are returned as-is without rotation.
-     */
-    description?: React.ReactNode | Array<React.ReactNode>;
+type BaseProps = InheritedProps & {
+  /** Optional size (thickness) of the progress bar. */
+  size?: Size;
 
-    /**
-     * Optional formatting of progress value text.
-     * If undefined, no progress value is displayed.
-     */
-    formatValue?: FormatValueType;
+  /** Optional descriptive text below the progress bar.
+   * If multiple items are provided in an array, they will be automatically rotated every 2000 milliseconds.
+   * Single items are returned as-is without rotation.
+   */
+  description?: React.ReactNode | Array<React.ReactNode>;
 
-    /**
-     * When `true`, displays icon next to progress value.
-     * If `variant` is `'success'`, the icon only appears when progress reaches 100%.
-     */
-    showIcon?: boolean;
-  };
+  /**
+   * Optional formatting of progress value text.
+   * If undefined, no progress value is displayed.
+   */
+  formatValue?: FormatValueType;
+
+  /**
+   * When `true`, displays icon next to progress value.
+   * If `variant` is `'success'`, the icon only appears when progress reaches 100%.
+   */
+  showIcon?: boolean;
+};
 
 interface BaseDeterminateProps {
   /** When `true`, shows an infinite looping animation along the bar instead of a specific width. Only available for `info` and `success` variants. */
@@ -139,32 +141,6 @@ export type ProgressBarProps = BaseProps &
   (DeterminateProps | IndeterminateProps);
 
 /**
- * Internal, flattened form of `ProgressBarProps` used within the ProgressBar implementation.
- *
- * Collapses the discriminated union into a uniform shape with resolved and normalized values,
- * eliminating the need for runtime narrowing or conditional logic.
- */
-export interface ResolvedProgressBarProps {
-  /** Resolved role of the progress bar ("progressbar" or "meter"). */
-  role: Role;
-
-  /** Current progress value. Optional only if isIndeterminate is `true`. */
-  value: number | undefined;
-
-  /** Maximum progress value. */
-  maxValue: number | undefined;
-
-  /** When `true`, shows a disabled style and pauses animation. */
-  disabled: boolean;
-
-  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. */
-  isIndeterminate: boolean;
-
-  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". */
-  enableAnimation: boolean;
-}
-
-/**
  * Internal enum-like type representing resolved animation state,
  * derived from props like `isIndeterminate`, `enableAnimation`, and `role`.
  *
@@ -177,3 +153,50 @@ export const AnimationMode = {
   Transition: 'indeterminate-to-determinate-transition',
 } as const;
 export type AnimationMode = (typeof AnimationMode)[keyof typeof AnimationMode];
+
+/**
+ * Internal flattened type representing all resolved props for rendering.
+ */
+export type ResolvedProgressBarProps = InheritedProps & {
+  /** Resolved role of the progress bar ("progressbar" or "meter"). */
+  role: Role;
+
+  /** Resolved current progress value. */
+  value: number | undefined;
+
+  /** Resolved maximum progress value. */
+  maxValue: number | undefined;
+
+  /** When `true`, shows a disabled style and pauses animation. */
+  disabled: boolean;
+
+  /** When `true`, shows an infinite looping animation along the bar instead of a specific width. */
+  isIndeterminate: boolean;
+
+  /** When `true`, enables shimmer animation for longer-running processes. Only available for determinate bars with role "progressbar". */
+  enableAnimation: boolean;
+
+  /** Resolved size (thickness) of the progress bar. */
+  size: Size;
+
+  /** Resolved variant of the progress bar. Defaults to "info". */
+  variant: Variant;
+
+  /**
+   * When `true`, displays icon next to progress value.
+   * If `variant` is `'success'`, the icon only appears when progress reaches 100%.
+   */
+  showIcon: boolean;
+
+  /** Optional descriptive text below the progress bar.
+   * If multiple items are provided in an array, they will be automatically rotated every 2000 milliseconds.
+   * Single items are returned as-is without rotation.
+   */
+  description?: React.ReactNode | Array<React.ReactNode>;
+
+  /**
+   * Optional formatting of progress value text.
+   * If undefined, no progress value is displayed.
+   */
+  formatValue?: FormatValueType;
+};

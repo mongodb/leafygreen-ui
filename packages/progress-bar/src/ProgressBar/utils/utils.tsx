@@ -6,7 +6,13 @@ import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { isDefined } from '@leafygreen-ui/lib';
 
-import { DEFAULT_MAX_VALUE } from '../constants';
+import { DEFAULT_LGID_ROOT } from '../../testing';
+import {
+  DEFAULT_MAX_VALUE,
+  DEFAULT_SIZE,
+  DEFAULT_VARIANT,
+  iconsPendingCompletion,
+} from '../constants';
 import {
   AnimationMode,
   FormatValueType,
@@ -58,92 +64,6 @@ const getValidValue = (value?: number, maxValue?: number) => {
   }
 
   return Math.max(0, value);
-};
-
-/**
- * Resolves the full set of progress bar props based on provided props.
- *
- * @param props - Input props from the consumer
- * @returns Fully resolved progress bar props with:
- * - `value`: Current progress value
- * - `maxValue`: Maximum progress value
- * - `disabled`: Whether the progress bar is disabled
- * - `isIndeterminate`: Whether the bar is in indeterminate mode
- * - `enableAnimation`: Whether animation is enabled
- * - `role`: ARIA role string
- */
-export const resolveProgressBarProps = (
-  props: ProgressBarProps,
-): ResolvedProgressBarProps => {
-  // baseline common for all progress bars
-  const baseProps = {
-    value: undefined,
-    maxValue: undefined,
-    disabled: false,
-    isIndeterminate: false,
-    enableAnimation: false,
-  };
-
-  // indeterminate
-  if (props.isIndeterminate) {
-    warnMeterRole(props);
-    warnAnimatedVariant(props);
-
-    return {
-      ...baseProps,
-      role: Role.Progress,
-      value: getValidValue(props.value),
-      isIndeterminate: true,
-    };
-  }
-
-  // determinate with role "meter"
-  if (props.role === Role.Meter) {
-    warnEnableAnimationFlag(props);
-
-    return {
-      ...baseProps,
-      role: Role.Meter,
-      value: getValidValue(props.value, props.maxValue),
-      maxValue: getValidMaxValue(props.maxValue),
-      disabled: props.disabled ?? false,
-    };
-  }
-
-  // determinate with role "progressbar"
-  if (props.enableAnimation) warnAnimatedVariant(props);
-
-  return {
-    ...baseProps,
-    role: Role.Progress,
-    value: getValidValue(props.value, props.maxValue),
-    maxValue: getValidMaxValue(props.maxValue),
-    disabled: props.disabled ?? false,
-    enableAnimation: props.enableAnimation ?? false,
-  };
-};
-
-/**
- * Omits resolved props from the original props object.
- * Useful for spreading the remaining props while excluding resolved ones.
- *
- * @param obj - Original props object
- * @param resolved - Resolved props to omit
- * @returns New object with resolved props omitted
- */
-export const omitProps = (
-  obj: ProgressBarProps,
-  resolved: ResolvedProgressBarProps,
-): Omit<ProgressBarProps, keyof ResolvedProgressBarProps> => {
-  const clone = { ...obj };
-
-  for (const key of Object.keys(resolved) as Array<
-    keyof ResolvedProgressBarProps
-  >) {
-    delete clone[key as keyof ProgressBarProps];
-  }
-
-  return clone;
 };
 
 /**
@@ -272,4 +192,108 @@ export const getHeaderIcon = ({
     default:
       return <InfoWithCircleIcon {...props} />;
   }
+};
+
+/**
+ * Omits resolved props from the original props object.
+ * Useful for spreading the remaining props while excluding custom resolved ones.
+ *
+ * @param obj - Original props object
+ * @param omit - Props to omit
+ * @returns New object with omitted props
+ */
+export const omitProps = (
+  obj: ProgressBarProps,
+  omit: any = {},
+): Omit<ProgressBarProps, keyof ProgressBarProps> => {
+  const clone = { ...obj };
+
+  for (const key of Object.keys(omit) as Array<keyof ProgressBarProps>) {
+    delete clone[key as keyof ProgressBarProps];
+  }
+
+  return clone;
+};
+
+/**
+ * Resolves the final props for the progress bar component.
+ * - Validates and normalizes conditional values like `value`, `maxValue`, `role`, and `enableAnimation`.
+ * - Applies default values where necessary.
+ *
+ * @param props - The initial props passed to the progress bar
+ * @returns Resolved props object with a complete set ready for rendering.
+ */
+export const resolveProgressBarProps = (
+  props: ProgressBarProps,
+): ResolvedProgressBarProps => {
+  // extract consumer props and apply defaults
+  const {
+    size = DEFAULT_SIZE,
+    label,
+    description,
+    variant = DEFAULT_VARIANT,
+    darkMode = false,
+    formatValue,
+    className,
+    'aria-label': ariaLabel,
+    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+    showIcon,
+  } = props;
+
+  // create base props object
+  const base: ResolvedProgressBarProps = {
+    size,
+    label,
+    description,
+    variant,
+    darkMode,
+    formatValue,
+    className,
+    'aria-label': ariaLabel,
+    'data-lgid': dataLgId,
+
+    showIcon: false,
+    role: Role.Progress,
+    value: undefined,
+    maxValue: undefined,
+    disabled: false,
+    isIndeterminate: false,
+    enableAnimation: false,
+  };
+
+  // apply discriminant-based overrides
+  const overrides: Partial<ResolvedProgressBarProps> = {};
+
+  if (props.isIndeterminate) {
+    warnMeterRole(props);
+    warnAnimatedVariant(props);
+
+    overrides.isIndeterminate = true;
+    overrides.value = getValidValue(props.value);
+  } else if (props.role === Role.Meter) {
+    warnEnableAnimationFlag(props);
+
+    overrides.role = Role.Meter;
+    overrides.value = getValidValue(props.value, props.maxValue);
+    overrides.maxValue = getValidMaxValue(props.maxValue);
+    overrides.disabled = props.disabled ?? false;
+  } else {
+    if (props.enableAnimation) warnAnimatedVariant(props);
+
+    overrides.value = getValidValue(props.value, props.maxValue);
+    overrides.maxValue = getValidMaxValue(props.maxValue);
+    overrides.disabled = props.disabled ?? false;
+    overrides.enableAnimation = props.enableAnimation ?? false;
+  }
+
+  // based on overrides, set icon visibility
+  overrides.showIcon = iconsPendingCompletion.includes(variant)
+    ? showIcon && overrides.value === overrides.maxValue
+    : showIcon;
+
+  return {
+    ...base,
+    ...overrides,
+    ...omitProps(props, base),
+  };
 };
