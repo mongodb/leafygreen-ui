@@ -4,7 +4,7 @@ import { CodeEditorProps } from '../CodeEditor.types';
 
 import type { LoadersMap } from './useLazyModules';
 
-interface CodeEditorModules extends Record<string, unknown> {
+interface CodeEditorModules {
   '@uiw/codemirror-extensions-hyper-link': typeof import('@uiw/codemirror-extensions-hyper-link');
   '@codemirror/language': typeof import('@codemirror/language');
   '@codemirror/lint': typeof import('@codemirror/lint');
