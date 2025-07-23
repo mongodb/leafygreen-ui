@@ -1,33 +1,33 @@
 # Suggestion Card
 
-![npm (scoped)](https://img.shields.io/npm/v/@lg-chat/suggestion-card.svg)
+![npm (scoped)](https://img.shields.io/npm/v/@lg-chat/suggestions.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/suggestion-card/live-example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/suggestions/live-example/)
 
 ## Installation
 
 ### PNPM
 
 ```shell
-pnpm add @lg-chat/suggestion-card
+pnpm add @lg-chat/suggestions
 ```
 
 ### Yarn
 
 ```shell
-yarn add @lg-chat/suggestion-card
+yarn add @lg-chat/suggestions
 ```
 
 ### NPM
 
 ```shell
-npm install @lg-chat/suggestion-card
+npm install @lg-chat/suggestions
 ```
 
 ## Example
 
 ```tsx
-import { SuggestionCard, Status } from '@lg-chat/suggestion-card';
+import { SuggestedActions, Status } from '@lg-chat/suggestions';
 
 const configurationParameters = {
   'Cluster Tier': 'M10 ($9.00/month)',
@@ -43,21 +43,21 @@ const appliedParameters = {
 };
 
 // Basic suggestion card
-<SuggestionCard
+<SuggestedActions
   status={Status.Unset}
   suggestedConfigurationParameters={configurationParameters}
   onClickApply={() => console.log('Apply clicked')}
 />
 
 // With apply button
-<SuggestionCard
+<SuggestedActions
   status={Status.Apply}
   suggestedConfigurationParameters={configurationParameters}
   onClickApply={() => console.log('Apply clicked')}
 />
 
 // Success state with applied parameters
-<SuggestionCard
+<SuggestedActions
   status={Status.Success}
   suggestedConfigurationParameters={configurationParameters}
   appliedParameters={appliedParameters}
@@ -65,7 +65,7 @@ const appliedParameters = {
 />
 
 // Error state with failed parameters
-<SuggestionCard
+<SuggestedActions
   status={Status.Error}
   suggestedConfigurationParameters={configurationParameters}
   failedParameters={appliedParameters}

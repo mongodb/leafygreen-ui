@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { SuggestionCard } from '.';
+import { SuggestedActions } from '.';
 
-describe('packages/suggestion-card/getTestUtils', () => {
+describe('packages/suggestions/getTestUtils', () => {
   test('condition', () => {});
 });

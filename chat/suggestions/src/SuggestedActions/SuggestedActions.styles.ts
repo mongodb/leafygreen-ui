@@ -10,16 +10,21 @@ import {
 
 const DIVIDER_WIDTH = 353;
 
-export const dividerStyle = css`
+export const dividerStyles = css`
   width: ${DIVIDER_WIDTH}px;
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[400]}px;
 `;
 
-export const getSuggetionCardWrapperStyles = (theme: Theme) => css`
+export const getSuggestedActionsWrapperStyles = (theme: Theme) => css`
   background-color: ${color[theme].background.secondary.default};
   border: 1px solid ${color[theme].border.secondary.default};
   border-radius: ${borderRadius[300]}px;
   width: 100%;
   padding: ${spacing[300]}px;
+  display: flex;
+  flex-direction: column;
   gap: ${spacing[200]}px;
   font-size: ${typeScales.body1.fontSize}px;
   color: ${color[theme].text.primary.default};
@@ -28,17 +33,7 @@ export const getSuggetionCardWrapperStyles = (theme: Theme) => css`
 
 export const applyButtonStyles = css`
   width: 100%;
-  margin-top: ${spacing[200]}px;
   font-weight: ${fontWeights.regular};
-`;
-
-export const bannerWrapperStyles = css`
-  width: 100%;
-  gap: ${spacing[200]}px;
-  font-size: ${typeScales.body1.fontSize}px;
-  line-height: ${typeScales.body1.lineHeight}px;
-  margin-top: ${spacing[400]}px;
-  justify-content: space-between;
 `;
 
 export const boldedTextStyle = css`
@@ -49,7 +44,6 @@ export const tableStyles = css`
   width: 100%;
   gap: ${spacing[200]}px;
   line-height: ${typeScales.body1.lineHeight}px;
-  margin-top: ${spacing[200]}px;
 `;
 
 export const tableHeaderStyles = css`
@@ -60,10 +54,4 @@ export const tableHeaderStyles = css`
 export const tableCellStyles = css`
   text-align: right;
   padding: ${spacing[50]}px 0;
-`;
-
-export const listStyles = css`
-  padding-left: ${spacing[500]}px;
-  line-height: ${typeScales.body1.lineHeight}px;
-  margin: ${spacing[100]}px;
 `;

@@ -1,6 +1,6 @@
   
 {
-  "name": "@lg-chat/suggestion-card",
+  "name": "@lg-chat/suggestions",
   "version": "0.1.0",
   "description": "LeafyGreen UI Kit Suggestion Card",
   "main": "./dist/umd/index.js",
@@ -28,11 +28,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
-  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/suggestion-card",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/chat/suggestions",
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui"

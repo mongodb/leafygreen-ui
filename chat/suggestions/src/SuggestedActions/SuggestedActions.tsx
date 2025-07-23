@@ -6,26 +6,25 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
+import { Status } from '../shared.types';
 import { StatusBanner } from '../StatusBanner/StatusBanner';
 
 import {
   applyButtonStyles,
   boldedTextStyle,
-  dividerStyle,
-  getSuggetionCardWrapperStyles,
+  dividerStyles,
+  getSuggestedActionsWrapperStyles,
   tableCellStyles,
   tableHeaderStyles,
   tableStyles,
-} from './SuggestionCard.styles';
-import { Status, SuggestionCardProps } from './SuggestionCard.types';
+} from './SuggestedActions.styles';
+import { SuggestedActionsProps } from './SuggestedActions.types';
 
-const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
+const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
   (props, fwdRef) => {
     const {
       status,
-      suggestedConfigurationParameters,
-      appliedParameters,
-      failedParameters,
+      configurationParameters,
       onClickApply,
       darkMode: darkModeProp,
     } = props;
@@ -33,13 +32,13 @@ const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={fwdRef} className={dividerStyle}>
-          <div className={getSuggetionCardWrapperStyles(theme)}>
+        <div ref={fwdRef} className={dividerStyles}>
+          <div className={getSuggestedActionsWrapperStyles(theme)}>
             <div className={boldedTextStyle}>
               Apply configuration to your cluster?
             </div>
             <table className={tableStyles}>
-              {Object.entries(suggestedConfigurationParameters).map(
+              {Object.entries(configurationParameters.apply ?? {}).map(
                 ([key, value]) => (
                   <tr key={key}>
                     <th className={tableHeaderStyles}>{key}</th>
@@ -66,8 +65,8 @@ const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
           ) && (
             <StatusBanner
               status={status}
-              appliedParameters={appliedParameters}
-              failedParameters={failedParameters}
+              appliedParameters={configurationParameters.success}
+              failedParameters={configurationParameters.error}
             />
           )}
         </div>
@@ -76,6 +75,6 @@ const SuggestionCard = forwardRef<HTMLDivElement, SuggestionCardProps>(
   },
 );
 
-export default SuggestionCard;
+export default SuggestedActions;
 
-SuggestionCard.displayName = 'SuggestionCard';
+SuggestedActions.displayName = 'SuggestedActions';

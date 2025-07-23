@@ -811,7 +811,7 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
-  chat/suggestion-card:
+  chat/suggestions:
     dependencies:
       '@leafygreen-ui/banner':
         specifier: workspace:^

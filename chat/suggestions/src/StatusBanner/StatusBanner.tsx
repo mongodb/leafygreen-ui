@@ -2,16 +2,13 @@ import React from 'react';
 
 import Banner, { Variant as BannerVariant } from '@leafygreen-ui/banner';
 
+import { ConfigurationParameters, Status } from '../shared.types';
+
 import {
   bannerWrapperStyles,
   boldedTextStyle,
   listStyles,
-} from '../SuggestionCard/SuggestionCard.styles';
-import {
-  ConfigurationParameters,
-  Status,
-  SuggestionCardProps,
-} from '../SuggestionCard/SuggestionCard.types';
+} from './StatusBanner.styles';
 
 export const StatusBanner = ({
   status,
@@ -19,8 +16,8 @@ export const StatusBanner = ({
   failedParameters,
 }: {
   status: Status;
-  appliedParameters: SuggestionCardProps['appliedParameters'];
-  failedParameters: SuggestionCardProps['failedParameters'];
+  appliedParameters?: ConfigurationParameters;
+  failedParameters?: ConfigurationParameters;
 }) => {
   const clusterConfigurationBannerContent = (
     parameters?: ConfigurationParameters,

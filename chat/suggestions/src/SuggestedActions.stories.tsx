@@ -6,11 +6,11 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { Status, SuggestionCard, SuggestionCardProps } from '.';
+import { Status, SuggestedActions, SuggestedActionsProps } from '.';
 
-const meta: StoryMetaType<typeof SuggestionCard> = {
-  title: 'Chat/SuggestionCard',
-  component: SuggestionCard,
+const meta: StoryMetaType<typeof SuggestedActions> = {
+  title: 'Chat/SuggestedActions',
+  component: SuggestedActions,
   parameters: {
     default: 'LiveExample',
     generate: {
@@ -30,21 +30,23 @@ const meta: StoryMetaType<typeof SuggestionCard> = {
     },
   },
   args: {
-    status: Status.Unset,
-    suggestedConfigurationParameters: {
-      'Cluster Tier': 'M200 ($14.59/hour)',
-      Provider: 'AWS / N. Virginia (us-east-1)',
-      Storage: '1500 GB',
-      RAM: '256 GB',
-      vCPUs: '64 vCPUs',
-    },
-    appliedParameters: {
-      'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
-      'Cluster Tier': 'M200',
-    },
-    failedParameters: {
-      'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
-      'Cluster Tier': 'M200',
+    status: Status.Apply,
+    configurationParameters: {
+      apply: {
+        'Cluster Tier': 'M200 ($14.59/hour)',
+        Provider: 'AWS / N. Virginia (us-east-1)',
+        Storage: '1500 GB',
+        RAM: '256 GB',
+        vCPUs: '64 vCPUs',
+      },
+      success: {
+        'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
+        'Cluster Tier': 'M200',
+      },
+      error: {
+        'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
+        'Cluster Tier': 'M200',
+      },
     },
     onClickApply: () => {},
     darkMode: false,
@@ -55,13 +57,7 @@ const meta: StoryMetaType<typeof SuggestionCard> = {
       options: Object.values(Status),
       control: { type: 'select' },
     },
-    suggestedConfigurationParameters: {
-      control: 'object',
-    },
-    appliedParameters: {
-      control: 'object',
-    },
-    failedParameters: {
+    configurationParameters: {
       control: 'object',
     },
     onClickApply: {
@@ -72,9 +68,9 @@ const meta: StoryMetaType<typeof SuggestionCard> = {
 
 export default meta;
 
-export const LiveExample: StoryFn<SuggestionCardProps> = props => (
-  <SuggestionCard {...props} />
-);
+export const LiveExample: StoryFn<SuggestedActionsProps> = (
+  props: SuggestedActionsProps,
+) => <SuggestedActions {...props} />;
 LiveExample.parameters = {
   chromatic: { disableSnapshot: true },
 };
