@@ -28,6 +28,9 @@ import {
 } from './ExpandableCard.styles';
 import { ExpandableCardProps } from './ExpandableCard.types';
 
+/**
+ * Expandable Cards are components equipped with a chevron that functions like a toggle that can show or hide contained content. Additionally, the component has an optional description that remains visible whether the card is expanded or collapsed. For more general content guidelines, visit our Card guidelines.
+ */
 const ExpandableCard = ({
   title,
   children,

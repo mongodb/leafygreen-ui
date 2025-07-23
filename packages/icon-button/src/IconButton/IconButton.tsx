@@ -22,6 +22,9 @@ import {
 } from './IconButton.styles';
 import { AccessibleIconButtonProps, IconProps, Size } from './IconButton.types';
 
+/**
+ * Icon Buttons are a type of call to action (CTA) the user can click or press. They use icons to indicate the type of action that will occur when the button is pressed.
+ */
 export const IconButton = InferredPolymorphic<
   AccessibleIconButtonProps,
   'button'

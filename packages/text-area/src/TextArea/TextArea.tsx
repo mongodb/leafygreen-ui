@@ -10,10 +10,9 @@ import { getLgIds } from '../utils';
 import { textAreaContainerStyles, textAreaStyles } from './TextArea.styles';
 import { State, TextAreaProps } from './TextArea.types';
 
+type TextArea = React.ForwardRefExoticComponent<TextAreaProps>;
+
 /**
- * # TextArea
- *
- * TextArea component
  *
  * ```
 <TextArea label='Input Label' onChange={() => execute when value of input field changes}/>
@@ -35,8 +34,6 @@ import { State, TextAreaProps } from './TextArea.types';
  * @param props.baseFontSize Override the global `baseFontSize` set in LeafygreenProvider. This will only change the font size of the input text, not the label or description.
  * @param props.defaultValue The default value of the input field. Unlike value, component will not be controlled if defaultValue is passed.
  */
-
-type TextArea = React.ForwardRefExoticComponent<TextAreaProps>;
 export const TextArea: TextArea = forwardRef<
   HTMLTextAreaElement,
   TextAreaProps
