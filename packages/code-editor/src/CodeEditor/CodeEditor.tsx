@@ -28,6 +28,7 @@ import { createLanguageExtension } from './codeMirrorExtensions/createLanguageEx
 import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
 import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
 import { useExtension } from './hooks/useExtension';
+import { useHyperLinkExtension } from './hooks/useHyperLinkExtension';
 import { useLazyModules } from './hooks/useLazyModules';
 import { useModuleLoaders } from './hooks/useModuleLoaders';
 import { getEditorStyles } from './CodeEditor.styles';
@@ -77,14 +78,10 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     const moduleLoaders = useModuleLoaders(props);
     const { isLoading, modules } = useLazyModules(moduleLoaders);
 
-    const hyperLinkExtension = useExtension(
+    const hyperLinkExtension = useHyperLinkExtension(
       editorRef.current?.view || null,
-      {
-        enable: enableClickableUrls,
-        module: modules['@uiw/codemirror-extensions-hyper-link'],
-      },
-      ({ enable, module }) =>
-        enable && module?.hyperLink ? module.hyperLink : [],
+      modules,
+      enableClickableUrls,
     );
 
     const lineWrapExtension = useExtension(
