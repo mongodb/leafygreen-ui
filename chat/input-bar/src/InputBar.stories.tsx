@@ -49,6 +49,10 @@ const meta: StoryMetaType<typeof InputBar> = {
     shouldRenderGradient: { control: 'boolean' },
     disabled: { control: 'boolean' },
     disableSend: { control: 'boolean' },
+    state: {
+      control: { type: 'radio' },
+      options: Object.values(State),
+    },
     variant: {
       control: { type: 'radio' },
       options: Object.values(Variant),

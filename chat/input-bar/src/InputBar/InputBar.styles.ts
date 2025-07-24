@@ -15,6 +15,11 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+/**
+ * "adornment" refers to any element added to user interface (UI) primarily for
+ * enhancing its visual appeal, providing supplementary information, or facilitating
+ * interaction, but not fundamentally essential to the basic functionality.
+ */
 const ADORNMENT_CONTAINER_HEIGHT = 36;
 const GRADIENT_WIDTH = 3;
 const GRADIENT_OFFSET = 1;
@@ -27,7 +32,7 @@ const baseFormStyles = css`
 export const getFormStyles = (className?: string) =>
   cx(baseFormStyles, className);
 
-export const foo = css`
+export const outerFocusContainerStyles = css`
   position: relative;
 `;
 
@@ -102,7 +107,7 @@ const focusStyles = css`
   transition-property: border-color, box-shadow;
 `;
 
-export const getFocusContainerStyles = ({
+export const getInnerFocusContainerStyles = ({
   disabled,
   isFocused,
   shouldRenderGradient,

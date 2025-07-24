@@ -31,6 +31,7 @@ import {
   useDynamicRefs,
   useEventListener,
   useForwardedRef,
+  usePrevious,
 } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
@@ -48,12 +49,12 @@ import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 import {
   actionContainerStyles,
   adornmentContainerStyles,
-  foo,
   getContentWrapperStyles,
-  getFocusContainerStyles,
   getFormStyles,
   getHotkeyIndicatorStyles,
+  getInnerFocusContainerStyles,
   getTextAreaStyles,
+  outerFocusContainerStyles,
 } from './InputBar.styles';
 import { type InputBarProps } from './InputBar.types';
 import { InputBarFeedback } from './InputBarFeedback';
@@ -86,25 +87,23 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const { containerWidth, variant } = useLeafyGreenChatContext();
     const isCompact = variant === Variant.Compact;
 
-    useEffect(() => {
-      if (
-        isCompact &&
-        (shouldRenderHotkeyIndicator ||
-          shouldRenderGradientProp ||
-          badgeText ||
-          dropdownFooterSlot)
-      ) {
-        consoleOnce.warn(
-          `@lg-chat/input-bar: The InputBar component's props 'shouldRenderHotkeyIndicator', 'shouldRenderGradient', 'badgeText', and 'dropdownFooterSlot' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
-        );
-      }
-    }, [
-      isCompact,
-      shouldRenderHotkeyIndicator,
-      shouldRenderGradientProp,
-      badgeText,
-      dropdownFooterSlot,
-    ]);
+    if (
+      isCompact &&
+      (shouldRenderHotkeyIndicator ||
+        shouldRenderGradientProp ||
+        badgeText ||
+        dropdownFooterSlot)
+    ) {
+      consoleOnce.warn(
+        `@lg-chat/input-bar: The InputBar component's props 'shouldRenderHotkeyIndicator', 'shouldRenderGradient', 'badgeText', and 'dropdownFooterSlot' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
+      );
+    }
+
+    if (!isCompact && (errorMessage || state)) {
+      consoleOnce.warn(
+        `@lg-chat/input-bar: The InputBar component's props 'errorMessage' and 'state' are only used in the 'compact' variant. They will not be rendered in the 'spacious' variant set by the provider.`,
+      );
+    }
 
     const formRef = useForwardedRef(forwardedRef, null);
     const focusContainerRef = useRef<HTMLDivElement>(null);
@@ -128,6 +127,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       textareaProps?.onChange,
       '',
     );
+    const prevState = usePrevious(state);
 
     // The index of the currently highlighted result option
     const [highlightIndex, setHighlightIndex] = useState<number | undefined>(
@@ -137,7 +137,6 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const [shouldRenderButtonText, setShouldRenderButtonText] =
       useState<boolean>(false);
 
-    const isError = state === State.Error;
     const isSendButtonDisabled = disableSend || disabled || messageBody === '';
     const shouldRenderGradient =
       !isCompact && shouldRenderGradientProp && isFocused && !disabled;
@@ -404,11 +403,11 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     );
 
     /**
-     * When the state is 'error', we want to reset the message body and focus the textarea
-     * so the user can retry sending the message.
+     * When the state has changed to an 'error', we reset the cleared message to
+     * the previous message and focus the textarea so the user can retry sending.
      */
     useEffect(() => {
-      if (!isError) {
+      if (state === prevState || state !== State.Error) {
         return;
       }
 
@@ -418,7 +417,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       }
 
       textareaRef.current?.focus();
-    }, [isError, isControlled, prevMessageBody, updateValue]);
+    }, [state, prevState, isControlled, prevMessageBody, updateValue]);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -431,9 +430,9 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
           {isCompact && (
             <InputBarFeedback errorMessage={errorMessage} state={state} />
           )}
-          <div className={foo}>
+          <div className={outerFocusContainerStyles}>
             <div
-              className={getFocusContainerStyles({
+              className={getInnerFocusContainerStyles({
                 disabled,
                 isFocused,
                 shouldRenderGradient,

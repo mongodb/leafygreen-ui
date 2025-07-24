@@ -16,6 +16,12 @@ import {
 import { InputBarFeedbackProps } from './InputBarFeedback.types';
 import { State } from './shared.types';
 
+const texts = {
+  defaultError: 'Oops... Something went wrong.',
+  loading: 'MongoDB Assistant is thinking',
+  retryButton: 'Retry',
+} as const;
+
 export const InputBarFeedback = forwardRef<
   HTMLDivElement,
   InputBarFeedbackProps
@@ -44,18 +50,16 @@ export const InputBarFeedback = forwardRef<
         {state === State.Loading && (
           <div className={loadingContainerStyles}>
             <AssistantAvatar darkMode={darkMode} size={20} />
-            <Body className={getLoadingTextStyles(theme)}>
-              MongoDB Assistant is thinking
-            </Body>
+            <Body className={getLoadingTextStyles(theme)}>{texts.loading}</Body>
           </div>
         )}
 
         {state === State.Error && (
           <Banner variant="danger" className={bannerStyles}>
             <div className={bannerContentContainerStyles}>
-              <Error>{errorMessage || 'Oops... Something went wrong.'}</Error>
+              <Error>{errorMessage || texts.defaultError}</Error>
               <Button size="xsmall" type="submit">
-                Retry
+                {texts.retryButton}
               </Button>
             </div>
           </Banner>
