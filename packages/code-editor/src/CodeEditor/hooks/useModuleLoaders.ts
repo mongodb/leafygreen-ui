@@ -22,6 +22,7 @@ interface CodeEditorModules {
   '@codemirror/lang-python': typeof import('@codemirror/lang-python');
   '@codemirror/legacy-modes/mode/ruby': typeof import('@codemirror/legacy-modes/mode/ruby');
   '@codemirror/lang-rust': typeof import('@codemirror/lang-rust');
+  '@lezer/highlight': typeof import('@lezer/highlight');
 }
 
 export const useModuleLoaders = ({
@@ -50,6 +51,8 @@ export const useModuleLoaders = ({
     }
 
     if (language) {
+      neededLoaders['@lezer/highlight'] = () => import('@lezer/highlight');
+
       switch (language) {
         case LanguageName.cpp:
           neededLoaders['@codemirror/lang-cpp'] = () =>

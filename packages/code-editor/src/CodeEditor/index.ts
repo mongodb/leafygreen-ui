@@ -10,7 +10,4 @@ export {
   type CodeMirrorView,
   IndentUnits,
 } from './CodeEditor.types';
-export {
-  createHighlightExtension as createCodeMirrorHighlightExtension,
-  createThemeExtension as createCodeMirrorThemeExtension,
-} from './codeMirrorExtensions';
+export { createThemeExtension as createCodeMirrorThemeExtension } from './codeMirrorExtensions';
