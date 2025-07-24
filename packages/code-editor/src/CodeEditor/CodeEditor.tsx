@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { renderToString } from 'react-dom/server';
 import { forceParsing } from '@codemirror/language';
 import CodeMirror, {
   Compartment,
@@ -14,9 +13,7 @@ import CodeMirror, {
 } from '@uiw/react-codemirror';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { css } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
-import Icon from '@leafygreen-ui/icon';
 import {
   useBaseFontSize,
   useDarkMode,
@@ -27,6 +24,7 @@ import { createLanguageExtension } from './codeMirrorExtensions/createLanguageEx
 import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
 import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
 import { useExtension } from './hooks/useExtension';
+import { useFoldGutterExtension } from './hooks/useFoldGutterExtension';
 import { useHyperLinkExtension } from './hooks/useHyperLinkExtension';
 import { useIndentExtension } from './hooks/useIndentExtension';
 import { useLazyModules } from './hooks/useLazyModules';
@@ -98,44 +96,10 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       modules?.['@codemirror/language'],
     );
 
-    const foldGutterExtension = useExtension(
-      editorRef.current?.view || null,
-      {
-        enable: enableCodeFolding,
-        module: modules['@codemirror/language'],
-      },
-      ({ enable, module }) => {
-        if (!enable || !module || !module.foldGutter) {
-          return [];
-        }
-
-        return module.foldGutter({
-          markerDOM: (open: boolean) => {
-            const icon = document.createElement('span');
-            icon.className = 'cm-custom-fold-marker';
-            icon.innerHTML = renderToString(
-              open ? (
-                <Icon
-                  glyph="ChevronDown"
-                  size="small"
-                  className={css`
-                    margin-top: 2px;
-                  `}
-                />
-              ) : (
-                <Icon
-                  glyph="ChevronRight"
-                  size="small"
-                  className={css`
-                    margin-top: 2px;
-                  `}
-                />
-              ),
-            );
-            return icon;
-          },
-        });
-      },
+    const foldGutterExtension = useFoldGutterExtension(
+      editorView,
+      enableCodeFolding,
+      modules?.['@codemirror/language'],
     );
 
     const tooltipExtension = useExtension(
