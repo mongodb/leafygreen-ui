@@ -226,7 +226,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       className: cx(
         css`
           cursor: ${isVertical ? 'col-resize' : 'row-resize'};
-          background-color: transparent; // Default background color
+          background-color: transparent;
 
           &:hover,
           &:focus-visible {
