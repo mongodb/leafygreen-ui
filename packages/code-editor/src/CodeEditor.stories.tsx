@@ -9,8 +9,9 @@ import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
 
+import { LanguageName } from './CodeEditor/hooks/useLanguageExtension';
 import { codeSnippets } from './CodeEditor/testing';
-import { IndentUnits, LanguageName } from './CodeEditor';
+import { IndentUnits } from './CodeEditor';
 import { CodeEditor } from '.';
 
 const MyTooltip = ({
