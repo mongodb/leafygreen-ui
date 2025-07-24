@@ -5,7 +5,7 @@ import { axe } from 'jest-axe';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { ConfigurationParameters, Status } from '../shared.types';
+import { ConfigurationParameters, State } from '../shared.types';
 
 import { SuggestedActionsProps } from './SuggestedActions.types';
 import { SuggestedActions } from '.';
@@ -24,9 +24,9 @@ const successConfigurationParameters: ConfigurationParameters = [
   {
     key: 'Cloud Provider & Region',
     value: 'AWS / N. Virginia (us-east-1)',
-    status: Status.Success,
+    state: State.Success,
   },
-  { key: 'Cluster Tier', value: 'M10 ($9.00/month)', status: Status.Success },
+  { key: 'Cluster Tier', value: 'M10 ($9.00/month)', state: State.Success },
 ];
 
 const errorConfigurationParameters: ConfigurationParameters = [
@@ -35,13 +35,13 @@ const errorConfigurationParameters: ConfigurationParameters = [
   {
     key: 'Cloud Provider & Region',
     value: 'GCP / Iowa (us-central1)',
-    status: Status.Error,
+    state: State.Error,
   },
-  { key: 'Cluster Tier', value: 'M30 ($31.00/month)', status: Status.Error },
+  { key: 'Cluster Tier', value: 'M30 ($31.00/month)', state: State.Error },
 ];
 
 const defaultProps: SuggestedActionsProps = {
-  status: Status.Apply,
+  state: State.Unset,
   configurationParameters: defaultConfigurationParameters,
   onClickApply: jest.fn(),
 };
@@ -69,14 +69,14 @@ describe('chat/suggestions', () => {
     });
 
     test('does not have accessibility issues with Apply button', async () => {
-      const { container } = renderSuggestedActions({ status: Status.Apply });
+      const { container } = renderSuggestedActions({ state: State.Unset });
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
 
     test('does not have accessibility issues with Success banner', async () => {
       const { container } = renderSuggestedActions({
-        status: Status.Success,
+        state: State.Success,
         configurationParameters: successConfigurationParameters,
       });
       const results = await axe(container);
@@ -85,7 +85,7 @@ describe('chat/suggestions', () => {
 
     test('does not have accessibility issues with Error banner', async () => {
       const { container } = renderSuggestedActions({
-        status: Status.Error,
+        state: State.Error,
         configurationParameters: errorConfigurationParameters,
       });
       const results = await axe(container);
@@ -154,20 +154,20 @@ describe('chat/suggestions', () => {
       expect(screen.queryAllByRole('columnheader')).toHaveLength(0);
     });
 
-    test('renders parameters with mixed status values', () => {
+    test('renders parameters with mixed state values', () => {
       const mixedParams = [
         { key: 'Cluster Tier', value: 'M10 ($9.00/month)' }, // defaults to apply
         {
           key: 'Provider',
           value: 'AWS / N. Virginia (us-east-1)',
-          status: Status.Apply,
+          state: State.Unset,
         },
         {
           key: 'Success Param',
           value: 'Success Value',
-          status: Status.Success,
+          state: State.Success,
         },
-        { key: 'Error Param', value: 'Error Value', status: Status.Error },
+        { key: 'Error Param', value: 'Error Value', state: State.Error },
       ];
 
       renderSuggestedActions({
@@ -183,23 +183,23 @@ describe('chat/suggestions', () => {
   });
 
   describe('Apply button', () => {
-    test('renders when status is Apply', () => {
-      renderSuggestedActions({ status: Status.Apply });
+    test('renders when state is Unset', () => {
+      renderSuggestedActions({ state: State.Unset });
       const button = screen.getByRole('button', {
         name: /apply these suggestions/i,
       });
       expect(button).toBeInTheDocument();
     });
 
-    test('does not render when status is Success', () => {
-      renderSuggestedActions({ status: Status.Success });
+    test('does not render when state is Success', () => {
+      renderSuggestedActions({ state: State.Success });
       expect(
         screen.queryByRole('button', { name: /apply these suggestions/i }),
       ).not.toBeInTheDocument();
     });
 
-    test('does not render when status is Error', () => {
-      renderSuggestedActions({ status: Status.Error });
+    test('does not render when state is Error', () => {
+      renderSuggestedActions({ state: State.Error });
       expect(
         screen.queryByRole('button', { name: /apply these suggestions/i }),
       ).not.toBeInTheDocument();
@@ -207,7 +207,7 @@ describe('chat/suggestions', () => {
 
     test('calls onClickApply when clicked', () => {
       const onClickApply = jest.fn();
-      renderSuggestedActions({ status: Status.Apply, onClickApply });
+      renderSuggestedActions({ state: State.Unset, onClickApply });
 
       const button = screen.getByRole('button', {
         name: /apply these suggestions/i,
@@ -218,7 +218,7 @@ describe('chat/suggestions', () => {
     });
 
     test('has correct button attributes', () => {
-      renderSuggestedActions({ status: Status.Apply });
+      renderSuggestedActions({ state: State.Unset });
       const button = screen.getByRole('button', {
         name: /apply these suggestions/i,
       });
@@ -229,8 +229,8 @@ describe('chat/suggestions', () => {
   });
 
   describe('Status banner', () => {
-    test('does not render when status is Apply', () => {
-      renderSuggestedActions({ status: Status.Apply });
+    test('does not render when state is Unset', () => {
+      renderSuggestedActions({ state: State.Unset });
       expect(
         screen.queryByText('The suggestions have been applied.'),
       ).not.toBeInTheDocument();
@@ -239,9 +239,9 @@ describe('chat/suggestions', () => {
       ).not.toBeInTheDocument();
     });
 
-    test('renders success banner when status is Success', () => {
+    test('renders success banner when state is Success', () => {
       renderSuggestedActions({
-        status: Status.Success,
+        state: State.Success,
         configurationParameters: successConfigurationParameters,
       });
 
@@ -260,9 +260,9 @@ describe('chat/suggestions', () => {
       );
     });
 
-    test('renders error banner when status is Error', () => {
+    test('renders error banner when state is Error', () => {
       renderSuggestedActions({
-        status: Status.Error,
+        state: State.Error,
         configurationParameters: errorConfigurationParameters,
       });
 
@@ -285,7 +285,7 @@ describe('chat/suggestions', () => {
 
     test('handles empty success parameters', () => {
       renderSuggestedActions({
-        status: Status.Success,
+        state: State.Success,
         configurationParameters: [],
       });
 
@@ -301,7 +301,7 @@ describe('chat/suggestions', () => {
 
     test('handles empty error parameters', () => {
       renderSuggestedActions({
-        status: Status.Error,
+        state: State.Error,
         configurationParameters: [],
       });
 
@@ -323,18 +323,18 @@ describe('chat/suggestions', () => {
         {
           key: 'Success Param 1',
           value: 'Success Value 1',
-          status: Status.Success,
+          state: State.Success,
         },
         {
           key: 'Success Param 2',
           value: 'Success Value 2',
-          status: Status.Success,
+          state: State.Success,
         },
-        { key: 'Error Param', value: 'Error Value', status: Status.Error },
+        { key: 'Error Param', value: 'Error Value', state: State.Error },
       ];
 
       renderSuggestedActions({
-        status: Status.Success,
+        state: State.Success,
         configurationParameters: mixedParams,
       });
 
@@ -356,14 +356,14 @@ describe('chat/suggestions', () => {
         {
           key: 'Success Param',
           value: 'Success Value',
-          status: Status.Success,
+          state: State.Success,
         },
-        { key: 'Error Param 1', value: 'Error Value 1', status: Status.Error },
-        { key: 'Error Param 2', value: 'Error Value 2', status: Status.Error },
+        { key: 'Error Param 1', value: 'Error Value 1', state: State.Error },
+        { key: 'Error Param 2', value: 'Error Value 2', state: State.Error },
       ];
 
       renderSuggestedActions({
-        status: Status.Error,
+        state: State.Error,
         configurationParameters: mixedParams,
       });
 
@@ -467,39 +467,39 @@ describe('chat/suggestions', () => {
       expect(screen.getAllByRole('cell')).toHaveLength(3);
     });
 
-    test('handles parameters with default status correctly', () => {
-      const defaultStatusParams = [
-        { key: 'Default Status', value: 'Should be apply' },
+    test('handles parameters with default state correctly', () => {
+      const defaultStateParams = [
+        { key: 'Default State', value: 'Should be apply' },
         {
-          key: 'Explicit Apply',
-          value: 'Explicit apply',
-          status: Status.Apply,
+          key: 'Explicit Unset',
+          value: 'Explicit unset',
+          state: State.Unset,
         },
-        { key: 'Success Status', value: 'Success', status: Status.Success },
+        { key: 'Success State', value: 'Success', state: State.Success },
       ];
 
       renderSuggestedActions({
-        configurationParameters: defaultStatusParams,
+        configurationParameters: defaultStateParams,
       });
 
       // All parameters should be visible in table
-      expect(screen.getByText('Default Status')).toBeInTheDocument();
-      expect(screen.getByText('Explicit Apply')).toBeInTheDocument();
-      expect(screen.getByText('Success Status')).toBeInTheDocument();
+      expect(screen.getByText('Default State')).toBeInTheDocument();
+      expect(screen.getByText('Explicit Unset')).toBeInTheDocument();
+      expect(screen.getByText('Success State')).toBeInTheDocument();
     });
   });
 
   describe('integration', () => {
     test('table shows all parameters regardless of banner status', () => {
       renderSuggestedActions({
-        status: Status.Success,
+        state: State.Success,
         configurationParameters: [
           { key: 'Cluster Tier', value: 'M10 ($9.00/month)' },
           { key: 'Provider', value: 'AWS / N. Virginia (us-east-1)' },
           {
             key: 'Different Key',
             value: 'Different Value',
-            status: Status.Success,
+            state: State.Success,
           },
         ],
       });
@@ -535,7 +535,7 @@ describe('chat/suggestions', () => {
   describe('props validation', () => {
     test('renders with minimal required props', () => {
       const minimalProps = {
-        status: Status.Apply,
+        state: State.Unset,
         configurationParameters: [{ key: 'Test', value: 'Value' }],
         onClickApply: jest.fn(),
       };
@@ -551,15 +551,15 @@ describe('chat/suggestions', () => {
       expect(screen.getByText('Value')).toBeInTheDocument();
     });
 
-    test('handles different status enum values correctly', () => {
-      // Test each status value
-      Object.values(Status).forEach(statusValue => {
+    test('handles different state enum values correctly', () => {
+      // Test each state value
+      Object.values(State).forEach(stateValue => {
         const { unmount } = renderSuggestedActions({
-          status: statusValue,
+          state: stateValue,
           configurationParameters: [
             { key: 'Test', value: 'Value' },
-            { key: 'Success Test', value: 'Success', status: Status.Success },
-            { key: 'Error Test', value: 'Error', status: Status.Error },
+            { key: 'Success Test', value: 'Success', state: State.Success },
+            { key: 'Error Test', value: 'Error', state: State.Error },
           ],
         });
 

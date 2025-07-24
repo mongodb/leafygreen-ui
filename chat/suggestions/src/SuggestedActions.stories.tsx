@@ -6,7 +6,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { Status, SuggestedActions, SuggestedActionsProps } from '.';
+import { State, SuggestedActions, SuggestedActionsProps } from '.';
 
 const meta: StoryMetaType<typeof SuggestedActions> = {
   title: 'Chat/SuggestedActions',
@@ -16,7 +16,7 @@ const meta: StoryMetaType<typeof SuggestedActions> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        status: Object.values(Status),
+        state: Object.values(State),
       },
     },
     controls: {
@@ -30,29 +30,29 @@ const meta: StoryMetaType<typeof SuggestedActions> = {
     },
   },
   args: {
-    status: Status.Apply,
+    state: State.Unset,
     configurationParameters: [
       {
         key: 'Cluster Tier',
         value: 'M200 ($14.59/hour)',
-        status: Status.Success,
+        state: State.Success,
       },
       {
         key: 'Provider',
         value: 'AWS / N. Virginia (us-east-1)',
-        status: Status.Success,
+        state: State.Success,
       },
       { key: 'Storage', value: '1500 GB' },
-      { key: 'RAM', value: '256 GB', status: Status.Error },
-      { key: 'vCPUs', value: '64 vCPUs', status: Status.Error },
+      { key: 'RAM', value: '256 GB', state: State.Error },
+      { key: 'vCPUs', value: '64 vCPUs', state: State.Error },
     ],
     onClickApply: () => {},
     darkMode: false,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    status: {
-      options: Object.values(Status),
+    state: {
+      options: Object.values(State),
       control: { type: 'select' },
     },
     configurationParameters: {

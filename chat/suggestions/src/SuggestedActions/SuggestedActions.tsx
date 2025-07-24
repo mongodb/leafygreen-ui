@@ -6,7 +6,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { Status } from '../shared.types';
+import { State } from '../shared.types';
 import { StatusBanner } from '../StatusBanner/StatusBanner';
 
 import {
@@ -23,19 +23,19 @@ import { SuggestedActionsProps } from './SuggestedActions.types';
 const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
   (props: SuggestedActionsProps, fwdRef: React.Ref<HTMLDivElement>) => {
     const {
-      status,
+      state,
       configurationParameters,
       onClickApply,
       darkMode: darkModeProp,
     } = props;
     const { theme, darkMode } = useDarkMode(darkModeProp);
 
-    // Filter parameters by status
+    // Filter parameters by state
     const successParameters = configurationParameters.filter(
-      param => param.status === Status.Success,
+      param => param.state === State.Success,
     );
     const errorParameters = configurationParameters.filter(
-      param => param.status === Status.Error,
+      param => param.state === State.Error,
     );
 
     return (
@@ -53,7 +53,7 @@ const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
                 </tr>
               ))}
             </table>
-            {status === Status.Apply && (
+            {state === State.Unset && (
               <Button
                 className={applyButtonStyles}
                 variant="primary"
@@ -66,11 +66,9 @@ const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
             )}
           </div>
 
-          {([Status.Success, Status.Error] as Array<Status>).includes(
-            status,
-          ) && (
+          {([State.Success, State.Error] as Array<State>).includes(state) && (
             <StatusBanner
-              status={status}
+              state={state}
               appliedParameters={successParameters}
               failedParameters={errorParameters}
             />

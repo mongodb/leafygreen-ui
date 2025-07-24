@@ -1,23 +1,23 @@
 /**
- * Options to control the status of the SuggestedActions
+ * Options to control the state of the SuggestedActions
  */
-export const Status = {
-  Apply: 'apply',
+export const State = {
+  Unset: 'unset',
   Success: 'success',
   Error: 'error',
 } as const;
-export type Status = (typeof Status)[keyof typeof Status];
+export type State = (typeof State)[keyof typeof State];
 
 /**
- * A single configuration parameter with its key, value, and current status
+ * A single configuration parameter with its key, value, and current state
  */
 export interface ConfigurationParameter {
   key: string;
   value: string;
-  status?: Status; // Defaults to 'apply' if not specified
+  state?: State; // Defaults to 'unset' if not specified
 }
 
 /**
- * Array of configuration parameters, each with their own status.
+ * Array of configuration parameters, each with their own state.
  */
 export type ConfigurationParameters = Array<ConfigurationParameter>;
