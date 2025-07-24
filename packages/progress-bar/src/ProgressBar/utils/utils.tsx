@@ -1,4 +1,5 @@
 import React from 'react';
+import omit from 'lodash/omit';
 
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
@@ -204,15 +205,9 @@ export const getHeaderIcon = ({
  */
 export const omitProps = (
   obj: ProgressBarProps,
-  omit: any = {},
+  toOmit: any = {},
 ): Omit<ProgressBarProps, keyof ProgressBarProps> => {
-  const clone = { ...obj };
-
-  for (const key of Object.keys(omit) as Array<keyof ProgressBarProps>) {
-    delete clone[key as keyof ProgressBarProps];
-  }
-
-  return clone;
+  return omit(obj, Object.keys(toOmit));
 };
 
 /**
