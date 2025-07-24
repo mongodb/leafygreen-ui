@@ -1,4 +1,5 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
+
 import { DisplayMode } from '../Drawer/Drawer.types';
 
 export interface DrawerLayoutContextType {

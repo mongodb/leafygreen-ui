@@ -1,8 +1,10 @@
-import { act } from '@testing-library/react';
 import { fireEvent } from '@testing-library/dom';
+import { act } from '@testing-library/react';
+
 import { keyMap } from '@leafygreen-ui/lib';
-import { useResizable } from './useResizable';
 import { renderHook } from '@leafygreen-ui/testing-lib';
+
+import { useResizable } from './useResizable';
 import { Position } from './useResizable.types';
 
 // Mock window dimensions
@@ -290,6 +292,7 @@ describe('useResizable', () => {
 
     // Mock requestAnimationFrame to execute immediately
     const originalRAF = window.requestAnimationFrame;
+
     window.requestAnimationFrame = cb => {
       return setTimeout(cb, 0);
     };

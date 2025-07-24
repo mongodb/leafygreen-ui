@@ -1,6 +1,5 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { DrawerProps } from '../Drawer/Drawer.types';
 import { DrawerToolbarLayoutProps } from '../DrawerToolbarLayout';
 import { LayoutComponentProps } from '../LayoutComponent';
 

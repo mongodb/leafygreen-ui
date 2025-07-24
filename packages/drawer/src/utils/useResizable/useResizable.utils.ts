@@ -50,5 +50,6 @@ export const calculateNewSize = (
   } else if (newSize > effectiveMaxSize) {
     newSize = effectiveMaxSize;
   }
+
   return newSize;
 };

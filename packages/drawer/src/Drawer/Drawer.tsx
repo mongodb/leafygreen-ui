@@ -15,9 +15,18 @@ import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { PANEL_WIDTH } from '../constants';
+import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
+import { useResizable } from '../utils/useResizable/useResizable';
+import { Position } from '../utils/useResizable/useResizable.types';
 
+import {
+  DRAWER_MAX_PERCENTAGE_WIDTH,
+  DRAWER_MAX_WIDTH,
+  DRAWER_MIN_WIDTH,
+} from './Drawer.constants';
 import {
   drawerTransitionDuration,
   getChildrenContainerStyles,
@@ -29,15 +38,6 @@ import {
   innerChildrenContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
-import { useResizable } from '../utils/useResizable/useResizable';
-import { PANEL_WIDTH } from '../constants';
-import {
-  DRAWER_MAX_WIDTH,
-  DRAWER_MIN_WIDTH,
-  DRAWER_MAX_PERCENTAGE_WIDTH,
-} from './Drawer.constants';
-import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
-import { Position } from '../utils/useResizable/useResizable.types';
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
@@ -111,14 +111,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
-    useEffect(() => {
-      if (open) {
-        registerDrawer(id);
-      } else {
-        setTimeout(() => unregisterDrawer(id), drawerTransitionDuration);
-      }
-    }, [open]);
-
     /**
      * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
      *
@@ -154,9 +146,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     // Create merged ref after resizableRef is defined
     // Use a conditional to ensure resizableRef is only included when it's needed
     const refsToMerge = [fwdRef, ref];
+
     if (displayMode === DisplayMode.Embedded && resizable) {
       refsToMerge.push(resizableRef);
     }
+
     const drawerRef = useMergeRefs(refsToMerge);
     const resizerProps = getResizerProps();
 

@@ -4,8 +4,8 @@ import { breakpoints } from '@leafygreen-ui/tokens';
 import { GRID_AREA } from '../constants';
 import {
   PANEL_WIDTH,
-  TOOLBAR_WIDTH,
   PANEL_WITH_TOOLBAR_WIDTH,
+  TOOLBAR_WIDTH,
 } from '../constants';
 import { MOBILE_BREAKPOINT } from '../Drawer';
 import { drawerTransitionDuration } from '../Drawer/Drawer.styles';

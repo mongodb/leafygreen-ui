@@ -14,7 +14,7 @@ export const SizeGrowth = {
 
 export type SizeGrowth = (typeof SizeGrowth)[keyof typeof SizeGrowth];
 
-export type ResizableProps = {
+export interface ResizableProps {
   /**
    * Whether the resizable feature is enabled.
    * @default false
@@ -57,17 +57,17 @@ export type ResizableProps = {
    * This is used to determine the direction in which the element can be resized.
    */
   position: Position;
-};
+}
 
-export type ResizerProps = {
+export interface ResizerProps {
   onMouseDown: (e: React.MouseEvent | MouseEvent) => void;
   tabIndex: number;
   onFocus: () => void;
   onBlur: () => void;
   className?: string;
-};
+}
 
-export type ResizableReturn<T extends HTMLElement = HTMLElement> = {
+export interface ResizableReturn<T extends HTMLElement = HTMLElement> {
   /**
    * The current width and height of the resizable element.
    */
@@ -94,4 +94,4 @@ export type ResizableReturn<T extends HTMLElement = HTMLElement> = {
    * Generic type allows for specific HTML element types like HTMLDialogElement or HTMLDivElement.
    */
   resizableRef: React.RefObject<T>;
-};
+}

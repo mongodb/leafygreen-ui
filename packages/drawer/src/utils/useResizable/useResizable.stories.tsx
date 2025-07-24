@@ -1,5 +1,7 @@
 import React, { ElementType } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryFn, StoryObj } from '@storybook/react';
+
 import { useResizable } from './useResizable';
 import { Position } from './useResizable.types';
 
@@ -10,12 +12,11 @@ export default {
     chromatic: {
       disableSnapshot: true,
     },
+    controls: {
+      exclude: ['position'],
+    },
   },
 } satisfies StoryMetaType<ElementType<unknown>>;
-
-interface WrapperProps {
-  children: React.ReactNode;
-}
 
 interface HandleConfig {
   containerStyles: React.CSSProperties;
@@ -65,7 +66,29 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
   },
 };
 
-const Wrapper: React.FC<WrapperProps> = ({ children }) => {
+const CreateResizableStory: StoryFn<any> = args => {
+  const { position } = args;
+  const config = HANDLE_CONFIGS[position];
+  const { getResizerProps, size, resizableRef } = useResizable({
+    enabled: true,
+    initialSize: 300,
+    minSize: 200,
+    maxSize: 600,
+    maxViewportPercentages: 50,
+    position,
+  });
+
+  const resizerProps = getResizerProps();
+  const isVertical = position === 'left' || position === 'right';
+
+  const containerStyles = {
+    ...config.containerStyles,
+    [isVertical ? 'width' : 'height']: size,
+    ...(isVertical ? { height: '100%' } : { width: '100vw' }),
+    backgroundColor: 'lightgray',
+    position: 'absolute' as const,
+  };
+
   return (
     <div
       style={{
@@ -75,54 +98,45 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
         margin: '-100px',
       }}
     >
-      {children}
+      <div ref={resizableRef} style={containerStyles}>
+        <div
+          {...resizerProps}
+          style={{
+            position: 'absolute',
+            ...config.resizerBaseStyles,
+          }}
+          className={resizerProps?.className}
+        />
+        Resizable element is on the {position}
+      </div>
     </div>
   );
 };
 
-const createResizableStory = (position: Position) => {
-  const config = HANDLE_CONFIGS[position];
-
-  return () => {
-    const { getResizerProps, size, resizableRef } = useResizable({
-      enabled: true,
-      initialSize: 300,
-      minSize: 200,
-      maxSize: 600,
-      maxViewportPercentages: 50,
-      position,
-    });
-
-    const resizerProps = getResizerProps();
-    const isVertical = position === 'left' || position === 'right';
-
-    const containerStyles = {
-      ...config.containerStyles,
-      [isVertical ? 'width' : 'height']: size,
-      ...(isVertical ? { height: '100%' } : { width: '100vw' }),
-      backgroundColor: 'lightgray',
-      position: 'absolute' as const,
-    };
-
-    return (
-      <Wrapper>
-        <div ref={resizableRef} style={containerStyles}>
-          <div
-            {...resizerProps}
-            style={{
-              position: 'absolute',
-              ...config.resizerBaseStyles,
-            }}
-            className={resizerProps?.className}
-          />
-          Resizable element is on the {position}
-        </div>
-      </Wrapper>
-    );
-  };
+export const Left: StoryObj<any> = {
+  render: CreateResizableStory,
+  args: {
+    position: Position.Left,
+  },
 };
 
-export const Left = createResizableStory(Position.Left);
-export const Right = createResizableStory(Position.Right);
-export const Top = createResizableStory(Position.Top);
-export const Bottom = createResizableStory(Position.Bottom);
+export const Right: StoryObj<any> = {
+  render: CreateResizableStory,
+  args: {
+    position: Position.Right,
+  },
+};
+
+export const Top: StoryObj<any> = {
+  render: CreateResizableStory,
+  args: {
+    position: Position.Top,
+  },
+};
+
+export const Bottom: StoryObj<any> = {
+  render: CreateResizableStory,
+  args: {
+    position: Position.Bottom,
+  },
+};

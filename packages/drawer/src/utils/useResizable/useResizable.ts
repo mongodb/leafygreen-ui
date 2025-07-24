@@ -1,14 +1,16 @@
-import { keyMap } from '@leafygreen-ui/lib';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import { keyMap } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
 import {
+  Position,
   ResizableProps,
   ResizableReturn,
-  Position,
   SizeGrowth,
 } from './useResizable.types';
 import { calculateNewSize } from './useResizable.utils';
-import { palette } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
 
 // Mappings for keyboard interactions based on the position
 const SIZE_GROWTH_KEY_MAPPINGS: Record<
@@ -71,23 +73,26 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    * @param event
    * @returns void
    */
-  const handleMouseMove = (event: MouseEvent) => {
-    // Only proceed if resizing is enabled and the element is currently being resized
-    if (!isResizingRef.current) return;
+  const handleMouseMove = useCallback(
+    (event: MouseEvent) => {
+      // Only proceed if resizing is enabled and the element is currently being resized
+      if (!isResizingRef.current) return;
 
-    let newSize = calculateNewSize(
-      event,
-      initialElementSize.current,
-      initialMousePos.current,
-      position,
-      minSize,
-      maxSize,
-      maxViewportPercentages,
-    );
+      const newSize = calculateNewSize(
+        event,
+        initialElementSize.current,
+        initialMousePos.current,
+        position,
+        minSize,
+        maxSize,
+        maxViewportPercentages,
+      );
 
-    setSize(newSize);
-    onResize?.(newSize);
-  };
+      setSize(newSize);
+      onResize?.(newSize);
+    },
+    [maxSize, maxViewportPercentages, minSize, onResize, position],
+  );
 
   /**
    * Handles the mouse up event to stop resizing.
@@ -99,29 +104,29 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       isResizingRef.current = false; // Synchronously update ref
       setIsResizing(false); // Set resizing state to false
     });
-  }, [enabled]);
+  }, []);
 
   /**
    * Handles keyboard interactions for resizing.
    * Allows resizing using arrow keys based on the position.
    *
    * For example:
-   * - If position is 'left' and the left arrow key is pressed, it increases the size.
-   * - If position is 'left' and the right arrow key is pressed, it decreases the size.
+   * - If position is 'left' and the left arrow key is pressed, it decreases the size.
+   * - If position is 'right' and the left arrow key is pressed, it increases the size.
    */
-  const getKeyboardInteraction = useCallback(
+  const getNextKeyboardSize = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent, position: Position | null) => {
       if (position === Position.Left || position === Position.Right) {
         if (event.code == keyMap.ArrowLeft || event.code == keyMap.ArrowRight) {
           event.preventDefault();
-        } else {
-          if (event.code == keyMap.ArrowUp || event.code == keyMap.ArrowDown) {
-            event.preventDefault();
-          }
+        }
+      } else {
+        if (event.code == keyMap.ArrowUp || event.code == keyMap.ArrowDown) {
+          event.preventDefault();
         }
       }
 
-      const getNextSizes = (sizeGrowth: SizeGrowth) => {
+      const getNextSize = (sizeGrowth: SizeGrowth) => {
         const currentSize = size;
         const sizes = sortedKeyboardSizes;
 
@@ -141,23 +146,23 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
       if (position && event.code in SIZE_GROWTH_KEY_MAPPINGS[position]) {
         const sizeGrowth = SIZE_GROWTH_KEY_MAPPINGS[position][event.code];
-        const nextSize = getNextSizes(sizeGrowth);
+        const nextSize = getNextSize(sizeGrowth);
         handleSizeChange(nextSize);
       }
     },
-    [size, sortedKeyboardSizes, onResize, initialSize, minSize],
+    [size, sortedKeyboardSizes, onResize],
   );
 
   /**
    * Handles key down events for resizing.
-   * Prevents default behavior and calls getKeyboardInteraction to handle resizing.
+   * Prevents default behavior and calls getNextKeyboardSize to handle resizing.
    * This allows resizing using arrow keys based on the position.
    */
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent) => {
-      getKeyboardInteraction(event, position);
+      getNextKeyboardSize(event, position);
     },
-    [getKeyboardInteraction],
+    [getNextKeyboardSize, position],
   );
 
   /**
@@ -182,7 +187,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
           : resizableRef.current.offsetHeight;
       }
     },
-    [enabled, position],
+    [enabled, isVertical],
   );
 
   /**
@@ -256,11 +261,11 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     size,
     minSize,
     maxSize,
-    position,
     handleOnMouseDown,
     handleOnFocus,
     handleOnBlur,
     isResizing,
+    isVertical,
   ]);
 
   // Effect hook to add and remove global mouse event listeners
@@ -324,7 +329,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     return () => {
       cleanupStyles();
     };
-  }, [isResizing]);
+  }, [isResizing, isVertical]);
 
   return {
     size,
