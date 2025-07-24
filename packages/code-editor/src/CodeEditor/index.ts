@@ -12,8 +12,6 @@ export {
 } from './CodeEditor.types';
 export {
   createHighlightExtension as createCodeMirrorHighlightExtension,
-  createLanguageExtension as createCodeMirrorLanguageExtension,
   createThemeExtension as createCodeMirrorThemeExtension,
-  createTooltipsExtension as createCodeMirrorTooltipsExtension,
   LanguageName,
 } from './codeMirrorExtensions';
