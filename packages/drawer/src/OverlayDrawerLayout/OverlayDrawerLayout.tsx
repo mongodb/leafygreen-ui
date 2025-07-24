@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { getOverlayDrawerLayoutStyles } from './OverlayDrawerLayout.styles';
 import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 
 /**
  * @internal
@@ -14,23 +15,20 @@ import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
 export const OverlayDrawerLayout = forwardRef<
   HTMLDivElement,
   OverlayDrawerLayoutProps
->(
-  (
-    { children, className, hasToolbar = false }: OverlayDrawerLayoutProps,
-    forwardedRef,
-  ) => {
-    return (
-      <div
-        ref={forwardedRef}
-        className={getOverlayDrawerLayoutStyles({
-          className,
-          hasToolbar,
-        })}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+>(({ children, className }: OverlayDrawerLayoutProps, forwardedRef) => {
+  const { hasToolbar } = useDrawerLayoutContext();
+
+  return (
+    <div
+      ref={forwardedRef}
+      className={getOverlayDrawerLayoutStyles({
+        className,
+        hasToolbar,
+      })}
+    >
+      {children}
+    </div>
+  );
+});
 
 OverlayDrawerLayout.displayName = 'OverlayDrawerLayout';

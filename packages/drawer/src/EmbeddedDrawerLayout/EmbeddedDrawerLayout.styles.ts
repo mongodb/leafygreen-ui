@@ -2,11 +2,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
 import { GRID_AREA } from '../constants';
-import {
-  PANEL_WIDTH,
-  PANEL_WITH_TOOLBAR_WIDTH,
-  TOOLBAR_WIDTH,
-} from '../constants';
+import { TOOLBAR_WIDTH } from '../constants';
 import { MOBILE_BREAKPOINT } from '../Drawer';
 import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
@@ -23,7 +19,7 @@ const baseStyles = css`
   position: relative;
 `;
 
-const drawerBaseStyles = css`
+const withoutToolbarBaseStyles = css`
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-columns: unset;
     grid-template-rows: 100% 0;
@@ -31,11 +27,8 @@ const drawerBaseStyles = css`
 `;
 
 // If there is no toolbar and the drawer is open, we need to shift the layout by the panel width;
-const drawerOpenStyles = css`
-  /* grid-template-columns: auto ${PANEL_WIDTH}px; */
+const withoutToolbarOpenStyles = css`
   grid-template-columns: 1fr auto;
-
-  /* grid-template-columns: auto var(--drawerWidth); */
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-rows: 50% 50%;
@@ -49,11 +42,6 @@ const withToolbarBaseStyles = css`
 
 // If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + panel width;
 const withToolbarOpenStyles = css`
-  /* grid-template-columns: auto ${PANEL_WITH_TOOLBAR_WIDTH +
-  TOOLBAR_WIDTH}px; */
-
-  /* grid-template-columns: auto calc(var(--drawerWidth) + ${TOOLBAR_WIDTH}px); */
-
   grid-template-columns: 1fr auto;
 
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
@@ -75,8 +63,8 @@ export const getEmbeddedDrawerLayoutStyles = ({
     {
       [withToolbarBaseStyles]: hasToolbar,
       [withToolbarOpenStyles]: isDrawerOpen && hasToolbar,
-      [drawerBaseStyles]: !hasToolbar,
-      [drawerOpenStyles]: isDrawerOpen && !hasToolbar,
+      [withoutToolbarBaseStyles]: !hasToolbar,
+      [withoutToolbarOpenStyles]: isDrawerOpen && !hasToolbar,
     },
     className,
   );

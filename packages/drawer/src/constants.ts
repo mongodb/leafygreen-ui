@@ -8,5 +8,5 @@ export const GRID_AREA = {
   innerDrawer: 'inner-drawer',
 };
 
-export const PANEL_WIDTH = 432;
-export const PANEL_WITH_TOOLBAR_WIDTH = PANEL_WIDTH - TOOLBAR_WIDTH;
+export const DRAWER_WIDTH = 432;
+export const DRAWER_WITH_TOOLBAR_WIDTH = DRAWER_WIDTH - TOOLBAR_WIDTH;

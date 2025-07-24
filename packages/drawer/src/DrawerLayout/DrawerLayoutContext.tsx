@@ -7,6 +7,7 @@ export interface DrawerLayoutContextType {
   resizable?: boolean;
   displayMode?: DrawerProps['displayMode'];
   onClose?: DrawerProps['onClose'];
+  hasToolbar?: boolean;
 }
 
 export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
@@ -14,14 +15,12 @@ export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
   isDrawerOpen: false,
   displayMode: DisplayMode.Overlay,
   onClose: undefined,
+  hasToolbar: false,
 });
 
 /**
  * The DrawerLayoutProvider is used to provide the drawer layout context to the children components.
  * It is used to determine if the drawer is open, if it is resizable, and the display mode of the drawer.
- *
- * @param {PropsWithChildren<DrawerLayoutContextType>} props - The props for the DrawerLayoutProvider.
- * @returns {JSX.Element} The DrawerLayoutProvider component.
  */
 export const DrawerLayoutProvider = ({
   children,
@@ -29,12 +28,14 @@ export const DrawerLayoutProvider = ({
   resizable,
   displayMode,
   onClose,
+  hasToolbar,
 }: PropsWithChildren<DrawerLayoutContextType>) => {
   const value = {
     resizable,
     isDrawerOpen,
     displayMode,
     onClose,
+    hasToolbar,
   };
 
   return (

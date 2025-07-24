@@ -9,7 +9,7 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import { PANEL_WIDTH } from '../constants';
+import { DRAWER_WIDTH } from '../constants';
 
 import { HEADER_HEIGHT, MOBILE_BREAKPOINT } from './Drawer.constants';
 import { DisplayMode } from './Drawer.types';
@@ -56,7 +56,7 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
   max-width: 50vw;
-  width: ${PANEL_WIDTH}px;
+  width: ${DRAWER_WIDTH}px;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
@@ -286,11 +286,6 @@ export const innerChildrenContainerStyles = cx(
   baseInnerChildrenContainerStyles,
   scrollContainerStyles,
 );
-
-export const resizerColors: Record<Theme, string> = {
-  [Theme.Light]: palette.blue.light1,
-  [Theme.Dark]: palette.blue.light1,
-};
 
 export const getResizerStyles = ({
   resizerClassName,

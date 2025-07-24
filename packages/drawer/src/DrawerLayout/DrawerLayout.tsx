@@ -26,7 +26,9 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
     }: DrawerLayoutProps,
     forwardedRef,
   ) => {
-    if (!toolbarData) {
+    const hasToolbar = toolbarData && toolbarData.length > 0;
+
+    if (!hasToolbar) {
       consoleOnce.warn(
         'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
       );
@@ -38,6 +40,7 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
         resizable={resizable}
         displayMode={displayMode}
         onClose={onClose}
+        hasToolbar={hasToolbar}
       >
         {toolbarData ? (
           <DrawerToolbarLayout

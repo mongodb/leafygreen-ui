@@ -41,7 +41,6 @@ export const DrawerToolbarLayoutContainer = forwardRef<
     const { onClose, displayMode } = useDrawerLayoutContext();
 
     const lgIds = getLgIds(dataLgId);
-    const hasData = toolbarData && toolbarData.length > 0;
 
     const handleOnClose = (event: React.MouseEvent<HTMLButtonElement>) => {
       onClose?.(event);
@@ -58,12 +57,7 @@ export const DrawerToolbarLayoutContainer = forwardRef<
     };
 
     return (
-      <LayoutComponent
-        {...rest}
-        ref={forwardRef}
-        hasToolbar={hasData}
-        isDrawerOpen={isDrawerOpen}
-      >
+      <LayoutComponent {...rest} ref={forwardRef} isDrawerOpen={isDrawerOpen}>
         <div className={contentStyles}>{children}</div>
         <DrawerWithToolbarWrapper isDrawerOpen={isDrawerOpen}>
           <Toolbar data-lgid={lgIds.toolbar} data-testid={lgIds.toolbar}>

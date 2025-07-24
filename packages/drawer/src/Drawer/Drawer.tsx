@@ -17,7 +17,7 @@ import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { PANEL_WIDTH } from '../constants';
+import { DRAWER_WIDTH, DRAWER_WITH_TOOLBAR_WIDTH } from '../constants';
 import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
@@ -26,6 +26,8 @@ import {
   DRAWER_MAX_PERCENTAGE_WIDTH,
   DRAWER_MAX_WIDTH,
   DRAWER_MIN_WIDTH,
+  DRAWER_MIN_WIDTH_WITH_TOOLBAR,
+  DRAWER_MAX_WIDTH_WITH_TOOLBAR,
 } from './Drawer.constants';
 import {
   drawerTransitionDuration,
@@ -66,6 +68,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       resizable,
       displayMode: displayModeContextProp,
       onClose: onCloseContextProp,
+      hasToolbar,
     } = useDrawerLayoutContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
@@ -78,6 +81,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
     );
+
+    const initialSize = hasToolbar ? DRAWER_WITH_TOOLBAR_WIDTH : DRAWER_WIDTH;
+    const resizableMinWidth = hasToolbar
+      ? DRAWER_MIN_WIDTH_WITH_TOOLBAR
+      : DRAWER_MIN_WIDTH;
+    const resizableMaxWidth = hasToolbar
+      ? DRAWER_MAX_WIDTH_WITH_TOOLBAR
+      : DRAWER_MAX_WIDTH;
 
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
@@ -141,10 +152,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       HTMLDialogElement | HTMLDivElement
     >({
       enabled: resizable && displayMode === DisplayMode.Embedded,
-      initialSize: open ? PANEL_WIDTH : 0,
-      minSize: DRAWER_MIN_WIDTH,
-      maxSize: DRAWER_MAX_WIDTH, // Allow resizing up to a reasonable size
-      maxViewportPercentages: DRAWER_MAX_PERCENTAGE_WIDTH, // Allow resizing up to 50% of the viewport width
+      initialSize: open ? initialSize : 0,
+      minSize: resizableMinWidth,
+      maxSize: resizableMaxWidth,
+      maxViewportPercentages: DRAWER_MAX_PERCENTAGE_WIDTH,
       position: Position.Right,
     });
 
@@ -171,7 +182,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
-            size: resizable ? size : open ? PANEL_WIDTH : 0,
+            size: resizable ? size : open ? initialSize : 0,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}

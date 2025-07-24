@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
 import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
-import { GRID_AREA, PANEL_WITH_TOOLBAR_WIDTH } from '../constants';
+import { GRID_AREA, DRAWER_WITH_TOOLBAR_WIDTH } from '../constants';
 import { TOOLBAR_WIDTH } from '../constants';
 import {
   drawerClassName,
@@ -20,13 +20,13 @@ const drawerIn = keyframes`
     grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
   }
   to {
-    grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WITH_TOOLBAR_WIDTH}px;
+    grid-template-columns: ${TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px;
   }
 `;
 
 const drawerOut = keyframes`
   from {
-    grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WITH_TOOLBAR_WIDTH}px;
+    grid-template-columns: ${TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px;
   }
   to {
     grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
@@ -86,7 +86,7 @@ const closedOverlayStyles = css`
 `;
 
 const openEmbeddedStyles = css`
-  /* grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WITH_TOOLBAR_WIDTH}px; */
+  /* grid-template-columns: ${TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px; */
   grid-template-columns: ${TOOLBAR_WIDTH}px auto;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
