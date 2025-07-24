@@ -1,11 +1,11 @@
-export const DragFrom = {
+export const Position = {
   Left: 'left',
   Right: 'right',
   Top: 'top',
   Bottom: 'bottom',
 } as const;
 
-export type DragFrom = (typeof DragFrom)[keyof typeof DragFrom];
+export type Position = (typeof Position)[keyof typeof Position];
 
 export const SizeGrowth = {
   Increase: 'increase',
@@ -53,10 +53,10 @@ export type ResizableProps = {
   maxViewportPercentages: number;
 
   /**
-   * The type of handle used for resizing.
-   * This determines which edge of the element can be dragged to resize it.
+   * The position of the element to which the resizer handle is attached.
+   * This is used to determine the direction in which the element can be resized.
    */
-  dragFrom: DragFrom;
+  position: Position;
 };
 
 export type ResizerProps = {

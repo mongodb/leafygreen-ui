@@ -33,7 +33,7 @@ import { useResizable } from '../utils/useResizable/useResizable';
 import { PANEL_WIDTH } from '../constants';
 import { DRAWER_MAX_WIDTH, DRAWER_MIN_WIDTH } from './Drawer.constants';
 import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
-import { DragFrom } from '../utils/useResizable/useResizable.types';
+import { Position } from '../utils/useResizable/useResizable.types';
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
@@ -144,7 +144,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       minSize: DRAWER_MIN_WIDTH,
       maxSize: DRAWER_MAX_WIDTH, // Allow resizing up to a reasonable size
       maxViewportPercentages: 50,
-      dragFrom: DragFrom.Left,
+      position: Position.Right,
     });
 
     // Create merged ref after resizableRef is defined

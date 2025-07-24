@@ -1,4 +1,4 @@
-import { DragFrom } from './useResizable.types';
+import { Position } from './useResizable.types';
 
 /**
  * Calculates the new size based on mouse position and constraints
@@ -7,7 +7,7 @@ export const calculateNewSize = (
   event: MouseEvent,
   initialElementSize: number,
   initialMousePosition: { x: number; y: number },
-  dragDirection: DragFrom,
+  dragDirection: Position,
   minSize: number,
   maxSize: number,
   viewportPercentage?: number,
@@ -21,16 +21,16 @@ export const calculateNewSize = (
 
   // Apply direction-specific calculation
   switch (dragDirection) {
-    case DragFrom.Left:
+    case Position.Right:
       newSize = initialElementSize - deltaX;
       break;
-    case DragFrom.Right:
+    case Position.Left:
       newSize = initialElementSize + deltaX;
       break;
-    case DragFrom.Top:
+    case Position.Bottom:
       newSize = initialElementSize - deltaY;
       break;
-    case DragFrom.Bottom:
+    case Position.Top:
       newSize = initialElementSize + deltaY;
       break;
   }
@@ -39,7 +39,7 @@ export const calculateNewSize = (
   if (viewportPercentage) {
     const percent = viewportPercentage / 100;
     const viewportSize =
-      dragDirection === DragFrom.Left || dragDirection === DragFrom.Right
+      dragDirection === Position.Left || dragDirection === Position.Right
         ? window.innerWidth
         : window.innerHeight;
     effectiveMaxSize = Math.min(effectiveMaxSize, viewportSize * percent);

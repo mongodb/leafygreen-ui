@@ -3,7 +3,7 @@ import { fireEvent } from '@testing-library/dom';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useResizable } from './useResizable';
 import { renderHook } from '@leafygreen-ui/testing-lib';
-import { DragFrom } from './useResizable.types';
+import { Position } from './useResizable.types';
 
 // Mock window dimensions
 Object.defineProperty(window, 'innerWidth', { value: 1024 });
@@ -31,7 +31,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        dragFrom: DragFrom.Right,
+        position: Position.Right,
         maxViewportPercentages: 50,
       }),
     );
@@ -48,7 +48,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        dragFrom: DragFrom.Right,
+        position: Position.Right,
         maxViewportPercentages: 50,
       }),
     );
@@ -67,7 +67,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        dragFrom: DragFrom.Right,
+        position: Position.Right,
         onResize,
         maxViewportPercentages: 50,
       }),
@@ -102,9 +102,9 @@ describe('useResizable', () => {
     expect(onResize).toHaveBeenCalledWith(400);
   });
 
-  describe.each([DragFrom.Bottom, DragFrom.Top, DragFrom.Left, DragFrom.Right])(
-    'dragFrom: %s',
-    dragFrom => {
+  describe.each([Position.Bottom, Position.Top, Position.Left, Position.Right])(
+    'position: %s',
+    position => {
       test('respects minSize constraint', () => {
         const onResize = jest.fn();
         const initialSize = 300;
@@ -113,7 +113,7 @@ describe('useResizable', () => {
             initialSize,
             minSize: 250,
             maxSize: 500,
-            dragFrom: dragFrom as DragFrom,
+            position: position as Position,
             onResize,
             maxViewportPercentages: 50,
           }),
@@ -140,11 +140,11 @@ describe('useResizable', () => {
             window,
             new MouseEvent('mousemove', {
               clientX:
-                dragFrom === DragFrom.Left
+                position === Position.Left
                   ? initialSize + 100
                   : initialSize - 100,
               clientY:
-                dragFrom === DragFrom.Top
+                position === Position.Top
                   ? initialSize + 100
                   : initialSize - 100,
             }),
@@ -164,7 +164,7 @@ describe('useResizable', () => {
             initialSize,
             minSize: 100,
             maxSize: 400,
-            dragFrom: dragFrom as DragFrom,
+            position: position as Position,
             onResize,
             maxViewportPercentages: 60,
           }),
@@ -191,11 +191,11 @@ describe('useResizable', () => {
             window,
             new MouseEvent('mousemove', {
               clientX:
-                dragFrom === DragFrom.Left
+                position === Position.Left
                   ? initialSize - 200
                   : initialSize + 200,
               clientY:
-                dragFrom === DragFrom.Top
+                position === Position.Top
                   ? initialSize - 200
                   : initialSize + 200,
             }),
@@ -215,7 +215,7 @@ describe('useResizable', () => {
             initialSize,
             minSize: 100,
             maxSize: 900,
-            dragFrom: dragFrom as DragFrom,
+            position: position as Position,
             maxViewportPercentages: 50,
             onResize,
           }),
@@ -241,11 +241,11 @@ describe('useResizable', () => {
             window,
             new MouseEvent('mousemove', {
               clientX:
-                dragFrom === DragFrom.Left
+                position === Position.Left
                   ? initialSize - 400
                   : initialSize + 400,
               clientY:
-                dragFrom === DragFrom.Top
+                position === Position.Top
                   ? initialSize - 200
                   : initialSize + 200,
             }),
@@ -253,7 +253,7 @@ describe('useResizable', () => {
         });
 
         const maxViewportSize =
-          dragFrom === DragFrom.Right || dragFrom === DragFrom.Left ? 512 : 384; // 50% of viewport width or height
+          position === Position.Right || position === Position.Left ? 512 : 384; // 50% of viewport width or height
         expect(result.current.size).toBe(maxViewportSize);
         expect(onResize).toHaveBeenCalledWith(maxViewportSize);
       });
@@ -266,7 +266,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        dragFrom: DragFrom.Right,
+        position: Position.Right,
         maxViewportPercentages: 50,
       }),
     );
@@ -317,7 +317,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        dragFrom: DragFrom.Right,
+        position: Position.Right,
         onResize,
         maxViewportPercentages: 50,
       }),
@@ -353,7 +353,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        dragFrom: DragFrom.Right,
+        position: Position.Right,
         onResize,
         enabled: false,
         maxViewportPercentages: 50,

@@ -3,31 +3,31 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ResizableProps,
   ResizableReturn,
-  DragFrom,
+  Position,
   SizeGrowth,
 } from './useResizable.types';
 import { calculateNewSize } from './useResizable.utils';
 import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
-// Mappings for keyboard interactions based on the dragFrom direction
+// Mappings for keyboard interactions based on the position
 const SIZE_GROWTH_KEY_MAPPINGS: Record<
-  DragFrom,
+  Position,
   { [key: string]: SizeGrowth }
 > = {
-  left: {
+  [Position.Right]: {
     [keyMap.ArrowLeft]: 'increase',
     [keyMap.ArrowRight]: 'decrease',
   },
-  right: {
+  [Position.Left]: {
     [keyMap.ArrowRight]: 'increase',
     [keyMap.ArrowLeft]: 'decrease',
   },
-  top: {
+  [Position.Bottom]: {
     [keyMap.ArrowUp]: 'increase',
     [keyMap.ArrowDown]: 'decrease',
   },
-  bottom: {
+  [Position.Top]: {
     [keyMap.ArrowDown]: 'increase',
     [keyMap.ArrowUp]: 'decrease',
   },
@@ -42,7 +42,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   maxSize: maxSizeProp = 0,
   onResize,
   maxViewportPercentages,
-  dragFrom,
+  position,
 }: ResizableProps): ResizableReturn<T> => {
   const resizableRef = useRef<T>(null);
   const [isResizing, setIsResizing] = useState<boolean>(false);
@@ -55,7 +55,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   const [size, setSize] = useState<number>(initialSize);
   const minSize = minSizeProp ?? initialSize;
   const maxSize = maxSizeProp ?? initialSize;
-  const isVertical = dragFrom === DragFrom.Left || dragFrom === DragFrom.Right;
+  const isVertical = position === Position.Left || position === Position.Right;
 
   // Keeps track of all the sizes that can be used for resizing with keyboard
   const keyboardSizes = [initialSize!, minSize, maxSize];
@@ -79,7 +79,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       event,
       initialElementSize.current,
       initialMousePos.current,
-      dragFrom,
+      position,
       minSize,
       maxSize,
       maxViewportPercentages,
@@ -103,15 +103,15 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
   /**
    * Handles keyboard interactions for resizing.
-   * Allows resizing using arrow keys based on the dragFrom direction.
+   * Allows resizing using arrow keys based on the position.
    *
    * For example:
-   * - If dragFrom is 'left' and the left arrow key is pressed, it increases the size.
-   * - If dragFrom is 'left' and the right arrow key is pressed, it decreases the size.
+   * - If position is 'left' and the left arrow key is pressed, it increases the size.
+   * - If position is 'left' and the right arrow key is pressed, it decreases the size.
    */
   const getKeyboardInteraction = useCallback(
-    (event: React.KeyboardEvent | KeyboardEvent, dragFrom: DragFrom | null) => {
-      if (dragFrom === DragFrom.Left || dragFrom === DragFrom.Right) {
+    (event: React.KeyboardEvent | KeyboardEvent, position: Position | null) => {
+      if (position === Position.Left || position === Position.Right) {
         if (event.code == keyMap.ArrowLeft || event.code == keyMap.ArrowRight) {
           event.preventDefault();
         } else {
@@ -139,8 +139,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         }
       };
 
-      if (dragFrom && event.code in SIZE_GROWTH_KEY_MAPPINGS[dragFrom]) {
-        const sizeGrowth = SIZE_GROWTH_KEY_MAPPINGS[dragFrom][event.code];
+      if (position && event.code in SIZE_GROWTH_KEY_MAPPINGS[position]) {
+        const sizeGrowth = SIZE_GROWTH_KEY_MAPPINGS[position][event.code];
         const nextSize = getNextSizes(sizeGrowth);
         handleSizeChange(nextSize);
       }
@@ -151,11 +151,11 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   /**
    * Handles key down events for resizing.
    * Prevents default behavior and calls getKeyboardInteraction to handle resizing.
-   * This allows resizing using arrow keys based on the dragFrom direction.
+   * This allows resizing using arrow keys based on the position.
    */
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent) => {
-      getKeyboardInteraction(event, dragFrom);
+      getKeyboardInteraction(event, position);
     },
     [getKeyboardInteraction],
   );
@@ -182,7 +182,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
           : resizableRef.current.offsetHeight;
       }
     },
-    [enabled, dragFrom],
+    [enabled, position],
   );
 
   /**
@@ -256,7 +256,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     size,
     minSize,
     maxSize,
-    dragFrom,
+    position,
     handleOnMouseDown,
     handleOnFocus,
     handleOnBlur,
@@ -343,7 +343,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 // 5. Update DrawerLayout props ✅
 // 6. Figure out the correct TS and defaults for the sizes  ✅
 // 7. Add setOpen to drawer component to allow closing the drawer from inside ❌
-// 8. Add back dragFrom to getResizerProps ❌
+// 8. Add back position to getResizerProps ❌
 // 9. Remove snap close logic from the hook ✅
 // 10.Disable resize on small widths? DO i need to
 // 11.Ensure correct a11y practices ✅

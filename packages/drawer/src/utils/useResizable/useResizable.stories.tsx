@@ -1,11 +1,10 @@
 import React, { ElementType } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
-import { StoryFn, StoryObj } from '@storybook/react';
 import { useResizable } from './useResizable';
-import { palette } from '@leafygreen-ui/palette';
+import { Position } from './useResizable.types';
 
 export default {
-  title: 'hooks/useResizable/dragFrom',
+  title: 'hooks/useResizable/position',
   parameters: {
     default: null,
     chromatic: {
@@ -19,27 +18,22 @@ interface WrapperProps {
 }
 
 interface HandleConfig {
-  dragFrom: 'left' | 'right' | 'top' | 'bottom';
   containerStyles: React.CSSProperties;
   resizerBaseStyles: React.CSSProperties;
-  label: string;
 }
 
 const HANDLE_CONFIGS: Record<string, HandleConfig> = {
-  left: {
-    dragFrom: 'left',
-    containerStyles: {
-      right: 0,
-      top: 0,
-    },
-    resizerBaseStyles: {
-      left: 0,
-      top: 0,
-    },
-    label: 'Resizable from the left edge of the element',
-  },
   right: {
-    dragFrom: 'right',
+    containerStyles: {
+      right: 0,
+      top: 0,
+    },
+    resizerBaseStyles: {
+      left: 0,
+      top: 0,
+    },
+  },
+  left: {
     containerStyles: {
       left: 0,
       top: 0,
@@ -48,22 +42,18 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
       right: 0,
       top: 0,
     },
-    label: 'Resizable from the right edge of the element',
-  },
-  top: {
-    dragFrom: 'top',
-    containerStyles: {
-      left: 0,
-      bottom: 0,
-    },
-    resizerBaseStyles: {
-      left: 0,
-      top: 0,
-    },
-    label: 'Resizable from the top of the element',
   },
   bottom: {
-    dragFrom: 'bottom',
+    containerStyles: {
+      left: 0,
+      bottom: 0,
+    },
+    resizerBaseStyles: {
+      left: 0,
+      top: 0,
+    },
+  },
+  top: {
     containerStyles: {
       left: 0,
       top: 0,
@@ -72,7 +62,6 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
       left: 0,
       bottom: 0,
     },
-    label: 'Resizable from the bottom edge of the element',
   },
 };
 
@@ -91,10 +80,8 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
   );
 };
 
-const createResizableStory = (
-  dragFrom: 'left' | 'right' | 'top' | 'bottom',
-) => {
-  const config = HANDLE_CONFIGS[dragFrom];
+const createResizableStory = (position: Position) => {
+  const config = HANDLE_CONFIGS[position];
 
   return () => {
     const { getResizerProps, size, resizableRef } = useResizable({
@@ -103,12 +90,11 @@ const createResizableStory = (
       minSize: 200,
       maxSize: 600,
       maxViewportPercentages: 50,
-      dragFrom: config.dragFrom,
+      position,
     });
 
     const resizerProps = getResizerProps();
-    const configDragFrom = config.dragFrom;
-    const isVertical = configDragFrom === 'left' || configDragFrom === 'right';
+    const isVertical = position === 'left' || position === 'right';
 
     const containerStyles = {
       ...config.containerStyles,
@@ -129,14 +115,14 @@ const createResizableStory = (
             }}
             className={resizerProps?.className}
           />
-          {config.label}
+          Resizable element is on the {position}
         </div>
       </Wrapper>
     );
   };
 };
 
-export const Left = createResizableStory('left');
-export const Right = createResizableStory('right');
-export const Top = createResizableStory('top');
-export const Bottom = createResizableStory('bottom');
+export const Left = createResizableStory(Position.Left);
+export const Right = createResizableStory(Position.Right);
+export const Top = createResizableStory(Position.Top);
+export const Bottom = createResizableStory(Position.Bottom);
