@@ -1,10 +1,4 @@
-import React, {
-  ForwardedRef,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { ForwardedRef, forwardRef, useCallback, useRef } from 'react';
 import {
   useLeafyGreenChatContext,
   Variant,
@@ -52,6 +46,12 @@ export const MessageRating = forwardRef(
     const { variant } = useLeafyGreenChatContext();
     const isCompact = variant === Variant.Compact;
 
+    if (isCompact && description) {
+      consoleOnce.warn(
+        `@lg-chat/message-rating: The MessageRating component's prop 'description' is only used in the 'spacious' variant. It will not be rendered in the 'compact' variant set by the provider.`,
+      );
+    }
+
     const likeButtonRef = useRef<HTMLButtonElement>(null);
     const dislikeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -91,14 +91,6 @@ export const MessageRating = forwardRef(
       },
       [handleClick],
     );
-
-    useEffect(() => {
-      if (isCompact && description) {
-        consoleOnce.warn(
-          `@lg-chat/message-rating: The MessageRating component's prop 'description' is only used in the 'spacious' variant. It will not be rendered in the 'compact' variant set by the provider.`,
-        );
-      }
-    }, [isCompact, description]);
 
     const isLiked = value === 'liked';
     const isDisliked = value === 'disliked';
