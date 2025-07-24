@@ -55,6 +55,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   const [size, setSize] = useState<number>(initialSize);
   const minSize = minSizeProp ?? initialSize;
   const maxSize = maxSizeProp ?? initialSize;
+  const isVertical = dragFrom === DragFrom.Left || dragFrom === DragFrom.Right;
 
   // Keeps track of all the sizes that can be used for resizing with keyboard
   const keyboardSizes = [initialSize!, minSize, maxSize];
@@ -172,14 +173,11 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       isResizingRef.current = true;
       setIsResizing(true); // This will trigger re-render and useEffect later
 
-      const isHorizontal =
-        dragFrom === DragFrom.Left || dragFrom === DragFrom.Right;
-
       // Capture initial mouse position and current element size
       initialMousePos.current = { x: e.clientX, y: e.clientY };
 
       if (resizableRef.current) {
-        initialElementSize.current = isHorizontal
+        initialElementSize.current = isVertical
           ? resizableRef.current.offsetWidth
           : resizableRef.current.offsetHeight;
       }
@@ -210,9 +208,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     if (!enabled) {
       return;
     }
-
-    const isVertical =
-      dragFrom === DragFrom.Left || dragFrom === DragFrom.Right;
 
     // Use callbacks defined outside to prevent recreation of functions
     const props = {
@@ -313,10 +308,15 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   useEffect(() => {
     const cleanupStyles = () => {
       resizableRef.current?.style.removeProperty('transition');
+      document.body.style.removeProperty('cursor');
     };
 
     if (isResizing) {
       resizableRef.current?.style.setProperty('transition', 'none');
+      document.body.style.setProperty(
+        'cursor',
+        isVertical ? 'col-resize' : 'row-resize',
+      );
     } else {
       cleanupStyles();
     }
@@ -339,14 +339,14 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 // 1. Add support for keyboard events to allow resizing with arrow keys ✅
 // 2. Add css to temp remove CSS transition when resizing ✅
 // 3. Move from direction to from getResizerProps to the hook. Look at other design systems
-// 4. Make resize cusor show up even when the mouse is not on top of the resizer handle
+// 4. Make resize cusor show up even when the mouse is not on top of the resizer handle ✅
 // 5. Update DrawerLayout props ✅
 // 6. Figure out the correct TS and defaults for the sizes  ✅
 // 7. Add setOpen to drawer component to allow closing the drawer from inside ❌
 // 8. Add back dragFrom to getResizerProps ❌
 // 9. Remove snap close logic from the hook ✅
 // 10.Disable resize on small widths? DO i need to
-// 11.Ensure correct a11y practices
+// 11.Ensure correct a11y practices ✅
 // 12.Fixes closing transition  ✅
 // 13.Weird resize bug, the drawer goes crazy
 // 14.Toolbar interaction story is still flakey
