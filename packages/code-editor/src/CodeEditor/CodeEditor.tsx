@@ -8,7 +8,6 @@ import {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
 import { useFoldGutterExtension } from './hooks/useFoldGutterExtension';
 import { useHighlightExtension } from './hooks/useHighlightExtension';
 import { useHyperLinkExtension } from './hooks/useHyperLinkExtension';
@@ -17,6 +16,7 @@ import { useLanguageExtension } from './hooks/useLanguageExtension';
 import { useLazyModules } from './hooks/useLazyModules';
 import { useLineWrapExtension } from './hooks/useLineWrapExtension';
 import { useModuleLoaders } from './hooks/useModuleLoaders';
+import { useThemeExtension } from './hooks/useThemeExtension';
 import { useTooltipExtension } from './hooks/useTooltipExtension';
 import { getEditorStyles } from './CodeEditor.styles';
 import {
@@ -106,6 +106,8 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       modules,
     );
 
+    const themeExtension = useThemeExtension(editorView, theme, baseFontSize);
+
     const onCreateEditor = useCallback(
       (editorView: EditorView) => {
         if (forceParsingProp) {
@@ -173,7 +175,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
          * `theme` prop is used instead of just adding these to extensions
          * list because it automates updating on theme change.
          */
-        theme={[createThemeExtension(theme, baseFontSize), highlightExtension]}
+        theme={[themeExtension, highlightExtension]}
         extensions={[
           ...consumerExtensions.map(extension => Prec.highest(extension)),
           // ...customExtensions,
