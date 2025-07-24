@@ -21,7 +21,7 @@ import {
 import { SuggestedActionsProps } from './SuggestedActions.types';
 
 const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
-  (props, fwdRef) => {
+  (props: SuggestedActionsProps, fwdRef: React.Ref<HTMLDivElement>) => {
     const {
       status,
       configurationParameters,

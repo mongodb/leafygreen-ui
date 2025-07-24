@@ -31,23 +31,13 @@ const meta: StoryMetaType<typeof SuggestedActions> = {
   },
   args: {
     status: Status.Apply,
-    configurationParameters: {
-      apply: {
-        'Cluster Tier': 'M200 ($14.59/hour)',
-        Provider: 'AWS / N. Virginia (us-east-1)',
-        Storage: '1500 GB',
-        RAM: '256 GB',
-        vCPUs: '64 vCPUs',
-      },
-      success: {
-        'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
-        'Cluster Tier': 'M200',
-      },
-      error: {
-        'Cloud Provider & Region': 'AWS / N. Virginia (us-east-1)',
-        'Cluster Tier': 'M200',
-      },
-    },
+    configurationParameters: [
+      { key: 'Cluster Tier', value: 'M200 ($14.59/hour)', status: Status.Success },
+      { key: 'Provider', value: 'AWS / N. Virginia (us-east-1)', status: Status.Success },
+      { key: 'Storage', value: '1500 GB' },
+      { key: 'RAM', value: '256 GB', status: Status.Error },
+      { key: 'vCPUs', value: '64 vCPUs', status: Status.Error },
+    ],
     onClickApply: () => {},
     darkMode: false,
   },
