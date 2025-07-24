@@ -156,6 +156,48 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   );
 
   /**
+   * Handles mouse down event for resizing
+   */
+  const handleOnMouseDown = useCallback(
+    (e: MouseEvent | React.MouseEvent) => {
+      if (!enabled) return;
+
+      e.preventDefault(); // Prevent default browser behavior like text selection
+
+      // Synchronously update the ref BEFORE setting state
+      isResizingRef.current = true;
+      setIsResizing(true); // This will trigger re-render and useEffect later
+
+      const isHorizontal =
+        dragFrom === DragFrom.Left || dragFrom === DragFrom.Right;
+
+      // Capture initial mouse position and current element size
+      initialMousePos.current = { x: e.clientX, y: e.clientY };
+
+      if (resizableRef.current) {
+        initialElementSize.current = isHorizontal
+          ? resizableRef.current.offsetWidth
+          : resizableRef.current.offsetHeight;
+      }
+    },
+    [enabled, dragFrom],
+  );
+
+  /**
+   * Handle focus event for the resizer
+   */
+  const handleOnFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  /**
+   * Handle blur event for the resizer
+   */
+  const handleOnBlur = useCallback(() => {
+    setIsFocused(false);
+  }, []);
+
+  /**
    * Returns the props for the resizer element.
    * This includes mouse down, focus, blur, and style properties.
    * The resizer is used to initiate resizing of the element.
@@ -165,42 +207,39 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       return;
     }
 
-    return {
-      onMouseDown: (e: MouseEvent | React.MouseEvent) => {
-        e.preventDefault(); // Prevent default browser behavior like text selection
+    const isHorizontal =
+      dragFrom === DragFrom.Left || dragFrom === DragFrom.Right;
 
-        // Synchronously update the ref BEFORE setting state
-        isResizingRef.current = true;
-        setIsResizing(true); // This will trigger re-render and useEffect later
-
-        // Capture initial mouse position and current element size
-        initialMousePos.current = { x: e.clientX, y: e.clientY };
-
-        if (resizableRef.current) {
-          initialElementSize.current =
-            dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
-              ? resizableRef.current.offsetWidth
-              : resizableRef.current.offsetHeight;
-        }
-      },
+    // Use callbacks defined outside to prevent recreation of functions
+    const props = {
+      onMouseDown: handleOnMouseDown,
+      onFocus: handleOnFocus,
+      onBlur: handleOnBlur,
+      // ARIA attributes for accessibility
+      role: 'separator', // Defines the element as an interactive divider that separates content regions.
+      'aria-valuenow': size, // Represents the current position of the separator as a value between aria-valuemin and aria-valuemax.
+      'aria-valuemin': minSize, //The minimum value of the separator's range.
+      'aria-valuemax': maxSize, // The maximum value of the separator's range.
+      'aria-orientation': isHorizontal ? 'vertical' : 'horizontal', // The visual orientation of the separator bar.
+      'aria-label': `${isHorizontal ? 'Vertical' : 'Horizontal'} resize handle`, // Descriptive label
+      'aria-valuetext': `${size} pixels`, // Provide size in a more readable format
       tabIndex: 0, // Make the resizer focusable
-      onFocus: () => {
-        // Set focus state when resizer receives focus
-        setIsFocused(true);
-      },
-      onBlur: () => {
-        // Handle blur event if needed, e.g., to reset styles or state
-        setIsFocused(false);
-      },
       style: {
-        cursor:
-          dragFrom === DragFrom.Left || dragFrom === DragFrom.Right
-            ? 'col-resize'
-            : 'row-resize', // Set cursor style for resizing
+        cursor: isHorizontal ? 'col-resize' : 'row-resize', // Set cursor style for resizing
       },
-      // TODO: add correct aria labels
     };
-  }, [enabled]);
+
+    return props;
+  }, [
+    enabled,
+    size,
+    minSize,
+    maxSize,
+    dragFrom,
+    handleOnMouseDown,
+    handleOnFocus,
+    handleOnBlur,
+  ]);
 
   // Effect hook to add and remove global mouse event listeners
   // These listeners are added to 'window' to ensure dragging works even if the mouse
