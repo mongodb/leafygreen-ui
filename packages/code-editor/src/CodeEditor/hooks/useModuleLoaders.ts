@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
 import { CodeEditorProps } from '../CodeEditor.types';
-import { LanguageName } from '../codeMirrorExtensions';
 
+import { LanguageName } from './useLanguageExtension';
 import type { LoadersMap } from './useLazyModules';
 
 interface CodeEditorModules {
