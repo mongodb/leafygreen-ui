@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Compartment, EditorView, Extension } from '@uiw/react-codemirror';
+import {
+  Compartment,
+  type EditorView,
+  type Extension,
+} from '@uiw/react-codemirror';
 
 /**
  * Hook for managing a dynamic CodeMirror extensions using a Compartment.

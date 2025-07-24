@@ -1,0 +1,9 @@
+export { useExtension } from './useExtension';
+export { useFoldGutterExtension } from './useFoldGutterExtension';
+export { useHighlightExtension } from './useHighlightExtension';
+export { useHyperLinkExtension } from './useHyperLinkExtension';
+export { useIndentExtension } from './useIndentExtension';
+export { useLanguageExtension } from './useLanguageExtension';
+export { useLineWrapExtension } from './useLineWrapExtension';
+export { useThemeExtension } from './useThemeExtension';
+export { useTooltipExtension } from './useTooltipExtension';

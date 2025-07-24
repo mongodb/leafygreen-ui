@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import type {
   EditorState,
   EditorView,
@@ -6,9 +6,9 @@ import type {
   ReactCodeMirrorRef,
 } from '@uiw/react-codemirror';
 
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { type DarkModeProps } from '@leafygreen-ui/lib';
 
-import { type LanguageName } from './hooks/useLanguageExtension';
+import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.

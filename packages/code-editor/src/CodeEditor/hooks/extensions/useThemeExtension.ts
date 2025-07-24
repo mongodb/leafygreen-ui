@@ -10,7 +10,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { CodeEditorSelectors } from '../CodeEditor.types';
+import { CodeEditorSelectors } from '../../CodeEditor.types';
 
 import { useExtension } from './useExtension';
 

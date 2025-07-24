@@ -8,9 +8,10 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+import { type CodeEditorModules } from '../useModuleLoaders';
+
 import { useExtension } from './useExtension';
 import { type LanguageName } from './useLanguageExtension';
-import { CodeEditorModules } from './useModuleLoaders';
 
 export function useHighlightExtension(
   view: EditorView | null,
