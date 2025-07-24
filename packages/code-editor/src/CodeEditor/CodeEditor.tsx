@@ -80,8 +80,8 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
 
     const hyperLinkExtension = useHyperLinkExtension(
       editorRef.current?.view || null,
-      modules,
       enableClickableUrls,
+      modules?.['@uiw/codemirror-extensions-hyper-link'],
     );
 
     const lineWrapExtension = useExtension(
