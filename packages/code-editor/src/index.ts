@@ -8,10 +8,17 @@ export {
   type CodeMirrorRef,
   type CodeMirrorState,
   type CodeMirrorView,
-  createCodeMirrorHighlightExtension,
-  createCodeMirrorLanguageExtension,
-  createCodeMirrorThemeExtension,
-  createCodeMirrorTooltipsExtension,
   IndentUnits,
-  LanguageName,
 } from './CodeEditor';
+export {
+  useFoldGutterExtension,
+  useHighlightExtension,
+  useHyperLinkExtension,
+  useIndentExtension,
+  useLanguageExtension,
+  useLazyModules,
+  useLineWrapExtension,
+  useModuleLoaders,
+  useThemeExtension,
+  useTooltipExtension,
+} from './CodeEditor/hooks';
