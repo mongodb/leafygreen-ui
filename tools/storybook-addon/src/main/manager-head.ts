@@ -102,7 +102,7 @@ ${head}
   /* Bold */
   @font-face {
     font-family: 'MongoDB Value Serif';
-    font-weight: 600;
+    font-weight: 700;
     src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Bold.woff')
         format('woff'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Bold.woff2')
