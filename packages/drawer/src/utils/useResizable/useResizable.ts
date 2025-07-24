@@ -10,33 +10,19 @@ import {
   ResizableReturn,
   SizeGrowth,
 } from './useResizable.types';
-import { calculateNewSize } from './useResizable.utils';
+import {
+  calculateNewSize,
+  RESIZER_SIZE,
+  SIZE_GROWTH_KEY_MAPPINGS,
+} from './useResizable.utils';
 
-// Mappings for keyboard interactions based on the position
-const SIZE_GROWTH_KEY_MAPPINGS: Record<
-  Position,
-  { [key: string]: SizeGrowth }
-> = {
-  [Position.Right]: {
-    [keyMap.ArrowLeft]: 'increase',
-    [keyMap.ArrowRight]: 'decrease',
-  },
-  [Position.Left]: {
-    [keyMap.ArrowRight]: 'increase',
-    [keyMap.ArrowLeft]: 'decrease',
-  },
-  [Position.Bottom]: {
-    [keyMap.ArrowUp]: 'increase',
-    [keyMap.ArrowDown]: 'decrease',
-  },
-  [Position.Top]: {
-    [keyMap.ArrowDown]: 'increase',
-    [keyMap.ArrowUp]: 'decrease',
-  },
-};
-
-const RESIZER_SIZE = 2;
-
+/**
+ * Custom hook to handle resizable functionality for a component.
+ * It allows resizing the component using mouse and keyboard interactions.
+ *
+ * @param {ResizableProps} props - The properties for the resizable functionality.
+ * @returns {ResizableReturn} - The state and methods for the resizable component.
+ */
 export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   enabled = true,
   initialSize = 0,
