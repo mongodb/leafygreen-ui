@@ -22,14 +22,13 @@ import {
 import { createHighlightExtension } from './codeMirrorExtensions/createHighlightExtension';
 import { createLanguageExtension } from './codeMirrorExtensions/createLanguageExtension';
 import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
-import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
-import { useExtension } from './hooks/useExtension';
 import { useFoldGutterExtension } from './hooks/useFoldGutterExtension';
 import { useHyperLinkExtension } from './hooks/useHyperLinkExtension';
 import { useIndentExtension } from './hooks/useIndentExtension';
 import { useLazyModules } from './hooks/useLazyModules';
 import { useLineWrapExtension } from './hooks/useLineWrapExtension';
 import { useModuleLoaders } from './hooks/useModuleLoaders';
+import { useTooltipExtension } from './hooks/useTooltipExtension';
 import { getEditorStyles } from './CodeEditor.styles';
 import {
   type CodeEditorProps,
@@ -102,13 +101,10 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       modules?.['@codemirror/language'],
     );
 
-    const tooltipExtension = useExtension(
-      editorRef.current?.view || null,
-      {
-        tooltips,
-      },
-      ({ tooltips }) =>
-        tooltips.length > 0 ? [createTooltipsExtension(tooltips)] : [],
+    const tooltipExtension = useTooltipExtension(
+      editorView,
+      tooltips,
+      modules?.['@codemirror/lint'],
     );
 
     const onChange = useCallback(

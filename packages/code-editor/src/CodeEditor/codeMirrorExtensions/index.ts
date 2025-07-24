@@ -4,4 +4,3 @@ export {
   LanguageName,
 } from './createLanguageExtension';
 export { createThemeExtension } from './createThemeExtension';
-export { createTooltipsExtension } from './createTooltipsExtension';
