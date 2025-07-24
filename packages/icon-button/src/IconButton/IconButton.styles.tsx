@@ -28,7 +28,7 @@ export const baseIconButtonStyle = css`
   // which can make things render differently across browsers if not defined explicitly.
   background-color: rgba(255, 255, 255, 0);
 
-  &:before {
+  &::before {
     content: '';
     transition: ${transitionDuration.default}ms all ease-in-out;
     position: absolute;
@@ -77,7 +77,7 @@ export const iconButtonMode: Record<Theme, string> = {
     &[data-hover='true'] {
       color: ${palette.black};
 
-      &:before {
+      &::before {
         background-color: ${transparentize(0.9, palette.gray.dark2)};
       }
     }
@@ -90,7 +90,7 @@ export const iconButtonMode: Record<Theme, string> = {
     &[data-hover='true'] {
       color: ${palette.gray.light3};
 
-      &:before {
+      &::before {
         background-color: ${transparentize(0.9, palette.gray.light2)};
       }
     }
@@ -104,7 +104,7 @@ export const focusStyle: Record<Theme, string> = {
       color: ${palette.black};
       box-shadow: ${focusRing[Theme.Light].default};
 
-      &:before {
+      &::before {
         background-color: ${transparentize(0.9, palette.gray.dark2)};
       }
     }
@@ -115,7 +115,7 @@ export const focusStyle: Record<Theme, string> = {
       color: ${palette.gray.light3};
       box-shadow: ${focusRing[Theme.Dark].default};
 
-      &:before {
+      &::before {
         background-color: ${transparentize(0.9, palette.gray.light2)};
       }
     }
@@ -133,7 +133,7 @@ export const disabledStyle: Record<Theme, string> = {
     &[data-hover='true'] {
       color: ${palette.gray.light1};
 
-      &:before {
+      &::before {
         background-color: rgba(255, 255, 255, 0);
       }
     }
@@ -142,7 +142,7 @@ export const disabledStyle: Record<Theme, string> = {
     &[data-focus='true'] {
       color: ${palette.gray.light1};
 
-      &:before {
+      &::before {
         background-color: rgba(255, 255, 255, 0);
       }
     }
@@ -158,7 +158,7 @@ export const disabledStyle: Record<Theme, string> = {
     &[data-hover='true'] {
       color: ${palette.gray.dark1};
 
-      &:before {
+      &::before {
         background-color: rgba(255, 255, 255, 0);
       }
     }
@@ -167,7 +167,7 @@ export const disabledStyle: Record<Theme, string> = {
     &[data-focus='true'] {
       color: ${palette.gray.dark1};
 
-      &:before {
+      &::before {
         background-color: rgba(255, 255, 255, 0);
       }
     }
@@ -178,7 +178,7 @@ export const activeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.black};
 
-    &:before {
+    &::before {
       background-color: ${transparentize(0.9, palette.gray.dark2)};
       transform: scale(1);
     }
@@ -186,7 +186,7 @@ export const activeStyle: Record<Theme, string> = {
   [Theme.Dark]: css`
     color: ${palette.gray.light3};
 
-    &:before {
+    &::before {
       background-color: ${transparentize(0.9, palette.gray.light2)};
       transform: scale(1);
     }

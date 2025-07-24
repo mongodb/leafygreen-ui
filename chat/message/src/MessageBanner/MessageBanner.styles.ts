@@ -6,7 +6,7 @@ import { spacing } from '@leafygreen-ui/tokens';
  */
 export const baseStyles = css`
   // Remove the Banner's left border wedge
-  &:before {
+  &::before {
     content: '';
     background: transparent;
   }

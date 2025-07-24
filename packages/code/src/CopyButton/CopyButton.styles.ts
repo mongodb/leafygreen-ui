@@ -56,7 +56,7 @@ export const copiedThemeStyle: Record<Theme, string> = {
     &:focus,
     &:hover {
       background-color: ${palette.green.dark1};
-      &:before {
+      &::before {
         background-color: ${palette.green.dark1};
       }
     }
@@ -78,7 +78,7 @@ export const copiedThemeStyle: Record<Theme, string> = {
     &:hover {
       background-color: ${palette.green.base};
 
-      &:before {
+      &::before {
         background-color: ${palette.green.base};
       }
     }

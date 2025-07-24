@@ -56,7 +56,7 @@ export const messageContainerWrapperStyles = css`
 
 const sharedMessageContainerWedgeStyles = css`
   // Left wedge
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     left: 0;
@@ -70,13 +70,13 @@ const sharedMessageContainerWedgeStyles = css`
 export const messageContainerWedgeStyles = {
   [Theme.Dark]: css`
     ${sharedMessageContainerWedgeStyles}
-    &:before {
+    &::before {
       background-color: ${palette.green.base};
     }
   `,
   [Theme.Light]: css`
     ${sharedMessageContainerWedgeStyles}
-    &:before {
+    &::before {
       background-color: ${palette.green.dark2};
     }
   `,
