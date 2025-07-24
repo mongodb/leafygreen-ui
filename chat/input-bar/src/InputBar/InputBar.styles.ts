@@ -157,8 +157,8 @@ const gradientWidth = 3;
 const gradientOffset = 1;
 
 export const gradientAnimationStyles = css`
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     top: -${gradientWidth + gradientOffset}px;
@@ -171,11 +171,11 @@ export const gradientAnimationStyles = css`
     background-position: 800% 800%; // set final state of animation
   }
 
-  &:after {
+  &::after {
     animation: 4s animateBg linear;
   }
 
-  &:before {
+  &::before {
     filter: blur(4px) opacity(0.6);
     animation: 4s animateBg, animateShadow linear infinite;
     opacity: 0;

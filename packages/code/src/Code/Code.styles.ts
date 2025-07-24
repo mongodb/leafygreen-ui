@@ -156,7 +156,7 @@ export const codeWithoutPanelStyles = css`
   // No panel, all code
   grid-template-areas: 'code code';
 
-  &:after {
+  &::after {
     grid-column: -1; // Placed on the right edge
   }
 `;
@@ -167,8 +167,8 @@ export const codeWithPanelStyles = css`
     'code';
   grid-template-columns: unset;
 
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     grid-row: 2; // Placed on the top under the Picker Panel
   }
 `;
@@ -307,8 +307,8 @@ export function getExpandButtonUtilsVariantStyle(theme: Theme): string {
 }
 
 export const baseScrollShadowStyles = css`
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     content: '';
     display: block;
     position: absolute;
@@ -320,11 +320,11 @@ export const baseScrollShadowStyles = css`
     box-shadow: unset;
     transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
   }
-  &:before {
+  &::before {
     grid-column: 1;
     left: -40px;
   }
-  &:after {
+  &::after {
     grid-column: 2; // Placed either under Panel, or on the right edge
   }
 `;
@@ -344,14 +344,14 @@ export function getScrollShadow(
       : `-15px 0px 15px 0 ${transparentize(0.7, 'black')}`;
 
   return css`
-    &:before {
+    &::before {
       ${(scrollState === ScrollState.Both ||
         scrollState === ScrollState.Left) &&
       css`
         box-shadow: ${dropShadowBefore};
       `};
     }
-    &:after {
+    &::after {
       ${(scrollState === ScrollState.Both ||
         scrollState === ScrollState.Right) &&
       `
