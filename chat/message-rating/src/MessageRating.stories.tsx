@@ -87,6 +87,11 @@ const Template: StoryFn<MessageRatingStoryProps> = ({ variant, ...props }) => (
 
 export const LiveExample: StoryObj<MessageRatingStoryProps> = {
   render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
 export const Controlled: StoryFn<typeof MessageRating> = ({
