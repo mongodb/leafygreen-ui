@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { baseStyles, variantStyles } from './MessageContainer.styles';
+import { getMessageContainerStyles } from './MessageContainer.styles';
 import { MessageContainerProps } from './MessageContainer.types';
 import { Variant } from '.';
 
@@ -17,7 +16,11 @@ export function MessageContainer({
   const { theme } = useDarkMode(darkModeProp);
   return (
     <div
-      className={cx(baseStyles, variantStyles[variant][theme], className)}
+      className={getMessageContainerStyles({
+        className,
+        theme,
+        variant,
+      })}
       {...rest}
     >
       {children}

@@ -1,13 +1,13 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { Variant } from './MessageContainer.types';
 
-export const baseStyles = css`
+const baseStyles = css`
   border-radius: 12px;
-  padding: ${spacing[4]}px;
+  padding: ${spacing[600]}px;
   white-space: pre-wrap;
   overflow-wrap: break-word;
   /* Card Shadow */
@@ -20,7 +20,7 @@ export const baseStyles = css`
   gap: ${spacing[200]}px;
 `;
 
-export const variantStyles: Record<Variant, Record<Theme, string>> = {
+const variantThemeStyles: Record<Variant, Record<Theme, string>> = {
   [Variant.Primary]: {
     [Theme.Dark]: css`
       background-color: ${palette.green.dark3};
@@ -38,3 +38,13 @@ export const variantStyles: Record<Variant, Record<Theme, string>> = {
     `,
   },
 };
+
+export const getMessageContainerStyles = ({
+  className,
+  theme,
+  variant,
+}: {
+  className?: string;
+  theme: Theme;
+  variant: Variant;
+}) => cx(baseStyles, variantThemeStyles[variant][theme], className);

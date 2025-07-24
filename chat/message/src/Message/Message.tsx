@@ -1,14 +1,13 @@
 import React, {
   ForwardedRef,
   forwardRef,
-  MutableRefObject,
   useEffect,
-  useRef,
+  useMemo,
   useState,
 } from 'react';
 import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { useForwardedRef } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -16,22 +15,20 @@ import { Polymorph } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize, breakpoints } from '@leafygreen-ui/tokens';
 
 import { VerifiedAnswerBanner } from '../MessageBanner';
-import { MessageContainer, Variant } from '../MessageContainer';
+import {
+  MessageContainer,
+  Variant as MessageContainerVariant,
+} from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
 import { MessageLinks } from '../MessageLinks';
 
 import {
-  avatarClassName,
-  desktopBaseStyles,
-  getBaseStyles,
-  hiddenStyles,
-  invisibleStyles,
+  getAvatarWrapperStyles,
+  getContainerStyles,
+  getMessageContainerWedgeStyles,
   messageClassName,
-  messageContainerWedgeStyles,
   messageContainerWrapperStyles,
-  rightAlignedStyles,
   senderClassName,
-  tabletBaseStyles,
 } from './Message.styles';
 import { Align } from './Message.types';
 import { MessageProps } from '.';
@@ -56,23 +53,13 @@ export const Message = forwardRef(
       baseFontSize: baseFontSizeProp,
       ...rest
     }: MessageProps,
-    forwardedRef: ForwardedRef<HTMLDivElement>,
+    fwdRef: ForwardedRef<HTMLDivElement>,
   ) => {
-    const { containerWidth } = useLeafyGreenChatContext();
-    const fallbackRef = useRef<HTMLDivElement>(null);
-    const ref =
-      (forwardedRef as MutableRefObject<HTMLDivElement>) || fallbackRef;
-    const { darkMode, theme } = useDarkMode(darkModeProp);
-    const isRightAligned = align === Align.Right || (!align && isSender);
-    const isLeftAligned = align === Align.Left || (!align && !isSender);
     const [isRenderingAvatar, setIsRenderingAvatar] = useState<boolean>(true);
-    const isMobile = () =>
-      !!containerWidth && containerWidth < breakpoints.Tablet;
-    const isDesktop = () =>
-      !!containerWidth && containerWidth >= breakpoints.Desktop;
-    const baseFontSize: BaseFontSize =
-      baseFontSizeProp ??
-      (isMobile() ? BaseFontSize.Body1 : BaseFontSize.Body2);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { containerWidth } = useLeafyGreenChatContext();
+
+    const ref = useForwardedRef(fwdRef, null);
 
     useEffect(() => {
       // determine whether the avatar should be rendered
@@ -93,34 +80,41 @@ export const Message = forwardRef(
           setIsRenderingAvatar(true);
         }
       }
-      // FIXME:
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ref.current]);
+    }, [isSender, ref]);
 
     const isVerified = verified !== undefined;
+    const isLeftAligned = align === Align.Left || (!align && !isSender);
+    const isRightAligned = align === Align.Right || (!align && isSender);
+    const isMobile = useMemo(
+      () => !!containerWidth && containerWidth < breakpoints.Tablet,
+      [containerWidth],
+    );
+    const isDesktop = useMemo(
+      () => !!containerWidth && containerWidth >= breakpoints.Desktop,
+      [containerWidth],
+    );
+    const baseFontSize: BaseFontSize =
+      baseFontSizeProp ?? (isMobile ? BaseFontSize.Body1 : BaseFontSize.Body2);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div
-          className={cx(
-            getBaseStyles(theme),
-            messageClassName,
-            {
-              [senderClassName]: isSender,
-              [rightAlignedStyles]: isRightAligned,
-              [tabletBaseStyles]: !isMobile(),
-              [desktopBaseStyles]: isDesktop(),
-            },
+          className={getContainerStyles({
             className,
-          )}
+            isDesktop,
+            isMobile,
+            isRightAligned,
+            isSender,
+            theme,
+          })}
           ref={ref}
           {...rest}
         >
           <div
-            className={cx(avatarClassName, {
-              [hiddenStyles]: isRightAligned && isMobile(),
-              [invisibleStyles]:
-                (isRightAligned && !isMobile()) || !isRenderingAvatar,
+            className={getAvatarWrapperStyles({
+              shouldHide: isRightAligned && isMobile,
+              shouldBeInvisible:
+                (isRightAligned && !isMobile) || !isRenderingAvatar,
             })}
           >
             {avatar}
@@ -128,9 +122,14 @@ export const Message = forwardRef(
           <div className={messageContainerWrapperStyles}>
             <Polymorph
               as={componentOverrides?.MessageContainer ?? MessageContainer}
-              variant={isSender ? Variant.Primary : Variant.Secondary}
-              className={cx({
-                [messageContainerWedgeStyles[theme]]: isVerified,
+              variant={
+                isSender
+                  ? MessageContainerVariant.Primary
+                  : MessageContainerVariant.Secondary
+              }
+              className={getMessageContainerWedgeStyles({
+                showVerified: isVerified,
+                theme,
               })}
             >
               {isVerified ? <VerifiedAnswerBanner {...verified} /> : null}
@@ -154,10 +153,10 @@ export const Message = forwardRef(
             </Polymorph>
           </div>
           <div
-            className={cx(avatarClassName, {
-              [hiddenStyles]: isLeftAligned && isMobile(),
-              [invisibleStyles]:
-                (isLeftAligned && !isMobile()) || !isRenderingAvatar,
+            className={getAvatarWrapperStyles({
+              shouldHide: isLeftAligned && isMobile,
+              shouldBeInvisible:
+                (isLeftAligned && !isMobile) || !isRenderingAvatar,
             })}
           >
             {avatar}
@@ -169,5 +168,3 @@ export const Message = forwardRef(
 );
 
 Message.displayName = 'Message';
-
-export default Message;
