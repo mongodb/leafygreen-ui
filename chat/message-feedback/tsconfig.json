@@ -19,6 +19,9 @@
   ],
   "references": [
     {
+      "path": "../leafygreen-chat-provider"
+    },
+    {
       "path": "../message-rating"
     },
     {

@@ -1,27 +1,86 @@
-import { css } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
+import {
+  borderRadius,
+  color,
+  InteractionState,
+  spacing,
+  Variant,
+} from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
+/** match height of the close IconButton which may not render */
+const HEADER_CONTAINER_HEIGHT = 28;
+
+const baseFormContainerStyles = css`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[200]}px;
 `;
 
-export const labelContainerStyles = css`
+const getCompactFormContainerStyles = (theme: Theme) => css`
+  border: 1px solid
+    ${color[theme].border[Variant.Primary][InteractionState.Default]};
+  border-radius: ${borderRadius[200]}px;
+  gap: ${spacing[200]}px ${spacing[300]}px;
+`;
+
+export const getFormContainerStyles = ({
+  isCompact,
+  theme,
+}: {
+  isCompact: boolean;
+  theme: Theme;
+}) =>
+  cx(baseFormContainerStyles, {
+    [getCompactFormContainerStyles(theme)]: isCompact,
+  });
+
+// Alternate padding used to align close IconButton with submit Button
+export const getHeaderContainerStyles = ({
+  isCompact,
+}: {
+  isCompact: boolean;
+}) => css`
+  height: ${HEADER_CONTAINER_HEIGHT}px;
+  padding: ${isCompact
+    ? `${spacing[200]}px ${spacing[200]}px 0 ${spacing[400]}px`
+    : 0};
   display: flex;
-  justify-content: end;
+  align-items: center;
 `;
 
 export const labelStyles = css`
   flex: 1;
-  padding-top: 3px; // to match icon button padding
 `;
 
-export const textAreaStyle = css`
-  margin-top: ${spacing[100]}px;
+const baseBodyContainerStyles = css`
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[200]}px;
 `;
+
+const compactBodyContainerStyles = css`
+  padding: 0 ${spacing[400]}px ${spacing[400]}px;
+  flex-direction: row;
+  gap: ${spacing[300]}px;
+`;
+
+export const getBodyContainerStyles = ({ isCompact }: { isCompact: boolean }) =>
+  cx(baseBodyContainerStyles, {
+    [compactBodyContainerStyles]: isCompact,
+  });
+
+const baseTextAreaStyles = css`
+  width: 100%;
+`;
+
+export const getTextAreaStyles = (className?: string) =>
+  cx(baseTextAreaStyles, className);
 
 export const actionContainerStyles = css`
-  margin-top: ${spacing[200]}px;
   display: flex;
-  gap: ${spacing[2]}px;
-  justify-content: end;
+  gap: ${spacing[200]}px;
+  justify-content: flex-end;
+  align-items: flex-end;
 `;
