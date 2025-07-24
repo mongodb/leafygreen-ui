@@ -86,7 +86,6 @@ const closedOverlayStyles = css`
 `;
 
 const openEmbeddedStyles = css`
-  /* grid-template-columns: ${TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px; */
   grid-template-columns: ${TOOLBAR_WIDTH}px auto;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -111,7 +110,7 @@ const baseEmbeddedStyles = css`
   grid-template-columns: 1fr auto;
 `;
 
-const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
+const getOverlayShadowStyles = ({ theme }: { theme: Theme }) => css`
   ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
 
   // Need this to show the box shadow since we are using overflow: hidden
@@ -166,7 +165,7 @@ const baseOverlayStyles = css`
   }
 `;
 
-const closedDrawerShadowStyles = css`
+const closedOverlayShadowStyles = css`
   padding-left: 0;
   animation-name: ${drawerPaddingOut};
   animation-timing-function: ease-in-out;
@@ -189,22 +188,22 @@ export const getDrawerWithToolbarWrapperStyles = ({
   shouldAnimate?: boolean;
   displayMode?: DisplayMode;
   theme: Theme;
-}) =>
-  cx(
+}) => {
+  const isOverLay = displayMode === DisplayMode.Overlay;
+  const isEmbedded = displayMode === DisplayMode.Embedded;
+
+  return cx(
     baseStyles,
     {
-      [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
-      [closedDrawerShadowStyles]:
-        displayMode === DisplayMode.Overlay && !isDrawerOpen,
-      [baseOverlayStyles]: displayMode === DisplayMode.Overlay,
-      [openOverlayStyles]: isDrawerOpen && displayMode === DisplayMode.Overlay, // TODO: is this only needed for overlay?
-      [closedOverlayStyles]:
-        !isDrawerOpen && shouldAnimate && displayMode === DisplayMode.Overlay, // This ensures that the drawer does not animate closed on initial render
-      [openEmbeddedStyles]:
-        isDrawerOpen && displayMode === DisplayMode.Embedded,
-      [closedEmbeddedStyles]:
-        !isDrawerOpen && displayMode === DisplayMode.Embedded, // This ensures that the drawer does not animate closed on initial render
-      [baseEmbeddedStyles]: displayMode === DisplayMode.Embedded,
+      [getOverlayShadowStyles({ theme })]: isOverLay,
+      [closedOverlayShadowStyles]: isOverLay && !isDrawerOpen,
+      [baseOverlayStyles]: isOverLay,
+      [openOverlayStyles]: isDrawerOpen && isOverLay,
+      [closedOverlayStyles]: !isDrawerOpen && shouldAnimate && isOverLay, // This ensures that the drawer does not animate closed on initial render
+      [baseEmbeddedStyles]: isEmbedded,
+      [openEmbeddedStyles]: isDrawerOpen && isEmbedded,
+      [closedEmbeddedStyles]: !isDrawerOpen && isEmbedded,
     },
     className,
   );
+};
