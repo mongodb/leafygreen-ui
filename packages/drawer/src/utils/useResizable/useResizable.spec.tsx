@@ -31,7 +31,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        position: Position.Right,
+        position: Position.Left,
         maxViewportPercentages: 50,
       }),
     );
@@ -48,7 +48,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        position: Position.Right,
+        position: Position.Left,
         maxViewportPercentages: 50,
       }),
     );
@@ -67,7 +67,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        position: Position.Right,
+        position: Position.Left,
         onResize,
         maxViewportPercentages: 50,
       }),
@@ -140,11 +140,11 @@ describe('useResizable', () => {
             window,
             new MouseEvent('mousemove', {
               clientX:
-                position === Position.Left
+                position === Position.Right
                   ? initialSize + 100
                   : initialSize - 100,
               clientY:
-                position === Position.Top
+                position === Position.Bottom
                   ? initialSize + 100
                   : initialSize - 100,
             }),
@@ -191,11 +191,11 @@ describe('useResizable', () => {
             window,
             new MouseEvent('mousemove', {
               clientX:
-                position === Position.Left
+                position === Position.Right
                   ? initialSize - 200
                   : initialSize + 200,
               clientY:
-                position === Position.Top
+                position === Position.Bottom
                   ? initialSize - 200
                   : initialSize + 200,
             }),
@@ -241,11 +241,11 @@ describe('useResizable', () => {
             window,
             new MouseEvent('mousemove', {
               clientX:
-                position === Position.Left
+                position === Position.Right
                   ? initialSize - 400
                   : initialSize + 400,
               clientY:
-                position === Position.Top
+                position === Position.Bottom
                   ? initialSize - 200
                   : initialSize + 200,
             }),
@@ -317,7 +317,7 @@ describe('useResizable', () => {
         initialSize: 300,
         minSize: 100,
         maxSize: 500,
-        position: Position.Right,
+        position: Position.Left,
         onResize,
         maxViewportPercentages: 50,
       }),
