@@ -1,13 +1,8 @@
+import { PRIMARY_BUTTON_INTERACTIVE_GREEN } from '@leafygreen-ui/button/Button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
-
-/**
- * Off-palette value specific to primary button instances
- * @see TODO: https://jira.mongodb.org/browse/LG-5388
- */
-const GREEN_BETWEEN_DARK2_DARK3 = '#00593F';
 
 export const getIconFill = ({
   disabled,
@@ -32,13 +27,13 @@ const getBaseIconButtonStyles = ({ theme }: { theme: Theme }) => {
 
     &:active,
     &:hover {
-      background-color: ${GREEN_BETWEEN_DARK2_DARK3};
+      background-color: ${PRIMARY_BUTTON_INTERACTIVE_GREEN};
       color: ${palette.white};
       box-shadow: 0 0 0 3px ${palette.green[darkMode ? 'dark3' : 'light2']};
     }
 
     &:focus-visible {
-      background-color: ${GREEN_BETWEEN_DARK2_DARK3};
+      background-color: ${PRIMARY_BUTTON_INTERACTIVE_GREEN};
       color: ${palette.white};
     }
   `;
