@@ -78,6 +78,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const isResizable =
       displayMode === DisplayMode.Embedded && !!resizable && open;
     const onClose = onCloseProp ?? onCloseContextProp;
+    const isEmbedded = displayMode === DisplayMode.Embedded;
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
     );
@@ -151,7 +152,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { resizableRef, size, getResizerProps } = useResizable<
       HTMLDialogElement | HTMLDivElement
     >({
-      enabled: resizable && displayMode === DisplayMode.Embedded,
+      enabled: resizable && isEmbedded,
       initialSize: open ? initialSize : 0,
       minSize: resizableMinWidth,
       maxSize: resizableMaxWidth,
@@ -160,10 +161,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     });
 
     // Create merged ref after resizableRef is defined
-    // Use a conditional to ensure resizableRef is only included when it's needed
     const refsToMerge = [fwdRef, ref];
 
-    if (displayMode === DisplayMode.Embedded && resizable) {
+    // Use a conditional to ensure resizableRef is only included when it's needed
+    if (isEmbedded && resizable) {
       refsToMerge.push(resizableRef);
     }
 
