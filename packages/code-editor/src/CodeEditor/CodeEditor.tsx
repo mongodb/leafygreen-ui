@@ -9,7 +9,6 @@ import { renderToString } from 'react-dom/server';
 import { forceParsing } from '@codemirror/language';
 import CodeMirror, {
   Compartment,
-  EditorState,
   EditorView,
   Prec,
 } from '@uiw/react-codemirror';
