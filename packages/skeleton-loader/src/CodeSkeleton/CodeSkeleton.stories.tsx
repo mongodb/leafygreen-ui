@@ -4,7 +4,7 @@ import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { CodeSkeleton } from '..';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Composition/Loading/SkeletonLoader',
   component: CodeSkeleton,
   parameters: {
     default: null,

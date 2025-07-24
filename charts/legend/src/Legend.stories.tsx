@@ -23,7 +23,7 @@ const defaultExcludedControls = [
 ];
 
 export default {
-  title: 'Charts/Legend',
+  title: 'Composition/Charts/Legend',
   component: Legend,
   parameters: {
     default: 'LiveExample',

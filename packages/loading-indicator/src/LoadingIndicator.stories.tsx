@@ -15,7 +15,7 @@ import { DisplayOption } from './Spinner/Spinner.types';
 import { PageLoader, Spinner } from '.';
 
 const meta: StoryMetaType<any> = {
-  title: 'Components/LoadingIndicator',
+  title: 'Composition/Loading/LoadingIndicator',
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     description: { control: 'text' },

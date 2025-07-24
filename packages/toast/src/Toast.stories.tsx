@@ -21,7 +21,7 @@ import { InternalToast, type InternalToastProps } from './InternalToast';
 import { ToastProvider, type ToastProviderProps, useToast, Variant } from '.';
 
 const meta: StoryMetaType<typeof InternalToast, ToastProviderProps> = {
-  title: 'Components/Toast',
+  title: 'Components/Notifications/Toast',
   component: InternalToast,
   decorators: [
     (Story, meta: StoryContext<InternalToastProps & ToastProviderProps>) => (

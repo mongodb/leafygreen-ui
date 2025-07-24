@@ -22,7 +22,7 @@ import {
 } from '.';
 
 const meta: StoryMetaType<typeof SearchInput> = {
-  title: 'Components/SearchInput',
+  title: 'Components/Inputs/SearchInput',
   component: SearchInput,
   parameters: {
     default: 'LiveExample',

@@ -12,6 +12,9 @@ import { StepStates } from '../types';
 import { baseStyles } from './Stepper.styles';
 import { StepperProps } from './Stepper.types';
 
+/**
+ * Steppers indicate progress sequentially by breaking content up into multiple logical and numbered steps.
+ */
 export const Stepper = ({
   children,
   currentStep,

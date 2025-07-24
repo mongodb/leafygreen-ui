@@ -38,7 +38,7 @@ const nestedItemStyle = css`
 `;
 
 const meta: StoryMetaType<ElementType<unknown>> = {
-  title: 'Hooks/Descendants',
+  title: 'Internal/Hooks/Descendants',
   parameters: {
     default: null,
     chromatic: {

@@ -27,6 +27,9 @@ import {
   Variant,
 } from './SplitButton.types';
 
+/**
+ * A Split Button combines the functionality of a dropdown Menu and a Button, allowing users to select from a primary action or the dropdown with related actions
+ */
 export const SplitButton = InferredPolymorphic<
   InternalSplitButtonProps,
   'button'

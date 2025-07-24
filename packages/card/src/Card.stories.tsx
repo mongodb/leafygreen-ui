@@ -7,7 +7,7 @@ import Card, { CardProps } from '.';
 const loremIpsum = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy children ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
 
 const meta: StoryMetaType<typeof Card> = {
-  title: 'Components/Card',
+  title: 'Sections/Cards/Card',
   component: Card,
   parameters: {
     default: 'LiveExample',

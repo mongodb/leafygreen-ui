@@ -9,7 +9,7 @@ import SelectContext from '../SelectContext';
 import { InternalOption } from './Option';
 
 const meta: StoryMetaType<typeof InternalOption> = {
-  title: 'Components/Select/Option',
+  title: 'Components/Inputs/Select/Option',
   component: InternalOption,
   parameters: {
     default: null,

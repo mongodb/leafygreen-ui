@@ -22,6 +22,9 @@ import {
 } from './NumberInput.styles';
 import { NumberInputProps, Size, State } from './NumberInput.types';
 
+/**
+ * The number input allows users to enter numerical values and choose units. The dropdown option presents a list of preset unit values that users can select from. The input field and the dropdown option should have clear labels and be associated with a label describing their purpose.
+ */
 export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   (
     {

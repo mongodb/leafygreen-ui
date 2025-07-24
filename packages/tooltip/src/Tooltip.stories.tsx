@@ -26,7 +26,7 @@ import Tooltip, { Align, Justify, TooltipProps, TriggerEvent } from '.';
 const { getAlign, getJustify } = TestUtils;
 
 const meta: StoryMetaType<typeof Tooltip> = {
-  title: 'Components/Tooltip',
+  title: 'Composition/Overlays/Tooltip',
   component: Tooltip,
   args: {
     enabled: true,

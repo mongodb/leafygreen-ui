@@ -29,7 +29,7 @@ const numOfLineColors = 15;
 const lineData = makeLineData(numOfLineColors);
 
 export default {
-  title: 'Charts/Core',
+  title: 'Composition/Charts/Core',
   component: Chart,
   parameters: {
     default: 'LiveExample',

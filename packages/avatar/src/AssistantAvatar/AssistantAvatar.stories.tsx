@@ -8,7 +8,7 @@ import { AssistantAvatar } from './AssistantAvatar';
 import { AssistantAvatarProps } from './AssistantAvatar.types';
 
 export default {
-  title: 'Components/Avatar/AssistantAvatar',
+  title: 'Components/Display/Avatar/AssistantAvatar',
   component: AssistantAvatar,
   parameters: {
     default: 'LiveExample',

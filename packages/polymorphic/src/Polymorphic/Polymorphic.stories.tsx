@@ -9,7 +9,7 @@ import {
 } from '.';
 
 const meta: StoryMetaType<typeof Polymorph> = {
-  title: 'Components/Internal/Polymorph',
+  title: 'Internal/Polymorph',
   component: Polymorph,
   args: {
     children: 'Polymorph',

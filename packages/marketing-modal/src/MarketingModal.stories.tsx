@@ -18,7 +18,7 @@ import MarketingModal, {
 } from '.';
 
 const meta: StoryMetaType<typeof MarketingModal> = {
-  title: 'Components/Modals/Marketing Modal',
+  title: 'Sections/Modals/Marketing Modal',
   component: MarketingModal,
   args: {
     darkMode: false,

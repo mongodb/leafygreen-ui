@@ -28,7 +28,7 @@ const TooltipRoot = (Story: StoryFn, ctx: any) => {
 };
 
 export default {
-  title: 'Charts/ChartTooltip',
+  title: 'Composition/Charts/ChartTooltip',
   component: CustomTooltip,
   decorators: [TooltipRoot],
   args: {

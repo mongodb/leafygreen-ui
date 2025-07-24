@@ -8,7 +8,7 @@ import { Variant } from '../Chip/Chip.types';
 import { DismissButton } from '.';
 
 const meta: StoryMetaType<typeof DismissButton> = {
-  title: 'Components/Chip/DismissButton',
+  title: 'Components/Display/Chip/DismissButton',
   component: DismissButton,
   parameters: {
     default: null,

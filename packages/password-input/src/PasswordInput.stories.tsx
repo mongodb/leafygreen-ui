@@ -91,7 +91,7 @@ type UserFriendlyProps = PasswordInputProps & {
 };
 
 const meta: StoryMetaType<typeof PasswordInput> = {
-  title: 'Components/PasswordInput',
+  title: 'Components/Inputs/PasswordInput',
   component: PasswordInput,
   parameters: {
     default: 'LiveExample',

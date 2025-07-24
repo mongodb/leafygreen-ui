@@ -12,7 +12,7 @@ import TableHead from '../../TableHead';
 import { makeData } from '../../utils/makeData.testutils';
 
 const meta: StoryMetaType<typeof HeaderRow> = {
-  title: 'Components/Table/Row/HeaderRow',
+  title: 'Composition/Data Display/Table/Row/HeaderRow',
   component: HeaderRow,
   parameters: {
     default: null,

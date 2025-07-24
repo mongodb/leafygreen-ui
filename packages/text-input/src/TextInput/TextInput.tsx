@@ -18,9 +18,6 @@ import {
 } from './TextInput.types';
 
 /**
- * # TextInput
- *
- * TextInput component
  *
  * ```
 <TextInput label='Input Label' onChange={() => execute when value of input field changes}/>

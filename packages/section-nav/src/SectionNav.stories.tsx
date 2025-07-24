@@ -23,7 +23,7 @@ const children = (
 );
 
 export default {
-  title: 'Components/SectionNav',
+  title: 'Composition/Data Display/SectionNav',
   component: SectionNav,
   parameters: {
     default: 'LiveExample',
