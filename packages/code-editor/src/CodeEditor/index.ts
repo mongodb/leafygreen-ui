@@ -13,5 +13,4 @@ export {
 export {
   createHighlightExtension as createCodeMirrorHighlightExtension,
   createThemeExtension as createCodeMirrorThemeExtension,
-  LanguageName,
 } from './codeMirrorExtensions';
