@@ -1,17 +1,19 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
-import { DisplayMode } from '../Drawer/Drawer.types';
+import { DisplayMode, DrawerProps } from '../Drawer/Drawer.types';
 
 export interface DrawerLayoutContextType {
   isDrawerOpen?: boolean;
   resizable?: boolean;
-  displayMode?: DisplayMode;
+  displayMode?: DrawerProps['displayMode'];
+  onClose?: DrawerProps['onClose'];
 }
 
 export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
   resizable: false,
   isDrawerOpen: false,
   displayMode: DisplayMode.Overlay,
+  onClose: undefined,
 });
 
 /**
@@ -26,11 +28,13 @@ export const DrawerLayoutProvider = ({
   isDrawerOpen,
   resizable,
   displayMode,
+  onClose,
 }: PropsWithChildren<DrawerLayoutContextType>) => {
   const value = {
     resizable,
     isDrawerOpen,
     displayMode,
+    onClose,
   };
 
   return (

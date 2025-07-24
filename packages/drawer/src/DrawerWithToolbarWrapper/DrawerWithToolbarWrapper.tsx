@@ -4,6 +4,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { getDrawerWithToolbarWrapperStyles } from './DrawerWithToolbarWrapper.styles';
 import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 
 /**
  * @internal
@@ -17,16 +18,12 @@ export const DrawerWithToolbarWrapper = forwardRef<
   DrawerWithToolbarWrapperProps
 >(
   (
-    {
-      children,
-      className,
-      isDrawerOpen,
-      displayMode,
-    }: DrawerWithToolbarWrapperProps,
+    { children, className, isDrawerOpen }: DrawerWithToolbarWrapperProps,
     forwardedRef,
   ) => {
     const { theme } = useDarkMode();
     const [shouldAnimate, setShouldAnimate] = useState(false);
+    const { displayMode } = useDrawerLayoutContext();
 
     useEffect(() => {
       if (isDrawerOpen) setShouldAnimate(true);

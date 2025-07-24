@@ -21,50 +21,37 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
       displayMode = DisplayMode.Overlay,
       isDrawerOpen = false,
       resizable = false,
+      onClose,
       ...rest
     }: DrawerLayoutProps,
     forwardedRef,
   ) => {
-    // If there is data, we render the DrawerToolbarLayout.
-    if (toolbarData) {
-      return (
-        <DrawerLayoutProvider
-          isDrawerOpen={isDrawerOpen}
-          resizable={resizable}
-          displayMode={displayMode}
-        >
-          <DrawerToolbarLayout
-            ref={forwardedRef}
-            toolbarData={toolbarData}
-            displayMode={displayMode}
-            {...rest}
-          >
-            {children}
-          </DrawerToolbarLayout>
-        </DrawerLayoutProvider>
+    if (!toolbarData) {
+      consoleOnce.warn(
+        'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
       );
     }
 
-    consoleOnce.warn(
-      'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
-    );
-
-    // If there is no data, we render the LayoutComponent.
-    // The LayoutComponent will read the displayMode and render the appropriate layout.
     return (
       <DrawerLayoutProvider
         isDrawerOpen={isDrawerOpen}
         resizable={resizable}
         displayMode={displayMode}
+        onClose={onClose}
       >
-        <LayoutComponent
-          ref={forwardedRef}
-          displayMode={displayMode}
-          isDrawerOpen={isDrawerOpen}
-          {...rest}
-        >
-          {children}
-        </LayoutComponent>
+        {toolbarData ? (
+          <DrawerToolbarLayout
+            ref={forwardedRef}
+            toolbarData={toolbarData}
+            {...rest}
+          >
+            {children}
+          </DrawerToolbarLayout>
+        ) : (
+          <LayoutComponent ref={forwardedRef} {...rest}>
+            {children}
+          </LayoutComponent>
+        )}
       </DrawerLayoutProvider>
     );
   },

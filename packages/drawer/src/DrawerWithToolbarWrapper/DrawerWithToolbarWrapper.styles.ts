@@ -185,9 +185,9 @@ export const getDrawerWithToolbarWrapperStyles = ({
   theme,
 }: {
   className?: string;
-  isDrawerOpen: boolean;
+  isDrawerOpen?: boolean;
   shouldAnimate?: boolean;
-  displayMode: DisplayMode;
+  displayMode?: DisplayMode;
   theme: Theme;
 }) =>
   cx(

@@ -9,6 +9,7 @@ import { EmbeddedDrawerLayout } from '../EmbeddedDrawerLayout';
 import { OverlayDrawerLayout } from '../OverlayDrawerLayout';
 
 import { LayoutComponentProps } from './LayoutComponent.types';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 
 /**
  * @internal
@@ -20,15 +21,17 @@ export const LayoutComponent = forwardRef<HTMLDivElement, LayoutComponentProps>(
   (
     {
       children,
-      displayMode,
       darkMode: darkModeProp,
-      isDrawerOpen = false,
       drawer,
+      isDrawerOpen: isDrawerOpenProp,
       ...rest
     }: LayoutComponentProps,
     forwardRef,
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
+    const { isDrawerOpen: isDrawerOpenContextProp, displayMode } =
+      useDrawerLayoutContext();
+    const isDrawerOpen = isDrawerOpenProp ?? isDrawerOpenContextProp;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>

@@ -50,7 +50,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       'data-lgid': dataLgId,
       displayMode: displayModeProp,
       id: idProp,
-      onClose,
+      onClose: onCloseProp,
       open: openProp,
       title,
       ...rest
@@ -65,6 +65,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       isDrawerOpen,
       resizable,
       displayMode: displayModeContextProp,
+      onClose: onCloseContextProp,
     } = useDrawerLayoutContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
@@ -73,6 +74,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const open = openProp ?? isDrawerOpen ?? false;
     const isResizable =
       displayMode === DisplayMode.Embedded && !!resizable && open;
+    const onClose = onCloseProp ?? onCloseContextProp;
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
     );
