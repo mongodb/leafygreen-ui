@@ -53,8 +53,8 @@ describe('packages/chip', () => {
       >
         {'children'}
       </DrawerLayout>
+      {/* @ts-expect-error - drawer should not be passed with toolbarData */}
       <DrawerLayout
-        // @ts-expect-error - dawer should not be passed with toolbarData
         drawer={<>drawer</>}
         toolbarData={[
           {

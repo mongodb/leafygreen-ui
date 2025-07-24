@@ -1,13 +1,12 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { DrawerToolbarLayoutProps } from '../DrawerToolbarLayout';
-import { LayoutComponentProps } from '../LayoutComponent';
 
 import { DrawerProps } from '../Drawer/Drawer.types';
 
 type PickedDrawerProps = Pick<DrawerProps, 'onClose'>;
 
-export interface BaseDrawerLayoutPropsWihtoutDisplayMode
+export interface BaseDrawerLayoutPropsWithoutDisplayMode
   extends HTMLElementProps<'div'>,
     DarkModeProps,
     PickedDrawerProps {
@@ -15,7 +14,7 @@ export interface BaseDrawerLayoutPropsWihtoutDisplayMode
 }
 
 export interface BaseDrawerLayoutEmbeddedProps
-  extends BaseDrawerLayoutPropsWihtoutDisplayMode {
+  extends BaseDrawerLayoutPropsWithoutDisplayMode {
   /**
    * Options to display the drawer element
    * @param Embedded will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as container page content. It is recommended to wrap an embedded drawer within the `DrawerLayout` container
@@ -33,7 +32,7 @@ export interface BaseDrawerLayoutEmbeddedProps
 }
 
 export interface BaseDrawerLayoutOverlayProps
-  extends BaseDrawerLayoutPropsWihtoutDisplayMode {
+  extends BaseDrawerLayoutPropsWithoutDisplayMode {
   /**
    * Options to display the drawer element
    * @param Embedded will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as container page content. It is recommended to wrap an embedded drawer within the `DrawerLayout` container
@@ -54,10 +53,7 @@ export type BaseDrawerLayoutProps =
   | BaseDrawerLayoutEmbeddedProps
   | BaseDrawerLayoutOverlayProps;
 
-export type DrawerLayoutPropsWithoutToolbar = Omit<
-  LayoutComponentProps,
-  'displayMode' | 'isDrawerOpen'
-> & {
+export type DrawerLayoutPropsWithoutToolbar = {
   /**
    * An array of data that will be used to render the toolbar items and the drawer content.
    */
@@ -74,14 +70,21 @@ export type DrawerLayoutPropsWithoutToolbar = Omit<
   drawer?: React.ReactNode;
 } & BaseDrawerLayoutProps;
 
-export type DrawerLayoutPropsWithToolbar = Omit<
-  DrawerToolbarLayoutProps,
-  'displayMode'
-> & {
+export type DrawerLayoutPropsWithToolbar = {
+  /**
+   * An array of data that will be used to render the toolbar items and the drawer content.
+   */
+  toolbarData: DrawerToolbarLayoutProps['toolbarData'];
+
   /**
    * Determines if the Drawer is open. This is only needed if using the Drawer without a toolbar. This will shift the layout to the right by the width of the drawer if `displayMode` is set to 'embedded'.
    */
   isDrawerOpen?: never;
+
+  /**
+   * The drawer component to be rendered in the layout.
+   */
+  drawer?: never;
 } & BaseDrawerLayoutProps;
 
 export type DrawerLayoutProps =
