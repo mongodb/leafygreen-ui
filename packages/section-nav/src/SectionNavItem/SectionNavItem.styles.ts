@@ -108,7 +108,7 @@ export const getHoverStyles = ({ theme }: { theme: Theme }) => css`
 
 export const getActiveStyles = ({ theme }: { theme: Theme }) => css`
   color: ${color[theme].text.primary.default};
-  font-weight: ${fontWeights.bold};
+  font-weight: ${fontWeights.semiBold};
 
   &::before {
     background-color: ${activeWedgeColor[theme]};

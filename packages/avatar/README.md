@@ -25,9 +25,14 @@ return <Avatar format={Format.Icon} glyph="PersonGroup" />;
 
 // Logo
 return <Avatar format={Format.MongoDB} sizeOverride={56} />;
+
+// Assistant
+return <AssistantAvatar size={AvatarSize.Large} />;
 ```
 
 ## Properties
+
+### Avatar
 
 | Prop           | Type                               | Description                                                                     | Default     |
 | -------------- | ---------------------------------- | ------------------------------------------------------------------------------- | ----------- |
@@ -38,6 +43,13 @@ return <Avatar format={Format.MongoDB} sizeOverride={56} />;
 | `text`         | `string`                           | The text to render in the Avatar when `format === 'text'`                       |             |
 | `glyph`        | `GlyphName`                        | The LeafyGreen icon glyph name to render in the Avatar when `format === 'icon'` | `"Person"`  |
 | `...`          | `HTMLElementProps<'div'>`          | Props spread on the root element                                                |             |
+
+### AssistantAvatar
+
+| Prop       | Type                               | Description                                          | Default     |
+| ---------- | ---------------------------------- | ---------------------------------------------------- | ----------- |
+| `darkMode` | `boolean`                          | Determines if the component will render in dark mode | `false`     |
+| `size`     | `"default"`, `"large"`, `"xlarge"` | Determines the size of the avatar                    | `"default"` |
 
 ## `getInitials`
 

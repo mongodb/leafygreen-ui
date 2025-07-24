@@ -35,7 +35,7 @@ const defaultExcludedControls = [
 ];
 
 const meta: StoryMetaType<typeof ContextDrawer> = {
-  title: 'Components/ContextDrawer',
+  title: 'Composition/Data Display/ContextDrawer',
   component: ContextDrawer,
   parameters: {
     default: 'LiveExample',

@@ -1,5 +1,11 @@
 # @leafygreen-ui/form-footer
 
+## 9.0.1
+
+### Patch Changes
+
+- @leafygreen-ui/split-button@6.1.1
+
 ## 9.0.0
 
 ### Major Changes

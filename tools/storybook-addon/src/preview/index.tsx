@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ComponentPreview,
   PropCombinations,
@@ -7,6 +8,13 @@ import {
   storybookExcludedArgTypes,
   storybookExcludedControlParams,
 } from '@lg-tools/storybook-utils';
+import {
+  Controls,
+  Description,
+  Primary,
+  Subtitle as StorybookSubtitle,
+  Title,
+} from '@storybook/blocks';
 import type { Preview } from '@storybook/react';
 
 import {
@@ -48,6 +56,15 @@ const parameters = {
       code: InlineCode,
     },
     source: { type: 'code' },
+    page: () => (
+      <>
+        <Title />
+        <StorybookSubtitle />
+        <Description />
+        <Primary />
+        <Controls />
+      </>
+    ),
   },
   darkMode: {
     dark: { ...darkTheme },
@@ -58,6 +75,7 @@ const parameters = {
 const preview: Preview = {
   parameters,
   decorators: [ReactStrictMode, ComponentPreview, PropCombinations],
+  tags: ['autodocs'],
 };
 
 export default preview;

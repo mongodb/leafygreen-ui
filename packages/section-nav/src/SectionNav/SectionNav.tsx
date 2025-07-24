@@ -9,6 +9,9 @@ import { getLgIds } from '../utils/getLgIds';
 import { getOrderedListStyles, getTitleStyles } from './SectionNav.styles';
 import { type SectionNavProps } from './SectionNav.types';
 
+/**
+ * The Section Nav provides a page overview and direct access to specific sections. It is an ordered list of clickable headings corresponding to the content sections on the page. It allows users to navigate directly to any of the sections on the same page.
+ */
 export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(
   (
     {

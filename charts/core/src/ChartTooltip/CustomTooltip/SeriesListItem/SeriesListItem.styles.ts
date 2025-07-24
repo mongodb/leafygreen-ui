@@ -17,5 +17,5 @@ export const nameStyle = css`
 export const valueStyle = css`
   text-align: right;
   font-family: ${fontFamilies.default};
-  font-weight: ${fontWeights.bold};
+  font-weight: ${fontWeights.semiBold};
 `;

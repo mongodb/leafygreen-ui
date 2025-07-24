@@ -13,7 +13,7 @@ import { RadioBoxGroup } from './RadioBoxGroup';
 import { type RadioBoxGroupProps, Size } from './types';
 
 const meta: StoryMetaType<typeof RadioBoxGroup> = {
-  title: 'Components/RadioBoxGroup',
+  title: 'Components/Inputs/RadioBoxGroup',
   component: RadioBoxGroup,
   parameters: {
     default: 'LiveExample',

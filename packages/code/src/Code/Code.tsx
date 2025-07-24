@@ -32,6 +32,9 @@ import {
 } from './Code.types';
 import { getHorizontalScrollbarHeight, hasMultipleLines } from './utils';
 
+/**
+ * Code components are used to show snippets of code.
+ */
 function Code({
   language: languageProp,
   darkMode: darkModeProp,

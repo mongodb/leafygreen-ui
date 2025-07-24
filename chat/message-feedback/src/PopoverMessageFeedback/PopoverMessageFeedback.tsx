@@ -1,4 +1,8 @@
 import React, { ForwardedRef, forwardRef } from 'react';
+import {
+  useLeafyGreenChatContext,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
@@ -34,6 +38,12 @@ export const PopoverMessageFeedback = forwardRef(
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
     const { theme } = useDarkMode(darkModeProp);
+    const { variant } = useLeafyGreenChatContext();
+    const isCompact = variant === Variant.Compact;
+
+    if (isCompact) {
+      return null;
+    }
 
     return (
       <LeafyGreenProvider darkMode={true}>

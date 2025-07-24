@@ -1,7 +1,7 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { BaseFontSize, FontWeight } from '@leafygreen-ui/tokens';
 
 import Body from './Body';
 import { BodyProps } from './Body.types';
@@ -19,13 +19,26 @@ const meta: StoryMetaType<typeof Body> = {
       combineArgs: {
         darkMode: [false, true],
         baseFontSize: Object.values(BaseFontSize),
-        weight: ['regular', 'medium'],
+        weight: Object.values(FontWeight).filter(
+          value => value !== FontWeight.Bold,
+        ),
       },
     },
   },
   args: {
     children: 'Lorem ipsum dolor sit amet',
     darkMode: false,
+    weight: FontWeight.Regular,
+  },
+  argTypes: {
+    weight: {
+      options: Object.values(FontWeight).filter(
+        value => value !== FontWeight.Bold,
+      ),
+      control: {
+        type: 'select',
+      },
+    },
   },
 };
 export default meta;

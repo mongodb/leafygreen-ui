@@ -39,6 +39,9 @@ import {
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 
+/**
+ * A drawer is a panel that slides in from the right side of the screen (not customizable). Because the user can use the Drawer without navigating away from the current page, tasks can be completed more efficiently while not changing page context.
+ */
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
     {

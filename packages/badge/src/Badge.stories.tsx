@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import Badge, { BadgeProps, Variant } from '.';
 
 const meta: StoryMetaType<typeof Badge> = {
-  title: 'Components/Badge',
+  title: 'Components/Display/Badge',
   component: Badge,
   parameters: {
     default: 'LiveExample',

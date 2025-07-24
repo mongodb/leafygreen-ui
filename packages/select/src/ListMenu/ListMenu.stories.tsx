@@ -12,7 +12,7 @@ import { SelectContext } from '../SelectContext';
 import ListMenu from './ListMenu';
 
 const meta: StoryMetaType<typeof ListMenu> = {
-  title: 'Components/Select/ListMenu',
+  title: 'Components/Inputs/Select/ListMenu',
   component: ListMenu,
   parameters: {
     default: null,

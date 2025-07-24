@@ -19,7 +19,7 @@ const decoratorWrapper = (Story: StoryFn, context: any) => (
 );
 
 export default {
-  title: 'Components/SectionNav/SectionNavItem',
+  title: 'Composition/Data Display/SectionNav/SectionNavItem',
   component: SectionNavItem,
   parameters: {
     default: 'LiveExample',

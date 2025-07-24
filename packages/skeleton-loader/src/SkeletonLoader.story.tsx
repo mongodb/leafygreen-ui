@@ -18,7 +18,7 @@ import {
 } from '.';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Composition/Loading/SkeletonLoader',
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     enableAnimations: { control: 'boolean' },

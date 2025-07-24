@@ -16,9 +16,9 @@ import { Person } from '../../utils/makeData.testutils';
 
 import HeaderCell, { HeaderCellProps } from '.';
 
-const lgids = getLgIds();
+const lgIds = getLgIds();
 
-const headerCellSortIconTestId = lgids.sortIcon;
+const headerCellSortIconTestId = lgIds.sortIcon;
 
 function renderSimpleHeaderCell(props: HeaderCellProps<unknown>) {
   return render(

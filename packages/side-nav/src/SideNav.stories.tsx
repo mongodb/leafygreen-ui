@@ -27,7 +27,7 @@ const basicStyles = css`
 `;
 
 const meta: StoryMetaType<typeof SideNav> = {
-  title: 'Components/SideNav',
+  title: 'Composition/Data Display/SideNav',
   component: SideNav,
   parameters: {
     default: 'LiveExample',

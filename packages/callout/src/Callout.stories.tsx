@@ -18,7 +18,7 @@ const loremWithLinks = (
 );
 
 const meta: StoryMetaType<typeof Callout> = {
-  title: 'Components/Callout',
+  title: 'Components/Notifications/Callout',
   component: Callout,
   parameters: {
     default: 'LiveExample',

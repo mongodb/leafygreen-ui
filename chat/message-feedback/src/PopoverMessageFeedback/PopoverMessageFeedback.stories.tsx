@@ -5,7 +5,7 @@ import { storybookArgTypes, StoryType } from '@lg-tools/storybook-utils';
 import { PopoverMessageFeedback } from '.';
 
 export default {
-  title: 'Chat/MessageFeedback/PopoverMessageFeedback',
+  title: 'Composition/Chat/MessageFeedback/PopoverMessageFeedback',
   component: PopoverMessageFeedback,
   args: {
     label: 'Provide additional feedback here. How can we improve?',

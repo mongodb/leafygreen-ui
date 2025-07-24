@@ -1,19 +1,46 @@
 import React, { ChangeEvent, useState } from 'react';
 import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import {
   MessageRating,
   MessageRatingProps,
   MessageRatingValue,
 } from '@lg-chat/message-rating';
-import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { InlineMessageFeedback } from '.';
+import { InlineMessageFeedback, type InlineMessageFeedbackProps } from '.';
 
-export default {
-  title: 'Chat/MessageFeedback/InlineMessageFeedback',
+const meta: StoryMetaType<typeof InlineMessageFeedback> = {
+  title: 'Composition/Chat/MessageFeedback/InlineMessageFeedback',
   component: InlineMessageFeedback,
+  parameters: {
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        // eslint-disable-next-line no-console
+        onClose: [undefined, () => console.log('closed')],
+        textareaProps: [
+          {
+            value: '',
+          },
+          {
+            value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+          },
+        ],
+      },
+      decorator: StoryFn => (
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <StoryFn />
+        </LeafyGreenChatProvider>
+      ),
+    },
+  },
   args: {
     label: 'What did you think?',
     onClose: undefined,
@@ -22,23 +49,44 @@ export default {
     darkMode: storybookArgTypes.darkMode,
   },
 };
+export default meta;
 
-const Template: StoryFn<typeof InlineMessageFeedback> = props => (
-  <InlineMessageFeedback {...props} />
+type InlineMessageFeedbackStoryProps = InlineMessageFeedbackProps & {
+  variant?: Variant;
+};
+
+const Template: StoryFn<InlineMessageFeedbackStoryProps> = ({
+  variant,
+  ...props
+}) => (
+  <LeafyGreenChatProvider variant={variant}>
+    <InlineMessageFeedback {...props} />
+  </LeafyGreenChatProvider>
 );
 
-export const Basic = Template.bind({});
+export const LiveExample: StoryObj<InlineMessageFeedbackStoryProps> = {
+  render: Template,
+};
 
-export const BasicControlled = Template.bind({});
-BasicControlled.args = {
-  textareaProps: {
-    value: 'test',
+export const Controlled: StoryObj<InlineMessageFeedbackStoryProps> = {
+  render: Template,
+  args: {
+    textareaProps: {
+      value: 'test',
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: ['onSubmit', 'onCancel'],
+    },
   },
 };
 
-export const SubmittedState = Template.bind({});
-SubmittedState.args = {
-  isSubmitted: true,
+export const SubmittedState: StoryObj<InlineMessageFeedbackStoryProps> = {
+  render: Template,
+  args: {
+    isSubmitted: true,
+  },
 };
 
 export const WithMessageRating: StoryFn<typeof MessageRating> = args => {
@@ -84,10 +132,19 @@ export const WithMessageRating: StoryFn<typeof MessageRating> = args => {
         <InlineMessageFeedback
           label="What do you think?"
           onCancel={handleCancel}
+          onClose={handleCancel}
           onSubmit={handleSubmit}
           isSubmitted={isDisplayingSubmitted}
         />
       )}
     </div>
   );
+};
+
+export const Generated: StoryObj<InlineMessageFeedbackStoryProps> = {
+  render: Template,
+  args: {
+    isSubmitted: false,
+    variant: Variant.Compact,
+  },
 };

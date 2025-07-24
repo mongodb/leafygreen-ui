@@ -24,6 +24,9 @@ import {
   warningIconThemeStyle,
 } from './styles';
 
+/**
+ * Modals can be used to display a simple task, confirm actions, prompt users to input information, or display additional information.
+ */
 export const ConfirmationModal = React.forwardRef(
   (
     {

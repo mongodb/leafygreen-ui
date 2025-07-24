@@ -41,7 +41,7 @@ const baseStyles = css`
 
   &:focus:not(:disabled) {
     outline: none;
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
   }
 
   // We create a pseudo element that's the width of the bolded text
@@ -49,7 +49,7 @@ const baseStyles = css`
   &:before {
     content: attr(data-text);
     height: 0;
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
     visibility: hidden;
     overflow: hidden;
     user-select: none;
@@ -126,7 +126,7 @@ const modeStyles: Record<Theme, ListTitleMode> = {
       &,
       &:hover {
         color: ${palette.green.dark2};
-        font-weight: ${fontWeights.bold};
+        font-weight: ${fontWeights.semiBold};
 
         &:after {
           transform: scaleX(1);
@@ -167,7 +167,7 @@ const modeStyles: Record<Theme, ListTitleMode> = {
       &,
       &:hover {
         color: ${palette.gray.light2};
-        font-weight: ${fontWeights.bold};
+        font-weight: ${fontWeights.semiBold};
 
         &:after {
           transform: scaleX(1);

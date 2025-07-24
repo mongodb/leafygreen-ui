@@ -161,7 +161,7 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
 }
 
 const meta: StoryMetaType<any> = {
-  title: 'Components/Palette',
+  title: 'Internal/Palette',
   component: null,
   parameters: {
     default: 'AllColors',

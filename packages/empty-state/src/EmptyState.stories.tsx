@@ -32,7 +32,7 @@ type StoryProps = BasicEmptyStateProps &
 
 const meta: StoryMetaType<typeof BasicEmptyState | typeof FeaturesEmptyState> =
   {
-    title: 'Components/EmptyState',
+    title: 'Sections/EmptyState',
     args: {
       variant: StoryVariant.Basic,
     },

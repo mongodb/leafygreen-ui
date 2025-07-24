@@ -10,7 +10,7 @@ import { StoryFn } from '@storybook/react';
 import { MessageRating, MessageRatingProps } from '.';
 
 export default {
-  title: 'Chat/MessageRating',
+  title: 'Composition/Chat/MessageRating',
   component: MessageRating,
   args: {
     onChange: (e: ChangeEvent<HTMLInputElement>) => {

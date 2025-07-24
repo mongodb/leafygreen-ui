@@ -19,6 +19,9 @@ import {
 import { FormFooterProps } from './FormFooter.types';
 import { getLgIds } from './utils';
 
+/**
+ * The form footer sits at the bottom of a page and provides context and guidance to users as they fill out a form.
+ */
 export default function FormFooter({
   primaryButtonProps,
   cancelButtonProps,
