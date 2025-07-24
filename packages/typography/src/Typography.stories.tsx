@@ -60,7 +60,7 @@ export const LiveExample = ({
 
         <Body weight={FontWeight.Regular}>Body (Regular)</Body>
         <Body weight={FontWeight.Medium}>Body (Medium)</Body>
-        <Body weight={FontWeight.SemiBold}>Body (Semi-Bold)</Body>
+        <Body weight={FontWeight.SemiBold}>Body (SemiBold)</Body>
         <Body weight={FontWeight.Regular}>
           <em>Body (Regular Italic)</em>
         </Body>
@@ -68,7 +68,7 @@ export const LiveExample = ({
           <em>Body (Medium Italic)</em>
         </Body>
         <Body weight={FontWeight.SemiBold}>
-          <em>Body (Semi-Bold Italic)</em>
+          <em>Body (SemiBold Italic)</em>
         </Body>
 
         <div className={cx(displayFlex)}>
