@@ -3,7 +3,6 @@ import React, { forwardRef } from 'react';
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 
 import { Drawer } from '../Drawer/Drawer';
-import { DisplayMode } from '../Drawer/Drawer.types';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 import { DrawerWithToolbarWrapper } from '../DrawerWithToolbarWrapper';
 import { LayoutComponent } from '../LayoutComponent';
@@ -14,6 +13,7 @@ import {
   DrawerToolbarLayoutContainerProps,
   LayoutData,
 } from './DrawerToolbarLayout.types';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 
 /**
  * @internal
@@ -28,9 +28,7 @@ export const DrawerToolbarLayoutContainer = forwardRef<
   (
     {
       children,
-      displayMode = DisplayMode.Overlay,
       toolbarData,
-      onClose,
       darkMode: darkModeProp,
       'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
@@ -40,6 +38,8 @@ export const DrawerToolbarLayoutContainer = forwardRef<
     const { openDrawer, closeDrawer, getActiveDrawerContent, isDrawerOpen } =
       useDrawerToolbarContext();
     const { id, title, content } = getActiveDrawerContent() || {};
+    const { onClose, displayMode } = useDrawerLayoutContext();
+
     const lgIds = getLgIds(dataLgId);
     const hasData = toolbarData && toolbarData.length > 0;
 
@@ -61,15 +61,11 @@ export const DrawerToolbarLayoutContainer = forwardRef<
       <LayoutComponent
         {...rest}
         ref={forwardRef}
-        displayMode={displayMode}
         hasToolbar={hasData}
         isDrawerOpen={isDrawerOpen}
       >
         <div className={contentStyles}>{children}</div>
-        <DrawerWithToolbarWrapper
-          displayMode={displayMode}
-          isDrawerOpen={isDrawerOpen}
-        >
+        <DrawerWithToolbarWrapper isDrawerOpen={isDrawerOpen}>
           <Toolbar data-lgid={lgIds.toolbar} data-testid={lgIds.toolbar}>
             {toolbarData?.map(toolbarItem => (
               <ToolbarIconButton

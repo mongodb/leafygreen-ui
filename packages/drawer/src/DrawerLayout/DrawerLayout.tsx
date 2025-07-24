@@ -7,6 +7,7 @@ import { DrawerToolbarLayout } from '../DrawerToolbarLayout';
 import { LayoutComponent } from '../LayoutComponent';
 
 import { DrawerLayoutProps } from './DrawerLayout.types';
+import { DrawerLayoutProvider } from './DrawerLayoutContext';
 
 /**
  * `DrawerLayout` is a component that provides a flexible layout for displaying content in a drawer.
@@ -19,39 +20,39 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
       children,
       displayMode = DisplayMode.Overlay,
       isDrawerOpen = false,
+      resizable = false,
+      onClose,
       ...rest
     }: DrawerLayoutProps,
     forwardedRef,
   ) => {
-    // If there is data, we render the DrawerToolbarLayout.
-    if (toolbarData) {
-      return (
-        <DrawerToolbarLayout
-          ref={forwardedRef}
-          toolbarData={toolbarData}
-          displayMode={displayMode}
-          {...rest}
-        >
-          {children}
-        </DrawerToolbarLayout>
+    if (!toolbarData) {
+      consoleOnce.warn(
+        'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
       );
     }
 
-    consoleOnce.warn(
-      'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
-    );
-
-    // If there is no data, we render the LayoutComponent.
-    // The LayoutComponent will read the displayMode and render the appropriate layout.
     return (
-      <LayoutComponent
-        ref={forwardedRef}
-        displayMode={displayMode}
+      <DrawerLayoutProvider
         isDrawerOpen={isDrawerOpen}
-        {...rest}
+        resizable={resizable}
+        displayMode={displayMode}
+        onClose={onClose}
       >
-        {children}
-      </LayoutComponent>
+        {toolbarData ? (
+          <DrawerToolbarLayout
+            ref={forwardedRef}
+            toolbarData={toolbarData}
+            {...rest}
+          >
+            {children}
+          </DrawerToolbarLayout>
+        ) : (
+          <LayoutComponent ref={forwardedRef} {...rest}>
+            {children}
+          </LayoutComponent>
+        )}
+      </DrawerLayoutProvider>
     );
   },
 );

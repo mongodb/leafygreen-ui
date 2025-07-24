@@ -2,20 +2,25 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
 import { GRID_AREA } from '../constants';
-import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../constants';
+import {
+  PANEL_WIDTH,
+  PANEL_WITH_TOOLBAR_WIDTH,
+  TOOLBAR_WIDTH,
+} from '../constants';
 import { MOBILE_BREAKPOINT } from '../Drawer';
 import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
 const baseStyles = css`
   width: 100%;
   display: grid;
-  grid-template-columns: auto 0;
+  grid-template-columns: 1fr auto;
   transition-property: grid-template-columns, grid-template-rows;
   transition-timing-function: ease-in-out;
   transition-duration: ${drawerTransitionDuration}ms;
   overflow: hidden;
   position: relative;
   height: 100%;
+  position: relative;
 `;
 
 const drawerBaseStyles = css`
@@ -27,7 +32,10 @@ const drawerBaseStyles = css`
 
 // If there is no toolbar and the drawer is open, we need to shift the layout by the panel width;
 const drawerOpenStyles = css`
-  grid-template-columns: auto ${PANEL_WIDTH}px;
+  /* grid-template-columns: auto ${PANEL_WIDTH}px; */
+  grid-template-columns: 1fr auto;
+
+  /* grid-template-columns: auto var(--drawerWidth); */
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-rows: 50% 50%;
@@ -41,7 +49,12 @@ const withToolbarBaseStyles = css`
 
 // If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + panel width;
 const withToolbarOpenStyles = css`
-  grid-template-columns: auto ${PANEL_WIDTH + TOOLBAR_WIDTH}px;
+  /* grid-template-columns: auto ${PANEL_WITH_TOOLBAR_WIDTH +
+  TOOLBAR_WIDTH}px; */
+
+  /* grid-template-columns: auto calc(var(--drawerWidth) + ${TOOLBAR_WIDTH}px); */
+
+  grid-template-columns: 1fr auto;
 
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
     grid-template-columns: auto ${TOOLBAR_WIDTH}px;

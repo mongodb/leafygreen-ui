@@ -1,5 +1,6 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
   addOverflowShadow,
   color,
@@ -54,13 +55,15 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   all: unset;
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
-  width: 100%;
-  max-width: ${PANEL_WIDTH}px;
+  max-width: 50vw;
+  width: ${PANEL_WIDTH}px;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
+  position: relative;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    width: auto;
     max-width: 100%;
     height: 50vh;
   }
@@ -129,20 +132,39 @@ const getOverlayStyles = ({
     },
   );
 
+// When the drawer is in embedded mode, the width of the drawer changes based on the open state and the resizer size.
+const getEmbeddedStyles = ({ open, size }: { open: boolean; size: number }) =>
+  cx(
+    css`
+      transition: width ${drawerTransitionDuration}ms linear;
+    `,
+    {
+      [css`
+        width: ${size}px;
+      `]: open,
+      [css`
+        width: 0;
+      `]: !open,
+    },
+  );
+
 const getDisplayModeStyles = ({
   displayMode,
   open,
   shouldAnimate,
   zIndex,
+  size,
 }: {
   displayMode: DisplayMode;
   open: boolean;
   shouldAnimate: boolean;
   zIndex: number;
+  size: number;
 }) =>
   cx({
     [getOverlayStyles({ open, shouldAnimate, zIndex })]:
       displayMode === DisplayMode.Overlay,
+    [getEmbeddedStyles({ open, size })]: displayMode === DisplayMode.Embedded,
   });
 
 export const getDrawerStyles = ({
@@ -152,6 +174,7 @@ export const getDrawerStyles = ({
   shouldAnimate,
   theme,
   zIndex,
+  size,
 }: {
   className?: string;
   displayMode: DisplayMode;
@@ -159,10 +182,11 @@ export const getDrawerStyles = ({
   shouldAnimate: boolean;
   theme: Theme;
   zIndex: number;
+  size: number;
 }) =>
   cx(
     getBaseStyles({ theme }),
-    getDisplayModeStyles({ displayMode, open, shouldAnimate, zIndex }),
+    getDisplayModeStyles({ displayMode, open, shouldAnimate, zIndex, size }),
     className,
     drawerClassName,
   );
@@ -263,3 +287,21 @@ export const innerChildrenContainerStyles = cx(
   baseInnerChildrenContainerStyles,
   scrollContainerStyles,
 );
+
+export const resizerColors: Record<Theme, string> = {
+  [Theme.Light]: palette.blue.light1,
+  [Theme.Dark]: palette.blue.light1,
+};
+
+export const getResizerStyles = ({
+  resizerClassName,
+}: {
+  resizerClassName?: string;
+}) =>
+  cx(
+    css`
+      position: absolute;
+      left: 0;
+    `,
+    resizerClassName,
+  );
