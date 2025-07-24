@@ -391,7 +391,7 @@ const sizeStyle: Record<Size, string> = {
     text-transform: uppercase;
     font-size: 12px;
     line-height: 1em;
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
     letter-spacing: 0.4px;
   `,
 

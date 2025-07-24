@@ -38,7 +38,7 @@ export const labelBaseStyle = css`
   line-height: 20px;
   cursor: pointer;
   align-items: flex-start;
-  font-weight: ${fontWeights.bold};
+  font-weight: ${fontWeights.semiBold};
 `;
 
 export const disabledStyle = css`

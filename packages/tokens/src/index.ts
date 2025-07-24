@@ -9,7 +9,7 @@ export {
 } from './color';
 export { default as focusRing } from './focusRing';
 export { default as fontFamilies } from './fontFamilies';
-export { default as fontWeights } from './fontWeights';
+export { FontWeight, default as fontWeights } from './fontWeights';
 export { default as hoverRing } from './hoverRing';
 export { Mode } from './mode';
 export {

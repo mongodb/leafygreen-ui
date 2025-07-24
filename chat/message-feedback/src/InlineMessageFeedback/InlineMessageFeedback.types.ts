@@ -12,16 +12,19 @@ export type InlineMessageFeedbackProps = Required<
      * Text displayed inside the cancel Button
      *
      * @default: 'Cancel'
+     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
      */
     cancelButtonText?: string;
 
     /**
      * Click event handler for the cancel Button
+     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
      */
-    onCancel: MouseEventHandler<HTMLElement>;
+    onCancel?: MouseEventHandler<HTMLElement>;
 
     /**
      * Override props for the cancel Button
+     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
      */
     cancelButtonProps?: BaseButtonProps;
 

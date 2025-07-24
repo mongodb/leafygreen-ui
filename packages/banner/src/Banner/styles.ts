@@ -266,7 +266,7 @@ export const textStyles = (image: boolean, dismissible: boolean) => css`
   .${anchorClassName}, a {
     font-size: inherit;
     line-height: inherit;
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;
