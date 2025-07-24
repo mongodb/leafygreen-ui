@@ -760,6 +760,9 @@ importers:
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../../packages/icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../../packages/leafygreen-provider
@@ -775,6 +778,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
