@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { forceParsing } from '@codemirror/language';
 import CodeMirror, {
   Compartment,
   EditorView,
@@ -107,6 +106,20 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       modules?.['@codemirror/lint'],
     );
 
+    const onCreateEditor = useCallback(
+      (editorView: EditorView) => {
+        if (forceParsingProp) {
+          const { state } = editorView;
+          const forceParsing = modules?.['@codemirror/language']?.forceParsing;
+
+          if (forceParsing && state.doc.length > 0) {
+            forceParsing(editorView, state.doc.length, 150);
+          }
+        }
+      },
+      [forceParsingProp, modules],
+    );
+
     const onChange = useCallback(
       (val: string) => {
         setValue(val);
@@ -116,19 +129,6 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         }
       },
       [onChangeProp],
-    );
-
-    const onCreateEditor = useCallback(
-      (editorView: EditorView) => {
-        if (forceParsingProp) {
-          const { state } = editorView;
-
-          if (state.doc.length > 0) {
-            forceParsing(editorView, state.doc.length, 150);
-          }
-        }
-      },
-      [forceParsingProp],
     );
 
     /**
