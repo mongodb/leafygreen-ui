@@ -9,7 +9,7 @@
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild.ts",
     "postbuild": "ts-node ./scripts/postbuild.ts",
-    "build": "lg-build bundle",
+    "build": "ts-node ./scripts/build-icons-parallel.ts",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
   },
@@ -29,6 +29,7 @@
     "@svgr/core": "^5.3.1",
     "@types/xml2json": "^0.11.0",
     "commander": "^11.0.0",
+    "rollup": "4.16.1",
     "ts-node": "^10.9.2",
     "xml2json": "^0.12.0"
   },
