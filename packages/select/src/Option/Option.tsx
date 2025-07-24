@@ -122,7 +122,7 @@ export function InternalOption({
         <span
           className={cx({
             [css`
-              font-weight: ${fontWeights.bold};
+              font-weight: ${fontWeights.semiBold};
             `]: selected,
           })}
         >

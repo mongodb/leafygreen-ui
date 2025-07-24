@@ -49,7 +49,7 @@ export const baseToastStyle = css`
   .${anchorClassName}, a {
     font-size: inherit;
     line-height: inherit;
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;
@@ -126,7 +126,7 @@ export const textContentStyle = css`
 `;
 
 export const titleStyle = css`
-  font-weight: ${fontWeights.bold};
+  font-weight: ${fontWeights.semiBold};
   overflow: hidden;
 `;
 

@@ -9,7 +9,7 @@ export const baseStyle = css`
   font-family: ${fontFamilies.default};
   display: inline-flex;
   align-items: center;
-  font-weight: ${fontWeights.bold};
+  font-weight: ${fontWeights.semiBold};
   font-size: 12px;
   line-height: 16px;
   border-radius: 24px;

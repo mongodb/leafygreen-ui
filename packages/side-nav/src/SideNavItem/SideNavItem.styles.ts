@@ -97,7 +97,7 @@ export const themeStyle: Record<Theme, string> = {
 
 export const activeBaseStyle = css`
   cursor: default;
-  font-weight: ${fontWeights.bold};
+  font-weight: ${fontWeights.semiBold};
   text-decoration: none;
 
   // The active wedge

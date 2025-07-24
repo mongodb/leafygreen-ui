@@ -13,7 +13,7 @@ export const optionGroupLabelStyle = css`
   overflow-wrap: anywhere;
   font-size: 12px;
   line-height: 16px;
-  font-weight: ${fontWeights.bold};
+  font-weight: ${fontWeights.semiBold};
   text-transform: uppercase;
   letter-spacing: 0.4px;
 `;

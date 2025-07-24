@@ -293,11 +293,11 @@ export const calendarCellRangeHoverStyles: Record<Theme, string> = {
 export const currentStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.blue.base};
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
   `,
   [Theme.Dark]: css`
     color: ${palette.blue.light1};
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
   `,
 };
 
