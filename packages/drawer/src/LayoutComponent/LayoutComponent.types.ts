@@ -24,6 +24,4 @@ export interface BaseLayoutComponentProps
    * The content to be rendered inside the Drawer
    */
   children: React.ReactNode;
-
-  drawer?: React.ReactNode;
 }

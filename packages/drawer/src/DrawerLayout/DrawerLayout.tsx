@@ -7,7 +7,6 @@ import { DrawerToolbarLayout } from '../DrawerToolbarLayout';
 import { LayoutComponent } from '../LayoutComponent';
 
 import { DrawerLayoutProps } from './DrawerLayout.types';
-import { DrawerLayoutProvider } from './DrawerLayoutContext';
 
 /**
  * `DrawerLayout` is a component that provides a flexible layout for displaying content in a drawer.
@@ -20,7 +19,6 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
       children,
       displayMode = DisplayMode.Overlay,
       isDrawerOpen = false,
-      resizable = false,
       ...rest
     }: DrawerLayoutProps,
     forwardedRef,
@@ -28,20 +26,14 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
     // If there is data, we render the DrawerToolbarLayout.
     if (toolbarData) {
       return (
-        <DrawerLayoutProvider
-          isDrawerOpen={isDrawerOpen}
-          resizable={resizable}
+        <DrawerToolbarLayout
+          ref={forwardedRef}
+          toolbarData={toolbarData}
           displayMode={displayMode}
+          {...rest}
         >
-          <DrawerToolbarLayout
-            ref={forwardedRef}
-            toolbarData={toolbarData}
-            displayMode={displayMode}
-            {...rest}
-          >
-            {children}
-          </DrawerToolbarLayout>
-        </DrawerLayoutProvider>
+          {children}
+        </DrawerToolbarLayout>
       );
     }
 
@@ -52,20 +44,14 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
     // If there is no data, we render the LayoutComponent.
     // The LayoutComponent will read the displayMode and render the appropriate layout.
     return (
-      <DrawerLayoutProvider
-        isDrawerOpen={isDrawerOpen}
-        resizable={resizable}
+      <LayoutComponent
+        ref={forwardedRef}
         displayMode={displayMode}
+        isDrawerOpen={isDrawerOpen}
+        {...rest}
       >
-        <LayoutComponent
-          ref={forwardedRef}
-          displayMode={displayMode}
-          isDrawerOpen={isDrawerOpen}
-          {...rest}
-        >
-          {children}
-        </LayoutComponent>
-      </DrawerLayoutProvider>
+        {children}
+      </LayoutComponent>
     );
   },
 );

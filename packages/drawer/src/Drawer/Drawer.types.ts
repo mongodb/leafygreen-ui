@@ -21,13 +21,13 @@ export interface DrawerProps
    * Options to display the drawer element
    * @defaultValue 'overlay'
    * @param Embedded will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as container page content. It is recommended to wrap an embedded drawer within the `DrawerLayout` container
-   * @param Overlay will display a drawer as a `<dialog>` element that takes up the full parent container height and elevated above container page content. It is recommended to wrap an overlay drawer within the `DrawerLayout` container.
-   * If wrapping the Drawer in a `DrawerLayout`, this prop is not needed. The Drawer read the `displayMode` prop from `DrawerLayout`.
+   * @param Overlay will display a drawer as a `<dialog>` element that takes up the full parent container height and elevated above container page content. It is recommended to wrap an overlay drawer within the `DrawerLayout` container
    */
   displayMode?: DisplayMode;
 
   /**
-   * Determines if the Drawer is open or closed. If wrapping the Drawer in a `DrawerLayout`, this prop is not needed. The Drawer read the `isDrawerOpen` prop from `DrawerLayout`.
+   * Determines if the Drawer is open or closed
+   * @defaultValue false
    */
   open?: boolean;
 

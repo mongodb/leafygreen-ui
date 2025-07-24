@@ -99,13 +99,11 @@ const LongContent = () => {
   );
 };
 
-type DrawerOmitOpen = Omit<DrawerProps, 'open'>;
-
-const TemplateComponent: StoryFn<DrawerOmitOpen> = ({
+const TemplateComponent: StoryFn<DrawerProps> = ({
   displayMode = DisplayMode.Overlay,
   initialOpen,
   ...rest
-}: DrawerOmitOpen & {
+}: DrawerProps & {
   initialOpen?: boolean;
 }) => {
   const [open, setOpen] = useState(initialOpen ?? true);
@@ -119,8 +117,9 @@ const TemplateComponent: StoryFn<DrawerOmitOpen> = ({
   const renderDrawer = () => (
     <Drawer
       {...rest}
+      displayMode={displayMode}
+      open={open}
       onClose={() => setOpen(false)}
-      open={undefined} // Prevent open from passing since it is passed to DrawerLayout
     />
   );
 
@@ -132,12 +131,7 @@ const TemplateComponent: StoryFn<DrawerOmitOpen> = ({
           width: 100%;
         `}
       >
-        <DrawerLayout
-          displayMode={displayMode}
-          isDrawerOpen={open}
-          drawer={renderDrawer()}
-          resizable={true}
-        >
+        <DrawerLayout displayMode={displayMode} isDrawerOpen={open}>
           <main
             className={css`
               padding: ${spacing[400]}px;
@@ -151,6 +145,7 @@ const TemplateComponent: StoryFn<DrawerOmitOpen> = ({
             {renderTrigger()}
             <LongContent />
           </main>
+          {renderDrawer()}
         </DrawerLayout>
       </div>
     </DrawerStackProvider>

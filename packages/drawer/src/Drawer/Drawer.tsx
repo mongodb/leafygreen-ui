@@ -2,11 +2,9 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
-  Position,
   useIdAllocator,
   useIsomorphicLayoutEffect,
   useMergeRefs,
-  useResizable,
 } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -17,16 +15,9 @@ import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { PANEL_WIDTH } from '../constants';
-import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
 
-import {
-  DRAWER_MAX_PERCENTAGE_WIDTH,
-  DRAWER_MAX_WIDTH,
-  DRAWER_MIN_WIDTH,
-} from './Drawer.constants';
 import {
   drawerTransitionDuration,
   getChildrenContainerStyles,
@@ -34,7 +25,6 @@ import {
   getDrawerStyles,
   getHeaderStyles,
   getInnerContainerStyles,
-  getResizerStyles,
   innerChildrenContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
@@ -48,34 +38,24 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       children,
       className,
       'data-lgid': dataLgId,
-      displayMode: displayModeProp,
+      displayMode = DisplayMode.Overlay,
       id: idProp,
       onClose,
-      open: openProp,
+      open = false,
       title,
       ...rest
     },
     fwdRef,
   ) => {
     const { darkMode, theme } = useDarkMode();
-
-    const { getDrawerIndex, registerDrawer, unregisterDrawer } =
-      useDrawerStackContext();
-    const {
-      isDrawerOpen,
-      resizable,
-      displayMode: displayModeContextProp,
-    } = useDrawerLayoutContext();
-    const [shouldAnimate, setShouldAnimate] = useState(false);
-    const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
-    const displayMode =
-      displayModeProp ?? displayModeContextProp ?? DisplayMode.Overlay;
-    const open = openProp ?? isDrawerOpen ?? false;
-    const isResizable =
-      displayMode === DisplayMode.Embedded && !!resizable && open;
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
     );
+    const { getDrawerIndex, registerDrawer, unregisterDrawer } =
+      useDrawerStackContext();
+    const [shouldAnimate, setShouldAnimate] = useState(false);
+    const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
+    const drawerRef = useMergeRefs([fwdRef, ref]);
 
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
@@ -134,29 +114,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     };
 
-    // Enables resizable functionality if the drawer is resizable and in embedded mode.
-    const { resizableRef, size, getResizerProps } = useResizable<
-      HTMLDialogElement | HTMLDivElement
-    >({
-      enabled: resizable && displayMode === DisplayMode.Embedded,
-      initialSize: open ? PANEL_WIDTH : 0,
-      minSize: DRAWER_MIN_WIDTH,
-      maxSize: DRAWER_MAX_WIDTH, // Allow resizing up to a reasonable size
-      maxViewportPercentages: DRAWER_MAX_PERCENTAGE_WIDTH, // Allow resizing up to 50% of the viewport width
-      position: Position.Right,
-    });
-
-    // Create merged ref after resizableRef is defined
-    // Use a conditional to ensure resizableRef is only included when it's needed
-    const refsToMerge = [fwdRef, ref];
-
-    if (displayMode === DisplayMode.Embedded && resizable) {
-      refsToMerge.push(resizableRef);
-    }
-
-    const drawerRef = useMergeRefs(refsToMerge);
-    const resizerProps = getResizerProps();
-
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <Component
@@ -169,7 +126,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
-            size: resizable ? size : open ? PANEL_WIDTH : 0,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}
@@ -179,14 +135,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           inert={!open ? 'inert' : undefined}
           {...rest}
         >
-          {isResizable && (
-            <div
-              {...resizerProps}
-              className={getResizerStyles({
-                resizerClassName: resizerProps?.className,
-              })}
-            />
-          )}
           <div className={getDrawerShadowStyles({ theme, displayMode })}>
             <div
               className={getInnerContainerStyles({
