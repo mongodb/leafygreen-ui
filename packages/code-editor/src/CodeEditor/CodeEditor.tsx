@@ -29,6 +29,7 @@ import { createThemeExtension } from './codeMirrorExtensions/createThemeExtensio
 import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsExtension';
 import { useExtension } from './hooks/useExtension';
 import { useHyperLinkExtension } from './hooks/useHyperLinkExtension';
+import { useIndentExtension } from './hooks/useIndentExtension';
 import { useLazyModules } from './hooks/useLazyModules';
 import { useLineWrapExtension } from './hooks/useLineWrapExtension';
 import { useModuleLoaders } from './hooks/useModuleLoaders';
@@ -91,31 +92,11 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       enableLineWrapping,
     );
 
-    const indentExtension = useExtension(
-      editorRef.current?.view || null,
-      {
-        unit: indentUnit,
-        size: indentSize,
-        module: modules['@codemirror/language'],
-      },
-      ({ unit, size, module }) => {
-        if (!module || !module.indentUnit) {
-          return [];
-        }
-
-        let indentString: string;
-
-        if (unit === IndentUnits.Tab) {
-          indentString = '\t';
-        } else {
-          indentString = ' '.repeat(size);
-        }
-
-        return [
-          module.indentUnit.of(indentString),
-          EditorState.tabSize.of(size),
-        ];
-      },
+    const indentExtension = useIndentExtension(
+      editorView,
+      indentUnit,
+      indentSize,
+      modules?.['@codemirror/language'],
     );
 
     const foldGutterExtension = useExtension(
