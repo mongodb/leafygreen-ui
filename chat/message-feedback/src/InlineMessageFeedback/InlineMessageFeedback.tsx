@@ -4,7 +4,6 @@ import React, {
   ForwardedRef,
   forwardRef,
   MutableRefObject,
-  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -61,6 +60,12 @@ export const InlineMessageFeedback = forwardRef(
     const { variant } = useLeafyGreenChatContext();
     const isCompact = variant === Variant.Compact;
 
+    if (isCompact && (cancelButtonProps || cancelButtonText || onCancel)) {
+      consoleOnce.warn(
+        `@lg-chat/message-rating: The MessageRating component's props 'cancelButtonProps', 'cancelButtonText', and 'onCancel' are only used in the 'spacious' variant. It will not be rendered in the 'compact' variant set by the provider.`,
+      );
+    }
+
     const textareaId = useIdAllocator({ prefix: 'lg-chat-imf-input' });
     const labelId = useIdAllocator({ prefix: 'lg-chat-imf-label' });
     const textareaRef: MutableRefObject<HTMLTextAreaElement | null> =
@@ -84,14 +89,6 @@ export const InlineMessageFeedback = forwardRef(
     const [hasEmptyTextarea, setHasEmptyTextarea] = useState<boolean>(
       isTextareaEmpty(),
     );
-
-    useEffect(() => {
-      if (isCompact && (cancelButtonProps || cancelButtonText || onCancel)) {
-        consoleOnce.warn(
-          `@lg-chat/message-rating: The MessageRating component's props 'cancelButtonProps', 'cancelButtonText', and 'onCancel' are only used in the 'spacious' variant. It will not be rendered in the 'compact' variant set by the provider.`,
-        );
-      }
-    }, [isCompact, cancelButtonProps, cancelButtonText, onCancel]);
 
     const showCancelButton = !isCompact && !!onCancel;
 
