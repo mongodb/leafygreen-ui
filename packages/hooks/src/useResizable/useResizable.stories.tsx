@@ -6,7 +6,7 @@ import { useResizable } from './useResizable';
 import { Position } from './useResizable.types';
 
 export default {
-  title: 'hooks/useResizable/position',
+  title: 'internal/hooks/useResizable/position',
   parameters: {
     default: null,
     chromatic: {

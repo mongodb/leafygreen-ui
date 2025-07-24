@@ -2,9 +2,11 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
+  Position,
   useIdAllocator,
   useIsomorphicLayoutEffect,
   useMergeRefs,
+  useResizable,
 } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -19,8 +21,6 @@ import { PANEL_WIDTH } from '../constants';
 import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
-import { useResizable } from '../utils/useResizable/useResizable';
-import { Position } from '../utils/useResizable/useResizable.types';
 
 import {
   DRAWER_MAX_PERCENTAGE_WIDTH,
