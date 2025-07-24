@@ -8,6 +8,7 @@
   "typesVersions": {},
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild.ts",
+    "postbuild": "ts-node ./scripts/postbuild.ts",
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
