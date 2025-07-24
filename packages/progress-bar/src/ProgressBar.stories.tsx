@@ -14,9 +14,9 @@ import {
 } from '.';
 
 const sharedDeterminateArgs: ProgressBarProps = {
+  ...requiredA11yArgs,
   value: storyValues.value,
   maxValue: storyValues.maxValue,
-  ...requiredA11yArgs,
 };
 
 const ROLES = Object.values(Role);
@@ -86,16 +86,16 @@ const meta: StoryMetaType<typeof ProgressBar> = {
       control: { type: 'number' },
       if: { arg: 'isIndeterminate', neq: true },
     },
-    roleType: {
+    role: {
       control: { type: 'select' },
       options: ROLES,
       if: { arg: 'isIndeterminate', neq: true },
     },
     enableAnimation: {
       description:
-        '**Only available** if roleType="progressbar" and isIndeterminate=false. **Only available** for `info` and `success` variants.',
+        '**Only available** if role="progressbar" and isIndeterminate=false. **Only available** for `info` and `success` variants.',
       control: { type: 'boolean' },
-      // if: { arg: 'roleType', eq: Role.Progress } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
+      // if: { arg: 'role', eq: Role.Progress } AND { arg: 'isIndeterminate', neq: true }, // TODO: not supported
     },
   },
 };
@@ -203,7 +203,7 @@ export const DeterminateMeterVariants: StoryObj<typeof ProgressBar> = {
       },
       args: {
         ...sharedDeterminateArgs,
-        roleType: Role.Meter,
+        role: Role.Meter,
         formatValue: (value: number, maxValue?: number) =>
           `${value} / ${maxValue} GB`,
         showIcon: true,

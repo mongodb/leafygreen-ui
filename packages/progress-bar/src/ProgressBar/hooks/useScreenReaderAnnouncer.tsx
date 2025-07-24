@@ -8,19 +8,29 @@ import { getPercentage } from '../utils';
 const announcementThresholds = [0, 50, 100];
 const variantsAnnounced = [Variant.Warning, Variant.Error] as Array<Variant>;
 
-interface UseScreenReaderAnnouncerProps {
+interface UseScreenReaderAnnouncerParams {
+  /**
+   * ARIA role of the component (e.g., progressbar, meter).
+   * If the role is `meter`, no message is generated.
+   */
   role: Role;
+  /** Current progress value. No message is generated if this is `undefined`. */
   value?: number;
+  /** Maximum progress value. */
   maxValue?: number;
+  /** Variant of the progress bar (e.g., 'success', 'error'), which is included in the message if relevant. */
   variant?: Variant;
 }
 
-export function useScreenReaderAnnouncer({
+/**
+ * Generates an accessible live region message for screen readers when progress bar updates cross defined thresholds.
+ */
+export const useScreenReaderAnnouncer = ({
   role,
   value,
   maxValue,
   variant,
-}: UseScreenReaderAnnouncerProps): string | undefined {
+}: UseScreenReaderAnnouncerParams): string | undefined => {
   const thresholdIndexRef = useRef(-1);
 
   const message = useMemo(() => {
@@ -62,4 +72,4 @@ export function useScreenReaderAnnouncer({
   }, [role, value, maxValue, variant]);
 
   return message;
-}
+};

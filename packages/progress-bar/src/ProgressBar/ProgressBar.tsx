@@ -8,19 +8,20 @@ import LeafyGreenProvider, {
 import { isDefined } from '@leafygreen-ui/lib';
 import { Body, Description, Label } from '@leafygreen-ui/typography';
 
-import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
+import { getLgIds } from '../testing';
 
+import { WIDTH_ANIMATION_SPEED } from './constants';
 import {
-  DEFAULT_SIZE,
-  DEFAULT_VARIANT,
-  iconsPendingCompletion,
-} from './constants';
-import { useIdIdentifiers, useScreenReaderAnnouncer } from './hooks';
+  useComputedTransitionDuration,
+  useIdIdentifiers,
+  useRotatingItems,
+  useScreenReaderAnnouncer,
+} from './hooks';
 import {
-  containerStyles,
   getAnimatedTextStyles,
   getBarFillStyles,
   getBarTrackStyles,
+  getContainerStyles,
   getHeaderIconStyles,
   getHeaderValueStyles,
   headerStyles,
@@ -32,34 +33,50 @@ import {
   getAnimationMode,
   getFormattedValue,
   getHeaderIcon,
+  getPercentage,
   getValueAriaAttributes,
   resolveProgressBarProps,
 } from './utils';
 export function ProgressBar(props: ProgressBarProps) {
-  const { role, value, maxValue, disabled, isIndeterminate, enableAnimation } =
-    resolveProgressBarProps(props);
-
   const {
-    size = DEFAULT_SIZE,
+    size,
     label,
-    description,
-    variant = DEFAULT_VARIANT,
-    darkMode = false,
+    description: descriptionProp,
+    variant,
+    darkMode,
     formatValue,
-    showIcon: showIconProp = false,
+    showIcon,
     'aria-label': ariaLabel,
-    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
-  } = props;
+    'data-lgid': dataLgId,
+    className,
+
+    role,
+    value,
+    maxValue,
+    disabled,
+    isIndeterminate,
+    enableAnimation,
+    ...rest
+  } = resolveProgressBarProps(props);
 
   const { theme } = useDarkMode(darkMode);
 
-  const { barId, labelId, descId } = useIdIdentifiers(role, label, description);
+  const { barId, labelId, descId } = useIdIdentifiers({
+    role,
+    label,
+    description: descriptionProp,
+  });
+
   const lgIds = getLgIds(dataLgId);
 
-  const showIcon = iconsPendingCompletion.includes(variant)
-    ? showIconProp && value === maxValue
-    : showIconProp;
+  const screenReaderMessage = useScreenReaderAnnouncer({
+    role,
+    value,
+    maxValue,
+    variant,
+  });
 
+  // track animation mode changes for animated transition
   const [animationMode, setAnimationMode] = useState<AnimationMode>(
     getAnimationMode(isIndeterminate, enableAnimation),
   );
@@ -83,8 +100,10 @@ export function ProgressBar(props: ProgressBarProps) {
     });
   }, [isIndeterminate, enableAnimation]);
 
-  const [isNewDescription, setIsNewDescription] = useState(false);
+  // track description text changes for animated transition
+  const description = useRotatingItems(descriptionProp);
   const prevDescription = usePrevious(description);
+  const [isNewDescription, setIsNewDescription] = useState(false);
 
   useEffect(() => {
     // if description is changed, apply fade-in transition
@@ -93,19 +112,23 @@ export function ProgressBar(props: ProgressBarProps) {
     }
   }, [description, prevDescription]);
 
-  const screenReaderMessage = useScreenReaderAnnouncer({
-    role,
-    value,
-    maxValue,
-    variant,
+  // get width and animation duration for determinate progress bars
+  const displayWidth = isDefined(value)
+    ? getPercentage(value, maxValue)
+    : undefined;
+
+  const widthAnimationDuration = useComputedTransitionDuration({
+    currentValue: displayWidth,
+    speed: WIDTH_ANIMATION_SPEED,
   });
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div
         data-lgid={lgIds.root}
-        className={containerStyles}
         aria-disabled={disabled}
+        className={getContainerStyles(className)}
+        {...rest}
       >
         <div className={headerStyles}>
           <Label
@@ -160,8 +183,8 @@ export function ProgressBar(props: ProgressBarProps) {
                 theme,
                 variant,
                 disabled,
-                value,
-                maxValue,
+                width: displayWidth,
+                widthAnimationDuration,
                 animationMode,
               })}
               // if on fade-out transition, revert back to base mode
