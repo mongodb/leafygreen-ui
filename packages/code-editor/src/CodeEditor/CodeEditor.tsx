@@ -30,6 +30,7 @@ import { createTooltipsExtension } from './codeMirrorExtensions/createTooltipsEx
 import { useExtension } from './hooks/useExtension';
 import { useHyperLinkExtension } from './hooks/useHyperLinkExtension';
 import { useLazyModules } from './hooks/useLazyModules';
+import { useLineWrapExtension } from './hooks/useLineWrapExtension';
 import { useModuleLoaders } from './hooks/useModuleLoaders';
 import { getEditorStyles } from './CodeEditor.styles';
 import {
@@ -77,19 +78,17 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
 
     const moduleLoaders = useModuleLoaders(props);
     const { isLoading, modules } = useLazyModules(moduleLoaders);
+    const editorView = editorRef.current?.view || null;
 
     const hyperLinkExtension = useHyperLinkExtension(
-      editorRef.current?.view || null,
+      editorView,
       enableClickableUrls,
       modules?.['@uiw/codemirror-extensions-hyper-link'],
     );
 
-    const lineWrapExtension = useExtension(
-      editorRef.current?.view || null,
-      {
-        enable: enableLineWrapping,
-      },
-      ({ enable }) => (enable ? EditorView.lineWrapping : []),
+    const lineWrapExtension = useLineWrapExtension(
+      editorView,
+      enableLineWrapping,
     );
 
     const indentExtension = useExtension(
