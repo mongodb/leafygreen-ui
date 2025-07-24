@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { CodeEditorProps } from '../CodeEditor.types';
+import { type CodeEditorProps } from '../CodeEditor.types';
 
-import { LanguageName } from './useLanguageExtension';
-import type { LoadersMap } from './useLazyModules';
+import { LanguageName } from './extensions/useLanguageExtension';
+import { type LoadersMap } from './useLazyModules';
 
 interface CodeEditorModules {
   '@uiw/codemirror-extensions-hyper-link': typeof import('@uiw/codemirror-extensions-hyper-link');

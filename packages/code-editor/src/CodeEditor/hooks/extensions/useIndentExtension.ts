@@ -1,6 +1,6 @@
 import { EditorState, type EditorView } from '@uiw/react-codemirror';
 
-import { type CodeEditorProps, IndentUnits } from '../CodeEditor.types';
+import { type CodeEditorProps, IndentUnits } from '../../CodeEditor.types';
 
 import { useExtension } from './useExtension';
 

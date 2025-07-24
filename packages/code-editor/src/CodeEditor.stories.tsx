@@ -9,7 +9,7 @@ import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
 
-import { LanguageName } from './CodeEditor/hooks/useLanguageExtension';
+import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { codeSnippets } from './CodeEditor/testing';
 import { IndentUnits } from './CodeEditor';
 import { CodeEditor } from '.';

@@ -1,7 +1,8 @@
 import { type EditorView } from '@uiw/react-codemirror';
 
+import { type CodeEditorModules } from '../useModuleLoaders';
+
 import { useExtension } from './useExtension';
-import { type CodeEditorModules } from './useModuleLoaders';
 
 export const LanguageName = {
   cpp: 'cpp',

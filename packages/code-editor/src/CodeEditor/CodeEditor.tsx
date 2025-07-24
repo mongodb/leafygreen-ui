@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useRef, useState } from 'react';
-import CodeMirror, { EditorView, Prec } from '@uiw/react-codemirror';
+import CodeMirror, { type EditorView, Prec } from '@uiw/react-codemirror';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
@@ -8,22 +8,24 @@ import {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { useFoldGutterExtension } from './hooks/useFoldGutterExtension';
-import { useHighlightExtension } from './hooks/useHighlightExtension';
-import { useHyperLinkExtension } from './hooks/useHyperLinkExtension';
-import { useIndentExtension } from './hooks/useIndentExtension';
-import { useLanguageExtension } from './hooks/useLanguageExtension';
-import { useLazyModules } from './hooks/useLazyModules';
-import { useLineWrapExtension } from './hooks/useLineWrapExtension';
-import { useModuleLoaders } from './hooks/useModuleLoaders';
-import { useThemeExtension } from './hooks/useThemeExtension';
-import { useTooltipExtension } from './hooks/useTooltipExtension';
 import { getEditorStyles } from './CodeEditor.styles';
 import {
   type CodeEditorProps,
   type CodeMirrorRef,
   IndentUnits,
 } from './CodeEditor.types';
+import {
+  useFoldGutterExtension,
+  useHighlightExtension,
+  useHyperLinkExtension,
+  useIndentExtension,
+  useLanguageExtension,
+  useLazyModules,
+  useLineWrapExtension,
+  useModuleLoaders,
+  useThemeExtension,
+  useTooltipExtension,
+} from './hooks';
 
 export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
   (props, forwardedRef) => {
