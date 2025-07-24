@@ -64,7 +64,7 @@ export type ResizerProps = {
   tabIndex: number;
   onFocus: () => void;
   onBlur: () => void;
-  style: React.CSSProperties;
+  className?: string;
 };
 
 export type ResizableReturn<T extends HTMLElement = HTMLElement> = {

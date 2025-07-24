@@ -154,6 +154,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       refsToMerge.push(resizableRef);
     }
     const drawerRef = useMergeRefs(refsToMerge);
+    const resizerProps = getResizerProps();
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -179,8 +180,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         >
           {isResizable && (
             <div
-              {...getResizerProps()}
-              className={getResizerStyles({ isResizing })}
+              {...resizerProps}
+              className={getResizerStyles({
+                resizerClassName: resizerProps?.className,
+              })}
             />
           )}
           <div className={getDrawerShadowStyles({ theme, displayMode })}>

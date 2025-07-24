@@ -33,7 +33,6 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
       top: 0,
     },
     resizerBaseStyles: {
-      width: '2px',
       left: 0,
       top: 0,
     },
@@ -46,7 +45,6 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
       top: 0,
     },
     resizerBaseStyles: {
-      width: '2px',
       right: 0,
       top: 0,
     },
@@ -59,7 +57,6 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
       bottom: 0,
     },
     resizerBaseStyles: {
-      height: '2px',
       left: 0,
       top: 0,
     },
@@ -72,7 +69,6 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
       top: 0,
     },
     resizerBaseStyles: {
-      height: '2px',
       left: 0,
       bottom: 0,
     },
@@ -130,10 +126,8 @@ const createResizableStory = (
             style={{
               position: 'absolute',
               ...config.resizerBaseStyles,
-              backgroundColor: palette.blue.light1,
-              ...(isVertical ? { height: '100%' } : { width: '100%' }),
-              ...(resizerProps?.style || {}),
             }}
+            className={resizerProps?.className}
           />
           {config.label}
         </div>

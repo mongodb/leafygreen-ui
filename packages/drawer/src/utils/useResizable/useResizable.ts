@@ -7,6 +7,8 @@ import {
   SizeGrowth,
 } from './useResizable.types';
 import { calculateNewSize } from './useResizable.utils';
+import { palette } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
 
 // Mappings for keyboard interactions based on the dragFrom direction
 const SIZE_GROWTH_KEY_MAPPINGS: Record<
@@ -30,6 +32,8 @@ const SIZE_GROWTH_KEY_MAPPINGS: Record<
     [keyMap.ArrowUp]: 'decrease',
   },
 };
+
+const RESIZER_SIZE = 2;
 
 export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   enabled = true,
@@ -207,7 +211,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       return;
     }
 
-    const isHorizontal =
+    const isVertical =
       dragFrom === DragFrom.Left || dragFrom === DragFrom.Right;
 
     // Use callbacks defined outside to prevent recreation of functions
@@ -220,13 +224,35 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       'aria-valuenow': size, // Represents the current position of the separator as a value between aria-valuemin and aria-valuemax.
       'aria-valuemin': minSize, //The minimum value of the separator's range.
       'aria-valuemax': maxSize, // The maximum value of the separator's range.
-      'aria-orientation': isHorizontal ? 'vertical' : 'horizontal', // The visual orientation of the separator bar.
-      'aria-label': `${isHorizontal ? 'Vertical' : 'Horizontal'} resize handle`, // Descriptive label
+      'aria-orientation': isVertical ? 'vertical' : 'horizontal', // The visual orientation of the separator bar.
+      'aria-label': `${isVertical ? 'Vertical' : 'Horizontal'} resize handle`, // Descriptive label
       'aria-valuetext': `${size} pixels`, // Provide size in a more readable format
       tabIndex: 0, // Make the resizer focusable
-      style: {
-        cursor: isHorizontal ? 'col-resize' : 'row-resize', // Set cursor style for resizing
-      },
+      className: cx(
+        css`
+          cursor: ${isVertical ? 'col-resize' : 'row-resize'};
+          background-color: transparent; // Default background color
+
+          &:hover,
+          &:focus-visible {
+            background-color: ${palette.blue.light1};
+            outline: none;
+          }
+        `,
+        {
+          [css`
+            width: ${RESIZER_SIZE}px;
+            height: 100%;
+          `]: isVertical,
+          [css`
+            height: ${RESIZER_SIZE}px;
+            width: 100%;
+          `]: !isVertical,
+          [css`
+            background-color: ${palette.blue.light1};
+          `]: isResizing,
+        },
+      ),
     };
 
     return props;
@@ -239,6 +265,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     handleOnMouseDown,
     handleOnFocus,
     handleOnBlur,
+    isResizing,
   ]);
 
   // Effect hook to add and remove global mouse event listeners
