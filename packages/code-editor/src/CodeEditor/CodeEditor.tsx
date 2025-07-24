@@ -1,15 +1,5 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import CodeMirror, {
-  Compartment,
-  EditorView,
-  Prec,
-} from '@uiw/react-codemirror';
+import React, { forwardRef, useCallback, useRef, useState } from 'react';
+import CodeMirror, { EditorView, Prec } from '@uiw/react-codemirror';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
@@ -19,11 +9,11 @@ import {
 } from '@leafygreen-ui/leafygreen-provider';
 
 import { createHighlightExtension } from './codeMirrorExtensions/createHighlightExtension';
-import { createLanguageExtension } from './codeMirrorExtensions/createLanguageExtension';
 import { createThemeExtension } from './codeMirrorExtensions/createThemeExtension';
 import { useFoldGutterExtension } from './hooks/useFoldGutterExtension';
 import { useHyperLinkExtension } from './hooks/useHyperLinkExtension';
 import { useIndentExtension } from './hooks/useIndentExtension';
+import { useLanguageExtension } from './hooks/useLanguageExtension';
 import { useLazyModules } from './hooks/useLazyModules';
 import { useLineWrapExtension } from './hooks/useLineWrapExtension';
 import { useModuleLoaders } from './hooks/useModuleLoaders';
@@ -31,7 +21,6 @@ import { useTooltipExtension } from './hooks/useTooltipExtension';
 import { getEditorStyles } from './CodeEditor.styles';
 import {
   type CodeEditorProps,
-  type CodeMirrorExtension,
   type CodeMirrorRef,
   IndentUnits,
 } from './CodeEditor.types';
@@ -67,8 +56,6 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useBaseFontSize();
     const [value, setValue] = useState(defaultValue || '');
-    const [languageExtension, setLanguageExtension] =
-      useState<CodeMirrorExtension>([]);
     const editorRef = useRef<CodeMirrorRef>(null);
     const ref = useMergeRefs([editorRef, forwardedRef]);
 
@@ -106,6 +93,12 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       modules?.['@codemirror/lint'],
     );
 
+    const languageExtension = useLanguageExtension(
+      editorView,
+      language,
+      modules,
+    );
+
     const onCreateEditor = useCallback(
       (editorView: EditorView) => {
         if (forceParsingProp) {
@@ -130,22 +123,6 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       },
       [onChangeProp],
     );
-
-    /**
-     * Handles setting up language support. This is done separately because
-     * it is an asynchronous operation that requires dynamic imports.
-     */
-    useEffect(() => {
-      async function setupLanguageExtension() {
-        const languageCompartment = new Compartment();
-        setLanguageExtension(
-          languageCompartment.of(
-            language ? await createLanguageExtension(language) : [],
-          ),
-        );
-      }
-      setupLanguageExtension();
-    }, [language]);
 
     if (isLoading) {
       return (
