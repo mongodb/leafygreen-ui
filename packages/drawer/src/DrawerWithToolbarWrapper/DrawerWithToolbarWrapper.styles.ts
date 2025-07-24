@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
 import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
-import { GRID_AREA, DRAWER_WITH_TOOLBAR_WIDTH } from '../constants';
+import { DRAWER_WITH_TOOLBAR_WIDTH, GRID_AREA } from '../constants';
 import { TOOLBAR_WIDTH } from '../constants';
 import {
   drawerClassName,

@@ -1,8 +1,7 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { DrawerToolbarLayoutProps } from '../DrawerToolbarLayout';
-
 import { DrawerProps } from '../Drawer/Drawer.types';
+import { DrawerToolbarLayoutProps } from '../DrawerToolbarLayout';
 
 type PickedDrawerProps = Pick<DrawerProps, 'onClose'>;
 
@@ -24,7 +23,7 @@ export interface BaseDrawerLayoutEmbeddedProps
   displayMode?: 'embedded';
 
   /**
-   * Determines if the drawer is resiazable. This is only recommened for individual drawers, not stacked drawers.
+   * Determines if the drawer is resizable. This is only recommended for individual drawers, not stacked drawers.
    *
    * @defaultValue false
    */
@@ -42,7 +41,7 @@ export interface BaseDrawerLayoutOverlayProps
   displayMode?: 'overlay';
 
   /**
-   * Determines if the drawer is resiazable. This is only recommened for individual drawers, not stacked drawers.
+   * Determines if the drawer is resizable. This is only recommended for individual drawers, not stacked drawers.
    *
    * @defaultValue false
    */

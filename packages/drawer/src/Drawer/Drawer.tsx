@@ -25,9 +25,9 @@ import { getLgIds } from '../utils';
 import {
   DRAWER_MAX_PERCENTAGE_WIDTH,
   DRAWER_MAX_WIDTH,
+  DRAWER_MAX_WIDTH_WITH_TOOLBAR,
   DRAWER_MIN_WIDTH,
   DRAWER_MIN_WIDTH_WITH_TOOLBAR,
-  DRAWER_MAX_WIDTH_WITH_TOOLBAR,
 } from './Drawer.constants';
 import {
   drawerTransitionDuration,

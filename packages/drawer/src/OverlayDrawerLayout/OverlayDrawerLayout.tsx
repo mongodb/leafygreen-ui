@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
 
+import { useDrawerLayoutContext } from '../DrawerLayout';
+
 import { getOverlayDrawerLayoutStyles } from './OverlayDrawerLayout.styles';
 import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
-import { useDrawerLayoutContext } from '../DrawerLayout';
 
 /**
  * @internal

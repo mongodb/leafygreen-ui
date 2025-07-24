@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 
 import { Drawer } from '../Drawer/Drawer';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 import { DrawerWithToolbarWrapper } from '../DrawerWithToolbarWrapper';
 import { LayoutComponent } from '../LayoutComponent';
@@ -13,7 +14,6 @@ import {
   DrawerToolbarLayoutContainerProps,
   LayoutData,
 } from './DrawerToolbarLayout.types';
-import { useDrawerLayoutContext } from '../DrawerLayout';
 
 /**
  * @internal

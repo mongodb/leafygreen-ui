@@ -2,9 +2,10 @@ import React, { forwardRef, useEffect, useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { useDrawerLayoutContext } from '../DrawerLayout';
+
 import { getDrawerWithToolbarWrapperStyles } from './DrawerWithToolbarWrapper.styles';
 import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types';
-import { useDrawerLayoutContext } from '../DrawerLayout';
 
 /**
  * @internal

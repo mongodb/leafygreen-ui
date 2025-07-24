@@ -5,11 +5,11 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 
 import { DisplayMode } from '../Drawer';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 import { EmbeddedDrawerLayout } from '../EmbeddedDrawerLayout';
 import { OverlayDrawerLayout } from '../OverlayDrawerLayout';
 
 import { LayoutComponentProps } from './LayoutComponent.types';
-import { useDrawerLayoutContext } from '../DrawerLayout';
 
 /**
  * @internal

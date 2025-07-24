@@ -16,7 +16,6 @@ const baseStyles = css`
   overflow: hidden;
   position: relative;
   height: 100%;
-  position: relative;
 `;
 
 const withoutToolbarBaseStyles = css`
