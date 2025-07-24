@@ -334,19 +334,3 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     resizableRef,
   };
 };
-
-// TODO:
-// 1. Add support for keyboard events to allow resizing with arrow keys ✅
-// 2. Add css to temp remove CSS transition when resizing ✅
-// 3. Move from direction to from getResizerProps to the hook. Look at other design systems
-// 4. Make resize cusor show up even when the mouse is not on top of the resizer handle ✅
-// 5. Update DrawerLayout props ✅
-// 6. Figure out the correct TS and defaults for the sizes  ✅
-// 7. Add setOpen to drawer component to allow closing the drawer from inside ❌
-// 8. Add back position to getResizerProps ❌
-// 9. Remove snap close logic from the hook ✅
-// 10.Disable resize on small widths? DO i need to
-// 11.Ensure correct a11y practices ✅
-// 12.Fixes closing transition  ✅
-// 13.Weird resize bug, the drawer goes crazy
-// 14.Toolbar interaction story is still flakey

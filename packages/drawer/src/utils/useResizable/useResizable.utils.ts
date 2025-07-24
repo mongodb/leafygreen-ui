@@ -7,7 +7,7 @@ export const calculateNewSize = (
   event: MouseEvent,
   initialElementSize: number,
   initialMousePosition: { x: number; y: number },
-  dragDirection: Position,
+  position: Position,
   minSize: number,
   maxSize: number,
   viewportPercentage?: number,
@@ -20,7 +20,7 @@ export const calculateNewSize = (
   const deltaY = event.clientY - initialMousePosition.y;
 
   // Apply direction-specific calculation
-  switch (dragDirection) {
+  switch (position) {
     case Position.Right:
       newSize = initialElementSize - deltaX;
       break;
@@ -39,7 +39,7 @@ export const calculateNewSize = (
   if (viewportPercentage) {
     const percent = viewportPercentage / 100;
     const viewportSize =
-      dragDirection === Position.Left || dragDirection === Position.Right
+      position === Position.Left || position === Position.Right
         ? window.innerWidth
         : window.innerHeight;
     effectiveMaxSize = Math.min(effectiveMaxSize, viewportSize * percent);
