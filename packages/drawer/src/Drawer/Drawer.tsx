@@ -135,6 +135,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     };
 
+    // Enables resizable functionality if the drawer is resizable and in embedded mode.
     const { resizableRef, size, getResizerProps, isResizing } = useResizable<
       HTMLDialogElement | HTMLDivElement
     >({
@@ -149,7 +150,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     // Create merged ref after resizableRef is defined
     // Use a conditional to ensure resizableRef is only included when it's needed
     const refsToMerge = [fwdRef, ref];
-    if (displayMode === DisplayMode.Embedded) {
+    if (displayMode === DisplayMode.Embedded && resizable) {
       refsToMerge.push(resizableRef);
     }
     const drawerRef = useMergeRefs(refsToMerge);

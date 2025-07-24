@@ -198,6 +198,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
             ? 'col-resize'
             : 'row-resize', // Set cursor style for resizing
       },
+      // TODO: add correct aria labels
     };
   }, [enabled]);
 

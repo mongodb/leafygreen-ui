@@ -4,13 +4,21 @@ import { DrawerProps } from '../Drawer/Drawer.types';
 import { DrawerToolbarLayoutProps } from '../DrawerToolbarLayout';
 import { LayoutComponentProps } from '../LayoutComponent';
 
-export type PickedDrawerProps = Pick<DrawerProps, 'displayMode'>;
-
-export interface BaseDrawerLayoutProps
-  extends PickedDrawerProps,
-    HTMLElementProps<'div'>,
+export interface BaseDrawerLayoutPropsWihtoutDisplayMode
+  extends HTMLElementProps<'div'>,
     DarkModeProps {
   children: React.ReactNode;
+}
+
+export interface BaseDrawerLayoutEmbeddedProps
+  extends BaseDrawerLayoutPropsWihtoutDisplayMode {
+  /**
+   * Options to display the drawer element
+   * @param Embedded will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as container page content. It is recommended to wrap an embedded drawer within the `DrawerLayout` container
+   * @param Overlay will display a drawer as a `<dialog>` element that takes up the full parent container height and elevated above container page content.
+   *
+   */
+  displayMode?: 'embedded';
 
   /**
    * Determines if the drawer is resiazable. This is only recommened for individual drawers, not stacked drawers.
@@ -19,6 +27,28 @@ export interface BaseDrawerLayoutProps
    */
   resizable?: boolean;
 }
+
+export interface BaseDrawerLayoutOverlayProps
+  extends BaseDrawerLayoutPropsWihtoutDisplayMode {
+  /**
+   * Options to display the drawer element
+   * @param Embedded will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as container page content. It is recommended to wrap an embedded drawer within the `DrawerLayout` container
+   * @param Overlay will display a drawer as a `<dialog>` element that takes up the full parent container height and elevated above container page content.
+   *
+   */
+  displayMode?: 'overlay';
+
+  /**
+   * Determines if the drawer is resiazable. This is only recommened for individual drawers, not stacked drawers.
+   *
+   * @defaultValue false
+   */
+  resizable?: never;
+}
+
+export type BaseDrawerLayoutProps =
+  | BaseDrawerLayoutEmbeddedProps
+  | BaseDrawerLayoutOverlayProps;
 
 export type DrawerLayoutPropsWithoutToolbar = Omit<
   LayoutComponentProps,
@@ -37,10 +67,10 @@ export type DrawerLayoutPropsWithoutToolbar = Omit<
   /**
    * Determines if the Drawer is open. This is only needed if using the Drawer without a toolbar. This will shift the layout to the right by the width of the drawer if `displayMode` is set to 'embedded'.
    */
-  isDrawerOpen?: boolean; // TODO: this is only needed for embedded drawers
+  isDrawerOpen?: boolean;
 
   /**
-   * The drawer
+   * The drawer component to be rendered in the layout.
    */
   drawer?: React.ReactNode;
 } & BaseDrawerLayoutProps;

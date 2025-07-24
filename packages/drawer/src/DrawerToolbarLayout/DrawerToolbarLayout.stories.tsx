@@ -206,9 +206,7 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
 ];
 
 const Component: StoryFn<DrawerLayoutProps> = ({
-  displayMode = DisplayMode.Embedded,
-  resizable = false,
-  darkMode,
+  ...args
 }: DrawerLayoutProps) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
@@ -233,23 +231,14 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerLayout
-        darkMode={darkMode}
-        toolbarData={DRAWER_TOOLBAR_DATA}
-        displayMode={displayMode}
-        resizable={resizable}
-      >
+      <DrawerLayout {...args}>
         <MainContent />
       </DrawerLayout>
     </div>
   );
 };
 
-const ComponentOpen: StoryFn<DrawerLayoutProps> = ({
-  displayMode = DisplayMode.Embedded,
-  resizable = false,
-  darkMode,
-}: DrawerLayoutProps) => {
+const ComponentOpen: StoryFn<DrawerLayoutProps> = (args: DrawerLayoutProps) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -277,12 +266,7 @@ const ComponentOpen: StoryFn<DrawerLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerLayout
-        darkMode={darkMode}
-        toolbarData={DRAWER_TOOLBAR_DATA}
-        displayMode={displayMode}
-        resizable={resizable}
-      >
+      <DrawerLayout {...args}>
         <MainContent />
       </DrawerLayout>
     </div>
@@ -325,6 +309,7 @@ export const Overlay: StoryObj<DrawerLayoutProps> = {
   render: Component,
   args: {
     displayMode: DisplayMode.Overlay,
+    toolbarData: DRAWER_TOOLBAR_DATA,
   },
   parameters: {
     controls: {
@@ -337,6 +322,7 @@ export const OverlayOpen: StoryObj<DrawerLayoutProps> = {
   render: ComponentOpen,
   args: {
     displayMode: DisplayMode.Overlay,
+    toolbarData: DRAWER_TOOLBAR_DATA,
   },
   parameters: {
     controls: {
@@ -378,6 +364,7 @@ export const EmbeddedCloudNav: StoryObj<DrawerLayoutProps> = {
   },
   args: {
     resizable: true,
+    displayMode: DisplayMode.Embedded,
   },
 };
 
@@ -385,6 +372,7 @@ export const Embedded: StoryObj<DrawerLayoutProps> = {
   render: Component,
   args: {
     displayMode: DisplayMode.Embedded,
+    toolbarData: DRAWER_TOOLBAR_DATA,
     resizable: true,
   },
   parameters: {
@@ -398,6 +386,7 @@ export const EmbeddedOpen: StoryObj<DrawerLayoutProps> = {
   render: ComponentOpen,
   args: {
     displayMode: DisplayMode.Embedded,
+    toolbarData: DRAWER_TOOLBAR_DATA,
     resizable: true,
   },
   parameters: {

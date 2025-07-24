@@ -119,7 +119,6 @@ const TemplateComponent: StoryFn<DrawerOmitOpen> = ({
   const renderDrawer = () => (
     <Drawer
       {...rest}
-      displayMode={displayMode}
       onClose={() => setOpen(false)}
       open={undefined} // Prevent open from passing since it is passed to DrawerLayout
     />

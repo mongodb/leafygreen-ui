@@ -21,20 +21,20 @@ export interface DrawerProps
    * Options to display the drawer element
    * @defaultValue 'overlay'
    * @param Embedded will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as container page content. It is recommended to wrap an embedded drawer within the `DrawerLayout` container
-   * @param Overlay will display a drawer as a `<dialog>` element that takes up the full parent container height and elevated above container page content. It is recommended to wrap an overlay drawer within the `DrawerLayout` container
+   * @param Overlay will display a drawer as a `<dialog>` element that takes up the full parent container height and elevated above container page content. It is recommended to wrap an overlay drawer within the `DrawerLayout` container.
+   * If wrapping the Drawer in a `DrawerLayout`, this prop is not needed. The Drawer read the `displayMode` prop from `DrawerLayout`.
    */
   displayMode?: DisplayMode;
 
   /**
-   * Determines if the Drawer is open or closed
+   * Determines if the Drawer is open or closed. If wrapping the Drawer in a `DrawerLayout`, this prop is not needed. The Drawer read the `isDrawerOpen` prop from `DrawerLayout`.
    */
   open?: boolean;
 
   /**
    * Event handler called on close button click. If provided, a close button will be rendered in the Drawer header.
    */
-  // onClose?: React.MouseEventHandler<HTMLButtonElement>; TODO:
-  onClose?: () => void;
+  onClose?: React.MouseEventHandler<HTMLButtonElement>;
 
   /**
    * Title of the Drawer

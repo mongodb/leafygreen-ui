@@ -132,6 +132,7 @@ const getOverlayStyles = ({
     },
   );
 
+// When the drawer is in embedded mode, the width of the drawer changes based on the open state and the resizer size.
 const getEmbeddedStyles = ({ open, size }: { open: boolean; size: number }) =>
   cx(
     css`

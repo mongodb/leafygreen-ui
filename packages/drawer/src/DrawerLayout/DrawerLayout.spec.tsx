@@ -8,13 +8,20 @@ describe('packages/chip', () => {
     <>
       {/* @ts-expect-error - Missing children */}
       <DrawerLayout />
-
-      <DrawerLayout>{'children'}</DrawerLayout>
-
-      <DrawerLayout displayMode="embedded">{'children'}</DrawerLayout>
-
-      <DrawerLayout displayMode="overlay">{'children'}</DrawerLayout>
-
+      <DrawerLayout drawer={<>drawer</>}>{'children'}</DrawerLayout>
+      <DrawerLayout drawer={<>drawer</>} displayMode="embedded">
+        {'children'}
+      </DrawerLayout>
+      <DrawerLayout drawer={<>drawer</>} displayMode="embedded" resizable>
+        {'children'}
+      </DrawerLayout>
+      <DrawerLayout drawer={<>drawer</>} displayMode="overlay">
+        {'children'}
+      </DrawerLayout>
+      {/* @ts-expect-error - Resizable should not be passed with displayMode overlay */}
+      <DrawerLayout drawer={<>drawer</>} displayMode="overlay" resizable>
+        {'children'}
+      </DrawerLayout>{' '}
       <DrawerLayout
         toolbarData={[
           {
@@ -31,16 +38,36 @@ describe('packages/chip', () => {
       >
         {'children'}
       </DrawerLayout>
-
-      <DrawerLayout isDrawerOpen={false} displayMode="embedded">
+      <DrawerLayout
+        drawer={<>drawer</>}
+        isDrawerOpen={false}
+        displayMode="embedded"
+      >
         {'children'}
       </DrawerLayout>
-
       {/* @ts-expect-error - ToolbarData should not be passed with isDrawerOpen */}
       <DrawerLayout
         isDrawerOpen={false}
         displayMode="embedded"
         toolbarData={[]}
+      >
+        {'children'}
+      </DrawerLayout>
+      <DrawerLayout
+        // @ts-expect-error - dawer should not be passed with toolbarData
+        drawer={<>drawer</>}
+        toolbarData={[
+          {
+            id: 'code',
+            glyph: 'Code',
+            content: '<p>hey</p>',
+            label: 'the label',
+            title: 'the title',
+          },
+        ]}
+        onClose={() => {}}
+        displayMode="overlay"
+        darkMode
       >
         {'children'}
       </DrawerLayout>
