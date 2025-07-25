@@ -1,8 +1,8 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
-import { Position } from './useResizable.types';
 import { RESIZER_SIZE } from './useResizable.constants';
+import { Position } from './useResizable.types';
 
 /**
  * Calculates the new size based on mouse position and constraints
