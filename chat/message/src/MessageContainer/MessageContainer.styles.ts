@@ -1,26 +1,44 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { borderRadius, spacing } from '@leafygreen-ui/tokens';
 
 import { Variant } from './MessageContainer.types';
 
 const baseStyles = css`
-  border-radius: 12px;
-  padding: ${spacing[600]}px;
+  position: relative;
   white-space: pre-wrap;
   overflow-wrap: break-word;
-  /* Card Shadow */
-  box-shadow: 0px 4px 10px -4px ${palette.black}4D; // 4D is 30% opacity
-
-  position: relative;
-
   display: flex;
   flex-direction: column;
   gap: ${spacing[200]}px;
 `;
 
-const variantThemeStyles: Record<Variant, Record<Theme, string>> = {
+const getCompactPrimaryVariantStyles = (theme: Theme) => css`
+  border-radius: ${borderRadius[300]}px ${borderRadius[300]}px 0;
+  background-color: ${palette.gray[theme === Theme.Dark ? 'dark2' : 'light2']};
+  padding: ${spacing[300]}px;
+`;
+
+const getCompactStyles = ({
+  theme,
+  variant,
+}: {
+  theme: Theme;
+  variant: Variant;
+}) =>
+  cx({
+    [getCompactPrimaryVariantStyles(theme)]: variant === Variant.Primary,
+  });
+
+const baseSpaciousContainerStyles = css`
+  border-radius: ${borderRadius[300]}px;
+  /* Card Shadow */
+  box-shadow: 0px 4px 10px -4px ${palette.black}4D; // 4D is 30% opacity
+  padding: ${spacing[600]}px;
+`;
+
+const spaciousVariantThemeStyles: Record<Variant, Record<Theme, string>> = {
   [Variant.Primary]: {
     [Theme.Dark]: css`
       background-color: ${palette.green.dark3};
@@ -39,12 +57,31 @@ const variantThemeStyles: Record<Variant, Record<Theme, string>> = {
   },
 };
 
+const getSpaciousContainerStyles = ({
+  theme,
+  variant,
+}: {
+  theme: Theme;
+  variant: Variant;
+}) =>
+  cx(baseSpaciousContainerStyles, spaciousVariantThemeStyles[variant][theme]);
+
 export const getMessageContainerStyles = ({
   className,
+  isCompact,
   theme,
   variant,
 }: {
   className?: string;
+  isCompact: boolean;
   theme: Theme;
   variant: Variant;
-}) => cx(baseStyles, variantThemeStyles[variant][theme], className);
+}) =>
+  cx(
+    baseStyles,
+    {
+      [getCompactStyles({ theme, variant })]: isCompact,
+      [getSpaciousContainerStyles({ theme, variant })]: !isCompact,
+    },
+    className,
+  );
