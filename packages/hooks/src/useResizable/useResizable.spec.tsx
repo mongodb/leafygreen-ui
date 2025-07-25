@@ -363,8 +363,8 @@ describe('useResizable', () => {
       }),
     );
 
-    // Check that getResizerProps returns an empty object
+    // Check that getResizerProps returns undefined
     const resizerProps = result.current.getResizerProps();
-    expect(Object.keys(resizerProps || {}).length).toBe(0);
+    expect(resizerProps).toBeUndefined();
   });
 });

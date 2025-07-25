@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 
 import {
   Position,
@@ -12,9 +10,10 @@ import {
 } from './useResizable.types';
 import {
   calculateNewSize,
-  RESIZER_SIZE,
-  SIZE_GROWTH_KEY_MAPPINGS,
+  getResizerAriaAttributes,
+  getResizerStyles,
 } from './useResizable.utils';
+import { SIZE_GROWTH_KEY_MAPPINGS } from './useResizable.constants';
 
 /**
  * Custom hook to handle resizable functionality for a component.
@@ -46,7 +45,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   const isVertical = position === Position.Left || position === Position.Right;
 
   // Keeps track of all the sizes that can be used for resizing with keyboard
-  const keyboardSizes = [initialSize!, minSize, maxSize];
+  const keyboardSizes = [initialSize, minSize, maxSize];
   const sortedKeyboardSizes = [...keyboardSizes].sort((a, b) => a - b);
 
   // Update size when enabled state or initialSize changes
@@ -56,8 +55,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
   /**
    * Calculates and sets the current resizing state and updates the ref synchronously.
-   * @param event
-   * @returns void
    */
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
@@ -93,8 +90,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   }, []);
 
   /**
-   * Handles keyboard interactions for resizing.
-   * Allows resizing using arrow keys based on the position.
+   * Handles keyboard interactions for resizing based on the position.
+   * Prevents default behavior for arrow keys.
    *
    * For example:
    * - If position is 'left' and the left arrow key is pressed, it decreases the size.
@@ -103,11 +100,14 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   const getNextKeyboardSize = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent, position: Position | null) => {
       if (position === Position.Left || position === Position.Right) {
-        if (event.code == keyMap.ArrowLeft || event.code == keyMap.ArrowRight) {
+        if (
+          event.code === keyMap.ArrowLeft ||
+          event.code === keyMap.ArrowRight
+        ) {
           event.preventDefault();
         }
       } else {
-        if (event.code == keyMap.ArrowUp || event.code == keyMap.ArrowDown) {
+        if (event.code === keyMap.ArrowUp || event.code === keyMap.ArrowDown) {
           event.preventDefault();
         }
       }
@@ -140,7 +140,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   );
 
   /**
-   * Handles key down events for resizing.
    * Prevents default behavior and calls getNextKeyboardSize to handle resizing.
    * This allows resizing using arrow keys based on the position.
    */
@@ -158,13 +157,11 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     (e: MouseEvent | React.MouseEvent) => {
       if (!enabled) return;
 
-      e.preventDefault(); // Prevent default browser behavior like text selection
+      e.preventDefault();
 
-      // Synchronously update the ref BEFORE setting state
       isResizingRef.current = true;
-      setIsResizing(true); // This will trigger re-render and useEffect later
+      setIsResizing(true);
 
-      // Capture initial mouse position and current element size
       initialMousePos.current = { x: e.clientX, y: e.clientY };
 
       if (resizableRef.current) {
@@ -205,40 +202,9 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       onMouseDown: handleOnMouseDown,
       onFocus: handleOnFocus,
       onBlur: handleOnBlur,
-      // ARIA attributes for accessibility
-      role: 'separator', // Defines the element as an interactive divider that separates content regions.
-      'aria-valuenow': size, // Represents the current position of the separator as a value between aria-valuemin and aria-valuemax.
-      'aria-valuemin': minSize, //The minimum value of the separator's range.
-      'aria-valuemax': maxSize, // The maximum value of the separator's range.
-      'aria-orientation': isVertical ? 'vertical' : 'horizontal', // The visual orientation of the separator bar.
-      'aria-label': `${isVertical ? 'Vertical' : 'Horizontal'} resize handle`, // Descriptive label
-      'aria-valuetext': `${size} pixels`, // Provide size in a more readable format
+      ...getResizerAriaAttributes(size, minSize, maxSize, isVertical),
       tabIndex: 0, // Make the resizer focusable
-      className: cx(
-        css`
-          cursor: ${isVertical ? 'col-resize' : 'row-resize'};
-          background-color: transparent;
-
-          &:hover,
-          &:focus-visible {
-            background-color: ${palette.blue.light1};
-            outline: none;
-          }
-        `,
-        {
-          [css`
-            width: ${RESIZER_SIZE}px;
-            height: 100%;
-          `]: isVertical,
-          [css`
-            height: ${RESIZER_SIZE}px;
-            width: 100%;
-          `]: !isVertical,
-          [css`
-            background-color: ${palette.blue.light1};
-          `]: isResizing,
-        },
-      ),
+      className: getResizerStyles(isVertical, isResizing),
     };
 
     return props;

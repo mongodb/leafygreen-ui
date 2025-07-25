@@ -1,31 +1,8 @@
-import { keyMap } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { palette } from '@leafygreen-ui/palette';
 
-import { Position, SizeGrowth } from './useResizable.types';
-
-// Mappings for keyboard interactions based on the position
-export const SIZE_GROWTH_KEY_MAPPINGS: Record<
-  Position,
-  { [key: string]: SizeGrowth }
-> = {
-  [Position.Right]: {
-    [keyMap.ArrowLeft]: 'increase',
-    [keyMap.ArrowRight]: 'decrease',
-  },
-  [Position.Left]: {
-    [keyMap.ArrowRight]: 'increase',
-    [keyMap.ArrowLeft]: 'decrease',
-  },
-  [Position.Bottom]: {
-    [keyMap.ArrowUp]: 'increase',
-    [keyMap.ArrowDown]: 'decrease',
-  },
-  [Position.Top]: {
-    [keyMap.ArrowDown]: 'increase',
-    [keyMap.ArrowUp]: 'decrease',
-  },
-};
-
-export const RESIZER_SIZE = 2;
+import { Position } from './useResizable.types';
+import { RESIZER_SIZE } from './useResizable.constants';
 
 /**
  * Calculates the new size based on mouse position and constraints
@@ -79,4 +56,54 @@ export const calculateNewSize = (
   }
 
   return newSize;
+};
+
+/**
+ * Generates styles for the resizer element based on its orientation and resizing state
+ */
+export const getResizerStyles = (isVertical: boolean, isResizing: boolean) =>
+  cx(
+    css`
+      cursor: ${isVertical ? 'col-resize' : 'row-resize'};
+      background-color: transparent;
+
+      &:hover,
+      &:focus-visible {
+        background-color: ${palette.blue.light1};
+        outline: none;
+      }
+    `,
+    {
+      [css`
+        width: ${RESIZER_SIZE}px;
+        height: 100%;
+      `]: isVertical,
+      [css`
+        height: ${RESIZER_SIZE}px;
+        width: 100%;
+      `]: !isVertical,
+      [css`
+        background-color: ${palette.blue.light1};
+      `]: isResizing,
+    },
+  );
+
+/**
+ * Generates ARIA attributes for the resizer element
+ */
+export const getResizerAriaAttributes = (
+  size: number,
+  minSize: number,
+  maxSize: number,
+  isVertical: boolean,
+) => {
+  return {
+    role: 'separator', // Defines the element as an interactive divider that separates content regions.
+    'aria-valuenow': size, // Represents the current position of the separator as a value between aria-valuemin and aria-valuemax.
+    'aria-valuemin': minSize, //The minimum value of the separator's range.
+    'aria-valuemax': maxSize, // The maximum value of the separator's range.
+    'aria-orientation': isVertical ? 'vertical' : 'horizontal', // The visual orientation of the separator bar.
+    'aria-label': `${isVertical ? 'Vertical' : 'Horizontal'} resize handle`, // Descriptive label
+    'aria-valuetext': `${size} pixels`, // Provide size in a more readable format
+  };
 };
