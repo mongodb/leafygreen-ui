@@ -2,9 +2,11 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
+  Position,
   useIdAllocator,
   useIsomorphicLayoutEffect,
   useMergeRefs,
+  useResizable,
 } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -15,16 +17,29 @@ import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import {
+  DRAWER_WIDTH,
+  DRAWER_WITH_TOOLBAR_WIDTH,
+  TRANSITION_DURATION,
+} from '../constants';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
 
 import {
-  drawerTransitionDuration,
+  DRAWER_MAX_PERCENTAGE_WIDTH,
+  DRAWER_MAX_WIDTH,
+  DRAWER_MAX_WIDTH_WITH_TOOLBAR,
+  DRAWER_MIN_WIDTH,
+  DRAWER_MIN_WIDTH_WITH_TOOLBAR,
+} from './Drawer.constants';
+import {
   getChildrenContainerStyles,
   getDrawerShadowStyles,
   getDrawerStyles,
   getHeaderStyles,
   getInnerContainerStyles,
+  getResizerStyles,
   innerChildrenContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
@@ -38,24 +53,49 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       children,
       className,
       'data-lgid': dataLgId,
-      displayMode = DisplayMode.Overlay,
+      displayMode: displayModeProp,
       id: idProp,
-      onClose,
-      open = false,
+      onClose: onCloseProp,
+      open: openProp,
       title,
       ...rest
     },
     fwdRef,
   ) => {
     const { darkMode, theme } = useDarkMode();
-    const { Component } = usePolymorphic<'dialog' | 'div'>(
-      displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
-    );
     const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
+    const {
+      isDrawerOpen,
+      resizable,
+      displayMode: displayModeContextProp,
+      onClose: onCloseContextProp,
+      hasToolbar,
+    } = useDrawerLayoutContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
-    const drawerRef = useMergeRefs([fwdRef, ref]);
+
+    // Prop overrides
+    const displayMode =
+      displayModeProp ?? displayModeContextProp ?? DisplayMode.Overlay;
+    const open = openProp ?? isDrawerOpen ?? false;
+    const onClose = onCloseProp ?? onCloseContextProp;
+
+    const isEmbedded = displayMode === DisplayMode.Embedded;
+    const isOverlay = displayMode === DisplayMode.Overlay;
+
+    const isResizable = isEmbedded && !!resizable && open;
+    const { Component } = usePolymorphic<'dialog' | 'div'>(
+      isOverlay ? 'dialog' : 'div',
+    );
+
+    const initialSize = hasToolbar ? DRAWER_WITH_TOOLBAR_WIDTH : DRAWER_WIDTH;
+    const resizableMinWidth = hasToolbar
+      ? DRAWER_MIN_WIDTH_WITH_TOOLBAR
+      : DRAWER_MIN_WIDTH;
+    const resizableMaxWidth = hasToolbar
+      ? DRAWER_MAX_WIDTH_WITH_TOOLBAR
+      : DRAWER_MAX_WIDTH;
 
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
@@ -90,7 +130,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       if (open) {
         registerDrawer(id);
       } else {
-        setTimeout(() => unregisterDrawer(id), drawerTransitionDuration);
+        setTimeout(() => unregisterDrawer(id), TRANSITION_DURATION);
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
@@ -114,6 +154,25 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     };
 
+    // Enables resizable functionality if the drawer is resizable and in embedded mode.
+    const {
+      resizableRef,
+      size: drawerSize,
+      getResizerProps,
+    } = useResizable<HTMLDialogElement | HTMLDivElement>({
+      enabled: resizable && isEmbedded,
+      initialSize: open ? initialSize : 0,
+      minSize: resizableMinWidth,
+      maxSize: resizableMaxWidth,
+      maxViewportPercentages: DRAWER_MAX_PERCENTAGE_WIDTH,
+      position: Position.Right,
+    });
+
+    const resizerProps = getResizerProps();
+
+    const refsToMerge = [fwdRef, ref, resizableRef];
+    const drawerRef = useMergeRefs(refsToMerge);
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <Component
@@ -126,6 +185,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
+            size: resizable ? drawerSize : open ? initialSize : 0,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}
@@ -135,6 +195,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           inert={!open ? 'inert' : undefined}
           {...rest}
         >
+          {isResizable && (
+            <div
+              {...resizerProps}
+              className={getResizerStyles({
+                resizerClassName: resizerProps?.className,
+              })}
+            />
+          )}
           <div className={getDrawerShadowStyles({ theme, displayMode })}>
             <div
               className={getInnerContainerStyles({

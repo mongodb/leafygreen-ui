@@ -63,6 +63,7 @@ export default {
   args: {
     displayMode: DisplayMode.Overlay,
     title: 'Drawer Title',
+    onClose: undefined,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -99,11 +100,13 @@ const LongContent = () => {
   );
 };
 
-const TemplateComponent: StoryFn<DrawerProps> = ({
+type DrawerOmitOpen = Omit<DrawerProps, 'open' | 'onClose'>;
+
+const TemplateComponent: StoryFn<DrawerOmitOpen> = ({
   displayMode = DisplayMode.Overlay,
   initialOpen,
   ...rest
-}: DrawerProps & {
+}: DrawerOmitOpen & {
   initialOpen?: boolean;
 }) => {
   const [open, setOpen] = useState(initialOpen ?? true);
@@ -114,14 +117,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     </Button>
   );
 
-  const renderDrawer = () => (
-    <Drawer
-      {...rest}
-      displayMode={displayMode}
-      open={open}
-      onClose={() => setOpen(false)}
-    />
-  );
+  const renderDrawer = () => <Drawer {...rest} />;
 
   return (
     <DrawerStackProvider>
@@ -131,7 +127,14 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
           width: 100%;
         `}
       >
-        <DrawerLayout displayMode={displayMode} isDrawerOpen={open}>
+        {/* TODO: fix TS error */}
+        <DrawerLayout
+          displayMode={displayMode}
+          isDrawerOpen={open}
+          drawer={renderDrawer()}
+          resizable={true}
+          onClose={() => setOpen(false)}
+        >
           <main
             className={css`
               padding: ${spacing[400]}px;
@@ -145,7 +148,6 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
             {renderTrigger()}
             <LongContent />
           </main>
-          {renderDrawer()}
         </DrawerLayout>
       </div>
     </DrawerStackProvider>
@@ -250,7 +252,6 @@ export const LightModeOverlay: StoryObj<DrawerProps> = {
     children: <LongContent />,
     darkMode: false,
     displayMode: DisplayMode.Overlay,
-    open: true,
   },
   parameters: {
     controls: {
@@ -265,7 +266,6 @@ export const DarkModeOverlay: StoryObj<DrawerProps> = {
     children: <LongContent />,
     darkMode: true,
     displayMode: DisplayMode.Overlay,
-    open: true,
   },
   parameters: {
     controls: {
@@ -280,7 +280,6 @@ export const LightModeEmbedded: StoryObj<DrawerProps> = {
     children: <LongContent />,
     darkMode: false,
     displayMode: DisplayMode.Embedded,
-    open: true,
   },
   parameters: {
     controls: {
@@ -295,7 +294,6 @@ export const DarkModeEmbedded: StoryObj<DrawerProps> = {
     children: <LongContent />,
     darkMode: true,
     displayMode: DisplayMode.Embedded,
-    open: true,
   },
   parameters: {
     controls: {

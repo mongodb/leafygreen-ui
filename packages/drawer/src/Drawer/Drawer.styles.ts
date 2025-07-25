@@ -8,12 +8,14 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import { PANEL_WIDTH } from '../constants';
+import {
+  DRAWER_WIDTH,
+  TRANSITION_DURATION,
+  TRANSITION_TIMING_FUNCTION,
+} from '../constants';
 
 import { HEADER_HEIGHT, MOBILE_BREAKPOINT } from './Drawer.constants';
 import { DisplayMode } from './Drawer.types';
-
-export const drawerTransitionDuration = transitionDuration.slower;
 
 export const drawerClassName = createUniqueClassName('lg-drawer');
 
@@ -54,13 +56,15 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   all: unset;
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
-  width: 100%;
-  max-width: ${PANEL_WIDTH}px;
+  max-width: 50vw;
+  width: ${DRAWER_WIDTH}px;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
+  position: relative;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    width: auto;
     max-width: 100%;
     height: 50vh;
   }
@@ -107,8 +111,8 @@ const getOverlayStyles = ({
 
       // By default, the drawer is positioned off-screen to the right.
       transform: translate3d(100%, 0, 0);
-      animation-timing-function: ease-in-out;
-      animation-duration: ${drawerTransitionDuration}ms;
+      animation-timing-function: ${TRANSITION_TIMING_FUNCTION};
+      animation-duration: ${TRANSITION_DURATION}ms;
       animation-fill-mode: forwards;
 
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -118,9 +122,10 @@ const getOverlayStyles = ({
         animation: none;
         position: fixed;
         transform: translate3d(0, 100%, 0);
-        transition: transform ${drawerTransitionDuration}ms ease-in-out,
-          opacity ${drawerTransitionDuration}ms ease-in-out
-            ${open ? '0ms' : `${drawerTransitionDuration}ms`};
+        transition-property: transform, opacity;
+        transition-duration: ${TRANSITION_DURATION}ms;
+        transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
+        transition-delay: 0ms, ${open ? '0ms' : `${TRANSITION_DURATION}ms`};
       }
     `,
     {
@@ -129,20 +134,38 @@ const getOverlayStyles = ({
     },
   );
 
+const getEmbeddedStyles = ({ open, size }: { open: boolean; size: number }) =>
+  cx(
+    css`
+      transition: width ${TRANSITION_DURATION}ms ${TRANSITION_TIMING_FUNCTION};
+    `,
+    {
+      [css`
+        width: ${size}px;
+      `]: open,
+      [css`
+        width: 0;
+      `]: !open,
+    },
+  );
+
 const getDisplayModeStyles = ({
   displayMode,
   open,
   shouldAnimate,
   zIndex,
+  size,
 }: {
   displayMode: DisplayMode;
   open: boolean;
   shouldAnimate: boolean;
   zIndex: number;
+  size: number;
 }) =>
   cx({
     [getOverlayStyles({ open, shouldAnimate, zIndex })]:
       displayMode === DisplayMode.Overlay,
+    [getEmbeddedStyles({ open, size })]: displayMode === DisplayMode.Embedded,
   });
 
 export const getDrawerStyles = ({
@@ -152,6 +175,7 @@ export const getDrawerStyles = ({
   shouldAnimate,
   theme,
   zIndex,
+  size,
 }: {
   className?: string;
   displayMode: DisplayMode;
@@ -159,10 +183,11 @@ export const getDrawerStyles = ({
   shouldAnimate: boolean;
   theme: Theme;
   zIndex: number;
+  size: number;
 }) =>
   cx(
     getBaseStyles({ theme }),
-    getDisplayModeStyles({ displayMode, open, shouldAnimate, zIndex }),
+    getDisplayModeStyles({ displayMode, open, shouldAnimate, zIndex, size }),
     className,
     drawerClassName,
   );
@@ -199,13 +224,13 @@ const getBaseInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
   opacity: 0;
   transition-property: opacity;
   transition-duration: ${transitionDuration.faster}ms;
-  transition-timing-function: linear;
+  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
 `;
 
 const getInnerOpenContainerStyles = css`
   transition-property: opacity;
   transition-duration: ${transitionDuration.slowest}ms;
-  transition-timing-function: linear;
+  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
   opacity: 1;
 `;
 
@@ -229,7 +254,7 @@ export const getHeaderStyles = ({ theme }: { theme: Theme }) => css`
   border-bottom: 1px solid ${color[theme].border.secondary.default};
   transition-property: box-shadow;
   transition-duration: ${transitionDuration.faster}ms;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
 `;
 
 const baseChildrenContainerStyles = css`
@@ -263,3 +288,16 @@ export const innerChildrenContainerStyles = cx(
   baseInnerChildrenContainerStyles,
   scrollContainerStyles,
 );
+
+export const getResizerStyles = ({
+  resizerClassName,
+}: {
+  resizerClassName?: string;
+}) =>
+  cx(
+    css`
+      position: absolute;
+      left: 0;
+    `,
+    resizerClassName,
+  );

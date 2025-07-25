@@ -2,6 +2,8 @@ import React, { forwardRef, useEffect, useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { useDrawerLayoutContext } from '../DrawerLayout';
+
 import { getDrawerWithToolbarWrapperStyles } from './DrawerWithToolbarWrapper.styles';
 import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types';
 
@@ -15,38 +17,29 @@ import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types'
 export const DrawerWithToolbarWrapper = forwardRef<
   HTMLDivElement,
   DrawerWithToolbarWrapperProps
->(
-  (
-    {
-      children,
-      className,
-      isDrawerOpen,
-      displayMode,
-    }: DrawerWithToolbarWrapperProps,
-    forwardedRef,
-  ) => {
-    const { theme } = useDarkMode();
-    const [shouldAnimate, setShouldAnimate] = useState(false);
+>(({ children, className }: DrawerWithToolbarWrapperProps, forwardedRef) => {
+  const { theme } = useDarkMode();
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const { displayMode, isDrawerOpen } = useDrawerLayoutContext();
 
-    useEffect(() => {
-      if (isDrawerOpen) setShouldAnimate(true);
-    }, [isDrawerOpen]);
+  useEffect(() => {
+    if (isDrawerOpen) setShouldAnimate(true);
+  }, [isDrawerOpen]);
 
-    return (
-      <div
-        ref={forwardedRef}
-        className={getDrawerWithToolbarWrapperStyles({
-          className,
-          isDrawerOpen,
-          shouldAnimate,
-          displayMode,
-          theme,
-        })}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+  return (
+    <div
+      ref={forwardedRef}
+      className={getDrawerWithToolbarWrapperStyles({
+        className,
+        isDrawerOpen,
+        shouldAnimate,
+        displayMode,
+        theme,
+      })}
+    >
+      {children}
+    </div>
+  );
+});
 
 DrawerWithToolbarWrapper.displayName = 'DrawerWithToolbarWrapper';

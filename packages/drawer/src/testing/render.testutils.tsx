@@ -88,10 +88,7 @@ export const renderMultipleDrawers = () => {
 
 export const renderDrawerToolbarLayout = (): RenderResult => {
   return render(
-    <DrawerToolbarLayout
-      toolbarData={DRAWER_TOOLBAR_DATA}
-      displayMode="overlay"
-    >
+    <DrawerToolbarLayout toolbarData={DRAWER_TOOLBAR_DATA}>
       <main>
         <div>Content for the main area</div>
       </main>
