@@ -10,7 +10,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 export const messageClassName = createUniqueClassName('lg-message');
-export const senderClassName = createUniqueClassName('lg-message');
+export const senderClassName = createUniqueClassName('lg-message-sender');
 /** @deprecated */
 export const avatarClassName = createUniqueClassName('lg-message-avatar');
 

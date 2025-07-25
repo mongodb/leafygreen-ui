@@ -134,7 +134,7 @@ export const LiveExample: StoryObj<MessageStoryProps> = {
 export const Text: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    messageBody: UserText,
+    messageBody: MarkdownText,
     sourceType: MessageSourceType.Text,
   },
 };
