@@ -9,9 +9,11 @@
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild.ts",
     "postbuild": "ts-node ./scripts/postbuild.ts",
-    "build": "ts-node ./scripts/build-icons-parallel.ts",
+    "bundle": "ts-node ./scripts/build-icons-parallel.ts",
     "tsc": "lg-build tsc",
-    "docs": "lg-build docs"
+    "docs": "lg-build docs",
+    "build": "pnpm tsc && pnpm bundle",
+    "build:old-version": "lg-build bundle"
   },
   "license": "Apache-2.0",
   "publishConfig": {
