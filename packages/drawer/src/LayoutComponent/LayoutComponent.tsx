@@ -38,7 +38,7 @@ export const LayoutComponent = forwardRef<HTMLDivElement, LayoutComponentProps>(
         {displayMode === DisplayMode.Overlay ? (
           <OverlayDrawerLayout ref={forwardRef} {...rest}>
             {children}
-            {drawer && drawer}
+            {drawer}
           </OverlayDrawerLayout>
         ) : (
           <EmbeddedDrawerLayout
@@ -47,7 +47,7 @@ export const LayoutComponent = forwardRef<HTMLDivElement, LayoutComponentProps>(
             {...rest}
           >
             {children}
-            {drawer && drawer}
+            {drawer}
           </EmbeddedDrawerLayout>
         )}
       </LeafyGreenProvider>

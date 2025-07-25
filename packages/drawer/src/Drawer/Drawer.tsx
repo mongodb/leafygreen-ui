@@ -60,7 +60,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     fwdRef,
   ) => {
     const { darkMode, theme } = useDarkMode();
-
     const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
     const {
