@@ -2,7 +2,7 @@ import React from 'react';
 
 import { DrawerLayout } from '.';
 
-describe('packages/chip', () => {
+describe('packages/DrawerLayout', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('types behave as expected', () => {
     <>
