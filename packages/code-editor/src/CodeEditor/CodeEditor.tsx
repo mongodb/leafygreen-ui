@@ -8,6 +8,7 @@ import {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
+import { useAutoCompleteExtension } from './hooks/extensions/useAutoCompleteExtension';
 import { useLineNumberExtension } from './hooks/extensions/useLineNumbersExtension';
 import { getEditorStyles } from './CodeEditor.styles';
 import { type CodeEditorProps, IndentUnits } from './CodeEditor.types';
@@ -121,6 +122,12 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       modules?.['@codemirror/view'],
     );
 
+    const autoCompleteExtension = useAutoCompleteExtension(
+      editorViewRef.current,
+      language,
+      modules?.['@codemirror/autocomplete'],
+    );
+
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
       const commands = modules?.['@codemirror/commands'];
@@ -137,6 +144,24 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
         parent: domNode,
         extensions: [
           ...consumerExtensions.map(extension => Prec.highest(extension)),
+
+          // Core configurations ------------
+          commands.history(),
+
+          EditorView.EditorView.updateListener.of(update => {
+            if (isControlled && update.docChanged) {
+              const editorText = editor.state.sliceDoc() ?? '';
+              onChangeProp?.(editorText);
+              setControlledValue(editorText);
+            }
+          }),
+
+          EditorView.keymap.of([
+            ...commands.defaultKeymap,
+            ...commands.historyKeymap,
+          ]),
+
+          // Custom extensions ------------
           languageExtension,
           lineNumbersExtension,
           lineWrapExtension,
@@ -146,18 +171,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
           tooltipExtension,
           themeExtension,
           highlightExtension,
-          commands.history(),
-          EditorView.EditorView.updateListener.of(update => {
-            if (isControlled && update.docChanged) {
-              const editorText = editor.state.sliceDoc() ?? '';
-              onChangeProp?.(editorText);
-              setControlledValue(editorText);
-            }
-          }),
-          EditorView.keymap.of([
-            ...commands.defaultKeymap,
-            ...commands.historyKeymap,
-          ]),
+          autoCompleteExtension,
         ],
       }));
 
@@ -191,6 +205,8 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       isControlled,
       onChangeProp,
       forceParsingProp,
+      autoCompleteExtension,
+      lineNumbersExtension,
     ]);
 
     if (isLoading) {

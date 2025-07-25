@@ -27,6 +27,7 @@ interface CodeEditorModules {
   '@codemirror/view': typeof import('@codemirror/view');
   '@codemirror/state': typeof import('@codemirror/state');
   '@codemirror/commands': typeof import('@codemirror/commands');
+  '@codemirror/autocomplete': typeof import('@codemirror/autocomplete');
 }
 
 export const useModuleLoaders = ({
@@ -61,6 +62,8 @@ export const useModuleLoaders = ({
 
     if (language) {
       neededLoaders['@lezer/highlight'] = () => import('@lezer/highlight');
+      neededLoaders['@codemirror/autocomplete'] = () =>
+        import('@codemirror/autocomplete');
 
       switch (language) {
         case LanguageName.cpp:
