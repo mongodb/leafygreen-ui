@@ -10,6 +10,7 @@ import {
 
 import { useAutoCompleteExtension } from './hooks/extensions/useAutoCompleteExtension';
 import { useLineNumberExtension } from './hooks/extensions/useLineNumbersExtension';
+import { useReadOnlyExtension } from './hooks/extensions/useReadOnlyExtension';
 import { getEditorStyles } from './CodeEditor.styles';
 import { type CodeEditorProps, IndentUnits } from './CodeEditor.types';
 import {
@@ -128,6 +129,12 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       modules?.['@codemirror/autocomplete'],
     );
 
+    const readOnlyExtension = useReadOnlyExtension(
+      editorViewRef.current,
+      readOnly,
+      modules?.['@codemirror/state'],
+    );
+
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
       const commands = modules?.['@codemirror/commands'];
@@ -172,6 +179,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
           themeExtension,
           highlightExtension,
           autoCompleteExtension,
+          readOnlyExtension,
         ],
       }));
 
