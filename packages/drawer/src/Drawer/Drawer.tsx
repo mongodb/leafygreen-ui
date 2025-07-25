@@ -72,15 +72,19 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     } = useDrawerLayoutContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
+
+    // Prop overrides
     const displayMode =
       displayModeProp ?? displayModeContextProp ?? DisplayMode.Overlay;
     const open = openProp ?? isDrawerOpen ?? false;
-    const isResizable =
-      displayMode === DisplayMode.Embedded && !!resizable && open;
     const onClose = onCloseProp ?? onCloseContextProp;
+
     const isEmbedded = displayMode === DisplayMode.Embedded;
+    const isOverlay = displayMode === DisplayMode.Overlay;
+
+    const isResizable = isEmbedded && !!resizable && open;
     const { Component } = usePolymorphic<'dialog' | 'div'>(
-      displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
+      isOverlay ? 'dialog' : 'div',
     );
 
     const initialSize = hasToolbar ? DRAWER_WITH_TOOLBAR_WIDTH : DRAWER_WIDTH;
@@ -149,9 +153,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     };
 
     // Enables resizable functionality if the drawer is resizable and in embedded mode.
-    const { resizableRef, size, getResizerProps } = useResizable<
-      HTMLDialogElement | HTMLDivElement
-    >({
+    const {
+      resizableRef,
+      size: drawerSize,
+      getResizerProps,
+    } = useResizable<HTMLDialogElement | HTMLDivElement>({
       enabled: resizable && isEmbedded,
       initialSize: open ? initialSize : 0,
       minSize: resizableMinWidth,
@@ -183,7 +189,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
-            size: resizable ? size : open ? initialSize : 0,
+            size: resizable ? drawerSize : open ? initialSize : 0,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}
