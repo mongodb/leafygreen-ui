@@ -23,19 +23,16 @@ export interface ResizableProps {
 
   /**
    * The initial size of the resizable element.
-   * If not provided, the element will take its default size.
    */
   initialSize: number;
 
   /**
    * The minimum size the resizable element can be resized to.
-   * If not provided, there will be no minimum size restriction.
    */
   minSize: number;
 
   /**
    * The maximum size the resizable element can be resized to.
-   * If not provided, there will be no maximum size restriction.
    */
   maxSize: number;
 
@@ -48,13 +45,12 @@ export interface ResizableProps {
   /**
    * The percentage of the viewport that the resizable element should occupy at maximum.
    * This can be used to ensure the element does not exceed a certain size relative to the viewport.
-   * If provided, this percentage-based maximum will override the maxSize prop if the calculated pixel value is smaller.
+   * This percentage-based maximum will override the maxSize prop if the calculated pixel value is smaller.
    */
   maxViewportPercentages: number;
 
   /**
    * The position of the element to which the resizer handle is attached.
-   * This is used to determine the direction in which the element can be resized.
    */
   position: Position;
 }
@@ -69,13 +65,12 @@ export interface ResizerProps {
 
 export interface ResizableReturn<T extends HTMLElement = HTMLElement> {
   /**
-   * The current width and height of the resizable element.
+   * The current size of the resizable element.
    */
   size: number;
 
   /**
    * Function to set the size of the resizable element.
-   * Accepts a Size object with width and height properties.
    */
   setSize: React.Dispatch<React.SetStateAction<number>>;
 
@@ -91,7 +86,6 @@ export interface ResizableReturn<T extends HTMLElement = HTMLElement> {
 
   /**
    * A ref to the resizable element that can be used to attach the resizer functionality.
-   * Generic type allows for specific HTML element types like HTMLDialogElement or HTMLDivElement.
    */
   resizableRef: React.RefObject<T>;
 }
