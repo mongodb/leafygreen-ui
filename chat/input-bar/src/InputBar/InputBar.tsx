@@ -89,13 +89,10 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
 
     if (
       isCompact &&
-      (shouldRenderHotkeyIndicator ||
-        shouldRenderGradientProp ||
-        badgeText ||
-        dropdownFooterSlot)
+      (shouldRenderHotkeyIndicator || shouldRenderGradientProp || badgeText)
     ) {
       consoleOnce.warn(
-        `@lg-chat/input-bar: The InputBar component's props 'shouldRenderHotkeyIndicator', 'shouldRenderGradient', 'badgeText', and 'dropdownFooterSlot' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
+        `@lg-chat/input-bar: The InputBar component's props 'shouldRenderHotkeyIndicator', 'shouldRenderGradient', and 'badgeText' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
       );
     }
 

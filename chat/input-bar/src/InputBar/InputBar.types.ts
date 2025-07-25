@@ -49,13 +49,11 @@ export type InputBarProps = HTMLElementProps<'form'> &
     disableSend?: boolean;
     /**
      * Footer content displayed when a dropdown is rendered. Only renders when children exist.
-     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
      */
     dropdownFooterSlot?: ReactElement;
 
     /**
      * Props passed to the Popover that renders the suggested prompts.
-     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
      */
     dropdownProps?: Omit<
       PopoverRenderModeProps,
