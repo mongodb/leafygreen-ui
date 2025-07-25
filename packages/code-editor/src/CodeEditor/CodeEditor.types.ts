@@ -217,6 +217,13 @@ export interface CodeEditorProps extends DarkModeProps {
   tooltips?: Array<CodeEditorTooltip>;
 
   /**
+   * Controlled value of the editor. If set, the editor will not be editable
+   * and will not update its value on change. Use `onChange` to update the
+   * value externally.
+   */
+  value?: string;
+
+  /**
    * Sets the editor's width. If not set, the editor will be 100% width of its
    * parent container.
    */

@@ -26,6 +26,7 @@ interface CodeEditorModules {
   codemirror: typeof import('codemirror');
   '@codemirror/view': typeof import('@codemirror/view');
   '@codemirror/state': typeof import('@codemirror/state');
+  '@codemirror/commands': typeof import('@codemirror/commands');
 }
 
 export const useModuleLoaders = ({
@@ -41,6 +42,7 @@ export const useModuleLoaders = ({
       codemirror: () => import('codemirror'),
       '@codemirror/view': () => import('@codemirror/view'),
       '@codemirror/state': () => import('@codemirror/state'),
+      '@codemirror/commands': () => import('@codemirror/commands'),
     };
 
     if (enableClickableUrls) {

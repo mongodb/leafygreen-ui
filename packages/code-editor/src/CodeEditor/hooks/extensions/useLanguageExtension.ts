@@ -29,7 +29,6 @@ export function useLanguageExtension(
   language?: LanguageName,
   modules?: Partial<CodeEditorModules>,
 ) {
-  console.log('HIT');
   return useExtension(
     view || null,
     {
