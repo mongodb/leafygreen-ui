@@ -8,6 +8,7 @@ import {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
+import { useLineNumberExtension } from './hooks/extensions/useLineNumbersExtension';
 import { getEditorStyles } from './CodeEditor.styles';
 import { type CodeEditorProps, IndentUnits } from './CodeEditor.types';
 import {
@@ -72,6 +73,13 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
     const lineWrapExtension = useLineWrapExtension(
       editorViewRef.current,
       enableLineWrapping,
+      modules?.['@codemirror/view'],
+    );
+
+    const lineNumbersExtension = useLineNumberExtension(
+      editorViewRef.current,
+      enableLineNumbers,
+      modules?.['@codemirror/view'],
     );
 
     const indentExtension = useIndentExtension(
@@ -130,6 +138,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
         extensions: [
           ...consumerExtensions.map(extension => Prec.highest(extension)),
           languageExtension,
+          lineNumbersExtension,
           lineWrapExtension,
           hyperLinkExtension,
           indentExtension,
