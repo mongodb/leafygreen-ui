@@ -16,7 +16,7 @@ const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
 const drawerIn = keyframes`
   from {
-    // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work when the Drawer is embedded.
+    // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work when the Drawer is overlay.
     grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
   }
   to {
@@ -187,17 +187,17 @@ export const getDrawerWithToolbarWrapperStyles = ({
   displayMode?: DisplayMode;
   theme: Theme;
 }) => {
-  const isOverLay = displayMode === DisplayMode.Overlay;
+  const isOverlay = displayMode === DisplayMode.Overlay;
   const isEmbedded = displayMode === DisplayMode.Embedded;
 
   return cx(
     baseStyles,
     {
-      [getOverlayShadowStyles({ theme })]: isOverLay,
-      [closedOverlayShadowStyles]: isOverLay && !isDrawerOpen,
-      [baseOverlayStyles]: isOverLay,
-      [openOverlayStyles]: isDrawerOpen && isOverLay,
-      [closedOverlayStyles]: !isDrawerOpen && shouldAnimate && isOverLay, // This ensures that the drawer does not animate closed on initial render
+      [getOverlayShadowStyles({ theme })]: isOverlay,
+      [closedOverlayShadowStyles]: isOverlay && !isDrawerOpen,
+      [baseOverlayStyles]: isOverlay,
+      [openOverlayStyles]: isDrawerOpen && isOverlay,
+      [closedOverlayStyles]: !isDrawerOpen && shouldAnimate && isOverlay, // This ensures that the drawer does not animate closed on initial render
       [baseEmbeddedStyles]: isEmbedded,
       [openEmbeddedStyles]: isDrawerOpen && isEmbedded,
       [closedEmbeddedStyles]: !isDrawerOpen && isEmbedded,

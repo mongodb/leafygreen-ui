@@ -15,11 +15,25 @@ describe('packages/DrawerLayout', () => {
       <DrawerLayout drawer={<>drawer</>} displayMode="embedded" resizable>
         {'children'}
       </DrawerLayout>
+      <DrawerLayout
+        drawer={<>drawer</>}
+        displayMode="embedded"
+        resizable={false}
+      >
+        {'children'}
+      </DrawerLayout>
       <DrawerLayout drawer={<>drawer</>} displayMode="overlay">
         {'children'}
       </DrawerLayout>
-      {/* @ts-expect-error - Resizable should not be passed with displayMode overlay */}
+      {/* @ts-expect-error - Resizable should not be true with displayMode overlay */}
       <DrawerLayout drawer={<>drawer</>} displayMode="overlay" resizable>
+        {'children'}
+      </DrawerLayout>{' '}
+      <DrawerLayout
+        drawer={<>drawer</>}
+        displayMode="overlay"
+        resizable={undefined}
+      >
         {'children'}
       </DrawerLayout>{' '}
       <DrawerLayout
