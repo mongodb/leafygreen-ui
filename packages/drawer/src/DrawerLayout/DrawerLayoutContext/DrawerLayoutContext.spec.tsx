@@ -43,15 +43,13 @@ describe('useDrawerLayoutContext', () => {
   test('Updates isDrawerOpen when setIsDrawerOpen is called', () => {
     const { result } = renderHook(() => useDrawerLayoutContext(), {
       wrapper: ({ children }) => (
-        <DrawerLayoutProvider displayMode={DisplayMode.Overlay}>
-          {children}
-        </DrawerLayoutProvider>
+        <DrawerLayoutProvider isDrawerOpen>{children}</DrawerLayoutProvider>
       ),
     });
     expect(result.current.isDrawerOpen).toBe(true);
     act(() => {
-      result.current.setIsDrawerOpen(true);
+      result.current.setIsDrawerOpen(false);
     });
-    expect(result.current.isDrawerOpen).toBe(true);
+    expect(result.current.isDrawerOpen).toBe(false);
   });
 });
