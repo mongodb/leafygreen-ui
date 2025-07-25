@@ -3,14 +3,7 @@ import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-/** Gets directory path to generated .tsx files per icon. */
-const iconDir = path.resolve(process.cwd(), 'src/generated');
-
-/** Gets list of icon names based on the generated .tsx files. */
-const iconNames = fs
-  .readdirSync(iconDir)
-  .filter(f => /\.tsx?$/.test(f))
-  .map(f => path.basename(f, path.extname(f)));
+import { getChangedIcons } from './compare-checksum';
 
 /** Splits an array into chunks of a specified size. */
 function chunkArray<T>(arr: Array<T>, size: number): Array<Array<T>> {
@@ -24,7 +17,7 @@ function chunkArray<T>(arr: Array<T>, size: number): Array<Array<T>> {
 }
 
 /** Uses Rollup to build a batch of icons, given an array of their names. */
-function buildBatch(batch: Array<string>): Promise<void> {
+function buildBatch(batch: Array<unknown>): Promise<void> {
   return new Promise((resolve, reject) => {
     const DELIMITER = '|';
     const ROLLUP_CONFIG_PATH = 'rollup.batch.config.mjs';
@@ -47,8 +40,12 @@ function buildBatch(batch: Array<string>): Promise<void> {
 }
 
 /** Creates async functions to build all icons in batches. */
-async function buildAllIconsBatched(batchSize = 10, numWorkers = 4) {
-  const batches = chunkArray(iconNames, batchSize);
+async function buildAllBatched(
+  batchSize = 10,
+  numWorkers = 4,
+  fullBatch: Array<unknown>,
+): Promise<void> {
+  const batches = chunkArray(fullBatch, batchSize);
   let index = 0;
 
   async function worker() {
@@ -68,10 +65,22 @@ async function buildAllIconsBatched(batchSize = 10, numWorkers = 4) {
   const workers = Array.from({ length: numWorkers }, () => worker());
   await Promise.all(workers);
 
-  console.log('All icon batches built successfully');
+  console.log('All batches built successfully');
 }
 
-buildAllIconsBatched(10, 4).catch(err => {
+const ICON_DIR = path.resolve(process.cwd(), 'src/generated');
+
+const _iconNamesAll = fs
+  .readdirSync(ICON_DIR)
+  .filter(f => /\.tsx?$/.test(f))
+  .map(f => path.basename(f, path.extname(f)));
+
+const BATCH_SIZE = 10;
+const NUM_WORKERS = 4;
+
+const iconNamesToBuild = getChangedIcons();
+
+buildAllBatched(BATCH_SIZE, NUM_WORKERS, iconNamesToBuild).catch(err => {
   console.error('Build failed:', err);
   process.exit(1);
 });
