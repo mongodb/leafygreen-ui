@@ -1245,6 +1245,9 @@ importers:
 
   packages/code-editor:
     dependencies:
+      '@codemirror/commands':
+        specifier: ^6.8.1
+        version: 6.8.1
       '@codemirror/lang-cpp':
         specifier: ^6.0.2
         version: 6.0.2

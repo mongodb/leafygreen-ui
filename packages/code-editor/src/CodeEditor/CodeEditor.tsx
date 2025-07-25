@@ -1,11 +1,5 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
-// import CodeMirror, { type EditorView, Prec } from '@uiw/react-codemirror';
+import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
+import { type EditorView } from '@codemirror/view';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
@@ -15,11 +9,7 @@ import {
 } from '@leafygreen-ui/leafygreen-provider';
 
 import { getEditorStyles } from './CodeEditor.styles';
-import {
-  type CodeEditorProps,
-  type CodeMirrorRef,
-  IndentUnits,
-} from './CodeEditor.types';
+import { type CodeEditorProps, IndentUnits } from './CodeEditor.types';
 import {
   useFoldGutterExtension,
   useHighlightExtension,
@@ -32,12 +22,12 @@ import {
   useThemeExtension,
   useTooltipExtension,
 } from './hooks';
-import { type EditorView } from 'codemirror';
 
 export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
   (props, forwardedRef) => {
     const {
       defaultValue,
+      value,
       enableClickableUrls = true,
       enableCodeFolding = true,
       enableLineNumbers = true,
@@ -64,15 +54,14 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
 
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useBaseFontSize();
-    // const [value, setValue] = useState(defaultValue || '');
-    // // const editorRef = useRef<CodeMirrorRef>(null);
+    const [controlledValue, setControlledValue] = useState(value || '');
+    const isControlled = value !== undefined;
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
-    // const ref = useMergeRefs([editorRef, forwardedRef]);
+    const ref = useMergeRefs([editorContainerRef, forwardedRef]);
 
     const moduleLoaders = useModuleLoaders(props);
     const { isLoading, modules } = useLazyModules(moduleLoaders);
-    // const editorView = editorRef.current?.view || null;
 
     const hyperLinkExtension = useHyperLinkExtension(
       editorViewRef.current,
@@ -124,50 +113,22 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       modules?.['@codemirror/view'],
     );
 
-    // const onCreateEditor = useCallback(
-    //   (editorView: EditorView) => {
-    //     if (forceParsingProp) {
-    //       const { state } = editorView;
-    //       const forceParsing = modules?.['@codemirror/language']?.forceParsing;
-
-    //       if (forceParsing && state.doc.length > 0) {
-    //         forceParsing(editorView, state.doc.length, 150);
-    //       }
-    //     }
-    //   },
-    //   [forceParsingProp, modules],
-    // );
-
-    // const onChange = useCallback(
-    //   (val: string) => {
-    //     setValue(val);
-
-    //     if (onChangeProp) {
-    //       onChangeProp(val);
-    //     }
-    //   },
-    //   [onChangeProp],
-    // );
-
     useLayoutEffect(() => {
-      const basicSetup = modules?.['codemirror']?.basicSetup;
-      const EditorView = modules?.['@codemirror/view']?.EditorView;
+      const EditorView = modules?.['@codemirror/view'];
+      const commands = modules?.['@codemirror/commands'];
       const Prec = modules?.['@codemirror/state']?.Prec;
 
-      if (!editorContainerRef?.current || !EditorView || !Prec || !basicSetup) {
+      if (!editorContainerRef?.current || !EditorView || !Prec || !commands) {
         return;
       }
 
       const domNode = editorContainerRef.current;
 
-      console.log(languageExtension);
-
-      const editor = (editorViewRef.current = new EditorView({
-        doc: defaultValue || '',
+      const editor = (editorViewRef.current = new EditorView.EditorView({
+        doc: controlledValue || defaultValue,
         parent: domNode,
         extensions: [
           ...consumerExtensions.map(extension => Prec.highest(extension)),
-          basicSetup,
           languageExtension,
           lineWrapExtension,
           hyperLinkExtension,
@@ -176,8 +137,29 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
           tooltipExtension,
           themeExtension,
           highlightExtension,
+          commands.history(),
+          EditorView.EditorView.updateListener.of(update => {
+            if (isControlled && update.docChanged) {
+              const editorText = editor.state.sliceDoc() ?? '';
+              onChangeProp?.(editorText);
+              setControlledValue(editorText);
+            }
+          }),
+          EditorView.keymap.of([
+            ...commands.defaultKeymap,
+            ...commands.historyKeymap,
+          ]),
         ],
       }));
+
+      if (forceParsingProp) {
+        const Language = modules?.['@codemirror/language'];
+        const docLength = editor.state.doc.length;
+
+        if (Language && Language.forceParsing && docLength > 0) {
+          Language.forceParsing(editor, docLength, 150);
+        }
+      }
 
       return () => {
         delete (domNode as any)._cm;
@@ -185,7 +167,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       };
     }, [
       consumerExtensions,
-      defaultValue,
+      value,
       languageExtension,
       lineWrapExtension,
       hyperLinkExtension,
@@ -195,6 +177,11 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       themeExtension,
       highlightExtension,
       modules,
+      controlledValue,
+      defaultValue,
+      isControlled,
+      onChangeProp,
+      forceParsingProp,
     ]);
 
     if (isLoading) {
@@ -203,7 +190,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
 
     return (
       <div
-        ref={editorContainerRef}
+        ref={ref}
         className={cx(
           getEditorStyles({
             width,
