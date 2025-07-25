@@ -6,7 +6,7 @@ const ICON_DIR = path.resolve(process.cwd(), 'src/generated');
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
 const CHECKSUMS_FILE = path.resolve(process.cwd(), '.icon-checksums.json');
 
-/** Loads prevChecksums checksums from the .icon-checksums.json file.
+/** Loads checksums from the .icon-checksums.json file.
  * If it doesn't exist, returns an empty object.
  */
 function loadStoredChecksums(): Record<string, string> {
@@ -17,7 +17,7 @@ function loadStoredChecksums(): Record<string, string> {
   }
 }
 
-/** Updates prevChecksums checksums in the .icon-checksums.json file. */
+/** Updates checksums in the .icon-checksums.json file. */
 function saveChecksums(checksums: Record<string, string>) {
   fs.writeFileSync(CHECKSUMS_FILE, JSON.stringify(checksums, null, 2));
 }
