@@ -3,7 +3,7 @@ import { act, waitFor } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
+import { TRANSITION_DURATION } from '../constants';
 
 import {
   DrawerToolbarProvider,
@@ -216,9 +216,7 @@ describe('useDrawerToolbarContext', () => {
         expect(result.current.getActiveDrawerContent()).toEqual(mockData[0]);
 
         act(() => result.current.closeDrawer());
-        await new Promise(resolve =>
-          setTimeout(resolve, drawerTransitionDuration),
-        );
+        await new Promise(resolve => setTimeout(resolve, TRANSITION_DURATION));
         await waitFor(() =>
           expect(result.current.getActiveDrawerContent()).toBeUndefined(),
         );
@@ -254,7 +252,7 @@ describe('useDrawerToolbarContext', () => {
 
     act(() => result.current.closeDrawer());
     act(() => result.current.closeDrawer()); // Call close multiple times
-    await new Promise(resolve => setTimeout(resolve, drawerTransitionDuration));
+    await new Promise(resolve => setTimeout(resolve, TRANSITION_DURATION));
     await waitFor(() =>
       expect(result.current.getActiveDrawerContent()).toBeUndefined(),
     );

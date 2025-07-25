@@ -1,17 +1,21 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
-import { DRAWER_TOOLBAR_WIDTH, GRID_AREA } from '../constants';
+import {
+  DRAWER_TOOLBAR_WIDTH,
+  GRID_AREA,
+  TRANSITION_DURATION,
+  TRANSITION_TIMING_FUNCTION,
+} from '../constants';
 import { MOBILE_BREAKPOINT } from '../Drawer';
-import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
 const baseStyles = css`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr auto;
   transition-property: grid-template-columns, grid-template-rows;
-  transition-timing-function: ease-in-out;
-  transition-duration: ${drawerTransitionDuration}ms;
+  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
+  transition-duration: ${TRANSITION_DURATION}ms;
   overflow: hidden;
   position: relative;
   height: 100%;

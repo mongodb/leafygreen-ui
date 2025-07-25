@@ -7,11 +7,10 @@ import {
   DRAWER_TOOLBAR_WIDTH,
   DRAWER_WITH_TOOLBAR_WIDTH,
   GRID_AREA,
+  TRANSITION_DURATION,
+  TRANSITION_TIMING_FUNCTION,
 } from '../constants';
-import {
-  drawerClassName,
-  drawerTransitionDuration,
-} from '../Drawer/Drawer.styles';
+import { drawerClassName } from '../Drawer/Drawer.styles';
 import { DisplayMode } from '../Drawer/Drawer.types';
 
 const MOBILE_BREAKPOINT = breakpoints.Tablet;
@@ -106,8 +105,8 @@ const closedEmbeddedStyles = css`
 
 const baseEmbeddedStyles = css`
   transition-property: grid-template-columns;
-  transition-duration: ${drawerTransitionDuration}ms;
-  transition-timing-function: linear;
+  transition-duration: ${TRANSITION_DURATION}ms;
+  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
   grid-template-columns: 1fr auto;
 `;
 
@@ -119,8 +118,8 @@ const getOverlayShadowStyles = ({ theme }: { theme: Theme }) => css`
 
   &::before {
     transition-property: opacity;
-    transition-duration: ${drawerTransitionDuration}ms;
-    transition-timing-function: linear;
+    transition-duration: ${TRANSITION_DURATION}ms;
+    transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
     opacity: 1;
     left: ${SHADOW_WIDTH}px;
   }
@@ -132,8 +131,8 @@ const baseStyles = css`
   grid-template-areas: '${GRID_AREA.toolbar} ${GRID_AREA.innerDrawer}';
   grid-area: ${GRID_AREA.drawer};
   justify-self: end;
-  animation-timing-function: linear;
-  animation-duration: ${drawerTransitionDuration}ms;
+  animation-timing-function: ${TRANSITION_TIMING_FUNCTION};
+  animation-duration: ${TRANSITION_DURATION}ms;
   z-index: 0;
   height: 100%;
   overflow: hidden;
@@ -169,8 +168,8 @@ const baseOverlayStyles = css`
 const closedOverlayShadowStyles = css`
   padding-left: 0;
   animation-name: ${drawerPaddingOut};
-  animation-timing-function: ease-in-out;
-  animation-duration: ${drawerTransitionDuration}ms;
+  animation-timing-function: ${TRANSITION_TIMING_FUNCTION};
+  animation-duration: ${TRANSITION_DURATION}ms;
 
   ::before {
     opacity: 0;

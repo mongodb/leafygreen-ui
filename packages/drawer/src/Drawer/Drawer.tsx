@@ -17,7 +17,11 @@ import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { DRAWER_WIDTH, DRAWER_WITH_TOOLBAR_WIDTH } from '../constants';
+import {
+  DRAWER_WIDTH,
+  DRAWER_WITH_TOOLBAR_WIDTH,
+  TRANSITION_DURATION,
+} from '../constants';
 import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
@@ -30,7 +34,6 @@ import {
   DRAWER_MIN_WIDTH_WITH_TOOLBAR,
 } from './Drawer.constants';
 import {
-  drawerTransitionDuration,
   getChildrenContainerStyles,
   getDrawerShadowStyles,
   getDrawerStyles,
@@ -127,7 +130,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       if (open) {
         registerDrawer(id);
       } else {
-        setTimeout(() => unregisterDrawer(id), drawerTransitionDuration);
+        setTimeout(() => unregisterDrawer(id), TRANSITION_DURATION);
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
