@@ -64,7 +64,8 @@ export type DrawerLayoutPropsWithoutToolbar = {
   isDrawerOpen?: boolean;
 
   /**
-   * The drawer component to be rendered in the layout.
+   * The drawer component to be rendered in the layout. This is only needed if using the Drawer without a toolbar.
+   * If using the Drawer with a toolbar, the drawer is rendered internally.
    */
   drawer?: React.ReactNode;
 } & BaseDrawerLayoutProps;
@@ -81,7 +82,8 @@ export type DrawerLayoutPropsWithToolbar = {
   isDrawerOpen?: never;
 
   /**
-   * The drawer component to be rendered in the layout.
+   * The drawer component to be rendered in the layout. This is only needed if using the Drawer without a toolbar.
+   * If using the Drawer with a toolbar, the drawer is rendered internally.
    */
   drawer?: never;
 } & BaseDrawerLayoutProps;
