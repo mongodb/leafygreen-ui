@@ -1,5 +1,22 @@
 # @lg-chat/message-feedback
 
+## 5.1.0
+
+### Minor Changes
+
+- b5ec55d: [LG-5373](https://jira.mongodb.org/browse/LG-5373): add variant support for when the parent `LeafyGreenChatProvider` has `variant="compact"`
+
+  Mark `PopoverMessageFeedback` and `PopoverMessageFeedbackProps` as `@deprecated`
+
+### Patch Changes
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+  - @leafygreen-ui/button@25.0.1
+
 ## 5.0.4
 
 ### Patch Changes
