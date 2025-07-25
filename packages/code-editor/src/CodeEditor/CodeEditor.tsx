@@ -239,51 +239,6 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
         {...rest}
       />
     );
-
-    // return (
-    //   <CodeMirror
-    //     value={value}
-    //     onChange={onChange}
-    //     onCreateEditor={onCreateEditor}
-    //     readOnly={readOnly}
-    //     placeholder={placeholder}
-    //     className={cx(
-    //       getEditorStyles({
-    //         width,
-    //         minWidth,
-    //         maxWidth,
-    //         height,
-    //         minHeight,
-    //         maxHeight,
-    //       }),
-    //       className, // class styles override inline styles
-    //     )}
-    //     /**
-    //      * `theme` prop is used instead of just adding these to extensions
-    //      * list because it automates updating on theme change.
-    //      */
-    //     theme={[themeExtension, highlightExtension]}
-    //     extensions={[
-    //       ...consumerExtensions.map(extension => Prec.highest(extension)),
-    //       // ...customExtensions,
-    //       languageExtension,
-    //       lineWrapExtension,
-    //       hyperLinkExtension,
-    //       indentExtension,
-    //       foldGutterExtension,
-    //       tooltipExtension,
-    //     ]}
-    //     basicSetup={{
-    //       allowMultipleSelections: true,
-    //       foldGutter: false, // Custom fold gutter is used instead
-    //       highlightActiveLine: false,
-    //       highlightActiveLineGutter: false,
-    //       lineNumbers: enableLineNumbers,
-    //     }}
-    //     ref={ref}
-    //     {...rest}
-    //   />
-    // );
   },
 );
 
