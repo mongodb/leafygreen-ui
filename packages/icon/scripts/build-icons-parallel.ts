@@ -23,8 +23,8 @@ function chunkArray<T>(arr: Array<T>, size: number): Array<Array<T>> {
 function buildBatch(batch: Array<string>): Promise<void> {
   return new Promise((resolve, reject) => {
     const iconsArg = batch.join('|');
-    const cmd = `pnpm exec rollup -c rollup.icon.batch.config.mjs --environment "ICONS:${iconsArg}"`;
-    console.log(`Building batch: ${iconsArg}`);
+    const cmd = `pnpm exec rollup -c rollup.batch.config.mjs --environment "ICONS:${iconsArg}"`;
+    // console.log(`Building batch: ${iconsArg}`);
 
     const proc = exec(cmd);
 
