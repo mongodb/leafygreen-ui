@@ -1,5 +1,20 @@
 # @leafygreen-ui/date-picker
 
+## 4.0.5
+
+### Patch Changes
+
+- 56c0d3b: - Updates usages of `bold` weight token to `semiBold`.
+
+  Note: This should have no visual impact since the font-face being used was already semi-bold/600px. It just updates the token used to better align with the font-face and Figma component.
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+  - @leafygreen-ui/select@16.0.3
+
 ## 4.0.4
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @leafygreen-ui/table
 
+## 15.1.0
+
+### Minor Changes
+
+- 34ab9cb: - Patches table header interaction test to scroll in Chromatic snapshots.
+  - Introduces `headerRow` lgId to differentiate it from `header`, which refers specifically to cells in the header row.
+
+### Patch Changes
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+
 ## 15.0.1
 
 ### Patch Changes

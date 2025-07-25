@@ -1,5 +1,20 @@
 # @lg-chat/message-rating
 
+## 4.1.0
+
+### Minor Changes
+
+- cbd09c5: [LG-5376](https://jira.mongodb.org/browse/LG-5376): add variant support for when the parent `LeafyGreenChatProvider` has `variant="compact"`
+
+  Mark `lgMessageRatingStyles`, `lgRadioButtonStyles`, `RadioButton`, and `RadioButtonProps` as `@deprecated`
+
+### Patch Changes
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+
 ## 4.0.3
 
 ### Patch Changes
