@@ -14,20 +14,23 @@ export type MessageSourceType =
 export interface MessageContentProps
   extends Omit<HTMLElementProps<'div'>, 'children'> {
   /**
-   * Determines the rendering method of the message
-   * @default MessageSourceType.Text
+   * Base font size
    */
-  sourceType?: MessageSourceType;
-  /**
-   * Props passed to the internal ReactMarkdown instance
-   */
-  markdownProps?: Omit<LGMarkdownProps, 'children'>;
+  baseFontSize?: BaseFontSize;
+
   /**
    * Rendered children; only string children are supported.
    */
   children: string;
+
   /**
-   * Base font size
+   * Props passed to the internal ReactMarkdown instance
    */
-  baseFontSize?: BaseFontSize;
+  markdownProps?: Omit<LGMarkdownProps, 'children'>;
+
+  /**
+   * Determines the rendering method of the message
+   * @default MessageSourceType.Text
+   */
+  sourceType?: MessageSourceType;
 }

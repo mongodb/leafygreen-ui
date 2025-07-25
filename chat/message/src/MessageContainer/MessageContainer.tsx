@@ -1,9 +1,12 @@
 import React from 'react';
+import {
+  useLeafyGreenChatContext,
+  Variant as ChatVariant,
+} from '@lg-chat/leafygreen-chat-provider';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { baseStyles, variantStyles } from './MessageContainer.styles';
+import { getMessageContainerStyles } from './MessageContainer.styles';
 import { MessageContainerProps } from './MessageContainer.types';
 import { Variant } from '.';
 
@@ -15,9 +18,17 @@ export function MessageContainer({
   ...rest
 }: MessageContainerProps) {
   const { theme } = useDarkMode(darkModeProp);
+  const { variant: chatVariant } = useLeafyGreenChatContext();
+  const isCompact = chatVariant === ChatVariant.Compact;
+
   return (
     <div
-      className={cx(baseStyles, variantStyles[variant][theme], className)}
+      className={getMessageContainerStyles({
+        className,
+        isCompact,
+        theme,
+        variant,
+      })}
       {...rest}
     >
       {children}

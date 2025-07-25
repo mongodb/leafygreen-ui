@@ -1,13 +1,12 @@
 import React from 'react';
 import { RichLinksArea } from '@lg-chat/rich-links';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Subtitle } from '@leafygreen-ui/typography';
 
 import {
-  baseStyles,
-  dividingLineStyles,
+  containerStyles,
+  getDividerStyles,
   linksHeadingStyles,
 } from './MessageLinks.styles';
 import { type MessageLinksProps } from './MessageLinks.types';
@@ -21,9 +20,9 @@ export function MessageLinks({
 }: MessageLinksProps) {
   const { theme } = useDarkMode(darkModeProp);
   return (
-    <div className={cx(baseStyles)} {...divProps}>
-      <hr className={cx(dividingLineStyles[theme])} />
-      <Subtitle className={cx(linksHeadingStyles)}>{headingText}</Subtitle>
+    <div className={containerStyles} {...divProps}>
+      <hr className={getDividerStyles(theme)} />
+      <Subtitle className={linksHeadingStyles}>{headingText}</Subtitle>
       <RichLinksArea links={links} onLinkClick={onLinkClick} />
     </div>
   );

@@ -1,10 +1,12 @@
 export {
+  /** @deprecated */
   lgMessageStyles,
   Message,
   type MessageProps,
   type VerificationInfo,
 } from './Message';
 export {
+  /** @deprecated */
   lgMessageContainerStyles,
   MessageContainer,
   type MessageContainerProps,
