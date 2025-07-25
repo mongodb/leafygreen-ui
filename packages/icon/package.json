@@ -9,7 +9,7 @@
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild.ts",
     "postbuild": "ts-node ./scripts/postbuild.ts",
-    "build": "ts-node ./scripts/build-icons-parallel.ts",
+    "build": "ts-node ./scripts/build-parallel.ts",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
   },

@@ -3,13 +3,16 @@ import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
+/** Gets directory path to generated .tsx files per icon. */
 const iconDir = path.resolve(process.cwd(), 'src/generated');
 
+/** Gets list of icon names based on the generated .tsx files. */
 const iconNames = fs
   .readdirSync(iconDir)
   .filter(f => /\.tsx?$/.test(f))
   .map(f => path.basename(f, path.extname(f)));
 
+/** Splits an array into chunks of a specified size. */
 function chunkArray<T>(arr: Array<T>, size: number): Array<Array<T>> {
   const chunks: Array<Array<T>> = [];
 
@@ -20,32 +23,31 @@ function chunkArray<T>(arr: Array<T>, size: number): Array<Array<T>> {
   return chunks;
 }
 
+/** Uses Rollup to build a batch of icons, given an array of their names. */
 function buildBatch(batch: Array<string>): Promise<void> {
   return new Promise((resolve, reject) => {
-    const iconsArg = batch.join('|');
-    const cmd = `pnpm exec rollup -c rollup.batch.config.mjs --environment "ICONS:${iconsArg}"`;
+    const DELIMITER = '|';
+    const ROLLUP_CONFIG_PATH = 'rollup.batch.config.mjs';
+
+    const iconsArg = batch.join(DELIMITER);
     // console.log(`Building batch: ${iconsArg}`);
 
+    const cmd = `pnpm exec rollup -c ${ROLLUP_CONFIG_PATH} --environment "ICONS:${iconsArg}"`;
     const proc = exec(cmd);
-
-    // proc.stdout?.pipe(process.stdout);
-    // proc.stderr?.pipe(process.stderr);
-
-    proc.on('close', code => {
-      if (code === 0) {
-        resolve();
-      } else {
-        reject(
-          new Error(
-            `Batch build failed for icons: ${iconsArg} with code ${code}`,
+    proc.on('close', code =>
+      code === 0
+        ? resolve()
+        : reject(
+            new Error(
+              `Batch build failed for icons: ${iconsArg} with code ${code}`,
+            ),
           ),
-        );
-      }
-    });
+    );
   });
 }
 
-async function buildAllIconsBatched(batchSize = 10, concurrency = 4) {
+/** Creates async functions to build all icons in batches. */
+async function buildAllIconsBatched(batchSize = 10, numWorkers = 4) {
   const batches = chunkArray(iconNames, batchSize);
   let index = 0;
 
@@ -53,6 +55,7 @@ async function buildAllIconsBatched(batchSize = 10, concurrency = 4) {
     while (index < batches.length) {
       const currentIndex = index;
       index++;
+
       try {
         await buildBatch(batches[currentIndex]);
       } catch (err) {
@@ -62,7 +65,7 @@ async function buildAllIconsBatched(batchSize = 10, concurrency = 4) {
     }
   }
 
-  const workers = Array.from({ length: concurrency }, () => worker());
+  const workers = Array.from({ length: numWorkers }, () => worker());
   await Promise.all(workers);
 
   console.log('All icon batches built successfully');

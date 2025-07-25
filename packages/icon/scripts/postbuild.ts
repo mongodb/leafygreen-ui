@@ -2,9 +2,11 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-// Since the icons are currently bundled together without code-splitting,
-// output each UMD build separately at the dist root to allow consumers
-// to import only the icons they need.
+/**
+ * Since the icons are currently bundled together without code-splitting,
+ * output each UMD build separately at the dist root to allow consumers
+ * to import only the icons they need.
+ */
 async function copyUmdToDist(): Promise<void> {
   const sourceDir = path.resolve(process.cwd(), 'dist/umd');
   const targetDir = path.resolve(process.cwd(), 'dist');
