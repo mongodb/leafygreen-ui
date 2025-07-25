@@ -31,10 +31,22 @@
       "path": "../message-feedback"
     },
     {
+      "path": "../rich-links"
+    },
+    {
+      "path": "../../packages/avatar"
+    },
+    {
+      "path": "../../packages/banner"
+    },
+    {
       "path": "../../packages/emotion"
     },
     {
       "path": "../../packages/hooks"
+    },
+    {
+      "path": "../../packages/leafygreen-provider"
     },
     {
       "path": "../../packages/lib"
@@ -49,13 +61,7 @@
       "path": "../../packages/tokens"
     },
     {
-      "path": "../../packages/leafygreen-provider"
-    },
-    {
-      "path": "../../packages/banner"
-    },
-    {
-      "path": "../rich-links"
+      "path": "../../packages/typography"
     }
   ]
 }
