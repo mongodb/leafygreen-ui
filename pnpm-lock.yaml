@@ -483,6 +483,9 @@ importers:
       '@leafygreen-ui/badge':
         specifier: workspace:^
         version: link:../../packages/badge
+      '@leafygreen-ui/banner':
+        specifier: workspace:^
+        version: link:../../packages/banner
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../../packages/button
@@ -495,6 +498,9 @@ importers:
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../../packages/icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../../packages/icon-button
       '@leafygreen-ui/input-option':
         specifier: workspace:^
         version: link:../../packages/input-option

@@ -1,12 +1,24 @@
 import React from 'react';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import { State } from './shared.types';
 import { InputBar } from '.';
 
 const testText = 'test';
+
+// Mock the ResizeObserver which is used by TextareaAutosize
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
 
 describe('packages/input-bar', () => {
   test('renders `badgeText` when the prop is set', () => {
@@ -95,6 +107,22 @@ describe('packages/input-bar', () => {
         }),
       );
     });
+  });
+
+  test('disables the textarea and send button when `disabled` is true', () => {
+    render(<InputBar disabled />);
+    const textarea = screen.getByRole('textbox');
+    const sendButton = screen.getByRole('button');
+    expect(textarea).toBeDisabled();
+    expect(sendButton).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  test('disables only the send button when `disableSend` is true', () => {
+    render(<InputBar disableSend />);
+    const textarea = screen.getByRole('textbox');
+    const sendButton = screen.getByRole('button');
+    expect(textarea).not.toBeDisabled();
+    expect(sendButton).toHaveAttribute('aria-disabled', 'true');
   });
 
   describe('Hotkey Indicator', () => {
@@ -210,6 +238,90 @@ describe('packages/input-bar', () => {
 
       // The onChange handler should be called when typing
       expect(onTextareaChange).toHaveBeenCalled();
+    });
+  });
+
+  describe('status states', () => {
+    test('renders loading state when state is "loading"', () => {
+      render(
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <InputBar state={State.Loading} />
+        </LeafyGreenChatProvider>,
+      );
+
+      expect(
+        screen.getByText(/MongoDB Assistant is thinking/i),
+      ).toBeInTheDocument();
+    });
+
+    test('renders error state with default message when state is "error" and no message provided', () => {
+      render(
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <InputBar state={State.Error} />
+        </LeafyGreenChatProvider>,
+      );
+
+      expect(
+        screen.getByText(/Oops... Something went wrong/i),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: /retry/i }),
+      ).toBeInTheDocument();
+    });
+
+    test('renders error state with custom message when state is "error" and errorMessage provided', () => {
+      const errorMessage = 'Custom error message';
+      render(
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <InputBar state={State.Error} errorMessage={errorMessage} />
+        </LeafyGreenChatProvider>,
+      );
+
+      expect(screen.getByText(errorMessage)).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: /retry/i }),
+      ).toBeInTheDocument();
+    });
+
+    test('retry button calls onMessageSend', () => {
+      const onMessageSend = jest.fn();
+      const { rerender } = render(
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <InputBar
+            onMessageSend={onMessageSend}
+            textareaProps={{ value: testText }}
+          />
+        </LeafyGreenChatProvider>,
+      );
+
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+      userEvent.click(sendButton);
+      expect(onMessageSend).toHaveBeenCalledWith(
+        testText,
+        expect.objectContaining({
+          type: 'submit',
+        }),
+      );
+
+      rerender(
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <InputBar
+            state={State.Error}
+            onMessageSend={onMessageSend}
+            textareaProps={{ value: testText }}
+          />
+        </LeafyGreenChatProvider>,
+      );
+
+      const retryButton = screen.getByRole('button', { name: /retry/i });
+      userEvent.click(retryButton);
+
+      expect(onMessageSend).toHaveBeenCalledWith(
+        testText,
+        expect.objectContaining({
+          type: 'submit',
+        }),
+      );
     });
   });
 });

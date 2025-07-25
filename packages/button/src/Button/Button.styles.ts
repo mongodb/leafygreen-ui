@@ -13,6 +13,12 @@ import {
 
 import { ButtonProps, Size, Variant } from '../types';
 
+/**
+ * Off-palette value specific to primary button instances
+ * @see TODO: https://jira.mongodb.org/browse/LG-5388
+ */
+export const PRIMARY_BUTTON_INTERACTIVE_GREEN = '#00593F';
+
 const focusSelector = `&:focus-visible, &[data-focus="true"]`;
 const hoverSelector = `&:hover, &[data-hover="true"]`;
 const activeSelector = `&:active, &[data-active="true"]`;
@@ -82,8 +88,8 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       ${hoverSelector},
       ${activeSelector} {
         color: ${palette.white};
-        background-color: #00593f; // Not quite dark3
-        border-color: #00593f; // Not quite dark3
+        background-color: ${PRIMARY_BUTTON_INTERACTIVE_GREEN};
+        border-color: ${PRIMARY_BUTTON_INTERACTIVE_GREEN};
         box-shadow: 0 0 0 3px ${palette.green.light2};
       }
     `,
@@ -188,7 +194,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       ${hoverSelector},
       ${activeSelector} {
         color: ${palette.white};
-        background-color: #00593f; // Off palette
+        background-color: ${PRIMARY_BUTTON_INTERACTIVE_GREEN}; // Off palette
         box-shadow: 0 0 0 3px ${palette.green.dark3};
       }
     `,
@@ -280,7 +286,7 @@ const focusStyle: Record<Theme, Record<Variant, string>> = {
     [Variant.Primary]: css`
       ${focusSelector} {
         color: ${palette.white};
-        background-color: #00593f; // Not quite dark3
+        background-color: ${PRIMARY_BUTTON_INTERACTIVE_GREEN};
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
@@ -318,7 +324,7 @@ const focusStyle: Record<Theme, Record<Variant, string>> = {
     `,
     [Variant.Primary]: css`
       ${focusSelector} {
-        background-color: #00593f; // Off palette
+        background-color: ${PRIMARY_BUTTON_INTERACTIVE_GREEN}; // Off palette
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,

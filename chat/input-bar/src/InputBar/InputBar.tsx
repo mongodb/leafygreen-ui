@@ -16,13 +16,14 @@ import React, {
 } from 'react';
 import flattenChildren from 'react-keyed-flatten-children';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
+import {
+  useLeafyGreenChatContext,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 import isUndefined from 'lodash/isUndefined';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import Badge from '@leafygreen-ui/badge';
-import Button from '@leafygreen-ui/button';
-import { cx } from '@leafygreen-ui/emotion';
 import {
   useAutoScroll,
   useBackdropClick,
@@ -30,59 +31,77 @@ import {
   useDynamicRefs,
   useEventListener,
   useForwardedRef,
+  usePrevious,
 } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { getNodeTextContent, isComponentType } from '@leafygreen-ui/lib';
+import {
+  consoleOnce,
+  getNodeTextContent,
+  isComponentType,
+} from '@leafygreen-ui/lib';
 import { SearchResultsMenu } from '@leafygreen-ui/search-input';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
 import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 
 import {
-  baseHotkeyIndicatorStyles,
-  baseStyles,
-  contentWrapperFocusStyles,
-  contentWrapperStyles,
-  contentWrapperThemeStyles,
-  disabledThemeStyles,
-  focusContainerStyles,
-  focusStyles,
-  getIconFill,
-  gradientAnimationStyles,
-  hotkeyIndicatorFocusedStyles,
-  hotkeyIndicatorUnfocusedStyles,
-  inputStyles,
-  inputThemeStyles,
-  leftContentStyles,
-  rightContentStyles,
-  sendButtonDisabledStyles,
-  themedHotkeyIndicatorStyles,
+  actionContainerStyles,
+  adornmentContainerStyles,
+  getContentWrapperStyles,
+  getFormStyles,
+  getHotkeyIndicatorStyles,
+  getInnerFocusContainerStyles,
+  getTextAreaStyles,
+  outerFocusContainerStyles,
 } from './InputBar.styles';
-import { ReturnIcon } from './ReturnIcon';
-import { InputBarProps } from '.';
+import { type InputBarProps } from './InputBar.types';
+import { InputBarFeedback } from './InputBarFeedback';
+import { InputBarSendButton } from './InputBarSendButton';
+import { State } from './shared.types';
 
 export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
   (
     {
-      className,
-      textareaProps,
-      onMessageSend,
-      onSubmit,
-      shouldRenderHotkeyIndicator = false,
-      shouldRenderGradient: shouldRenderGradientProp = true,
       badgeText,
-      darkMode: darkModeProp,
-      disabled,
-      disableSend,
       children,
+      className,
+      darkMode: darkModeProp,
+      disabled = false,
+      disableSend,
       dropdownFooterSlot,
       dropdownProps,
+      errorMessage,
+      onMessageSend,
+      onSubmit,
+      shouldRenderGradient: shouldRenderGradientProp = true,
+      shouldRenderHotkeyIndicator = false,
+      state,
+      textareaProps,
       ...rest
     }: InputBarProps,
     forwardedRef: ForwardedRef<HTMLFormElement>,
   ) => {
+    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { containerWidth, variant } = useLeafyGreenChatContext();
+    const isCompact = variant === Variant.Compact;
+
+    if (
+      isCompact &&
+      (shouldRenderHotkeyIndicator || shouldRenderGradientProp || badgeText)
+    ) {
+      consoleOnce.warn(
+        `@lg-chat/input-bar: The InputBar component's props 'shouldRenderHotkeyIndicator', 'shouldRenderGradient', and 'badgeText' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
+      );
+    }
+
+    if (!isCompact && (errorMessage || state)) {
+      consoleOnce.warn(
+        `@lg-chat/input-bar: The InputBar component's props 'errorMessage' and 'state' are only used in the 'compact' variant. They will not be rendered in the 'spacious' variant set by the provider.`,
+      );
+    }
+
     const formRef = useForwardedRef(forwardedRef, null);
     const focusContainerRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLUListElement>(null);
@@ -92,6 +111,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     });
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [isOpen, setOpen] = useState(false);
+    const [prevMessageBody, setPrevMessageBody] = useState<string>('');
 
     // Use controlled value hook to handle both controlled and uncontrolled modes
     const {
@@ -104,6 +124,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       textareaProps?.onChange,
       '',
     );
+    const prevState = usePrevious(state);
 
     // The index of the currently highlighted result option
     const [highlightIndex, setHighlightIndex] = useState<number | undefined>(
@@ -113,12 +134,11 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const [shouldRenderButtonText, setShouldRenderButtonText] =
       useState<boolean>(false);
 
-    const { darkMode, theme } = useDarkMode(darkModeProp);
-    const { containerWidth } = useLeafyGreenChatContext();
+    const isSendButtonDisabled = disableSend || disabled || messageBody === '';
     const shouldRenderGradient =
-      shouldRenderGradientProp && isFocused && !disabled;
-    const isSendButtonDisabled = () =>
-      disableSend || disabled || messageBody === '';
+      !isCompact && shouldRenderGradientProp && isFocused && !disabled;
+    const showHotkeyIndicator =
+      !isCompact && shouldRenderHotkeyIndicator && !disabled;
     const withTypeAhead = !isUndefined(children);
 
     /**
@@ -331,15 +351,20 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
       e.preventDefault();
-      if (!isSendButtonDisabled()) {
-        if (onMessageSend && messageBody) {
-          onMessageSend(messageBody, e);
-          if (!isControlled) {
-            updateValue('', textareaRef);
-          }
-        }
-        onSubmit?.(e);
+
+      if (isSendButtonDisabled) {
+        return;
       }
+
+      if (onMessageSend && messageBody) {
+        onMessageSend(messageBody, e);
+        if (!isControlled) {
+          setPrevMessageBody(messageBody);
+          updateValue('', textareaRef);
+        }
+      }
+
+      onSubmit?.(e);
     };
 
     const handleFocus: FocusEventHandler<HTMLTextAreaElement> = _ => {
@@ -374,81 +399,94 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       },
     );
 
+    /**
+     * When the state has changed to an 'error', we reset the cleared message to
+     * the previous message and focus the textarea so the user can retry sending.
+     */
+    useEffect(() => {
+      if (state === prevState || state !== State.Error) {
+        return;
+      }
+
+      if (!isControlled) {
+        updateValue(prevMessageBody, textareaRef);
+        setPrevMessageBody('');
+      }
+
+      textareaRef.current?.focus();
+    }, [state, prevState, isControlled, prevMessageBody, updateValue]);
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <form
-          className={cx(baseStyles, className)}
+          className={getFormStyles(className)}
           onSubmit={handleSubmit}
           ref={formRef}
           {...rest}
         >
-          <div
-            className={cx(focusContainerStyles, {
-              [gradientAnimationStyles]: shouldRenderGradient,
-              [focusStyles]: !shouldRenderGradient && isFocused && !disabled,
-            })}
-            ref={focusContainerRef}
-          >
+          {isCompact && (
+            <InputBarFeedback errorMessage={errorMessage} state={state} />
+          )}
+          <div className={outerFocusContainerStyles}>
             <div
-              className={cx(
-                contentWrapperStyles,
-                contentWrapperThemeStyles[theme],
-                {
-                  [disabledThemeStyles[theme]]: disabled,
-                  [contentWrapperFocusStyles]: isFocused,
-                },
-              )}
+              className={getInnerFocusContainerStyles({
+                disabled,
+                isFocused,
+                shouldRenderGradient,
+              })}
+              ref={focusContainerRef}
             >
-              <div className={leftContentStyles}>
-                <AssistantAvatar darkMode={darkMode} disabled={disabled} />
-                {badgeText && <Badge variant="blue">{badgeText}</Badge>}
-              </div>
-              <TextareaAutosize
-                aria-keyshortcuts="/"
-                placeholder={'Type your message here'}
-                value={messageBody}
-                disabled={disabled}
-                {...(textareaProps ?? {})}
-                className={cx(
-                  inputStyles,
-                  inputThemeStyles[theme],
-                  textareaProps?.className,
-                )}
-                onKeyDown={handleKeyDown}
-                onChange={handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                ref={textareaRef}
-              />
-              <div className={rightContentStyles}>
-                {shouldRenderHotkeyIndicator && !disabled && (
-                  <div
-                    data-testid="lg-chat-hotkey-indicator"
-                    className={cx(
-                      baseHotkeyIndicatorStyles,
-                      themedHotkeyIndicatorStyles[theme],
-                      {
-                        [hotkeyIndicatorFocusedStyles]: isFocused,
-                        [hotkeyIndicatorUnfocusedStyles]: !isFocused,
-                      },
-                    )}
-                  >
-                    /
+              <div
+                className={getContentWrapperStyles({
+                  disabled,
+                  isCompact,
+                  isFocused,
+                  theme,
+                })}
+              >
+                {!isCompact && (
+                  <div className={adornmentContainerStyles}>
+                    <AssistantAvatar darkMode={darkMode} disabled={disabled} />
+                    {badgeText && <Badge variant="blue">{badgeText}</Badge>}
                   </div>
                 )}
-                <Button
-                  size="small"
-                  rightGlyph={
-                    <ReturnIcon fill={getIconFill(theme, disabled)} />
-                  }
-                  type="submit"
-                  disabled={isSendButtonDisabled()}
-                  className={cx({
-                    [sendButtonDisabledStyles]: isSendButtonDisabled(),
+                <TextareaAutosize
+                  aria-keyshortcuts="/"
+                  disabled={disabled}
+                  maxRows={isCompact ? 14 : 8}
+                  placeholder={'Type your message here'}
+                  value={messageBody}
+                  {...(textareaProps ?? {})}
+                  className={getTextAreaStyles({
+                    className: textareaProps?.className,
+                    isCompact,
+                    theme,
                   })}
-                >
-                  {shouldRenderButtonText && 'Enter'}
-                </Button>
+                  onKeyDown={handleKeyDown}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  ref={textareaRef}
+                />
+                <div className={actionContainerStyles}>
+                  {showHotkeyIndicator && (
+                    <div
+                      data-testid="lg-chat-hotkey-indicator"
+                      className={getHotkeyIndicatorStyles({
+                        isFocused,
+                        theme,
+                      })}
+                    >
+                      /
+                    </div>
+                  )}
+                  <InputBarSendButton
+                    disabled={isSendButtonDisabled}
+                    isCompact={isCompact}
+                    shouldRenderButtonText={shouldRenderButtonText}
+                    state={state}
+                  />
+                </div>
               </div>
             </div>
           </div>
