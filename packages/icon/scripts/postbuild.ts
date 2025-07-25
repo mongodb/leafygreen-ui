@@ -7,10 +7,7 @@ import path from 'path';
  * output each UMD build separately at the dist root to allow consumers
  * to import only the icons they need.
  */
-async function copyUmdToDist(): Promise<void> {
-  const sourceDir = path.resolve(process.cwd(), 'dist/umd');
-  const targetDir = path.resolve(process.cwd(), 'dist');
-
+async function copy(sourceDir: string, targetDir: string): Promise<void> {
   try {
     if (!(await fs.pathExists(sourceDir))) {
       console.error(`Source directory does not exist: ${sourceDir}`);
@@ -25,4 +22,7 @@ async function copyUmdToDist(): Promise<void> {
   }
 }
 
-copyUmdToDist();
+const sourceDir = path.resolve(process.cwd(), 'dist/umd');
+const targetDir = path.resolve(process.cwd(), 'dist');
+
+copy(sourceDir, targetDir);

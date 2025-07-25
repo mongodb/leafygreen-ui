@@ -3,7 +3,6 @@ import { esmConfig, umdConfig } from '@lg-tools/build/config/rollup.config.mjs';
 const DELIMITER = '|';
 
 const iconsEnv = process.env.ICONS || '';
-
 const iconNames = iconsEnv.split(DELIMITER);
 
 /** Creates Rollup configurations for each icon. */
