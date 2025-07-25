@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { keyMap } from '@leafygreen-ui/lib';
 
+import { SIZE_GROWTH_KEY_MAPPINGS } from './useResizable.constants';
 import {
   Position,
   ResizableProps,
@@ -13,7 +14,6 @@ import {
   getResizerAriaAttributes,
   getResizerStyles,
 } from './useResizable.utils';
-import { SIZE_GROWTH_KEY_MAPPINGS } from './useResizable.constants';
 
 /**
  * Custom hook to handle resizable functionality for a component.

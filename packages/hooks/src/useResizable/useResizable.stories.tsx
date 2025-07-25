@@ -23,7 +23,7 @@ interface HandleConfig {
   resizerBaseStyles: React.CSSProperties;
 }
 
-const HANDLE_CONFIGS: Record<string, HandleConfig> = {
+const POSITION_CONFIGS: Record<string, HandleConfig> = {
   right: {
     containerStyles: {
       right: 0,
@@ -68,7 +68,7 @@ const HANDLE_CONFIGS: Record<string, HandleConfig> = {
 
 const CreateResizableStory: StoryFn<any> = args => {
   const { position } = args;
-  const config = HANDLE_CONFIGS[position];
+  const config = POSITION_CONFIGS[position];
   const { getResizerProps, size, resizableRef } = useResizable({
     enabled: true,
     initialSize: 300,
