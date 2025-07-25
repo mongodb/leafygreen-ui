@@ -215,6 +215,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       forceParsingProp,
       autoCompleteExtension,
       lineNumbersExtension,
+      readOnlyExtension,
     ]);
 
     if (isLoading) {
