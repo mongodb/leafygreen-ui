@@ -3,8 +3,11 @@ import { Theme } from '@leafygreen-ui/lib';
 import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
 import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
-import { DRAWER_WITH_TOOLBAR_WIDTH, GRID_AREA } from '../constants';
-import { TOOLBAR_WIDTH } from '../constants';
+import {
+  DRAWER_TOOLBAR_WIDTH,
+  DRAWER_WITH_TOOLBAR_WIDTH,
+  GRID_AREA,
+} from '../constants';
 import {
   drawerClassName,
   drawerTransitionDuration,
@@ -17,40 +20,40 @@ const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 const drawerIn = keyframes`
   from {
     // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work when the Drawer is overlay.
-    grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 1px;
   }
   to {
-    grid-template-columns: ${TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px;
   }
 `;
 
 const drawerOut = keyframes`
   from {
-    grid-template-columns: ${TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px;
   }
   to {
-    grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
   }
 `;
 
 const drawerOutMobile = keyframes`
   from {
-    grid-template-columns: ${TOOLBAR_WIDTH}px calc(100vw - ${
-  TOOLBAR_WIDTH * 2
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${
+  DRAWER_TOOLBAR_WIDTH * 2
 }px);
   }
   to {
-    grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
   }
 `;
 
 const drawerInMobile = keyframes`
   from {
-    grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 1px;
   }
   to {
-    grid-template-columns: ${TOOLBAR_WIDTH}px calc(100vw - ${
-  TOOLBAR_WIDTH * 2
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${
+  DRAWER_TOOLBAR_WIDTH * 2
 }px);
   }
 `;
@@ -86,7 +89,7 @@ const closedOverlayStyles = css`
 `;
 
 const openEmbeddedStyles = css`
-  grid-template-columns: ${TOOLBAR_WIDTH}px auto;
+  grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px auto;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     animation-name: ${drawerInMobile};
@@ -125,7 +128,7 @@ const getOverlayShadowStyles = ({ theme }: { theme: Theme }) => css`
 
 const baseStyles = css`
   display: grid;
-  grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
+  grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
   grid-template-areas: '${GRID_AREA.toolbar} ${GRID_AREA.innerDrawer}';
   grid-area: ${GRID_AREA.drawer};
   justify-self: end;

@@ -1,8 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
-import { GRID_AREA } from '../constants';
-import { TOOLBAR_WIDTH } from '../constants';
+import { DRAWER_TOOLBAR_WIDTH, GRID_AREA } from '../constants';
 import { MOBILE_BREAKPOINT } from '../Drawer';
 import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
@@ -35,7 +34,7 @@ const withoutToolbarOpenStyles = css`
 `;
 
 const withToolbarBaseStyles = css`
-  grid-template-columns: auto ${TOOLBAR_WIDTH}px;
+  grid-template-columns: auto ${DRAWER_TOOLBAR_WIDTH}px;
   grid-template-areas: '${GRID_AREA.content} ${GRID_AREA.drawer}';
 `;
 
@@ -44,7 +43,7 @@ const withToolbarOpenStyles = css`
   grid-template-columns: 1fr auto;
 
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
-    grid-template-columns: auto ${TOOLBAR_WIDTH}px;
+    grid-template-columns: auto ${DRAWER_TOOLBAR_WIDTH}px;
   }
 `;
 

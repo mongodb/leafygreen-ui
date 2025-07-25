@@ -1,5 +1,4 @@
 import { TOOLBAR_WIDTH } from '@leafygreen-ui/toolbar';
-export { TOOLBAR_WIDTH } from '@leafygreen-ui/toolbar';
 
 export const GRID_AREA = {
   drawer: 'drawer',
@@ -8,5 +7,6 @@ export const GRID_AREA = {
   innerDrawer: 'inner-drawer',
 };
 
+export const DRAWER_TOOLBAR_WIDTH = TOOLBAR_WIDTH;
 export const DRAWER_WIDTH = 432;
 export const DRAWER_WITH_TOOLBAR_WIDTH = DRAWER_WIDTH - TOOLBAR_WIDTH;
