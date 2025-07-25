@@ -1,4 +1,4 @@
-import { type EditorView } from '@uiw/react-codemirror';
+import { type EditorView } from '@codemirror/view';
 
 import { Theme } from '@leafygreen-ui/lib';
 import {

@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Compartment, type Extension } from '@codemirror/state';
 import { type EditorView } from 'codemirror';
 
+// TODO: Load state sync
+
 /**
  * Hook for managing a dynamic CodeMirror extensions using a Compartment.
  * This hook simplifies using extensions that need to change based on props

@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { type Diagnostic } from '@codemirror/lint';
-import { type EditorView } from '@uiw/react-codemirror';
+import { type EditorView } from '@codemirror/view';
 
 import { type CodeEditorTooltip } from '../../CodeEditor.types';
 

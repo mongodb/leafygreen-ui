@@ -2,7 +2,7 @@ import { type EditorView } from '@codemirror/view';
 
 import { useExtension } from './useExtension';
 
-export function useLineNumberExtension(
+export function useLineNumbersExtension(
   view: EditorView | null,
   enableLineWrapping: boolean,
   module?: typeof import('@codemirror/view'),

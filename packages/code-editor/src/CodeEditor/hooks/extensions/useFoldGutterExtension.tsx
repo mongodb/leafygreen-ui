@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { type EditorView } from '@uiw/react-codemirror';
+import { type EditorView } from '@codemirror/view';
 
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';

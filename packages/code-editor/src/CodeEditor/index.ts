@@ -5,7 +5,6 @@ export {
   type CodeEditorTooltip,
   CodeEditorTooltipSeverity,
   type CodeMirrorExtension,
-  type CodeMirrorRef,
   type CodeMirrorState,
   type CodeMirrorView,
   IndentUnits,

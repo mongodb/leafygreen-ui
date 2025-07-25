@@ -1,4 +1,4 @@
-import { EditorState, type EditorView } from '@uiw/react-codemirror';
+import { type EditorView } from '@codemirror/view';
 
 import { type CodeEditorProps, IndentUnits } from '../../CodeEditor.types';
 
@@ -9,6 +9,7 @@ export function useIndentExtension(
   unit: CodeEditorProps['indentUnit'],
   size: CodeEditorProps['indentSize'],
   module?: typeof import('@codemirror/language'),
+  stateModule?: typeof import('@codemirror/state'),
 ) {
   return useExtension(
     view || null,
@@ -16,13 +17,14 @@ export function useIndentExtension(
       unit,
       size,
       module,
+      stateModule,
     },
     /**
      * Size is given a default because if unit is set and size is not, some size
      * is required.
      */
-    ({ unit, size = 2, module }) => {
-      if (!module || !module.indentUnit || unit === undefined) {
+    ({ unit, size = 2, module, stateModule }) => {
+      if (!module || unit === undefined || !stateModule) {
         return [];
       }
 
@@ -34,7 +36,10 @@ export function useIndentExtension(
         indentString = ' '.repeat(size);
       }
 
-      return [module.indentUnit.of(indentString), EditorState.tabSize.of(size)];
+      return [
+        module.indentUnit.of(indentString),
+        stateModule.EditorState.tabSize.of(size),
+      ];
     },
   );
 }

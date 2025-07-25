@@ -8,20 +8,20 @@ import {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { useAutoCompleteExtension } from './hooks/extensions/useAutoCompleteExtension';
-import { useLineNumberExtension } from './hooks/extensions/useLineNumbersExtension';
-import { useReadOnlyExtension } from './hooks/extensions/useReadOnlyExtension';
 import { getEditorStyles } from './CodeEditor.styles';
 import { type CodeEditorProps, IndentUnits } from './CodeEditor.types';
 import {
+  useAutoCompleteExtension,
   useFoldGutterExtension,
   useHighlightExtension,
   useHyperLinkExtension,
   useIndentExtension,
   useLanguageExtension,
   useLazyModules,
+  useLineNumbersExtension,
   useLineWrapExtension,
   useModuleLoaders,
+  useReadOnlyExtension,
   useThemeExtension,
   useTooltipExtension,
 } from './hooks';
@@ -78,7 +78,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       modules?.['@codemirror/view'],
     );
 
-    const lineNumbersExtension = useLineNumberExtension(
+    const lineNumbersExtension = useLineNumbersExtension(
       editorViewRef.current,
       enableLineNumbers,
       modules?.['@codemirror/view'],
@@ -89,6 +89,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       indentUnit,
       indentSize,
       modules?.['@codemirror/language'],
+      modules?.['@codemirror/state'],
     );
 
     const foldGutterExtension = useFoldGutterExtension(

@@ -64,25 +64,24 @@ console.log(greet('MongoDB user'));`;
 
 ## Types and Variables
 
-| Name                         | Description                                                                                                                                                                                               |
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `CodeEditorProps`            | Props that can be passed to the `CodeEditor` component.                                                                                                                                                   |
-| `CodeEditorSelectors`        | Enum-like map of CSS selectors for common elements that make up the code editor. These can be useful in testing.                                                                                          |
-| `CodeEditorTooltip`          | Describes a tooltip to be displayed on hover                                                                                                                                                              |
-| `CodeEditorTooltip.column`   | Optional number. Which character, going from left to right, the tooltip should be rendered. 1 based. Defaults to 1.                                                                                       |
-| `CodeEditorTooltip.content`  | ReactNode. What gets rendered in the tooltip.                                                                                                                                                             |
-| `CodeEditorTooltip.length`   | Number. The length the text that the tooltip should cover in characters.                                                                                                                                  |
-| `CodeEditorTooltip.line`     | Number. Which line in the document the tooltip should be rendered. 1 based.                                                                                                                               |
-| `CodeEditorTooltip.severity` | Optional `CodeEditorTooltipSeverity` level. Defaults to 'info'.                                                                                                                                           |
-| `CodeEditorTooltipSeverity`  | Possible severity levels a `CodeEditorTooltip` can have.                                                                                                                                                  |
-| `CodeMirrorExtension`        | Underlying CodeMirror editor `Extension` type. For more information see https://codemirror.net/docs/ref/#state.Extension.                                                                                 |
-| `CodeMirrorRef`              | Underlying CodeMirror editor ref type. When a ref is passed to the `CodeEditor` it will be of this type and give you direct access to CodeMirror internals such as `CodeMirrorState` and `CodeMirrorView` |
-| `CodeMirrorState`            | Underlying CodeMirror editor `EditorState` type. For more information see https://codemirror.net/docs/ref/#state.EditorState.                                                                             |
-| `CodeMirrorView`             | Underlying CodeMirror editor `EditorView` type. For more information see https://codemirror.net/docs/ref/#view.EditorView.                                                                                |
-| `IndentUnits`                | Unit options that can be set via the `indentUnit` prop of `CodeEditor`.                                                                                                                                   |
-| `LanguageName`               | Record of all supported languages.                                                                                                                                                                        |
-| `RenderedTestEditorType`     | Editor type used to interact with editor in a Jest test. More info in Test Utilities section.                                                                                                             |
-| `RenderedTestResult`         | Type returned by the `renderEditor` test utility. More info in Test Utilities section.                                                                                                                    |
+| Name                         | Description                                                                                                                   |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `CodeEditorProps`            | Props that can be passed to the `CodeEditor` component.                                                                       |
+| `CodeEditorSelectors`        | Enum-like map of CSS selectors for common elements that make up the code editor. These can be useful in testing.              |
+| `CodeEditorTooltip`          | Describes a tooltip to be displayed on hover                                                                                  |
+| `CodeEditorTooltip.column`   | Optional number. Which character, going from left to right, the tooltip should be rendered. 1 based. Defaults to 1.           |
+| `CodeEditorTooltip.content`  | ReactNode. What gets rendered in the tooltip.                                                                                 |
+| `CodeEditorTooltip.length`   | Number. The length the text that the tooltip should cover in characters.                                                      |
+| `CodeEditorTooltip.line`     | Number. Which line in the document the tooltip should be rendered. 1 based.                                                   |
+| `CodeEditorTooltip.severity` | Optional `CodeEditorTooltipSeverity` level. Defaults to 'info'.                                                               |
+| `CodeEditorTooltipSeverity`  | Possible severity levels a `CodeEditorTooltip` can have.                                                                      |
+| `CodeMirrorExtension`        | Underlying CodeMirror editor `Extension` type. For more information see https://codemirror.net/docs/ref/#state.Extension.     |
+| `CodeMirrorState`            | Underlying CodeMirror editor `EditorState` type. For more information see https://codemirror.net/docs/ref/#state.EditorState. |
+| `CodeMirrorView`             | Underlying CodeMirror editor `EditorView` type. For more information see https://codemirror.net/docs/ref/#view.EditorView.    |
+| `IndentUnits`                | Unit options that can be set via the `indentUnit` prop of `CodeEditor`.                                                       |
+| `LanguageName`               | Record of all supported languages.                                                                                            |
+| `RenderedTestEditorType`     | Editor type used to interact with editor in a Jest test. More info in Test Utilities section.                                 |
+| `RenderedTestResult`         | Type returned by the `renderEditor` test utility. More info in Test Utilities section.                                        |
 
 ## Test Utlities
 

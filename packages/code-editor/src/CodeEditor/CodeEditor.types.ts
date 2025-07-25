@@ -1,10 +1,6 @@
 import { type ReactNode } from 'react';
-import type {
-  EditorState,
-  EditorView,
-  Extension,
-  ReactCodeMirrorRef,
-} from '@uiw/react-codemirror';
+import { type EditorState, type Extension } from '@codemirror/state';
+import { type EditorView } from '@codemirror/view';
 
 import { type DarkModeProps } from '@leafygreen-ui/lib';
 
@@ -16,13 +12,6 @@ import { type LanguageName } from './hooks/extensions/useLanguageExtension';
  * @see {@link https://codemirror.net/docs/ref/#state.Extension}
  */
 export type CodeMirrorExtension = Extension;
-
-/**
- * Re-export of CodeMirror's {@link ReactCodeMirrorRef} type.
- * Provides access to the editor instance through React refs.
- * @see {@link https://uiwjs.github.io/react-codemirror/#/basic}
- */
-export type CodeMirrorRef = ReactCodeMirrorRef;
 
 /**
  * Re-export of CodeMirror's {@link EditorState} type.
