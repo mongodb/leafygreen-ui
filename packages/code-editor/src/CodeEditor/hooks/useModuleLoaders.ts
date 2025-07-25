@@ -23,6 +23,9 @@ interface CodeEditorModules {
   '@codemirror/legacy-modes/mode/ruby': typeof import('@codemirror/legacy-modes/mode/ruby');
   '@codemirror/lang-rust': typeof import('@codemirror/lang-rust');
   '@lezer/highlight': typeof import('@lezer/highlight');
+  codemirror: typeof import('codemirror');
+  '@codemirror/view': typeof import('@codemirror/view');
+  '@codemirror/state': typeof import('@codemirror/state');
 }
 
 export const useModuleLoaders = ({
@@ -34,7 +37,11 @@ export const useModuleLoaders = ({
   language,
 }: CodeEditorProps) => {
   const loaders = useMemo(() => {
-    const neededLoaders: Partial<LoadersMap<CodeEditorModules>> = {};
+    const neededLoaders: Partial<LoadersMap<CodeEditorModules>> = {
+      codemirror: () => import('codemirror'),
+      '@codemirror/view': () => import('@codemirror/view'),
+      '@codemirror/state': () => import('@codemirror/state'),
+    };
 
     if (enableClickableUrls) {
       neededLoaders['@uiw/codemirror-extensions-hyper-link'] = () =>

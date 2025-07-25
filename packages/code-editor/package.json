@@ -40,6 +40,8 @@
     "@codemirror/language": "^6.11.0",
     "@codemirror/legacy-modes": "^6.5.1",
     "@codemirror/lint": "^6.8.5",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.1",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
@@ -50,7 +52,8 @@
     "@lezer/highlight": "^1.2.1",
     "@replit/codemirror-lang-csharp": "^6.2.0",
     "@uiw/codemirror-extensions-hyper-link": "^4.23.12",
-    "@uiw/react-codemirror": "^4.23.10"
+    "@uiw/react-codemirror": "^4.23.10",
+    "codemirror": "^6.0.2"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",

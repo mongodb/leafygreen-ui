@@ -1,5 +1,11 @@
-import React, { forwardRef, useCallback, useRef, useState } from 'react';
-import CodeMirror, { type EditorView, Prec } from '@uiw/react-codemirror';
+import React, {
+  forwardRef,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
+// import CodeMirror, { type EditorView, Prec } from '@uiw/react-codemirror';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
@@ -26,8 +32,9 @@ import {
   useThemeExtension,
   useTooltipExtension,
 } from './hooks';
+import { type EditorView } from 'codemirror';
 
-export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
+export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
   (props, forwardedRef) => {
     const {
       defaultValue,
@@ -57,111 +64,146 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
 
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useBaseFontSize();
-    const [value, setValue] = useState(defaultValue || '');
-    const editorRef = useRef<CodeMirrorRef>(null);
-    const ref = useMergeRefs([editorRef, forwardedRef]);
+    // const [value, setValue] = useState(defaultValue || '');
+    // // const editorRef = useRef<CodeMirrorRef>(null);
+    const editorContainerRef = useRef<HTMLDivElement | null>(null);
+    const editorViewRef = useRef<EditorView | null>(null);
+    // const ref = useMergeRefs([editorRef, forwardedRef]);
 
     const moduleLoaders = useModuleLoaders(props);
     const { isLoading, modules } = useLazyModules(moduleLoaders);
-    const editorView = editorRef.current?.view || null;
+    // const editorView = editorRef.current?.view || null;
 
     const hyperLinkExtension = useHyperLinkExtension(
-      editorView,
+      editorViewRef.current,
       enableClickableUrls,
       modules?.['@uiw/codemirror-extensions-hyper-link'],
     );
 
     const lineWrapExtension = useLineWrapExtension(
-      editorView,
+      editorViewRef.current,
       enableLineWrapping,
     );
 
     const indentExtension = useIndentExtension(
-      editorView,
+      editorViewRef.current,
       indentUnit,
       indentSize,
       modules?.['@codemirror/language'],
     );
 
     const foldGutterExtension = useFoldGutterExtension(
-      editorView,
+      editorViewRef.current,
       enableCodeFolding,
       modules?.['@codemirror/language'],
     );
 
     const tooltipExtension = useTooltipExtension(
-      editorView,
+      editorViewRef.current,
       tooltips,
       modules?.['@codemirror/lint'],
     );
 
     const languageExtension = useLanguageExtension(
-      editorView,
+      editorViewRef.current,
       language,
       modules,
     );
 
     const highlightExtension = useHighlightExtension(
-      editorView,
+      editorViewRef.current,
       theme,
       language,
       modules,
     );
 
-    const themeExtension = useThemeExtension(editorView, theme, baseFontSize);
-
-    const onCreateEditor = useCallback(
-      (editorView: EditorView) => {
-        if (forceParsingProp) {
-          const { state } = editorView;
-          const forceParsing = modules?.['@codemirror/language']?.forceParsing;
-
-          if (forceParsing && state.doc.length > 0) {
-            forceParsing(editorView, state.doc.length, 150);
-          }
-        }
-      },
-      [forceParsingProp, modules],
+    const themeExtension = useThemeExtension(
+      editorViewRef.current,
+      theme,
+      baseFontSize,
+      modules?.['@codemirror/view'],
     );
 
-    const onChange = useCallback(
-      (val: string) => {
-        setValue(val);
+    // const onCreateEditor = useCallback(
+    //   (editorView: EditorView) => {
+    //     if (forceParsingProp) {
+    //       const { state } = editorView;
+    //       const forceParsing = modules?.['@codemirror/language']?.forceParsing;
 
-        if (onChangeProp) {
-          onChangeProp(val);
-        }
-      },
-      [onChangeProp],
-    );
+    //       if (forceParsing && state.doc.length > 0) {
+    //         forceParsing(editorView, state.doc.length, 150);
+    //       }
+    //     }
+    //   },
+    //   [forceParsingProp, modules],
+    // );
+
+    // const onChange = useCallback(
+    //   (val: string) => {
+    //     setValue(val);
+
+    //     if (onChangeProp) {
+    //       onChangeProp(val);
+    //     }
+    //   },
+    //   [onChangeProp],
+    // );
+
+    useLayoutEffect(() => {
+      const basicSetup = modules?.['codemirror']?.basicSetup;
+      const EditorView = modules?.['@codemirror/view']?.EditorView;
+      const Prec = modules?.['@codemirror/state']?.Prec;
+
+      if (!editorContainerRef?.current || !EditorView || !Prec || !basicSetup) {
+        return;
+      }
+
+      const domNode = editorContainerRef.current;
+
+      console.log(languageExtension);
+
+      const editor = (editorViewRef.current = new EditorView({
+        doc: defaultValue || '',
+        parent: domNode,
+        extensions: [
+          ...consumerExtensions.map(extension => Prec.highest(extension)),
+          basicSetup,
+          languageExtension,
+          lineWrapExtension,
+          hyperLinkExtension,
+          indentExtension,
+          foldGutterExtension,
+          tooltipExtension,
+          themeExtension,
+          highlightExtension,
+        ],
+      }));
+
+      return () => {
+        delete (domNode as any)._cm;
+        editor.destroy();
+      };
+    }, [
+      consumerExtensions,
+      defaultValue,
+      languageExtension,
+      lineWrapExtension,
+      hyperLinkExtension,
+      indentExtension,
+      foldGutterExtension,
+      tooltipExtension,
+      themeExtension,
+      highlightExtension,
+      modules,
+    ]);
 
     if (isLoading) {
-      return (
-        <div
-          className={cx(
-            getEditorStyles({
-              width,
-              minWidth,
-              maxWidth,
-              height,
-              minHeight,
-              maxHeight,
-            }),
-            className,
-          )}
-        >
-          Loading...
-        </div>
-      );
+      return <div>Loading...</div>;
     }
 
     return (
-      <CodeMirror
-        value={value}
-        onChange={onChange}
-        onCreateEditor={onCreateEditor}
-        readOnly={readOnly}
-        placeholder={placeholder}
+      <div
+        ref={editorContainerRef}
         className={cx(
           getEditorStyles({
             width,
@@ -171,34 +213,56 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
             minHeight,
             maxHeight,
           }),
-          className, // class styles override inline styles
+          className,
         )}
-        /**
-         * `theme` prop is used instead of just adding these to extensions
-         * list because it automates updating on theme change.
-         */
-        theme={[themeExtension, highlightExtension]}
-        extensions={[
-          ...consumerExtensions.map(extension => Prec.highest(extension)),
-          // ...customExtensions,
-          languageExtension,
-          lineWrapExtension,
-          hyperLinkExtension,
-          indentExtension,
-          foldGutterExtension,
-          tooltipExtension,
-        ]}
-        basicSetup={{
-          allowMultipleSelections: true,
-          foldGutter: false, // Custom fold gutter is used instead
-          highlightActiveLine: false,
-          highlightActiveLineGutter: false,
-          lineNumbers: enableLineNumbers,
-        }}
-        ref={ref}
         {...rest}
       />
     );
+
+    // return (
+    //   <CodeMirror
+    //     value={value}
+    //     onChange={onChange}
+    //     onCreateEditor={onCreateEditor}
+    //     readOnly={readOnly}
+    //     placeholder={placeholder}
+    //     className={cx(
+    //       getEditorStyles({
+    //         width,
+    //         minWidth,
+    //         maxWidth,
+    //         height,
+    //         minHeight,
+    //         maxHeight,
+    //       }),
+    //       className, // class styles override inline styles
+    //     )}
+    //     /**
+    //      * `theme` prop is used instead of just adding these to extensions
+    //      * list because it automates updating on theme change.
+    //      */
+    //     theme={[themeExtension, highlightExtension]}
+    //     extensions={[
+    //       ...consumerExtensions.map(extension => Prec.highest(extension)),
+    //       // ...customExtensions,
+    //       languageExtension,
+    //       lineWrapExtension,
+    //       hyperLinkExtension,
+    //       indentExtension,
+    //       foldGutterExtension,
+    //       tooltipExtension,
+    //     ]}
+    //     basicSetup={{
+    //       allowMultipleSelections: true,
+    //       foldGutter: false, // Custom fold gutter is used instead
+    //       highlightActiveLine: false,
+    //       highlightActiveLineGutter: false,
+    //       lineNumbers: enableLineNumbers,
+    //     }}
+    //     ref={ref}
+    //     {...rest}
+    //   />
+    // );
   },
 );
 
