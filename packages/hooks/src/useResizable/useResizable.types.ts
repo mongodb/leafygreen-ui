@@ -1,0 +1,91 @@
+export const Position = {
+  Left: 'left',
+  Right: 'right',
+  Top: 'top',
+  Bottom: 'bottom',
+} as const;
+
+export type Position = (typeof Position)[keyof typeof Position];
+
+export const SizeGrowth = {
+  Increase: 'increase',
+  Decrease: 'decrease',
+} as const;
+
+export type SizeGrowth = (typeof SizeGrowth)[keyof typeof SizeGrowth];
+
+export interface ResizableProps {
+  /**
+   * Whether the resizable feature is enabled.
+   * @default false
+   */
+  enabled?: boolean;
+
+  /**
+   * The initial size of the resizable element.
+   */
+  initialSize: number;
+
+  /**
+   * The minimum size the resizable element can be resized to.
+   */
+  minSize: number;
+
+  /**
+   * The maximum size the resizable element can be resized to.
+   */
+  maxSize: number;
+
+  /**
+   * Callback function that is called when the resizable element is resized.
+   * This can be used to perform any actions based on the new size.
+   */
+  onResize?: (size: number) => void;
+
+  /**
+   * The percentage of the viewport that the resizable element should occupy at maximum.
+   * This can be used to ensure the element does not exceed a certain size relative to the viewport.
+   * This percentage-based maximum will override the maxSize prop if the calculated pixel value is smaller.
+   */
+  maxViewportPercentages: number;
+
+  /**
+   * The position of the element to which the resizer handle is attached.
+   */
+  position: Position;
+}
+
+export interface ResizerProps {
+  onMouseDown: (e: React.MouseEvent | MouseEvent) => void;
+  tabIndex: number;
+  onFocus: () => void;
+  onBlur: () => void;
+  className?: string;
+}
+
+export interface ResizableReturn<T extends HTMLElement = HTMLElement> {
+  /**
+   * The current size of the resizable element.
+   */
+  size: number;
+
+  /**
+   * Function to set the size of the resizable element.
+   */
+  setSize: React.Dispatch<React.SetStateAction<number>>;
+
+  /**
+   * Boolean indicating whether the resizable element is currently being resized.
+   */
+  isResizing: boolean;
+
+  /**
+   * A function that returns the props needed to be spread onto the resizer element.
+   */
+  getResizerProps: () => ResizerProps | undefined;
+
+  /**
+   * A ref to the resizable element that can be used to attach the resizer functionality.
+   */
+  resizableRef: React.RefObject<T>;
+}

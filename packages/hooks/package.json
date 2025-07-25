@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "lodash": "^4.17.21"
   },

@@ -16,6 +16,7 @@ export { default as useMutationObserver } from './useMutationObserver';
 export { default as useObjectDependency } from './useObjectDependency';
 export { default as usePoller } from './usePoller';
 export { default as usePrevious } from './usePrevious';
+export { Position, useResizable } from './useResizable/';
 export { default as useSsrCheck } from './useSsrCheck';
 export { useStateRef } from './useStateRef';
 export { default as useValidation } from './useValidation';
