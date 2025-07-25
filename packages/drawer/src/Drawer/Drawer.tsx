@@ -168,16 +168,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       position: Position.Right,
     });
 
-    // Create merged ref after resizableRef is defined
-    const refsToMerge = [fwdRef, ref];
-
-    // Use a conditional to ensure resizableRef is only included when it's needed
-    if (isEmbedded && resizable) {
-      refsToMerge.push(resizableRef);
-    }
-
-    const drawerRef = useMergeRefs(refsToMerge);
     const resizerProps = getResizerProps();
+
+    const refsToMerge = [fwdRef, ref, resizableRef];
+    const drawerRef = useMergeRefs(refsToMerge);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
