@@ -1,8 +1,8 @@
-import { EditorView } from '@uiw/react-codemirror';
+import { type EditorView } from '@codemirror/view';
 
 import { useExtension } from './useExtension';
 
-export function useLineWrapExtension(
+export function useLineNumberExtension(
   view: EditorView | null,
   enableLineWrapping: boolean,
   module?: typeof import('@codemirror/view'),
@@ -13,7 +13,6 @@ export function useLineWrapExtension(
       enable: enableLineWrapping,
       module,
     },
-    ({ enable, module }) =>
-      enable && module ? module.EditorView.lineWrapping : [],
+    ({ enable, module }) => (enable && module ? module.lineNumbers() : []),
   );
 }
