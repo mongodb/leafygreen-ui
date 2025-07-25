@@ -6,8 +6,8 @@ import { DisplayMode } from '../Drawer/Drawer.types';
 import { DrawerToolbarLayout } from '../DrawerToolbarLayout';
 import { LayoutComponent } from '../LayoutComponent';
 
+import { DrawerLayoutProvider } from './DrawerLayoutContext/DrawerLayoutContext';
 import { DrawerLayoutProps } from './DrawerLayout.types';
-import { DrawerLayoutProvider } from './DrawerLayoutContext';
 
 /**
  * `DrawerLayout` is a component that provides a flexible layout for displaying content in a drawer.

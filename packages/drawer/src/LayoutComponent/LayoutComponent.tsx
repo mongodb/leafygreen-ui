@@ -19,19 +19,11 @@ import { LayoutComponentProps } from './LayoutComponent.types';
  */
 export const LayoutComponent = forwardRef<HTMLDivElement, LayoutComponentProps>(
   (
-    {
-      children,
-      darkMode: darkModeProp,
-      drawer,
-      isDrawerOpen: isDrawerOpenProp,
-      ...rest
-    }: LayoutComponentProps,
+    { children, darkMode: darkModeProp, drawer, ...rest }: LayoutComponentProps,
     forwardRef,
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
-    const { isDrawerOpen: isDrawerOpenContextProp, displayMode } =
-      useDrawerLayoutContext();
-    const isDrawerOpen = isDrawerOpenProp ?? isDrawerOpenContextProp;
+    const { displayMode } = useDrawerLayoutContext();
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -41,11 +33,7 @@ export const LayoutComponent = forwardRef<HTMLDivElement, LayoutComponentProps>(
             {drawer}
           </OverlayDrawerLayout>
         ) : (
-          <EmbeddedDrawerLayout
-            ref={forwardRef}
-            isDrawerOpen={isDrawerOpen}
-            {...rest}
-          >
+          <EmbeddedDrawerLayout ref={forwardRef} {...rest}>
             {children}
             {drawer}
           </EmbeddedDrawerLayout>

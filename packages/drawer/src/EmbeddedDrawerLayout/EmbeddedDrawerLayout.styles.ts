@@ -7,7 +7,7 @@ import {
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
 } from '../constants';
-import { MOBILE_BREAKPOINT } from '../Drawer';
+import { MOBILE_BREAKPOINT } from '../Drawer/Drawer.constants';
 
 const baseStyles = css`
   width: 100%;
@@ -57,7 +57,7 @@ export const getEmbeddedDrawerLayoutStyles = ({
   hasToolbar = false,
 }: {
   className?: string;
-  isDrawerOpen: boolean;
+  isDrawerOpen?: boolean;
   hasToolbar?: boolean;
 }) =>
   cx(

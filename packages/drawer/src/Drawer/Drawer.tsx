@@ -22,7 +22,7 @@ import {
   DRAWER_WITH_TOOLBAR_WIDTH,
   TRANSITION_DURATION,
 } from '../constants';
-import { useDrawerLayoutContext } from '../DrawerLayout/DrawerLayoutContext';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
 

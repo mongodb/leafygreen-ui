@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 
@@ -38,7 +38,11 @@ export const DrawerToolbarLayoutContainer = forwardRef<
     const { openDrawer, closeDrawer, getActiveDrawerContent, isDrawerOpen } =
       useDrawerToolbarContext();
     const { id, title, content } = getActiveDrawerContent() || {};
-    const { onClose, displayMode } = useDrawerLayoutContext();
+    const { onClose, displayMode, setIsDrawerOpen } = useDrawerLayoutContext();
+
+    useEffect(() => {
+      setIsDrawerOpen(isDrawerOpen);
+    }, [isDrawerOpen, setIsDrawerOpen]);
 
     const lgIds = getLgIds(dataLgId);
 
@@ -57,9 +61,9 @@ export const DrawerToolbarLayoutContainer = forwardRef<
     };
 
     return (
-      <LayoutComponent {...rest} ref={forwardRef} isDrawerOpen={isDrawerOpen}>
+      <LayoutComponent {...rest} ref={forwardRef}>
         <div className={contentStyles}>{children}</div>
-        <DrawerWithToolbarWrapper isDrawerOpen={isDrawerOpen}>
+        <DrawerWithToolbarWrapper>
           <Toolbar data-lgid={lgIds.toolbar} data-testid={lgIds.toolbar}>
             {toolbarData?.map(toolbarItem => (
               <ToolbarIconButton

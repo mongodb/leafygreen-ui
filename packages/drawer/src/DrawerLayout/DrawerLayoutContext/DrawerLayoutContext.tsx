@@ -1,14 +1,16 @@
-import React, { createContext, PropsWithChildren, useContext } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+} from 'react';
 
-import { DisplayMode, DrawerProps } from '../Drawer/Drawer.types';
+import { DisplayMode } from '../../Drawer/Drawer.types';
 
-export interface DrawerLayoutContextType {
-  isDrawerOpen?: boolean;
-  resizable?: boolean;
-  displayMode?: DrawerProps['displayMode'];
-  onClose?: DrawerProps['onClose'];
-  hasToolbar?: boolean;
-}
+import {
+  DrawerLayoutContextType,
+  DrawerLayoutProviderProps,
+} from './DrawerLayoutContext.types';
 
 export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
   resizable: false,
@@ -16,6 +18,7 @@ export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
   displayMode: DisplayMode.Overlay,
   onClose: undefined,
   hasToolbar: false,
+  setIsDrawerOpen: () => {},
 });
 
 /**
@@ -24,18 +27,25 @@ export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
  */
 export const DrawerLayoutProvider = ({
   children,
-  isDrawerOpen,
+  isDrawerOpen: isDrawerOpenProp,
   resizable,
   displayMode,
   onClose,
   hasToolbar,
-}: PropsWithChildren<DrawerLayoutContextType>) => {
+}: PropsWithChildren<DrawerLayoutProviderProps>) => {
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(isDrawerOpenProp);
+
+  useEffect(() => {
+    setIsDrawerOpen(isDrawerOpenProp);
+  }, [isDrawerOpenProp]);
+
   const value = {
     resizable,
     isDrawerOpen,
     displayMode,
     onClose,
     hasToolbar,
+    setIsDrawerOpen,
   };
 
   return (

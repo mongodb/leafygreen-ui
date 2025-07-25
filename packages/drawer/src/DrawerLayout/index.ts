@@ -3,4 +3,4 @@ export type { DrawerLayoutProps } from './DrawerLayout.types';
 export {
   DrawerLayoutProvider,
   useDrawerLayoutContext,
-} from './DrawerLayoutContext';
+} from './DrawerLayoutContext/DrawerLayoutContext';

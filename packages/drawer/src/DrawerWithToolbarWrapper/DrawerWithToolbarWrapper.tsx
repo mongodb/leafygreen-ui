@@ -17,34 +17,29 @@ import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types'
 export const DrawerWithToolbarWrapper = forwardRef<
   HTMLDivElement,
   DrawerWithToolbarWrapperProps
->(
-  (
-    { children, className, isDrawerOpen }: DrawerWithToolbarWrapperProps,
-    forwardedRef,
-  ) => {
-    const { theme } = useDarkMode();
-    const [shouldAnimate, setShouldAnimate] = useState(false);
-    const { displayMode } = useDrawerLayoutContext();
+>(({ children, className }: DrawerWithToolbarWrapperProps, forwardedRef) => {
+  const { theme } = useDarkMode();
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const { displayMode, isDrawerOpen } = useDrawerLayoutContext();
 
-    useEffect(() => {
-      if (isDrawerOpen) setShouldAnimate(true);
-    }, [isDrawerOpen]);
+  useEffect(() => {
+    if (isDrawerOpen) setShouldAnimate(true);
+  }, [isDrawerOpen]);
 
-    return (
-      <div
-        ref={forwardedRef}
-        className={getDrawerWithToolbarWrapperStyles({
-          className,
-          isDrawerOpen,
-          shouldAnimate,
-          displayMode,
-          theme,
-        })}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+  return (
+    <div
+      ref={forwardedRef}
+      className={getDrawerWithToolbarWrapperStyles({
+        className,
+        isDrawerOpen,
+        shouldAnimate,
+        displayMode,
+        theme,
+      })}
+    >
+      {children}
+    </div>
+  );
+});
 
 DrawerWithToolbarWrapper.displayName = 'DrawerWithToolbarWrapper';
