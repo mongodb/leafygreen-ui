@@ -28,8 +28,8 @@ function buildBatch(batch: Array<string>): Promise<void> {
 
     const proc = exec(cmd);
 
-    proc.stdout?.pipe(process.stdout);
-    proc.stderr?.pipe(process.stderr);
+    // proc.stdout?.pipe(process.stdout);
+    // proc.stderr?.pipe(process.stderr);
 
     proc.on('close', code => {
       if (code === 0) {
