@@ -95,8 +95,6 @@ const openEmbeddedStyles = css`
 `;
 
 const closedEmbeddedStyles = css`
-  grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
-
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     animation-name: ${drawerOutMobile};
     animation-fill-mode: forwards;
