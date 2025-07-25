@@ -16,7 +16,7 @@ import {
 import { InputBarFeedbackProps } from './InputBarFeedback.types';
 import { State } from './shared.types';
 
-const texts = {
+const messages = {
   defaultError: 'Oops... Something went wrong.',
   loading: 'MongoDB Assistant is thinking',
   retryButton: 'Retry',
@@ -50,16 +50,18 @@ export const InputBarFeedback = forwardRef<
         {state === State.Loading && (
           <div className={loadingContainerStyles}>
             <AssistantAvatar darkMode={darkMode} size={20} />
-            <Body className={getLoadingTextStyles(theme)}>{texts.loading}</Body>
+            <Body className={getLoadingTextStyles(theme)}>
+              {messages.loading}
+            </Body>
           </div>
         )}
 
         {state === State.Error && (
           <Banner variant="danger" className={bannerStyles}>
             <div className={bannerContentContainerStyles}>
-              <Error>{errorMessage || texts.defaultError}</Error>
+              <Error>{errorMessage || messages.defaultError}</Error>
               <Button size="xsmall" type="submit">
-                {texts.retryButton}
+                {messages.retryButton}
               </Button>
             </div>
           </Banner>

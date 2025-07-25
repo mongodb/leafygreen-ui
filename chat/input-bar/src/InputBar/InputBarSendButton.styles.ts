@@ -1,4 +1,4 @@
-import { PRIMARY_BUTTON_INTERACTIVE_GREEN } from '@leafygreen-ui/button/Button';
+import { PRIMARY_BUTTON_INTERACTIVE_GREEN } from '@leafygreen-ui/button/Button.styles';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';

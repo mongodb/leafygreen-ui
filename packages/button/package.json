@@ -26,7 +26,7 @@
       "import": "./dist/esm/testing/index.js",
       "types": "./dist/types/testing/index.d.ts"
     },
-    "./Button": "./src/Button/index.ts"
+    "./Button.styles": "./src/Button/index.ts"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
