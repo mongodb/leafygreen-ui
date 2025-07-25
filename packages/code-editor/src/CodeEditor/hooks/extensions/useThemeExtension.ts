@@ -1,4 +1,5 @@
-import { EditorView } from '@uiw/react-codemirror';
+// import { EditorView } from '@uiw/react-codemirror';
+import { type EditorView } from '@codemirror/view';
 
 import { Theme } from '@leafygreen-ui/lib';
 import {
@@ -18,15 +19,21 @@ export function useThemeExtension(
   view: EditorView | null,
   theme: Theme,
   fontSize: number,
+  editorViewModule?: typeof import('@codemirror/view'),
 ) {
   return useExtension(
     view || null,
     {
       theme,
       fontSize,
+      editorViewModule,
     },
-    ({ theme, fontSize }) => {
-      return EditorView.theme(
+    ({ theme, fontSize, editorViewModule }) => {
+      if (!editorViewModule || !editorViewModule.EditorView) {
+        return [];
+      }
+
+      return editorViewModule.EditorView.theme(
         {
           '&': {
             backgroundColor:
