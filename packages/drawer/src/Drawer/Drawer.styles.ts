@@ -10,6 +10,7 @@ import {
 
 import {
   DRAWER_WIDTH,
+  DRAWER_WITH_TOOLBAR_WIDTH,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
 } from '../constants';
@@ -57,7 +58,7 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
   max-width: 50vw;
-  width: ${DRAWER_WIDTH}px;
+  width: 100%;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
@@ -95,10 +96,12 @@ const getOverlayStyles = ({
   open,
   shouldAnimate,
   zIndex,
+  hasToolbar,
 }: {
   open: boolean;
   shouldAnimate: boolean;
   zIndex: number;
+  hasToolbar: boolean;
 }) =>
   cx(
     css`
@@ -108,6 +111,8 @@ const getOverlayStyles = ({
       bottom: 0;
       right: 0;
       overflow: visible;
+
+      max-width: ${hasToolbar ? DRAWER_WITH_TOOLBAR_WIDTH : DRAWER_WIDTH}px;
 
       // By default, the drawer is positioned off-screen to the right.
       transform: translate3d(100%, 0, 0);
@@ -154,18 +159,17 @@ const getDisplayModeStyles = ({
   open,
   shouldAnimate,
   zIndex,
-  size,
+  hasToolbar,
 }: {
   displayMode: DisplayMode;
   open: boolean;
   shouldAnimate: boolean;
   zIndex: number;
-  size: number;
+  hasToolbar: boolean;
 }) =>
   cx({
-    [getOverlayStyles({ open, shouldAnimate, zIndex })]:
+    [getOverlayStyles({ open, shouldAnimate, zIndex, hasToolbar })]:
       displayMode === DisplayMode.Overlay,
-    [getEmbeddedStyles({ open, size })]: displayMode === DisplayMode.Embedded,
   });
 
 export const getDrawerStyles = ({
@@ -175,7 +179,7 @@ export const getDrawerStyles = ({
   shouldAnimate,
   theme,
   zIndex,
-  size,
+  hasToolbar = false,
 }: {
   className?: string;
   displayMode: DisplayMode;
@@ -183,11 +187,17 @@ export const getDrawerStyles = ({
   shouldAnimate: boolean;
   theme: Theme;
   zIndex: number;
-  size: number;
+  hasToolbar?: boolean;
 }) =>
   cx(
     getBaseStyles({ theme }),
-    getDisplayModeStyles({ displayMode, open, shouldAnimate, zIndex, size }),
+    getDisplayModeStyles({
+      displayMode,
+      open,
+      shouldAnimate,
+      zIndex,
+      hasToolbar,
+    }),
     className,
     drawerClassName,
   );

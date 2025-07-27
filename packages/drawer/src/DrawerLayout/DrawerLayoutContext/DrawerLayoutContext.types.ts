@@ -10,4 +10,8 @@ export interface DrawerLayoutProviderProps {
 
 export interface DrawerLayoutContextType extends DrawerLayoutProviderProps {
   setIsDrawerOpen: (isOpen: boolean) => void;
+  drawerWidth: number;
+  setDrawerWidth: (width: number) => void;
+  setIsDrawerResizing: (isResizing: boolean) => void;
+  isDrawerResizing: boolean;
 }

@@ -4,6 +4,7 @@ import { useDrawerLayoutContext } from '../DrawerLayout';
 
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
+import { css, cx } from '@leafygreen-ui/emotion';
 
 /**
  * @internal
@@ -17,16 +18,23 @@ export const EmbeddedDrawerLayout = forwardRef<
   HTMLDivElement,
   EmbeddedDrawerLayoutProps
 >(({ children, className }: EmbeddedDrawerLayoutProps, forwardedRef) => {
-  const { hasToolbar, isDrawerOpen } = useDrawerLayoutContext();
+  const { hasToolbar, isDrawerOpen, drawerWidth, isDrawerResizing } =
+    useDrawerLayoutContext();
 
   return (
     <div
       ref={forwardedRef}
-      className={getEmbeddedDrawerLayoutStyles({
-        className,
-        isDrawerOpen,
-        hasToolbar,
-      })}
+      className={cx(
+        css`
+          --drawer-width: ${drawerWidth};
+        `,
+        getEmbeddedDrawerLayoutStyles({
+          className,
+          isDrawerOpen,
+          hasToolbar,
+          isDrawerResizing,
+        }),
+      )}
     >
       {children}
     </div>

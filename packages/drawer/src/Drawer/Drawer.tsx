@@ -71,6 +71,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       displayMode: displayModeContextProp,
       onClose: onCloseContextProp,
       hasToolbar,
+      setIsDrawerResizing,
+      setDrawerWidth,
     } = useDrawerLayoutContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
@@ -159,6 +161,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       resizableRef,
       size: drawerSize,
       getResizerProps,
+      isResizing,
     } = useResizable<HTMLDialogElement | HTMLDivElement>({
       enabled: resizable && isEmbedded,
       initialSize: open ? initialSize : 0,
@@ -167,6 +170,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       maxViewportPercentages: DRAWER_MAX_PERCENTAGE_WIDTH,
       position: Position.Right,
     });
+
+    useEffect(() => {
+      if (isEmbedded) {
+        setIsDrawerResizing(isResizing);
+        setDrawerWidth(drawerSize);
+      }
+    }, [isEmbedded, drawerSize, isResizing]);
 
     const resizerProps = getResizerProps();
 
@@ -185,7 +195,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
-            size: resizable ? drawerSize : open ? initialSize : 0,
+            hasToolbar,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}
