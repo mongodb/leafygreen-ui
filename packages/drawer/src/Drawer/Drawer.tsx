@@ -171,6 +171,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       position: Position.Right,
     });
 
+    // The parent grid container controls the drawer width with grid-template-columns, so we pass the width to the context where it is read by the parent grid container.
     useEffect(() => {
       if (isEmbedded) {
         setIsDrawerResizing(isResizing);

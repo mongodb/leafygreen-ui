@@ -1,10 +1,10 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 
 import { useDrawerLayoutContext } from '../DrawerLayout';
 
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { useMergeRefs } from '@leafygreen-ui/hooks';
 
 /**
  * @internal
@@ -21,20 +21,22 @@ export const EmbeddedDrawerLayout = forwardRef<
   const { hasToolbar, isDrawerOpen, drawerWidth, isDrawerResizing } =
     useDrawerLayoutContext();
 
+  const ref = React.useRef<HTMLDivElement>(null);
+  const mergeRefs = useMergeRefs([forwardedRef, ref]);
+
+  useEffect(() => {
+    ref.current?.style.setProperty('--drawer-width', `${drawerWidth}`);
+  }, [drawerWidth]);
+
   return (
     <div
-      ref={forwardedRef}
-      className={cx(
-        css`
-          --drawer-width: ${drawerWidth};
-        `,
-        getEmbeddedDrawerLayoutStyles({
-          className,
-          isDrawerOpen,
-          hasToolbar,
-          isDrawerResizing,
-        }),
-      )}
+      ref={mergeRefs}
+      className={getEmbeddedDrawerLayoutStyles({
+        className,
+        isDrawerOpen,
+        hasToolbar,
+        isDrawerResizing,
+      })}
     >
       {children}
     </div>
