@@ -17,22 +17,12 @@ import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import {
-  DRAWER_WIDTH,
-  DRAWER_WITH_TOOLBAR_WIDTH,
-  TRANSITION_DURATION,
-} from '../constants';
+import { TRANSITION_DURATION } from '../constants';
 import { useDrawerLayoutContext } from '../DrawerLayout';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
 
-import {
-  DRAWER_MAX_PERCENTAGE_WIDTH,
-  DRAWER_MAX_WIDTH,
-  DRAWER_MAX_WIDTH_WITH_TOOLBAR,
-  DRAWER_MIN_WIDTH,
-  DRAWER_MIN_WIDTH_WITH_TOOLBAR,
-} from './Drawer.constants';
+import { DRAWER_MAX_PERCENTAGE_WIDTH } from './Drawer.constants';
 import {
   getChildrenContainerStyles,
   getDrawerShadowStyles,
@@ -43,6 +33,7 @@ import {
   innerChildrenContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
+import { getResolvedDrawerSizes, useResolvedDrawerProps } from './Drawer.utils';
 
 /**
  * A drawer is a panel that slides in from the right side of the screen (not customizable). Because the user can use the Drawer without navigating away from the current page, tasks can be completed more efficiently while not changing page context.
@@ -77,27 +68,26 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
 
-    // Prop overrides
-    const displayMode =
-      displayModeProp ?? displayModeContextProp ?? DisplayMode.Overlay;
-    const open = openProp ?? isDrawerOpen ?? false;
-    const onClose = onCloseProp ?? onCloseContextProp;
+    // Returns the resolved displayMode, open state, and onClose function based on the component and context props.
+    const { displayMode, open, onClose } = useResolvedDrawerProps({
+      componentDisplayMode: displayModeProp,
+      contextDisplayMode: displayModeContextProp,
+      componentOpen: openProp,
+      contextOpen: isDrawerOpen,
+      componentOnClose: onCloseProp,
+      contextOnClose: onCloseContextProp,
+    });
+
+    // Returns the resolved drawer sizes based on whether a toolbar is present.
+    const { initialSize, resizableMinWidth, resizableMaxWidth } =
+      getResolvedDrawerSizes(hasToolbar);
 
     const isEmbedded = displayMode === DisplayMode.Embedded;
     const isOverlay = displayMode === DisplayMode.Overlay;
-
     const isResizable = isEmbedded && !!resizable && open;
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       isOverlay ? 'dialog' : 'div',
     );
-
-    const initialSize = hasToolbar ? DRAWER_WITH_TOOLBAR_WIDTH : DRAWER_WIDTH;
-    const resizableMinWidth = hasToolbar
-      ? DRAWER_MIN_WIDTH_WITH_TOOLBAR
-      : DRAWER_MIN_WIDTH;
-    const resizableMaxWidth = hasToolbar
-      ? DRAWER_MAX_WIDTH_WITH_TOOLBAR
-      : DRAWER_MAX_WIDTH;
 
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
