@@ -164,7 +164,7 @@ const {
 | `getBar`             | Returns the progress bar element, which can have either `role="progressbar"` or `role="meter"` depending on usage. | `HTMLDivElement`         |
 | `getBarFill`         | Returns the fill element of the progress bar.                                                                      | `HTMLDivElement`         |
 | `getBarTrack`        | Returns the track element of the progress bar.                                                                     | `HTMLDivElement`         |
-| `getBarFillWidthVar` | Returns the width of the progress bar fill element, either from CSS variable or inline style.                      | `HTMLDivElement`         |
+| `getBarFillWidthVar` | Returns the CSS var applied to the width of the progress bar fill element.                                         | `HTMLDivElement`         |
 | `queryIcon`          | Returns the icon element, if present.                                                                              | `HTMLDivElement \| null` |
 | `queryLabel`         | Returns the label element, if present.                                                                             | `HTMLDivElement \| null` |
 | `queryDescription`   | Returns the description element, if present.                                                                       | `HTMLDivElement \| null` |
