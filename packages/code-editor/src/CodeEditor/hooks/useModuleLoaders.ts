@@ -51,7 +51,7 @@ export const useModuleLoaders = ({
         import('@uiw/codemirror-extensions-hyper-link');
     }
 
-    if (enableCodeFolding || forceParsing || !!indentUnit) {
+    if (language || enableCodeFolding || forceParsing || !!indentUnit) {
       neededLoaders['@codemirror/language'] = () =>
         import('@codemirror/language');
     }
