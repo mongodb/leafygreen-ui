@@ -5,6 +5,14 @@ import { type CodeEditorProps } from '../CodeEditor.types';
 import { LanguageName } from './extensions/useLanguageExtension';
 import { type LoadersMap } from './useLazyModules';
 
+/**
+ * Interface representing all the CodeMirror modules that might be dynamically imported
+ * by the CodeEditor component. This comprehensive mapping enables the lazy loading
+ * system to properly type and load the required modules based on editor configuration.
+ *
+ * Each property represents a module that can be dynamically imported, with its type
+ * corresponding to the result of importing that module.
+ */
 interface CodeEditorModules {
   '@uiw/codemirror-extensions-hyper-link': typeof import('@uiw/codemirror-extensions-hyper-link');
   '@codemirror/language': typeof import('@codemirror/language');
@@ -30,6 +38,23 @@ interface CodeEditorModules {
   '@codemirror/autocomplete': typeof import('@codemirror/autocomplete');
 }
 
+/**
+ * Hook that determines which CodeMirror modules need to be dynamically loaded
+ * based on the current editor configuration.
+ *
+ * This hook analyzes the provided editor props to construct a map of module loaders
+ * that will only import the modules necessary for the current editor features.
+ * This approach optimizes bundle size by avoiding loading unnecessary modules.
+ *
+ * @param {object} params Configuration options derived from CodeEditorProps
+ * @param {boolean} [params.enableClickableUrls] Whether clickable URLs are enabled
+ * @param {boolean} [params.enableCodeFolding] Whether code folding is enabled
+ * @param {boolean} [params.forceParsing] Whether to force complete document parsing
+ * @param {string} [params.indentUnit] The type of indentation unit ('spaces' or 'tabs')
+ * @param {Array} [params.tooltips] Array of tooltip configurations
+ * @param {string} [params.language] The language for syntax highlighting and autocompletion
+ * @returns {Partial<LoadersMap<CodeEditorModules>>} A map of module names to their dynamic import functions
+ */
 export const useModuleLoaders = ({
   enableClickableUrls,
   enableCodeFolding,
@@ -39,6 +64,11 @@ export const useModuleLoaders = ({
   language,
 }: CodeEditorProps) => {
   const loaders = useMemo(() => {
+    /**
+     * Start with core modules that are always required by the editor
+     * regardless of feature configuration. These modules provide the
+     * fundamental editor functionality.
+     */
     const neededLoaders: Partial<LoadersMap<CodeEditorModules>> = {
       codemirror: () => import('codemirror'),
       '@codemirror/view': () => import('@codemirror/view'),
@@ -65,6 +95,10 @@ export const useModuleLoaders = ({
       neededLoaders['@codemirror/autocomplete'] = () =>
         import('@codemirror/autocomplete');
 
+      /**
+       * Load language-specific modules based on the selected language.
+       * Each case imports only the modules needed for that particular language.
+       */
       switch (language) {
         case LanguageName.cpp:
           neededLoaders['@codemirror/lang-cpp'] = () =>
@@ -141,4 +175,8 @@ export const useModuleLoaders = ({
   return loaders;
 };
 
+/**
+ * Export the CodeEditorModules interface for use in other components
+ * that need to interact with the dynamically loaded modules
+ */
 export type { CodeEditorModules };
