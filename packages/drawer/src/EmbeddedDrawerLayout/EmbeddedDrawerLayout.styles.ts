@@ -23,6 +23,28 @@ const baseStyles = css`
   height: 100%;
 `;
 
+const setDrawerDefaultWidth = ({
+  isDrawerOpen,
+  hasToolbar,
+}: {
+  isDrawerOpen?: boolean;
+  hasToolbar: boolean;
+}) => css`
+  --drawer-width-default: ${isDrawerOpen
+    ? hasToolbar
+      ? DRAWER_WITH_TOOLBAR_WIDTH
+      : DRAWER_WIDTH
+    : 0};
+`;
+
+const getBaseStyles = ({
+  isDrawerOpen,
+  hasToolbar,
+}: {
+  isDrawerOpen?: boolean;
+  hasToolbar: boolean;
+}) => cx(baseStyles, setDrawerDefaultWidth({ isDrawerOpen, hasToolbar }));
+
 const withoutToolbarBaseStyles = css`
   grid-template-columns: auto min(
       50vw,
@@ -76,14 +98,7 @@ export const getEmbeddedDrawerLayoutStyles = ({
   isDrawerResizing?: boolean;
 }) =>
   cx(
-    baseStyles,
-    css`
-      --drawer-width-default: ${isDrawerOpen
-        ? hasToolbar
-          ? DRAWER_WITH_TOOLBAR_WIDTH
-          : DRAWER_WIDTH
-        : 0};
-    `,
+    getBaseStyles({ isDrawerOpen, hasToolbar }),
     {
       [resizingStyles]: isDrawerResizing,
       [withToolbarBaseStyles]: hasToolbar,

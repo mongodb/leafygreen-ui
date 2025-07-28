@@ -1,6 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
-
-import { useMergeRefs } from '@leafygreen-ui/hooks';
+import React, { forwardRef } from 'react';
 
 import { useDrawerLayoutContext } from '../DrawerLayout';
 
@@ -22,22 +20,17 @@ export const EmbeddedDrawerLayout = forwardRef<
   const { hasToolbar, isDrawerOpen, drawerWidth, isDrawerResizing } =
     useDrawerLayoutContext();
 
-  const ref = React.useRef<HTMLDivElement>(null);
-  const mergeRefs = useMergeRefs([forwardedRef, ref]);
-
-  useEffect(() => {
-    ref.current?.style.setProperty('--drawer-width', `${drawerWidth}`);
-  }, [drawerWidth]);
-
   return (
     <div
-      ref={mergeRefs}
+      ref={forwardedRef}
       className={getEmbeddedDrawerLayoutStyles({
         className,
         isDrawerOpen,
         hasToolbar,
         isDrawerResizing,
       })}
+      // Prevents a new style class everytime the width changes
+      style={{ '--drawer-width': `${drawerWidth}` } as React.CSSProperties}
     >
       {children}
     </div>

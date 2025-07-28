@@ -176,9 +176,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     ]);
 
     const resizerProps = getResizerProps();
-
-    const refsToMerge = [fwdRef, ref, resizableRef];
-    const drawerRef = useMergeRefs(refsToMerge);
+    const drawerRef = useMergeRefs([fwdRef, ref, resizableRef]);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
