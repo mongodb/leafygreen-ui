@@ -2,17 +2,25 @@ import { type EditorView } from '@codemirror/view';
 
 import { useExtension } from './useExtension';
 
-export function useLineNumbersExtension(
-  view: EditorView | null,
-  enableLineWrapping: boolean,
-  module?: typeof import('@codemirror/view'),
-) {
-  return useExtension(
-    view || null,
-    {
-      enable: enableLineWrapping,
-      module,
+export function useLineNumbersExtension({
+  editorView,
+  stateModule,
+  enableLineNumbers,
+  viewModule,
+}: {
+  editorView: EditorView | null;
+  stateModule?: typeof import('@codemirror/state');
+  enableLineNumbers: boolean;
+  viewModule?: typeof import('@codemirror/view');
+}) {
+  return useExtension({
+    editorView,
+    stateModule,
+    value: {
+      enable: enableLineNumbers,
+      module: viewModule,
     },
-    ({ enable, module }) => (enable && module ? module.lineNumbers() : []),
-  );
+    factory: ({ enable, module }) =>
+      enable && module ? module.lineNumbers() : [],
+  });
 }

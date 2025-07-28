@@ -24,18 +24,25 @@ export const LanguageName = {
 } as const;
 export type LanguageName = (typeof LanguageName)[keyof typeof LanguageName];
 
-export function useLanguageExtension(
-  view: EditorView | null,
-  language?: LanguageName,
-  modules?: Partial<CodeEditorModules>,
-) {
-  return useExtension(
-    view || null,
-    {
+export function useLanguageExtension({
+  editorView,
+  stateModule,
+  language,
+  modules,
+}: {
+  editorView: EditorView | null;
+  stateModule?: typeof import('@codemirror/state');
+  language?: LanguageName;
+  modules?: Partial<CodeEditorModules>;
+}) {
+  return useExtension({
+    editorView,
+    stateModule,
+    value: {
       language,
       modules,
     },
-    ({ language, modules }) => {
+    factory: ({ language, modules }) => {
       if (!language || !modules) {
         return [];
       }
@@ -136,5 +143,5 @@ export function useLanguageExtension(
           return [];
       }
     },
-  );
+  });
 }

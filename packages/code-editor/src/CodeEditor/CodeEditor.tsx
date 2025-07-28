@@ -66,75 +66,84 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
     const moduleLoaders = useModuleLoaders(props);
     const { isLoading, modules } = useLazyModules(moduleLoaders);
 
-    const hyperLinkExtension = useHyperLinkExtension(
-      editorViewRef.current,
+    const autoCompleteExtension = useAutoCompleteExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
+      language,
+      autoCompleteModule: modules?.['@codemirror/autocomplete'],
+    });
+
+    const codeFoldingExtension = useCodeFoldingExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
+      enableCodeFolding,
+      languageModule: modules?.['@codemirror/language'],
+    });
+
+    const highlightExtension = useHighlightExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
+      theme,
+      language,
+      modules,
+    });
+
+    const hyperLinkExtension = useHyperLinkExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
       enableClickableUrls,
-      modules?.['@uiw/codemirror-extensions-hyper-link'],
-    );
+      hyperLinkModule: modules?.['@uiw/codemirror-extensions-hyper-link'],
+    });
 
-    const lineWrapExtension = useLineWrapExtension(
-      editorViewRef.current,
+    const lineWrapExtension = useLineWrapExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
       enableLineWrapping,
-      modules?.['@codemirror/view'],
-    );
+      viewModule: modules?.['@codemirror/view'],
+    });
 
-    const lineNumbersExtension = useLineNumbersExtension(
-      editorViewRef.current,
+    const lineNumbersExtension = useLineNumbersExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
       enableLineNumbers,
-      modules?.['@codemirror/view'],
-    );
+      viewModule: modules?.['@codemirror/view'],
+    });
 
-    const indentExtension = useIndentExtension(
-      editorViewRef.current,
+    const indentExtension = useIndentExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
       indentUnit,
       indentSize,
-      modules?.['@codemirror/language'],
-      modules?.['@codemirror/state'],
-    );
+      languageModule: modules?.['@codemirror/language'],
+    });
 
-    const foldGutterExtension = useCodeFoldingExtension(
-      editorViewRef.current,
-      enableCodeFolding,
-      modules?.['@codemirror/language'],
-    );
-
-    const tooltipExtension = useTooltipExtension(
-      editorViewRef.current,
+    const tooltipExtension = useTooltipExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
       tooltips,
-      modules?.['@codemirror/lint'],
-    );
+      lintModule: modules?.['@codemirror/lint'],
+    });
 
-    const languageExtension = useLanguageExtension(
-      editorViewRef.current,
+    const languageExtension = useLanguageExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
       language,
       modules,
-    );
+    });
 
-    const highlightExtension = useHighlightExtension(
-      editorViewRef.current,
-      theme,
-      language,
-      modules,
-    );
-
-    const themeExtension = useThemeExtension(
-      editorViewRef.current,
+    const themeExtension = useThemeExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
       theme,
       baseFontSize,
-      modules?.['@codemirror/view'],
-    );
+      viewModule: modules?.['@codemirror/view'],
+    });
 
-    const autoCompleteExtension = useAutoCompleteExtension(
-      editorViewRef.current,
-      language,
-      modules?.['@codemirror/autocomplete'],
-    );
-
-    const readOnlyExtension = useReadOnlyExtension(
-      editorViewRef.current,
+    const readOnlyExtension = useReadOnlyExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
       readOnly,
-      modules?.['@codemirror/state'],
-    );
+    });
 
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
@@ -175,7 +184,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
           lineWrapExtension,
           hyperLinkExtension,
           indentExtension,
-          foldGutterExtension,
+          codeFoldingExtension,
           tooltipExtension,
           themeExtension,
           highlightExtension,
@@ -204,7 +213,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       lineWrapExtension,
       hyperLinkExtension,
       indentExtension,
-      foldGutterExtension,
+      codeFoldingExtension,
       tooltipExtension,
       themeExtension,
       highlightExtension,

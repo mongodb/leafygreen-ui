@@ -4,26 +4,33 @@ import { type CodeEditorProps, IndentUnits } from '../../CodeEditor.types';
 
 import { useExtension } from './useExtension';
 
-export function useIndentExtension(
-  view: EditorView | null,
-  unit: CodeEditorProps['indentUnit'],
-  size: CodeEditorProps['indentSize'],
-  module?: typeof import('@codemirror/language'),
-  stateModule?: typeof import('@codemirror/state'),
-) {
-  return useExtension(
-    view || null,
-    {
-      unit,
-      size,
-      module,
+export function useIndentExtension({
+  editorView,
+  stateModule,
+  indentUnit,
+  indentSize,
+  languageModule,
+}: {
+  editorView: EditorView | null;
+  stateModule?: typeof import('@codemirror/state');
+  indentUnit: CodeEditorProps['indentUnit'];
+  indentSize: CodeEditorProps['indentSize'];
+  languageModule?: typeof import('@codemirror/language');
+}) {
+  return useExtension({
+    editorView,
+    stateModule,
+    value: {
+      unit: indentUnit,
+      size: indentSize,
+      module: languageModule,
       stateModule,
     },
     /**
      * Size is given a default because if unit is set and size is not, some size
      * is required.
      */
-    ({ unit, size = 2, module, stateModule }) => {
+    factory: ({ unit, size = 2, module, stateModule }) => {
       if (!module || unit === undefined || !stateModule) {
         return [];
       }
@@ -41,5 +48,5 @@ export function useIndentExtension(
         stateModule.EditorState.tabSize.of(size),
       ];
     },
-  );
+  });
 }

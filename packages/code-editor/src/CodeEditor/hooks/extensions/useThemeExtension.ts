@@ -15,20 +15,28 @@ import { CodeEditorSelectors } from '../../CodeEditor.types';
 
 import { useExtension } from './useExtension';
 
-export function useThemeExtension(
-  view: EditorView | null,
-  theme: Theme,
-  fontSize: number,
-  editorViewModule?: typeof import('@codemirror/view'),
-) {
-  return useExtension(
-    view || null,
-    {
+export function useThemeExtension({
+  editorView,
+  stateModule,
+  theme,
+  baseFontSize,
+  viewModule,
+}: {
+  editorView: EditorView | null;
+  stateModule?: typeof import('@codemirror/state');
+  theme: Theme;
+  baseFontSize: number;
+  viewModule?: typeof import('@codemirror/view');
+}) {
+  return useExtension({
+    editorView,
+    stateModule,
+    value: {
       theme,
-      fontSize,
-      editorViewModule,
+      fontSize: baseFontSize,
+      editorViewModule: viewModule,
     },
-    ({ theme, fontSize, editorViewModule }) => {
+    factory: ({ theme, fontSize, editorViewModule }) => {
       if (!editorViewModule || !editorViewModule.EditorView) {
         return [];
       }
@@ -94,5 +102,5 @@ export function useThemeExtension(
         { dark: theme === Theme.Dark },
       );
     },
-  );
+  });
 }

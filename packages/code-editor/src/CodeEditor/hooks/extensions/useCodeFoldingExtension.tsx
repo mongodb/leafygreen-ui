@@ -7,23 +7,30 @@ import Icon from '@leafygreen-ui/icon';
 
 import { useExtension } from './useExtension';
 
-export function useCodeFoldingExtension(
-  view: EditorView | null,
-  enable: boolean,
-  module?: typeof import('@codemirror/language'),
-) {
-  return useExtension(
-    view || null,
-    {
-      enable,
-      module,
+export function useCodeFoldingExtension({
+  editorView,
+  stateModule,
+  enableCodeFolding,
+  languageModule,
+}: {
+  editorView: EditorView | null;
+  stateModule?: typeof import('@codemirror/state');
+  enableCodeFolding?: boolean;
+  languageModule?: typeof import('@codemirror/language');
+}) {
+  return useExtension({
+    editorView,
+    stateModule,
+    value: {
+      enableCodeFolding,
+      languageModule,
     },
-    ({ enable, module }) => {
-      if (!enable || !module || !module.foldGutter) {
+    factory: ({ enableCodeFolding, languageModule }) => {
+      if (!enableCodeFolding || !languageModule || !languageModule.foldGutter) {
         return [];
       }
 
-      return module.foldGutter({
+      return languageModule.foldGutter({
         markerDOM: (open: boolean) => {
           const icon = document.createElement('span');
           icon.className = 'cm-custom-fold-marker';
@@ -50,5 +57,5 @@ export function useCodeFoldingExtension(
         },
       });
     },
-  );
+  });
 }

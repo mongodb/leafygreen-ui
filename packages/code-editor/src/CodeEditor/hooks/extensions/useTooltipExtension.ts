@@ -23,26 +23,33 @@ import { useExtension } from './useExtension';
  * ]);
  * ```
  */
-export function useTooltipExtension(
-  view: EditorView | null,
-  tooltips: Array<CodeEditorTooltip>,
-  module?: typeof import('@codemirror/lint'),
-) {
-  return useExtension(
-    view || null,
-    {
+export function useTooltipExtension({
+  editorView,
+  stateModule,
+  tooltips,
+  lintModule,
+}: {
+  editorView: EditorView | null;
+  stateModule?: typeof import('@codemirror/state');
+  tooltips: Array<CodeEditorTooltip>;
+  lintModule?: typeof import('@codemirror/lint');
+}) {
+  return useExtension({
+    editorView,
+    stateModule,
+    value: {
       tooltips,
-      module,
+      module: lintModule,
     },
-    ({ tooltips, module }) => {
+    factory: ({ tooltips, module }) => {
       if (!module || !module.linter || tooltips.length === 0) {
         return [];
       }
 
-      return module.linter(view => {
+      return module.linter(linterView => {
         const diagnostics: Array<Diagnostic> = tooltips.map(
           ({ line, column = 1, content, severity, length }) => {
-            const lineInfo = view.state.doc.line(line);
+            const lineInfo = linterView.state.doc.line(line);
             const from = lineInfo.from + column - 1;
             const to = from + length;
 
@@ -79,5 +86,5 @@ export function useTooltipExtension(
         return diagnostics;
       });
     },
-  );
+  });
 }

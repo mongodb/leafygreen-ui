@@ -2,18 +2,25 @@ import { type EditorView } from '@codemirror/view';
 
 import { useExtension } from './useExtension';
 
-export function useLineWrapExtension(
-  view: EditorView | null,
-  enableLineWrapping: boolean,
-  module?: typeof import('@codemirror/view'),
-) {
-  return useExtension(
-    view || null,
-    {
+export function useLineWrapExtension({
+  editorView,
+  stateModule,
+  enableLineWrapping,
+  viewModule,
+}: {
+  editorView: EditorView | null;
+  stateModule?: typeof import('@codemirror/state');
+  enableLineWrapping: boolean;
+  viewModule?: typeof import('@codemirror/view');
+}) {
+  return useExtension({
+    editorView,
+    stateModule,
+    value: {
       enable: enableLineWrapping,
-      module,
+      module: viewModule,
     },
-    ({ enable, module }) =>
+    factory: ({ enable, module }) =>
       enable && module ? module.EditorView.lineWrapping : [],
-  );
+  });
 }

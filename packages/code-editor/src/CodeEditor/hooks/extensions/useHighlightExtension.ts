@@ -13,20 +13,28 @@ import { type CodeEditorModules } from '../useModuleLoaders';
 import { useExtension } from './useExtension';
 import { type LanguageName } from './useLanguageExtension';
 
-export function useHighlightExtension(
-  view: EditorView | null,
-  theme: Theme,
-  language?: LanguageName,
-  modules?: Partial<CodeEditorModules>,
-) {
-  return useExtension(
-    view || null,
-    {
+export function useHighlightExtension({
+  editorView,
+  stateModule,
+  theme,
+  language,
+  modules,
+}: {
+  editorView: EditorView | null;
+  stateModule?: typeof import('@codemirror/state');
+  theme: Theme;
+  language?: LanguageName;
+  modules?: Partial<CodeEditorModules>;
+}) {
+  return useExtension({
+    editorView,
+    stateModule,
+    value: {
       theme,
       language,
       modules,
     },
-    ({ language, modules }) => {
+    factory: ({ theme, language, modules }) => {
       if (
         !language ||
         !modules ||
@@ -108,5 +116,5 @@ export function useHighlightExtension(
 
       return syntaxHighlighting(highlightStyle);
     },
-  );
+  });
 }

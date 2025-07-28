@@ -2,18 +2,23 @@ import { type EditorView } from '@codemirror/view';
 
 import { useExtension } from './useExtension';
 
-export function useReadOnlyExtension(
-  view: EditorView | null,
-  enableReadOnly: boolean,
-  module?: typeof import('@codemirror/state'),
-) {
-  return useExtension(
-    view || null,
-    {
-      enable: enableReadOnly,
-      module,
+export function useReadOnlyExtension({
+  editorView,
+  stateModule,
+  readOnly,
+}: {
+  editorView: EditorView | null;
+  stateModule?: typeof import('@codemirror/state');
+  readOnly: boolean;
+}) {
+  return useExtension({
+    editorView,
+    stateModule,
+    value: {
+      enable: readOnly,
+      module: stateModule,
     },
-    ({ enable, module }) =>
+    factory: ({ enable, module }) =>
       enable && module ? module.EditorState.readOnly.of(true) : [],
-  );
+  });
 }
