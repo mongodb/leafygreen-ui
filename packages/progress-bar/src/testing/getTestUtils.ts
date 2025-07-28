@@ -36,10 +36,8 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
   const getBarFill = () => getByLgId!<T>(lgIds.fill);
   const getBarTrack = () => getByLgId!<T>(lgIds.track);
 
-  const getBarFillWidth = () => {
-    const barFill = getBarFill();
-    return barFill.style.getPropertyValue('--width') || barFill.style.width;
-  };
+  const getBarFillWidthVar = () =>
+    getBarFill().style.getPropertyValue('--width');
 
   const queryLabel = () => queryByLgId!<T>(lgIds.label);
   const queryDescription = () => queryByLgId!<T>(lgIds.description);
@@ -56,7 +54,7 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
     getBar,
     getBarFill,
     getBarTrack,
-    getBarFillWidth,
+    getBarFillWidthVar,
 
     queryLabel,
     queryDescription,

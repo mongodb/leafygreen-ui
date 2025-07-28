@@ -37,7 +37,7 @@ describe('getTestUtils', () => {
       getBar,
       getBarFill,
       getBarTrack,
-      getBarFillWidth,
+      getBarFillWidthVar,
       queryIcon,
       queryLabel,
     } = getTestUtils();
@@ -46,7 +46,7 @@ describe('getTestUtils', () => {
     expect(getBar()).toHaveAttribute('role', 'progressbar');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFillWidth()).toBe('50%');
+    expect(getBarFillWidthVar()).toBe('50%');
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeInTheDocument();
@@ -68,7 +68,7 @@ describe('getTestUtils', () => {
       getBar,
       getBarFill,
       getBarTrack,
-      getBarFillWidth,
+      getBarFillWidthVar,
       queryIcon,
       queryDescription,
     } = getTestUtils();
@@ -77,7 +77,7 @@ describe('getTestUtils', () => {
     expect(getBar()).toHaveAttribute('role', 'meter');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFillWidth()).toBe('50%');
+    expect(getBarFillWidthVar()).toBe('50%');
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeNull();
@@ -110,13 +110,13 @@ describe('getTestUtils', () => {
     expect(first.getBar()).toBeInTheDocument();
     expect(first.getBar()).toHaveAttribute('role', 'progressbar');
     expect(first.getBarFill()).toBeInTheDocument();
-    expect(first.getBarFillWidth()).toBe('30%');
+    expect(first.getBarFillWidthVar()).toBe('30%');
     expect(first.queryIcon()).toBeNull();
 
     expect(second.getBar()).toBeInTheDocument();
     expect(second.getBar()).toHaveAttribute('role', 'meter');
     expect(second.getBarFill()).toBeInTheDocument();
-    expect(second.getBarFillWidth()).toBe('70%');
+    expect(second.getBarFillWidthVar()).toBe('70%');
     expect(second.queryIcon()).toBeInTheDocument();
   });
 });

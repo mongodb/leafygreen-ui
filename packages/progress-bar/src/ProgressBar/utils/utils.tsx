@@ -212,14 +212,14 @@ export const omitProps = (
 };
 
 /** Returns an animated variant even if the original variant is not animated. */
-const forceAnimatedVariant = (variantProp: Variant) => {
+const forceAnimatedVariant = (variant: Variant) => {
   const ANIMATED_VARIANTS = Object.values(AnimatedVariant);
 
-  if (!(ANIMATED_VARIANTS as Array<Variant>).includes(variantProp)) {
+  if (!(ANIMATED_VARIANTS as Array<Variant>).includes(variant)) {
     return DEFAULT_VARIANT;
   }
 
-  return variantProp;
+  return variant;
 };
 
 /**
@@ -286,7 +286,7 @@ export const resolveProgressBarProps = (
     overrides.maxValue = getValidMaxValue(props.maxValue);
     overrides.disabled = props.disabled ?? false;
   } else {
-    if (props.enableAnimation) warnAnimatedVariant(props); // determinate bars with animation enabled don't need forcing; their variants already exclude unsupported colors
+    if (props.enableAnimation) warnAnimatedVariant(props); // determinate bars with animation enabled don't need forcing; their styling logic already excludes unsupported colors
 
     overrides.value = getValidValue(props.value, props.maxValue);
     overrides.maxValue = getValidMaxValue(props.maxValue);

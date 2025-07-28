@@ -125,9 +125,9 @@ describe('packages/progress-bar', () => {
           />,
         );
 
-        const { getBarFill, getBarFillWidth } = getTestUtils();
+        const { getBarFill, getBarFillWidthVar } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
-        expect(getBarFillWidth()).toBe('50%');
+        expect(getBarFillWidthVar()).toBe('50%');
       });
 
       test('does not render success variant icon if under maxValue, even if showIcon is true', () => {
@@ -151,9 +151,9 @@ describe('packages/progress-bar', () => {
       test('renders width 0% when value is less than 0', () => {
         render(<ProgressBar value={-5} maxValue={100} {...requiredA11yArgs} />);
 
-        const { getBarFill, getBarFillWidth } = getTestUtils();
+        const { getBarFill, getBarFillWidthVar } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
-        expect(getBarFillWidth()).toBe('0%');
+        expect(getBarFillWidthVar()).toBe('0%');
       });
 
       test('renders width capped at 100% when value is over maxValue', () => {
@@ -161,25 +161,25 @@ describe('packages/progress-bar', () => {
           <ProgressBar value={105} maxValue={100} {...requiredA11yArgs} />,
         );
 
-        const { getBarFill, getBarFillWidth } = getTestUtils();
+        const { getBarFill, getBarFillWidthVar } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
-        expect(getBarFillWidth()).toBe('100%');
+        expect(getBarFillWidthVar()).toBe('100%');
       });
 
       test('defaults to maxValue of 1 when maxValue is less than 0', () => {
         render(<ProgressBar value={1} maxValue={-10} {...requiredA11yArgs} />);
 
-        const { getBarFill, getBarFillWidth } = getTestUtils();
+        const { getBarFill, getBarFillWidthVar } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
-        expect(getBarFillWidth()).toBe('100%');
+        expect(getBarFillWidthVar()).toBe('100%');
       });
 
       test('defaults to maxValue of 1 when maxValue is 0', () => {
         render(<ProgressBar value={1} maxValue={0} {...requiredA11yArgs} />);
 
-        const { getBarFill, getBarFillWidth } = getTestUtils();
+        const { getBarFill, getBarFillWidthVar } = getTestUtils();
         expect(getBarFill()).toBeInTheDocument();
-        expect(getBarFillWidth()).toBe('100%');
+        expect(getBarFillWidthVar()).toBe('100%');
       });
     });
   });
