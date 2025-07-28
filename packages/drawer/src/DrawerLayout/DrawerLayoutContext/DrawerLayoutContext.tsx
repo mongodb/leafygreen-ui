@@ -20,6 +20,9 @@ export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
   hasToolbar: false,
   isDrawerResizing: false,
   drawerWidth: 0,
+  setIsDrawerOpen: () => {},
+  setDrawerWidth: () => {},
+  setIsDrawerResizing: () => {},
 });
 
 /**
@@ -28,7 +31,7 @@ export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
  */
 export const DrawerLayoutProvider = ({
   children,
-  isDrawerOpen: isDrawerOpenProp,
+  isDrawerOpen: isDrawerOpenProp = false,
   resizable,
   displayMode,
   onClose,

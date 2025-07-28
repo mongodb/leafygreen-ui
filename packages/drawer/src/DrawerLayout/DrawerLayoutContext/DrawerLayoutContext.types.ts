@@ -41,15 +41,15 @@ export interface DrawerLayoutContextType extends DrawerLayoutProviderProps {
   /**
    * Function to set the drawer open state.
    */
-  setIsDrawerOpen?: (isOpen: boolean) => void;
+  setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
    * Function to set the drawer width.
    */
-  setDrawerWidth?: (width: number) => void;
+  setDrawerWidth: React.Dispatch<React.SetStateAction<number>>;
 
   /**
    * Function to set the drawer resizing state.
    */
-  setIsDrawerResizing?: (isResizing: boolean) => void;
+  setIsDrawerResizing: React.Dispatch<React.SetStateAction<boolean>>;
 }
