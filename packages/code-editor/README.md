@@ -261,51 +261,226 @@ test('Updates value on when user types', () => {
 });
 ```
 
-## CodeMirror Utils
+## CodeMirror Extenstion Hooks
 
 [CodeMirror v6](https://codemirror.net/) is used to drive `CodeEditor` under the
 hood. Some implementations of a CodeMirror editor may be so unique that adopting
 this component is too difficult. However, there may be a desire to bring in certain
 aspects of this editor to be better inline with the design system - E.g. language
-support, themes, and syntax highlighting. For this reason, custom CodeMirror
-utils or extensions that are used internally are also exported from this package.
+support, themes, and syntax highlighting. For this reason, custom hooks that
+return the configured CodeMirrors extensions use in the editor are also exported
+from this package.
 
-### Utils
+### Hooks
 
-#### `createCodeMirrorHighlightExtension(theme: Theme): CodeMirrorExtension`
+These hooks follow a consistent pattern for lazy-loading CodeMirror modules while maintaining type safety.
+Although module parameters are marked as optional in TypeScript signatures, they are actually required for
+the extensions to function properly. The optional typing allows for asynchronously loading the modules while
+rendering the component immediately.
 
-Utility method that will create the CodeMirror extension used for syntax
-highlighting in `CodeEditor`.
+#### Common parameters for all hooks
 
-#### `createCodeMirrorLanguageExtension(language: LanguageName): CodeMirrorExtension`
+- `editorView`: The CodeMirror `EditorView` instance to attach the extension to
+- `stateModule`: Reference to the `@codemirror/state` module (optional for lazy loading, but required for functionality)
 
-Utility method that will load the language extension used in `CodeEditor` for
-any supported `LanguageName`.
+#### `useAutoCompleteExtension`
 
-##### Example
-
-```ts
-import { createCodeMirrorLanuageExtension, LanguageName } from "@leafygreen-ui/code-editor";
-import { EditorState } from "@codemirror/state"
-
-let state = EditorState.create({extensions: [
-  createCodeMirrorLanuageExtension(LanguageName.javascript);
-]});
+```tsx
+import { useAutoCompleteExtension } from '@leafygreen-ui/code-editor';
 ```
 
-#### `createCodeMirrorHighlightExtension(theme: Theme, fontSize: number): CodeMirrorExtension`
+Hook that provides autocompletion functionality for CodeMirror editors.
 
-Utility method that will create the CodeMirror extension used for the theme in `CodeEditor`.
+**Parameters:**
 
-#### `createCodeMirrorTooltipsExtension(tooltipConfigs): CodeMirrorExtension`
+- Common parameters (see above)
+- `language`: Language identifier to enable language-specific autocompletion
+- `autoCompleteModule`: Reference to the `@codemirror/autocomplete` module
 
-Creates a CodeMirror extension that displays multiple tooltips as diagnostics.
+**Returns:** A CodeMirror extension that enables autocompletion.
 
-##### Example
+#### `useCodeFoldingExtension`
 
-```ts
-const tooltipExtension = createTooltipsExtension([
+```tsx
+import { useCodeFoldingExtension } from '@leafygreen-ui/code-editor';
+```
+
+Hook that provides code folding functionality for CodeMirror editors with LeafyGreen styled fold markers.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `enableCodeFolding`: Flag to enable/disable code folding functionality
+- `languageModule`: Reference to the `@codemirror/language` module
+
+**Returns:** A CodeMirror extension that enables code folding with custom fold markers.
+
+#### `useHighlightExtension`
+
+```tsx
+import { useHighlightExtension } from '@leafygreen-ui/code-editor';
+```
+
+Hook that provides syntax highlighting functionality for CodeMirror editors with LeafyGreen theming.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `theme`: The LeafyGreen theme to apply for syntax highlighting (`'light'` or `'dark'`)
+- `language`: Language identifier for language-specific highlighting
+- `modules`: Various CodeMirror language modules needed for syntax highlighting
+
+**Returns:** A CodeMirror extension that enables syntax highlighting based on the provided theme and language.
+
+#### `useHyperLinkExtension`
+
+```tsx
+import { useHyperLinkExtension } from '@leafygreen-ui/code-editor';
+```
+
+Hook that provides clickable URLs functionality for CodeMirror editors.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `enableClickableUrls`: Flag to enable/disable clickable URLs functionality
+- `hyperLinkModule`: Reference to the `@uiw/codemirror-extensions-hyper-link` module
+
+**Returns:** A CodeMirror extension that enables clickable URLs.
+
+#### `useIndentExtension`
+
+```tsx
+import { useIndentExtension } from '@leafygreen-ui/code-editor';
+```
+
+Hook that configures indentation settings for CodeMirror editors.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `indentUnit`: The type of indentation to use (`'spaces'` or `'tabs'`)
+- `indentSize`: The number of spaces for each indentation level
+- `languageModule`: Reference to the `@codemirror/language` module
+
+**Returns:** A CodeMirror extension that configures indentation behavior.
+
+#### `useLanguageExtension`
+
+```tsx
+import { useLanguageExtension, LanguageName } from '@leafygreen-ui/code-editor';
+```
+
+Hook that provides language support for CodeMirror editors.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `language`: Language identifier from the `LanguageName` constants
+- `modules`: CodeMirror modules with language packages (e.g., `@codemirror/lang-javascript`, `@codemirror/lang-python`)
+
+**Returns:** A CodeMirror extension that enables language-specific features.
+
+#### `useLineNumbersExtension`
+
+```tsx
+import { useLineNumbersExtension } from '@leafygreen-ui/code-editor';
+```
+
+Hook that provides line numbering functionality for CodeMirror editors.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `enableLineNumbers`: Flag to enable/disable line numbers
+- `viewModule`: Reference to the `@codemirror/view` module
+
+**Returns:** A CodeMirror extension that enables line numbers.
+
+#### `useLineWrapExtension`
+
+```tsx
+import { useLineWrapExtension } from '@leafygreen-ui/code-editor';
+```
+
+Hook that provides line wrapping functionality for CodeMirror editors.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `enableLineWrapping`: Flag to enable/disable line wrapping
+- `viewModule`: Reference to the `@codemirror/view` module
+
+**Returns:** A CodeMirror extension that enables line wrapping.
+
+#### `useReadOnlyExtension`
+
+```tsx
+import { useReadOnlyExtension } from '@leafygreen-ui/code-editor';
+```
+
+Hook that provides read-only functionality for CodeMirror editors.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `readOnly`: Flag to enable/disable read-only mode
+
+**Returns:** A CodeMirror extension that enables read-only mode.
+
+#### `useThemeExtension`
+
+```tsx
+import { useThemeExtension } from '@leafygreen-ui/code-editor';
+```
+
+Hook that provides theme styling functionality for CodeMirror editors.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `theme`: The LeafyGreen theme to apply (`'light'` or `'dark'`)
+- `baseFontSize`: Base font size for the editor
+- `viewModule`: Reference to the `@codemirror/view` module
+
+**Returns:** A CodeMirror extension that applies LeafyGreen styling to the editor.
+
+#### `useTooltipExtension`
+
+```tsx
+import { useTooltipExtension } from '@leafygreen-ui/code-editor';
+```
+
+Hook that provides tooltip functionality for CodeMirror editors.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `tooltips`: Array of tooltip configurations specifying position and content
+- `lintModule`: Reference to the `@codemirror/lint` module
+
+**Example:**
+```tsx
+const tooltips = [
   { line: 2, column: 5, length: 4, content: <div>Tooltip 1</div> },
   { line: 3, column: 2, length: 2, content: <div>Tooltip 2</div> },
-]);
+];
 ```
+
+**Returns:** A CodeMirror extension that renders tooltips at specified positions in the code.
+
+#### `useExtension`
+
+```tsx
+import { useExtension } from '@leafygreen-ui/code-editor';
+```
+
+Base hook for managing dynamic CodeMirror extensions using a Compartment.
+
+**Parameters:**
+
+- Common parameters (see above)
+- `value`: The dynamic value that the extension depends on
+- `factory`: A function that takes the value and returns a CodeMirror Extension
+
+**Returns:** A CodeMirror extension to be included in the editor's configuration.
