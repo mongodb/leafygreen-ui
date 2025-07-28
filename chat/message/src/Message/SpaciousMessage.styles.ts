@@ -2,6 +2,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  borderRadius,
   breakpoints,
   color,
   InteractionState,
@@ -10,7 +11,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 export const messageClassName = createUniqueClassName('lg-message');
-export const senderClassName = createUniqueClassName('lg-message');
+export const senderClassName = createUniqueClassName('lg-message-sender');
 /** @deprecated */
 export const avatarClassName = createUniqueClassName('lg-message-avatar');
 
@@ -106,7 +107,7 @@ const sharedMessageContainerWedgeStyles = css`
     top: 0;
     width: ${spacing[200]}px;
     height: 100%;
-    border-radius: 24px 0px 0px 24px;
+    border-radius: ${borderRadius[600]}px 0px 0px ${borderRadius[600]}px;
   }
 `;
 
