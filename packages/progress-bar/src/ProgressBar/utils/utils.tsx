@@ -15,6 +15,7 @@ import {
   iconsPendingCompletion,
 } from '../constants';
 import {
+  AnimatedVariant,
   AnimationMode,
   FormatValueType,
   ProgressBarProps,
@@ -210,6 +211,17 @@ export const omitProps = (
   return omit(obj, Object.keys(toOmit));
 };
 
+/** Returns an animated variant even if the original variant is not animated. */
+const forceAnimatedVariant = (variantProp: Variant) => {
+  const ANIMATED_VARIANTS = Object.values(AnimatedVariant);
+
+  if (!(ANIMATED_VARIANTS as Array<Variant>).includes(variantProp)) {
+    return DEFAULT_VARIANT;
+  }
+
+  return variantProp;
+};
+
 /**
  * Resolves the final props for the progress bar component.
  * - Validates and normalizes conditional values like `value`, `maxValue`, `role`, and `enableAnimation`.
@@ -265,6 +277,7 @@ export const resolveProgressBarProps = (
 
     overrides.isIndeterminate = true;
     overrides.value = getValidValue(props.value);
+    overrides.variant = forceAnimatedVariant(variant); // indeterminate bars must be forced to use an animated variant to avoid animating unsupported colors
   } else if (props.role === Role.Meter) {
     warnEnableAnimationFlag(props);
 
@@ -273,7 +286,7 @@ export const resolveProgressBarProps = (
     overrides.maxValue = getValidMaxValue(props.maxValue);
     overrides.disabled = props.disabled ?? false;
   } else {
-    if (props.enableAnimation) warnAnimatedVariant(props);
+    if (props.enableAnimation) warnAnimatedVariant(props); // determinate bars with animation enabled don't need forcing; their variants already exclude unsupported colors
 
     overrides.value = getValidValue(props.value, props.maxValue);
     overrides.maxValue = getValidMaxValue(props.maxValue);
