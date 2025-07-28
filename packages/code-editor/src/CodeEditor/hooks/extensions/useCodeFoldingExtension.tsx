@@ -7,6 +7,23 @@ import Icon from '@leafygreen-ui/icon';
 
 import { useExtension } from './useExtension';
 
+/**
+ * Hook that provides code folding functionality for CodeMirror editors.
+ * This hook creates and manages a CodeMirror extension for code folding
+ * that can be toggled on/off and customizes the folding marker UI with LeafyGreen icons.
+ *
+ * @param params Configuration object for the code folding extension
+ * @param params.editorView The CodeMirror EditorView instance to attach the extension to
+ * @param params.stateModule CodeMirror state module for creating the compartment (marked optional for lazy loading, but required for functionality)
+ * @param params.enableCodeFolding Optional flag to enable/disable code folding functionality
+ * @param params.languageModule Optional CodeMirror language module reference needed for fold gutter
+ * @returns A CodeMirror extension that enables code folding with custom fold markers when both enableCodeFolding and languageModule are provided
+ *
+ * @remarks
+ * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
+ * the compartment will not be created until stateModule is provided. The hook safely handles
+ * the case where it's not immediately available by returning an empty extension array.
+ */
 export function useCodeFoldingExtension({
   editorView,
   stateModule,

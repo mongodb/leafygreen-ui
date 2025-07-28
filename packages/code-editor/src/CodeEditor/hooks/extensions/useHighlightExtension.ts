@@ -13,6 +13,24 @@ import { type CodeEditorModules } from '../useModuleLoaders';
 import { useExtension } from './useExtension';
 import { type LanguageName } from './useLanguageExtension';
 
+/**
+ * Hook that provides syntax highlighting functionality for CodeMirror editors.
+ * This hook creates and manages a CodeMirror extension for syntax highlighting
+ * with theme integration and language-specific highlighting.
+ *
+ * @param params Configuration object for the highlight extension
+ * @param params.editorView The CodeMirror EditorView instance to attach the extension to
+ * @param params.stateModule CodeMirror state module for creating the compartment (marked optional for lazy loading, but required for functionality)
+ * @param params.theme The LeafyGreen theme to apply for syntax highlighting
+ * @param params.language Optional language identifier for language-specific highlighting
+ * @param params.modules CodeMirror modules needed for syntax highlighting
+ * @returns A CodeMirror extension that enables syntax highlighting based on the provided theme and language
+ *
+ * @remarks
+ * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
+ * the compartment will not be created until stateModule is provided. The hook safely handles
+ * the case where it's not immediately available by returning an empty extension array.
+ */
 export function useHighlightExtension({
   editorView,
   stateModule,

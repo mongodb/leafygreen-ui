@@ -4,6 +4,24 @@ import { type CodeEditorProps, IndentUnits } from '../../CodeEditor.types';
 
 import { useExtension } from './useExtension';
 
+/**
+ * Hook that configures indentation settings for CodeMirror editors.
+ * This hook creates and manages a CodeMirror extension for indentation
+ * that controls indent type (tabs vs spaces) and size.
+ *
+ * @param params Configuration object for the indentation extension
+ * @param params.editorView The CodeMirror EditorView instance to attach the extension to
+ * @param params.stateModule CodeMirror state module for creating the compartment (marked optional for lazy loading, but required for functionality)
+ * @param params.indentUnit The type of indentation to use ('spaces' or 'tabs')
+ * @param params.indentSize The number of spaces for each indentation level
+ * @param params.languageModule Optional CodeMirror language module needed for language-aware indentation
+ * @returns A CodeMirror extension that configures indentation behavior
+ *
+ * @remarks
+ * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
+ * the compartment will not be created until stateModule is provided. The hook safely handles
+ * the case where it's not immediately available by returning an empty extension array.
+ */
 export function useIndentExtension({
   editorView,
   stateModule,

@@ -3,25 +3,27 @@ import { type Compartment, type Extension } from '@codemirror/state';
 import { type EditorView } from 'codemirror';
 
 /**
- * Hook for managing a dynamic CodeMirror extensions using a Compartment.
+ * Hook for managing dynamic CodeMirror extensions using a Compartment.
  * This hook simplifies using extensions that need to change based on props
  * by handling the compartment creation and reconfiguration internally.
  *
- * @param extensionConfig An object containing:
- * - `editorView`: The CodeMirror EditorView instance.
- * - `stateModule`: The CodeMirror state module, used to create the Compartment.
- * - `value`: The dynamic value that the extension depends on. When this value
- * changes, the extension will be reconfigured.
- * - `factory`: A function that takes the `value` and returns a CodeMirror
- * `Extension`. This function should be stable (e.g., defined outside the
- * component or memoized with useCallback).
- * @returns An `Extension` to be included in the editor's configuration.
+ * @param params Configuration object for the extension
+ * @param params.editorView The CodeMirror EditorView instance to attach the extension to
+ * @param params.stateModule CodeMirror state module for creating the Compartment (marked optional for lazy loading, but required for functionality)
+ * @param params.value The dynamic value that the extension depends on; when this changes, the extension will be reconfigured
+ * @param params.factory A function that takes the value and returns a CodeMirror Extension (should be stable or memoized with useCallback)
+ * @returns A CodeMirror Extension to be included in the editor's configuration
  *
- * @remarks CodeMirror state is immutable. Once configuration is set, the
- * entire state would need to be updated to update one facet. Compartments allow
- * us to dynamically change parts of the configuration after
- * initialization, without needing to recreate the entire editor state.
+ * @remarks
+ * CodeMirror state is immutable. Once configuration is set, the entire state would
+ * need to be updated to update one facet. Compartments allow us to dynamically change
+ * parts of the configuration after initialization, without needing to recreate the
+ * entire editor state.
  * See https://codemirror.net/examples/config/#dynamic-configuration
+ *
+ * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
+ * the compartment will not be created until stateModule is provided. The hook safely handles
+ * the case where it's not immediately available by returning an empty extension array.
  */
 export const useExtension = <T>({
   editorView,

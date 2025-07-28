@@ -4,6 +4,9 @@ import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
+/**
+ * Constant object defining supported language names for the CodeMirror editor.
+ */
 export const LanguageName = {
   cpp: 'cpp',
   csharp: 'csharp',
@@ -24,6 +27,23 @@ export const LanguageName = {
 } as const;
 export type LanguageName = (typeof LanguageName)[keyof typeof LanguageName];
 
+/**
+ * Hook that provides language support for CodeMirror editors.
+ * This hook creates and manages a CodeMirror extension for language-specific features
+ * such as syntax highlighting, auto-completion, and code folding.
+ *
+ * @param params Configuration object for the language extension
+ * @param params.editorView The CodeMirror EditorView instance to attach the extension to
+ * @param params.stateModule CodeMirror state module for creating the compartment (marked optional for lazy loading, but required for functionality)
+ * @param params.language Optional language identifier from the LanguageName constants
+ * @param params.modules Optional CodeMirror modules needed for language support
+ * @returns A CodeMirror extension that enables language-specific features
+ *
+ * @remarks
+ * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
+ * the compartment will not be created until stateModule is provided. The hook safely handles
+ * the case where it's not immediately available by returning an empty extension array.
+ */
 export function useLanguageExtension({
   editorView,
   stateModule,

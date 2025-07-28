@@ -15,6 +15,22 @@ import { CodeEditorSelectors } from '../../CodeEditor.types';
 
 import { useExtension } from './useExtension';
 
+/**
+ * Hook that provides theme styling functionality for CodeMirror editors.
+ * This hook creates and manages a CodeMirror extension for theming
+ * that applies LeafyGreen UI design system styles to the editor.
+ *
+ * @param params Configuration object for the theme extension
+ * @param params.editorView The CodeMirror EditorView instance to attach the extension to
+ * @param params.stateModule CodeMirror state module for creating the compartment (marked optional for lazy loading, but required for functionality)
+ * @param params.theme The LeafyGreen theme to apply (light or dark)
+ * @returns A CodeMirror extension that applies LeafyGreen styling to the editor
+ *
+ * @remarks
+ * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
+ * the compartment will not be created until stateModule is provided. The hook safely handles
+ * the case where it's not immediately available by returning an empty extension array.
+ */
 export function useThemeExtension({
   editorView,
   stateModule,

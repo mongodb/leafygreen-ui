@@ -8,16 +8,25 @@ import { type CodeEditorTooltip } from '../../CodeEditor.types';
 import { useExtension } from './useExtension';
 
 /**
- * TODO: UPDATE
- * Creates a CodeMirror linter extension that displays multiple tooltips as diagnostics.
- * This allows multiple tooltips to be shown at once, each at its own position.
+ * Hook that provides tooltip functionality for CodeMirror editors.
+ * This hook creates and manages a CodeMirror extension that displays
+ * multiple tooltips as diagnostics at specific positions in the code.
  *
- * @param tooltips - Array of tooltip configs
- * @returns A CodeMirror extension that renders all tooltips as diagnostics
+ * @param params Configuration object for the tooltip extension
+ * @param params.editorView The CodeMirror EditorView instance to attach the extension to
+ * @param params.stateModule CodeMirror state module for creating the compartment (marked optional for lazy loading, but required for functionality)
+ * @param params.tooltips Array of tooltip configurations specifying position and content
+ * @param params.lintModule Optional CodeMirror lint module needed for displaying tooltips as diagnostics
+ * @returns A CodeMirror extension that renders tooltips at specified positions in the code
+ *
+ * @remarks
+ * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
+ * the compartment will not be created until stateModule is provided. The hook safely handles
+ * the case where it's not immediately available by returning an empty extension array.
  *
  * @example
  * ```tsx
- * const tooltipExtension = createTooltipsExtension([
+ * const tooltips = [
  *   { line: 2, column: 5, length: 4, content: <div>Tooltip 1</div> },
  *   { line: 3, column: 2, length: 2, content: <div>Tooltip 2</div> },
  * ]);
