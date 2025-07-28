@@ -81,6 +81,9 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     variant: {
       control: { type: 'select' },
       options: VARIANTS,
+      // storybook fails to parse ts docs description for this prop
+      description:
+        'Determinate variants: `info`, `success`, `warning`, `error`. Indeterminate variants: `info`, `success`.',
     },
     maxValue: {
       control: { type: 'number' },

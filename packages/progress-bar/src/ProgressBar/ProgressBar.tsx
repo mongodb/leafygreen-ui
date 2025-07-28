@@ -179,12 +179,19 @@ export function ProgressBar(props: ProgressBarProps) {
           >
             <div
               data-lgid={lgIds.fill}
+              style={
+                {
+                  // to avoid rebuilding styles on every width change, use CSS variables
+                  ...(!isIndeterminate && {
+                    '--width': `${displayWidth}%`,
+                    '--width-animation-duration': `${widthAnimationDuration}ms`,
+                  }),
+                } as React.CSSProperties
+              }
               className={getBarFillStyles({
                 theme,
                 variant,
                 disabled,
-                width: displayWidth,
-                widthAnimationDuration,
                 animationMode,
               })}
               // if on fade-out transition, revert back to base mode

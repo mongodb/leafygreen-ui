@@ -33,14 +33,20 @@ describe('getTestUtils', () => {
       />,
     );
 
-    const { getBar, getBarFill, getBarTrack, queryIcon, queryLabel } =
-      getTestUtils();
+    const {
+      getBar,
+      getBarFill,
+      getBarTrack,
+      getBarFillWidth,
+      queryIcon,
+      queryLabel,
+    } = getTestUtils();
 
     expect(getBar()).toBeInTheDocument();
     expect(getBar()).toHaveAttribute('role', 'progressbar');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFill()).toHaveStyle({ width: '50%' });
+    expect(getBarFillWidth()).toBe('50%');
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeInTheDocument();
@@ -58,14 +64,20 @@ describe('getTestUtils', () => {
       />,
     );
 
-    const { getBar, getBarFill, getBarTrack, queryIcon, queryDescription } =
-      getTestUtils();
+    const {
+      getBar,
+      getBarFill,
+      getBarTrack,
+      getBarFillWidth,
+      queryIcon,
+      queryDescription,
+    } = getTestUtils();
 
     expect(getBar()).toBeInTheDocument();
     expect(getBar()).toHaveAttribute('role', 'meter');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFill()).toHaveStyle({ width: '50%' });
+    expect(getBarFillWidth()).toBe('50%');
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeNull();
@@ -98,13 +110,13 @@ describe('getTestUtils', () => {
     expect(first.getBar()).toBeInTheDocument();
     expect(first.getBar()).toHaveAttribute('role', 'progressbar');
     expect(first.getBarFill()).toBeInTheDocument();
-    expect(first.getBarFill()).toHaveStyle({ width: '30%' });
+    expect(first.getBarFillWidth()).toBe('30%');
     expect(first.queryIcon()).toBeNull();
 
     expect(second.getBar()).toBeInTheDocument();
     expect(second.getBar()).toHaveAttribute('role', 'meter');
     expect(second.getBarFill()).toBeInTheDocument();
-    expect(second.getBarFill()).toHaveStyle({ width: '70%' });
+    expect(second.getBarFillWidth()).toBe('70%');
     expect(second.queryIcon()).toBeInTheDocument();
   });
 });
