@@ -9,25 +9,19 @@ import React, {
 import flattenChildren from 'react-keyed-flatten-children';
 import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
-import Button, { Size as ButtonSize } from '@leafygreen-ui/button';
-import { cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
+import { ScrollToLatestButton } from '../ScrollToLatestButton';
+
 import {
-  avatarPaddingStyles,
-  baseStyles,
-  desktopAvatarPaddingStyles,
   disclaimerTextStyles,
-  messageFeedStyles,
-  messageFeedThemeStyles,
-  scrollButtonContainerStyles,
-  scrollButtonStyles,
-  themeStyles,
+  getAvatarPaddingStyles,
+  getContainerStyles,
+  getMessageFeedStyles,
 } from './MessageFeed.styles';
 import { MessageFeedProps } from '.';
 
@@ -39,7 +33,7 @@ export const MessageFeed = forwardRef(
     const { containerWidth: chatContainerWidth } = useLeafyGreenChatContext();
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const containerRef = useRef<HTMLDivElement>(null);
-    const isDesktop = () =>
+    const isDesktop =
       !!chatContainerWidth && chatContainerWidth >= breakpoints.Tablet;
 
     const flattenedChildren = flattenChildren(children);
@@ -54,9 +48,7 @@ export const MessageFeed = forwardRef(
         return (
           <div
             key="message-prompts"
-            className={cx(avatarPaddingStyles, {
-              [desktopAvatarPaddingStyles]: isDesktop(),
-            })}
+            className={getAvatarPaddingStyles(isDesktop)}
           >
             {child}
           </div>
@@ -121,19 +113,16 @@ export const MessageFeed = forwardRef(
       <LeafyGreenProvider darkMode={darkMode}>
         <div
           {...rest}
-          className={cx(baseStyles, themeStyles[theme], className)}
+          className={getContainerStyles({ className, theme })}
           ref={ref}
         >
-          <div
-            className={cx(messageFeedThemeStyles[theme], messageFeedStyles)}
-            ref={containerRef}
-          >
+          <div className={getMessageFeedStyles(theme)} ref={containerRef}>
             {renderedChildren}
           </div>
           <ScrollToLatestButton
-            visible={showScrollButton}
-            handleScroll={scrollToLatest}
             darkMode={darkMode}
+            onClick={scrollToLatest}
+            visible={showScrollButton}
           />
         </div>
       </LeafyGreenProvider>
@@ -142,29 +131,3 @@ export const MessageFeed = forwardRef(
 );
 
 MessageFeed.displayName = 'MessageFeed';
-
-function ScrollToLatestButton({
-  visible,
-  handleScroll,
-  darkMode: darkModeProp,
-}: {
-  visible: boolean;
-  handleScroll: () => void;
-  darkMode?: boolean;
-}) {
-  const { darkMode } = useDarkMode(darkModeProp);
-  return visible ? (
-    <div className={scrollButtonContainerStyles}>
-      <Button
-        className={scrollButtonStyles}
-        onClick={handleScroll}
-        darkMode={darkMode}
-        aria-label="Scroll to latest message"
-        size={ButtonSize.Small}
-        rightGlyph={<Icon glyph="ArrowDown" />}
-      >
-        Scroll to latest
-      </Button>
-    </div>
-  ) : null;
-}

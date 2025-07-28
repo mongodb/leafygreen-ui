@@ -13,8 +13,10 @@ import {
 
 import { Link } from '@leafygreen-ui/typography';
 
-import baseMessages from './utils/baseMessages';
-import { MessageFields } from './utils';
+import {
+  baseMessages,
+  type MessageFields,
+} from './utils/MessageFeed.testutils';
 import { MessageFeed } from '.';
 
 const meta: StoryMetaType<typeof MessageFeed> = {

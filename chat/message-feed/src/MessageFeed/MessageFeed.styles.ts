@@ -1,19 +1,21 @@
 import { avatarSizes, Size } from '@lg-chat/avatar';
 
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { borderRadius, breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
-  height: 500px;
+const MESSAGE_FEED_HEIGHT = 500;
+
+const baseStyles = css`
+  height: ${MESSAGE_FEED_HEIGHT}px;
   width: 100%;
   display: flex;
   justify-content: center;
   position: relative;
 `;
 
-export const themeStyles: Record<Theme, string> = {
+const themeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.black};
   `,
@@ -22,18 +24,26 @@ export const themeStyles: Record<Theme, string> = {
   `,
 };
 
-export const messageFeedStyles = css`
+export const getContainerStyles = ({
+  className,
+  theme,
+}: {
+  className?: string;
+  theme: Theme;
+}) => cx(baseStyles, themeStyles[theme], className);
+
+const baseMessageFeedStyles = css`
   width: 100%;
   max-width: ${breakpoints.Tablet +
-  (avatarSizes[Size.Default] + spacing[5] + spacing[3]) * 2}px;
+  (avatarSizes[Size.Default] + spacing[800] + spacing[400]) * 2}px;
   height: 100%;
   overflow-y: scroll;
   scroll-behavior: smooth;
   position: relative;
-  padding: ${spacing[3]}px ${spacing[5]}px ${spacing[2]}px;
+  padding: ${spacing[400]}px ${spacing[800]}px ${spacing[200]}px;
 `;
 
-export const messageFeedThemeStyles: Record<Theme, string> = {
+const messageFeedThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     // https://css-tricks.com/books/greatest-css-tricks/scroll-shadows/
     background:
@@ -90,27 +100,25 @@ export const messageFeedThemeStyles: Record<Theme, string> = {
   `,
 };
 
-// Avatar size + horizontal gap in Message
-export const avatarPaddingStyles = css`
-  padding: 0px ${avatarSizes[Size.Small] + spacing[2]}px;
-`;
-
-export const desktopAvatarPaddingStyles = css`
-  padding: 0px ${avatarSizes[Size.Default] + spacing[3]}px;
-`;
+export const getMessageFeedStyles = (theme: Theme) =>
+  cx(baseMessageFeedStyles, messageFeedThemeStyles[theme]);
 
 export const disclaimerTextStyles = css`
   text-align: center;
-  margin-top: ${spacing[4]}px;
-  margin-bottom: ${spacing[6]}px;
+  margin-top: ${spacing[600]}px;
+  margin-bottom: ${spacing[1600]}px;
 `;
 
-export const scrollButtonContainerStyles = css`
-  position: absolute;
-  bottom: ${spacing[400]}px;
+// Avatar size + horizontal gap in Message
+const baseAvatarPaddingStyles = css`
+  padding: 0px ${avatarSizes[Size.Small] + spacing[200]}px;
 `;
 
-export const scrollButtonStyles = css`
-  box-shadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
-  border-radius: ${borderRadius[400]}px;
+const desktopAvatarPaddingStyles = css`
+  padding: 0px ${avatarSizes[Size.Default] + spacing[400]}px;
 `;
+
+export const getAvatarPaddingStyles = (isDesktop: boolean) =>
+  cx(baseAvatarPaddingStyles, {
+    [desktopAvatarPaddingStyles]: isDesktop,
+  });
