@@ -3,6 +3,8 @@ import { breakpoints } from '@leafygreen-ui/tokens';
 
 import {
   DRAWER_TOOLBAR_WIDTH,
+  DRAWER_WIDTH,
+  DRAWER_WITH_TOOLBAR_WIDTH,
   GRID_AREA,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
@@ -22,7 +24,10 @@ const baseStyles = css`
 `;
 
 const withoutToolbarBaseStyles = css`
-  grid-template-columns: auto min(50vw, calc(var(--drawer-width) * 1px));
+  grid-template-columns: auto min(
+      50vw,
+      calc(var(--drawer-width, var(--drawer-width-default)) * 1px)
+    );
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-columns: unset;
@@ -41,7 +46,10 @@ const withToolbarBaseStyles = css`
   grid-template-areas: '${GRID_AREA.content} ${GRID_AREA.drawer}';
   grid-template-columns: auto min(
       50vw,
-      calc(${DRAWER_TOOLBAR_WIDTH}px + var(--drawer-width) * 1px)
+      calc(
+        ${DRAWER_TOOLBAR_WIDTH}px +
+          var(--drawer-width, var(--drawer-width-default)) * 1px
+      )
     );
 `;
 
@@ -50,6 +58,10 @@ const withToolbarOpenStyles = css`
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
     grid-template-columns: auto ${DRAWER_TOOLBAR_WIDTH}px;
   }
+`;
+
+const resizingStyles = css`
+  transition: none;
 `;
 
 export const getEmbeddedDrawerLayoutStyles = ({
@@ -65,10 +77,15 @@ export const getEmbeddedDrawerLayoutStyles = ({
 }) =>
   cx(
     baseStyles,
+    css`
+      --drawer-width-default: ${isDrawerOpen
+        ? hasToolbar
+          ? DRAWER_WITH_TOOLBAR_WIDTH
+          : DRAWER_WIDTH
+        : 0};
+    `,
     {
-      [css`
-        transition: none;
-      `]: isDrawerResizing,
+      [resizingStyles]: isDrawerResizing,
       [withToolbarBaseStyles]: hasToolbar,
       [withToolbarOpenStyles]: isDrawerOpen && hasToolbar,
       [withoutToolbarBaseStyles]: !hasToolbar,
