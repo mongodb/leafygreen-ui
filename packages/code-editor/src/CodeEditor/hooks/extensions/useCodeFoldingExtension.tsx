@@ -14,15 +14,16 @@ import { useExtension } from './useExtension';
  *
  * @param params Configuration object for the code folding extension
  * @param params.editorView The CodeMirror EditorView instance to attach the extension to
- * @param params.stateModule CodeMirror state module for creating the compartment (marked optional for lazy loading, but required for functionality)
- * @param params.enableCodeFolding Optional flag to enable/disable code folding functionality
- * @param params.languageModule Optional CodeMirror language module reference needed for fold gutter
+ * @param params.stateModule CodeMirror state module (`@codemirror/state`) for creating the compartment (marked optional for lazy loading, but required for functionality)
+ * @param params.enableCodeFolding Flag to enable/disable code folding functionality
+ * @param params.languageModule CodeMirror language module (`@codemirror/language`) reference needed for fold gutter (marked optional for lazy loading, but required for functionality)
  * @returns A CodeMirror extension that enables code folding with custom fold markers when both enableCodeFolding and languageModule are provided
  *
  * @remarks
- * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
- * the compartment will not be created until stateModule is provided. The hook safely handles
- * the case where it's not immediately available by returning an empty extension array.
+ * Note: Although several parameters are marked as optional in the type signature (due to lazy loading),
+ * the extension will only be fully functional once all required modules are provided. The hook safely handles
+ * the case where modules aren't immediately available by returning an empty extension array.
+ * This pattern allows the component to render immediately while modules are being loaded asynchronously.
  */
 export function useCodeFoldingExtension({
   editorView,

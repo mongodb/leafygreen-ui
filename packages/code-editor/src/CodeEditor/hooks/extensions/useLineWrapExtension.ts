@@ -9,15 +9,16 @@ import { useExtension } from './useExtension';
  *
  * @param params Configuration object for the line wrap extension
  * @param params.editorView The CodeMirror EditorView instance to attach the extension to
- * @param params.stateModule CodeMirror state module for creating the compartment (marked optional for lazy loading, but required for functionality)
+ * @param params.stateModule CodeMirror state module (`@codemirror/state`) for creating the compartment (marked optional for lazy loading, but required for functionality)
  * @param params.enableLineWrapping Flag to enable/disable line wrapping
- * @param params.viewModule Optional CodeMirror view module needed for line wrapping functionality
+ * @param params.viewModule CodeMirror view module (`@codemirror/view`) needed for line wrapping functionality (marked optional for lazy loading, but required for functionality)
  * @returns A CodeMirror extension that enables line wrapping when both enableLineWrapping is true and viewModule is provided
  *
  * @remarks
- * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
- * the compartment will not be created until stateModule is provided. The hook safely handles
- * the case where it's not immediately available by returning an empty extension array.
+ * Note: Although several parameters are marked as optional in the type signature (due to lazy loading),
+ * the extension will only be fully functional once all required modules are provided. The hook safely handles
+ * the case where modules aren't immediately available by returning an empty extension array.
+ * This pattern allows the component to render immediately while modules are being loaded asynchronously.
  */
 export function useLineWrapExtension({
   editorView,
