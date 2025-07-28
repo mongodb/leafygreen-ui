@@ -7,7 +7,7 @@ import Icon from '@leafygreen-ui/icon';
 
 import { useExtension } from './useExtension';
 
-export function useFoldGutterExtension(
+export function useCodeFoldingExtension(
   view: EditorView | null,
   enable: boolean,
   module?: typeof import('@codemirror/language'),

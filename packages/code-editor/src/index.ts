@@ -10,7 +10,7 @@ export {
   IndentUnits,
 } from './CodeEditor';
 export {
-  useFoldGutterExtension,
+  useCodeFoldingExtension,
   useHighlightExtension,
   useHyperLinkExtension,
   useIndentExtension,

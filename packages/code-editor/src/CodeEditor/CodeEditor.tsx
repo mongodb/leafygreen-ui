@@ -12,7 +12,7 @@ import { getEditorStyles } from './CodeEditor.styles';
 import { type CodeEditorProps, IndentUnits } from './CodeEditor.types';
 import {
   useAutoCompleteExtension,
-  useFoldGutterExtension,
+  useCodeFoldingExtension,
   useHighlightExtension,
   useHyperLinkExtension,
   useIndentExtension,
@@ -92,7 +92,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       modules?.['@codemirror/state'],
     );
 
-    const foldGutterExtension = useFoldGutterExtension(
+    const foldGutterExtension = useCodeFoldingExtension(
       editorViewRef.current,
       enableCodeFolding,
       modules?.['@codemirror/language'],
