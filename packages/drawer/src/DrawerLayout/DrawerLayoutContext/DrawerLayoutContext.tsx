@@ -18,11 +18,8 @@ export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
   displayMode: DisplayMode.Overlay,
   onClose: undefined,
   hasToolbar: false,
-  setIsDrawerOpen: () => {},
   isDrawerResizing: false,
-  setIsDrawerResizing: () => {},
   drawerWidth: 0,
-  setDrawerWidth: () => {},
 });
 
 /**

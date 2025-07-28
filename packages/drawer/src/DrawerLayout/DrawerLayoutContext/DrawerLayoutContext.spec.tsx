@@ -18,7 +18,11 @@ describe('useDrawerLayoutContext', () => {
     expect(result.current.displayMode).toBe(DisplayMode.Overlay);
     expect(result.current.onClose).toBeUndefined();
     expect(result.current.hasToolbar).toBe(false);
-    expect(typeof result.current.setIsDrawerOpen).toBe('function');
+    expect(result.current.isDrawerResizing).toBe(false);
+    expect(result.current.drawerWidth).toBe(0);
+    expect(typeof result.current.setIsDrawerOpen).toBe('undefined');
+    expect(typeof result.current.setDrawerWidth).toBe('undefined');
+    expect(typeof result.current.setIsDrawerResizing).toBe('undefined');
   });
 
   test('Returns the value passed to the provider', () => {
@@ -48,8 +52,34 @@ describe('useDrawerLayoutContext', () => {
     });
     expect(result.current.isDrawerOpen).toBe(true);
     act(() => {
-      result.current.setIsDrawerOpen(false);
+      result?.current?.setIsDrawerOpen?.(false);
     });
     expect(result.current.isDrawerOpen).toBe(false);
+  });
+
+  test('Updates drawerWidth when setDrawerWidth is called', () => {
+    const { result } = renderHook(() => useDrawerLayoutContext(), {
+      wrapper: ({ children }) => (
+        <DrawerLayoutProvider>{children}</DrawerLayoutProvider>
+      ),
+    });
+    expect(result.current.drawerWidth).toBe(0);
+    act(() => {
+      result?.current?.setDrawerWidth?.(100);
+    });
+    expect(result.current.drawerWidth).toBe(100);
+  });
+
+  test('Updates isDrawerResizing when setIsDrawerResizing is called', () => {
+    const { result } = renderHook(() => useDrawerLayoutContext(), {
+      wrapper: ({ children }) => (
+        <DrawerLayoutProvider>{children}</DrawerLayoutProvider>
+      ),
+    });
+    expect(result.current.isDrawerResizing).toBe(false);
+    act(() => {
+      result?.current?.setIsDrawerResizing?.(true);
+    });
+    expect(result.current.isDrawerResizing).toBe(true);
   });
 });
