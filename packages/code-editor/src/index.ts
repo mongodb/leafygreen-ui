@@ -9,15 +9,4 @@ export {
   type CodeMirrorView,
   IndentUnits,
 } from './CodeEditor';
-export {
-  useCodeFoldingExtension,
-  useHighlightExtension,
-  useHyperLinkExtension,
-  useIndentExtension,
-  useLanguageExtension,
-  useLazyModules,
-  useLineWrapExtension,
-  useModuleLoaders,
-  useThemeExtension,
-  useTooltipExtension,
-} from './CodeEditor/hooks';
+export * from './CodeEditor/hooks/extensions';
