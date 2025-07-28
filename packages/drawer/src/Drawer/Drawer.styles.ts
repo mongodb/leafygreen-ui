@@ -139,21 +139,6 @@ const getOverlayStyles = ({
     },
   );
 
-const getEmbeddedStyles = ({ open, size }: { open: boolean; size: number }) =>
-  cx(
-    css`
-      transition: width ${TRANSITION_DURATION}ms ${TRANSITION_TIMING_FUNCTION};
-    `,
-    {
-      [css`
-        width: ${size}px;
-      `]: open,
-      [css`
-        width: 0;
-      `]: !open,
-    },
-  );
-
 const getDisplayModeStyles = ({
   displayMode,
   open,

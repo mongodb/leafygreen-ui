@@ -1,10 +1,11 @@
 import React, { forwardRef, useEffect } from 'react';
 
+import { useMergeRefs } from '@leafygreen-ui/hooks';
+
 import { useDrawerLayoutContext } from '../DrawerLayout';
 
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
-import { useMergeRefs } from '@leafygreen-ui/hooks';
 
 /**
  * @internal

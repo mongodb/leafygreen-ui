@@ -177,7 +177,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         setIsDrawerResizing(isResizing);
         setDrawerWidth(drawerSize);
       }
-    }, [isEmbedded, drawerSize, isResizing]);
+    }, [
+      isEmbedded,
+      drawerSize,
+      isResizing,
+      setDrawerWidth,
+      setIsDrawerResizing,
+    ]);
 
     const resizerProps = getResizerProps();
 
