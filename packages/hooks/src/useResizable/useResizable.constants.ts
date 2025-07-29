@@ -1,11 +1,13 @@
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { Position, SizeGrowth } from './useResizable.types';
+import { Arrow, Position, SizeGrowth } from './useResizable.types';
+
+export const RESIZER_SIZE = 2;
 
 // Mappings for keyboard interactions based on the position
 export const SIZE_GROWTH_KEY_MAPPINGS: Record<
   Position,
-  { [key: string]: SizeGrowth }
+  Partial<Record<Arrow, SizeGrowth>>
 > = {
   [Position.Right]: {
     [keyMap.ArrowLeft]: 'increase',
@@ -24,5 +26,3 @@ export const SIZE_GROWTH_KEY_MAPPINGS: Record<
     [keyMap.ArrowUp]: 'decrease',
   },
 };
-
-export const RESIZER_SIZE = 2;

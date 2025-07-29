@@ -1,3 +1,5 @@
+import { keyMap } from '@leafygreen-ui/lib';
+
 export const Position = {
   Left: 'left',
   Right: 'right',
@@ -13,6 +15,13 @@ export const SizeGrowth = {
 } as const;
 
 export type SizeGrowth = (typeof SizeGrowth)[keyof typeof SizeGrowth];
+
+// Define Arrow type using the keyMap values
+export type Arrow =
+  | typeof keyMap.ArrowLeft
+  | typeof keyMap.ArrowRight
+  | typeof keyMap.ArrowUp
+  | typeof keyMap.ArrowDown;
 
 export interface ResizableProps {
   /**

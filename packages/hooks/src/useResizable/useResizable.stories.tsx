@@ -79,7 +79,7 @@ const CreateResizableStory: StoryFn<any> = args => {
   });
 
   const resizerProps = getResizerProps();
-  const isVertical = position === 'left' || position === 'right';
+  const isVertical = position === Position.Left || position === Position.Right;
 
   const containerStyles = {
     ...config.containerStyles,

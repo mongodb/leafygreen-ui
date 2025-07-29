@@ -4,6 +4,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 
 import { SIZE_GROWTH_KEY_MAPPINGS } from './useResizable.constants';
 import {
+  Arrow,
   Position,
   ResizableProps,
   ResizableReturn,
@@ -90,8 +91,20 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   }, []);
 
   /**
+   * Handles the size update based on the next size value.
+   */
+  const updateSize = useCallback(
+    (nextSize: number | undefined) => {
+      if (nextSize !== undefined) {
+        setSize(nextSize);
+        onResize?.(nextSize);
+      }
+    },
+    [onResize],
+  );
+
+  /**
    * Handles keyboard interactions for resizing based on the position.
-   * Prevents default behavior for arrow keys.
    *
    * For example:
    * - If position is 'left' and the left arrow key is pressed, it decreases the size.
@@ -99,6 +112,34 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    */
   const getNextKeyboardSize = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent, position: Position | null) => {
+      const getNextSize = (sizeGrowth: SizeGrowth | undefined) => {
+        const currentSize = size;
+        const sizes = sortedKeyboardSizes;
+
+        if (!sizeGrowth) return currentSize; // No change if sizeGrowth is undefined
+
+        if (sizeGrowth === SizeGrowth.Increase) {
+          return sizes.find(size => size > currentSize);
+        } else {
+          return [...sizes].reverse().find(size => size < currentSize);
+        }
+      };
+
+      if (position && event.code in SIZE_GROWTH_KEY_MAPPINGS[position]) {
+        const sizeGrowth =
+          SIZE_GROWTH_KEY_MAPPINGS[position][event.code as Arrow];
+        const nextSize = getNextSize(sizeGrowth);
+        updateSize(nextSize);
+      }
+    },
+    [size, sortedKeyboardSizes, updateSize],
+  );
+
+  /**
+   * Prevents default behavior and calls getNextKeyboardSize to handle resizing.
+   */
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent | KeyboardEvent) => {
       if (position === Position.Left || position === Position.Right) {
         if (
           event.code === keyMap.ArrowLeft ||
@@ -111,40 +152,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
           event.preventDefault();
         }
       }
-
-      const getNextSize = (sizeGrowth: SizeGrowth) => {
-        const currentSize = size;
-        const sizes = sortedKeyboardSizes;
-
-        if (sizeGrowth === SizeGrowth.Increase) {
-          return sizes.find(size => size > currentSize);
-        } else {
-          return [...sizes].reverse().find(size => size < currentSize);
-        }
-      };
-
-      const handleSizeChange = (nextSize: number | undefined) => {
-        if (nextSize !== undefined) {
-          setSize(nextSize);
-          onResize?.(nextSize);
-        }
-      };
-
-      if (position && event.code in SIZE_GROWTH_KEY_MAPPINGS[position]) {
-        const sizeGrowth = SIZE_GROWTH_KEY_MAPPINGS[position][event.code];
-        const nextSize = getNextSize(sizeGrowth);
-        handleSizeChange(nextSize);
-      }
-    },
-    [size, sortedKeyboardSizes, onResize],
-  );
-
-  /**
-   * Prevents default behavior and calls getNextKeyboardSize to handle resizing.
-   * This allows resizing using arrow keys based on the position.
-   */
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent | KeyboardEvent) => {
       getNextKeyboardSize(event, position);
     },
     [getNextKeyboardSize, position],
@@ -153,7 +160,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   /**
    * Handles mouse down event for resizing
    */
-  const handleOnMouseDown = useCallback(
+  const handleMouseDown = useCallback(
     (e: MouseEvent | React.MouseEvent) => {
       if (!enabled) return;
 
@@ -176,14 +183,14 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   /**
    * Handle focus event for the resizer
    */
-  const handleOnFocus = useCallback(() => {
+  const handleFocus = useCallback(() => {
     setIsFocused(true);
   }, []);
 
   /**
    * Handle blur event for the resizer
    */
-  const handleOnBlur = useCallback(() => {
+  const handleBlur = useCallback(() => {
     setIsFocused(false);
   }, []);
 
@@ -199,9 +206,9 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
     // Use callbacks defined outside to prevent recreation of functions
     const props = {
-      onMouseDown: handleOnMouseDown,
-      onFocus: handleOnFocus,
-      onBlur: handleOnBlur,
+      onMouseDown: handleMouseDown,
+      onFocus: handleFocus,
+      onBlur: handleBlur,
       ...getResizerAriaAttributes(size, minSize, maxSize, isVertical),
       tabIndex: 0, // Make the resizer focusable
       className: getResizerStyles(isVertical, isResizing),
@@ -213,73 +220,62 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     size,
     minSize,
     maxSize,
-    handleOnMouseDown,
-    handleOnFocus,
-    handleOnBlur,
+    handleMouseDown,
+    handleFocus,
+    handleBlur,
     isResizing,
     isVertical,
   ]);
 
-  // Effect hook to add and remove global mouse event listeners
-  // These listeners are added to 'window' to ensure dragging works even if the mouse
-  // moves off the resizer handle during the drag.
+  /**
+   * Effect hook to add and remove global mouse event listeners
+   * These listeners are added to 'window' to ensure dragging works even if the mouse
+   * moves off the resizer handle during the drag.
+   */
   useEffect(() => {
-    const cleanupListeners = () => {
+    if (!isResizing && !enabled) return;
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-
-    if (isResizing && enabled) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-    } else {
-      cleanupListeners();
-    }
-
-    return () => {
-      cleanupListeners();
-    };
   }, [isResizing, handleMouseMove, handleMouseUp, enabled]);
 
-  // Effect hook to add and remove global keydown event listener
-  // This listener is added to 'window' to allow resizing with arrow keys
+  /**
+   * Effect hook to add and remove global keydown event listener
+   * This listener is added to 'window' to allow resizing with arrow keys
+   */
   useEffect(() => {
-    const cleanupListeners = () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+    if (!isFocused && !enabled) return;
 
-    if (isFocused && enabled) {
-      window.addEventListener('keydown', handleKeyDown);
-    } else {
-      cleanupListeners();
-    }
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      cleanupListeners();
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [enabled, isFocused, handleKeyDown]);
 
-  // Effect hook to handle CSS transitions for resizing
-  // This is to ensure that the resizing does not have a transition effect while resizing
-  // but transitions back to the new size smoothly after resizing is done.
+  /**
+   * Effect hook to handle CSS transitions for resizing
+   * This is to ensure that the resizing does not have a transition effect while resizing
+   * but transitions back to the new size smoothly after resizing is done.
+   */
   useEffect(() => {
-    const cleanupStyles = () => {
-      resizableRef.current?.style.removeProperty('transition');
-      document.body.style.removeProperty('cursor');
-    };
+    if (!isResizing) return;
+    const ref = resizableRef.current;
 
-    if (isResizing) {
-      resizableRef.current?.style.setProperty('transition', 'none');
-      document.body.style.setProperty(
-        'cursor',
-        isVertical ? 'col-resize' : 'row-resize',
-      );
-    } else {
-      cleanupStyles();
-    }
+    ref?.style.setProperty('transition', 'none');
+    document.body.style.setProperty(
+      'cursor',
+      isVertical ? 'col-resize' : 'row-resize',
+    );
 
     return () => {
-      cleanupStyles();
+      ref?.style.removeProperty('transition');
+      document.body.style.removeProperty('cursor');
     };
   }, [isResizing, isVertical]);
 
