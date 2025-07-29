@@ -125,7 +125,27 @@ const TemplateComponent: StoryFn<StoryDrawerProps> = ({
     </Button>
   );
 
-  const renderDrawer = () => <Drawer {...rest} />;
+  const renderDrawer = () => (
+    <Drawer {...rest} open={open} onClose={() => setOpen(false)} />
+  );
+  const isEmbedded = displayMode === DisplayMode.Embedded;
+
+  const baseLayoutProps = {
+    drawer: renderDrawer(),
+    onClose: () => setOpen(false),
+    isDrawerOpen: open,
+  };
+
+  const layoutProps = isEmbedded
+    ? {
+        displayMode,
+        resizable,
+        ...baseLayoutProps,
+      }
+    : {
+        displayMode,
+        ...baseLayoutProps,
+      };
 
   return (
     <div
@@ -134,14 +154,7 @@ const TemplateComponent: StoryFn<StoryDrawerProps> = ({
         width: 100%;
       `}
     >
-      {/* @ts-expect-error resizable prop is only allowed for embedded drawers */}
-      <DrawerLayout
-        displayMode={displayMode}
-        isDrawerOpen={open}
-        drawer={renderDrawer()}
-        resizable={resizable}
-        onClose={() => setOpen(false)}
-      >
+      <DrawerLayout {...layoutProps}>
         <main
           className={css`
             padding: ${spacing[400]}px;
