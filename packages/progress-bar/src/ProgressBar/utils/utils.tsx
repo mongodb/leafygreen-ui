@@ -38,7 +38,7 @@ import {
  * @param maxValue - The input maximum value to validate.
  * @returns The valid maximum value.
  */
-const getValidMaxValue = (maxValue?: number) => {
+export const getValidMaxValue = (maxValue?: number) => {
   if (!isDefined(maxValue) || maxValue <= 0) {
     return DEFAULT_MAX_VALUE;
   }
@@ -56,7 +56,7 @@ const getValidMaxValue = (maxValue?: number) => {
  * @param maxValue - The optional upper bound.
  * @returns The clamped value, or undefined if value is undefined.
  */
-const getValidValue = (value?: number, maxValue?: number) => {
+export const getValidValue = (value?: number, maxValue?: number) => {
   if (!isDefined(value)) {
     return value;
   }
@@ -211,7 +211,7 @@ export const omitProps = (
   return omit(obj, Object.keys(toOmit));
 };
 
-/** Returns an animated variant even if the original variant is not animated. */
+/** Helper function to return an animated variant even if the original variant is not animated. */
 const forceAnimatedVariant = (variant: Variant) => {
   const ANIMATED_VARIANTS = Object.values(AnimatedVariant);
 

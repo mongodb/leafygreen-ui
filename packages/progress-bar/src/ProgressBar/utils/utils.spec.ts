@@ -2,7 +2,37 @@ import { requiredA11yArgs } from '../../test.constants';
 import { DEFAULT_VARIANT } from '../constants';
 import { Role, Variant } from '../ProgressBar.types';
 
-import { getFormattedValue, resolveProgressBarProps } from './utils';
+import {
+  getFormattedValue,
+  getValidMaxValue,
+  getValidValue,
+  resolveProgressBarProps,
+} from './utils';
+
+describe('getValidMaxValue', () => {
+  test('defaults to maxValue of 1 when maxValue is less than 0', () => {
+    expect(getValidMaxValue(-10)).toBe(1);
+  });
+
+  test('defaults to maxValue of 1 when maxValue is 0', () => {
+    expect(getValidMaxValue(0)).toBe(1);
+  });
+
+  test('returns the original maxValue when it is greater than 0', () => {
+    expect(getValidMaxValue(10)).toBe(10);
+  });
+});
+
+describe('getValidValue', () => {
+  const TEST_MAX_VALUE = 100;
+  test('defaults to value of 0 when value is less than 0', () => {
+    expect(getValidValue(-10, TEST_MAX_VALUE)).toBe(0);
+  });
+
+  test('defaults to maxValue when value is greater than maxValue', () => {
+    expect(getValidValue(150, TEST_MAX_VALUE)).toBe(TEST_MAX_VALUE);
+  });
+});
 
 describe('getFormattedValue', () => {
   test('renders a fraction correctly', () => {

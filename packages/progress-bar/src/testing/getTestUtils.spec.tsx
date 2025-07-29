@@ -16,7 +16,6 @@ describe('getTestUtils', () => {
     expect(getBar()).toHaveAttribute('role', 'progressbar');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFill()).toHaveStyle({ width: '100%' });
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeNull();
@@ -33,20 +32,13 @@ describe('getTestUtils', () => {
       />,
     );
 
-    const {
-      getBar,
-      getBarFill,
-      getBarTrack,
-      getBarFillWidthVar,
-      queryIcon,
-      queryLabel,
-    } = getTestUtils();
+    const { getBar, getBarFill, getBarTrack, queryIcon, queryLabel } =
+      getTestUtils();
 
     expect(getBar()).toBeInTheDocument();
     expect(getBar()).toHaveAttribute('role', 'progressbar');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFillWidthVar()).toBe('50%');
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeInTheDocument();
@@ -64,20 +56,13 @@ describe('getTestUtils', () => {
       />,
     );
 
-    const {
-      getBar,
-      getBarFill,
-      getBarTrack,
-      getBarFillWidthVar,
-      queryIcon,
-      queryDescription,
-    } = getTestUtils();
+    const { getBar, getBarFill, getBarTrack, queryIcon, queryDescription } =
+      getTestUtils();
 
     expect(getBar()).toBeInTheDocument();
     expect(getBar()).toHaveAttribute('role', 'meter');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFillWidthVar()).toBe('50%');
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeNull();
@@ -110,13 +95,13 @@ describe('getTestUtils', () => {
     expect(first.getBar()).toBeInTheDocument();
     expect(first.getBar()).toHaveAttribute('role', 'progressbar');
     expect(first.getBarFill()).toBeInTheDocument();
-    expect(first.getBarFillWidthVar()).toBe('30%');
     expect(first.queryIcon()).toBeNull();
+    expect(first.queryLabel()).toHaveTextContent('First Progress');
 
     expect(second.getBar()).toBeInTheDocument();
     expect(second.getBar()).toHaveAttribute('role', 'meter');
     expect(second.getBarFill()).toBeInTheDocument();
-    expect(second.getBarFillWidthVar()).toBe('70%');
     expect(second.queryIcon()).toBeInTheDocument();
+    expect(second.queryLabel()).toHaveTextContent('Second Progress');
   });
 });

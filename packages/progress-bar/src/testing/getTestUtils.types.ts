@@ -13,9 +13,6 @@ export interface GetTestUtilsReturnType<
   /** Returns the track of the progress bar element */
   getBarTrack: () => T;
 
-  /** Returns the CSS var applied to the width of the progress bar fill element. */
-  getBarFillWidthVar: () => string;
-
   /** Returns the icon element, if present. */
   queryIcon: () => T | null;
 
