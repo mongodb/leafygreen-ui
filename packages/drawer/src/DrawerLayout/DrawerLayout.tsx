@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { DisplayMode } from '../Drawer/Drawer.types';
+import { DisplayMode, Size } from '../Drawer/Drawer.types';
 import { DrawerToolbarLayout } from '../DrawerToolbarLayout';
 import { LayoutComponent } from '../LayoutComponent';
 
@@ -22,6 +22,7 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
       isDrawerOpen = false,
       resizable = false,
       onClose,
+      size = Size.Default,
       ...rest
     }: DrawerLayoutProps,
     forwardedRef,
@@ -41,6 +42,7 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
         displayMode={displayMode}
         onClose={onClose}
         hasToolbar={hasToolbar}
+        size={size}
       >
         {toolbarData ? (
           <DrawerToolbarLayout

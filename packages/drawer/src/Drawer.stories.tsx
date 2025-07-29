@@ -13,6 +13,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { color, spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { Size } from './Drawer/Drawer.types';
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerLayout } from './DrawerLayout';
 import { DrawerStackProvider } from './DrawerStackContext';
@@ -31,6 +32,7 @@ const snapshotStoryExcludedControlParams = [
   'darkMode',
   'displayMode',
   'title',
+  'size',
 ];
 
 export default {
@@ -65,6 +67,7 @@ export default {
     title: 'Drawer Title',
     onClose: undefined,
     resizable: true,
+    size: Size.Default,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -81,6 +84,11 @@ export default {
       control: 'boolean',
       description:
         'Determines if the Drawer is resizable. Only applies to Embedded display mode.',
+    },
+    size: {
+      control: 'select',
+      description: 'Size of the drawer',
+      options: Object.values(Size),
     },
   },
 } satisfies StoryMetaType<typeof Drawer>;
@@ -113,6 +121,7 @@ const TemplateComponent: StoryFn<StoryDrawerProps> = ({
   displayMode = DisplayMode.Overlay,
   initialOpen,
   resizable,
+  size,
   ...rest
 }: StoryDrawerProps & {
   initialOpen?: boolean;
@@ -134,6 +143,7 @@ const TemplateComponent: StoryFn<StoryDrawerProps> = ({
     drawer: renderDrawer(),
     onClose: () => setOpen(false),
     isDrawerOpen: open,
+    size,
   };
 
   const layoutProps = isEmbedded
@@ -308,6 +318,35 @@ export const LightModeEmbedded: StoryObj<DrawerProps> = {
 };
 
 export const DarkModeEmbedded: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    darkMode: true,
+    displayMode: DisplayMode.Embedded,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+export const Large: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    darkMode: true,
+    displayMode: DisplayMode.Embedded,
+    size: Size.Large,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+export const Default: StoryObj<DrawerProps> = {
   render: TemplateComponent,
   args: {
     children: <LongContent />,

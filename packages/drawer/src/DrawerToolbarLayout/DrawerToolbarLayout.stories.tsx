@@ -14,7 +14,8 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { DisplayMode, Drawer } from '../Drawer';
+import { DisplayMode } from '../Drawer';
+import { Size } from '../Drawer/Drawer.types';
 import { DrawerLayout, DrawerLayoutProps } from '../DrawerLayout';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 
@@ -118,7 +119,6 @@ const toolbarExcludedControls = [
 
 export default {
   title: 'Sections/Drawer/Toolbar',
-  component: Drawer,
   decorators: [
     StoryFn => (
       <div
@@ -143,22 +143,18 @@ export default {
   },
   args: {
     displayMode: DisplayMode.Overlay,
-    title: 'Drawer Title',
     toolbarData: DRAWER_TOOLBAR_DATA,
+    size: Size.Default,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    displayMode: {
-      control: 'radio',
-      description: 'Options to control how the drawer element is displayed',
-      options: Object.values(DisplayMode),
-    },
-    title: {
-      control: 'text',
-      description: 'Title of the Drawer',
+    size: {
+      control: 'select',
+      description: 'Size of the drawer',
+      options: Object.values(Size),
     },
   },
-} satisfies StoryMetaType<typeof Drawer>;
+} satisfies StoryMetaType<typeof DrawerLayout>;
 
 const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
   children,
