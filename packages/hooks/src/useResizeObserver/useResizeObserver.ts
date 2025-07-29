@@ -9,7 +9,7 @@ interface UseResizeObserverProps<T extends HTMLElement = HTMLElement> {
   /** Optional React ref object pointing to the target element or the target element itself. */
   target?: React.RefObject<T> | T | null | undefined;
   /** Function to call when the size of the target element changes. */
-  callback?: (entry: ResizeObserverEntry) => void;
+  onResize?: (entry: ResizeObserverEntry) => void;
   /** Determines whether or not the hook should run, defaults to false. */
   disabled?: boolean;
 }
@@ -22,11 +22,11 @@ interface UseResizeObserverReturnType<T extends HTMLElement = HTMLElement> {
 }
 
 /**
- * Hook to observe changes in the size of a DOM element and fire a callback.
+ * Hook to observe changes in the size of a DOM element and fire a onResize.
  */
 export const useResizeObserver = <T extends HTMLElement>({
   target,
-  callback,
+  onResize,
   disabled = false,
 }: UseResizeObserverProps<T>): UseResizeObserverReturnType<T> => {
   const internalTargetRef = useRef<T>(null);
@@ -53,8 +53,8 @@ export const useResizeObserver = <T extends HTMLElement>({
         const { width, height } = entry.contentRect;
         setSize({ width, height });
 
-        if (callback) {
-          callback(entry);
+        if (onResize) {
+          onResize(entry);
         }
       }
     });
@@ -66,7 +66,7 @@ export const useResizeObserver = <T extends HTMLElement>({
     return () => {
       observer.disconnect();
     };
-  }, [target, callback, disabled]);
+  }, [target, onResize, disabled]);
 
   return {
     ref: target ? undefined : internalTargetRef,

@@ -17,7 +17,7 @@ function MockComponent({
 
   const { ref, size } = useResizeObserver({
     target: usesControlledRef ? controlledRef : undefined,
-    callback: onResize,
+    onResize,
     disabled,
   });
 
