@@ -1,32 +1,52 @@
 import React, { ChangeEvent, Fragment, useState } from 'react';
 import { Avatar } from '@lg-chat/avatar';
 import { DisclaimerText } from '@lg-chat/chat-disclaimer';
-import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
-import { Message } from '@lg-chat/message';
-import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
-import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
 import {
-  storybookArgTypes,
-  StoryMetaType,
-  StoryType,
-} from '@lg-tools/storybook-utils';
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
+import { MessageRating } from '@lg-chat/message-rating';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryFn, StoryObj } from '@storybook/react';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Link } from '@leafygreen-ui/typography';
 
 import {
   baseMessages,
   type MessageFields,
 } from './utils/MessageFeed.testutils';
-import { MessageFeed } from '.';
+import { MessageFeed, type MessageFeedProps } from '.';
 
 const meta: StoryMetaType<typeof MessageFeed> = {
   title: 'Composition/Chat/MessageFeed',
   component: MessageFeed,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    variant: {
+      control: 'radio',
+      options: Object.values(Variant),
+    },
   },
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
+    generate: {
+      storyNames: ['CompactVariant', 'SpaciousVariant'],
+      combineArgs: {
+        darkMode: [false, true],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafyGreenProvider darkMode={context?.args.darkMode}>
+            <LeafyGreenChatProvider variant={context?.args.variant}>
+              <Instance />
+            </LeafyGreenChatProvider>
+          </LeafyGreenProvider>
+        );
+      },
+    },
   },
 };
 export default meta;
@@ -36,8 +56,8 @@ const MyMessage = ({
   isMongo,
   messageBody,
   userName,
-  hasMessageRating,
-}: any) => {
+  messageRatingProps,
+}: MessageFields) => {
   return (
     <Message
       key={id}
@@ -56,58 +76,68 @@ const MyMessage = ({
           </MessagePrompt>
         </MessagePrompts>
       )}
-      {/* @ts-ignore onChange is passed in the story itself */}
-      {hasMessageRating && <MessageFeedbackStory />}
+      {messageRatingProps && <MessageRating {...messageRatingProps} />}
     </Message>
   );
 };
 
-const Template: StoryType<typeof MessageFeed> = ({
+type MessageFeedStoryProps = MessageFeedProps & {
+  variant?: Variant;
+};
+
+const Template: StoryFn<MessageFeedStoryProps> = ({
   children,
-  darkMode,
+  variant,
   ...rest
 }) => (
-  <LeafyGreenChatProvider>
-    <MessageFeed
-      style={{ width: 700, height: 400 }}
-      darkMode={darkMode}
-      {...rest}
-    >
-      <DisclaimerText title="Terms and Conditions">
-        This is a test description. There&apos;s also a{' '}
-        <Link>link inside of it</Link>.
-      </DisclaimerText>
-      {baseMessages.map(messageFields => (
-        <MyMessage key={messageFields.id} {...messageFields} />
-      ))}
+  <LeafyGreenChatProvider variant={variant}>
+    <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+      {children ?? (
+        <>
+          {variant === Variant.Spacious && (
+            <DisclaimerText title="Terms and Conditions">
+              This is a test description. There&apos;s also a{' '}
+              <Link>link inside of it</Link>.
+            </DisclaimerText>
+          )}
+          {baseMessages.map(messageFields => (
+            <MyMessage key={messageFields.id} {...messageFields} />
+          ))}
+        </>
+      )}
     </MessageFeed>
   </LeafyGreenChatProvider>
 );
 
-export const Basic: StoryType<typeof MessageFeed> = Template.bind({});
+export const LiveExample: StoryObj<MessageFeedStoryProps> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
 
-export const OneMessage: StoryType<typeof MessageFeed> = ({
-  darkMode,
-  ...rest
-}) => {
-  const firstMessage = baseMessages[0] as MessageFields;
-  return (
-    <LeafyGreenChatProvider>
-      <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+export const OneMessage: StoryObj<MessageFeedStoryProps> = {
+  render: Template,
+  args: {
+    children: (
+      <>
         <DisclaimerText title="Terms and Conditions">
           This is a test description. There&apos;s also a{' '}
           <Link>link inside of it</Link>.
         </DisclaimerText>
-        <MyMessage {...firstMessage} />
-      </MessageFeed>
-    </LeafyGreenChatProvider>
-  );
+        <MyMessage {...baseMessages[0]} />
+      </>
+    ),
+  },
 };
 
-export const ChangingMessages: StoryType<typeof MessageFeed> = ({
+const ChangingMessagesComponent = ({
   darkMode,
+  variant,
   ...rest
-}) => {
+}: MessageFeedStoryProps) => {
   const [messages, setMessages] = useState<Array<any>>(baseMessages);
   const [newMessageId, setNewMessageId] = useState<number>(
     baseMessages.length + 1,
@@ -143,7 +173,7 @@ export const ChangingMessages: StoryType<typeof MessageFeed> = ({
 
   return (
     <div>
-      <LeafyGreenChatProvider>
+      <LeafyGreenChatProvider variant={variant}>
         <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
           <DisclaimerText title="Terms and Conditions">
             This is a test description. There&apos;s also a{' '}
@@ -190,4 +220,39 @@ export const ChangingMessages: StoryType<typeof MessageFeed> = ({
       </button>
     </div>
   );
+};
+export const ChangingMessages: StoryObj<MessageFeedStoryProps> = {
+  render: ChangingMessagesComponent,
+};
+
+export const CompactVariant: StoryObj<MessageFeedStoryProps> = {
+  render: Template,
+  args: {
+    children: (
+      <>
+        {baseMessages.map(messageFields => (
+          <MyMessage key={messageFields.id} {...messageFields} />
+        ))}
+      </>
+    ),
+    variant: Variant.Compact,
+  },
+};
+
+export const SpaciousVariant: StoryObj<MessageFeedStoryProps> = {
+  render: Template,
+  args: {
+    children: (
+      <>
+        <DisclaimerText title="Terms and Conditions">
+          This is a test description. There&apos;s also a{' '}
+          <Link>link inside of it</Link>.
+        </DisclaimerText>
+        {baseMessages.map(messageFields => (
+          <MyMessage key={messageFields.id} {...messageFields} />
+        ))}
+      </>
+    ),
+    variant: Variant.Spacious,
+  },
 };

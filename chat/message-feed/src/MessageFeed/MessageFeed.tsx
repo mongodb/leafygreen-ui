@@ -6,23 +6,21 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import flattenChildren from 'react-keyed-flatten-children';
-import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
+import { useInView } from 'react-intersection-observer';
+import {
+  useLeafyGreenChatContext,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { breakpoints } from '@leafygreen-ui/tokens';
 
 import { ScrollToLatestButton } from '../ScrollToLatestButton';
 
-import {
-  disclaimerTextStyles,
-  getAvatarPaddingStyles,
-  getContainerStyles,
-  getMessageFeedStyles,
-} from './MessageFeed.styles';
+import { CompactMessageFeed } from './CompactMessageFeed';
+import { getWrapperStyles } from './MessageFeed.styles';
+import { SpaciousMessageFeed } from './SpaciousMessageFeed';
 import { MessageFeedProps } from '.';
 
 export const MessageFeed = forwardRef(
@@ -30,50 +28,47 @@ export const MessageFeed = forwardRef(
     { children, darkMode: darkModeProp, className, ...rest }: MessageFeedProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
-    const { containerWidth: chatContainerWidth } = useLeafyGreenChatContext();
     const { darkMode, theme } = useDarkMode(darkModeProp);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const isDesktop =
-      !!chatContainerWidth && chatContainerWidth >= breakpoints.Tablet;
+    const { variant } = useLeafyGreenChatContext();
 
-    const flattenedChildren = flattenChildren(children);
-    const renderedChildren = flattenedChildren.map(child => {
-      if (isComponentType(child, 'DisclaimerText')) {
-        return (
-          <div className={disclaimerTextStyles} key="disclaimer-text">
-            {child}
-          </div>
-        );
-      } else if (isComponentType(child, 'MessagePrompts')) {
-        return (
-          <div
-            key="message-prompts"
-            className={getAvatarPaddingStyles(isDesktop)}
-          >
-            {child}
-          </div>
-        );
-      } else {
-        return child;
-      }
-    });
-
-    const [showScrollButton, setShowScrollButton] = useState(false);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+    const [showScrollButton, setShowScrollButton] = useState(false);
+
+    const { ref: topInterceptRef, inView: isTopInView } = useInView({
+      initialInView: true,
+      root: scrollContainerRef.current,
+      threshold: 0,
+    });
+    const { ref: bottomInterceptRef, inView: isBottomInView } = useInView({
+      initialInView: true,
+      root: scrollContainerRef.current,
+      threshold: 0,
+    });
+
+    const isCompact = variant === Variant.Compact;
+    const ScrollContainer = isCompact
+      ? CompactMessageFeed
+      : SpaciousMessageFeed;
+
     const scrollToLatest = useCallback(() => {
-      if (containerRef.current) {
-        containerRef.current.scrollTo(0, containerRef.current.scrollHeight);
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTo(
+          0,
+          scrollContainerRef.current.scrollHeight,
+        );
       }
     }, []);
 
     useEffect(() => {
-      const scrollElement = containerRef.current;
+      const scrollElement = scrollContainerRef.current;
       if (!scrollElement) return;
 
       const isScrolledToEnd = () => {
-        if (!containerRef.current) return true;
-        const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
+        if (!scrollContainerRef.current) return true;
+        const { scrollHeight, scrollTop, clientHeight } =
+          scrollContainerRef.current;
         // Add a small buffer (2px) to account for floating point differences
         return scrollHeight - scrollTop - clientHeight <= 2;
       };
@@ -113,12 +108,22 @@ export const MessageFeed = forwardRef(
       <LeafyGreenProvider darkMode={darkMode}>
         <div
           {...rest}
-          className={getContainerStyles({ className, theme })}
+          className={getWrapperStyles({
+            className,
+            hasBottomShadow: !isBottomInView,
+            hasTopShadow: !isTopInView,
+            isCompact,
+            theme,
+          })}
           ref={ref}
         >
-          <div className={getMessageFeedStyles(theme)} ref={containerRef}>
-            {renderedChildren}
-          </div>
+          <ScrollContainer ref={scrollContainerRef}>
+            {/* Empty span element used to track if container can scroll up */}
+            <span ref={topInterceptRef} />
+            {children}
+            {/* Empty span element used to track if container can scroll down */}
+            <span ref={bottomInterceptRef} />
+          </ScrollContainer>
           <ScrollToLatestButton
             darkMode={darkMode}
             onClick={scrollToLatest}
