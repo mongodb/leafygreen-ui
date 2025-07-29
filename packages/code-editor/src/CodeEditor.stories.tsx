@@ -94,6 +94,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     readOnly: false,
     indentSize: 2,
     indentUnit: IndentUnits.Space,
+    isLoading: false,
     defaultValue: '',
     tooltips: [],
     darkMode: false,
@@ -133,6 +134,9 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     indentUnit: {
       options: ['space', 'tab'],
       control: { type: 'radio' },
+    },
+    isLoading: {
+      control: { type: 'boolean' },
     },
     language: {
       control: { type: 'select' },
@@ -221,6 +225,11 @@ export const TooltipOnHover: StoryObj<{}> = {
       expect(canvasElement.querySelector('.cm-tooltip')).toBeInTheDocument();
     });
   },
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
 };
 
 /**

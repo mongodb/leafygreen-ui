@@ -1,14 +1,18 @@
 import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
 import { type EditorView } from '@codemirror/view';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import {
   useBaseFontSize,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { Body } from '@leafygreen-ui/typography';
 
-import { getEditorStyles } from './CodeEditor.styles';
+import {
+  getEditorStyles,
+  getLoaderStyles,
+  getLoadingTextStyles,
+} from './CodeEditor.styles';
 import { type CodeEditorProps, IndentUnits } from './CodeEditor.types';
 import {
   useAutoCompleteExtension,
@@ -42,6 +46,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       readOnly = false,
       indentUnit = IndentUnits.Space,
       indentSize = 2,
+      isLoading: isLoadingProp = false,
       tooltips = [],
       extensions: consumerExtensions = [],
       darkMode: darkModeProp,
@@ -228,26 +233,38 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       readOnlyExtension,
     ]);
 
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
-
     return (
       <div
         ref={ref}
-        className={cx(
-          getEditorStyles({
-            width,
-            minWidth,
-            maxWidth,
-            height,
-            minHeight,
-            maxHeight,
-          }),
+        className={getEditorStyles({
+          width,
+          minWidth,
+          maxWidth,
+          height,
+          minHeight,
+          maxHeight,
           className,
-        )}
+        })}
         {...rest}
-      />
+      >
+        {(isLoadingProp || isLoading) && (
+          <div
+            className={getLoaderStyles({
+              theme,
+              width,
+              minWidth,
+              maxWidth,
+              height,
+              minHeight,
+              maxHeight,
+            })}
+          >
+            <Body className={getLoadingTextStyles(theme)}>
+              Loading code editor...
+            </Body>
+          </div>
+        )}
+      </div>
     );
   },
 );

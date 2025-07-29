@@ -161,6 +161,17 @@ export interface CodeEditorProps extends DarkModeProps {
   indentUnit?: IndentUnits;
 
   /**
+   * Renders the editor in a loading state.
+   *
+   * @remarks
+   * The CodeEditor is an asynchronous component that relies on lazy loading of
+   * modules. Due to this, regardless of the `isLoading` prop, the editor will
+   * always render a loading state until all required modules are loaded.
+   * This is to ensure that the editor is fully functional before it is displayed.
+   */
+  isLoading?: boolean;
+
+  /**
    * Language to use for syntax highlighting. Will have no highlighting if not set.
    */
   language?: LanguageName;
