@@ -5,7 +5,6 @@ const DELIMITER = '|';
 const iconsEnv = process.env.ICONS || '';
 const iconNames = iconsEnv.split(DELIMITER);
 
-/** Creates Rollup configurations for each icon. */
 const iconConfigs = [esmConfig, umdConfig].flatMap(config =>
   iconNames.map(name => ({
     ...config,
@@ -17,4 +16,4 @@ const iconConfigs = [esmConfig, umdConfig].flatMap(config =>
   })),
 );
 
-export default iconNames.length ? iconConfigs : [];
+export default iconConfigs;
