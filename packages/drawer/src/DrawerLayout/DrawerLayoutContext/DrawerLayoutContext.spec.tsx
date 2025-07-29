@@ -20,9 +20,9 @@ describe('useDrawerLayoutContext', () => {
     expect(result.current.hasToolbar).toBe(false);
     expect(result.current.isDrawerResizing).toBe(false);
     expect(result.current.drawerWidth).toBe(0);
-    expect(typeof result.current.setIsDrawerOpen).toBe('undefined');
-    expect(typeof result.current.setDrawerWidth).toBe('undefined');
-    expect(typeof result.current.setIsDrawerResizing).toBe('undefined');
+    expect(typeof result.current.setIsDrawerOpen).toBe('function');
+    expect(typeof result.current.setDrawerWidth).toBe('function');
+    expect(typeof result.current.setIsDrawerResizing).toBe('function');
   });
 
   test('Returns the value passed to the provider', () => {
