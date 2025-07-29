@@ -24,6 +24,7 @@
     "@lg-chat/avatar": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-rating": "workspace:^",
+    "react-intersection-observer": "^8.25.1",
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {

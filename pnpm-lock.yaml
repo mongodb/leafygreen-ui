@@ -670,6 +670,9 @@ importers:
       '@lg-chat/message-rating':
         specifier: workspace:^
         version: link:../message-rating
+      react-intersection-observer:
+        specifier: ^8.25.1
+        version: 8.34.0(react@18.3.1)
       react-keyed-flatten-children:
         specifier: ^2.2.1
         version: 2.2.1(react@18.3.1)
