@@ -3,8 +3,6 @@ import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-import { getChangedIcons } from './compare-checksum';
-
 /** Splits an array into chunks of a specified size. */
 function chunkArray<T>(arr: Array<T>, size: number): Array<Array<T>> {
   const chunks: Array<Array<T>> = [];
@@ -70,7 +68,7 @@ async function buildAllBatched(
 
 const ICON_DIR = path.resolve(process.cwd(), 'src/generated');
 
-const _iconNamesAll = fs
+const iconNames = fs
   .readdirSync(ICON_DIR)
   .filter(f => /\.tsx?$/.test(f))
   .map(f => path.basename(f, path.extname(f)));
@@ -78,9 +76,7 @@ const _iconNamesAll = fs
 const BATCH_SIZE = 10;
 const NUM_WORKERS = 4;
 
-const iconNamesToBuild = getChangedIcons();
-
-buildAllBatched(BATCH_SIZE, NUM_WORKERS, iconNamesToBuild).catch(err => {
+buildAllBatched(BATCH_SIZE, NUM_WORKERS, iconNames).catch(err => {
   console.error('Build failed:', err);
   process.exit(1);
 });
