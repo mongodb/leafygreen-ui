@@ -83,6 +83,36 @@ const lastTimeContentElMutated = useMutationObserver(
 | `callback` | `function`             | Callback function to execute inside of MutationObserver instance.                                                                                  |         |
 | `enabled`  | `boolean`              | Determines whether the event handler is attached or not.                                                                                           | `true`  |
 
+## useResizeObserver
+
+### Example
+
+```js
+import { useResizeObserver } from '@leafygreen-ui/hooks';
+
+const MyComponent = () => {
+  const { ref, size } = useResizeObserver(
+    onResize: ({ width }) => {
+      doSomethingWith(width)
+    }
+  );
+
+  return (
+    <div ref={ref}>
+      Width: {size.width}, Height: {size.height}
+    </div>
+  );
+};
+```
+
+### Properties
+
+| Prop       | Type                                                | Description                                                                             | Default |
+| ---------- | --------------------------------------------------- | --------------------------------------------------------------------------------------- | ------- |
+| `target`   | `React.RefObject<T> \| T \| null \| undefined`      | Optional React ref object pointing to the target element, or the target element itself. |         |
+| `onResize` | `(size: { width: number, height: number }) => void` | Optional function to call when the size of the target element changes.                  |         |
+| `disabled` | `boolean`                                           | Determines whether the event handler is disabled or not.                                | `false` |
+
 ## useViewportSize
 
 Hook to subscribe to changes in viewport size

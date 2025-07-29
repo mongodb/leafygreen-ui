@@ -6,7 +6,7 @@ interface Size {
 }
 
 interface UseResizeObserverProps<T extends HTMLElement = HTMLElement> {
-  /** Optional React ref object pointing to the target element or the target element itself. */
+  /** Optional React ref object pointing to the target element, or the target element itself. */
   target?: React.RefObject<T> | T | null | undefined;
   /** Function to call when the size of the target element changes. */
   onResize?: (size: Size) => void;
