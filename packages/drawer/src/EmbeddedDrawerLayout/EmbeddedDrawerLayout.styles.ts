@@ -35,6 +35,7 @@ const setDrawerDefaultWidth = ({
       ? DRAWER_WITH_TOOLBAR_WIDTH
       : DRAWER_WIDTH
     : 0};
+  --drawer-width: var(--drawer-width-default);
 `;
 
 const getBaseStyles = ({
@@ -45,6 +46,7 @@ const getBaseStyles = ({
   hasToolbar: boolean;
 }) => cx(baseStyles, setDrawerDefaultWidth({ isDrawerOpen, hasToolbar }));
 
+// If there is no toolbar and the drawer is open, we need to shift the layout by the drawer width;
 const withoutToolbarBaseStyles = css`
   grid-template-columns: auto min(
       50vw,
@@ -57,13 +59,13 @@ const withoutToolbarBaseStyles = css`
   }
 `;
 
-// If there is no toolbar and the drawer is open, we need to shift the layout by the panel width;
 const withoutToolbarOpenStyles = css`
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-rows: 50% 50%;
   }
 `;
 
+// If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + drawer width;
 const withToolbarBaseStyles = css`
   grid-template-areas: '${GRID_AREA.content} ${GRID_AREA.drawer}';
   grid-template-columns: auto min(
@@ -75,7 +77,6 @@ const withToolbarBaseStyles = css`
     );
 `;
 
-// If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + panel width;
 const withToolbarOpenStyles = css`
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
     grid-template-columns: auto ${DRAWER_TOOLBAR_WIDTH}px;
