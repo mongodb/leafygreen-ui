@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import Banner from '@leafygreen-ui/banner';
-import { cx } from '@leafygreen-ui/emotion';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
-import { baseStyles, multilineStyles } from './MessageBanner.styles';
+import { getMessageBannerStyles } from './MessageBanner.styles';
 import { MessageBannerProps } from './MessageBanner.types';
 
 export function MessageBanner({
@@ -26,7 +25,10 @@ export function MessageBanner({
   return (
     <Banner
       ref={bannerRef}
-      className={cx(baseStyles, { [multilineStyles]: isMultiline }, className)}
+      className={getMessageBannerStyles({
+        className,
+        isMultiline,
+      })}
       variant={variant}
       {...divProps}
     >
