@@ -10,7 +10,7 @@ import {
   CodeMirrorView,
 } from '..';
 
-let editorView: CodeMirrorView;
+let editorView: CodeMirrorView | null = null;
 
 /**
  * Returns the first element matching a specific CodeEditor selector
@@ -239,9 +239,7 @@ export function renderCodeEditor(props: Partial<CodeEditorProps> = {}) {
     <CodeEditor
       {...props}
       ref={ref => {
-        if (ref && ref.view) {
-          editorView = ref.view;
-        }
+        editorView = ref?.getEditorView() ?? null;
       }}
     />,
   );
