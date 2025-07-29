@@ -64,6 +64,7 @@ export default {
     displayMode: DisplayMode.Overlay,
     title: 'Drawer Title',
     onClose: undefined,
+    resizable: true,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -75,6 +76,11 @@ export default {
     title: {
       control: 'text',
       description: 'Title of the Drawer',
+    },
+    resizable: {
+      control: 'boolean',
+      description:
+        'Determines if the Drawer is resizable. Only applies to Embedded display mode.',
     },
   },
 } satisfies StoryMetaType<typeof Drawer>;
@@ -101,12 +107,14 @@ const LongContent = () => {
 };
 
 type DrawerOmitOpen = Omit<DrawerProps, 'open' | 'onClose'>;
+type StoryDrawerProps = DrawerOmitOpen & { resizable?: boolean };
 
-const TemplateComponent: StoryFn<DrawerOmitOpen> = ({
+const TemplateComponent: StoryFn<StoryDrawerProps> = ({
   displayMode = DisplayMode.Overlay,
   initialOpen,
+  resizable,
   ...rest
-}: DrawerOmitOpen & {
+}: StoryDrawerProps & {
   initialOpen?: boolean;
 }) => {
   const [open, setOpen] = useState(initialOpen ?? true);
@@ -120,37 +128,35 @@ const TemplateComponent: StoryFn<DrawerOmitOpen> = ({
   const renderDrawer = () => <Drawer {...rest} />;
 
   return (
-    <DrawerStackProvider>
-      <div
-        className={css`
-          height: 500px;
-          width: 100%;
-        `}
+    <div
+      className={css`
+        height: 500px;
+        width: 100%;
+      `}
+    >
+      {/* @ts-expect-error resizable prop is only allowed for embedded drawers */}
+      <DrawerLayout
+        displayMode={displayMode}
+        isDrawerOpen={open}
+        drawer={renderDrawer()}
+        resizable={resizable}
+        onClose={() => setOpen(false)}
       >
-        {/* TODO: fix TS error */}
-        <DrawerLayout
-          displayMode={displayMode}
-          isDrawerOpen={open}
-          drawer={renderDrawer()}
-          resizable={true}
-          onClose={() => setOpen(false)}
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: ${spacing[200]}px;
+          `}
         >
-          <main
-            className={css`
-              padding: ${spacing[400]}px;
-              overflow: auto;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              gap: ${spacing[200]}px;
-            `}
-          >
-            {renderTrigger()}
-            <LongContent />
-          </main>
-        </DrawerLayout>
-      </div>
-    </DrawerStackProvider>
+          {renderTrigger()}
+          <LongContent />
+        </main>
+      </DrawerLayout>
+    </div>
   );
 };
 
