@@ -2,12 +2,6 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-/**
- * Since the icons are currently bundled together without code-splitting,
- * output each UMD build separately at the dist root to allow consumers
- * to import only the icons they need. Keeps backward compatibility for
- * imports from 'leafygreen-ui/icon/dist/MyIconName'.
- */
 async function copy(sourceDir: string, targetDir: string): Promise<void> {
   try {
     if (!(await fs.pathExists(sourceDir))) {
@@ -23,6 +17,9 @@ async function copy(sourceDir: string, targetDir: string): Promise<void> {
   }
 }
 
+/**
+ * Keeps backward compatibility for imports like 'leafygreen-ui/icon/dist/MyIconName'.
+ */
 const sourceDir = path.resolve(process.cwd(), 'dist/umd');
 const targetDir = path.resolve(process.cwd(), 'dist');
 

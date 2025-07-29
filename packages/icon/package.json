@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "p-queue": "^8.1.0"
   },
   "devDependencies": {
     "@leafygreen-ui/lib": "workspace:^",
