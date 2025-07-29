@@ -189,7 +189,12 @@ describe('resolveProgressBarProps', () => {
       } as const;
 
       // @ts-expect-error - animated progress cannot be warning variant
-      resolveProgressBarProps(props);
+      const resolvedProps = resolveProgressBarProps(props);
+      expect(resolvedProps).toMatchObject({
+        enableAnimation: false,
+        variant: Variant.Warning, // variant takes precedence over enableAnimation
+      });
+
       expect(consoleSpy).toHaveBeenCalledWith(
         'Only non-animated determinate bars support "warning" or "error" variants.',
       );

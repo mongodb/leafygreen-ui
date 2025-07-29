@@ -211,15 +211,10 @@ export const omitProps = (
   return omit(obj, Object.keys(toOmit));
 };
 
-/** Helper function to return an animated variant even if the original variant is not animated. */
-const forceAnimatedVariant = (variant: Variant) => {
+/** Helper function to check if a variant is animated. */
+export const isAnimatedVariant = (variant: Variant) => {
   const ANIMATED_VARIANTS = Object.values(AnimatedVariant);
-
-  if (!(ANIMATED_VARIANTS as Array<Variant>).includes(variant)) {
-    return DEFAULT_VARIANT;
-  }
-
-  return variant;
+  return (ANIMATED_VARIANTS as Array<Variant>).includes(variant);
 };
 
 /**
@@ -277,7 +272,7 @@ export const resolveProgressBarProps = (
 
     overrides.isIndeterminate = true;
     overrides.value = getValidValue(props.value);
-    overrides.variant = forceAnimatedVariant(variant); // indeterminate bars must be forced to use an animated variant to avoid animating unsupported colors
+    overrides.variant = isAnimatedVariant(variant) ? variant : DEFAULT_VARIANT;
   } else if (props.role === Role.Meter) {
     warnEnableAnimationFlag(props);
 
@@ -286,12 +281,13 @@ export const resolveProgressBarProps = (
     overrides.maxValue = getValidMaxValue(props.maxValue);
     overrides.disabled = props.disabled ?? false;
   } else {
-    if (props.enableAnimation) warnAnimatedVariant(props); // determinate bars with animation enabled don't need forcing; their styling logic already excludes unsupported colors
+    if (props.enableAnimation) warnAnimatedVariant(props);
 
     overrides.value = getValidValue(props.value, props.maxValue);
     overrides.maxValue = getValidMaxValue(props.maxValue);
     overrides.disabled = props.disabled ?? false;
-    overrides.enableAnimation = props.enableAnimation ?? false;
+    overrides.enableAnimation =
+      props.enableAnimation && isAnimatedVariant(variant);
   }
 
   // based on overrides, set icon visibility
