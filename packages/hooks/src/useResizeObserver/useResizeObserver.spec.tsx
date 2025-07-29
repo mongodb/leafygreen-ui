@@ -5,18 +5,28 @@ import { act, render } from '@testing-library/react';
 import { useResizeObserver } from './useResizeObserver';
 
 function MockComponent({
+  usesControlledRef = false,
   disabled = false,
   onResize,
 }: {
+  usesControlledRef?: boolean;
   disabled?: boolean;
   onResize: jest.Mock;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useResizeObserver(ref, onResize, disabled);
+  const controlledRef = useRef<HTMLDivElement>(null);
+
+  const { ref, size } = useResizeObserver({
+    target: usesControlledRef ? controlledRef : undefined,
+    callback: onResize,
+    disabled,
+  });
 
   return (
-    <div data-testid="mock-element" ref={ref}>
-      My little div
+    <div
+      data-testid="mock-element"
+      ref={usesControlledRef ? controlledRef : ref}
+    >
+      My little div of {size?.width} x {size?.height} pixels
     </div>
   );
 }
@@ -46,40 +56,79 @@ describe('useResizeObserver', () => {
     disconnectMock.mockClear();
   });
 
-  test('observes the target element', () => {
-    const { getByTestId } = render(<MockComponent onResize={jest.fn()} />);
+  const testCases = [
+    {
+      desc: 'with internal ref (created in hook)',
+      usesControlledRef: false,
+    },
+    {
+      desc: 'with controlled ref (created by consumer)',
+      usesControlledRef: true,
+    },
+  ];
 
-    const targetElem = getByTestId('mock-element');
-    expect(observeMock).toHaveBeenCalledWith(targetElem);
-  });
+  testCases.forEach(({ desc, usesControlledRef }) => {
+    describe(desc, () => {
+      test('observes the target element', () => {
+        const { getByTestId } = render(
+          <MockComponent
+            onResize={jest.fn()}
+            usesControlledRef={usesControlledRef}
+          />,
+        );
+        const targetElem = getByTestId('mock-element');
+        expect(observeMock).toHaveBeenCalledWith(targetElem);
+      });
 
-  test('calls the provided callback when a size change is observed', () => {
-    const onResize = jest.fn();
-    render(<MockComponent onResize={onResize} />);
+      test('calls the provided callback when a size change is observed', () => {
+        const onResize = jest.fn();
+        const { getByTestId } = render(
+          <MockComponent
+            onResize={onResize}
+            usesControlledRef={usesControlledRef}
+          />,
+        );
 
-    const resizeObserverEntry = {
-      contentRect: { width: 100, height: 200 },
-    } as ResizeObserverEntry;
+        const resizeObserverEntry = {
+          contentRect: { width: 100, height: 200 },
+        } as ResizeObserverEntry;
 
-    // simulate ResizeObserver triggering callback
-    act(() => {
-      resizeCallback([resizeObserverEntry], new ResizeObserver(() => {}));
+        act(() => {
+          resizeCallback([resizeObserverEntry], new ResizeObserver(() => {}));
+        });
+
+        expect(onResize).toHaveBeenCalled();
+
+        const targetElem = getByTestId('mock-element');
+        expect(targetElem.textContent).toBe(
+          'My little div of 100 x 200 pixels',
+        );
+      });
+
+      test('disconnects observer on unmount', () => {
+        const { unmount } = render(
+          <MockComponent
+            onResize={jest.fn()}
+            usesControlledRef={usesControlledRef}
+          />,
+        );
+
+        unmount();
+        expect(disconnectMock).toHaveBeenCalled();
+      });
+
+      test('does not observe or disconnect if disabled', () => {
+        render(
+          <MockComponent
+            disabled
+            onResize={jest.fn()}
+            usesControlledRef={usesControlledRef}
+          />,
+        );
+
+        expect(observeMock).not.toHaveBeenCalled();
+        expect(disconnectMock).not.toHaveBeenCalled();
+      });
     });
-
-    expect(onResize).toHaveBeenCalled();
-  });
-
-  test('disconnects observer on unmount', () => {
-    const { unmount } = render(<MockComponent onResize={jest.fn()} />);
-
-    unmount();
-    expect(disconnectMock).toHaveBeenCalled();
-  });
-
-  test('does not observe if disabled', () => {
-    render(<MockComponent disabled={true} onResize={jest.fn()} />);
-
-    expect(observeMock).not.toHaveBeenCalled();
-    expect(disconnectMock).not.toHaveBeenCalled();
   });
 });
