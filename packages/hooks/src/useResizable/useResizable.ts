@@ -26,8 +26,8 @@ import {
 export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   enabled = true,
   initialSize = 0,
-  minSize: minSizeProp = 0,
-  maxSize: maxSizeProp = 0,
+  minSize: minSizeProp,
+  maxSize: maxSizeProp,
   onResize,
   maxViewportPercentages,
   position,
