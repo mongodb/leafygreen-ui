@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
-import useResizeObserver from 'use-resize-observer';
+
+import { useResizeObserver } from '@leafygreen-ui/hooks';
 
 import {
   LeafyGreenChatContextProps,

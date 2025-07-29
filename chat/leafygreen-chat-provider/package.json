@@ -15,7 +15,7 @@
     "access": "public"
   },
   "dependencies": {
-    "use-resize-observer": "^9.1.0"
+    "@leafygreen-ui/hooks": "workspace:^"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"
