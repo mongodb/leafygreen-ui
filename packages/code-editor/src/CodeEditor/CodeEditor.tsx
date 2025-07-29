@@ -1,4 +1,10 @@
-import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { type EditorView } from '@codemirror/view';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
@@ -13,7 +19,11 @@ import {
   getLoaderStyles,
   getLoadingTextStyles,
 } from './CodeEditor.styles';
-import { type CodeEditorProps, IndentUnits } from './CodeEditor.types';
+import {
+  CodeEditorHandle,
+  type CodeEditorProps,
+  IndentUnits,
+} from './CodeEditor.types';
 import {
   useAutoCompleteExtension,
   useCodeFoldingExtension,
@@ -30,7 +40,7 @@ import {
   useTooltipExtension,
 } from './hooks';
 
-export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
+export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
     const {
       defaultValue,
@@ -66,7 +76,6 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
     const isControlled = value !== undefined;
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
-    const ref = useMergeRefs([editorContainerRef, forwardedRef]);
 
     const moduleLoaders = useModuleLoaders(props);
     const { isLoading, modules } = useLazyModules(moduleLoaders);
@@ -233,9 +242,13 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
       readOnlyExtension,
     ]);
 
+    useImperativeHandle(forwardedRef, () => ({
+      getEditorView: () => editorViewRef.current,
+    }));
+
     return (
       <div
-        ref={ref}
+        ref={editorContainerRef}
         className={getEditorStyles({
           width,
           minWidth,
