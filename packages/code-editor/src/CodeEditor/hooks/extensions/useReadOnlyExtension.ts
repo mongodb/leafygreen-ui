@@ -1,39 +1,25 @@
 import { type EditorView } from '@codemirror/view';
 
+import { type CodeEditorProps } from '../../CodeEditor.types';
+import { type CodeEditorModules } from '../useModuleLoaders';
+
 import { useExtension } from './useExtension';
 
-/**
- * Hook that provides read-only functionality for CodeMirror editors.
- * This hook creates and manages a CodeMirror extension that controls
- * whether the editor content can be modified by the user.
- *
- * @param params Configuration object for the read-only extension
- * @param params.editorView The CodeMirror EditorView instance to attach the extension to
- * @param params.stateModule CodeMirror state module (`@codemirror/state`) for creating the compartment (marked optional for lazy loading, but required for functionality)
- * @param params.readOnly Flag to enable/disable read-only mode
- * @returns A CodeMirror extension that enables read-only mode when readOnly is true and stateModule is provided
- *
- * @remarks
- * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
- * the extension will only be fully functional once all required modules are provided. The hook safely handles
- * the case where modules aren't immediately available by returning an empty extension array.
- * This pattern allows the component to render immediately while modules are being loaded asynchronously.
- */
 export function useReadOnlyExtension({
-  editorView,
-  stateModule,
-  readOnly,
+  editorViewInstance,
+  props,
+  modules,
 }: {
-  editorView: EditorView | null;
-  stateModule?: typeof import('@codemirror/state');
-  readOnly: boolean;
+  editorViewInstance: EditorView | null;
+  props: Partial<CodeEditorProps>;
+  modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView,
-    stateModule,
+    editorView: editorViewInstance,
+    stateModule: modules?.['@codemirror/state'],
     value: {
-      enable: readOnly,
-      module: stateModule,
+      enable: props.readOnly,
+      module: modules?.['@codemirror/state'],
     },
     factory: ({ enable, module }) =>
       enable && module ? module.EditorState.readOnly.of(true) : [],

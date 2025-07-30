@@ -1,49 +1,27 @@
 import { type EditorView } from '@codemirror/view';
 
 import { type CodeEditorProps, IndentUnits } from '../../CodeEditor.types';
+import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
-/**
- * Hook that configures indentation settings for CodeMirror editors.
- * This hook creates and manages a CodeMirror extension for indentation
- * that controls indent type (tabs vs spaces) and size.
- *
- * @param params Configuration object for the indentation extension
- * @param params.editorView The CodeMirror EditorView instance to attach the extension to
- * @param params.stateModule CodeMirror state module (`@codemirror/state`) for creating the compartment (marked optional for lazy loading, but required for functionality)
- * @param params.indentUnit The type of indentation to use ('spaces' or 'tabs')
- * @param params.indentSize The number of spaces for each indentation level
- * @param params.languageModule CodeMirror language module (`@codemirror/language`) needed for language-aware indentation (marked optional for lazy loading, but required for functionality)
- * @returns A CodeMirror extension that configures indentation behavior
- *
- * @remarks
- * Note: Although several parameters are marked as optional in the type signature (due to lazy loading),
- * the extension will only be fully functional once all required modules are provided. The hook safely handles
- * the case where modules aren't immediately available by returning an empty extension array.
- * This pattern allows the component to render immediately while modules are being loaded asynchronously.
- */
 export function useIndentExtension({
-  editorView,
-  stateModule,
-  indentUnit,
-  indentSize,
-  languageModule,
+  editorViewInstance,
+  props,
+  modules,
 }: {
-  editorView: EditorView | null;
-  stateModule?: typeof import('@codemirror/state');
-  indentUnit: CodeEditorProps['indentUnit'];
-  indentSize: CodeEditorProps['indentSize'];
-  languageModule?: typeof import('@codemirror/language');
+  editorViewInstance: EditorView | null;
+  props: Partial<CodeEditorProps>;
+  modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView,
-    stateModule,
+    editorView: editorViewInstance,
+    stateModule: modules?.['@codemirror/state'],
     value: {
-      unit: indentUnit,
-      size: indentSize,
-      module: languageModule,
-      stateModule,
+      unit: props.indentUnit,
+      size: props.indentSize,
+      module: modules?.['@codemirror/language'],
+      stateModule: modules?.['@codemirror/state'],
     },
     /**
      * Size is given a default because if unit is set and size is not, some size

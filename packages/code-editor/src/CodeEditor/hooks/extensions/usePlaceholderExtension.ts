@@ -1,26 +1,25 @@
 import { type EditorView } from '@codemirror/view';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';
+import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
 export function usePlaceholderExtension({
-  editorView,
-  stateModule,
-  placeholder,
-  viewModule,
+  editorViewInstance,
+  props,
+  modules,
 }: {
-  editorView: EditorView | null;
-  stateModule?: typeof import('@codemirror/state');
-  placeholder?: CodeEditorProps['placeholder'];
-  viewModule?: typeof import('@codemirror/view');
+  editorViewInstance: EditorView | null;
+  props: Partial<CodeEditorProps>;
+  modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView,
-    stateModule,
+    editorView: editorViewInstance,
+    stateModule: modules?.['@codemirror/state'],
     value: {
-      viewModule,
-      placeholder,
+      viewModule: modules?.['@codemirror/view'],
+      placeholder: props.placeholder,
     },
     factory: ({ viewModule, placeholder }) => {
       return placeholder && viewModule

@@ -19,11 +19,7 @@ import {
   getLoaderStyles,
   getLoadingTextStyles,
 } from './CodeEditor.styles';
-import {
-  CodeEditorHandle,
-  type CodeEditorProps,
-  IndentUnits,
-} from './CodeEditor.types';
+import { CodeEditorHandle, type CodeEditorProps } from './CodeEditor.types';
 import {
   useAutoCompleteExtension,
   useCodeFoldingExtension,
@@ -45,19 +41,10 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const {
       defaultValue,
       value,
-      enableClickableUrls = true,
-      enableCodeFolding = true,
-      enableLineNumbers = true,
-      enableLineWrapping = true,
       forceParsing: forceParsingProp = false,
       language,
       onChange: onChangeProp,
-      placeholder,
-      readOnly = false,
-      indentUnit = IndentUnits.Space,
-      indentSize = 2,
       isLoading: isLoadingProp = false,
-      tooltips = [],
       extensions: consumerExtensions = [],
       darkMode: darkModeProp,
       className,
@@ -67,6 +54,15 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       minHeight,
       minWidth,
       width,
+      enableClickableUrls,
+      enableCodeFolding,
+      enableLineNumbers,
+      enableLineWrapping,
+      indentUnit,
+      indentSize,
+      placeholder,
+      readOnly,
+      tooltips,
       ...rest
     } = props;
 
@@ -81,89 +77,75 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const { isLoading, modules } = useLazyModules(moduleLoaders);
 
     const autoCompleteExtension = useAutoCompleteExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      language,
-      autoCompleteModule: modules?.['@codemirror/autocomplete'],
+      editorViewInstance: editorViewRef.current,
+      props,
+      modules,
     });
 
     const codeFoldingExtension = useCodeFoldingExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      enableCodeFolding,
-      languageModule: modules?.['@codemirror/language'],
+      editorViewInstance: editorViewRef.current,
+      props,
+      modules,
     });
 
     const highlightExtension = useHighlightExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      theme,
-      language,
+      editorViewInstance: editorViewRef.current,
+      props: { ...props, theme },
       modules,
     });
 
     const hyperLinkExtension = useHyperLinkExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      enableClickableUrls,
-      hyperLinkModule: modules?.['@uiw/codemirror-extensions-hyper-link'],
+      editorViewInstance: editorViewRef.current,
+      props,
+      modules,
     });
 
     const lineWrapExtension = useLineWrapExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      enableLineWrapping,
-      viewModule: modules?.['@codemirror/view'],
+      editorViewInstance: editorViewRef.current,
+      props,
+      modules,
     });
 
     const lineNumbersExtension = useLineNumbersExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      enableLineNumbers,
-      viewModule: modules?.['@codemirror/view'],
+      editorViewInstance: editorViewRef.current,
+      props,
+      modules,
     });
 
     const indentExtension = useIndentExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      indentUnit,
-      indentSize,
-      languageModule: modules?.['@codemirror/language'],
+      editorViewInstance: editorViewRef.current,
+      props,
+      modules,
     });
 
     const placeholderExtension = usePlaceholderExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      placeholder,
-      viewModule: modules?.['@codemirror/view'],
+      editorViewInstance: editorViewRef.current,
+      props,
+      modules,
     });
 
     const tooltipExtension = useTooltipExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      tooltips,
-      lintModule: modules?.['@codemirror/lint'],
+      editorViewInstance: editorViewRef.current,
+      props,
+      modules,
     });
 
     const languageExtension = useLanguageExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      language,
+      editorViewInstance: editorViewRef.current,
+      props,
       modules,
     });
 
     const themeExtension = useThemeExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      theme,
-      baseFontSize,
-      viewModule: modules?.['@codemirror/view'],
+      editorViewInstance: editorViewRef.current,
+      props: { ...props, theme, baseFontSize },
+      modules,
     });
 
     const readOnlyExtension = useReadOnlyExtension({
-      editorView: editorViewRef.current,
-      stateModule: modules?.['@codemirror/state'],
-      readOnly,
+      editorViewInstance: editorViewRef.current,
+      props,
+      modules,
     });
 
     useLayoutEffect(() => {

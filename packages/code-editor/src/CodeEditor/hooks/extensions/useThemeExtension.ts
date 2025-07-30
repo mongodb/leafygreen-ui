@@ -11,47 +11,33 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { CodeEditorSelectors } from '../../CodeEditor.types';
+import {
+  type CodeEditorProps,
+  CodeEditorSelectors,
+} from '../../CodeEditor.types';
+import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
-/**
- * Hook that provides theme styling functionality for CodeMirror editors.
- * This hook creates and manages a CodeMirror extension for theming
- * that applies LeafyGreen UI design system styles to the editor.
- *
- * @param params Configuration object for the theme extension
- * @param params.editorView The CodeMirror EditorView instance to attach the extension to
- * @param params.stateModule CodeMirror state module (`@codemirror/state`) for creating the compartment (marked optional for lazy loading, but required for functionality)
- * @param params.theme The LeafyGreen theme to apply (light or dark)
- * @returns A CodeMirror extension that applies LeafyGreen styling to the editor
- *
- * @remarks
- * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
- * the extension will only be fully functional once all required modules are provided. The hook safely handles
- * the case where modules aren't immediately available by returning an empty extension array.
- * This pattern allows the component to render immediately while modules are being loaded asynchronously.
- */
 export function useThemeExtension({
-  editorView,
-  stateModule,
-  theme,
-  baseFontSize,
-  viewModule,
+  editorViewInstance,
+  props,
+  modules,
 }: {
-  editorView: EditorView | null;
-  stateModule?: typeof import('@codemirror/state');
-  theme: Theme;
-  baseFontSize: number;
-  viewModule?: typeof import('@codemirror/view');
+  editorViewInstance: EditorView | null;
+  props: Partial<CodeEditorProps> & {
+    theme: Theme;
+    baseFontSize: number;
+  };
+  modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView,
-    stateModule,
+    editorView: editorViewInstance,
+    stateModule: modules?.['@codemirror/state'],
     value: {
-      theme,
-      fontSize: baseFontSize,
-      editorViewModule: viewModule,
+      theme: props.theme,
+      fontSize: props.baseFontSize,
+      editorViewModule: modules?.['@codemirror/view'],
     },
     factory: ({ theme, fontSize, editorViewModule }) => {
       if (!editorViewModule || !editorViewModule.EditorView) {

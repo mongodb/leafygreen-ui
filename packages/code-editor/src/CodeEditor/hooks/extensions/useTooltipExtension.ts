@@ -3,53 +3,29 @@ import { renderToString } from 'react-dom/server';
 import { type Diagnostic } from '@codemirror/lint';
 import { type EditorView } from '@codemirror/view';
 
-import { type CodeEditorTooltip } from '../../CodeEditor.types';
+import {
+  type CodeEditorProps,
+  type CodeEditorTooltip,
+} from '../../CodeEditor.types';
+import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
-/**
- * Hook that provides tooltip functionality for CodeMirror editors.
- * This hook creates and manages a CodeMirror extension that displays
- * multiple tooltips as diagnostics at specific positions in the code.
- *
- * @param params Configuration object for the tooltip extension
- * @param params.editorView The CodeMirror EditorView instance to attach the extension to
- * @param params.stateModule CodeMirror state module (`@codemirror/state`) for creating the compartment (marked optional for lazy loading, but required for functionality)
- * @param params.tooltips Array of tooltip configurations specifying position and content
- * @param params.lintModule CodeMirror lint module (`@codemirror/lint`) needed for displaying tooltips as diagnostics (marked optional for lazy loading, but required for functionality)
- * @returns A CodeMirror extension that renders tooltips at specified positions in the code
- *
- * @remarks
- * Note: Although several parameters are marked as optional in the type signature (due to lazy loading),
- * the extension will only be fully functional once all required modules are provided. The hook safely handles
- * the case where modules aren't immediately available by returning an empty extension array.
- * This pattern allows the component to render immediately while modules are being loaded asynchronously.
- *
- * @example
- * ```tsx
- * const tooltips = [
- *   { line: 2, column: 5, length: 4, content: <div>Tooltip 1</div> },
- *   { line: 3, column: 2, length: 2, content: <div>Tooltip 2</div> },
- * ]);
- * ```
- */
 export function useTooltipExtension({
-  editorView,
-  stateModule,
-  tooltips,
-  lintModule,
+  editorViewInstance,
+  props,
+  modules,
 }: {
-  editorView: EditorView | null;
-  stateModule?: typeof import('@codemirror/state');
-  tooltips: Array<CodeEditorTooltip>;
-  lintModule?: typeof import('@codemirror/lint');
+  editorViewInstance: EditorView | null;
+  props: Partial<CodeEditorProps>;
+  modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView,
-    stateModule,
+    editorView: editorViewInstance,
+    stateModule: modules?.['@codemirror/state'],
     value: {
-      tooltips,
-      module: lintModule,
+      tooltips: props.tooltips || [],
+      module: modules?.['@codemirror/lint'],
     },
     factory: ({ tooltips, module }) => {
       if (!module || !module.linter || tooltips.length === 0) {
