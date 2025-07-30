@@ -40,447 +40,478 @@ function greet(name: string): string {
 
 console.log(greet('MongoDB user'));`;
 
-<CodeEditor defaultValue={sampleCode} language={LanguageName.javascipt} />;
+<CodeEditor defaultValue={sampleCode} language={LanguageName.javascript} />;
 ```
 
 #### Properties
 
 | Name                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Type                         | Default     |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | ----------- |
+| `className` _(optional)_           | CSS class name to apply to the editor container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `string`                     | `undefined` |
+| `darkMode` _(optional)_            | Determines if the component appears in dark mode. When not provided, the component will inherit the dark mode state from the LeafyGreen Provider.                                                                                                                                                                                                                                                                                                                                                                              | `boolean`                    | `undefined` |
 | `defaultValue` _(optional)_        | Initial value to render in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `string`                     | `undefined` |
-| `enableClickableUrls` _(optional)_ | Renders URLs as clickable links in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `boolean`                    | `true`      |
-| `enableCodeFolding` _(optional)_   | Enables code folding arrows in the gutter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `boolean`                    | `true`      |
+| `enableClickableUrls` _(optional)_ | Renders URLs as clickable links in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `boolean`                    | `undefined` |
+| `enableCodeFolding` _(optional)_   | Enables code folding arrows in the gutter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `boolean`                    | `undefined` |
 | `enableLineNumbers` _(optional)_   | Enables line numbers in the editor’s gutter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `boolean`                    | `true`      |
 | `enableLineWrapping` _(optional)_  | Enables line wrapping when the text exceeds the editor’s width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `boolean`                    | `true`      |
 | `extensions` _(optional)_          | Additional CodeMirror extensions to apply to the editor. These will be applied with high precendence, meaning they can override extensions applied through built in props. See the [CodeMirror v6 System Guide](https://codemirror.net/docs/guide/) for more information.                                                                                                                                                                                                                                                      | `Array<CodeMirrorExtension>` | `[]`        |
 | `forceParsing` _(optional)_        | _**This should be used with caution as it can significantly impact performance!**_<br><br>Forces the parsing of the complete document, even parts not currently visible.<br><br>By default, the editor optimizes performance by only parsing the code that is visible on the screen, which is especially beneficial when dealing with large amounts of code. Enabling this option overrides this behavior and forces the parsing of all code, visible or not. This should generally be reserved for exceptional circumstances. | `boolean`                    | `false`     |
-| `indentSize` _(optional)_          | Sets the editor's indent size on tab click. made.                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `number`                     | `2`         |
-| `indentUnit` _(optional)_          | Sets the editor's indent unit on tab click. made.                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `'space' \| 'tab'`           | `space`     |
-| `language` _(optional)_            | Specifies the language for syntax highlighting and autocompletion. The following languages are supported::<br><ul><li>cpp</li><li>csharp</li><li>css</li><li>go</li><li>html</li><li>java</li><li>javascript</li><li>json</li><li>kotlin</li><li>php</li><li>python</li><li>ruby</li><li>rust</li><li>typescript</li></ul>                                                                                                                                                                                                     | `LanguageName`               | `undefined` |
-| `onChange` _(optional)_            | Callback that receives the updated editor value when changes are made.                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(value: string) => void;`   | `undefined` |
+| `height` _(optional)_              | Sets the editor's height. If not set, the editor will automatically adjust its height based on the content.                                                                                                                                                                                                                                                                                                                                                                                                                    | `string`                     | `undefined` |
+| `indentSize` _(optional)_          | Sets the editor's indent size on tab click.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `number`                     | `undefined` |
+| `indentUnit` _(optional)_          | Sets the editor's indent unit on tab click.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `IndentUnits`                | `undefined` |
+| `isLoading` _(optional)_           | Renders the editor in a loading state. The CodeEditor is an asynchronous component that relies on lazy loading of modules. Due to this, regardless of the `isLoading` prop, the editor will always render a loading state until all required modules are loaded.                                                                                                                                                                                                                                                               | `boolean`                    | `false`     |
+| `language` _(optional)_            | Specifies the language for syntax highlighting and autocompletion. The following languages are supported:<br><ul><li>cpp</li><li>csharp</li><li>css</li><li>go</li><li>html</li><li>java</li><li>javascript</li><li>jsx</li><li>json</li><li>kotlin</li><li>php</li><li>python</li><li>ruby</li><li>rust</li><li>typescript</li><li>tsx</li></ul>                                                                                                                                                                              | `LanguageName`               | `undefined` |
+| `maxHeight` _(optional)_           | Sets the editor's maximum height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `string`                     | `undefined` |
+| `maxWidth` _(optional)_            | Sets the editor's maximum width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `string`                     | `undefined` |
+| `minHeight` _(optional)_           | Sets the editor's minimum height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `string`                     | `undefined` |
+| `minWidth` _(optional)_            | Sets the editor's minimum width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `string`                     | `undefined` |
+| `onChange` _(optional)_            | Callback that receives the updated editor value when changes are made.                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(value: string) => void`    | `undefined` |
 | `placeholder` _(optional)_         | Value to display in the editor when it is empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `HTMLElement \| string`      | `undefined` |
 | `readOnly` _(optional)_            | Enables read only mode, making the contents uneditable.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `boolean`                    | `false`     |
-| `tooltips` _(optional)_            | Add tooltips to the editor content that appear on hover.                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `Array<Tooltip>`             | `undefined` |
+| `tooltips` _(optional)_            | Add tooltips to the editor content that appear on hover.                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `Array<CodeEditorTooltip>`   | `undefined` |
+| `value` _(optional)_               | Controlled value of the editor. If set, the editor will be controlled and will not update its value on change. Use `onChange` to update the value externally.                                                                                                                                                                                                                                                                                                                                                                  | `string`                     | `undefined` |
+| `width` _(optional)_               | Sets the editor's width. If not set, the editor will be 100% width of its parent container.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `string`                     | `undefined` |
 
 ## Types and Variables
 
-| Name                         | Description                                                                                                                   |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `CodeEditorProps`            | Props that can be passed to the `CodeEditor` component.                                                                       |
-| `CodeEditorSelectors`        | Enum-like map of CSS selectors for common elements that make up the code editor. These can be useful in testing.              |
-| `CodeEditorTooltip`          | Describes a tooltip to be displayed on hover                                                                                  |
-| `CodeEditorTooltip.column`   | Optional number. Which character, going from left to right, the tooltip should be rendered. 1 based. Defaults to 1.           |
-| `CodeEditorTooltip.content`  | ReactNode. What gets rendered in the tooltip.                                                                                 |
-| `CodeEditorTooltip.length`   | Number. The length the text that the tooltip should cover in characters.                                                      |
-| `CodeEditorTooltip.line`     | Number. Which line in the document the tooltip should be rendered. 1 based.                                                   |
-| `CodeEditorTooltip.severity` | Optional `CodeEditorTooltipSeverity` level. Defaults to 'info'.                                                               |
-| `CodeEditorTooltipSeverity`  | Possible severity levels a `CodeEditorTooltip` can have.                                                                      |
-| `CodeMirrorExtension`        | Underlying CodeMirror editor `Extension` type. For more information see https://codemirror.net/docs/ref/#state.Extension.     |
-| `CodeMirrorState`            | Underlying CodeMirror editor `EditorState` type. For more information see https://codemirror.net/docs/ref/#state.EditorState. |
-| `CodeMirrorView`             | Underlying CodeMirror editor `EditorView` type. For more information see https://codemirror.net/docs/ref/#view.EditorView.    |
-| `IndentUnits`                | Unit options that can be set via the `indentUnit` prop of `CodeEditor`.                                                       |
-| `LanguageName`               | Record of all supported languages.                                                                                            |
-| `RenderedTestEditorType`     | Editor type used to interact with editor in a Jest test. More info in Test Utilities section.                                 |
-| `RenderedTestResult`         | Type returned by the `renderEditor` test utility. More info in Test Utilities section.                                        |
+| Name                        | Description                                                                                                     |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `CodeEditorProps`           | TypeScript interface defining all props that can be passed to the `CodeEditor` component.                       |
+| `CodeEditorSelectors`       | Constant object containing CSS selectors for common CodeEditor elements. Useful for testing and custom styling. |
+| `CodeEditorTooltip`         | TypeScript interface defining the structure for tooltips displayed on hover in the editor.                      |
+| `CodeEditorTooltipSeverity` | Constant object defining possible severity levels for tooltips (`info`, `warning`, `error`, `hint`).            |
+| `CodeMirrorExtension`       | Re-export of CodeMirror's `Extension` type. See https://codemirror.net/docs/ref/#state.Extension.               |
+| `CodeMirrorState`           | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.           |
+| `CodeMirrorView`            | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.              |
+| `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                        |
+| `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                         |
+| `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.          |
 
-## Test Utlities
+## Test Utilities
 
-Test utility helpers imported from `@leafygreen-ui/code-editor/testing`;
+The `@leafygreen-ui/code-editor` package provides a comprehensive testing utility to help you test CodeEditor components in your Jest tests.
 
-### `codeSnippets`
+### `renderCodeEditor(props?)`
 
-Code snippets for all supported languages.
+Renders a CodeEditor component with the specified props for testing purposes.
 
-```ts
-const snippet = codeSnippets[LanguageName.javascript];
-```
+**Parameters:**
 
-### `renderEditor`
+- `props` _(optional)_: Partial `CodeEditorProps` to pass to the CodeEditor component
 
-Renders the editor in a Jest test.
+**Returns:**
+
+- `container`: The rendered container element from `@testing-library/react`
+- `editor`: Editor test utilities object with methods for interacting with the editor
+
+**Example:**
 
 ```tsx
-function renderEditor(props?: Partial<CodeEditorProps>): RenderResult;
+import { renderCodeEditor } from '@leafygreen-ui/code-editor';
+
+test('renders code editor with default value', async () => {
+  const { editor, container } = renderCodeEditor({
+    defaultValue: 'console.log("Hello World");',
+  });
+  await editor.waitForEditorView();
+
+  expect(container).toHaveTextContent('console.log("Hello World");');
+});
 ```
 
-### `RenderResult`
+### Editor Test Utilities
 
-#### `container`
+The `editor` object returned by `renderCodeEditor` provides the following methods:
 
-HTML element of the container of the editor that was rendered.
+#### `editor.waitForEditorView(timeout?)`
 
-#### `editor`
+Waits for the editor view to be available before proceeding with tests.
 
-Editor object used for querying and interacting with the rendered editor.
+**Parameters:**
 
-Has the following interface:
+- `timeout` _(optional)_: Maximum time to wait in milliseconds (default: 5000)
+
+**Returns:** Promise that resolves when the editor view is available
+
+**Example:**
 
 ```tsx
-{
-  /**
-   * Returns the first element matching a specific CodeEditor selector
-   * @param selector - The CSS selector to look for in the editor
-   * @param options - Optional filtering options
-   * @param options.text - Optional text content filter
-   * @returns The first DOM element matching the selector and optional text filter
-   * @throws Error if no elements or multiple elements are found
-   */
-  getBySelector(
-    selector: CodeEditorSelectors,
-    options?: { text?: string },
-  ): Element;
-
-  /**
-   * Returns all elements matching a specific CodeEditor selector
-   * @param selector - The CSS selector to look for in the editor
-   * @param options - Optional filtering options
-   * @param options.text - Optional text content filter
-   * @returns All DOM elements matching the selector and optional text filter
-   * @throws Error if no elements are found
-   */
-  function getAllBySelector(
-    selector: CodeEditorSelectors,
-    options?: { text?: string },
-  ): Array<Element>;
-
-  /**
-   * Returns the first element matching a specific CodeEditor selector or null if not found
-   * @param selector - The CSS selector to look for in the editor
-   * @param options - Optional filtering options
-   * @param options.text - Optional text content filter
-   * @returns The first DOM element matching the selector and optional text filter, or null if not found
-   */
-  queryBySelector(selector: CodeEditorSelectors, options?: {
-    text?: string;
-  }): Element | null;
-
-  /**
-   * Returns all elements matching a specific CodeEditor selector or null if none are found
-   * @param selector - The CSS selector to look for in the editor
-   * @param options - Optional filtering options
-   * @param options.text - Optional text content filter
-   * @returns All DOM elements matching the selector and optional text filter, or null if none found
-   */
-  function queryAllBySelector(
-    selector: CodeEditorSelectors,
-    options?: { text?: string },
-  ): Array<Element> | null;
-
-  /**
-   * Checks if the editor is in read-only mode
-   * @returns Boolean indicating whether the editor is in read-only mode
-   */
-  function isReadOnly(): boolean;
-
-  /**
-   * Retrieves the current indentation unit configuration from the editor
-   * @returns The string used for indentation (spaces or tab)
-   */
-  function getIndentUnit(): IndentUnit;
-
-  /**
-   * Checks if line wrapping is enabled in the editor
-   * @returns Boolean indicating whether line wrapping is enabled
-   */
-  function isLineWrappingEnabled(): boolean;
-
-  // Group of actions that can be performed on the editor.
-  interactions: {
-    /**
-     * Inserts text into the editor at the specified position
-     * @param text - The text to insert
-     * @param options - Optional position options
-     * @param options.from - Starting position for insertion (defaults to 0)
-     * @param options.to - End position for replacement (optional)
-     * @throws Error if editor view is not initialized
-     */
-    insertText(text: string, options?: { to?: number; from?: number; }): undefined;
-  }
-}
+const { editor } = renderCodeEditor();
+await editor.waitForEditorView(); // Wait before interacting with editor
 ```
 
-### Examples
+#### `editor.getBySelector(selector, options?)`
 
-#### Test selector has rendered
+Returns the first element matching a specific CodeEditor selector. Throws an error if no element or multiple elements are found.
+
+**Parameters:**
+
+- `selector`: The CSS selector from `CodeEditorSelectors` enum
+- `options` _(optional)_: Object with optional `text` property for filtering by text content
+
+**Example:**
 
 ```tsx
-import { TestUtils } from '@leafygreen-ui/code-editor/testing';
+// Get the content element
+const content = editor.getBySelector(CodeEditorSelectors.Content);
 
-const { renderEditor } = TestUtils;
+// Get a specific line number
+const lineNumber = editor.getBySelector(CodeEditorSelectors.GutterElement, {
+  text: '1',
+});
+```
 
-test('Line numbers rendered', () => {
-  const { editor } = renderCodeEditor({
-    defaultValue: 'content',
+#### `editor.getAllBySelector(selector, options?)`
+
+Returns all elements matching a specific CodeEditor selector. Throws an error if no elements are found.
+
+**Parameters:**
+
+- `selector`: The CSS selector from `CodeEditorSelectors` enum
+- `options` _(optional)_: Object with optional `text` property for filtering by text content
+
+**Example:**
+
+```tsx
+// Get all line numbers
+const allLineNumbers = editor.getAllBySelector(
+  CodeEditorSelectors.GutterElement,
+);
+```
+
+#### `editor.queryBySelector(selector, options?)`
+
+Returns the first element matching a specific CodeEditor selector, or null if not found. Useful when you're not sure if an element exists.
+
+**Parameters:**
+
+- `selector`: The CSS selector from `CodeEditorSelectors` enum
+- `options` _(optional)_: Object with optional `text` property for filtering by text content
+
+**Example:**
+
+```tsx
+// Check if fold gutter exists
+const foldGutter = editor.queryBySelector(CodeEditorSelectors.FoldGutter);
+expect(foldGutter).not.toBeInTheDocument();
+```
+
+#### `editor.queryAllBySelector(selector, options?)`
+
+Returns all elements matching a specific CodeEditor selector, or null if none are found.
+
+**Parameters:**
+
+- `selector`: The CSS selector from `CodeEditorSelectors` enum
+- `options` _(optional)_: Object with optional `text` property for filtering by text content
+
+#### `editor.isReadOnly()`
+
+Checks if the editor is in read-only mode.
+
+**Returns:** Boolean indicating whether the editor is in read-only mode
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ readOnly: true });
+await editor.waitForEditorView();
+
+expect(editor.isReadOnly()).toBe(true);
+```
+
+#### `editor.getIndentUnit()`
+
+Retrieves the current indentation unit configuration from the editor.
+
+**Returns:** The string used for indentation (spaces or tab character)
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({
+  indentUnit: 'space',
+  indentSize: 4,
+});
+await editor.waitForEditorView();
+
+expect(editor.getIndentUnit()).toBe('    '); // 4 spaces
+```
+
+#### `editor.isLineWrappingEnabled()`
+
+Checks if line wrapping is enabled in the editor.
+
+**Returns:** Boolean indicating whether line wrapping is enabled
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ enableLineWrapping: true });
+await editor.waitForEditorView();
+
+expect(editor.isLineWrappingEnabled()).toBe(true);
+```
+
+#### `editor.interactions.insertText(text, options?)`
+
+Inserts text into the editor at the specified position.
+
+**Parameters:**
+
+- `text`: The text to insert
+- `options` _(optional)_: Object with optional position properties
+  - `from`: Starting position for insertion (defaults to 0)
+  - `to`: End position for replacement (optional)
+
+**Example:**
+
+```tsx
+import { act } from '@testing-library/react';
+
+const { editor } = renderCodeEditor();
+await editor.waitForEditorView();
+
+act(() => {
+  editor.interactions.insertText('new content');
+});
+
+expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
+  'new content',
+);
+```
+
+### Complete Test Example
+
+```tsx
+import {
+  renderCodeEditor,
+  CodeEditorSelectors,
+} from '@leafygreen-ui/code-editor';
+import { act } from '@testing-library/react';
+
+test('comprehensive editor testing', async () => {
+  const { editor, container } = renderCodeEditor({
+    defaultValue: 'const greeting = "Hello";',
+    language: LanguageName.javascript,
     enableLineNumbers: true,
+    enableCodeFolding: true,
   });
+
+  // Wait for editor to initialize
+  await editor.waitForEditorView();
+
+  // Check initial content
+  expect(container).toHaveTextContent('const greeting = "Hello";');
+
+  // Verify line numbers are present
   expect(
-    editor.getBySelector(CodeEditorSelectors.GutterElement, {
-      text: '1',
-    }),
+    editor.getBySelector(CodeEditorSelectors.GutterElement, { text: '1' }),
   ).toBeInTheDocument();
-});
-```
 
-#### Test selector has not rendered
-
-```tsx
-import { TestUtils } from '@leafygreen-ui/code-editor/testing';
-
-const { renderEditor } = TestUtils;
-
-test('Fold gutter does not render', () => {
-  const { editor } = renderCodeEditor({ enableCodeFolding: false });
+  // Verify fold gutter is present
   expect(
-    // Note use of queryBy instead of getBy when test if not rendered
-    editor.queryBySelector(CodeEditorSelectors.FoldGutter),
-  ).not.toBeInTheDocument();
-});
-```
+    editor.getBySelector(CodeEditorSelectors.FoldGutter),
+  ).toBeInTheDocument();
 
-#### Test user interaction
-
-```tsx
-import { TestUtils } from '@leafygreen-ui/code-editor/testing';
-
-const { renderEditor } = TestUtils;
-
-test('Updates value on when user types', () => {
-  const { editor } = renderCodeEditor();
-
-  expect(
-    editor.getBySelector(CodeEditorSelectors.Content),
-  ).not.toHaveTextContent('new content');
-
+  // Insert new text
   act(() => {
-    editor.interactions.insertText('new content');
+    editor.interactions.insertText('\nconsole.log(greeting);', { from: 25 });
   });
 
+  // Verify the new content
   expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
-    'new content',
+    'const greeting = "Hello";\nconsole.log(greeting);',
   );
 });
 ```
 
-## CodeMirror Extenstion Hooks
+## CodeMirror Extension Hooks
 
-[CodeMirror v6](https://codemirror.net/) is used to drive `CodeEditor` under the
-hood. Some implementations of a CodeMirror editor may be so unique that adopting
-this component is too difficult. However, there may be a desire to bring in certain
-aspects of this editor to be better inline with the design system - E.g. language
-support, themes, and syntax highlighting. For this reason, custom hooks that
-return the configured CodeMirrors extensions use in the editor are also exported
-from this package.
+The `CodeEditor` component is built on [CodeMirror v6](https://codemirror.net/) and provides a complete, ready-to-use editor experience. However, some applications may need highly customized CodeMirror implementations that don't fit the standard `CodeEditor` API, while still wanting to maintain consistency with the LeafyGreen design system.
 
-### Hooks
+For these use cases, this package exports individual extension hooks that encapsulate specific CodeMirror functionality with LeafyGreen theming and behavior. These hooks allow you to build custom CodeMirror editors while leveraging the same language support, themes, syntax highlighting, and other features used by the main `CodeEditor` component.
 
-These hooks follow a consistent pattern for lazy-loading CodeMirror modules while maintaining type safety.
-Although module parameters are marked as optional in TypeScript signatures, they are actually required for
-the extensions to function properly. The optional typing allows for asynchronously loading the modules while
-rendering the component immediately.
+### Common API Pattern
 
-#### Common parameters for all hooks
-
-- `editorView`: The CodeMirror `EditorView` instance to attach the extension to
-- `stateModule`: Reference to the `@codemirror/state` module (optional for lazy loading, but required for functionality)
-
-#### `useAutoCompleteExtension`
+All extension hooks (except `useExtension`) follow a consistent API pattern:
 
 ```tsx
-import { useAutoCompleteExtension } from '@leafygreen-ui/code-editor';
+function useXExtension({
+  editorViewInstance,
+  props,
+  modules,
+}: {
+  editorViewInstance: EditorView | null;
+  props: Partial<CodeEditorProps>;
+  modules: Partial<CodeEditorModules>;
+}) {
+  // Returns a CodeMirror Extension
+}
 ```
 
-Hook that provides autocompletion functionality for CodeMirror editors.
+**Common Parameters:**
+
+- `editorViewInstance`: The CodeMirror editor view instance
+- `props`: Partial CodeEditor props containing relevant configuration
+- `modules`: Lazy-loaded CodeMirror modules required for the extension
+
+### Base Extension Hook
+
+#### `useExtension<T>(config)`
+
+The foundational hook that all other extension hooks build upon. It provides dynamic reconfiguration of CodeMirror extensions using compartments.
 
 **Parameters:**
 
-- Common parameters (see above)
-- `language`: Language identifier to enable language-specific autocompletion
-- `autoCompleteModule`: Reference to the `@codemirror/autocomplete` module
-
-**Returns:** A CodeMirror extension that enables autocompletion.
-
-#### `useCodeFoldingExtension`
-
-```tsx
-import { useCodeFoldingExtension } from '@leafygreen-ui/code-editor';
-```
-
-Hook that provides code folding functionality for CodeMirror editors with LeafyGreen styled fold markers.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `enableCodeFolding`: Flag to enable/disable code folding functionality
-- `languageModule`: Reference to the `@codemirror/language` module
-
-**Returns:** A CodeMirror extension that enables code folding with custom fold markers.
-
-#### `useHighlightExtension`
-
-```tsx
-import { useHighlightExtension } from '@leafygreen-ui/code-editor';
-```
-
-Hook that provides syntax highlighting functionality for CodeMirror editors with LeafyGreen theming.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `theme`: The LeafyGreen theme to apply for syntax highlighting (`'light'` or `'dark'`)
-- `language`: Language identifier for language-specific highlighting
-- `modules`: Various CodeMirror language modules needed for syntax highlighting
-
-**Returns:** A CodeMirror extension that enables syntax highlighting based on the provided theme and language.
-
-#### `useHyperLinkExtension`
-
-```tsx
-import { useHyperLinkExtension } from '@leafygreen-ui/code-editor';
-```
-
-Hook that provides clickable URLs functionality for CodeMirror editors.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `enableClickableUrls`: Flag to enable/disable clickable URLs functionality
-- `hyperLinkModule`: Reference to the `@uiw/codemirror-extensions-hyper-link` module
-
-**Returns:** A CodeMirror extension that enables clickable URLs.
-
-#### `useIndentExtension`
-
-```tsx
-import { useIndentExtension } from '@leafygreen-ui/code-editor';
-```
-
-Hook that configures indentation settings for CodeMirror editors.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `indentUnit`: The type of indentation to use (`'spaces'` or `'tabs'`)
-- `indentSize`: The number of spaces for each indentation level
-- `languageModule`: Reference to the `@codemirror/language` module
-
-**Returns:** A CodeMirror extension that configures indentation behavior.
-
-#### `useLanguageExtension`
-
-```tsx
-import { useLanguageExtension, LanguageName } from '@leafygreen-ui/code-editor';
-```
-
-Hook that provides language support for CodeMirror editors.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `language`: Language identifier from the `LanguageName` constants
-- `modules`: CodeMirror modules with language packages (e.g., `@codemirror/lang-javascript`, `@codemirror/lang-python`)
-
-**Returns:** A CodeMirror extension that enables language-specific features.
-
-#### `useLineNumbersExtension`
-
-```tsx
-import { useLineNumbersExtension } from '@leafygreen-ui/code-editor';
-```
-
-Hook that provides line numbering functionality for CodeMirror editors.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `enableLineNumbers`: Flag to enable/disable line numbers
-- `viewModule`: Reference to the `@codemirror/view` module
-
-**Returns:** A CodeMirror extension that enables line numbers.
-
-#### `useLineWrapExtension`
-
-```tsx
-import { useLineWrapExtension } from '@leafygreen-ui/code-editor';
-```
-
-Hook that provides line wrapping functionality for CodeMirror editors.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `enableLineWrapping`: Flag to enable/disable line wrapping
-- `viewModule`: Reference to the `@codemirror/view` module
-
-**Returns:** A CodeMirror extension that enables line wrapping.
-
-#### `useReadOnlyExtension`
-
-```tsx
-import { useReadOnlyExtension } from '@leafygreen-ui/code-editor';
-```
-
-Hook that provides read-only functionality for CodeMirror editors.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `readOnly`: Flag to enable/disable read-only mode
-
-**Returns:** A CodeMirror extension that enables read-only mode.
-
-#### `useThemeExtension`
-
-```tsx
-import { useThemeExtension } from '@leafygreen-ui/code-editor';
-```
-
-Hook that provides theme styling functionality for CodeMirror editors.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `theme`: The LeafyGreen theme to apply (`'light'` or `'dark'`)
-- `baseFontSize`: Base font size for the editor
-- `viewModule`: Reference to the `@codemirror/view` module
-
-**Returns:** A CodeMirror extension that applies LeafyGreen styling to the editor.
-
-#### `useTooltipExtension`
-
-```tsx
-import { useTooltipExtension } from '@leafygreen-ui/code-editor';
-```
-
-Hook that provides tooltip functionality for CodeMirror editors.
-
-**Parameters:**
-
-- Common parameters (see above)
-- `tooltips`: Array of tooltip configurations specifying position and content
-- `lintModule`: Reference to the `@codemirror/lint` module
+- `editorViewInstance`: The CodeMirror editor view instance
+- `value`: Value of type `T` to pass to the factory function
+- `factory`: Function that creates an extension from the provided value
+- `stateModule` _(optional)_: The `@codemirror/state` module for compartment management
 
 **Example:**
-```tsx
-const tooltips = [
-  { line: 2, column: 5, length: 4, content: <div>Tooltip 1</div> },
-  { line: 3, column: 2, length: 2, content: <div>Tooltip 2</div> },
-];
-```
-
-**Returns:** A CodeMirror extension that renders tooltips at specified positions in the code.
-
-#### `useExtension`
 
 ```tsx
 import { useExtension } from '@leafygreen-ui/code-editor';
+
+const myExtension = useExtension({
+  editorViewInstance,
+  stateModule: modules?.['@codemirror/state'],
+  value: { myConfig: 'value' },
+  factory: ({ myConfig }) => (myConfig ? someExtension() : []),
+});
 ```
 
-Base hook for managing dynamic CodeMirror extensions using a Compartment.
+### Feature Extension Hooks
 
-**Parameters:**
+#### `useAutoCompleteExtension(config)`
 
-- Common parameters (see above)
-- `value`: The dynamic value that the extension depends on
-- `factory`: A function that takes the value and returns a CodeMirror Extension
+Provides intelligent code completion based on the selected language.
 
-**Returns:** A CodeMirror extension to be included in the editor's configuration.
+**Required Props:** `language`  
+**Required Modules:** `@codemirror/autocomplete`
+
+#### `useCodeFoldingExtension(config)`
+
+Enables code folding with custom LeafyGreen UI icons (ChevronDown/ChevronRight).
+
+**Required Props:** `enableCodeFolding`  
+**Required Modules:** `@codemirror/language`
+
+#### `useHighlightExtension(config)`
+
+Manages syntax highlighting and text search highlighting functionality.
+
+**Required Props:** `theme`  
+**Required Modules:** `@codemirror/search`, `@codemirror/view`
+
+#### `useHyperLinkExtension(config)`
+
+Makes URLs in the editor clickable when enabled.
+
+**Required Props:** `enableClickableUrls`  
+**Required Modules:** `@uiw/codemirror-extensions-hyper-link`
+
+#### `useIndentExtension(config)`
+
+Configures indentation behavior including tabs vs spaces and indent size.
+
+**Required Props:** `indentUnit`, `indentSize`  
+**Required Modules:** `@codemirror/language`, `@codemirror/state`
+
+#### `useLanguageExtension(config)`
+
+Provides language-specific syntax highlighting and features for supported languages.
+
+**Required Props:** `language`  
+**Required Modules:** Language-specific modules based on selected language:
+
+- JavaScript/TypeScript/JSX/TSX: `@codemirror/lang-javascript`
+- Python: `@codemirror/lang-python`
+- Java: `@codemirror/lang-java`
+- C++: `@codemirror/lang-cpp`
+- CSS: `@codemirror/lang-css`
+- HTML: `@codemirror/lang-html`
+- JSON: `@codemirror/lang-json`
+- Go: `@codemirror/lang-go`
+- PHP: `@codemirror/lang-php`
+- Rust: `@codemirror/lang-rust`
+- C#: `@replit/codemirror-lang-csharp`
+- Kotlin: `@codemirror/language`, `@codemirror/legacy-modes/mode/clike`
+- Ruby: `@codemirror/language`, `@codemirror/legacy-modes/mode/ruby`
+
+#### `useLineNumbersExtension(config)`
+
+Displays line numbers in the editor's gutter when enabled.
+
+**Required Props:** `enableLineNumbers`  
+**Required Modules:** `@codemirror/view`
+
+#### `useLineWrapExtension(config)`
+
+Enables line wrapping to prevent horizontal scrolling.
+
+**Required Props:** `enableLineWrapping`  
+**Required Modules:** `@codemirror/view`
+
+#### `usePlaceholderExtension(config)`
+
+Shows placeholder text when the editor is empty.
+
+**Required Props:** `placeholder`  
+**Required Modules:** `@codemirror/view`
+
+#### `useReadOnlyExtension(config)`
+
+Controls the read-only state of the editor.
+
+**Required Props:** `readOnly`  
+**Required Modules:** `@codemirror/state`
+
+#### `useThemeExtension(config)`
+
+Applies LeafyGreen UI theming including colors, typography, and spacing.
+
+**Required Props:** `theme`, `baseFontSize`  
+**Required Modules:** `@codemirror/view`
+
+#### `useTooltipExtension(config)`
+
+Adds hover tooltips to editor content with configurable severity levels.
+
+**Required Props:** `tooltips`  
+**Required Modules:** `@codemirror/view`
+
+### Example Usage
+
+```tsx
+import {
+  useLanguageExtension,
+  useThemeExtension,
+  useLineNumbersExtension,
+  LanguageName,
+} from '@leafygreen-ui/code-editor';
+import { Theme } from '@leafygreen-ui/lib';
+
+// In a custom CodeMirror implementation
+const languageExt = useLanguageExtension({
+  editorViewInstance,
+  props: { language: LanguageName.javascript },
+  modules: lazyModules,
+});
+
+const themeExt = useThemeExtension({
+  editorViewInstance,
+  props: { theme: Theme.Dark, baseFontSize: 14 },
+  modules: lazyModules,
+});
+
+const lineNumbersExt = useLineNumbersExtension({
+  editorViewInstance,
+  props: { enableLineNumbers: true },
+  modules: lazyModules,
+});
+
+// Combine extensions
+const allExtensions = [languageExt, themeExt, lineNumbersExt];
+```
