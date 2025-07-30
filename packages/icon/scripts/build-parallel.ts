@@ -94,13 +94,13 @@ async function buildAllBatches(
   }
 
   await queue.onIdle();
-  console.log('All icons built successfully (°ロ°) !');
 }
 
 async function main(): Promise<void> {
   try {
     await buildExportsAndStories();
     await buildAllBatches(BATCH_SIZE, NUM_WORKERS, iconNames);
+    console.log('All icons built successfully (°ロ°) !');
   } catch (err) {
     console.error('Build failed:', err);
     process.exit(1);
