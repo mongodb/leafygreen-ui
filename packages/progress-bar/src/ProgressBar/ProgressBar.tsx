@@ -122,6 +122,19 @@ export function ProgressBar(props: ProgressBarProps) {
     speed: WIDTH_ANIMATION_SPEED,
   });
 
+  const getWidthStyles = () => {
+    if (isIndeterminate) {
+      return;
+    }
+
+    // use CSS variables for width and animation duration to prevent
+    // unnecessary re-generation of emotion classes on every width change
+    return {
+      '--width': `${displayWidth}%`,
+      '--width-animation-duration': `${widthAnimationDuration}ms`,
+    } as React.CSSProperties;
+  };
+
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div
@@ -179,15 +192,7 @@ export function ProgressBar(props: ProgressBarProps) {
           >
             <div
               data-lgid={lgIds.fill}
-              style={
-                {
-                  // to avoid rebuilding styles on every width change, use CSS variables
-                  ...(!isIndeterminate && {
-                    '--width': `${displayWidth}%`,
-                    '--width-animation-duration': `${widthAnimationDuration}ms`,
-                  }),
-                } as React.CSSProperties
-              }
+              style={getWidthStyles()}
               className={getBarFillStyles({
                 theme,
                 variant,

@@ -170,6 +170,7 @@ const getDeterminateFillStyles = ({
   variant: Variant;
   disabled?: boolean;
 }) => css`
+  // variables defined in getWidthStyles() of .tsx component, applied to bar fill element (data-lgid=progress-bar-fill)
   width: var(--width);
   transition: var(--width-animation-duration) ease;
 

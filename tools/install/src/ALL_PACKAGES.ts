@@ -93,6 +93,7 @@ export const ALL_PACKAGES = [
   '@lg-chat/message-prompts',
   '@lg-chat/message-rating',
   '@lg-chat/rich-links',
+  '@lg-chat/suggestions',
   '@lg-chat/title-bar',
   '@lg-tools/build',
   '@lg-tools/cli',
