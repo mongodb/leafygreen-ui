@@ -1,5 +1,6 @@
 import { type EditorView } from '@codemirror/view';
 
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import {
   color,
@@ -23,7 +24,7 @@ import { useExtension } from './useExtension';
  *
  * @param params - Configuration object
  * @param params.editorViewInstance - The CodeMirror editor view instance
- * @param params.props - CodeEditor props including theme and language settings
+ * @param params.props - CodeEditor props including darkMode and language settings
  * @param params.modules - Module dependencies (requires @codemirror/language for syntaxHighlighting and @lezer/highlight for tags)
  * @returns A CodeMirror extension that applies syntax highlighting
  */
@@ -33,14 +34,16 @@ export function useHighlightExtension({
   modules,
 }: {
   editorViewInstance: EditorView | null;
-  props: Partial<CodeEditorProps> & { theme: Theme };
+  props: Partial<CodeEditorProps>;
   modules: Partial<CodeEditorModules>;
 }) {
+  const { theme } = useDarkMode(props.darkMode);
+
   return useExtension({
     editorViewInstance,
     stateModule: modules?.['@codemirror/state'],
     value: {
-      theme: props.theme,
+      theme,
       language: props.language,
       modules,
     },

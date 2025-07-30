@@ -47,6 +47,7 @@ console.log(greet('MongoDB user'));`;
 
 | Name                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Type                         | Default     |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | ----------- |
+| `baseFontSize` _(optional)_        | Font size of text in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `BaseFontSize`               | `14`        |
 | `className` _(optional)_           | CSS class name to apply to the editor container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `string`                     | `undefined` |
 | `darkMode` _(optional)_            | Determines if the component appears in dark mode. When not provided, the component will inherit the dark mode state from the LeafyGreen Provider.                                                                                                                                                                                                                                                                                                                                                                              | `boolean`                    | `undefined` |
 | `defaultValue` _(optional)_        | Initial value to render in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `string`                     | `undefined` |
@@ -402,7 +403,7 @@ Enables code folding with custom LeafyGreen UI icons (ChevronDown/ChevronRight).
 
 Manages syntax highlighting and text search highlighting functionality.
 
-**Required Props:** `theme`  
+**Required Props:** `darkMode`  
 **Required Modules:** `@codemirror/search`, `@codemirror/view`
 
 #### `useHyperLinkExtension(config)`
@@ -472,7 +473,7 @@ Controls the read-only state of the editor.
 
 Applies LeafyGreen UI theming including colors, typography, and spacing.
 
-**Required Props:** `theme`, `baseFontSize`  
+**Required Props:** `darkMode`, `baseFontSize`  
 **Required Modules:** `@codemirror/view`
 
 #### `useTooltipExtension(config)`

@@ -18,6 +18,7 @@ import {
 import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * Hook for applying LeafyGreen UI theme styling to the CodeMirror editor.
@@ -29,7 +30,7 @@ import { useExtension } from './useExtension';
  *
  * @param params - Configuration object
  * @param params.editorViewInstance - The CodeMirror editor view instance
- * @param params.props - CodeEditor props including theme and baseFontSize
+ * @param params.props - CodeEditor props including darkMode and baseFontSize
  * @param params.modules - Module dependencies (requires @codemirror/view for EditorView.theme)
  * @returns A CodeMirror extension that applies LeafyGreen theming
  */
@@ -40,16 +41,17 @@ export function useThemeExtension({
 }: {
   editorViewInstance: EditorView | null;
   props: Partial<CodeEditorProps> & {
-    theme: Theme;
     baseFontSize: number;
   };
   modules: Partial<CodeEditorModules>;
 }) {
+  const { theme } = useDarkMode(props.darkMode);
+
   return useExtension({
     editorViewInstance,
     stateModule: modules?.['@codemirror/state'],
     value: {
-      theme: props.theme,
+      theme,
       fontSize: props.baseFontSize,
       editorViewModule: modules?.['@codemirror/view'],
     },

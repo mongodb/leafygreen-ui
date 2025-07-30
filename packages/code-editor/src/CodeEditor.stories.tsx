@@ -89,6 +89,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     enableCodeFolding: true,
     enableLineNumbers: true,
     enableLineWrapping: true,
+    baseFontSize: 14,
     forceParsing: false,
     placeholder: 'Type your code here...',
     readOnly: false,
@@ -118,6 +119,10 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     },
     enableLineWrapping: {
       control: { type: 'boolean' },
+    },
+    baseFontSize: {
+      control: { type: 'select' },
+      options: [14, 16],
     },
     placeholder: {
       control: { type: 'text' },

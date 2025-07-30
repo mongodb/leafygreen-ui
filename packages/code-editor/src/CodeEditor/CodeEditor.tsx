@@ -46,6 +46,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       isLoading: isLoadingProp = false,
       extensions: consumerExtensions = [],
       darkMode: darkModeProp,
+      baseFontSize: baseFontSizeProp,
       className,
       height,
       maxHeight,
@@ -90,7 +91,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     const highlightExtension = useHighlightExtension({
       editorViewInstance: editorViewRef.current,
-      props: { ...props, theme },
+      props: props,
       modules,
     });
 
@@ -138,7 +139,10 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     const themeExtension = useThemeExtension({
       editorViewInstance: editorViewRef.current,
-      props: { ...props, theme, baseFontSize },
+      props: {
+        ...props,
+        baseFontSize: baseFontSizeProp || baseFontSize,
+      },
       modules,
     });
 
