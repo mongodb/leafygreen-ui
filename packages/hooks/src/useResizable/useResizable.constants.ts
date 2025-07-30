@@ -10,19 +10,19 @@ export const SIZE_GROWTH_KEY_MAPPINGS: Record<
   Partial<Record<Arrow, SizeGrowth>>
 > = {
   [Position.Right]: {
-    [keyMap.ArrowLeft]: 'increase',
-    [keyMap.ArrowRight]: 'decrease',
+    [keyMap.ArrowLeft]: SizeGrowth.Increase,
+    [keyMap.ArrowRight]: SizeGrowth.Decrease,
   },
   [Position.Left]: {
-    [keyMap.ArrowRight]: 'increase',
-    [keyMap.ArrowLeft]: 'decrease',
+    [keyMap.ArrowRight]: SizeGrowth.Increase,
+    [keyMap.ArrowLeft]: SizeGrowth.Decrease,
   },
   [Position.Bottom]: {
-    [keyMap.ArrowUp]: 'increase',
-    [keyMap.ArrowDown]: 'decrease',
+    [keyMap.ArrowUp]: SizeGrowth.Increase,
+    [keyMap.ArrowDown]: SizeGrowth.Decrease,
   },
   [Position.Top]: {
-    [keyMap.ArrowDown]: 'increase',
-    [keyMap.ArrowUp]: 'decrease',
+    [keyMap.ArrowDown]: SizeGrowth.Increase,
+    [keyMap.ArrowUp]: SizeGrowth.Decrease,
   },
 };
