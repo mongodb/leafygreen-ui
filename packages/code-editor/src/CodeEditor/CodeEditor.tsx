@@ -13,6 +13,7 @@ import {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
+import { usePlaceholderExtension } from './hooks/extensions/usePlaceholderExtension';
 import {
   getEditorStyles,
   getLoaderStyles,
@@ -130,6 +131,13 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       languageModule: modules?.['@codemirror/language'],
     });
 
+    const placeholderExtension = usePlaceholderExtension({
+      editorView: editorViewRef.current,
+      stateModule: modules?.['@codemirror/state'],
+      placeholder,
+      viewModule: modules?.['@codemirror/view'],
+    });
+
     const tooltipExtension = useTooltipExtension({
       editorView: editorViewRef.current,
       stateModule: modules?.['@codemirror/state'],
@@ -203,6 +211,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           highlightExtension,
           autoCompleteExtension,
           readOnlyExtension,
+          placeholderExtension,
         ],
       }));
 
@@ -239,6 +248,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       autoCompleteExtension,
       lineNumbersExtension,
       readOnlyExtension,
+      placeholderExtension,
     ]);
 
     useImperativeHandle(forwardedRef, () => ({
