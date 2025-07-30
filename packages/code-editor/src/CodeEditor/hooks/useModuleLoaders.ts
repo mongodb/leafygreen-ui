@@ -13,7 +13,7 @@ import { type LoadersMap } from './useLazyModules';
  * Each property represents a module that can be dynamically imported, with its type
  * corresponding to the result of importing that module.
  */
-interface CodeEditorModules {
+export interface CodeEditorModules {
   '@uiw/codemirror-extensions-hyper-link': typeof import('@uiw/codemirror-extensions-hyper-link');
   '@codemirror/language': typeof import('@codemirror/language');
   '@codemirror/lint': typeof import('@codemirror/lint');

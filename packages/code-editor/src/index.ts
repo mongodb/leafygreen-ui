@@ -9,4 +9,4 @@ export {
   type CodeMirrorView,
   IndentUnits,
 } from './CodeEditor';
-export * from './CodeEditor/hooks/extensions';
+export * from './CodeEditor/hooks';

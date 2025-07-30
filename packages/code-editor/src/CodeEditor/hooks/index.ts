@@ -1,3 +1,2 @@
 export * from './extensions';
-export { useLazyModules } from './useLazyModules';
-export { useModuleLoaders } from './useModuleLoaders';
+export { type CodeEditorModules } from './useModuleLoaders';
