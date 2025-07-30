@@ -60,6 +60,19 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   }, [enabled, initialSize]);
 
   /**
+   * Handles the size update based on the next size value.
+   */
+  const updateSize = useCallback(
+    (nextSize: number | undefined) => {
+      if (nextSize !== undefined) {
+        setSize(nextSize);
+        onResize?.(nextSize);
+      }
+    },
+    [onResize],
+  );
+
+  /**
    * Calculates and sets the current resizing state and updates the ref synchronously.
    */
   const handleMouseMove = useCallback(
@@ -75,9 +88,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         minSize,
         maxSize,
       );
-
-      setSize(newSize);
-      onResize?.(newSize);
+      updateSize(newSize);
     },
     [maxSize, minSize, onResize, position],
   );
@@ -93,19 +104,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       setIsResizing(false); // Set resizing state to false
     });
   }, []);
-
-  /**
-   * Handles the size update based on the next size value.
-   */
-  const updateSize = useCallback(
-    (nextSize: number | undefined) => {
-      if (nextSize !== undefined) {
-        setSize(nextSize);
-        onResize?.(nextSize);
-      }
-    },
-    [onResize],
-  );
 
   /**
    * Handles keyboard interactions for resizing based on the position.
