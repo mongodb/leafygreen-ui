@@ -368,7 +368,7 @@ The foundational hook that all other extension hooks build upon. It provides dyn
 - `editorViewInstance`: The CodeMirror editor view instance
 - `value`: Value of type `T` to pass to the factory function
 - `factory`: Function that creates an extension from the provided value
-- `stateModule` _(optional)_: The `@codemirror/state` module for compartment management
+- `stateModule` _(optional)_: The `@codemirror/state` module for compartment management. While optional, if not provided, an empty extension will be returned since the state module is required to create compartments. This parameter is only optional because modules are lazy-loaded internally and may not be available on the initial call.
 
 **Example:**
 
@@ -390,28 +390,28 @@ const myExtension = useExtension({
 Provides intelligent code completion based on the selected language.
 
 **Required Props:** `language`  
-**Required Modules:** `@codemirror/autocomplete`
+**Required Modules:** `@codemirror/autocomplete`, `@codemirror/state`
 
 #### `useCodeFoldingExtension(config)`
 
 Enables code folding with custom LeafyGreen UI icons (ChevronDown/ChevronRight).
 
 **Required Props:** `enableCodeFolding`  
-**Required Modules:** `@codemirror/language`
+**Required Modules:** `@codemirror/language`, `@codemirror/state`
 
 #### `useHighlightExtension(config)`
 
 Manages syntax highlighting and text search highlighting functionality.
 
 **Required Props:** `darkMode`  
-**Required Modules:** `@codemirror/search`, `@codemirror/view`
+**Required Modules:** `@codemirror/search`, `@codemirror/view`, `@codemirror/state`
 
 #### `useHyperLinkExtension(config)`
 
 Makes URLs in the editor clickable when enabled.
 
 **Required Props:** `enableClickableUrls`  
-**Required Modules:** `@uiw/codemirror-extensions-hyper-link`
+**Required Modules:** `@uiw/codemirror-extensions-hyper-link`, `@codemirror/state`
 
 #### `useIndentExtension(config)`
 
@@ -425,7 +425,7 @@ Configures indentation behavior including tabs vs spaces and indent size.
 Provides language-specific syntax highlighting and features for supported languages.
 
 **Required Props:** `language`  
-**Required Modules:** Language-specific modules based on selected language:
+**Required Modules:** `@codemirror/state` and language-specific modules based on selected language:
 
 - JavaScript/TypeScript/JSX/TSX: `@codemirror/lang-javascript`
 - Python: `@codemirror/lang-python`
@@ -446,21 +446,21 @@ Provides language-specific syntax highlighting and features for supported langua
 Displays line numbers in the editor's gutter when enabled.
 
 **Required Props:** `enableLineNumbers`  
-**Required Modules:** `@codemirror/view`
+**Required Modules:** `@codemirror/view`, `@codemirror/state`
 
 #### `useLineWrapExtension(config)`
 
 Enables line wrapping to prevent horizontal scrolling.
 
 **Required Props:** `enableLineWrapping`  
-**Required Modules:** `@codemirror/view`
+**Required Modules:** `@codemirror/view`, `@codemirror/state`
 
 #### `usePlaceholderExtension(config)`
 
 Shows placeholder text when the editor is empty.
 
 **Required Props:** `placeholder`  
-**Required Modules:** `@codemirror/view`
+**Required Modules:** `@codemirror/view`, `@codemirror/state`
 
 #### `useReadOnlyExtension(config)`
 
@@ -474,14 +474,14 @@ Controls the read-only state of the editor.
 Applies LeafyGreen UI theming including colors, typography, and spacing.
 
 **Required Props:** `darkMode`, `baseFontSize`  
-**Required Modules:** `@codemirror/view`
+**Required Modules:** `@codemirror/view`, `@codemirror/state`
 
 #### `useTooltipExtension(config)`
 
 Adds hover tooltips to editor content with configurable severity levels.
 
 **Required Props:** `tooltips`  
-**Required Modules:** `@codemirror/view`
+**Required Modules:** `@codemirror/view`, `@codemirror/state`
 
 ### Example Usage
 
