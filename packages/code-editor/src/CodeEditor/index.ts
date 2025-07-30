@@ -11,6 +11,7 @@ export {
 } from './CodeEditor.types';
 export {
   type CodeEditorModules,
+  LanguageName,
   useAutoCompleteExtension,
   useCodeFoldingExtension,
   useHighlightExtension,
