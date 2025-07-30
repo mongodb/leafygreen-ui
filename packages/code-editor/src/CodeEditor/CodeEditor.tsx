@@ -13,7 +13,6 @@ import {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { usePlaceholderExtension } from './hooks/extensions/usePlaceholderExtension';
 import {
   getEditorStyles,
   getLoaderStyles,
@@ -31,6 +30,7 @@ import {
   useLineNumbersExtension,
   useLineWrapExtension,
   useModuleLoaders,
+  usePlaceholderExtension,
   useReadOnlyExtension,
   useThemeExtension,
   useTooltipExtension,
