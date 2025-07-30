@@ -29,6 +29,7 @@ export const Label = Polymorphic<BaseLabelProps>(
     'data-lgid': dataLgId,
     ...rest
   }) => {
+    console.log('HELLO I AM LABEL RENDERED');
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
     const { Component } = usePolymorphic(as);

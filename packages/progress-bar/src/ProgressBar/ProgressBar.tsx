@@ -145,7 +145,7 @@ export function ProgressBar(props: ProgressBarProps) {
       >
         <div className={headerStyles}>
           <Label
-            data-lgid={lgIds.label}
+            data-lgid={lgIds.root} // handled by <Label> internally
             id={labelId}
             htmlFor={barId}
             className={truncatedTextStyles}
@@ -209,7 +209,7 @@ export function ProgressBar(props: ProgressBarProps) {
           <Description
             id={descId}
             disabled={disabled}
-            data-lgid={lgIds.description}
+            data-lgid={lgIds.root} // handled by <Description> internally
             className={cx({ [getAnimatedTextStyles()]: isNewDescription })}
             // if on fade-in transition, reset state after animation ends
             onAnimationEnd={() => setIsNewDescription(false)}
