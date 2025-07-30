@@ -15,7 +15,7 @@ export function usePlaceholderExtension({
   modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView: editorViewInstance,
+    editorViewInstance,
     stateModule: modules?.['@codemirror/state'],
     value: {
       viewModule: modules?.['@codemirror/view'],

@@ -21,7 +21,7 @@ export function useTooltipExtension({
   modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView: editorViewInstance,
+    editorViewInstance,
     stateModule: modules?.['@codemirror/state'],
     value: {
       tooltips: props.tooltips || [],

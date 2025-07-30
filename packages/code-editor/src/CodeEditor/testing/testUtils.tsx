@@ -10,7 +10,7 @@ import {
   CodeMirrorView,
 } from '..';
 
-let editorView: CodeMirrorView | null = null;
+let editorViewInstance: CodeMirrorView | null = null;
 let getEditorViewFn: (() => CodeMirrorView | null) | null = null;
 
 /**
@@ -27,7 +27,7 @@ async function waitForEditorView(timeout = 5000): Promise<CodeMirrorView> {
       const view = getEditorViewFn();
 
       if (view) {
-        editorView = view;
+        editorViewInstance = view;
         return view;
       }
     }
@@ -43,13 +43,13 @@ async function waitForEditorView(timeout = 5000): Promise<CodeMirrorView> {
  * @throws Error if editor view is not available
  */
 function ensureEditorView(): CodeMirrorView {
-  if (!editorView) {
+  if (!editorViewInstance) {
     throw new Error(
       'Editor view is not available. Make sure to call renderCodeEditor first and wait for the editor to initialize.',
     );
   }
 
-  return editorView;
+  return editorViewInstance;
 }
 
 /**
@@ -284,8 +284,8 @@ export function renderCodeEditor(props: Partial<CodeEditorProps> = {}) {
     <CodeEditor
       {...props}
       ref={ref => {
-        getEditorViewFn = ref?.getEditorView ?? null;
-        editorView = ref?.getEditorView() ?? null;
+        getEditorViewFn = ref?.getEditorViewInstance ?? null;
+        editorViewInstance = ref?.getEditorViewInstance() ?? null;
       }}
     />,
   );

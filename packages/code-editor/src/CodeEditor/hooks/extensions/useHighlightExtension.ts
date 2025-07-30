@@ -23,7 +23,7 @@ export function useHighlightExtension({
   modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView: editorViewInstance,
+    editorViewInstance,
     stateModule: modules?.['@codemirror/state'],
     value: {
       theme: props.theme,

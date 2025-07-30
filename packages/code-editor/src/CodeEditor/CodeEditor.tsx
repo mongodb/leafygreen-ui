@@ -234,7 +234,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     ]);
 
     useImperativeHandle(forwardedRef, () => ({
-      getEditorView: () => editorViewRef.current,
+      getEditorViewInstance: () => editorViewRef.current,
     }));
 
     return (

@@ -234,5 +234,5 @@ export interface CodeEditorProps extends DarkModeProps {
  * Imperative handle for the CodeEditor component.
  */
 export interface CodeEditorHandle {
-  getEditorView: () => EditorView | null;
+  getEditorViewInstance: () => EditorView | null;
 }

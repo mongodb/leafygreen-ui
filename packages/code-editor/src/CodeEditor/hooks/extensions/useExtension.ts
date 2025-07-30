@@ -8,7 +8,7 @@ import { type EditorView } from 'codemirror';
  * by handling the compartment creation and reconfiguration internally.
  *
  * @param params Configuration object for the extension
- * @param params.editorView The CodeMirror EditorView instance to attach the extension to
+ * @param params.editorViewInstance The CodeMirror EditorView instance to attach the extension to
  * @param params.stateModule CodeMirror state module for creating the Compartment (marked optional for lazy loading, but required for functionality)
  * @param params.value The dynamic value that the extension depends on; when this changes, the extension will be reconfigured
  * @param params.factory A function that takes the value and returns a CodeMirror Extension (should be stable or memoized with useCallback)
@@ -26,12 +26,12 @@ import { type EditorView } from 'codemirror';
  * the case where it's not immediately available by returning an empty extension array.
  */
 export const useExtension = <T>({
-  editorView,
+  editorViewInstance,
   stateModule,
   value,
   factory,
 }: {
-  editorView: EditorView | null;
+  editorViewInstance: EditorView | null;
   value: T;
   factory: (value: T) => Extension;
   stateModule?: typeof import('@codemirror/state');
@@ -47,16 +47,16 @@ export const useExtension = <T>({
   }, [stateModule]);
 
   useEffect(() => {
-    if (compartment && editorView) {
+    if (compartment && editorViewInstance) {
       /**
        * This will reconfigure the compartment with the new extension
        * whenever the value changes.
        */
-      editorView.dispatch({
+      editorViewInstance.dispatch({
         effects: compartment.reconfigure(extension),
       });
     }
-  }, [compartment, editorView, extension]);
+  }, [compartment, editorViewInstance, extension]);
 
   /**
    * If compartment isn't available (because stateModule isn't provided yet)

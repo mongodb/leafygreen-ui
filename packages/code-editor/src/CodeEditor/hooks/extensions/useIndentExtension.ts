@@ -15,7 +15,7 @@ export function useIndentExtension({
   modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView: editorViewInstance,
+    editorViewInstance,
     stateModule: modules?.['@codemirror/state'],
     value: {
       unit: props.indentUnit,

@@ -15,7 +15,7 @@ export function useHyperLinkExtension({
   modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView: editorViewInstance,
+    editorViewInstance,
     stateModule: modules?.['@codemirror/state'],
     value: {
       enable: props.enableClickableUrls,

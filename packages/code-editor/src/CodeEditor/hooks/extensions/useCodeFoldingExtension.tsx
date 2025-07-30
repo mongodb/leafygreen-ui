@@ -20,7 +20,7 @@ export function useCodeFoldingExtension({
   modules: Partial<CodeEditorModules>;
 }) {
   return useExtension({
-    editorView: editorViewInstance,
+    editorViewInstance,
     stateModule: modules?.['@codemirror/state'],
     value: {
       enableCodeFolding: props.enableCodeFolding,
