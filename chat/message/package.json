@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message",
-  "version": "6.0.1",
+  "version": "7.0.0",
   "description": "lg-chat Message",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -15,8 +15,10 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/avatar": "workspace:^",
     "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",

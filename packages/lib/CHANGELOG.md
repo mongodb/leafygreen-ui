@@ -1,5 +1,24 @@
 # @leafygreen-ui/lib
 
+## 15.2.0
+
+### Minor Changes
+
+- b67497a: Adds `formatCssSize` util for properly formatting a number or string into a valid css value
+
+## 15.1.0
+
+### Minor Changes
+
+- 3bef1e7: Exports new utilities:
+  - `deepMapValues`: Recursively maps the values of an object using a callback function
+  - `queryAllFocusableElements`, `queryFirstFocusableElement`, and `queryLastFocusableElement`: selects focusable elements within a given element. Focusable elements defined as: `button, a, input:not([type="hidden"]), select, textarea, [tabindex]:not([tabindex="-1"])`
+
+### Patch Changes
+
+- 164b15f: Export `LgIdString` type
+- 518ce41: Additional support for getting node text content from functional components.
+
 ## 15.0.0
 
 ### Major Changes

@@ -9,7 +9,7 @@ import { getInitials } from './utils/getInitials';
 import { Avatar } from '.';
 
 export default {
-  title: 'Components/Avatar',
+  title: 'Components/Display/Avatar',
   component: Avatar,
   parameters: {
     default: 'LiveExample',
@@ -163,9 +163,3 @@ export const IconAvatar: StoryObj<typeof Avatar> = {
     format: Format.Icon,
   },
 };
-// export const ImageAvatar: StoryObj<typeof Avatar> = {
-//   render: () => <></>,
-//   args: {
-//     format: Format.MongoDB,
-//   },
-// };

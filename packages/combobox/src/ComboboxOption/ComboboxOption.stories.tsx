@@ -9,7 +9,7 @@ import { ComboboxContext, defaultContext } from '../ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
 
 const meta: StoryMetaType<typeof InternalComboboxOption> = {
-  title: 'Components/Combobox/ComboboxOption',
+  title: 'Components/Inputs/Combobox/ComboboxOption',
   component: InternalComboboxOption,
   parameters: {
     default: null,

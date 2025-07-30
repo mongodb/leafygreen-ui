@@ -15,7 +15,13 @@ import {
   languageOptions,
   LanguageSwitcherWithPanelExample,
 } from './LanguageSwitcher/LanguageSwitcherExample';
-import Code, { CodeProps, CopyButtonAppearance, Language, Panel } from '.';
+import Code, {
+  CodeProps,
+  CopyButton,
+  CopyButtonAppearance,
+  Language,
+  Panel,
+} from '.';
 
 const customActionButtons = [
   <IconButton onClick={() => {}} aria-label="label" key="1">
@@ -78,7 +84,7 @@ const shortJsSnippet = `
 `;
 
 const meta: StoryMetaType<typeof Code> = {
-  title: 'Components/Code',
+  title: 'Components/Display/Code',
   component: Code,
   parameters: {
     default: 'LiveExample',
@@ -383,4 +389,8 @@ Loading.parameters = {
       );
     },
   },
+};
+
+export const CopyButtonExample = () => {
+  return <CopyButton contents={jsSnippet} />;
 };

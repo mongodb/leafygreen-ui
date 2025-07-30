@@ -1,5 +1,77 @@
 # @lg-charts/core
 
+## 2.0.1
+
+### Patch Changes
+
+- 56c0d3b: - Updates usages of `bold` weight token to `semiBold`.
+
+  Note: This should have no visual impact since the font-face being used was already semi-bold/600px. It just updates the token used to better align with the font-face and Figma component.
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+
+## 2.0.0
+
+### Major Changes
+
+- 7537bad: Add `enableGroupTooltipSync` prop to `Chart` component to turn on/off tooltip syncing for grouped charts.
+
+  Previously, all charts only synced axis pointers and did not sync tooltips. This was done to prevent longer tooltips from visually colliding with other long tooltips.
+
+  `enableGroupTooltipSync` defaults to `true` and will always sync tooltips. The prop can be explicitly set to `false` to achieve the previous behavior of only syncing axis pointers and not syncing tooltips.
+
+### Minor Changes
+
+- 19992c4: [LG-5341](https://jira.mongodb.org/browse/LG-5341): add exit interaction for closing pinned `ChartTooltip`. Clicking on chart wrapper outside of pinned `ChartTooltip` instance will close the tooltip.
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @lg-charts/chart-card@1.0.3
+  - @lg-charts/colors@1.0.2
+  - @lg-charts/series-provider@1.0.2
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/icon-button@17.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
+## 1.4.0
+
+### Minor Changes
+
+- ae6b41d: [LG-5321](https://jira.mongodb.org/browse/LG-5321): add and export `chartWrapperClassName` for customizing `Chart` styling
+- ca86113: Allow `null` and `undefined` values in data points
+- 2fecbc0: Ability to optionally add icon directly next to title in chart header.
+
+### Patch Changes
+
+- 94eb7e3: Allow consumers to adjust height on Charts
+- 0698bd7: [LG-5334](https://jira.mongodb.org/browse/LG-5334): Fixes an issue where the scroll position in `ChartTooltip` would reset when a user moused out of the chart. With this update, the scroll position is now preserved
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/typography@22.0.0
+  - @leafygreen-ui/icon@14.1.0
+  - @lg-charts/chart-card@1.0.2
+  - @lg-charts/colors@1.0.1
+  - @lg-charts/series-provider@1.0.1
+  - @leafygreen-ui/icon-button@17.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 1.3.0
 
 ### Minor Changes

@@ -1,5 +1,70 @@
 # @lg-chat/message-feedback
 
+## 5.1.0
+
+### Minor Changes
+
+- b5ec55d: [LG-5373](https://jira.mongodb.org/browse/LG-5373): add variant support for when the parent `LeafyGreenChatProvider` has `variant="compact"`
+
+  Mark `PopoverMessageFeedback` and `PopoverMessageFeedbackProps` as `@deprecated`
+
+### Patch Changes
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+  - @leafygreen-ui/button@25.0.1
+
+## 5.0.4
+
+### Patch Changes
+
+- Updated dependencies [2adba55]
+  - @leafygreen-ui/button@25.0.0
+  - @leafygreen-ui/popover@14.0.3
+
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/button@24.0.3
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/icon-button@17.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/popover@14.0.3
+  - @leafygreen-ui/text-area@12.0.1
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/button@24.0.2
+  - @leafygreen-ui/typography@22.0.0
+  - @leafygreen-ui/text-area@12.0.0
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/icon-button@17.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/popover@14.0.2
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 5.0.1
 
 ### Patch Changes

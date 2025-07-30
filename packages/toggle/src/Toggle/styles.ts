@@ -52,7 +52,7 @@ export const buttonBaseStyles = css`
   &[aria-checked='true'] {
     transition-delay: ${transitionDuration.default}ms;
 
-    &:before {
+    &::before {
       transform: scale(1);
       opacity: 1;
     }
@@ -60,7 +60,7 @@ export const buttonBaseStyles = css`
 
   // We're animating this pseudo-element in order to give the toggle groove
   // background an animation in and out.
-  &:before {
+  &::before {
     content: '';
     transition: ${transitionDuration.default}ms all ease-in-out;
     position: absolute;
@@ -91,8 +91,8 @@ export const sliderBaseStyles = css`
   justify-content: center;
   align-items: center;
 
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     top: 0;
@@ -102,8 +102,8 @@ export const sliderBaseStyles = css`
   }
 
   ${sliderSelector.disabled} {
-    &:before,
-    &:after {
+    &::before,
+    &::after {
       content: none;
     }
   }
@@ -176,7 +176,7 @@ export const buttonThemeStyles: Record<Theme, string> = {
       border-color: ${palette.gray.light2};
     }
 
-    &:before {
+    &::before {
       background-color: ${palette.blue.base};
     }
 
@@ -206,7 +206,7 @@ export const buttonThemeStyles: Record<Theme, string> = {
       border-color: ${palette.gray.dark2};
     }
 
-    &:before {
+    &::before {
       background-color: ${palette.blue.light1};
     }
 

@@ -1,5 +1,40 @@
 # @lg-chat/chat-window
 
+## 4.0.4
+
+### Patch Changes
+
+- Updated dependencies [82d0ad2]
+  - @lg-chat/leafygreen-chat-provider@4.1.0
+  - @lg-chat/avatar@6.0.0
+  - @lg-chat/title-bar@4.0.4
+
+## 4.0.3
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @lg-chat/avatar@5.0.3
+  - @lg-chat/title-bar@4.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.2
+
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+  - @leafygreen-ui/lib@15.1.0
+  - @lg-chat/avatar@5.0.2
+  - @lg-chat/title-bar@4.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 4.0.1
 
 ### Patch Changes

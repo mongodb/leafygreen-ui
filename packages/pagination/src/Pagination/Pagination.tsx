@@ -26,6 +26,9 @@ import {
 
 const DEFAULT_ITEMS_PER_PAGE_OPTIONS = [10, 25, 50];
 
+/**
+ * Pagination enables the segmentation of extensive content into smaller portions distributed across various pages. Implement a Pagination component when dealing with an abundance of results to prevent overwhelming users with excessive information on a single page.
+ */
 function Pagination<T extends number>({
   id: idProp,
   className,

@@ -26,29 +26,49 @@ export interface MessageProps
     HTMLElementProps<'div'>,
     DarkModeProps {
   /**
-   * Indicates if the message is from the current user
-   * @default true
+   * Determines whether the message is aligned to the left or right
+   *
+   * By default, if `isSender === true`, the message is aligned to the right, and otherwise to the left. This prop overrides that behavior.
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
    */
-  isSender?: boolean;
+  align?: Align;
+
   /**
    * Avatar element
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
    */
   avatar?: ReactElement;
 
   /**
-   * Determines whether the message is aligned to the left or right
-   *
-   * By default, if `isSender === true`, the message is aligned to the right, and otherwise to the left. This prop overrides that behavior.
-   */
-  align?: Align;
-  /**
-   * Component overrides for any subcomponents
-   */
-  componentOverrides?: ComponentOverrides;
-  /**
    * Base font size
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
    */
   baseFontSize?: BaseFontSize;
+
+  /**
+   * Component overrides for any subcomponents
+   * @deprecated
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   */
+  componentOverrides?: ComponentOverrides;
+
+  /**
+   * Indicates if the message is from the current user
+   * @default true
+   */
+  isSender?: boolean;
+
+  /**
+   * A list of links to render as rich links for the message.
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   */
+  links?: Array<RichLinkProps>;
+
+  /**
+   * The heading text to display for the links section.
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   */
+  linksHeading?: string;
 
   /**
    * Message body text passed to LGMarkdown
@@ -56,28 +76,24 @@ export interface MessageProps
   messageBody?: string;
 
   /**
+   * A callback function that is called when any link is clicked.
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   */
+  onLinkClick?: RichLinkProps['onLinkClick'];
+
+  /**
    * Configure a *verified message* which includes additional styles and
    * displays information about the message.
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
    */
   verified?: VerificationInfo;
-
-  /**
-   * A list of links to render as rich links for the message.
-   */
-  links?: Array<RichLinkProps>;
-
-  /**
-   * The heading text to display for the links section.
-   */
-  linksHeading?: string;
 }
 
 export interface VerificationInfo {
   /**
-   * The name of the entity that verified the message.
-   * @example "MongoDB Staff"
+   * URL to learn more about the verification.
    */
-  verifier?: string;
+  learnMoreUrl?: string;
 
   /**
    * The time the message was last verified.
@@ -86,7 +102,8 @@ export interface VerificationInfo {
   verifiedAt?: Date;
 
   /**
-   * URL to learn more about the verification.
+   * The name of the entity that verified the message.
+   * @example "MongoDB Staff"
    */
-  learnMoreUrl?: string;
+  verifier?: string;
 }

@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -11,11 +11,12 @@ import {
 
 export const messageClassName = createUniqueClassName('lg-message');
 export const senderClassName = createUniqueClassName('lg-message');
+/** @deprecated */
 export const avatarClassName = createUniqueClassName('lg-message-avatar');
 
 // Unless otherwise indicated, styles are defined as left-aligned and mobile-first by default
 
-export const getBaseStyles = (theme: Theme) => css`
+const getBaseContainerStyles = (theme: Theme) => css`
   display: flex;
   gap: ${spacing[200]}px;
   align-items: flex-end;
@@ -23,32 +24,74 @@ export const getBaseStyles = (theme: Theme) => css`
   color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
 
   &:not(:last-child) {
-    margin-bottom: ${spacing[3]}px;
+    margin-bottom: ${spacing[400]}px;
   }
 `;
 
-export const rightAlignedStyles = css`
+const rightAlignedStyles = css`
   justify-content: flex-end;
 `;
 
-export const tabletBaseStyles = css`
-  gap: ${spacing[3]}px;
+const tabletContainerStyles = css`
+  gap: ${spacing[400]}px;
 `;
 
-export const desktopBaseStyles = css`
+/**
+ * @deprecated move this to MessageFeed
+ */
+const desktopContainerStyles = css`
   &:not(:last-child) {
-    margin-bottom: ${spacing[4]}px;
+    margin-bottom: ${spacing[600]}px;
   }
 `;
 
-export const hiddenStyles = css`
+export const getContainerStyles = ({
+  className,
+  isDesktop,
+  isMobile,
+  isRightAligned,
+  isSender,
+  theme,
+}: {
+  className?: string;
+  isDesktop: boolean;
+  isMobile: boolean;
+  isRightAligned: boolean;
+  isSender: boolean;
+  theme: Theme;
+}) =>
+  cx(
+    messageClassName,
+    getBaseContainerStyles(theme),
+    {
+      [senderClassName]: isSender,
+      [rightAlignedStyles]: isRightAligned,
+      [tabletContainerStyles]: !isMobile,
+      [desktopContainerStyles]: isDesktop,
+    },
+    className,
+  );
+
+const hiddenStyles = css`
   display: none;
 `;
 
-export const invisibleStyles = css`
+const invisibleStyles = css`
   display: block;
   visibility: hidden;
 `;
+
+export const getAvatarWrapperStyles = ({
+  shouldHide,
+  shouldBeInvisible,
+}: {
+  shouldHide: boolean;
+  shouldBeInvisible: boolean;
+}) =>
+  cx(avatarClassName, {
+    [hiddenStyles]: shouldHide,
+    [invisibleStyles]: shouldBeInvisible,
+  });
 
 export const messageContainerWrapperStyles = css`
   max-width: ${breakpoints.Tablet}px;
@@ -56,7 +99,7 @@ export const messageContainerWrapperStyles = css`
 
 const sharedMessageContainerWedgeStyles = css`
   // Left wedge
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     left: 0;
@@ -67,17 +110,28 @@ const sharedMessageContainerWedgeStyles = css`
   }
 `;
 
-export const messageContainerWedgeStyles = {
+const messageContainerWedgeStyles = {
   [Theme.Dark]: css`
     ${sharedMessageContainerWedgeStyles}
-    &:before {
+    &::before {
       background-color: ${palette.green.base};
     }
   `,
   [Theme.Light]: css`
     ${sharedMessageContainerWedgeStyles}
-    &:before {
+    &::before {
       background-color: ${palette.green.dark2};
     }
   `,
 };
+
+export const getMessageContainerWedgeStyles = ({
+  showVerified,
+  theme,
+}: {
+  showVerified: boolean;
+  theme: Theme;
+}) =>
+  cx({
+    [messageContainerWedgeStyles[theme]]: showVerified,
+  });

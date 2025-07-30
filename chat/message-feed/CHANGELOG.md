@@ -1,5 +1,57 @@
 # @lg-chat/message-feed
 
+## 6.0.0
+
+### Patch Changes
+
+- Updated dependencies [82d0ad2]
+  - @lg-chat/leafygreen-chat-provider@4.1.0
+  - @lg-chat/avatar@6.0.0
+  - @lg-chat/message@7.0.0
+
+## 5.0.4
+
+### Patch Changes
+
+- Updated dependencies [2adba55]
+  - @leafygreen-ui/button@25.0.0
+  - @lg-chat/message@6.1.2
+
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @lg-chat/avatar@5.0.3
+  - @lg-chat/message@6.1.1
+  - @lg-chat/message-rating@4.0.3
+  - @leafygreen-ui/button@24.0.3
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.2
+
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [12ff299]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+  - @leafygreen-ui/lib@15.1.0
+  - @lg-chat/message@6.1.0
+  - @leafygreen-ui/button@24.0.2
+  - @leafygreen-ui/icon@14.1.0
+  - @lg-chat/avatar@5.0.2
+  - @lg-chat/message-rating@4.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 5.0.1
 
 ### Patch Changes

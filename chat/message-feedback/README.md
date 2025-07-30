@@ -1,34 +1,64 @@
 # Message Feedback
 
-![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/message-feedback.svg)
-
-#### [View on MongoDB.design](https://www.mongodb.design/component/message-feedback/live-example/)
+![npm (scoped)](https://img.shields.io/npm/v/@lg-chat/message-feedback.svg)
 
 ## Installation
+
+### PNPM
+
+```shell
+pnpm install @lg-chat/message-feedback
+```
 
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/message-feedback
+yarn add @lg-chat/message-feedback
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/message-feedback
+npm install @lg-chat/message-feedback
 ```
 
 ## Examples
 
-### InlineMessageFeedback
+### Compact InlineMessageFeedback
 
-```
-<InlineMessageFeedback {...props} />
+```tsx
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { InlineMessageFeedback } from '@lg-chat/message-feedback';
+
+return (
+  <LeafyGreenChatProvider variant={Variant.Compact}>
+    <InlineMessageFeedback />
+  </LeafyGreenChatProvider>
+);
 ```
 
-### PopoverMessageFeedback
+### Spacious InlineMessageFeedback
 
+```tsx
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { InlineMessageFeedback } from '@lg-chat/message-feedback';
+
+return (
+  <LeafyGreenChatProvider variant={Variant.Spacious}>
+    <InlineMessageFeedback />
+  </LeafyGreenChatProvider>
+);
 ```
+
+### PopoverMessageFeedback (deprecated)
+
+```tsx
 const triggerRef = useRef(null);
 const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -39,13 +69,9 @@ const handleRatingChange: ChangeEventHandler<HTMLInputElement> = e => {
   setIsActive(rating === 'disliked');
 };
 
-
 return (
   <>
-    <MessageRating
-      ref={triggerRef}
-      onChange={handleRatingChange}
-    />
+    <MessageRating ref={triggerRef} onChange={handleRatingChange} />
     <PopoverMessageFeedback
       popoverProps={{
         ...popoverProps,
@@ -63,8 +89,6 @@ return (
 
 ### InlineMessageFeedback
 
-## Properties
-
 | Prop                | Type                                | Description                                                                                                                                                                                                   | Default                                  |
 | ------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
 | `cancelButtonText`  | `string`                            | Text displayed inside the cancel Button                                                                                                                                                                       | `'Cancel'`                               |
@@ -79,7 +103,7 @@ return (
 | `label`             | `TextAreaProps['label']`            |                                                                                                                                                                                                               |
 | `onClose`           | `string`                            | Event handler called on close button click. Close button will not be rendered when undefined. This is mainly for internal use as most instances of InlineMessageFeedback should be closed solely by onCancel. |                                          |
 
-### PopoverMessageFeedback
+### PopoverMessageFeedback (deprecated)
 
 | Prop            | Type     | Description            | Default |
 | --------------- | -------- | ---------------------- | ------- |

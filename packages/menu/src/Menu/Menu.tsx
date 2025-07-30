@@ -21,12 +21,12 @@ import Popover, {
   RenderMode,
 } from '@leafygreen-ui/popover';
 
-import { LGIDs } from '../constants';
 import { useHighlightReducer } from '../HighlightReducer';
 import {
   MenuContext,
   MenuDescendantsContext,
 } from '../MenuContext/MenuContext';
+import { getLgIds } from '../utils';
 
 import { useMenuHeight } from './utils/useMenuHeight';
 import {
@@ -34,7 +34,7 @@ import {
   getMenuStyles,
   scrollContainerStyle,
 } from './Menu.styles';
-import { MenuProps } from './Menu.types';
+import { MenuProps, MenuVariant } from './Menu.types';
 
 /**
  *
@@ -67,11 +67,13 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
     renderDarkMenu = true,
+    'data-lgid': dataLgId,
     children,
     className,
     refEl,
     trigger,
     renderMode = RenderMode.TopLayer,
+    variant = MenuVariant.Default,
     portalClassName,
     portalContainer,
     portalRef,
@@ -82,6 +84,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   forwardRef,
 ) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const lgIds = getLgIds(dataLgId);
 
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const defaultTriggerRef = useRef<HTMLElement>(null);
@@ -217,6 +220,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           setHighlight,
           moveHighlight,
           renderDarkMenu,
+          lgIds,
+          variant,
         }}
       >
         <Popover
@@ -227,15 +232,13 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           refEl={triggerRef}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
-          data-testid={LGIDs.root}
-          data-lgid={LGIDs.root}
           ref={popoverRef}
           {...popoverProps}
         >
           <div
             data-theme={theme}
             className={cx(
-              getMenuStyles({ theme }),
+              getMenuStyles({ theme, variant }),
               css`
                 max-height: ${maxMenuHeightValue};
               `,
@@ -252,7 +255,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
             <ul
+              data-testid={lgIds.root}
               {...rest}
+              data-lgid={lgIds.root}
               className={scrollContainerStyle}
               role="menu"
               onClick={e => e.stopPropagation()}

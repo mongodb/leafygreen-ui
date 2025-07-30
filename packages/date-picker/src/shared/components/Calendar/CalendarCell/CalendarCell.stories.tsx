@@ -16,7 +16,7 @@ import {
 } from './CalendarCell.types';
 
 const meta: StoryMetaType<typeof CalendarCell, SharedDatePickerContextProps> = {
-  title: 'Components/DatePicker/Shared/CalendarCell',
+  title: 'Components/Inputs/DatePicker/Shared/CalendarCell',
   component: CalendarCell,
   parameters: {
     default: null,

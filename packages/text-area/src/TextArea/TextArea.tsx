@@ -5,15 +5,14 @@ import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { LGIDS_TEXT_AREA } from '../constants';
+import { getLgIds } from '../utils';
 
 import { textAreaContainerStyles, textAreaStyles } from './TextArea.styles';
 import { State, TextAreaProps } from './TextArea.types';
 
+type TextArea = React.ForwardRefExoticComponent<TextAreaProps>;
+
 /**
- * # TextArea
- *
- * TextArea component
  *
  * ```
 <TextArea label='Input Label' onChange={() => execute when value of input field changes}/>
@@ -35,8 +34,6 @@ import { State, TextAreaProps } from './TextArea.types';
  * @param props.baseFontSize Override the global `baseFontSize` set in LeafygreenProvider. This will only change the font size of the input text, not the label or description.
  * @param props.defaultValue The default value of the input field. Unlike value, component will not be controlled if defaultValue is passed.
  */
-
-type TextArea = React.ForwardRefExoticComponent<TextAreaProps>;
 export const TextArea: TextArea = forwardRef<
   HTMLTextAreaElement,
   TextAreaProps
@@ -60,7 +57,7 @@ export const TextArea: TextArea = forwardRef<
     'aria-labelledby': ariaLabelledby,
     'aria-invalid': ariaInvalid,
     baseFontSize: baseFontSizeProp,
-    'data-lgid': dataLgId = LGIDS_TEXT_AREA.root,
+    'data-lgid': dataLgId,
     defaultValue = '',
     ...rest
   }: TextAreaProps,
@@ -73,6 +70,8 @@ export const TextArea: TextArea = forwardRef<
   const isControlled = typeof controlledValue === 'string';
   const [uncontrolledValue, setValue] = useState(defaultValue);
   const value = isControlled ? controlledValue : uncontrolledValue;
+
+  const lgIds = getLgIds(dataLgId);
 
   // Validation
   const validation = useValidation<HTMLTextAreaElement>(handleValidation);
@@ -113,7 +112,8 @@ export const TextArea: TextArea = forwardRef<
     baseFontSize,
     className,
     darkMode,
-    'data-lgid': dataLgId,
+    'data-lgid': lgIds.root,
+    'data-testid': lgIds.root,
     description,
     disabled,
     errorMessage,

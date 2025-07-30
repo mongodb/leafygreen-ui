@@ -9,12 +9,14 @@ import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing } from '@leafygreen-ui/tokens';
 
-import { LGIDs } from '../constants';
+import { MenuVariant } from '../Menu/Menu.types';
 import { menuColor } from '../styles';
+import { getLgIds } from '../utils';
 
 import { Variant } from './MenuItem.types';
+const lgIds = getLgIds();
 
-export const menuItemClassName = createUniqueClassName(LGIDs.item);
+export const menuItemClassName = createUniqueClassName(lgIds.item);
 
 export const menuItemContainerStyles = css`
   width: 100%;
@@ -28,7 +30,11 @@ interface MenuItemStyleArgs {
   highlighted: boolean;
   theme: Theme;
   variant: Variant;
+  menuVariant: MenuVariant;
 }
+
+const DEFAULT_MENU_ITEM_PADDING = spacing[200];
+const COMPACT_MENU_ITEM_PADDING = spacing[150];
 
 export const getMenuItemStyles = ({
   active,
@@ -36,6 +42,7 @@ export const getMenuItemStyles = ({
   highlighted,
   theme,
   variant,
+  menuVariant,
 }: MenuItemStyleArgs) =>
   cx(
     // Base styles
@@ -44,6 +51,10 @@ export const getMenuItemStyles = ({
       width: 100%;
       min-height: ${spacing[800]}px;
       background-color: ${menuColor[theme].background.default};
+      padding: ${menuVariant === MenuVariant.Default
+          ? DEFAULT_MENU_ITEM_PADDING
+          : COMPACT_MENU_ITEM_PADDING}px
+        ${spacing[300]}px;
 
       .${titleClassName} {
         color: ${menuColor[theme].text.default};
@@ -59,7 +70,7 @@ export const getMenuItemStyles = ({
         &:hover {
           background-color: ${menuColor[theme].background.active};
 
-          &:before {
+          &::before {
             transform: scaleY(1) translateY(-50%);
             background-color: ${menuColor[theme].border.active};
           }
@@ -82,7 +93,7 @@ export const getMenuItemStyles = ({
         &:focus-visible {
           background-color: ${menuColor[theme].background.focus};
 
-          &:before {
+          &::before {
             transform: scaleY(1) translateY(-50%);
             background-color: ${menuColor[theme].border.focus};
           }
@@ -169,7 +180,7 @@ export const getNestedMenuItemStyles = ({
     {
       // The inset border for submenu items
       [css`
-        &:after {
+        &::after {
           content: '';
           position: absolute;
           top: 0;

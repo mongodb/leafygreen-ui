@@ -1,5 +1,51 @@
 # @leafygreen-ui/button
 
+## 25.0.1
+
+### Patch Changes
+
+- 56c0d3b: - Updates usages of `bold` weight token to `semiBold`.
+
+  Note: This should have no visual impact since the font-face being used was already semi-bold/600px. It just updates the token used to better align with the font-face and Figma component.
+
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/tokens@3.2.0
+
+## 25.0.0
+
+### Major Changes
+
+- 2adba55: Update button testing exports from `@leafygreen-ui/button` to `@leafygreen-ui/button/testing`
+
+## 24.0.3
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.3
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/ripple@2.0.3
+
+## 24.0.2
+
+### Patch Changes
+
+- 164b15f: Use `LgIdString` type and remove setting `DEFAULT_LGID_ROOT`.
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [da277d5]
+  - @leafygreen-ui/lib@15.1.0
+  - @lg-tools/test-harnesses@0.3.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.2
+  - @leafygreen-ui/tokens@3.1.1
+  - @leafygreen-ui/ripple@2.0.2
+
 ## 24.0.1
 
 ### Patch Changes

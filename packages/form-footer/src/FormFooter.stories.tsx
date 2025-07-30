@@ -5,10 +5,11 @@ import {
   StoryMetaType,
   StoryType,
 } from '@lg-tools/storybook-utils';
+import { StoryObj } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import { MenuItem } from '@leafygreen-ui/menu';
 
 import FormFooter, { FormFooterProps } from '.';
 
@@ -18,7 +19,7 @@ const wrapperStyle = css`
 `;
 
 const meta: StoryMetaType<typeof FormFooter> = {
-  title: 'Components/FormFooter',
+  title: 'Components/Inputs/FormFooter',
   component: FormFooter,
   decorators: [
     StoryFn => (
@@ -79,50 +80,43 @@ const Template: StoryType<typeof FormFooter> = ({
   />
 );
 
-export const LiveExample: StoryType<typeof FormFooter> = Template.bind({});
-LiveExample.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+export const LiveExample: StoryObj<FormFooterProps> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
-};
-LiveExample.args = {
-  backButtonProps: { children: 'Back' },
-  cancelButtonProps: { children: 'Cancel' },
-};
-
-export const WithCustomPrimaryButton: StoryType<typeof FormFooter> =
-  Template.bind({});
-WithCustomPrimaryButton.args = {
-  primaryButton: (
-    <Button
-      leftGlyph={<Icon glyph={'Cloud'} />}
-      rightGlyph={<Icon glyph={'Checkmark'} />}
-      variant="primary"
-      disabled
-    >
-      Save to cloud
-    </Button>
-  ),
-  backButtonProps: { children: 'Back' },
-  cancelButtonProps: { children: 'Cancel' },
-};
-WithCustomPrimaryButton.parameters = {
-  chromatic: {
-    disableSnapshot: true,
-  },
-  controls: {
-    exclude: [
-      ...(meta.parameters.controls?.exclude ?? []),
-      'primaryButtonText',
-    ],
+  args: {
+    backButtonProps: { children: 'Back' },
+    cancelButtonProps: { children: 'Cancel' },
   },
 };
 
-export const LightMode: StoryType<typeof FormFooter> = () => <></>;
-LightMode.args = {
-  darkMode: false,
+export const CustomSplitButton: StoryObj<typeof FormFooter> = {
+  render: Template,
+  args: {
+    cancelButtonProps: {
+      label: 'More options',
+      menuItems: [
+        <MenuItem key="0">Menu Item 1</MenuItem>,
+        <MenuItem key="1">Menu Item 2</MenuItem>,
+        <MenuItem key="2">Menu Item 3</MenuItem>,
+      ],
+    },
+  },
 };
-export const DarkMode: StoryType<typeof FormFooter> = () => <></>;
-DarkMode.args = {
-  darkMode: true,
+
+export const LightMode: StoryObj<typeof FormFooter> = {
+  render: Template,
+  args: {
+    darkMode: false,
+  },
+};
+
+export const DarkMode: StoryObj<typeof FormFooter> = {
+  render: Template,
+  args: {
+    darkMode: true,
+  },
 };

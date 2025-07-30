@@ -1,6 +1,5 @@
-export { LGIDs } from './constants';
 export { FocusableMenuItem } from './FocusableMenuItem';
-export { Menu, type MenuProps } from './Menu';
+export { Menu, type MenuProps, MenuVariant } from './Menu';
 export {
   type MenuContextData,
   MenuDescendantsContext,
@@ -25,3 +24,4 @@ export {
   type SubMenuProps,
   subMenuToggleClassName,
 } from './SubMenu';
+export { DEFAULT_LGID_ROOT, getLgIds, type GetLgIdsReturnType } from './utils';

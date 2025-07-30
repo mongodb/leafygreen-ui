@@ -1,5 +1,77 @@
 # @leafygreen-ui/tabs
 
+## 17.0.1
+
+### Patch Changes
+
+- 56c0d3b: - Updates usages of `bold` weight token to `semiBold`.
+
+  Note: This should have no visual impact since the font-face being used was already semi-bold/600px. It just updates the token used to better align with the font-face and Figma component.
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+
+## 17.0.0
+
+### Major Changes
+
+- 95f7c12: [LG-4696](https://jira.mongodb.org/browse/LG-4696): Rename `selected` prop to `value` and `setSelected` prop to `onValueChange` and update `onValueChange` type signature to `(number | string) => void;`
+
+### Patch Changes
+
+- @leafygreen-ui/descendants@3.0.2
+
+## 16.0.1
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/a11y@3.0.2
+  - @leafygreen-ui/descendants@3.0.2
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.3
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
+## 16.0.0
+
+### Major Changes
+
+- 164b15f: Updates `data-lgid` and `data-testid` to use scope based test IDs. These test IDs are generated using the helper utility `getLgIds`. For more information [check out the section in the styleguide about getLgIds](https://github.com/mongodb/leafygreen-ui/blob/main/STYLEGUIDE.md#getlgids).
+
+  Removes public exports for:
+
+  - `LGIDs`
+  - `LGIDS_CHECKBOX`
+  - `LGIDS_FORM_FIELD`
+  - `LGIDS_SELECT`
+  - `LGIDS_TYPOGRAPHY`
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [f685e51]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [da277d5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/descendants@3.0.1
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/typography@22.0.0
+  - @lg-tools/test-harnesses@0.3.2
+  - @leafygreen-ui/a11y@3.0.1
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.2
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 15.0.1
 
 ### Patch Changes

@@ -4,14 +4,56 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryFn, StoryObj } from '@storybook/react';
 
-import { MessageRating, MessageRatingProps } from '.';
+import { MessageRating, type MessageRatingProps, MessageRatingValue } from '.';
 
-export default {
-  title: 'Chat/MessageRating',
+const meta: StoryMetaType<typeof MessageRating> = {
+  title: 'Composition/Chat/MessageRating',
   component: MessageRating,
+  parameters: {
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        hideThumbsDown: [false, true],
+        hideThumbsUp: [false, true],
+        value: Object.values(MessageRatingValue),
+      },
+      decorator: StoryFn => (
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <StoryFn />
+        </LeafyGreenChatProvider>
+      ),
+      excludeCombinations: [
+        {
+          hideThumbsDown: true,
+          hideThumbsUp: true,
+        },
+        {
+          hideThumbsDown: true,
+          value: MessageRatingValue.Disliked,
+        },
+        {
+          hideThumbsDown: true,
+          value: MessageRatingValue.Unselected,
+        },
+        {
+          hideThumbsUp: true,
+          value: MessageRatingValue.Liked,
+        },
+        {
+          hideThumbsUp: true,
+          value: MessageRatingValue.Unselected,
+        },
+      ],
+    },
+  },
   args: {
     onChange: (e: ChangeEvent<HTMLInputElement>) => {
       // eslint-disable-next-line no-console
@@ -23,16 +65,34 @@ export default {
     description: { control: 'text' },
     value: {
       control: 'radio',
-      options: ['liked', 'disliked', 'undefined'],
+      options: Object.values(MessageRatingValue),
+    },
+    variant: {
+      control: 'radio',
+      options: Object.values(Variant),
     },
   },
 };
+export default meta;
 
-const Template: StoryFn<typeof MessageRating> = props => (
-  <MessageRating {...props} />
+type MessageRatingStoryProps = MessageRatingProps & {
+  variant?: Variant;
+};
+
+const Template: StoryFn<MessageRatingStoryProps> = ({ variant, ...props }) => (
+  <LeafyGreenChatProvider variant={variant}>
+    <MessageRating {...props} />
+  </LeafyGreenChatProvider>
 );
 
-export const Basic: StoryFn<typeof MessageRating> = Template.bind({});
+export const LiveExample: StoryObj<MessageRatingStoryProps> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
 
 export const Controlled: StoryFn<typeof MessageRating> = ({
   value: valueProp,
@@ -53,4 +113,11 @@ export const Controlled: StoryFn<typeof MessageRating> = ({
 };
 Controlled.argTypes = {
   value: { control: 'none' },
+};
+
+export const Generated: StoryObj<MessageRatingStoryProps> = {
+  render: Template,
+  args: {
+    variant: Variant.Compact,
+  },
 };

@@ -1,17 +1,15 @@
 /**
- * If selected is a `string`, return the corresponding index, else return the index.
+ * If value is a `string`, return the corresponding index, else return the index.
  *
- * @param selected
+ * @param value
  * @param tabTitleElements
  * @returns number
  */
 export const getSelectedIndex = (
-  selected: number | string,
+  value: number | string | undefined,
   tabTitleElements: Array<HTMLElement>,
 ): number => {
-  if (typeof selected === 'number') return selected;
+  if (typeof value === 'number') return value;
 
-  return tabTitleElements.findIndex(
-    element => element.dataset.text === selected,
-  );
+  return tabTitleElements.findIndex(element => element.dataset.text === value);
 };

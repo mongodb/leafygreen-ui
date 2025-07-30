@@ -10,13 +10,14 @@ import type { ChartHookProps, ChartInstance } from './useChart.types';
 import { useTooltipVisibility } from './useTooltipVisibility';
 
 export function useChart({
-  onChartReady = () => {},
-  zoomSelect,
-  onZoomSelect,
   chartId,
+  enableGroupTooltipSync,
   groupId,
-  theme,
+  onChartReady = () => {},
+  onZoomSelect,
   state,
+  theme,
+  zoomSelect,
 }: ChartHookProps): ChartInstance {
   const initialOptions = useMemo(() => getDefaultChartOptions(theme), [theme]);
 
@@ -142,6 +143,7 @@ export function useChart({
 
   return {
     ...echart,
+    enableGroupTooltipSync: !!groupId && enableGroupTooltipSync,
     id,
     isChartHovered,
     ref: setContainer,

@@ -21,7 +21,7 @@ import {
 import Logo, { LogoName } from '.';
 
 const meta: StoryMetaType<typeof Logo> = {
-  title: 'Components/Logo',
+  title: 'Components/Display/Logo',
   component: Logo,
   decorators: [
     Story => (

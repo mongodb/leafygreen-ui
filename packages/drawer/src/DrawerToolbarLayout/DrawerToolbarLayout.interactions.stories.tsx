@@ -18,6 +18,11 @@ import { getTestUtils } from '../testing';
 import { DrawerToolbarLayout } from './DrawerToolbarLayout';
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 
+// The tooltip sometimes lingers after the drawer closes, which can cause
+// snapshot tests to fail if the tooltip is not in the correct position.
+// Setting a delay of 1 second allows the tooltip to be in the correct position
+const TOOLTIP_SNAPSHOT_DELAY = 1000; // ms
+
 const SEED = 0;
 faker.seed(SEED);
 
@@ -82,7 +87,7 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
 ];
 
 export default {
-  title: 'Components/Drawer/Toolbar/Interactions',
+  title: 'Sections/Drawer/Toolbar/Interactions',
   component: Drawer,
   parameters: {
     default: 'LiveExample',
@@ -163,6 +168,8 @@ export const OverlayOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
         expect(isOpen()).toBe(true);
         expect(canvas.getByText('Code Title')).toBeVisible();
       });
+      // Pause so the tooltip is in the correct position in the snapshot
+      await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
     },
   };
 
@@ -189,9 +196,6 @@ export const OverlaySwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> = {
     });
 
     userEvent.unhover(codeButton!);
-    // Pause so the change is visible in the story
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
     userEvent.click(dashboardButton!);
 
     await waitFor(() => {
@@ -221,12 +225,12 @@ export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
       expect(isOpen()).toBe(true);
       expect(canvas.getByText('Code Title')).toBeVisible();
     });
-    // Pause so the change is visible in the story
-    await new Promise(resolve => setTimeout(resolve, 1000));
 
     userEvent.click(closeButton);
 
     await waitFor(() => expect(isOpen()).toBe(false));
+    // Pause so the tooltip is in the correct position in the snapshot
+    await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
   },
 };
 
@@ -250,6 +254,8 @@ export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
         expect(isOpen()).toBe(true);
         expect(canvas.getByText('Code Title')).toBeVisible();
       });
+      // Pause so the tooltip is in the correct position in the snapshot
+      await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
     },
   };
 
@@ -277,9 +283,6 @@ export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> =
       });
 
       userEvent.unhover(codeButton!);
-      // Pause so the change is visible in the story
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
       userEvent.click(dashboardButton!);
 
       await waitFor(() =>
@@ -308,11 +311,11 @@ export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
       expect(isOpen()).toBe(true);
       expect(canvas.getByText('Code Title')).toBeVisible();
     });
-    // Pause so the change is visible in the story
-    await new Promise(resolve => setTimeout(resolve, 1000));
 
     userEvent.click(closeButton!);
 
     await waitFor(() => expect(isOpen()).toBe(false));
+    // Pause so the tooltip is in the correct position in the snapshot
+    await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
   },
 };

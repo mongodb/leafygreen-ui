@@ -11,7 +11,7 @@ import { AnyDict } from '../utils/types';
 import TableHead from './TableHead';
 
 export default {
-  title: 'Components/Table/TableHead',
+  title: 'Composition/Data Display/Table/TableHead',
   component: TableHead,
   argTypes: {
     children: { control: 'none' },

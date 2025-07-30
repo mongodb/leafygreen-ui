@@ -9,11 +9,11 @@
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/fixed-chat-window
+yarn add @lg-chat/fixed-chat-window
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/fixed-chat-window
+npm install @lg-chat/fixed-chat-window
 ```

@@ -16,7 +16,7 @@ import {
 import { InputOption, type InputOptionProps } from '.';
 
 export default {
-  title: 'Components/InputOption',
+  title: 'Internal/InputOption',
   component: InputOption,
   parameters: {
     default: 'Basic',

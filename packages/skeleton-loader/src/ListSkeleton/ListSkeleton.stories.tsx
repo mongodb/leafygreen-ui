@@ -4,7 +4,7 @@ import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { ListSkeleton } from '.';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Composition/Loading/SkeletonLoader',
   component: ListSkeleton,
   parameters: {
     default: null,

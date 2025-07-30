@@ -82,6 +82,7 @@ export function CustomTooltip({
         )}
       </div>
       <SeriesList
+        data-chartid={chartId}
         seriesData={seriesData}
         seriesValueFormatter={seriesValueFormatter}
         seriesNameFormatter={seriesNameFormatter}

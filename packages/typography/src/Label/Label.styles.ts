@@ -13,7 +13,7 @@ export const getLabelStyles = (theme: Theme) => {
     color: ${color[theme].text.primary.default};
 
     font-family: ${fontFamilies.default};
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
   `;
 };
 

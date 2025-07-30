@@ -129,12 +129,12 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 
 # Body
 
-| Prop           | Type                      | Description                                                                                        | Default                                       |
-| -------------- | ------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `weight`       | `'regular'` \| `'medium'` | font-weight applied to typography element                                                          | `'regular'`                                   |
-| `darkMode`     | `boolean`                 | Determines if the component renders in dark mode                                                   | `false`                                       |
-| `as`           | `React.ElementType`       | Element to render the component as. **Note**: This will supersede the behavior of any other props. | `'p'`                                         |
-| `baseFontSize` | `13` \| `16`              | font-size applied to typography element                                                            | Defaults to value set by LeafyGreen Provider. |
+| Prop           | Type                                      | Description                                                                                        | Default                                       |
+| -------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `weight`       | `'regular'` \| `'medium'` \| `'semiBold'` | font-weight applied to typography element                                                          | `'regular'`                                   |
+| `darkMode`     | `boolean`                                 | Determines if the component renders in dark mode                                                   | `false`                                       |
+| `as`           | `React.ElementType`                       | Element to render the component as. **Note**: This will supersede the behavior of any other props. | `'p'`                                         |
+| `baseFontSize` | `13` \| `16`                              | font-size applied to typography element                                                            | Defaults to value set by LeafyGreen Provider. |
 
 # InlineCode
 

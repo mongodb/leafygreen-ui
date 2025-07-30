@@ -9,7 +9,7 @@ import { Size } from './Toggle/types';
 import Toggle, { ToggleProps } from '.';
 
 const meta: StoryMetaType<typeof Toggle> = {
-  title: 'Components/Toggle',
+  title: 'Components/Inputs/Toggle',
   component: Toggle,
   parameters: {
     default: 'LiveExample',

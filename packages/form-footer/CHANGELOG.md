@@ -1,5 +1,73 @@
 # @leafygreen-ui/form-footer
 
+## 9.0.1
+
+### Patch Changes
+
+- @leafygreen-ui/split-button@6.1.1
+
+## 9.0.0
+
+### Major Changes
+
+- 4b306ae: [LG-5038](https://jira.mongodb.org/browse/LG-5038): remove deprecated `primaryButton` prop and make `primaryButtonProps` required. Please migrate to using the `primaryButtonProps` prop.
+
+### Minor Changes
+
+- ee7d80d: [LG-5039](https://jira.mongodb.org/browse/LG-5039): `backButtonProps`, `cancelButtonProps`, and `primaryButtonProps` can be used to render `SplitButton` instances.
+
+### Patch Changes
+
+- Updated dependencies [ee7d80d]
+  - @leafygreen-ui/split-button@6.1.0
+
+## 8.0.2
+
+### Patch Changes
+
+- Updated dependencies [2adba55]
+  - @leafygreen-ui/button@25.0.0
+
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/banner@10.0.3
+  - @leafygreen-ui/button@24.0.3
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+
+## 8.0.0
+
+### Major Changes
+
+- 164b15f: Updates `data-lgid` and `data-testid` to use scope based test IDs. These test IDs are generated using the helper utility `getLgIds`. For more information [check out the section in the styleguide about getLgIds](https://github.com/mongodb/leafygreen-ui/blob/main/STYLEGUIDE.md#getlgids).
+
+  Removes public exports for:
+
+  - `LGIDs`
+  - `LGIDS_CHECKBOX`
+  - `LGIDS_FORM_FIELD`
+  - `LGIDS_SELECT`
+  - `LGIDS_TYPOGRAPHY`
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/button@24.0.2
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/banner@10.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+
 ## 7.0.1
 
 ### Patch Changes

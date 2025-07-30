@@ -6,9 +6,10 @@ import noop from 'lodash/noop';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 
-import { Menu } from '../Menu';
+import { Menu, MenuVariant } from '../Menu';
 import { MenuContext } from '../MenuContext';
 import { MenuItem } from '../MenuItem';
+import { getLgIds } from '../utils';
 
 /**
  * Implements a MenuContext wrapper around each `MenuItem`, `SubMenu` or `MenuGroup`
@@ -22,6 +23,7 @@ export const withMenuContext =
         highlight,
         moveHighlight,
         setHighlight,
+        lgIds = getLgIds(),
       },
     } = ctx ?? {
       args: {
@@ -30,6 +32,7 @@ export const withMenuContext =
         highlight: undefined,
         moveHighlight: noop,
         setHighlight: noop,
+        lgIds: getLgIds(),
       },
     };
 
@@ -50,6 +53,8 @@ export const withMenuContext =
             highlight,
             moveHighlight,
             setHighlight,
+            lgIds,
+            variant: MenuVariant.Default,
           }}
         >
           <Instance />

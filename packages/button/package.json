@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "24.0.1",
+  "version": "25.0.1",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -14,6 +14,19 @@
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    },
+    "./Button.styles": "./src/Button/index.ts"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",

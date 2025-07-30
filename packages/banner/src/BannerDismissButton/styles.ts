@@ -24,7 +24,7 @@ const darkModeInfoStyles = css`
     box-shadow: 0 0 0 2px ${palette.blue.dark3},
       0 0 0 4px ${palette.blue.light1};
 
-    &:before {
+    &::before {
       background-color: ${palette.blue.dark2};
     }
   }
@@ -39,7 +39,7 @@ const darkModeWarningStyles = css`
     box-shadow: 0 0 0 2px ${palette.yellow.dark3},
       0 0 0 4px ${palette.blue.light1};
 
-    &:before {
+    &::before {
       background-color: ${palette.yellow.dark2};
     }
   }
@@ -54,7 +54,7 @@ const darkModeDangerStyles = css`
     color: ${palette.red.light2};
     box-shadow: 0 0 0 2px ${palette.red.dark3}, 0 0 0 4px ${palette.blue.light1};
 
-    &:before {
+    &::before {
       background-color: ${palette.red.dark2};
     }
   }
@@ -70,7 +70,7 @@ const darkModeSuccessStyles = css`
     box-shadow: 0 0 0 2px ${palette.green.dark3},
       0 0 0 4px ${palette.blue.light1};
 
-    &:before {
+    &::before {
       background-color: ${palette.green.dark2};
     }
   }
@@ -84,7 +84,7 @@ const lightModeInfoStyles = css`
   &:focus-visible {
     color: ${palette.blue.dark2};
 
-    &:before {
+    &::before {
       background-color: ${palette.blue.light2};
     }
   }
@@ -98,7 +98,7 @@ const lightModeWarningStyles = css`
   &:focus-visible {
     color: ${palette.yellow.dark2};
 
-    &:before {
+    &::before {
       background-color: ${palette.yellow.light2};
     }
   }
@@ -112,7 +112,7 @@ const lightModeDangerStyles = css`
   &:focus-visible {
     color: ${palette.red.dark2};
 
-    &:before {
+    &::before {
       background-color: ${palette.red.light2};
     }
   }
@@ -126,7 +126,7 @@ const lightModeSuccessStyles = css`
   &:focus-visible {
     color: ${palette.green.dark2};
 
-    &:before {
+    &::before {
       background-color: ${palette.green.light2};
     }
   }

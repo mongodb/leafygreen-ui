@@ -6,7 +6,7 @@ import { StoryObj } from '@storybook/react';
 import { Avatar, Size, Variant } from '.';
 
 export default {
-  title: 'Chat/Avatar',
+  title: 'Composition/Chat/Avatar',
   component: Avatar,
   decorators: [
     StoryFn => <LeafyGreenChatProvider>{StoryFn()}</LeafyGreenChatProvider>,

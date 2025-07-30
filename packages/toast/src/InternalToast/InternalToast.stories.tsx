@@ -19,7 +19,7 @@ import { Variant } from '../Toast.types';
 import { InternalToast, InternalToastProps } from '.';
 
 const meta: StoryMetaType<typeof InternalToast> = {
-  title: 'Components/Toast/Internal',
+  title: 'Components/Notifications/Toast/Internal',
   component: InternalToast,
   parameters: {
     default: 'Basic',

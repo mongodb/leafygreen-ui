@@ -5,7 +5,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { LGIDS_TOGGLE } from '../constants';
+import { getLgIds } from '../utils';
 
 import {
   buttonBaseStyles,
@@ -21,6 +21,9 @@ import {
 } from './styles';
 import { Size, ToggleProps } from './types';
 
+/**
+ * A Toggle component is used to switch between two binary states, like on and off, and will take an immediate effect when selected.
+ */
 function Toggle({
   className,
   size = Size.Default,
@@ -29,12 +32,13 @@ function Toggle({
   onChange: onChangeProp,
   onClick: onClickProp,
   checked: controlledChecked,
-  'data-lgid': dataLgId = LGIDS_TOGGLE.root,
+  'data-lgid': dataLgId,
   ...rest
 }: ToggleProps) {
   validateAriaLabelProps(rest, Toggle.displayName);
   const { theme } = useDarkMode(darkModeProp);
   const [checked, setChecked] = useState(false);
+  const lgIds = getLgIds(dataLgId);
 
   const isControlled = typeof controlledChecked === 'boolean';
   const normalizedChecked = controlledChecked ?? checked;
@@ -71,7 +75,8 @@ function Toggle({
         buttonThemeStyles[theme],
         buttonSizeStyles[size],
       )}
-      data-lgid={dataLgId}
+      data-lgid={lgIds.root}
+      data-testid={lgIds.root}
       {...rest}
     >
       <div

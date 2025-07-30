@@ -26,19 +26,16 @@ export type ChartProps = HTMLElementProps<'div'> &
   DarkModeProps &
   PropsWithChildren<{
     /**
-     * Callback to be called when chart is finished rendering.
+     * Unique identifier when using with `DragProvider`.
      */
-    onChartReady?: () => void;
+    dragId?: string | number;
 
     /**
-     * Zoom selection configuration.
+     * Enables tooltip synchronization across charts with the same groupId.
+     * groupId must be set for this to work.
+     * @default true
      */
-    zoomSelect?: ZoomSelect;
-
-    /**
-     * Zoom selection enablement configuration.
-     */
-    onZoomSelect?: (e: ZoomSelectionEvent) => void;
+    enableGroupTooltipSync?: boolean;
 
     /**
      * Charts with same groupID will have their tooltips synchronized.
@@ -46,12 +43,22 @@ export type ChartProps = HTMLElementProps<'div'> &
     groupId?: string;
 
     /**
+     * Callback to be called when chart is finished rendering.
+     */
+    onChartReady?: () => void;
+
+    /**
+     * Zoom selection enablement configuration.
+     */
+    onZoomSelect?: (e: ZoomSelectionEvent) => void;
+
+    /**
      * Controls the current chart state.
      */
     state?: ChartStates;
 
     /**
-     * Unique identifier when using with `DragProvider`.
+     * Zoom selection configuration.
      */
-    dragId?: string | number;
+    zoomSelect?: ZoomSelect;
   }>;

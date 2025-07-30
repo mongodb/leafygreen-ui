@@ -18,7 +18,7 @@ interface Props {
 function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
   const { darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
-  const { isLoading, lgids } = useCodeContext();
+  const { isLoading, lgIds } = useCodeContext();
 
   const handleChange = (val: string) => {
     if (val === '' && previousLanguage !== undefined) {
@@ -45,8 +45,8 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
         allowDeselect={false}
         renderMode={RenderMode.TopLayer}
         size={Size.XSmall}
-        data-testid={lgids.select}
-        data-lgid={lgids.select}
+        data-testid={lgIds.select}
+        data-lgid={lgIds.select}
         disabled={isLoading}
       >
         {languageOptions?.map(option => (

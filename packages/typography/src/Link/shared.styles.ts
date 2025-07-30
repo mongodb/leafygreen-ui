@@ -58,7 +58,7 @@ export const linkModeStyles: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     color: ${palette.blue.light1};
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
 
     &:hover,
     &[data-hover='true'] {

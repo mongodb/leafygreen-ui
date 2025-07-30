@@ -34,7 +34,7 @@ const toolbarExcludedControls = [
 ];
 
 export default {
-  title: 'Components/Drawer/Toolbar',
+  title: 'Sections/Drawer/Toolbar',
   component: Drawer,
   decorators: [
     StoryFn => (
@@ -196,6 +196,12 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
     onClick: () => {
       console.log('Plus clicked, does not update drawer');
     },
+  },
+  {
+    id: 'Sparkle',
+    label: 'Disabled item',
+    glyph: 'Sparkle',
+    disabled: true,
   },
 ];
 

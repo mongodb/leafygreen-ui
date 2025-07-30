@@ -25,7 +25,7 @@ import { useInitDescendants } from '.';
 faker.seed(0);
 
 const testItemStyle = css`
-  &:before {
+  &::before {
     content: attr(data-index);
     color: gray;
     padding-right: 4px;
@@ -38,7 +38,7 @@ const nestedItemStyle = css`
 `;
 
 const meta: StoryMetaType<ElementType<unknown>> = {
-  title: 'Hooks/Descendants',
+  title: 'Internal/Hooks/Descendants',
   parameters: {
     default: null,
     chromatic: {

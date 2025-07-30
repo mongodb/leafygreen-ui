@@ -3,4 +3,4 @@ export {
   DrawerStackProvider,
   useDrawerStackContext,
 } from './DrawerStackContext';
-export { DrawerStackContextType } from './DrawerStackContext.types';
+export { type DrawerStackContextType } from './DrawerStackContext.types';

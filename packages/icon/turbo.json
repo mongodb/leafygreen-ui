@@ -6,6 +6,19 @@
       "dependsOn": ["^tsc", "^prebuild"],
       "inputs": ["src/glyphs/*.svg"],
       "outputs": ["src/generated/*.tsx", "src/glyphs/index.ts"]
+    },
+    "build": {
+      "dependsOn": ["^build", "^prebuild", "prebuild"],
+      "inputs": ["src/generated/*.tsx"],
+      "outputs": ["dist/**/*.js", "dist/**/*.js.map", "stories.js"]
+    },
+    "tsc": {
+      "dependsOn": ["^tsc", "^prebuild", "prebuild"],
+      "outputs": [
+        "dist/**/*.d.ts",
+        "dist/**/*.d.ts.map",
+        "tsconfig.tsbuildinfo"
+      ]
     }
   }
 }

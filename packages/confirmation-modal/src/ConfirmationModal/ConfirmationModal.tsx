@@ -9,7 +9,7 @@ import { palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import { H3 } from '@leafygreen-ui/typography';
 
-import { LGIDS_CONFIRMATION_MODAL } from '../constants';
+import { getLgIds } from '../utils/getLgIds';
 
 import { ConfirmationModalProps, Variant } from './ConfirmationModal.types';
 import {
@@ -24,6 +24,9 @@ import {
   warningIconThemeStyle,
 } from './styles';
 
+/**
+ * Modals can be used to display a simple task, confirm actions, prompt users to input information, or display additional information.
+ */
 export const ConfirmationModal = React.forwardRef(
   (
     {
@@ -38,12 +41,15 @@ export const ConfirmationModal = React.forwardRef(
       darkMode: darkModeProp,
       confirmButtonProps = {},
       cancelButtonProps = {},
+      'data-lgid': dataLgId,
       ...modalProps
     }: ConfirmationModalProps,
     forwardRef: React.ForwardedRef<HTMLDivElement | null>,
   ) => {
     const [confirmEnabled, setConfirmEnabled] = useState(!requiredInputText);
     const { theme, darkMode } = useDarkMode(darkModeProp);
+
+    const lgIds = getLgIds(dataLgId);
 
     const textEntryConfirmation = useMemo(() => {
       setConfirmEnabled(!requiredInputText);
@@ -62,13 +68,13 @@ export const ConfirmationModal = React.forwardRef(
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             darkMode={darkMode}
-            data-testid={LGIDS_CONFIRMATION_MODAL.input}
+            data-testid={lgIds.input}
           ></TextInput>
         );
       }
 
       return textEntryConfirmation;
-    }, [requiredInputText, darkMode]);
+    }, [requiredInputText, darkMode, lgIds.input]);
 
     // TODO: remove - onConfirm is deprecated
     const _onConfirm = onConfirm || confirmButtonProps?.onClick;
@@ -96,6 +102,8 @@ export const ConfirmationModal = React.forwardRef(
 
     return (
       <Modal
+        data-testid={lgIds.root}
+        data-lgid={lgIds.root}
         {...modalProps}
         contentClassName={baseModalStyle}
         setOpen={handleCancel}
@@ -115,11 +123,7 @@ export const ConfirmationModal = React.forwardRef(
               />
             </div>
           )}
-          <H3
-            as="h1"
-            className={cx(titleStyle)}
-            data-testid={LGIDS_CONFIRMATION_MODAL.title}
-          >
+          <H3 as="h1" className={cx(titleStyle)} data-testid={lgIds.title}>
             {title}
           </H3>
           {children}
@@ -128,7 +132,7 @@ export const ConfirmationModal = React.forwardRef(
         <Footer>
           <Button
             {...confirmButtonProps}
-            data-testid={LGIDS_CONFIRMATION_MODAL.confirm}
+            data-testid={lgIds.confirm}
             disabled={!confirmEnabled || isConfirmDisabled}
             className={cx(buttonStyle, confirmButtonProps?.className)}
             variant={variant}
@@ -141,7 +145,7 @@ export const ConfirmationModal = React.forwardRef(
             {...cancelButtonProps}
             onClick={handleCancel}
             className={cx(buttonStyle, cancelButtonProps?.className)}
-            data-testid={LGIDS_CONFIRMATION_MODAL.cancel}
+            data-testid={lgIds.cancel}
           >
             Cancel
           </Button>

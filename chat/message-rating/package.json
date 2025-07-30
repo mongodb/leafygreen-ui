@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-rating",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "lg-chat Message Rating",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -18,13 +18,15 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"

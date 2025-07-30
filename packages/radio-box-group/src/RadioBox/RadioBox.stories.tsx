@@ -9,7 +9,7 @@ import { Size } from '..';
 import { RadioBox } from '.';
 
 const meta: StoryMetaType<typeof RadioBox> = {
-  title: 'Components/RadioBoxGroup/RadioBox',
+  title: 'Components/Inputs/RadioBoxGroup/RadioBox',
   component: RadioBox,
   parameters: {
     default: null,

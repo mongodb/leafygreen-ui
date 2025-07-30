@@ -1,5 +1,35 @@
 # @leafygreen-ui/toggle
 
+## 12.0.3
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/a11y@3.0.2
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.2
+
+## 12.0.2
+
+### Patch Changes
+
+- 164b15f: Updates `data-lgid` and `data-testid` to use scope based test IDs. These test IDs are generated using the helper utility `getLgIds`. For more information [check out the section in the styleguide about getLgIds](https://github.com/mongodb/leafygreen-ui/blob/main/STYLEGUIDE.md#getlgids).
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [1eafbb5]
+- Updated dependencies [da277d5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/icon@14.1.0
+  - @lg-tools/test-harnesses@0.3.2
+  - @leafygreen-ui/a11y@3.0.1
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 12.0.1
 
 ### Patch Changes

@@ -1,5 +1,128 @@
 # @leafygreen-ui/code
 
+## 20.0.3
+
+### Patch Changes
+
+- 56c0d3b: - Updates usages of `bold` weight token to `semiBold`.
+
+  Note: This should have no visual impact since the font-face being used was already semi-bold/600px. It just updates the token used to better align with the font-face and Figma component.
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+  - @leafygreen-ui/button@25.0.1
+  - @leafygreen-ui/select@16.0.3
+
+## 20.0.2
+
+### Patch Changes
+
+- 2adba55: Refactor test utils usage to import from `@leafygreen-ui/button/testing` instead of `@leafygreen-ui/button`
+- Updated dependencies [2adba55]
+  - @leafygreen-ui/button@25.0.0
+  - @leafygreen-ui/select@16.0.2
+  - @leafygreen-ui/tooltip@14.1.1
+
+## 20.0.1
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/a11y@3.0.2
+  - @leafygreen-ui/button@24.0.3
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/icon-button@17.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/select@16.0.1
+  - @leafygreen-ui/skeleton-loader@3.0.3
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/tooltip@14.1.1
+  - @leafygreen-ui/typography@22.0.1
+
+## 20.0.0
+
+### Major Changes
+
+- 164b15f: - Move `lgIds` to context, use `LgIdString` type, and remove setting `DEFAULT_LGID_ROOT`.
+
+  - Update all IDs to return the unique root identifier passed to `data-lgid`:
+
+    **Before**
+
+    ```tsx
+    export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
+      const ids = {
+        root,
+        panel: `${DEFAULT_LGID_ROOT}-panel`,
+        select: `${root}-select`,
+        copyButton: `${DEFAULT_LGID_ROOT}-copy_button`,
+        copyTooltip: `${DEFAULT_LGID_ROOT}-copy_tooltip`,
+        expandButton: `${root}-expand_button`,
+        skeleton: `${root}-skeleton`,
+        pre: `${root}-pre`,
+        title: `${DEFAULT_LGID_ROOT}-title`,
+      } as const;
+      return ids;
+    };
+    ```
+
+    **After**
+
+    ```tsx
+    export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
+      const ids = {
+        root,
+        panel: `${root}-panel`, // Updated to use unique root identifier
+        select: `${root}-select`,
+        copyButton: `${root}-copy_button`, // Updated to use unique root identifier
+        copyTooltip: `${root}-copy_tooltip`, // Updated to use unique root identifier
+        expandButton: `${root}-expand_button`,
+        skeleton: `${root}-skeleton`,
+        pre: `${root}-pre`,
+        title: `${root}-title`, // Updated to use unique root identifier
+      } as const;
+      return ids;
+    };
+    ```
+
+### Minor Changes
+
+- 04e55b3: Exports `CopyButton` component
+
+### Patch Changes
+
+- 4f601e3: Adds missing `@lg-tools/build` as a devDep in local `package.json`
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+- Updated dependencies [da277d5]
+- Updated dependencies [92c38b1]
+- Updated dependencies [92c38b1]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/button@24.0.2
+  - @leafygreen-ui/typography@22.0.0
+  - @leafygreen-ui/select@16.0.0
+  - @leafygreen-ui/icon@14.1.0
+  - @lg-tools/test-harnesses@0.3.2
+  - @leafygreen-ui/tooltip@14.1.0
+  - @leafygreen-ui/a11y@3.0.1
+  - @leafygreen-ui/icon-button@17.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/skeleton-loader@3.0.2
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 19.0.1
 
 ### Patch Changes

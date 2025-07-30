@@ -16,7 +16,7 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { useDrawerStackContext } from '../DrawerStackContext';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
+import { getLgIds } from '../utils';
 
 import {
   drawerTransitionDuration,
@@ -29,12 +29,15 @@ import {
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 
+/**
+ * A drawer is a panel that slides in from the right side of the screen (not customizable). Because the user can use the Drawer without navigating away from the current page, tasks can be completed more efficiently while not changing page context.
+ */
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
     {
       children,
       className,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId,
       displayMode = DisplayMode.Overlay,
       id: idProp,
       onClose,
@@ -125,6 +128,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             zIndex: 1000 + drawerIndex,
           })}
           data-lgid={lgIds.root}
+          data-testid={lgIds.root}
           id={id}
           ref={drawerRef}
           onAnimationEnd={handleAnimationEnd}
@@ -154,6 +158,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                   <IconButton
                     aria-label="Close drawer"
                     data-lgid={lgIds.closeButton}
+                    data-testid={lgIds.closeButton}
                     onClick={onClose}
                   >
                     <XIcon />

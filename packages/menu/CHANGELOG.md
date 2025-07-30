@@ -1,5 +1,70 @@
 # @leafygreen-ui/menu
 
+## 32.0.0
+
+### Major Changes
+
+- 2d2047c: - Adds compact variant option to `Menu`
+  - Fixes default `Menu` and `MenuItem` padding to align with designs
+
+### Patch Changes
+
+- 4a5d7b8: Fix bug where custom `data-testid` was being ignored.
+
+## 31.0.1
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/descendants@3.0.2
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/icon-button@17.0.3
+  - @leafygreen-ui/input-option@4.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.3
+  - @leafygreen-ui/popover@14.0.3
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
+## 31.0.0
+
+### Major Changes
+
+- 164b15f: Updates `data-lgid` and `data-testid` to use scope based test IDs. These test IDs are generated using the helper utility `getLgIds`. For more information [check out the section in the styleguide about getLgIds](https://github.com/mongodb/leafygreen-ui/blob/main/STYLEGUIDE.md#getlgids).
+
+  Removes public exports for:
+
+  - `LGIDs`
+  - `LGIDS_CHECKBOX`
+  - `LGIDS_FORM_FIELD`
+  - `LGIDS_SELECT`
+  - `LGIDS_TYPOGRAPHY`
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [f685e51]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/descendants@3.0.1
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/typography@22.0.0
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/icon-button@17.0.2
+  - @leafygreen-ui/input-option@4.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.2
+  - @leafygreen-ui/popover@14.0.2
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 30.0.1
 
 ### Patch Changes

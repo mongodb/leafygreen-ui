@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
@@ -29,7 +29,7 @@ const numOfLineColors = 15;
 const lineData = makeLineData(numOfLineColors);
 
 export default {
-  title: 'Charts/Core',
+  title: 'Composition/Charts/Core',
   component: Chart,
   parameters: {
     default: 'LiveExample',
@@ -829,6 +829,26 @@ export const Basic: StoryObj<{}> = {
   },
 };
 
+export const NullValues: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <Line
+          name={'My Data'}
+          data={[
+            [new Date(2020, 1, 1), 0],
+            [new Date(2020, 1, 2), 1],
+            [new Date(2020, 1, 3), null], // line should visually skip this point
+            [new Date(2020, 1, 4), 3],
+            [new Date(2020, 1, 5), 4],
+          ]}
+        />
+        <ChartTooltip />
+      </Chart>
+    );
+  },
+};
+
 export const WithTooltip: StoryObj<{}> = {
   render: () => {
     return (
@@ -965,6 +985,77 @@ export const WithHeaderContent: StoryObj<{}> = {
       <Chart>
         <ChartHeader
           title="Header"
+          showDivider
+          headerContent={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                height: '100%',
+              }}
+            >
+              Header Content{' '}
+            </div>
+          }
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithHeaderTitleIcon: StoryObj<{
+  headerTitle: ChartHeaderProps['title'];
+  headerTitleIcon: ChartHeaderProps['titleIcon'];
+}> = {
+  args: {
+    headerTitle: 'Header',
+    headerTitleIcon: (() => {
+      const TooltipIcon: React.FC = () => {
+        const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+        const handleMouseEnter = () => setIsTooltipVisible(true);
+        const handleMouseLeave = () => setIsTooltipVisible(false);
+
+        return (
+          <div
+            style={{ position: 'relative' }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div style={{ cursor: 'pointer' }}>🍀</div>
+            {isTooltipVisible && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  padding: '4px 8px',
+                  backgroundColor: 'black',
+                  color: 'white',
+                  borderRadius: '4px',
+                  opacity: 1,
+                }}
+              >
+                Tooltip
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      return <TooltipIcon />;
+    })(),
+  },
+  render: ({ headerTitle, headerTitleIcon }) => {
+    return (
+      <Chart>
+        <ChartHeader
+          title={headerTitle}
+          titleIcon={headerTitleIcon}
           showDivider
           headerContent={
             <div
@@ -1144,25 +1235,30 @@ export const WithZoomAndTooltip: StoryObj<{}> = {
   },
 };
 
-export const SyncedByGroupID: StoryObj<{}> = {
+export const SyncedByGroupIDWithTooltipSync: StoryObj<{}> = {
   render: () => {
     return (
       <div
-        style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          width: '100%',
+          gap: '8px',
+        }}
       >
-        <Chart groupId="group1">
+        <Chart groupId="group1" enableGroupTooltipSync>
           <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-        <Chart groupId="group1">
+        <Chart groupId="group1" enableGroupTooltipSync>
           <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-        <Chart groupId="group1">
+        <Chart groupId="group1" enableGroupTooltipSync>
           <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
@@ -1170,5 +1266,49 @@ export const SyncedByGroupID: StoryObj<{}> = {
         </Chart>
       </div>
     );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+
+export const SyncedByGroupIDWithoutTooltipSync: StoryObj<{}> = {
+  render: () => {
+    return (
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          width: '100%',
+          gap: '8px',
+        }}
+      >
+        <Chart groupId="group1" enableGroupTooltipSync={false}>
+          <ChartTooltip />
+          {lineData.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+        <Chart groupId="group1" enableGroupTooltipSync={false}>
+          <ChartTooltip />
+          {lineData.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+        <Chart groupId="group1" enableGroupTooltipSync={false}>
+          <ChartTooltip />
+          {lineData.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+      </div>
+    );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };

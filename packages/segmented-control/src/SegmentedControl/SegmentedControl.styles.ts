@@ -106,7 +106,7 @@ export const optionsWrapperStyle = ({
       }
 
       // Frame shadow
-      &:after {
+      &::after {
         content: '';
         position: absolute;
         width: 100%;

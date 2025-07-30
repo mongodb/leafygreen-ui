@@ -1,6 +1,6 @@
 export { PasswordInput } from './PasswordInput';
 export {
-  NotificationProps,
+  type NotificationProps,
   Size,
   type StateNotificationProps,
 } from './PasswordInput.types';

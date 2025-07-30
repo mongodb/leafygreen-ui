@@ -1,5 +1,19 @@
 # @lg-tools/cli
 
+## 0.10.2
+
+### Patch Changes
+
+- Updated dependencies [95f7c12]
+  - @lg-tools/codemods@0.3.0
+
+## 0.10.1
+
+### Patch Changes
+
+- Updated dependencies [d2bec61]
+  - @lg-tools/create@0.4.0
+
 ## 0.10.0
 
 ### Minor Changes

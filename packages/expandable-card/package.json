@@ -1,11 +1,23 @@
 {
   "name": "@leafygreen-ui/expandable-card",
-  "version": "5.0.1",
+  "version": "5.0.3",
   "description": "leafyGreen UI Kit Expandable Card",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
@@ -25,6 +37,7 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^",
     "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {

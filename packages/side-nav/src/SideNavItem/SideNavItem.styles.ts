@@ -60,7 +60,7 @@ export const baseStyle = css`
   }
 
   // Setup the active/focus wedge
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     background-color: transparent;
@@ -97,11 +97,11 @@ export const themeStyle: Record<Theme, string> = {
 
 export const activeBaseStyle = css`
   cursor: default;
-  font-weight: ${fontWeights.bold};
+  font-weight: ${fontWeights.semiBold};
   text-decoration: none;
 
   // The active wedge
-  &:before {
+  &::before {
     transform: scaleY(1);
   }
 `;
@@ -115,7 +115,7 @@ export const activeThemeStyle: Record<Theme, string> = {
       background-color: ${palette.green.light3};
     }
 
-    &:before {
+    &::before {
       background-color: ${palette.green.dark1};
     }
   `,
@@ -127,7 +127,7 @@ export const activeThemeStyle: Record<Theme, string> = {
       background-color: ${palette.green.dark3};
     }
 
-    &:before {
+    &::before {
       background-color: ${palette.green.base};
     }
   `,
@@ -152,7 +152,7 @@ export const focusedStyle = css`
     text-decoration: none;
 
     // The focus wedge
-    &:before {
+    &::before {
       transform: scaleY(1);
     }
   }
@@ -164,7 +164,7 @@ export const focusedThemeStyle: Record<Theme, string> = {
       color: ${palette.blue.dark2};
       background-color: ${palette.blue.light3};
 
-      &:before {
+      &::before {
         background-color: ${palette.blue.base};
       }
     }
@@ -174,7 +174,7 @@ export const focusedThemeStyle: Record<Theme, string> = {
       color: ${palette.blue.light3};
       background-color: ${palette.blue.dark3};
 
-      &:before {
+      &::before {
         background-color: ${palette.blue.light1};
       }
     }
@@ -183,7 +183,7 @@ export const focusedThemeStyle: Record<Theme, string> = {
 
 export const focusedDisabledStyle = css`
   &:focus {
-    &:before {
+    &::before {
       content: unset;
     }
   }

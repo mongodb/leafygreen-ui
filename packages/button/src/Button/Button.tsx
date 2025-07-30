@@ -10,13 +10,13 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { ButtonContent } from '../ButtonContent/ButtonContent';
 import { ButtonClassName } from '../styles';
+import { getLgIds } from '../testing';
 import { BaseButtonProps, Size, Variant } from '../types';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { getClassName } from './Button.styles';
 
 /**
- * Buttons allow users to take actions, and make choices, with a single tap.
+ * Buttons allow users to take actions, and make choices, with a single tap. Buttons are a type of call to action (CTA) the user can click or press.
  */
 export const Button = InferredPolymorphic<BaseButtonProps, 'button'>(
   (
@@ -24,7 +24,7 @@ export const Button = InferredPolymorphic<BaseButtonProps, 'button'>(
       variant = Variant.Default,
       size = Size.Default,
       darkMode: darkModeProp,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId,
       baseFontSize = BaseFontSize.Body1,
       disabled = false,
       onClick,

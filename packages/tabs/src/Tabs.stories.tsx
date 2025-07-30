@@ -34,11 +34,11 @@ const Lipsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec u
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,
   'children',
-  'setSelected',
+  'onValueChange',
 ];
 
 const meta: StoryMetaType<typeof Tabs> = {
-  title: 'Components/Tabs',
+  title: 'Sections/Tabs',
   component: Tabs,
   parameters: {
     default: 'LiveExample',
@@ -101,7 +101,7 @@ const meta: StoryMetaType<typeof Tabs> = {
     as: storybookArgTypes.as,
     baseFontSize: storybookArgTypes.baseFontSize,
     forceRenderAllTabPanels: { control: 'boolean' },
-    selected: { control: 'number' },
+    value: { control: 'number' },
     size: {
       control: 'radio',
       description:
@@ -153,8 +153,8 @@ export const Controlled: StoryFn<TabsProps<string>> = (
       <br></br>
       <LiveExample
         {...args}
-        selected={selectedTab}
-        setSelected={setSelectedTab}
+        value={selectedTab}
+        onValueChange={setSelectedTab}
       />
     </div>
   );
@@ -162,7 +162,7 @@ export const Controlled: StoryFn<TabsProps<string>> = (
 Controlled.parameters = {
   chromatic: { disableSnapshot: true },
   controls: {
-    exclude: [...defaultExcludedControls, 'selected'],
+    exclude: [...defaultExcludedControls, 'value'],
   },
 };
 
@@ -182,8 +182,10 @@ WithInlineChildren.args = {
     </>
   ),
 };
-WithInlineChildren.argTypes = {
-  inlineChildren: { control: 'none' },
+WithInlineChildren.parameters = {
+  controls: {
+    exclude: [...defaultExcludedControls, 'inlineChildren'],
+  },
 };
 
 export const WithTooltip: StoryFn<TabsProps<string>> = ({

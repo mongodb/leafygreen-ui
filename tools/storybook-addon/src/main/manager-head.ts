@@ -26,7 +26,7 @@ ${head}
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Semibold.ttf')
         format('truetype');
-    font-weight: 700;
+    font-weight: 600;
     font-style: normal;
   }
 
@@ -39,7 +39,7 @@ ${head}
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-SemiboldItalic.ttf')
         format('truetype');
-    font-weight: 700;
+    font-weight: 600;
     font-style: italic;
   }
 

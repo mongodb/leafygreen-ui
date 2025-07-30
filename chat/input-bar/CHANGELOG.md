@@ -1,5 +1,87 @@
 # @lg-chat/input-bar
 
+## 9.1.0
+
+### Minor Changes
+
+- c6ee34b: [LG-5368](https://jira.mongodb.org/browse/LG-5368): add variant support for when the parent `LeafyGreenChatProvider` has `variant="compact"`
+
+  Mark `lgInputBarStyles` as `@deprecated`
+
+### Patch Changes
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+  - @leafygreen-ui/banner@10.0.4
+  - @leafygreen-ui/button@25.0.1
+  - @leafygreen-ui/badge@10.0.4
+
+## 9.0.0
+
+### Patch Changes
+
+- 8db14f9: Replace gray icon with `AssistantAvatar` with gradient
+- e8f53ec: [LG-5358](https://jira.mongodb.org/browse/LG-5358): fixes issue where `ctrl + enter` and `shift + enter` was unexpectedly adding new line to the end of the message body. Now, doing so will add the new line at the cursor position.
+- Updated dependencies [3e8fbd7]
+- Updated dependencies [82d0ad2]
+  - @leafygreen-ui/avatar@3.1.0
+  - @lg-chat/leafygreen-chat-provider@4.1.0
+
+## 8.0.5
+
+### Patch Changes
+
+- Updated dependencies [2adba55]
+  - @leafygreen-ui/button@25.0.0
+  - @leafygreen-ui/popover@14.0.3
+
+## 8.0.4
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/badge@10.0.3
+  - @leafygreen-ui/button@24.0.3
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/input-option@4.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.3
+  - @leafygreen-ui/popover@14.0.3
+  - @leafygreen-ui/search-input@6.0.3
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
+## 8.0.3
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/button@24.0.2
+  - @leafygreen-ui/typography@22.0.0
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/badge@10.0.2
+  - @leafygreen-ui/input-option@4.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/polymorphic@3.0.2
+  - @leafygreen-ui/popover@14.0.2
+  - @leafygreen-ui/search-input@6.0.2
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 8.0.2
 
 ### Patch Changes

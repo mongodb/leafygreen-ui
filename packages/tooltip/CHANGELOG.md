@@ -1,5 +1,65 @@
 # @leafygreen-ui/tooltip
 
+## 14.1.1
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/popover@14.0.3
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
+## 14.1.0
+
+### Minor Changes
+
+- 92c38b1: Exports `Tooltip` as a named export (as well as default)
+- 92c38b1: Exports `useTooltipTriggerEventHandlers` to enable handling external tooltip triggers.
+
+  ```tsx
+  const [open, setOpen] = useState(false);
+  const tooltipEventHandlers = useTooltipTriggerEventHandlers({
+    triggerEvent: TriggerEvent.Hover,
+    setState: setOpen,
+    onFocus: e => {
+      console.log(e);
+    }, // side effects called on focus of the trigger
+  });
+
+  return (
+    <>
+      <Button ref={triggerRef} {...tooltipEventHandlers}>
+        Button
+      </Button>
+      <Tooltip refEl={triggerRef} open={open} setOpen={setOpen}>
+        Content
+      </Tooltip>
+    </>
+  );
+  ```
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [1eafbb5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/typography@22.0.0
+  - @leafygreen-ui/icon@14.1.0
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/popover@14.0.2
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 14.0.1
 
 ### Patch Changes

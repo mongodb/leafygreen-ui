@@ -1,5 +1,47 @@
 # @leafygreen-ui/text-input
 
+## 16.0.1
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @leafygreen-ui/form-field@4.0.1
+  - @leafygreen-ui/hooks@9.1.1
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/tokens@3.1.2
+  - @leafygreen-ui/typography@22.0.1
+
+## 16.0.0
+
+### Major Changes
+
+- 164b15f: Updates `data-lgid` and `data-testid` to use scope based test IDs. These test IDs are generated using the helper utility `getLgIds`. For more information [check out the section in the styleguide about getLgIds](https://github.com/mongodb/leafygreen-ui/blob/main/STYLEGUIDE.md#getlgids).
+
+  Removes public exports for:
+
+  - `LGIDs`
+  - `LGIDS_CHECKBOX`
+  - `LGIDS_FORM_FIELD`
+  - `LGIDS_SELECT`
+  - `LGIDS_TYPOGRAPHY`
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+- Updated dependencies [da277d5]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/hooks@9.1.0
+  - @leafygreen-ui/form-field@4.0.0
+  - @leafygreen-ui/typography@22.0.0
+  - @lg-tools/test-harnesses@0.3.2
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 15.0.1
 
 ### Patch Changes

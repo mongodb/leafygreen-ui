@@ -1,14 +1,17 @@
 import React from 'react';
 import { Avatar } from '@lg-chat/avatar';
-import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { Message, MessageSourceType } from '..';
+import { Message, MessageProps, MessageSourceType } from '..';
 
 const MarkdownText = `
 # Heading 1
@@ -64,7 +67,7 @@ const MessageFeedback = () => {
 };
 
 const meta: StoryMetaType<typeof Message> = {
-  title: 'Chat/Message',
+  title: 'Composition/Chat/Message',
   component: Message,
   args: {
     avatar: <Avatar variant="user" name="Sean Park" />,
@@ -76,21 +79,28 @@ const meta: StoryMetaType<typeof Message> = {
     avatar: { control: 'none' },
     components: { control: 'none' },
     markdownProps: { control: 'none' },
+    variant: {
+      control: 'radio',
+      options: Object.values(Variant),
+    },
   },
   parameters: {
     default: null,
     exclude: ['children'],
     generate: {
+      storyNames: ['CompactVariant', 'SpaciousVariant'],
       combineArgs: {
         darkMode: [false, true],
         isSender: [false, true],
-        sourceType: [MessageSourceType.Text, MessageSourceType.Markdown],
+        sourceType: Object.values(MessageSourceType),
         messageBody: [UserText, MarkdownText, MongoText],
       },
       decorator: (Instance, context) => {
         return (
           <LeafyGreenProvider darkMode={context?.args.darkMode}>
-            <Instance glyph={context?.args.glyph} />
+            <LeafyGreenChatProvider variant={context?.args.variant}>
+              <Instance glyph={context?.args.glyph} />
+            </LeafyGreenChatProvider>
           </LeafyGreenProvider>
         );
       },
@@ -99,139 +109,205 @@ const meta: StoryMetaType<typeof Message> = {
 };
 export default meta;
 
-const Template: StoryFn<typeof Message> = props => {
-  return <Message {...props}></Message>;
+type MessageStoryProps = MessageProps & {
+  variant?: Variant;
 };
 
-export const Basic: StoryFn<typeof Message> = Template.bind({});
-Basic.args = {
-  messageBody: UserText,
-};
+const Template: StoryFn<MessageStoryProps> = ({ variant, ...props }) => (
+  <LeafyGreenChatProvider variant={variant}>
+    <Message {...props} />
+  </LeafyGreenChatProvider>
+);
 
-export const Text: StoryFn<typeof Message> = Template.bind({});
-Text.args = {
-  messageBody: MarkdownText,
-  sourceType: MessageSourceType.Text,
-};
-
-export const Markdown: StoryFn<typeof Message> = Template.bind({});
-Markdown.args = {
-  messageBody: MarkdownText,
-  sourceType: MessageSourceType.Markdown,
-};
-
-export const Mongo: StoryFn<typeof Message> = Template.bind({});
-Mongo.args = {
-  isSender: false,
-  messageBody: MongoText,
-  avatar: <Avatar variant="mongo" />,
-};
-
-export const WithMessageRating: StoryFn<typeof Message> = Template.bind({});
-WithMessageRating.args = {
-  isSender: false,
-  messageBody: MongoText,
-  avatar: <Avatar variant="mongo" />,
-  children: <MessageFeedback />,
-};
-
-export const VerifiedAnswer: StoryFn<typeof Message> = Template.bind({});
-VerifiedAnswer.args = {
-  isSender: false,
-  messageBody: 'The MongoDB Atlas free tier includes 512MB of storage.',
-  avatar: <Avatar variant="mongo" />,
-  verified: {
-    verifier: 'MongoDB Staff',
-    verifiedAt: new Date('2023-08-24T16:20:00Z'),
+export const LiveExample: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    messageBody: UserText,
   },
-  children: <MessageFeedback />,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
-export const MultipleUser = () => {
+export const Text: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    messageBody: MarkdownText,
+    sourceType: MessageSourceType.Text,
+  },
+};
+
+export const Markdown: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    messageBody: MarkdownText,
+    sourceType: MessageSourceType.Markdown,
+  },
+};
+
+export const Mongo: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    avatar: <Avatar variant="mongo" />,
+    isSender: false,
+    messageBody: MongoText,
+  },
+};
+
+export const WithMessageRating: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    avatar: <Avatar variant="mongo" />,
+    children: <MessageFeedback />,
+    isSender: false,
+    messageBody: MongoText,
+  },
+};
+
+export const VerifiedAnswer: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    avatar: <Avatar variant="mongo" />,
+    children: <MessageFeedback />,
+    isSender: false,
+    messageBody: 'The MongoDB Atlas free tier includes 512MB of storage.',
+    verified: {
+      verifier: 'MongoDB Staff',
+      verifiedAt: new Date('2023-08-24T16:20:00Z'),
+    },
+  },
+};
+
+const MultipleUserComponent = () => {
   const baseFontSize = useUpdatedBaseFontSize();
   return (
     <LeafyGreenChatProvider>
       <div>
-        <Basic {...meta.args} {...Basic.args} baseFontSize={baseFontSize} />
-        <Basic
+        <Message
           {...meta.args}
-          {...Basic.args}
-          messageBody="Another message!"
           baseFontSize={baseFontSize}
+          messageBody={UserText}
+        />
+        <Message
+          {...meta.args}
+          baseFontSize={baseFontSize}
+          messageBody="Another message!"
         />
       </div>
     </LeafyGreenChatProvider>
   );
 };
+export const MultipleUser: StoryObj<MessageStoryProps> = {
+  render: MultipleUserComponent,
+};
 
-export const MultipleMongo = () => {
+const MultipleMongoComponent = () => {
   const baseFontSize = useUpdatedBaseFontSize();
   return (
     <LeafyGreenChatProvider>
       <div>
-        <Mongo
+        <Message
           {...meta.args}
-          {...Mongo.args}
+          avatar={<Avatar variant="mongo" />}
           messageBody="First message! Expect another from me right after this one."
           baseFontSize={baseFontSize}
+          isSender={false}
         />
-        <Mongo {...meta.args} {...Mongo.args} baseFontSize={baseFontSize} />
+        <Message
+          {...meta.args}
+          avatar={<Avatar variant="mongo" />}
+          baseFontSize={baseFontSize}
+          isSender={false}
+          messageBody={MongoText}
+        />
       </div>
     </LeafyGreenChatProvider>
   );
 };
+export const MultipleMongo: StoryObj<MessageStoryProps> = {
+  render: MultipleMongoComponent,
+};
 
-export const Alternating = () => {
+const AlternatingComponent = () => {
   const baseFontSize = useUpdatedBaseFontSize();
   return (
     <LeafyGreenChatProvider>
       <div>
-        <Basic {...meta.args} {...Basic.args} baseFontSize={baseFontSize} />
-        <Mongo {...meta.args} {...Mongo.args} baseFontSize={baseFontSize} />
+        <Message
+          {...meta.args}
+          baseFontSize={baseFontSize}
+          messageBody={UserText}
+        />
+        <Message
+          {...meta.args}
+          avatar={<Avatar variant="mongo" />}
+          baseFontSize={baseFontSize}
+          isSender={false}
+          messageBody={MongoText}
+        />
       </div>
     </LeafyGreenChatProvider>
   );
 };
-
-export const WithRichLinks: StoryFn<typeof Message> = Template.bind({});
-WithRichLinks.args = {
-  isSender: false,
-  messageBody: MongoText,
-  avatar: <Avatar variant="mongo" />,
-  children: <MessageFeedback />,
-  links: [
-    {
-      href: 'https://mongodb.design',
-      children: 'LeafyGreen UI',
-      variant: 'Website',
-    },
-    {
-      href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
-      children: 'LeafyGreen UI Docs',
-      variant: 'Docs',
-    },
-    {
-      href: 'https://learn.mongodb.com/',
-      children: 'MongoDB University',
-      variant: 'Learn',
-    },
-    {
-      href: 'https://mongodb.com/docs',
-      children: 'MongoDB Docs',
-      variant: 'Docs',
-    },
-    {
-      href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      children: 'Rick Astley - Never Gonna Give You Up',
-      variant: 'Video',
-      imageUrl: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
-    },
-    {
-      href: 'https://mongodb.com/',
-      children: 'MongoDB Homepage',
-      variant: 'Website',
-    },
-  ],
+export const Alternating: StoryObj<MessageStoryProps> = {
+  render: AlternatingComponent,
 };
 
-export const Generated = () => {};
+export const WithRichLinks: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    avatar: <Avatar variant="mongo" />,
+    children: <MessageFeedback />,
+    isSender: false,
+    links: [
+      {
+        href: 'https://mongodb.design',
+        children: 'LeafyGreen UI',
+        variant: 'Website',
+      },
+      {
+        href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
+        children: 'LeafyGreen UI Docs',
+        variant: 'Docs',
+      },
+      {
+        href: 'https://learn.mongodb.com/',
+        children: 'MongoDB University',
+        variant: 'Learn',
+      },
+      {
+        href: 'https://mongodb.com/docs',
+        children: 'MongoDB Docs',
+        variant: 'Docs',
+      },
+      {
+        href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        children: 'Rick Astley - Never Gonna Give You Up',
+        variant: 'Video',
+        imageUrl: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+      },
+      {
+        href: 'https://mongodb.com/',
+        children: 'MongoDB Homepage',
+        variant: 'Website',
+      },
+    ],
+    messageBody: MongoText,
+  },
+};
+
+export const CompactVariant: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    variant: Variant.Compact,
+  },
+};
+
+export const SpaciousVariant: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    variant: Variant.Spacious,
+  },
+};

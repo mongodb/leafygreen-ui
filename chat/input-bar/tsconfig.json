@@ -22,7 +22,13 @@
       "path": "../leafygreen-chat-provider"
     },
     {
+      "path": "../../packages/avatar"
+    },
+    {
       "path": "../../packages/badge"
+    },
+    {
+      "path": "../../packages/banner"
     },
     {
       "path": "../../packages/button"
@@ -35,6 +41,9 @@
     },
     {
       "path": "../../packages/icon"
+    },
+    {
+      "path": "../../packages/icon-button"
     },
     {
       "path": "../../packages/input-option"

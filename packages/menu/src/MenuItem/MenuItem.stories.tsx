@@ -11,7 +11,7 @@ import { withMenuContext } from '../testUtils/withMenuContextDecorator.testutils
 import { MenuItem, Variant } from '.';
 
 export default {
-  title: 'Components/Menu/MenuItem',
+  title: 'Components/Actions/Menu/MenuItem',
   component: MenuItem,
   args: {
     children: 'Menu Item',

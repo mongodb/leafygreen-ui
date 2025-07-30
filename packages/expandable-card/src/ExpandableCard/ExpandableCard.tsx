@@ -11,6 +11,8 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
+import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
+
 import {
   cardStyle,
   childrenWrapperStyle,
@@ -26,6 +28,9 @@ import {
 } from './ExpandableCard.styles';
 import { ExpandableCardProps } from './ExpandableCard.types';
 
+/**
+ * Expandable Cards are components equipped with a chevron that functions like a toggle that can show or hide contained content. Additionally, the component has an optional description that remains visible whether the card is expanded or collapsed. For more general content guidelines, visit our Card guidelines.
+ */
 const ExpandableCard = ({
   title,
   children,
@@ -38,10 +43,12 @@ const ExpandableCard = ({
   id: idProp,
   flagText,
   contentClassName,
+  'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   ...rest
 }: ExpandableCardProps) => {
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const isControlled = isControlledOpen !== undefined;
+  const lgIds = getLgIds(dataLgId);
 
   // Always start open
   const [isOpen, setIsOpen] = useState(isControlledOpen ?? defaultOpen);
@@ -88,6 +95,7 @@ const ExpandableCard = ({
       setChildrenHeight(childrenInnerRef.current.offsetHeight);
     }
   };
+
   useEffect(
     updateHeight,
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,12 +104,18 @@ const ExpandableCard = ({
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <Card className={cx(cardStyle(darkMode), className)} id={id} {...rest}>
+      <Card
+        className={cx(cardStyle(darkMode), className)}
+        data-lgid={lgIds.root}
+        id={id}
+        {...rest}
+      >
         {/* HTML `button` elements can't be used as a grid parent */}
         <div
           role="button"
           aria-expanded={isOpen}
           aria-controls={contentId}
+          data-lgid={lgIds.toggle}
           id={summaryId}
           className={summaryStyle}
           onClick={onClick}

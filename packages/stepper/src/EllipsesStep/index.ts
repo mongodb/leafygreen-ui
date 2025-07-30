@@ -1,6 +1,6 @@
 export { EllipsesStep } from './EllipsesStep';
 export {
-  EllipsesStepProps,
-  EllipsesStepState,
+  type EllipsesStepProps,
+  type EllipsesStepState,
   EllipsesStepStates,
 } from './EllipsesStep.types';

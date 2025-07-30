@@ -18,7 +18,7 @@ const drawerIn = keyframes`
   from {
     // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work.
     grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
-  },
+  }
   to {
     grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WIDTH}px;
   }
@@ -27,7 +27,7 @@ const drawerIn = keyframes`
 const drawerOut = keyframes`
   from {
     grid-template-columns: ${TOOLBAR_WIDTH}px ${PANEL_WIDTH}px;
-  },
+  }
   to {
     grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
   }
@@ -38,7 +38,7 @@ const drawerOutMobile = keyframes`
     grid-template-columns: ${TOOLBAR_WIDTH}px calc(100vw - ${
   TOOLBAR_WIDTH * 2
 }px);
-  },
+  }
   to {
     grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
   }
@@ -47,7 +47,7 @@ const drawerOutMobile = keyframes`
 const drawerInMobile = keyframes`
   from {
     grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
-  },
+  }
   to {
     grid-template-columns: ${TOOLBAR_WIDTH}px calc(100vw - ${
   TOOLBAR_WIDTH * 2

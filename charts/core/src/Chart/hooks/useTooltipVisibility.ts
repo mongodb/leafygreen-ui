@@ -63,8 +63,41 @@ export const useTooltipVisibility = ({
   );
 
   /**
-   * Event listener callback added to the close button in the tooltip. When called,
-   * it hides the tooltip and sets the `tooltipPinned` state to false.
+   * Callback to remove the chart from the group if it is grouped, record the `pinnedPosition`
+   * state, and set the `tooltipPinned` state to true.
+   *
+   * Separate effect is used to show tooltip and add the unpin event listener because
+   * the `ChartTooltip` instance must first react to the `tooltipPinned` state change.
+   */
+  const pinTooltip = useCallback(
+    (params: any) => {
+      /**
+       * When the tooltip is pinned, the chart is removed from the group to prevent
+       * event listeners of sibling charts from triggering the tooltip of current chart.
+       */
+      if (groupId) {
+        removeFromGroup();
+      }
+
+      /**
+       * Remove the mouse move event listener to prevent the tooltip from moving when it
+       * is pinned. User can unpin it by clicking the close button in the tooltip which
+       * will turn the listener back on.
+       */
+      off(EChartEvents.MouseMove, showTooltipOnMouseMove, {
+        useCanvasAsTrigger: true,
+      });
+
+      const { offsetX, offsetY } = params;
+      setPinnedPosition([offsetX, offsetY]);
+      setTooltipPinned(true);
+    },
+    [groupId, off, removeFromGroup, showTooltipOnMouseMove],
+  );
+
+  /**
+   * Callback to set the `tooltipPinned` state to false and add the chart back to the group.
+   * It also hides the tooltip after the state change has been applied.
    */
   const unpinTooltip = useCallback(() => {
     /**
@@ -95,7 +128,7 @@ export const useTooltipVisibility = ({
    * so it has to be added manually.
    */
   const addUnpinCallbackToCloseButton = useCallback(() => {
-    const btn = document.querySelector(`[data-chartid="${chartId}"]`);
+    const btn = document.querySelector(`button[data-chartid="${chartId}"]`);
 
     if (btn instanceof HTMLElement && !btn.dataset.bound) {
       btn.addEventListener('click', unpinTooltip);
@@ -104,41 +137,24 @@ export const useTooltipVisibility = ({
   }, [chartId, unpinTooltip]);
 
   /**
-   * Event listener callback added to the chart that is called on click to record the
-   * `pinnedPosition` state and set the `tooltipPinned` state to true.
-   *
-   * Separate effect is used to show tooltip and add the unpin event listener because
-   * the `ChartTooltip` instance must first react to the `tooltipPinned` state change.
+   * Event listener callback added to the chart. When called, it toggles the
+   * tooltip pinning.
    */
-  const pinTooltipOnClick = useCallback(
+  const toggleTooltipPinning = useCallback(
     (params: any) => {
-      if (!tooltipMountedRef.current || tooltipPinnedRef.current) {
+      if (!tooltipMountedRef.current) {
         return;
       }
 
-      /**
-       * When the tooltip is pinned, the chart is removed from the group to prevent
-       * event listeners of sibling charts from triggering the tooltip of current chart.
-       */
-      if (groupId) {
-        removeFromGroup();
+      if (tooltipPinnedRef.current) {
+        unpinTooltip();
+        return;
+      } else {
+        pinTooltip(params);
+        return;
       }
-
-      /**
-       * Remove the mouse move and click event listeners to prevent the tooltip from
-       * moving when it is pinned. User can unpin it by clicking the close button in
-       * the tooltip which will turn the listeners back on.
-       */
-      off(EChartEvents.MouseMove, showTooltipOnMouseMove, {
-        useCanvasAsTrigger: true,
-      });
-      off(EChartEvents.Click, pinTooltipOnClick, { useCanvasAsTrigger: true });
-
-      const { offsetX, offsetY } = params;
-      setPinnedPosition([offsetX, offsetY]);
-      setTooltipPinned(true);
     },
-    [groupId, off, showTooltipOnMouseMove, removeFromGroup],
+    [pinTooltip, unpinTooltip],
   );
 
   /**
@@ -157,12 +173,12 @@ export const useTooltipVisibility = ({
       ) {
         hideTooltip();
         on(EChartEvents.MouseMove, hideTooltip);
-        off(EChartEvents.Click, pinTooltipOnClick, {
+        off(EChartEvents.Click, toggleTooltipPinning, {
           useCanvasAsTrigger: true,
         });
       }
     },
-    [hideTooltip, off, on, pinTooltipOnClick],
+    [hideTooltip, off, on, toggleTooltipPinning],
   );
 
   /**
@@ -180,12 +196,12 @@ export const useTooltipVisibility = ({
         params.componentType === 'markLine'
       ) {
         off(EChartEvents.MouseMove, hideTooltip);
-        on(EChartEvents.Click, pinTooltipOnClick, {
+        on(EChartEvents.Click, toggleTooltipPinning, {
           useCanvasAsTrigger: true,
         });
       }
     },
-    [hideTooltip, off, on, pinTooltipOnClick],
+    [hideTooltip, off, on, toggleTooltipPinning],
   );
 
   useEffect(() => {
@@ -232,10 +248,10 @@ export const useTooltipVisibility = ({
     on(EChartEvents.MouseMove, showTooltipOnMouseMove, {
       useCanvasAsTrigger: true,
     });
-    on(EChartEvents.Click, pinTooltipOnClick, {
+    on(EChartEvents.Click, toggleTooltipPinning, {
       useCanvasAsTrigger: true,
     });
-  }, [on, pinTooltipOnClick, ready, showTooltipOnMouseMove, tooltipPinned]);
+  }, [ready, tooltipPinned, on, showTooltipOnMouseMove, toggleTooltipPinning]);
 
   /**
    * Effect to add the event listeners to hide the tooltip when hovering a mark.
@@ -247,17 +263,7 @@ export const useTooltipVisibility = ({
 
     on(EChartEvents.MouseOver, hideTooltipOnMouseOverMark);
     on(EChartEvents.MouseOut, stopHideTooltipOnMouseOutMark);
-  }, [
-    pinTooltipOnClick,
-    showTooltipOnMouseMove,
-    hideTooltipOnMouseOverMark,
-    stopHideTooltipOnMouseOutMark,
-    hideTooltip,
-    off,
-    on,
-    ready,
-    tooltipPinned,
-  ]);
+  }, [ready, on, hideTooltipOnMouseOverMark, stopHideTooltipOnMouseOutMark]);
 
   /**
    * Effect to react to the `tooltipPinned` state and show the tooltip.
@@ -276,13 +282,7 @@ export const useTooltipVisibility = ({
       showTooltip(x, y);
       addUnpinCallbackToCloseButton();
     });
-  }, [
-    isChartHovered,
-    tooltipPinned,
-    pinnedPosition,
-    showTooltip,
-    addUnpinCallbackToCloseButton,
-  ]);
+  }, [pinnedPosition, showTooltip, addUnpinCallbackToCloseButton]);
 
   /**
    * Effect to clean up any tooltip elements when the component is unmounted.

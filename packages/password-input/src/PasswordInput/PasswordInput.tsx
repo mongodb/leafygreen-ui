@@ -10,6 +10,7 @@ import { Label } from '@leafygreen-ui/typography';
 
 import { PasswordInputFeedback } from '../PasswordInputFeedback';
 import { PasswordToggle } from '../PasswordToggle';
+import { getLgIds } from '../utils';
 
 import {
   getInputDisabledStyles,
@@ -29,6 +30,9 @@ import {
 } from './PasswordInput.types';
 import { convertStateToFormFieldState, getStateFromArray } from './utils';
 
+/**
+ * A password input protects user’s sensitive information and prevents unauthorized access to a page or product. It features an icon button that allows the user to toggle the visibility of the input field. This provides them with the opportunity to view any typing errors and confirm their input.
+ */
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
   PasswordInputProps
@@ -48,6 +52,7 @@ export const PasswordInput = React.forwardRef<
       stateNotifications = [],
       disabled = false,
       autoComplete = 'new-password',
+      'data-lgid': dataLgId,
       className,
       label,
       ...rest
@@ -63,6 +68,7 @@ export const PasswordInput = React.forwardRef<
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
+    const lgIds = getLgIds(dataLgId);
 
     if (!label && !ariaLabelledbyProp && !ariaLabelProp) {
       console.warn(
@@ -105,7 +111,12 @@ export const PasswordInput = React.forwardRef<
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div className={className} ref={forwardedRef}>
+        <div
+          className={className}
+          ref={forwardedRef}
+          data-lgid={lgIds.root}
+          data-test={lgIds.root}
+        >
           {label && (
             <Label
               className={cx(labelBaseStyles, {
@@ -113,6 +124,8 @@ export const PasswordInput = React.forwardRef<
               })}
               htmlFor={inputId}
               disabled={disabled}
+              data-lgid={lgIds.root}
+              data-testid={lgIds.root}
             >
               {label}
             </Label>
@@ -155,6 +168,7 @@ export const PasswordInput = React.forwardRef<
             hasStateNotifications={hasStateNotifications}
             notifications={stateNotifications as Array<NotificationProps>}
             formFieldFeedbackProps={formFieldFeedbackProps}
+            data-lgid={lgIds.stateNotifications}
           />
         </div>
       </LeafyGreenProvider>

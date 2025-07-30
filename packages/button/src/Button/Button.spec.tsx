@@ -5,8 +5,8 @@ import { axe } from 'jest-axe';
 
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 
+import { getTestUtils } from '../testing';
 import { ButtonProps } from '../types';
-import { getTestUtils } from '../utils/getTestUtils';
 import Button from '..';
 
 const className = 'test-button-class';

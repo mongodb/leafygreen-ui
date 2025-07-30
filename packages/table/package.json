@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "14.0.1",
+  "version": "15.1.0",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -54,7 +54,8 @@
     "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/pagination": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@storybook/test": "^8.6.14"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

@@ -1,5 +1,32 @@
 # @lg-charts/legend
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [b67497a]
+  - @leafygreen-ui/lib@15.2.0
+  - @lg-charts/series-provider@1.0.2
+  - @leafygreen-ui/checkbox@18.0.1
+  - @leafygreen-ui/leafygreen-provider@5.0.2
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.2
+
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [164b15f]
+- Updated dependencies [518ce41]
+- Updated dependencies [3bef1e7]
+- Updated dependencies [164b15f]
+  - @leafygreen-ui/lib@15.1.0
+  - @leafygreen-ui/checkbox@18.0.0
+  - @lg-charts/series-provider@1.0.1
+  - @leafygreen-ui/leafygreen-provider@5.0.1
+  - @leafygreen-ui/palette@5.0.0
+  - @leafygreen-ui/tokens@3.1.1
+
 ## 1.0.1
 
 ### Patch Changes
