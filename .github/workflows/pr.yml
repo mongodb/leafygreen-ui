@@ -36,16 +36,16 @@ jobs:
             tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
-      # @leafygreen-ui/icon has an additional cache layer due to built-in checksum logic
+      # @leafygreen-ui/icon has an additional built-in cache layer
       - uses: actions/cache/restore@v4
-        name: (TEST, THIS IS NEW) Restore previous icon build cache
+        name: Restore previous icon build
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         id: icon-build-cache
         with:
           path: |
             packages/icon/dist
           key: icon-dist-${{ github.ref }}-${{ github.run_id }}
-          # use any previous builds in the same branch as the current one
-          # icon build logic detects changes and rebuilds accordingly
+          # using the latest build in this branch, icon build script detects changes and only rebuilds what's stale
           restore-keys: |
             icon-dist-${{ github.ref }}-
 
@@ -77,9 +77,10 @@ jobs:
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
-      # @leafygreen-ui/icon has a separate cache due to built-in checksum logic
-      - name: (TEST, THIS IS NEW) Save icon build to cache
+      # @leafygreen-ui/icon has an additional built-in cache layer
+      - name: Save icon build
         uses: actions/cache/save@v4
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
           path: packages/icon/dist
           key: icon-dist-${{ github.ref }}-${{ github.run_id }}
