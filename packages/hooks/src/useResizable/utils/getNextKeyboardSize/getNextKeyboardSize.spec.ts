@@ -3,6 +3,12 @@ import { SizeGrowth } from '../../useResizable.types';
 
 import { getNextKeyboardSize } from './getNextKeyboardSize';
 
+// Mock DOM element with offsetWidth
+const mockElement = {
+  offsetWidth: 250,
+  offsetHeight: 250,
+} as HTMLElement;
+
 describe('getNextKeyboardSize', () => {
   test('returns current size when sizeGrowth is undefined', () => {
     const result = getNextKeyboardSize({
@@ -10,6 +16,8 @@ describe('getNextKeyboardSize', () => {
       size: 250,
       maxSize: 500,
       minSize: 100,
+      isVertical: true,
+      currentElement: mockElement,
     });
 
     expect(result).toBe(250);
@@ -21,6 +29,8 @@ describe('getNextKeyboardSize', () => {
       size: 250,
       maxSize: 500,
       minSize: 100,
+      isVertical: true,
+      currentElement: mockElement,
     });
 
     expect(result).toBe(250 + KEYBOARD_RESIZE_PIXEL_STEP);
@@ -32,6 +42,8 @@ describe('getNextKeyboardSize', () => {
       size: 250,
       maxSize: 500,
       minSize: 100,
+      isVertical: true,
+      currentElement: mockElement,
     });
 
     // The implementation decreases by KEYBOARD_RESIZE_PIXEL_STEP (50)
@@ -39,11 +51,19 @@ describe('getNextKeyboardSize', () => {
   });
 
   test('respects maxSize constraint when increasing beyond maxSize', () => {
+    // Mock DOM element with offsetWidth
+    const mockElement = {
+      offsetWidth: 500,
+      offsetHeight: 500,
+    } as HTMLElement;
+
     const result = getNextKeyboardSize({
       sizeGrowth: SizeGrowth.Increase,
       size: 480,
       maxSize: 500,
       minSize: 100,
+      isVertical: true,
+      currentElement: mockElement,
     });
 
     // Should cap at maxSize
@@ -51,36 +71,56 @@ describe('getNextKeyboardSize', () => {
   });
 
   test('respects minSize constraint when decreasing below minSize', () => {
+    // Mock DOM element with offsetWidth
+    const mockElement = {
+      offsetWidth: 100,
+      offsetHeight: 100,
+    } as HTMLElement;
+
     const result = getNextKeyboardSize({
       sizeGrowth: SizeGrowth.Decrease,
-      size: 120,
+      size: 100,
       maxSize: 500,
       minSize: 100,
+      isVertical: true,
+      currentElement: mockElement,
     });
 
     // Should not go below minSize
     expect(result).toBe(100);
   });
 
-  test('stays at minSize when already at minimum size and sizeGrowth is Decrease', () => {
+  test('decreases size of the element by KEYBOARD_RESIZE_PIXEL_STEP when the size of the element is smaller than the hook size', () => {
+    // Mock DOM element with offsetWidth
+    const mockElement = {
+      offsetWidth: 400,
+      offsetHeight: 400,
+    } as HTMLElement;
+
     const result = getNextKeyboardSize({
       sizeGrowth: SizeGrowth.Decrease,
-      size: 100,
+      size: 600, // Size is larger than element's offsetWidth
       maxSize: 500,
       minSize: 100,
+      currentElement: mockElement,
+      isVertical: true,
     });
 
-    expect(result).toBe(100);
+    // Should use element's offsetWidth and decrease by KEYBOARD_RESIZE_PIXEL_STEP
+    expect(result).toBe(400 - KEYBOARD_RESIZE_PIXEL_STEP);
   });
 
-  test('stays at maxSize when already at maximum size and sizeGrowth is Increase', () => {
+  test('handles null currentElement gracefully', () => {
     const result = getNextKeyboardSize({
-      sizeGrowth: SizeGrowth.Increase,
-      size: 500,
+      sizeGrowth: SizeGrowth.Decrease,
+      size: 250,
       maxSize: 500,
       minSize: 100,
+      currentElement: null,
+      isVertical: true,
     });
 
-    expect(result).toBe(500);
+    // Should just decrease by KEYBOARD_RESIZE_PIXEL_STEP from the current size
+    expect(result).toBe(250 - KEYBOARD_RESIZE_PIXEL_STEP);
   });
 });

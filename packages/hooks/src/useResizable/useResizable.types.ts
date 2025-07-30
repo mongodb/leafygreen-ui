@@ -52,13 +52,6 @@ export interface ResizableProps {
   onResize?: (size: number) => void;
 
   /**
-   * The percentage of the viewport that the resizable element should occupy at maximum.
-   * This can be used to ensure the element does not exceed a certain size relative to the viewport.
-   * This percentage-based maximum will override the maxSize prop if the calculated pixel value is smaller.
-   */
-  maxViewportPercentages: number;
-
-  /**
    * The position of the element to which the resizer handle is attached.
    */
   position: Position;

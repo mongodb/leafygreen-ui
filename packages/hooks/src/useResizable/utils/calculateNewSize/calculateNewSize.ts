@@ -9,7 +9,6 @@ import { Position } from '../../useResizable.types';
  * @param position - The position of the resizer (e.g., Right, Left, Bottom, Top).
  * @param minSize - The minimum size the element can be resized to.
  * @param maxSize - The maximum size the element can be resized to.
- * @param viewportPercentage - Optional percentage of the viewport size to constrain the maximum size.
  * @returns The new size of the element after applying the resizing logic and constraints.
  */
 export const calculateNewSize = (
@@ -19,10 +18,8 @@ export const calculateNewSize = (
   position: Position,
   minSize: number,
   maxSize: number,
-  viewportPercentage?: number,
 ): number => {
   let newSize = initialElementSize;
-  let effectiveMaxSize = maxSize;
 
   // Calculate delta
   const deltaX = event.clientX - initialMousePosition.x;
@@ -44,20 +41,10 @@ export const calculateNewSize = (
       break;
   }
 
-  // Apply viewport percentage constraint if specified
-  if (viewportPercentage) {
-    const percent = viewportPercentage / 100;
-    const viewportSize =
-      position === Position.Left || position === Position.Right
-        ? window.innerWidth
-        : window.innerHeight;
-    effectiveMaxSize = Math.min(effectiveMaxSize, viewportSize * percent);
-  }
-
   if (newSize < minSize) {
     newSize = minSize;
-  } else if (newSize > effectiveMaxSize) {
-    newSize = effectiveMaxSize;
+  } else if (newSize > maxSize) {
+    newSize = maxSize;
   }
 
   return newSize;

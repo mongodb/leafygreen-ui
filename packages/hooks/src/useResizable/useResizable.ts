@@ -29,7 +29,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   minSize: minSizeProp,
   maxSize: maxSizeProp,
   onResize,
-  maxViewportPercentages,
   position,
 }: ResizableProps): ResizableReturn<T> => {
   const resizableRef = useRef<T>(null);
@@ -50,17 +49,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     setSize(initialSize);
   }, [enabled, initialSize]);
 
-  // Prevents the size from exceeding the current element size when using a keyboard.
-  // If there is a  max-width set on the resizing element, we want to ensure that the size does not exceed that max-width
-  useEffect(() => {
-    const currentElementSize = resizableRef.current
-      ? isVertical
-        ? resizableRef.current.offsetWidth
-        : resizableRef.current.offsetHeight
-      : 0;
-    if (size > currentElementSize) setSize(currentElementSize);
-  }, [isVertical, size]);
-
   /**
    * Calculates and sets the current resizing state and updates the ref synchronously.
    */
@@ -76,13 +64,12 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         position,
         minSize,
         maxSize,
-        maxViewportPercentages,
       );
 
       setSize(newSize);
       onResize?.(newSize);
     },
-    [maxSize, maxViewportPercentages, minSize, onResize, position],
+    [maxSize, minSize, onResize, position],
   );
 
   /**
@@ -127,6 +114,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
           size,
           maxSize,
           minSize,
+          currentElement: resizableRef.current ?? null,
+          isVertical,
         });
         updateSize(nextSize);
       }

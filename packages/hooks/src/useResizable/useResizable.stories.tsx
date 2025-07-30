@@ -74,7 +74,6 @@ const CreateResizableStory: StoryFn<any> = args => {
     initialSize: 300,
     minSize: 200,
     maxSize: 600,
-    maxViewportPercentages: 50,
     position,
   });
 

@@ -6,6 +6,7 @@ import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useResizable } from './useResizable';
 import { Position } from './useResizable.types';
+import { KEYBOARD_RESIZE_PIXEL_STEP } from './useResizable.constants';
 
 // Mock window dimensions
 Object.defineProperty(window, 'innerWidth', { value: 1024 });
@@ -34,7 +35,6 @@ describe('useResizable', () => {
         minSize: 100,
         maxSize: 500,
         position: Position.Left,
-        maxViewportPercentages: 50,
       }),
     );
 
@@ -51,7 +51,6 @@ describe('useResizable', () => {
         minSize: 100,
         maxSize: 500,
         position: Position.Left,
-        maxViewportPercentages: 50,
       }),
     );
 
@@ -71,7 +70,6 @@ describe('useResizable', () => {
         maxSize: 500,
         position: Position.Left,
         onResize,
-        maxViewportPercentages: 50,
       }),
     );
 
@@ -117,7 +115,6 @@ describe('useResizable', () => {
             maxSize: 500,
             position: position as Position,
             onResize,
-            maxViewportPercentages: 50,
           }),
         );
 
@@ -168,7 +165,6 @@ describe('useResizable', () => {
             maxSize: 400,
             position: position as Position,
             onResize,
-            maxViewportPercentages: 60,
           }),
         );
 
@@ -208,57 +204,6 @@ describe('useResizable', () => {
         expect(result.current.size).toBe(400);
         expect(onResize).toHaveBeenCalledWith(400);
       });
-
-      test('respects maxViewportPercentage constraint', () => {
-        const onResize = jest.fn();
-        const initialSize = 300;
-        const { result } = renderHook(() =>
-          useResizable({
-            initialSize,
-            minSize: 100,
-            maxSize: 900,
-            position: position as Position,
-            maxViewportPercentages: 50,
-            onResize,
-          }),
-        );
-
-        // current is read-only from outside the hook but for testing we can set it directly
-        (result.current.resizableRef as any).current = mockRef.current;
-
-        // Start resizing
-        const resizerProps = result.current.getResizerProps();
-        act(() => {
-          // @ts-expect-error - onMouseDown expects all properties of MouseEvent
-          resizerProps?.onMouseDown({
-            preventDefault: jest.fn(),
-            clientX: initialSize,
-            clientY: initialSize,
-          });
-        });
-
-        // Simulate mouse movement that would exceed viewport percentage
-        act(() => {
-          fireEvent(
-            window,
-            new MouseEvent('mousemove', {
-              clientX:
-                position === Position.Right
-                  ? initialSize - 400
-                  : initialSize + 400,
-              clientY:
-                position === Position.Bottom
-                  ? initialSize - 200
-                  : initialSize + 200,
-            }),
-          );
-        });
-
-        const maxViewportSize =
-          position === Position.Right || position === Position.Left ? 512 : 384; // 50% of viewport width or height
-        expect(result.current.size).toBe(maxViewportSize);
-        expect(onResize).toHaveBeenCalledWith(maxViewportSize);
-      });
     },
   );
 
@@ -269,7 +214,6 @@ describe('useResizable', () => {
         minSize: 100,
         maxSize: 500,
         position: Position.Right,
-        maxViewportPercentages: 50,
       }),
     );
 
@@ -313,8 +257,9 @@ describe('useResizable', () => {
     window.requestAnimationFrame = originalRAF;
   });
 
-  test('handles keyboard interactions', () => {
+  test('handles keyboard interactions with KEYBOARD_RESIZE_PIXEL_STEP increments', () => {
     const onResize = jest.fn();
+    const initialSize = 300;
     const { result } = renderHook(() =>
       useResizable({
         initialSize: 300,
@@ -322,7 +267,6 @@ describe('useResizable', () => {
         maxSize: 500,
         position: Position.Left,
         onResize,
-        maxViewportPercentages: 50,
       }),
     );
 
@@ -337,16 +281,18 @@ describe('useResizable', () => {
       fireEvent.keyDown(window, { code: keyMap.ArrowRight });
     });
 
-    expect(result.current.size).toBe(500);
-    expect(onResize).toHaveBeenCalledWith(500);
+    const increasedSize = initialSize + KEYBOARD_RESIZE_PIXEL_STEP;
+    expect(result.current.size).toBe(increasedSize);
+    expect(onResize).toHaveBeenCalledWith(increasedSize);
 
     // Press left arrow to decrease size
     act(() => {
       fireEvent.keyDown(window, { code: keyMap.ArrowLeft });
     });
 
-    expect(result.current.size).toBe(300);
-    expect(onResize).toHaveBeenCalledWith(300);
+    // Should be back to initial size
+    expect(result.current.size).toBe(initialSize);
+    expect(onResize).toHaveBeenCalledWith(initialSize);
   });
 
   test('does not resize when disabled', () => {
@@ -359,12 +305,57 @@ describe('useResizable', () => {
         position: Position.Right,
         onResize,
         enabled: false,
-        maxViewportPercentages: 50,
       }),
     );
 
     // Check that getResizerProps returns undefined
     const resizerProps = result.current.getResizerProps();
     expect(resizerProps).toBeUndefined();
+  });
+
+  test('applies min/max constraints when using keyboard navigation', () => {
+    const onResize = jest.fn();
+    const initialSize = 450;
+    const maxSize = 500;
+    const minSize = 100;
+    const { result } = renderHook(() =>
+      useResizable({
+        initialSize,
+        minSize,
+        maxSize,
+        position: Position.Right,
+        onResize,
+      }),
+    );
+
+    // Focus the resizer
+    const resizerProps = result.current.getResizerProps();
+    act(() => {
+      resizerProps?.onFocus();
+    });
+
+    // Press key to increase size beyond max
+    act(() => {
+      fireEvent.keyDown(window, { code: keyMap.ArrowLeft });
+    });
+
+    // Should be constrained to maxSize
+    expect(result.current.size).toBe(maxSize);
+    expect(onResize).toHaveBeenCalledWith(maxSize);
+
+    // Reset the size to near the minimum
+    act(() => {
+      result.current.setSize(minSize + 10);
+    });
+    onResize.mockClear();
+
+    // Press key to decrease size below min
+    act(() => {
+      fireEvent.keyDown(window, { code: keyMap.ArrowRight });
+    });
+
+    // Should be constrained to minSize
+    expect(result.current.size).toBe(minSize);
+    expect(onResize).toHaveBeenCalledWith(minSize);
   });
 });
