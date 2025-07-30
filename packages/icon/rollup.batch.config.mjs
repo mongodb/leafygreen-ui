@@ -16,4 +16,4 @@ const iconConfigs = [esmConfig, umdConfig].flatMap(config =>
   })),
 );
 
-export default iconConfigs;
+export default [esmConfig, umdConfig, ...iconConfigs];
