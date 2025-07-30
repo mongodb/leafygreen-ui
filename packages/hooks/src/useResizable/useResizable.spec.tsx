@@ -5,8 +5,8 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useResizable } from './useResizable';
-import { Position } from './useResizable.types';
 import { KEYBOARD_RESIZE_PIXEL_STEP } from './useResizable.constants';
+import { Position } from './useResizable.types';
 
 // Mock window dimensions
 Object.defineProperty(window, 'innerWidth', { value: 1024 });

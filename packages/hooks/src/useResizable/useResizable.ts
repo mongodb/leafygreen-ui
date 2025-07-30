@@ -22,6 +22,16 @@ import { calculateNewSize } from './utils';
  *
  * @param {ResizableProps} props - The properties for the resizable functionality.
  * @returns {ResizableReturn} - The state and methods for the resizable component.
+ *
+ * @example
+ * const { size, setSize, isResizing, getResizerProps, resizableRef } = useResizable({
+ *   enabled: true,
+ *   initialSize: 200,
+ *   minSize: 100,
+ *   maxSize: 500,
+ *   onResize: (newSize) => console.log('Resized to:', newSize),
+ *   position: Position.Right,
+ * });
  */
 export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   enabled = true,
@@ -120,7 +130,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
         updateSize(nextSize);
       }
     },
-    [size, updateSize, minSize, maxSize],
+    [size, updateSize, minSize, maxSize, isVertical],
   );
 
   /**

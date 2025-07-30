@@ -36,6 +36,7 @@ export const getNextKeyboardSize = ({
       const currentElementSize = isVertical
         ? currentElement.offsetWidth
         : currentElement.offsetHeight;
+
       // If an element has a max-width/max-height set in CSS, the hook size might exceed the max size in CSS. This ensures that the value is decreased using the implicit CSS max width/height and not the hook size
       if (size > currentElementSize) {
         return currentElementSize - KEYBOARD_RESIZE_PIXEL_STEP;
