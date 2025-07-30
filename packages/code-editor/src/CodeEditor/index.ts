@@ -10,6 +10,7 @@ export {
   IndentUnits,
 } from './CodeEditor.types';
 export {
+  type CodeEditorModules,
   useAutoCompleteExtension,
   useCodeFoldingExtension,
   useHighlightExtension,

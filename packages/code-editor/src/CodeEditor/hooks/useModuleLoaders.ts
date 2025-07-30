@@ -174,9 +174,3 @@ export const useModuleLoaders = ({
 
   return loaders;
 };
-
-/**
- * Export the CodeEditorModules interface for use in other components
- * that need to interact with the dynamically loaded modules
- */
-export type { CodeEditorModules };
