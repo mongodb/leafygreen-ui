@@ -7,7 +7,7 @@ const baseContainerStyles = css`
   overflow-y: scroll;
   scroll-behavior: smooth;
   position: relative;
-  padding: ${spacing[400]}px;
+  padding: 0 ${spacing[400]}px;
   display: flex;
   flex-direction: column;
   gap: ${spacing[400]}px;

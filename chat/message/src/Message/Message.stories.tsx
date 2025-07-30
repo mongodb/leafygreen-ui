@@ -185,6 +185,8 @@ const MultipleUserComponent = () => {
   return (
     <LeafyGreenChatProvider>
       <div>
+        {/* replicate empty span used in `MessageFeed` */}
+        <span />
         <Message
           {...meta.args}
           baseFontSize={baseFontSize}
@@ -195,6 +197,8 @@ const MultipleUserComponent = () => {
           baseFontSize={baseFontSize}
           messageBody="Another message!"
         />
+        {/* replicate empty span used in `MessageFeed` */}
+        <span />
       </div>
     </LeafyGreenChatProvider>
   );
@@ -208,6 +212,8 @@ const MultipleMongoComponent = () => {
   return (
     <LeafyGreenChatProvider>
       <div>
+        {/* replicate empty span used in `MessageFeed` */}
+        <span />
         <Message
           {...meta.args}
           avatar={<Avatar variant="mongo" />}
@@ -222,6 +228,8 @@ const MultipleMongoComponent = () => {
           isSender={false}
           messageBody={MongoText}
         />
+        {/* replicate empty span used in `MessageFeed` */}
+        <span />
       </div>
     </LeafyGreenChatProvider>
   );
@@ -235,6 +243,8 @@ const AlternatingComponent = () => {
   return (
     <LeafyGreenChatProvider>
       <div>
+        {/* replicate empty span used in `MessageFeed` */}
+        <span />
         <Message
           {...meta.args}
           baseFontSize={baseFontSize}
@@ -247,6 +257,8 @@ const AlternatingComponent = () => {
           isSender={false}
           messageBody={MongoText}
         />
+        {/* replicate empty span used in `MessageFeed` */}
+        <span />
       </div>
     </LeafyGreenChatProvider>
   );

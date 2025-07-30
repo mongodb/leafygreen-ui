@@ -24,7 +24,7 @@ const getBaseContainerStyles = (theme: Theme) => css`
   width: 100%;
   color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
 
-  &:not(:last-child) {
+  &:not(:first-child):not(:nth-last-child(2)):not(:last-child) {
     margin-bottom: ${spacing[400]}px;
   }
 `;
@@ -41,7 +41,7 @@ const tabletContainerStyles = css`
  * @deprecated move this to MessageFeed
  */
 const desktopContainerStyles = css`
-  &:not(:last-child) {
+  &:not(:first-child):not(:nth-last-child(2)):not(:last-child) {
     margin-bottom: ${spacing[600]}px;
   }
 `;
