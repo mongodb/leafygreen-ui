@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import { type EditorView } from '@codemirror/view';
 
-import { useMergeRefs } from '@leafygreen-ui/hooks';
 import {
   useBaseFontSize,
   useDarkMode,
