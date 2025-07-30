@@ -14,7 +14,8 @@ const BATCH_SIZE = 10;
 const NUM_WORKERS = 4;
 
 const DELIMITER = '|';
-const ROLLUP_CONFIG_PATH = 'rollup.batch.config.mjs';
+const ROLLUP_CONFIG_PATH = 'rollup.config.mjs';
+const ROLLUP_BATCH_CONFIG_PATH = 'rollup.batch.config.mjs';
 
 /** Splits an array into chunks of a specified size. */
 function chunkArray<T>(arr: Array<T>, size: number): Array<Array<T>> {
@@ -28,12 +29,29 @@ function chunkArray<T>(arr: Array<T>, size: number): Array<Array<T>> {
 }
 
 /**
+ * Runs the Rollup build command for index and story files.
+ */
+async function buildExportsAndStories(): Promise<void> {
+  const cmd = `pnpm exec rollup -c ${ROLLUP_CONFIG_PATH}`;
+
+  await new Promise<void>((resolve, reject) => {
+    exec(cmd, error => {
+      if (error) {
+        reject(new Error(`Exports and stories build failed: ${error.message}`));
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+/**
  * Runs the Rollup build command for a batch of icons and returns a promise
  * that resolves only when the build process finishes successfully.
  */
 async function buildBatch(batch: Array<string>): Promise<void> {
   const batchArg = batch.join(DELIMITER);
-  const cmd = `pnpm exec rollup -c ${ROLLUP_CONFIG_PATH} --environment "ICONS:${batchArg}"`;
+  const cmd = `pnpm exec rollup -c ${ROLLUP_BATCH_CONFIG_PATH} --environment "ICONS:${batchArg}"`;
   // console.log(`Building icon batch: ${batch.join(', ')}`);
 
   await new Promise<void>((resolve, reject) => {
@@ -69,7 +87,14 @@ async function buildAllBatches(
   console.log('All icons built successfully (°ロ°) !');
 }
 
-buildAllBatches(BATCH_SIZE, NUM_WORKERS, iconNames).catch(err => {
-  console.error('Build failed:', err);
-  process.exit(1);
-});
+async function main() {
+  try {
+    await buildExportsAndStories();
+    await buildAllBatches(BATCH_SIZE, NUM_WORKERS, iconNames);
+  } catch (err) {
+    console.error('Build failed:', err);
+    process.exit(1);
+  }
+}
+
+main();
