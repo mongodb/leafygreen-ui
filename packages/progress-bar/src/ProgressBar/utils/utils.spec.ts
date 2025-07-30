@@ -1,7 +1,39 @@
 import { requiredA11yArgs } from '../../test.constants';
-import { Role } from '../ProgressBar.types';
+import { DEFAULT_VARIANT } from '../constants';
+import { Role, Variant } from '../ProgressBar.types';
 
-import { getFormattedValue, resolveProgressBarProps } from './utils';
+import {
+  getFormattedValue,
+  getValidMaxValue,
+  getValidValue,
+  resolveProgressBarProps,
+} from './utils';
+
+describe('getValidMaxValue', () => {
+  test('defaults to maxValue of 1 when maxValue is less than 0', () => {
+    expect(getValidMaxValue(-10)).toBe(1);
+  });
+
+  test('defaults to maxValue of 1 when maxValue is 0', () => {
+    expect(getValidMaxValue(0)).toBe(1);
+  });
+
+  test('returns the original maxValue when it is greater than 0', () => {
+    expect(getValidMaxValue(10)).toBe(10);
+  });
+});
+
+describe('getValidValue', () => {
+  const TEST_MAX_VALUE = 100;
+
+  test('defaults to value of 0 when value is less than 0', () => {
+    expect(getValidValue(-10, TEST_MAX_VALUE)).toBe(0);
+  });
+
+  test('defaults to maxValue when value is greater than maxValue', () => {
+    expect(getValidValue(150, TEST_MAX_VALUE)).toBe(TEST_MAX_VALUE);
+  });
+});
 
 describe('getFormattedValue', () => {
   test('renders a fraction correctly', () => {
@@ -66,21 +98,6 @@ describe('resolveProgressBarProps', () => {
     });
   });
 
-  test('it ignores invalid props for determinate with role "meter"', () => {
-    const props = {
-      role: Role.Meter,
-      value: 50,
-      maxValue: 100,
-      enableAnimation: true,
-      ...requiredA11yArgs,
-    } as const;
-
-    const resolvedProps = resolveProgressBarProps(props);
-    expect(resolvedProps).toMatchObject({
-      enableAnimation: false,
-    });
-  });
-
   test('it correctly resolves props for indeterminate', () => {
     const props = {
       isIndeterminate: true,
@@ -98,18 +115,89 @@ describe('resolveProgressBarProps', () => {
     });
   });
 
-  test('it ignores invalid props for indeterminate', () => {
-    const props = {
-      isIndeterminate: true,
-      role: Role.Meter,
-      enableAnimation: true,
-      ...requiredA11yArgs,
-    } as const;
+  describe('with invalid props', () => {
+    let consoleSpy: jest.SpyInstance;
 
-    const resolvedProps = resolveProgressBarProps(props);
-    expect(resolvedProps).toMatchObject({
-      role: Role.Progress,
-      enableAnimation: false,
+    beforeEach(() => {
+      consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+      consoleSpy.mockRestore();
+    });
+
+    test('warns if indeterminate bar uses meter role', () => {
+      const props = {
+        isIndeterminate: true,
+        role: Role.Meter,
+        ...requiredA11yArgs,
+      } as const;
+
+      const resolvedProps = resolveProgressBarProps(props);
+      expect(resolvedProps).not.toMatchObject({
+        role: Role.Meter,
+      });
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Only determinate bars support role "meter".',
+      );
+    });
+
+    test('warns if indeterminate bar uses non-animated variant', () => {
+      const props = {
+        isIndeterminate: true,
+        variant: Variant.Warning,
+        ...requiredA11yArgs,
+      } as const;
+
+      // @ts-expect-error - indeterminate cannot be warning variant
+      const resolvedProps = resolveProgressBarProps(props);
+      expect(resolvedProps).toMatchObject({
+        variant: DEFAULT_VARIANT,
+      });
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Only non-animated determinate bars support "warning" or "error" variants.',
+      );
+    });
+
+    test('warns if determinate bar with meter role uses enableAnimation flag', () => {
+      const props = {
+        role: Role.Meter,
+        enableAnimation: true,
+        ...requiredA11yArgs,
+      } as const;
+
+      // @ts-expect-error - meter cannot enable animation
+      const resolvedProps = resolveProgressBarProps(props);
+      expect(resolvedProps).toMatchObject({
+        enableAnimation: false,
+      });
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Only determinate bars with role "progressbar" support the `enableAnimation` flag.',
+      );
+    });
+
+    test('warns if determinate bar uses non-animated variant with enableAnimation flag', () => {
+      const props = {
+        value: 50,
+        maxValue: 100,
+        enableAnimation: true,
+        variant: Variant.Warning,
+        ...requiredA11yArgs,
+      } as const;
+
+      // @ts-expect-error - animated progress cannot be warning variant
+      const resolvedProps = resolveProgressBarProps(props);
+      expect(resolvedProps).toMatchObject({
+        enableAnimation: false,
+        variant: Variant.Warning, // variant takes precedence over enableAnimation
+      });
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Only non-animated determinate bars support "warning" or "error" variants.',
+      );
     });
   });
 });

@@ -15,6 +15,7 @@ import {
   iconsPendingCompletion,
 } from '../constants';
 import {
+  AnimatedVariant,
   AnimationMode,
   FormatValueType,
   ProgressBarProps,
@@ -37,7 +38,7 @@ import {
  * @param maxValue - The input maximum value to validate.
  * @returns The valid maximum value.
  */
-const getValidMaxValue = (maxValue?: number) => {
+export const getValidMaxValue = (maxValue?: number) => {
   if (!isDefined(maxValue) || maxValue <= 0) {
     return DEFAULT_MAX_VALUE;
   }
@@ -55,7 +56,7 @@ const getValidMaxValue = (maxValue?: number) => {
  * @param maxValue - The optional upper bound.
  * @returns The clamped value, or undefined if value is undefined.
  */
-const getValidValue = (value?: number, maxValue?: number) => {
+export const getValidValue = (value?: number, maxValue?: number) => {
   if (!isDefined(value)) {
     return value;
   }
@@ -210,6 +211,12 @@ export const omitProps = (
   return omit(obj, Object.keys(toOmit));
 };
 
+/** Helper function to check if a variant is animated. */
+export const isAnimatedVariant = (variant: Variant) => {
+  const ANIMATED_VARIANTS = Object.values(AnimatedVariant);
+  return (ANIMATED_VARIANTS as Array<Variant>).includes(variant);
+};
+
 /**
  * Resolves the final props for the progress bar component.
  * - Validates and normalizes conditional values like `value`, `maxValue`, `role`, and `enableAnimation`.
@@ -265,6 +272,7 @@ export const resolveProgressBarProps = (
 
     overrides.isIndeterminate = true;
     overrides.value = getValidValue(props.value);
+    overrides.variant = isAnimatedVariant(variant) ? variant : DEFAULT_VARIANT;
   } else if (props.role === Role.Meter) {
     warnEnableAnimationFlag(props);
 
@@ -278,7 +286,8 @@ export const resolveProgressBarProps = (
     overrides.value = getValidValue(props.value, props.maxValue);
     overrides.maxValue = getValidMaxValue(props.maxValue);
     overrides.disabled = props.disabled ?? false;
-    overrides.enableAnimation = props.enableAnimation ?? false;
+    overrides.enableAnimation =
+      props.enableAnimation && isAnimatedVariant(variant);
   }
 
   // based on overrides, set icon visibility

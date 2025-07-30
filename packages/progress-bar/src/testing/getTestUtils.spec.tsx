@@ -16,7 +16,6 @@ describe('getTestUtils', () => {
     expect(getBar()).toHaveAttribute('role', 'progressbar');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFill()).toHaveStyle({ width: '100%' });
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeNull();
@@ -40,7 +39,6 @@ describe('getTestUtils', () => {
     expect(getBar()).toHaveAttribute('role', 'progressbar');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFill()).toHaveStyle({ width: '50%' });
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeInTheDocument();
@@ -65,7 +63,6 @@ describe('getTestUtils', () => {
     expect(getBar()).toHaveAttribute('role', 'meter');
 
     expect(getBarFill()).toBeInTheDocument();
-    expect(getBarFill()).toHaveStyle({ width: '50%' });
     expect(getBarTrack()).toBeInTheDocument();
 
     expect(queryIcon()).toBeNull();
@@ -98,13 +95,13 @@ describe('getTestUtils', () => {
     expect(first.getBar()).toBeInTheDocument();
     expect(first.getBar()).toHaveAttribute('role', 'progressbar');
     expect(first.getBarFill()).toBeInTheDocument();
-    expect(first.getBarFill()).toHaveStyle({ width: '30%' });
     expect(first.queryIcon()).toBeNull();
+    expect(first.queryLabel()).toHaveTextContent('First Progress');
 
     expect(second.getBar()).toBeInTheDocument();
     expect(second.getBar()).toHaveAttribute('role', 'meter');
     expect(second.getBarFill()).toBeInTheDocument();
-    expect(second.getBarFill()).toHaveStyle({ width: '70%' });
     expect(second.queryIcon()).toBeInTheDocument();
+    expect(second.queryLabel()).toHaveTextContent('Second Progress');
   });
 });

@@ -1,6 +1,6 @@
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
-import { isDefined, Theme } from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
 import {
   color as colorToken,
   spacing as spacingToken,
@@ -9,7 +9,6 @@ import {
 import {
   barColorStyles,
   barSizeStyles,
-  DEFAULT_WIDTH_ANIMATION_DURATION,
   getDeterminateAnimatedGradient,
   getIndeterminateGradient,
   INDETERMINATE_ANIMATION_DURATION_MS,
@@ -166,18 +165,15 @@ const getDeterminateFillStyles = ({
   theme,
   variant,
   disabled,
-  width,
-  widthAnimationDuration,
 }: {
   theme: Theme;
   variant: Variant;
   disabled?: boolean;
-  width: number;
-  widthAnimationDuration?: number;
 }) => css`
-  width: ${width}%;
-  transition: width
-    ${widthAnimationDuration || DEFAULT_WIDTH_ANIMATION_DURATION}ms ease;
+  // variables defined in getWidthStyles() of .tsx component, applied to bar fill element (data-lgid=progress-bar-fill)
+  width: var(--width);
+  transition: var(--width-animation-duration) ease;
+
   background-color: ${disabled
     ? barColorStyles[theme].disabledBar
     : barColorStyles[theme][variant].bar};
@@ -266,29 +262,21 @@ export const getBarFillStyles = ({
   theme,
   variant,
   disabled,
-  width,
-  widthAnimationDuration,
 }: {
   animationMode: AnimationMode;
   theme: Theme;
   variant: Variant;
   disabled?: boolean;
-  width?: number;
-  widthAnimationDuration?: number;
 }) => {
   const baseStyles = getBaseBarFillStyles();
 
   let addOnStyles;
 
-  const determinate =
-    isDefined(width) &&
-    getDeterminateFillStyles({
-      theme,
-      variant,
-      disabled,
-      width,
-      widthAnimationDuration,
-    });
+  const determinate = getDeterminateFillStyles({
+    theme,
+    variant,
+    disabled,
+  });
 
   const determinateAnimated = getDeterminateAnimatedFillStyles({
     theme,

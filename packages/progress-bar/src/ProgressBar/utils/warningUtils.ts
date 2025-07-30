@@ -10,7 +10,7 @@ export const warnMeterRole = (props: any): void => {
 export const warnEnableAnimationFlag = (props: any): void => {
   if (props.enableAnimation) {
     console.warn(
-      'Only determinate bars with role "progressbar" support additional animation.',
+      'Only determinate bars with role "progressbar" support the `enableAnimation` flag.',
     );
   }
 };

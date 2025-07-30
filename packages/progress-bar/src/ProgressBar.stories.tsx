@@ -2,6 +2,7 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
+import { isAnimatedVariant } from './ProgressBar/utils';
 import { requiredA11yArgs, storyValues } from './test.constants';
 import {
   AnimatedVariant,
@@ -81,6 +82,9 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     variant: {
       control: { type: 'select' },
       options: VARIANTS,
+      // storybook fails to parse ts docs description for this prop
+      description:
+        'Determinate variants: `info`, `success`, `warning`, `error`. Indeterminate variants: `info`, `success`.',
     },
     maxValue: {
       control: { type: 'number' },
@@ -179,9 +183,7 @@ export const DeterminateProgressVariants: StoryObj<typeof ProgressBar> = {
       },
       excludeCombinations: [
         {
-          variant: VARIANTS.filter(
-            v => !(ANIMATED_VARIANTS as Array<Variant>).includes(v),
-          ),
+          variant: VARIANTS.filter(v => !isAnimatedVariant(v)),
           enableAnimation: [true],
         },
         {
