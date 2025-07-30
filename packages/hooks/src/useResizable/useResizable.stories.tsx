@@ -84,7 +84,9 @@ const CreateResizableStory: StoryFn<any> = args => {
   const containerStyles = {
     ...config.containerStyles,
     [isVertical ? 'width' : 'height']: size,
-    ...(isVertical ? { height: '100%' } : { width: '100vw' }),
+    ...(isVertical
+      ? { height: '100%', maxWidth: '50vw' }
+      : { width: '100vw', maxHeight: '50vh' }),
     backgroundColor: 'lightgray',
     position: 'absolute' as const,
   };

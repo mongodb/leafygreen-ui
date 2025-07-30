@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { keyMap } from '@leafygreen-ui/lib';
 
+import { getNextKeyboardSize } from './utils/getNextKeyboardSize';
 import { SIZE_GROWTH_KEY_MAPPINGS } from './useResizable.constants';
 import {
   Arrow,
   Position,
   ResizableProps,
   ResizableReturn,
-  SizeGrowth,
 } from './useResizable.types';
 import {
   getResizerAriaAttributes,
@@ -45,14 +45,21 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   const maxSize = maxSizeProp ?? initialSize;
   const isVertical = position === Position.Left || position === Position.Right;
 
-  // Keeps track of all the sizes that can be used for resizing with keyboard
-  const keyboardSizes = [initialSize, minSize, maxSize];
-  const sortedKeyboardSizes = [...keyboardSizes].sort((a, b) => a - b);
-
   // Update size when enabled state or initialSize changes
   useEffect(() => {
     setSize(initialSize);
   }, [enabled, initialSize]);
+
+  // Prevents the size from exceeding the current element size when using a keyboard.
+  // If there is a  max-width set on the resizing element, we want to ensure that the size does not exceed that max-width
+  useEffect(() => {
+    const currentElementSize = resizableRef.current
+      ? isVertical
+        ? resizableRef.current.offsetWidth
+        : resizableRef.current.offsetHeight
+      : 0;
+    if (size > currentElementSize) setSize(currentElementSize);
+  }, [isVertical, size]);
 
   /**
    * Calculates and sets the current resizing state and updates the ref synchronously.
@@ -110,33 +117,25 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    * - If position is 'left' and the left arrow key is pressed, it decreases the size.
    * - If position is 'right' and the left arrow key is pressed, it increases the size.
    */
-  const getNextKeyboardSize = useCallback(
+  const setNextKeyboardSize = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent, position: Position | null) => {
-      const getNextSize = (sizeGrowth: SizeGrowth | undefined) => {
-        const currentSize = size;
-        const sizes = sortedKeyboardSizes;
-
-        if (!sizeGrowth) return currentSize; // No change if sizeGrowth is undefined
-
-        if (sizeGrowth === SizeGrowth.Increase) {
-          return sizes.find(size => size > currentSize);
-        } else {
-          return [...sizes].reverse().find(size => size < currentSize);
-        }
-      };
-
       if (position && event.code in SIZE_GROWTH_KEY_MAPPINGS[position]) {
         const sizeGrowth =
           SIZE_GROWTH_KEY_MAPPINGS[position][event.code as Arrow];
-        const nextSize = getNextSize(sizeGrowth);
+        const nextSize = getNextKeyboardSize({
+          sizeGrowth,
+          size,
+          maxSize,
+          minSize,
+        });
         updateSize(nextSize);
       }
     },
-    [size, sortedKeyboardSizes, updateSize],
+    [size, updateSize, minSize, maxSize],
   );
 
   /**
-   * Prevents default behavior and calls getNextKeyboardSize to handle resizing.
+   * Prevents default behavior and calls setNextKeyboardSize to handle resizing.
    */
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent) => {
@@ -152,9 +151,9 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
           event.preventDefault();
         }
       }
-      getNextKeyboardSize(event, position);
+      setNextKeyboardSize(event, position);
     },
-    [getNextKeyboardSize, position],
+    [setNextKeyboardSize, position],
   );
 
   /**

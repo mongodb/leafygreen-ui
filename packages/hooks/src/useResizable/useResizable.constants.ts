@@ -3,6 +3,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { Arrow, Position, SizeGrowth } from './useResizable.types';
 
 export const RESIZER_SIZE = 2;
+export const KEYBOARD_RESIZE_PIXEL_STEP = 50;
 
 // Mappings for keyboard interactions based on the position
 export const SIZE_GROWTH_KEY_MAPPINGS: Record<
