@@ -3,10 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { type Diagnostic } from '@codemirror/lint';
 import { type EditorView } from '@codemirror/view';
 
-import {
-  type CodeEditorProps,
-  type CodeEditorTooltip,
-} from '../../CodeEditor.types';
+import { type CodeEditorProps } from '../../CodeEditor.types';
 import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
