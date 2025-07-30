@@ -10,6 +10,20 @@ import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
+/**
+ * Hook for managing code folding functionality in the CodeMirror editor.
+ *
+ * This extension adds code folding capabilities with custom LeafyGreen UI icons.
+ * When enabled, users can collapse and expand code blocks (like functions, classes,
+ * etc.) to improve readability and navigation. The extension uses ChevronDown and
+ * ChevronRight icons to indicate fold states.
+ *
+ * @param params - Configuration object
+ * @param params.editorViewInstance - The CodeMirror editor view instance
+ * @param params.props - Partial CodeEditor props containing the enableCodeFolding flag
+ * @param params.modules - Module dependencies (requires @codemirror/language for foldGutter)
+ * @returns A CodeMirror extension that enables code folding with custom icons
+ */
 export function useCodeFoldingExtension({
   editorViewInstance,
   props,

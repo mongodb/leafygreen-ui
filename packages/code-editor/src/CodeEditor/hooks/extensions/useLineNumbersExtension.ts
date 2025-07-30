@@ -5,6 +5,19 @@ import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
+/**
+ * Hook for managing line number display in the CodeMirror editor.
+ *
+ * This extension adds line numbers to the editor's gutter when enabled.
+ * The line numbers are displayed on the left side of the editor and help
+ * users navigate and reference specific lines in the code.
+ *
+ * @param params - Configuration object
+ * @param params.editorViewInstance - The CodeMirror editor view instance
+ * @param params.props - Partial CodeEditor props containing the enableLineNumbers flag
+ * @param params.modules - Module dependencies (requires @codemirror/view for lineNumbers)
+ * @returns A CodeMirror extension that displays line numbers
+ */
 export function useLineNumbersExtension({
   editorViewInstance,
   props,

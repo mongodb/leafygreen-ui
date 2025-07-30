@@ -70,9 +70,6 @@ export const useLazyModules = <T extends object>(
       }
     });
 
-    /*
-     * Self-invoking async function to handle Promise.all
-     */
     (async () => {
       try {
         const modules = await Promise.all(modulePromises);

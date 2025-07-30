@@ -3,27 +3,20 @@ import { type Compartment, type Extension } from '@codemirror/state';
 import { type EditorView } from 'codemirror';
 
 /**
- * Hook for managing dynamic CodeMirror extensions using a Compartment.
- * This hook simplifies using extensions that need to change based on props
- * by handling the compartment creation and reconfiguration internally.
+ * A base hook for managing CodeMirror extensions with compartments.
  *
- * @param params Configuration object for the extension
- * @param params.editorViewInstance The CodeMirror EditorView instance to attach the extension to
- * @param params.stateModule CodeMirror state module for creating the Compartment (marked optional for lazy loading, but required for functionality)
- * @param params.value The dynamic value that the extension depends on; when this changes, the extension will be reconfigured
- * @param params.factory A function that takes the value and returns a CodeMirror Extension (should be stable or memoized with useCallback)
- * @returns A CodeMirror Extension to be included in the editor's configuration
+ * This hook provides a foundation for dynamically managing CodeMirror extensions
+ * by using compartments to reconfigure extensions when their values change.
+ * It handles the lifecycle of compartments and ensures extensions are properly
+ * updated when the editor view or extension values change.
  *
- * @remarks
- * CodeMirror state is immutable. Once configuration is set, the entire state would
- * need to be updated to update one facet. Compartments allow us to dynamically change
- * parts of the configuration after initialization, without needing to recreate the
- * entire editor state.
- * See https://codemirror.net/examples/config/#dynamic-configuration
- *
- * Note: Although stateModule is marked as optional in the type signature (due to lazy loading),
- * the compartment will not be created until stateModule is provided. The hook safely handles
- * the case where it's not immediately available by returning an empty extension array.
+ * @template T - The type of the value parameter used by the extension factory
+ * @param params - Configuration object for the extension
+ * @param params.editorViewInstance - The CodeMirror editor view instance
+ * @param params.value - The value to pass to the extension factory function
+ * @param params.factory - Function that creates an extension from the provided value
+ * @param params.stateModule - Optional @codemirror/state module for creating compartments
+ * @returns A CodeMirror extension that can be dynamically reconfigured
  */
 export const useExtension = <T>({
   editorViewInstance,

@@ -13,6 +13,20 @@ import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
+/**
+ * Hook for managing syntax highlighting themes in the CodeMirror editor.
+ *
+ * This extension applies language-specific syntax highlighting with colors
+ * that match the LeafyGreen design system. It provides different color schemes
+ * for light and dark themes, highlighting various syntax elements like keywords,
+ * strings, comments, functions, and more.
+ *
+ * @param params - Configuration object
+ * @param params.editorViewInstance - The CodeMirror editor view instance
+ * @param params.props - CodeEditor props including theme and language settings
+ * @param params.modules - Module dependencies (requires @codemirror/language for syntaxHighlighting and @lezer/highlight for tags)
+ * @returns A CodeMirror extension that applies syntax highlighting
+ */
 export function useHighlightExtension({
   editorViewInstance,
   props,

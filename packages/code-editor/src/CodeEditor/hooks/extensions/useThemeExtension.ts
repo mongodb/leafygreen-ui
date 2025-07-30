@@ -19,6 +19,20 @@ import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
+/**
+ * Hook for applying LeafyGreen UI theme styling to the CodeMirror editor.
+ *
+ * This extension applies consistent theming to match the LeafyGreen design system,
+ * including colors, typography, spacing, and border radius. It supports both
+ * light and dark themes and adapts the editor's appearance based on the current
+ * theme and font size settings.
+ *
+ * @param params - Configuration object
+ * @param params.editorViewInstance - The CodeMirror editor view instance
+ * @param params.props - CodeEditor props including theme and baseFontSize
+ * @param params.modules - Module dependencies (requires @codemirror/view for EditorView.theme)
+ * @returns A CodeMirror extension that applies LeafyGreen theming
+ */
 export function useThemeExtension({
   editorViewInstance,
   props,

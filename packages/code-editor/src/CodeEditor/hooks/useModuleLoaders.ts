@@ -6,7 +6,7 @@ import { LanguageName } from './extensions/useLanguageExtension';
 import { type LoadersMap } from './useLazyModules';
 
 /**
- * Interface representing all the CodeMirror modules that might be dynamically imported
+ * Interface representing all the module dependencies that might be dynamically imported
  * by the CodeEditor component. This comprehensive mapping enables the lazy loading
  * system to properly type and load the required modules based on editor configuration.
  *
@@ -39,7 +39,7 @@ interface CodeEditorModules {
 }
 
 /**
- * Hook that determines which CodeMirror modules need to be dynamically loaded
+ * Hook that determines which module dependencies need to be dynamically loaded
  * based on the current editor configuration.
  *
  * This hook analyzes the provided editor props to construct a map of module loaders

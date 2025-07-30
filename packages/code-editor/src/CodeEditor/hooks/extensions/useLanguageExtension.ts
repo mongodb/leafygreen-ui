@@ -28,6 +28,22 @@ export const LanguageName = {
 } as const;
 export type LanguageName = (typeof LanguageName)[keyof typeof LanguageName];
 
+/**
+ * Hook for managing language-specific syntax highlighting and features in the CodeMirror editor.
+ *
+ * This extension provides language support for various programming languages including
+ * syntax highlighting, code completion, and language-specific features. It dynamically
+ * loads and configures the appropriate language extension based on the specified language.
+ *
+ * Supported languages include: JavaScript, TypeScript, JSX, TSX, Python, Java, C++,
+ * C#, CSS, HTML, JSON, Go, PHP, Ruby, Rust, and Kotlin.
+ *
+ * @param params - Configuration object
+ * @param params.editorViewInstance - The CodeMirror editor view instance
+ * @param params.props - Partial CodeEditor props containing the language setting
+ * @param params.modules - Module dependencies (requires language-specific modules like @codemirror/lang-javascript, @codemirror/lang-python, etc.)
+ * @returns A CodeMirror extension that provides language-specific features
+ */
 export function useLanguageExtension({
   editorViewInstance,
   props,
