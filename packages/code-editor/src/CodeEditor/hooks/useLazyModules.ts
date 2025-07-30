@@ -17,15 +17,36 @@ export type LoaderFn<T> = () => Promise<T>;
 export type LoadersMap<T> = { [K in keyof T]: LoaderFn<T[K]> };
 
 /**
- * Hook for lazy-loading modules on demand based on a map of loader functions
+ * A React hook for lazy loading modules with loading state management.
  *
- * This hook efficiently manages dynamic imports by tracking which modules have
- * already been loaded and only loading new modules when needed. It handles
- * loading states and error handling for module loading operations.
+ * This hook takes a map of loader functions and dynamically loads modules as needed,
+ * preventing duplicate loads and providing loading state feedback. Modules are loaded
+ * concurrently when the hook first runs or when new loaders are provided.
  *
- * @template T Object type representing the modules to be loaded - extends object to ensure keyof operations are valid
- * @param loaders Map of module names to their dynamic import functions
- * @returns Object containing the loaded modules and loading state
+ * @template T Object type representing the expected structure of all possible modules
+ * @param loaders - A map where keys represent module names and values are loader functions
+ *                  that return promises resolving to the corresponding module
+ *
+ * @returns An object containing:
+ * - `modules`: Partial<T> - Object containing successfully loaded modules
+ * - `isLoading`: boolean - Whether any modules are currently being loaded
+ *
+ * @example
+ * ```typescript
+ * interface MyModules {
+ *   utils: { helper: () => void };
+ *   components: { Button: React.ComponentType };
+ * }
+ *
+ * const { modules, isLoading } = useLazyModules<MyModules>({
+ *   utils: () => import('./utils'),
+ *   components: () => import('./components'),
+ * });
+ *
+ * if (!isLoading && modules.utils) {
+ *   modules.utils.helper();
+ * }
+ * ```
  */
 export const useLazyModules = <T extends object>(
   loaders: LoadersMap<Partial<T>>,
@@ -98,9 +119,6 @@ export const useLazyModules = <T extends object>(
           return acc;
         }, {} as Partial<T>);
 
-        /*
-         * Update state with the newly loaded modules
-         */
         setModules(prev => ({ ...prev, ...newModules }));
       } catch (err: any) {
         console.error(`Failed to load module:`, err);
