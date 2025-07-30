@@ -9,7 +9,7 @@ import { StoryFn } from '@storybook/react';
 import { State, SuggestedActions, SuggestedActionsProps } from '.';
 
 const meta: StoryMetaType<typeof SuggestedActions> = {
-  title: 'Chat/SuggestedActions',
+  title: 'Composition/Chat/SuggestedActions',
   component: SuggestedActions,
   parameters: {
     default: 'LiveExample',
