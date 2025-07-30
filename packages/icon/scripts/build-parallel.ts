@@ -54,8 +54,7 @@ async function buildExportsAndStories(): Promise<void> {
 }
 
 /**
- * Runs the Rollup build command for a batch of icons and returns a promise
- * that resolves only when the build process finishes successfully.
+ * Runs the Rollup build command for a batch of icons.
  */
 async function buildBatch(batch: Array<string>): Promise<void> {
   const batchArg = batch.join(DELIMITER);
@@ -84,7 +83,7 @@ async function buildAllBatches(
   batchSize = 10,
   numWorkers = 4,
   fullBatch: Array<string>,
-) {
+): Promise<void> {
   const { default: PQueue } = await import('p-queue');
 
   const queue = new PQueue({ concurrency: numWorkers });
@@ -98,7 +97,7 @@ async function buildAllBatches(
   console.log('All icons built successfully (°ロ°) !');
 }
 
-async function main() {
+async function main(): Promise<void> {
   try {
     await buildExportsAndStories();
     await buildAllBatches(BATCH_SIZE, NUM_WORKERS, iconNames);
