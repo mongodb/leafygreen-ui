@@ -2,6 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 
+// test comment
 const ICON_DIR = path.resolve(process.cwd(), 'src/generated');
 
 const iconNames = fs

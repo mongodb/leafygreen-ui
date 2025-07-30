@@ -36,6 +36,19 @@ jobs:
             tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
+      # @leafygreen-ui/icon has an additional cache layer due to built-in checksum logic
+      - uses: actions/cache/restore@v4
+        name: (TEST, THIS IS NEW) Restore previous icon build cache
+        id: icon-build-cache
+        with:
+          path: |
+            packages/icon/dist
+          key: icon-dist-${{ github.ref }}-${{ github.run_id }}
+          # use any previous builds in the same branch as the current one
+          # icon build logic detects changes and rebuilds accordingly
+          restore-keys: |
+            icon-dist-${{ github.ref }}-
+
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -63,6 +76,13 @@ jobs:
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
+
+      # @leafygreen-ui/icon has a separate cache due to built-in checksum logic
+      - name: (TEST, THIS IS NEW) Save icon build to cache
+        uses: actions/cache/save@v4
+        with:
+          path: packages/icon/dist
+          key: icon-dist-${{ github.ref }}-${{ github.run_id }}
 
   lint:
     name: Check lints
