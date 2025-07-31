@@ -635,6 +635,39 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  chat/message-actions:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../../packages/emotion
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../../packages/icon-button
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../../packages/lib
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../../packages/tokens
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
+      '@lg-chat/message-feedback':
+        specifier: workspace:^
+        version: link:../message-feedback
+      '@lg-chat/message-rating':
+        specifier: workspace:^
+        version: link:../message-rating
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+
   chat/message-feed:
     dependencies:
       '@leafygreen-ui/button':
