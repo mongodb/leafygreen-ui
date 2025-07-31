@@ -2,6 +2,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @lg-chat/chat-window
+```
+
 ### Yarn
 
 ```shell
@@ -16,9 +22,20 @@ npm install @lg-chat/chat-window
 
 ## Example
 
-```
-const Example = (props) => {
-  const userName = "Sean Park";
+### Compact
+
+```tsx
+import { ChatWindow } from '@lg-chat/chat-window';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+import { MessageFeed } from '@lg-chat/message-feed';
+import { TitleBar } from '@lg-chat/title-bar';
+
+const CompactExample = props => {
+  const userName = 'Sean Park';
   const [messages, setMessages] = useState<Array<any>>(baseMessages);
 
   const handleMessageSend = (messageBody: string) => {
@@ -26,16 +43,56 @@ const Example = (props) => {
       messageBody,
       userName,
     };
-    setMessages((messages) => [...messages, newMessage]);
+    setMessages(messages => [...messages, newMessage]);
   };
 
   return (
-    <LeafyGreenChatProvider>
+    <LeafyGreenChatProvider variant={Variant.Compact}>
       <ChatWindow {...props}>
         <TitleBar title="LG Chat Demo" badgeText="Beta" />
         <MessageFeed>
-          {messages.map((messageFields) => (
-            <MyMessage key={messageFields.id} {...messageFields} />
+          {messages.map(messageFields => (
+            <Message key={messageFields.id} {...messageFields} />
+          ))}
+        </MessageFeed>
+        <InputBar onMessageSend={handleMessageSend} />
+      </ChatWindow>
+    </LeafyGreenChatProvider>
+  );
+};
+```
+
+### Spacious
+
+```tsx
+import { ChatWindow } from '@lg-chat/chat-window';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+import { MessageFeed } from '@lg-chat/message-feed';
+import { TitleBar } from '@lg-chat/title-bar';
+
+const SpaciousExample = props => {
+  const userName = 'Sean Park';
+  const [messages, setMessages] = useState<Array<any>>(baseMessages);
+
+  const handleMessageSend = (messageBody: string) => {
+    const newMessage = {
+      messageBody,
+      userName,
+    };
+    setMessages(messages => [...messages, newMessage]);
+  };
+
+  return (
+    <LeafyGreenChatProvider variant={Variant.Spacious}>
+      <ChatWindow {...props}>
+        <TitleBar title="LG Chat Demo" badgeText="Beta" />
+        <MessageFeed>
+          {messages.map(messageFields => (
+            <Message key={messageFields.id} {...messageFields} />
           ))}
         </MessageFeed>
         <InputBar onMessageSend={handleMessageSend} />
