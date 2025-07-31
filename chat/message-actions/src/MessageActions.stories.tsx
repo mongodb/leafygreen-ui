@@ -14,16 +14,20 @@ import { expect, userEvent, within } from '@storybook/test';
 import { FEEDBACK_TEXTAREA_TEST_ID } from './constants';
 import { MessageActions, MessageActionsProps } from '.';
 
+// eslint-disable-next-line no-console
+const testOnClickCopy = () => console.log('Copy clicked');
+// eslint-disable-next-line no-console
+const testOnClickRetry = () => console.log('Retry clicked');
+// eslint-disable-next-line no-console
+const testOnSubmitFeedback = () => console.log('Feedback submitted');
+
 const meta: StoryMetaType<typeof MessageActions> = {
   title: 'Composition/Chat/MessageActions',
   component: MessageActions,
   args: {
-    // eslint-disable-next-line no-console
-    onClickCopy: () => console.log('Copy clicked'),
-    // eslint-disable-next-line no-console
-    onClickRetry: () => console.log('Retry clicked'),
-    // eslint-disable-next-line no-console
-    onSubmitFeedback: () => console.log('Feedback submitted'),
+    onClickCopy: testOnClickCopy,
+    onClickRetry: testOnClickRetry,
+    onSubmitFeedback: testOnSubmitFeedback,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -32,6 +36,26 @@ const meta: StoryMetaType<typeof MessageActions> = {
     default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        onClickCopy: [undefined, testOnClickCopy],
+        onClickRetry: [undefined, testOnClickRetry],
+        onSubmitFeedback: [undefined, testOnSubmitFeedback],
+      },
+      decorator: StoryFn => (
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <StoryFn />
+        </LeafyGreenChatProvider>
+      ),
+      excludeCombinations: [
+        {
+          onClickCopy: undefined,
+          onClickRetry: undefined,
+          onSubmitFeedback: undefined,
+        },
+      ],
     },
   },
 };
@@ -238,3 +262,7 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmit: StoryObj<MessageActio
       darkMode: true,
     },
   };
+
+export const Generated: StoryObj<MessageActionsProps> = {
+  render: Template,
+};

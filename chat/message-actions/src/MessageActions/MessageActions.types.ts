@@ -8,14 +8,16 @@ export interface MessageActionsProps
   extends DarkModeProps,
     HTMLElementProps<'div'> {
   /**
-   * Callback fired when the copy button is clicked.
+   * Optional callback fired when the copy button is clicked.
+   * @remarks if not provided, the copy button will not be rendered
    */
-  onClickCopy: MouseEventHandler<HTMLButtonElement>;
+  onClickCopy?: MouseEventHandler<HTMLButtonElement>;
 
   /**
-   * Callback fired when the retry button is clicked.
+   * Optional callback fired when the retry button is clicked.
+   * @remarks if not provided, the retry button will not be rendered
    */
-  onClickRetry: MouseEventHandler<HTMLButtonElement>;
+  onClickRetry?: MouseEventHandler<HTMLButtonElement>;
 
   /**
    * Optional callback fired when the feedback form is closed by clicking
@@ -24,10 +26,11 @@ export interface MessageActionsProps
   onCloseFeedback?: InlineMessageFeedbackProps['onClose'];
 
   /**
-   * Callback when the user submits the feedback form.
-   * Receives the original form event, plus an options object with rating and comment.
+   * Optional callback when the user submits the feedback form.
+   * Receives the original form event, plus an options object with rating and feedback.
+   * @remarks if not provided, the rating buttons and feedback form will not be rendered
    */
-  onSubmitFeedback: (
+  onSubmitFeedback?: (
     e: FormEvent<HTMLFormElement>,
     options: { rating: MessageRatingValue; feedback?: string },
   ) => void;
