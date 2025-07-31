@@ -9,6 +9,7 @@ import {
   Position,
   ResizableProps,
   ResizableReturn,
+  ResizerProps,
 } from './useResizable.types';
 import {
   getResizerAriaAttributes,
@@ -45,13 +46,18 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   // Refs to store initial mouse position and element size at the start of a drag
-  const initialMousePos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const initialMousePos = useRef<Readonly<{ x: number; y: number }>>({
+    x: 0,
+    y: 0,
+  });
   const initialElementSize = useRef<number>(0);
   // Ref to hold the current value of isResizing to prevent stale closures in event handlers
   const isResizingRef = useRef<boolean>(isResizing);
   const [size, setSize] = useState<number>(initialSize);
+  // Use provided min/max sizes or fallback to initialSize as boundaries
   const minSize = minSizeProp ?? initialSize;
   const maxSize = maxSizeProp ?? initialSize;
+  // Determine if resizing is vertical (left/right) or horizontal (top/bottom)
   const isVertical = position === Position.Left || position === Position.Right;
 
   // Update size when enabled state or initialSize changes
@@ -61,6 +67,9 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
   /**
    * Handles the size update based on the next size value.
+   * Updates internal state and calls the onResize callback if provided.
+   *
+   * @param {number | undefined} nextSize - The new size value to set
    */
   const updateSize = useCallback(
     (nextSize: number | undefined) => {
@@ -74,6 +83,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
   /**
    * Calculates and sets the current resizing state and updates the ref synchronously.
+   * Uses the mouse movement to determine the new size.
    */
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
@@ -90,7 +100,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       );
       updateSize(newSize);
     },
-    [maxSize, minSize, onResize, position],
+    [maxSize, minSize, position, updateSize],
   );
 
   /**
@@ -194,13 +204,14 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    * Returns the props for the resizer element.
    * This includes mouse down, focus, blur, and style properties.
    * The resizer is used to initiate resizing of the element.
+   *
+   * @returns {Object | undefined} An object containing props for the resizer element, or undefined if resizing is disabled
    */
-  const getResizerProps = useCallback(() => {
+  const getResizerProps = useCallback((): ResizerProps | undefined => {
     if (!enabled) {
-      return;
+      return undefined;
     }
 
-    // Use callbacks defined outside to prevent recreation of functions
     const props = {
       onMouseDown: handleMouseDown,
       onFocus: handleFocus,
@@ -258,18 +269,22 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    * Effect hook to handle CSS transitions for resizing
    * This is to ensure that the resizing does not have a transition effect while resizing
    * but transitions back to the new size smoothly after resizing is done.
+   * Also sets appropriate cursor style on the document body.
    */
   useEffect(() => {
     if (!isResizing) return;
     const ref = resizableRef.current;
 
+    // Disable transitions during resizing for smoother interaction
     ref?.style.setProperty('transition', 'none');
+    // Set appropriate cursor based on resize direction
     document.body.style.setProperty(
       'cursor',
       isVertical ? 'col-resize' : 'row-resize',
     );
 
     return () => {
+      // Restore default transition and cursor when resizing ends
       ref?.style.removeProperty('transition');
       document.body.style.removeProperty('cursor');
     };

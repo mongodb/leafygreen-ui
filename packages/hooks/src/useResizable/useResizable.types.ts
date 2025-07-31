@@ -63,6 +63,7 @@ export interface ResizerProps {
   onFocus: () => void;
   onBlur: () => void;
   className?: string;
+  [key: string]: any; // For aria attributes
 }
 
 export interface ResizableReturn<T extends HTMLElement = HTMLElement> {
