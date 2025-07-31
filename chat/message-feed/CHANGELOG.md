@@ -1,5 +1,20 @@
 # @lg-chat/message-feed
 
+## 6.1.0
+
+### Minor Changes
+
+- bb848de: [LG-5377](https://jira.mongodb.org/browse/LG-5377): add variant support for when the parent `LeafyGreenChatProvider` has `variant="compact"`
+
+  Mark `lgMessageFeedStyles` as `@deprecated`
+
+### Patch Changes
+
+- Updated dependencies [d247e6c]
+- Updated dependencies [f2ecd1a]
+  - @lg-chat/message@7.1.0
+  - @leafygreen-ui/icon@14.1.1
+
 ## 6.0.0
 
 ### Patch Changes

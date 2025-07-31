@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 14.1.1
+
+### Patch Changes
+
+- f2ecd1a: - Batches rollup bundles for @leafygreen-ui/icon and runs them in parallel, reducing build times
+
 ## 14.1.0
 
 ### Minor Changes
