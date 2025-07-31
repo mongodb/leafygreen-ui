@@ -1,5 +1,13 @@
 # @lg-chat/message
 
+## 7.1.0
+
+### Minor Changes
+
+- d247e6c: [LG-5374](https://jira.mongodb.org/browse/LG-5374): add variant support for when the parent `LeafyGreenChatProvider` has `variant="compact"`
+
+  Mark `lgMessageStyles` and `lgMessageContainerStyles` as `@deprecated`. Mark `componentOverrides` prop `@deprecated`
+
 ## 7.0.0
 
 ### Patch Changes
