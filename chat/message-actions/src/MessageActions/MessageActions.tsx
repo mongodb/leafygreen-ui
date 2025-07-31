@@ -74,11 +74,11 @@ export function MessageActions({
 
   const handleFeedbackSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
-      if (!rating || rating === MessageRatingValue.Unselected || !feedback) {
+      if (rating === MessageRatingValue.Unselected || !feedback) {
         return;
       }
 
-      onSubmitFeedback(e, { rating, feedback });
+      onSubmitFeedback?.(e, { rating, feedback });
       setIsSubmitted(true);
     },
     [feedback, onSubmitFeedback, rating],
@@ -92,6 +92,12 @@ export function MessageActions({
     [onCloseFeedback],
   );
 
+  const showPrimaryActions = !!onClickCopy || !!onClickRetry;
+  const showMessageRating = !!onSubmitFeedback;
+  const showDivider = showPrimaryActions && showMessageRating;
+  const showFeedbackForm =
+    showMessageRating && rating !== MessageRatingValue.Unselected;
+
   const textareaProps = useMemo(
     () => ({
       'data-testid': FEEDBACK_TEXTAREA_TEST_ID,
@@ -101,7 +107,7 @@ export function MessageActions({
     [handleFeedbackChange, feedback],
   );
 
-  if (!isCompact) {
+  if (!isCompact || (!showPrimaryActions && !showMessageRating)) {
     return null;
   }
 
@@ -109,18 +115,26 @@ export function MessageActions({
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={getContainerStyles({ className, isSubmitted })} {...rest}>
         <div className={actionBarStyles}>
-          <div className={primaryActionsContainerStyles}>
-            <IconButton aria-label="Copy message" onClick={onClickCopy}>
-              <CopyIcon />
-            </IconButton>
-            <IconButton aria-label="Retry message" onClick={onClickRetry}>
-              <RefreshIcon />
-            </IconButton>
-          </div>
-          <div className={getDividerStyles(theme)} />
-          <MessageRating onChange={handleRatingChange} value={rating} />
+          {showPrimaryActions && (
+            <div className={primaryActionsContainerStyles}>
+              {onClickCopy && (
+                <IconButton aria-label="Copy message" onClick={onClickCopy}>
+                  <CopyIcon />
+                </IconButton>
+              )}
+              {onClickRetry && (
+                <IconButton aria-label="Retry message" onClick={onClickRetry}>
+                  <RefreshIcon />
+                </IconButton>
+              )}
+            </div>
+          )}
+          {showDivider && <div className={getDividerStyles(theme)} />}
+          {showMessageRating && (
+            <MessageRating onChange={handleRatingChange} value={rating} />
+          )}
         </div>
-        {rating !== MessageRatingValue.Unselected && (
+        {showFeedbackForm && (
           <InlineMessageFeedback
             isSubmitted={isSubmitted}
             label="Provide feedback"
