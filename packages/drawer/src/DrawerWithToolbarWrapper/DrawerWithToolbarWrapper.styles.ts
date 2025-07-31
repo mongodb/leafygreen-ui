@@ -16,23 +16,19 @@ import { getDrawerWidth } from '../Drawer/Drawer.utils';
 const MOBILE_BREAKPOINT = breakpoints.Tablet;
 const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
-const getDrawerIn = (size: Size) => keyframes`
+const getDrawerIn = (size: number) => keyframes`
   from {
     // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work when the Drawer is overlay.
     grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 1px;
   }
   to {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${
-  getDrawerWidth({ size }).withToolbar
-}px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
   }
 `;
 
-const getDrawerOut = (size: Size) => keyframes`
+const getDrawerOut = (size: number) => keyframes`
   from {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${
-  getDrawerWidth({ size }).withToolbar
-}px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
   }
   to {
     grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
@@ -74,7 +70,7 @@ const drawerPaddingOut = keyframes`
   }
 `;
 
-const getOpenOverlayStyles = (size: Size) => css`
+const getOpenOverlayStyles = (size: number) => css`
   animation-name: ${getDrawerIn(size)};
   animation-fill-mode: forwards;
 
@@ -83,7 +79,7 @@ const getOpenOverlayStyles = (size: Size) => css`
   }
 `;
 
-const getClosedOverlayStyles = (size: Size) => css`
+const getClosedOverlayStyles = (size: number) => css`
   animation-name: ${getDrawerOut(size)};
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -186,7 +182,7 @@ export const getDrawerWithToolbarWrapperStyles = ({
   shouldAnimate,
   displayMode,
   theme,
-  size = Size.Default,
+  size: sizeProp = Size.Default,
 }: {
   className?: string;
   isDrawerOpen?: boolean;
@@ -197,6 +193,9 @@ export const getDrawerWithToolbarWrapperStyles = ({
 }) => {
   const isOverlay = displayMode === DisplayMode.Overlay;
   const isEmbedded = displayMode === DisplayMode.Embedded;
+  const size = getDrawerWidth({ size: sizeProp }).withToolbar;
+
+  console.log({ size });
 
   return cx(
     baseStyles,

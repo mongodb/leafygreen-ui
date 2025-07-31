@@ -1,5 +1,6 @@
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { TOOLBAR_WIDTH } from '@leafygreen-ui/toolbar';
+import { Size } from './Drawer/Drawer.types';
 
 export const GRID_AREA = {
   drawer: 'drawer',
@@ -8,9 +9,9 @@ export const GRID_AREA = {
   innerDrawer: 'inner-drawer',
 };
 
-export const DRAWER_WIDTH = {
-  default: 432,
-  large: 472,
+export const DRAWER_WIDTH: Record<Size, number> = {
+  [Size.Default]: 432,
+  [Size.Large]: 520,
 };
 
 export const DRAWER_TOOLBAR_WIDTH = TOOLBAR_WIDTH;

@@ -32,7 +32,6 @@ const snapshotStoryExcludedControlParams = [
   'darkMode',
   'displayMode',
   'title',
-  'size',
 ];
 
 export default {
@@ -86,7 +85,7 @@ export default {
         'Determines if the Drawer is resizable. Only applies to Embedded display mode.',
     },
     size: {
-      control: 'select',
+      control: 'radio',
       description: 'Size of the drawer',
       options: Object.values(Size),
     },

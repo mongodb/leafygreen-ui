@@ -149,7 +149,7 @@ export default {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     size: {
-      control: 'select',
+      control: 'radio',
       description: 'Size of the drawer',
       options: Object.values(Size),
     },
