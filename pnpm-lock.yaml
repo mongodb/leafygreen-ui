@@ -1826,9 +1826,6 @@ importers:
 
   packages/hooks:
     dependencies:
-      '@leafygreen-ui/emotion':
-        specifier: workspace:^
-        version: link:../emotion
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1842,6 +1839,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
@@ -2615,6 +2615,21 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
+
+  packages/resizable:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
 
   packages/ripple:
     dependencies:

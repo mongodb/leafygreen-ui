@@ -2,8 +2,8 @@ import React, { ElementType } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
+import { Position } from './useResizable/useResizable.types';
 import { useResizable } from './useResizable';
-import { Position } from './useResizable.types';
 
 export default {
   title: 'internal/hooks/useResizable/position',
