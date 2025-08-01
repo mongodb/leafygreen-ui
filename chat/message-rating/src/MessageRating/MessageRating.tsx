@@ -107,7 +107,8 @@ export const MessageRating = forwardRef(
             {isCompact ? (
               <IconButton
                 id={`like-${inputName}`}
-                aria-label="Thumbs up this message"
+                aria-label="Like this message"
+                title="Helpful"
                 value="liked"
                 onClick={handleLikeClick}
                 active={isLiked}
@@ -124,7 +125,7 @@ export const MessageRating = forwardRef(
             ) : (
               <RadioButton
                 id={`like-${inputName}`}
-                aria-label="Thumbs up this message"
+                aria-label="Like this message"
                 name={inputName}
                 value="liked"
                 onChange={handleChange}
@@ -139,7 +140,8 @@ export const MessageRating = forwardRef(
             {isCompact ? (
               <IconButton
                 id={`dislike-${inputName}`}
-                aria-label="Thumbs down this message"
+                aria-label="Dislike this message"
+                title="Not helpful"
                 value="disliked"
                 onClick={handleDislikeClick}
                 active={isDisliked}
@@ -158,7 +160,7 @@ export const MessageRating = forwardRef(
                 id={`dislike-${inputName}`}
                 name={inputName}
                 value="disliked"
-                aria-label="Thumbs down this message"
+                aria-label="Dislike this message"
                 onChange={handleChange}
                 checked={isDisliked}
                 className={getHiddenStyles(hideThumbsDown)}
