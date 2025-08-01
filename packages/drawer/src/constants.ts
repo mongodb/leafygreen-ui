@@ -1,5 +1,6 @@
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { TOOLBAR_WIDTH } from '@leafygreen-ui/toolbar';
+
 import { Size } from './Drawer/Drawer.types';
 
 export const GRID_AREA = {

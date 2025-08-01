@@ -195,8 +195,6 @@ export const getDrawerWithToolbarWrapperStyles = ({
   const isEmbedded = displayMode === DisplayMode.Embedded;
   const size = getDrawerWidth({ size: sizeProp }).withToolbar;
 
-  console.log({ size });
-
   return cx(
     baseStyles,
     {
