@@ -1,3 +1,5 @@
+import { keyMap } from '@leafygreen-ui/lib';
+
 export const Position = {
   Left: 'left',
   Right: 'right',
@@ -13,6 +15,13 @@ export const SizeGrowth = {
 } as const;
 
 export type SizeGrowth = (typeof SizeGrowth)[keyof typeof SizeGrowth];
+
+// Define Arrow type using the keyMap values
+export type Arrow =
+  | typeof keyMap.ArrowLeft
+  | typeof keyMap.ArrowRight
+  | typeof keyMap.ArrowUp
+  | typeof keyMap.ArrowDown;
 
 export interface ResizableProps {
   /**
@@ -43,13 +52,6 @@ export interface ResizableProps {
   onResize?: (size: number) => void;
 
   /**
-   * The percentage of the viewport that the resizable element should occupy at maximum.
-   * This can be used to ensure the element does not exceed a certain size relative to the viewport.
-   * This percentage-based maximum will override the maxSize prop if the calculated pixel value is smaller.
-   */
-  maxViewportPercentages: number;
-
-  /**
    * The position of the element to which the resizer handle is attached.
    */
   position: Position;
@@ -61,6 +63,7 @@ export interface ResizerProps {
   onFocus: () => void;
   onBlur: () => void;
   className?: string;
+  [key: string]: any; // For aria attributes
 }
 
 export interface ResizableReturn<T extends HTMLElement = HTMLElement> {

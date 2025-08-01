@@ -53,6 +53,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/preview-card',
   '@leafygreen-ui/radio-box-group',
   '@leafygreen-ui/radio-group',
+  '@leafygreen-ui/resizable',
   '@leafygreen-ui/ripple',
   '@leafygreen-ui/search-input',
   '@leafygreen-ui/section-nav',
