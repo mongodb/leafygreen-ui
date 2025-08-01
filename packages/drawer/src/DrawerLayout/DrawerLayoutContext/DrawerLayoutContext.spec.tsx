@@ -3,7 +3,7 @@ import { act } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { DisplayMode } from '../../Drawer/Drawer.types';
+import { DisplayMode, Size } from '../../Drawer/Drawer.types';
 
 import {
   DrawerLayoutProvider,
@@ -20,6 +20,7 @@ describe('useDrawerLayoutContext', () => {
     expect(result.current.hasToolbar).toBe(false);
     expect(result.current.isDrawerResizing).toBe(false);
     expect(result.current.drawerWidth).toBe(0);
+    expect(result.current.size).toBe(Size.Default);
     expect(typeof result.current.setIsDrawerOpen).toBe('function');
     expect(typeof result.current.setDrawerWidth).toBe('function');
     expect(typeof result.current.setIsDrawerResizing).toBe('function');
@@ -33,6 +34,7 @@ describe('useDrawerLayoutContext', () => {
           resizable
           displayMode={DisplayMode.Embedded}
           hasToolbar
+          size={Size.Large}
         >
           {children}
         </DrawerLayoutProvider>
@@ -42,6 +44,7 @@ describe('useDrawerLayoutContext', () => {
     expect(result.current.resizable).toBe(true);
     expect(result.current.displayMode).toBe(DisplayMode.Embedded);
     expect(result.current.hasToolbar).toBe(true);
+    expect(result.current.size).toBe(Size.Large);
   });
 
   test('Updates isDrawerOpen when setIsDrawerOpen is called', () => {

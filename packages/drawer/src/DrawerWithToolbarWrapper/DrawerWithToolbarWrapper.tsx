@@ -20,7 +20,7 @@ export const DrawerWithToolbarWrapper = forwardRef<
 >(({ children, className }: DrawerWithToolbarWrapperProps, forwardedRef) => {
   const { theme } = useDarkMode();
   const [shouldAnimate, setShouldAnimate] = useState(false);
-  const { displayMode, isDrawerOpen } = useDrawerLayoutContext();
+  const { displayMode, isDrawerOpen, size } = useDrawerLayoutContext();
 
   useEffect(() => {
     if (isDrawerOpen) setShouldAnimate(true);
@@ -35,6 +35,7 @@ export const DrawerWithToolbarWrapper = forwardRef<
         shouldAnimate,
         displayMode,
         theme,
+        size,
       })}
     >
       {children}

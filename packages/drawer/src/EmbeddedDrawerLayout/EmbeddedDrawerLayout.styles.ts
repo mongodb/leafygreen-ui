@@ -3,13 +3,13 @@ import { breakpoints } from '@leafygreen-ui/tokens';
 
 import {
   DRAWER_TOOLBAR_WIDTH,
-  DRAWER_WIDTH,
-  DRAWER_WITH_TOOLBAR_WIDTH,
   GRID_AREA,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
 } from '../constants';
 import { MOBILE_BREAKPOINT } from '../Drawer/Drawer.constants';
+import { Size } from '../Drawer/Drawer.types';
+import { getDrawerWidth } from '../Drawer/Drawer.utils';
 
 const baseStyles = css`
   width: 100%;
@@ -26,14 +26,16 @@ const baseStyles = css`
 const setDrawerDefaultWidth = ({
   isDrawerOpen,
   hasToolbar,
+  size,
 }: {
   isDrawerOpen?: boolean;
   hasToolbar: boolean;
+  size: Size;
 }) => css`
   --drawer-width-default: ${isDrawerOpen
     ? hasToolbar
-      ? DRAWER_WITH_TOOLBAR_WIDTH
-      : DRAWER_WIDTH
+      ? getDrawerWidth({ size }).withToolbar
+      : getDrawerWidth({ size }).default
     : 0};
   --drawer-width: var(--drawer-width-default);
 `;
@@ -41,10 +43,12 @@ const setDrawerDefaultWidth = ({
 const getBaseStyles = ({
   isDrawerOpen,
   hasToolbar,
+  size,
 }: {
   isDrawerOpen?: boolean;
   hasToolbar: boolean;
-}) => cx(baseStyles, setDrawerDefaultWidth({ isDrawerOpen, hasToolbar }));
+  size: Size;
+}) => cx(baseStyles, setDrawerDefaultWidth({ isDrawerOpen, hasToolbar, size }));
 
 // If there is no toolbar and the drawer is open, we need to shift the layout by the drawer width;
 const withoutToolbarBaseStyles = css`
@@ -92,14 +96,16 @@ export const getEmbeddedDrawerLayoutStyles = ({
   isDrawerOpen,
   hasToolbar = false,
   isDrawerResizing = false,
+  size = Size.Default,
 }: {
   className?: string;
   isDrawerOpen?: boolean;
   hasToolbar?: boolean;
   isDrawerResizing?: boolean;
+  size?: Size;
 }) =>
   cx(
-    getBaseStyles({ isDrawerOpen, hasToolbar }),
+    getBaseStyles({ isDrawerOpen, hasToolbar, size }),
     {
       [resizingStyles]: isDrawerResizing,
       [withToolbarBaseStyles]: hasToolbar,

@@ -5,30 +5,30 @@ import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
 import {
   DRAWER_TOOLBAR_WIDTH,
-  DRAWER_WITH_TOOLBAR_WIDTH,
   GRID_AREA,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
 } from '../constants';
 import { drawerClassName } from '../Drawer/Drawer.styles';
-import { DisplayMode } from '../Drawer/Drawer.types';
+import { DisplayMode, Size } from '../Drawer/Drawer.types';
+import { getDrawerWidth } from '../Drawer/Drawer.utils';
 
 const MOBILE_BREAKPOINT = breakpoints.Tablet;
 const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
-const drawerIn = keyframes`
+const getDrawerIn = (size: number) => keyframes`
   from {
     // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work when the Drawer is overlay.
     grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 1px;
   }
   to {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
   }
 `;
 
-const drawerOut = keyframes`
+const getDrawerOut = (size: number) => keyframes`
   from {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${DRAWER_WITH_TOOLBAR_WIDTH}px;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
   }
   to {
     grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
@@ -70,8 +70,8 @@ const drawerPaddingOut = keyframes`
   }
 `;
 
-const openOverlayStyles = css`
-  animation-name: ${drawerIn};
+const getOpenOverlayStyles = (size: number) => css`
+  animation-name: ${getDrawerIn(size)};
   animation-fill-mode: forwards;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -79,8 +79,8 @@ const openOverlayStyles = css`
   }
 `;
 
-const closedOverlayStyles = css`
-  animation-name: ${drawerOut};
+const getClosedOverlayStyles = (size: number) => css`
+  animation-name: ${getDrawerOut(size)};
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     animation-name: ${drawerOutMobile};
@@ -182,15 +182,18 @@ export const getDrawerWithToolbarWrapperStyles = ({
   shouldAnimate,
   displayMode,
   theme,
+  size: sizeProp = Size.Default,
 }: {
   className?: string;
   isDrawerOpen?: boolean;
   shouldAnimate?: boolean;
   displayMode?: DisplayMode;
   theme: Theme;
+  size?: Size;
 }) => {
   const isOverlay = displayMode === DisplayMode.Overlay;
   const isEmbedded = displayMode === DisplayMode.Embedded;
+  const size = getDrawerWidth({ size: sizeProp }).withToolbar;
 
   return cx(
     baseStyles,
@@ -198,8 +201,9 @@ export const getDrawerWithToolbarWrapperStyles = ({
       [getOverlayShadowStyles({ theme })]: isOverlay,
       [closedOverlayShadowStyles]: isOverlay && !isDrawerOpen,
       [baseOverlayStyles]: isOverlay,
-      [openOverlayStyles]: isDrawerOpen && isOverlay,
-      [closedOverlayStyles]: !isDrawerOpen && shouldAnimate && isOverlay, // This ensures that the drawer does not animate closed on initial render
+      [getOpenOverlayStyles(size)]: isDrawerOpen && isOverlay,
+      [getClosedOverlayStyles(size)]:
+        !isDrawerOpen && shouldAnimate && isOverlay, // This ensures that the drawer does not animate closed on initial render
       [baseEmbeddedStyles]: isEmbedded,
       [openEmbeddedStyles]: isDrawerOpen && isEmbedded,
       [closedEmbeddedStyles]: !isDrawerOpen && isEmbedded,
