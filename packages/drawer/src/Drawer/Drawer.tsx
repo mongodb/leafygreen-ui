@@ -25,7 +25,7 @@ import {
   getDrawerStyles,
   getHeaderStyles,
   getInnerContainerStyles,
-  innerChildrenContainerStyles,
+  getScrollContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 
@@ -42,6 +42,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       id: idProp,
       onClose,
       open = false,
+      scrollable = true,
       title,
       ...rest
     },
@@ -65,6 +66,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { ref: interceptRef, inView: isInterceptInView } = useInView({
       initialInView: true,
       fallbackInView: true,
+      skip: !scrollable,
     });
 
     const showCloseButton = !!onClose;
@@ -171,11 +173,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                   theme,
                 })}
               >
-                <div className={innerChildrenContainerStyles}>
-                  {/* Empty span element used to track if children container has scrolled down */}
-                  {<span ref={interceptRef} />}
-                  {children}
-                </div>
+                {scrollable ? (
+                  <div className={getScrollContainerStyles({ scrollable })}>
+                    {/* Empty span element used to track if children container has scrolled down */}
+                    <span ref={interceptRef} />
+                    {children}
+                  </div>
+                ) : (
+                  children
+                )}
               </div>
             </div>
           </div>

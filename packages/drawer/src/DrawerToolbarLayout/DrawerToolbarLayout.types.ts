@@ -28,6 +28,13 @@ interface LayoutWithContent extends LayoutBase {
    * The content of the drawer. This is not required if the toolbar item should not open a drawer.
    */
   content: React.ReactNode;
+
+  /**
+   * Determines whether the drawer content should have its own scroll container with padding.
+   * When false, the content area will not have padding or scroll behavior, allowing full-width/height content.
+   * @defaultValue true
+   */
+  scrollable?: boolean;
 }
 
 interface LayoutWithoutContent extends LayoutBase {
@@ -40,6 +47,13 @@ interface LayoutWithoutContent extends LayoutBase {
    * The content of the drawer. This is not required if the toolbar item should not open a drawer.
    */
   content?: never;
+
+  /**
+   * Determines whether the drawer content should have its own scroll container with padding.
+   * When false, the content area will not have padding or scroll behavior, allowing full-width/height content.
+   * @defaultValue true
+   */
+  scrollable?: never;
 }
 
 export type LayoutData = LayoutWithContent | LayoutWithoutContent;

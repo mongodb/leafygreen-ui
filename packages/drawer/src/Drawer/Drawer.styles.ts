@@ -249,17 +249,18 @@ export const getChildrenContainerStyles = ({
       hasShadowTop,
   });
 
-const baseInnerChildrenContainerStyles = css`
+const baseScrollContainerStyles = css`
   height: 100%;
-`;
-
-const scrollContainerStyles = css`
   padding: ${spacing[400]}px;
   overflow-y: auto;
   overscroll-behavior: contain;
 `;
 
-export const innerChildrenContainerStyles = cx(
-  baseInnerChildrenContainerStyles,
-  scrollContainerStyles,
-);
+export const getScrollContainerStyles = ({
+  scrollable,
+}: {
+  scrollable: boolean;
+}) =>
+  cx({
+    [baseScrollContainerStyles]: scrollable,
+  });
