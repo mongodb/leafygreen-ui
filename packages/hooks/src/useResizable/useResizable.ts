@@ -12,10 +12,10 @@ import {
   ResizerProps,
 } from './useResizable.types';
 import {
+  calculateNewSize,
   getResizerAriaAttributes,
   getResizerStyles,
-} from './useResizable.utils';
-import { calculateNewSize } from './utils';
+} from './utils';
 
 /**
  * Custom hook to handle resizable functionality for a component.
