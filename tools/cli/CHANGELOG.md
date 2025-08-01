@@ -1,5 +1,12 @@
 # @lg-tools/cli
 
+## 0.10.3
+
+### Patch Changes
+
+- Updated dependencies [7a01501]
+  - @lg-tools/install@0.3.0
+
 ## 0.10.2
 
 ### Patch Changes
