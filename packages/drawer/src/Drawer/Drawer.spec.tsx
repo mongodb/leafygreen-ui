@@ -67,6 +67,33 @@ describe('packages/drawer', () => {
     });
   });
 
+  describe('scrollable prop', () => {
+    test('defaults to true (scrollable)', () => {
+      const { drawer } = renderDrawer({ open: true });
+      // Find the content container - it's the div inside the children container
+      const contentContainer = drawer.querySelector('div > div > div > div');
+      expect(contentContainer).toBeInTheDocument();
+      // Check that scroll container styles are applied (padding and overflow)
+      expect(contentContainer).toHaveStyle('padding: 16px'); // spacing[400]
+      expect(contentContainer).toHaveStyle('overflow-y: auto');
+    });
+
+    test('scrollable={true} adds scroll container', () => {
+      const { drawer } = renderDrawer({ open: true, scrollable: true });
+      const contentContainer = drawer.querySelector('div > div > div > div');
+      expect(contentContainer).toBeInTheDocument();
+      // Check that scroll container styles are applied
+      expect(contentContainer).toHaveStyle('padding: 16px'); // spacing[400]
+      expect(contentContainer).toHaveStyle('overflow-y: auto');
+    });
+
+    test('scrollable={false} removes scroll container', () => {
+      const { drawer } = renderDrawer({ open: true, scrollable: false });
+      const contentContainer = drawer.querySelector('div > div > div > div');
+      expect(contentContainer).not.toBeInTheDocument();
+    });
+  });
+
   describe('when the "open" prop is true', () => {
     test('renders content as expected', async () => {
       const { getByText, isOpen } = renderDrawer({ open: true });
