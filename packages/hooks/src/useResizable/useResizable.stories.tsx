@@ -73,7 +73,7 @@ const CreateResizableStory: StoryFn<any> = args => {
     enabled: true,
     initialSize: 300,
     minSize: 200,
-    maxSize: 600,
+    maxSize: 400,
     position,
   });
 

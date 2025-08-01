@@ -110,6 +110,48 @@ describe('getNextKeyboardSize', () => {
     expect(result).toBe(400 - KEYBOARD_RESIZE_PIXEL_STEP);
   });
 
+  test('returns the minSize when the size of the element is smaller than the minSize when decreasing', () => {
+    // Mock DOM element with offsetWidth
+    const mockElement = {
+      offsetWidth: 100,
+      offsetHeight: 400,
+    } as HTMLElement;
+
+    const minSize = 200;
+
+    const result = getNextKeyboardSize({
+      sizeGrowth: SizeGrowth.Decrease,
+      size: 300,
+      maxSize: 500,
+      minSize: 200,
+      currentElement: mockElement,
+      isVertical: true,
+    });
+
+    expect(result).toBe(minSize);
+  });
+
+  test('returns the maxSize when the size of the element is larger than the maxSize when increasing', () => {
+    // Mock DOM element with offsetWidth
+    const mockElement = {
+      offsetWidth: 600,
+      offsetHeight: 400,
+    } as HTMLElement;
+
+    const maxSize = 500;
+
+    const result = getNextKeyboardSize({
+      sizeGrowth: SizeGrowth.Increase,
+      size: 600, // Size is larger than element's offsetWidth
+      maxSize,
+      minSize: 200,
+      currentElement: mockElement,
+      isVertical: true,
+    });
+
+    expect(result).toBe(maxSize);
+  });
+
   test('handles null currentElement gracefully', () => {
     const result = getNextKeyboardSize({
       sizeGrowth: SizeGrowth.Decrease,

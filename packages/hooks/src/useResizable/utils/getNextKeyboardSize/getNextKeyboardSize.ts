@@ -28,18 +28,29 @@ export const getNextKeyboardSize = ({
 }) => {
   if (!sizeGrowth) return size; // No change if sizeGrowth is undefined
 
+  const currentElementSize = isVertical
+    ? currentElement?.offsetWidth
+    : currentElement?.offsetHeight;
+
   if (sizeGrowth === SizeGrowth.Increase) {
+    // if the current element size is greater than the maxSize, return maxSize
+    if (currentElement && currentElementSize && currentElementSize > maxSize)
+      return maxSize;
+
     // increase the size by the value but not exceeding maxSize
     return Math.min(size + KEYBOARD_RESIZE_PIXEL_STEP, maxSize);
   } else {
-    if (currentElement) {
-      const currentElementSize = isVertical
-        ? currentElement.offsetWidth
-        : currentElement.offsetHeight;
+    if (currentElement && currentElementSize) {
+      // If the current element size is less than the minSize, return minSize
+      if (currentElementSize < minSize) return minSize;
 
-      // If an element has a max-width/max-height set in CSS, the hook size might exceed the max size in CSS. This ensures that the value is decreased using the implicit CSS max width/height and not the hook size
+      // If the element has a max-width/max-height set in CSS, the hook size might exceed the max size in CSS. This ensures that the value is decreased using the implicit CSS max width/height and not the hook size.
+      // This also ensures that if the element is resized to a size smaller than the minSize in the browser, it will not be resized further down.
       if (size > currentElementSize) {
-        return currentElementSize - KEYBOARD_RESIZE_PIXEL_STEP;
+        return Math.max(
+          minSize,
+          currentElementSize - KEYBOARD_RESIZE_PIXEL_STEP,
+        );
       }
     }
 
