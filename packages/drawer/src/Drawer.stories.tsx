@@ -10,8 +10,9 @@ import { StoryFn, StoryObj } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { color, spacing } from '@leafygreen-ui/tokens';
-import { Body } from '@leafygreen-ui/typography';
+import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerLayout } from './DrawerLayout';
@@ -295,6 +296,52 @@ export const DarkModeEmbedded: StoryObj<DrawerProps> = {
     children: <LongContent />,
     darkMode: true,
     displayMode: DisplayMode.Embedded,
+    open: true,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+const fullWidthHeightContentStyles = css`
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    ${palette.green.light1},
+    ${palette.green.dark1}
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const FullWidthHeightContent = () => (
+  <div className={fullWidthHeightContentStyles}>
+    <Subtitle>Full Width/Height Content</Subtitle>
+  </div>
+);
+
+export const ScrollableTrue: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    scrollable: true,
+    open: true,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+export const ScrollableFalse: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <FullWidthHeightContent />,
+    scrollable: false,
     open: true,
   },
   parameters: {

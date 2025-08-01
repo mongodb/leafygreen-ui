@@ -192,7 +192,6 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['data'] = [
   },
 ];
 
-
 const Component = () => {
   const Main = () => {
     const { openDrawer, closeDrawer } = useDrawerToolbarContext();
@@ -214,7 +213,7 @@ const Component = () => {
         onClose={() => {}}
       >
         <Main />
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </div>
   );
 };
@@ -357,6 +356,27 @@ const MultipleDrawersComponent = () => {
 | `open` _(optional)_        | `boolean`                                    | Determines if the `Drawer` is open or closed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `false`     |
 | `scrollable` _(optional)_  | `boolean`                                    | Determines whether the drawer content should have its own scroll container with padding. When false, the content area will not have padding or scroll behavior, allowing full-width/height content.                                                                                                                                                                                                                                                                                                                                                    | `true`      |
 | `title`                    | `React.ReactNode`                            | Title of the `Drawer`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |             |
+
+### Scrolling Behavior
+
+The `Drawer` component has a fixed position and does not scroll with the main page content. This ensures that:
+
+- **Overlay drawers** remain visible and accessible regardless of main page scroll position
+- **Embedded drawers** maintain their position within the layout grid
+- **Drawer content** can scroll independently when `scrollable={true}` (default)
+- **Full width/height content** can be achieved by setting `scrollable={false}`
+
+When `scrollable={true}` (default):
+
+- Drawer content has internal padding
+- Content can scroll vertically within the drawer
+- Shadow indicator appears when content overflows
+
+When `scrollable={false}`:
+
+- No internal padding is applied
+- Content takes full width/height of drawer
+- No scroll behavior - content should be sized to fit or have scroll behavior defined separately
 
 ### Height Considerations
 
