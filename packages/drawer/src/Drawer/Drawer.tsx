@@ -12,6 +12,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { usePolymorphic } from '@leafygreen-ui/polymorphic';
+import { Position, useResizable } from '@leafygreen-ui/resizable';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
@@ -31,8 +32,6 @@ import {
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 import { getResolvedDrawerSizes, useResolvedDrawerProps } from './Drawer.utils';
-
-import { useResizable, Position } from '@leafygreen-ui/resizable';
 
 /**
  * A drawer is a panel that slides in from the right side of the screen (not customizable). Because the user can use the Drawer without navigating away from the current page, tasks can be completed more efficiently while not changing page context.
