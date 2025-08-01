@@ -2,11 +2,9 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
-  Position,
   useIdAllocator,
   useIsomorphicLayoutEffect,
   useMergeRefs,
-  useResizable,
 } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -22,7 +20,6 @@ import { useDrawerLayoutContext } from '../DrawerLayout';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
 
-import { DRAWER_MAX_PERCENTAGE_WIDTH } from './Drawer.constants';
 import {
   getChildrenContainerStyles,
   getDrawerShadowStyles,
@@ -34,6 +31,8 @@ import {
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 import { getResolvedDrawerSizes, useResolvedDrawerProps } from './Drawer.utils';
+
+import { useResizable, Position } from '@leafygreen-ui/resizable';
 
 /**
  * A drawer is a panel that slides in from the right side of the screen (not customizable). Because the user can use the Drawer without navigating away from the current page, tasks can be completed more efficiently while not changing page context.
@@ -157,7 +156,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       initialSize: open ? initialSize : 0,
       minSize: resizableMinWidth,
       maxSize: resizableMaxWidth,
-      maxViewportPercentages: DRAWER_MAX_PERCENTAGE_WIDTH,
       position: Position.Right,
     });
 

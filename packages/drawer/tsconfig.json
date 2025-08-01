@@ -43,6 +43,9 @@
       "path": "../polymorphic"
     },
     {
+      "path": "../resizable"
+    },
+    {
       "path": "../tabs"
     },
     {
