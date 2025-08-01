@@ -72,6 +72,14 @@ describe('packages/DrawerLayout', () => {
       >
         {'children'}
       </DrawerLayout>
+      <DrawerLayout
+        drawer={<>drawer</>}
+        isDrawerOpen={false}
+        displayMode="embedded"
+        size="large"
+      >
+        {'children'}
+      </DrawerLayout>
 
       {/* With Toolbar */}
       <DrawerLayout
