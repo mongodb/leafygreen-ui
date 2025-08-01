@@ -103,7 +103,7 @@ export interface CodeEditorProps extends DarkModeProps {
    *
    * @default 14
    */
-  baseFontSize?: BaseFontSize;
+  baseFontSize?: 14 | 16;
 
   /**
    * Styling prop
