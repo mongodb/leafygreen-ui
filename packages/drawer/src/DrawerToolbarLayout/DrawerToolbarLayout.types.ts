@@ -3,9 +3,6 @@ import React from 'react';
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { ToolbarIconButtonProps } from '@leafygreen-ui/toolbar';
 
-import { DrawerProps } from '../Drawer/Drawer.types';
-
-type PickedOptionalDrawerProps = Pick<DrawerProps, 'onClose' | 'displayMode'>;
 type PickedRequiredToolbarIconButtonProps = Pick<
   ToolbarIconButtonProps,
   'glyph' | 'label' | 'onClick' | 'disabled'
@@ -44,8 +41,7 @@ interface LayoutWithoutContent extends LayoutBase {
 
 export type LayoutData = LayoutWithContent | LayoutWithoutContent;
 
-export type DrawerToolbarLayoutProps = PickedOptionalDrawerProps &
-  DarkModeProps &
+export type DrawerToolbarLayoutProps = DarkModeProps &
   LgIdProps & {
     /**
      * An array of data that will be used to render the toolbar items and the drawer content.

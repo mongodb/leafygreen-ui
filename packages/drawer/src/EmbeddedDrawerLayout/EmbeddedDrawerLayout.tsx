@@ -1,5 +1,7 @@
 import React, { forwardRef } from 'react';
 
+import { useDrawerLayoutContext } from '../DrawerLayout';
+
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
 
@@ -14,29 +16,25 @@ import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
 export const EmbeddedDrawerLayout = forwardRef<
   HTMLDivElement,
   EmbeddedDrawerLayoutProps
->(
-  (
-    {
-      children,
-      className,
-      isDrawerOpen = false,
-      hasToolbar = false,
-    }: EmbeddedDrawerLayoutProps,
-    forwardedRef,
-  ) => {
-    return (
-      <div
-        ref={forwardedRef}
-        className={getEmbeddedDrawerLayoutStyles({
-          className,
-          isDrawerOpen,
-          hasToolbar,
-        })}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+>(({ children, className }: EmbeddedDrawerLayoutProps, forwardedRef) => {
+  const { hasToolbar, isDrawerOpen, drawerWidth, isDrawerResizing } =
+    useDrawerLayoutContext();
+
+  return (
+    <div
+      ref={forwardedRef}
+      className={getEmbeddedDrawerLayoutStyles({
+        className,
+        isDrawerOpen,
+        hasToolbar,
+        isDrawerResizing,
+      })}
+      // Prevents a new style class everytime the width changes
+      style={{ '--drawer-width': `${drawerWidth}` } as React.CSSProperties}
+    >
+      {children}
+    </div>
+  );
+});
 
 EmbeddedDrawerLayout.displayName = 'EmbeddedDrawerLayout';
