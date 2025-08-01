@@ -187,4 +187,4 @@ function greet(name: string): void {
 
 greet('Earthlings');
 `,
-};
+} as const;
