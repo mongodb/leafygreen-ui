@@ -2615,6 +2615,49 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  packages/progress-bar:
+    dependencies:
+      '@leafygreen-ui/a11y':
+        specifier: workspace:^
+        version: link:../a11y
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      polished:
+        specifier: ^4.2.2
+        version: 4.3.1
+    devDependencies:
+      '@storybook/test':
+        specifier: ^8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
+
   packages/radio-box-group:
     dependencies:
       '@leafygreen-ui/emotion':
