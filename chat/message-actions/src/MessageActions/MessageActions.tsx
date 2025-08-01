@@ -118,12 +118,20 @@ export function MessageActions({
           {showPrimaryActions && (
             <div className={primaryActionsContainerStyles}>
               {onClickCopy && (
-                <IconButton aria-label="Copy message" onClick={onClickCopy}>
+                <IconButton
+                  aria-label="Copy message"
+                  onClick={onClickCopy}
+                  title="Copy"
+                >
                   <CopyIcon />
                 </IconButton>
               )}
               {onClickRetry && (
-                <IconButton aria-label="Retry message" onClick={onClickRetry}>
+                <IconButton
+                  aria-label="Retry message"
+                  onClick={onClickRetry}
+                  title="Retry"
+                >
                   <RefreshIcon />
                 </IconButton>
               )}
@@ -131,7 +139,12 @@ export function MessageActions({
           )}
           {showDivider && <div className={getDividerStyles(theme)} />}
           {showMessageRating && (
-            <MessageRating onChange={handleRatingChange} value={rating} />
+            <MessageRating
+              // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
+              inert={isSubmitted ? 'inert' : undefined}
+              onChange={handleRatingChange}
+              value={rating}
+            />
           )}
         </div>
         {showFeedbackForm && (

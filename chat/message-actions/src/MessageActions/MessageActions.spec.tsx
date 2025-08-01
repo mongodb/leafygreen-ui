@@ -100,9 +100,9 @@ describe('packages/message-actions', () => {
     });
     userEvent.click(thumbsUpButton);
 
-    // Type in feedback textarea
-    const textarea = screen.getByRole('textbox');
-    userEvent.type(textarea, 'This is a test comment');
+    // Fill in feedback
+    const feedbackTextarea = screen.getByRole('textbox');
+    userEvent.type(feedbackTextarea, 'Great response!');
 
     // Submit feedback
     const submitButton = screen.getByRole('button', { name: 'Submit' });
@@ -110,9 +110,34 @@ describe('packages/message-actions', () => {
 
     expect(defaultProps.onSubmitFeedback).toHaveBeenCalledTimes(1);
     expect(defaultProps.onSubmitFeedback).toHaveBeenCalledWith(
-      expect.any(Object), // form event
-      { rating: MessageRatingValue.Liked, feedback: 'This is a test comment' },
+      expect.any(Object),
+      {
+        rating: MessageRatingValue.Liked,
+        feedback: 'Great response!',
+      },
     );
+  });
+
+  test('MessageRating buttons become non-interactable after feedback submission', () => {
+    render(<MessageActions {...defaultProps} />);
+
+    // Select a rating
+    const thumbsUpButton = screen.getByRole('radio', {
+      name: 'Thumbs up this message',
+    });
+    userEvent.click(thumbsUpButton);
+
+    // Fill in feedback and submit
+    const feedbackTextarea = screen.getByRole('textbox');
+    userEvent.type(feedbackTextarea, 'Great response!');
+    const submitButton = screen.getByRole('button', { name: 'Submit' });
+    userEvent.click(submitButton);
+
+    // After submission, the MessageRating component should be inert
+    // Find the MessageRating container by looking for the radiogroup's parent
+    const radiogroup = screen.getByRole('radiogroup');
+    const messageRatingContainer = radiogroup.parentElement;
+    expect(messageRatingContainer).toHaveAttribute('inert', 'inert');
   });
 
   test('handles feedback text input', () => {
