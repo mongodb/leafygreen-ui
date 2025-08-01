@@ -19,6 +19,8 @@ const testOnClickCopy = () => console.log('Copy clicked');
 // eslint-disable-next-line no-console
 const testOnClickRetry = () => console.log('Retry clicked');
 // eslint-disable-next-line no-console
+const testOnRatingChange = () => console.log('Rating changed');
+// eslint-disable-next-line no-console
 const testOnSubmitFeedback = () => console.log('Feedback submitted');
 
 const meta: StoryMetaType<typeof MessageActions> = {
@@ -27,6 +29,7 @@ const meta: StoryMetaType<typeof MessageActions> = {
   args: {
     onClickCopy: testOnClickCopy,
     onClickRetry: testOnClickRetry,
+    onRatingChange: testOnRatingChange,
     onSubmitFeedback: testOnSubmitFeedback,
   },
   argTypes: {
@@ -42,6 +45,7 @@ const meta: StoryMetaType<typeof MessageActions> = {
         darkMode: [false, true],
         onClickCopy: [undefined, testOnClickCopy],
         onClickRetry: [undefined, testOnClickRetry],
+        onRatingChange: [undefined, testOnRatingChange],
         onSubmitFeedback: [undefined, testOnSubmitFeedback],
       },
       decorator: StoryFn => (
@@ -53,6 +57,7 @@ const meta: StoryMetaType<typeof MessageActions> = {
         {
           onClickCopy: undefined,
           onClickRetry: undefined,
+          onRatingChange: undefined,
           onSubmitFeedback: undefined,
         },
       ],
@@ -76,8 +81,54 @@ export const LiveExample: StoryObj<MessageActionsProps> = {
   },
 };
 
+export const RatingOnly: StoryObj<MessageActionsProps> = {
+  render: Template,
+  args: {
+    onRatingChange: testOnRatingChange,
+    // No onSubmitFeedback - only rating buttons should show
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+
+export const FeedbackOnly: StoryObj<MessageActionsProps> = {
+  render: Template,
+  args: {
+    onRatingChange: testOnRatingChange,
+    onSubmitFeedback: testOnSubmitFeedback,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Click thumbs up button
+    const thumbsUpButton = canvas.getByRole('radio', {
+      name: 'Thumbs up this message',
+    });
+    await userEvent.click(thumbsUpButton);
+
+    // Verify feedback form is visible
+    const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
+    expect(textarea).toBeInTheDocument();
+
+    const submitButton = canvas.getByRole('button', { name: 'Submit' });
+    expect(submitButton).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 100,
+    },
+  },
+};
+
 export const LightModeWithRatingSelect: StoryObj<MessageActionsProps> = {
   render: Template,
+  args: {
+    onRatingChange: testOnRatingChange,
+    onSubmitFeedback: testOnSubmitFeedback,
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -103,6 +154,11 @@ export const LightModeWithRatingSelect: StoryObj<MessageActionsProps> = {
 
 export const DarkModeWithRatingSelect: StoryObj<MessageActionsProps> = {
   render: Template,
+  args: {
+    darkMode: true,
+    onRatingChange: testOnRatingChange,
+    onSubmitFeedback: testOnSubmitFeedback,
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -124,14 +180,15 @@ export const DarkModeWithRatingSelect: StoryObj<MessageActionsProps> = {
       delay: 100,
     },
   },
-  args: {
-    darkMode: true,
-  },
 };
 
 export const LightModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps> =
   {
     render: Template,
+    args: {
+      onRatingChange: testOnRatingChange,
+      onSubmitFeedback: testOnSubmitFeedback,
+    },
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
@@ -161,6 +218,11 @@ export const LightModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps>
 export const DarkModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps> =
   {
     render: Template,
+    args: {
+      darkMode: true,
+      onRatingChange: testOnRatingChange,
+      onSubmitFeedback: testOnSubmitFeedback,
+    },
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
@@ -185,14 +247,15 @@ export const DarkModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps> 
         delay: 300,
       },
     },
-    args: {
-      darkMode: true,
-    },
   };
 
 export const LightModeWithRatingSelectAndFeedbackAndSubmit: StoryObj<MessageActionsProps> =
   {
     render: Template,
+    args: {
+      onRatingChange: testOnRatingChange,
+      onSubmitFeedback: testOnSubmitFeedback,
+    },
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
@@ -228,6 +291,11 @@ export const LightModeWithRatingSelectAndFeedbackAndSubmit: StoryObj<MessageActi
 export const DarkModeWithRatingSelectAndFeedbackAndSubmit: StoryObj<MessageActionsProps> =
   {
     render: Template,
+    args: {
+      darkMode: true,
+      onRatingChange: testOnRatingChange,
+      onSubmitFeedback: testOnSubmitFeedback,
+    },
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
@@ -257,9 +325,6 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmit: StoryObj<MessageActio
       chromatic: {
         delay: 300,
       },
-    },
-    args: {
-      darkMode: true,
     },
   };
 
