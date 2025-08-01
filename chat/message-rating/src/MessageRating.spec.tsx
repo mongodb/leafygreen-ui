@@ -59,15 +59,15 @@ describe('packages/message-rating', () => {
       describe('uncontrolled', () => {
         test('is unselected by default', () => {
           renderMessageRating({ onChange }, variant);
-          const thumbsUp = screen.getByLabelText('Thumbs up this message');
-          const thumbsDown = screen.getByLabelText('Thumbs down this message');
+          const thumbsUp = screen.getByLabelText('Like this message');
+          const thumbsDown = screen.getByLabelText('Dislike this message');
           expect(thumbsUp.getAttribute('aria-checked')).toBe('false');
           expect(thumbsDown.getAttribute('aria-checked')).toBe('false');
         });
 
         test('onChange receives change event when thumbs up button is clicked', () => {
           renderMessageRating({ onChange }, variant);
-          const thumbsUp = screen.getByLabelText('Thumbs up this message');
+          const thumbsUp = screen.getByLabelText('Like this message');
           userEvent.click(thumbsUp);
           expect(onChange).toHaveBeenCalledTimes(1);
           expect(onChange).toHaveBeenCalledWith(
@@ -79,7 +79,7 @@ describe('packages/message-rating', () => {
 
         test('onChange receives change event when thumbs down button is clicked', () => {
           renderMessageRating({ onChange }, variant);
-          const thumbsDown = screen.getByLabelText('Thumbs down this message');
+          const thumbsDown = screen.getByLabelText('Dislike this message');
           userEvent.click(thumbsDown);
           expect(onChange).toHaveBeenCalledTimes(1);
           expect(onChange).toHaveBeenCalledWith(
@@ -91,7 +91,7 @@ describe('packages/message-rating', () => {
 
         test('when thumbs up is clicked, it is selected', () => {
           renderMessageRating({ onChange }, variant);
-          const thumbsUp = screen.getByLabelText('Thumbs up this message');
+          const thumbsUp = screen.getByLabelText('Like this message');
           expect(thumbsUp.getAttribute('aria-checked')).toBe('false');
           userEvent.click(thumbsUp);
           expect(thumbsUp.getAttribute('aria-checked')).toBe('true');
@@ -99,7 +99,7 @@ describe('packages/message-rating', () => {
 
         test('when thumbs down is clicked, it is selected', () => {
           renderMessageRating({ onChange }, variant);
-          const thumbsDown = screen.getByLabelText('Thumbs down this message');
+          const thumbsDown = screen.getByLabelText('Dislike this message');
           expect(thumbsDown.getAttribute('aria-checked')).toBe('false');
           userEvent.click(thumbsDown);
           expect(thumbsDown.getAttribute('aria-checked')).toBe('true');
@@ -132,9 +132,9 @@ describe('packages/message-rating', () => {
 
         test('renders a button as checked based on the value prop', () => {
           renderControlled();
-          const thumbsDown = screen.getByLabelText('Thumbs down this message');
+          const thumbsDown = screen.getByLabelText('Dislike this message');
           expect(thumbsDown.getAttribute('aria-checked')).toBe('true');
-          const thumbsUp = screen.getByLabelText('Thumbs up this message');
+          const thumbsUp = screen.getByLabelText('Like this message');
           expect(thumbsUp.getAttribute('aria-checked')).toBe('false');
         });
 
@@ -147,16 +147,16 @@ describe('packages/message-rating', () => {
               <ControlledRatingValueHardcoded />
             </LeafyGreenChatProvider>,
           );
-          const thumbsUp = screen.getByLabelText('Thumbs up this message');
+          const thumbsUp = screen.getByLabelText('Like this message');
           userEvent.click(thumbsUp);
           expect(thumbsUp.getAttribute('aria-checked')).toBe('false');
-          const thumbsDown = screen.getByLabelText('Thumbs down this message');
+          const thumbsDown = screen.getByLabelText('Dislike this message');
           expect(thumbsDown.getAttribute('aria-checked')).toBe('true');
         });
 
         test('onChange gets called with the appropriate event target when button is clicked', () => {
           renderControlled();
-          const thumbsUp = screen.getByLabelText('Thumbs up this message');
+          const thumbsUp = screen.getByLabelText('Like this message');
           userEvent.click(thumbsUp);
           expect(onChange).toHaveBeenCalledTimes(1);
           expect(onChange).toHaveBeenCalledWith(
