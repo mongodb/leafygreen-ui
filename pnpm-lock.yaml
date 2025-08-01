@@ -2627,9 +2627,6 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
-      '@lg-tools/test-harnesses':
-        specifier: workspace:^
-        version: link:../../tools/test-harnesses
 
   packages/ripple:
     dependencies:
