@@ -1,6 +1,7 @@
 // import { EditorView } from '@uiw/react-codemirror';
 import { type EditorView } from '@codemirror/view';
 
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
@@ -18,7 +19,6 @@ import {
 import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * Hook for applying LeafyGreen UI theme styling to the CodeMirror editor.

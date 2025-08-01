@@ -3,7 +3,6 @@ import { type EditorState, type Extension } from '@codemirror/state';
 import { type EditorView } from '@codemirror/view';
 
 import { type DarkModeProps } from '@leafygreen-ui/lib';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 
