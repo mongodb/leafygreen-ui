@@ -24,12 +24,16 @@ npm install @lg-chat/message-actions
 
 ## Examples
 
+### Basic Usage
+
 ```tsx
+import React from 'react';
 import {
   LeafyGreenChatProvider,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
 import { MessageActions } from '@lg-chat/message-actions';
+import { MessageRatingValue } from '@lg-chat/message-rating';
 
 const Example = () => {
   const handleCopy = () => {
@@ -42,8 +46,16 @@ const Example = () => {
     console.log('Message retried');
   };
 
+  const handleRatingChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    options: { rating: MessageRatingValue },
+  ) => {
+    // Handle rating change
+    console.log('Rating changed:', options.rating);
+  };
+
   const handleSubmitFeedback = (
-    e: FormEvent<HTMLFormElement>,
+    e: React.FormEvent<HTMLFormElement>,
     options: { rating: MessageRatingValue; feedback?: string },
   ) => {
     // Handle feedback submission
@@ -55,6 +67,58 @@ const Example = () => {
       <MessageActions
         onClickCopy={handleCopy}
         onClickRetry={handleRetry}
+        onRatingChange={handleRatingChange}
+        onSubmitFeedback={handleSubmitFeedback}
+      />
+    </LeafyGreenChatProvider>
+  );
+};
+```
+
+### Rating Only (No Feedback Form)
+
+```tsx
+const RatingOnlyExample = () => {
+  const handleRatingChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    options: { rating: MessageRatingValue },
+  ) => {
+    // Handle rating change without feedback form
+    console.log('Rating changed:', options.rating);
+  };
+
+  return (
+    <LeafyGreenChatProvider variant={Variant.Compact}>
+      <MessageActions onRatingChange={handleRatingChange} />
+    </LeafyGreenChatProvider>
+  );
+};
+```
+
+### Feedback Only (Rating + Feedback Form)
+
+```tsx
+const FeedbackOnlyExample = () => {
+  const handleRatingChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    options: { rating: MessageRatingValue },
+  ) => {
+    // Handle rating change
+    console.log('Rating changed:', options.rating);
+  };
+
+  const handleSubmitFeedback = (
+    e: React.FormEvent<HTMLFormElement>,
+    options: { rating: MessageRatingValue; feedback?: string },
+  ) => {
+    // Handle feedback submission
+    console.log('Feedback submitted:', options);
+  };
+
+  return (
+    <LeafyGreenChatProvider variant={Variant.Compact}>
+      <MessageActions
+        onRatingChange={handleRatingChange}
         onSubmitFeedback={handleSubmitFeedback}
       />
     </LeafyGreenChatProvider>
@@ -64,14 +128,15 @@ const Example = () => {
 
 ## Properties
 
-| Prop                            | Type                                                                                                  | Description                                                                                                                                                                                                     | Default                       |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `onClickCopy` _(optional)_      | `MouseEventHandler<HTMLButtonElement>`                                                                | Callback fired when the copy button is clicked. If not provided, the copy button will not be rendered                                                                                                           |                               |
-| `onClickRetry` _(optional)_     | `MouseEventHandler<HTMLButtonElement>`                                                                | Callback fired when the retry button is clicked. If not provided, the retry button will not be rendered                                                                                                         |                               |
-| `onCloseFeedback` _(optional)_  | `InlineMessageFeedbackProps['onClose']`                                                               | Callback fired when the feedback form is closed by clicking the close button                                                                                                                                    |                               |
-| `onSubmitFeedback` _(optional)_ | `(e: FormEvent<HTMLFormElement>, options: { rating: MessageRatingValue; feedback?: string }) => void` | Callback when the user submits the feedback form. Receives the original form event, plus an options object with rating and feedback. If not provided, the rating buttons and feedback form will not be rendered |                               |
-| `submitButtonText` _(optional)_ | `InlineMessageFeedbackProps['submitButtonText']`                                                      | Optional text for the feedback form's submit button                                                                                                                                                             | `'Submit'`                    |
-| `submittedMessage` _(optional)_ | `InlineMessageFeedbackProps['submittedMessage']`                                                      | Optional success message to display after feedback is submitted. Can be a string or a ReactNode.                                                                                                                | `'Thanks for your feedback!'` |
+| Prop                            | Type                                                                                                  | Description                                                                                                                                                                                        | Default                       |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `onClickCopy` _(optional)_      | `MouseEventHandler<HTMLButtonElement>`                                                                | Callback fired when the copy button is clicked. If not provided, the copy button will not be rendered                                                                                              |                               |
+| `onClickRetry` _(optional)_     | `MouseEventHandler<HTMLButtonElement>`                                                                | Callback fired when the retry button is clicked. If not provided, the retry button will not be rendered                                                                                            |                               |
+| `onCloseFeedback` _(optional)_  | `InlineMessageFeedbackProps['onClose']`                                                               | Callback fired when the feedback form is closed by clicking the close button                                                                                                                       |                               |
+| `onRatingChange` _(optional)_   | `(e: ChangeEvent<HTMLInputElement>, options: { rating: MessageRatingValue }) => void`                 | Callback fired when the user clicks the like or dislike button. Receives the original change event and an options object with the rating. If not provided, the rating buttons will not be rendered |                               |
+| `onSubmitFeedback` _(optional)_ | `(e: FormEvent<HTMLFormElement>, options: { rating: MessageRatingValue; feedback?: string }) => void` | Callback when the user submits the feedback form. Receives the original form event, plus an options object with rating and feedback. If not provided, the feedback form will not be rendered       |                               |
+| `submitButtonText` _(optional)_ | `InlineMessageFeedbackProps['submitButtonText']`                                                      | Optional text for the feedback form's submit button                                                                                                                                                | `'Submit'`                    |
+| `submittedMessage` _(optional)_ | `InlineMessageFeedbackProps['submittedMessage']`                                                      | Optional success message to display after feedback is submitted. Can be a string or a ReactNode.                                                                                                   | `'Thanks for your feedback!'` |
 
 ## Behavior
 
@@ -79,7 +144,7 @@ The `MessageActions` component provides a comprehensive set of actions for chat 
 
 - **Copy Button**: Renders when `onClickCopy` is provided
 - **Retry Button**: Renders when `onClickRetry` is provided
-- **Rating System**: Renders when `onSubmitFeedback` is provided
+- **Rating Buttons**: Renders when `onRatingChange` is provided
 - **Feedback Form**: Shows when a rating is selected and `onSubmitFeedback` is provided
 
 ### Rendering Behavior
@@ -88,13 +153,19 @@ The `MessageActions` component provides a comprehensive set of actions for chat 
 - If **only some optional props** are provided, only those corresponding buttons/functionality are rendered
 - The component only renders in the `compact` variant of the `LeafyGreenChatProvider`. In the `spacious` variant, the component returns `null`
 
-### Feedback Flow
+### Rating and Feedback Flow
 
-1. User clicks thumbs up or thumbs down (only visible when `onSubmitFeedback` is provided)
-2. Feedback form appears with a textarea for additional comments
-3. User can optionally provide feedback text
-4. User clicks submit to send feedback
-5. Form shows success message and calls `onSubmitFeedback` with rating and feedback
+1. **Rating Only**: User clicks thumbs up or thumbs down (only visible when `onRatingChange` is provided)
+
+   - Calls `onRatingChange` with the selected rating
+   - No feedback form appears
+
+2. **Rating + Feedback**: User clicks thumbs up or thumbs down, then feedback form appears
+   - Calls `onRatingChange` with the selected rating
+   - Feedback form appears with a textarea for additional comments
+   - User can optionally provide feedback text
+   - User clicks submit to send feedback
+   - Form shows success message and calls `onSubmitFeedback` with rating and feedback
 
 ### State Management
 

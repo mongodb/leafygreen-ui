@@ -1,4 +1,4 @@
-import { FormEvent, MouseEventHandler } from 'react';
+import { ChangeEvent, FormEvent, MouseEventHandler } from 'react';
 import { InlineMessageFeedbackProps } from '@lg-chat/message-feedback';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 
@@ -26,13 +26,23 @@ export interface MessageActionsProps
   onCloseFeedback?: InlineMessageFeedbackProps['onClose'];
 
   /**
+   * Optional callback fired when the user clicks the like or dislike button.
+   * Receives the original change event and an options object with the rating.
+   * @remarks if not provided, the rating buttons will not be rendered
+   */
+  onRatingChange?: (
+    e: ChangeEvent<HTMLInputElement>,
+    options?: { rating: MessageRatingValue },
+  ) => void;
+
+  /**
    * Optional callback when the user submits the feedback form.
    * Receives the original form event, plus an options object with rating and feedback.
-   * @remarks if not provided, the rating buttons and feedback form will not be rendered
+   * @remarks if not provided, the feedback form will not be rendered
    */
   onSubmitFeedback?: (
     e: FormEvent<HTMLFormElement>,
-    options: { rating: MessageRatingValue; feedback?: string },
+    options?: { rating: MessageRatingValue; feedback: string },
   ) => void;
 
   /**

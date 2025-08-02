@@ -37,6 +37,7 @@ export function MessageActions({
   onClickCopy,
   onClickRetry,
   onCloseFeedback,
+  onRatingChange,
   onSubmitFeedback,
   submitButtonText = 'Submit',
   submittedMessage = 'Thanks for your feedback!',
@@ -57,9 +58,13 @@ export function MessageActions({
       if (isSubmitted) {
         return;
       }
-      setRating(e.target.value as MessageRatingValue);
+
+      const newRating = e.target.value as MessageRatingValue;
+      setRating(newRating);
+
+      onRatingChange?.(e, { rating: newRating });
     },
-    [isSubmitted],
+    [isSubmitted, onRatingChange],
   );
 
   const handleFeedbackChange = useCallback(
@@ -72,6 +77,11 @@ export function MessageActions({
     [isSubmitted],
   );
 
+  /**
+   * This callback is called when the user submits the feedback form.
+   * Feedback collection is not critical to the user's experience, so
+   * if it fails, it fails silently.
+   */
   const handleFeedbackSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       if (rating === MessageRatingValue.Unselected || !feedback) {
@@ -87,16 +97,17 @@ export function MessageActions({
   const handleCloseFeedback = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       setRating(MessageRatingValue.Unselected);
+      setFeedback(undefined);
       onCloseFeedback?.(e);
     },
     [onCloseFeedback],
   );
 
   const showPrimaryActions = !!onClickCopy || !!onClickRetry;
-  const showMessageRating = !!onSubmitFeedback;
+  const showMessageRating = !!onRatingChange;
   const showDivider = showPrimaryActions && showMessageRating;
   const showFeedbackForm =
-    showMessageRating && rating !== MessageRatingValue.Unselected;
+    rating !== MessageRatingValue.Unselected && !!onSubmitFeedback;
 
   const textareaProps = useMemo(
     () => ({

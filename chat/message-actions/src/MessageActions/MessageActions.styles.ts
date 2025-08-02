@@ -7,8 +7,9 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+/** divider sizes from design specs */
 const dividerSizes = {
-  height: 23,
+  height: 24,
   width: 1,
 } as const;
 
