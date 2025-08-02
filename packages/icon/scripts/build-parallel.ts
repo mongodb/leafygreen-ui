@@ -1,15 +1,8 @@
 /* eslint-disable no-console */
 import { exec } from 'child_process';
 import { Command } from 'commander';
-import fs from 'fs';
-import path from 'path';
 
-const ICON_DIR = path.resolve(process.cwd(), 'src/generated');
-
-const iconNames = fs
-  .readdirSync(ICON_DIR)
-  .filter(f => /\.tsx?$/.test(f))
-  .map(f => path.basename(f, path.extname(f)));
+import { getChangedChecksums } from './compare-checksum';
 
 const BATCH_SIZE = 10;
 const NUM_WORKERS = 4;
@@ -98,8 +91,10 @@ async function buildAllBatches(
 
 async function main(): Promise<void> {
   try {
+    const iconsToBuild = getChangedChecksums();
+
     await buildExportsAndStories();
-    await buildAllBatches(BATCH_SIZE, NUM_WORKERS, iconNames);
+    await buildAllBatches(BATCH_SIZE, NUM_WORKERS, iconsToBuild);
     console.log('All icons built successfully (°ロ°) !');
   } catch (err) {
     console.error('Build failed:', err);
