@@ -103,9 +103,7 @@ export function MessageActions({
     [onCloseFeedback],
   );
 
-  const showPrimaryActions = !!onClickCopy || !!onClickRetry;
   const showMessageRating = !!onRatingChange;
-  const showDivider = showPrimaryActions && showMessageRating;
   const showFeedbackForm =
     rating !== MessageRatingValue.Unselected && !!onSubmitFeedback;
 
@@ -118,7 +116,7 @@ export function MessageActions({
     [handleFeedbackChange, feedback],
   );
 
-  if (!isCompact || (!showPrimaryActions && !showMessageRating)) {
+  if (!isCompact) {
     return null;
   }
 
@@ -126,36 +124,34 @@ export function MessageActions({
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={getContainerStyles({ className, isSubmitted })} {...rest}>
         <div className={actionBarStyles}>
-          {showPrimaryActions && (
-            <div className={primaryActionsContainerStyles}>
-              {onClickCopy && (
-                <IconButton
-                  aria-label="Copy message"
-                  onClick={onClickCopy}
-                  title="Copy"
-                >
-                  <CopyIcon />
-                </IconButton>
-              )}
-              {onClickRetry && (
-                <IconButton
-                  aria-label="Retry message"
-                  onClick={onClickRetry}
-                  title="Retry"
-                >
-                  <RefreshIcon />
-                </IconButton>
-              )}
-            </div>
-          )}
-          {showDivider && <div className={getDividerStyles(theme)} />}
+          <div className={primaryActionsContainerStyles}>
+            <IconButton
+              aria-label="Copy message"
+              onClick={onClickCopy}
+              title="Copy"
+            >
+              <CopyIcon />
+            </IconButton>
+            {onClickRetry && (
+              <IconButton
+                aria-label="Retry message"
+                onClick={onClickRetry}
+                title="Retry"
+              >
+                <RefreshIcon />
+              </IconButton>
+            )}
+          </div>
           {showMessageRating && (
-            <MessageRating
-              // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
-              inert={isSubmitted ? 'inert' : undefined}
-              onChange={handleRatingChange}
-              value={rating}
-            />
+            <>
+              <div className={getDividerStyles(theme)} />
+              <MessageRating
+                // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
+                inert={isSubmitted ? 'inert' : undefined}
+                onChange={handleRatingChange}
+                value={rating}
+              />
+            </>
           )}
         </div>
         {showFeedbackForm && (

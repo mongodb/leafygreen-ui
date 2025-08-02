@@ -9,7 +9,6 @@ export interface MessageActionsProps
     HTMLElementProps<'div'> {
   /**
    * Optional callback fired when the copy button is clicked.
-   * @remarks if not provided, the copy button will not be rendered
    */
   onClickCopy?: MouseEventHandler<HTMLButtonElement>;
 

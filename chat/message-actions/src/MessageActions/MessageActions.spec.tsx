@@ -1,46 +1,60 @@
 import React from 'react';
-import { Variant } from '@lg-chat/leafygreen-chat-provider';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { MessageActions } from '.';
+import { MessageActions, type MessageActionsProps } from '.';
 
-jest.mock('@lg-chat/leafygreen-chat-provider', () => {
-  const actual = jest.requireActual('@lg-chat/leafygreen-chat-provider');
-  return {
-    ...actual,
-    useLeafyGreenChatContext: jest.fn(),
-  };
-});
+const renderMessageActions = (
+  props?: Partial<MessageActionsProps>,
+  options: {
+    variant?: Variant;
+  } = {},
+) => {
+  const { variant = Variant.Compact } = options;
 
-const defaultProps = {
-  onClickCopy: jest.fn(),
-  onClickRetry: jest.fn(),
-  onSubmitFeedback: jest.fn(),
+  return render(
+    <LeafyGreenChatProvider variant={variant}>
+      <MessageActions {...props} />
+    </LeafyGreenChatProvider>,
+  );
 };
 
-const mockUseLeafyGreenChatContext = jest.mocked(
-  require('@lg-chat/leafygreen-chat-provider').useLeafyGreenChatContext,
-);
-
 describe('packages/message-actions', () => {
+  beforeAll(() => {
+    global.ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
-    // Default to compact mode
-    mockUseLeafyGreenChatContext.mockReturnValue({ variant: Variant.Compact });
   });
 
-  test('renders nothing when not in compact mode', () => {
-    mockUseLeafyGreenChatContext.mockReturnValue({ variant: Variant.Spacious });
+  test('renders nothing in spacious mode', () => {
+    renderMessageActions({}, { variant: Variant.Spacious });
 
-    const { container } = render(<MessageActions {...defaultProps} />);
-
-    expect(container.firstChild).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Copy message' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Retry message' })).toBeNull();
+    expect(
+      screen.queryByRole('radio', { name: 'Like this message' }),
+    ).toBeNull();
+    expect(
+      screen.queryByRole('radio', { name: 'Dislike this message' }),
+    ).toBeNull();
   });
 
-  test('renders copy and retry buttons in compact mode', () => {
-    render(<MessageActions {...defaultProps} />);
+  test('renders all buttons when onClickRetry and onRatingChange are provided', () => {
+    renderMessageActions({
+      onClickRetry: jest.fn(),
+      onRatingChange: jest.fn(),
+    });
 
     expect(
       screen.getByRole('button', { name: 'Copy message' }),
@@ -48,11 +62,6 @@ describe('packages/message-actions', () => {
     expect(
       screen.getByRole('button', { name: 'Retry message' }),
     ).toBeInTheDocument();
-  });
-
-  test('renders rating buttons when onRatingChange is provided', () => {
-    render(<MessageActions {...defaultProps} onRatingChange={jest.fn()} />);
-
     expect(
       screen.getByRole('radio', { name: 'Like this message' }),
     ).toBeInTheDocument();
@@ -61,459 +70,60 @@ describe('packages/message-actions', () => {
     ).toBeInTheDocument();
   });
 
-  test('does not render rating buttons when onRatingChange is not provided', () => {
-    render(<MessageActions {...defaultProps} />);
-
-    expect(
-      screen.queryByRole('radio', { name: 'Like this message' }),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole('radio', { name: 'Dislike this message' }),
-    ).not.toBeInTheDocument();
-  });
-
-  test('renders feedback form when rating is selected and onSubmitFeedback is provided', () => {
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-      />,
-    );
-
-    // Initially, feedback form should not be visible
-    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
-
-    // Click thumbs up to trigger feedback form
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    // Feedback form should now be visible
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
-  });
-
-  test('does not render feedback form when onSubmitFeedback is not provided', () => {
-    const { onClickCopy, onClickRetry } = defaultProps;
-    render(
-      <MessageActions
-        onClickCopy={onClickCopy}
-        onClickRetry={onClickRetry}
-        onRatingChange={jest.fn()}
-      />,
-    );
-
-    // Click thumbs up button
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    // Feedback form should not be visible
-    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole('button', { name: 'Submit' }),
-    ).not.toBeInTheDocument();
-  });
-
-  test('calls onClickCopy when copy button is clicked', () => {
-    render(<MessageActions {...defaultProps} />);
-
-    const copyButton = screen.getByRole('button', { name: 'Copy message' });
-    userEvent.click(copyButton);
-
-    expect(defaultProps.onClickCopy).toHaveBeenCalledTimes(1);
-  });
-
-  test('calls onClickRetry when retry button is clicked', () => {
-    render(<MessageActions {...defaultProps} />);
-
-    const retryButton = screen.getByRole('button', {
-      name: 'Retry message',
-    });
-    userEvent.click(retryButton);
-
-    expect(defaultProps.onClickRetry).toHaveBeenCalledTimes(1);
-  });
-
-  test('shows feedback form when rating is selected', () => {
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-      />,
-    );
-
-    // Initially, feedback form should not be visible
-    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
-
-    // Click thumbs up to trigger feedback form
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    // Feedback form should now be visible
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
-  });
-
-  test('submits feedback when submit button is clicked', () => {
-    const mockOnSubmitFeedback = jest.fn();
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={mockOnSubmitFeedback}
-      />,
-    );
-
-    // Select a rating
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    // Fill in feedback
-    const feedbackTextarea = screen.getByRole('textbox');
-    userEvent.type(feedbackTextarea, 'Great response!');
-
-    // Submit feedback
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    userEvent.click(submitButton);
-
-    expect(mockOnSubmitFeedback).toHaveBeenCalledWith(expect.any(Object), {
-      rating: MessageRatingValue.Liked,
-      feedback: 'Great response!',
-    });
-  });
-
-  test('handles feedback text input', () => {
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-      />,
-    );
-
-    // Select a rating to show feedback form
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    const textarea = screen.getByRole('textbox');
-    userEvent.type(textarea, 'This is a test comment');
-
-    expect(textarea).toHaveValue('This is a test comment');
-  });
-
-  test('closes feedback form when close button is clicked', () => {
-    const mockOnCloseFeedback = jest.fn();
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-        onCloseFeedback={mockOnCloseFeedback}
-      />,
-    );
-
-    // Select a rating to show feedback form
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    // Fill in some feedback
-    const textarea = screen.getByRole('textbox');
-    userEvent.type(textarea, 'Test feedback');
-
-    // Click close button
-    const closeButton = screen.getByRole('button', {
-      name: 'Close feedback window',
-    });
-    userEvent.click(closeButton);
-
-    expect(mockOnCloseFeedback).toHaveBeenCalledTimes(1);
-  });
-
-  test('shows submitted message after feedback is submitted', () => {
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-      />,
-    );
-
-    // Select a rating
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    // Fill in feedback and submit
-    const feedbackTextarea = screen.getByRole('textbox');
-    userEvent.type(feedbackTextarea, 'Great response!');
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    userEvent.click(submitButton);
-
-    // Should show submitted message
-    expect(screen.getByText('Thanks for your feedback!')).toBeInTheDocument();
-  });
-
-  test('MessageRating buttons become non-interactable after feedback submission', () => {
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-      />,
-    );
-
-    // Select a rating
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    // Fill in feedback and submit
-    const feedbackTextarea = screen.getByRole('textbox');
-    userEvent.type(feedbackTextarea, 'Great response!');
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    userEvent.click(submitButton);
-
-    // After submission, the MessageRating component should be inert
-    // Find the MessageRating container by looking for the radiogroup's parent
-    const radiogroup = screen.getByRole('radiogroup');
-    const messageRatingContainer = radiogroup.parentElement;
-    expect(messageRatingContainer).toHaveAttribute('inert', 'inert');
-  });
-
-  test('calls onRatingChange when rating buttons are clicked', () => {
-    const mockOnRatingChange = jest.fn();
-    render(
-      <MessageActions {...defaultProps} onRatingChange={mockOnRatingChange} />,
-    );
-
-    // Click thumbs up button
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    expect(mockOnRatingChange).toHaveBeenCalledTimes(1);
-    expect(mockOnRatingChange).toHaveBeenCalledWith(
-      expect.objectContaining({
-        target: expect.objectContaining({ value: 'liked' }),
-      }),
-      { rating: 'liked' },
-    );
-
-    // Click thumbs down button
-    const thumbsDownButton = screen.getByRole('radio', {
-      name: 'Dislike this message',
-    });
-    userEvent.click(thumbsDownButton);
-
-    expect(mockOnRatingChange).toHaveBeenCalledTimes(2);
-    expect(mockOnRatingChange).toHaveBeenCalledWith(
-      expect.objectContaining({
-        target: expect.objectContaining({ value: 'disliked' }),
-      }),
-      { rating: 'disliked' },
-    );
-  });
-
-  test('does not call onRatingChange when isSubmitted is true', () => {
-    const mockOnRatingChange = jest.fn();
-    render(
-      <MessageActions {...defaultProps} onRatingChange={mockOnRatingChange} />,
-    );
-
-    // Submit feedback first
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    const feedbackTextarea = screen.getByRole('textbox');
-    userEvent.type(feedbackTextarea, 'Great response!');
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    userEvent.click(submitButton);
-
-    // Clear the mock to check only new calls
-    mockOnRatingChange.mockClear();
-
-    // Try to click rating buttons after submission
-    const thumbsDownButton = screen.getByRole('radio', {
-      name: 'Dislike this message',
-    });
-    userEvent.click(thumbsDownButton);
-
-    // onRatingChange should not be called when isSubmitted is true
-    expect(mockOnRatingChange).not.toHaveBeenCalled();
-  });
-
-  test('does not submit feedback form when feedback is not provided', () => {
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-      />,
-    );
-
-    // Select a rating
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    // Try to submit without providing feedback
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    userEvent.click(submitButton);
-
-    expect(defaultProps.onSubmitFeedback).not.toHaveBeenCalled();
-  });
-
-  test('does not submit feedback form when no rating is selected', () => {
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-      />,
-    );
-
-    // Try to submit without selecting a rating
-    const submitButton = screen.queryByRole('button', { name: 'Submit' });
-    expect(submitButton).not.toBeInTheDocument();
-
-    expect(defaultProps.onSubmitFeedback).not.toHaveBeenCalled();
-  });
-
-  test('uses custom submit button text', () => {
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-        submitButtonText="Send Feedback"
-      />,
-    );
-
-    // Select a rating to show feedback form
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    expect(
-      screen.getByRole('button', { name: 'Send Feedback' }),
-    ).toBeInTheDocument();
-  });
-
-  test('uses custom submitted message', () => {
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={jest.fn()}
-        submittedMessage="Feedback received!"
-      />,
-    );
-
-    // Select a rating
-    const thumbsUpButton = screen.getByRole('radio', {
-      name: 'Like this message',
-    });
-    userEvent.click(thumbsUpButton);
-
-    // Fill in feedback and submit
-    const feedbackTextarea = screen.getByRole('textbox');
-    userEvent.type(feedbackTextarea, 'Great response!');
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    userEvent.click(submitButton);
-
-    // Should show custom submitted message
-    expect(screen.getByText('Feedback received!')).toBeInTheDocument();
-  });
-
-  test('handles thumbs down rating', () => {
-    const mockOnSubmitFeedback = jest.fn();
-    render(
-      <MessageActions
-        {...defaultProps}
-        onRatingChange={jest.fn()}
-        onSubmitFeedback={mockOnSubmitFeedback}
-      />,
-    );
-
-    // Select thumbs down
-    const thumbsDownButton = screen.getByRole('radio', {
-      name: 'Dislike this message',
-    });
-    userEvent.click(thumbsDownButton);
-
-    // Fill in feedback
-    const feedbackTextarea = screen.getByRole('textbox');
-    userEvent.type(feedbackTextarea, 'Not helpful');
-
-    // Submit feedback
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
-    userEvent.click(submitButton);
-
-    expect(mockOnSubmitFeedback).toHaveBeenCalledWith(expect.any(Object), {
-      rating: MessageRatingValue.Disliked,
-      feedback: 'Not helpful',
-    });
-  });
-
-  // Tests for optional props behavior
-  describe('optional props behavior', () => {
-    test('renders only copy button when only onClickCopy is provided', () => {
-      render(<MessageActions onClickCopy={jest.fn()} />);
+  describe('copy button', () => {
+    test('renders copy button in compact mode by default', () => {
+      renderMessageActions();
 
       expect(
         screen.getByRole('button', { name: 'Copy message' }),
       ).toBeInTheDocument();
-      expect(
-        screen.queryByRole('button', { name: 'Retry message' }),
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryByRole('radio', { name: 'Like this message' }),
-      ).not.toBeInTheDocument();
     });
 
-    test('renders only retry button when only onClickRetry is provided', () => {
-      render(<MessageActions onClickRetry={jest.fn()} />);
+    test('calls onClickCopy when copy button is clicked', async () => {
+      const mockOnClickCopy = jest.fn();
+      renderMessageActions({ onClickCopy: mockOnClickCopy });
 
-      expect(
-        screen.queryByRole('button', { name: 'Copy message' }),
-      ).not.toBeInTheDocument();
+      const copyButton = screen.getByRole('button', { name: 'Copy message' });
+      userEvent.click(copyButton);
+
+      expect(mockOnClickCopy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('retry button', () => {
+    test('renders retry button when onClickRetry is provided', () => {
+      renderMessageActions({ onClickRetry: jest.fn() });
+
       expect(
         screen.getByRole('button', { name: 'Retry message' }),
       ).toBeInTheDocument();
-      expect(
-        screen.queryByRole('radio', { name: 'Like this message' }),
-      ).not.toBeInTheDocument();
     });
 
-    test('renders only rating buttons when only onRatingChange is provided', () => {
-      render(<MessageActions onRatingChange={jest.fn()} />);
+    test('does not render retry button when onClickRetry is not provided', () => {
+      renderMessageActions();
 
       expect(
-        screen.queryByRole('button', { name: 'Copy message' }),
-      ).not.toBeInTheDocument();
-      expect(
         screen.queryByRole('button', { name: 'Retry message' }),
-      ).not.toBeInTheDocument();
+      ).toBeNull();
+    });
+
+    test('calls onClickRetry when retry button is clicked', () => {
+      const mockOnClickRetry = jest.fn();
+      renderMessageActions({ onClickRetry: mockOnClickRetry });
+
+      const retryButton = screen.getByRole('button', {
+        name: 'Retry message',
+      });
+      userEvent.click(retryButton);
+
+      expect(mockOnClickRetry).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('rating buttons', () => {
+    test('renders rating buttons when onRatingChange is provided', () => {
+      renderMessageActions({ onRatingChange: jest.fn() });
+
       expect(
         screen.getByRole('radio', { name: 'Like this message' }),
       ).toBeInTheDocument();
@@ -522,87 +132,149 @@ describe('packages/message-actions', () => {
       ).toBeInTheDocument();
     });
 
-    test('renders all buttons when all optional props are provided', () => {
-      render(
-        <MessageActions
-          onClickCopy={jest.fn()}
-          onClickRetry={jest.fn()}
-          onRatingChange={jest.fn()}
-          onSubmitFeedback={jest.fn()}
-        />,
-      );
+    test('does not render rating buttons when onRatingChange is not provided', () => {
+      renderMessageActions();
 
       expect(
-        screen.getByRole('button', { name: 'Copy message' }),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Retry message' }),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('radio', { name: 'Like this message' }),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('radio', { name: 'Dislike this message' }),
-      ).toBeInTheDocument();
+        screen.queryByRole('radio', { name: 'Like this message' }),
+      ).toBeNull();
     });
 
-    test('shows feedback form when rating is selected and onSubmitFeedback is provided', () => {
-      render(
-        <MessageActions
-          onRatingChange={jest.fn()}
-          onSubmitFeedback={jest.fn()}
-        />,
-      );
+    test('calls onRatingChange when rating buttons are clicked', () => {
+      const mockOnRatingChange = jest.fn();
+      renderMessageActions({
+        onRatingChange: mockOnRatingChange,
+      });
 
-      // Click thumbs up to trigger feedback form
       const thumbsUpButton = screen.getByRole('radio', {
         name: 'Like this message',
       });
       userEvent.click(thumbsUpButton);
 
-      // Feedback form should now be visible
+      expect(mockOnRatingChange).toHaveBeenCalledTimes(1);
+      expect(mockOnRatingChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: expect.objectContaining({ value: 'liked' }),
+        }),
+        { rating: 'liked' },
+      );
+
+      const thumbsDownButton = screen.getByRole('radio', {
+        name: 'Dislike this message',
+      });
+      userEvent.click(thumbsDownButton);
+
+      expect(mockOnRatingChange).toHaveBeenCalledTimes(2);
+      expect(mockOnRatingChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          target: expect.objectContaining({ value: 'disliked' }),
+        }),
+        { rating: 'disliked' },
+      );
+    });
+
+    test('MessageRating buttons become non-interactable after feedback submission', () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Great response!');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      const radiogroup = screen.getByRole('radiogroup');
+      const messageRatingContainer = radiogroup.parentElement;
+      expect(messageRatingContainer).toHaveAttribute('inert', 'inert');
+    });
+
+    test('does not call onRatingChange when isSubmitted is true', () => {
+      const mockOnRatingChange = jest.fn();
+      const mockOnSubmitFeedback = jest.fn();
+      renderMessageActions({
+        onRatingChange: mockOnRatingChange,
+        onSubmitFeedback: mockOnSubmitFeedback,
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Great response!');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      // Clear the mock to check only new calls
+      mockOnRatingChange.mockClear();
+
+      const thumbsDownButton = screen.getByRole('radio', {
+        name: 'Dislike this message',
+      });
+      userEvent.click(thumbsDownButton);
+
+      expect(mockOnRatingChange).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('feedback form', () => {
+    test('renders feedback form when rating is selected and onSubmitFeedback is provided', () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+      });
+
+      expect(screen.queryByRole('textbox')).toBeNull();
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
       expect(screen.getByRole('textbox')).toBeInTheDocument();
       expect(
         screen.getByRole('button', { name: 'Submit' }),
       ).toBeInTheDocument();
     });
 
-    test('does not show feedback form when rating is selected but onSubmitFeedback is not provided', () => {
-      render(<MessageActions onRatingChange={jest.fn()} />);
+    test('does not render feedback form when onSubmitFeedback is not provided', () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+      });
 
-      // Click thumbs up button
       const thumbsUpButton = screen.getByRole('radio', {
         name: 'Like this message',
       });
       userEvent.click(thumbsUpButton);
 
-      // Feedback form should not be visible
-      expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
-      expect(
-        screen.queryByRole('button', { name: 'Submit' }),
-      ).not.toBeInTheDocument();
+      expect(screen.queryByRole('textbox')).toBeNull();
+      expect(screen.queryByRole('button', { name: 'Submit' })).toBeNull();
     });
 
-    test('submits feedback when submit button is clicked and onSubmitFeedback is provided', () => {
+    test('calls onSubmitFeedback when submit button is clicked', () => {
       const mockOnSubmitFeedback = jest.fn();
-      render(
-        <MessageActions
-          onRatingChange={jest.fn()}
-          onSubmitFeedback={mockOnSubmitFeedback}
-        />,
-      );
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: mockOnSubmitFeedback,
+      });
 
-      // Select a rating
       const thumbsUpButton = screen.getByRole('radio', {
         name: 'Like this message',
       });
       userEvent.click(thumbsUpButton);
 
-      // Fill in feedback
       const feedbackTextarea = screen.getByRole('textbox');
       userEvent.type(feedbackTextarea, 'Great response!');
 
-      // Submit feedback
       const submitButton = screen.getByRole('button', { name: 'Submit' });
       userEvent.click(submitButton);
 
@@ -610,6 +282,135 @@ describe('packages/message-actions', () => {
         rating: MessageRatingValue.Liked,
         feedback: 'Great response!',
       });
+    });
+
+    test('handles feedback text input', () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const textarea = screen.getByRole('textbox');
+      userEvent.type(textarea, 'This is a test comment');
+
+      expect(textarea).toHaveValue('This is a test comment');
+    });
+
+    test('closes feedback form when close button is clicked', () => {
+      const mockOnCloseFeedback = jest.fn();
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+        onCloseFeedback: mockOnCloseFeedback,
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const textarea = screen.getByRole('textbox');
+      userEvent.type(textarea, 'Test feedback');
+
+      const closeButton = screen.getByRole('button', {
+        name: 'Close feedback window',
+      });
+      userEvent.click(closeButton);
+
+      expect(mockOnCloseFeedback).toHaveBeenCalledTimes(1);
+    });
+
+    test('uses custom submit button text', () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+        submitButtonText: 'Send Feedback',
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      expect(
+        screen.getByRole('button', { name: 'Send Feedback' }),
+      ).toBeInTheDocument();
+    });
+
+    test('does not submit feedback form when no rating is selected', () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+      });
+
+      const submitButton = screen.queryByRole('button', { name: 'Submit' });
+
+      expect(submitButton).toBeNull();
+    });
+
+    test('does not submit feedback form when feedback is not provided', () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      expect(
+        screen.getByRole('button', { name: 'Submit' }),
+      ).toBeInTheDocument();
+    });
+
+    test('shows submitted message after feedback is submitted', () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Great response!');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      expect(screen.getByText('Thanks for your feedback!')).toBeInTheDocument();
+    });
+
+    test('uses custom submitted message', () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+        submittedMessage: 'Feedback received!',
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Great response!');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      expect(screen.getByText('Feedback received!')).toBeInTheDocument();
     });
   });
 });
