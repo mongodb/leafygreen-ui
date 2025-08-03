@@ -43,24 +43,14 @@ const meta: StoryMetaType<typeof MessageActions> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        onClickCopy: [undefined, testOnClickCopy],
         onClickRetry: [undefined, testOnClickRetry],
         onRatingChange: [undefined, testOnRatingChange],
-        onSubmitFeedback: [undefined, testOnSubmitFeedback],
       },
       decorator: StoryFn => (
         <LeafyGreenChatProvider variant={Variant.Compact}>
           <StoryFn />
         </LeafyGreenChatProvider>
       ),
-      excludeCombinations: [
-        {
-          onClickCopy: undefined,
-          onClickRetry: undefined,
-          onRatingChange: undefined,
-          onSubmitFeedback: undefined,
-        },
-      ],
     },
   },
 };
