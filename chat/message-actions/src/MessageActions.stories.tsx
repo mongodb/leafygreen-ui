@@ -3,6 +3,7 @@ import {
   LeafyGreenChatProvider,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -23,6 +24,9 @@ const testOnRatingChange = () => console.log('Rating changed');
 // eslint-disable-next-line no-console
 const testOnSubmitFeedback = () => console.log('Feedback submitted');
 
+const SAMPLE_MESSAGE_BODY =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
 const meta: StoryMetaType<typeof MessageActions> = {
   title: 'Composition/Chat/MessageActions',
   component: MessageActions,
@@ -35,6 +39,15 @@ const meta: StoryMetaType<typeof MessageActions> = {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
   },
+  decorators: [
+    (Story: StoryFn) => (
+      <LeafyGreenChatProvider variant={Variant.Compact}>
+        <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
+          <Story />
+        </Message>
+      </LeafyGreenChatProvider>
+    ),
+  ],
   parameters: {
     default: 'LiveExample',
     controls: {
@@ -48,7 +61,9 @@ const meta: StoryMetaType<typeof MessageActions> = {
       },
       decorator: StoryFn => (
         <LeafyGreenChatProvider variant={Variant.Compact}>
-          <StoryFn />
+          <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
+            <StoryFn />
+          </Message>
         </LeafyGreenChatProvider>
       ),
     },
@@ -57,9 +72,7 @@ const meta: StoryMetaType<typeof MessageActions> = {
 export default meta;
 
 const Template: StoryFn<MessageActionsProps> = props => (
-  <LeafyGreenChatProvider variant={Variant.Compact}>
-    <MessageActions {...props} />
-  </LeafyGreenChatProvider>
+  <MessageActions {...props} />
 );
 
 export const LiveExample: StoryObj<MessageActionsProps> = {
