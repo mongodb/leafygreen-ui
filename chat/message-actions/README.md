@@ -30,6 +30,7 @@ import {
   LeafyGreenChatProvider,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
 import { MessageActions } from '@lg-chat/message-actions';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 
@@ -62,12 +63,14 @@ const Example = () => {
 
   return (
     <LeafyGreenChatProvider variant={Variant.Compact}>
-      <MessageActions
-        onClickCopy={handleCopy}
-        onClickRetry={handleRetry}
-        onRatingChange={handleRatingChange}
-        onSubmitFeedback={handleSubmitFeedback}
-      />
+      <Message messageBody="Test message">
+        <MessageActions
+          onClickCopy={handleCopy}
+          onClickRetry={handleRetry}
+          onRatingChange={handleRatingChange}
+          onSubmitFeedback={handleSubmitFeedback}
+        />
+      </Message>
     </LeafyGreenChatProvider>
   );
 };
@@ -97,6 +100,10 @@ The `MessageActions` component provides a comprehensive set of actions for chat 
   - **Retry Button**: Renders when `onClickRetry` is provided
   - **Rating Buttons**: Renders when `onRatingChange` is provided
   - **Feedback Form**: Shows when a rating is selected and `onSubmitFeedback` is provided
+
+### Context Integration
+
+The component relies on `MessageContext` to access the message body for copy functionality.
 
 ### Rating and Feedback Flow
 
