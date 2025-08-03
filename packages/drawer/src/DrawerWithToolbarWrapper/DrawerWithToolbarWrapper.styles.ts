@@ -108,6 +108,9 @@ const baseEmbeddedStyles = css`
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
   grid-template-columns: 1fr auto;
+  // To show focus outline since the wrapper has overflow hidden
+  padding-left: 4px;
+  margin-left: -4px;
 `;
 
 const getOverlayShadowStyles = ({ theme }: { theme: Theme }) => css`

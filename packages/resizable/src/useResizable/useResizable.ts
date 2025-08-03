@@ -158,6 +158,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
           event.preventDefault();
         }
       }
+
       setNextKeyboardSize(event, position);
     },
     [setNextKeyboardSize, position],
@@ -240,14 +241,20 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    * moves off the resizer handle during the drag.
    */
   useEffect(() => {
-    if (!isResizing && !enabled) return;
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-
-    return () => {
+    const cleanupListeners = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    if (isResizing && enabled) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    } else {
+      cleanupListeners();
+    }
+
+    return () => {
+      cleanupListeners();
     };
   }, [isResizing, handleMouseMove, handleMouseUp, enabled]);
 
@@ -256,12 +263,18 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    * This listener is added to 'window' to allow resizing with arrow keys
    */
   useEffect(() => {
-    if (!isFocused && !enabled) return;
+    const cleanupListener = () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
 
-    window.addEventListener('keydown', handleKeyDown);
+    if (isFocused && enabled) {
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      cleanupListener();
+    }
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      cleanupListener();
     };
   }, [enabled, isFocused, handleKeyDown]);
 
