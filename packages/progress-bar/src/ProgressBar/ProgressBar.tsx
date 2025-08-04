@@ -43,7 +43,7 @@ export function ProgressBar(props: ProgressBarProps) {
     label,
     description: descriptionProp,
     variant,
-    darkMode,
+    darkMode: darkModeProp,
     formatValue,
     showIcon,
     'aria-label': ariaLabel,
@@ -59,7 +59,7 @@ export function ProgressBar(props: ProgressBarProps) {
     ...rest
   } = resolveProgressBarProps(props);
 
-  const { theme } = useDarkMode(darkMode);
+  const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const { barId, labelId, descId } = useIdIdentifiers({
     role,

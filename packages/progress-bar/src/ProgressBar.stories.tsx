@@ -2,6 +2,9 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { color } from '@leafygreen-ui/tokens';
+
 import { isAnimatedVariant } from './ProgressBar/utils';
 import { requiredA11yArgs, storyValues } from './test.constants';
 import {
@@ -18,6 +21,14 @@ const sharedDeterminateArgs: ProgressBarProps = {
   ...requiredA11yArgs,
   value: storyValues.value,
   maxValue: storyValues.maxValue,
+};
+
+const disableDarkModeControl = {
+  argTypes: {
+    darkMode: {
+      table: { disable: true },
+    },
+  },
 };
 
 const ROLES = Object.values(Role);
@@ -48,14 +59,11 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         size: SIZES,
         darkMode: [false, true],
       },
-
-      decorator: (InstanceFn, context) => {
-        return (
-          <div style={{ padding: '48px' }}>
-            <InstanceFn {...context?.args} />
-          </div>
-        );
-      },
+      decorator: InstanceFn => (
+        <div style={{ padding: '48px' }}>
+          <InstanceFn />
+        </div>
+      ),
     },
   },
   argTypes: {
@@ -150,6 +158,23 @@ export const WithHeaderTruncation: StoryObj<typeof ProgressBar> = {
   },
 };
 
+export const WithProviderDarkMode: StoryObj<typeof ProgressBar> = {
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: color.dark.background.secondary.default },
+      ],
+    },
+  },
+  render: () => (
+    <LeafyGreenProvider darkMode>
+      <ProgressBar label="Label" isIndeterminate />
+    </LeafyGreenProvider>
+  ),
+  ...disableDarkModeControl,
+};
+
 export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
   parameters: {
     generate: {
@@ -165,6 +190,7 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
       },
     },
   },
+  ...disableDarkModeControl,
 };
 
 export const DeterminateProgressVariants: StoryObj<typeof ProgressBar> = {
@@ -194,6 +220,7 @@ export const DeterminateProgressVariants: StoryObj<typeof ProgressBar> = {
       ],
     },
   },
+  ...disableDarkModeControl,
 };
 
 export const DeterminateMeterVariants: StoryObj<typeof ProgressBar> = {
@@ -219,4 +246,5 @@ export const DeterminateMeterVariants: StoryObj<typeof ProgressBar> = {
       ],
     },
   },
+  ...disableDarkModeControl,
 };

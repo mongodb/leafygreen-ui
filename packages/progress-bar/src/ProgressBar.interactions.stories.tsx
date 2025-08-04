@@ -178,7 +178,7 @@ export const IndeterminateToDeterminate: StoryObj<typeof ProgressBar> = {
         [
           interactionWaitTimes.medium,
           {
-            ...requiredA11yArgs,
+            ...initialArgs,
             isIndeterminate: false,
             value: storyValues.maxValue,
             maxValue: storyValues.maxValue,
