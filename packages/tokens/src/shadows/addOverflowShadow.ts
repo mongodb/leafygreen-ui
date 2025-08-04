@@ -21,7 +21,7 @@ const shadowThemeColor: Record<Theme, string> = {
 };
 
 const shadowOffset: Record<Theme, number> = {
-  [Theme.Light]: 8,
+  [Theme.Light]: 2,
   [Theme.Dark]: 16,
 };
 
