@@ -234,7 +234,7 @@ export const resolveProgressBarProps = (
     label,
     description,
     variant = DEFAULT_VARIANT,
-    darkMode = false,
+    darkMode,
     formatValue,
     className,
     'aria-label': ariaLabel,
