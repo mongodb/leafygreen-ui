@@ -19,31 +19,29 @@ export const baseIconButtonStyles = css`
 `;
 
 export const getIconButtonActiveStyles = ({ theme }: { theme: Theme }) =>
-  cx(
-    css`
-      // Override styles from IconButton
-      &,
-      &:is(:hover, [data-hover='true'], :focus-visible, [data-focus='true']) {
-        background-color: ${theme === Theme.Light
-          ? palette.green.light3
-          : palette.green.dark3};
+  css`
+    // Override styles from IconButton
+    &,
+    &:is(:hover, [data-hover='true'], :focus-visible, [data-focus='true']) {
+      background-color: ${theme === Theme.Light
+        ? palette.green.light3
+        : palette.green.dark3};
 
-        color: ${theme === Theme.Light
-          ? palette.green.dark2
-          : palette.green.light1};
-      }
+      color: ${theme === Theme.Light
+        ? palette.green.dark2
+        : palette.green.light1};
+    }
 
-      // Override ::before styles from IconButton
-      &:is(
-          :hover,
-          [data-hover='true'],
-          :focus-visible,
-          [data-focus='true']
-        )::before {
-        background-color: transparent;
-      }
-    `,
-  );
+    // Override ::before styles from IconButton
+    &:is(
+        :hover,
+        [data-hover='true'],
+        :focus-visible,
+        [data-focus='true']
+      )::before {
+      background-color: transparent;
+    }
+  `;
 
 export const getIconButtonStyles = ({
   active,
