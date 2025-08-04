@@ -167,9 +167,9 @@ export const WithProviderDarkMode: StoryObj<typeof ProgressBar> = {
       ],
     },
   },
-  render: _args => (
-    <LeafyGreenProvider darkMode={true}>
-      <ProgressBar {...sharedDeterminateArgs} />
+  render: () => (
+    <LeafyGreenProvider darkMode>
+      <ProgressBar label="Label" isIndeterminate />
     </LeafyGreenProvider>
   ),
   ...disableDarkModeControl,
