@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 3.2.1
+
+### Patch Changes
+
+- a638649: Decrease light theme shadow intensity by reducing `shadowOffset` from `8` to `2` in `getOverflowShadow.ts` to match design specifications.
+
 ## 3.2.0
 
 ### Minor Changes

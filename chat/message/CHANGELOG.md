@@ -1,5 +1,16 @@
 # @lg-chat/message
 
+## 7.2.0
+
+### Minor Changes
+
+- 7348708: Create `MessageContext` for each `Message` instance and pass down `messageBody`. This is used to enable copy functionality in the `MessageActions` component.
+
+### Patch Changes
+
+- Updated dependencies [a638649]
+  - @leafygreen-ui/tokens@3.2.1
+
 ## 7.1.0
 
 ### Minor Changes
