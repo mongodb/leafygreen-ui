@@ -25,6 +25,11 @@ export interface DrawerLayoutProviderProps {
    * Callback function to be called when the drawer is closed.
    */
   onClose?: DrawerProps['onClose'];
+
+  /**
+   * The size of the drawer.
+   */
+  size?: DrawerProps['size'];
 }
 
 export interface DrawerLayoutContextType extends DrawerLayoutProviderProps {

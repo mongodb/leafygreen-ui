@@ -5,7 +5,7 @@ import React, {
   useEffect,
 } from 'react';
 
-import { DisplayMode } from '../../Drawer/Drawer.types';
+import { DisplayMode, Size } from '../../Drawer/Drawer.types';
 
 import {
   DrawerLayoutContextType,
@@ -23,6 +23,7 @@ export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
   setIsDrawerOpen: () => {},
   setDrawerWidth: () => {},
   setIsDrawerResizing: () => {},
+  size: Size.Default,
 });
 
 /**
@@ -36,6 +37,7 @@ export const DrawerLayoutProvider = ({
   displayMode,
   onClose,
   hasToolbar,
+  size,
 }: PropsWithChildren<DrawerLayoutProviderProps>) => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(isDrawerOpenProp);
   const [isDrawerResizing, setIsDrawerResizing] = React.useState(false);
@@ -56,6 +58,7 @@ export const DrawerLayoutProvider = ({
     setIsDrawerResizing,
     drawerWidth,
     setDrawerWidth,
+    size,
   };
 
   return (
