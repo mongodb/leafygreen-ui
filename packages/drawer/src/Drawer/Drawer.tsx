@@ -148,12 +148,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     };
 
-    // Enables resizable functionality if the drawer is resizable and in embedded mode. ??
+    // Enables resizable functionality if the drawer is resizable and in embedded mode.
     const {
       resizableRef,
       size: drawerSize,
       getResizerProps,
-      isResizing, // ??
+      isResizing,
     } = useResizable<HTMLDialogElement | HTMLDivElement>({
       enabled: resizable && isEmbedded,
       initialSize: open ? initialSize : 0,
