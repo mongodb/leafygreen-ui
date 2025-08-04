@@ -12,18 +12,36 @@ export const baseIconButtonStyles = css`
   &::before {
     border-radius: ${borderRadius[150]}px;
   }
+
+  &::before {
+    background-color: transparent;
+  }
 `;
 
 export const getIconButtonActiveStyles = ({ theme }: { theme: Theme }) =>
   cx(
     css`
-      background: ${theme === Theme.Light
-        ? palette.green.light3
-        : palette.green.dark3};
+      // Override styles from IconButton
+      &,
+      &:is(:hover, [data-hover='true'], :focus-visible, [data-focus='true']) {
+        background-color: ${theme === Theme.Light
+          ? palette.green.light3
+          : palette.green.dark3};
 
-      color: ${theme === Theme.Light
-        ? palette.green.dark2
-        : palette.green.light1};
+        color: ${theme === Theme.Light
+          ? palette.green.dark2
+          : palette.green.light1};
+      }
+
+      // Override ::before styles from IconButton
+      &:is(
+          :hover,
+          [data-hover='true'],
+          :focus-visible,
+          [data-focus='true']
+        )::before {
+        background-color: transparent;
+      }
     `,
   );
 
