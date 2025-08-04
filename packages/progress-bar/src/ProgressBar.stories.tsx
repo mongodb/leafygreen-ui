@@ -22,6 +22,14 @@ const sharedDeterminateArgs: ProgressBarProps = {
   maxValue: storyValues.maxValue,
 };
 
+const disabledDarkModeArgTypes = {
+  argTypes: {
+    darkMode: {
+      table: { disable: true },
+    },
+  },
+};
+
 const ROLES = Object.values(Role);
 const SIZES = Object.values(Size);
 const FORMAT_VALUE_TYPES = Object.values(FormatValueType);
@@ -51,14 +59,21 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         darkMode: [false, true],
       },
       decorator: (InstanceFn, context) => (
-        <LeafyGreenProvider darkMode={context?.args.darkMode}>
-          <div style={{ padding: '48px' }}>
+        <div style={{ padding: '48px' }}>
+          <LeafyGreenProvider darkMode={context?.args.darkMode}>
             <InstanceFn />
-          </div>
-        </LeafyGreenProvider>
+          </LeafyGreenProvider>
+        </div>
       ),
     },
   },
+  decorators: [
+    (InstanceFn, context) => (
+      <LeafyGreenProvider darkMode={context?.args.darkMode}>
+        <InstanceFn />
+      </LeafyGreenProvider>
+    ),
+  ],
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     isIndeterminate: {
@@ -167,6 +182,7 @@ export const IndeterminateVariants: StoryObj<typeof ProgressBar> = {
       },
     },
   },
+  ...disabledDarkModeArgTypes,
 };
 
 export const DeterminateProgressVariants: StoryObj<typeof ProgressBar> = {
@@ -196,6 +212,7 @@ export const DeterminateProgressVariants: StoryObj<typeof ProgressBar> = {
       ],
     },
   },
+  ...disabledDarkModeArgTypes,
 };
 
 export const DeterminateMeterVariants: StoryObj<typeof ProgressBar> = {
@@ -221,4 +238,5 @@ export const DeterminateMeterVariants: StoryObj<typeof ProgressBar> = {
       ],
     },
   },
+  ...disabledDarkModeArgTypes,
 };
