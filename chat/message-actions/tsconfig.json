@@ -13,6 +13,9 @@
       "path": "../leafygreen-chat-provider"
     },
     {
+      "path": "../message"
+    },
+    {
       "path": "../message-feedback"
     },
     {

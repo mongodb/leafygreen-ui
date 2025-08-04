@@ -10,9 +10,11 @@ import {
   useLeafyGreenChatContext,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
+import { useMessageContext } from '@lg-chat/message';
 import { InlineMessageFeedback } from '@lg-chat/message-feedback';
 import { MessageRating, MessageRatingValue } from '@lg-chat/message-rating';
 
+import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -46,12 +48,33 @@ export function MessageActions({
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const { variant } = useLeafyGreenChatContext();
   const isCompact = variant === Variant.Compact;
+  const { messageBody } = useMessageContext();
 
+  const [copied, setCopied] = useState(false);
   const [rating, setRating] = useState<MessageRatingValue>(
     MessageRatingValue.Unselected,
   );
   const [feedback, setFeedback] = useState<string | undefined>(undefined);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleCopy = useCallback(
+    async (e: MouseEvent<HTMLButtonElement>) => {
+      if (copied || !messageBody) {
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(messageBody);
+        setCopied(true);
+        onClickCopy?.(e);
+        // reset copied state after 1.5 seconds
+        setTimeout(() => setCopied(false), 1500);
+      } catch (_err) {
+        onClickCopy?.(e);
+      }
+    },
+    [copied, messageBody, onClickCopy],
+  );
 
   const handleRatingChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -127,10 +150,10 @@ export function MessageActions({
           <div className={primaryActionsContainerStyles}>
             <IconButton
               aria-label="Copy message"
-              onClick={onClickCopy}
+              onClick={handleCopy}
               title="Copy"
             >
-              <CopyIcon />
+              {copied ? <CheckmarkIcon /> : <CopyIcon />}
             </IconButton>
             {onClickRetry && (
               <IconButton

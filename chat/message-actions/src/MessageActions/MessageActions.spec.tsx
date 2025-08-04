@@ -3,23 +3,43 @@ import {
   LeafyGreenChatProvider,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { MessageActions, type MessageActionsProps } from '.';
+import { MessageActions, MessageActionsProps } from '.';
+
+jest.mock('@lg-chat/lg-markdown', () => ({
+  LGMarkdown: jest.fn(({ children }) => <div>{children}</div>),
+}));
+
+// Mock the clipboard API
+const mockClipboard = {
+  writeText: jest.fn().mockResolvedValue(undefined),
+};
+
+// Mock the clipboard API globally
+Object.defineProperty(navigator, 'clipboard', {
+  value: mockClipboard,
+  writable: true,
+});
 
 const renderMessageActions = (
   props?: Partial<MessageActionsProps>,
   options: {
     variant?: Variant;
+    messageBody?: string;
   } = {},
 ) => {
-  const { variant = Variant.Compact } = options;
+  const { variant = Variant.Compact, messageBody = 'Test message body' } =
+    options;
 
   return render(
     <LeafyGreenChatProvider variant={variant}>
-      <MessageActions {...props} />
+      <Message messageBody={messageBody}>
+        <MessageActions {...props} />
+      </Message>
     </LeafyGreenChatProvider>,
   );
 };
@@ -35,6 +55,7 @@ describe('packages/message-actions', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockClipboard.writeText.mockResolvedValue(undefined);
   });
 
   test('renders nothing in spacious mode', () => {
@@ -86,7 +107,50 @@ describe('packages/message-actions', () => {
       const copyButton = screen.getByRole('button', { name: 'Copy message' });
       userEvent.click(copyButton);
 
+      // Wait for the clipboard API call to complete
+      await new Promise(resolve => setTimeout(resolve, 0));
+
       expect(mockOnClickCopy).toHaveBeenCalledTimes(1);
+    });
+
+    test('uses messageBody from context for copy functionality', async () => {
+      const mockOnClickCopy = jest.fn();
+      const testMessageBody = 'Test message content from context';
+
+      renderMessageActions(
+        { onClickCopy: mockOnClickCopy },
+        { messageBody: testMessageBody },
+      );
+
+      const copyButton = screen.getByRole('button', { name: 'Copy message' });
+      userEvent.click(copyButton);
+
+      // Wait for the clipboard API call to complete
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(mockClipboard.writeText).toHaveBeenCalledWith(testMessageBody);
+      expect(mockOnClickCopy).toHaveBeenCalled();
+    });
+
+    test('handles missing messageBody in context gracefully', async () => {
+      const mockOnClickCopy = jest.fn();
+
+      const { container: _container } = render(
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <Message messageBody={undefined}>
+            <MessageActions onClickCopy={mockOnClickCopy} />
+          </Message>
+        </LeafyGreenChatProvider>,
+      );
+
+      const copyButton = screen.getByRole('button', { name: 'Copy message' });
+      userEvent.click(copyButton);
+
+      // Wait for the clipboard API call to complete
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(mockClipboard.writeText).not.toHaveBeenCalled();
+      expect(mockOnClickCopy).not.toHaveBeenCalled();
     });
   });
 

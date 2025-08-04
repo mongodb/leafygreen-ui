@@ -33,6 +33,7 @@
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feedback": "workspace:^",
     "@lg-chat/message-rating": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
