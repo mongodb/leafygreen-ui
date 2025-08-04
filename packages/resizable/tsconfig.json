@@ -19,19 +19,7 @@
   ],
   "references": [
     {
-      "path": "../button"
-    },
-    {
       "path": "../emotion"
-    },
-    {
-      "path": "../hooks"
-    },
-    {
-      "path": "../icon"
-    },
-    {
-      "path": "../icon-button"
     },
     {
       "path": "../lib"
@@ -39,23 +27,5 @@
     {
       "path": "../palette"
     },
-    {
-      "path": "../polymorphic"
-    },
-    {
-      "path": "../resizable"
-    },
-    {
-      "path": "../tabs"
-    },
-    {
-      "path": "../toolbar"
-    },
-    {
-      "path": "../tokens"
-    },
-    {
-      "path": "../typography"
-    }
   ]
 }

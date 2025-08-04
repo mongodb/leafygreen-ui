@@ -2,11 +2,9 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
-  Position,
   useIdAllocator,
   useIsomorphicLayoutEffect,
   useMergeRefs,
-  useResizable,
 } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -14,6 +12,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { usePolymorphic } from '@leafygreen-ui/polymorphic';
+import { Position, useResizable } from '@leafygreen-ui/resizable';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
@@ -22,7 +21,6 @@ import { useDrawerLayoutContext } from '../DrawerLayout';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
 
-import { DRAWER_MAX_PERCENTAGE_WIDTH } from './Drawer.constants';
 import {
   getChildrenContainerStyles,
   getDrawerShadowStyles,
@@ -161,7 +159,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       initialSize: open ? initialSize : 0,
       minSize: resizableMinWidth,
       maxSize: resizableMaxWidth,
-      maxViewportPercentages: DRAWER_MAX_PERCENTAGE_WIDTH,
       position: Position.Right,
     });
 

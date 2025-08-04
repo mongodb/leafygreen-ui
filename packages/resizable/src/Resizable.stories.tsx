@@ -2,8 +2,8 @@ import React, { ElementType } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
+import { Position } from './useResizable/useResizable.types';
 import { useResizable } from './useResizable';
-import { Position } from './useResizable.types';
 
 export default {
   title: 'internal/hooks/useResizable/position',
@@ -74,17 +74,18 @@ const CreateResizableStory: StoryFn<any> = args => {
     initialSize: 300,
     minSize: 200,
     maxSize: 600,
-    maxViewportPercentages: 50,
     position,
   });
 
   const resizerProps = getResizerProps();
-  const isVertical = position === 'left' || position === 'right';
+  const isVertical = position === Position.Left || position === Position.Right;
 
   const containerStyles = {
     ...config.containerStyles,
     [isVertical ? 'width' : 'height']: size,
-    ...(isVertical ? { height: '100%' } : { width: '100vw' }),
+    ...(isVertical
+      ? { height: '100%', maxWidth: '50vw' }
+      : { width: '100vw', maxHeight: '50vh' }),
     backgroundColor: 'lightgray',
     position: 'absolute' as const,
   };

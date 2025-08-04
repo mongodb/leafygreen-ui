@@ -1,0 +1,1 @@
+export { calculateNewSize } from './calculateNewSize';
