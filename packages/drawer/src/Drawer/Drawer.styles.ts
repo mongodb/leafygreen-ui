@@ -8,7 +8,11 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import { TRANSITION_DURATION, TRANSITION_TIMING_FUNCTION } from '../constants';
+import {
+  EMBEDDED_TOOLBAR_OVERFLOW_PADDING,
+  TRANSITION_DURATION,
+  TRANSITION_TIMING_FUNCTION,
+} from '../constants';
 
 import { HEADER_HEIGHT, MOBILE_BREAKPOINT } from './Drawer.constants';
 import { DisplayMode, Size } from './Drawer.types';
@@ -303,7 +307,7 @@ export const getResizerStyles = ({
     `,
     {
       [css`
-        left: 4px; // only if there is a toolbar
+        left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px; // An embedded drawer with a toolbar needs to be offset to the right to account for the overflow padding.
       `]: hasToolbar,
     },
     resizerClassName,

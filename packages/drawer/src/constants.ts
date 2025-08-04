@@ -18,3 +18,4 @@ export const DRAWER_WIDTH: Record<Size, number> = {
 export const DRAWER_TOOLBAR_WIDTH = TOOLBAR_WIDTH;
 export const TRANSITION_TIMING_FUNCTION = 'ease-in-out';
 export const TRANSITION_DURATION = transitionDuration.slower;
+export const EMBEDDED_TOOLBAR_OVERFLOW_PADDING = 4;
