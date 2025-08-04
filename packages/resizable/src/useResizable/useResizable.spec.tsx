@@ -284,7 +284,7 @@ describe('useResizable', () => {
     expect(result.current.size).toBe(increasedSize);
     expect(onResize).toHaveBeenCalledWith(increasedSize);
 
-    // Get the NEW resizer props after the re-render
+    // Get the new resizer props after the re-render
     resizerProps = result.current.getResizerProps();
 
     // Press left arrow to decrease size
@@ -354,7 +354,7 @@ describe('useResizable', () => {
     });
     onResize.mockClear();
 
-    // Get the NEW resizer props after the re-render
+    // Get the new resizer props after the re-render
     resizerProps = result.current.getResizerProps();
 
     // Press key to decrease size below min
