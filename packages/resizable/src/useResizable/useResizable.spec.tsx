@@ -1,6 +1,5 @@
 import { fireEvent } from '@testing-library/dom';
 import { act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
@@ -270,24 +269,30 @@ describe('useResizable', () => {
       }),
     );
 
-    // Focus the resizer
-    const resizerProps = result.current.getResizerProps();
-    act(() => {
-      resizerProps?.onFocus();
-    });
+    // Get resizer props
+    let resizerProps = result.current.getResizerProps();
 
-    // Press right arrow to increase size
+    // Trigger keyDown directly since the hook handles keyboard events directly
     act(() => {
-      userEvent.keyboard('{ArrowRight}');
+      resizerProps?.onKeyDown({
+        code: 'ArrowRight',
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent);
     });
 
     const increasedSize = initialSize + KEYBOARD_RESIZE_PIXEL_STEP;
     expect(result.current.size).toBe(increasedSize);
     expect(onResize).toHaveBeenCalledWith(increasedSize);
 
+    // Get the NEW resizer props after the re-render
+    resizerProps = result.current.getResizerProps();
+
     // Press left arrow to decrease size
     act(() => {
-      userEvent.keyboard('{ArrowLeft}');
+      resizerProps?.onKeyDown({
+        code: 'ArrowLeft',
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent);
     });
 
     // Should be back to initial size
@@ -328,15 +333,15 @@ describe('useResizable', () => {
       }),
     );
 
-    // Focus the resizer
-    const resizerProps = result.current.getResizerProps();
-    act(() => {
-      resizerProps?.onFocus();
-    });
+    // Get resizer props
+    let resizerProps = result.current.getResizerProps();
 
     // Press key to increase size beyond max
     act(() => {
-      userEvent.keyboard('{ArrowLeft}');
+      resizerProps?.onKeyDown({
+        code: 'ArrowLeft',
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent);
     });
 
     // Should be constrained to maxSize
@@ -349,54 +354,19 @@ describe('useResizable', () => {
     });
     onResize.mockClear();
 
+    // Get the NEW resizer props after the re-render
+    resizerProps = result.current.getResizerProps();
+
     // Press key to decrease size below min
     act(() => {
-      userEvent.keyboard('{ArrowRight}');
+      resizerProps?.onKeyDown({
+        code: 'ArrowRight',
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent);
     });
 
     // Should be constrained to minSize
     expect(result.current.size).toBe(minSize);
     expect(onResize).toHaveBeenCalledWith(minSize);
-  });
-
-  test('ignores keyboard interactions when resizer is not focused', () => {
-    const onResize = jest.fn();
-    const initialSize = 300;
-    const { result } = renderHook(() =>
-      useResizable({
-        initialSize,
-        minSize: 100,
-        maxSize: 500,
-        position: Position.Left,
-        onResize,
-      }),
-    );
-
-    // Note: not calling resizerProps.onFocus() so the resizer is not focused
-
-    // Try to resize with keyboard
-    act(() => {
-      userEvent.keyboard('{ArrowRight}');
-    });
-
-    // Size should remain unchanged
-    expect(result.current.size).toBe(initialSize);
-    expect(onResize).not.toHaveBeenCalled();
-
-    // Now focus and verify it works when focused
-    const resizerProps = result.current.getResizerProps();
-    act(() => {
-      resizerProps?.onFocus();
-    });
-
-    // Try again with focus
-    act(() => {
-      userEvent.keyboard('{ArrowRight}');
-    });
-
-    // Now size should change
-    const increasedSize = initialSize + KEYBOARD_RESIZE_PIXEL_STEP;
-    expect(result.current.size).toBe(increasedSize);
-    expect(onResize).toHaveBeenCalledWith(increasedSize);
   });
 });

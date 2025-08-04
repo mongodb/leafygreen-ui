@@ -44,7 +44,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 }: ResizableProps): ResizableReturn<T> => {
   const resizableRef = useRef<T>(null);
   const [isResizing, setIsResizing] = useState<boolean>(false);
-  const [isFocused, setIsFocused] = useState<boolean>(false);
   // Refs to store initial mouse position and element size at the start of a drag
   const initialMousePos = useRef<Readonly<{ x: number; y: number }>>({
     x: 0,
@@ -188,20 +187,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   );
 
   /**
-   * Handle focus event for the resizer
-   */
-  const handleFocus = useCallback(() => {
-    setIsFocused(true);
-  }, []);
-
-  /**
-   * Handle blur event for the resizer
-   */
-  const handleBlur = useCallback(() => {
-    setIsFocused(false);
-  }, []);
-
-  /**
    * Returns the props for the resizer element.
    * This includes mouse down, focus, blur, and style properties.
    * The resizer is used to initiate resizing of the element.
@@ -215,8 +200,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
 
     const props = {
       onMouseDown: handleMouseDown,
-      onFocus: handleFocus,
-      onBlur: handleBlur,
+      onKeyDown: handleKeyDown,
       ...getResizerAriaAttributes(size, minSize, maxSize, isVertical),
       tabIndex: 0, // Make the resizer focusable
       className: getResizerStyles(isVertical, isResizing),
@@ -229,8 +213,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     minSize,
     maxSize,
     handleMouseDown,
-    handleFocus,
-    handleBlur,
+    handleKeyDown,
     isResizing,
     isVertical,
   ]);
@@ -250,6 +233,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleMouseUp);
     } else {
+      // If not enabled, remove the listeners
       cleanupListeners();
     }
 
@@ -257,26 +241,6 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
       cleanupListeners();
     };
   }, [isResizing, handleMouseMove, handleMouseUp, enabled]);
-
-  /**
-   * Effect hook to add and remove global keydown event listener
-   * This listener is added to 'window' to allow resizing with arrow keys
-   */
-  useEffect(() => {
-    const cleanupListener = () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-
-    if (isFocused && enabled) {
-      window.addEventListener('keydown', handleKeyDown);
-    } else {
-      cleanupListener();
-    }
-
-    return () => {
-      cleanupListener();
-    };
-  }, [enabled, isFocused, handleKeyDown]);
 
   /**
    * Effect hook to handle CSS transitions for resizing

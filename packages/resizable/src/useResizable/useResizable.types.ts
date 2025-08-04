@@ -60,8 +60,7 @@ export interface ResizableProps {
 export interface ResizerProps {
   onMouseDown: (e: React.MouseEvent | MouseEvent) => void;
   tabIndex: number;
-  onFocus: () => void;
-  onBlur: () => void;
+  onKeyDown: (e: React.KeyboardEvent | KeyboardEvent) => void;
   className?: string;
   [key: string]: any; // For aria attributes
 }
