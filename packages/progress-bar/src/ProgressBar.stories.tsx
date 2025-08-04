@@ -159,17 +159,17 @@ export const WithHeaderTruncation: StoryObj<typeof ProgressBar> = {
 };
 
 export const WithProviderDarkMode: StoryObj<typeof ProgressBar> = {
+  parameters: {
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: color.dark.background.secondary.default },
+      ],
+    },
+  },
   render: _args => (
     <LeafyGreenProvider darkMode={true}>
-      <div
-        style={{
-          width: '100%',
-          padding: '48px',
-          backgroundColor: color.dark.background.secondary.default,
-        }}
-      >
-        <ProgressBar {...sharedDeterminateArgs} />
-      </div>
+      <ProgressBar {...sharedDeterminateArgs} />
     </LeafyGreenProvider>
   ),
   ...disableDarkModeControl,
