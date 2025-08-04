@@ -45,7 +45,7 @@ export const useResolvedDrawerProps = ({
  * @returns
  */
 export const getResolvedDrawerSizes = (hasToolbar?: boolean) => {
-  const initialSize = hasToolbar ? DRAWER_WITH_TOOLBAR_WIDTH : DRAWER_WIDTH;
+  const size = hasToolbar ? DRAWER_WITH_TOOLBAR_WIDTH : DRAWER_WIDTH;
   const resizableMinWidth = hasToolbar
     ? DRAWER_MIN_WIDTH_WITH_TOOLBAR
     : DRAWER_MIN_WIDTH;
@@ -53,5 +53,5 @@ export const getResolvedDrawerSizes = (hasToolbar?: boolean) => {
     ? DRAWER_MAX_WIDTH_WITH_TOOLBAR
     : DRAWER_MAX_WIDTH;
 
-  return { initialSize, resizableMinWidth, resizableMaxWidth };
+  return { size, resizableMinWidth, resizableMaxWidth };
 };

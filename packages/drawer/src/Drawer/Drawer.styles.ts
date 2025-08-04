@@ -286,13 +286,20 @@ export const innerChildrenContainerStyles = cx(
 
 export const getResizerStyles = ({
   resizerClassName,
+  hasToolbar = false,
 }: {
   resizerClassName?: string;
+  hasToolbar?: boolean;
 }) =>
   cx(
     css`
       position: absolute;
-      left: 0;
+      left: 0px;
     `,
+    {
+      [css`
+        left: 4px; // only if there is a toolbar
+      `]: hasToolbar,
+    },
     resizerClassName,
   );
