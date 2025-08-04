@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import {
   useLeafyGreenChatContext,
   Variant,
@@ -8,6 +8,8 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
+
+import { MessageContext } from '../MessageContext';
 
 import { CompactMessage } from './CompactMessage';
 import { type MessageProps } from './Message.types';
@@ -50,28 +52,37 @@ export const Message = forwardRef<HTMLDivElement, MessageProps>(
       );
     }
 
+    const contextValue = useMemo(
+      () => ({
+        messageBody: rest.messageBody,
+      }),
+      [rest.messageBody],
+    );
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        {isCompact ? (
-          <CompactMessage ref={fwdRef} {...rest}>
-            {children}
-          </CompactMessage>
-        ) : (
-          <SpaciousMessage
-            align={align}
-            avatar={avatar}
-            baseFontSize={baseFontSize}
-            componentOverrides={componentOverrides}
-            links={links}
-            linksHeading={linksHeading}
-            onLinkClick={onLinkClick}
-            ref={fwdRef}
-            verified={verified}
-            {...rest}
-          >
-            {children}
-          </SpaciousMessage>
-        )}
+        <MessageContext.Provider value={contextValue}>
+          {isCompact ? (
+            <CompactMessage ref={fwdRef} {...rest}>
+              {children}
+            </CompactMessage>
+          ) : (
+            <SpaciousMessage
+              align={align}
+              avatar={avatar}
+              baseFontSize={baseFontSize}
+              componentOverrides={componentOverrides}
+              links={links}
+              linksHeading={linksHeading}
+              onLinkClick={onLinkClick}
+              ref={fwdRef}
+              verified={verified}
+              {...rest}
+            >
+              {children}
+            </SpaciousMessage>
+          )}
+        </MessageContext.Provider>
       </LeafyGreenProvider>
     );
   },
