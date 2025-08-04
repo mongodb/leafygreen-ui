@@ -67,6 +67,7 @@ export function MessageActions({
         await navigator.clipboard.writeText(messageBody);
         setCopied(true);
         onClickCopy?.(e);
+        // reset copied state after 1.5 seconds
         setTimeout(() => setCopied(false), 1500);
       } catch (_err) {
         onClickCopy?.(e);
