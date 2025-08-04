@@ -1,5 +1,5 @@
 import React from 'react';
-import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -75,7 +75,6 @@ const meta: StoryMetaType<typeof ProgressBar> = {
     ),
   ],
   argTypes: {
-    darkMode: storybookArgTypes.darkMode,
     isIndeterminate: {
       control: { type: 'boolean' },
     },
