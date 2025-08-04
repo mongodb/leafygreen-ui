@@ -1,6 +1,8 @@
 import React from 'react';
-import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
+
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { isAnimatedVariant } from './ProgressBar/utils';
 import { requiredA11yArgs, storyValues } from './test.constants';
@@ -48,17 +50,17 @@ const meta: StoryMetaType<typeof ProgressBar> = {
         size: SIZES,
         darkMode: [false, true],
       },
-
-      decorator: (InstanceFn, context) => {
-        return (
+      decorator: (InstanceFn, context) => (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
           <div style={{ padding: '48px' }}>
-            <InstanceFn {...context?.args} />
+            <InstanceFn />
           </div>
-        );
-      },
+        </LeafyGreenProvider>
+      ),
     },
   },
   argTypes: {
+    darkMode: storybookArgTypes.darkMode,
     isIndeterminate: {
       control: { type: 'boolean' },
     },
