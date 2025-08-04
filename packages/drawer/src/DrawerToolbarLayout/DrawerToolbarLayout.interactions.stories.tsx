@@ -12,6 +12,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer } from '../Drawer';
+import { DrawerLayoutProvider } from '../DrawerLayout';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 import { getTestUtils } from '../testing';
 
@@ -22,6 +23,12 @@ import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 // snapshot tests to fail if the tooltip is not in the correct position.
 // Setting a delay of 1 second allows the tooltip to be in the correct position
 const TOOLTIP_SNAPSHOT_DELAY = 1000; // ms
+
+// For testing purposes. displayMode is read from the context, so we need to
+// pass it down to the DrawerToolbarLayoutProps.
+type DrawerToolbarLayoutPropsWithDisplayMode = DrawerToolbarLayoutProps & {
+  displayMode?: DisplayMode;
+};
 
 const SEED = 0;
 faker.seed(SEED);
@@ -112,9 +119,9 @@ export default {
   ],
 };
 
-const Template: StoryFn<DrawerToolbarLayoutProps> = ({
+const Template: StoryFn<DrawerToolbarLayoutPropsWithDisplayMode> = ({
   displayMode = DisplayMode.Embedded,
-}: DrawerToolbarLayoutProps) => {
+}: DrawerToolbarLayoutPropsWithDisplayMode) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -139,17 +146,16 @@ const Template: StoryFn<DrawerToolbarLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout
-        toolbarData={DRAWER_TOOLBAR_DATA}
-        displayMode={displayMode!}
-      >
-        <MainContent />
-      </DrawerToolbarLayout>
+      <DrawerLayoutProvider displayMode={displayMode!} hasToolbar>
+        <DrawerToolbarLayout toolbarData={DRAWER_TOOLBAR_DATA}>
+          <MainContent />
+        </DrawerToolbarLayout>
+      </DrawerLayoutProvider>
     </div>
   );
 };
 
-export const OverlayOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
+export const OverlayOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
   {
     render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
     args: {
@@ -173,70 +179,79 @@ export const OverlayOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
     },
   };
 
-export const OverlaySwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> = {
-  render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
-  args: {
-    displayMode: DisplayMode.Overlay,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const { getToolbarTestUtils, getDrawer, isOpen } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
-    const dashboardButton =
-      getToolbarIconButtonByLabel('Dashboard')?.getElement();
-
-    expect(isOpen()).toBe(false);
-
-    userEvent.click(codeButton!);
-
-    await waitFor(() => {
-      expect(isOpen()).toBe(true);
-      expect(canvas.getByText('Code Title')).toBeVisible();
-    });
-
-    userEvent.unhover(codeButton!);
-    userEvent.click(dashboardButton!);
-
-    await waitFor(() => {
-      expect(canvas.getByText('Dashboard Title')).toBeVisible();
-      expect(getDrawer().textContent).toContain('Dashboard Title');
-    });
-  },
-};
-
-export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
-  render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
-  args: {
-    displayMode: DisplayMode.Overlay,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const { getToolbarTestUtils, getCloseButtonUtils, isOpen } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
-    const closeButton = getCloseButtonUtils().getButton();
-
-    expect(isOpen()).toBe(false);
-
-    userEvent.click(codeButton!);
-
-    await waitFor(() => {
-      expect(isOpen()).toBe(true);
-      expect(canvas.getByText('Code Title')).toBeVisible();
-    });
-
-    userEvent.click(closeButton);
-
-    await waitFor(() => expect(isOpen()).toBe(false));
-    // Pause so the tooltip is in the correct position in the snapshot
-    await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
-  },
-};
-
-export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
+export const OverlaySwitchesToolbarItems: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
   {
-    render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <Template {...args} />
+    ),
+    args: {
+      displayMode: DisplayMode.Overlay,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const { getToolbarTestUtils, getDrawer, isOpen } = getTestUtils();
+      const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+      const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+      const dashboardButton =
+        getToolbarIconButtonByLabel('Dashboard')?.getElement();
+
+      expect(isOpen()).toBe(false);
+
+      userEvent.click(codeButton!);
+
+      await waitFor(() => {
+        expect(isOpen()).toBe(true);
+        expect(canvas.getByText('Code Title')).toBeVisible();
+      });
+
+      userEvent.unhover(codeButton!);
+      userEvent.click(dashboardButton!);
+
+      await waitFor(() => {
+        expect(canvas.getByText('Dashboard Title')).toBeVisible();
+        expect(getDrawer().textContent).toContain('Dashboard Title');
+      });
+    },
+  };
+
+export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <Template {...args} />
+    ),
+    args: {
+      displayMode: DisplayMode.Overlay,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const { getToolbarTestUtils, getCloseButtonUtils, isOpen } =
+        getTestUtils();
+      const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+      const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+      const closeButton = getCloseButtonUtils().getButton();
+
+      expect(isOpen()).toBe(false);
+
+      userEvent.click(codeButton!);
+
+      await waitFor(() => {
+        expect(isOpen()).toBe(true);
+        expect(canvas.getByText('Code Title')).toBeVisible();
+      });
+
+      userEvent.click(closeButton);
+
+      await waitFor(() => expect(isOpen()).toBe(false));
+      // Pause so the tooltip is in the correct position in the snapshot
+      await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
+    },
+  };
+
+export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <Template {...args} />
+    ),
     args: {
       displayMode: DisplayMode.Embedded,
     },
@@ -259,9 +274,11 @@ export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutProps> =
     },
   };
 
-export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> =
+export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
   {
-    render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <Template {...args} />
+    ),
     args: {
       displayMode: DisplayMode.Embedded,
     },
@@ -291,31 +308,35 @@ export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutProps> =
     },
   };
 
-export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutProps> = {
-  render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
-  args: {
-    displayMode: DisplayMode.Embedded,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const { getToolbarTestUtils, getCloseButtonUtils, isOpen } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
-    const closeButton = getCloseButtonUtils().getButton();
+export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <Template {...args} />
+    ),
+    args: {
+      displayMode: DisplayMode.Embedded,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const { getToolbarTestUtils, getCloseButtonUtils, isOpen } =
+        getTestUtils();
+      const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+      const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+      const closeButton = getCloseButtonUtils().getButton();
 
-    expect(isOpen()).toBe(false);
+      expect(isOpen()).toBe(false);
 
-    userEvent.click(codeButton!);
+      userEvent.click(codeButton!);
 
-    await waitFor(() => {
-      expect(isOpen()).toBe(true);
-      expect(canvas.getByText('Code Title')).toBeVisible();
-    });
+      await waitFor(() => {
+        expect(isOpen()).toBe(true);
+        expect(canvas.getByText('Code Title')).toBeVisible();
+      });
 
-    userEvent.click(closeButton!);
+      userEvent.click(closeButton!);
 
-    await waitFor(() => expect(isOpen()).toBe(false));
-    // Pause so the tooltip is in the correct position in the snapshot
-    await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
-  },
-};
+      await waitFor(() => expect(isOpen()).toBe(false));
+      // Pause so the tooltip is in the correct position in the snapshot
+      await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
+    },
+  };

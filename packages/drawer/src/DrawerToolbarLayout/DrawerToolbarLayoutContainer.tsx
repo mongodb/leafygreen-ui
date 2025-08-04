@@ -1,9 +1,9 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 
 import { Drawer } from '../Drawer/Drawer';
-import { DisplayMode } from '../Drawer/Drawer.types';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 import { DrawerWithToolbarWrapper } from '../DrawerWithToolbarWrapper';
 import { LayoutComponent } from '../LayoutComponent';
@@ -28,9 +28,7 @@ export const DrawerToolbarLayoutContainer = forwardRef<
   (
     {
       children,
-      displayMode = DisplayMode.Overlay,
       toolbarData,
-      onClose,
       darkMode: darkModeProp,
       'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
@@ -40,8 +38,13 @@ export const DrawerToolbarLayoutContainer = forwardRef<
     const { openDrawer, closeDrawer, getActiveDrawerContent, isDrawerOpen } =
       useDrawerToolbarContext();
     const { id, title, content } = getActiveDrawerContent() || {};
+    const { onClose, displayMode, setIsDrawerOpen } = useDrawerLayoutContext();
+
+    useEffect(() => {
+      setIsDrawerOpen(isDrawerOpen);
+    }, [isDrawerOpen, setIsDrawerOpen]);
+
     const lgIds = getLgIds(dataLgId);
-    const hasData = toolbarData && toolbarData.length > 0;
 
     const handleOnClose = (event: React.MouseEvent<HTMLButtonElement>) => {
       onClose?.(event);
@@ -58,18 +61,9 @@ export const DrawerToolbarLayoutContainer = forwardRef<
     };
 
     return (
-      <LayoutComponent
-        {...rest}
-        ref={forwardRef}
-        displayMode={displayMode}
-        hasToolbar={hasData}
-        isDrawerOpen={isDrawerOpen}
-      >
+      <LayoutComponent {...rest} ref={forwardRef}>
         <div className={contentStyles}>{children}</div>
-        <DrawerWithToolbarWrapper
-          displayMode={displayMode}
-          isDrawerOpen={isDrawerOpen}
-        >
+        <DrawerWithToolbarWrapper>
           <Toolbar data-lgid={lgIds.toolbar} data-testid={lgIds.toolbar}>
             {toolbarData?.map(toolbarItem => (
               <ToolbarIconButton

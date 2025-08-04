@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 
-import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
+import { TRANSITION_DURATION } from '../constants';
 
 import {
   ContextData,
@@ -50,7 +50,7 @@ export const DrawerToolbarProvider = ({
     // Delay the removal of the content to allow the drawer to close before removing the content
     setTimeout(() => {
       setContent(undefined);
-    }, drawerTransitionDuration);
+    }, TRANSITION_DURATION);
     setIsDrawerOpen(false);
   }, [setContent]);
 

@@ -21,61 +21,6 @@ import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 const SEED = 0;
 faker.seed(SEED);
 
-const defaultExcludedControls = [
-  ...storybookExcludedControlParams,
-  'children',
-  'open',
-];
-
-const toolbarExcludedControls = [
-  ...defaultExcludedControls,
-  'displayMode',
-  'title',
-];
-
-export default {
-  title: 'Sections/Drawer/Toolbar',
-  component: Drawer,
-  decorators: [
-    StoryFn => (
-      <div
-        className={css`
-          height: 100%;
-          display: flex;
-          align-items: center;
-          margin: -100px;
-          width: 100vw;
-          border-bottom: 3px solid ${palette.green.base};
-        `}
-      >
-        <StoryFn />
-      </div>
-    ),
-  ],
-  parameters: {
-    default: null,
-    controls: {
-      exclude: defaultExcludedControls,
-    },
-  },
-  args: {
-    displayMode: DisplayMode.Overlay,
-    title: 'Drawer Title',
-  },
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-    displayMode: {
-      control: 'radio',
-      description: 'Options to control how the drawer element is displayed',
-      options: Object.values(DisplayMode),
-    },
-    title: {
-      control: 'text',
-      description: 'Title of the Drawer',
-    },
-  },
-} satisfies StoryMetaType<typeof Drawer>;
-
 const LongContent = () => {
   const paragraphs = useMemo(() => {
     return faker.lorem
@@ -121,6 +66,99 @@ const DrawerContent = () => {
     </div>
   );
 };
+
+const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
+  {
+    id: 'Code',
+    label: 'Code',
+    content: <DrawerContent />,
+    title: 'Code Title',
+    glyph: 'Code',
+    onClick: () => {
+      console.log('Code clicked');
+    },
+  },
+  {
+    id: 'Dashboard',
+    label: 'Dashboard',
+    content: <DrawerContent />,
+    title: 'Dashboard Title',
+    glyph: 'Dashboard',
+    onClick: () => {
+      console.log('Dashboard clicked');
+    },
+  },
+  {
+    id: 'Plus',
+    label: "Perform some action, doesn't open a drawer",
+    glyph: 'Plus',
+    onClick: () => {
+      console.log('Plus clicked, does not update drawer');
+    },
+  },
+  {
+    id: 'Sparkle',
+    label: 'Disabled item',
+    glyph: 'Sparkle',
+    disabled: true,
+  },
+];
+
+const defaultExcludedControls = [
+  ...storybookExcludedControlParams,
+  'children',
+  'open',
+];
+
+const toolbarExcludedControls = [
+  ...defaultExcludedControls,
+  'displayMode',
+  'title',
+];
+
+export default {
+  title: 'Sections/Drawer/Toolbar',
+  component: Drawer,
+  decorators: [
+    StoryFn => (
+      <div
+        className={css`
+          height: 100%;
+          display: flex;
+          align-items: center;
+          margin: -100px;
+          width: 100vw;
+          border-bottom: 3px solid ${palette.green.base};
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
+  parameters: {
+    default: null,
+    controls: {
+      exclude: defaultExcludedControls,
+    },
+  },
+  args: {
+    displayMode: DisplayMode.Overlay,
+    title: 'Drawer Title',
+    toolbarData: DRAWER_TOOLBAR_DATA,
+  },
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+    displayMode: {
+      control: 'radio',
+      description: 'Options to control how the drawer element is displayed',
+      options: Object.values(DisplayMode),
+    },
+    title: {
+      control: 'text',
+      description: 'Title of the Drawer',
+    },
+  },
+} satisfies StoryMetaType<typeof Drawer>;
 
 const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
   children,
@@ -168,46 +206,8 @@ const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
   </div>
 );
 
-const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <DrawerContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-    onClick: () => {
-      console.log('Code clicked');
-    },
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <DrawerContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-    onClick: () => {
-      console.log('Dashboard clicked');
-    },
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-    onClick: () => {
-      console.log('Plus clicked, does not update drawer');
-    },
-  },
-  {
-    id: 'Sparkle',
-    label: 'Disabled item',
-    glyph: 'Sparkle',
-    disabled: true,
-  },
-];
-
 const Component: StoryFn<DrawerLayoutProps> = ({
-  displayMode = DisplayMode.Embedded,
-  darkMode,
+  ...args
 }: DrawerLayoutProps) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
@@ -232,21 +232,14 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerLayout
-        darkMode={darkMode}
-        toolbarData={DRAWER_TOOLBAR_DATA}
-        displayMode={displayMode}
-      >
+      <DrawerLayout {...args}>
         <MainContent />
       </DrawerLayout>
     </div>
   );
 };
 
-const ComponentOpen: StoryFn<DrawerLayoutProps> = ({
-  displayMode = DisplayMode.Embedded,
-  darkMode,
-}: DrawerLayoutProps) => {
+const ComponentOpen: StoryFn<DrawerLayoutProps> = (args: DrawerLayoutProps) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -274,11 +267,7 @@ const ComponentOpen: StoryFn<DrawerLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerLayout
-        darkMode={darkMode}
-        toolbarData={DRAWER_TOOLBAR_DATA}
-        displayMode={displayMode}
-      >
+      <DrawerLayout {...args}>
         <MainContent />
       </DrawerLayout>
     </div>
@@ -350,6 +339,7 @@ const EmbeddedCloudNavComponent: StoryFn<DrawerLayoutProps> = (
         toolbarData={DRAWER_TOOLBAR_DATA}
         darkMode={args.darkMode}
         displayMode="embedded"
+        resizable={args.resizable}
       >
         <main
           className={css`
@@ -371,12 +361,17 @@ export const EmbeddedCloudNav: StoryObj<DrawerLayoutProps> = {
       exclude: toolbarExcludedControls,
     },
   },
+  args: {
+    resizable: true,
+    displayMode: DisplayMode.Embedded,
+  },
 };
 
 export const Embedded: StoryObj<DrawerLayoutProps> = {
   render: Component,
   args: {
     displayMode: DisplayMode.Embedded,
+    resizable: true,
   },
   parameters: {
     controls: {
@@ -389,6 +384,7 @@ export const EmbeddedOpen: StoryObj<DrawerLayoutProps> = {
   render: ComponentOpen,
   args: {
     displayMode: DisplayMode.Embedded,
+    resizable: true,
   },
   parameters: {
     controls: {

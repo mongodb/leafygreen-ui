@@ -1,6 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { GRID_AREA, TOOLBAR_WIDTH } from '../constants';
+import { DRAWER_TOOLBAR_WIDTH, GRID_AREA } from '../constants';
 
 const baseStyles = css`
   width: 100%;
@@ -16,7 +16,7 @@ const drawerBaseStyles = css`
 
 const toolbarBaseStyles = css`
   display: grid;
-  grid-template-columns: auto ${TOOLBAR_WIDTH}px;
+  grid-template-columns: auto ${DRAWER_TOOLBAR_WIDTH}px;
   grid-template-areas: '${GRID_AREA.content} ${GRID_AREA.drawer}';
   height: 100%;
 `;

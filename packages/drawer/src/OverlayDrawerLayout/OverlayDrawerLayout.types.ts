@@ -1,3 +1,3 @@
-import { BaseLayoutComponentProps } from '../LayoutComponent/LayoutComponent.types';
+import { LayoutComponentProps } from '../LayoutComponent/LayoutComponent.types';
 
-export type OverlayDrawerLayoutProps = BaseLayoutComponentProps;
+export type OverlayDrawerLayoutProps = Omit<LayoutComponentProps, 'drawer'>;

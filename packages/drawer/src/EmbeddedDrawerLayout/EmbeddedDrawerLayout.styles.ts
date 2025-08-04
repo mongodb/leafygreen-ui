@@ -1,69 +1,111 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
-import { GRID_AREA } from '../constants';
-import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../constants';
-import { MOBILE_BREAKPOINT } from '../Drawer';
-import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
+import {
+  DRAWER_TOOLBAR_WIDTH,
+  DRAWER_WIDTH,
+  DRAWER_WITH_TOOLBAR_WIDTH,
+  GRID_AREA,
+  TRANSITION_DURATION,
+  TRANSITION_TIMING_FUNCTION,
+} from '../constants';
+import { MOBILE_BREAKPOINT } from '../Drawer/Drawer.constants';
 
 const baseStyles = css`
   width: 100%;
   display: grid;
   grid-template-columns: auto 0;
   transition-property: grid-template-columns, grid-template-rows;
-  transition-timing-function: ease-in-out;
-  transition-duration: ${drawerTransitionDuration}ms;
+  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
+  transition-duration: ${TRANSITION_DURATION}ms;
   overflow: hidden;
   position: relative;
   height: 100%;
 `;
 
-const drawerBaseStyles = css`
+const setDrawerDefaultWidth = ({
+  isDrawerOpen,
+  hasToolbar,
+}: {
+  isDrawerOpen?: boolean;
+  hasToolbar: boolean;
+}) => css`
+  --drawer-width-default: ${isDrawerOpen
+    ? hasToolbar
+      ? DRAWER_WITH_TOOLBAR_WIDTH
+      : DRAWER_WIDTH
+    : 0};
+  --drawer-width: var(--drawer-width-default);
+`;
+
+const getBaseStyles = ({
+  isDrawerOpen,
+  hasToolbar,
+}: {
+  isDrawerOpen?: boolean;
+  hasToolbar: boolean;
+}) => cx(baseStyles, setDrawerDefaultWidth({ isDrawerOpen, hasToolbar }));
+
+// If there is no toolbar and the drawer is open, we need to shift the layout by the drawer width;
+const withoutToolbarBaseStyles = css`
+  grid-template-columns: auto min(
+      50vw,
+      calc(var(--drawer-width, var(--drawer-width-default)) * 1px)
+    );
+
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-columns: unset;
     grid-template-rows: 100% 0;
   }
 `;
 
-// If there is no toolbar and the drawer is open, we need to shift the layout by the panel width;
-const drawerOpenStyles = css`
-  grid-template-columns: auto ${PANEL_WIDTH}px;
-
+const withoutToolbarOpenStyles = css`
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-rows: 50% 50%;
   }
 `;
 
+// If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + drawer width;
 const withToolbarBaseStyles = css`
-  grid-template-columns: auto ${TOOLBAR_WIDTH}px;
   grid-template-areas: '${GRID_AREA.content} ${GRID_AREA.drawer}';
+  grid-template-columns: auto min(
+      50vw,
+      calc(
+        ${DRAWER_TOOLBAR_WIDTH}px +
+          var(--drawer-width, var(--drawer-width-default)) * 1px
+      )
+    );
 `;
 
-// If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + panel width;
 const withToolbarOpenStyles = css`
-  grid-template-columns: auto ${PANEL_WIDTH + TOOLBAR_WIDTH}px;
-
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
-    grid-template-columns: auto ${TOOLBAR_WIDTH}px;
+    grid-template-columns: auto ${DRAWER_TOOLBAR_WIDTH}px;
   }
+`;
+
+const resizingStyles = css`
+  transition: none;
 `;
 
 export const getEmbeddedDrawerLayoutStyles = ({
   className,
   isDrawerOpen,
   hasToolbar = false,
+  isDrawerResizing = false,
 }: {
   className?: string;
-  isDrawerOpen: boolean;
+  isDrawerOpen?: boolean;
   hasToolbar?: boolean;
+  isDrawerResizing?: boolean;
 }) =>
   cx(
-    baseStyles,
+    getBaseStyles({ isDrawerOpen, hasToolbar }),
     {
+      [resizingStyles]: isDrawerResizing,
       [withToolbarBaseStyles]: hasToolbar,
       [withToolbarOpenStyles]: isDrawerOpen && hasToolbar,
-      [drawerBaseStyles]: !hasToolbar,
-      [drawerOpenStyles]: isDrawerOpen && !hasToolbar,
+      [withoutToolbarBaseStyles]: !hasToolbar,
+      [withoutToolbarOpenStyles]: isDrawerOpen && !hasToolbar,
     },
     className,
   );
