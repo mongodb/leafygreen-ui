@@ -7,7 +7,6 @@ import { getChangedChecksums } from './compare-checksum';
 const BATCH_SIZE = 10;
 const NUM_WORKERS = 4;
 
-const DELIMITER = '|';
 const ROLLUP_CONFIG_PATH = 'rollup.config.mjs';
 const ROLLUP_BATCH_CONFIG_PATH = 'rollup.batch.config.mjs';
 
@@ -50,6 +49,8 @@ async function buildExportsAndStories(): Promise<void> {
  * Runs the Rollup build command for a batch of icons.
  */
 async function buildBatch(batch: Array<string>): Promise<void> {
+  const { DELIMITER } = await import('../../constants.mjs');
+
   const batchArg = batch.join(DELIMITER);
   const cmd = `pnpm exec rollup -c ${ROLLUP_BATCH_CONFIG_PATH} --environment "ICONS:${batchArg}"`;
 
