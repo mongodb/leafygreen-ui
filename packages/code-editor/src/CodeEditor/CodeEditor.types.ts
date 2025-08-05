@@ -1,14 +1,10 @@
-import { ReactNode } from 'react';
-import type {
-  EditorState,
-  EditorView,
-  Extension,
-  ReactCodeMirrorRef,
-} from '@uiw/react-codemirror';
+import { type ReactNode } from 'react';
+import { type EditorState, type Extension } from '@codemirror/state';
+import { type EditorView } from '@codemirror/view';
 
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { type DarkModeProps } from '@leafygreen-ui/lib';
 
-import { type LanguageName } from './codeMirrorExtensions/createLanguageExtension';
+import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
@@ -16,13 +12,6 @@ import { type LanguageName } from './codeMirrorExtensions/createLanguageExtensio
  * @see {@link https://codemirror.net/docs/ref/#state.Extension}
  */
 export type CodeMirrorExtension = Extension;
-
-/**
- * Re-export of CodeMirror's {@link ReactCodeMirrorRef} type.
- * Provides access to the editor instance through React refs.
- * @see {@link https://uiwjs.github.io/react-codemirror/#/basic}
- */
-export type CodeMirrorRef = ReactCodeMirrorRef;
 
 /**
  * Re-export of CodeMirror's {@link EditorState} type.
@@ -37,6 +26,13 @@ export type CodeMirrorState = EditorState;
  * @see {@link https://codemirror.net/docs/ref/#view.EditorView}
  */
 export type CodeMirrorView = EditorView;
+
+/**
+ * Type for the DOM node that the CodeMirror editor is rendered into.
+ */
+export interface HTMLElementWithCodeMirror extends HTMLDivElement {
+  _cm?: EditorView;
+}
 
 /**
  * The important elements in the code mirror editor have regular (non-generated)
@@ -109,6 +105,13 @@ export interface CodeEditorTooltip {
 
 export interface CodeEditorProps extends DarkModeProps {
   /**
+   * Font size of text in the editor.
+   *
+   * @default 14
+   */
+  baseFontSize?: 14 | 16;
+
+  /**
    * Styling prop
    */
   className?: string;
@@ -172,6 +175,17 @@ export interface CodeEditorProps extends DarkModeProps {
   indentUnit?: IndentUnits;
 
   /**
+   * Renders the editor in a loading state.
+   *
+   * @remarks
+   * The CodeEditor is an asynchronous component that relies on lazy loading of
+   * modules. Due to this, regardless of the `isLoading` prop, the editor will
+   * always render a loading state until all required modules are loaded.
+   * This is to ensure that the editor is fully functional before it is displayed.
+   */
+  isLoading?: boolean;
+
+  /**
    * Language to use for syntax highlighting. Will have no highlighting if not set.
    */
   language?: LanguageName;
@@ -217,8 +231,22 @@ export interface CodeEditorProps extends DarkModeProps {
   tooltips?: Array<CodeEditorTooltip>;
 
   /**
+   * Controlled value of the editor. If set, the editor will not be editable
+   * and will not update its value on change. Use `onChange` to update the
+   * value externally.
+   */
+  value?: string;
+
+  /**
    * Sets the editor's width. If not set, the editor will be 100% width of its
    * parent container.
    */
   width?: string;
+}
+
+/**
+ * Imperative handle for the CodeEditor component.
+ */
+export interface CodeEditorHandle {
+  getEditorViewInstance: () => EditorView | null;
 }
