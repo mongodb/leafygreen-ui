@@ -114,20 +114,17 @@ function App() {
   const [open, setOpen] = useState(false);
 
   return (
-    <DrawerLayout displayMode={DisplayMode.Overlay} isDrawerOpen={open}>
+    <DrawerLayout
+      displayMode={DisplayMode.Embedded}
+      isDrawerOpen={open}
+      drawer={<Drawer title="Drawer Title">Drawer content</Drawer>}
+      onClose={() => setOpen(false)}
+    >
       <main>
         <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
           Open Drawer
         </Button>
       </main>
-      <Drawer
-        displayMode={DisplayMode.Overlay}
-        onClose={() => setOpen(false)}
-        open={open}
-        title="Drawer Title"
-      >
-        Drawer content goes here
-      </Drawer>
     </DrawerLayout>
   );
 }
