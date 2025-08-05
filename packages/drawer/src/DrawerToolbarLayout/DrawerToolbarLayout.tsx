@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import { DrawerToolbarProvider } from './DrawerToolbarContext/DrawerToolbarContext';
 
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
-import { DrawerToolbarLayoutContainer } from './DrawerToolbarLayoutContainer';
+import { DrawerToolbarLayoutContent } from './DrawerToolbarLayoutContent';
 
 /**
  * @internal
@@ -20,13 +20,13 @@ export const DrawerToolbarLayout = forwardRef<
   ) => {
     return (
       <DrawerToolbarProvider data={toolbarData}>
-        <DrawerToolbarLayoutContainer
+        <DrawerToolbarLayoutContent
           ref={forwardRef}
           toolbarData={toolbarData}
           {...rest}
         >
           {children}
-        </DrawerToolbarLayoutContainer>
+        </DrawerToolbarLayoutContent>
       </DrawerToolbarProvider>
     );
   },

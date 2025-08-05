@@ -11,19 +11,19 @@ import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { contentStyles } from './DrawerToolbarLayout.styles';
 import {
-  DrawerToolbarLayoutContainerProps,
+  DrawerToolbarLayoutContentProps,
   LayoutData,
 } from './DrawerToolbarLayout.types';
 
 /**
  * @internal
  *
- * DrawerToolbarLayoutContainer is a component that provides a layout for displaying content in a drawer with a toolbar.
+ * DrawerToolbarLayoutContent is a component that provides a layout for displaying content in a drawer with a toolbar.
  * It manages the state of the drawer and toolbar, and renders the appropriate components based on the display mode.
  */
-export const DrawerToolbarLayoutContainer = forwardRef<
+export const DrawerToolbarLayoutContent = forwardRef<
   HTMLDivElement,
-  DrawerToolbarLayoutContainerProps
+  DrawerToolbarLayoutContentProps
 >(
   (
     {
@@ -32,7 +32,7 @@ export const DrawerToolbarLayoutContainer = forwardRef<
       darkMode: darkModeProp,
       'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
-    }: DrawerToolbarLayoutContainerProps,
+    }: DrawerToolbarLayoutContentProps,
     forwardRef,
   ) => {
     const { openDrawer, closeDrawer, getActiveDrawerContent, isDrawerOpen } =
@@ -107,4 +107,4 @@ export const DrawerToolbarLayoutContainer = forwardRef<
   },
 );
 
-DrawerToolbarLayoutContainer.displayName = 'DrawerToolbarLayoutContainer';
+DrawerToolbarLayoutContent.displayName = 'DrawerToolbarLayoutContent';

@@ -51,4 +51,4 @@ export type DrawerToolbarLayoutProps = DarkModeProps &
     children: React.ReactNode;
   };
 
-export type DrawerToolbarLayoutContainerProps = DrawerToolbarLayoutProps;
+export type DrawerToolbarLayoutContentProps = DrawerToolbarLayoutProps;
