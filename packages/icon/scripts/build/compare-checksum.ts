@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import fs from 'fs';
 import path from 'path';
 
@@ -56,13 +55,6 @@ export function getChangedChecksums(): Array<string> {
     if (prevChecksums[iconName] !== checksum) {
       changes.push(iconName);
     }
-  }
-
-  if (changes.length > 0) {
-    console.log(
-      'Checksum comparison complete. Changes include:',
-      changes.join(', '),
-    );
   }
 
   saveNewChecksums(newChecksums);
