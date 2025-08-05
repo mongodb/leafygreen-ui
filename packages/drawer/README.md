@@ -36,7 +36,8 @@ import {
   DrawerLayout,
   DrawerLayout,
   useDrawerToolbarContext,
-  type DisplayMode,
+  DisplayMode,
+  Size,
 } from '@leafygreen-ui/drawer';
 
 const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
@@ -88,6 +89,8 @@ const App = () => {
       <DrawerLayout
         toolbarData={DRAWER_TOOLBAR_DATA}
         displayMode={DisplayMode.Overlay}
+        size={Size.Default}
+        onClose={() => {}}
       >
         <Main />
       </DrawerLayout>
@@ -192,7 +195,6 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['data'] = [
   },
 ];
 
-
 const Component = () => {
   const Main = () => {
     const { openDrawer, closeDrawer } = useDrawerToolbarContext();
@@ -214,7 +216,7 @@ const Component = () => {
         onClose={() => {}}
       >
         <Main />
-      </DrawerToolbarLayout>
+      </DrawerLayout>
     </div>
   );
 };
@@ -224,7 +226,9 @@ const Component = () => {
 
 #### Single `Drawer` instance
 
-To render a `Drawer` without a `Toolbar`, pass the `isDrawerOpen` prop to `<DrawerLayout>`. The `Drawer` component should be rendered manually as a child of the `DrawerLayout` and the `open` state should be managed by the consumer.
+To render a `Drawer` without a `Toolbar`, pass the `Drawer` component to the `drawer` prop of `<DrawerLayout>`. `DrawerLayout` will render the `Drawer` automatically.
+
+You don't need to pass `open`, `displayMode`, or `onClose` props to the `Drawer` component, as these will be handled by the `DrawerLayout`.
 
 ```tsx
 import React, { useState } from 'react';
@@ -236,20 +240,17 @@ function ExampleComponent() {
   const [open, setOpen] = useState(false);
 
   return (
-    <DrawerLayout displayMode={DisplayMode.Embedded} isDrawerOpen={open}>
+    <DrawerLayout
+      displayMode={DisplayMode.Embedded}
+      isDrawerOpen={open}
+      drawer={<Drawer title="Drawer Title">Drawer content</Drawer>}
+      onClose={() => setOpen(false)}
+    >
       <main>
         <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
           Open Drawer
         </Button>
       </main>
-      <Drawer
-        displayMode={DisplayMode.Embedded}
-        onClose={() => setOpen(false)}
-        open={open}
-        title="Drawer Title"
-      >
-        Drawer content
-      </Drawer>
     </DrawerLayout>
   );
 }
@@ -324,6 +325,21 @@ const MultipleDrawersComponent = () => {
     </DrawerLayout>
 ```
 
+### Resizable Drawers
+
+`DrawerLayout` supports rendering resizable embedded `Drawer` instances with or without a toolbar. To make an embedded `Drawer` resizable, pass the `resizable` prop to the `DrawerLayout` component.
+
+```tsx
+<DrawerLayout
+  toolbarData={DRAWER_TOOLBAR_DATA}
+  displayMode="embedded"
+  onClose={() => {}}
+  resizable
+>
+  {content}
+</DrawerLayout>
+```
+
 ## Props
 
 ### DrawerLayout
@@ -334,8 +350,9 @@ const MultipleDrawersComponent = () => {
 | `displayMode` _(optional)_  | `'embedded'` \| `'overlay'`                  | Options to control how the drawer element is displayed <br> \* `'embedded'` will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as container page content. <br> \* `'overlay'` will display a drawer as a `<dialog>` element that takes up the full parent container height and elevated above container page content. | `'overlay'` |
 | `onClose` _(optional)_      | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called on close button click. If provided, a close button will be rendered in the `Drawer` header. This is _only necessary_ if rendering the `Drawer` with `Toolbar`.                                                                                                                                                                                                    |             |
 | `toolbarData` _(optional)_  | `Array<LayoutData>`                          | The array of data that will be used to render the toolbar items and the drawer content. This is **REQUIRED** to render the `Drawer` with `Toolbar`. Without this prop, the `Drawer` and `Toolbar` will not render and you must manually pass the `Drawer` as a child. See below for `LayoutData` props.                                                                                |             |
-| `isDrawerOpen` _(optional)_ | `Boolean`                                    | This is _only needed_ if using the `Drawer` without a `Toolbar`. This will shift the layout to the right by the width of the `Drawer` if the `Drawer` is open and the `displayMode` is `embedded`.                                                                                                                                                                                     |             |
+| `isDrawerOpen` _(optional)_ | `Boolean`                                    | Whether the `Drawer` is open.                                                                                                                                                                                                                                                                                                                                                          |             |
 | `size` _(optional)_         | `'default'` \| `'large'`                     | The size of the `Drawer`. <br><br>**Available sizes:** <br> \* `'default'`: 432px <br> \* `'large'`: 520px                                                                                                                                                                                                                                                                             | `'default'` |
+| `resizable` _(optional)_    | `boolean`                                    | Whether the Drawer is resizable. Currently is only supported with an embedded drawer.                                                                                                                                                                                                                                                                                                  | `false`     |
 
 ### LayoutData
 
