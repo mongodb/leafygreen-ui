@@ -7,10 +7,7 @@ import React, {
 } from 'react';
 import { type EditorView } from '@codemirror/view';
 
-import {
-  useBaseFontSize,
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
 import {
@@ -19,23 +16,7 @@ import {
   getLoadingTextStyles,
 } from './CodeEditor.styles';
 import { CodeEditorHandle, type CodeEditorProps } from './CodeEditor.types';
-import {
-  useAutoCompleteExtension,
-  useCodeFoldingExtension,
-  useHighlightExtension,
-  useHyperLinkExtension,
-  useIndentExtension,
-  useLanguageExtension,
-  useLazyModules,
-  useLineNumbersExtension,
-  useLineWrapExtension,
-  useModuleLoaders,
-  usePlaceholderExtension,
-  useReadOnlyExtension,
-  useThemeExtension,
-  useTooltipExtension,
-} from './hooks';
-import { useExtensions } from './hooks/extensions/useExtensions';
+import { useExtensions, useLazyModules, useModuleLoaders } from './hooks';
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
