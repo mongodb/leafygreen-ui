@@ -1,6 +1,7 @@
 export { useAutoCompleteExtension } from './extensions/useAutoCompleteExtension';
 export { useCodeFoldingExtension } from './extensions/useCodeFoldingExtension';
 export { useExtension } from './extensions/useExtension';
+export { useExtensions } from './extensions/useExtensions';
 export { useHighlightExtension } from './extensions/useHighlightExtension';
 export { useHyperLinkExtension } from './extensions/useHyperLinkExtension';
 export { useIndentExtension } from './extensions/useIndentExtension';

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 
 /**
  * Type representing a function that dynamically loads a module
@@ -15,6 +15,61 @@ export type LoaderFn<T> = () => Promise<T>;
  * returns a Promise of the corresponding value type from T.
  */
 export type LoadersMap<T> = { [K in keyof T]: LoaderFn<T[K]> };
+
+/**
+ * State interface for the lazy modules reducer
+ */
+interface LazyModulesState<T> {
+  modules: Partial<T>;
+  isLoading: boolean;
+  keysToLoad: Array<keyof T>;
+}
+
+/**
+ * Action types for the lazy modules reducer
+ */
+type LazyModulesAction<T> =
+  | { type: 'SET_LOADERS'; loaders: LoadersMap<Partial<T>> }
+  | { type: 'SET_LOADING'; isLoading: boolean }
+  | { type: 'MODULE_LOADED'; key: keyof T; module: T[keyof T] }
+  | { type: 'MODULES_LOADED'; modules: Partial<T> };
+
+/**
+ * Reducer for managing lazy module loading state
+ */
+function lazyModulesReducer<T extends object>(
+  state: LazyModulesState<T>,
+  action: LazyModulesAction<T>,
+): LazyModulesState<T> {
+  switch (action.type) {
+    case 'SET_LOADERS': {
+      const neededKeys = Object.keys(action.loaders) as Array<keyof T>;
+      const availableKeys = Object.keys(state.modules) as Array<keyof T>;
+      const keysToLoad = neededKeys.filter(key => !availableKeys.includes(key));
+
+      return {
+        ...state,
+        keysToLoad,
+        isLoading: keysToLoad.length > 0,
+      };
+    }
+
+    case 'SET_LOADING':
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
+    case 'MODULES_LOADED':
+      return {
+        ...state,
+        modules: { ...state.modules, ...action.modules },
+        isLoading: false,
+        keysToLoad: [],
+      };
+    default:
+      return state;
+  }
+}
 
 /**
  * A React hook for lazy loading modules with loading state management.
@@ -51,38 +106,29 @@ export type LoadersMap<T> = { [K in keyof T]: LoaderFn<T[K]> };
 export const useLazyModules = <T extends object>(
   loaders: LoadersMap<Partial<T>>,
 ) => {
-  const [modules, setModules] = useState<Partial<T>>({});
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [state, dispatch] = useReducer(lazyModulesReducer<T>, {
+    modules: {},
+    isLoading: false,
+    keysToLoad: [],
+  });
 
+  // Effect that runs when loaders change to determine what needs to be loaded
   useEffect(() => {
-    /*
-     * Get keys from loaders object and cast them to the generic type
-     * This type assertion is necessary because Object.keys returns string[]
-     */
-    const neededKeys = Object.keys(loaders) as Array<keyof T>;
-    const availableKeys = Object.keys(modules) as Array<keyof T>;
+    dispatch({ type: 'SET_LOADERS', loaders });
+  }, [loaders]);
 
-    /*
-     * Determine which modules need to be loaded to prevent duplicate loads
-     */
-    const keysToLoad = neededKeys.filter(key => !availableKeys.includes(key));
-
-    /*
-     * Early return if there's nothing to load
-     */
-    if (keysToLoad.length === 0) {
-      setIsLoading(false);
+  // Effect that runs when there are keys to load
+  useEffect(() => {
+    if (state.keysToLoad.length === 0) {
       return;
     }
-
-    setIsLoading(true);
 
     /*
      * Create an array of promises for each module that needs to be loaded
      * The non-null assertion (!) is used because TypeScript can't guarantee
      * the key exists in loaders, even though we filtered for keys in loaders
      */
-    const modulePromises = keysToLoad.map(async key => {
+    const modulePromises = state.keysToLoad.map(async key => {
       try {
         const module = await loaders[key]!();
         return { key, module };
@@ -119,14 +165,13 @@ export const useLazyModules = <T extends object>(
           return acc;
         }, {} as Partial<T>);
 
-        setModules(prev => ({ ...prev, ...newModules }));
+        dispatch({ type: 'MODULES_LOADED', modules: newModules });
       } catch (err: any) {
         console.error(`Failed to load module:`, err);
-      } finally {
-        setIsLoading(false);
+        dispatch({ type: 'SET_LOADING', isLoading: false });
       }
     })();
-  }, [loaders, modules]);
+  }, [state.keysToLoad, loaders]);
 
-  return { modules, isLoading };
+  return { modules: state.modules, isLoading: state.isLoading };
 };

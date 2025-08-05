@@ -14,6 +14,7 @@ export {
   LanguageName,
   useAutoCompleteExtension,
   useCodeFoldingExtension,
+  useExtensions,
   useHighlightExtension,
   useHyperLinkExtension,
   useIndentExtension,

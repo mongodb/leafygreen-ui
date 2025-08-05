@@ -35,6 +35,7 @@ import {
   useThemeExtension,
   useTooltipExtension,
 } from './hooks';
+import { useExtensions } from './hooks/extensions/useExtensions';
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
@@ -68,7 +69,6 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     } = props;
 
     const { theme } = useDarkMode(darkModeProp);
-    const baseFontSize = useBaseFontSize();
     const [controlledValue, setControlledValue] = useState(value || '');
     const isControlled = value !== undefined;
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
@@ -77,76 +77,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const moduleLoaders = useModuleLoaders(props);
     const { isLoading, modules } = useLazyModules(moduleLoaders);
 
-    const autoCompleteExtension = useAutoCompleteExtension({
-      editorViewInstance: editorViewRef.current,
-      props,
-      modules,
-    });
-
-    const codeFoldingExtension = useCodeFoldingExtension({
-      editorViewInstance: editorViewRef.current,
-      props,
-      modules,
-    });
-
-    const highlightExtension = useHighlightExtension({
-      editorViewInstance: editorViewRef.current,
-      props: props,
-      modules,
-    });
-
-    const hyperLinkExtension = useHyperLinkExtension({
-      editorViewInstance: editorViewRef.current,
-      props,
-      modules,
-    });
-
-    const lineWrapExtension = useLineWrapExtension({
-      editorViewInstance: editorViewRef.current,
-      props,
-      modules,
-    });
-
-    const lineNumbersExtension = useLineNumbersExtension({
-      editorViewInstance: editorViewRef.current,
-      props,
-      modules,
-    });
-
-    const indentExtension = useIndentExtension({
-      editorViewInstance: editorViewRef.current,
-      props,
-      modules,
-    });
-
-    const placeholderExtension = usePlaceholderExtension({
-      editorViewInstance: editorViewRef.current,
-      props,
-      modules,
-    });
-
-    const tooltipExtension = useTooltipExtension({
-      editorViewInstance: editorViewRef.current,
-      props,
-      modules,
-    });
-
-    const languageExtension = useLanguageExtension({
-      editorViewInstance: editorViewRef.current,
-      props,
-      modules,
-    });
-
-    const themeExtension = useThemeExtension({
-      editorViewInstance: editorViewRef.current,
-      props: {
-        ...props,
-        baseFontSize: baseFontSizeProp || baseFontSize,
-      },
-      modules,
-    });
-
-    const readOnlyExtension = useReadOnlyExtension({
+    const customExtensions = useExtensions({
       editorViewInstance: editorViewRef.current,
       props,
       modules,
@@ -163,7 +94,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
       const domNode = editorContainerRef.current;
 
-      const editor = (editorViewRef.current = new EditorView.EditorView({
+      editorViewRef.current = new EditorView.EditorView({
         doc: controlledValue || defaultValue,
         parent: domNode,
         extensions: [
@@ -174,7 +105,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
           EditorView.EditorView.updateListener.of(update => {
             if (isControlled && update.docChanged) {
-              const editorText = editor.state.sliceDoc() ?? '';
+              const editorText = editorViewRef.current?.state.sliceDoc() ?? '';
               onChangeProp?.(editorText);
               setControlledValue(editorText);
             }
@@ -186,55 +117,34 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           ]),
 
           // Custom extensions ------------
-          languageExtension,
-          lineNumbersExtension,
-          lineWrapExtension,
-          hyperLinkExtension,
-          indentExtension,
-          codeFoldingExtension,
-          tooltipExtension,
-          themeExtension,
-          highlightExtension,
-          autoCompleteExtension,
-          readOnlyExtension,
-          placeholderExtension,
+          ...customExtensions,
         ],
-      }));
+      });
 
       if (forceParsingProp) {
         const Language = modules?.['@codemirror/language'];
-        const docLength = editor.state.doc.length;
+        const docLength = editorViewRef.current?.state.doc.length;
 
         if (Language && Language.forceParsing && docLength > 0) {
-          Language.forceParsing(editor, docLength, 150);
+          Language.forceParsing(editorViewRef.current, docLength, 150);
         }
       }
 
       return () => {
+        /** Delete the CodeMirror instance from the DOM node */
         delete (domNode as any)._cm;
-        editor.destroy();
+        editorViewRef.current?.destroy();
       };
     }, [
-      consumerExtensions,
       value,
-      languageExtension,
-      lineWrapExtension,
-      hyperLinkExtension,
-      indentExtension,
-      codeFoldingExtension,
-      tooltipExtension,
-      themeExtension,
-      highlightExtension,
       modules,
       controlledValue,
       defaultValue,
       isControlled,
       onChangeProp,
+      consumerExtensions,
+      customExtensions,
       forceParsingProp,
-      autoCompleteExtension,
-      lineNumbersExtension,
-      readOnlyExtension,
-      placeholderExtension,
     ]);
 
     useImperativeHandle(forwardedRef, () => ({

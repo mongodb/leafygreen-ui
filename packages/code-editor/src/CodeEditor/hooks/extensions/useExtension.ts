@@ -48,6 +48,20 @@ export const useExtension = <T>({
       editorViewInstance.dispatch({
         effects: compartment.reconfigure(extension),
       });
+
+      // Cleanup function to remove the extension when dependencies change or component unmounts
+      return () => {
+        // Only attempt cleanup if the editor view is still valid
+        if (editorViewInstance.state) {
+          try {
+            editorViewInstance.dispatch({
+              effects: compartment.reconfigure([]), // Empty array removes the extension
+            });
+          } catch (_error) {
+            // Silently ignore errors if the editor is being destroyed
+          }
+        }
+      };
     }
   }, [compartment, editorViewInstance, extension]);
 
