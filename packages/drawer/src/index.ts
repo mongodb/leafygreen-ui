@@ -10,5 +10,5 @@ export {
   DrawerStackProvider,
   useDrawerStackContext,
 } from './DrawerStackContext';
-export { useDrawerToolbarContext } from './DrawerToolbarContext';
+export { useDrawerToolbarContext } from './DrawerToolbarLayout/DrawerToolbarContext';
 export { getLgIds } from './utils';

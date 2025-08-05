@@ -13,7 +13,7 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer } from '../Drawer';
 import { DrawerLayoutProvider } from '../DrawerLayout';
-import { useDrawerToolbarContext } from '../DrawerToolbarContext';
+import { useDrawerToolbarContext } from './DrawerToolbarContext/DrawerToolbarContext';
 import { getTestUtils } from '../testing';
 
 import { DrawerToolbarLayout } from './DrawerToolbarLayout';
