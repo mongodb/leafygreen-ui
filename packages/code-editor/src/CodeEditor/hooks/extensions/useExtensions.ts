@@ -129,11 +129,11 @@ export function useExtensions({
 
   return [
     autoCompleteExtension,
-    codeFoldingExtension,
     highlightExtension,
     hyperLinkExtension,
     lineWrapExtension,
     lineNumbersExtension,
+    codeFoldingExtension, // Order matters here, code folding must be after line numbers
     indentExtension,
     placeholderExtension,
     tooltipExtension,
