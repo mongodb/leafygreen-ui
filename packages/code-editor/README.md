@@ -402,18 +402,27 @@ This hook manages the initialization and configuration of all available extensio
 **Example:**
 
 ```tsx
-import { useExtensions } from '@leafygreen-ui/code-editor';
+import {
+  useExtensions,
+  useLazyLoadedModules,
+  useModuleLoaders,
+} from '@leafygreen-ui/code-editor';
+
+const props = {
+  language: LanguageName.javascript,
+  enableLineNumbers: true,
+  enableCodeFolding: true,
+  readOnly: false,
+  // ... other props
+};
+
+const moduleLoaders = useModuleLoaders(props);
+const { isLoading, modules } = useLazyModules(moduleLoaders);
 
 const allExtensions = useExtensions({
   editorViewInstance,
-  props: {
-    language: LanguageName.javascript,
-    enableLineNumbers: true,
-    enableCodeFolding: true,
-    readOnly: false,
-    // ... other props
-  },
-  modules: lazyLoadedModules,
+  props,
+  modules,
 });
 
 // Apply all extensions to your CodeMirror editor
