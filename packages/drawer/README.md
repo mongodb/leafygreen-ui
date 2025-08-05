@@ -226,7 +226,7 @@ const Component = () => {
 
 #### Single `Drawer` instance
 
-To render a `Drawer` without a `Toolbar`, pass the `Drawer` component to the `drawer` prop of `<DrawerLayout>`. `DrawerLayout` will render the `Drawer` automatically.
+To render a `Drawer` without a `Toolbar`, pass the `Drawer` component to the `drawer` prop on `<DrawerLayout>`. `DrawerLayout` will render the `Drawer` automatically.
 
 You don't need to pass `open`, `displayMode`, or `onClose` props to the `Drawer` component, as these will be handled by the `DrawerLayout`.
 
