@@ -10,11 +10,12 @@ import {
 
 import {
   EMBEDDED_TOOLBAR_OVERFLOW_PADDING,
+  HEADER_HEIGHT,
+  MOBILE_BREAKPOINT,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
 } from '../constants';
 
-import { HEADER_HEIGHT, MOBILE_BREAKPOINT } from './Drawer.constants';
 import { DisplayMode, Size } from './Drawer.types';
 import { getDrawerWidth } from './Drawer.utils';
 

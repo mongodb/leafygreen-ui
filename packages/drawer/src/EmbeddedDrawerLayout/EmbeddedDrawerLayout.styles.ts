@@ -4,10 +4,10 @@ import { breakpoints } from '@leafygreen-ui/tokens';
 import {
   DRAWER_TOOLBAR_WIDTH,
   GRID_AREA,
+  MOBILE_BREAKPOINT,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
 } from '../constants';
-import { MOBILE_BREAKPOINT } from '../Drawer/Drawer.constants';
 import { Size } from '../Drawer/Drawer.types';
 import { getDrawerWidth } from '../Drawer/Drawer.utils';
 
