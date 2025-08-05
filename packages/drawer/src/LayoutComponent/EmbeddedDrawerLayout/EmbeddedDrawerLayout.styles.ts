@@ -7,9 +7,9 @@ import {
   MOBILE_BREAKPOINT,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
-} from '../constants';
-import { Size } from '../Drawer/Drawer.types';
-import { getDrawerWidth } from '../Drawer/Drawer.utils';
+} from '../../constants';
+import { Size } from '../../Drawer/Drawer.types';
+import { getDrawerWidth } from '../../Drawer/Drawer.utils';
 
 const baseStyles = css`
   width: 100%;
