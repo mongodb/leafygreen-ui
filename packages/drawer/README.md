@@ -34,6 +34,7 @@ import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import {
   DrawerLayout,
+  DrawerLayoutProps,
   useDrawerToolbarContext,
   DisplayMode,
   Size,
@@ -81,7 +82,7 @@ const App = () => {
     return (
       <main>
         <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
-        <Content />
+        <div>Your main application content goes here</div>
         <Button onClick={() => closeDrawer()}>Close Drawer</Button>
       </main>
     );
@@ -132,7 +133,7 @@ function App() {
 
 ## DrawerLayout
 
-`DrawerLayout` is a flexible layout wrapper that shift the page content appropriately when a `Drawer` opens. It can be used in both `overlay` and `embedded` modes, with or without a toolbar.
+`DrawerLayout` is a flexible layout wrapper that shifts the page content appropriately when a `Drawer` opens. It can be used in both `overlay` and `embedded` modes, with or without a toolbar.
 
 ### With `Toolbar`
 
@@ -362,11 +363,11 @@ const MultipleDrawersComponent = () => {
 `DrawerLayout` supports rendering resizable embedded `Drawer` instances with or without a toolbar. To make an embedded `Drawer` resizable, pass the `resizable` prop to the `DrawerLayout` component. This allows users to adjust the width of the drawer by dragging.
 
 ```tsx
-import React from 'react';
+import React, { useState } from 'react';
 import {
   DrawerLayout,
+  Drawer,
   DisplayMode,
-  useDrawerToolbarContext,
 } from '@leafygreen-ui/drawer';
 import Button from '@leafygreen-ui/button';
 
@@ -420,17 +421,19 @@ You can also use the resizable feature with a toolbar-based drawer:
 | `displayMode` _(optional)_  | `'embedded'` \| `'overlay'`                  | Options to control how the drawer element is displayed <br> \* `'embedded'` will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as container page content. <br> \* `'overlay'` will display a drawer as a `<dialog>` element that takes up the full parent container height and elevated above container page content. | `'overlay'` |
 | `onClose` _(optional)_      | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called on close button click. If provided, a close button will be rendered in the `Drawer` header. This is _only necessary_ if rendering the `Drawer` with `Toolbar`.                                                                                                                                                                                                    |             |
 | `toolbarData` _(optional)_  | `Array<LayoutData>`                          | The array of data that will be used to render the toolbar items and the drawer content. This is **REQUIRED** to render the `Drawer` with `Toolbar`. Without this prop, the `Drawer` and `Toolbar` will not render and you must manually pass the `Drawer` as a child. See below for `LayoutData` props.                                                                                |             |
-| `isDrawerOpen` _(optional)_ | `Boolean`                                    | Whether the `Drawer` is open.                                                                                                                                                                                                                                                                                                                                                          |             |
+| `isDrawerOpen` _(optional)_ | `boolean`                                    | Whether the `Drawer` is open.                                                                                                                                                                                                                                                                                                                                                          |             |
+| `drawer` _(optional)_       | `React.ReactNode`                            | The drawer component to be rendered in the layout. This is _only needed_ if using the `Drawer` without a `Toolbar`. If using the `Drawer` with a toolbar, the drawer is rendered internally.                                                                                                                                                                                           |             |
 | `size` _(optional)_         | `'default'` \| `'large'`                     | The size of the `Drawer`. <br><br>**Available sizes:** <br> \* `'default'`: 432px <br> \* `'large'`: 520px                                                                                                                                                                                                                                                                             | `'default'` |
-| `resizable` _(optional)_    | `boolean`                                    | Whether the Drawer is resizable. Currently is only supported with an embedded drawer.                                                                                                                                                                                                                                                                                                  | `false`     |
+| `resizable` _(optional)_    | `boolean`                                    | Whether the Drawer is resizable. This is only supported with embedded drawers.                                                                                                                                                                                                                                    | `false`     |
 
 ### LayoutData
 
-| Prop                 | Type   | Default | Description                                                                                         |
-| -------------------- | ------ | ------- | --------------------------------------------------------------------------------------------------- |
-| id                   | string |         | The required id of the layout. This is used to open the `Drawer` with `openDrawer(id)`.             |
-| title _(optional)_   | string |         | The title of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`.   |
-| content _(optional)_ | string |         | The content of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`. |
+| Prop                 | Type              | Default | Description                                                                                         |
+| -------------------- | ----------------- | ------- | --------------------------------------------------------------------------------------------------- |
+| id                   | `string`          |         | The required id of the layout. This is used to open the `Drawer` with `openDrawer(id)`.             |
+| title _(optional)_   | `React.ReactNode` |         | The title of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`.   |
+| content _(optional)_ | `React.ReactNode` |         | The content of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`. |
+| disabled _(optional)_ | `boolean`        | `false` | Whether the toolbar item is disabled.                                                              |
 
 \+ Extends the following from LG [Toolbar props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toolbar/README.md#toolbariconbutton): `glyph`, `label`, and `onClick`.
 
