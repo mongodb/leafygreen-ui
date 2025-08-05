@@ -383,6 +383,46 @@ const myExtension = useExtension({
 });
 ```
 
+### Aggregated Extension Hook
+
+#### `useExtensions(config)`
+
+A convenience hook that aggregates and configures all CodeMirror extensions used by the CodeEditor component. This hook internally calls all individual extension hooks and returns a complete array of configured extensions ready to be applied to a CodeMirror editor.
+
+This hook manages the initialization and configuration of all available extensions including auto-completion, code folding, syntax highlighting, hyperlinks, line wrapping, line numbers, indentation, placeholder text, tooltips, language support, theme styling, and read-only mode.
+
+**Parameters:**
+
+- `editorViewInstance`: The CodeMirror editor view instance
+- `props`: Partial CodeEditor props containing user configuration options
+- `modules`: Partial CodeEditor modules containing dynamically loaded CodeMirror modules
+
+**Returns:** Array of configured CodeMirror extensions
+
+**Example:**
+
+```tsx
+import { useExtensions } from '@leafygreen-ui/code-editor';
+
+const allExtensions = useExtensions({
+  editorViewInstance,
+  props: {
+    language: LanguageName.javascript,
+    enableLineNumbers: true,
+    enableCodeFolding: true,
+    readOnly: false,
+    // ... other props
+  },
+  modules: lazyLoadedModules,
+});
+
+// Apply all extensions to your CodeMirror editor
+const editorState = EditorState.create({
+  doc: initialContent,
+  extensions: allExtensions,
+});
+```
+
 ### Feature Extension Hooks
 
 #### `useAutoCompleteExtension(config)`
