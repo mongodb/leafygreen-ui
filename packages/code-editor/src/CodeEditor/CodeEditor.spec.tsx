@@ -2,8 +2,9 @@ import { forceParsing } from '@codemirror/language';
 import { act, waitFor } from '@testing-library/react';
 import { EditorState } from '@uiw/react-codemirror';
 
+import { LanguageName } from './hooks/extensions/useLanguageExtension';
 import { renderCodeEditor } from './testing/testUtils';
-import { CodeEditorSelectors, LanguageName } from '.';
+import { CodeEditorSelectors } from '.';
 
 global.MutationObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -21,43 +22,55 @@ jest.mock('@codemirror/language', () => {
 });
 
 describe('packages/code-editor', () => {
-  test('Renders default value in editor', () => {
-    const { container } = renderCodeEditor({ defaultValue: 'content' });
+  test('Renders default value in editor', async () => {
+    const { editor, container } = renderCodeEditor({ defaultValue: 'content' });
+    await editor.waitForEditorView();
+
     expect(container).toHaveTextContent('content');
   });
 
-  test('Updates value on when user types', () => {
+  test('Updates value on when user types', async () => {
     const { editor } = renderCodeEditor();
+    await editor.waitForEditorView();
+
     expect(
       editor.getBySelector(CodeEditorSelectors.Content),
     ).not.toHaveTextContent('new content');
+
     act(() => {
       editor.interactions.insertText('new content');
     });
+
     expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
       'new content',
     );
   });
 
-  test('Fold gutter renders when enabled', () => {
+  test('Fold gutter renders when enabled', async () => {
     const { editor } = renderCodeEditor({ enableCodeFolding: true });
+    await editor.waitForEditorView();
+
     expect(
       editor.getBySelector(CodeEditorSelectors.FoldGutter),
     ).toBeInTheDocument();
   });
 
-  test('Fold gutter does not render when disabled', () => {
+  test('Fold gutter does not render when disabled', async () => {
     const { editor } = renderCodeEditor({ enableCodeFolding: false });
+    await editor.waitForEditorView();
+
     expect(
       editor.queryBySelector(CodeEditorSelectors.FoldGutter),
     ).not.toBeInTheDocument();
   });
 
-  test('Line numbers render when enabled', () => {
+  test('Line numbers render when enabled', async () => {
     const { editor } = renderCodeEditor({
       defaultValue: 'content',
       enableLineNumbers: true,
     });
+    await editor.waitForEditorView();
+
     expect(
       editor.getBySelector(CodeEditorSelectors.GutterElement, {
         text: '1',
@@ -65,8 +78,10 @@ describe('packages/code-editor', () => {
     ).toBeInTheDocument();
   });
 
-  test('Line numbers do not render when disabled', () => {
+  test('Line numbers do not render when disabled', async () => {
     const { editor } = renderCodeEditor({ enableLineNumbers: false });
+    await editor.waitForEditorView();
+
     /**
      * When the custom caret was used it appears the line number still gets
      * rendered but is done so with visibility: hidden
@@ -76,107 +91,135 @@ describe('packages/code-editor', () => {
     ).not.toBeInTheDocument();
   });
 
-  test('Clickable URLs render when enabled', () => {
+  test('Clickable URLs render when enabled', async () => {
     const { editor } = renderCodeEditor({
       defaultValue: 'https://mongodb.design',
       enableClickableUrls: true,
     });
+    await editor.waitForEditorView();
+
     expect(
       editor.getBySelector(CodeEditorSelectors.HyperLink),
     ).toBeInTheDocument();
   });
 
-  test('Clickable URLs do not render when disable', () => {
+  test('Clickable URLs do not render when disable', async () => {
     const { editor } = renderCodeEditor({
       defaultValue: 'https://mongodb.design',
       enableClickableUrls: false,
     });
+    await editor.waitForEditorView();
+
     expect(
       editor.queryBySelector(CodeEditorSelectors.HyperLink),
     ).not.toBeInTheDocument();
   });
 
-  test('Read-only set on editor state when enabled', () => {
+  test('Read-only set on editor state when enabled', async () => {
     const { editor } = renderCodeEditor({ readOnly: true });
+    await editor.waitForEditorView();
+
     expect(editor.isReadOnly()).toBe(true);
   });
 
-  test('Read-only not set on editor state when disabled', () => {
+  test('Read-only not set on editor state when disabled', async () => {
     const { editor } = renderCodeEditor({ readOnly: false });
+    await editor.waitForEditorView();
+
     expect(editor.isReadOnly()).toBe(false);
   });
 
-  test('Line wrapping enabled when enabled', () => {
+  test('Line wrapping enabled when enabled', async () => {
     const { editor } = renderCodeEditor({ enableLineWrapping: true });
+    await editor.waitForEditorView();
+
     expect(editor.isLineWrappingEnabled()).toBe(true);
   });
 
-  test('Line wrapping not enabled when disabled', () => {
+  test('Line wrapping not enabled when disabled', async () => {
     const { editor } = renderCodeEditor({ enableLineWrapping: false });
+    await editor.waitForEditorView();
+
     expect(editor.isLineWrappingEnabled()).toBe(false);
   });
 
-  test('Editor displays placeholder when empty', () => {
+  test('Editor displays placeholder when empty', async () => {
     const { editor } = renderCodeEditor({
       placeholder: 'Type your code here...',
     });
+    await editor.waitForEditorView();
+
     expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
       'Type your code here...',
     );
   });
 
-  test('Editor displays HTMLElement placeholder when empty', () => {
+  test('Editor displays HTMLElement placeholder when empty', async () => {
     const placeholderElement = document.createElement('div');
     placeholderElement.textContent = 'Type your code here...';
     const { editor } = renderCodeEditor({ placeholder: placeholderElement });
+    await editor.waitForEditorView();
+
     expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
       'Type your code here...',
     );
   });
 
-  test('the forceParsing() method is called when enabled', () => {
-    renderCodeEditor({ forceParsing: true, defaultValue: 'content' });
-    expect(forceParsing as jest.Mock).toHaveBeenCalledTimes(1);
+  test('the forceParsing() method is called when enabled', async () => {
+    const { editor } = renderCodeEditor({
+      forceParsing: true,
+      defaultValue: 'content',
+    });
+    await editor.waitForEditorView();
+
+    expect(forceParsing as jest.Mock).toHaveBeenCalled();
   });
 
-  test('correct indentUnit is set on the editor when indentUnit is "space" and indentSize is 2', () => {
+  test('correct indentUnit is set on the editor when indentUnit is "space" and indentSize is 2', async () => {
     const { editor } = renderCodeEditor({
       indentUnit: 'space',
       indentSize: 2,
     });
+    await editor.waitForEditorView();
 
     expect(editor.getIndentUnit()).toBe('  ');
   });
 
-  test('correct indentUnit is set on the editor when indentUnit is "space" and indentSize is 4', () => {
+  test('correct indentUnit is set on the editor when indentUnit is "space" and indentSize is 4', async () => {
     const { editor } = renderCodeEditor({
       indentUnit: 'space',
       indentSize: 4,
     });
+    await editor.waitForEditorView();
 
     expect(editor.getIndentUnit()).toBe('    ');
   });
 
-  test('correct indentUnit is set on the editor when indentUnit is "tab"', () => {
+  test('correct indentUnit is set on the editor when indentUnit is "tab"', async () => {
     const { editor } = renderCodeEditor({
       indentUnit: 'tab',
     });
+    await editor.waitForEditorView();
 
     expect(editor.getIndentUnit()).toBe('\t');
   });
 
-  test('applies custom extensions to the editor', () => {
+  test('applies custom extensions to the editor', async () => {
     const { editor } = renderCodeEditor({
       extensions: [EditorState.readOnly.of(true)],
     });
+    await editor.waitForEditorView();
+
     expect(editor.isReadOnly()).toBe(true);
   });
 
-  test('custom extensions have precendence over built-in functionality', () => {
+  test('custom extensions have precendence over built-in functionality', async () => {
     const { editor } = renderCodeEditor({
       readOnly: false,
       extensions: [EditorState.readOnly.of(true)],
     });
+    await editor.waitForEditorView();
+
     expect(editor.isReadOnly()).toBe(true);
   });
 
