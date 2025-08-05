@@ -9,6 +9,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import {
+  EMBEDDED_TOOLBAR_OVERFLOW_PADDING,
   HEADER_HEIGHT,
   MOBILE_BREAKPOINT,
   TRANSITION_DURATION,
@@ -295,13 +296,20 @@ export const innerChildrenContainerStyles = cx(
 
 export const getResizerStyles = ({
   resizerClassName,
+  hasToolbar = false,
 }: {
   resizerClassName?: string;
+  hasToolbar?: boolean;
 }) =>
   cx(
     css`
       position: absolute;
-      left: 0;
+      left: 0px;
     `,
+    {
+      [css`
+        left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px; // An embedded drawer with a toolbar needs to be offset to the right to account for the overflow padding.
+      `]: hasToolbar,
+    },
     resizerClassName,
   );

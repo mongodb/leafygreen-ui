@@ -19,6 +19,7 @@ export const DRAWER_WIDTHS = {
 export const DRAWER_TOOLBAR_WIDTH = TOOLBAR_WIDTH;
 export const TRANSITION_TIMING_FUNCTION = 'ease-in-out';
 export const TRANSITION_DURATION = transitionDuration.slower;
+export const EMBEDDED_TOOLBAR_OVERFLOW_PADDING = 4;
 
 export const HEADER_HEIGHT = 48;
 export const MOBILE_BREAKPOINT = 390;

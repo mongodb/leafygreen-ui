@@ -5,6 +5,7 @@ import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
 import {
   DRAWER_TOOLBAR_WIDTH,
+  EMBEDDED_TOOLBAR_OVERFLOW_PADDING,
   GRID_AREA,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
@@ -108,6 +109,9 @@ const baseEmbeddedStyles = css`
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
   grid-template-columns: 1fr auto;
+  // To show focus outline since the wrapper has overflow hidden
+  padding-left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
+  margin-left: -${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
 `;
 
 const getOverlayShadowStyles = ({ theme }: { theme: Theme }) => css`

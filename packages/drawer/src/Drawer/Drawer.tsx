@@ -86,7 +86,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const isEmbedded = displayMode === DisplayMode.Embedded;
     const isOverlay = displayMode === DisplayMode.Overlay;
-    const isResizable = isEmbedded && !!resizable && open;
+    const isResizableEnabled = isEmbedded && !!resizable && open;
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       isOverlay ? 'dialog' : 'div',
     );
@@ -148,32 +148,43 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     };
 
-    // Enables resizable functionality if the drawer is resizable and in embedded mode.
+    // Enables resizable functionality if the drawer is resizable, embedded and open.
     const {
       resizableRef,
       size: drawerSize,
       getResizerProps,
       isResizing,
     } = useResizable<HTMLDialogElement | HTMLDivElement>({
-      enabled: resizable && isEmbedded,
-      initialSize: open ? initialSize : 0,
+      enabled: isResizableEnabled,
+      initialSize,
       minSize: resizableMinWidth,
       maxSize: resizableMaxWidth,
       position: Position.Right,
     });
 
-    // The parent grid container controls the drawer width with grid-template-columns, so we pass the width to the context where it is read by the parent grid container.
+    // In an embedded drawer, the parent grid container controls the drawer width with grid-template-columns, so we pass the width to the context where it is read by the parent grid container.
     useEffect(() => {
-      if (isEmbedded) {
-        setIsDrawerResizing(isResizing);
-        setDrawerWidth(drawerSize);
+      if (!isEmbedded) return;
+
+      if (open) {
+        // If the drawer is not resizable, we manually set the drawer width to the size prop when the drawer is open or closed.
+        const size = resizable ? drawerSize : initialSize;
+        setDrawerWidth(size);
+        if (resizable) setIsDrawerResizing(isResizing);
+      } else {
+        // If the drawer is closed, we set the drawer width to 0.
+        setDrawerWidth(0);
+        if (resizable) setIsDrawerResizing(false);
       }
     }, [
       isEmbedded,
       drawerSize,
       isResizing,
+      open,
+      resizable,
       setDrawerWidth,
       setIsDrawerResizing,
+      initialSize,
     ]);
 
     const resizerProps = getResizerProps();
@@ -202,11 +213,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           inert={!open ? 'inert' : undefined}
           {...rest}
         >
-          {isResizable && (
+          {isResizableEnabled && (
             <div
               {...resizerProps}
               className={getResizerStyles({
                 resizerClassName: resizerProps?.className,
+                hasToolbar,
               })}
             />
           )}

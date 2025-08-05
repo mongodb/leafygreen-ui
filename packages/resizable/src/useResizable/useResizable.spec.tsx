@@ -1,7 +1,6 @@
 import { fireEvent } from '@testing-library/dom';
 import { act } from '@testing-library/react';
 
-import { keyMap } from '@leafygreen-ui/lib';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useResizable } from './useResizable';
@@ -270,24 +269,30 @@ describe('useResizable', () => {
       }),
     );
 
-    // Focus the resizer
-    const resizerProps = result.current.getResizerProps();
-    act(() => {
-      resizerProps?.onFocus();
-    });
+    // Get resizer props
+    let resizerProps = result.current.getResizerProps();
 
-    // Press right arrow to increase size
+    // Trigger keyDown directly since the hook handles keyboard events directly
     act(() => {
-      fireEvent.keyDown(window, { code: keyMap.ArrowRight });
+      resizerProps?.onKeyDown({
+        code: 'ArrowRight',
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent);
     });
 
     const increasedSize = initialSize + KEYBOARD_RESIZE_PIXEL_STEP;
     expect(result.current.size).toBe(increasedSize);
     expect(onResize).toHaveBeenCalledWith(increasedSize);
 
+    // Get the new resizer props after the re-render
+    resizerProps = result.current.getResizerProps();
+
     // Press left arrow to decrease size
     act(() => {
-      fireEvent.keyDown(window, { code: keyMap.ArrowLeft });
+      resizerProps?.onKeyDown({
+        code: 'ArrowLeft',
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent);
     });
 
     // Should be back to initial size
@@ -328,15 +333,15 @@ describe('useResizable', () => {
       }),
     );
 
-    // Focus the resizer
-    const resizerProps = result.current.getResizerProps();
-    act(() => {
-      resizerProps?.onFocus();
-    });
+    // Get resizer props
+    let resizerProps = result.current.getResizerProps();
 
     // Press key to increase size beyond max
     act(() => {
-      fireEvent.keyDown(window, { code: keyMap.ArrowLeft });
+      resizerProps?.onKeyDown({
+        code: 'ArrowLeft',
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent);
     });
 
     // Should be constrained to maxSize
@@ -349,9 +354,15 @@ describe('useResizable', () => {
     });
     onResize.mockClear();
 
+    // Get the new resizer props after the re-render
+    resizerProps = result.current.getResizerProps();
+
     // Press key to decrease size below min
     act(() => {
-      fireEvent.keyDown(window, { code: keyMap.ArrowRight });
+      resizerProps?.onKeyDown({
+        code: 'ArrowRight',
+        preventDefault: jest.fn(),
+      } as unknown as React.KeyboardEvent);
     });
 
     // Should be constrained to minSize
