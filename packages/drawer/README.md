@@ -34,11 +34,14 @@ import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import {
   DrawerLayout,
-  DrawerLayout,
   useDrawerToolbarContext,
   DisplayMode,
   Size,
 } from '@leafygreen-ui/drawer';
+
+// Note: DrawerContent is a placeholder for your drawer content component
+// This could be any React component to render inside the drawer
+const DrawerContent = () => <div>Content inside the drawer</div>;
 
 const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
   {
@@ -101,8 +104,6 @@ const App = () => {
 
 ### Without Toolbar
 
-The `Drawer` component is manually rendered as a child of `<DrawerLayout>` and the consumer controls the `open` state.
-
 ```tsx
 import React, { useState } from 'react';
 
@@ -125,7 +126,7 @@ function App() {
         open={open}
         title="Drawer Title"
       >
-        content
+        Drawer content goes here
       </Drawer>
     </DrawerLayout>
   );
@@ -164,7 +165,7 @@ import {
 } from '@leafygreen-ui/drawer';
 
 // Data passed to <DrawerLayout /> to render the toolbar items and drawer content
-const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['data'] = [
+const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
   {
     id: 'Code',
     label: 'Code',
@@ -199,6 +200,9 @@ const Component = () => {
   const Main = () => {
     const { openDrawer, closeDrawer } = useDrawerToolbarContext();
 
+    // Content is a placeholder for your application's main content
+    const Content = () => <div>Main content of your application</div>;
+
     return (
       <main>
         <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
@@ -226,9 +230,9 @@ const Component = () => {
 
 #### Single `Drawer` instance
 
-To render a `Drawer` without a `Toolbar`, pass the `Drawer` component to the `drawer` prop on `<DrawerLayout>`. `DrawerLayout` will render the `Drawer` automatically.
+There are two ways to render a `Drawer` without a `Toolbar`:
 
-You don't need to pass `open`, `displayMode`, or `onClose` props to the `Drawer` component, as these will be handled by the `DrawerLayout`.
+1. Pass the `Drawer` component to the `drawer` prop of `<DrawerLayout>`. You don't need to pass `open`, `displayMode`, or `onClose` props to the `Drawer` component, as these will be handled by the `DrawerLayout`. (Recommended)
 
 ```tsx
 import React, { useState } from 'react';
@@ -251,6 +255,37 @@ function ExampleComponent() {
           Open Drawer
         </Button>
       </main>
+    </DrawerLayout>
+  );
+}
+```
+
+2. Pass the `Drawer` component as a child of `<DrawerLayout>`
+
+```tsx
+import React, { useState } from 'react';
+
+import Button from '@leafygreen-ui/button';
+import { DisplayMode, Drawer, DrawerLayout } from '@leafygreen-ui/drawer';
+
+function App() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <DrawerLayout displayMode={DisplayMode.Overlay} isDrawerOpen={open}>
+      <main>
+        <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+          Open Drawer
+        </Button>
+      </main>
+      <Drawer
+        displayMode={DisplayMode.Overlay}
+        onClose={() => setOpen(false)}
+        open={open}
+        title="Drawer Title"
+      >
+        Drawer content goes here
+      </Drawer>
     </DrawerLayout>
   );
 }
@@ -327,7 +362,45 @@ const MultipleDrawersComponent = () => {
 
 ### Resizable Drawers
 
-`DrawerLayout` supports rendering resizable embedded `Drawer` instances with or without a toolbar. To make an embedded `Drawer` resizable, pass the `resizable` prop to the `DrawerLayout` component.
+`DrawerLayout` supports rendering resizable embedded `Drawer` instances with or without a toolbar. To make an embedded `Drawer` resizable, pass the `resizable` prop to the `DrawerLayout` component. This allows users to adjust the width of the drawer by dragging.
+
+```tsx
+import React from 'react';
+import {
+  DrawerLayout,
+  DisplayMode,
+  useDrawerToolbarContext,
+} from '@leafygreen-ui/drawer';
+import Button from '@leafygreen-ui/button';
+
+function ResizableDrawerExample() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <DrawerLayout
+      displayMode={DisplayMode.Embedded}
+      isDrawerOpen={open}
+      resizable
+      drawer={
+        <Drawer title="Resizable Drawer">
+          <div>
+            Drawer content that can be resized by dragging the left edge
+          </div>
+        </Drawer>
+      }
+      onClose={() => setOpen(false)}
+    >
+      <main>
+        <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+          Toggle Resizable Drawer
+        </Button>
+      </main>
+    </DrawerLayout>
+  );
+}
+```
+
+You can also use the resizable feature with a toolbar-based drawer:
 
 ```tsx
 <DrawerLayout
@@ -473,7 +546,7 @@ import { getTestUtils } from '@leafygreen-ui/drawer/testing';
 
 ...
 
-const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['data'] = [
+const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
   {
     id: 'Code',
     label: 'Code',
