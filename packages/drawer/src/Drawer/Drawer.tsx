@@ -47,6 +47,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       onClose: onCloseProp,
       open: openProp,
       title,
+      size: sizeProp,
       ...rest
     },
     fwdRef,
@@ -62,23 +63,26 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       hasToolbar,
       setIsDrawerResizing,
       setDrawerWidth,
+      size: sizeContextProp,
     } = useDrawerLayoutContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
 
     // Returns the resolved displayMode, open state, and onClose function based on the component and context props.
-    const { displayMode, open, onClose } = useResolvedDrawerProps({
+    const { displayMode, open, onClose, size } = useResolvedDrawerProps({
       componentDisplayMode: displayModeProp,
       contextDisplayMode: displayModeContextProp,
       componentOpen: openProp,
       contextOpen: isDrawerOpen,
       componentOnClose: onCloseProp,
       contextOnClose: onCloseContextProp,
+      componentSize: sizeProp,
+      contextSize: sizeContextProp,
     });
 
     // Returns the resolved drawer sizes based on whether a toolbar is present.
     const { initialSize, resizableMinWidth, resizableMaxWidth } =
-      getResolvedDrawerSizes(hasToolbar);
+      getResolvedDrawerSizes(size, hasToolbar);
 
     const isEmbedded = displayMode === DisplayMode.Embedded;
     const isOverlay = displayMode === DisplayMode.Overlay;
@@ -188,6 +192,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             displayMode,
             zIndex: 1000 + drawerIndex,
             hasToolbar,
+            size,
           })}
           data-lgid={lgIds.root}
           data-testid={lgIds.root}

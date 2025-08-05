@@ -1,12 +1,24 @@
-import { DRAWER_WIDTH, DRAWER_WITH_TOOLBAR_WIDTH } from '../constants';
-
+import { DRAWER_TOOLBAR_WIDTH, DRAWER_WIDTHS } from '../constants';
 import {
   DRAWER_MAX_WIDTH,
   DRAWER_MAX_WIDTH_WITH_TOOLBAR,
   DRAWER_MIN_WIDTH,
   DRAWER_MIN_WIDTH_WITH_TOOLBAR,
-} from './Drawer.constants';
-import { DisplayMode } from './Drawer.types';
+} from '../constants';
+
+import { DisplayMode, Size } from './Drawer.types';
+
+/**
+ * Returns the width of the drawer based on the size.
+ * @param size - The size of the drawer.
+ * @returns An object containing the default width and width with toolbar.
+ */
+export const getDrawerWidth = ({ size }: { size: Size }) => {
+  return {
+    default: DRAWER_WIDTHS[size],
+    withToolbar: DRAWER_WIDTHS[size] - DRAWER_TOOLBAR_WIDTH,
+  };
+};
 
 /**
  * Resolves the drawer props based on the component and context props.
@@ -19,6 +31,8 @@ export const useResolvedDrawerProps = ({
   contextOpen,
   componentOnClose,
   contextOnClose,
+  componentSize,
+  contextSize,
 }: {
   componentDisplayMode?: DisplayMode;
   contextDisplayMode?: DisplayMode;
@@ -26,26 +40,27 @@ export const useResolvedDrawerProps = ({
   contextOpen?: boolean;
   componentOnClose?: React.MouseEventHandler<HTMLButtonElement>;
   contextOnClose?: React.MouseEventHandler<HTMLButtonElement>;
+  componentSize?: Size;
+  contextSize?: Size;
 }) => {
-  // If the component has a displayMode prop, use that. Otherwise, use the context displayMode.
   const displayMode =
     componentDisplayMode ?? contextDisplayMode ?? DisplayMode.Overlay;
-
-  // If the component has an open prop, use that. Otherwise, use the context open state.
   const open = componentOpen ?? contextOpen ?? false;
-
-  // If the component has an onClose prop, use that. Otherwise, use the context onClose function.
   const onClose = componentOnClose ?? contextOnClose ?? undefined;
+  const size = componentSize ?? contextSize ?? Size.Default;
 
-  return { displayMode, open, onClose };
+  return { displayMode, open, onClose, size };
 };
 
 /**
  * Returns the resolved drawer sizes based on whether a toolbar is present.
  * @returns
  */
-export const getResolvedDrawerSizes = (hasToolbar?: boolean) => {
-  const initialSize = hasToolbar ? DRAWER_WITH_TOOLBAR_WIDTH : DRAWER_WIDTH;
+export const getResolvedDrawerSizes = (size: Size, hasToolbar?: boolean) => {
+  const drawerWidths = getDrawerWidth({ size });
+  const initialSize = hasToolbar
+    ? drawerWidths.withToolbar
+    : drawerWidths.default;
   const resizableMinWidth = hasToolbar
     ? DRAWER_MIN_WIDTH_WITH_TOOLBAR
     : DRAWER_MIN_WIDTH;

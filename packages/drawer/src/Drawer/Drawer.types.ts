@@ -13,6 +13,12 @@ export const DisplayMode = {
 } as const;
 export type DisplayMode = (typeof DisplayMode)[keyof typeof DisplayMode];
 
+export const Size = {
+  Default: 'default',
+  Large: 'large',
+} as const;
+export type Size = (typeof Size)[keyof typeof Size];
+
 export interface DrawerProps
   extends Omit<HTMLElementProps<'dialog' | 'div'>, 'title'>,
     DarkModeProps,
@@ -40,4 +46,10 @@ export interface DrawerProps
    * Title of the Drawer
    */
   title: React.ReactNode;
+
+  /**
+   * The size of the Drawer.
+   * @defaultValue 'default'
+   */
+  size?: Size;
 }

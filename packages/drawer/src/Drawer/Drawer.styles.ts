@@ -9,14 +9,14 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import {
-  DRAWER_WIDTH,
-  DRAWER_WITH_TOOLBAR_WIDTH,
+  HEADER_HEIGHT,
+  MOBILE_BREAKPOINT,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
 } from '../constants';
 
-import { HEADER_HEIGHT, MOBILE_BREAKPOINT } from './Drawer.constants';
-import { DisplayMode } from './Drawer.types';
+import { DisplayMode, Size } from './Drawer.types';
+import { getDrawerWidth } from './Drawer.utils';
 
 export const drawerClassName = createUniqueClassName('lg-drawer');
 
@@ -97,11 +97,13 @@ const getOverlayStyles = ({
   shouldAnimate,
   zIndex,
   hasToolbar,
+  size,
 }: {
   open: boolean;
   shouldAnimate: boolean;
   zIndex: number;
   hasToolbar: boolean;
+  size: Size;
 }) =>
   cx(
     css`
@@ -112,7 +114,9 @@ const getOverlayStyles = ({
       right: 0;
       overflow: visible;
 
-      max-width: ${hasToolbar ? DRAWER_WITH_TOOLBAR_WIDTH : DRAWER_WIDTH}px;
+      max-width: ${hasToolbar
+        ? getDrawerWidth({ size }).withToolbar
+        : getDrawerWidth({ size }).default}px;
 
       // By default, the drawer is positioned off-screen to the right.
       transform: translate3d(100%, 0, 0);
@@ -145,15 +149,17 @@ const getDisplayModeStyles = ({
   shouldAnimate,
   zIndex,
   hasToolbar,
+  size,
 }: {
   displayMode: DisplayMode;
   open: boolean;
   shouldAnimate: boolean;
   zIndex: number;
   hasToolbar: boolean;
+  size: Size;
 }) =>
   cx({
-    [getOverlayStyles({ open, shouldAnimate, zIndex, hasToolbar })]:
+    [getOverlayStyles({ open, shouldAnimate, zIndex, hasToolbar, size })]:
       displayMode === DisplayMode.Overlay,
   });
 
@@ -165,6 +171,7 @@ export const getDrawerStyles = ({
   theme,
   zIndex,
   hasToolbar = false,
+  size,
 }: {
   className?: string;
   displayMode: DisplayMode;
@@ -173,6 +180,7 @@ export const getDrawerStyles = ({
   theme: Theme;
   zIndex: number;
   hasToolbar?: boolean;
+  size: Size;
 }) =>
   cx(
     getBaseStyles({ theme }),
@@ -182,6 +190,7 @@ export const getDrawerStyles = ({
       shouldAnimate,
       zIndex,
       hasToolbar,
+      size,
     }),
     className,
     drawerClassName,

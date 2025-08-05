@@ -3,6 +3,7 @@ export {
   Drawer,
   drawerClassName,
   type DrawerProps,
+  Size,
 } from './Drawer';
 export { DrawerLayout, type DrawerLayoutProps } from './DrawerLayout';
 export {
