@@ -15,7 +15,11 @@ import {
   getLoaderStyles,
   getLoadingTextStyles,
 } from './CodeEditor.styles';
-import { CodeEditorHandle, type CodeEditorProps } from './CodeEditor.types';
+import {
+  CodeEditorHandle,
+  type CodeEditorProps,
+  type HTMLElementWithCodeMirror,
+} from './CodeEditor.types';
 import { useExtensions, useLazyModules, useModuleLoaders } from './hooks';
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
@@ -73,7 +77,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         return;
       }
 
-      const domNode = editorContainerRef.current;
+      const domNode = editorContainerRef.current as HTMLElementWithCodeMirror;
 
       editorViewRef.current = new EditorView.EditorView({
         doc: controlledValue || defaultValue,
@@ -113,7 +117,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
       return () => {
         /** Delete the CodeMirror instance from the DOM node */
-        delete (domNode as any)._cm;
+        delete domNode._cm;
         editorViewRef.current?.destroy();
       };
     }, [

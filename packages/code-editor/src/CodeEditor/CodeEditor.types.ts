@@ -28,6 +28,13 @@ export type CodeMirrorState = EditorState;
 export type CodeMirrorView = EditorView;
 
 /**
+ * Type for the DOM node that the CodeMirror editor is rendered into.
+ */
+export interface HTMLElementWithCodeMirror extends HTMLDivElement {
+  _cm?: EditorView;
+}
+
+/**
  * The important elements in the code mirror editor have regular (non-generated)
  * CSS class names, which can be targeted. For example, the outer element has
  * class cm-editor. This is a mapping of those selectors which can be used for
