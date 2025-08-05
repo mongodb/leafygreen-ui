@@ -1,11 +1,11 @@
-import { DRAWER_TOOLBAR_WIDTH, DRAWER_WIDTH } from '../constants';
-
+import { DRAWER_TOOLBAR_WIDTH, DRAWER_WIDTHS } from '../constants';
 import {
   DRAWER_MAX_WIDTH,
   DRAWER_MAX_WIDTH_WITH_TOOLBAR,
   DRAWER_MIN_WIDTH,
   DRAWER_MIN_WIDTH_WITH_TOOLBAR,
-} from './Drawer.constants';
+} from '../constants';
+
 import { DisplayMode, Size } from './Drawer.types';
 
 /**
@@ -15,8 +15,8 @@ import { DisplayMode, Size } from './Drawer.types';
  */
 export const getDrawerWidth = ({ size }: { size: Size }) => {
   return {
-    default: DRAWER_WIDTH[size],
-    withToolbar: DRAWER_WIDTH[size] - DRAWER_TOOLBAR_WIDTH,
+    default: DRAWER_WIDTHS[size],
+    withToolbar: DRAWER_WIDTHS[size] - DRAWER_TOOLBAR_WIDTH,
   };
 };
 
