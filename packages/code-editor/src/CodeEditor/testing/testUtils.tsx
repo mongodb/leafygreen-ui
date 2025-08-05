@@ -10,7 +10,47 @@ import {
   CodeMirrorView,
 } from '..';
 
-let editorView: CodeMirrorView;
+let editorViewInstance: CodeMirrorView | null = null;
+let getEditorViewFn: (() => CodeMirrorView | null) | null = null;
+
+/**
+ * Waits for the editor view to be available
+ * @param timeout - Maximum time to wait in milliseconds (default: 5000)
+ * @returns Promise that resolves when the editor view is available
+ * @throws Error if timeout is reached
+ */
+async function waitForEditorView(timeout = 5000): Promise<CodeMirrorView> {
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < timeout) {
+    if (getEditorViewFn) {
+      const view = getEditorViewFn();
+
+      if (view) {
+        editorViewInstance = view;
+        return view;
+      }
+    }
+    // Wait a bit before checking again
+    await new Promise(resolve => setTimeout(resolve, 10));
+  }
+
+  throw new Error(`Editor view not available after ${timeout}ms timeout`);
+}
+
+/**
+ * Ensures the editor view is available, throwing an error if not
+ * @throws Error if editor view is not available
+ */
+function ensureEditorView(): CodeMirrorView {
+  if (!editorViewInstance) {
+    throw new Error(
+      'Editor view is not available. Make sure to call renderCodeEditor first and wait for the editor to initialize.',
+    );
+  }
+
+  return editorViewInstance;
+}
 
 /**
  * Returns the first element matching a specific CodeEditor selector
@@ -24,7 +64,8 @@ function getBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
 ) {
-  const elements = editorView.dom.querySelectorAll(selector);
+  const view = ensureEditorView();
+  const elements = view.dom.querySelectorAll(selector);
 
   if (!elements || elements.length === 0) {
     throw new Error(`Element with selector "${selector}" not found`);
@@ -69,7 +110,8 @@ function getAllBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
 ): Array<Element> {
-  const elements = editorView.dom.querySelectorAll(selector);
+  const view = ensureEditorView();
+  const elements = view.dom.querySelectorAll(selector);
 
   if (!elements || elements.length === 0) {
     throw new Error(`No elements with selector "${selector}" found`);
@@ -104,7 +146,8 @@ function queryBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
 ) {
-  const elements = editorView.dom.querySelectorAll(selector);
+  const view = ensureEditorView();
+  const elements = view.dom.querySelectorAll(selector);
 
   if (!elements || elements.length === 0) {
     return null;
@@ -144,7 +187,8 @@ function queryAllBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
 ): Array<Element> | null {
-  const elements = editorView.dom.querySelectorAll(selector);
+  const view = ensureEditorView();
+  const elements = view.dom.querySelectorAll(selector);
 
   if (!elements || elements.length === 0) {
     return null;
@@ -171,7 +215,8 @@ function queryAllBySelector(
  * @returns Boolean indicating whether the editor is in read-only mode
  */
 function isReadOnly() {
-  return editorView.state.readOnly;
+  const view = ensureEditorView();
+  return view.state.readOnly;
 }
 
 /**
@@ -179,7 +224,8 @@ function isReadOnly() {
  * @returns The string used for indentation (spaces or tab)
  */
 function getIndentUnit() {
-  return editorView.state.facet(indentUnit);
+  const view = ensureEditorView();
+  return view.state.facet(indentUnit);
 }
 
 /**
@@ -199,9 +245,7 @@ function isLineWrappingEnabled() {
  * @throws Error if editor view is not initialized
  */
 function insertText(text: string, options?: { from?: number; to?: number }) {
-  if (!editorView) {
-    throw new Error('Editor view is not initialized');
-  }
+  const view = ensureEditorView();
 
   const changes: ChangeSpec = { insert: text, from: options?.from || 0 };
 
@@ -209,11 +253,11 @@ function insertText(text: string, options?: { from?: number; to?: number }) {
     changes.to = options.to;
   }
 
-  const transaction = editorView.state.update({
+  const transaction = view.state.update({
     changes,
   });
 
-  editorView.dispatch(transaction);
+  view.dispatch(transaction);
 }
 
 export const editor = {
@@ -227,6 +271,7 @@ export const editor = {
   interactions: {
     insertText,
   },
+  waitForEditorView,
 };
 
 /**
@@ -239,9 +284,8 @@ export function renderCodeEditor(props: Partial<CodeEditorProps> = {}) {
     <CodeEditor
       {...props}
       ref={ref => {
-        if (ref && ref.view) {
-          editorView = ref.view;
-        }
+        getEditorViewFn = ref?.getEditorViewInstance ?? null;
+        editorViewInstance = ref?.getEditorViewInstance() ?? null;
       }}
     />,
   );

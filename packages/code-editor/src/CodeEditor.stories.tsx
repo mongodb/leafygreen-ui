@@ -9,8 +9,9 @@ import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
 
+import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { codeSnippets } from './CodeEditor/testing';
-import { IndentUnits, LanguageName } from './CodeEditor';
+import { IndentUnits } from './CodeEditor';
 import { CodeEditor } from '.';
 
 const MyTooltip = ({
@@ -88,11 +89,13 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     enableCodeFolding: true,
     enableLineNumbers: true,
     enableLineWrapping: true,
+    baseFontSize: 14,
     forceParsing: false,
     placeholder: 'Type your code here...',
     readOnly: false,
     indentSize: 2,
     indentUnit: IndentUnits.Space,
+    isLoading: false,
     defaultValue: '',
     tooltips: [],
     darkMode: false,
@@ -117,6 +120,10 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     enableLineWrapping: {
       control: { type: 'boolean' },
     },
+    baseFontSize: {
+      control: { type: 'select' },
+      options: [14, 16],
+    },
     placeholder: {
       control: { type: 'text' },
     },
@@ -132,6 +139,9 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     indentUnit: {
       options: ['space', 'tab'],
       control: { type: 'radio' },
+    },
+    isLoading: {
+      control: { type: 'boolean' },
     },
     language: {
       control: { type: 'select' },
@@ -220,6 +230,11 @@ export const TooltipOnHover: StoryObj<{}> = {
       expect(canvasElement.querySelector('.cm-tooltip')).toBeInTheDocument();
     });
   },
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
 };
 
 /**
