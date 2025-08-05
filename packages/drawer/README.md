@@ -364,11 +364,7 @@ const MultipleDrawersComponent = () => {
 
 ```tsx
 import React, { useState } from 'react';
-import {
-  DrawerLayout,
-  Drawer,
-  DisplayMode,
-} from '@leafygreen-ui/drawer';
+import { DrawerLayout, Drawer, DisplayMode } from '@leafygreen-ui/drawer';
 import Button from '@leafygreen-ui/button';
 
 function ResizableDrawerExample() {
@@ -424,16 +420,16 @@ You can also use the resizable feature with a toolbar-based drawer:
 | `isDrawerOpen` _(optional)_ | `boolean`                                    | Whether the `Drawer` is open.                                                                                                                                                                                                                                                                                                                                                          |             |
 | `drawer` _(optional)_       | `React.ReactNode`                            | The drawer component to be rendered in the layout. This is _only needed_ if using the `Drawer` without a `Toolbar`. If using the `Drawer` with a toolbar, the drawer is rendered internally.                                                                                                                                                                                           |             |
 | `size` _(optional)_         | `'default'` \| `'large'`                     | The size of the `Drawer`. <br><br>**Available sizes:** <br> \* `'default'`: 432px <br> \* `'large'`: 520px                                                                                                                                                                                                                                                                             | `'default'` |
-| `resizable` _(optional)_    | `boolean`                                    | Whether the Drawer is resizable. This is only supported with embedded drawers.                                                                                                                                                                                                                                    | `false`     |
+| `resizable` _(optional)_    | `boolean`                                    | Whether the Drawer is resizable. This is only supported with embedded drawers.                                                                                                                                                                                                                                                                                                         | `false`     |
 
 ### LayoutData
 
-| Prop                 | Type              | Default | Description                                                                                         |
-| -------------------- | ----------------- | ------- | --------------------------------------------------------------------------------------------------- |
-| id                   | `string`          |         | The required id of the layout. This is used to open the `Drawer` with `openDrawer(id)`.             |
-| title _(optional)_   | `React.ReactNode` |         | The title of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`.   |
-| content _(optional)_ | `React.ReactNode` |         | The content of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`. |
-| disabled _(optional)_ | `boolean`        | `false` | Whether the toolbar item is disabled.                                                              |
+| Prop                  | Type              | Default | Description                                                                                         |
+| --------------------- | ----------------- | ------- | --------------------------------------------------------------------------------------------------- |
+| id                    | `string`          |         | The required id of the layout. This is used to open the `Drawer` with `openDrawer(id)`.             |
+| title _(optional)_    | `React.ReactNode` |         | The title of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`.   |
+| content _(optional)_  | `React.ReactNode` |         | The content of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`. |
+| disabled _(optional)_ | `boolean`         | `false` | Whether the toolbar item is disabled.                                                               |
 
 \+ Extends the following from LG [Toolbar props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toolbar/README.md#toolbariconbutton): `glyph`, `label`, and `onClick`.
 

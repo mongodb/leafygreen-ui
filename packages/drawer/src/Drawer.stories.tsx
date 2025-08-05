@@ -133,9 +133,7 @@ const TemplateComponent: StoryFn<StoryDrawerProps> = ({
     </Button>
   );
 
-  const renderDrawer = () => (
-    <Drawer {...rest} open={open} onClose={() => setOpen(false)} />
-  );
+  const renderDrawer = () => <Drawer {...rest} />;
   const isEmbedded = displayMode === DisplayMode.Embedded;
 
   const baseLayoutProps = {
@@ -177,6 +175,74 @@ const TemplateComponent: StoryFn<StoryDrawerProps> = ({
           {renderTrigger()}
           <LongContent />
         </main>
+      </DrawerLayout>
+    </div>
+  );
+};
+
+const BackwardCompatibleTemplateComponent: StoryFn<StoryDrawerProps> = ({
+  displayMode = DisplayMode.Overlay,
+  initialOpen,
+  resizable,
+  size,
+  ...rest
+}: StoryDrawerProps & {
+  initialOpen?: boolean;
+}) => {
+  const [open, setOpen] = useState(initialOpen ?? true);
+
+  const renderTrigger = () => (
+    <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+      Toggle Drawer
+    </Button>
+  );
+
+  const isEmbedded = displayMode === DisplayMode.Embedded;
+
+  const baseLayoutProps = {
+    isDrawerOpen: open,
+    size,
+  };
+
+  const layoutProps = isEmbedded
+    ? {
+        displayMode,
+        resizable,
+        ...baseLayoutProps,
+      }
+    : {
+        displayMode,
+        ...baseLayoutProps,
+      };
+
+  return (
+    <div
+      className={css`
+        height: 500px;
+        width: 100%;
+      `}
+    >
+      <DrawerLayout {...layoutProps}>
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: ${spacing[200]}px;
+          `}
+        >
+          {renderTrigger()}
+          <LongContent />
+        </main>
+        <Drawer
+          {...rest}
+          open={open}
+          onClose={() => setOpen(false)}
+          displayMode={displayMode}
+          size={size}
+        />
       </DrawerLayout>
     </div>
   );
@@ -347,6 +413,20 @@ export const Large: StoryObj<DrawerProps> = {
 
 export const Default: StoryObj<DrawerProps> = {
   render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    darkMode: true,
+    displayMode: DisplayMode.Embedded,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+export const BackwardCompatible: StoryObj<DrawerProps> = {
+  render: BackwardCompatibleTemplateComponent,
   args: {
     children: <LongContent />,
     darkMode: true,
