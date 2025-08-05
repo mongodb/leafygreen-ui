@@ -88,6 +88,7 @@ export const ALL_PACKAGES = [
   '@lg-chat/leafygreen-chat-provider',
   '@lg-chat/lg-markdown',
   '@lg-chat/message',
+  '@lg-chat/message-actions',
   '@lg-chat/message-feed',
   '@lg-chat/message-feedback',
   '@lg-chat/message-prompts',
