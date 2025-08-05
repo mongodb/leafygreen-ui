@@ -7,9 +7,9 @@
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
   "scripts": {
-    "prebuild": "ts-node ./scripts/prebuild.ts",
-    "postbuild": "ts-node ./scripts/postbuild.ts",
-    "build": "ts-node ./scripts/build-parallel.ts",
+    "prebuild": "ts-node ./scripts/prebuild/prebuild.ts",
+    "postbuild": "ts-node ./scripts/postbuild/postbuild.ts",
+    "build": "ts-node ./scripts/build/build-parallel.ts",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
   },
