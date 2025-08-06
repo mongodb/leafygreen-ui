@@ -32,12 +32,31 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
+    "@leafygreen-ui/avatar": "workspace:^",
+    "@leafygreen-ui/badge": "workspace:^",
+    "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/callout": "workspace:^",
+    "@leafygreen-ui/checkbox": "workspace:^",
+    "@leafygreen-ui/chip": "workspace:^",
     "@leafygreen-ui/code": "workspace:^",
+    "@leafygreen-ui/combobox": "workspace:^",
     "@leafygreen-ui/copyable": "workspace:^",
+    "@leafygreen-ui/date-picker": "workspace:^",
+    "@leafygreen-ui/menu": "workspace:^",
+    "@leafygreen-ui/number-input": "workspace:^",
+    "@leafygreen-ui/password-input": "workspace:^",
+    "@leafygreen-ui/progress-bar": "workspace:^",
+    "@leafygreen-ui/radio-box-group": "workspace:^",
+    "@leafygreen-ui/segmented-control": "workspace:^",
     "@leafygreen-ui/select": "workspace:^",
+    "@leafygreen-ui/split-button": "workspace:^",
+    "@leafygreen-ui/text-input": "workspace:^",
+    "@leafygreen-ui/toggle": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
