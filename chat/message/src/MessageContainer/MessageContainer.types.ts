@@ -4,8 +4,8 @@ export const Variant = {
   Primary: 'primary',
   Secondary: 'secondary',
 } as const;
-
 export type Variant = (typeof Variant)[keyof typeof Variant];
+
 export interface MessageContainerProps
   extends HTMLElementProps<'div'>,
     DarkModeProps {

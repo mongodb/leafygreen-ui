@@ -1,5 +1,11 @@
 # @leafygreen-ui/drawer
 
+## 4.1.0
+
+### Minor Changes
+
+- c67c455: Add `scrollable` prop to `Drawer` to allow removing scroll styles (overflow, padding, and shadow) from container wrapping `children`. Also expose `scrollable` prop in `toolbarData` objects.
+
 ## 4.0.3
 
 ### Patch Changes

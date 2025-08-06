@@ -32,7 +32,7 @@ const getBaseSubmenuToggleStyles = (theme: Theme) => css`
 
   &:hover {
     color: ${menuColor[theme].icon.hover};
-    &:before {
+    &::before {
       // the icon button hover circle
       background-color: ${menuColor[theme].background.hover};
     }
