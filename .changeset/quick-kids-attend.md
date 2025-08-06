@@ -93,7 +93,5 @@
   - `onClose`: Callback function that is called when the drawer is closed.
   - `displayMode`: The display mode of the drawer.
   - `isDrawerOpen`: Boolean that determines whether the drawer is open or closed.
-  - `resizable`: Boolean that determines whether the drawer can be resized (only applicable in `DisplayMode.Embedded`). 
-
 
   _**note**:_ You can still pass the `Drawer` as a child of `DrawerLayout`, but using the `drawer` prop is recommended.
