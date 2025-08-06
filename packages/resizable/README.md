@@ -165,9 +165,9 @@ The resizer element receives the appropriate ARIA attributes for keyboard naviga
 
 When the resizer is focused, the following keyboard interactions are supported:
 
-| Key          | Action                                                                             |
-| ------------ | ---------------------------------------------------------------------------------- |
-| `ArrowLeft`  | <br> `Position.Right`: Increases the size <br> `Position.Left`: Decreases the size |
-| `ArrowRight` | <br> `Position.Right`: Decreses the size <br> `Position.Left`: Increases the size  |
-| `ArrowUp`    | <br> `Position.Top`: Decreses the size <br> `Position.Bottom`: Increases the size  |
-| `ArrowDown`  | <br> `Position.Top`: Increases the size <br> `Position.Bottom`: Decreases the size |
+| Key          | Action                                                                            |
+| ------------ | --------------------------------------------------------------------------------- |
+| `ArrowLeft`  | <br> `Position.Right`: Increase the size <br> `Position.Left`: Decrease the size  |
+| `ArrowRight` | <br> `Position.Right`: Decrease the size <br> `Position.Left`: Increases the size |
+| `ArrowUp`    | <br> `Position.Top`: Decrease the size <br> `Position.Bottom`: Increases the size |
+| `ArrowDown`  | <br> `Position.Top`: Increases the size <br> `Position.Bottom`: Decrease the size |

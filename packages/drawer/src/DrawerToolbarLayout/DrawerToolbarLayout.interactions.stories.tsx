@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
-import React, { useMemo } from 'react';
-import { faker } from '@faker-js/faker';
+import React from 'react';
 import { storybookExcludedControlParams } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
@@ -9,7 +7,6 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer } from '../Drawer';
 import { DrawerLayoutProvider } from '../DrawerLayout';
@@ -17,6 +14,10 @@ import { getTestUtils } from '../testing';
 
 import { useDrawerToolbarContext } from './DrawerToolbarContext/DrawerToolbarContext';
 import { DrawerToolbarLayout } from './DrawerToolbarLayout';
+import {
+  DRAWER_TOOLBAR_DATA,
+  LongContent,
+} from './DrawerToolbarLayout.testutils';
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 
 // The tooltip sometimes lingers after the drawer closes, which can cause
@@ -30,67 +31,12 @@ type DrawerToolbarLayoutPropsWithDisplayMode = DrawerToolbarLayoutProps & {
   displayMode?: DisplayMode;
 };
 
-const SEED = 0;
-faker.seed(SEED);
-
 const excludedControls = [
   ...storybookExcludedControlParams,
   'children',
   'open',
   'displayMode',
   'title',
-];
-
-const LongContent = () => {
-  const paragraphs = useMemo(() => {
-    return faker.lorem
-      .paragraphs(30, '\n')
-      .split('\n')
-      .map((p, i) => <Body key={i}>{p}</Body>);
-  }, []);
-
-  return (
-    <div
-      className={css`
-        display: flex;
-        flex-direction: column;
-        gap: ${spacing[100]}px;
-      `}
-    >
-      {paragraphs}
-    </div>
-  );
-};
-
-const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <LongContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-    onClick: () => {
-      console.log('Code clicked');
-    },
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <LongContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-    onClick: () => {
-      console.log('Dashboard clicked');
-    },
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-    onClick: () => {
-      console.log('Plus clicked, does not update drawer');
-    },
-  },
 ];
 
 export default {
