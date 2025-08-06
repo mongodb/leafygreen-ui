@@ -48,9 +48,9 @@ const MarketingModal = ({
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   // TODO: remove - onButtonClick is deprecated
-  const _onButtonClick = onButtonClick || buttonProps?.onClick;
+  const _onButtonClick = buttonProps?.onClick || onButtonClick;
   // TODO: remove - buttonText is deprecated
-  const _buttonText = buttonText || buttonProps?.children;
+  const _buttonText = buttonProps?.children || buttonText;
 
   return (
     <Modal

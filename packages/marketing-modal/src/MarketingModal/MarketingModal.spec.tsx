@@ -11,17 +11,27 @@ import MarketingModal from '..';
 
 const WrappedModal = ({
   open: initialOpen,
+  buttonProps,
   ...props
 }: Partial<React.ComponentProps<typeof MarketingModal>>) => {
   const [open, setOpen] = useState(initialOpen);
 
+  // If explicit buttonProps are provided, use them
+  // If deprecated props are provided and no explicit buttonProps, use undefined (rely on deprecated props)
+  // Otherwise, use default buttonProps
+  const finalButtonProps = buttonProps
+    ? buttonProps
+    : props.buttonText || props.onButtonClick
+    ? undefined
+    : {
+        children: 'Button action',
+        onClick: () => setOpen(false),
+      };
+
   return (
     <MarketingModal
       title="Title text"
-      buttonProps={{
-        children: 'Button action',
-        onClick: () => setOpen(false),
-      }}
+      buttonProps={finalButtonProps}
       linkText="Link action"
       open={open}
       onClose={() => setOpen(false)}
@@ -76,6 +86,7 @@ describe('packages/marketing-modal', () => {
 
     const { getByText } = renderModal({
       open: true,
+      buttonText: 'Button action',
       onButtonClick: buttonClickSpy,
       onLinkClick: linkClickSpy,
       onClose: closeSpy,
@@ -109,6 +120,27 @@ describe('packages/marketing-modal', () => {
     expect(buttonClickSpy).toHaveBeenCalledTimes(1);
   });
 
+  test('"buttonProps.onClick" overrides deprecated "onButtonClick"', () => {
+    const deprecatedClickSpy = jest.fn();
+    const newClickSpy = jest.fn();
+
+    const { getByText } = renderModal({
+      open: true,
+      onButtonClick: deprecatedClickSpy,
+      buttonProps: {
+        children: 'Button action',
+        onClick: newClickSpy,
+      },
+    });
+
+    const button = getByText('Button action');
+    expect(button).toBeVisible();
+
+    fireEvent.click(button);
+    expect(newClickSpy).toHaveBeenCalledTimes(1);
+    expect(deprecatedClickSpy).not.toHaveBeenCalled();
+  });
+
   describe('button text', () => {
     // TODO: remove - buttonText is deprecated
     test('renders from "buttonText"', () => {
@@ -133,16 +165,16 @@ describe('packages/marketing-modal', () => {
     });
 
     // TODO: remove - buttonText is deprecated
-    test('overrides "buttonProps"', () => {
+    test('"buttonProps" overrides deprecated "buttonText"', () => {
       const { getByText } = renderModal({
         open: true,
-        buttonText: 'custom button text',
+        buttonText: 'deprecated text',
         buttonProps: {
-          children: 'custom button',
+          children: 'new button text',
         },
       });
 
-      expect(getByText('custom button text')).toBeVisible();
+      expect(getByText('new button text')).toBeVisible();
     });
   });
 
