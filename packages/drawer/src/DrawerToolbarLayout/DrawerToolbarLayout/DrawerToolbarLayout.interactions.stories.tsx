@@ -12,6 +12,7 @@ import { DisplayMode, Drawer } from '../../Drawer';
 import { DrawerLayoutProvider } from '../../DrawerLayout';
 import { getTestUtils } from '../../testing';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
+
 import { DrawerToolbarLayout } from './DrawerToolbarLayout';
 import {
   DRAWER_TOOLBAR_DATA,

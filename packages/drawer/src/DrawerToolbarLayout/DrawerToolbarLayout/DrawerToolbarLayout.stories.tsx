@@ -246,6 +246,7 @@ const DynamicComponent: StoryFn<DrawerLayoutProps> = ({
     const id = setInterval(() => {
       setTimestamp(Date.now());
     }, 1000);
+
     return () => {
       clearInterval(id);
     };

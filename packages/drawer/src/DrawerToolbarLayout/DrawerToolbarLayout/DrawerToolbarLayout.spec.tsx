@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -11,12 +11,14 @@ const onClickMock = jest.fn();
 const onCloseMock = jest.fn();
 
 const Component = () => {
+  const [state, setState] = useState({ count: 0, name: 'test' });
+
   const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
     {
       id: 'Code',
       label: 'Code',
-      content: 'Drawer Content',
-      title: 'Code Title',
+      content: <span>{`Count: ${state.count}`}</span>,
+      title: `${state.name} - ${state.count}`,
       glyph: 'Code',
       onClick: onClickMock,
     },
@@ -30,7 +32,17 @@ const Component = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <main>Main Content</main>;
+    return (
+      <main>
+        Main Content{' '}
+        <button
+          data-testid="update-button"
+          onClick={() => setState({ count: 1, name: 'updated' })}
+        >
+          Update state
+        </button>
+      </main>
+    );
   };
 
   return (
@@ -77,5 +89,21 @@ describe('packages/DrawerToolbarLayout', () => {
     userEvent.click(closeButton);
 
     expect(onCloseMock).toHaveBeenCalled();
+  });
+
+  test('allows for dynamic toolbar data', () => {
+    const { getByTestId } = render(<Component />);
+
+    const { getDrawer } = getTestUtils();
+    const drawer = getDrawer();
+    const button = getByTestId('update-button');
+
+    expect(drawer).toHaveTextContent('Count: 0');
+    expect(drawer).toHaveTextContent('test - 0');
+
+    userEvent.click(button);
+
+    expect(drawer).toHaveTextContent('Count: 1');
+    expect(drawer).toHaveTextContent('updated - 1');
   });
 });
