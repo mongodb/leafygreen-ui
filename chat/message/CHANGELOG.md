@@ -1,5 +1,24 @@
 # @lg-chat/message
 
+## 7.2.0
+
+### Minor Changes
+
+- 7348708: Create `MessageContext` for each `Message` instance and pass down `messageBody`. This is used to enable copy functionality in the `MessageActions` component.
+
+### Patch Changes
+
+- Updated dependencies [a638649]
+  - @leafygreen-ui/tokens@3.2.1
+
+## 7.1.0
+
+### Minor Changes
+
+- d247e6c: [LG-5374](https://jira.mongodb.org/browse/LG-5374): add variant support for when the parent `LeafyGreenChatProvider` has `variant="compact"`
+
+  Mark `lgMessageStyles` and `lgMessageContainerStyles` as `@deprecated`. Mark `componentOverrides` prop `@deprecated`
+
 ## 7.0.0
 
 ### Patch Changes

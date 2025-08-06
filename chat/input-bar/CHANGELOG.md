@@ -1,5 +1,24 @@
 # @lg-chat/input-bar
 
+## 9.1.0
+
+### Minor Changes
+
+- c6ee34b: [LG-5368](https://jira.mongodb.org/browse/LG-5368): add variant support for when the parent `LeafyGreenChatProvider` has `variant="compact"`
+
+  Mark `lgInputBarStyles` as `@deprecated`
+
+### Patch Changes
+
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+- Updated dependencies [56c0d3b]
+  - @leafygreen-ui/typography@22.1.0
+  - @leafygreen-ui/tokens@3.2.0
+  - @leafygreen-ui/banner@10.0.4
+  - @leafygreen-ui/button@25.0.1
+  - @leafygreen-ui/badge@10.0.4
+
 ## 9.0.0
 
 ### Patch Changes

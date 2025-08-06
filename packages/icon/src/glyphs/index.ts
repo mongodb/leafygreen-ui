@@ -1,9 +1,10 @@
 import { createGlyphComponent } from '../createGlyphComponent';
 import { LGGlyph } from '../types';
 
-// Glyphs
 import ActivityFeed from './ActivityFeed.svg';
 import AddFile from './AddFile.svg';
+// Glyphs
+import AIModel from './AIModel.svg';
 import AllProducts from './AllProducts.svg';
 import AnalyticsNode from './AnalyticsNode.svg';
 import Apps from './Apps.svg';
@@ -183,6 +184,7 @@ import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
 
 const _glyphs = {
+  AIModel,
   ActivityFeed,
   AddFile,
   AllProducts,

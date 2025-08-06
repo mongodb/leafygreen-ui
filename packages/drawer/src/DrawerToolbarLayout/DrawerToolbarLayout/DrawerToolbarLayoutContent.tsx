@@ -37,7 +37,12 @@ export const DrawerToolbarLayoutContent = forwardRef<
   ) => {
     const { openDrawer, closeDrawer, getActiveDrawerContent, isDrawerOpen } =
       useDrawerToolbarContext();
-    const { id, title, content } = getActiveDrawerContent() || {};
+    const {
+      id,
+      title,
+      content,
+      scrollable = true,
+    } = getActiveDrawerContent() || {};
     const { onClose, displayMode, setIsDrawerOpen } = useDrawerLayoutContext();
 
     useEffect(() => {
@@ -94,6 +99,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
             open={isDrawerOpen}
             onClose={handleOnClose}
             title={title}
+            scrollable={scrollable}
             data-lgid={`${dataLgId}`}
             data-testid={`${dataLgId}`}
             aria-live="polite"

@@ -1,8 +1,28 @@
 import { ChangeEvent } from 'react';
+import { MessageSourceType } from '@lg-chat/message';
+import { MessageRatingProps } from '@lg-chat/message-rating';
 
-import { MessageFields } from '../utils';
+interface MessageFieldsBase {
+  id?: string | number;
+  messageBody: string;
+  sourceType?: MessageSourceType;
+}
 
-const baseMessages: Array<MessageFields> = [
+type UserMessageFields = MessageFieldsBase & {
+  userName: string;
+  isMongo?: never;
+  messageRatingProps?: never;
+};
+
+type MongoMessageFields = MessageFieldsBase & {
+  userName?: never;
+  isMongo: true;
+  messageRatingProps?: MessageRatingProps;
+};
+
+export type MessageFields = UserMessageFields | MongoMessageFields;
+
+export const baseMessages: Array<MessageFields> = [
   {
     id: 1,
     messageBody: 'Hi! Ask me anything.',
@@ -54,6 +74,4 @@ Refer to [LeafyGreen UI](mongodb.design) or [LeafyGreen UI](mongodb.design) for 
         console.log(`Message 6 was ${e.target.value}.`),
     },
   },
-];
-
-export default baseMessages;
+] as const;

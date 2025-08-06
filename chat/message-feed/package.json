@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-feed",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "lg-chat Message Feed",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -24,6 +24,7 @@
     "@lg-chat/avatar": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-rating": "workspace:^",
+    "react-intersection-observer": "^8.25.1",
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {

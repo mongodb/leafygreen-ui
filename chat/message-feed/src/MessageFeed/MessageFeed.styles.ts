@@ -1,19 +1,20 @@
-import { avatarSizes, Size } from '@lg-chat/avatar';
-
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { borderRadius, breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { addOverflowShadow, Side } from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
-  height: 500px;
+const DEFAULT_MESSAGE_FEED_HEIGHT = 500;
+
+const baseWrapperStyles = css`
+  height: ${DEFAULT_MESSAGE_FEED_HEIGHT}px;
   width: 100%;
   display: flex;
   justify-content: center;
   position: relative;
+  overflow: hidden;
 `;
 
-export const themeStyles: Record<Theme, string> = {
+const wrapperThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.black};
   `,
@@ -22,95 +23,27 @@ export const themeStyles: Record<Theme, string> = {
   `,
 };
 
-export const messageFeedStyles = css`
-  width: 100%;
-  max-width: ${breakpoints.Tablet +
-  (avatarSizes[Size.Default] + spacing[5] + spacing[3]) * 2}px;
-  height: 100%;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  position: relative;
-  padding: ${spacing[3]}px ${spacing[5]}px ${spacing[2]}px;
-`;
-
-export const messageFeedThemeStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    // https://css-tricks.com/books/greatest-css-tricks/scroll-shadows/
-    background:
-      /* Shadow Cover TOP */ 
-      // eslint-disable-next-line Maintain natural line break
-      linear-gradient(${palette.black} 30%, ${palette.black} 0%) center top,
-      /* Shadow Cover BOTTOM */
-        linear-gradient(${palette.black} 0%, ${palette.black} 70%) center bottom,
-      /* Shadow TOP */
-        radial-gradient(
-          farthest-side at 50% 0,
-          rgba(0, 0, 0, 0.3),
-          rgba(0, 0, 0, 0)
-        )
-        center top,
-      /* Shadow BOTTOM */
-        radial-gradient(
-          farthest-side at 50% 100%,
-          rgba(0, 0, 0, 0.3),
-          rgba(0, 0, 0, 0)
-        )
-        center bottom;
-    background-repeat: no-repeat;
-    background-size: 100% 16px, 100% 16px, 100% 8px, 100% 8px;
-    background-attachment: local, local, scroll, scroll;
-  `,
-  [Theme.Light]: css`
-    // https://css-tricks.com/books/greatest-css-tricks/scroll-shadows/
-    background:
-      /* Shadow Cover TOP */ 
-      // eslint-disable-next-line Maintain natural line break
-      linear-gradient(${palette.gray.light3} 30%, ${palette.gray.light3} 0%)
-        center top,
-      /* Shadow Cover BOTTOM */
-        linear-gradient(${palette.gray.light3} 0%, ${palette.gray.light3} 30%)
-        center bottom,
-      /* Shadow TOP */
-        radial-gradient(
-          farthest-side at 50% 0,
-          rgba(0, 0, 0, 0.1),
-          rgba(0, 0, 0, 0)
-        )
-        center top,
-      /* Shadow BOTTOM */
-        radial-gradient(
-          farthest-side at 50% 100%,
-          rgba(0, 0, 0, 0.1),
-          rgba(0, 0, 0, 0)
-        )
-        center bottom;
-    background-repeat: no-repeat;
-    background-size: 100% 16px, 100% 16px, 100% 8px, 100% 8px;
-    background-attachment: local, local, scroll, scroll;
-  `,
-};
-
-// Avatar size + horizontal gap in Message
-export const avatarPaddingStyles = css`
-  padding: 0px ${avatarSizes[Size.Small] + spacing[2]}px;
-`;
-
-export const desktopAvatarPaddingStyles = css`
-  padding: 0px ${avatarSizes[Size.Default] + spacing[3]}px;
-`;
-
-export const disclaimerTextStyles = css`
-  text-align: center;
-  margin-top: ${spacing[4]}px;
-  margin-bottom: ${spacing[6]}px;
-`;
-
-export const scrollButtonContainerStyles = css`
-  position: absolute;
-  bottom: ${spacing[400]}px;
-`;
-
-export const scrollButtonStyles = css`
-  box-shadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
-  border-radius: ${borderRadius[400]}px;
-`;
+export const getWrapperStyles = ({
+  className,
+  hasBottomShadow,
+  hasTopShadow,
+  isCompact,
+  theme,
+}: {
+  className?: string;
+  hasBottomShadow: boolean;
+  hasTopShadow: boolean;
+  isCompact: boolean;
+  theme: Theme;
+}) =>
+  cx(
+    baseWrapperStyles,
+    {
+      [wrapperThemeStyles[theme]]: !isCompact,
+      [addOverflowShadow({ side: Side.Top, theme, isInside: true })]:
+        hasTopShadow,
+      [addOverflowShadow({ side: Side.Bottom, theme, isInside: true })]:
+        hasBottomShadow,
+    },
+    className,
+  );
