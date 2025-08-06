@@ -86,25 +86,26 @@ const IntegrationContainer = () => {
   const [textValue, setTextValue] = useState('');
   const [segmentedValue, setSegmentedValue] = useState('option1');
 
-  const rowStyles = css`
-    display: flex;
-    flex-direction: row;
-    gap: ${spacing[4]}px;
+  const componentStyles = css`
+    max-width: 256px;
   `;
 
   return (
     <div
       className={css`
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(192px, 1fr));
         gap: ${spacing[4]}px;
         flex: 1;
       `}
     >
-      <div className={rowStyles}>
+      <div className={componentStyles}>
         <Tooltip open={true} trigger={<Button>Hover for Tooltip</Button>}>
           This tooltip is always visible in this story
         </Tooltip>
+      </div>
+
+      <div className={componentStyles}>
         <SplitButton
           label={`Split Button`}
           open={true}
@@ -122,7 +123,7 @@ const IntegrationContainer = () => {
         />
       </div>
 
-      <div className={rowStyles}>
+      <div className={componentStyles}>
         <Combobox
           label={`Combobox`}
           value={comboboxValue}
@@ -133,6 +134,9 @@ const IntegrationContainer = () => {
           <ComboboxOption value="orange">Orange</ComboboxOption>
           <ComboboxOption value="grape">Grape</ComboboxOption>
         </Combobox>
+      </div>
+
+      <div className={componentStyles}>
         <Select label={`Select`} value={selectValue} onChange={setSelectValue}>
           <OptionGroup label="Pets">
             <Option value="cat">Select Option 1</Option>
@@ -142,7 +146,7 @@ const IntegrationContainer = () => {
         </Select>
       </div>
 
-      <div className={rowStyles}>
+      <div className={componentStyles}>
         <DatePicker
           label={`Date Picker`}
           value={dateValue}
@@ -151,6 +155,9 @@ const IntegrationContainer = () => {
           }
           initialOpen
         />
+      </div>
+
+      <div className={componentStyles}>
         <NumberInput
           label={`Number Input`}
           value={numberValue}
@@ -165,13 +172,29 @@ const IntegrationContainer = () => {
         />
       </div>
 
-      <div className={rowStyles}>
+      <div className={componentStyles}>
         <Menu initialOpen trigger={<Button>Menu</Button>}>
           <MenuItem>Menu Item 1</MenuItem>
           <MenuItem>Menu Item 2</MenuItem>
           <MenuItem>Menu Item 3</MenuItem>
         </Menu>
+      </div>
 
+      <div className={componentStyles}>
+        <TextInput
+          label={`Text Input`}
+          value={textValue}
+          onChange={e => setTextValue(e.target.value)}
+          placeholder="Enter text here..."
+        />
+      </div>
+
+      <div
+        className={css`
+          max-width: unset;
+          grid-column: 1/-1;
+        `}
+      >
         <SegmentedControl
           label={`Segmented Control`}
           value={segmentedValue}
@@ -187,15 +210,6 @@ const IntegrationContainer = () => {
             Option 3
           </SegmentedControlOption>
         </SegmentedControl>
-      </div>
-
-      <div>
-        <TextInput
-          label={`Text Input`}
-          value={textValue}
-          onChange={e => setTextValue(e.target.value)}
-          placeholder="Enter text here..."
-        />
       </div>
     </div>
   );
@@ -282,10 +296,17 @@ export const WithBackgroundComponents: StoryObj = {
               their open dropdowns.
             </Body>
             {faker.lorem
-              .paragraphs(6, '\n')
+              .paragraphs(16)
               .split('\n')
               .map((p, index) => (
-                <Body key={index}>{p}</Body>
+                <Body
+                  className={css`
+                    margin: 0.5em 0;
+                  `}
+                  key={index}
+                >
+                  {p}
+                </Body>
               ))}
           </div>
         </Modal>
