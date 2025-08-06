@@ -4,4 +4,4 @@
 '@leafygreen-ui/split-button': patch
 ---
 
-Ensures the containing element establishes a new stacking context (`z-index: 0;`), which ensures the component will correctly render below other any high-z components (like `Modal`)
+Ensures the containing element establishes a new stacking context (`z-index: 0;`), which ensures the component will correctly render below any high-z components (like `Modal`)
