@@ -41,6 +41,8 @@ import { InlineMessageFeedbackProps } from '.';
 export const InlineMessageFeedback = forwardRef(
   (
     {
+      children: _children,
+      className,
       label,
       cancelButtonText = 'Cancel',
       onCancel,
@@ -53,6 +55,7 @@ export const InlineMessageFeedback = forwardRef(
       darkMode: darkModeProp,
       onClose,
       textareaProps,
+      ...rest
     }: InlineMessageFeedbackProps,
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
@@ -94,7 +97,7 @@ export const InlineMessageFeedback = forwardRef(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={forwardedRef}>
+        <div className={className} ref={forwardedRef} {...rest}>
           {isSubmitted ? (
             <SubmittedState submittedMessage={submittedMessage} />
           ) : (
