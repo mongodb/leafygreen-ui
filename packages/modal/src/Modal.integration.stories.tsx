@@ -3,12 +3,23 @@ import { faker } from '@faker-js/faker';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { type StoryObj } from '@storybook/react';
 
+import { Avatar, Format } from '@leafygreen-ui/avatar';
+import Badge from '@leafygreen-ui/badge';
+import Banner from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
+import Callout from '@leafygreen-ui/callout';
+import Checkbox from '@leafygreen-ui/checkbox';
+import { Chip } from '@leafygreen-ui/chip';
 import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
+import Copyable from '@leafygreen-ui/copyable';
 import { DatePicker } from '@leafygreen-ui/date-picker';
 import { css, cx } from '@leafygreen-ui/emotion';
+import IconButton from '@leafygreen-ui/icon-button';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { NumberInput } from '@leafygreen-ui/number-input';
+import { PasswordInput } from '@leafygreen-ui/password-input';
+import { ProgressBar } from '@leafygreen-ui/progress-bar';
+import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 import {
   SegmentedControl,
   SegmentedControlOption,
@@ -16,6 +27,7 @@ import {
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 import { SplitButton } from '@leafygreen-ui/split-button';
 import TextInput from '@leafygreen-ui/text-input';
+import Toggle from '@leafygreen-ui/toggle';
 import { spacing } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { Body, H3 } from '@leafygreen-ui/typography';
@@ -85,6 +97,10 @@ const IntegrationContainer = () => {
   const [dateValue, setDateValue] = useState<Date | undefined>(new Date());
   const [textValue, setTextValue] = useState('');
   const [segmentedValue, setSegmentedValue] = useState('option1');
+  const [passwordValue, setPasswordValue] = useState('');
+  const [checkboxValue, setCheckboxValue] = useState(false);
+  const [toggleValue, setToggleValue] = useState(false);
+  const [radioValue, setRadioValue] = useState('option1');
 
   const componentStyles = css`
     max-width: 256px;
@@ -189,6 +205,86 @@ const IntegrationContainer = () => {
         />
       </div>
 
+      <div className={componentStyles}>
+        <PasswordInput
+          label="Password Input"
+          value={passwordValue}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPasswordValue(e.target.value)
+          }
+          placeholder="Enter password..."
+        />
+      </div>
+
+      <div className={componentStyles}>
+        <ProgressBar value={75} label="Progress Bar" />
+      </div>
+
+      <div className={componentStyles}>
+        <Checkbox
+          label="Checkbox"
+          checked={checkboxValue}
+          onChange={e => setCheckboxValue(e.target.checked)}
+        />
+      </div>
+
+      <div className={componentStyles}>
+        <Toggle
+          aria-label="Toggle"
+          checked={toggleValue}
+          onChange={checked => setToggleValue(checked)}
+        />
+      </div>
+
+      <div className={componentStyles}>
+        <RadioBoxGroup
+          name="Radio Box Group"
+          value={radioValue}
+          onChange={e => setRadioValue(e.target.value)}
+        >
+          <RadioBox value="option1">Option 1</RadioBox>
+          <RadioBox value="option2">Option 2</RadioBox>
+        </RadioBoxGroup>
+      </div>
+
+      <div className={componentStyles}>
+        <Avatar format={Format.Icon} />
+      </div>
+
+      <div className={componentStyles}>
+        <Badge>Badge</Badge>
+      </div>
+
+      <div className={componentStyles}>
+        <Chip label="Chip" />
+      </div>
+
+      <div className={componentStyles}>
+        <Copyable label="Copyable">Copy this text</Copyable>
+      </div>
+
+      <div className={componentStyles}>
+        <IconButton aria-label="Settings" />
+      </div>
+
+      <div
+        className={css`
+          max-width: unset;
+          grid-column: 1/-1;
+        `}
+      >
+        <Banner>This is a Banner component</Banner>
+      </div>
+
+      <div
+        className={css`
+          max-width: unset;
+          grid-column: 1/-1;
+        `}
+      >
+        <Callout>This is a Callout component</Callout>
+      </div>
+
       <div
         className={css`
           max-width: unset;
@@ -215,11 +311,15 @@ const IntegrationContainer = () => {
   );
 };
 
-export const WithOpenPopovers: StoryObj = {
+export const WithComponents: StoryObj = {
+  args: {
+    size: 'large',
+  },
   render: (args: any) => {
     return (
       <div
         className={css`
+          width: 100vw;
           height: 100vh;
         `}
       >
@@ -267,16 +367,13 @@ export const WithBackgroundComponents: StoryObj = {
     return (
       <div
         className={css`
+          width: 100vw;
           height: 100vh;
           position: relative;
         `}
       >
-        {/* Background components with open dropdowns */}
         <div
           className={css`
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: ${spacing[4]}px;
             padding: ${spacing[4]}px;
             outline: 1px solid red;
           `}
