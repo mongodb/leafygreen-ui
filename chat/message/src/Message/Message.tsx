@@ -1,173 +1,91 @@
-import React, {
-  ForwardedRef,
-  forwardRef,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
+import React, { forwardRef, useMemo } from 'react';
+import {
+  useLeafyGreenChatContext,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 
-import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { Polymorph } from '@leafygreen-ui/polymorphic';
-import { BaseFontSize, breakpoints } from '@leafygreen-ui/tokens';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { VerifiedAnswerBanner } from '../MessageBanner';
-import { MessageContainer, Variant } from '../MessageContainer';
-import { MessageContent } from '../MessageContent';
-import { MessageLinks } from '../MessageLinks';
+import { MessageContext } from '../MessageContext';
 
-import {
-  avatarClassName,
-  desktopBaseStyles,
-  getBaseStyles,
-  hiddenStyles,
-  invisibleStyles,
-  messageClassName,
-  messageContainerWedgeStyles,
-  messageContainerWrapperStyles,
-  rightAlignedStyles,
-  senderClassName,
-  tabletBaseStyles,
-} from './Message.styles';
-import { Align } from './Message.types';
-import { MessageProps } from '.';
+import { CompactMessage } from './CompactMessage';
+import { type MessageProps } from './Message.types';
+import { SpaciousMessage } from './SpaciousMessage';
 
-export const Message = forwardRef(
+export const Message = forwardRef<HTMLDivElement, MessageProps>(
   (
     {
-      isSender = true,
-      sourceType,
-      avatar,
       align,
-      messageBody,
-      className,
+      avatar,
+      baseFontSize,
       children,
       componentOverrides,
+      darkMode: darkModeProp,
       links,
       linksHeading,
       onLinkClick,
-      markdownProps,
       verified,
-      darkMode: darkModeProp,
-      baseFontSize: baseFontSizeProp,
       ...rest
-    }: MessageProps,
-    forwardedRef: ForwardedRef<HTMLDivElement>,
+    },
+    fwdRef,
   ) => {
-    const { containerWidth } = useLeafyGreenChatContext();
-    const fallbackRef = useRef<HTMLDivElement>(null);
-    const ref =
-      (forwardedRef as MutableRefObject<HTMLDivElement>) || fallbackRef;
-    const { darkMode, theme } = useDarkMode(darkModeProp);
-    const isRightAligned = align === Align.Right || (!align && isSender);
-    const isLeftAligned = align === Align.Left || (!align && !isSender);
-    const [isRenderingAvatar, setIsRenderingAvatar] = useState<boolean>(true);
-    const isMobile = () =>
-      !!containerWidth && containerWidth < breakpoints.Tablet;
-    const isDesktop = () =>
-      !!containerWidth && containerWidth >= breakpoints.Desktop;
-    const baseFontSize: BaseFontSize =
-      baseFontSizeProp ??
-      (isMobile() ? BaseFontSize.Body1 : BaseFontSize.Body2);
+    const { darkMode } = useDarkMode(darkModeProp);
+    const { variant } = useLeafyGreenChatContext();
+    const isCompact = variant === Variant.Compact;
 
-    useEffect(() => {
-      // determine whether the avatar should be rendered
-      if (ref.current) {
-        if (
-          ref.current.nextElementSibling &&
-          ref.current.nextElementSibling.classList.contains(messageClassName)
-        ) {
-          const isLastSender =
-            isSender &&
-            !ref.current.nextElementSibling.classList.contains(senderClassName);
-          const isLastNonSender =
-            !isSender &&
-            ref.current.nextElementSibling.classList.contains(senderClassName);
-          setIsRenderingAvatar(isLastSender || isLastNonSender);
-        } else {
-          // no next element sibling or if next sibling is not a message, so should render avatar
-          setIsRenderingAvatar(true);
-        }
-      }
-      // FIXME:
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ref.current]);
+    if (
+      isCompact &&
+      (align ||
+        avatar ||
+        baseFontSize ||
+        componentOverrides ||
+        links ||
+        linksHeading ||
+        onLinkClick ||
+        verified)
+    ) {
+      consoleOnce.warn(
+        `@lg-chat/message: The Message component's props 'align', 'avatar', 'baseFontSize', 'componentOverrides', 'links', 'linksHeading', 'onLinkClick', and 'verified' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
+      );
+    }
 
-    const isVerified = verified !== undefined;
+    const contextValue = useMemo(
+      () => ({
+        messageBody: rest.messageBody,
+      }),
+      [rest.messageBody],
+    );
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div
-          className={cx(
-            getBaseStyles(theme),
-            messageClassName,
-            {
-              [senderClassName]: isSender,
-              [rightAlignedStyles]: isRightAligned,
-              [tabletBaseStyles]: !isMobile(),
-              [desktopBaseStyles]: isDesktop(),
-            },
-            className,
-          )}
-          ref={ref}
-          {...rest}
-        >
-          <div
-            className={cx(avatarClassName, {
-              [hiddenStyles]: isRightAligned && isMobile(),
-              [invisibleStyles]:
-                (isRightAligned && !isMobile()) || !isRenderingAvatar,
-            })}
-          >
-            {avatar}
-          </div>
-          <div className={messageContainerWrapperStyles}>
-            <Polymorph
-              as={componentOverrides?.MessageContainer ?? MessageContainer}
-              variant={isSender ? Variant.Primary : Variant.Secondary}
-              className={cx({
-                [messageContainerWedgeStyles[theme]]: isVerified,
-              })}
-            >
-              {isVerified ? <VerifiedAnswerBanner {...verified} /> : null}
-              <Polymorph
-                as={componentOverrides?.MessageContent ?? MessageContent}
-                sourceType={sourceType}
-                baseFontSize={baseFontSize}
-                {...markdownProps}
-              >
-                {messageBody ?? ''}
-              </Polymorph>
-              {links ? (
-                <Polymorph
-                  as={componentOverrides?.MessageLinks ?? MessageLinks}
-                  headingText={linksHeading}
-                  links={links}
-                  onLinkClick={onLinkClick}
-                />
-              ) : null}
+        <MessageContext.Provider value={contextValue}>
+          {isCompact ? (
+            <CompactMessage ref={fwdRef} {...rest}>
               {children}
-            </Polymorph>
-          </div>
-          <div
-            className={cx(avatarClassName, {
-              [hiddenStyles]: isLeftAligned && isMobile(),
-              [invisibleStyles]:
-                (isLeftAligned && !isMobile()) || !isRenderingAvatar,
-            })}
-          >
-            {avatar}
-          </div>
-        </div>
+            </CompactMessage>
+          ) : (
+            <SpaciousMessage
+              align={align}
+              avatar={avatar}
+              baseFontSize={baseFontSize}
+              componentOverrides={componentOverrides}
+              links={links}
+              linksHeading={linksHeading}
+              onLinkClick={onLinkClick}
+              ref={fwdRef}
+              verified={verified}
+              {...rest}
+            >
+              {children}
+            </SpaciousMessage>
+          )}
+        </MessageContext.Provider>
       </LeafyGreenProvider>
     );
   },
 );
 
 Message.displayName = 'Message';
-
-export default Message;

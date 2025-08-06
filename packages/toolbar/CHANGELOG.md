@@ -1,5 +1,12 @@
 # @leafygreen-ui/toolbar
 
+## 1.0.3
+
+### Patch Changes
+
+- f9f9ed3: - Updates the active hover styles for `ToolbarIconButton`.
+  - Updates the background-color for `ToolbarIconButton`.
+
 ## 1.0.2
 
 ### Patch Changes

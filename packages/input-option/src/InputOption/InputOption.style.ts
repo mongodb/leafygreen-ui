@@ -96,7 +96,7 @@ export const getInputOptionWedge = ({
   highlighted,
 }: InputOptionStyleArgs) => css`
   // Left wedge
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     left: 0;

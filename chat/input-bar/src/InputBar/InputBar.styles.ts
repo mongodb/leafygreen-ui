@@ -1,181 +1,65 @@
-import { css, keyframes } from '@leafygreen-ui/emotion';
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
   borderRadius,
+  color,
   focusRing,
   fontFamilies,
   fontWeights,
+  InteractionState,
   spacing,
   transitionDuration,
   typeScales,
+  Variant,
 } from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
+/**
+ * "adornment" refers to any element added to user interface (UI) primarily for
+ * enhancing its visual appeal, providing supplementary information, or facilitating
+ * interaction, but not fundamentally essential to the basic functionality.
+ */
+const ADORNMENT_CONTAINER_HEIGHT = 36;
+const GRADIENT_WIDTH = 3;
+const GRADIENT_OFFSET = 1;
+const HOTKEY_INDICATOR_HEIGHT = 28;
+
+const baseFormStyles = css`
   width: 100%;
+`;
+
+export const getFormStyles = (className?: string) =>
+  cx(baseFormStyles, className);
+
+export const outerFocusContainerStyles = css`
   position: relative;
 `;
 
-export const contentWrapperStyles = css`
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  position: relative;
-  border-radius: 8px;
-  border: 1px solid ${palette.gray.base};
-  z-index: 2;
-
-  &:disabled {
-    cursor: not-allowed;
-
-    &:hover,
-    &:active {
-      box-shadow: none;
-    }
-  }
+const baseFocusContainerStyles = css`
+  border-radius: ${borderRadius[200]}px;
 `;
 
-export const contentWrapperFocusStyles = css`
-  border-color: transparent;
-`;
-
-export const contentWrapperThemeStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    background-color: ${palette.black};
-    color: ${palette.white};
-  `,
-  [Theme.Light]: css`
-    background-color: ${palette.white};
-    color: black;
-  `,
-};
-
-export const leftContentStyles = css`
-  display: flex;
-  gap: ${spacing[2]}px;
-  align-items: center;
-  align-self: top;
-  height: 36px; // hard set to height of textarea
-  padding: ${spacing[1]}px 0px ${spacing[1]}px ${spacing[2]}px;
-  background-color: inherit;
-  border-top-left-radius: inherit;
-  border-bottom-left-radius: inherit;
-`;
-
-export const rightContentStyles = css`
-  display: flex;
-  align-items: flex-end;
-  gap: ${spacing[2]}px;
-  padding: ${spacing[1]}px;
-  background-color: inherit;
-  border-top-right-radius: inherit;
-  border-bottom-right-radius: inherit;
-`;
-
-export const inputStyles = css`
-  flex: 1;
-  font-size: ${BaseFontSize.Body1}px;
-  font-family: ${fontFamilies.default};
-  font-weight: ${fontWeights.regular};
-  height: 36px;
-  padding: ${spacing[2]}px;
-  outline: none;
-  border: none;
-  transition: ${transitionDuration.default}ms ease-in-out;
-  transition-property: border-color, box-shadow;
-  overflow-y: scroll;
-  resize: none; // to remove bottom right diagonal lines
-  box-sizing: content-box;
-  line-height: ${typeScales.body1.lineHeight}px;
-  max-height: 160px;
-  background-color: inherit;
-  color: inherit;
-  margin: 0; // firefox creates margins on textareas - remove it for consistent sizing
-
-  &:disabled {
-    &::placeholder {
-      color: inherit;
-    }
-
-    &:disabled:-webkit-autofill {
-      &,
-      &:hover,
-      &:focus {
-        appearance: none;
-        -webkit-text-fill-color: ${palette.gray.base};
-      }
-    }
-  }
-`;
-
-export const disabledThemeStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    color: ${palette.gray.dark1};
-    background-color: ${palette.gray.dark3};
-    border-color: ${palette.gray.dark2};
-  `,
-  [Theme.Light]: css`
-    color: ${palette.gray.base};
-    background-color: ${palette.gray.light2};
-    border-color: ${palette.gray.light1};
-  `,
-};
-
-export const inputThemeStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    background-color: ${palette.black};
-    color: ${palette.white};
-    &:disabled {
-      ${disabledThemeStyles[Theme.Dark]}
-    }
-  `,
-  [Theme.Light]: css`
-    background-color: ${palette.white};
-    color: black;
-    &:disabled {
-      ${disabledThemeStyles[Theme.Light]}
-    }
-    &::placeholder {
-      color: ${palette.gray.base};
-    }
-  `,
-};
-
-export const focusContainerStyles = css`
-  border-radius: 8px;
-`;
-
-export const focusStyles = css`
-  box-shadow: ${focusRing.light.input};
-  border-color: transparent;
-  transition: ${transitionDuration.default}ms ease-in-out;
-  transition-property: border-color, box-shadow;
-`;
-
-const gradientWidth = 3;
-const gradientOffset = 1;
-
-export const gradientAnimationStyles = css`
-  &:before,
-  &:after {
+const gradientAnimationStyles = css`
+  &::before,
+  &::after {
     content: '';
     position: absolute;
-    top: -${gradientWidth + gradientOffset}px;
-    left: -${gradientWidth + gradientOffset}px;
-    width: calc(100% + ${(gradientWidth + gradientOffset) * 2}px);
-    height: calc(100% + ${(gradientWidth + gradientOffset) * 2}px);
-    border-radius: 12px;
+    top: -${GRADIENT_WIDTH + GRADIENT_OFFSET}px;
+    left: -${GRADIENT_WIDTH + GRADIENT_OFFSET}px;
+    width: calc(100% + ${(GRADIENT_WIDTH + GRADIENT_OFFSET) * 2}px);
+    height: calc(100% + ${(GRADIENT_WIDTH + GRADIENT_OFFSET) * 2}px);
+    border-radius: ${borderRadius[300]}px;
     background-color: ${palette.blue.light1};
     background-size: 400% 400%;
     background-position: 800% 800%; // set final state of animation
   }
 
-  &:after {
+  &::after {
     animation: 4s animateBg linear;
   }
 
-  &:before {
+  &::before {
     filter: blur(4px) opacity(0.6);
     animation: 4s animateBg, animateShadow linear infinite;
     opacity: 0;
@@ -216,16 +100,164 @@ export const gradientAnimationStyles = css`
   }
 `;
 
-export const sendButtonDisabledStyles = css`
-  &:hover {
-    box-shadow: none;
+const focusStyles = css`
+  box-shadow: ${focusRing.light.input};
+  border-color: transparent;
+  transition: ${transitionDuration.default}ms ease-in-out;
+  transition-property: border-color, box-shadow;
+`;
+
+export const getInnerFocusContainerStyles = ({
+  disabled,
+  isFocused,
+  shouldRenderGradient,
+}: {
+  disabled: boolean;
+  isFocused: boolean;
+  shouldRenderGradient: boolean;
+}) =>
+  cx(baseFocusContainerStyles, {
+    [gradientAnimationStyles]: shouldRenderGradient,
+    [focusStyles]: !disabled && isFocused && !shouldRenderGradient,
+  });
+
+const getBaseContentWrapperStyles = ({
+  isCompact,
+  theme,
+}: {
+  isCompact: boolean;
+  theme: Theme;
+}) => css`
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: ${isCompact ? 'column' : 'row'};
+  position: relative;
+  border-radius: ${borderRadius[200]}px;
+  border: 1px solid ${palette.gray.base};
+  z-index: 2;
+  background-color: ${color[theme].background[Variant.Primary][
+    InteractionState.Default
+  ]};
+  color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &:hover,
+    &:active {
+      box-shadow: none;
+    }
   }
 `;
 
-export const baseHotkeyIndicatorStyles = css`
+const getDisabledThemeStyles = (theme: Theme) => css`
+  background-color: ${color[theme].background[Variant.Disabled][
+    InteractionState.Default
+  ]};
+  border-color: ${color[theme].border[Variant.Disabled][
+    InteractionState.Default
+  ]};
+  color: ${color[theme].text[Variant.Disabled][InteractionState.Default]};
+`;
+
+const contentWrapperFocusStyles = css`
+  border-color: transparent;
+`;
+
+export const getContentWrapperStyles = ({
+  disabled,
+  isCompact,
+  isFocused,
+  theme,
+}: {
+  disabled: boolean;
+  isCompact: boolean;
+  isFocused: boolean;
+  theme: Theme;
+}) =>
+  cx(getBaseContentWrapperStyles({ isCompact, theme }), {
+    [getDisabledThemeStyles(theme)]: disabled,
+    [contentWrapperFocusStyles]: isFocused,
+  });
+
+export const adornmentContainerStyles = css`
+  height: ${ADORNMENT_CONTAINER_HEIGHT}px;
+  display: flex;
+  gap: ${spacing[200]}px;
+  align-items: center;
+  align-self: flex-start;
+  padding: ${spacing[100]}px 0px ${spacing[100]}px ${spacing[200]}px;
+`;
+
+const getBaseTextAreaStyles = ({
+  isCompact,
+  theme,
+}: {
+  isCompact: boolean;
+  theme: Theme;
+}) => css`
+  flex: ${isCompact ? 'initial' : 1};
+  font-size: ${BaseFontSize.Body1}px;
+  font-family: ${fontFamilies.default};
+  font-weight: ${fontWeights.regular};
+  padding: ${spacing[200]}px;
+  outline: none;
+  border: none;
+  transition: ${transitionDuration.default}ms ease-in-out;
+  transition-property: border-color, box-shadow;
+  overflow-y: scroll;
+  resize: none; // to remove bottom right diagonal lines
+  box-sizing: content-box;
+  line-height: ${typeScales.body1.lineHeight}px;
+  background-color: inherit;
+  color: inherit;
+  margin: 0; // firefox creates margins on textareas - remove it for consistent sizing
+  background-color: ${color[theme].background[Variant.Primary][
+    InteractionState.Default
+  ]};
+  color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
+
+  &:disabled {
+    ${getDisabledThemeStyles(theme)};
+
+    &::placeholder {
+      color: inherit;
+    }
+
+    &:disabled:-webkit-autofill {
+      &,
+      &:hover,
+      &:focus {
+        appearance: none;
+        -webkit-text-fill-color: ${palette.gray.base};
+      }
+    }
+  }
+`;
+
+export const getTextAreaStyles = ({
+  className,
+  isCompact,
+  theme,
+}: {
+  className?: string;
+  isCompact: boolean;
+  theme: Theme;
+}) => cx(getBaseTextAreaStyles({ isCompact, theme }), className);
+
+export const actionContainerStyles = css`
+  display: flex;
+  align-items: flex-end;
+  align-self: flex-end;
+  gap: ${spacing[200]}px;
+  padding: ${spacing[100]}px;
+`;
+
+const baseHotkeyIndicatorStyles = css`
   padding: ${spacing[100]}px ${spacing[400]}px;
   border-radius: ${borderRadius[400]}px;
-  height: 28px;
+  height: ${HOTKEY_INDICATOR_HEIGHT}px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +265,7 @@ export const baseHotkeyIndicatorStyles = css`
   user-select: none;
 `;
 
-export const themedHotkeyIndicatorStyles = {
+const hotkeyIndicatorThemeStyles = {
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
     border: 1px solid ${palette.gray.dark2};
@@ -246,22 +278,6 @@ export const themedHotkeyIndicatorStyles = {
   `,
 };
 
-const appearAnimation = keyframes`
-  from {
-    opacity: 0;
-    display: none;
-  }
-  to {
-    opacity: 1;
-    display: flex;
-  }
-`;
-
-export const hotkeyIndicatorUnfocusedStyles = css`
-  opacity: 1;
-  animation: ${appearAnimation} ${transitionDuration.default}ms forwards;
-`;
-
 const vanishAnimation = keyframes`
   from {
     display: flex;
@@ -273,23 +289,35 @@ const vanishAnimation = keyframes`
   }
 `;
 
-export const hotkeyIndicatorFocusedStyles = css`
+const hotkeyIndicatorFocusedStyles = css`
   opacity: 0;
   animation: ${vanishAnimation} ${transitionDuration.default}ms forwards;
 `;
 
-export const getIconFill = (theme: Theme, disabled?: boolean) => {
-  if (theme === Theme.Dark) {
-    if (disabled) {
-      return palette.gray.dark1;
-    } else {
-      return palette.gray.light1;
-    }
-  } else {
-    if (disabled) {
-      return palette.gray.base;
-    } else {
-      return palette.gray.dark1;
-    }
+const appearAnimation = keyframes`
+  from {
+    opacity: 0;
+    display: none;
   }
-};
+  to {
+    opacity: 1;
+    display: flex;
+  }
+`;
+
+const hotkeyIndicatorUnfocusedStyles = css`
+  opacity: 1;
+  animation: ${appearAnimation} ${transitionDuration.default}ms forwards;
+`;
+
+export const getHotkeyIndicatorStyles = ({
+  isFocused,
+  theme,
+}: {
+  isFocused: boolean;
+  theme: Theme;
+}) =>
+  cx(baseHotkeyIndicatorStyles, hotkeyIndicatorThemeStyles[theme], {
+    [hotkeyIndicatorFocusedStyles]: isFocused,
+    [hotkeyIndicatorUnfocusedStyles]: !isFocused,
+  });

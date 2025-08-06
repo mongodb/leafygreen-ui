@@ -15,7 +15,7 @@ export const baseBannerStyles = css`
   border-radius: 12px;
   font-family: ${fontFamilies.default};
 
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     width: 13px;
@@ -44,7 +44,7 @@ const darkModeInfoBannerStyles = css`
     }
   }
 
-  &:before {
+  &::before {
     background: linear-gradient(
       to left,
       transparent 6px,
@@ -71,7 +71,7 @@ const darkModeWarningBannerStyles = css`
     }
   }
 
-  &:before {
+  &::before {
     background: linear-gradient(
       to left,
       transparent 6px,
@@ -98,7 +98,7 @@ const darkModeDangerBannerStyles = css`
     }
   }
 
-  &:before {
+  &::before {
     background: linear-gradient(
       to left,
       transparent 6px,
@@ -125,7 +125,7 @@ const darkModeSuccessBannerStyles = css`
     }
   }
 
-  &:before {
+  &::before {
     background: linear-gradient(
       to left,
       transparent 6px,
@@ -152,7 +152,7 @@ const lightModeInfoBannerStyles = css`
     }
   }
 
-  &:before {
+  &::before {
     background: linear-gradient(
       to left,
       transparent 6px,
@@ -179,7 +179,7 @@ const lightModeWarningBannerStyles = css`
     }
   }
 
-  &:before {
+  &::before {
     background: linear-gradient(
       to left,
       transparent 6px,
@@ -206,7 +206,7 @@ const lightModeDangerBannerStyles = css`
     }
   }
 
-  &:before {
+  &::before {
     background: linear-gradient(
       to left,
       transparent 6px,
@@ -233,7 +233,7 @@ const lightModeSuccessBannerStyles = css`
     }
   }
 
-  &:before {
+  &::before {
     background: linear-gradient(
       to left,
       transparent 6px,

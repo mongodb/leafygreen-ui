@@ -43,6 +43,13 @@ export interface DrawerProps
   onClose?: React.MouseEventHandler<HTMLButtonElement>;
 
   /**
+   * Determines whether the drawer content should have its own scroll container with padding.
+   * When false, the content area will not have padding or scroll behavior, allowing full-width/height content.
+   * @defaultValue true
+   */
+  scrollable?: boolean;
+
+  /**
    * Title of the Drawer
    */
   title: React.ReactNode;

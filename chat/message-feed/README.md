@@ -2,6 +2,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @lg-chat/message-feed
+```
+
 ### Yarn
 
 ```shell
@@ -16,32 +22,50 @@ npm install @lg-chat/message-feed
 
 ## Example
 
-```ts
+### Compact
+
+```tsx
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 import { MessageFeed } from '@lg-chat/message-feed';
 
 return (
-  <MessageFeed darkMode={darkMode} {...rest}>
-    {messages.map(
-      ({ id, isMongo, messageBody, userName, messageRatingProps }) => (
+  <LeafyGreenChatProvider variant={Variant.Compact}>
+    <MessageFeed darkMode={darkMode} {...rest}>
+      {messages.map(({ id, messageBody, userName }) => (
+        <Message key={id} isSender={!!userName} messageBody={messageBody} />
+      ))}
+    </MessageFeed>
+  </LeafyGreenChatProvider>
+);
+```
+
+### Spacious
+
+```tsx
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { MessageFeed } from '@lg-chat/message-feed';
+
+return (
+  <LeafyGreenChatProvider variant={Variant.Spacious}>
+    <MessageFeed darkMode={darkMode} {...rest}>
+      {messages.map(({ id, messageBody, userName }) => (
         <Message
           key={id}
-          sourceType="markdown"
-          darkMode={darkMode}
           avatar={
-            <Avatar
-              variant={isMongo ? 'mongo' : 'user'}
-              darkMode={darkMode}
-              name={userName}
-            />
+            <Avatar name={userName} variant={isMongo ? 'mongo' : 'user'} />
           }
           isSender={!!userName}
-          messageRatingProps={messageRatingProps}
-        >
-          {messageBody}
-        </Message>
-      ),
-    )}
-  </MessageFeed>
+          messageBody={messageBody}
+        />
+      ))}
+    </MessageFeed>
+  </LeafyGreenChatProvider>
 );
 ```
 
