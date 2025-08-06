@@ -47,6 +47,9 @@ export function getChangedChecksums(): Array<string> {
 
     // theoretically, there should always be a checksum as it is added during generation
     if (!checksum) {
+      console.warn(
+        `No checksum found for icon: ${iconName}. This may indicate a problem with the prebuild process.`,
+      );
       changes.push(iconName);
       continue;
     }
