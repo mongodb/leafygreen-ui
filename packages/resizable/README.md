@@ -105,7 +105,7 @@ const HorizontalResizablePanel = () => {
     initialSize: 300,
     minSize: 200,
     maxSize: 600,
-    position: // Position.Right or Position.Left
+    position: Position.Left,
   });
 
   return (
@@ -134,7 +134,7 @@ const VerticalResizablePanel = () => {
     initialSize: 200,
     minSize: 100,
     maxSize: 500,
-    position: // Position.Bottom or Position.Top
+    position: Position.Top,
   });
 
   return (
