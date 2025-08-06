@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -234,6 +234,83 @@ const OverlayCloudNavComponent: StoryFn<DrawerLayoutProps> = ({
   );
 };
 
+const DynamicContent = ({ data }: { data: string }) => {
+  return <div>{data}</div>;
+};
+
+const DynamicComponent: StoryFn<DrawerLayoutProps> = ({
+  displayMode,
+}: DrawerLayoutProps) => {
+  const [timestamp, setTimestamp] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTimestamp(Date.now());
+    }, 1000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
+  const timestampStr = new Date(timestamp).toISOString();
+
+  const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
+    {
+      id: 'Code',
+      label: 'Code',
+      content: <DynamicContent data={timestampStr} />,
+      title: `Title - ${timestampStr}`,
+      glyph: 'Code',
+    },
+    {
+      id: 'Dashboard',
+      label: 'Dashboard',
+      content: `Content - ${timestampStr}`,
+      title: `Title 🕛 - ${timestampStr}`,
+      glyph: 'Dashboard',
+    },
+    {
+      id: 'Plus',
+      label: "Perform some action, doesn't open a drawer",
+      glyph: 'Plus',
+    },
+    {
+      id: 'Sparkle',
+      label: 'Disabled item',
+      glyph: 'Sparkle',
+      disabled: true,
+    },
+  ];
+
+  const MainContent = () => {
+    const { openDrawer } = useDrawerToolbarContext();
+
+    return (
+      <main
+        className={css`
+          padding: ${spacing[400]}px;
+        `}
+      >
+        <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
+        <div>Main content</div>
+        <div>Time Stamp: ${timestampStr}</div>
+        <LongContent />
+      </main>
+    );
+  };
+
+  return (
+    <div
+      className={css`
+        height: 90vh;
+        width: 100%;
+      `}
+    >
+      <DrawerLayout displayMode={displayMode} toolbarData={DRAWER_TOOLBAR_DATA}>
+        <MainContent />
+      </DrawerLayout>
+    </div>
+  );
+};
+
 export const OverlayCloudNav: StoryObj<DrawerLayoutProps> = {
   render: OverlayCloudNavComponent,
   parameters: {
@@ -257,6 +334,18 @@ export const Overlay: StoryObj<DrawerLayoutProps> = {
 
 export const OverlayOpen: StoryObj<DrawerLayoutProps> = {
   render: ComponentOpen,
+  args: {
+    displayMode: DisplayMode.Overlay,
+  },
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const OverlayDynamic: StoryObj<DrawerLayoutProps> = {
+  render: DynamicComponent,
   args: {
     displayMode: DisplayMode.Overlay,
   },
@@ -322,6 +411,18 @@ export const EmbeddedOpen: StoryObj<DrawerLayoutProps> = {
   args: {
     displayMode: DisplayMode.Embedded,
     resizable: true,
+  },
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const EmbeddedDynamic: StoryObj<DrawerLayoutProps> = {
+  render: DynamicComponent,
+  args: {
+    displayMode: DisplayMode.Embedded,
   },
   parameters: {
     controls: {
