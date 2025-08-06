@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   LeafyGreenChatProvider,
   Variant,
@@ -123,6 +123,42 @@ describe('packages/input-bar', () => {
     const sendButton = screen.getByRole('button');
     expect(textarea).not.toBeDisabled();
     expect(sendButton).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  test('provides access to textarea element via textareaRef', () => {
+    const TestComponent = () => {
+      const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+      const handleClick = () => {
+        if (textareaRef.current) {
+          // Focus the textarea to verify ref access
+          textareaRef.current.focus();
+        }
+      };
+
+      return (
+        <div>
+          <button onClick={handleClick} data-testid="ref-button">
+            Focus via ref
+          </button>
+          <InputBar textareaRef={textareaRef} />
+        </div>
+      );
+    };
+
+    render(<TestComponent />);
+
+    const textarea = screen.getByRole('textbox');
+    const refButton = screen.getByTestId('ref-button');
+
+    // Initially not focused
+    expect(textarea).not.toHaveFocus();
+
+    // Click button to focus via ref
+    userEvent.click(refButton);
+
+    // Textarea should be focused via ref
+    expect(textarea).toHaveFocus();
   });
 
   describe('Hotkey Indicator', () => {

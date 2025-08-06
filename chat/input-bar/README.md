@@ -66,7 +66,8 @@ return (
 | `onMessageSend`               | `(messageBody: string, e?: FormEvent) => void` | Submit event handler.                                       |         |
 | `shouldRenderGradient`        | `boolean`                                      | Toggles the gradient animation around the input             | `true`  |
 | `shouldRenderHotkeyIndicator` | `boolean`                                      | Toggles the hotkey indicator on the right side of the input | `false` |
-| `textAreaProps`               | `TextareaAutosizeProps`                        | Props passed to the TextareaAutosize component.             |         |
+| `textareaProps`               | `TextareaAutosizeProps`                        | Props passed to the TextareaAutosize component.             |         |
+| `textareaRef`                 | `RefObject<HTMLTextAreaElement>`               | Ref object to access the textarea element directly          |         |
 | `state`                       | `'unset' \| 'error' \| 'loading'`              | The current state of the InputBar.                          |         |
 | `...`                         | `HTMLElementProps<'form'>`                     | Props spread on the root element                            |         |
 
