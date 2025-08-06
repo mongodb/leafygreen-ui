@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/drawer': major
+'@leafygreen-ui/drawer': minor
 ---
 
 ## What's New
