@@ -3,7 +3,7 @@ import { act, waitFor } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { TRANSITION_DURATION } from '../constants';
+import { TRANSITION_DURATION } from '../../constants';
 
 import {
   DrawerToolbarProvider,

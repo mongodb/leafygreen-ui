@@ -133,13 +133,10 @@ const TemplateComponent: StoryFn<StoryDrawerProps> = ({
     </Button>
   );
 
-  const renderDrawer = () => (
-    <Drawer {...rest} open={open} onClose={() => setOpen(false)} />
-  );
   const isEmbedded = displayMode === DisplayMode.Embedded;
 
   const baseLayoutProps = {
-    drawer: renderDrawer(),
+    drawer: <Drawer {...rest} />,
     onClose: () => setOpen(false),
     isDrawerOpen: open,
     size,

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { useDrawerLayoutContext } from '../DrawerLayout';
+import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/DrawerLayoutContext';
 
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';

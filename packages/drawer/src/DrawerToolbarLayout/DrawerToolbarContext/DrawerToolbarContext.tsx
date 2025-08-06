@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 
-import { TRANSITION_DURATION } from '../constants';
+import { TRANSITION_DURATION } from '../../constants';
 
 import {
   ContextData,

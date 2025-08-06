@@ -6,10 +6,10 @@ import LeafyGreenProvider, {
 
 import { DisplayMode } from '../Drawer';
 import { useDrawerLayoutContext } from '../DrawerLayout';
-import { EmbeddedDrawerLayout } from '../EmbeddedDrawerLayout';
-import { OverlayDrawerLayout } from '../OverlayDrawerLayout';
 
+import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 import { LayoutComponentProps } from './LayoutComponent.types';
+import { OverlayDrawerLayout } from './OverlayDrawerLayout';
 
 /**
  * @internal

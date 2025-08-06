@@ -1,4 +1,4 @@
-import { LayoutData } from '../DrawerToolbarLayout';
+import { LayoutData } from '../DrawerToolbarLayout/DrawerToolbarLayout.types';
 
 export type ContextData = LayoutData | undefined;
 

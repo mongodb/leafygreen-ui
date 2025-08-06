@@ -9,10 +9,10 @@ import {
   GRID_AREA,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
-} from '../constants';
-import { drawerClassName } from '../Drawer/Drawer.styles';
-import { DisplayMode, Size } from '../Drawer/Drawer.types';
-import { getDrawerWidth } from '../Drawer/Drawer.utils';
+} from '../../constants';
+import { drawerClassName } from '../../Drawer/Drawer.styles';
+import { DisplayMode, Size } from '../../Drawer/Drawer.types';
+import { getDrawerWidth } from '../../Drawer/Drawer.utils';
 
 const MOBILE_BREAKPOINT = breakpoints.Tablet;
 const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side

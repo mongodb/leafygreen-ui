@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
-import React, { useEffect, useMemo } from 'react';
-import { faker } from '@faker-js/faker';
+import React, { useEffect } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -12,61 +10,13 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import { Body } from '@leafygreen-ui/typography';
 
-import { DisplayMode } from '../Drawer';
-import { Size } from '../Drawer/Drawer.types';
-import { DrawerLayout, DrawerLayoutProps } from '../DrawerLayout';
-import { useDrawerToolbarContext } from '../DrawerToolbarContext';
+import { DisplayMode } from '../../Drawer';
+import { Size } from '../../Drawer/Drawer.types';
+import { DrawerLayout, DrawerLayoutProps } from '../../DrawerLayout';
+import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
 
-const SEED = 0;
-faker.seed(SEED);
-
-const LongContent = () => {
-  const paragraphs = useMemo(() => {
-    return faker.lorem
-      .paragraphs(30, '\n')
-      .split('\n')
-      .map((p, i) => <Body key={i}>{p}</Body>);
-  }, []);
-
-  return (
-    <div
-      className={css`
-        display: flex;
-        flex-direction: column;
-        gap: ${spacing[100]}px;
-      `}
-    >
-      {paragraphs}
-    </div>
-  );
-};
-
-const DrawerContent = () => {
-  // Generate a unique seed based on timestamp for different content each time
-  React.useEffect(() => {
-    faker.seed(Date.now());
-  }, []);
-
-  // Generate paragraphs without memoization so they're different each render
-  const paragraphs = faker.lorem
-    .paragraphs(30, '\n')
-    .split('\n')
-    .map((p, i) => <Body key={i}>{p}</Body>);
-
-  return (
-    <div
-      className={css`
-        display: flex;
-        flex-direction: column;
-        gap: ${spacing[100]}px;
-      `}
-    >
-      {paragraphs}
-    </div>
-  );
-};
+import { DrawerContent, LongContent } from './DrawerToolbarLayout.testutils';
 
 const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
   {
@@ -75,9 +25,6 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
     content: <DrawerContent />,
     title: 'Code Title',
     glyph: 'Code',
-    onClick: () => {
-      console.log('Code clicked');
-    },
   },
   {
     id: 'Dashboard',
@@ -85,17 +32,11 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
     content: <DrawerContent />,
     title: 'Dashboard Title',
     glyph: 'Dashboard',
-    onClick: () => {
-      console.log('Dashboard clicked');
-    },
   },
   {
     id: 'Plus',
     label: "Perform some action, doesn't open a drawer",
     glyph: 'Plus',
-    onClick: () => {
-      console.log('Plus clicked, does not update drawer');
-    },
   },
   {
     id: 'Sparkle',
