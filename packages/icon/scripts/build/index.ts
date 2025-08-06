@@ -71,12 +71,17 @@ async function buildBatch(
  * Splits a list into batches, then uses a concurrency-limited queue to
  * build all batches in parallel. Waits until all batches have finished.
  */
-async function buildAllBatches(
-  fullBatch: Array<string>,
+async function buildAllBatches({
+  fullBatch,
   batchSize = 10,
   numWorkers = 4,
   verbose = false,
-): Promise<void> {
+}: {
+  fullBatch: Array<string>;
+  batchSize: number;
+  numWorkers: number;
+  verbose?: boolean;
+}): Promise<void> {
   const { default: PQueue } = await import('p-queue');
 
   const queue = new PQueue({ concurrency: numWorkers });
@@ -89,13 +94,18 @@ async function buildAllBatches(
   await queue.onIdle();
 }
 
-async function main(options: { verbose: boolean }): Promise<void> {
+async function buildChangedIcons(options: { verbose: boolean }): Promise<void> {
   try {
     const iconsToBuild = getChangedChecksums();
     const verbose = options.verbose;
 
     await buildExportsAndStories();
-    await buildAllBatches(iconsToBuild, BATCH_SIZE, NUM_WORKERS, verbose);
+    await buildAllBatches({
+      fullBatch: iconsToBuild,
+      batchSize: BATCH_SIZE,
+      numWorkers: NUM_WORKERS,
+      verbose,
+    });
     console.log('All icons built successfully (°ロ°) !');
   } catch (err) {
     console.error('Build failed:', err);
@@ -106,5 +116,5 @@ async function main(options: { verbose: boolean }): Promise<void> {
 new Command()
   .description('Split icon files into batches for bundling in parallel')
   .option('-v, --verbose', 'Enable verbose output', false)
-  .action(main)
+  .action(buildChangedIcons)
   .parse();
