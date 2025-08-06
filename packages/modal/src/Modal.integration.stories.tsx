@@ -42,6 +42,9 @@ const meta: StoryMetaType<typeof Modal> = {
 
   component: Modal,
   parameters: {
+    docs: {
+      page: null,
+    },
     default: 'ScrollableWithOpenDropdowns',
     generate: {
       storyNames: [
