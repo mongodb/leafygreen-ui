@@ -9,7 +9,6 @@ import React, {
 import { TRANSITION_DURATION } from '../../constants';
 
 import {
-  ContextData,
   DataId,
   DrawerToolbarContextType,
   DrawerToolbarProviderProps,
@@ -22,7 +21,7 @@ export const DrawerToolbarProvider = ({
   children,
   data,
 }: DrawerToolbarProviderProps) => {
-  const [content, setContent] = useState<ContextData>(undefined);
+  const [activeDrawerId, setActiveDrawerId] = useState<DataId | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const openDrawer = useCallback(
@@ -33,30 +32,29 @@ export const DrawerToolbarProvider = ({
 
       if (activeDrawerContent) {
         setIsDrawerOpen(true);
-        setContent(prev => {
-          if (prev?.id === id) return prev;
-          return activeDrawerContent;
-        });
+        setActiveDrawerId(id);
       } else {
         console.error(
           `No matching item found in the toolbar for the provided id: ${id}. Please verify that the id is correct.`,
         );
       }
     },
-    [setContent, data, setIsDrawerOpen],
+    [data, setIsDrawerOpen],
   );
 
   const closeDrawer = useCallback(() => {
     // Delay the removal of the content to allow the drawer to close before removing the content
     setTimeout(() => {
-      setContent(undefined);
+      setActiveDrawerId(null);
     }, TRANSITION_DURATION);
     setIsDrawerOpen(false);
-  }, [setContent]);
+  }, [setActiveDrawerId]);
 
   const getActiveDrawerContent = useCallback(() => {
+    if (!activeDrawerId) return undefined;
+    const content = data.find(item => item?.id === activeDrawerId);
     return content;
-  }, [content]);
+  }, [activeDrawerId, data]);
 
   const value = useMemo(
     () => ({

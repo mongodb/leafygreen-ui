@@ -8,10 +8,8 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 
-const SEED = 0;
-faker.seed(SEED);
-
 export const LongContent = () => {
+  faker.seed(0);
   const paragraphs = useMemo(() => {
     return faker.lorem
       .paragraphs(30, '\n')
@@ -33,10 +31,7 @@ export const LongContent = () => {
 };
 
 export const DrawerContent = () => {
-  // Generate a unique seed based on timestamp for different content each time
-  React.useEffect(() => {
-    faker.seed(Date.now());
-  }, []);
+  faker.seed(Date.now());
 
   // Generate paragraphs without memoization so they're different each render
   const paragraphs = faker.lorem
