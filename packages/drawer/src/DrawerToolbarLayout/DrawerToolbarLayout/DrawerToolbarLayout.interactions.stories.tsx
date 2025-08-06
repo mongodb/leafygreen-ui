@@ -8,11 +8,11 @@ import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { DisplayMode, Drawer } from '../Drawer';
-import { DrawerLayoutProvider } from '../DrawerLayout';
-import { getTestUtils } from '../testing';
+import { DisplayMode, Drawer } from '../../Drawer';
+import { DrawerLayoutProvider } from '../../DrawerLayout';
+import { getTestUtils } from '../../testing';
+import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
 
-import { useDrawerToolbarContext } from './DrawerToolbarContext/DrawerToolbarContext';
 import { DrawerToolbarLayout } from './DrawerToolbarLayout';
 import {
   DRAWER_TOOLBAR_DATA,

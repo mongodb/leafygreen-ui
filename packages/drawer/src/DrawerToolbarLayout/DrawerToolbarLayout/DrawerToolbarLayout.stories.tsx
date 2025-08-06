@@ -11,11 +11,11 @@ import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { DisplayMode } from '../Drawer';
-import { Size } from '../Drawer/Drawer.types';
-import { DrawerLayout, DrawerLayoutProps } from '../DrawerLayout';
+import { DisplayMode } from '../../Drawer';
+import { Size } from '../../Drawer/Drawer.types';
+import { DrawerLayout, DrawerLayoutProps } from '../../DrawerLayout';
+import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
 
-import { useDrawerToolbarContext } from './DrawerToolbarContext/DrawerToolbarContext';
 import { DrawerContent, LongContent } from './DrawerToolbarLayout.testutils';
 
 const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [

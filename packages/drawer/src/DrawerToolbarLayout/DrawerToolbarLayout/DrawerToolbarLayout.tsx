@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 
-import { DrawerToolbarProvider } from './DrawerToolbarContext/DrawerToolbarContext';
+import { DrawerToolbarProvider } from '../DrawerToolbarContext/DrawerToolbarContext';
+
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 import { DrawerToolbarLayoutContent } from './DrawerToolbarLayoutContent';
 

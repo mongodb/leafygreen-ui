@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { DrawerLayout } from '../DrawerLayout/DrawerLayout';
-import { DrawerLayoutProps } from '../DrawerLayout/DrawerLayout.types';
-import { useDrawerToolbarContext } from '../DrawerToolbarLayout/DrawerToolbarContext/DrawerToolbarContext';
-import { getTestUtils } from '../testing';
+import { DrawerLayout } from '../../DrawerLayout/DrawerLayout';
+import { DrawerLayoutProps } from '../../DrawerLayout/DrawerLayout.types';
+import { useDrawerToolbarContext } from '../../DrawerToolbarLayout/DrawerToolbarContext/DrawerToolbarContext';
+import { getTestUtils } from '../../testing';
 
 const onClickMock = jest.fn();
 const onCloseMock = jest.fn();
