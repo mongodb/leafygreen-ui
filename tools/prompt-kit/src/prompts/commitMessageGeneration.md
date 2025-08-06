@@ -16,3 +16,6 @@ Examples:
 - `style: format code with lint command`
 - `refactor(charts tooltip): abstract visibility logic into hook`
 - `test: add unit tests for new functionality`
+- `build: update webpack configuration for better tree shaking`
+- `ci: add automated testing workflow for pull requests`
+- `perf(table): optimize rendering for large datasets`
