@@ -35,6 +35,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
+    "@leafygreen-ui/resizable": "workspace:^",
     "@leafygreen-ui/tabs": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/toolbar": "workspace:^",

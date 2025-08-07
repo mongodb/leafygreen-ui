@@ -2,10 +2,11 @@ import React, { forwardRef } from 'react';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { DisplayMode } from '../Drawer/Drawer.types';
+import { DisplayMode, Size } from '../Drawer/Drawer.types';
 import { DrawerToolbarLayout } from '../DrawerToolbarLayout';
 import { LayoutComponent } from '../LayoutComponent';
 
+import { DrawerLayoutProvider } from './DrawerLayoutContext/DrawerLayoutContext';
 import { DrawerLayoutProps } from './DrawerLayout.types';
 
 /**
@@ -19,39 +20,44 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
       children,
       displayMode = DisplayMode.Overlay,
       isDrawerOpen = false,
+      resizable = false,
+      onClose,
+      size = Size.Default,
       ...rest
     }: DrawerLayoutProps,
     forwardedRef,
   ) => {
-    // If there is data, we render the DrawerToolbarLayout.
-    if (toolbarData) {
-      return (
-        <DrawerToolbarLayout
-          ref={forwardedRef}
-          toolbarData={toolbarData}
-          displayMode={displayMode}
-          {...rest}
-        >
-          {children}
-        </DrawerToolbarLayout>
+    const hasToolbar = toolbarData && toolbarData.length > 0;
+
+    if (!hasToolbar) {
+      consoleOnce.warn(
+        'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
       );
     }
 
-    consoleOnce.warn(
-      'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
-    );
-
-    // If there is no data, we render the LayoutComponent.
-    // The LayoutComponent will read the displayMode and render the appropriate layout.
     return (
-      <LayoutComponent
-        ref={forwardedRef}
-        displayMode={displayMode}
+      <DrawerLayoutProvider
         isDrawerOpen={isDrawerOpen}
-        {...rest}
+        resizable={resizable}
+        displayMode={displayMode}
+        onClose={onClose}
+        hasToolbar={hasToolbar}
+        size={size}
       >
-        {children}
-      </LayoutComponent>
+        {toolbarData ? (
+          <DrawerToolbarLayout
+            ref={forwardedRef}
+            toolbarData={toolbarData}
+            {...rest}
+          >
+            {children}
+          </DrawerToolbarLayout>
+        ) : (
+          <LayoutComponent ref={forwardedRef} {...rest}>
+            {children}
+          </LayoutComponent>
+        )}
+      </DrawerLayoutProvider>
     );
   },
 );
