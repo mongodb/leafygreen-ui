@@ -291,7 +291,6 @@ const DynamicComponent: StoryFn<DrawerLayoutProps> = ({
         `}
       >
         <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
-        <div>Main content</div>
         <div>Time Stamp: ${timestampStr}</div>
         <LongContent />
       </main>
@@ -353,6 +352,9 @@ export const OverlayDynamic: StoryObj<DrawerLayoutProps> = {
   parameters: {
     controls: {
       exclude: toolbarExcludedControls,
+    },
+    chromatic: {
+      disableSnapshot: true,
     },
   },
 };
@@ -428,6 +430,9 @@ export const EmbeddedDynamic: StoryObj<DrawerLayoutProps> = {
   parameters: {
     controls: {
       exclude: toolbarExcludedControls,
+    },
+    chromatic: {
+      disableSnapshot: true,
     },
   },
 };
