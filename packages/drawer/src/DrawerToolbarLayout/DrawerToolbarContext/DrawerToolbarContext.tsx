@@ -24,6 +24,11 @@ export const DrawerToolbarProvider = ({
   const [activeDrawerId, setActiveDrawerId] = useState<DataId | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
+  /**
+   * Checks if there if there is any content for the provided id.
+   * If there is, it opens the drawer and sets the active drawer id.
+   * If there is no content, it logs an error and does not open the drawer.
+   */
   const openDrawer = useCallback(
     (id: DataId) => {
       const activeDrawerContent = data.find(
@@ -42,6 +47,10 @@ export const DrawerToolbarProvider = ({
     [data, setIsDrawerOpen],
   );
 
+  /**
+   * Closes the drawer and sets the active drawer id to null.
+   * The content will be removed after a delay to allow the drawer to close first.
+   */
   const closeDrawer = useCallback(() => {
     // Delay the removal of the content to allow the drawer to close before removing the content
     setTimeout(() => {
@@ -50,6 +59,10 @@ export const DrawerToolbarProvider = ({
     setIsDrawerOpen(false);
   }, [setActiveDrawerId]);
 
+  /**
+   * Returns the content for the active drawer id.
+   * If there is no active drawer id, it returns undefined.
+   */
   const getActiveDrawerContent = useCallback(() => {
     if (!activeDrawerId) return undefined;
     const content = data.find(item => item?.id === activeDrawerId);
