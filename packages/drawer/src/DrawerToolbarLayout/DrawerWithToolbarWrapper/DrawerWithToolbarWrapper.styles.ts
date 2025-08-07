@@ -109,6 +109,7 @@ const baseEmbeddedStyles = css`
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
   grid-template-columns: 1fr auto;
+  width: 100%;
   // To show focus outline since the wrapper has overflow hidden
   padding-left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
   margin-left: -${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
