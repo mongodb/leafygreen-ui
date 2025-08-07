@@ -90,6 +90,9 @@ const getClosedOverlayStyles = (size: number) => css`
 
 const openEmbeddedStyles = css`
   grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px auto;
+  // To show focus outline since the wrapper has overflow hidden
+  padding-left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
+  margin-left: -${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     animation-name: ${drawerInMobile};
@@ -109,9 +112,7 @@ const baseEmbeddedStyles = css`
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
   grid-template-columns: 1fr auto;
-  // To show focus outline since the wrapper has overflow hidden
-  padding-left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
-  margin-left: -${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
+  width: 100%;
 `;
 
 const getOverlayShadowStyles = ({ theme }: { theme: Theme }) => css`
