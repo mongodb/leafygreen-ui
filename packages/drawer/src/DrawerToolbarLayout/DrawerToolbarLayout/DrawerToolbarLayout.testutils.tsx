@@ -13,6 +13,7 @@ faker.seed(SEED);
 
 export const LongContent = () => {
   const paragraphs = useMemo(() => {
+    faker.seed(SEED);
     return faker.lorem
       .paragraphs(30, '\n')
       .split('\n')
