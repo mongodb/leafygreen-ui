@@ -565,3 +565,123 @@ const lineNumbersExt = useLineNumbersExtension({
 // Combine extensions
 const allExtensions = [languageExt, themeExt, lineNumbersExt];
 ```
+
+### Extension Testing Utilities
+
+The `@leafygreen-ui/code-editor` package provides specialized testing utilities for CodeMirror extension hooks. These utilities eliminate duplication and provide consistent fake modules for testing extension functionality.
+
+#### Extension Test Utilities
+
+The following utilities are available for testing extension hooks:
+
+```tsx
+import {
+  createFakeStateModule,
+  createFakeViewModule,
+  createFakeLanguageModule,
+  createFakeLezerHighlightModule,
+  createFakeAutoCompleteModule,
+  createFakeLintModule,
+  createFakeHyperLinkModule,
+  createComprehensiveFakeModules,
+  createFakeExtension,
+  FakeCompartment,
+} from '@leafygreen-ui/code-editor';
+```
+
+#### Basic Fake Module Creators
+
+- `createFakeStateModule(additionalMethods?)` - Creates a fake `@codemirror/state` module
+- `createFakeViewModule(additionalMethods?)` - Creates a fake `@codemirror/view` module
+- `createFakeLanguageModule(additionalMethods?)` - Creates a fake `@codemirror/language` module
+- `createFakeLezerHighlightModule()` - Creates a fake `@lezer/highlight` module
+- `createFakeAutoCompleteModule()` - Creates a fake `@codemirror/autocomplete` module
+- `createFakeLintModule()` - Creates a fake `@codemirror/lint` module
+- `createFakeHyperLinkModule()` - Creates a fake `@uiw/codemirror-extensions-hyper-link` module
+
+#### Comprehensive Test Setup
+
+- `createComprehensiveFakeModules()` - Creates a complete set of fake modules for testing complex scenarios
+- `createFakeExtension(label)` - Creates a fake Extension object for testing
+- `FakeCompartment` - A fake Compartment class for testing
+
+#### Usage Examples
+
+**Testing a Single Extension Hook:**
+
+```tsx
+import { renderHook } from '@testing-library/react';
+import {
+  createFakeStateModule,
+  createFakeViewModule,
+} from '@leafygreen-ui/code-editor';
+import { useThemeExtension } from '@leafygreen-ui/code-editor/hooks/extensions';
+
+describe('useThemeExtension', () => {
+  const fakeStateModule = createFakeStateModule();
+  const fakeViewModule = createFakeViewModule();
+
+  it('should apply theme correctly', () => {
+    const { result } = renderHook(() =>
+      useThemeExtension({
+        editorViewInstance: null,
+        props: { darkMode: true, baseFontSize: 16 },
+        modules: {
+          '@codemirror/state': fakeStateModule,
+          '@codemirror/view': fakeViewModule,
+        },
+      }),
+    );
+
+    expect(result.current).toBeTruthy();
+  });
+});
+```
+
+**Testing Multiple Extensions:**
+
+```tsx
+import { renderHook } from '@testing-library/react';
+import { createComprehensiveFakeModules } from '@leafygreen-ui/code-editor';
+import { useExtensions } from '@leafygreen-ui/code-editor/hooks/extensions';
+
+describe('useExtensions', () => {
+  const fakeModules = createComprehensiveFakeModules();
+
+  it('should aggregate all extensions', () => {
+    const { result } = renderHook(() =>
+      useExtensions({
+        editorViewInstance: null,
+        props: {
+          language: 'javascript',
+          enableLineNumbers: true,
+          enableCodeFolding: true,
+        },
+        modules: fakeModules,
+      }),
+    );
+
+    expect(Array.isArray(result.current)).toBe(true);
+    expect(result.current.length).toBeGreaterThan(0);
+  });
+});
+```
+
+**Custom Module Configuration:**
+
+```tsx
+import { createFakeStateModule } from '@leafygreen-ui/code-editor';
+
+// Extend base module with custom methods
+const customStateModule = createFakeStateModule({
+  myCustomMethod: jest.fn(() => 'custom result'),
+});
+```
+
+#### Benefits
+
+1. **Reduces Duplication** - No need to recreate fake modules in every test file
+2. **Consistency** - All tests use the same fake module implementations
+3. **Maintainability** - Changes to fake modules only need to be made in one place
+4. **Readability** - Tests focus on the logic being tested rather than setup code
+5. **Extensibility** - Easy to add new fake modules or extend existing ones
