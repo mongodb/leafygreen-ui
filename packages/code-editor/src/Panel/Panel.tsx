@@ -9,8 +9,6 @@ import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 // @ts-ignore LG icons don't currently support TS
 import FormatIcon from '@leafygreen-ui/icon/dist/Format';
 // @ts-ignore LG icons don't currently support TS
-import PlayIcon from '@leafygreen-ui/icon/dist/Play';
-// @ts-ignore LG icons don't currently support TS
 import QuestionMarkWithCircleIcon from '@leafygreen-ui/icon/dist/QuestionMarkWithCircle';
 // @ts-ignore LG icons don't currently support TS
 import RedoIcon from '@leafygreen-ui/icon/dist/Redo';
@@ -22,6 +20,7 @@ import {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuItem, MenuVariant } from '@leafygreen-ui/menu';
+import Tooltip from '@leafygreen-ui/tooltip';
 
 import {
   getPanelButtonsStyles,
@@ -35,11 +34,9 @@ export function Panel({
   title,
   showCopyButton,
   showFormatButton,
-  showPlayButton,
   showSecondaryMenuButton,
   onCopyClick,
   onFormatClick,
-  onPlayClick,
   onUndoClick,
   onRedoClick,
   onDownloadClick,
@@ -59,23 +56,37 @@ export function Panel({
       >
         {title}
       </div>
-      <div className={getPanelChildrenStyles(theme)}>{children}</div>
-      <div className={getPanelButtonsStyles(theme)}>
-        {showPlayButton && (
-          <IconButton onClick={onPlayClick}>
-            <PlayIcon />
-          </IconButton>
-        )}
-
+      <div className={getPanelChildrenStyles()}>{children}</div>
+      <div className={getPanelButtonsStyles()}>
         {showFormatButton && (
-          <IconButton onClick={onFormatClick}>
-            <FormatIcon />
-          </IconButton>
+          <Tooltip
+            align="top"
+            justify="middle"
+            trigger={
+              <IconButton onClick={onFormatClick}>
+                <FormatIcon />
+              </IconButton>
+            }
+            triggerEvent="hover"
+            darkMode={darkMode}
+          >
+            Prettify code
+          </Tooltip>
         )}
         {showCopyButton && (
-          <IconButton onClick={onCopyClick}>
-            <CopyIcon />
-          </IconButton>
+          <Tooltip
+            align="top"
+            justify="middle"
+            trigger={
+              <IconButton onClick={onCopyClick}>
+                <CopyIcon />
+              </IconButton>
+            }
+            triggerEvent="hover"
+            darkMode={darkMode}
+          >
+            Copy
+          </Tooltip>
         )}
         {showSecondaryMenuButton && (
           <Menu

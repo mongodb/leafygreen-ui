@@ -5,7 +5,7 @@ interface SecondaryButtonConfig {
   label: string;
   glyph?: React.ReactElement;
   href?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export interface PanelProps extends DarkModeProps {
@@ -13,12 +13,10 @@ export interface PanelProps extends DarkModeProps {
 
   showCopyButton?: boolean;
   showFormatButton?: boolean;
-  showPlayButton?: boolean;
   showSecondaryMenuButton?: boolean;
 
   onCopyClick?: () => void;
   onFormatClick?: () => void;
-  onPlayClick?: () => void;
   onUndoClick?: () => void;
   onRedoClick?: () => void;
   onDownloadClick?: () => void;
