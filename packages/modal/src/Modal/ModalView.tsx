@@ -1,36 +1,22 @@
-import React, { useCallback, useState } from 'react';
-import { Transition, TransitionStatus } from 'react-transition-group';
-import { Options } from 'focus-trap';
-import FocusTrap from 'focus-trap-react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
+import { useEscapeKey, useIdAllocator, useMergeRefs } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
-  PortalContextProvider,
   useDarkMode,
-  usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import Portal from '@leafygreen-ui/portal';
 
 import { getLgIds } from '../utils';
 
 import {
-  backdropBaseStyle,
-  backdropThemeStyles,
   baseCloseButtonStyles,
   closeButton,
-  modalContentStyle,
-  modalSizes,
-  modalThemeStyles,
-  scrollContainer,
-  visibleBackdrop,
-  visibleModalContentStyle,
+  getDialogStyles,
 } from './Modal.styles';
 import {
   CloseIconColor,
-  ForwardedRef,
   ModalProps,
   ModalSize,
 } from './Modal.types';
@@ -39,7 +25,7 @@ import {
  * @internal
  * Internal Modal View component
  */
-const ModalView = React.forwardRef(
+const ModalView = React.forwardRef<HTMLDialogElement, ModalProps>(
   (
     {
       open = false,
@@ -51,25 +37,19 @@ const ModalView = React.forwardRef(
       id: idProp,
       children,
       className,
-      contentClassName,
-      initialFocus,
+      backdropClassName,
       'data-lgid': dataLgId,
       ...rest
-    }: ModalProps,
-    forwardedRef: ForwardedRef,
+    },
+    fwdRef,
   ) => {
     const { theme, darkMode } = useDarkMode(darkModeProp);
-
-    const nodeRef = React.useRef<HTMLDivElement | null>(null);
-    const ref = forwardedRef ?? nodeRef;
-
-    const [scrollContainerRef, setScrollContainerRef] =
-      useState<null | HTMLDivElement>(null);
-
-    const { isPopoverOpen } = usePopoverContext();
+    // const [scrollContainerRef, setScrollContainerRef] = useState<null | HTMLDivElement>(null);
+    const [dialogEl, setDialogEl] = useState<HTMLDialogElement | null>(null);
+    const dialogRef = useMergeRefs([fwdRef, setDialogEl]);
 
     const handleClose = useCallback(() => {
-      if (setOpen && shouldClose()) {
+      if (shouldClose()) {
         setOpen(false);
       }
     }, [setOpen, shouldClose]);
@@ -78,101 +58,88 @@ const ModalView = React.forwardRef(
     const closeId = useIdAllocator({ prefix: 'modal' });
     const lgIds = getLgIds(dataLgId);
 
-    useEscapeKey(handleClose, { enabled: open && !isPopoverOpen });
-
-    const focusTrapOptions: Options = initialFocus
-      ? {
-          initialFocus: `#${id} ${initialFocus}`,
-          fallbackFocus: `#${closeId}`,
-          escapeDeactivates: false,
-        }
-      : {
-          fallbackFocus: `#${closeId}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
-          escapeDeactivates: false,
-        };
+    // TODO: test closing open popovers in modal with esc key
+    // useEscapeKey(handleClose, { enabled: open && !isPopoverOpen });
+    useEscapeKey(handleClose, { enabled: open });
 
     const allowedSize = Object.values(ModalSize).includes(sizeProp);
     const size = allowedSize ? sizeProp : ModalSize.Default;
 
+    // Handle dialog open/close and focus management
+    useEffect(() => {
+      console.log('dialog', dialogEl);
+      if (!dialogEl) return;
+
+      if (open && !dialogEl.open) {
+        dialogEl.showModal();
+      } else {
+        dialogEl.close();
+      }
+    }, [dialogEl, open]);
+
+    // Handle ESC key and other native dialog events
+    // useEffect(() => {
+    //   const dialog = dialogEl;
+    //   if (!dialog) return;
+
+    //   const handleCancel = (event: Event) => {
+    //     // Prevent default ESC behavior if shouldClose returns false
+    //     if (!shouldClose()) {
+    //       event.preventDefault();
+    //     } else {
+    //       setOpen(false);
+    //     }
+    //   };
+
+    //   const handleClose = () => {
+    //     setOpen(false);
+    //   };
+
+    //   dialog.addEventListener('cancel', handleCancel);
+    //   dialog.addEventListener('close', handleClose);
+
+    //   return () => {
+    //     dialog.removeEventListener('cancel', handleCancel);
+    //     dialog.removeEventListener('close', handleClose);
+    //   };
+    // }, [shouldClose, setOpen, dialogRef]);
+
     return (
-      <Transition
-        in={open}
-        timeout={150}
-        mountOnEnter
-        unmountOnExit
-        nodeRef={nodeRef}
-      >
-        {(state: TransitionStatus) => (
-          <Portal>
-            <div
-              data-testid={lgIds.root}
-              data-lgid={lgIds.root}
-              {...rest}
-              id={id}
-              ref={ref}
-              className={cx(
-                className,
-                backdropBaseStyle,
-                backdropThemeStyles[theme],
-                {
-                  [visibleBackdrop]: state === 'entered',
-                },
-              )}
-            >
-              <LeafyGreenProvider darkMode={darkMode}>
-                <FocusTrap
-                  active={state === 'entered'}
-                  focusTrapOptions={focusTrapOptions}
-                >
-                  <div
-                    className={scrollContainer}
-                    ref={el => setScrollContainerRef(el)}
-                  >
-                    <div
-                      data-testid={lgIds.modal}
-                      data-lgid={lgIds.modal}
-                      aria-modal="true"
-                      role="dialog"
-                      tabIndex={-1}
-                      className={cx(
-                        modalContentStyle,
-                        modalThemeStyles[theme],
-                        modalSizes[size],
-                        {
-                          [visibleModalContentStyle]: state === 'entered',
-                        },
-                        contentClassName,
-                      )}
-                    >
-                      <PortalContextProvider
-                        popover={{
-                          portalContainer: scrollContainerRef,
-                          scrollContainer: scrollContainerRef,
-                        }}
-                      >
-                        {children}
-                        <IconButton
-                          id={closeId}
-                          data-testid={lgIds.close}
-                          data-lgid={lgIds.close}
-                          onClick={handleClose}
-                          aria-label="Close modal"
-                          className={cx(
-                            baseCloseButtonStyles,
-                            closeButton[theme][closeIconColor],
-                          )}
-                        >
-                          <XIcon />
-                        </IconButton>
-                      </PortalContextProvider>
-                    </div>
-                  </div>
-                </FocusTrap>
-              </LeafyGreenProvider>
-            </div>
-          </Portal>
-        )}
-      </Transition>
+      <LeafyGreenProvider darkMode={darkMode} popoverPortalContainer={{
+        portalContainer: dialogEl,
+        scrollContainer: dialogEl,
+      }}>
+        { }
+        <dialog
+          {...rest}
+          ref={dialogRef}
+          id={id}
+          data-testid={lgIds.root}
+          data-lgid={lgIds.root}
+          className={getDialogStyles({
+            backdropClassName,
+            className,
+            size,
+            theme,
+          })}
+        >
+
+          {children}
+          <IconButton
+            id={closeId}
+            data-testid={lgIds.close}
+            data-lgid={lgIds.close}
+            onClick={handleClose}
+            aria-label="Close modal"
+            className={cx(
+              baseCloseButtonStyles,
+              closeButton[theme][closeIconColor],
+            )}
+          >
+            <XIcon />
+          </IconButton>
+        </dialog>
+      </LeafyGreenProvider>
     );
   },
 );

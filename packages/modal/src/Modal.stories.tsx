@@ -44,9 +44,6 @@ const meta: StoryMetaType<typeof Modal> = {
   },
   args: {
     open: true,
-    className: css`
-      z-index: 1;
-    `,
     children: (
       <div className={margin}>
         <H3>Base modal</H3>
