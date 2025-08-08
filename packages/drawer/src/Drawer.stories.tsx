@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import {
@@ -9,6 +10,8 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing } from '@leafygreen-ui/tokens';
@@ -34,6 +37,29 @@ const snapshotStoryExcludedControlParams = [
   'displayMode',
   'title',
 ];
+
+const DrawerCustomTitle = () => {
+  return (
+    <div
+      className={css`
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      `}
+    >
+      <div>Drawer title</div>
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <IconButton onClick={() => console.log('click')}>
+          <CloudIcon aria-label="Cloud" />
+        </IconButton>
+      </div>
+    </div>
+  );
+};
 
 export default {
   title: 'Sections/Drawer',
@@ -394,6 +420,20 @@ export const ScrollableFalse: StoryObj<DrawerProps> = {
   args: {
     children: <FullWidthHeightContent />,
     scrollable: false,
+    open: true,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+export const CustomTitle: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    title: <DrawerCustomTitle />,
     open: true,
   },
   parameters: {

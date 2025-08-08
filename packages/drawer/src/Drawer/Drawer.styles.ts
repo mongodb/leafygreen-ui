@@ -313,3 +313,7 @@ export const getScrollContainerStyles = ({
   cx({
     [baseScrollContainerStyles]: scrollable,
   });
+
+export const titleStyles = css`
+  flex-grow: 1;
+`;
