@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement } from 'react';
+import { FormEvent, ReactElement, RefObject } from 'react';
 import { TextareaAutosizeProps } from 'react-textarea-autosize';
 
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
@@ -14,6 +14,12 @@ export type InputBarProps = HTMLElementProps<'form'> &
      * https://www.npmjs.com/package/react-autosize-textarea
      */
     textareaProps?: TextareaAutosizeProps;
+
+    /**
+     * Ref object to access the textarea element directly
+     */
+    textareaRef?: RefObject<HTMLTextAreaElement>;
+
     /**
      * Submit event handler.
      */

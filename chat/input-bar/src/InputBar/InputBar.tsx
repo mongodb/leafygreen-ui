@@ -31,6 +31,7 @@ import {
   useDynamicRefs,
   useEventListener,
   useForwardedRef,
+  useMergeRefs,
   usePrevious,
 } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
@@ -79,6 +80,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       shouldRenderHotkeyIndicator = false,
       state,
       textareaProps,
+      textareaRef: externalTextareaRef,
       ...rest
     }: InputBarProps,
     forwardedRef: ForwardedRef<HTMLFormElement>,
@@ -105,7 +107,11 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const formRef = useForwardedRef(forwardedRef, null);
     const focusContainerRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLUListElement>(null);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const internalTextareaRef = useRef<HTMLTextAreaElement>(null);
+    const textareaRef = useMergeRefs([
+      internalTextareaRef,
+      externalTextareaRef,
+    ]);
     const promptRefs = useDynamicRefs<HTMLElement>({
       prefix: 'suggested-prompt',
     });
@@ -162,7 +168,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
             child.props.onClick?.(e); // call the child's onClick handler
 
             // Update the input value so the submit event has a target.value
-            updateValue(textValue, textareaRef);
+            updateValue(textValue, internalTextareaRef);
             // allow the state update to be consumed in submit
             const submitTimeout = setTimeout(() => {
               formRef?.current?.requestSubmit();
@@ -273,7 +279,8 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
               if (!e.ctrlKey && !e.shiftKey) {
                 formRef.current?.requestSubmit();
               } else if (e.ctrlKey || e.shiftKey) {
-                const textArea = textareaRef?.current as HTMLTextAreaElement;
+                const textArea =
+                  internalTextareaRef?.current as HTMLTextAreaElement;
 
                 if (textArea) {
                   // Insert a new line at the cursor position
@@ -285,9 +292,9 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
 
                   // Update the textarea value
                   setReactTextAreaValue(textArea, newValue);
-                  updateValue(newValue, textareaRef);
+                  updateValue(newValue, internalTextareaRef);
                   const changeEvent = new Event('change', { bubbles: true });
-                  textareaRef.current?.dispatchEvent(changeEvent);
+                  internalTextareaRef.current?.dispatchEvent(changeEvent);
 
                   // Position cursor after the inserted newline
                   setTimeout(() => {
@@ -302,13 +309,13 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
 
           case 'Escape': {
             closeMenu();
-            textareaRef.current?.focus();
+            internalTextareaRef.current?.focus();
             break;
           }
 
           case 'ArrowDown': {
             if (withTypeAhead) {
-              textareaRef.current?.focus();
+              internalTextareaRef.current?.focus();
               openMenu();
               e.preventDefault(); // Stop page scroll
               if (isUndefined(highlightIndex)) {
@@ -322,7 +329,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
 
           case 'ArrowUp': {
             if (withTypeAhead) {
-              textareaRef.current?.focus();
+              internalTextareaRef.current?.focus();
               openMenu();
               e.preventDefault(); // Stop page scroll
               if (isUndefined(highlightIndex)) {
@@ -360,7 +367,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
         onMessageSend(messageBody, e);
         if (!isControlled) {
           setPrevMessageBody(messageBody);
-          updateValue('', textareaRef);
+          updateValue('', internalTextareaRef);
         }
       }
 
@@ -388,10 +395,10 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     useEventListener(
       'keydown',
       (e: KeyboardEvent) => {
-        if (!e.repeat && e.key === '/' && textareaRef.current) {
+        if (!e.repeat && e.key === '/' && internalTextareaRef.current) {
           e.preventDefault();
           e.stopPropagation();
-          textareaRef.current.focus();
+          internalTextareaRef.current.focus();
         }
       },
       {
@@ -409,11 +416,11 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       }
 
       if (!isControlled) {
-        updateValue(prevMessageBody, textareaRef);
+        updateValue(prevMessageBody, internalTextareaRef);
         setPrevMessageBody('');
       }
 
-      textareaRef.current?.focus();
+      internalTextareaRef.current?.focus();
     }, [state, prevState, isControlled, prevMessageBody, updateValue]);
 
     return (

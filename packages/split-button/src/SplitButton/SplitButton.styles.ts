@@ -7,6 +7,7 @@ import { Variant } from './SplitButton.types';
 export const buttonContainerStyles = css`
   position: relative;
   display: flex;
+  z-index: 0; // Establish new stacking context
 `;
 
 export const buttonBaseStyles = css`
