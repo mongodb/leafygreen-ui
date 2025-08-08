@@ -9,7 +9,7 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import { CloseIconColor, ModalSize } from './Modal.types';
+import { ModalSize } from './Modal.types';
 
 // breakpoints for different screen sizes
 export const large = `${breakpoints.Desktop + 1}px`; // laptops/desktop screens, from 1025px and above
@@ -103,38 +103,4 @@ export const modalSizes: Record<ModalSize, string> = {
       width: 960px;
     }
   `,
-};
-
-export const baseCloseButtonStyles = css`
-  position: absolute;
-  cursor: pointer;
-  // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
-  // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
-  right: 18px;
-  top: 18px;
-`;
-
-export const closeButton: Record<Theme, Record<CloseIconColor, string>> = {
-  [Theme.Light]: {
-    [CloseIconColor.Default]: css`
-      color: ${palette.gray.dark1};
-    `,
-    [CloseIconColor.Dark]: css`
-      color: ${palette.black};
-    `,
-    [CloseIconColor.Light]: css`
-      color: ${palette.gray.light2};
-    `,
-  },
-  [Theme.Dark]: {
-    [CloseIconColor.Default]: css`
-      color: ${palette.gray.base};
-    `,
-    [CloseIconColor.Dark]: css`
-      color: ${palette.black};
-    `,
-    [CloseIconColor.Light]: css`
-      color: ${palette.gray.light2};
-    `,
-  },
 };

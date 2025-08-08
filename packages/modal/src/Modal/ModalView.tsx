@@ -5,8 +5,6 @@ import FocusTrap from 'focus-trap-react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
-import XIcon from '@leafygreen-ui/icon/dist/X';
-import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   PortalContextProvider,
   useDarkMode,
@@ -14,13 +12,13 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import Portal from '@leafygreen-ui/portal';
 
+import { CloseButton } from '../CloseButton';
+import { CloseIconColor } from '../shared.types';
 import { getLgIds } from '../utils';
 
 import {
   backdropBaseStyle,
   backdropThemeStyles,
-  baseCloseButtonStyles,
-  closeButton,
   modalContentStyle,
   modalSizes,
   modalThemeStyles,
@@ -28,12 +26,7 @@ import {
   visibleBackdrop,
   visibleModalContentStyle,
 } from './Modal.styles';
-import {
-  CloseIconColor,
-  ForwardedRef,
-  ModalProps,
-  ModalSize,
-} from './Modal.types';
+import { ForwardedRef, ModalProps, ModalSize } from './Modal.types';
 
 /**
  * @internal
@@ -151,19 +144,12 @@ const ModalView = React.forwardRef(
                         }}
                       >
                         {children}
-                        <IconButton
-                          id={closeId}
-                          data-testid={lgIds.close}
+                        <CloseButton
                           data-lgid={lgIds.close}
+                          data-testid={lgIds.close}
+                          closeIconColor={closeIconColor}
                           onClick={handleClose}
-                          aria-label="Close modal"
-                          className={cx(
-                            baseCloseButtonStyles,
-                            closeButton[theme][closeIconColor],
-                          )}
-                        >
-                          <XIcon />
-                        </IconButton>
+                        />
                       </PortalContextProvider>
                     </div>
                   </div>

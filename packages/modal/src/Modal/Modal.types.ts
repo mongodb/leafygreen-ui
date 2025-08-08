@@ -2,14 +2,7 @@ import { SetStateAction } from 'react';
 
 import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 
-export const CloseIconColor = {
-  Default: 'default',
-  Dark: 'dark',
-  Light: 'light',
-} as const;
-
-export type CloseIconColor =
-  (typeof CloseIconColor)[keyof typeof CloseIconColor];
+import { CloseIconColorProp } from '../shared.types';
 
 export const ModalSize = {
   Small: 'small',
@@ -27,7 +20,8 @@ export type ForwardedRef =
 export interface ModalProps
   extends HTMLElementProps<'div'>,
     DarkModeProps,
-    LgIdProps {
+    LgIdProps,
+    CloseIconColorProp {
   /**
    * Content that will appear inside of the Modal component.
    */
@@ -72,10 +66,4 @@ export interface ModalProps
    * Selector string (which will be passed to document.querySelector() to find the DOM node)
    */
   initialFocus?: string;
-
-  /**
-   * Determines the color of the close icon.
-   * @default 'default'
-   */
-  closeIconColor?: CloseIconColor;
 }
