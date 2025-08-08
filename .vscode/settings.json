@@ -19,6 +19,7 @@
   "cSpell.words": [
     "leafygreen"
   ],
+  "githubPullRequests.pullRequestDescription": "Copilot",
   "github.copilot.chat.codeGeneration.instructions": [
     {
       "file": "node_modules/@lg-tools/prompt-kit/src/prompts/codeGeneration.md"
