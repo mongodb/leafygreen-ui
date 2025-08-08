@@ -10,14 +10,18 @@ import { type EditorView } from '@codemirror/view';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
+import { CopyButton } from '../CopyButton';
+
 import {
   getEditorStyles,
   getLoaderStyles,
   getLoadingTextStyles,
+  minimalCopyButtonStyles,
 } from './CodeEditor.styles';
 import {
   CodeEditorHandle,
   type CodeEditorProps,
+  CopyButtonAppearance,
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
 import { useExtensions, useLazyModules, useModuleLoaders } from './hooks';
@@ -51,6 +55,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       placeholder,
       readOnly,
       tooltips,
+      copyButtonAppearance = CopyButtonAppearance.Hover,
       ...rest
     } = props;
 
@@ -160,6 +165,15 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         {...rest}
       >
         {panel}
+        {!panel &&
+          (copyButtonAppearance === CopyButtonAppearance.Hover ||
+            copyButtonAppearance === CopyButtonAppearance.Persist) && (
+            <CopyButton
+              contents="Test"
+              className={minimalCopyButtonStyles}
+              isPanelVariant={false}
+            />
+          )}
         {(isLoadingProp || isLoading) && (
           <div
             className={getLoaderStyles({

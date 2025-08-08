@@ -4,6 +4,7 @@ import {
   borderRadius,
   color,
   InteractionState,
+  spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
 
@@ -116,3 +117,10 @@ export const getLoadingTextStyles = (theme: Theme) => {
     color: ${color[theme].text[Variant.Secondary][InteractionState.Default]};
   `;
 };
+
+export const minimalCopyButtonStyles = css`
+  position: absolute;
+  top: ${spacing[200]}px;
+  right: ${spacing[200]}px;
+  z-index: 1;
+`;
