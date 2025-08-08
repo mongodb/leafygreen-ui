@@ -26,3 +26,4 @@ export {
   useThemeExtension,
   useTooltipExtension,
 } from './CodeEditor';
+export { Panel, type PanelProps } from './Panel';
