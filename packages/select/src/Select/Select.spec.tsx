@@ -1163,4 +1163,161 @@ describe('packages/select', () => {
       );
     });
   });
+
+  describe('controlled open state', () => {
+    function ControlledOpenSelect({
+      initialOpen = false,
+    }: {
+      initialOpen?: boolean;
+    }) {
+      const [open, setOpen] = useState(initialOpen);
+      return (
+        <Select {...defaultProps} open={open} setOpen={setOpen}>
+          <Option value="option1">Option 1</Option>
+          <Option value="option2">Option 2</Option>
+        </Select>
+      );
+    }
+
+    test('opens and closes when controlled externally', async () => {
+      const { getPopover, rerender } = renderSelect({});
+
+      // Initially closed
+      expect(getPopover()).not.toBeInTheDocument();
+
+      // Rerender with open=true
+      rerender(
+        <Select {...defaultProps} open={true} setOpen={() => {}}>
+          <Option value="option1">Option 1</Option>
+        </Select>,
+      );
+
+      await waitFor(() => {
+        expect(getPopover()).toBeInTheDocument();
+      });
+
+      // Rerender with open=false
+      rerender(
+        <Select {...defaultProps} open={false} setOpen={() => {}}>
+          <Option value="option1">Option 1</Option>
+        </Select>,
+      );
+
+      await waitForElementToBeRemoved(getPopover());
+      expect(getPopover()).not.toBeInTheDocument();
+    });
+
+    test('calls setOpen when user interacts with component', async () => {
+      const setOpenSpy = jest.fn();
+      renderSelect({ open: false, setOpen: setOpenSpy });
+      const { getInput: getUtilsInput } = getTestUtils();
+
+      // Click to open
+      userEvent.click(getUtilsInput());
+      expect(setOpenSpy).toHaveBeenCalledWith(true);
+
+      setOpenSpy.mockClear();
+    });
+
+    test('calls setOpen when pressing escape key', async () => {
+      const setOpenSpy = jest.fn();
+      render(
+        <Select {...defaultProps} open={true} setOpen={setOpenSpy}>
+          <Option value="option1">Option 1</Option>
+        </Select>,
+      );
+
+      const { getInput } = getTestUtils();
+
+      // Focus the input and press escape
+      act(() => getInput().focus());
+      userEvent.keyboard('{escape}');
+
+      expect(setOpenSpy).toHaveBeenCalledWith(false);
+    });
+
+    test('works with internal state management', async () => {
+      render(<ControlledOpenSelect />);
+
+      const { getInput, getPopover } = getTestUtils();
+
+      // Initially closed
+      expect(getPopover()).not.toBeInTheDocument();
+
+      // Click to open
+      userEvent.click(getInput());
+
+      await waitFor(() => {
+        expect(getPopover()).toBeInTheDocument();
+      });
+
+      // Click to close
+      userEvent.click(getInput());
+
+      await waitForElementToBeRemoved(getPopover());
+      expect(getPopover()).not.toBeInTheDocument();
+    });
+
+    test('starts open when initialOpen is true', async () => {
+      render(<ControlledOpenSelect initialOpen={true} />);
+
+      const { getPopover } = getTestUtils();
+
+      await waitFor(() => {
+        expect(getPopover()).toBeInTheDocument();
+      });
+    });
+
+    test('backwards compatibility - uncontrolled mode still works', async () => {
+      render(
+        <Select {...defaultProps}>
+          <Option value="option1">Option 1</Option>
+        </Select>,
+      );
+
+      const { getPopover } = getTestUtils();
+
+      const { getInput } = getTestUtils();
+
+      // Initially closed
+      expect(getPopover()).not.toBeInTheDocument();
+
+      // Click to open
+      userEvent.click(getInput());
+
+      await waitFor(() => {
+        expect(getPopover()).toBeInTheDocument();
+      });
+
+      // Click to close
+      userEvent.click(getInput());
+
+      await waitForElementToBeRemoved(getPopover());
+      expect(getPopover()).not.toBeInTheDocument();
+    });
+  });
+
+  describe('controlled open state warnings', () => {
+    test('warns when controlled component has no `setOpen` handler', () => {
+      Context.within(Jest.spyContext(console, 'warn'), spy => {
+        spy.mockImplementation();
+
+        render(<Select {...defaultProps} open={true} />);
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(
+          'You provided an `open` prop to Select without a `setOpen` handler. ' +
+            'This will render a Select with fixed open state. ' +
+            'If you want to control the open state, provide both `open` and `setOpen` props.',
+        );
+
+        spy.mockClear();
+
+        render(<Select {...defaultProps} />);
+        render(<Select {...defaultProps} open={true} setOpen={() => {}} />);
+
+        expect(spy).not.toHaveBeenCalled();
+      });
+    });
+  });
 });

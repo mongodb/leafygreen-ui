@@ -114,6 +114,16 @@ export interface BaseSelectProps
   dropdownWidthBasis?: DropdownWidthBasis;
 
   /**
+   * Controls whether the dropdown menu is open. When provided, the component becomes a controlled component for the open state.
+   */
+  open?: boolean;
+
+  /**
+   * Callback function that is called when the open state should change. Required when `open` prop is provided.
+   */
+  setOpen?: (open: boolean) => void;
+
+  /**
    * @internal
    */
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
