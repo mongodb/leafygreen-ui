@@ -14,6 +14,7 @@ import {
 import { Size } from './SegmentedControl.types';
 
 export const wrapperStyle = css`
+  position: relative;
   display: flex;
   gap: ${spacing[200]}px;
   align-items: center;
