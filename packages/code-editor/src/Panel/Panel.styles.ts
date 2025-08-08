@@ -37,13 +37,13 @@ export const getPanelTitleStyles = (theme: Theme, baseFontSize: number) => {
   `;
 };
 
-export const getPanelChildrenStyles = (theme: Theme) => {
+export const getPanelChildrenStyles = () => {
   return css`
     grid-area: children;
   `;
 };
 
-export const getPanelButtonsStyles = (theme: Theme) => {
+export const getPanelButtonsStyles = () => {
   return css`
     grid-area: buttons;
   `;

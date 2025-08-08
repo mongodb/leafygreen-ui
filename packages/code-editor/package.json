@@ -53,6 +53,7 @@
     "@leafygreen-ui/menu": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lezer/highlight": "^1.2.1",
     "@replit/codemirror-lang-csharp": "^6.2.0",

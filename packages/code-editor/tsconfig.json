@@ -37,6 +37,9 @@
       "path": "../menu"
     },
     {
+      "path": "../tooltip"
+    },
+    {
       "path": "../typography"
     }
   ]

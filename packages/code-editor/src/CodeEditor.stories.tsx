@@ -183,7 +183,6 @@ WithPanel.args = {
       title="my-file.txt"
       showCopyButton
       showFormatButton
-      showPlayButton
       showSecondaryMenuButton
       customSecondaryButtons={[
         {
