@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, typeScales } from '@leafygreen-ui/tokens';
@@ -20,12 +20,12 @@ export const wrapperStyle = css`
   margin: 0 auto;
 `;
 
-export const contentStyle = css`
+const contentStyle = css`
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
 `;
 
-export const contentThemeStyle: Record<Theme, string> = {
+const contentThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.black};
   `,
@@ -33,6 +33,9 @@ export const contentThemeStyle: Record<Theme, string> = {
     color: ${palette.gray.light1};
   `,
 };
+
+export const getContentStyles = (theme: Theme) =>
+  cx(contentStyle, contentThemeStyle[theme]);
 
 export const footerContentStyle = css`
   line-height: 24px;
@@ -43,9 +46,12 @@ export const footerContentStyle = css`
   justify-content: center;
 `;
 
-export const buttonStyle = css`
+const baseButtonStyles = css`
   min-width: 200px;
 `;
+
+export const getButtonStyles = (className?: string) =>
+  cx(baseButtonStyles, className);
 
 export const linkStyle = css`
   margin-top: ${spacing[3]}px;
