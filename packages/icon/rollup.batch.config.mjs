@@ -1,6 +1,5 @@
 import { esmConfig, umdConfig } from '@lg-tools/build/config/rollup.config.mjs';
-
-const DELIMITER = '|';
+import { DELIMITER } from './constants.mjs';
 
 const iconsEnv = process.env.ICONS || '';
 const iconNames = iconsEnv.split(DELIMITER);

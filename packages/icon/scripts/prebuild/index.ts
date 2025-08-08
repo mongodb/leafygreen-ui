@@ -6,12 +6,14 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 
-import svgrrc from '../.svgrrc';
+import svgrrc from '../../.svgrrc';
 
 import { getChecksum } from './checksum';
 import { indexTemplate } from './indexTemplate';
 import { FileObject, PrebuildOptions } from './prebuild.types';
 import { svgrTemplate } from './svgrTemplate';
+
+const SRC_PATH = path.resolve(__dirname, '..', '..', 'src');
 
 const program = new Command()
   .description('Process SVG files and generate React components')
@@ -36,7 +38,7 @@ async function buildSvgFiles(options: PrebuildOptions): Promise<void> {
 async function getSVGFiles(
   options?: PrebuildOptions,
 ): Promise<Array<FileObject>> {
-  const glyphsDir = path.resolve(__dirname, '..', 'src', 'glyphs');
+  const glyphsDir = path.resolve(SRC_PATH, 'glyphs');
   const filePaths = fs.readdirSync(glyphsDir);
   const svgFilePaths = filePaths.filter(filterSvgFiles);
 
@@ -64,7 +66,7 @@ function filterSvgFiles(str: string): boolean {
 async function createOutputDirectory(options: PrebuildOptions) {
   const outputDir = options.outDir
     ? path.resolve(process.cwd(), options.outDir)
-    : path.resolve(__dirname, '..', 'src/generated');
+    : path.resolve(SRC_PATH, 'generated');
 
   const outputDirectoryExists = fs.existsSync(outputDir);
 
@@ -84,7 +86,7 @@ async function createIndexFile(
   svgFiles: Array<FileObject>,
   options?: PrebuildOptions,
 ) {
-  const indexPath = path.resolve(__dirname, '..', 'src/glyphs', 'index.ts');
+  const indexPath = path.resolve(SRC_PATH, 'glyphs', 'index.ts');
   options?.verbose && console.log('Writing index file...', indexPath);
   const indexContent = await indexTemplate(svgFiles);
   const formattedIndexContent = await formatLG(indexContent, indexPath);

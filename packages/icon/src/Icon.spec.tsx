@@ -7,7 +7,7 @@ import { toJson } from 'xml2json';
 
 import { typeIs } from '@leafygreen-ui/lib';
 
-import { getChecksum } from '../scripts/checksum';
+import { getChecksum } from '../scripts/prebuild/checksum';
 
 import EditIcon from './generated/Edit';
 import { Size } from './glyphCommon';

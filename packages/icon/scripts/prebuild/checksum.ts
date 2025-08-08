@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 export function getChecksum(svgContent: string, processedSVGR: string): string {
-  const scriptPath = path.resolve(__dirname, './prebuild.ts');
+  const scriptPath = path.resolve(__dirname, './index.ts');
   const scriptContent = fs.readFileSync(scriptPath, 'utf8');
   const checksumContent = fs.readFileSync(__filename, 'utf8');
 
