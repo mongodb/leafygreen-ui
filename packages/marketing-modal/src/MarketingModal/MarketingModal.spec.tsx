@@ -11,27 +11,26 @@ import MarketingModal from '..';
 
 const WrappedModal = ({
   open: initialOpen,
-  buttonProps,
+  buttonProps: buttonPropsProp,
   ...props
 }: Partial<React.ComponentProps<typeof MarketingModal>>) => {
   const [open, setOpen] = useState(initialOpen);
 
-  // If explicit buttonProps are provided, use them
-  // If deprecated props are provided and no explicit buttonProps, use undefined (rely on deprecated props)
-  // Otherwise, use default buttonProps
-  const finalButtonProps = buttonProps
-    ? buttonProps
-    : props.buttonText || props.onButtonClick
+  const defaultButtonProps = Object.freeze({
+    children: 'Button action',
+    onClick: () => setOpen(false),
+  });
+  const hasDeprecatedButtonProps = !!props.buttonText || !!props.onButtonClick;
+  const buttonProps = buttonPropsProp
+    ? buttonPropsProp
+    : hasDeprecatedButtonProps
     ? undefined
-    : {
-        children: 'Button action',
-        onClick: () => setOpen(false),
-      };
+    : defaultButtonProps;
 
   return (
     <MarketingModal
       title="Title text"
-      buttonProps={finalButtonProps}
+      buttonProps={buttonProps}
       linkText="Link action"
       open={open}
       onClose={() => setOpen(false)}
