@@ -51,6 +51,11 @@ const meta: StoryMetaType<typeof MarketingModal> = {
       options: Object.values(BlobPosition),
     },
     disclaimer: { control: 'text' },
+    buttonText: {
+      control: 'text',
+      description:
+        'Storybook-only prop for controlling button text. In actual usage, use the `children` property in `buttonProps`.',
+    },
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
   },
@@ -70,11 +75,14 @@ const meta: StoryMetaType<typeof MarketingModal> = {
 };
 export default meta;
 
-export const LiveExample: StoryFn<MarketingModalProps> = ({
+type MarketingModalStoryProps = MarketingModalProps & { buttonText: string };
+
+export const LiveExample: StoryFn<MarketingModalStoryProps> = ({
   graphicStyle,
   darkMode,
   disclaimer,
   buttonProps,
+  buttonText,
   ...args
 }) => {
   const graphicCenterImage = 'marketing-center-light.svg';
@@ -94,6 +102,7 @@ export const LiveExample: StoryFn<MarketingModalProps> = ({
         darkMode={darkMode}
         buttonProps={{
           ...buttonProps,
+          children: buttonText,
           onClick: handleClose,
         }}
         graphic={
@@ -126,11 +135,12 @@ LiveExample.parameters = {
   chromatic: { disableSnapshot: true },
 };
 
-const Template: StoryFn<MarketingModalProps> = ({
+const Template: StoryFn<MarketingModalStoryProps> = ({
   graphicStyle,
   darkMode,
   disclaimer,
   buttonProps,
+  buttonText,
   ...args
 }) => {
   const graphicCenterImage = 'marketing-center-light.svg';
@@ -151,6 +161,7 @@ const Template: StoryFn<MarketingModalProps> = ({
         darkMode={darkMode}
         buttonProps={{
           ...buttonProps,
+          children: buttonText,
           onClick: handleClose,
         }}
         graphic={
