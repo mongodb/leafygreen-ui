@@ -40,12 +40,6 @@ export interface MarketingModalProps
   graphicStyle?: GraphicStyle;
 
   /**
-   * 	Callback fired when the primary action button is clicked.
-   * @deprecated Use `buttonProps`.
-   */
-  onButtonClick?: () => void;
-
-  /**
    * 	Callback fired when the secondary link element is clicked.
    */
   onLinkClick?: () => void;
@@ -54,12 +48,6 @@ export interface MarketingModalProps
    * 	Callback fired when the modal is closed
    */
   onClose?: () => void;
-
-  /**
-   * 	Text of the primary CTA button
-   * @deprecated Use `buttonProps`.
-   */
-  buttonText?: string;
 
   /**
    * An object that accepts all Button props except for the `variant` prop.

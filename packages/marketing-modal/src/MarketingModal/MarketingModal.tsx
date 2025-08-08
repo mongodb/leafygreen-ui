@@ -31,10 +31,8 @@ const MarketingModal = ({
   children,
   title,
   graphic,
-  onButtonClick,
   onLinkClick,
   onClose,
-  buttonText,
   buttonProps = {},
   linkText,
   darkMode: darkModeProp,
@@ -46,11 +44,6 @@ const MarketingModal = ({
   ...modalProps
 }: MarketingModalProps) => {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-
-  // TODO: remove - onButtonClick is deprecated
-  const _onButtonClick = buttonProps?.onClick || onButtonClick;
-  // TODO: remove - buttonText is deprecated
-  const _buttonText = buttonProps?.children || buttonText;
 
   return (
     <Modal
@@ -78,10 +71,8 @@ const MarketingModal = ({
           {...buttonProps}
           variant="baseGreen"
           className={getButtonStyles(buttonProps?.className)}
-          onClick={_onButtonClick}
         >
-          {/* TODO: remove - buttonText is deprecated */}
-          {_buttonText}
+          {buttonProps?.children}
         </Button>
         <Body className={linkStyle}>
           <Link tabIndex={0} onClick={onLinkClick} hideExternalIcon>

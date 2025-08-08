@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import {
-  act,
-  fireEvent,
-  render,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { act, render, waitForElementToBeRemoved } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import MarketingModal from '..';
@@ -20,12 +16,7 @@ const WrappedModal = ({
     children: 'Button action',
     onClick: () => setOpen(false),
   });
-  const hasDeprecatedButtonProps = !!props.buttonText || !!props.onButtonClick;
-  const buttonProps = buttonPropsProp
-    ? buttonPropsProp
-    : hasDeprecatedButtonProps
-    ? undefined
-    : defaultButtonProps;
+  const buttonProps = buttonPropsProp ? buttonPropsProp : defaultButtonProps;
 
   return (
     <MarketingModal
@@ -57,7 +48,7 @@ describe('packages/marketing-modal', () => {
       expect(results).toHaveNoViolations();
 
       let newResults = null as any;
-      act(() => void fireEvent.click(getByText('Button action')));
+      act(() => void userEvent.click(getByText('Button action')));
       await act(async () => {
         newResults = await axe(container);
       });
@@ -78,113 +69,43 @@ describe('packages/marketing-modal', () => {
     expect(getByText('Link action')).toBeVisible();
   });
 
-  test('fires `onButtonClick` when button is clicked', () => {
-    const buttonClickSpy = jest.fn();
-    const linkClickSpy = jest.fn();
-    const closeSpy = jest.fn();
+  describe('buttonProps', () => {
+    test('fires `onClick` when button is clicked', () => {
+      const buttonClickSpy = jest.fn();
 
-    const { getByText } = renderModal({
-      open: true,
-      buttonText: 'Button action',
-      onButtonClick: buttonClickSpy,
-      onLinkClick: linkClickSpy,
-      onClose: closeSpy,
-    });
-
-    const button = getByText('Button action');
-    expect(button).toBeVisible();
-
-    fireEvent.click(button);
-    expect(buttonClickSpy).toHaveBeenCalledTimes(1);
-    expect(linkClickSpy).not.toHaveBeenCalled();
-    expect(closeSpy).not.toHaveBeenCalled();
-  });
-
-  test('fires `onClick` from "buttonProps"', () => {
-    const buttonClickSpy = jest.fn();
-
-    const { getByText } = renderModal({
-      open: true,
-      onButtonClick: undefined,
-      buttonProps: {
-        children: 'Custom button text',
-        onClick: buttonClickSpy,
-      },
-    });
-
-    const button = getByText('Custom button text');
-    expect(button).toBeVisible();
-
-    fireEvent.click(button);
-    expect(buttonClickSpy).toHaveBeenCalledTimes(1);
-  });
-
-  test('"buttonProps.onClick" overrides deprecated "onButtonClick"', () => {
-    const deprecatedClickSpy = jest.fn();
-    const newClickSpy = jest.fn();
-
-    const { getByText } = renderModal({
-      open: true,
-      onButtonClick: deprecatedClickSpy,
-      buttonProps: {
-        children: 'Button action',
-        onClick: newClickSpy,
-      },
-    });
-
-    const button = getByText('Button action');
-    expect(button).toBeVisible();
-
-    fireEvent.click(button);
-    expect(newClickSpy).toHaveBeenCalledTimes(1);
-    expect(deprecatedClickSpy).not.toHaveBeenCalled();
-  });
-
-  describe('button text', () => {
-    // TODO: remove - buttonText is deprecated
-    test('renders from "buttonText"', () => {
       const { getByText } = renderModal({
         open: true,
-        buttonText: 'custom button text',
+        buttonProps: {
+          children: 'Custom button text',
+          onClick: buttonClickSpy,
+        },
+      });
+
+      const button = getByText('Custom button text');
+      expect(button).toBeVisible();
+
+      userEvent.click(button);
+      expect(buttonClickSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('renders custom button text', () => {
+      const { getByText } = renderModal({
+        open: true,
+        buttonProps: {
+          children: 'custom button text',
+        },
       });
 
       expect(getByText('custom button text')).toBeVisible();
     });
-
-    test('renders from "buttonProps"', () => {
-      const { getByText } = renderModal({
-        open: true,
-        buttonText: undefined,
-        buttonProps: {
-          children: 'custom button',
-        },
-      });
-
-      expect(getByText('custom button')).toBeVisible();
-    });
-
-    // TODO: remove - buttonText is deprecated
-    test('"buttonProps" overrides deprecated "buttonText"', () => {
-      const { getByText } = renderModal({
-        open: true,
-        buttonText: 'deprecated text',
-        buttonProps: {
-          children: 'new button text',
-        },
-      });
-
-      expect(getByText('new button text')).toBeVisible();
-    });
   });
 
   test('fires `onLinkClick` when link is clicked', () => {
-    const buttonClickSpy = jest.fn();
     const linkClickSpy = jest.fn();
     const closeSpy = jest.fn();
 
     const { getByText } = renderModal({
       open: true,
-      onButtonClick: buttonClickSpy,
       onLinkClick: linkClickSpy,
       onClose: closeSpy,
     });
@@ -192,8 +113,7 @@ describe('packages/marketing-modal', () => {
     const button = getByText('Link action');
     expect(button).toBeVisible();
 
-    fireEvent.click(button);
-    expect(buttonClickSpy).not.toHaveBeenCalled();
+    userEvent.click(button);
     expect(linkClickSpy).toHaveBeenCalledTimes(1);
     expect(closeSpy).not.toHaveBeenCalled();
   });
@@ -203,7 +123,7 @@ describe('packages/marketing-modal', () => {
       const { getByRole } = renderModal({ open: true });
       const modal = getByRole('dialog');
 
-      fireEvent.keyDown(document, { key: 'Escape', keyCode: 27 });
+      userEvent.keyboard('{Escape}');
 
       await waitForElementToBeRemoved(modal);
     });
@@ -213,7 +133,7 @@ describe('packages/marketing-modal', () => {
       const modal = getByRole('dialog');
 
       const x = getByLabelText('Close modal');
-      fireEvent.click(x);
+      userEvent.click(x);
 
       await waitForElementToBeRemoved(modal);
     });
