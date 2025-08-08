@@ -1,5 +1,11 @@
 # @leafygreen-ui/marketing-modal
 
+## 6.1.0
+
+### Minor Changes
+
+- 4b63f9b: [LG-5416](https://jira.mongodb.org/browse/LG-5416): deprecate `buttonText` and `onButtonClick` prop and add `buttonProps` object prop which now supports using all button props except `variant`.
+
 ## 6.0.4
 
 ### Patch Changes

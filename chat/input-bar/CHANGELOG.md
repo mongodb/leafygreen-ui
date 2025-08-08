@@ -1,5 +1,11 @@
 # @lg-chat/input-bar
 
+## 9.2.0
+
+### Minor Changes
+
+- f06b7b7: [LG-5413](https://jira.mongodb.org/browse/LG-5413): add `textareaRef` prop to expose access to textarea element
+
 ## 9.1.0
 
 ### Minor Changes
