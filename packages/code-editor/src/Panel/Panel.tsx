@@ -62,18 +62,18 @@ export function Panel({
       <div className={getPanelChildrenStyles(theme)}>{children}</div>
       <div className={getPanelButtonsStyles(theme)}>
         {showPlayButton && (
-          <IconButton>
+          <IconButton onClick={onPlayClick}>
             <PlayIcon />
           </IconButton>
         )}
 
         {showFormatButton && (
-          <IconButton>
+          <IconButton onClick={onFormatClick}>
             <FormatIcon />
           </IconButton>
         )}
         {showCopyButton && (
-          <IconButton>
+          <IconButton onClick={onCopyClick}>
             <CopyIcon />
           </IconButton>
         )}
