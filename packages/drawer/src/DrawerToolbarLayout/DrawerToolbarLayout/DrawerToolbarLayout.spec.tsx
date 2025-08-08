@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -83,7 +83,7 @@ describe('packages/DrawerToolbarLayout', () => {
     expect(onCloseMock).toHaveBeenCalled();
   });
 
-  test('allows for dynamic toolbar data', () => {
+  test('Updates the open drawer content when the toolbar data changes', () => {
     const { rerender } = render(<Component />);
 
     const { getDrawer, isOpen } = getTestUtils();
@@ -102,7 +102,6 @@ describe('packages/DrawerToolbarLayout', () => {
             content: 'Rerendered Drawer Content',
             title: `Rerendered Drawer Title`,
             glyph: 'Code',
-            onClick: onClickMock,
           },
         ]}
       />,
