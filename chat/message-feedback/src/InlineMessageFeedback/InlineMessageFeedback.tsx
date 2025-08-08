@@ -41,7 +41,6 @@ import { InlineMessageFeedbackProps } from '.';
 export const InlineMessageFeedback = forwardRef(
   (
     {
-      children: _children,
       className,
       label,
       cancelButtonText = 'Cancel',

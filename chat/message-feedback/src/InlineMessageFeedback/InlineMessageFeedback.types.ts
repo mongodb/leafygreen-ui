@@ -8,7 +8,7 @@ export type InlineMessageFeedbackProps = Required<
   Pick<TextAreaProps, 'label'>
 > &
   DarkModeProps &
-  Omit<HTMLElementProps<'div'>, 'onSubmit'> & {
+  Omit<HTMLElementProps<'div'>, 'children' | 'onSubmit'> & {
     /**
      * Text displayed inside the cancel Button
      *
