@@ -12,7 +12,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { codeSnippets } from './CodeEditor/testing';
 import { IndentUnits } from './CodeEditor';
-import { CodeEditor } from '.';
+import { CodeEditor, Panel } from '.';
 
 const MyTooltip = ({
   line,
@@ -173,6 +173,19 @@ export default meta;
 const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 
 export const LiveExample = Template.bind({});
+
+export const WithPanel = Template.bind({});
+WithPanel.args = {
+  panel: (
+    <Panel
+      title="My Panel"
+      showCopyButton
+      showFormatButton
+      showPlayButton
+      showSecondaryMenuButton
+    ></Panel>
+  ),
+};
 
 export const TooltipOnHover: StoryObj<{}> = {
   render: () => {
