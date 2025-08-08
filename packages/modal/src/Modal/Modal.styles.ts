@@ -65,10 +65,6 @@ export const modalContentStyle = css`
   border-radius: 24px;
   padding: 40px 36px;
   box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
-
-  &:focus {
-    outline: none;
-  }
 `;
 
 export const modalThemeStyles: Record<Theme, string> = {
