@@ -3,16 +3,25 @@ import React from 'react';
 // @ts-ignore LG icons don't currently support TS
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 // @ts-ignore LG icons don't currently support TS
+import DownloadIcon from '@leafygreen-ui/icon/dist/Download';
+// @ts-ignore LG icons don't currently support TS
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 // @ts-ignore LG icons don't currently support TS
 import FormatIcon from '@leafygreen-ui/icon/dist/Format';
 // @ts-ignore LG icons don't currently support TS
 import PlayIcon from '@leafygreen-ui/icon/dist/Play';
+// @ts-ignore LG icons don't currently support TS
+import QuestionMarkWithCircleIcon from '@leafygreen-ui/icon/dist/QuestionMarkWithCircle';
+// @ts-ignore LG icons don't currently support TS
+import RedoIcon from '@leafygreen-ui/icon/dist/Redo';
+// @ts-ignore LG icons don't currently support TS
+import UndoIcon from '@leafygreen-ui/icon/dist/Undo';
 import IconButton from '@leafygreen-ui/icon-button';
 import {
   useBaseFontSize,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { Menu, MenuItem, MenuVariant } from '@leafygreen-ui/menu';
 
 import {
   getPanelButtonsStyles,
@@ -69,9 +78,31 @@ export function Panel({
           </IconButton>
         )}
         {showSecondaryMenuButton && (
-          <IconButton>
-            <EllipsisIcon />
-          </IconButton>
+          <Menu
+            trigger={
+              <IconButton>
+                <EllipsisIcon />
+              </IconButton>
+            }
+            variant={MenuVariant.Compact}
+            darkMode={darkMode}
+          >
+            <MenuItem glyph={<UndoIcon />} onClick={onUndoClick}>
+              Undo
+            </MenuItem>
+            <MenuItem glyph={<RedoIcon />} onClick={onRedoClick}>
+              Redo
+            </MenuItem>
+            <MenuItem glyph={<DownloadIcon />} onClick={onDownloadClick}>
+              Download
+            </MenuItem>
+            <MenuItem
+              glyph={<QuestionMarkWithCircleIcon />}
+              onClick={onViewShortcutsClick}
+            >
+              View Shortcuts
+            </MenuItem>
+          </Menu>
         )}
       </div>
     </div>

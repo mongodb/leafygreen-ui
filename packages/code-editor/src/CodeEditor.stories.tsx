@@ -178,7 +178,7 @@ export const WithPanel = Template.bind({});
 WithPanel.args = {
   panel: (
     <Panel
-      title="My Panel"
+      title="my-file.txt"
       showCopyButton
       showFormatButton
       showPlayButton

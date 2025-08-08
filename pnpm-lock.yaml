@@ -1353,6 +1353,9 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@leafygreen-ui/menu':
+        specifier: workspace:^
+        version: link:../menu
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
