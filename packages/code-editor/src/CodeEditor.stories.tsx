@@ -8,6 +8,8 @@ import type { StoryFn, StoryObj } from '@storybook/react';
 import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
+// @ts-ignore LG icons don't currently support TS
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { codeSnippets } from './CodeEditor/testing';
@@ -183,6 +185,13 @@ WithPanel.args = {
       showFormatButton
       showPlayButton
       showSecondaryMenuButton
+      customSecondaryButtons={[
+        {
+          label: 'Custom action',
+          glyph: <CloudIcon />,
+          onClick: () => {},
+        },
+      ]}
     ></Panel>
   ),
 };

@@ -100,8 +100,13 @@ export function Panel({
               glyph={<QuestionMarkWithCircleIcon />}
               onClick={onViewShortcutsClick}
             >
-              View Shortcuts
+              View shortcuts
             </MenuItem>
+            {customSecondaryButtons?.map(({ label, glyph, onClick, href }) => (
+              <MenuItem glyph={glyph} onClick={onClick} href={href} key={label}>
+                {label}
+              </MenuItem>
+            ))}
           </Menu>
         )}
       </div>
