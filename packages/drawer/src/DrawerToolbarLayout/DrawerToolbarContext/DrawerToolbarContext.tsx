@@ -52,11 +52,11 @@ export const DrawerToolbarProvider = ({
    * The content will be removed after a delay to allow the drawer to close first.
    */
   const closeDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
     // Delay the removal of the content to allow the drawer to close before removing the content
     setTimeout(() => {
       setActiveDrawerId(null);
     }, TRANSITION_DURATION);
-    setIsDrawerOpen(false);
   }, [setActiveDrawerId]);
 
   /**

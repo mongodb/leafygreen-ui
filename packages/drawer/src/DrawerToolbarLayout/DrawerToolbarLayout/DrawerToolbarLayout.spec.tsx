@@ -10,20 +10,22 @@ import { getTestUtils } from '../../testing';
 const onClickMock = jest.fn();
 const onCloseMock = jest.fn();
 
-const Component = () => {
-  const [state, setState] = useState({ count: 0, name: 'test' });
+const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
+  {
+    id: 'Code',
+    label: 'Code',
+    content: 'Drawer Content',
+    title: `Drawer Title`,
+    glyph: 'Code',
+    onClick: onClickMock,
+  },
+];
 
-  const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
-    {
-      id: 'Code',
-      label: 'Code',
-      content: <span>{`Count: ${state.count}`}</span>,
-      title: `${state.name} - ${state.count}`,
-      glyph: 'Code',
-      onClick: onClickMock,
-    },
-  ];
-
+const Component = ({
+  data = DRAWER_TOOLBAR_DATA,
+}: {
+  data?: DrawerLayoutProps['toolbarData'];
+}) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -32,22 +34,12 @@ const Component = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return (
-      <main>
-        Main Content{' '}
-        <button
-          data-testid="update-button"
-          onClick={() => setState({ count: 1, name: 'updated' })}
-        >
-          Update state
-        </button>
-      </main>
-    );
+    return '🌻';
   };
 
   return (
     <div>
-      <DrawerLayout toolbarData={DRAWER_TOOLBAR_DATA} onClose={onCloseMock}>
+      <DrawerLayout toolbarData={data} onClose={onCloseMock}>
         <MainContent />
       </DrawerLayout>
     </div>
@@ -92,18 +84,32 @@ describe('packages/DrawerToolbarLayout', () => {
   });
 
   test('allows for dynamic toolbar data', () => {
-    const { getByTestId } = render(<Component />);
+    const { rerender } = render(<Component />);
 
-    const { getDrawer } = getTestUtils();
+    const { getDrawer, isOpen } = getTestUtils();
     const drawer = getDrawer();
-    const button = getByTestId('update-button');
 
-    expect(drawer).toHaveTextContent('Count: 0');
-    expect(drawer).toHaveTextContent('test - 0');
+    expect(isOpen()).toBe(true);
+    expect(drawer).toHaveTextContent('Drawer Content');
+    expect(drawer).toHaveTextContent('Drawer Title');
 
-    userEvent.click(button);
+    rerender(
+      <Component
+        data={[
+          {
+            id: 'Code',
+            label: 'Code',
+            content: 'Rerendered Drawer Content',
+            title: `Rerendered Drawer Title`,
+            glyph: 'Code',
+            onClick: onClickMock,
+          },
+        ]}
+      />,
+    );
 
-    expect(drawer).toHaveTextContent('Count: 1');
-    expect(drawer).toHaveTextContent('updated - 1');
+    expect(isOpen()).toBe(true);
+    expect(drawer).toHaveTextContent('Rerendered Drawer Content');
+    expect(drawer).toHaveTextContent('Rerendered Drawer Title');
   });
 });
