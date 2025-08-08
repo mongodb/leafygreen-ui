@@ -7,7 +7,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { CodeEditorSelectors } from './CodeEditor.types';
+import { CodeEditorSelectors, ToolbarVariant } from './CodeEditor.types';
 
 export const getEditorStyles = ({
   width,
@@ -114,5 +114,30 @@ export const getLoaderStyles = ({
 export const getLoadingTextStyles = (theme: Theme) => {
   return css`
     color: ${color[theme].text[Variant.Secondary][InteractionState.Default]};
+  `;
+};
+
+export const getToolbarStyles = (theme: Theme, variant: ToolbarVariant) => {
+  if (variant === ToolbarVariant.None) {
+    return css`
+      display: none;
+    `;
+  }
+
+  return css`
+    background-color: ${color[theme].background[Variant.Secondary][
+      InteractionState.Default
+    ]};
+    height: 36px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px 0 10px;
+    border: 1px solid
+      ${color[theme].border[Variant.Secondary][InteractionState.Default]};
+    border-bottom: none;
+    border-top-left-radius: ${borderRadius[300]}px;
+    border-top-right-radius: ${borderRadius[300]}px;
   `;
 };

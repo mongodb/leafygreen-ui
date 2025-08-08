@@ -34,6 +34,14 @@ export interface HTMLElementWithCodeMirror extends HTMLDivElement {
   _cm?: EditorView;
 }
 
+export const ToolbarVariant = {
+  Window: 'window',
+  Minimal: 'minimal',
+  None: 'none',
+} as const;
+export type ToolbarVariant =
+  (typeof ToolbarVariant)[keyof typeof ToolbarVariant];
+
 /**
  * The important elements in the code mirror editor have regular (non-generated)
  * CSS class names, which can be targeted. For example, the outer element has
@@ -224,6 +232,12 @@ export interface CodeEditorProps extends DarkModeProps {
    * Enables read only mode, making the contents uneditable.
    */
   readOnly?: boolean;
+
+  /**
+   * Sets the toolbar variant.
+   * @default 'none'
+   */
+  toolbarVariant?: ToolbarVariant;
 
   /**
    * Add tooltips to the editor content.
