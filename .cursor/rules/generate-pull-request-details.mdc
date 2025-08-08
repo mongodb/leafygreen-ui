@@ -1,6 +1,5 @@
 ---
 description: This rule can be used to generate pull request title and description. This rule depends on the `@Branch (Diff with Main Branch)` being included in the context to generate better pull request details.
-globs:
 alwaysApply: false
 manual: true
 ---
