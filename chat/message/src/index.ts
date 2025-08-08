@@ -22,4 +22,8 @@ export {
   type MessageContentProps,
   MessageSourceType,
 } from './MessageContent';
+export {
+  MessageContext,
+  useMessageContext,
+} from './MessageContext/MessageContext';
 export { MessageLinks, type MessageLinksProps } from './MessageLinks';

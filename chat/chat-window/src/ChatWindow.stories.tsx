@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import { Avatar } from '@lg-chat/avatar';
 import { InputBar } from '@lg-chat/input-bar';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessageFeed } from '@lg-chat/message-feed';
 import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
 import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
+
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import baseMessages from './utils/baseMessages';
-import { ChatWindow } from '.';
+import { ChatWindow, ChatWindowProps } from '.';
 
 const meta: StoryMetaType<typeof ChatWindow> = {
   title: 'Composition/Chat/ChatWindow',
@@ -20,12 +26,30 @@ const meta: StoryMetaType<typeof ChatWindow> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    variant: {
+      control: 'radio',
+      options: Object.values(Variant),
+    },
   },
   parameters: {
-    default: null,
+    default: 'LiveExample',
+    generate: {
+      storyNames: ['CompactVariant', 'SpaciousVariant'],
+      combineArgs: {
+        darkMode: [false, true],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafyGreenProvider darkMode={context?.args.darkMode}>
+            <LeafyGreenChatProvider variant={context?.args.variant}>
+              <Instance />
+            </LeafyGreenChatProvider>
+          </LeafyGreenProvider>
+        );
+      },
+    },
   },
 };
-
 export default meta;
 
 const MyMessage = ({
@@ -59,7 +83,11 @@ const MyMessage = ({
   );
 };
 
-const Template: StoryFn<typeof ChatWindow> = props => {
+type ChatWindowStoryProps = ChatWindowProps & {
+  variant?: Variant;
+};
+
+const Template: StoryFn<ChatWindowStoryProps> = ({ variant, ...props }) => {
   const [messages, setMessages] = useState<Array<any>>(baseMessages);
 
   const handleMessageSend = (messageBody: string) => {
@@ -70,20 +98,29 @@ const Template: StoryFn<typeof ChatWindow> = props => {
   };
 
   return (
-    <ChatWindow {...props}>
-      <MessageFeed>
-        {messages.map(messageFields => (
-          <MyMessage key={messageFields.id} {...messageFields} />
-        ))}
-      </MessageFeed>
-      <InputBar onMessageSend={handleMessageSend} />
-    </ChatWindow>
+    <LeafyGreenChatProvider variant={variant}>
+      <ChatWindow {...props}>
+        <MessageFeed>
+          {messages.map(messageFields => (
+            <MyMessage key={messageFields.id} {...messageFields} />
+          ))}
+        </MessageFeed>
+        <InputBar onMessageSend={handleMessageSend} />
+      </ChatWindow>
+    </LeafyGreenChatProvider>
   );
 };
 
-export const Basic: StoryFn<typeof ChatWindow> = Template.bind({});
+export const LiveExample: StoryObj<ChatWindowStoryProps> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: false,
+    },
+  },
+};
 
-export const Empty: StoryFn<typeof ChatWindow> = props => {
+const EmptyComponent = ({ variant, ...props }: ChatWindowStoryProps) => {
   const userName = 'Sean Park';
   const [messages, setMessages] = useState<Array<any>>([]);
 
@@ -96,13 +133,52 @@ export const Empty: StoryFn<typeof ChatWindow> = props => {
   };
 
   return (
-    <ChatWindow {...props}>
-      <MessageFeed>
-        {messages.map(messageFields => (
-          <MyMessage key={messageFields.id} {...messageFields} />
-        ))}
-      </MessageFeed>
-      <InputBar onMessageSend={handleMessageSend} />
-    </ChatWindow>
+    <LeafyGreenChatProvider variant={variant}>
+      <ChatWindow {...props}>
+        <MessageFeed>
+          {messages.map(messageFields => (
+            <MyMessage key={messageFields.id} {...messageFields} />
+          ))}
+        </MessageFeed>
+        <InputBar onMessageSend={handleMessageSend} />
+      </ChatWindow>
+    </LeafyGreenChatProvider>
   );
+};
+export const Empty: StoryObj<ChatWindowStoryProps> = {
+  render: EmptyComponent,
+};
+
+export const CompactVariant: StoryObj<ChatWindowStoryProps> = {
+  render: Template,
+  args: {
+    children: (
+      <>
+        <MessageFeed>
+          {baseMessages.map((messageFields: any) => (
+            <MyMessage key={messageFields.id} {...messageFields} />
+          ))}
+        </MessageFeed>
+        <InputBar />
+      </>
+    ),
+    variant: Variant.Compact,
+  },
+};
+
+export const SpaciousVariant: StoryObj<ChatWindowStoryProps> = {
+  render: Template,
+  args: {
+    children: (
+      <>
+        <MessageFeed>
+          {baseMessages.map((messageFields: any) => (
+            <MyMessage key={messageFields.id} {...messageFields} />
+          ))}
+        </MessageFeed>
+        <InputBar />
+      </>
+    ),
+    variant: Variant.Spacious,
+  },
 };

@@ -1,5 +1,5 @@
-export { DrawerToolbarLayout } from './DrawerToolbarLayout';
+export { DrawerToolbarLayout } from '../DrawerToolbarLayout/DrawerToolbarLayout/DrawerToolbarLayout';
 export type {
   DrawerToolbarLayoutProps,
   LayoutData,
-} from './DrawerToolbarLayout.types';
+} from '../DrawerToolbarLayout/DrawerToolbarLayout/DrawerToolbarLayout.types';

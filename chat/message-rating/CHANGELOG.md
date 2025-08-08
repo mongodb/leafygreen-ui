@@ -1,5 +1,11 @@
 # @lg-chat/message-rating
 
+## 4.2.0
+
+### Minor Changes
+
+- 3f09ada: Add `title` attributes to like and dislike buttons and update `aria-label` attributes
+
 ## 4.1.0
 
 ### Minor Changes

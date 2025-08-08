@@ -61,6 +61,7 @@ const meta: StoryMetaType<typeof MarketingModal> = {
         ...storybookExcludedControlParams,
         'open',
         'graphic',
+        'buttonProps',
         'onButtonClick',
         'onLinkClick',
       ],
@@ -73,6 +74,7 @@ export const LiveExample: StoryFn<MarketingModalProps> = ({
   graphicStyle,
   darkMode,
   disclaimer,
+  buttonProps,
   ...args
 }) => {
   const graphicCenterImage = 'marketing-center-light.svg';
@@ -90,6 +92,10 @@ export const LiveExample: StoryFn<MarketingModalProps> = ({
         {...args}
         graphicStyle={graphicStyle}
         darkMode={darkMode}
+        buttonProps={{
+          ...buttonProps,
+          onClick: handleClose,
+        }}
         graphic={
           graphicStyle === GraphicStyle.Center ? (
             <img
@@ -124,6 +130,7 @@ const Template: StoryFn<MarketingModalProps> = ({
   graphicStyle,
   darkMode,
   disclaimer,
+  buttonProps,
   ...args
 }) => {
   const graphicCenterImage = 'marketing-center-light.svg';
@@ -142,6 +149,10 @@ const Template: StoryFn<MarketingModalProps> = ({
         {...args}
         graphicStyle={graphicStyle}
         darkMode={darkMode}
+        buttonProps={{
+          ...buttonProps,
+          onClick: handleClose,
+        }}
         graphic={
           graphicStyle === GraphicStyle.Center ? (
             <img

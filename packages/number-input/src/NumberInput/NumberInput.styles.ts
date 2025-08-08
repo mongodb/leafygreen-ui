@@ -12,6 +12,8 @@ export const labelDescriptionStyles = css`
 
 export const wrapperBaseStyles = css`
   display: flex;
+  position: relative;
+  z-index: 0; // Establish new stacking context
 `;
 
 export const wrapperSizeStyles: Record<Size, string> = {
