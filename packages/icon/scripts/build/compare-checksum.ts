@@ -17,7 +17,22 @@ const CHECKSUMS_FILE = path.resolve(process.cwd(), 'dist/checksums.json');
 function getPrevChecksums(): Record<string, string> {
   try {
     return JSON.parse(fs.readFileSync(CHECKSUMS_FILE, 'utf-8'));
-  } catch {
+  } catch (err: any) {
+    if (err.code === 'ENOENT') {
+      // this is normal if the file doesn't exist yet
+      return {};
+    } else if (err instanceof SyntaxError) {
+      console.error(
+        `[compare-checksum] Invalid JSON in checksums file at ${CHECKSUMS_FILE}:`,
+        err.message,
+      );
+    } else {
+      console.error(
+        `[compare-checksum] Error reading checksums file at ${CHECKSUMS_FILE}:`,
+        err,
+      );
+    }
+
     return {};
   }
 }
