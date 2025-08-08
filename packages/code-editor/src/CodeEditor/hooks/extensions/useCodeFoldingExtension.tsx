@@ -55,7 +55,9 @@ export function useCodeFoldingExtension({
                 glyph="ChevronDown"
                 size="small"
                 className={css`
-                  margin-top: 2px;
+                  margin-top: 4px;
+                  height: 10px;
+                  width: 10px;
                 `}
               />
             ) : (
@@ -63,7 +65,9 @@ export function useCodeFoldingExtension({
                 glyph="ChevronRight"
                 size="small"
                 className={css`
-                  margin-top: 2px;
+                  margin-top: 4px;
+                  height: 10px;
+                  width: 10px;
                 `}
               />
             ),

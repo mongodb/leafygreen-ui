@@ -15,6 +15,7 @@ import {
 import {
   type CodeEditorProps,
   CodeEditorSelectors,
+  ToolbarVariant,
 } from '../../CodeEditor.types';
 import { type CodeEditorModules } from '../useModuleLoaders';
 
@@ -70,7 +71,18 @@ export function useThemeExtension({
             color: color[theme].text[Variant.Primary][InteractionState.Default],
             border: `1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
-            borderRadius: `${borderRadius[300]}px`,
+
+            borderBottomLeftRadius: `${borderRadius[300]}px`,
+            borderBottomRightRadius: `${borderRadius[300]}px`,
+
+            borderTopLeftRadius:
+              props.toolbarVariant === ToolbarVariant.Window
+                ? 0
+                : `${borderRadius[300]}px`,
+            borderTopRightRadius:
+              props.toolbarVariant === ToolbarVariant.Window
+                ? 0
+                : `${borderRadius[300]}px`,
           },
 
           [`&${CodeEditorSelectors.Focused}`]: {

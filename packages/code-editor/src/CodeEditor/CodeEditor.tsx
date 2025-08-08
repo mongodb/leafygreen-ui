@@ -14,11 +14,13 @@ import {
   getEditorStyles,
   getLoaderStyles,
   getLoadingTextStyles,
+  getToolbarStyles,
 } from './CodeEditor.styles';
 import {
   CodeEditorHandle,
   type CodeEditorProps,
   type HTMLElementWithCodeMirror,
+  ToolbarVariant,
 } from './CodeEditor.types';
 import { useExtensions, useLazyModules, useModuleLoaders } from './hooks';
 
@@ -33,6 +35,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       extensions: consumerExtensions = [],
       darkMode: darkModeProp,
       baseFontSize: baseFontSizeProp,
+      toolbarVariant = ToolbarVariant.Window,
       className,
       height,
       maxHeight,
@@ -64,7 +67,16 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     const customExtensions = useExtensions({
       editorViewInstance: editorViewRef.current,
-      props,
+      props: {
+        ...props,
+        forceParsing: forceParsingProp,
+        onChange: onChangeProp,
+        isLoading: isLoadingProp,
+        extensions: consumerExtensions,
+        darkMode: darkModeProp,
+        baseFontSize: baseFontSizeProp,
+        toolbarVariant,
+      },
       modules,
     });
 
@@ -150,6 +162,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         })}
         {...rest}
       >
+        <div className={getToolbarStyles(theme, toolbarVariant)}></div>
         {(isLoadingProp || isLoading) && (
           <div
             className={getLoaderStyles({
