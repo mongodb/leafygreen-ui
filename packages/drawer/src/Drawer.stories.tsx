@@ -48,15 +48,9 @@ const DrawerCustomTitle = () => {
       `}
     >
       <div>Drawer title</div>
-      <div
-        className={css`
-          display: flex;
-        `}
-      >
-        <IconButton onClick={() => console.log('click')}>
-          <CloudIcon aria-label="Cloud" />
-        </IconButton>
-      </div>
+      <IconButton aria-label="Cloud" onClick={() => console.log('cloud click')}>
+        <CloudIcon />
+      </IconButton>
     </div>
   );
 };
