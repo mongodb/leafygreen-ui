@@ -277,7 +277,6 @@ export const ControlledOpenState: StoryFn = () => {
         value={value}
         onChange={newValue => {
           setValue(newValue);
-          console.log('Selected:', newValue);
         }}
         placeholder="Choose an option"
       >
@@ -322,8 +321,8 @@ export const ControlledOpenStateWithInitialValue: StoryFn = () => {
           font-size: 14px;
         `}
       >
-        <strong>State:</strong> Open = {isOpen ? 'true' : 'false'}, Value = "
-        {value || 'none'}"
+        <strong>State:</strong> Open = {isOpen ? 'true' : 'false'}, Value ={' '}
+        {value || 'none'}
       </div>
 
       <div
@@ -360,7 +359,6 @@ export const ControlledOpenStateWithInitialValue: StoryFn = () => {
         value={value}
         onChange={newValue => {
           setValue(newValue);
-          console.log('Selected:', newValue);
         }}
         allowDeselect
       >
@@ -387,11 +385,8 @@ export const ControlledOpenStateWithExternalTrigger: StoryFn = () => {
   const [value, setValue] = useState('');
 
   const handleExternalAction = (action: string) => {
-    console.log(`External action: ${action}`);
     if (action === 'save') {
       setIsSelectOpen(false);
-      // In a real app, you might save the value here
-      console.log('Saved value:', value);
     } else if (action === 'cancel') {
       setIsSelectOpen(false);
       setValue(''); // Reset on cancel
@@ -463,7 +458,6 @@ export const ControlledOpenStateWithExternalTrigger: StoryFn = () => {
         value={value}
         onChange={newValue => {
           setValue(newValue);
-          console.log('Theme changed to:', newValue);
         }}
         placeholder="Select a theme"
         disabled={!isSelectOpen}
