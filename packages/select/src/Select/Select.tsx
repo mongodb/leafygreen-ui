@@ -126,8 +126,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
 
     // Use controlled open state if provided, otherwise use internal state
-    const open = openProp !== undefined ? openProp : uncontrolledOpen;
-    const setOpen = openProp !== undefined ? setOpenProp! : setUncontrolledOpen;
+    const open = isDefined(openProp) ? openProp : uncontrolledOpen;
+    const setOpen = isDefined(openProp) && isDefined(setOpenProp) ? setOpenProp : setUncontrolledOpen;
 
     const containerRef = useForwardedRef(fwdRef, null);
     const menuButtonRef = useStateRef<HTMLButtonElement>(null);
