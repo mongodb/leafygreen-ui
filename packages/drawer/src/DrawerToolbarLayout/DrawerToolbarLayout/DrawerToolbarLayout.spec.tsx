@@ -10,18 +10,22 @@ import { getTestUtils } from '../../testing';
 const onClickMock = jest.fn();
 const onCloseMock = jest.fn();
 
-const Component = () => {
-  const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
-    {
-      id: 'Code',
-      label: 'Code',
-      content: 'Drawer Content',
-      title: 'Code Title',
-      glyph: 'Code',
-      onClick: onClickMock,
-    },
-  ];
+const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
+  {
+    id: 'Code',
+    label: 'Code',
+    content: 'Drawer Content',
+    title: `Drawer Title`,
+    glyph: 'Code',
+    onClick: onClickMock,
+  },
+];
 
+const Component = ({
+  data = DRAWER_TOOLBAR_DATA,
+}: {
+  data?: DrawerLayoutProps['toolbarData'];
+}) => {
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -30,12 +34,12 @@ const Component = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <main>Main Content</main>;
+    return '🌻';
   };
 
   return (
     <div>
-      <DrawerLayout toolbarData={DRAWER_TOOLBAR_DATA} onClose={onCloseMock}>
+      <DrawerLayout toolbarData={data} onClose={onCloseMock}>
         <MainContent />
       </DrawerLayout>
     </div>
@@ -77,5 +81,34 @@ describe('packages/DrawerToolbarLayout', () => {
     userEvent.click(closeButton);
 
     expect(onCloseMock).toHaveBeenCalled();
+  });
+
+  test('Updates the open drawer content when the toolbar data changes', () => {
+    const { rerender } = render(<Component />);
+
+    const { getDrawer, isOpen } = getTestUtils();
+    const drawer = getDrawer();
+
+    expect(isOpen()).toBe(true);
+    expect(drawer).toHaveTextContent('Drawer Content');
+    expect(drawer).toHaveTextContent('Drawer Title');
+
+    rerender(
+      <Component
+        data={[
+          {
+            id: 'Code',
+            label: 'Code',
+            content: 'Rerendered Drawer Content',
+            title: `Rerendered Drawer Title`,
+            glyph: 'Code',
+          },
+        ]}
+      />,
+    );
+
+    expect(isOpen()).toBe(true);
+    expect(drawer).toHaveTextContent('Rerendered Drawer Content');
+    expect(drawer).toHaveTextContent('Rerendered Drawer Title');
   });
 });

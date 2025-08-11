@@ -1,5 +1,11 @@
 # @leafygreen-ui/segmented-control
 
+## 11.0.5
+
+### Patch Changes
+
+- 76b252d: Ensures the containing element establishes a new stacking context (`z-index: 0;`), which ensures the component will correctly render below any high-z components (like `Modal`)
+
 ## 11.0.4
 
 ### Patch Changes
