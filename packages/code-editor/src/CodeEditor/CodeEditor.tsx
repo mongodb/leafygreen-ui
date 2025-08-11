@@ -25,7 +25,13 @@ import {
   CopyButtonAppearance,
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
-import { useExtensions, useLazyModules, useModuleLoaders } from './hooks';
+import {
+  useExtensions,
+  useFormattingExtension,
+  useFormattingModuleLoaders,
+  useLazyModules,
+  useModuleLoaders,
+} from './hooks';
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
@@ -69,6 +75,19 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const moduleLoaders = useModuleLoaders(props);
     const { isLoading, modules } = useLazyModules(moduleLoaders);
 
+    // Lazy load formatting modules
+    const formattingModuleLoaders = useFormattingModuleLoaders(language);
+    const { modules: formattingModules } = useLazyModules(
+      formattingModuleLoaders,
+    );
+
+    // Get formatting functionality
+    const { formatCode, isFormattingAvailable } = useFormattingExtension({
+      editorViewInstance: editorViewRef.current,
+      props: { language },
+      modules: formattingModules,
+    });
+
     const customExtensions = useExtensions({
       editorViewInstance: editorViewRef.current,
       props: {
@@ -86,6 +105,51 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const getContents = useCallback(() => {
       return editorViewRef.current?.state.sliceDoc() ?? '';
     }, []);
+
+    /**
+     * Formats the current code content and updates the editor.
+     * @returns Promise resolving to the formatted code string
+     */
+    const handleFormatCode = useCallback(async (): Promise<string> => {
+      if (!isFormattingAvailable()) {
+        console.warn('Formatting is not available for the current language');
+        return getContents();
+      }
+
+      try {
+        const currentContent = getContents();
+        const formattedContent = await formatCode(currentContent);
+
+        // Update the editor with formatted content
+        if (editorViewRef.current && formattedContent !== currentContent) {
+          const transaction = editorViewRef.current.state.update({
+            changes: {
+              from: 0,
+              to: editorViewRef.current.state.doc.length,
+              insert: formattedContent,
+            },
+          });
+          editorViewRef.current.dispatch(transaction);
+
+          // Update controlled value if in controlled mode
+          if (isControlled) {
+            setControlledValue(formattedContent);
+            onChangeProp?.(formattedContent);
+          }
+        }
+
+        return formattedContent;
+      } catch (error) {
+        console.error('Error formatting code:', error);
+        return getContents();
+      }
+    }, [
+      isFormattingAvailable,
+      getContents,
+      formatCode,
+      isControlled,
+      onChangeProp,
+    ]);
 
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
@@ -152,13 +216,22 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       getContents,
     ]);
 
-    useImperativeHandle(forwardedRef, () => ({
-      getEditorViewInstance: () => editorViewRef.current,
-    }));
+    useImperativeHandle(
+      forwardedRef,
+      () => ({
+        getEditorViewInstance: () => editorViewRef.current,
+        formatCode: handleFormatCode,
+        isFormattingAvailable,
+      }),
+      [handleFormatCode, isFormattingAvailable],
+    );
 
     const panelNode = React.isValidElement(panel)
       ? React.cloneElement(panel as React.ReactElement<any>, {
           getContents,
+          formatCode: handleFormatCode,
+          isFormattingAvailable,
+          language,
         })
       : panel;
 

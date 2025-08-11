@@ -145,7 +145,7 @@ export type CodeEditorProps = DarkModeProps & {
   enableLineNumbers?: boolean;
 
   /**
-   * Enables line wrapping when the text exceeds the editor’s width.
+   * Enables line wrapping when the text exceeds the editor's width.
    */
   enableLineWrapping?: boolean;
 
@@ -302,4 +302,16 @@ export type CodeEditorProps = DarkModeProps & {
  */
 export interface CodeEditorHandle {
   getEditorViewInstance: () => EditorView | null;
+
+  /**
+   * Formats the current code content using the appropriate formatter for the selected language.
+   * @returns Promise resolving to the formatted code string
+   */
+  formatCode: () => Promise<string>;
+
+  /**
+   * Checks if formatting is available for the current language and configuration.
+   * @returns boolean indicating whether formatting is available
+   */
+  isFormattingAvailable: () => boolean;
 }

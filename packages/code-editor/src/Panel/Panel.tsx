@@ -46,9 +46,29 @@ export function Panel({
   baseFontSize: baseFontSizeProp,
   darkMode,
   getContents,
+  formatCode,
+  isFormattingAvailable,
+  language,
 }: PanelProps) {
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
+
+  const handleFormatClick = async () => {
+    if (formatCode) {
+      try {
+        await formatCode();
+        onFormatClick?.();
+      } catch (error) {
+        console.error('Error formatting code:', error);
+      }
+    } else {
+      onFormatClick?.();
+    }
+  };
+
+  // Show format button only if formatting is available for the current language
+  const shouldShowFormatButton =
+    showFormatButton && (isFormattingAvailable?.() ?? false);
 
   return (
     <div className={getPanelStyles(theme)}>
@@ -59,12 +79,12 @@ export function Panel({
       </div>
       <div className={getPanelChildrenStyles()}>{children}</div>
       <div className={getPanelButtonsStyles()}>
-        {showFormatButton && (
+        {shouldShowFormatButton && (
           <Tooltip
             align="top"
             justify="middle"
             trigger={
-              <IconButton onClick={onFormatClick}>
+              <IconButton onClick={handleFormatClick}>
                 <FormatIcon />
               </IconButton>
             }

@@ -54,7 +54,7 @@ console.log(greet('MongoDB user'));`;
 | `enableClickableUrls` _(optional)_ | Renders URLs as clickable links in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `boolean`                    | `undefined` |
 | `enableCodeFolding` _(optional)_   | Enables code folding arrows in the gutter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `boolean`                    | `undefined` |
 | `enableLineNumbers` _(optional)_   | Enables line numbers in the editor’s gutter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `boolean`                    | `true`      |
-| `enableLineWrapping` _(optional)_  | Enables line wrapping when the text exceeds the editor’s width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `boolean`                    | `true`      |
+| `enableLineWrapping` _(optional)_  | Enables line wrapping when the text exceeds the editor's width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `boolean`                    | `true`      |
 | `extensions` _(optional)_          | Additional CodeMirror extensions to apply to the editor. These will be applied with high precendence, meaning they can override extensions applied through built in props. See the [CodeMirror v6 System Guide](https://codemirror.net/docs/guide/) for more information.                                                                                                                                                                                                                                                      | `Array<CodeMirrorExtension>` | `[]`        |
 | `forceParsing` _(optional)_        | _**This should be used with caution as it can significantly impact performance!**_<br><br>Forces the parsing of the complete document, even parts not currently visible.<br><br>By default, the editor optimizes performance by only parsing the code that is visible on the screen, which is especially beneficial when dealing with large amounts of code. Enabling this option overrides this behavior and forces the parsing of all code, visible or not. This should generally be reserved for exceptional circumstances. | `boolean`                    | `false`     |
 | `height` _(optional)_              | Sets the editor's height. If not set, the editor will automatically adjust its height based on the content.                                                                                                                                                                                                                                                                                                                                                                                                                    | `string`                     | `undefined` |
@@ -73,6 +73,135 @@ console.log(greet('MongoDB user'));`;
 | `value` _(optional)_               | Controlled value of the editor. If set, the editor will be controlled and will not update its value on change. Use `onChange` to update the value externally.                                                                                                                                                                                                                                                                                                                                                                  | `string`                     | `undefined` |
 | `width` _(optional)_               | Sets the editor's width. If not set, the editor will be 100% width of its parent container.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `string`                     | `undefined` |
 
+## Code Formatting
+
+The CodeEditor component includes built-in code formatting functionality that can be accessed through the `CodeEditorCopyButton` component or used independently via the `useFormattingExtension` hook.
+
+### Supported Languages and Formatters
+
+The formatting system supports multiple languages using different formatting backends:
+
+#### Prettier-based Languages
+
+These languages use [Prettier](https://prettier.io/) for code formatting:
+
+- **JavaScript/JSX**: Uses `prettier/parser-babel`
+- **TypeScript/TSX**: Uses `prettier/parser-typescript`
+- **CSS**: Uses `prettier/parser-postcss`
+- **HTML**: Uses `prettier/parser-html`
+- **JSON**: Uses `prettier/parser-babel`
+- **Java**: Uses `prettier-plugin-java`
+- **Kotlin**: Uses `prettier-plugin-kotlin`
+- **PHP**: Uses `@prettier/plugin-php`
+- **Ruby**: Uses `@prettier/plugin-ruby`
+- **Rust**: Uses `prettier-plugin-rust`
+
+#### WASM-based Languages
+
+These languages use WebAssembly-compiled formatters for in-browser formatting:
+
+- **C/C++/C#**: Uses `@wasm-fmt/clang-format`
+- **Go**: Uses `@wasm-fmt/gofmt`
+- **Python**: Uses `@wasm-fmt/ruff_fmt`
+
+### Using Code Formatting
+
+#### Via CodeEditor and Panel
+
+The formatting functionality is accessible through the `CodeEditor` component and automatically available in the `Panel` component:
+
+```tsx
+import { useRef } from 'react';
+import {
+  CodeEditor,
+  Panel,
+  type CodeEditorHandle,
+  LanguageName,
+} from '@leafygreen-ui/code-editor';
+
+function MyComponent() {
+  const editorRef = useRef<CodeEditorHandle>(null);
+
+  const handleFormatCode = async () => {
+    if (editorRef.current?.isFormattingAvailable()) {
+      const formattedCode = await editorRef.current.formatCode();
+      console.log('Formatted code:', formattedCode);
+    }
+  };
+
+  return (
+    <div>
+      <CodeEditor
+        ref={editorRef}
+        defaultValue="const x=1;const y=2;"
+        language={LanguageName.javascript}
+        panel={<Panel showFormatButton={true} />}
+      />
+      <button onClick={handleFormatCode}>Format Code Externally</button>
+    </div>
+  );
+}
+```
+
+#### Via useFormattingExtension Hook
+
+For more advanced use cases, you can use the `useFormattingExtension` hook directly:
+
+```tsx
+import {
+  useFormattingExtension,
+  useLazyModules,
+  useFormattingModuleLoaders,
+  LanguageName,
+  type FormattingOptions,
+} from '@leafygreen-ui/code-editor';
+
+function MyFormattingComponent() {
+  const moduleLoaders = useFormattingModuleLoaders(LanguageName.javascript);
+  const { modules } = useLazyModules(moduleLoaders);
+
+  const { formatCode, isFormattingAvailable } = useFormattingExtension({
+    editorViewInstance: null,
+    props: { language: LanguageName.javascript },
+    modules,
+  });
+
+  const handleFormat = async () => {
+    if (isFormattingAvailable()) {
+      const options: FormattingOptions = {
+        semi: true,
+        singleQuote: true,
+        tabWidth: 2,
+      };
+
+      const formatted = await formatCode('const x=1;', options);
+      console.log(formatted); // "const x = 1;"
+    }
+  };
+
+  return <button onClick={handleFormat}>Format Code</button>;
+}
+```
+
+### Formatting Options
+
+The `FormattingOptions` interface provides configuration for different formatters:
+
+```tsx
+interface FormattingOptions {
+  // Prettier options
+  semi?: boolean; // Add semicolons (default: true)
+  singleQuote?: boolean; // Use single quotes (default: true)
+  tabWidth?: number; // Tab width (default: varies by language)
+  useTabs?: boolean; // Use tabs instead of spaces (default: false)
+  printWidth?: number; // Line length (default: varies by language)
+  trailingComma?: 'none' | 'es5' | 'all'; // Trailing commas
+  bracketSpacing?: boolean; // Spaces around object brackets
+  jsxBracketSameLine?: boolean; // JSX bracket placement
+  arrowParens?: 'avoid' | 'always'; // Arrow function parentheses
+}
+```
+
 ## Types and Variables
 
 | Name                        | Description                                                                                                     |
@@ -87,6 +216,8 @@ console.log(greet('MongoDB user'));`;
 | `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                        |
 | `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                         |
 | `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.          |
+| `FormattingOptions`         | TypeScript interface defining formatting options for different formatters (Prettier and WASM-based).            |
+| `CodeEditorHandle`          | TypeScript interface for the imperative handle of the CodeEditor component, including formatting methods.       |
 
 ## Test Utilities
 
@@ -531,6 +662,39 @@ Adds hover tooltips to editor content with configurable severity levels.
 
 **Required Props:** `tooltips`  
 **Required Modules:** `@codemirror/view`, `@codemirror/state`
+
+#### `useFormattingExtension(config)`
+
+Provides code formatting functionality using language-specific formatters. This hook doesn't return a CodeMirror extension but rather a formatting utility that can format code content. It supports multiple formatting backends:
+
+- **Prettier-based formatters**: For JavaScript, TypeScript, CSS, HTML, JSON, Java, Kotlin, PHP, Ruby, and Rust
+- **WASM-based formatters**: For C/C++, C#, Go, and Python
+
+**Required Props:** `language`  
+**Required Modules:** Depends on language:
+
+- Prettier languages: `prettier/standalone` + language-specific parser/plugin
+- WASM languages: `@wasm-fmt/clang-format`, `@wasm-fmt/gofmt`, or `@wasm-fmt/ruff_fmt`
+
+**Returns:**
+
+- `formatCode(code: string, options?: FormattingOptions): Promise<string>` - Formats the provided code
+- `isFormattingAvailable(): boolean` - Checks if formatting is available for current language
+
+**Example:**
+
+```tsx
+const { formatCode, isFormattingAvailable } = useFormattingExtension({
+  editorViewInstance: null, // Not needed for standalone formatting
+  props: { language: LanguageName.javascript },
+  modules: lazyModules,
+});
+
+if (isFormattingAvailable()) {
+  const formatted = await formatCode('const x=1;');
+  console.log(formatted); // "const x = 1;"
+}
+```
 
 ### Example Usage
 

@@ -11,10 +11,13 @@ export {
 } from './CodeEditor.types';
 export {
   type CodeEditorModules,
+  type FormattingOptions,
   LanguageName,
   useAutoCompleteExtension,
   useCodeFoldingExtension,
   useExtensions,
+  useFormattingExtension,
+  useFormattingModuleLoaders,
   useHighlightExtension,
   useHyperLinkExtension,
   useIndentExtension,
