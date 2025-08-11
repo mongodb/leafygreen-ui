@@ -18,7 +18,7 @@ import LeafyGreenProvider, {
   PopoverPropsProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap } from '@leafygreen-ui/lib';
+import { isDefined, keyMap } from '@leafygreen-ui/lib';
 import { getPopoverRenderModeProps } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
@@ -127,7 +127,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     // Use controlled open state if provided, otherwise use internal state
     const open = isDefined(openProp) ? openProp : uncontrolledOpen;
-    const setOpen = isDefined(openProp) && isDefined(setOpenProp) ? setOpenProp : setUncontrolledOpen;
+    const setOpen =
+      isDefined(openProp) && isDefined(setOpenProp)
+        ? setOpenProp
+        : setUncontrolledOpen;
 
     const containerRef = useForwardedRef(fwdRef, null);
     const menuButtonRef = useStateRef<HTMLButtonElement>(null);
