@@ -45,6 +45,7 @@ export function Panel({
   children,
   baseFontSize: baseFontSizeProp,
   darkMode,
+  getContents,
 }: PanelProps) {
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
@@ -74,15 +75,11 @@ export function Panel({
           </Tooltip>
         )}
         {showCopyButton && (
-          <Tooltip
-            align="top"
-            justify="middle"
-            trigger={<CopyButton contents="Test" isPanelVariant />}
-            triggerEvent="hover"
-            darkMode={darkMode}
-          >
-            Copy
-          </Tooltip>
+          <CopyButton
+            isPanelVariant
+            getContents={getContents ?? (() => '')}
+            onCopy={onCopyClick}
+          />
         )}
         {showSecondaryMenuButton && (
           <Menu

@@ -22,6 +22,11 @@ export interface PanelProps extends DarkModeProps {
   onDownloadClick?: () => void;
   onViewShortcutsClick?: () => void;
 
+  /**
+   * Function to retrieve the current editor contents for copy action.
+   */
+  getContents?: () => string;
+
   customSecondaryButtons?: Array<SecondaryButtonConfig>;
 
   // Slot prop to left of button panel

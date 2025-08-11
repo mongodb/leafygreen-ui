@@ -156,6 +156,12 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       getEditorViewInstance: () => editorViewRef.current,
     }));
 
+    const panelNode = React.isValidElement(panel)
+      ? React.cloneElement(panel as React.ReactElement<any>, {
+          getContents,
+        })
+      : panel;
+
     return (
       <div
         ref={editorContainerRef}
@@ -170,7 +176,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         })}
         {...rest}
       >
-        {panel}
+        {panelNode}
         {!panel &&
           (copyButtonAppearance === CopyButtonAppearance.Hover ||
             copyButtonAppearance === CopyButtonAppearance.Persist) && (
@@ -178,6 +184,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               getContents={getContents}
               className={minimalCopyButtonStyles}
               isPanelVariant={false}
+              disabled={isLoadingProp || isLoading}
             />
           )}
         {(isLoadingProp || isLoading) && (
