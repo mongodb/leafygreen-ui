@@ -145,6 +145,7 @@ import ShardedCluster from './ShardedCluster.svg';
 import Shell from './Shell.svg';
 import Shield from './Shield.svg';
 import Shirt from './Shirt.svg';
+import Shortcut from './Shortcut.svg';
 import SMS from './SMS.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
@@ -328,6 +329,7 @@ const _glyphs = {
   Shell,
   Shield,
   Shirt,
+  Shortcut,
   SortAscending,
   SortDescending,
   Sparkle,
