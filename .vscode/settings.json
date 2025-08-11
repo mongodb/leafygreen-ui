@@ -12,13 +12,12 @@
   "eslint.lintTask.enable": true,
   "eslint.format.enable": true,
   "eslint.runtime": "node",
-  "eslint.workingDirectories": [
-    "./"
-  ],
+  "eslint.workingDirectories": ["./"],
   "typescript.preferences.importModuleSpecifier": "project-relative",
-  "cSpell.words": [
-    "leafygreen"
-  ],
+  "cSpell.words": ["leafygreen"],
+  "workbench.editorAssociations": {
+    "*.svg": "default"
+  },
   "githubPullRequests.pullRequestDescription": "Copilot",
   "github.copilot.chat.codeGeneration.instructions": [
     {
