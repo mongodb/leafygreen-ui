@@ -168,7 +168,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const onClose = useCallback(() => {
       setOpen(false);
-      menuButtonRef.current!.focus();
+      menuButtonRef.current?.focus();
     }, [setOpen, menuButtonRef]);
 
     useEffect(() => {
