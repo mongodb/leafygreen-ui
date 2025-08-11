@@ -31,7 +31,7 @@ const getBaseLegendCheckboxStyles = ({
     .${checkWrapperClassName} {
       border-color: ${checkboxColor || defaultCheckboxColor};
 
-      &:before {
+      &::before {
         background-color: ${checkboxColor || defaultCheckboxColor};
       }
     }

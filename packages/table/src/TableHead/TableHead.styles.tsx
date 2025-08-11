@@ -25,7 +25,7 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
         top: 0;
 
         .${tableClassName} & {
-          :after {
+          ::after {
             content: '';
             position: absolute;
             z-index: -1;
@@ -45,7 +45,7 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
         }
 
         .${tableClassName}[data-is-sticky='true'] & {
-          :after {
+          ::after {
             opacity: 1;
           }
         }

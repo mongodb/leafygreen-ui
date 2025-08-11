@@ -1,7 +1,12 @@
 import React, { createRef } from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { render, RenderResult } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { InlineMessageFeedback } from '.';
+import { InlineMessageFeedback, InlineMessageFeedbackProps } from '.';
 
 const defaultProps = {
   label: 'label test',
@@ -10,6 +15,24 @@ const defaultProps = {
   cancelButtonText: 'cancel the feedback',
   submitButtonText: 'submit the feedback',
 } as const;
+
+const renderInlineMessageFeedback = (
+  props: Partial<InlineMessageFeedbackProps> = {},
+  variant: Variant = Variant.Spacious,
+): RenderResult => {
+  return render(
+    <LeafyGreenChatProvider variant={variant}>
+      <InlineMessageFeedback {...defaultProps} {...props} />
+    </LeafyGreenChatProvider>,
+  );
+};
+
+// Mock the ResizeObserver
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
 
 describe('packages/inline-message-feedback', () => {
   describe('submitted state', () => {
@@ -37,26 +60,41 @@ describe('packages/inline-message-feedback', () => {
 
   describe('label prop', () => {
     test('renders label', () => {
-      const { getByText } = render(<InlineMessageFeedback {...defaultProps} />);
+      const { getByText } = renderInlineMessageFeedback();
       expect(getByText(defaultProps.label)).toBeInTheDocument();
     });
   });
   describe('cancel button props', () => {
-    test('renders cancelButtonText', () => {
-      const { container } = render(<InlineMessageFeedback {...defaultProps} />);
-      const cancelButton = container.querySelector('button[type="button"]');
-      expect(cancelButton).toHaveTextContent(defaultProps.cancelButtonText);
-    });
-    test('cancel button calls onCancel', () => {
-      const { container } = render(<InlineMessageFeedback {...defaultProps} />);
-      const cancelButton = container.querySelector('button[type="button"]');
-      fireEvent.click(cancelButton!);
-      expect(defaultProps.onCancel).toHaveBeenCalled();
+    describe.each([
+      [Variant.Spacious, true],
+      [Variant.Compact, false],
+    ])('given the provider is in %s mode', (variant, shouldShow) => {
+      if (shouldShow) {
+        test('it renders the cancel button', () => {
+          const { container } = renderInlineMessageFeedback({}, variant);
+          const cancelButton = container.querySelector('button[type="button"]');
+          expect(cancelButton).toBeInTheDocument();
+          expect(cancelButton).toHaveTextContent(defaultProps.cancelButtonText);
+        });
+
+        test('cancel button calls onCancel', () => {
+          const { container } = renderInlineMessageFeedback({}, variant);
+          const cancelButton = container.querySelector('button[type="button"]');
+          userEvent.click(cancelButton!);
+          expect(defaultProps.onCancel).toHaveBeenCalled();
+        });
+      } else {
+        test('it does not render the cancel button', () => {
+          const { container } = renderInlineMessageFeedback({}, variant);
+          const cancelButton = container.querySelector('button[type="button"]');
+          expect(cancelButton).not.toBeInTheDocument();
+        });
+      }
     });
   });
   describe('close button props', () => {
     test('does not render close button without onClose', () => {
-      const { container } = render(<InlineMessageFeedback {...defaultProps} />);
+      const { container } = renderInlineMessageFeedback();
       const closeButton = container.querySelector(
         `[aria-label='Close feedback window']`,
       );
@@ -64,9 +102,9 @@ describe('packages/inline-message-feedback', () => {
     });
     test('renders close button when onClose prop is defined', () => {
       const closeHandler = jest.fn();
-      const { container } = render(
-        <InlineMessageFeedback {...defaultProps} onClose={closeHandler} />,
-      );
+      const { container } = renderInlineMessageFeedback({
+        onClose: closeHandler,
+      });
       const closeButton = container.querySelector(
         `[aria-label='Close feedback window']`,
       );
@@ -74,13 +112,13 @@ describe('packages/inline-message-feedback', () => {
     });
     test('close button calls onClose', () => {
       const closeHandler = jest.fn();
-      const { container } = render(
-        <InlineMessageFeedback {...defaultProps} onClose={closeHandler} />,
-      );
+      const { container } = renderInlineMessageFeedback({
+        onClose: closeHandler,
+      });
       const closeButton = container.querySelector(
         `[aria-label='Close feedback window']`,
       );
-      fireEvent.click(closeButton!);
+      userEvent.click(closeButton!);
       expect(closeHandler).toHaveBeenCalled();
     });
   });
@@ -88,38 +126,31 @@ describe('packages/inline-message-feedback', () => {
     // Latest TextArea (v8.0.20) does not pass aria-labelledby correctly, so this is currently not passing
     // eslint-disable-next-line jest/no-disabled-tests
     test.skip('is labelled by label by default', () => {
-      const { container, getByLabelText } = render(
-        <InlineMessageFeedback {...defaultProps} />,
-      );
+      const { container, getByLabelText } = renderInlineMessageFeedback();
       const textarea = container.querySelector('textarea');
       expect(getByLabelText(defaultProps.label)).toEqual(textarea);
     });
     test('ref is passable to textarea', () => {
       const ref = createRef<HTMLTextAreaElement>();
-      render(
-        <InlineMessageFeedback {...defaultProps} textareaProps={{ ref }} />,
-      );
+      renderInlineMessageFeedback({ textareaProps: { ref } });
       expect(ref.current).toBeDefined();
     });
   });
   describe('submit button props', () => {
     test('renders submitButtonText', () => {
-      const { container } = render(<InlineMessageFeedback {...defaultProps} />);
+      const { container } = renderInlineMessageFeedback();
       const submitButton = container.querySelector('button[type="submit"]');
       expect(submitButton).toHaveTextContent(defaultProps.submitButtonText);
     });
     test('submit button does not call onSubmit when textarea is empty', () => {
-      const { container } = render(<InlineMessageFeedback {...defaultProps} />);
+      const { container } = renderInlineMessageFeedback();
       const submitButton = container.querySelector('button[type="submit"]');
       expect(submitButton!.getAttribute('aria-disabled')).toBe('true');
     });
     test('submit button calls onSubmit when textarea is not empty', () => {
-      const { container } = render(
-        <InlineMessageFeedback
-          {...defaultProps}
-          textareaProps={{ value: 'test' }}
-        />,
-      );
+      const { container } = renderInlineMessageFeedback({
+        textareaProps: { value: 'test' },
+      });
       const submitButton = container.querySelector('button[type="submit"]');
       expect(submitButton!.getAttribute('aria-disabled')).toBe('false');
     });
@@ -127,9 +158,7 @@ describe('packages/inline-message-feedback', () => {
 
   test('accepts a ref', () => {
     const ref = createRef<HTMLDivElement>();
-    render(
-      <InlineMessageFeedback ref={ref} label="test" onCancel={() => {}} />,
-    );
+    render(<InlineMessageFeedback ref={ref} {...defaultProps} />);
 
     expect(ref.current).toBeDefined();
   });

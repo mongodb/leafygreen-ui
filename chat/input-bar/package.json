@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/input-bar",
-  "version": "9.0.0",
+  "version": "9.2.0",
   "description": "lg-chat Input Bar",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -17,10 +17,12 @@
   "dependencies": {
     "@leafygreen-ui/avatar": "workspace:^",
     "@leafygreen-ui/badge": "workspace:^",
+    "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/input-option": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",

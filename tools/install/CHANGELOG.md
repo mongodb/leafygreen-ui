@@ -1,5 +1,11 @@
 # @lg-tools/install
 
+## 0.3.0
+
+### Minor Changes
+
+- 7a01501: Official release of @leafygreen-ui/progress-bar.
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,13 +1,21 @@
 import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
+import {
+  color,
+  InteractionState,
+  spacing,
+  Variant,
+} from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
+export const containerStyles = css`
   display: flex;
-  gap: ${spacing[1]}px;
+  gap: ${spacing[100]}px;
   align-items: center;
 `;
 
-export const bodyStyles = css`
-  color: ${palette.gray.dark1};
+export const getIconFill = (theme: Theme) =>
+  color[theme].icon[Variant.Success][InteractionState.Default];
+
+export const getTextStyles = (theme: Theme) => css`
+  color: ${color[theme].text[Variant.Secondary][InteractionState.Default]};
 `;

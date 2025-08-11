@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
 /**
@@ -6,7 +6,7 @@ import { spacing } from '@leafygreen-ui/tokens';
  */
 export const baseStyles = css`
   // Remove the Banner's left border wedge
-  &:before {
+  &::before {
     content: '';
     background: transparent;
   }
@@ -21,3 +21,18 @@ export const baseStyles = css`
 export const multilineStyles = css`
   border-radius: ${spacing[300]}px;
 `;
+
+export const getMessageBannerStyles = ({
+  className,
+  isMultiline,
+}: {
+  className?: string;
+  isMultiline: boolean;
+}) =>
+  cx(
+    baseStyles,
+    {
+      [multilineStyles]: isMultiline,
+    },
+    className,
+  );

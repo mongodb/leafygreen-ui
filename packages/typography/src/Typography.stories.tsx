@@ -5,6 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
+import { FontWeight } from '@leafygreen-ui/tokens';
 
 import {
   BackLink,
@@ -57,17 +58,17 @@ export const LiveExample = ({
         <H3>Heading 3</H3>
         <Subtitle>Subtitle</Subtitle>
 
-        <Body>Body</Body>
-        <Body>
-          <strong>Body (Semibold)</strong>
+        <Body weight={FontWeight.Regular}>Body (Regular)</Body>
+        <Body weight={FontWeight.Medium}>Body (Medium)</Body>
+        <Body weight={FontWeight.SemiBold}>Body (SemiBold)</Body>
+        <Body weight={FontWeight.Regular}>
+          <em>Body (Regular Italic)</em>
         </Body>
-        <Body>
-          <em>Body (Italic)</em>
+        <Body weight={FontWeight.Medium}>
+          <em>Body (Medium Italic)</em>
         </Body>
-        <Body>
-          <strong>
-            <em>Body (Semibold Italic)</em>
-          </strong>
+        <Body weight={FontWeight.SemiBold}>
+          <em>Body (SemiBold Italic)</em>
         </Body>
 
         <div className={cx(displayFlex)}>

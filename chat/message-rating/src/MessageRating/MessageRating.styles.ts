@@ -1,12 +1,15 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
+const baseContainerStyles = css`
   display: flex;
   align-items: center;
   gap: ${spacing[200]}px;
 `;
+
+export const getContainerStyles = (className?: string) =>
+  cx(baseContainerStyles, className);
 
 export const buttonContainerStyles = css`
   display: flex;
@@ -14,22 +17,44 @@ export const buttonContainerStyles = css`
   gap: ${spacing[100]}px;
 `;
 
-export const getIconFill = (darkMode: boolean, isSelected: boolean) => {
-  if (darkMode) {
-    if (isSelected) {
-      return palette.black;
-    } else {
-      return palette.gray.light2;
-    }
-  } else {
-    if (isSelected) {
-      return palette.gray.light3;
-    } else {
-      return palette.gray.dark1;
-    }
-  }
-};
+const getBaseIconFill = (darkMode: boolean) =>
+  palette.gray[darkMode ? 'light2' : 'dark1'];
 
-export const hiddenStyles = css`
+const getSelectedIconFill = (darkMode: boolean) =>
+  darkMode ? palette.black : palette.gray.light3;
+
+export const getIconFill = ({
+  darkMode,
+  isSelected,
+}: {
+  darkMode: boolean;
+  isSelected: boolean;
+}) => (isSelected ? getSelectedIconFill(darkMode) : getBaseIconFill(darkMode));
+
+const baseActiveStyles = css`
+  &::before {
+    background-color: initial;
+  }
+`;
+
+const getActiveStyles = (isActive: boolean) =>
+  cx({
+    [baseActiveStyles]: isActive,
+  });
+
+const baseHiddenStyles = css`
   display: none;
 `;
+
+export const getHiddenStyles = (isHidden: boolean) =>
+  cx({
+    [baseHiddenStyles]: isHidden,
+  });
+
+export const getIconButtonStyles = ({
+  isActive,
+  isHidden,
+}: {
+  isActive: boolean;
+  isHidden: boolean;
+}) => cx(getActiveStyles(isActive), getHiddenStyles(isHidden));

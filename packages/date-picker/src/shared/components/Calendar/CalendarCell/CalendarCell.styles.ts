@@ -110,7 +110,7 @@ export const calendarCellCurrentStyles: ThemedStateStyles = {
  */
 
 const _baseRangeStartStyles = css`
-  &:after {
+  &::after {
     content: '';
     position: absolute;
     width: 50%;
@@ -122,7 +122,7 @@ const _baseRangeStartStyles = css`
 `;
 
 const _baseRangeEndStyles = css`
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     width: 50%;
@@ -141,7 +141,7 @@ export const calendarCellRangeStyles: Record<
     [CalendarCellRangeState.Start]: cx(
       _baseRangeStartStyles,
       css`
-        &:after {
+        &::after {
           background-color: ${palette.blue.light3};
         }
       `,
@@ -149,7 +149,7 @@ export const calendarCellRangeStyles: Record<
     [CalendarCellRangeState.End]: cx(
       _baseRangeEndStyles,
       css`
-        &:before {
+        &::before {
           background-color: ${palette.blue.light3};
         }
       `,
@@ -159,8 +159,8 @@ export const calendarCellRangeStyles: Record<
       _baseRangeEndStyles,
       css`
         color: ${palette.black};
-        &:before,
-        &:after {
+        &::before,
+        &::after {
           background-color: ${palette.blue.light3};
         }
       `,
@@ -171,7 +171,7 @@ export const calendarCellRangeStyles: Record<
     [CalendarCellRangeState.Start]: cx(
       _baseRangeStartStyles,
       css`
-        &:after {
+        &::after {
           background-color: ${palette.blue.dark3};
         }
       `,
@@ -179,7 +179,7 @@ export const calendarCellRangeStyles: Record<
     [CalendarCellRangeState.End]: cx(
       _baseRangeEndStyles,
       css`
-        &:before {
+        &::before {
           background-color: ${palette.blue.dark3};
         }
       `,
@@ -189,8 +189,8 @@ export const calendarCellRangeStyles: Record<
       _baseRangeEndStyles,
       css`
         color: ${palette.blue.light3};
-        &:before,
-        &:after {
+        &::before,
+        &::after {
           background-color: ${palette.blue.dark3};
         }
       `,
@@ -293,11 +293,11 @@ export const calendarCellRangeHoverStyles: Record<Theme, string> = {
 export const currentStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.blue.base};
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
   `,
   [Theme.Dark]: css`
     color: ${palette.blue.light1};
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
   `,
 };
 
@@ -321,7 +321,7 @@ export const cellTextStyles = css`
 export const cellTextCurrentStyles = css`
   font-weight: ${fontWeights.medium};
 
-  &:after {
+  &::after {
     position: absolute;
     content: '';
     bottom: 0;

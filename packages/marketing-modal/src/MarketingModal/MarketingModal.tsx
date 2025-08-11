@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Button from '@leafygreen-ui/button';
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 import { CloseIconColor } from '@leafygreen-ui/modal';
@@ -11,11 +10,10 @@ import { Graphic } from '../Graphic/Graphic';
 
 import {
   baseModalStyle,
-  buttonStyle,
-  contentStyle,
-  contentThemeStyle,
   disclaimerStyles,
   footerContentStyle,
+  getButtonStyles,
+  getContentStyles,
   linkStyle,
   titleStyle,
   wrapperStyle,
@@ -37,6 +35,7 @@ const MarketingModal = ({
   onLinkClick,
   onClose,
   buttonText,
+  buttonProps = {},
   linkText,
   darkMode: darkModeProp,
   graphicStyle = GraphicStyle.Center,
@@ -47,6 +46,11 @@ const MarketingModal = ({
   ...modalProps
 }: MarketingModalProps) => {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+
+  // TODO: remove - onButtonClick is deprecated
+  const _onButtonClick = buttonProps?.onClick || onButtonClick;
+  // TODO: remove - buttonText is deprecated
+  const _buttonText = buttonProps?.children || buttonText;
 
   return (
     <Modal
@@ -67,17 +71,17 @@ const MarketingModal = ({
         <H3 className={titleStyle} as="h1">
           {title}
         </H3>
-        <div className={cx(contentStyle, contentThemeStyle[theme])}>
-          {children}
-        </div>
+        <div className={getContentStyles(theme)}>{children}</div>
       </div>
       <div className={footerContentStyle}>
         <Button
+          {...buttonProps}
           variant="baseGreen"
-          onClick={onButtonClick}
-          className={buttonStyle}
+          className={getButtonStyles(buttonProps?.className)}
+          onClick={_onButtonClick}
         >
-          {buttonText}
+          {/* TODO: remove - buttonText is deprecated */}
+          {_buttonText}
         </Button>
         <Body className={linkStyle}>
           <Link tabIndex={0} onClick={onLinkClick} hideExternalIcon>

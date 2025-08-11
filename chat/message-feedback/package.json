@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-feedback",
-  "version": "5.0.4",
+  "version": "5.1.1",
   "description": "LeafyGreen UI Kit Message Feedback",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -33,7 +33,8 @@
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"

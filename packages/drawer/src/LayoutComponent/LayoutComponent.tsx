@@ -5,10 +5,11 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 
 import { DisplayMode } from '../Drawer';
-import { EmbeddedDrawerLayout } from '../EmbeddedDrawerLayout';
-import { OverlayDrawerLayout } from '../OverlayDrawerLayout';
+import { useDrawerLayoutContext } from '../DrawerLayout';
 
+import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 import { LayoutComponentProps } from './LayoutComponent.types';
+import { OverlayDrawerLayout } from './OverlayDrawerLayout';
 
 /**
  * @internal
@@ -18,32 +19,23 @@ import { LayoutComponentProps } from './LayoutComponent.types';
  */
 export const LayoutComponent = forwardRef<HTMLDivElement, LayoutComponentProps>(
   (
-    {
-      children,
-      displayMode,
-      darkMode: darkModeProp,
-      isDrawerOpen = false,
-      ...rest
-    }: LayoutComponentProps,
+    { children, darkMode: darkModeProp, drawer, ...rest }: LayoutComponentProps,
     forwardRef,
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
+    const { displayMode } = useDrawerLayoutContext();
+
+    const Component =
+      displayMode === DisplayMode.Overlay
+        ? OverlayDrawerLayout
+        : EmbeddedDrawerLayout;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        {displayMode === DisplayMode.Overlay ? (
-          <OverlayDrawerLayout ref={forwardRef} {...rest}>
-            {children}
-          </OverlayDrawerLayout>
-        ) : (
-          <EmbeddedDrawerLayout
-            ref={forwardRef}
-            isDrawerOpen={isDrawerOpen}
-            {...rest}
-          >
-            {children}
-          </EmbeddedDrawerLayout>
-        )}
+        <Component ref={forwardRef} {...rest}>
+          {children}
+          {drawer}
+        </Component>
       </LeafyGreenProvider>
     );
   },

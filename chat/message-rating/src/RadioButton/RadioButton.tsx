@@ -1,25 +1,19 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import {
-  baseStyles,
-  baseThemedStyles,
-  checkedStyles,
-  labelStyles,
-} from './RadioButton.styles';
+import { getContainerStyles, labelStyles } from './RadioButton.styles';
 import { RadioButtonProps } from './RadioButton.types';
 
 export const RadioButton = forwardRef(
   (
     {
-      id,
-      className,
-      name,
-      children,
-      darkMode: darkModeProp,
       checked,
+      children,
+      className,
+      darkMode: darkModeProp,
+      id,
+      name,
       ...rest
     }: RadioButtonProps,
     ref: ForwardedRef<HTMLDivElement>,
@@ -27,12 +21,11 @@ export const RadioButton = forwardRef(
     const { theme } = useDarkMode(darkModeProp);
     return (
       <div
-        className={cx(
-          baseStyles,
-          baseThemedStyles[theme],
-          { [checkedStyles[theme]]: checked },
+        className={getContainerStyles({
+          checked,
           className,
-        )}
+          theme,
+        })}
         ref={ref}
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}

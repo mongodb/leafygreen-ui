@@ -41,22 +41,22 @@ const baseStyles = css`
 
   &:focus:not(:disabled) {
     outline: none;
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
   }
 
   // We create a pseudo element that's the width of the bolded text
   // This way there's no layout shift on hover when the text is bolded.
-  &:before {
+  &::before {
     content: attr(data-text);
     height: 0;
-    font-weight: ${fontWeights.bold};
+    font-weight: ${fontWeights.semiBold};
     visibility: hidden;
     overflow: hidden;
     user-select: none;
     pointer-events: none;
   }
 
-  &:after {
+  &::after {
     content: '';
     position: absolute;
     left: 0;
@@ -76,7 +76,7 @@ const baseStyles = css`
   }
 
   &:active:after {
-    &:after {
+    &::after {
       transform: scaleX(1);
     }
   }
@@ -108,7 +108,7 @@ const modeStyles: Record<Theme, ListTitleMode> = {
       &:hover {
         cursor: pointer;
         color: ${palette.gray.dark3};
-        &:after {
+        &::after {
           background-color: ${palette.gray.light2};
         }
       }
@@ -117,7 +117,7 @@ const modeStyles: Record<Theme, ListTitleMode> = {
       &:focus-visible {
         color: ${palette.blue.base};
 
-        &:after {
+        &::after {
           background-color: ${palette.blue.light1};
         }
       }
@@ -126,9 +126,9 @@ const modeStyles: Record<Theme, ListTitleMode> = {
       &,
       &:hover {
         color: ${palette.green.dark2};
-        font-weight: ${fontWeights.bold};
+        font-weight: ${fontWeights.semiBold};
 
-        &:after {
+        &::after {
           transform: scaleX(1);
           background-color: ${palette.green.dark1};
         }
@@ -149,7 +149,7 @@ const modeStyles: Record<Theme, ListTitleMode> = {
         cursor: pointer;
         color: ${palette.white};
 
-        &:after {
+        &::after {
           background-color: ${palette.gray.dark2};
         }
       }
@@ -158,7 +158,7 @@ const modeStyles: Record<Theme, ListTitleMode> = {
       &:focus-visible {
         color: ${palette.blue.light1};
 
-        &:after {
+        &::after {
           background-color: ${palette.blue.light1};
         }
       }
@@ -167,9 +167,9 @@ const modeStyles: Record<Theme, ListTitleMode> = {
       &,
       &:hover {
         color: ${palette.gray.light2};
-        font-weight: ${fontWeights.bold};
+        font-weight: ${fontWeights.semiBold};
 
-        &:after {
+        &::after {
           transform: scaleX(1);
           background-color: ${palette.green.dark1};
         }
@@ -189,7 +189,7 @@ const sizeStyles: Record<Size, string> = {
     line-height: ${typeScales.body1.lineHeight}px;
     height: ${SMALL_HEIGHT}px;
 
-    &:after {
+    &::after {
       height: 2px;
     }
   `,

@@ -126,7 +126,7 @@ export const InternalMenuItemContent = React.forwardRef<
               menuVariant: menuVariant,
             })]: theme === 'light' && renderDarkMenu,
             [css`
-              &:after {
+              &::after {
                 background-color: ${color.dark.border.secondary.default};
               }
             `]: theme === 'light' && renderDarkMenu && submenuDepth > 0,

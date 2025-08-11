@@ -51,7 +51,7 @@ export const disallowPointer = css`
 `;
 
 export const displayNameStyle = (isSelected: boolean) => css`
-  font-weight: ${isSelected ? fontWeights.bold : fontWeights.regular};
+  font-weight: ${isSelected ? fontWeights.semiBold : fontWeights.regular};
 `;
 
 export const iconThemeStyles: Record<Theme, string> = {

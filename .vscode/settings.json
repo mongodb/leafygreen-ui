@@ -12,16 +12,17 @@
   "eslint.lintTask.enable": true,
   "eslint.format.enable": true,
   "eslint.runtime": "node",
-  "eslint.workingDirectories": ["./"],
+  "eslint.workingDirectories": [
+    "./"
+  ],
   "typescript.preferences.importModuleSpecifier": "project-relative",
+  "cSpell.words": [
+    "leafygreen"
+  ],
+  "githubPullRequests.pullRequestDescription": "Copilot",
   "github.copilot.chat.codeGeneration.instructions": [
     {
       "file": "node_modules/@lg-tools/prompt-kit/src/prompts/codeGeneration.md"
-    }
-  ],
-  "github.copilot.chat.commitMessageGeneration.instructions": [
-    {
-      "file": "node_modules/@lg-tools/prompt-kit/src/prompts/commitMessageGeneration.md"
     }
   ],
   "github.copilot.chat.testGeneration.instructions": [
@@ -29,5 +30,14 @@
       "file": "node_modules/@lg-tools/prompt-kit/src/prompts/testGeneration.md"
     }
   ],
-  "cSpell.words": ["leafygreen"]
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file": "node_modules/@lg-tools/prompt-kit/src/prompts/commitMessageGeneration.md"
+    }
+  ],
+  "github.copilot.chat.pullRequestDescriptionGeneration.instructions": [
+    {
+      "file": "node_modules/@lg-tools/prompt-kit/src/prompts/pullRequestDescriptionGeneration.md"
+    }
+  ]
 }

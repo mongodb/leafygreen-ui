@@ -1,5 +1,120 @@
 # @leafygreen-ui/drawer
 
+## 4.2.0
+
+### Minor Changes
+
+- b76683d: ## What's New
+
+  - Adds `resizable` prop to `DrawerLayout` to support resizable drawers in embedded mode. When `resizable` is true, the drawer can be resized by dragging its edge. _**Note**_ that this feature only works with `DisplayMode.Embedded`.
+
+    ```tsx
+    import React, { useState } from 'react';
+    import Button from '@leafygreen-ui/button';
+    import { DisplayMode, Drawer, DrawerLayout } from '@leafygreen-ui/drawer';
+    function ExampleComponent() {
+      const [open, setOpen] = useState(false);
+
+      return (
+        <DrawerLayout
+          displayMode={DisplayMode.Embedded}
+          isDrawerOpen={open}
+          drawer={<Drawer title="Drawer Title">Drawer content</Drawer>}
+          onClose={() => setOpen(false)}
+          resizable={true} // Enable resizable drawer in embedded mode
+        >
+          <main>
+            <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+              Open Drawer
+            </Button>
+          </main>
+        </DrawerLayout>
+      );
+    }
+    ```
+
+  - Adds `drawer` prop to `DrawerLayout`. This prop is recommended when rendering a `Drawer` without a `Toolbar`. This allows for a more consistent API when using `DrawerLayout` with or without a `Toolbar`. Previously, to render a `Drawer` without a `Toolbar`, you would pass the `Drawer` as a child of `DrawerLayout`.
+
+    **Example of old usage**:
+
+    ```tsx
+    import React, { useState } from 'react';
+
+    import Button from '@leafygreen-ui/button';
+    import { DisplayMode, Drawer, DrawerLayout } from '@leafygreen-ui/drawer';
+
+    function ExampleComponent() {
+      const [open, setOpen] = useState(false);
+
+      return (
+        <DrawerLayout displayMode={DisplayMode.Overlay} isDrawerOpen={open}>
+          <main>
+            <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+              Open Drawer
+            </Button>
+          </main>
+          <Drawer
+            displayMode={DisplayMode.Overlay}
+            onClose={() => setOpen(false)}
+            open={open}
+            title="Drawer Title"
+          >
+            Drawer content goes here
+          </Drawer>
+        </DrawerLayout>
+      );
+    }
+    ```
+
+    **Example of new usage**:
+
+    ```tsx
+    import React, { useState } from 'react';
+
+    import Button from '@leafygreen-ui/button';
+    import { DisplayMode, Drawer, DrawerLayout } from '@leafygreen-ui/drawer';
+
+    function ExampleComponent() {
+      const [open, setOpen] = useState(false);
+
+      return (
+        <DrawerLayout
+          displayMode={DisplayMode.Overlay}
+          isDrawerOpen={open}
+          drawer={<Drawer title="Drawer Title">Drawer content</Drawer>}
+          onClose={() => setOpen(false)}
+        >
+          <main>
+            <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+              Open Drawer
+            </Button>
+          </main>
+        </DrawerLayout>
+      );
+    }
+    ```
+
+    With this new change, you can also pass `DrawerLayout` the following props and avoid passing them to `Drawer`:
+
+    - `onClose`: Callback function that is called when the drawer is closed.
+    - `displayMode`: The display mode of the drawer.
+    - `isDrawerOpen`: Boolean that determines whether the drawer is open or closed.
+
+    _**note**:_ You can still pass the `Drawer` as a child of `DrawerLayout`, but using the `drawer` prop is recommended.
+
+### Patch Changes
+
+- 775b4a8: - Fixes bug that cached `toolbarData`. This change ensures that the toolbar data is updated on re-renders, allowing the open drawer to reflect the latest data.
+  - Adds a transition delay to the drawer content opacity to allow the drawer to open before showing the content.
+- Updated dependencies [b76683d]
+  - @leafygreen-ui/resizable@0.1.1
+
+## 4.1.0
+
+### Minor Changes
+
+- c67c455: Add `scrollable` prop to `Drawer` to allow removing scroll styles (overflow, padding, and shadow) from container wrapping `children`. Also expose `scrollable` prop in `toolbarData` objects.
+
 ## 4.0.3
 
 ### Patch Changes

@@ -107,7 +107,7 @@ export const buttonWrapperStyle = css`
 `;
 
 export const buttonWrapperStyleShadow = css`
-  &:before {
+  &::before {
     content: '';
     display: block;
     position: absolute;
@@ -122,7 +122,7 @@ export const buttonWrapperStyleShadow = css`
 
 export const buttonWrapperStyleShadowTheme: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:before {
+    &::before {
       box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
     }
 
@@ -131,7 +131,7 @@ export const buttonWrapperStyleShadowTheme: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    &:before {
+    &::before {
       box-shadow: -10px 0 10px 0 ${transparentize(0.4, palette.black)};
     }
 

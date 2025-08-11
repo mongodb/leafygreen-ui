@@ -1,27 +1,31 @@
 import { FormEventHandler, MouseEventHandler } from 'react';
 
 import { BaseButtonProps } from '@leafygreen-ui/button';
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { TextAreaProps } from '@leafygreen-ui/text-area';
 
 export type InlineMessageFeedbackProps = Required<
   Pick<TextAreaProps, 'label'>
 > &
-  DarkModeProps & {
+  DarkModeProps &
+  Omit<HTMLElementProps<'div'>, 'children' | 'onSubmit'> & {
     /**
      * Text displayed inside the cancel Button
      *
      * @default: 'Cancel'
+     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
      */
     cancelButtonText?: string;
 
     /**
      * Click event handler for the cancel Button
+     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
      */
-    onCancel: MouseEventHandler<HTMLElement>;
+    onCancel?: MouseEventHandler<HTMLElement>;
 
     /**
      * Override props for the cancel Button
+     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
      */
     cancelButtonProps?: BaseButtonProps;
 

@@ -49,7 +49,7 @@ const optionSizeStyles: Record<Size, string> = {
     --line-height: 16px;
     --padding-inline: ${spacing[300]}px;
     --text-transform: uppercase;
-    --font-weight: ${fontWeights.bold};
+    --font-weight: ${fontWeights.semiBold};
     --divider-height: 12px;
     --padding-block: 3px;
   `,
@@ -112,7 +112,7 @@ export const getContainerStyles = ({
       /* 
       * Adds the divider line to unselected segments 
       */
-      &:before {
+      &::before {
         --divider-width: ${spacing[25]}px;
         content: '';
         position: absolute;

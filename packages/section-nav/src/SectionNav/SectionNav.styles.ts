@@ -20,6 +20,6 @@ export const getTitleStyles = ({
   theme: Theme;
 }) => css`
   color: ${color[theme].text.secondary.default};
-  font-weight: ${fontWeights.bold};
+  font-weight: ${fontWeights.semiBold};
   margin-block-end: ${spacing[200]}px;
 `;

@@ -29,7 +29,10 @@ function Example() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <MarketingModal
         open={open}
-        onButtonClick={() => setOpen(false)}
+        buttonProps={{
+          children: 'Get started',
+          onClick: () => setOpen(false),
+        }}
         onLinkClick={() => setOpen(false)}
         onClose={() => setOpen(false)}
         title="Introducing New Feature!"
@@ -37,7 +40,6 @@ function Example() {
           <img alt="" src="examples/DataLake.png" width={275} height={220} />
         }
         graphicStyle={ImageStyle.Center}
-        buttonText="Okay"
         linkText="Cancel"
       >
         This is some description text, and it is extra long so it fills up this
@@ -108,20 +110,22 @@ function Example() {
 
 ## Properties
 
-| Prop             | Type                                          | Description                                                                                                                               | Default    |
-| ---------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------- | -------- | -------------------------------------------------- | --- |
-| `open`           | `boolean`                                     | Determines open state of `Modal` component                                                                                                | `false`    |
-| `onButtonClick`  | `function`                                    | Callback that fires when the primary button is clicked. This can be used to set the modal to be closed.                                   | `() => {}` |
-| `onLinkClick`    | `function`                                    | Callback that fires when the secondary link is clicked. This can be used to set the modal to be closed.                                   | `() => {}` |
-| `onClose`        | `function`                                    | Callback that fires when the cancel button, x button, or backdrop is clicked. This can be used to set the modal to be closed.             | `() => {}` | `title` | `string` | Title text to display above the main content text. |     |
-| `graphic`        | `React.ReactElement`                          | Element to be used as the main graphic of the modal.                                                                                      |            |
-| `graphicStyle`   | `'center'`, `'fill'`                          | Determines how the main graphic should be displayed in the modal.                                                                         | `'center'` |
-| `children`       | `node`                                        | Children that will be rendered inside `<ConfirmationModal />` component.                                                                  |            |
-| `buttonText`     | `string`                                      | Text content of the confirmation button.                                                                                                  |            |
-| `linkText`       | `string`                                      | Text content of the alternate action link.                                                                                                |            |
-| `className`      | `string`                                      | Style to be applied to the container's root node.                                                                                         |            |
-| `darkMode`       | `boolean`                                     | Determines if the component will appear in dark mode.                                                                                     | `false`    |
-| `closeIconColor` | `'default'`, `'dark'`, `'light'`              | Determines the color of the close icon.                                                                                                   |
-| `showBlob`       | `boolean`                                     | Determines if the blob illustration should appear in the background of the modal. Currently will only work if `darkMode` is set to false. | `false`    |
-| `blobPosition`   | `'top left'`, `'top right'`, `'bottom right'` | Determines the position of the blob if `showBlob` is set to `true`.                                                                       | `top left` |
-| `disclaimer`     | `React.ReactElement`                          | Disclaimer text to be rendered under the primary action button.                                                                           |            |
+| Prop                | Type                                          | Description                                                                                                                                                                                                                    | Default     |
+| ------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `open`              | `boolean`                                     | Determines open state of `Modal` component                                                                                                                                                                                     | `false`     |
+| `onLinkClick`       | `function`                                    | Callback that fires when the secondary link is clicked. This can be used to set the modal to be closed.                                                                                                                        | `() => {}`  |
+| `onClose`           | `function`                                    | Callback that fires when the cancel button, x button, or backdrop is clicked. This can be used to set the modal to be closed.                                                                                                  | `() => {}`  |
+| `title`             | `ReactNode`                                   | Title text to display above the main content text.                                                                                                                                                                             |             |
+| `graphic`           | `React.ReactElement`                          | Element to be used as the main graphic of the modal.                                                                                                                                                                           |             |
+| `graphicStyle`      | `'center'`, `'fill'`                          | Determines how the main graphic should be displayed in the modal.                                                                                                                                                              | `'center'`  |
+| `children`          | `node`                                        | Children that will be rendered inside `<MarketingModal />` component.                                                                                                                                                          |             |
+| `linkText`          | `string`                                      | Text content of the alternate action link.                                                                                                                                                                                     |             |
+| `className`         | `string`                                      | Style to be applied to the container's root node.                                                                                                                                                                              |             |
+| `darkMode`          | `boolean`                                     | Determines if the component will appear in dark mode.                                                                                                                                                                          | `false`     |
+| `closeIconColor`    | `'default'`, `'dark'`, `'light'`              | Determines the color of the close icon.                                                                                                                                                                                        | `'default'` |
+| `showBlob`          | `boolean`                                     | Determines if the blob illustration should appear in the background of the modal. Currently will only work if `darkMode` is set to false.                                                                                      | `false`     |
+| `blobPosition`      | `'top left'`, `'top right'`, `'bottom right'` | Determines the position of the blob if `showBlob` is set to `true`.                                                                                                                                                            | `top left`  |
+| `disclaimer`        | `React.ReactElement`                          | Disclaimer text to be rendered under the primary action button.                                                                                                                                                                |             |
+| `buttonProps`       | `ButtonProps`                                 | The primary button. An object that accepts all [Button props](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#properties) except for the `variant` prop.                                          |             |
+| ~~`onButtonClick`~~ | `function`                                    | ⚠️ **DEPRECATED**: Use the `buttonProps` prop and pass the `children` property instead. This will be removed in v7.<br>Callback that fires when the primary button is clicked. This can be used to set the modal to be closed. | `() => {}`  |
+| ~~`buttonText`~~    | `string`                                      | ⚠️ **DEPRECATED**: Use the `buttonProps` prop and pass the `children` property instead. This will be removed in v7.<br>Text content of the confirmation button.                                                                |             |

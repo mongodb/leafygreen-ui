@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+import { BaseButtonProps } from '@leafygreen-ui/button';
 import { ModalProps } from '@leafygreen-ui/modal';
 
 export const BlobPosition = {
@@ -16,6 +17,8 @@ export const GraphicStyle = {
 } as const;
 
 export type GraphicStyle = (typeof GraphicStyle)[keyof typeof GraphicStyle];
+
+type CustomButtonProps = Omit<BaseButtonProps, 'variant'>;
 
 export interface MarketingModalProps
   extends Omit<ModalProps, 'size' | 'title'> {
@@ -38,6 +41,7 @@ export interface MarketingModalProps
 
   /**
    * 	Callback fired when the primary action button is clicked.
+   * @deprecated Use `buttonProps`.
    */
   onButtonClick?: () => void;
 
@@ -53,8 +57,14 @@ export interface MarketingModalProps
 
   /**
    * 	Text of the primary CTA button
+   * @deprecated Use `buttonProps`.
    */
-  buttonText: string;
+  buttonText?: string;
+
+  /**
+   * An object that accepts all Button props except for the `variant` prop.
+   */
+  buttonProps?: CustomButtonProps;
 
   /**
    * 	Text of the secondary link element

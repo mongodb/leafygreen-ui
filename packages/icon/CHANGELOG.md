@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 14.2.0
+
+### Minor Changes
+
+- 13a2ac4: Adds `AIModel` glyph to set
+
+## 14.1.1
+
+### Patch Changes
+
+- f2ecd1a: - Batches rollup bundles for @leafygreen-ui/icon and runs them in parallel, reducing build times
+
 ## 14.1.0
 
 ### Minor Changes

@@ -7,8 +7,15 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import {
+  useLeafyGreenChatContext,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 
-import Button from '@leafygreen-ui/button';
+import Button, {
+  Size as ButtonSize,
+  Variant as ButtonVariant,
+} from '@leafygreen-ui/button';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 // @ts-ignore LG icons don't currently support TS
 import XIcon from '@leafygreen-ui/icon/dist/X';
@@ -16,22 +23,25 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce } from '@leafygreen-ui/lib';
 import TextArea from '@leafygreen-ui/text-area';
 import { Label } from '@leafygreen-ui/typography';
 
 import { SubmittedState } from './SubmittedState/SubmittedState';
 import {
   actionContainerStyles,
-  baseStyles,
-  labelContainerStyles,
+  getBodyContainerStyles,
+  getFormContainerStyles,
+  getHeaderContainerStyles,
+  getTextAreaStyles,
   labelStyles,
-  textAreaStyle,
 } from './InlineMessageFeedback.styles';
 import { InlineMessageFeedbackProps } from '.';
 
 export const InlineMessageFeedback = forwardRef(
   (
     {
+      className,
       label,
       cancelButtonText = 'Cancel',
       onCancel,
@@ -44,10 +54,20 @@ export const InlineMessageFeedback = forwardRef(
       darkMode: darkModeProp,
       onClose,
       textareaProps,
+      ...rest
     }: InlineMessageFeedbackProps,
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
-    const { darkMode } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { variant } = useLeafyGreenChatContext();
+    const isCompact = variant === Variant.Compact;
+
+    if (isCompact && (cancelButtonProps || cancelButtonText || onCancel)) {
+      consoleOnce.warn(
+        `@lg-chat/message-rating: The MessageRating component's props 'cancelButtonProps', 'cancelButtonText', and 'onCancel' are only used in the 'spacious' variant. It will not be rendered in the 'compact' variant set by the provider.`,
+      );
+    }
+
     const textareaId = useIdAllocator({ prefix: 'lg-chat-imf-input' });
     const labelId = useIdAllocator({ prefix: 'lg-chat-imf-label' });
     const textareaRef: MutableRefObject<HTMLTextAreaElement | null> =
@@ -72,14 +92,19 @@ export const InlineMessageFeedback = forwardRef(
       isTextareaEmpty(),
     );
 
+    const showCancelButton = !isCompact && !!onCancel;
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={forwardedRef}>
+        <div className={className} ref={forwardedRef} {...rest}>
           {isSubmitted ? (
             <SubmittedState submittedMessage={submittedMessage} />
           ) : (
-            <form className={baseStyles} onSubmit={handleSubmit}>
-              <div className={labelContainerStyles}>
+            <form
+              className={getFormContainerStyles({ isCompact, theme })}
+              onSubmit={handleSubmit}
+            >
+              <div className={getHeaderContainerStyles({ isCompact })}>
                 {/* @ts-ignore htmlFor not necessary since aria-labelledby is used on TextArea */}
                 <Label id={labelId} className={labelStyles}>
                   {label}
@@ -93,42 +118,46 @@ export const InlineMessageFeedback = forwardRef(
                   </IconButton>
                 )}
               </div>
-              <TextArea
-                id={textareaId}
-                aria-labelledby={labelId}
-                /* eslint-disable-next-line jsx-a11y/no-autofocus */
-                autoFocus={true}
-                className={textAreaStyle}
-                {...textareaProps}
-                ref={(el: HTMLTextAreaElement) => {
-                  if (textareaProps?.ref) {
-                    (
-                      textareaProps.ref as MutableRefObject<HTMLTextAreaElement>
-                    ).current = el;
-                  }
-                  textareaRef.current = el;
-                }}
-                onChange={handleChange}
-              />
-              <div className={actionContainerStyles}>
-                <Button
-                  type="button"
-                  variant="default"
-                  size="small"
-                  onClick={onCancel}
-                  {...cancelButtonProps}
-                >
-                  {cancelButtonText}
-                </Button>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="small"
-                  disabled={!!hasEmptyTextarea}
-                  {...submitButtonProps}
-                >
-                  {submitButtonText}
-                </Button>
+              <div className={getBodyContainerStyles({ isCompact })}>
+                <TextArea
+                  id={textareaId}
+                  aria-labelledby={labelId}
+                  /* eslint-disable-next-line jsx-a11y/no-autofocus */
+                  autoFocus={true}
+                  {...textareaProps}
+                  className={getTextAreaStyles(textareaProps?.className)}
+                  ref={(el: HTMLTextAreaElement) => {
+                    if (textareaProps?.ref) {
+                      (
+                        textareaProps.ref as MutableRefObject<HTMLTextAreaElement>
+                      ).current = el;
+                    }
+                    textareaRef.current = el;
+                  }}
+                  onChange={handleChange}
+                />
+                <div className={actionContainerStyles}>
+                  {showCancelButton && (
+                    <Button
+                      type="button"
+                      variant={ButtonVariant.Default}
+                      size={ButtonSize.Small}
+                      onClick={onCancel}
+                      {...cancelButtonProps}
+                    >
+                      {cancelButtonText}
+                    </Button>
+                  )}
+                  <Button
+                    type="submit"
+                    variant={ButtonVariant[isCompact ? 'Default' : 'Primary']}
+                    size={ButtonSize[isCompact ? 'Default' : 'Small']}
+                    disabled={!!hasEmptyTextarea}
+                    {...submitButtonProps}
+                  >
+                    {submitButtonText}
+                  </Button>
+                </div>
               </div>
             </form>
           )}
