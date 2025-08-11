@@ -9,28 +9,44 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
 
+import { getCopyButtonStyles } from './CodeEditorCopyButton.styles';
+import { CodeEditorCopyButtonProps } from './CodeEditorCopyButton.types';
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
-import { getCopyButtonStyles } from './CopyButton.styles';
-import { CopyProps } from './CopyButton.types';
 
-function CopyButton({
+/**
+ * A copy button component.
+ * Provides functionality to copy text content to the clipboard with visual feedback.
+ *
+ * @example
+ * ```tsx
+ * <CodeEditorCopyButton
+ *   getContents={() => "console.log('Hello World')"}
+ *   onCopy={() => console.log('Content copied!')}
+ *   isPanelVariant={false}
+ * />
+ * ```
+ */
+export function CodeEditorCopyButton({
   onCopy,
   getContents,
   className,
   isPanelVariant,
   disabled,
   ...rest
-}: CopyProps) {
+}: CodeEditorCopyButtonProps) {
   const [copied, setCopied] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { theme } = useDarkMode();
 
+  /**
+   * Copies the content to the clipboard using the modern Clipboard API when available,
+   * or falls back to the legacy document.execCommand method for older browsers.
+   */
   const copyToClipboard = async () => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(getContents());
       } else {
-        // Fallback for older browsers or non-secure contexts
         const textArea = document.createElement('textarea');
         textArea.value = getContents();
         textArea.style.position = 'fixed';
@@ -47,23 +63,29 @@ function CopyButton({
     }
   };
 
+  /**
+   * Handles the click event on the copy button.
+   * Performs the copy operation and manages the visual feedback state.
+   */
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     await copyToClipboard();
     onCopy?.();
     setCopied(true);
 
-    // Reset copied state after the duration
     setTimeout(() => {
       setCopied(false);
     }, COPIED_SUCCESS_DURATION);
   };
 
+  /**
+   * Handles keyboard interactions for the copy button.
+   * Supports Enter and Space keys to trigger the copy action.
+   */
   const handleKeyDown = (e: React.KeyboardEvent) => {
     switch (e.key) {
       case keyMap.Escape:
       case keyMap.Tab: {
-        // Let Tooltip manage its own open/close on focus/blur
         break;
       }
 
@@ -124,6 +146,4 @@ function CopyButton({
   );
 }
 
-CopyButton.displayName = 'CopyButton';
-
-export default CopyButton;
+CodeEditorCopyButton.displayName = 'CodeEditorCopyButton';

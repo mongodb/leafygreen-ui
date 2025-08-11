@@ -20,7 +20,7 @@ import {
 import { Menu, MenuItem, MenuVariant } from '@leafygreen-ui/menu';
 import Tooltip from '@leafygreen-ui/tooltip';
 
-import { CopyButton } from '../CopyButton';
+import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 
 import {
   getPanelButtonsStyles,
@@ -75,7 +75,7 @@ export function Panel({
           </Tooltip>
         )}
         {showCopyButton && (
-          <CopyButton
+          <CodeEditorCopyButton
             isPanelVariant
             getContents={getContents ?? (() => '')}
             onCopy={onCopyClick}

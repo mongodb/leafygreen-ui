@@ -3,6 +3,16 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, transitionDuration } from '@leafygreen-ui/tokens';
 
+/**
+ * Generates the CSS styles for the CodeEditorCopyButton component.
+ * Handles theming, copy state visual feedback, and panel/minimal variants.
+ *
+ * @param theme - The current theme (light or dark)
+ * @param copied - Whether the button is in the "copied" state
+ * @param showPanel - Whether this is the panel variant (affects styling)
+ * @param className - Additional CSS class names to apply
+ * @returns Combined CSS class string
+ */
 export const getCopyButtonStyles = ({
   theme,
   copied,
@@ -39,6 +49,10 @@ export const getCopyButtonStyles = ({
     className,
   );
 
+/**
+ * Theme-specific styles applied when the button is in the "copied" state.
+ * Shows green background and white text to indicate successful copy operation.
+ */
 export const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &,
@@ -85,6 +99,13 @@ export const copiedThemeStyle: Record<Theme, string> = {
   `,
 };
 
+/**
+ * Generates styles for the minimal button variant when in copied state.
+ * Used for minimal/hover copy buttons outside of panels.
+ *
+ * @param theme - The current theme
+ * @returns CSS styles for the minimal copied state
+ */
 export const getMinimalButtonCopiedStyles = ({
   theme,
 }: {
@@ -93,6 +114,10 @@ export const getMinimalButtonCopiedStyles = ({
   border-color: ${color[theme].icon.primary.default};
 `;
 
+/**
+ * Theme-specific styles for the minimal button variant.
+ * Applied when the copy button is not in a panel (showPanel = false).
+ */
 export const minimalButtonThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     border-color: ${palette.gray.base};

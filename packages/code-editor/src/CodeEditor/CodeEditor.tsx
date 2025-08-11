@@ -11,7 +11,7 @@ import { type EditorView } from '@codemirror/view';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { CopyButton } from '../CopyButton';
+import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 
 import {
   getEditorStyles,
@@ -180,7 +180,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         {!panel &&
           (copyButtonAppearance === CopyButtonAppearance.Hover ||
             copyButtonAppearance === CopyButtonAppearance.Persist) && (
-            <CopyButton
+            <CodeEditorCopyButton
               getContents={getContents}
               className={minimalCopyButtonStyles}
               isPanelVariant={false}
