@@ -24,7 +24,7 @@ const useLocalContext = () => ({ isLoading: false });
 
 function CopyButton({
   onCopy,
-  contents,
+  getContents,
   className,
   isPanelVariant,
   ...rest
@@ -57,11 +57,11 @@ function CopyButton({
   const copyToClipboard = async () => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(contents);
+        await navigator.clipboard.writeText(getContents());
       } else {
         // Fallback for older browsers or non-secure contexts
         const textArea = document.createElement('textarea');
-        textArea.value = contents;
+        textArea.value = getContents();
         textArea.style.position = 'fixed';
         textArea.style.left = '-999999px';
         textArea.style.top = '-999999px';

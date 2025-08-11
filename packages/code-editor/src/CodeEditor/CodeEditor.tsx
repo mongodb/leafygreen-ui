@@ -1,5 +1,6 @@
 import React, {
   forwardRef,
+  useCallback,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
@@ -82,6 +83,10 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       modules,
     });
 
+    const getContents = useCallback(() => {
+      return editorViewRef.current?.state.sliceDoc() ?? '';
+    }, []);
+
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
       const commands = modules?.['@codemirror/commands'];
@@ -104,7 +109,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
           EditorView.EditorView.updateListener.of(update => {
             if (isControlled && update.docChanged) {
-              const editorText = editorViewRef.current?.state.sliceDoc() ?? '';
+              const editorText = getContents();
               onChangeProp?.(editorText);
               setControlledValue(editorText);
             }
@@ -144,6 +149,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       consumerExtensions,
       customExtensions,
       forceParsingProp,
+      getContents,
     ]);
 
     useImperativeHandle(forwardedRef, () => ({
@@ -169,7 +175,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           (copyButtonAppearance === CopyButtonAppearance.Hover ||
             copyButtonAppearance === CopyButtonAppearance.Persist) && (
             <CopyButton
-              contents="Test"
+              getContents={getContents}
               className={minimalCopyButtonStyles}
               isPanelVariant={false}
             />
