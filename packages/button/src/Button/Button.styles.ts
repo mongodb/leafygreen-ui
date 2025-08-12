@@ -11,13 +11,8 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
+import { PRIMARY_BUTTON_INTERACTIVE_GREEN } from '../constants';
 import { ButtonProps, Size, Variant } from '../types';
-
-/**
- * Off-palette value specific to primary button instances
- * @see TODO: https://jira.mongodb.org/browse/LG-5388
- */
-export const PRIMARY_BUTTON_INTERACTIVE_GREEN = '#00593F';
 
 const focusSelector = `&:focus-visible, &[data-focus="true"]`;
 const hoverSelector = `&:hover, &[data-hover="true"]`;
