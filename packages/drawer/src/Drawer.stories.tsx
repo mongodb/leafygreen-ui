@@ -14,7 +14,7 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color, spacing } from '@leafygreen-ui/tokens';
+import { BaseFontSize, color, spacing } from '@leafygreen-ui/tokens';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Size } from './Drawer/Drawer.types';
@@ -47,7 +47,9 @@ const DrawerCustomTitle = () => {
         align-items: center;
       `}
     >
-      <Body as="h2">Custom title</Body>
+      <Body as="h2" baseFontSize={BaseFontSize.Body2}>
+        <strong>Custom title</strong>
+      </Body>
       <IconButton aria-label="Cloud" onClick={() => console.log('cloud click')}>
         <CloudIcon />
       </IconButton>
