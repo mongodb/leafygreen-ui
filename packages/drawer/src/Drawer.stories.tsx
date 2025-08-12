@@ -55,6 +55,10 @@ const DrawerCustomTitle = () => {
   );
 };
 
+//<Drawer title={} customActions={}></Drawer>
+// inlineChildren - tabs
+// customActionButtons - code
+
 export default {
   title: 'Sections/Drawer',
   component: Drawer,
