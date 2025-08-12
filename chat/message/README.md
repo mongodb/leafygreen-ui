@@ -35,6 +35,7 @@ return (
   <LeafyGreenChatProvider variant={Variant.Compact}>
     <Message messageBody="Question" />
     <Message isSender={false} messageBody="Answer" />
+    <Message assistantName="AI Helper" isSender={false} messageBody="Answer" />
   </LeafyGreenChatProvider>
 );
 ```
@@ -63,6 +64,7 @@ return (
 | --------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `align`                           | `'left', 'right'`                                                                                   | Determines whether the message is aligned to the left or right                    | if `isSender === true`, the message is aligned to the right, and otherwise to the left. This prop overrides that behavior |
 | `avatar`                          | `ReactElement`                                                                                      | Avatar element                                                                    |                                                                                                                           |
+| `assistantName`                   | `string`                                                                                            | Custom name to display for the AI assistant                                       | `'MongoDB Assistant'`                                                                                                     |
 | `componentOverrides` (deprecated) | `Record<MarkdownComponent, ComponentType>`                                                          | Uses value to override key'ed markdown elements in terms of how they are rendered |                                                                                                                           |
 | `isSender`                        | `boolean`                                                                                           | Indicates if the message is from the current user                                 | `true`                                                                                                                    |
 | `links`                           | `{ url: string; text: string; imageUrl?: string; variant: string; }[]`                              | A list of links to show in a section at the end of the message.                   |                                                                                                                           |
