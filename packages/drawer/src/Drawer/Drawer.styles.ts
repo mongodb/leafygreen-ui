@@ -317,4 +317,11 @@ export const getScrollContainerStyles = ({
 
 export const titleStyles = css`
   flex-grow: 1;
+
+  h2 {
+    margin: unset;
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
 `;
