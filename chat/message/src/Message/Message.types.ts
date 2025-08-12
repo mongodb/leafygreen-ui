@@ -34,6 +34,12 @@ export interface MessageProps
   align?: Align;
 
   /**
+   * Custom name to display for the AI assistant
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="compact"`.
+   */
+  assistantName?: string;
+
+  /**
    * Avatar element
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
    */

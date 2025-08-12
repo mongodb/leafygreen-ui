@@ -96,4 +96,44 @@ describe('Message', () => {
 
     expect(consoleOnce.warn).not.toHaveBeenCalled();
   });
+
+  describe('assistantName prop', () => {
+    test('uses custom assistant name when provided in compact variant', () => {
+      renderMessage(
+        {
+          messageBody: MESSAGE_CONTENT,
+          isSender: false,
+          assistantName: 'Custom Assistant',
+        },
+        Variant.Compact,
+      );
+
+      expect(screen.getByText('Custom Assistant')).toBeInTheDocument();
+    });
+
+    test('uses default assistant name when assistantName is not provided in compact variant', () => {
+      renderMessage(
+        {
+          messageBody: MESSAGE_CONTENT,
+          isSender: false,
+        },
+        Variant.Compact,
+      );
+
+      expect(screen.getByText('MongoDB Assistant')).toBeInTheDocument();
+    });
+
+    test('assistantName prop is ignored in spacious variant', () => {
+      renderMessage(
+        {
+          messageBody: MESSAGE_CONTENT,
+          isSender: false,
+          assistantName: 'Custom Assistant',
+        },
+        Variant.Spacious,
+      );
+
+      expect(screen.queryByText('Custom Assistant')).toBeNull();
+    });
+  });
 });

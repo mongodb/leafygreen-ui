@@ -19,6 +19,7 @@ export const Message = forwardRef<HTMLDivElement, MessageProps>(
   (
     {
       align,
+      assistantName,
       avatar,
       baseFontSize,
       children,
@@ -63,7 +64,11 @@ export const Message = forwardRef<HTMLDivElement, MessageProps>(
       <LeafyGreenProvider darkMode={darkMode}>
         <MessageContext.Provider value={contextValue}>
           {isCompact ? (
-            <CompactMessage ref={fwdRef} {...rest}>
+            <CompactMessage
+              assistantName={assistantName}
+              ref={fwdRef}
+              {...rest}
+            >
               {children}
             </CompactMessage>
           ) : (

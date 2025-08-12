@@ -17,11 +17,12 @@ import {
 } from './CompactMessage.styles';
 import { type MessageProps } from './Message.types';
 
-const ASSISTANT_AVATAR_TEXT = 'MongoDB Assistant';
+const DEFAULT_ASSISTANT_NAME = 'MongoDB Assistant';
 
 export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
   (
     {
+      assistantName = DEFAULT_ASSISTANT_NAME,
       children,
       className,
       isSender = true,
@@ -47,7 +48,7 @@ export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
         {!isSender && (
           <div className={avatarContainerStyles}>
             <AssistantAvatar darkMode={darkMode} size={20} />
-            <Body weight="semiBold">{ASSISTANT_AVATAR_TEXT}</Body>
+            <Body weight="semiBold">{assistantName}</Body>
           </div>
         )}
         <MessageContainer
