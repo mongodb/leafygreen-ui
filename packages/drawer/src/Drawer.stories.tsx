@@ -47,7 +47,7 @@ const DrawerCustomTitle = () => {
         align-items: center;
       `}
     >
-      <h2>Drawer title</h2>
+      <Body as="h2">Drawer title</Body>
       <IconButton aria-label="Cloud" onClick={() => console.log('cloud click')}>
         <CloudIcon />
       </IconButton>
