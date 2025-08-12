@@ -325,3 +325,7 @@ export const titleStyles = css`
     line-height: inherit;
   }
 `;
+
+export const inlineChildrenStyles = css`
+  display: flex;
+`;

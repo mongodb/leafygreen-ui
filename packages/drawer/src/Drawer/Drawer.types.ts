@@ -55,6 +55,15 @@ export interface DrawerProps
   title: React.ReactNode;
 
   /**
+   * Inline children in the title of the Drawer
+   */
+  inlineChildrenInTitle?: React.ReactNode;
+
+  /**
+   * Custom action buttons in the title of the Drawer
+   */
+  customActionButtons?: React.ReactNode;
+  /**
    * The size of the Drawer.
    * @defaultValue 'default'
    */

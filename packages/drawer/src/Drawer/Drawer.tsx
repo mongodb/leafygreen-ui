@@ -29,6 +29,7 @@ import {
   getInnerContainerStyles,
   getResizerStyles,
   getScrollContainerStyles,
+  inlineChildrenStyles,
   titleStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
@@ -45,6 +46,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       'data-lgid': dataLgId,
       displayMode: displayModeProp,
       id: idProp,
+      inlineChildrenInTitle,
       onClose: onCloseProp,
       open: openProp,
       scrollable = true,
@@ -245,6 +247,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 >
                   <strong>{title}</strong>
                 </Body>
+                {inlineChildrenInTitle && (
+                  <div className={inlineChildrenStyles}>
+                    {inlineChildrenInTitle}
+                  </div>
+                )}
                 {showCloseButton && (
                   <IconButton
                     aria-label="Close drawer"

@@ -47,17 +47,13 @@ const DrawerCustomTitle = () => {
         align-items: center;
       `}
     >
-      <Body as="h2">Drawer title</Body>
+      <Body as="h2">Custom title</Body>
       <IconButton aria-label="Cloud" onClick={() => console.log('cloud click')}>
         <CloudIcon />
       </IconButton>
     </div>
   );
 };
-
-//<Drawer title={} customActions={}></Drawer>
-// inlineChildren - tabs
-// customActionButtons - code
 
 export default {
   title: 'Sections/Drawer',
@@ -418,6 +414,25 @@ export const ScrollableFalse: StoryObj<DrawerProps> = {
   args: {
     children: <FullWidthHeightContent />,
     scrollable: false,
+    open: true,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+export const WithInlineChildrenInTitle: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    title: 'Drawer Title',
+    inlineChildrenInTitle: (
+      <IconButton aria-label="Cloud" onClick={() => console.log('cloud click')}>
+        <CloudIcon />
+      </IconButton>
+    ),
     open: true,
   },
   parameters: {
