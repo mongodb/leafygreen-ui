@@ -236,6 +236,7 @@ const getInnerOpenContainerStyles = css`
   transition-property: opacity;
   transition-duration: ${transitionDuration.slowest}ms;
   transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
+  transition-delay: ${transitionDuration.default}ms;
   opacity: 1;
 `;
 

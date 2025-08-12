@@ -9,7 +9,6 @@ import React, {
 import { TRANSITION_DURATION } from '../../constants';
 
 import {
-  ContextData,
   DataId,
   DrawerToolbarContextType,
   DrawerToolbarProviderProps,
@@ -22,9 +21,14 @@ export const DrawerToolbarProvider = ({
   children,
   data,
 }: DrawerToolbarProviderProps) => {
-  const [content, setContent] = useState<ContextData>(undefined);
+  const [activeDrawerId, setActiveDrawerId] = useState<DataId | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
+  /**
+   * Checks if there if there is any content for the provided id.
+   * If there is, it opens the drawer and sets the active drawer id.
+   * If there is no content, it logs an error and does not open the drawer.
+   */
   const openDrawer = useCallback(
     (id: DataId) => {
       const activeDrawerContent = data.find(
@@ -33,30 +37,37 @@ export const DrawerToolbarProvider = ({
 
       if (activeDrawerContent) {
         setIsDrawerOpen(true);
-        setContent(prev => {
-          if (prev?.id === id) return prev;
-          return activeDrawerContent;
-        });
+        setActiveDrawerId(id);
       } else {
         console.error(
           `No matching item found in the toolbar for the provided id: ${id}. Please verify that the id is correct.`,
         );
       }
     },
-    [setContent, data, setIsDrawerOpen],
+    [data, setIsDrawerOpen],
   );
 
+  /**
+   * Closes the drawer and sets the active drawer id to null.
+   * The content will be removed after a delay to allow the drawer to close first.
+   */
   const closeDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
     // Delay the removal of the content to allow the drawer to close before removing the content
     setTimeout(() => {
-      setContent(undefined);
+      setActiveDrawerId(null);
     }, TRANSITION_DURATION);
-    setIsDrawerOpen(false);
-  }, [setContent]);
+  }, [setActiveDrawerId]);
 
+  /**
+   * Returns the content for the active drawer id.
+   * If there is no active drawer id, it returns undefined.
+   */
   const getActiveDrawerContent = useCallback(() => {
+    if (!activeDrawerId) return undefined;
+    const content = data.find(item => item?.id === activeDrawerId);
     return content;
-  }, [content]);
+  }, [activeDrawerId, data]);
 
   const value = useMemo(
     () => ({
