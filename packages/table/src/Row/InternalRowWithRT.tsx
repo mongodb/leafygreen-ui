@@ -28,6 +28,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   isParentExpanded,
   isSelected,
   rowRef,
+  shouldMemoizeRows: _shouldMemoizeRows,
   ...rest
 }: InternalRowWithRTProps<T>) => {
   // We need to use the virtualRow index instead of nth-of-type because the rows are not static
@@ -77,27 +78,19 @@ const InternalRowWithRT = <T extends LGRowData>({
 export const MemoizedInternalRowWithRT = React.memo(
   InternalRowWithRT,
   (prevProps, nextProps) => {
-    const {
-      children: prevChildren,
-      shouldMemoizeRows: _prevShouldMemoizeRows,
-      ...restPrevProps
-    } = prevProps;
-    const {
-      children: nextChildren,
-      shouldMemoizeRows: nextShouldMemoizeRows,
-      ...restNextProps
-    } = nextProps;
+    // Early exit if rows should not be memoized
+    if (!nextProps.shouldMemoizeRows) return false;
 
-    if (!nextShouldMemoizeRows) return false;
+    // Extract children and compare counts
+    const prevChildrenCount = React.Children.count(prevProps.children);
+    const nextChildrenCount = React.Children.count(nextProps.children);
 
-    // This allows us to rerender if the child(cell) count changes. E.g. column visibility changes
-    const prevChildrenCount = React.Children.count(prevChildren);
-    const nextChildrenCount = React.Children.count(nextChildren);
+    if (prevChildrenCount !== nextChildrenCount) return false;
 
-    const propsAreEqual =
-      isEqual(restPrevProps, restNextProps) &&
-      prevChildrenCount === nextChildrenCount;
+    // Compare all props except children and shouldMemoizeRows
+    const { children: _1, shouldMemoizeRows: _2, ...prevRest } = prevProps;
+    const { children: _3, shouldMemoizeRows: _4, ...nextRest } = nextProps;
 
-    return propsAreEqual;
+    return isEqual(prevRest, nextRest);
   },
 ) as RowComponentWithRTType;
