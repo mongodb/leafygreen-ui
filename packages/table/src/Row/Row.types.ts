@@ -13,17 +13,14 @@ import { Theme } from '@leafygreen-ui/lib';
 
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
 
-export interface InternalRowBaseProps extends ComponentPropsWithoutRef<'tr'> {
+export interface RowBaseProps extends ComponentPropsWithoutRef<'tr'> {
   /**
    * Determines whether the row is disabled
    */
   disabled?: boolean;
 }
 
-export interface InternalRowWithoutRTProps extends InternalRowBaseProps {}
-
-export interface InternalRowWithRTBaseProps<T extends LGRowData>
-  extends InternalRowBaseProps {
+export interface RowWithRTBaseProps<T extends LGRowData> extends RowBaseProps {
   /**
    * Row object passed from the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hook.
    */
@@ -33,15 +30,10 @@ export interface InternalRowWithRTBaseProps<T extends LGRowData>
    * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
   virtualRow?: VirtualItem;
-
-  /**
-   * Whether the data columns are equal
-   */
-  shouldMemoizeRows?: boolean;
 }
 
 export interface InternalRowWithRTProps<T extends LGRowData>
-  extends InternalRowWithRTBaseProps<T> {
+  extends RowWithRTBaseProps<T> {
   /**
    * Determines whether alternating rows will have dark backgrounds.
    * @default false
@@ -77,11 +69,16 @@ export interface InternalRowWithRTProps<T extends LGRowData>
    * An internal prop used to pass a ref to the row
    */
   rowRef?: React.MutableRefObject<HTMLTableRowElement | null>;
+
+  /**
+   * Whether the data columns are equal
+   */
+  shouldMemoizeRows?: boolean;
 }
 
 export type RowProps<T extends LGRowData> = ComponentPropsWithRef<'tr'> &
-  InternalRowBaseProps &
-  Partial<InternalRowWithRTBaseProps<T>>;
+  RowBaseProps &
+  Partial<RowWithRTBaseProps<T>>;
 
 // https://stackoverflow.com/a/58473012
 // React.forwardRef can only work with plain function types.
