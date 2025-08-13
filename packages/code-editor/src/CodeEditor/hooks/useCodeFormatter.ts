@@ -1,7 +1,7 @@
-import { type CodeEditorProps } from '../../CodeEditor.types';
-import { type CodeEditorModules } from '../useModuleLoaders';
+import { type CodeEditorProps } from '../CodeEditor.types';
 
-import { LanguageName } from './useLanguageExtension';
+import { LanguageName } from './extensions/useLanguageExtension';
+import { type CodeEditorModules } from './useModuleLoaders';
 
 /**
  * Interface defining formatting options for different formatters
@@ -21,19 +21,17 @@ export interface FormattingOptions {
 }
 
 /**
- * Hook for creating a formatting utility that can format code based on the selected language.
+ * Hook for creating a code formatting utility that can format code based on the selected language.
  *
- * This hook doesn't return a CodeMirror extension, but rather a formatting function
- * that can be used to format code content. It uses lazy-loaded formatting modules
- * to provide language-specific formatting capabilities.
+ * This hook provides language-specific code formatting capabilities using lazy-loaded
+ * formatting modules. It supports both Prettier-based formatters and WASM-based formatters.
  *
  * @param params - Configuration object
- * @param params.editorViewInstance - The CodeMirror editor view instance (unused but kept for API consistency)
  * @param params.props - Partial CodeEditor props containing language setting
  * @param params.modules - Module dependencies containing formatting modules
- * @returns Object containing the format function and loading state
+ * @returns Object containing the format function and availability check
  */
-export function useFormattingExtension({
+export function useCodeFormatter({
   props,
   modules,
 }: {

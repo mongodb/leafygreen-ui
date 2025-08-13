@@ -26,8 +26,8 @@ import {
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
 import {
+  useCodeFormatter,
   useExtensions,
-  useFormattingExtension,
   useFormattingModuleLoaders,
   useLazyModules,
   useModuleLoaders,
@@ -82,8 +82,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     );
 
     // Get formatting functionality
-    const { formatCode, isFormattingAvailable } = useFormattingExtension({
-      editorViewInstance: editorViewRef.current,
+    const { formatCode, isFormattingAvailable } = useCodeFormatter({
       props: { language },
       modules: formattingModules,
     });

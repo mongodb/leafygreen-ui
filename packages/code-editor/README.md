@@ -75,7 +75,7 @@ console.log(greet('MongoDB user'));`;
 
 ## Code Formatting
 
-The CodeEditor component includes built-in code formatting functionality is integrated into the `Panel` component or can be used independently via the `useFormattingExtension` hook.
+The CodeEditor component includes built-in code formatting functionality that is integrated into the `Panel` component or can be used independently via the `useCodeFormatter` hook.
 
 ### Supported Languages and Formatters
 
@@ -143,13 +143,13 @@ function MyComponent() {
 }
 ```
 
-#### Via useFormattingExtension Hook
+#### Via useCodeFormatter Hook
 
-For more advanced use cases, you can use the `useFormattingExtension` hook directly:
+For more advanced use cases, you can use the `useCodeFormatter` hook directly:
 
 ```tsx
 import {
-  useFormattingExtension,
+  useCodeFormatter,
   useLazyModules,
   useFormattingModuleLoaders,
   LanguageName,
@@ -160,7 +160,7 @@ function MyFormattingComponent() {
   const moduleLoaders = useFormattingModuleLoaders(LanguageName.javascript);
   const { modules } = useLazyModules(moduleLoaders);
 
-  const { formatCode, isFormattingAvailable } = useFormattingExtension({
+  const { formatCode, isFormattingAvailable } = useCodeFormatter({
     props: { language: LanguageName.javascript },
     modules,
   });
@@ -662,9 +662,9 @@ Adds hover tooltips to editor content with configurable severity levels.
 **Required Props:** `tooltips`  
 **Required Modules:** `@codemirror/view`, `@codemirror/state`
 
-#### `useFormattingExtension(config)`
+#### `useCodeFormatter(config)`
 
-Provides code formatting functionality using language-specific formatters. This hook doesn't return a CodeMirror extension but rather a formatting utility that can format code content. It supports multiple formatting backends:
+Provides code formatting functionality using language-specific formatters. This hook provides a formatting utility that can format code content. It supports multiple formatting backends:
 
 - **Prettier-based formatters**: For JavaScript, TypeScript, CSS, HTML, JSON, Java, Kotlin, PHP, Ruby, and Rust
 - **WASM-based formatters**: For C/C++, C#, Go, and Python
@@ -683,8 +683,7 @@ Provides code formatting functionality using language-specific formatters. This 
 **Example:**
 
 ```tsx
-const { formatCode, isFormattingAvailable } = useFormattingExtension({
-  editorViewInstance: null, // Not needed for standalone formatting
+const { formatCode, isFormattingAvailable } = useCodeFormatter({
   props: { language: LanguageName.javascript },
   modules: lazyModules,
 });
