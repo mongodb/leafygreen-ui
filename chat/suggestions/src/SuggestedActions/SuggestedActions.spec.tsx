@@ -185,7 +185,9 @@ describe('chat/suggestions', () => {
   describe('Apply button', () => {
     test('renders when state is Unset', () => {
       renderSuggestedActions({ state: State.Unset });
-      expect(screen.getByText('Apply configuration to your cluster?')).toBeInTheDocument();
+      expect(
+        screen.getByText('Apply configuration to your cluster?'),
+      ).toBeInTheDocument();
     });
 
     test('renders when state is Apply', () => {
