@@ -11,6 +11,7 @@ import { css } from '@leafygreen-ui/emotion';
 // @ts-ignore LG icons don't currently support TS
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 
+import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { codeSnippets } from './CodeEditor/testing';
 import { IndentUnits } from './CodeEditor';
@@ -87,6 +88,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     ),
   ],
   args: {
+    copyButtonAppearance: CopyButtonAppearance.None,
     enableClickableUrls: true,
     enableCodeFolding: true,
     enableLineNumbers: true,
@@ -148,6 +150,10 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     language: {
       control: { type: 'select' },
       options: Object.values(LanguageName),
+    },
+    copyButtonAppearance: {
+      control: { type: 'select' },
+      options: Object.values(CopyButtonAppearance),
     },
     height: {
       control: { type: 'text' },
