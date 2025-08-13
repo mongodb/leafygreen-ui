@@ -19,6 +19,9 @@ import { TableHeaderCheckbox } from './TableHeaderCheckbox';
 import { TableRowCheckbox } from './TableRowCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
+import { usePrevious } from '@leafygreen-ui/hooks';
+
+import isEqual from 'react-fast-compare';
 
 const CHECKBOX_WIDTH = spacing[1000];
 
@@ -33,6 +36,14 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   const [expanded, setExpanded] = useState<ExpandedState>(
     (rest.initialState?.expanded as ExpandedState) ?? {},
   );
+
+  const prevColumns = usePrevious(columnsProp);
+
+  console.log('👿', {
+    prevColumns,
+    columnsProp,
+    areEqual: isEqual(prevColumns, columnsProp),
+  });
 
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
@@ -121,6 +132,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   return {
     ...table,
     hasSelectableRows,
+    dataColumnsAreEqual: isEqual(prevColumns, columnsProp),
   } as LeafyGreenTable<T>;
 }
 

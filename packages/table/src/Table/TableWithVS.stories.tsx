@@ -123,11 +123,130 @@ const basicColumnDefs: Array<LGColumnDef<Person>> = [
   },
 ];
 
+// export const Basic: StoryFn<StoryTableProps> = args => {
+//   const tableContainerRef = React.useRef<HTMLDivElement>(null);
+//   const data = React.useMemo(() => makeData(false, 10_000), []);
+
+//   const columns = useMemo(() => basicColumnDefs, []);
+
+//   const table = useLeafyGreenVirtualTable<Person>({
+//     containerRef: tableContainerRef,
+//     data,
+//     columns,
+//   });
+
+//   return (
+//     <>
+//       <div>
+//         <p>{table.getRowModel().rows.length} total rows</p>
+//         <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
+//         <p>{table?.virtual.getTotalSize()} virtual rows</p>
+//       </div>
+
+//       <Table
+//         {...args}
+//         table={table}
+//         ref={tableContainerRef}
+//         className={virtualScrollingContainerHeight}
+//       >
+//         <TableHead isSticky>
+//           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+//             <HeaderRow key={headerGroup.id}>
+//               {headerGroup.headers.map(header => {
+//                 return (
+//                   <HeaderCell key={header.id} header={header}>
+//                     {flexRender(
+//                       header.column.columnDef.header,
+//                       header.getContext(),
+//                     )}
+//                   </HeaderCell>
+//                 );
+//               })}
+//             </HeaderRow>
+//           ))}
+//         </TableHead>
+//         <TableBody>
+//           {table.virtual.getVirtualItems() &&
+//             table.virtual
+//               .getVirtualItems()
+//               .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
+//                 const row = virtualRow.row;
+//                 const cells = row.getVisibleCells();
+//                 return (
+//                   <Row key={virtualRow.key} virtualRow={virtualRow} row={row}>
+//                     {cells.map((cell: LeafyGreenTableCell<Person>) => {
+//                       return (
+//                         <Cell key={cell.id} cell={cell}>
+//                           {flexRender(
+//                             cell.column.columnDef.cell,
+//                             cell.getContext(),
+//                           )}
+//                         </Cell>
+//                       );
+//                     })}
+//                   </Row>
+//                 );
+//               })}
+//         </TableBody>
+//       </Table>
+//     </>
+//   );
+// };
+
 export const Basic: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useMemo(() => makeData(false, 10_000), []);
+  const data = React.useMemo(() => makeData(false, 10), []);
+  const [isOriginalColumn, setIsOriginalColumn] = useState(true);
 
-  const columns = useMemo(() => basicColumnDefs, []);
+  const basicColumnDefs: Array<LGColumnDef<Person>> = [
+    {
+      accessorKey: 'index',
+      header: 'index',
+      size: 40,
+    },
+    {
+      accessorKey: 'id',
+      header: 'ID',
+      size: 60,
+    },
+    {
+      accessorKey: 'firstName',
+      header: 'First Name',
+      cell: info => info.getValue(),
+    },
+    {
+      accessorFn: row => row.lastName,
+      id: 'lastName',
+      cell: info => info.getValue(),
+      header: () => <span>Last Name</span>,
+    },
+    {
+      accessorKey: 'age',
+      header: () => 'Age',
+      size: 50,
+      align: 'center',
+      cell: info => {
+        const value = info.getValue();
+        return isOriginalColumn && value > 40 ? (
+          <Badge variant={'green'}>{value}</Badge>
+        ) : (
+          <Badge variant={'red'}>{value}</Badge>
+        );
+      },
+    },
+    {
+      accessorKey: 'visits',
+      header: () => <span>Visits</span>,
+      size: 50,
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      size: 90,
+    },
+  ];
+
+  const columns = useMemo(() => basicColumnDefs, [isOriginalColumn]);
 
   const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
@@ -141,6 +260,10 @@ export const Basic: StoryFn<StoryTableProps> = args => {
         <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
         <p>{table?.virtual.getTotalSize()} virtual rows</p>
+        <button onClick={() => setIsOriginalColumn(!isOriginalColumn)}>
+          Toggle state
+        </button>
+        <p>isOriginalColumn: {isOriginalColumn.toString()}</p>
       </div>
 
       <Table

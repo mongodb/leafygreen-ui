@@ -47,6 +47,17 @@ const InternalRowWithRT = <T extends LGRowData>({
     };
   }, [depth, disabled, isExpandable, isExpanded, row]);
 
+  // console.group();
+  // console.log({
+  //   visibleCells: row.getVisibleCells(),
+  //   value: row.getVisibleCells()[3]?.renderValue(),
+  //   children,
+  // });
+
+  // console.groupEnd();
+
+  console.log('🌈');
+
   return (
     <RowContextProvider {...contextValues}>
       <InternalRowBase
@@ -77,8 +88,24 @@ const InternalRowWithRT = <T extends LGRowData>({
 export const MemoizedInternalRowWithRT = React.memo(
   InternalRowWithRT,
   (prevProps, nextProps) => {
-    const { children: prevChildren, ...restPrevProps } = prevProps;
-    const { children: nextChildren, ...restNextProps } = nextProps;
+    const {
+      children: prevChildren,
+      dataColumnsAreEqual: prevDataColumnsAreEqual,
+      ...restPrevProps
+    } = prevProps;
+    const {
+      children: nextChildren,
+      dataColumnsAreEqual: nextDataColumnsAreEqual,
+      ...restNextProps
+    } = nextProps;
+
+    // if (!nextDataColumnsAreEqual && prevDataColumnsAreEqual !== false) {
+    //   return false;
+    // }
+
+    // if (!nextDataColumnsAreEqual) {
+    //   return false;
+    // }
 
     // This allows us to rerender if the child(cell) count changes. E.g. column visibility changes
     const prevChildrenCount = React.Children.count(prevChildren);
@@ -89,5 +116,6 @@ export const MemoizedInternalRowWithRT = React.memo(
       prevChildrenCount === nextChildrenCount;
 
     return propsAreEqual;
+    // return false;
   },
 ) as RowComponentWithRTType;

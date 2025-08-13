@@ -82,4 +82,5 @@ export interface LeafyGreenTable<T extends LGRowData>
    */
   hasSelectableRows: boolean;
   virtual: never;
+  dataColumnsAreEqual: boolean;
 }

@@ -33,6 +33,11 @@ export interface InternalRowWithRTBaseProps<T extends LGRowData>
    * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
   virtualRow?: VirtualItem;
+
+  /**
+   * Whether the data columns are equal
+   */
+  dataColumnsAreEqual?: boolean;
 }
 
 export interface InternalRowWithRTProps<T extends LGRowData>
