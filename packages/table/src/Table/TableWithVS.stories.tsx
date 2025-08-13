@@ -198,45 +198,46 @@ export const DynamicData: StoryFn<StoryTableProps> = args => {
   const data = React.useMemo(() => makeData(false, 100), []);
   const [showEmoji, setShowEmoji] = useState(true);
 
-  const basicColumnDefs: Array<LGColumnDef<Person>> = [
-    {
-      accessorKey: 'index',
-      header: 'index',
-      size: 40,
-    },
-    {
-      accessorKey: 'id',
-      header: 'ID',
-      size: 60,
-    },
-    {
-      accessorKey: 'firstName',
-      header: 'First Name',
-      cell: info => info.getValue(),
-    },
-    {
-      accessorFn: row => row.lastName,
-      id: 'lastName',
-      cell: info => info.getValue(),
-      header: () => <span>Last Name</span>,
-    },
-    {
-      accessorKey: 'age',
-      header: () => 'Age',
-      size: 50,
-      align: 'center',
-      cell: info => {
-        return `${info.getValue()} ${showEmoji ? '🥬' : ''}`;
+  const columns = useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'index',
+        header: 'index',
+        size: 40,
       },
-    },
-    {
-      accessorKey: 'visits',
-      header: () => <span>Visits</span>,
-      size: 50,
-    },
-  ];
-
-  const columns = useMemo(() => basicColumnDefs, [basicColumnDefs]);
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        size: 50,
+        align: 'center',
+        cell: info => {
+          return `${info.getValue()} ${showEmoji ? '🥬' : ''}`;
+        },
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+    ],
+    [showEmoji],
+  );
 
   const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,

@@ -81,6 +81,14 @@ export interface LeafyGreenTable<T extends LGRowData>
    * Whether the table will have selectable rows.
    */
   hasSelectableRows: boolean;
+
+  /**
+   * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) return from the Virtualizer instance.
+   */
   virtual: never;
+
+  /**
+   * Whether the rows should be memoized.
+   */
   shouldMemoizeRows: boolean;
 }
