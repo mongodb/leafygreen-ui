@@ -31,7 +31,7 @@ const TableContextProvider = <T extends LGRowData>({
   virtualTable,
   verticalAlignment,
   lgIds,
-  dataColumnsAreEqual,
+  haveColumnDefinitionsChanged,
 }: PropsWithChildren<TableProviderProps<T>>) => {
   /** The appropriately typed context provider */
   const TableProvider = (TableContext as React.Context<TableProviderProps<T>>)
@@ -47,7 +47,7 @@ const TableContextProvider = <T extends LGRowData>({
       verticalAlignment,
       virtualTable,
       lgIds,
-      dataColumnsAreEqual,
+      haveColumnDefinitionsChanged,
     };
   }, [
     shouldAlternateRowColor,
@@ -58,7 +58,7 @@ const TableContextProvider = <T extends LGRowData>({
     verticalAlignment,
     virtualTable,
     lgIds,
-    dataColumnsAreEqual,
+    haveColumnDefinitionsChanged,
   ]);
 
   return (

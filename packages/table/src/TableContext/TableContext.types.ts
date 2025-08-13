@@ -28,7 +28,7 @@ interface BaseTableContextValue<T extends LGRowData> {
    */
   lgIds: GetLgIdsReturnType;
 
-  dataColumnsAreEqual?: boolean;
+  haveColumnDefinitionsChanged?: boolean;
 }
 
 type PartialTableProps<T extends LGRowData> = Pick<

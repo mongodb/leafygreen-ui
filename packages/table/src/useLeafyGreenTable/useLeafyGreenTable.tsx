@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import isEqual from 'react-fast-compare';
 import {
   ExpandedState,
   getExpandedRowModel,
@@ -13,15 +14,13 @@ import {
 } from '@tanstack/react-table';
 import omit from 'lodash/omit';
 
+import { usePrevious } from '@leafygreen-ui/hooks';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { TableHeaderCheckbox } from './TableHeaderCheckbox';
 import { TableRowCheckbox } from './TableRowCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
-import { usePrevious } from '@leafygreen-ui/hooks';
-
-import isEqual from 'react-fast-compare';
 
 const CHECKBOX_WIDTH = spacing[1000];
 
@@ -38,12 +37,21 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   );
 
   const prevColumns = usePrevious(columnsProp);
+  /**
+   * This is used to determine if the table should re-render. If the column definitions are the same, table rows will not re-render. If they are different, all rows will re-render.
+   *
+   * On initial load, prevColumns is undefined, so we should consider them equal
+   * to avoid unnecessary re-renders after the first load
+   */
+  const haveColumnDefinitionsChanged =
+    prevColumns === undefined || isEqual(prevColumns, columnsProp);
 
-  console.log('👿', {
-    prevColumns,
-    columnsProp,
-    areEqual: isEqual(prevColumns, columnsProp),
-  });
+  // console.log('👿', {
+  //   prevColumns,
+  //   columnsProp,
+  //   areEqual: haveColumnDefinitionsChanged,
+  //   isInitialLoad: prevColumns === undefined,
+  // });
 
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
@@ -132,7 +140,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   return {
     ...table,
     hasSelectableRows,
-    dataColumnsAreEqual: isEqual(prevColumns, columnsProp),
+    haveColumnDefinitionsChanged,
   } as LeafyGreenTable<T>;
 }
 

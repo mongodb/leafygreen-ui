@@ -13,7 +13,6 @@ import {
   InternalCellWithRTProps,
 } from './Cell.types';
 import InternalCellBase from './InternalCellBase';
-import { usePrevious } from '@leafygreen-ui/hooks';
 
 /**
  * @internal
@@ -33,14 +32,6 @@ const InternalCellWithRTForwardRef = <T extends LGRowData>(
     useRowContext();
   const { isSelectable, shouldTruncate = true } = useTableContext();
   const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
-
-  const prevChildren = usePrevious(children);
-
-  // console.log('🚨', {
-  //   prevChildren,
-  //   children,
-  //   acessorFn: cell,
-  // });
 
   return (
     <InternalCellBase

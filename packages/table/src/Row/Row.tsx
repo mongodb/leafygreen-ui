@@ -23,7 +23,7 @@ const RowWithRef = <T extends LGRowData>(
   const {
     shouldAlternateRowColor = false,
     virtualTable,
-    dataColumnsAreEqual,
+    haveColumnDefinitionsChanged,
   } = useTableContext();
 
   const ref = useForwardedRef(fwdRef, null);
@@ -44,7 +44,7 @@ const RowWithRef = <T extends LGRowData>(
           isSelected={row.getIsSelected()}
           rowRef={ref}
           disabled={disabled}
-          dataColumnsAreEqual={dataColumnsAreEqual}
+          haveColumnDefinitionsChanged={haveColumnDefinitionsChanged}
           {...rest}
         />
       ) : (

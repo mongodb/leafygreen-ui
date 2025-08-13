@@ -42,8 +42,6 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     const { theme, darkMode } = useDarkMode(darkModeProp);
     const lgIds = getLgIds(dataLgId);
 
-    console.log('😡', { dataColumnsAreEqual: table?.dataColumnsAreEqual });
-
     const isVirtual = Boolean((table as LeafyGreenVirtualTable<T>)?.virtual);
     const virtualTable = isVirtual
       ? (table as LeafyGreenVirtualTable<T>).virtual
@@ -75,7 +73,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           virtualTable={virtualTable}
           verticalAlignment={verticalAlignment}
           lgIds={lgIds}
-          dataColumnsAreEqual={table?.dataColumnsAreEqual}
+          haveColumnDefinitionsChanged={table?.haveColumnDefinitionsChanged}
         >
           <table
             className={cx(

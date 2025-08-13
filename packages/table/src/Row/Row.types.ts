@@ -37,7 +37,7 @@ export interface InternalRowWithRTBaseProps<T extends LGRowData>
   /**
    * Whether the data columns are equal
    */
-  dataColumnsAreEqual?: boolean;
+  haveColumnDefinitionsChanged?: boolean;
 }
 
 export interface InternalRowWithRTProps<T extends LGRowData>
