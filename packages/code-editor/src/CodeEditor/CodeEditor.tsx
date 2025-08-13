@@ -17,7 +17,7 @@ import {
   getEditorStyles,
   getLoaderStyles,
   getLoadingTextStyles,
-  minimalCopyButtonStyles,
+  getMinimalCopyButtonStyles,
 } from './CodeEditor.styles';
 import {
   CodeEditorHandle,
@@ -63,7 +63,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       placeholder,
       readOnly,
       tooltips,
-      copyButtonAppearance = CopyButtonAppearance.Hover,
+      copyButtonAppearance,
       ...rest
     } = props;
 
@@ -245,6 +245,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           minHeight,
           maxHeight,
           className,
+          appearance: copyButtonAppearance,
         })}
         {...rest}
       >
@@ -256,9 +257,11 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
             copyButtonAppearance === CopyButtonAppearance.Persist) && (
             <CodeEditorCopyButton
               getContents={getContents}
-              className={minimalCopyButtonStyles}
+              className={getMinimalCopyButtonStyles(copyButtonAppearance)}
               isPanelVariant={false}
+              appearance={copyButtonAppearance}
               disabled={isLoadingProp || isLoading}
+              data-lgid="code-editor-copy-button"
             />
           )}
         {(isLoadingProp || isLoading) && (

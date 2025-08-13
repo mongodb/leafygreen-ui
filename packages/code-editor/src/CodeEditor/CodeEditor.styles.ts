@@ -8,7 +8,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { CodeEditorSelectors } from './CodeEditor.types';
+import { CodeEditorSelectors, CopyButtonAppearance } from './CodeEditor.types';
 
 export const getEditorStyles = ({
   width,
@@ -18,6 +18,7 @@ export const getEditorStyles = ({
   minHeight,
   maxHeight,
   className,
+  appearance,
 }: {
   width?: string;
   minWidth?: string;
@@ -26,6 +27,7 @@ export const getEditorStyles = ({
   minHeight?: string;
   maxHeight?: string;
   className?: string;
+  appearance?: CopyButtonAppearance;
 }) =>
   cx(
     {
@@ -63,6 +65,16 @@ export const getEditorStyles = ({
     },
     css`
       position: relative;
+      ${appearance === CopyButtonAppearance.Hover
+        ? css`
+            @media (hover: hover) {
+              &:hover [data-lgid='code-editor-copy-button'] {
+                opacity: 1;
+                visibility: visible;
+              }
+            }
+          `
+        : ''}
     `,
     className,
   );
@@ -118,9 +130,27 @@ export const getLoadingTextStyles = (theme: Theme) => {
   `;
 };
 
-export const minimalCopyButtonStyles = css`
+export const getMinimalCopyButtonStyles = (
+  appearance: CopyButtonAppearance,
+) => css`
   position: absolute;
   top: ${spacing[200]}px;
   right: ${spacing[200]}px;
   z-index: 1;
+  ${appearance === CopyButtonAppearance.Hover
+    ? css`
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+
+        /* Always show on touch devices where hover doesn't work well */
+        @media (hover: none) {
+          opacity: 1;
+          visibility: visible;
+        }
+      `
+    : css`
+        opacity: 1;
+        visibility: visible;
+      `}
 `;

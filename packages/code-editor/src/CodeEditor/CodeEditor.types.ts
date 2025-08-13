@@ -52,6 +52,7 @@ export const CodeEditorSelectors = {
   ActiveLine: '.cm-activeLine',
   ActiveLineGutter: '.cm-activeLineGutter',
   Content: '.cm-content',
+  CopyButton: '[data-lgid="code-editor-copy-button"]',
   Cursor: '.cm-cursor',
   Editor: '.cm-editor',
   Focused: '.cm-focused',
