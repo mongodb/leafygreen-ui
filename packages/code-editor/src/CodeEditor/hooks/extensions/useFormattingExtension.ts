@@ -1,5 +1,3 @@
-import { type EditorView } from '@codemirror/view';
-
 import { type CodeEditorProps } from '../../CodeEditor.types';
 import { type CodeEditorModules } from '../useModuleLoaders';
 
@@ -36,11 +34,9 @@ export interface FormattingOptions {
  * @returns Object containing the format function and loading state
  */
 export function useFormattingExtension({
-  editorViewInstance,
   props,
   modules,
 }: {
-  editorViewInstance: EditorView | null;
   props: Partial<CodeEditorProps>;
   modules: Partial<CodeEditorModules>;
 }) {
@@ -187,7 +183,7 @@ export function useFormattingExtension({
 
           return prettier.format(code, {
             parser: 'java',
-            plugins: [javaPlugin],
+            plugins: [javaPlugin as any],
             tabWidth: options.tabWidth ?? 4,
             useTabs: options.useTabs ?? false,
             printWidth: options.printWidth ?? 100,
@@ -206,7 +202,7 @@ export function useFormattingExtension({
 
           return prettier.format(code, {
             parser: 'kotlin',
-            plugins: [kotlinPlugin],
+            plugins: [kotlinPlugin.default || kotlinPlugin],
             tabWidth: options.tabWidth ?? 4,
             useTabs: options.useTabs ?? false,
             printWidth: options.printWidth ?? 100,
@@ -225,7 +221,7 @@ export function useFormattingExtension({
 
           return prettier.format(code, {
             parser: 'php',
-            plugins: [phpPlugin],
+            plugins: [phpPlugin.default || phpPlugin],
             tabWidth: options.tabWidth ?? 4,
             useTabs: options.useTabs ?? false,
             printWidth: options.printWidth ?? 80,
@@ -244,7 +240,7 @@ export function useFormattingExtension({
 
           return prettier.format(code, {
             parser: 'ruby',
-            plugins: [rubyPlugin],
+            plugins: [rubyPlugin.default || rubyPlugin],
             tabWidth: options.tabWidth ?? 2,
             useTabs: options.useTabs ?? false,
             printWidth: options.printWidth ?? 80,
@@ -263,7 +259,7 @@ export function useFormattingExtension({
 
           return prettier.format(code, {
             parser: 'rust',
-            plugins: [rustPlugin],
+            plugins: [rustPlugin.default || rustPlugin],
             tabWidth: options.tabWidth ?? 4,
             useTabs: options.useTabs ?? false,
             printWidth: options.printWidth ?? 100,
@@ -284,14 +280,17 @@ export function useFormattingExtension({
           }
 
           // Initialize the WASM module if needed
-          await clangFormat.init();
+          await clangFormat.default();
 
-          return clangFormat.format(code, {
-            // Default clang-format options
-            IndentWidth: options.tabWidth ?? 2,
-            UseTab: options.useTabs ? 'Always' : 'Never',
-            ColumnLimit: options.printWidth ?? 100,
-          });
+          const filename =
+            language === LanguageName.cpp ? 'main.cpp' : 'main.cs';
+          const style = `{BasedOnStyle: LLVM, IndentWidth: ${
+            options.tabWidth ?? 2
+          }, UseTab: ${options.useTabs ? 'Always' : 'Never'}, ColumnLimit: ${
+            options.printWidth ?? 100
+          }}`;
+
+          return clangFormat.format(code, filename, style);
         }
 
         case LanguageName.go: {
@@ -303,7 +302,7 @@ export function useFormattingExtension({
           }
 
           // Initialize the WASM module if needed
-          await gofmt.init();
+          await gofmt.default();
 
           return gofmt.format(code);
         }
@@ -319,11 +318,11 @@ export function useFormattingExtension({
           }
 
           // Initialize the WASM module if needed
-          await ruffFmt.init();
+          await ruffFmt.default();
 
-          return ruffFmt.format(code, {
+          return ruffFmt.format(code, 'main.py', {
             indent_width: options.tabWidth ?? 4,
-            line_length: options.printWidth ?? 88,
+            line_width: options.printWidth ?? 88,
             // Add other ruff formatting options as needed
           });
         }
