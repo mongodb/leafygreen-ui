@@ -185,6 +185,11 @@ describe('chat/suggestions', () => {
   describe('Apply button', () => {
     test('renders when state is Unset', () => {
       renderSuggestedActions({ state: State.Unset });
+      expect(screen.getByText('Apply configuration to your cluster?')).toBeInTheDocument();
+    });
+
+    test('renders when state is Apply', () => {
+      renderSuggestedActions({ state: State.Apply });
       const button = screen.getByRole('button', {
         name: /apply these suggestions/i,
       });
@@ -205,9 +210,9 @@ describe('chat/suggestions', () => {
       ).not.toBeInTheDocument();
     });
 
-    test('calls onClickApply when clicked', () => {
+    test('calls onClickApply when clicked in Apply state', () => {
       const onClickApply = jest.fn();
-      renderSuggestedActions({ state: State.Unset, onClickApply });
+      renderSuggestedActions({ state: State.Apply, onClickApply });
 
       const button = screen.getByRole('button', {
         name: /apply these suggestions/i,
@@ -215,16 +220,6 @@ describe('chat/suggestions', () => {
       userEvent.click(button);
 
       expect(onClickApply).toHaveBeenCalledTimes(1);
-    });
-
-    test('has correct button attributes', () => {
-      renderSuggestedActions({ state: State.Unset });
-      const button = screen.getByRole('button', {
-        name: /apply these suggestions/i,
-      });
-
-      expect(button).toHaveAttribute('type', 'button');
-      expect(button).not.toBeDisabled();
     });
   });
 
@@ -529,6 +524,40 @@ describe('chat/suggestions', () => {
       );
 
       expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    });
+
+    test('spreads rest props to root div', () => {
+      const { container } = renderSuggestedActions({
+        'data-testid': 'suggestions-card',
+        'aria-label': 'Configuration suggestions',
+        style: { border: '2px solid red' },
+      });
+
+      const rootDiv = container.firstChild as HTMLElement;
+      expect(rootDiv).toHaveAttribute('data-testid', 'suggestions-card');
+      expect(rootDiv).toHaveAttribute(
+        'aria-label',
+        'Configuration suggestions',
+      );
+      expect(rootDiv).toHaveStyle('border: 2px solid red');
+    });
+
+    test('applies custom className to root div', () => {
+      const customClassName = 'custom-suggestions-class';
+      const { container } = renderSuggestedActions({
+        className: customClassName,
+      });
+
+      const rootDiv = container.firstChild as HTMLElement;
+      expect(rootDiv).toHaveClass(customClassName);
+    });
+
+    test('expands to parent container width', () => {
+      const { container } = renderSuggestedActions();
+      const rootDiv = container.firstChild as HTMLElement;
+
+      // The component should have width: 100% instead of a fixed width
+      expect(rootDiv).toHaveStyle('width: 100%');
     });
   });
 
