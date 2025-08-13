@@ -28,6 +28,9 @@ interface BaseTableContextValue<T extends LGRowData> {
    */
   lgIds: GetLgIdsReturnType;
 
+  /**
+   * Whether the rows should be memoized.
+   */
   shouldMemoizeRows?: boolean;
 }
 

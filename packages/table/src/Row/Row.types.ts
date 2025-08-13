@@ -71,7 +71,7 @@ export interface InternalRowWithRTProps<T extends LGRowData>
   rowRef?: React.MutableRefObject<HTMLTableRowElement | null>;
 
   /**
-   * Whether the data columns are equal
+   * Whether the rows should be memoized.
    */
   shouldMemoizeRows?: boolean;
 }
