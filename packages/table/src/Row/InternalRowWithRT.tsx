@@ -47,8 +47,6 @@ const InternalRowWithRT = <T extends LGRowData>({
     };
   }, [depth, disabled, isExpandable, isExpanded, row]);
 
-  console.log('🌈');
-
   return (
     <RowContextProvider {...contextValues}>
       <InternalRowBase
@@ -103,6 +101,3 @@ export const MemoizedInternalRowWithRT = React.memo(
     return propsAreEqual;
   },
 ) as RowComponentWithRTType;
-
-//TODO:
-// the difference in performance with this approach

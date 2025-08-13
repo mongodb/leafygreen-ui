@@ -46,13 +46,6 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   const shouldMemoizeRows =
     prevColumns === undefined || isEqual(prevColumns, columnsProp);
 
-  // console.log('👿', {
-  //   prevColumns,
-  //   columnsProp,
-  //   areEqual: shouldMemoizeRows,
-  //   isInitialLoad: prevColumns === undefined,
-  // });
-
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
    */
