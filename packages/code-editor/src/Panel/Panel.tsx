@@ -31,6 +31,41 @@ import {
 } from './Panel.styles';
 import { PanelProps } from './Panel.types';
 
+/**
+ * Panel component provides a toolbar interface for the CodeEditor with formatting, copying, and custom action buttons.
+ *
+ * The Panel displays at the top of the CodeEditor and can include:
+ * - A title for the code language or content description
+ * - Format button for code prettification (when formatting is available)
+ * - Copy button for copying code to clipboard
+ * - Secondary menu with additional actions (undo, redo, download, view shortcuts)
+ * - Custom secondary buttons for application-specific actions
+ * - Custom children content in the left slot
+ *
+ * @example
+ * ```tsx
+ * <CodeEditor
+ *   defaultValue="const greeting = 'Hello World';"
+ *   language={LanguageName.javascript}
+ *   panel={
+ *     <Panel
+ *       title="JavaScript"
+ *       showFormatButton
+ *       showCopyButton
+ *       showSecondaryMenuButton
+ *       customSecondaryButtons={[
+ *         {
+ *           label: 'My Custom Button',
+ *           glyph: <CloudIcon />,
+ *           onClick: () => console.log('custom button clicked'),
+ *           'aria-label': 'Do custom action',
+ *         },
+ *       ]}
+ *     />
+ *   }
+ * />
+ * ```
+ */
 export function Panel({
   title,
   showCopyButton,
@@ -85,6 +120,7 @@ export function Panel({
               <IconButton
                 onClick={handleFormatClick}
                 disabled={showFormatButton && !isFormattingAvailable}
+                aria-label="Format code"
               >
                 <FormatIcon />
               </IconButton>
@@ -105,33 +141,54 @@ export function Panel({
         {showSecondaryMenuButton && (
           <Menu
             trigger={
-              <IconButton>
+              <IconButton aria-label="Show more actions">
                 <EllipsisIcon />
               </IconButton>
             }
             variant={MenuVariant.Compact}
             darkMode={darkMode}
           >
-            <MenuItem glyph={<UndoIcon />} onClick={onUndoClick}>
+            <MenuItem
+              glyph={<UndoIcon />}
+              onClick={onUndoClick}
+              aria-label="Undo changes"
+            >
               Undo
             </MenuItem>
-            <MenuItem glyph={<RedoIcon />} onClick={onRedoClick}>
+            <MenuItem
+              glyph={<RedoIcon />}
+              onClick={onRedoClick}
+              aria-label="Redo changes"
+            >
               Redo
             </MenuItem>
-            <MenuItem glyph={<DownloadIcon />} onClick={onDownloadClick}>
+            <MenuItem
+              glyph={<DownloadIcon />}
+              onClick={onDownloadClick}
+              aria-label="Download code"
+            >
               Download
             </MenuItem>
             <MenuItem
               glyph={<QuestionMarkWithCircleIcon />}
               onClick={onViewShortcutsClick}
+              aria-label="View shortcuts"
             >
               View shortcuts
             </MenuItem>
-            {customSecondaryButtons?.map(({ label, glyph, onClick, href }) => (
-              <MenuItem glyph={glyph} onClick={onClick} href={href} key={label}>
-                {label}
-              </MenuItem>
-            ))}
+            {customSecondaryButtons?.map(
+              ({ label, glyph, onClick, href, 'aria-label': ariaLabel }) => (
+                <MenuItem
+                  glyph={glyph}
+                  onClick={onClick}
+                  href={href}
+                  key={label}
+                  aria-label={ariaLabel || label}
+                >
+                  {label}
+                </MenuItem>
+              ),
+            )}
           </Menu>
         )}
       </div>

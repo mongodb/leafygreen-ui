@@ -1,12 +1,14 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import { type MenuItemProps } from '@leafygreen-ui/menu';
 
-interface SecondaryButtonConfig {
+type SecondaryButtonConfig = MenuItemProps & {
   // Subset of MenuItem props
   label: string;
   glyph?: React.ReactElement;
   href?: string;
   onClick?: () => void;
-}
+  'aria-label'?: string;
+};
 
 export interface PanelProps extends DarkModeProps {
   title?: string;

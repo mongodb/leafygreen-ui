@@ -122,7 +122,7 @@ export function CodeEditorCopyButton({
       triggerEvent="hover"
       trigger={
         isPanelVariant ? (
-          <IconButton {...sharedButtonProps}>
+          <IconButton {...sharedButtonProps} aria-label="Copy text">
             {copied ? <CheckmarkIcon /> : <CopyIcon />}
             {copied && (
               <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>

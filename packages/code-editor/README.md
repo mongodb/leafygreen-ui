@@ -73,6 +73,66 @@ console.log(greet('MongoDB user'));`;
 | `value` _(optional)_               | Controlled value of the editor. If set, the editor will be controlled and will not update its value on change. Use `onChange` to update the value externally.                                                                                                                                                                                                                                                                                                                                                                  | `string`                     | `undefined` |
 | `width` _(optional)_               | Sets the editor's width. If not set, the editor will be 100% width of its parent container.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `string`                     | `undefined` |
 
+### `<Panel>`
+
+The Panel component provides a toolbar interface for the CodeEditor with formatting, copying, and custom action buttons.
+
+#### Example
+
+```tsx
+import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
+
+<CodeEditor
+  defaultValue="const greeting = 'Hello World';"
+  language={LanguageName.javascript}
+  panel={
+    <Panel
+      title="JavaScript"
+      showFormatButton
+      showCopyButton
+      showSecondaryMenuButton
+      customSecondaryButtons={[
+        {
+          label: 'My Custom Button',
+          glyph: <CloudIcon />,
+          onClick: () => console.log('custom button clicked'),
+          'aria-label': 'Do custom action',
+        },
+      ]}
+    />
+  }
+/>;
+```
+
+#### Properties
+
+| Name                                   | Description                                                                                                                                        | Type                           | Default     |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------- |
+| `baseFontSize` _(optional)_            | Font size of text in the panel.                                                                                                                    | `14 \| 16`                     | `14`        |
+| `children` _(optional)_                | Slot prop to left of button panel.                                                                                                                 | `React.ReactElement`           | `undefined` |
+| `customSecondaryButtons` _(optional)_  | Array of custom secondary buttons to display in the secondary menu. Each button can include a label, glyph, href, onClick handler, and aria-label. | `Array<SecondaryButtonConfig>` | `undefined` |
+| `darkMode` _(optional)_                | Determines if the component appears in dark mode.                                                                                                  | `boolean`                      | `undefined` |
+| `onCopyClick` _(optional)_             | Callback fired when the copy button is clicked.                                                                                                    | `() => void`                   | `undefined` |
+| `onDownloadClick` _(optional)_         | Callback fired when the download button is clicked.                                                                                                | `() => void`                   | `undefined` |
+| `onFormatClick` _(optional)_           | Callback fired when the format button is clicked.                                                                                                  | `() => void`                   | `undefined` |
+| `onRedoClick` _(optional)_             | Callback fired when the redo button is clicked.                                                                                                    | `() => void`                   | `undefined` |
+| `onUndoClick` _(optional)_             | Callback fired when the undo button is clicked.                                                                                                    | `() => void`                   | `undefined` |
+| `onViewShortcutsClick` _(optional)_    | Callback fired when the view shortcuts button is clicked.                                                                                          | `() => void`                   | `undefined` |
+| `showCopyButton` _(optional)_          | Determines whether to show the copy button.                                                                                                        | `boolean`                      | `undefined` |
+| `showFormatButton` _(optional)_        | Determines whether to show the format button.                                                                                                      | `boolean`                      | `undefined` |
+| `showSecondaryMenuButton` _(optional)_ | Determines whether to show the secondary menu button with additional actions.                                                                      | `boolean`                      | `undefined` |
+| `title` _(optional)_                   | Title text to display in the panel.                                                                                                                | `string`                       | `undefined` |
+
+#### `SecondaryButtonConfig`
+
+| Name                      | Description                                                            | Type                 | Default     |
+| ------------------------- | ---------------------------------------------------------------------- | -------------------- | ----------- |
+| `aria-label` _(optional)_ | Accessible label for the button to provide context for screen readers. | `string`             | `undefined` |
+| `glyph` _(optional)_      | Icon element to display in the button.                                 | `React.ReactElement` | `undefined` |
+| `href` _(optional)_       | URL to navigate to when the button is clicked.                         | `string`             | `undefined` |
+| `label`                   | Text label for the button.                                             | `string`             | —           |
+| `onClick` _(optional)_    | Callback fired when the button is clicked.                             | `() => void`         | `undefined` |
+
 ## Code Formatting
 
 The CodeEditor component includes built-in code formatting functionality that is integrated into the `Panel` component or can be used independently via the `useCodeFormatter` hook.
