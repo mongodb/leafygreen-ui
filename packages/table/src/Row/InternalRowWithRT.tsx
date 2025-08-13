@@ -81,16 +81,16 @@ export const MemoizedInternalRowWithRT = React.memo(
   (prevProps, nextProps) => {
     const {
       children: prevChildren,
-      haveColumnDefinitionsChanged: _prevHaveColumnDefinitionsChanged,
+      shouldMemoizeRows: _prevShouldMemoizeRows,
       ...restPrevProps
     } = prevProps;
     const {
       children: nextChildren,
-      haveColumnDefinitionsChanged: nextHaveColumnDefinitionsChanged,
+      shouldMemoizeRows: nextShouldMemoizeRows,
       ...restNextProps
     } = nextProps;
 
-    if (!nextHaveColumnDefinitionsChanged) return false;
+    if (!nextShouldMemoizeRows) return false;
 
     // This allows us to rerender if the child(cell) count changes. E.g. column visibility changes
     const prevChildrenCount = React.Children.count(prevChildren);

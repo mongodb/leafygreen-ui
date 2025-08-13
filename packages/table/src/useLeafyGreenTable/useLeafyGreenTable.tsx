@@ -38,18 +38,18 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
 
   const prevColumns = usePrevious(columnsProp);
   /**
-   * This is used to determine if the table should re-render. If the column definitions are the same, table rows will not re-render. If they are different, all rows will re-render.
+   * This is used to determine if table rows should re-render. If the column definitions are the same, table rows will not re-render. If they are different, all rows will re-render.
    *
    * On initial load, prevColumns is undefined, so we should consider them equal
    * to avoid unnecessary re-renders after the first load
    */
-  const haveColumnDefinitionsChanged =
+  const shouldMemoizeRows =
     prevColumns === undefined || isEqual(prevColumns, columnsProp);
 
   // console.log('👿', {
   //   prevColumns,
   //   columnsProp,
-  //   areEqual: haveColumnDefinitionsChanged,
+  //   areEqual: shouldMemoizeRows,
   //   isInitialLoad: prevColumns === undefined,
   // });
 
@@ -140,7 +140,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   return {
     ...table,
     hasSelectableRows,
-    haveColumnDefinitionsChanged,
+    shouldMemoizeRows,
   } as LeafyGreenTable<T>;
 }
 

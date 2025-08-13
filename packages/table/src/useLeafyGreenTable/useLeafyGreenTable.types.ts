@@ -82,5 +82,5 @@ export interface LeafyGreenTable<T extends LGRowData>
    */
   hasSelectableRows: boolean;
   virtual: never;
-  haveColumnDefinitionsChanged: boolean;
+  shouldMemoizeRows: boolean;
 }
