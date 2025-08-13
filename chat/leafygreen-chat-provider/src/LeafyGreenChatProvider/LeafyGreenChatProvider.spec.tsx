@@ -29,17 +29,17 @@ describe('LeafyGreenChatProvider', () => {
     );
 
     const testComponent = screen.getByTestId('test-component');
-    expect(testComponent.textContent).toBe(Variant.Spacious);
+    expect(testComponent.textContent).toBe(Variant.Compact);
   });
 
   it('provides the specified variant to the context', () => {
     render(
-      <LeafyGreenChatProvider variant={Variant.Compact}>
+      <LeafyGreenChatProvider variant={Variant.Spacious}>
         <TestComponent />
       </LeafyGreenChatProvider>,
     );
 
     const testComponent = screen.getByTestId('test-component');
-    expect(testComponent.textContent).toBe(Variant.Compact);
+    expect(testComponent.textContent).toBe(Variant.Spacious);
   });
 });
