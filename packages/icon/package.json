@@ -1,15 +1,15 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "14.2.0",
+  "version": "14.3.0",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
   "scripts": {
-    "prebuild": "ts-node ./scripts/prebuild.ts",
-    "postbuild": "ts-node ./scripts/postbuild.ts",
-    "build": "ts-node ./scripts/build-parallel.ts",
+    "prebuild": "ts-node ./scripts/prebuild/index.ts",
+    "build": "ts-node ./scripts/build/index.ts",
+    "postbuild": "ts-node ./scripts/postbuild/index.ts",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
   },

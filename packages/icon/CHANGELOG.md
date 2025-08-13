@@ -1,5 +1,15 @@
 # @leafygreen-ui/icon
 
+## 14.3.0
+
+### Minor Changes
+
+- ac3c7e8: Adds "Shortcut" icon
+
+### Patch Changes
+
+- 5420209: - Patch to only rebuild stale icons when source code is changed by comparing checksums of each icon form previous build.
+
 ## 14.2.0
 
 ### Minor Changes
