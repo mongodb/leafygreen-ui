@@ -21,6 +21,7 @@
     "@leafygreen-ui/testing-lib": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/meta": "workspace:^",
+    "@oddbird/popover-polyfill": "0.5.2",
     "@testing-library/dom": "9.3.1",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "14.0.0",
