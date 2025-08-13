@@ -20,6 +20,8 @@ npm install @leafygreen-ui/select
 
 ## Example
 
+### Basic Usage
+
 ```js
 import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 
@@ -40,6 +42,34 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
     <Option value="parrot">Parrot</Option>
   </OptionGroup>
 </Select>;
+```
+
+### Controlled Open State
+
+```js
+import { useState } from 'react';
+import { Option, Select } from '@leafygreen-ui/select';
+
+function ControlledSelect() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState('');
+
+  return (
+    <>
+      <button onClick={() => setIsOpen(true)}>Open Select</button>
+      <Select
+        label="Controlled Select"
+        open={isOpen}
+        setOpen={setIsOpen}
+        value={value}
+        onChange={setValue}
+      >
+        <Option value="option1">Option 1</Option>
+        <Option value="option2">Option 2</Option>
+      </Select>
+    </>
+  );
+}
 ```
 
 ## Select Properties
@@ -63,6 +93,8 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `onChange`           | `function`                                          | A function that gets called when the selected value changes. Receives the value string as the first argument.                                                                                                                                                                                                                                                                         | `() => {}`                          |
 | `readOnly`           | `boolean`                                           | Disables the console warning when the component is controlled and no `onChange` prop is provided.                                                                                                                                                                                                                                                                                     | `false`                             |
 | `allowDeselect`      | `boolean`                                           | Enables or disables the option for a user to select a null default value.                                                                                                                                                                                                                                                                                                             | `true`                              |
+| `open`               | `boolean`                                           | Controls whether the dropdown menu is open. When provided, the component becomes a controlled component for the open state.                                                                                                                                                                                                                                                           |                                     |
+| `setOpen`            | `function`                                          | Callback function that is called when the open state should change. Required when `open` prop is provided. Receives a boolean value as the first argument.                                                                                                                                                                                                                            |                                     |
 | `renderMode`         | `'inline'` \| `'portal'` \| `'top-layer'`           | Options to render the popover element <br> \* [deprecated] `'inline'` will render the popover element inline in the DOM where it's written <br> \* [deprecated] `'portal'` will render the popover element in a new div appended to the body. Alternatively, can be portaled into a provided `portalContainer` <br> \* `'top-layer'` will render the popover element in the top layer | `'top-layer'`                       |
 | `portalContainer`    | `HTMLElement` \| `null`                             | Sets the container used for the popover's portal. NOTE: If using a `scrollContainer` make sure that the `portalContainer` is contained within the `scrollContainer`. E.g, passing the same refrence to `scrollContainer` and `portalContainer`.                                                                                                                                       |                                     |
 | `scrollContainer`    | `HTMLElement` \| `null`                             | If the popover portal has a scrollable ancestor other than the window, this prop allows passing a reference to that lement to allow the portal to position properly.                                                                                                                                                                                                                  |                                     |

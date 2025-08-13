@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -7,6 +7,7 @@ import {
 import { StoryFn } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
+import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -75,7 +76,13 @@ const meta: StoryMetaType<typeof Select> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [...storybookExcludedControlParams, 'children', 'value'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'children',
+        'value',
+        'open',
+        'setOpen',
+      ],
     },
     generate: {
       combineArgs: {
@@ -115,6 +122,16 @@ const meta: StoryMetaType<typeof Select> = {
     readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
+    open: {
+      control: false,
+      description:
+        'Controls whether the dropdown menu is open. When provided, the component becomes controlled for open state.',
+    },
+    setOpen: {
+      control: false,
+      description:
+        'Callback function called when the open state should change. Required when open prop is provided.',
+    },
     darkMode: storybookArgTypes.darkMode,
   },
 };
@@ -218,4 +235,261 @@ export const InitialLongSelectOpen = {
       </div>
     ),
   ],
+};
+
+export const ControlledOpenState: StoryFn = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState('');
+
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-width: 300px;
+      `}
+    >
+      <div
+        className={css`
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        `}
+      >
+        <Button onClick={() => setIsOpen(true)} size="small">
+          Open Select
+        </Button>
+        <Button onClick={() => setIsOpen(false)} size="small">
+          Close Select
+        </Button>
+        <Button onClick={() => setIsOpen(!isOpen)} size="small">
+          Toggle Select
+        </Button>
+        <span>Open: {isOpen ? 'true' : 'false'}</span>
+      </div>
+
+      <Select
+        label="Controlled Open State"
+        description={`Current value: ${value || 'None selected'}`}
+        open={isOpen}
+        setOpen={setIsOpen}
+        value={value}
+        onChange={newValue => {
+          setValue(newValue);
+        }}
+        placeholder="Choose an option"
+      >
+        <Option value="apple">Apple</Option>
+        <Option value="banana">Banana</Option>
+        <Option value="cherry">Cherry</Option>
+        <Option value="date">Date</Option>
+        <OptionGroup label="Exotic Fruits">
+          <Option value="dragonfruit">Dragon Fruit</Option>
+          <Option value="kiwi">Kiwi</Option>
+          <Option value="mango">Mango</Option>
+        </OptionGroup>
+      </Select>
+    </div>
+  );
+};
+
+ControlledOpenState.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const ControlledOpenStateWithInitialValue: StoryFn = () => {
+  const [isOpen, setIsOpen] = useState(true); // Start opened
+  const [value, setValue] = useState('banana'); // Start with a selected value
+
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-width: 300px;
+      `}
+    >
+      <div
+        className={css`
+          padding: 12px;
+          background-color: #f3f4f6;
+          border-radius: 6px;
+          font-size: 14px;
+        `}
+      >
+        <strong>State:</strong> Open = {isOpen ? 'true' : 'false'}, Value ={' '}
+        {value || 'none'}
+      </div>
+
+      <div
+        className={css`
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        `}
+      >
+        <Button onClick={() => setIsOpen(!isOpen)} size="small">
+          {isOpen ? 'Close' : 'Open'} Select
+        </Button>
+        <Button
+          onClick={() => setValue('')}
+          size="small"
+          variant="dangerOutline"
+        >
+          Clear Selection
+        </Button>
+        <Button
+          onClick={() => setValue('mango')}
+          size="small"
+          variant="primaryOutline"
+        >
+          Select Mango
+        </Button>
+      </div>
+
+      <Select
+        label="Initially Open with Value"
+        description="This Select starts open with 'banana' selected"
+        open={isOpen}
+        setOpen={setIsOpen}
+        value={value}
+        onChange={newValue => {
+          setValue(newValue);
+        }}
+        allowDeselect
+      >
+        <Option value="apple">Apple</Option>
+        <Option value="banana">Banana</Option>
+        <Option value="cherry">Cherry</Option>
+        <OptionGroup label="Tropical">
+          <Option value="mango">Mango</Option>
+          <Option value="pineapple">Pineapple</Option>
+        </OptionGroup>
+      </Select>
+    </div>
+  );
+};
+
+ControlledOpenStateWithInitialValue.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const ControlledOpenStateWithExternalTrigger: StoryFn = () => {
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [value, setValue] = useState('');
+
+  const handleExternalAction = (action: string) => {
+    if (action === 'save') {
+      setIsSelectOpen(false);
+    } else if (action === 'cancel') {
+      setIsSelectOpen(false);
+      setValue(''); // Reset on cancel
+    }
+  };
+
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 350px;
+        padding: 20px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+      `}
+    >
+      <h3
+        className={css`
+          margin: 0 0 8px 0;
+          color: #374151;
+          font-size: 18px;
+        `}
+      >
+        Settings Panel
+      </h3>
+
+      <div
+        className={css`
+          display: flex;
+          gap: 12px;
+          align-items: center;
+        `}
+      >
+        <Button
+          onClick={() => setIsSelectOpen(true)}
+          size="default"
+          disabled={isSelectOpen}
+        >
+          Choose Theme
+        </Button>
+
+        {isSelectOpen && (
+          <>
+            <Button
+              onClick={() => handleExternalAction('save')}
+              size="small"
+              variant="primary"
+            >
+              Save
+            </Button>
+            <Button
+              onClick={() => handleExternalAction('cancel')}
+              size="small"
+              variant="dangerOutline"
+            >
+              Cancel
+            </Button>
+          </>
+        )}
+      </div>
+
+      <Select
+        label="Theme Selection"
+        description="Choose your preferred theme"
+        open={isSelectOpen}
+        setOpen={setIsSelectOpen}
+        value={value}
+        onChange={newValue => {
+          setValue(newValue);
+        }}
+        placeholder="Select a theme"
+        disabled={!isSelectOpen}
+      >
+        <Option value="light">Light</Option>
+        <Option value="dark">Dark</Option>
+        <Option value="auto">Auto (System)</Option>
+        <OptionGroup label="Custom Themes">
+          <Option value="high-contrast">High Contrast</Option>
+          <Option value="colorblind-friendly">Colorblind Friendly</Option>
+        </OptionGroup>
+      </Select>
+
+      {value && (
+        <div
+          className={css`
+            padding: 8px 12px;
+            background-color: #dcfce7;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #166534;
+          `}
+        >
+          Selected theme: <strong>{value}</strong>
+        </div>
+      )}
+    </div>
+  );
+};
+
+ControlledOpenStateWithExternalTrigger.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
