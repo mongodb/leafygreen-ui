@@ -259,7 +259,6 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               getContents={getContents}
               className={getMinimalCopyButtonStyles(copyButtonAppearance)}
               isPanelVariant={false}
-              appearance={copyButtonAppearance}
               disabled={isLoadingProp || isLoading}
               data-lgid="code-editor-copy-button"
             />
