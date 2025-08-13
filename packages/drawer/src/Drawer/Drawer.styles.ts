@@ -3,6 +3,7 @@ import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import {
   addOverflowShadow,
   color,
+  fontWeights,
   Side,
   spacing,
   transitionDuration,
@@ -317,6 +318,7 @@ export const getScrollContainerStyles = ({
 
 export const titleStyles = css`
   flex-grow: 1;
+  font-weight: ${fontWeights.semiBold};
 `;
 
 export const inlineChildrenStyles = css`

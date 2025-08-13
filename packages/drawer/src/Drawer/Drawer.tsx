@@ -245,7 +245,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                   id={titleId}
                   className={titleStyles}
                 >
-                  <strong>{title}</strong>
+                  {title}
                 </Body>
                 {inlineChildrenInTitle && (
                   <div className={inlineChildrenStyles}>
