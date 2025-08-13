@@ -13,14 +13,17 @@ import { Theme } from '@leafygreen-ui/lib';
 
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
 
-export interface RowBaseProps extends ComponentPropsWithoutRef<'tr'> {
+export interface InternalRowBaseProps extends ComponentPropsWithoutRef<'tr'> {
   /**
    * Determines whether the row is disabled
    */
   disabled?: boolean;
 }
 
-export interface RowWithRTBaseProps<T extends LGRowData> extends RowBaseProps {
+export interface InternalRowWithoutRTProps extends InternalRowBaseProps {}
+
+export interface InternalRowWithRTBaseProps<T extends LGRowData>
+  extends InternalRowBaseProps {
   /**
    * Row object passed from the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hook.
    */
@@ -33,7 +36,7 @@ export interface RowWithRTBaseProps<T extends LGRowData> extends RowBaseProps {
 }
 
 export interface InternalRowWithRTProps<T extends LGRowData>
-  extends RowWithRTBaseProps<T> {
+  extends InternalRowWithRTBaseProps<T> {
   /**
    * Determines whether alternating rows will have dark backgrounds.
    * @default false
@@ -77,8 +80,8 @@ export interface InternalRowWithRTProps<T extends LGRowData>
 }
 
 export type RowProps<T extends LGRowData> = ComponentPropsWithRef<'tr'> &
-  RowBaseProps &
-  Partial<RowWithRTBaseProps<T>>;
+  InternalRowBaseProps &
+  Partial<InternalRowWithRTBaseProps<T>>;
 
 // https://stackoverflow.com/a/58473012
 // React.forwardRef can only work with plain function types.
