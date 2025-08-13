@@ -6,6 +6,12 @@ import { axe } from 'jest-axe';
 import Button from '@leafygreen-ui/button';
 import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 
+/**
+ * JSDOM does not support the popover API, so we polyfill it
+ * https://github.com/jsdom/jsdom/issues/3721
+ */
+import '@oddbird/popover-polyfill';
+
 import { Popover } from './Popover';
 import {
   DismissMode,
