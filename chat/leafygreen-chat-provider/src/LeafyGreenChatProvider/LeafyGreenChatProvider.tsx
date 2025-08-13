@@ -7,13 +7,17 @@ import {
   Variant,
 } from './LeafyGreenChatProvider.types';
 
+const DEFAULT_ASSISTANT_NAME = 'MongoDB Assistant';
+
 const LeafyGreenChatContext = createContext<LeafyGreenChatContextProps>({
+  assistantName: DEFAULT_ASSISTANT_NAME,
   containerWidth: undefined,
   variant: Variant.Compact,
 });
 export const useLeafyGreenChatContext = () => useContext(LeafyGreenChatContext);
 
 export function LeafyGreenChatProvider({
+  assistantName = DEFAULT_ASSISTANT_NAME,
   children,
   variant = Variant.Compact,
 }: LeafyGreenChatProviderProps) {
@@ -28,6 +32,7 @@ export function LeafyGreenChatProvider({
   return (
     <LeafyGreenChatContext.Provider
       value={{
+        assistantName,
         containerWidth,
         variant,
       }}
