@@ -161,7 +161,6 @@ function MyFormattingComponent() {
   const { modules } = useLazyModules(moduleLoaders);
 
   const { formatCode, isFormattingAvailable } = useFormattingExtension({
-    editorViewInstance: null,
     props: { language: LanguageName.javascript },
     modules,
   });
