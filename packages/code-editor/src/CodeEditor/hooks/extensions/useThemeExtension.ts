@@ -76,6 +76,8 @@ export function useThemeExtension({
 
             borderTopLeftRadius: props.panel ? 0 : `${borderRadius[300]}px`,
             borderTopRightRadius: props.panel ? 0 : `${borderRadius[300]}px`,
+            paddingTop: `${spacing[200]}px`,
+            paddingBottom: `${spacing[200]}px`,
           },
 
           [`&${CodeEditorSelectors.Focused}`]: {
