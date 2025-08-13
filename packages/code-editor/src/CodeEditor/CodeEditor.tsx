@@ -25,6 +25,7 @@ import {
   CopyButtonAppearance,
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
+import { CodeEditorProvider } from './CodeEditorContext';
 import {
   useCodeFormatter,
   useExtensions,
@@ -225,14 +226,12 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       [handleFormatCode, isFormattingAvailable],
     );
 
-    const panelNode = React.isValidElement(panel)
-      ? React.cloneElement(panel as React.ReactElement<any>, {
-          getContents,
-          formatCode: handleFormatCode,
-          isFormattingAvailable,
-          language,
-        })
-      : panel;
+    const contextValue = {
+      getContents,
+      formatCode: handleFormatCode,
+      isFormattingAvailable,
+      language,
+    };
 
     return (
       <div
@@ -248,7 +247,9 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         })}
         {...rest}
       >
-        {panelNode}
+        {panel && (
+          <CodeEditorProvider value={contextValue}>{panel}</CodeEditorProvider>
+        )}
         {!panel &&
           (copyButtonAppearance === CopyButtonAppearance.Hover ||
             copyButtonAppearance === CopyButtonAppearance.Persist) && (

@@ -1,7 +1,5 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-import { type LanguageName } from '../CodeEditor/hooks/extensions/useLanguageExtension';
-
 interface SecondaryButtonConfig {
   // Subset of MenuItem props
   label: string;
@@ -23,29 +21,6 @@ export interface PanelProps extends DarkModeProps {
   onRedoClick?: () => void;
   onDownloadClick?: () => void;
   onViewShortcutsClick?: () => void;
-
-  /**
-   * Function to retrieve the current editor contents for copy action.
-   */
-  getContents?: () => string;
-
-  /**
-   * Function to format the current editor content.
-   * Passed from CodeEditor when the Panel is used with it.
-   */
-  formatCode?: () => Promise<string>;
-
-  /**
-   * Function to check if formatting is available for the current language.
-   * Passed from CodeEditor when the Panel is used with it.
-   */
-  isFormattingAvailable?: () => boolean;
-
-  /**
-   * Current language for formatting context.
-   * Passed from CodeEditor when the Panel is used with it.
-   */
-  language?: LanguageName;
 
   customSecondaryButtons?: Array<SecondaryButtonConfig>;
 

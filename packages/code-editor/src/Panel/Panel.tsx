@@ -20,6 +20,7 @@ import {
 import { Menu, MenuItem, MenuVariant } from '@leafygreen-ui/menu';
 import Tooltip from '@leafygreen-ui/tooltip';
 
+import { useCodeEditorContext } from '../CodeEditor/CodeEditorContext';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 
 import {
@@ -45,13 +46,14 @@ export function Panel({
   children,
   baseFontSize: baseFontSizeProp,
   darkMode,
-  getContents,
-  formatCode,
-  isFormattingAvailable,
-  language,
 }: PanelProps) {
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
+
+  // Get internal values from CodeEditor context
+  // This will only work when Panel is used within CodeEditor
+  const contextValues = useCodeEditorContext();
+  const { getContents, formatCode, isFormattingAvailable } = contextValues;
 
   const handleFormatClick = async () => {
     if (formatCode) {
