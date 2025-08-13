@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { type CodeEditorProps } from '../CodeEditor.types';
 
 import { LanguageName } from './extensions/useLanguageExtension';
@@ -38,6 +40,8 @@ export function useCodeFormatter({
   props: Partial<CodeEditorProps>;
   modules: Partial<CodeEditorModules>;
 }) {
+  const [isFormattingAvailable, setIsFormattingReady] = useState(false);
+
   /**
    * Formats code using the appropriate formatter based on the selected language.
    *
@@ -335,80 +339,94 @@ export function useCodeFormatter({
     }
   };
 
-  /**
-   * Checks if formatting is available for the current language
-   */
-  const isFormattingAvailable = (): boolean => {
+  useEffect(() => {
+    let isReady = false;
+
     const { language } = props;
 
     if (!language) {
-      return false;
+      isReady = false;
     }
 
     switch (language) {
       case LanguageName.javascript:
       case LanguageName.jsx:
       case LanguageName.json:
-        return !!(
+        isReady = !!(
           modules['prettier/standalone'] && modules['prettier/parser-babel']
         );
+        break;
 
       case LanguageName.typescript:
       case LanguageName.tsx:
-        return !!(
+        isReady = !!(
           modules['prettier/standalone'] &&
           modules['prettier/parser-typescript']
         );
+        break;
 
       case LanguageName.css:
-        return !!(
+        isReady = !!(
           modules['prettier/standalone'] && modules['prettier/parser-postcss']
         );
+        break;
 
       case LanguageName.html:
-        return !!(
+        isReady = !!(
           modules['prettier/standalone'] && modules['prettier/parser-html']
         );
+        break;
 
       case LanguageName.java:
-        return !!(
+        isReady = !!(
           modules['prettier/standalone'] && modules['prettier-plugin-java']
         );
+        break;
 
       case LanguageName.kotlin:
-        return !!(
+        isReady = !!(
           modules['prettier/standalone'] && modules['prettier-plugin-kotlin']
         );
+        break;
 
       case LanguageName.php:
-        return !!(
+        isReady = !!(
           modules['prettier/standalone'] && modules['@prettier/plugin-php']
         );
+        break;
 
       case LanguageName.ruby:
-        return !!(
+        isReady = !!(
           modules['prettier/standalone'] && modules['@prettier/plugin-ruby']
         );
+        break;
 
       case LanguageName.rust:
-        return !!(
+        isReady = !!(
           modules['prettier/standalone'] && modules['prettier-plugin-rust']
         );
+        break;
 
       case LanguageName.cpp:
       case LanguageName.csharp:
-        return !!modules['@wasm-fmt/clang-format'];
+        isReady = !!modules['@wasm-fmt/clang-format'];
+        break;
 
       case LanguageName.go:
-        return !!modules['@wasm-fmt/gofmt'];
+        isReady = !!modules['@wasm-fmt/gofmt'];
+        break;
 
       case LanguageName.python:
-        return !!modules['@wasm-fmt/ruff_fmt'];
+        isReady = !!modules['@wasm-fmt/ruff_fmt'];
+        break;
 
       default:
-        return false;
+        isReady = false;
+        break;
     }
-  };
+
+    setIsFormattingReady(isReady);
+  }, [modules, props]);
 
   return {
     formatCode,

@@ -17,9 +17,10 @@ export interface CodeEditorContextValue {
   formatCode: () => Promise<string>;
 
   /**
-   * Function to check if formatting is available for the current language.
+   * Stateful boolean indicating if formatting is available for the current language.
+   * This updates when formatting modules are loaded or language changes.
    */
-  isFormattingAvailable: () => boolean;
+  isFormattingAvailable: boolean;
 
   /**
    * Current language for formatting context.
@@ -31,7 +32,7 @@ export interface CodeEditorContextValue {
 const defaultContextValue: CodeEditorContextValue = {
   getContents: () => '',
   formatCode: async () => '',
-  isFormattingAvailable: () => false,
+  isFormattingAvailable: false,
   language: undefined,
 };
 

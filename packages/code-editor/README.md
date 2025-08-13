@@ -123,7 +123,7 @@ function MyComponent() {
   const editorRef = useRef<CodeEditorHandle>(null);
 
   const handleFormatCode = async () => {
-    if (editorRef.current?.isFormattingAvailable()) {
+    if (editorRef.current?.isFormattingAvailable) {
       const formattedCode = await editorRef.current.formatCode();
       console.log('Formatted code:', formattedCode);
     }
@@ -166,7 +166,7 @@ function MyFormattingComponent() {
   });
 
   const handleFormat = async () => {
-    if (isFormattingAvailable()) {
+    if (isFormattingAvailable) {
       const options: FormattingOptions = {
         semi: true,
         singleQuote: true,
@@ -678,7 +678,7 @@ Provides code formatting functionality using language-specific formatters. This 
 **Returns:**
 
 - `formatCode(code: string, options?: FormattingOptions): Promise<string>` - Formats the provided code
-- `isFormattingAvailable(): boolean` - Checks if formatting is available for current language
+- `isFormattingAvailable: boolean` - Stateful boolean indicating if formatting is available for the current language
 
 **Example:**
 
@@ -688,7 +688,7 @@ const { formatCode, isFormattingAvailable } = useCodeFormatter({
   modules: lazyModules,
 });
 
-if (isFormattingAvailable()) {
+if (isFormattingAvailable) {
   const formatted = await formatCode('const x=1;');
   console.log(formatted); // "const x = 1;"
 }

@@ -178,6 +178,7 @@ export const LiveExample = Template.bind({});
 
 export const WithPanel = Template.bind({});
 WithPanel.args = {
+  language: LanguageName.javascript,
   panel: (
     <Panel
       title="my-file.txt"

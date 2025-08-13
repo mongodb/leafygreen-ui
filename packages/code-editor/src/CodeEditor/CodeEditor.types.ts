@@ -310,8 +310,8 @@ export interface CodeEditorHandle {
   formatCode: () => Promise<string>;
 
   /**
-   * Checks if formatting is available for the current language and configuration.
-   * @returns boolean indicating whether formatting is available
+   * Stateful boolean indicating if formatting is available for the current language and configuration.
+   * This updates reactively when formatting modules are loaded or language/configuration changes.
    */
-  isFormattingAvailable: () => boolean;
+  isFormattingAvailable: boolean;
 }

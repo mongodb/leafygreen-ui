@@ -111,13 +111,14 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
      * @returns Promise resolving to the formatted code string
      */
     const handleFormatCode = useCallback(async (): Promise<string> => {
-      if (!isFormattingAvailable()) {
+      const currentContent = getContents();
+
+      if (!isFormattingAvailable) {
         console.warn('Formatting is not available for the current language');
-        return getContents();
+        return currentContent;
       }
 
       try {
-        const currentContent = getContents();
         const formattedContent = await formatCode(currentContent);
 
         // Update the editor with formatted content

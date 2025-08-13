@@ -52,8 +52,8 @@ export function Panel({
 
   // Get internal values from CodeEditor context
   // This will only work when Panel is used within CodeEditor
-  const contextValues = useCodeEditorContext();
-  const { getContents, formatCode, isFormattingAvailable } = contextValues;
+  const { getContents, formatCode, isFormattingAvailable } =
+    useCodeEditorContext();
 
   const handleFormatClick = async () => {
     if (formatCode) {
@@ -68,10 +68,6 @@ export function Panel({
     }
   };
 
-  // Show format button only if formatting is available for the current language
-  const shouldShowFormatButton =
-    showFormatButton && (isFormattingAvailable?.() ?? false);
-
   return (
     <div className={getPanelStyles(theme)}>
       <div
@@ -81,12 +77,15 @@ export function Panel({
       </div>
       <div className={getPanelChildrenStyles()}>{children}</div>
       <div className={getPanelButtonsStyles()}>
-        {shouldShowFormatButton && (
+        {showFormatButton && (
           <Tooltip
             align="top"
             justify="middle"
             trigger={
-              <IconButton onClick={handleFormatClick}>
+              <IconButton
+                onClick={handleFormatClick}
+                disabled={showFormatButton && !isFormattingAvailable}
+              >
                 <FormatIcon />
               </IconButton>
             }
