@@ -247,20 +247,20 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 >
                   {title}
                 </Body>
-                {inlineChildrenInTitle && (
+                {(inlineChildrenInTitle || showCloseButton) && (
                   <div className={inlineChildrenStyles}>
                     {inlineChildrenInTitle}
+                    {showCloseButton && (
+                      <IconButton
+                        aria-label="Close drawer"
+                        data-lgid={lgIds.closeButton}
+                        data-testid={lgIds.closeButton}
+                        onClick={onClose}
+                      >
+                        <XIcon />
+                      </IconButton>
+                    )}
                   </div>
-                )}
-                {showCloseButton && (
-                  <IconButton
-                    aria-label="Close drawer"
-                    data-lgid={lgIds.closeButton}
-                    data-testid={lgIds.closeButton}
-                    onClick={onClose}
-                  >
-                    <XIcon />
-                  </IconButton>
                 )}
               </div>
               <div

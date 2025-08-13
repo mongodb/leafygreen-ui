@@ -11,13 +11,14 @@ import { StoryFn, StoryObj } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import SparkleIcon from '@leafygreen-ui/icon/dist/Sparkle';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
   color,
-  fontWeights,
+  FontWeight,
   spacing,
 } from '@leafygreen-ui/tokens';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
@@ -55,7 +56,7 @@ const DrawerCustomTitle = () => {
       <Body
         as="h2"
         baseFontSize={BaseFontSize.Body2}
-        weight={fontWeights.semiBold}
+        weight={FontWeight.SemiBold}
       >
         Custom title
       </Body>
@@ -440,9 +441,20 @@ export const WithInlineChildrenInTitle: StoryObj<DrawerProps> = {
     children: <LongContent />,
     title: 'Drawer Title',
     inlineChildrenInTitle: (
-      <IconButton aria-label="Cloud" onClick={() => console.log('cloud click')}>
-        <CloudIcon />
-      </IconButton>
+      <>
+        <IconButton
+          aria-label="Cloud"
+          onClick={() => console.log('cloud click')}
+        >
+          <CloudIcon />
+        </IconButton>
+        <IconButton
+          aria-label="Cloud"
+          onClick={() => console.log('sparkle click')}
+        >
+          <SparkleIcon />
+        </IconButton>
+      </>
     ),
     open: true,
   },
