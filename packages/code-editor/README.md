@@ -75,7 +75,7 @@ console.log(greet('MongoDB user'));`;
 
 ## Code Formatting
 
-The CodeEditor component includes built-in code formatting functionality that can be accessed through the `CodeEditorCopyButton` component or used independently via the `useFormattingExtension` hook.
+The CodeEditor component includes built-in code formatting functionality is integrated into the `Panel` component or can be used independently via the `useFormattingExtension` hook.
 
 ### Supported Languages and Formatters
 
@@ -135,7 +135,7 @@ function MyComponent() {
         ref={editorRef}
         defaultValue="const x=1;const y=2;"
         language={LanguageName.javascript}
-        panel={<Panel showFormatButton={true} />}
+        panel={<Panel showFormatButton />}
       />
       <button onClick={handleFormatCode}>Format Code Externally</button>
     </div>
