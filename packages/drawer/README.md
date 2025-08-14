@@ -517,13 +517,13 @@ const DrawerCustomTitle = () => {
         `}
       >
         <IconButton
-          aria-label="Descriptive aria label goes here"
+          aria-label="Descriptive label goes here"
           onClick={() => console.log('cloud click')}
         >
           <CloudIcon />
         </IconButton>
         <IconButton
-          aria-label="Descriptive aria label goes here"
+          aria-label="Descriptive label goes here"
           onClick={() => console.log('sparkle click')}
         >
           <SparkleIcon />
