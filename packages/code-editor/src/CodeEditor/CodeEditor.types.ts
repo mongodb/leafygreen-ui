@@ -5,7 +5,6 @@ import { type EditorView } from '@codemirror/view';
 import { type DarkModeProps } from '@leafygreen-ui/lib';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
-import { copyButtonClassName } from './CodeEditor.styles';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
