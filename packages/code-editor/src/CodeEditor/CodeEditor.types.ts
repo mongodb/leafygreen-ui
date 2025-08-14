@@ -5,6 +5,7 @@ import { type EditorView } from '@codemirror/view';
 import { type DarkModeProps } from '@leafygreen-ui/lib';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
+import { copyButtonClassName } from './CodeEditor.styles';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
@@ -129,6 +130,21 @@ export type CodeEditorProps = DarkModeProps & {
    * Styling prop
    */
   className?: string;
+
+  /**
+   * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
+   *
+   * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
+   *
+   * If `persist`, the copy button will always be visible.
+   *
+   * If `none`, the copy button will not be rendered.
+   *
+   * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
+   *
+   * @default `hover`
+   */
+  copyButtonAppearance?: CopyButtonAppearance;
 
   /**
    * Initial value to render in the editor.

@@ -174,16 +174,6 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         {panel && (
           <CodeEditorProvider value={contextValue}>{panel}</CodeEditorProvider>
         )}
-        {(copyButtonAppearance === CopyButtonAppearance.Hover ||
-          copyButtonAppearance === CopyButtonAppearance.Persist) && (
-          <CodeEditorCopyButton
-            getContentsToCopy={getContents}
-            className={getCopyButtonStyles(copyButtonAppearance)}
-            variant={CopyButtonVariant.Button}
-            disabled={isLoadingProp || isLoading}
-            data-lgid={CopyButtonLgId}
-          />
-        )}
         {!panel &&
           (copyButtonAppearance === CopyButtonAppearance.Hover ||
             copyButtonAppearance === CopyButtonAppearance.Persist) && (
