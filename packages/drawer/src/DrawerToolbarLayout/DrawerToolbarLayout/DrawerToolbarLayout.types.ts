@@ -22,11 +22,6 @@ interface LayoutWithContent extends LayoutBase {
   title: React.ReactNode;
 
   /**
-   * The inline children in the title of the drawer. This is not required if the toolbar item should not open a drawer.
-   */
-  inlineChildrenInTitle?: React.ReactNode;
-
-  /**
    * The content of the drawer. This is not required if the toolbar item should not open a drawer.
    */
   content: React.ReactNode;
@@ -44,11 +39,6 @@ interface LayoutWithoutContent extends LayoutBase {
    * The title of the drawer. This is not required if the toolbar item should not open a drawer.
    */
   title?: never;
-
-  /**
-   * The inline children in the title of the drawer. This is not required if the toolbar item should not open a drawer.
-   */
-  inlineChildrenInTitle?: never;
 
   /**
    * The content of the drawer. This is not required if the toolbar item should not open a drawer.

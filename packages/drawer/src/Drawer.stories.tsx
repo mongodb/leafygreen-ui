@@ -60,9 +60,24 @@ const DrawerCustomTitle = () => {
       >
         Custom title
       </Body>
-      <IconButton aria-label="Cloud" onClick={() => console.log('cloud click')}>
-        <CloudIcon />
-      </IconButton>
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <IconButton
+          aria-label="Go to sleep"
+          onClick={() => console.log('cloud click')}
+        >
+          <CloudIcon />
+        </IconButton>
+        <IconButton
+          aria-label="Make it sparkle"
+          onClick={() => console.log('sparkle click')}
+        >
+          <SparkleIcon />
+        </IconButton>
+      </div>
     </div>
   );
 };
@@ -426,36 +441,6 @@ export const ScrollableFalse: StoryObj<DrawerProps> = {
   args: {
     children: <FullWidthHeightContent />,
     scrollable: false,
-    open: true,
-  },
-  parameters: {
-    controls: {
-      exclude: snapshotStoryExcludedControlParams,
-    },
-  },
-};
-
-export const WithInlineChildrenInTitle: StoryObj<DrawerProps> = {
-  render: TemplateComponent,
-  args: {
-    children: <LongContent />,
-    title: 'Drawer Title',
-    inlineChildrenInTitle: (
-      <>
-        <IconButton
-          aria-label="Cloud"
-          onClick={() => console.log('cloud click')}
-        >
-          <CloudIcon />
-        </IconButton>
-        <IconButton
-          aria-label="Cloud"
-          onClick={() => console.log('sparkle click')}
-        >
-          <SparkleIcon />
-        </IconButton>
-      </>
-    ),
     open: true,
   },
   parameters: {

@@ -399,12 +399,20 @@ You can also use the resizable feature with a toolbar-based drawer:
 ```tsx
 <DrawerLayout
   toolbarData={DRAWER_TOOLBAR_DATA}
-  displayMode="embedded"
+  displayMode={DisplayMode.Embedded}
   onClose={() => {}}
   resizable
 >
   {content}
 </DrawerLayout>
+```
+
+### Title
+
+The `title` prop of the `Drawer` and `Toolbar` items can be a string or a React node. If it is a string, it will be rendered as a `<h2>` element. If it is a React node, it will be rendered as is.
+
+```tsx
+
 ```
 
 ## Props
@@ -444,7 +452,7 @@ You can also use the resizable feature with a toolbar-based drawer:
 | `onClose` _(optional)_               | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called on close button click. If provided, a close button will be rendered in the `Drawer` header                                                                                                                                                                                                                                                                                                                                                                                                                                        |             |
 | `open` _(optional)_                  | `boolean`                                    | Determines if the `Drawer` is open or closed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `false`     |
 | `scrollable` _(optional)_            | `boolean`                                    | Determines whether the drawer content should have its own scroll container with padding. When false, the content area will not have padding or scroll behavior, allowing full-width/height content.                                                                                                                                                                                                                                                                                                                                                    | `true`      |
-| `title`                              | `React.ReactNode`                            | Title of the `Drawer`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |             |
+| `title`                              | `React.ReactNode`                            | Title of the `Drawer`. If it is a string, it will be rendered as a `<h2>` element. If it is a React node, it will be rendered as is.                                                                                                                                                                                                                                                                                                                                                                                                                   |             |
 | `inlineChildrenInTitle` _(optional)_ | `React.ReactNode`                            | The inline children in the title of the `Drawer` This will render to the right of the title.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |             |
 | `size` _(optional)_                  | `'default'` \| `'large'`                     | The size of the `Drawer`. <br><br>**Available sizes:** <br> \* `'default'`: 432px <br> \* `'large'`: 520px                                                                                                                                                                                                                                                                                                                                                                                                                                             | `'default'` |
 
@@ -472,6 +480,59 @@ When `scrollable={false}`:
 ### Height Considerations
 
 If rendering `DrawerLayout` inside another element, make sure that element has an explicit height. Otherwise, the layout may not size itself correctly.
+
+### Title Considerations
+
+The `title` prop of the `Drawer` and `Toolbar` items can be a string or a React node. If it is a string, it will be rendered as a `<h2>` element. If it is a React node, it will be rendered as is and you are responsible for styling the title and adding the correct semantic HTML.
+
+Example of a custom title:
+
+```tsx
+import { css } from '@leafygreen-ui/emotion';
+import { BaseFontSize, FontWeight } from '@leafygreen-ui/tokens';
+import { Body } from '@leafygreen-ui/typography';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import SparkleIcon from '@leafygreen-ui/icon/dist/Sparkle';
+import IconButton from '@leafygreen-ui/icon-button';
+
+const DrawerCustomTitle = () => {
+  return (
+    <div
+      className={css`
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      `}
+    >
+      <Body
+        as="h2"
+        baseFontSize={BaseFontSize.Body2}
+        weight={FontWeight.SemiBold}
+      >
+        Custom title
+      </Body>
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <IconButton
+          aria-label="Descriptive aria label goes here"
+          onClick={() => console.log('cloud click')}
+        >
+          <CloudIcon />
+        </IconButton>
+        <IconButton
+          aria-label="Descriptive aria label goes here"
+          onClick={() => console.log('sparkle click')}
+        >
+          <SparkleIcon />
+        </IconButton>
+      </div>
+    </div>
+  );
+};
+```
 
 # Test Harnesses
 

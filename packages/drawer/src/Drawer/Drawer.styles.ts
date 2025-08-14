@@ -320,7 +320,3 @@ export const titleStyles = css`
   flex-grow: 1;
   font-weight: ${fontWeights.semiBold};
 `;
-
-export const inlineChildrenStyles = css`
-  display: flex;
-`;

@@ -8,8 +8,6 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import IconButton from '@leafygreen-ui/icon-button';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -26,12 +24,6 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
     label: 'Code',
     content: <DrawerContent />,
     title: 'Code Title',
-    inlineChildrenInTitle: (
-      // eslint-disable-next-line no-console
-      <IconButton aria-label="Cloud" onClick={() => console.log('cloud click')}>
-        <CloudIcon />
-      </IconButton>
-    ),
     glyph: 'Code',
   },
   {
