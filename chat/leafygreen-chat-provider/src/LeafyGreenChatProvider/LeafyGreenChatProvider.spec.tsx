@@ -7,39 +7,64 @@ import {
 } from './LeafyGreenChatProvider';
 import { Variant } from './LeafyGreenChatProvider.types';
 
-beforeAll(() => {
-  global.ResizeObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    unobserve: jest.fn(),
-    disconnect: jest.fn(),
-  }));
-});
-
 const TestComponent = () => {
-  const { variant } = useLeafyGreenChatContext();
-  return <div data-testid="test-component">{variant}</div>;
+  const { variant, assistantName } = useLeafyGreenChatContext();
+  return (
+    <div>
+      <div data-testid="test-variant">{variant}</div>
+      <div data-testid="test-assistant-name">{assistantName}</div>
+    </div>
+  );
 };
 
 describe('LeafyGreenChatProvider', () => {
-  it('provides the default variant to the context', () => {
+  beforeAll(() => {
+    global.ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+  });
+
+  test('provides the default variant and assistantName to the context', () => {
     render(
       <LeafyGreenChatProvider>
         <TestComponent />
       </LeafyGreenChatProvider>,
     );
 
-    const testComponent = screen.getByTestId('test-component');
-    expect(testComponent.textContent).toBe(Variant.Spacious);
+    const testVariant = screen.getByTestId('test-variant');
+    const testAssistantName = screen.getByTestId('test-assistant-name');
+    expect(testVariant.textContent).toBe(Variant.Compact);
+    expect(testAssistantName.textContent).toBe('MongoDB Assistant');
   });
 
-  it('provides the specified variant to the context', () => {
+  test('provides the specified variant and assistantName to the context', () => {
     render(
-      <LeafyGreenChatProvider variant={Variant.Compact}>
+      <LeafyGreenChatProvider
+        variant={Variant.Spacious}
+        assistantName="Custom Assistant"
+      >
         <TestComponent />
       </LeafyGreenChatProvider>,
     );
 
-    const testComponent = screen.getByTestId('test-component');
-    expect(testComponent.textContent).toBe(Variant.Compact);
+    const testVariant = screen.getByTestId('test-variant');
+    const testAssistantName = screen.getByTestId('test-assistant-name');
+    expect(testVariant.textContent).toBe(Variant.Spacious);
+    expect(testAssistantName.textContent).toBe('Custom Assistant');
+  });
+
+  test('allows overriding only the assistantName', () => {
+    render(
+      <LeafyGreenChatProvider assistantName="Custom Assistant">
+        <TestComponent />
+      </LeafyGreenChatProvider>,
+    );
+
+    const testVariant = screen.getByTestId('test-variant');
+    const testAssistantName = screen.getByTestId('test-assistant-name');
+    expect(testVariant.textContent).toBe(Variant.Compact);
+    expect(testAssistantName.textContent).toBe('Custom Assistant');
   });
 });
