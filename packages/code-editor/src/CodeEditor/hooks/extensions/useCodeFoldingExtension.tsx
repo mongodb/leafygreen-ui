@@ -4,6 +4,7 @@ import { type EditorView } from '@codemirror/view';
 
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';
 import { type CodeEditorModules } from '../useModuleLoaders';
@@ -55,7 +56,9 @@ export function useCodeFoldingExtension({
                 glyph="ChevronDown"
                 size="small"
                 className={css`
-                  margin-top: 2px;
+                  margin-top: ${spacing[100]}px;
+                  height: 10px; // Custom icon height
+                  width: 10px; // Custom icon width
                 `}
               />
             ) : (
@@ -63,7 +66,9 @@ export function useCodeFoldingExtension({
                 glyph="ChevronRight"
                 size="small"
                 className={css`
-                  margin-top: 2px;
+                  margin-top: ${spacing[100]}px;
+                  height: 10px;
+                  width: 10px;
                 `}
               />
             ),

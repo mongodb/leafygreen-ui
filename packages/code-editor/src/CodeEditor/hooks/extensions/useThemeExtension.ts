@@ -71,6 +71,8 @@ export function useThemeExtension({
             border: `1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
             borderRadius: `${borderRadius[300]}px`,
+            paddingTop: `${spacing[200]}px`,
+            paddingBottom: `${spacing[200]}px`,
           },
 
           [`&${CodeEditorSelectors.Focused}`]: {
