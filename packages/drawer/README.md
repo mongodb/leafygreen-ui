@@ -407,14 +407,6 @@ You can also use the resizable feature with a toolbar-based drawer:
 </DrawerLayout>
 ```
 
-### Title
-
-The `title` prop of the `Drawer` and `Toolbar` items can be a string or a React node. If it is a string, it will be rendered as a `<h2>` element. If it is a React node, it will be rendered as is.
-
-```tsx
-
-```
-
 ## Props
 
 ### DrawerLayout
