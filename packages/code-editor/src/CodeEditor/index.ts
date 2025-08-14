@@ -7,6 +7,7 @@ export {
   type CodeMirrorExtension,
   type CodeMirrorState,
   type CodeMirrorView,
+  CopyButtonAppearance,
   IndentUnits,
 } from './CodeEditor.types';
 export {

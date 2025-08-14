@@ -5,6 +5,7 @@ import { type EditorView } from '@codemirror/view';
 import { type DarkModeProps } from '@leafygreen-ui/lib';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
+import { copyButtonClassName } from './CodeEditor.styles';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
@@ -35,6 +36,19 @@ export interface HTMLElementWithCodeMirror extends HTMLDivElement {
 }
 
 /**
+ * The appearance of the copy button.
+ */
+export const CopyButtonAppearance = {
+  Hover: 'hover',
+  Persist: 'persist',
+  None: 'none',
+} as const;
+export type CopyButtonAppearance =
+  (typeof CopyButtonAppearance)[keyof typeof CopyButtonAppearance];
+
+export const CopyButtonLgId = 'lg-code_editor-code_editor_copy_button';
+
+/**
  * The important elements in the code mirror editor have regular (non-generated)
  * CSS class names, which can be targeted. For example, the outer element has
  * class cm-editor. This is a mapping of those selectors which can be used for
@@ -44,6 +58,7 @@ export const CodeEditorSelectors = {
   ActiveLine: '.cm-activeLine',
   ActiveLineGutter: '.cm-activeLineGutter',
   Content: '.cm-content',
+  CopyButton: `[data-lgid="${CopyButtonLgId}"]`,
   Cursor: '.cm-cursor',
   Editor: '.cm-editor',
   Focused: '.cm-focused',
@@ -115,6 +130,21 @@ export interface CodeEditorProps extends DarkModeProps {
    * Styling prop
    */
   className?: string;
+
+  /**
+   * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
+   *
+   * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
+   *
+   * If `persist`, the copy button will always be visible.
+   *
+   * If `none`, the copy button will not be rendered.
+   *
+   * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
+   *
+   * @default `hover`
+   */
+  copyButtonAppearance?: CopyButtonAppearance;
 
   /**
    * Initial value to render in the editor.
