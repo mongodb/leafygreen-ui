@@ -7,14 +7,6 @@ import {
 } from './LeafyGreenChatProvider';
 import { Variant } from './LeafyGreenChatProvider.types';
 
-beforeAll(() => {
-  global.ResizeObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    unobserve: jest.fn(),
-    disconnect: jest.fn(),
-  }));
-});
-
 const TestComponent = () => {
   const { variant, assistantName } = useLeafyGreenChatContext();
   return (
@@ -26,7 +18,15 @@ const TestComponent = () => {
 };
 
 describe('LeafyGreenChatProvider', () => {
-  it('provides the default variant and assistantName to the context', () => {
+  beforeAll(() => {
+    global.ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+  });
+
+  test('provides the default variant and assistantName to the context', () => {
     render(
       <LeafyGreenChatProvider>
         <TestComponent />
@@ -36,14 +36,14 @@ describe('LeafyGreenChatProvider', () => {
     const testVariant = screen.getByTestId('test-variant');
     const testAssistantName = screen.getByTestId('test-assistant-name');
     expect(testVariant.textContent).toBe(Variant.Compact);
-    expect(testAssistantName.textContent).toBe('AI Assistant');
+    expect(testAssistantName.textContent).toBe('MongoDB Assistant');
   });
 
-  it('provides the specified variant and assistantName to the context', () => {
+  test('provides the specified variant and assistantName to the context', () => {
     render(
       <LeafyGreenChatProvider
         variant={Variant.Spacious}
-        assistantName="MongoDB Assistant"
+        assistantName="Custom Assistant"
       >
         <TestComponent />
       </LeafyGreenChatProvider>,
@@ -52,10 +52,10 @@ describe('LeafyGreenChatProvider', () => {
     const testVariant = screen.getByTestId('test-variant');
     const testAssistantName = screen.getByTestId('test-assistant-name');
     expect(testVariant.textContent).toBe(Variant.Spacious);
-    expect(testAssistantName.textContent).toBe('MongoDB Assistant');
+    expect(testAssistantName.textContent).toBe('Custom Assistant');
   });
 
-  it('allows overriding only the assistantName', () => {
+  test('allows overriding only the assistantName', () => {
     render(
       <LeafyGreenChatProvider assistantName="Custom Assistant">
         <TestComponent />

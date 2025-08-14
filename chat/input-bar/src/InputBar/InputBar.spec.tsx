@@ -9,50 +9,63 @@ import userEvent from '@testing-library/user-event';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { State } from './shared.types';
-import { InputBar } from '.';
+import { InputBar, InputBarProps } from '.';
 
-const testText = 'test';
+const TEST_INPUT_TEXT = 'test';
 
-// Mock the ResizeObserver which is used by TextareaAutosize
-global.ResizeObserver = jest.fn().mockImplementation(() => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
-}));
+const renderInputBar = (
+  props: Partial<InputBarProps> = {},
+  variant: Variant = Variant.Compact,
+) => {
+  return render(
+    <LeafyGreenChatProvider variant={variant}>
+      <InputBar {...props} />
+    </LeafyGreenChatProvider>,
+  );
+};
 
 describe('packages/input-bar', () => {
+  // mock the ResizeObserver used in LeafyGreenChatProvider
+  beforeAll(() => {
+    global.ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+  });
+
   test('renders `badgeText` when the prop is set', () => {
-    render(<InputBar badgeText="beta" />);
+    renderInputBar({ badgeText: 'beta' }, Variant.Spacious);
 
     expect(screen.getByText('beta')).toBeInTheDocument();
   });
 
   test('fires `onChange` when user types', () => {
     const onChange = jest.fn();
-    render(<InputBar onChange={onChange} />);
+    renderInputBar({ onChange });
 
     const textarea = screen.getByRole('textbox');
-    userEvent.type(textarea, testText);
+    userEvent.type(textarea, TEST_INPUT_TEXT);
 
-    expect(onChange).toHaveBeenCalledTimes(testText.length);
+    expect(onChange).toHaveBeenCalledTimes(TEST_INPUT_TEXT.length);
   });
 
   describe('onMessageSend', () => {
     const onMessageSend = jest.fn();
     beforeEach(() => {
       onMessageSend.mockClear();
-      render(<InputBar onMessageSend={onMessageSend} />);
+      renderInputBar({ onMessageSend });
     });
 
     test('fires when enter is clicked', () => {
       const textarea = screen.getByRole('textbox');
       const sendButton = screen.getByRole('button');
-      userEvent.type(textarea, testText);
+      userEvent.type(textarea, TEST_INPUT_TEXT);
       userEvent.click(sendButton);
 
       expect(onMessageSend).toHaveBeenCalledTimes(1);
       expect(onMessageSend).toHaveBeenCalledWith(
-        testText,
+        TEST_INPUT_TEXT,
         expect.objectContaining({
           type: 'submit',
         }),
@@ -61,12 +74,12 @@ describe('packages/input-bar', () => {
 
     test('fires when enter key is pressed', () => {
       const textarea = screen.getByRole('textbox');
-      userEvent.type(textarea, testText);
+      userEvent.type(textarea, TEST_INPUT_TEXT);
       userEvent.type(textarea, '{enter}');
 
       expect(onMessageSend).toHaveBeenCalledTimes(1);
       expect(onMessageSend).toHaveBeenCalledWith(
-        testText,
+        TEST_INPUT_TEXT,
         expect.objectContaining({
           type: 'submit',
         }),
@@ -78,13 +91,13 @@ describe('packages/input-bar', () => {
     const onSubmit = jest.fn();
     beforeEach(() => {
       onSubmit.mockClear();
-      render(<InputBar onSubmit={onSubmit} />);
+      renderInputBar({ onSubmit });
     });
 
     test('fires when enter is clicked', () => {
       const textarea = screen.getByRole('textbox');
       const sendButton = screen.getByRole('button');
-      userEvent.type(textarea, testText);
+      userEvent.type(textarea, TEST_INPUT_TEXT);
       userEvent.click(sendButton);
 
       expect(onSubmit).toHaveBeenCalledTimes(1);
@@ -97,7 +110,7 @@ describe('packages/input-bar', () => {
 
     test('fires when enter key is pressed', () => {
       const textarea = screen.getByRole('textbox');
-      userEvent.type(textarea, testText);
+      userEvent.type(textarea, TEST_INPUT_TEXT);
       userEvent.type(textarea, '{enter}');
 
       expect(onSubmit).toHaveBeenCalledTimes(1);
@@ -110,7 +123,7 @@ describe('packages/input-bar', () => {
   });
 
   test('disables the textarea and send button when `disabled` is true', () => {
-    render(<InputBar disabled />);
+    renderInputBar({ disabled: true });
     const textarea = screen.getByRole('textbox');
     const sendButton = screen.getByRole('button');
     expect(textarea).toBeDisabled();
@@ -118,7 +131,7 @@ describe('packages/input-bar', () => {
   });
 
   test('disables only the send button when `disableSend` is true', () => {
-    render(<InputBar disableSend />);
+    renderInputBar({ disableSend: true });
     const textarea = screen.getByRole('textbox');
     const sendButton = screen.getByRole('button');
     expect(textarea).not.toBeDisabled();
@@ -163,7 +176,7 @@ describe('packages/input-bar', () => {
 
   describe('Hotkey Indicator', () => {
     beforeEach(() => {
-      render(<InputBar shouldRenderHotkeyIndicator />);
+      renderInputBar({ shouldRenderHotkeyIndicator: true }, Variant.Spacious);
     });
 
     test('renders when the prop is set', () => {
@@ -206,7 +219,7 @@ describe('packages/input-bar', () => {
     test('resets value to empty string after form submission when uncontrolled', () => {
       const onMessageSend = jest.fn();
 
-      render(<InputBar onMessageSend={onMessageSend} />);
+      renderInputBar({ onMessageSend });
 
       const textarea = screen.getByRole('textbox');
       const sendButton = screen.getByRole('button');
@@ -234,12 +247,10 @@ describe('packages/input-bar', () => {
       const onMessageSend = jest.fn();
       const controlledValue = 'persistent text';
 
-      render(
-        <InputBar
-          textareaProps={{ value: controlledValue }}
-          onMessageSend={onMessageSend}
-        />,
-      );
+      renderInputBar({
+        textareaProps: { value: controlledValue },
+        onMessageSend,
+      });
 
       const textarea = screen.getByRole('textbox');
       const sendButton = screen.getByRole('button');
@@ -260,14 +271,12 @@ describe('packages/input-bar', () => {
     test('handles textareaProps.onChange correctly', () => {
       const onTextareaChange = jest.fn();
 
-      render(
-        <InputBar
-          textareaProps={{
-            value: 'initial',
-            onChange: onTextareaChange,
-          }}
-        />,
-      );
+      renderInputBar({
+        textareaProps: {
+          value: 'initial',
+          onChange: onTextareaChange,
+        },
+      });
 
       const textarea = screen.getByRole('textbox');
       userEvent.type(textarea, 'x');
@@ -279,11 +288,7 @@ describe('packages/input-bar', () => {
 
   describe('status states', () => {
     test('renders loading state when state is "loading"', () => {
-      render(
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <InputBar state={State.Loading} />
-        </LeafyGreenChatProvider>,
-      );
+      renderInputBar({ state: State.Loading });
 
       expect(
         screen.getByText(/MongoDB Assistant is thinking/i),
@@ -291,11 +296,7 @@ describe('packages/input-bar', () => {
     });
 
     test('renders error state with default message when state is "error" and no message provided', () => {
-      render(
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <InputBar state={State.Error} />
-        </LeafyGreenChatProvider>,
-      );
+      renderInputBar({ state: State.Error });
 
       expect(
         screen.getByText(/Oops... Something went wrong/i),
@@ -307,11 +308,7 @@ describe('packages/input-bar', () => {
 
     test('renders error state with custom message when state is "error" and errorMessage provided', () => {
       const errorMessage = 'Custom error message';
-      render(
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <InputBar state={State.Error} errorMessage={errorMessage} />
-        </LeafyGreenChatProvider>,
-      );
+      renderInputBar({ state: State.Error, errorMessage });
 
       expect(screen.getByText(errorMessage)).toBeInTheDocument();
       expect(
@@ -321,19 +318,15 @@ describe('packages/input-bar', () => {
 
     test('retry button calls onMessageSend', () => {
       const onMessageSend = jest.fn();
-      const { rerender } = render(
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <InputBar
-            onMessageSend={onMessageSend}
-            textareaProps={{ value: testText }}
-          />
-        </LeafyGreenChatProvider>,
-      );
+      const { rerender } = renderInputBar({
+        onMessageSend,
+        textareaProps: { value: TEST_INPUT_TEXT },
+      });
 
       const sendButton = screen.getByRole('button', { name: 'Send message' });
       userEvent.click(sendButton);
       expect(onMessageSend).toHaveBeenCalledWith(
-        testText,
+        TEST_INPUT_TEXT,
         expect.objectContaining({
           type: 'submit',
         }),
@@ -344,7 +337,7 @@ describe('packages/input-bar', () => {
           <InputBar
             state={State.Error}
             onMessageSend={onMessageSend}
-            textareaProps={{ value: testText }}
+            textareaProps={{ value: TEST_INPUT_TEXT }}
           />
         </LeafyGreenChatProvider>,
       );
@@ -353,7 +346,7 @@ describe('packages/input-bar', () => {
       userEvent.click(retryButton);
 
       expect(onMessageSend).toHaveBeenCalledWith(
-        testText,
+        TEST_INPUT_TEXT,
         expect.objectContaining({
           type: 'submit',
         }),
