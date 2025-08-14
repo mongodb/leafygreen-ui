@@ -192,7 +192,7 @@ Refer to `STYLEGUIDE.md` for code style guidelines
 
 ## Additional instructions
 
-- For Storybook files `(\*_/_.stories.ts)`, do not comment on the inclusion of `console` logs.
+- For Storybook files `**/*.stories.ts`, do not comment on the inclusion of `console` logs.
 
 ## Trust These Instructions
 
