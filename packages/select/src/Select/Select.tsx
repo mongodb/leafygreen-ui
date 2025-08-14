@@ -18,7 +18,7 @@ import LeafyGreenProvider, {
   PopoverPropsProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap } from '@leafygreen-ui/lib';
+import { isDefined, keyMap } from '@leafygreen-ui/lib';
 import { getPopoverRenderModeProps } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
@@ -97,6 +97,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       onExiting,
       onExit,
       onExited,
+      open: openProp,
+      setOpen: setOpenProp,
       __INTERNAL__menuButtonSlot__,
       ...rest
     },
@@ -121,7 +123,14 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const descriptionId = `${id}-description`;
     const menuId = `${id}-menu`;
 
-    const [open, setOpen] = useState(false);
+    const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+
+    // Use controlled open state if provided, otherwise use internal state
+    const open = isDefined(openProp) ? openProp : uncontrolledOpen;
+    const setOpen =
+      isDefined(openProp) && isDefined(setOpenProp)
+        ? setOpenProp
+        : setUncontrolledOpen;
 
     const containerRef = useForwardedRef(fwdRef, null);
     const menuButtonRef = useStateRef<HTMLButtonElement>(null);
@@ -143,17 +152,27 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       }
     }, [onChange, readOnly, value]);
 
+    useEffect(() => {
+      if (openProp !== undefined && setOpenProp === undefined) {
+        console.warn(
+          'You provided an `open` prop to Select without a `setOpen` handler. ' +
+            'This will render a Select with fixed open state. ' +
+            'If you want to control the open state, provide both `open` and `setOpen` props.',
+        );
+      }
+    }, [openProp, setOpenProp]);
+
     /**
      * Open / close state
      */
     const onOpen = useCallback(() => {
       setOpen(true);
-    }, []);
+    }, [setOpen]);
 
     const onClose = useCallback(() => {
       setOpen(false);
-      menuButtonRef.current!.focus();
-    }, [menuButtonRef]);
+      menuButtonRef.current?.focus();
+    }, [setOpen, menuButtonRef]);
 
     useEffect(() => {
       if (!open) {
@@ -171,7 +190,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       return () => {
         document.removeEventListener('mousedown', onClickOutside);
       };
-    }, [listMenuRef, menuButtonRef, open]);
+    }, [listMenuRef, menuButtonRef, open, setOpen]);
 
     const initialUncontrolledSelectedOption = useMemo(() => {
       let initialUncontrolledSelectedOption: OptionElement | null = null;

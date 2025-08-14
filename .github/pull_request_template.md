@@ -1,25 +1,25 @@
 ## ✍️ Proposed changes
 
-<!-- Describe the big picture of your changes here and communicate why we should accept this pull request. If it fixes a bug or resolves a feature request, be sure to link to that issue. -->
+<!-- Provide a brief and clear description of the big picture changes and why they are being made. If it fixes a bug or implements a feature, concisely explain the problem being solved. -->
 
 🎟 _Jira ticket:_ [Name of ticket](https://jira.mongodb.org/browse/[name-of-ticket])
 
 ## ✅ Checklist
 
-### For bug fixes, new features & breaking changes
-
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] I have added necessary documentation (if appropriate)
-- [ ] I have run `pnpm changeset` and documented my changes
-
 ### For new components
 
 - [ ] I have added my new package to the global tsconfig
 - [ ] I have added my new package to the Table of Contents on the global README
-- [ ] I have verified the Live Example looks as intended on the design website.
+- [ ] I have verified the Live Example will look as intended on the design website.
+
+### For bug fixes, new features & breaking changes
+
+- [ ] I have added stories/tests that prove my fix is effective or that my feature works
+- [ ] I have added necessary documentation (if appropriate)
+- [ ] I have run `pnpm changeset` and documented my changes
 
 ## 🧪 How to test changes
 
 <!--
-Explain or give steps of how to test your changes manually. Be as specific as you can – this will help the reviewer effectively and efficiently test and approve your changes. For bug fixes, this can often simply be the steps that you used to reproduce the bug.
+Provide concise, specific, and actionable testing steps based on the changes made. For bug fixes, include simple steps to reproduce the issue. For features, provide clear steps to verify the new functionality.
 -->
