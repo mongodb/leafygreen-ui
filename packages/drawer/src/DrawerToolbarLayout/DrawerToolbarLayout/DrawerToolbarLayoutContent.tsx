@@ -40,7 +40,6 @@ export const DrawerToolbarLayoutContent = forwardRef<
     const {
       id,
       title,
-      inlineChildrenInTitle,
       content,
       scrollable = true,
     } = getActiveDrawerContent() || {};
@@ -100,7 +99,6 @@ export const DrawerToolbarLayoutContent = forwardRef<
             open={isDrawerOpen}
             onClose={handleOnClose}
             title={title}
-            inlineChildrenInTitle={inlineChildrenInTitle}
             scrollable={scrollable}
             data-lgid={`${dataLgId}`}
             data-testid={`${dataLgId}`}

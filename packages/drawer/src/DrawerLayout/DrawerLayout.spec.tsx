@@ -199,7 +199,6 @@ describe('packages/DrawerLayout', () => {
             content: '<p>hey</p>',
             label: 'the label',
             title: 'the title',
-            inlineChildrenInTitle: <div>inline children</div>,
           },
         ]}
         onClose={() => {}}
