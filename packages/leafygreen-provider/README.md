@@ -8,6 +8,12 @@ Components should always gracefully degrade when the provider is not an ancestor
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/leafygreen-provider
+```
+
 ### Yarn
 
 ```shell

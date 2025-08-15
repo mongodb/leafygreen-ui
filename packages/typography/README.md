@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/typography
+```
+
 ### Yarn
 
 ```shell
@@ -43,39 +49,6 @@ import { H1, H2, Subtitle, Body, InlineCode, InlineKeyCode, Disclaimer, Overline
 <Overline>Overline</Overline>
 <Link href="http://mongodb.design">MongoDB.design</Link>
 <BackLink href="/home">MongoDB.design</BackLink>
-```
-
-**Output HTML**
-
-```html
-<h1 class="leafygreen-ui-wbskfk">Heading 1</h1>
-<h2 class="leafygreen-ui-1t0mh6j">Heading 2</h2>
-<h3 class="leafygreen-ui-1t0mh6j">Heading 3</h3>
-<h6 class="leafygreen-ui-1dmxpt6">Subtitle</h6>
-<div class="leafygreen-ui-wkgw79">Body</div>
-<code class="leafygreen-ui-18bk0d8">Code</code>
-<code class="leafygreen-ui-1vl51l4">CTRL</code
-><code class="leafygreen-ui-1vl51l4">+</code
-><code class="leafygreen-ui-1vl51l4">C</code>
-<small class="leafygreen-ui-1cggyhz">Disclaimer</small>
-<div class="leafygreen-ui-vezyzr">Overline</div>
-<a
-  href="http://mongodb.design"
-  target="_blank"
-  class="leafygreen-ui-1toaa4e"
-  data-leafygreen-ui="anchor-container"
->
-  <span>MongoDB.design</span>
-  <svg
-    width="16px"
-    height="16px"
-    viewBox="0 0 16 16"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-  >
-    <title>Open in New Tab</title>
-  </svg>
-</a>
 ```
 
 ## Properties
