@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { act, render, waitForElementToBeRemoved } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -41,6 +41,27 @@ function renderModal(
 }
 
 describe('packages/marketing-modal', () => {
+  // Mock dialog methods for JSDOM environment
+  beforeAll(() => {
+    HTMLDialogElement.prototype.show = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.showModal = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.close = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = false;
+    });
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container, getByText } = renderModal({ open: true });
@@ -56,8 +77,8 @@ describe('packages/marketing-modal', () => {
     });
   });
   test('does not render if closed', () => {
-    renderModal();
-    expect(document.body.innerHTML).toEqual('<div></div>');
+    const { getByText } = renderModal();
+    expect(getByText('Content text')).not.toBeVisible();
   });
 
   test('renders if open', () => {
@@ -125,7 +146,7 @@ describe('packages/marketing-modal', () => {
 
       userEvent.keyboard('{Escape}');
 
-      await waitForElementToBeRemoved(modal);
+      await waitFor(() => expect(modal).not.toBeVisible());
     });
 
     test('x icon is clicked', async () => {
@@ -135,7 +156,7 @@ describe('packages/marketing-modal', () => {
       const x = getByLabelText('Close modal');
       userEvent.click(x);
 
-      await waitForElementToBeRemoved(modal);
+      await waitFor(() => expect(modal).not.toBeVisible());
     });
   });
 

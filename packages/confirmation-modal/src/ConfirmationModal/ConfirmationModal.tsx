@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { forwardRef, useMemo, useState } from 'react';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -27,7 +27,10 @@ import {
 /**
  * Modals can be used to display a simple task, confirm actions, prompt users to input information, or display additional information.
  */
-export const ConfirmationModal = React.forwardRef(
+export const ConfirmationModal = forwardRef<
+  HTMLDialogElement,
+  ConfirmationModalProps
+>(
   (
     {
       children,
@@ -43,8 +46,8 @@ export const ConfirmationModal = React.forwardRef(
       cancelButtonProps = {},
       'data-lgid': dataLgId,
       ...modalProps
-    }: ConfirmationModalProps,
-    forwardRef: React.ForwardedRef<HTMLDivElement | null>,
+    },
+    fwdRef,
   ) => {
     const [confirmEnabled, setConfirmEnabled] = useState(!requiredInputText);
     const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -105,10 +108,10 @@ export const ConfirmationModal = React.forwardRef(
         data-testid={lgIds.root}
         data-lgid={lgIds.root}
         {...modalProps}
-        contentClassName={baseModalStyle}
+        className={baseModalStyle}
         setOpen={handleCancel}
         darkMode={darkMode}
-        ref={forwardRef}
+        ref={fwdRef}
       >
         <div
           className={cx(contentStyle, contentVariantStyles[variant], {
