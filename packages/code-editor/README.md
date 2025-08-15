@@ -74,6 +74,60 @@ console.log(greet('MongoDB user'));`;
 | `value` _(optional)_                | Controlled value of the editor. If set, the editor will be controlled and will not update its value on change. Use `onChange` to update the value externally.                                                                                                                                                                                                                                                                                                                                                                  | `string`                     | `undefined` |
 | `width` _(optional)_                | Sets the editor's width. If not set, the editor will be 100% width of its parent container.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `string`                     | `undefined` |
 
+### `<Panel>`
+
+The Panel component provides a toolbar interface for the CodeEditor with formatting, copying, and custom action buttons. It displays at the top of the CodeEditor and can include a title, action buttons, and custom content.
+
+#### Example
+
+```tsx
+import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
+import CloudIcon from '@leafygreen-ui/icon';
+
+<CodeEditor
+  defaultValue="const greeting = 'Hello World';"
+  language={LanguageName.javascript}
+  panel={
+    <Panel
+      title="index.ts"
+      showFormatButton
+      showCopyButton
+      showSecondaryMenuButton
+      customSecondaryButtons={[
+        {
+          label: 'Deploy to Cloud',
+          glyph: <CloudIcon />,
+          onClick: () => console.log('Deploy clicked'),
+          'aria-label': 'Deploy code to cloud',
+        },
+      ]}
+      onFormatClick={() => console.log('Format clicked')}
+      onCopyClick={() => console.log('Copy clicked')}
+      onDownloadClick={() => console.log('Download clicked')}
+    />
+  }
+/>;
+```
+
+#### Properties
+
+| Name                                   | Description                                                                                                                                                                             | Type                           | Default     |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------- |
+| `baseFontSize` _(optional)_            | Font size of text in the panel. Controls the typography scale used for the panel title and other text elements.                                                                         | `14 \| 16`                     | `14`        |
+| `customSecondaryButtons` _(optional)_  | Array of custom secondary buttons to display in the secondary menu. Each button can include a label, icon, click handler, href, and aria-label for accessibility.                       | `Array<SecondaryButtonConfig>` | `undefined` |
+| `darkMode` _(optional)_                | Determines if the component appears in dark mode. When not provided, the component will inherit the dark mode state from the LeafyGreen Provider.                                       | `boolean`                      | `undefined` |
+| `innerContent` _(optional)_            | React node to render between the title and the buttons. Can be used to add custom controls to the panel.                                                                                | `React.ReactNode`              | `undefined` |
+| `onCopyClick` _(optional)_             | Callback fired when the copy button is clicked. Called after the copy operation is attempted.                                                                                           | `() => void`                   | `undefined` |
+| `onDownloadClick` _(optional)_         | Callback fired when the download button in the secondary menu is clicked. Called after the download operation is attempted.                                                             | `() => void`                   | `undefined` |
+| `onFormatClick` _(optional)_           | Callback fired when the format button is clicked. Called after the formatting operation is attempted.                                                                                   | `() => void`                   | `undefined` |
+| `onRedoClick` _(optional)_             | Callback fired when the redo button in the secondary menu is clicked. Called after the redo operation is attempted.                                                                     | `() => void`                   | `undefined` |
+| `onUndoClick` _(optional)_             | Callback fired when the undo button in the secondary menu is clicked. Called after the undo operation is attempted.                                                                     | `() => void`                   | `undefined` |
+| `onViewShortcutsClick` _(optional)_    | Callback fired when the view shortcuts button in the secondary menu is clicked. Called after the view shortcuts operation is attempted.                                                 | `() => void`                   | `undefined` |
+| `showCopyButton` _(optional)_          | Determines whether to show the copy button in the panel. When enabled, users can copy the editor content to their clipboard.                                                            | `boolean`                      | `undefined` |
+| `showFormatButton` _(optional)_        | Determines whether to show the format button in the panel. When enabled and formatting is available for the current language, users can format/prettify their code.                     | `boolean`                      | `undefined` |
+| `showSecondaryMenuButton` _(optional)_ | Determines whether to show the secondary menu button (ellipsis icon) in the panel. When enabled, displays a menu with additional actions like undo, redo, download, and view shortcuts. | `boolean`                      | `undefined` |
+| `title` _(optional)_                   | Title text to display in the panel header. Typically used to show the current language or content description.                                                                          | `string`                       | `undefined` |
+
 ## Types and Variables
 
 | Name                        | Description                                                                                                     |
@@ -89,6 +143,7 @@ console.log(greet('MongoDB user'));`;
 | `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                        |
 | `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                         |
 | `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.          |
+| `PanelProps`                | TypeScript interface defining all props that can be passed to the `Panel` component.                            |
 
 ## Test Utilities
 
