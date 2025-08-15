@@ -2329,6 +2329,9 @@ importers:
       '@leafygreen-ui/select':
         specifier: workspace:^
         version: link:../select
+      '@leafygreen-ui/toast':
+        specifier: workspace:^
+        version: link:../toast
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
