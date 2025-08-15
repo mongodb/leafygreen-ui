@@ -36,6 +36,7 @@
     "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/copyable": "workspace:^",
     "@leafygreen-ui/select": "workspace:^",
+    "@leafygreen-ui/toast": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
