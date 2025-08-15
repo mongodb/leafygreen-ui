@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import isEqual from 'react-fast-compare';
+import omit from 'lodash/omit';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
@@ -88,8 +89,8 @@ export const MemoizedInternalRowWithRT = React.memo(
     if (prevChildrenCount !== nextChildrenCount) return false;
 
     // Compare all props except children and shouldMemoizeRows
-    const { children: _1, shouldMemoizeRows: _2, ...prevRest } = prevProps;
-    const { children: _3, shouldMemoizeRows: _4, ...nextRest } = nextProps;
+    const prevRest = omit(prevProps, ['children', 'shouldMemoizeRows']);
+    const nextRest = omit(nextProps, ['children', 'shouldMemoizeRows']);
 
     return isEqual(prevRest, nextRest);
   },
