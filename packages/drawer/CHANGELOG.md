@@ -1,5 +1,14 @@
 # @leafygreen-ui/drawer
 
+## 4.2.1
+
+### Patch Changes
+
+- af2634e: - Update drawer title so it takes up all available free space in the header. [LG-5427](https://jira.mongodb.org/browse/LG-5427)
+  - Internally, replaces `<strong>` with `font-weight: 600`
+- Updated dependencies [d3c0f1f]
+  - @leafygreen-ui/button@25.0.2
+
 ## 4.2.0
 
 ### Minor Changes
