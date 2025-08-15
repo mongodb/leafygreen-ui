@@ -565,3 +565,115 @@ const lineNumbersExt = useLineNumbersExtension({
 // Combine extensions
 const allExtensions = [languageExt, themeExt, lineNumbersExt];
 ```
+
+### Extension Testing Utilities
+
+The `@leafygreen-ui/code-editor` package provides specialized testing utilities for LG extension hooks. These utilities eliminate duplication and provide consistent fake modules for testing extension functionality.
+
+#### Extension Test Utilities
+
+The following utilities are available for testing extension hooks:
+
+```tsx
+import {
+  createMockStateModule,
+  createMockViewModule,
+  createMockLanguageModule,
+  createMockLezerHighlightModule,
+  createMockAutoCompleteModule,
+  createMockLintModule,
+  createMockHyperLinkModule,
+  createComprehensiveFakeModules,
+  createMockExtension,
+  FakeCompartment,
+} from '@leafygreen-ui/code-editor';
+```
+
+#### Basic Fake Module Creators
+
+- `createMockStateModule(additionalMethods?)` - Creates a fake `@codemirror/state` module
+- `createMockViewModule(additionalMethods?)` - Creates a fake `@codemirror/view` module
+- `createMockLanguageModule(additionalMethods?)` - Creates a fake `@codemirror/language` module
+- `createMockLezerHighlightModule()` - Creates a fake `@lezer/highlight` module
+- `createMockAutoCompleteModule()` - Creates a fake `@codemirror/autocomplete` module
+- `createMockLintModule()` - Creates a fake `@codemirror/lint` module
+- `createMockHyperLinkModule()` - Creates a fake `@uiw/codemirror-extensions-hyper-link` module
+
+#### Comprehensive Test Setup
+
+- `createComprehensiveFakeModules()` - Creates a complete set of fake modules for testing complex scenarios
+- `createMockExtension(label)` - Creates a fake Extension object for testing
+- `FakeCompartment` - A fake Compartment class for testing
+
+#### Usage Examples
+
+**Testing a Single Extension Hook:**
+
+```tsx
+import { renderHook } from '@testing-library/react';
+import {
+  createMockStateModule,
+  createMockViewModule,
+} from '@leafygreen-ui/code-editor';
+import { useThemeExtension } from '@leafygreen-ui/code-editor/hooks/extensions';
+
+describe('useThemeExtension', () => {
+  const fakeStateModule = createMockStateModule();
+  const fakeViewModule = createMockViewModule();
+
+  it('should apply theme correctly', () => {
+    const { result } = renderHook(() =>
+      useThemeExtension({
+        editorViewInstance: null,
+        props: { darkMode: true, baseFontSize: 16 },
+        modules: {
+          '@codemirror/state': fakeStateModule,
+          '@codemirror/view': fakeViewModule,
+        },
+      }),
+    );
+
+    expect(result.current).toBeTruthy();
+  });
+});
+```
+
+**Testing Multiple Extensions:**
+
+```tsx
+import { renderHook } from '@testing-library/react';
+import { createComprehensiveFakeModules } from '@leafygreen-ui/code-editor';
+import { useExtensions } from '@leafygreen-ui/code-editor/hooks/extensions';
+
+describe('useExtensions', () => {
+  const fakeModules = createComprehensiveFakeModules();
+
+  it('should aggregate all extensions', () => {
+    const { result } = renderHook(() =>
+      useExtensions({
+        editorViewInstance: null,
+        props: {
+          language: 'javascript',
+          enableLineNumbers: true,
+          enableCodeFolding: true,
+        },
+        modules: fakeModules,
+      }),
+    );
+
+    expect(Array.isArray(result.current)).toBe(true);
+    expect(result.current.length).toBeGreaterThan(0);
+  });
+});
+```
+
+**Custom Module Configuration:**
+
+```tsx
+import { createMockStateModule } from '@leafygreen-ui/code-editor';
+
+// Extend base module with custom methods
+const customStateModule = createMockStateModule({
+  myCustomMethod: jest.fn(() => 'custom result'),
+});
+```
