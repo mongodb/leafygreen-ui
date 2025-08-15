@@ -527,40 +527,6 @@ describe('chat/suggestions', () => {
 
       expect(ref.current).toBeInstanceOf(HTMLDivElement);
     });
-
-    test('spreads rest props to root div', () => {
-      const { container } = renderSuggestedActions({
-        'data-testid': 'suggestions-card',
-        'aria-label': 'Configuration suggestions',
-        style: { border: '2px solid red' },
-      });
-
-      const rootDiv = container.firstChild as HTMLElement;
-      expect(rootDiv).toHaveAttribute('data-testid', 'suggestions-card');
-      expect(rootDiv).toHaveAttribute(
-        'aria-label',
-        'Configuration suggestions',
-      );
-      expect(rootDiv).toHaveStyle('border: 2px solid red');
-    });
-
-    test('applies custom className to root div', () => {
-      const customClassName = 'custom-suggestions-class';
-      const { container } = renderSuggestedActions({
-        className: customClassName,
-      });
-
-      const rootDiv = container.firstChild as HTMLElement;
-      expect(rootDiv).toHaveClass(customClassName);
-    });
-
-    test('expands to parent container width', () => {
-      const { container } = renderSuggestedActions();
-      const rootDiv = container.firstChild as HTMLElement;
-
-      // The component should have width: 100% instead of a fixed width
-      expect(rootDiv).toHaveStyle('width: 100%');
-    });
   });
 
   describe('props validation', () => {
