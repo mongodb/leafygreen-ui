@@ -2,6 +2,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @lg-chat/lg-markdown
+```
+
 ### Yarn
 
 ```shell

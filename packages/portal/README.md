@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/portal
+```
+
 ### Yarn
 
 ```shell
@@ -29,17 +35,6 @@ import Portal from '@leafygreen-ui/portal';
     document.body to or a node that can be specified with a container prop.
   </div>
 </Portal>;
-```
-
-**Output HTML**
-
-```html
-<div>
-  <div class="leafygreen-ui-xi606m">
-    Portals transport their children to a div that is appended to the end of the
-    document.body to or a node that can be specified with a container prop.
-  </div>
-</div>
 ```
 
 ## Properties

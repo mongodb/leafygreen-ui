@@ -8,6 +8,12 @@ Note, this package only contains generic Date utilities. For implementation-spec
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/date-utils
+```
+
 ### Yarn
 
 ```shell

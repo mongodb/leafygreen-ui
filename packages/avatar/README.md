@@ -2,6 +2,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/avatar
+```
+
 ### Yarn
 
 ```shell

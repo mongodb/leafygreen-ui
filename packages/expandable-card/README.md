@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/expandable-card
+```
+
 ### Yarn
 
 ```shell
@@ -32,47 +38,6 @@ import ExpandableCard from '@leafygreen-ui/expandable-card';
   Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut
   fermentum massa justo sit amet risus.
 </ExpandableCard>;
-```
-
-**Output HTML**
-
-```html
-<div id="expandable-card-1">
-  <div
-    role="button"
-    aria-expanded="true"
-    aria-controls="expandable-card-content-1"
-    id="expandable-card-summary-1"
-    tabindex="0"
-  >
-    <span>
-      <h3>Lorem Ipsum</h3>
-      <span>optional</span>
-    </span>
-    <div>Donec id elit non mi porta gravida at eget metus.</div>
-    <svg
-      width="16"
-      height="16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 16 16"
-      role="img"
-      aria-label="Chevron Up Icon"
-    >
-      ...
-    </svg>
-  </div>
-  <div
-    role="region"
-    id="expandable-card-content-1"
-    aria-labelledby="expandable-card-summary-1"
-  >
-    <div>
-      Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-      ut fermentum massa justo sit amet risus.
-    </div>
-  </div>
-</div>
 ```
 
 ## Properties

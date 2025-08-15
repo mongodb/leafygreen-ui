@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @lg-chat/fixed-chat-window
+```
+
 ### Yarn
 
 ```shell

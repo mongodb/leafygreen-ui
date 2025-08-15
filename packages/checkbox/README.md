@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/checkbox
+```
+
 ### Yarn
 
 ```shell
@@ -32,36 +38,6 @@ import Checkbox from '@leafygreen-ui/checkbox';
   checked={true}
   bold={false}
 />;
-```
-
-**Output HTML**
-
-```html
-<label
-  class="css-1rgbgdt my-checkbox"
-  title="Create an item"
-  for="checkbox-14827892"
->
-  <input
-    checked
-    type="checkbox"
-    role="checkbox"
-    class="css-32kjhsdaf"
-    id="checkbox-14827892"
-    name="checkbox-14827892"
-    aria-disabled="false"
-    aria-checked="true"
-    aria-labeledby="checkbox-14827892-label"
-  />
-
-  <div class="css-34kjkdfg">
-    <div class="css-98sdfjsad"></div>
-  </div>
-
-  <span class="css-8xdsjfh9" id="checkbox-14827892-label">
-    This is how you enable a thing
-  </span>
-</label>
 ```
 
 ## Properties

@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/popover
+```
+
 ### Yarn
 
 ```shell
@@ -20,7 +26,7 @@ npm install @leafygreen-ui/popover
 
 ## Example
 
-```js
+```tsx
 import Popover, {
   Align,
   DismissMode,
@@ -58,21 +64,6 @@ const handleToggle = (e: ToggleEvent) => {
     Popover content
   </Popover>
 </>;
-```
-
-## Output HTML
-
-```html
-<html>
-  <body>
-    <button class="leafygreen-ui-79elbk">Open Popover</button>
-    <span class="leafygreen-ui-1hyfx7x" />
-    <div class="leafygreen-ui-1t5dnko" popover="auto">
-      Popover content ::backdrop
-    </div>
-  </body>
-</html>
-#top-layer > div > ::backdrop
 ```
 
 ## Render mode

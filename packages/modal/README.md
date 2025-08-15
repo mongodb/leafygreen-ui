@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/modal
+```
+
 ### Yarn
 
 ```shell
@@ -35,45 +41,6 @@ function ExampleComponent() {
     </>
   );
 }
-```
-
-**Output HTML**
-
-```html
-<button>Open Modal</button>
-<div aria-modal="true" role="dialog" tabindex="-1" class="leafygreen-ui-2e4yhj">
-  <button
-    tabindex="0"
-    aria-disabled="false"
-    aria-label="Close modal"
-    class="leafygreen-ui-zndd6x"
-  >
-    <div class="leafygreen-ui-xhlipt">
-      <svg
-        class="leafygreen-ui-19fdo3o"
-        height="20"
-        width="20"
-        viewBox="0 0 16 16"
-        role="img"
-      >
-        <g
-          id="X-Copy"
-          stroke="none"
-          stroke-width="1"
-          fill="none"
-          fill-rule="evenodd"
-        >
-          <path
-            d="M9,7 L13.5,7 L13.5,9 L9,9 L9,13.5 L7,13.5 L7,9 L2.5,9 L2.5,7 L7,7 L7,2.5 L9,2.5 L9,7 Z"
-            id="Combined-Shape-Copy"
-            fill="currentColor"
-            transform="translate(8.000000, 8.000000) rotate(45.000000) translate(-8.000000, -8.000000) "
-          ></path>
-        </g>
-      </svg>
-    </div></button
-  >Modal Content goes here.
-</div>
 ```
 
 ## Notes

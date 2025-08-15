@@ -4,6 +4,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/hooks
+```
+
 ### Yarn
 
 ```shell

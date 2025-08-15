@@ -8,6 +8,12 @@
 
 # Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/table@13.0.0-rc.0
+```
+
 ### Yarn
 
 ```shell

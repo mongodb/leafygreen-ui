@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/banner
+```
+
 ### Yarn
 
 ```shell
@@ -22,28 +28,6 @@ npm install @leafygreen-ui/banner
 
 ```js
 <Banner>This is the banner content</Banner>
-```
-
-**Output HTML**
-
-```html
-<div role="alert" class="leafygreen-ui-zvv1x8">
-  <svg
-    width="16"
-    height="16"
-    role="img"
-    viewBox="0 0 16 16"
-    class="leafygreen-ui-1e46tsl"
-  >
-    <title>Edit Icon</title>
-    <path
-      d="M11.352 6.648l-2-2L11 3l2 2-1.648 1.648zM6 12l-3 1 1-3 4.648-4.648 2 2L6 12z"
-      fill="currentColor"
-      fill-rule="evenodd"
-    />
-  </svg>
-  <span class="leafygreen-ui-1kr3ls8">This is the banner content.</span>
-</div>
 ```
 
 ## Properties
