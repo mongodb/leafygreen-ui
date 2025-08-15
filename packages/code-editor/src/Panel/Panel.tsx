@@ -68,20 +68,20 @@ import { PanelProps } from './Panel.types';
  * ```
  */
 export function Panel({
-  title,
+  baseFontSize: baseFontSizeProp,
+  customSecondaryButtons,
+  darkMode,
+  innerContent,
+  onCopyClick,
+  onDownloadClick,
+  onFormatClick,
+  onRedoClick,
+  onUndoClick,
+  onViewShortcutsClick,
   showCopyButton,
   showFormatButton,
   showSecondaryMenuButton,
-  onCopyClick,
-  onFormatClick,
-  onUndoClick,
-  onRedoClick,
-  onDownloadClick,
-  onViewShortcutsClick,
-  customSecondaryButtons,
-  innerContent,
-  baseFontSize: baseFontSizeProp,
-  darkMode,
+  title,
 }: PanelProps) {
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
