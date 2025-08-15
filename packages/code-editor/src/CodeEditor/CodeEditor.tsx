@@ -27,6 +27,7 @@ import {
   CopyButtonLgId,
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
+import { CodeEditorProvider } from './CodeEditorContext';
 import { useExtensions, useLazyModules, useModuleLoaders } from './hooks';
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
@@ -58,6 +59,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       readOnly,
       tooltips,
       copyButtonAppearance,
+      panel,
       ...rest
     } = props;
 
@@ -147,7 +149,12 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     useImperativeHandle(forwardedRef, () => ({
       getEditorViewInstance: () => editorViewRef.current,
+      getContents,
     }));
+
+    const contextValue = {
+      getContents,
+    };
 
     return (
       <div
@@ -164,16 +171,20 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         })}
         {...rest}
       >
-        {(copyButtonAppearance === CopyButtonAppearance.Hover ||
-          copyButtonAppearance === CopyButtonAppearance.Persist) && (
-          <CodeEditorCopyButton
-            getContentsToCopy={getContents}
-            className={getCopyButtonStyles(copyButtonAppearance)}
-            variant={CopyButtonVariant.Button}
-            disabled={isLoadingProp || isLoading}
-            data-lgid={CopyButtonLgId}
-          />
+        {panel && (
+          <CodeEditorProvider value={contextValue}>{panel}</CodeEditorProvider>
         )}
+        {!panel &&
+          (copyButtonAppearance === CopyButtonAppearance.Hover ||
+            copyButtonAppearance === CopyButtonAppearance.Persist) && (
+            <CodeEditorCopyButton
+              getContentsToCopy={getContents}
+              className={getCopyButtonStyles(copyButtonAppearance)}
+              variant={CopyButtonVariant.Button}
+              disabled={isLoadingProp || isLoading}
+              data-lgid={CopyButtonLgId}
+            />
+          )}
         {(isLoadingProp || isLoading) && (
           <div
             className={getLoaderStyles({
