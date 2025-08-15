@@ -38,9 +38,12 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
 
   const prevColumns = usePrevious(columnsProp);
   /**
-   * This is used to determine if table rows should re-render. If the column definitions are the same, table rows will not re-render. If they are different, all rows will re-render.
+   * Performance optimization flag that controls table row memoization inside `MemoizedInternalRowWithRT`.
    *
-   * On initial load, prevColumns is undefined, so we should consider them equal
+   * - `true`: Rows are memoized and only re-render when their data/props change, excluding children.
+   * - `false`: All rows re-render (when column definitions change). This bypasses memoization and ensures that rows pick up new configurations immediately.
+   *
+   * On initial load, prevColumns is undefined, so we enable memoization (return true)
    * to avoid unnecessary re-renders after the first load
    */
   const shouldMemoizeRows =
