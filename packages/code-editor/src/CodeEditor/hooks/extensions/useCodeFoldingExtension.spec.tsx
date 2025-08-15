@@ -1,12 +1,12 @@
 import { renderHook } from '@testing-library/react';
 
-import { createFakeLanguageModule, createFakeStateModule } from '../../testing';
+import { createMockLanguageModule, createMockStateModule } from '../../testing';
 
 import { useCodeFoldingExtension } from './useCodeFoldingExtension';
 
 describe('useCodeFoldingExtension', () => {
-  const fakeStateModule = createFakeStateModule();
-  const fakeLanguageModule = createFakeLanguageModule();
+  const fakeStateModule = createMockStateModule();
+  const fakeLanguageModule = createMockLanguageModule();
 
   it('returns empty when disabled or module missing', () => {
     const { result } = renderHook(() =>

@@ -1,15 +1,15 @@
 import { renderHook } from '@testing-library/react';
 
 import {
-  createFakeAutoCompleteModule,
-  createFakeStateModule,
+  createMockAutoCompleteModule,
+  createMockStateModule,
 } from '../../testing';
 
 import { useAutoCompleteExtension } from './useAutoCompleteExtension';
 
 describe('useAutoCompleteExtension', () => {
-  const fakeStateModule = createFakeStateModule();
-  const fakeAutoModule = createFakeAutoCompleteModule();
+  const fakeStateModule = createMockStateModule();
+  const fakeAutoModule = createMockAutoCompleteModule();
 
   it('returns empty when language not set', () => {
     const { result } = renderHook(() =>

@@ -1,12 +1,12 @@
 import { renderHook } from '@testing-library/react';
 
-import { createFakeStateModule, createFakeViewModule } from '../../testing';
+import { createMockStateModule, createMockViewModule } from '../../testing';
 
 import { useThemeExtension } from './useThemeExtension';
 
 describe('useThemeExtension', () => {
-  const fakeStateModule = createFakeStateModule();
-  const fakeEditorViewModule = createFakeViewModule();
+  const fakeStateModule = createMockStateModule();
+  const fakeEditorViewModule = createMockViewModule();
 
   it('returns empty extension when view module not provided', () => {
     const { result } = renderHook(() =>

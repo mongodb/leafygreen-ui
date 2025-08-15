@@ -1,13 +1,13 @@
 import { renderHook } from '@testing-library/react';
 
 import { IndentUnits } from '../../CodeEditor.types';
-import { createFakeLanguageModule, createFakeStateModule } from '../../testing';
+import { createMockLanguageModule, createMockStateModule } from '../../testing';
 
 import { useIndentExtension } from './useIndentExtension';
 
 describe('useIndentExtension', () => {
-  const fakeStateModule = createFakeStateModule();
-  const fakeLanguageModule = createFakeLanguageModule();
+  const fakeStateModule = createMockStateModule();
+  const fakeLanguageModule = createMockLanguageModule();
 
   it('returns empty when required modules missing', () => {
     const { result } = renderHook(() =>

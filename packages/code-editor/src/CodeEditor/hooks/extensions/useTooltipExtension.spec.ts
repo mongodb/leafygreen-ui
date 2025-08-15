@@ -1,12 +1,12 @@
 import { renderHook } from '@testing-library/react';
 
-import { createFakeLintModule, createFakeStateModule } from '../../testing';
+import { createMockLintModule, createMockStateModule } from '../../testing';
 
 import { useTooltipExtension } from './useTooltipExtension';
 
 describe('useTooltipExtension', () => {
-  const fakeStateModule = createFakeStateModule();
-  const fakeLintModule = createFakeLintModule();
+  const fakeStateModule = createMockStateModule();
+  const fakeLintModule = createMockLintModule();
 
   it('returns empty when no tooltips provided or module missing', () => {
     const { result } = renderHook(() =>

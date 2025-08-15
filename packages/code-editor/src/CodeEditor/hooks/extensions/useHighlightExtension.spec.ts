@@ -1,17 +1,17 @@
 import { renderHook } from '@testing-library/react';
 
 import {
-  createFakeLanguageModule,
-  createFakeLezerHighlightModule,
-  createFakeStateModule,
+  createMockLanguageModule,
+  createMockLezerHighlightModule,
+  createMockStateModule,
 } from '../../testing';
 
 import { useHighlightExtension } from './useHighlightExtension';
 
 describe('useHighlightExtension', () => {
-  const fakeStateModule = createFakeStateModule();
-  const fakeLanguageModule = createFakeLanguageModule();
-  const fakeLezerHighlight = createFakeLezerHighlightModule();
+  const fakeStateModule = createMockStateModule();
+  const fakeLanguageModule = createMockLanguageModule();
+  const fakeLezerHighlight = createMockLezerHighlightModule();
 
   it('returns empty when missing modules or language', () => {
     const { result } = renderHook(() =>

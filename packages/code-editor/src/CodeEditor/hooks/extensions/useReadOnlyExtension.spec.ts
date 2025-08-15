@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react';
 
-import { createFakeStateModule } from '../../testing';
+import { createMockStateModule } from '../../testing';
 
 import { useReadOnlyExtension } from './useReadOnlyExtension';
 
 describe('useReadOnlyExtension', () => {
-  const fakeStateModule = createFakeStateModule();
+  const fakeStateModule = createMockStateModule();
 
   it('returns empty when readOnly is false', () => {
     const { result } = renderHook(() =>

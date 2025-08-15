@@ -1,12 +1,12 @@
 import { renderHook } from '@testing-library/react';
 
-import { createFakeStateModule, createFakeViewModule } from '../../testing';
+import { createMockStateModule, createMockViewModule } from '../../testing';
 
 import { useLineWrapExtension } from './useLineWrapExtension';
 
 describe('useLineWrapExtension', () => {
-  const fakeStateModule = createFakeStateModule();
-  const fakeViewModule = createFakeViewModule();
+  const fakeStateModule = createMockStateModule();
+  const fakeViewModule = createMockViewModule();
 
   it('returns empty when disabled', () => {
     const { result } = renderHook(() =>

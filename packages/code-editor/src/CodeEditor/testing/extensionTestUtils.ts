@@ -21,7 +21,7 @@ export class FakeCompartment {
 /**
  * Fake @codemirror/state module for testing
  */
-export const createFakeStateModule = (
+export const createMockStateModule = (
   additionalMethods?: Record<string, any>,
 ) =>
   ({
@@ -36,7 +36,7 @@ export const createFakeStateModule = (
 /**
  * Fake @codemirror/view module for testing
  */
-export const createFakeViewModule = (additionalMethods?: Record<string, any>) =>
+export const createMockViewModule = (additionalMethods?: Record<string, any>) =>
   ({
     EditorView: {
       lineWrapping: 'WRAP_EXT',
@@ -51,7 +51,7 @@ export const createFakeViewModule = (additionalMethods?: Record<string, any>) =>
 /**
  * Fake @codemirror/language module for testing
  */
-export const createFakeLanguageModule = (
+export const createMockLanguageModule = (
   additionalMethods?: Record<string, any>,
 ) =>
   ({
@@ -65,7 +65,7 @@ export const createFakeLanguageModule = (
 /**
  * Fake @lezer/highlight module for testing
  */
-export const createFakeLezerHighlightModule = () =>
+export const createMockLezerHighlightModule = () =>
   ({
     tags: {
       keyword: {},
@@ -106,7 +106,7 @@ export const createFakeLezerHighlightModule = () =>
 /**
  * Fake @codemirror/autocomplete module for testing
  */
-export const createFakeAutoCompleteModule = () =>
+export const createMockAutoCompleteModule = () =>
   ({
     autocompletion: jest.fn(() => 'AC_EXT'),
   } as unknown as typeof import('@codemirror/autocomplete'));
@@ -114,7 +114,7 @@ export const createFakeAutoCompleteModule = () =>
 /**
  * Fake @codemirror/lint module for testing
  */
-export const createFakeLintModule = () =>
+export const createMockLintModule = () =>
   ({
     linter: (fn: any) => ({ LINTER_EXT: typeof fn }),
   } as unknown as typeof import('@codemirror/lint'));
@@ -122,7 +122,7 @@ export const createFakeLintModule = () =>
 /**
  * Fake @uiw/codemirror-extensions-hyper-link module for testing
  */
-export const createFakeHyperLinkModule = () =>
+export const createMockHyperLinkModule = () =>
   ({
     hyperLink: 'HYPERLINK_EXT',
   } as any);
@@ -138,16 +138,16 @@ export const createLanguageModuleFactory = (name: string) => ({
  * Comprehensive fake modules collection for complex tests
  */
 export const createComprehensiveFakeModules = () => {
-  const fakeStateModule = createFakeStateModule();
+  const fakeStateModule = createMockStateModule();
 
   return {
     '@codemirror/state': fakeStateModule,
-    '@codemirror/view': createFakeViewModule(),
-    '@codemirror/language': createFakeLanguageModule(),
-    '@lezer/highlight': createFakeLezerHighlightModule(),
-    '@codemirror/autocomplete': createFakeAutoCompleteModule(),
-    '@codemirror/lint': createFakeLintModule(),
-    '@uiw/codemirror-extensions-hyper-link': createFakeHyperLinkModule(),
+    '@codemirror/view': createMockViewModule(),
+    '@codemirror/language': createMockLanguageModule(),
+    '@lezer/highlight': createMockLezerHighlightModule(),
+    '@codemirror/autocomplete': createMockAutoCompleteModule(),
+    '@codemirror/lint': createMockLintModule(),
+    '@uiw/codemirror-extensions-hyper-link': createMockHyperLinkModule(),
     '@codemirror/lang-javascript': { javascript: jest.fn(() => 'JS_EXT') },
     '@codemirror/lang-json': createLanguageModuleFactory('json'),
     '@codemirror/lang-css': createLanguageModuleFactory('css'),
@@ -174,5 +174,5 @@ export const createDefaultTestProps = () => ({
 /**
  * Helper to create a fake Extension for testing useExtension
  */
-export const createFakeExtension = (label: string) =>
+export const createMockExtension = (label: string) =>
   ({ label } as unknown as import('@codemirror/state').Extension);

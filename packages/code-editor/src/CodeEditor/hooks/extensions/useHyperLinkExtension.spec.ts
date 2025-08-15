@@ -1,15 +1,15 @@
 import { renderHook } from '@testing-library/react';
 
 import {
-  createFakeHyperLinkModule,
-  createFakeStateModule,
+  createMockHyperLinkModule,
+  createMockStateModule,
 } from '../../testing';
 
 import { useHyperLinkExtension } from './useHyperLinkExtension';
 
 describe('useHyperLinkExtension', () => {
-  const fakeStateModule = createFakeStateModule();
-  const fakeHyperLinkModule = createFakeHyperLinkModule();
+  const fakeStateModule = createMockStateModule();
+  const fakeHyperLinkModule = createMockHyperLinkModule();
 
   it('returns empty when disabled', () => {
     const { result } = renderHook(() =>

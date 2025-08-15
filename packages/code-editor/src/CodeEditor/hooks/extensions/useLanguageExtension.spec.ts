@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react';
 
-import { createFakeStateModule } from '../../testing';
+import { createMockStateModule } from '../../testing';
 
 import { LanguageName, useLanguageExtension } from './useLanguageExtension';
 
 describe('useLanguageExtension', () => {
-  const fakeStateModule = createFakeStateModule();
+  const fakeStateModule = createMockStateModule();
   const modulesBase = { '@codemirror/state': fakeStateModule } as any;
 
   it('returns empty when language not provided', () => {

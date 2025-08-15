@@ -1,18 +1,18 @@
 import { renderHook, waitFor } from '@testing-library/react';
 
-import { createFakeExtension, createFakeStateModule } from '../../testing';
+import { createMockExtension, createMockStateModule } from '../../testing';
 
 import { useExtension } from './useExtension';
 
 describe('useExtension (base hook)', () => {
-  const fakeStateModule = createFakeStateModule();
+  const fakeStateModule = createMockStateModule();
 
   test('returns empty extension when no stateModule provided', () => {
     const { result } = renderHook(() =>
       useExtension({
         editorViewInstance: null,
         value: 'A',
-        factory: v => createFakeExtension(`EXT_${v}`),
+        factory: v => createMockExtension(`EXT_${v}`),
       }),
     );
 
@@ -24,7 +24,7 @@ describe('useExtension (base hook)', () => {
       useExtension({
         editorViewInstance: null,
         value: 'A',
-        factory: v => createFakeExtension(`EXT_${v}`),
+        factory: v => createMockExtension(`EXT_${v}`),
         stateModule: fakeStateModule,
       }),
     );
@@ -38,7 +38,7 @@ describe('useExtension (base hook)', () => {
         useExtension({
           editorViewInstance: null,
           value,
-          factory: (v: string) => createFakeExtension(`EXT_${v}`),
+          factory: (v: string) => createMockExtension(`EXT_${v}`),
           stateModule: fakeStateModule,
         }),
       { initialProps: { value: 'A' } },
