@@ -3,6 +3,7 @@
  */
 export const State = {
   Unset: 'unset',
+  Apply: 'apply',
   Success: 'success',
   Error: 'error',
 } as const;

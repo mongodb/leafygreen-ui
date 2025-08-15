@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
@@ -8,14 +8,15 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-const DIVIDER_WIDTH = 353;
-
-export const dividerStyles = css`
-  width: ${DIVIDER_WIDTH}px;
+export const baseContainerStyles = css`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: ${spacing[400]}px;
 `;
+
+export const getContainerStyles = (className?: string) =>
+  cx(baseContainerStyles, className);
 
 export const getSuggestedActionsWrapperStyles = (theme: Theme) => css`
   background-color: ${color[theme].background.secondary.default};

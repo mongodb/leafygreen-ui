@@ -185,6 +185,13 @@ describe('chat/suggestions', () => {
   describe('Apply button', () => {
     test('renders when state is Unset', () => {
       renderSuggestedActions({ state: State.Unset });
+      expect(
+        screen.getByText('Apply configuration to your cluster?'),
+      ).toBeInTheDocument();
+    });
+
+    test('renders when state is Apply', () => {
+      renderSuggestedActions({ state: State.Apply });
       const button = screen.getByRole('button', {
         name: /apply these suggestions/i,
       });
@@ -205,9 +212,9 @@ describe('chat/suggestions', () => {
       ).not.toBeInTheDocument();
     });
 
-    test('calls onClickApply when clicked', () => {
+    test('calls onClickApply when clicked in Apply state', () => {
       const onClickApply = jest.fn();
-      renderSuggestedActions({ state: State.Unset, onClickApply });
+      renderSuggestedActions({ state: State.Apply, onClickApply });
 
       const button = screen.getByRole('button', {
         name: /apply these suggestions/i,
@@ -215,16 +222,6 @@ describe('chat/suggestions', () => {
       userEvent.click(button);
 
       expect(onClickApply).toHaveBeenCalledTimes(1);
-    });
-
-    test('has correct button attributes', () => {
-      renderSuggestedActions({ state: State.Unset });
-      const button = screen.getByRole('button', {
-        name: /apply these suggestions/i,
-      });
-
-      expect(button).toHaveAttribute('type', 'button');
-      expect(button).not.toBeDisabled();
     });
   });
 

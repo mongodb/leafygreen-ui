@@ -12,7 +12,7 @@ import { StatusBanner } from '../StatusBanner/StatusBanner';
 import {
   applyButtonStyles,
   boldedTextStyle,
-  dividerStyles,
+  getContainerStyles,
   getSuggestedActionsWrapperStyles,
   tableCellStyles,
   tableHeaderStyles,
@@ -21,13 +21,17 @@ import {
 import { SuggestedActionsProps } from './SuggestedActions.types';
 
 const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
-  (props: SuggestedActionsProps, fwdRef: React.Ref<HTMLDivElement>) => {
-    const {
-      state,
+  (
+    {
+      className,
       configurationParameters,
-      onClickApply,
       darkMode: darkModeProp,
-    } = props;
+      onClickApply,
+      state,
+      ...rest
+    },
+    fwdRef,
+  ) => {
     const { theme, darkMode } = useDarkMode(darkModeProp);
 
     // Filter parameters by state
@@ -40,7 +44,7 @@ const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={fwdRef} className={dividerStyles}>
+        <div ref={fwdRef} className={getContainerStyles(className)} {...rest}>
           <div className={getSuggestedActionsWrapperStyles(theme)}>
             <div className={boldedTextStyle}>
               Apply configuration to your cluster?
@@ -53,7 +57,7 @@ const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
                 </tr>
               ))}
             </table>
-            {state === State.Unset && (
+            {state === State.Apply && (
               <Button
                 className={applyButtonStyles}
                 variant="primary"
