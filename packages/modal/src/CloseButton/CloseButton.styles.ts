@@ -4,6 +4,12 @@ import { palette } from '@leafygreen-ui/palette';
 
 import { CloseIconColor } from '../shared.types';
 
+/**
+ * x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
+ * so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
+ */
+const BUTTON_OFFSET = 18;
+
 const getColor = (theme: Theme, customColor: CloseIconColor) => {
   switch (customColor) {
     case 'dark':
@@ -26,10 +32,8 @@ const getBaseCloseButtonStyles = ({
 }) => css`
   position: absolute;
   cursor: pointer;
-  // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
-  // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
-  right: 18px;
-  top: 18px;
+  right: ${BUTTON_OFFSET}px;
+  top: ${BUTTON_OFFSET}px;
   color: ${getColor(theme, customColor)};
 `;
 
