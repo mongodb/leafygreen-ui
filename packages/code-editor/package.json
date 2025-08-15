@@ -52,6 +52,7 @@
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/leafygreen-provider": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/menu": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
