@@ -2,30 +2,30 @@ import React from 'react';
 
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 
-import { ForwardedRef, ModalProps } from './Modal.types';
+import { ModalProps } from './Modal.types';
 import ModalView from './ModalView';
 
 /**
+ * Modal component for displaying content in a dialog overlay.
  *
- *  Modals place content on top of main window.
- *
- * @param props.open Boolean to describe whether or not Modal is open.
- * @param props.size String to determine size of Modal. ['small', 'default', 'large']
- * @param props.setOpen Callback to change the open state of Modal.
- * @param props.children Content to appear inside of Modal container.
- * @param props.shouldClose Callback to determine whether or not Modal should close when user tries to close it.
- * @param props.className className applied to container div.
- * @param props.contentClassName className applied to overlay div.
- * @param props.initialFocus By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus. With this option you can specify a different element to receive that initial focus. Selector string (which will be passed to document.querySelector() to find the DOM node).
- * @param props.closeIconColor Choose between dark or light close icon. Default is dark.
+ * @param props.backdropClassName _(optional)_ Applies a className to the Modal backdrop.
+ * @param props.children Content to render inside the Modal.
+ * @param props.className _(optional)_ Applies a className to the Modal dialog element.
+ * @param props.closeIconColor Optional color for the close icon. One of `'default'` or `'light'`. Defaults to `'default'`.
+ * @param props.open Controls whether the Modal is open.
+ * @param props.setOpen Callback to update the open state.
+ * @param props.shouldClose Optional callback to determine if the Modal should close when a close action is triggered.
+ * @param props.size Optional size of the Modal. One of `'small'`, `'default'`, or `'large'`. Defaults to `'default'`.q
  */
-const Modal = React.forwardRef((props: ModalProps, ref: ForwardedRef) => {
-  return (
-    <PopoverProvider>
-      <ModalView {...props} ref={ref} />
-    </PopoverProvider>
-  );
-});
+const Modal = React.forwardRef<HTMLDialogElement, ModalProps>(
+  (props, fwdRef) => {
+    return (
+      <PopoverProvider>
+        <ModalView {...props} ref={fwdRef} />
+      </PopoverProvider>
+    );
+  },
+);
 
 Modal.displayName = 'Modal';
 
