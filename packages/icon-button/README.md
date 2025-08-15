@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/icon-button
+```
+
 ### Yarn
 
 ```shell
@@ -27,26 +33,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 <IconButton darkMode={true} aria-label="Some Menu">
   <EllipsisIcon />
 </IconButton>;
-```
-
-**Output HTML**
-
-```html
-<button aria-disabled="false" class="leafygreen-ui-194rp0y" aria-label="Some Menu>
-  <div class="leafygreen-ui-1rvdyoi">
-    <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
-      <g
-        id="Ellipsis-Copy"
-        stroke="none"
-        stroke-width="1"
-        fill="none"
-        fill-rule="evenodd"
-      >
-        <path fill="#89989B"></path>
-      </g>
-    </svg>
-  </div>
-</button>
 ```
 
 ## Properties

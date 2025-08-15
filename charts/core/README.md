@@ -6,6 +6,12 @@ Library of composable charting components that provides a way to create interact
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @lg-charts/core
+```
+
 ### Yarn
 
 ```shell

@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/logo
+```
+
 ### Yarn
 
 ```shell
@@ -30,29 +36,6 @@ import {
 } from '@leafygreen-ui/logo';
 
 return <MongoDBLogo />;
-```
-
-**Output HTML**
-
-```html
-<svg
-  role="img"
-  aria-label="MongoDB Logo"
-  class="leafygreen-ui-6pysb5"
-  height="40"
-  viewBox="0 0 127 32"
-  fill="none"
->
-  <path d="..." fill="#00684A"></path>
-  <path d="..." fill="#00684A"></path>
-  <path d="..." fill="#00684A"></path>
-  <path d="..." fill="#00684A"></path>
-  <path d="..." fill="#00684A"></path>
-  <path d="..." fill="#00684A"></path>
-  <path d="..." fill="#00684A"></path>
-  <path d="..." fill="#00684A"></path>
-  <path d="..." fill="#00684A"></path>
-</svg>
 ```
 
 # MongoDBLogo

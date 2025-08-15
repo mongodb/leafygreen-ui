@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/radio-box-group
+```
+
 ### Yarn
 
 ```shell
@@ -35,43 +41,6 @@ import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 </RadioBoxGroup>;
 ```
 
-## Output HTML
-
-```html
-<div
-  class="leafygreen-ui-k008qs radio-box-group-style"
-  role="group"
-  aria-label="radio-box-group-850132"
->
-  <label for="radio-box-group-850132-button-0" class="leafygreen-ui-i6e9um">
-    <input
-      type="radio"
-      id="radio-box-group-850132-button-0"
-      name="radio-box-group-850132"
-      aria-checked="false"
-      aria-disabled="false"
-      class="leafygreen-ui-10udnlm"
-      value="option-1"
-    />
-    <div class="leafygreen-ui-1rd79mb"></div>
-    <div class="leafygreen-ui-1m9u12l leafygreen-ui-tv1yok">Radio Box 1</div>
-  </label>
-  <label for="radio-box-group-850132-button-1" class="leafygreen-ui-i6e9um">
-    <input
-      type="radio"
-      id="radio-box-group-850132-button-1"
-      name="radio-box-group-850132"
-      aria-checked="false"
-      aria-disabled="false"
-      class="leafygreen-ui-10udnlm"
-      value="option-2"
-    />
-    <div class="leafygreen-ui-1rd79mb"></div>
-    <div class="leafygreen-ui-1m9u12l leafygreen-ui-tv1yok">Radio Box 2</div>
-  </label>
-</div>
-```
-
 ## Properties
 
 | Prop        | Type                               | Description                                                                                                      | Default     |
@@ -90,24 +59,6 @@ import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 
 ```js
 <RadioBox value="option-2">Radio Box 2</RadioBox>
-```
-
-## Output HTML
-
-```html
-<label for="radio-box-group-746930-button-1" class="leafygreen-ui-i6e9um">
-  <input
-    type="radio"
-    id="radio-box-group-746930-button-1"
-    name="radio-box-group-746930"
-    aria-checked="false"
-    aria-disabled="false"
-    class="leafygreen-ui-10udnlm"
-    value="option-2"
-  />
-  <div class="leafygreen-ui-1rd79mb"></div>
-  <div class="leafygreen-ui-1m9u12l leafygreen-ui-tv1yok">Radio Box 2</div>
-</label>
 ```
 
 ## Properties

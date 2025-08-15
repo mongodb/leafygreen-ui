@@ -15,6 +15,12 @@ This can be useful for simplifying components that are repetitively used, but ne
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/box
+```
+
 ### Yarn
 
 ```shell
@@ -29,16 +35,10 @@ npm install @leafygreen-ui/box
 
 ## Example
 
-```js
+```tsx
 import Box from '@leafygreen-ui/box';
 
 <Box href="https://mongodb.design">I shall render as a link</Box>;
-```
-
-**Output HTML**
-
-```html
-<a href="https://mongodb.design">I shall render as a link</a>
 ```
 
 ## Properties

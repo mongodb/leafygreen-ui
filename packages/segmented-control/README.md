@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/segmented-control
+```
+
 ### Yarn
 
 ```shell
@@ -46,67 +52,6 @@ import {
     Dragonfruit
   </SegmentedControlOption>
 </SegmentedControl>;
-```
-
-**Output HTML**
-
-```html
-<div>
-  <div
-    role="tablist"
-    aria-label="fruit"
-    aria-owns="fruit-0 fruit-1 fruit-2 fruit-3"
-  >
-    <div data-lg-checked="true">
-      <div>
-        <div tabindex="-1">
-          <button role="tab" id="fruit-0" tabindex="0" aria-selected="true">
-            <span>Apple</span>
-          </button>
-        </div>
-        <div data-leafygreen-ui="interaction-ring"></div>
-      </div>
-    </div>
-    <div data-lg-checked="false">
-      <div>
-        <div tabindex="-1">
-          <button role="tab" id="fruit-1" tabindex="-1" aria-selected="false">
-            <span>Banana</span>
-          </button>
-        </div>
-        <div data-leafygreen-ui="interaction-ring"></div>
-      </div>
-    </div>
-    <div data-lg-checked="false">
-      <div>
-        <div tabindex="-1">
-          <button role="tab" id="fruit-2" tabindex="-1" aria-selected="false">
-            <span>Carrot</span>
-          </button>
-        </div>
-        <div data-leafygreen-ui="interaction-ring"></div>
-      </div>
-    </div>
-    <div data-lg-checked="false">
-      <div>
-        <div tabindex="-1">
-          <button
-            role="tab"
-            id="fruit-3"
-            tabindex="-1"
-            aria-selected="false"
-            disabled=""
-          >
-            <span>Dragonfruit</span>
-          </button>
-        </div>
-        <div data-leafygreen-ui="interaction-ring"></div>
-      </div>
-    </div>
-    <div data-leafygreen-ui="selection-indicator"></div>
-    <div data-leafygreen-ui="hover-indicator"></div>
-  </div>
-</div>
 ```
 
 ## Props

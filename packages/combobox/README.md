@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/combobox
+```
+
 ### Yarn
 
 ```shell
@@ -38,41 +44,6 @@ import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
     <ComboboxOption value="jalapeno" displayName="Jalapeño" />
   </ComboboxGroup>
 </Combobox>;
-```
-
-**Output HTML**
-
-```html
-<div>
-  <div>
-    <label id="combobox-label-1" for="combobox-input-1"> Choose a fruit </label>
-    <p>Please pick one</p>
-  </div>
-  <div>
-    <div
-      role="combobox"
-      aria-expanded="true"
-      aria-controls="combobox-menu-1"
-      aria-owns="combobox-menu-1"
-      tabindex="-1"
-      data-disabled="false"
-      data-state="none"
-    >
-      <div>
-        <input
-          aria-label="Choose a fruit"
-          aria-autocomplete="list"
-          aria-controls="combobox-menu-1"
-          aria-labelledby="combobox-label-1"
-          id="combobox-input-1"
-          placeholder="Select fruit"
-          value=""
-        />
-      </div>
-      <svg aria-label="Caret Down Icon">...</svg>
-    </div>
-  </div>
-</div>
 ```
 
 ## Properties

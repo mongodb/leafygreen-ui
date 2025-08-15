@@ -4,6 +4,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/a11y
+```
+
 ### Yarn
 
 ```shell
@@ -29,15 +35,6 @@ const Button = () => {
     </button>
   );
 };
-```
-
-**Output HTML**
-
-```html
-<button>
-  <svg role="presentation" aria-hidden="true" />
-  <div>Click me</div>
-</button>
 ```
 
 ## VisuallyHidden

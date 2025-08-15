@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/form-footer
+```
+
 ### Yarn
 
 ```shell

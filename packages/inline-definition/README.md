@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/inline-definition
+```
+
 ### Yarn
 
 ```shell
@@ -25,29 +31,6 @@ npm install @leafygreen-ui/inline-definition
   <InlineDefinition definition={shardDefinition}>Shard</InlineDefinition> your
   cluster
 </H2>
-```
-
-**Output HTML**
-
-```html
-<h2 class="leafygreen-ui-1xwhtk1">
-  <span class="leafygreen-ui-1eprrtj" aria-describedby="tooltip-1">Shard</span>
-  your cluster
-</h2>
-<div>
-  <div class="leafygreen-ui-10b9mvh">
-    <div role="tooltip" id="tooltip-27" class="leafygreen-ui-10d84ei">
-      <div class="leafygreen-ui-qlb2bl">
-        <div class="leafygreen-ui-3uslxw"></div>
-      </div>
-      <p class="leafygreen-ui-1s8990i">
-        Sharding is a method for horizontally scaling across multiple replica
-        sets by breaking up large datasets (e.g. partitioning) into smaller
-        parts. Sharding is native to MongoDB.
-      </p>
-    </div>
-  </div>
-</div>
 ```
 
 ## Properties
