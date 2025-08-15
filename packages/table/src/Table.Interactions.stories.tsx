@@ -4,14 +4,16 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-import { expect, waitFor, within } from '@storybook/test';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import Badge from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
+import { getTestUtils } from './testing/getTestUtils';
 import { makeKitchenSinkData, Person } from './utils/makeData.testutils';
+import { DynamicDataComponent } from './utils/tableStory.testutils';
 import {
   Cell,
   ExpandedContent,
@@ -52,20 +54,6 @@ const meta: StoryMetaType<typeof Table> = {
       source: { type: 'code' },
     },
   },
-  decorators: [
-    Story => (
-      <div
-        data-testid="wrapper-container"
-        style={{
-          width: '100%',
-          height: '400px', // force shorter container to guarantee scroll for snapshots
-          overflow: 'auto',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
 };
 export default meta;
 
@@ -200,6 +188,20 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 export const StickyHeader = {
   render: (args: StoryTableProps) => <Template {...args} />,
+  decorators: [
+    (Story: StoryFn) => (
+      <div
+        data-testid="wrapper-container"
+        style={{
+          width: '100%',
+          height: '400px', // force shorter container to guarantee scroll for snapshots
+          overflow: 'auto',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const canvas = within(canvasElement);
     const container = await canvas.findByTestId('wrapper-container');
@@ -216,5 +218,22 @@ export const StickyHeader = {
       expect(table).toHaveAttribute('data-is-sticky', 'true');
       expect(headerRow).toBeVisible();
     });
+  },
+};
+
+export const DynamicData = {
+  render: DynamicDataComponent,
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+    const button = await canvas.findByTestId('lg-table-button');
+
+    const { getRowByIndex } = getTestUtils();
+    const cell = getRowByIndex(0)?.getAllCells()[3];
+
+    expect(cell).toHaveTextContent(/^9\.7\.5 with 🥬$/);
+
+    await userEvent.click(button);
+
+    expect(cell).toHaveTextContent(/^9\.7\.5$/);
   },
 };
