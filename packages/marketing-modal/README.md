@@ -26,7 +26,9 @@ npm install @leafygreen-ui/marketing-modal
 
 ## Example
 
-```js
+```tsx
+import MarketingModal from '@leafygreen-ui/marketing-modal';
+
 function Example() {
   const [open, setOpen] = useState(false);
 
