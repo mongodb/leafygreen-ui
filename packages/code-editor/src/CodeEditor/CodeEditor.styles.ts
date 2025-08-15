@@ -1,13 +1,24 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import {
+  createUniqueClassName,
+  getMobileMediaQuery,
+  Theme,
+} from '@leafygreen-ui/lib';
 import {
   borderRadius,
+  breakpoints,
   color,
   InteractionState,
+  spacing,
+  transitionDuration,
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { CodeEditorSelectors } from './CodeEditor.types';
+import { CodeEditorSelectors, CopyButtonAppearance } from './CodeEditor.types';
+
+export const copyButtonClassName = createUniqueClassName(
+  'code_editor_copy_button',
+);
 
 export const getEditorStyles = ({
   width,
@@ -17,6 +28,7 @@ export const getEditorStyles = ({
   minHeight,
   maxHeight,
   className,
+  copyButtonAppearance,
 }: {
   width?: string;
   minWidth?: string;
@@ -25,6 +37,7 @@ export const getEditorStyles = ({
   minHeight?: string;
   maxHeight?: string;
   className?: string;
+  copyButtonAppearance?: CopyButtonAppearance;
 }) =>
   cx(
     {
@@ -59,6 +72,13 @@ export const getEditorStyles = ({
           min-width: ${minWidth};
         }
       `]: !!minWidth,
+      [css`
+        @media (hover: hover) {
+          &:hover .${copyButtonClassName} {
+            opacity: 1;
+          }
+        }
+      `]: copyButtonAppearance === CopyButtonAppearance.Hover,
     },
     css`
       position: relative;
@@ -116,3 +136,34 @@ export const getLoadingTextStyles = (theme: Theme) => {
     color: ${color[theme].text[Variant.Secondary][InteractionState.Default]};
   `;
 };
+
+export const getCopyButtonStyles = (
+  copyButtonAppearance: CopyButtonAppearance,
+) =>
+  cx(
+    copyButtonClassName,
+    css`
+      position: absolute;
+      opacity: 1;
+      top: ${spacing[200]}px;
+      right: ${spacing[200]}px;
+      transition: opacity ${transitionDuration.default}ms ease-in-out;
+      z-index: 1;
+
+      // On hover or focus, the copy button should always be visible
+      &:hover,
+      &:focus-within {
+        opacity: 1;
+      }
+    `,
+    {
+      [css`
+        opacity: 0;
+
+        // On a mobile device, the copy button should always be visible
+        ${getMobileMediaQuery(breakpoints.Desktop)} {
+          opacity: 1;
+        }
+      `]: copyButtonAppearance === CopyButtonAppearance.Hover,
+    },
+  );
