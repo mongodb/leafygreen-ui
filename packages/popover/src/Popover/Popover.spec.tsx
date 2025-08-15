@@ -6,8 +6,19 @@ import { axe } from 'jest-axe';
 import Button from '@leafygreen-ui/button';
 import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 
+/**
+ * JSDOM does not support the popover API, so we polyfill it
+ * https://github.com/jsdom/jsdom/issues/3721
+ */
+import '@oddbird/popover-polyfill';
+
 import { Popover } from './Popover';
-import { DismissMode, PopoverProps, RenderMode } from './Popover.types';
+import {
+  DismissMode,
+  type PopoverProps,
+  RenderMode,
+  type ToggleEvent,
+} from './Popover.types';
 
 type RTLInlinePopoverProps = Partial<
   Omit<
@@ -39,13 +50,26 @@ type RTLTopLayerPopoverProps = Partial<
   >
 >;
 
-function TopLayerPopoverWithReference(props?: RTLTopLayerPopoverProps) {
+function TopLayerPopoverWithReference({
+  active: activeProp,
+  onToggle,
+  ...props
+}: RTLTopLayerPopoverProps) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
-  const [active, setActive] = useState(props?.active ?? false);
+  const [active, setActive] = useState(activeProp ?? false);
+
+  const handleToggle = (e: ToggleEvent) => {
+    if (props.dismissMode === DismissMode.Auto && e.oldState === 'open') {
+      setActive(false);
+    }
+
+    onToggle?.(e);
+  };
 
   return (
-    <>
+    <div>
       <Button
+        aria-expanded={active}
         data-testid="popover-reference-element"
         onClick={() => setActive(active => !active)}
         ref={buttonRef}
@@ -56,12 +80,13 @@ function TopLayerPopoverWithReference(props?: RTLTopLayerPopoverProps) {
         {...props}
         active={active}
         data-testid="popover-test-id"
+        onToggle={handleToggle}
         refEl={buttonRef}
         renderMode={RenderMode.TopLayer}
       >
         Popover Content
       </Popover>
-    </>
+    </div>
   );
 }
 
@@ -98,7 +123,6 @@ describe('packages/popover', () => {
           {...props}
           data-testid="popover-test-id"
           renderMode={RenderMode.Inline}
-          usePortal={false}
         >
           Popover Content
         </Popover>,
@@ -111,7 +135,6 @@ describe('packages/popover', () => {
             {...allProps}
             data-testid="popover-test-id"
             renderMode={RenderMode.Inline}
-            usePortal={false}
           >
             Popover Content
           </Popover>,
@@ -156,7 +179,6 @@ describe('packages/popover', () => {
           {...props}
           data-testid="popover-test-id"
           renderMode={RenderMode.Portal}
-          usePortal={true}
         >
           Popover Content
         </Popover>,
@@ -169,7 +191,6 @@ describe('packages/popover', () => {
             {...allProps}
             data-testid="popover-test-id"
             renderMode={RenderMode.Portal}
-            usePortal={true}
           >
             Popover Content
           </Popover>,
@@ -249,43 +270,57 @@ describe('packages/popover', () => {
     });
 
     describe(`when dismissMode=${DismissMode.Auto}`, () => {
-      // skip until JSDOM supports Popover API
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('dismisses popover when outside of popover is clicked', async () => {
+      test('dismisses popover when outside of popover is clicked', async () => {
+        const onToggleSpy = jest.fn();
         const { getByTestId } = renderTopLayerPopover({
           active: true,
           dismissMode: DismissMode.Auto,
+          onToggle: onToggleSpy,
         });
         const popover = getByTestId('popover-test-id');
 
         await waitFor(() => expect(popover).toBeVisible());
+        expect(onToggleSpy).toHaveBeenCalledTimes(1);
 
-        userEvent.click(document.body);
+        /**
+         * Simulate a toggle event to close the popover because even with the
+         * `@oddbird/popover-polyfill` there isn't a way to click outside of the
+         * popover to close it. This is currently tested in the Live Example story
+         */
+        fireEvent(
+          popover,
+          new ToggleEvent('toggle', {
+            bubbles: true,
+            oldState: 'open',
+            newState: 'closed',
+          }),
+        );
 
         await waitFor(() => expect(popover).not.toBeVisible());
+        expect(onToggleSpy).toHaveBeenCalledTimes(2);
       });
 
-      // skip until JSDOM supports Popover API
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('dismisses popover when `Escape` key is pressed', async () => {
+      test('dismisses popover when `Escape` key is pressed', async () => {
+        const onToggleSpy = jest.fn();
         const { getByTestId } = renderTopLayerPopover({
           active: true,
           dismissMode: DismissMode.Auto,
+          onToggle: onToggleSpy,
         });
         const popover = getByTestId('popover-test-id');
 
         await waitFor(() => expect(popover).toBeVisible());
+        expect(onToggleSpy).toHaveBeenCalledTimes(1);
 
         userEvent.keyboard('{escape}');
 
         await waitFor(() => expect(popover).not.toBeVisible());
+        expect(onToggleSpy).toHaveBeenCalledTimes(2);
       });
     });
 
     describe(`when dismissMode=${DismissMode.Manual}`, () => {
-      // skip until JSDOM supports Popover API
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('does not dismiss popover when outside of popover is clicked', async () => {
+      test('does not dismiss popover when outside of popover is clicked', async () => {
         const { getByTestId } = renderTopLayerPopover({
           active: true,
           dismissMode: DismissMode.Manual,
@@ -299,9 +334,7 @@ describe('packages/popover', () => {
         await waitFor(() => expect(popover).toBeVisible());
       });
 
-      // skip until JSDOM supports Popover API
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('does not dismiss popover when `Escape` key is pressed', async () => {
+      test('does not dismiss popover when `Escape` key is pressed', async () => {
         const { getByTestId } = renderTopLayerPopover({
           active: true,
           dismissMode: DismissMode.Manual,
@@ -548,7 +581,7 @@ describe('packages/popover', () => {
       <Popover
         active
         renderMode={RenderMode.Inline}
-        dismissMode="auto"
+        dismissMode={DismissMode.Auto}
         onToggle={() => {}}
       >
         Popover Content
@@ -558,7 +591,7 @@ describe('packages/popover', () => {
       <Popover
         active
         renderMode={RenderMode.Portal}
-        dismissMode="manual"
+        dismissMode={DismissMode.Manual}
         onToggle={() => {}}
       >
         Popover Content

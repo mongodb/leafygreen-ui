@@ -1,5 +1,11 @@
 # @lg-tools/prompt-kit
 
+## 0.3.1
+
+### Patch Changes
+
+- b2fc50e: Update PR description generation instructions to provide more concise description and testing steps. Also use provided checklist format.
+
 ## 0.3.0
 
 ### Minor Changes
