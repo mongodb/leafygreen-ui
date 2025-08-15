@@ -29,7 +29,8 @@
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@oddbird/popover-polyfill": "^0.5.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
