@@ -7,6 +7,7 @@ export { codeSnippets, renderCodeEditor };
 export {
   createComprehensiveFakeModules,
   createDefaultTestProps,
+  createLanguageModuleFactory,
   createMockAutoCompleteModule,
   createMockExtension,
   createMockHyperLinkModule,
@@ -15,6 +16,5 @@ export {
   createMockLintModule,
   createMockStateModule,
   createMockViewModule,
-  createLanguageModuleFactory,
   FakeCompartment,
 } from './extensionTestUtils';

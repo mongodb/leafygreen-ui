@@ -42,7 +42,7 @@ describe('useLazyModules', () => {
         () => ({
           moduleA: jest.fn().mockResolvedValue(mockModuleA),
         }),
-        [mockModuleA],
+        [],
       );
       return useLazyModules<TestModules>(loaders);
     });
@@ -72,7 +72,7 @@ describe('useLazyModules', () => {
           moduleA: jest.fn().mockResolvedValue(mockModuleA),
           moduleB: jest.fn().mockResolvedValue(mockModuleB),
         }),
-        [mockModuleA, mockModuleB],
+        [],
       );
       return useLazyModules<TestModules>(loaders);
     });
@@ -103,7 +103,7 @@ describe('useLazyModules', () => {
           moduleA: jest.fn().mockResolvedValue(mockModuleA),
           moduleB: jest.fn().mockRejectedValue(new Error('Load failed')),
         }),
-        [mockModuleA],
+        [],
       );
       return useLazyModules<TestModules>(loaders);
     });
@@ -133,7 +133,7 @@ describe('useLazyModules', () => {
           moduleA: jest.fn().mockResolvedValue(mockModuleA),
           moduleB: jest.fn().mockResolvedValue(undefined),
         }),
-        [mockModuleA],
+        [],
       );
       return useLazyModules<TestModules>(loaders);
     });
