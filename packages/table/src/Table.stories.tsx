@@ -20,7 +20,7 @@ import {
   makeKitchenSinkData,
   Person,
 } from './utils/makeData.testutils';
-import { DynamicDataComponent } from './utils/tableStory.testutils';
+import { DynamicDataComponent } from './utils/stories.testutils';
 import { AnyDict } from './utils/types';
 import {
   Cell,

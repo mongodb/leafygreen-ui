@@ -13,7 +13,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 
 import { getTestUtils } from './testing/getTestUtils';
 import { makeKitchenSinkData, Person } from './utils/makeData.testutils';
-import { DynamicDataComponent } from './utils/tableStory.testutils';
+import { DynamicDataComponent } from './utils/stories.testutils';
 import {
   Cell,
   ExpandedContent,

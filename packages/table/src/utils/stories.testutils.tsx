@@ -19,7 +19,7 @@ import {
   TableHead,
   type TableProps,
   useLeafyGreenTable,
-} from '../';
+} from '..';
 
 import { makeKitchenSinkData, Person } from './makeData.testutils';
 
