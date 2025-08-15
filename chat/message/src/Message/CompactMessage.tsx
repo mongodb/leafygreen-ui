@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -17,8 +18,6 @@ import {
 } from './CompactMessage.styles';
 import { type MessageProps } from './Message.types';
 
-const ASSISTANT_AVATAR_TEXT = 'MongoDB Assistant';
-
 export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
   (
     {
@@ -33,6 +32,7 @@ export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
     fwdRef,
   ) => {
     const { darkMode, theme } = useDarkMode();
+    const { assistantName } = useLeafyGreenChatContext();
 
     return (
       <div
@@ -47,7 +47,7 @@ export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
         {!isSender && (
           <div className={avatarContainerStyles}>
             <AssistantAvatar darkMode={darkMode} size={20} />
-            <Body weight="semiBold">{ASSISTANT_AVATAR_TEXT}</Body>
+            <Body weight="semiBold">{assistantName}</Body>
           </div>
         )}
         <MessageContainer

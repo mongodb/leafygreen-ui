@@ -50,7 +50,7 @@ export interface DrawerProps
   scrollable?: boolean;
 
   /**
-   * Title of the Drawer
+   * Title of the Drawer. If the title is a string, it will be rendered as a `<h2>` element. If the title is a React node, it will be rendered as is.
    */
   title: React.ReactNode;
 

@@ -29,6 +29,7 @@ import {
   getInnerContainerStyles,
   getResizerStyles,
   getScrollContainerStyles,
+  titleStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 import { getResolvedDrawerSizes, useResolvedDrawerProps } from './Drawer.utils';
@@ -240,9 +241,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                   as={typeof title === 'string' ? 'h2' : 'div'}
                   baseFontSize={BaseFontSize.Body2}
                   id={titleId}
+                  className={titleStyles}
                 >
-                  <strong>{title}</strong>
+                  {title}
                 </Body>
+
                 {showCloseButton && (
                   <IconButton
                     aria-label="Close drawer"

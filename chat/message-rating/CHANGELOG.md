@@ -1,5 +1,12 @@
 # @lg-chat/message-rating
 
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies [d72b413]
+  - @lg-chat/leafygreen-chat-provider@5.0.0
+
 ## 4.2.0
 
 ### Minor Changes

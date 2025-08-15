@@ -176,11 +176,15 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [active, setActive] = useState<boolean>(false);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // eslint-disable-next-line no-console
+    console.log('handleClick', e);
     setActive(active => !active);
   };
 
   const handleToggle = (e: ToggleEvent) => {
+    // eslint-disable-next-line no-console
+    console.log('handleToggle', e);
     onToggle?.(e);
     const newActive = e.newState === 'open';
     setActive(newActive);

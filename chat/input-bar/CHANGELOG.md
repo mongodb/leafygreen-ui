@@ -1,5 +1,12 @@
 # @lg-chat/input-bar
 
+## 10.0.0
+
+### Patch Changes
+
+- Updated dependencies [d72b413]
+  - @lg-chat/leafygreen-chat-provider@5.0.0
+
 ## 9.2.0
 
 ### Minor Changes

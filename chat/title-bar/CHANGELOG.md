@@ -1,5 +1,11 @@
 # @lg-chat/title-bar
 
+## 4.0.5
+
+### Patch Changes
+
+- @lg-chat/avatar@7.0.0
+
 ## 4.0.4
 
 ### Patch Changes

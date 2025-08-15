@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import {
@@ -9,9 +10,17 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import SparkleIcon from '@leafygreen-ui/icon/dist/Sparkle';
+import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color, spacing } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  color,
+  FontWeight,
+  spacing,
+} from '@leafygreen-ui/tokens';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Size } from './Drawer/Drawer.types';
@@ -34,6 +43,44 @@ const snapshotStoryExcludedControlParams = [
   'displayMode',
   'title',
 ];
+
+const DrawerCustomTitle = () => {
+  return (
+    <div
+      className={css`
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      `}
+    >
+      <Body
+        as="h2"
+        baseFontSize={BaseFontSize.Body2}
+        weight={FontWeight.SemiBold}
+      >
+        Custom title
+      </Body>
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <IconButton
+          aria-label="Go to sleep"
+          onClick={() => console.log('cloud click')}
+        >
+          <CloudIcon />
+        </IconButton>
+        <IconButton
+          aria-label="Make it sparkle"
+          onClick={() => console.log('sparkle click')}
+        >
+          <SparkleIcon />
+        </IconButton>
+      </div>
+    </div>
+  );
+};
 
 export default {
   title: 'Sections/Drawer',
@@ -394,6 +441,20 @@ export const ScrollableFalse: StoryObj<DrawerProps> = {
   args: {
     children: <FullWidthHeightContent />,
     scrollable: false,
+    open: true,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+export const CustomTitle: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    title: <DrawerCustomTitle />,
     open: true,
   },
   parameters: {

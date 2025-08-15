@@ -131,6 +131,23 @@ describe('packages/DrawerLayout', () => {
       >
         {'children'}
       </DrawerLayout>
+
+      <DrawerLayout
+        toolbarData={[
+          // @ts-expect-error - content should not be passed if title is missing
+          {
+            id: 'code',
+            glyph: 'Code',
+            content: '<p>hey</p>',
+            label: 'the label',
+          },
+        ]}
+        onClose={() => {}}
+        displayMode="overlay"
+        darkMode
+      >
+        {'children'}
+      </DrawerLayout>
       {/* ✅ */}
       {/* Without Toolbar */}
       <DrawerLayout drawer={<>drawer</>}>{'children'}</DrawerLayout>
@@ -182,6 +199,20 @@ describe('packages/DrawerLayout', () => {
             content: '<p>hey</p>',
             label: 'the label',
             title: 'the title',
+          },
+        ]}
+        onClose={() => {}}
+        displayMode="overlay"
+        darkMode
+      >
+        {'children'}
+      </DrawerLayout>
+      <DrawerLayout
+        toolbarData={[
+          {
+            id: 'code',
+            glyph: 'Code',
+            label: 'the label',
           },
         ]}
         onClose={() => {}}
