@@ -130,6 +130,7 @@ export function Panel({
             }
             variant={MenuVariant.Compact}
             darkMode={darkMode}
+            renderDarkMenu={false}
           >
             <MenuItem
               glyph={<UndoIcon />}
