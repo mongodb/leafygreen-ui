@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import isEqual from 'react-fast-compare';
+import omit from 'lodash/omit';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
@@ -28,6 +29,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   isParentExpanded,
   isSelected,
   rowRef,
+  shouldMemoizeRows: _shouldMemoizeRows,
   ...rest
 }: InternalRowWithRTProps<T>) => {
   // We need to use the virtualRow index instead of nth-of-type because the rows are not static
@@ -77,17 +79,19 @@ const InternalRowWithRT = <T extends LGRowData>({
 export const MemoizedInternalRowWithRT = React.memo(
   InternalRowWithRT,
   (prevProps, nextProps) => {
-    const { children: prevChildren, ...restPrevProps } = prevProps;
-    const { children: nextChildren, ...restNextProps } = nextProps;
+    // Early exit if rows should not be memoized
+    if (!nextProps.shouldMemoizeRows) return false;
 
-    // This allows us to rerender if the child(cell) count changes. E.g. column visibility changes
-    const prevChildrenCount = React.Children.count(prevChildren);
-    const nextChildrenCount = React.Children.count(nextChildren);
+    // Extract children and compare counts
+    const prevChildrenCount = React.Children.count(prevProps.children);
+    const nextChildrenCount = React.Children.count(nextProps.children);
 
-    const propsAreEqual =
-      isEqual(restPrevProps, restNextProps) &&
-      prevChildrenCount === nextChildrenCount;
+    if (prevChildrenCount !== nextChildrenCount) return false;
 
-    return propsAreEqual;
+    // Compare all props except children and shouldMemoizeRows
+    const prevRest = omit(prevProps, ['children', 'shouldMemoizeRows']);
+    const nextRest = omit(nextProps, ['children', 'shouldMemoizeRows']);
+
+    return isEqual(prevRest, nextRest);
   },
 ) as RowComponentWithRTType;

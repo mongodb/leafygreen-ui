@@ -72,6 +72,11 @@ export interface InternalRowWithRTProps<T extends LGRowData>
    * An internal prop used to pass a ref to the row
    */
   rowRef?: React.MutableRefObject<HTMLTableRowElement | null>;
+
+  /**
+   * Whether the rows should be memoized.
+   */
+  shouldMemoizeRows?: boolean;
 }
 
 export type RowProps<T extends LGRowData> = ComponentPropsWithRef<'tr'> &
