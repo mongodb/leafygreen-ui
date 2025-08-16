@@ -9,7 +9,8 @@
   "scripts": {
     "prebuild": "npx ts-node ./scripts/writePackageNames.ts",
     "build": "lg-build bundle",
-    "tsc": "lg-build tsc"
+    "tsc": "lg-build tsc",
+    "postversion": "npx ts-node ./scripts/writePackageNames.ts"
   },
   "publishConfig": {
     "access": "public"
