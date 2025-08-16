@@ -58,6 +58,12 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.green.light1};
     `,
+
+    [Variant.Purple]: css`
+      background-color: ${palette.purple.dark2};
+      border-color: ${palette.purple.base};
+      color: ${palette.purple.light2};
+    `,
   },
   [Theme.Light]: {
     [Variant.LightGray]: css`
@@ -94,6 +100,12 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
       background-color: ${palette.green.light3};
       border-color: ${palette.green.light2};
       color: ${palette.green.dark2};
+    `,
+
+    [Variant.Purple]: css`
+      background-color: ${palette.purple.light3};
+      border-color: ${palette.purple.light2};
+      color: ${palette.purple.dark2};
     `,
   },
 } as const;
