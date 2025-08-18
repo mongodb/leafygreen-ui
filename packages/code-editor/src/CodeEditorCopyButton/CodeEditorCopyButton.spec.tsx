@@ -55,9 +55,9 @@ describe('CodeEditorCopyButton', () => {
         />,
       );
 
-      const button = screen.getByRole('button', { name: 'Copy text' });
+      const button = screen.getByRole('button', { name: COPY_TEXT });
       expect(button).toBeInTheDocument();
-      expect(button).toHaveAttribute('aria-label', 'Copy text');
+      expect(button).toHaveAttribute('aria-label', COPY_TEXT);
     });
 
     test('renders with custom className', () => {
@@ -100,6 +100,8 @@ describe('CodeEditorCopyButton', () => {
 
       await act(async () => {
         await userEvent.hover(button);
+        // Advance timers to account for tooltip hover delay
+        jest.advanceTimersByTime(600);
       });
 
       await waitFor(() => {
@@ -120,6 +122,8 @@ describe('CodeEditorCopyButton', () => {
       await act(async () => {
         await userEvent.click(button);
         await userEvent.hover(button);
+        // Advance timers to account for tooltip hover delay
+        jest.advanceTimersByTime(600);
       });
 
       await waitFor(() => {

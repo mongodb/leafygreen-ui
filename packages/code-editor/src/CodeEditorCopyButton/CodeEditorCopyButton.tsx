@@ -1,11 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import Button from '@leafygreen-ui/button';
 import { useBackdropClick } from '@leafygreen-ui/hooks';
-import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
-import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import Tooltip, {
@@ -14,6 +9,8 @@ import Tooltip, {
   Justify,
   RenderMode,
 } from '@leafygreen-ui/tooltip';
+
+import { CopyButtonTrigger } from '../CodeEditorCopyButtonTrigger';
 
 import { getCopyButtonStyles } from './CodeEditorCopyButton.styles';
 import {
@@ -156,7 +153,6 @@ export function CodeEditorCopyButton({
     onKeyDown: handleKeyDown,
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
-    ref: buttonRef,
     disabled,
     ...rest,
   } as const;
@@ -169,24 +165,12 @@ export function CodeEditorCopyButton({
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
       trigger={
-        variant === CopyButtonVariant.IconButton ? (
-          <IconButton {...sharedButtonProps} aria-label="Copy text">
-            {copied ? <CheckmarkIcon /> : <CopyIcon />}
-            {copied && (
-              <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
-            )}
-          </IconButton>
-        ) : (
-          <Button
-            leftGlyph={copied ? <CheckmarkIcon /> : <CopyIcon />}
-            size="xsmall"
-            {...sharedButtonProps}
-          >
-            {copied && (
-              <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
-            )}
-          </Button>
-        )
+        <CopyButtonTrigger
+          variant={variant}
+          copied={copied}
+          {...sharedButtonProps}
+          ref={buttonRef}
+        />
       }
       shouldClose={shouldClose}
     >
