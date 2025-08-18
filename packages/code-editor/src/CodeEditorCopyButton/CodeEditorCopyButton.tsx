@@ -52,20 +52,7 @@ export function CodeEditorCopyButton({
    */
   const copyToClipboard = async () => {
     try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(getContentsToCopy());
-      } else {
-        const textArea = document.createElement('textarea');
-        textArea.value = getContentsToCopy();
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        textArea.style.top = '-999999px';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        document.execCommand('copy');
-        textArea.remove();
-      }
+      await navigator.clipboard.writeText(getContentsToCopy());
     } catch (err) {
       console.error('Failed to copy text: ', err);
     }
