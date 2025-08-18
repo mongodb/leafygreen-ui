@@ -37,9 +37,16 @@ const configurationParameters = [
   { key: 'vCPUs', value: '2 vCPUs' },
 ];
 
-// Basic suggestion card with apply button
+// Basic suggestion card
 <SuggestedActions
   state={State.Unset}
+  configurationParameters={configurationParameters}
+  onClickApply={() => console.log('Apply clicked')}
+/>
+
+// Apply state with apply button
+<SuggestedActions
+  state={State.Apply}
   configurationParameters={configurationParameters}
   onClickApply={() => console.log('Apply clicked')}
 />
@@ -75,7 +82,8 @@ The `State` enum provides the following options:
 
 | State     | Value       | Description                                            |
 | --------- | ----------- | ------------------------------------------------------ |
-| `Unset`   | `'unset'`   | Shows configuration suggestions with an "Apply" button |
+| `Unset`   | `'unset'`   | Shows configuration suggestions                        |
+| `Apply`   | `'apply'`   | Shows configuration suggestions with an "Apply" button |
 | `Success` | `'success'` | Shows success banner with applied parameters           |
 | `Error`   | `'error'`   | Shows error banner with failed parameters              |
 
@@ -93,7 +101,7 @@ interface ConfigurationParameter {
 
 The component automatically filters and displays parameters based on their state:
 
-- **Table**: Shows parameters with `unset` state (or no state)
+- **Table**: Shows parameters with `unset` or `apply` state (or no state)
 - **Success Banner**: Shows parameters with `success` state
 - **Error Banner**: Shows parameters with `error` state
 
@@ -101,8 +109,8 @@ The component automatically filters and displays parameters based on their state
 
 | Prop                      | Type                      | Description                                                                                  | Default |
 | ------------------------- | ------------------------- | -------------------------------------------------------------------------------------------- | ------- |
-| `state`                   | `State`                   | Determines the current state and rendering behavior of the suggestion card                   |         |
 | `configurationParameters` | `ConfigurationParameters` | Array of configuration parameters, each with key, value, and optional state                  |         |
-| `onClickApply`            | `() => void`              | Callback fired when the user clicks the "Apply" button (shown when `state` is `State.Unset`) |         |
 | `darkMode`                | `boolean`                 | Determines if the component is rendered in dark mode                                         | `false` |
+| `onClickApply`            | `() => void`              | Callback fired when the user clicks the "Apply" button (shown when `state` is `State.Apply`) |         |
+| `state`                   | `State`                   | Determines the current state and rendering behavior of the suggestion card                   |         |
 | `...`                     | `HTMLElementProps<'div'>` | Props spread on root element                                                                 |         |
