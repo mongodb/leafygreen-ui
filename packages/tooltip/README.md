@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/tooltip
+```
+
 ### Yarn
 
 ```shell
@@ -32,25 +38,6 @@ import Tooltip from '@leafygreen-ui/tooltip';
 >
   I am an uncontrolled Tooltip!
 </Tooltip>;
-```
-
-**Output HTML**
-
-```html
-<button aria-describedby="tooltip-6">
-  trigger
-  <div class="leafygreen-ui-1hyfx7x"></div>
-</button>
-<div>
-  <div class="leafygreen-ui-63ea86">
-    <div role="tooltip" id="tooltip-6" class="leafygreen-ui-a17v6a">
-      <div class="leafygreen-ui-11wlmto">
-        <div class="leafygreen-ui-ry7wu4"></div>
-      </div>
-      I am an uncontrolled Tooltip!
-    </div>
-  </div>
-</div>
 ```
 
 ## Properties

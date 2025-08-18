@@ -5,6 +5,12 @@ Please use `Avatar` from `@leafygreen-ui/avatar` instead.
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @lg-chat/avatar
+```
+
 ### Yarn
 
 ```shell
@@ -23,25 +29,6 @@ npm install @lg-chat/avatar
 import { Avatar } from '@lg-chat/avatar';
 
 return <Avatar darkMode variant={Variant.Mongo} />;
-```
-
-**Output HTML**
-
-```html
-<div class="lg-ui-lg-message-avatar-0000">
-  <div class="leafygreen-ui-i5hsjh" data-testid="mongo-avatar">
-    <svg
-      role="img"
-      aria-label="MongoDB Logo"
-      class="leafygreen-ui-ebwjgf"
-      height="40"
-      viewBox="0 0 15 32"
-      fill="none"
-    >
-      <path />
-    </svg>
-  </div>
-</div>
 ```
 
 ## Properties

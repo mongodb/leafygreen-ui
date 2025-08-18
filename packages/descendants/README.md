@@ -11,6 +11,12 @@ last_updated: 2024-06-12
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/descendants
+```
+
 ### Yarn
 
 ```shell

@@ -7,7 +7,7 @@
 ### PNPM
 
 ```shell
-pnpm install @lg-chat/message-feedback
+pnpm add @lg-chat/message-feedback
 ```
 
 ### Yarn

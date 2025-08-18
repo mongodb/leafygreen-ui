@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/badge
+```
+
 ### Yarn
 
 ```shell
@@ -26,12 +32,6 @@ import Badge from '@leafygreen-ui/badge';
 <Badge variant="blue" className="my-badge">
   New
 </Badge>;
-```
-
-**Output HTML**
-
-```html
-<div class="leafygreen-ui-rhgfxf my-badge">New</div>
 ```
 
 ## Properties

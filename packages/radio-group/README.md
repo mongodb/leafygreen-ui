@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/radio-group
+```
+
 ### Yarn
 
 ```shell
@@ -36,32 +42,6 @@ import { Radio, RadioGroup } from '@leafygreen-ui/radio-group';
 </RadioGroup>;
 ```
 
-## Output HTML
-
-```html
-<div
-  class="leafygreen-ui-16glayc my-radio-group"
-  role="group"
-  aria-label="radio-group-660118"
->
-  <label
-    for="radio-group-660118-button-0"
-    class="leafygreen-ui-11wfvmq my-radio"
-  >
-    <input
-      id="radio-group-660118-button-0"
-      name="name-of-input-group"
-      type="radio"
-      class="leafygreen-ui-i6tne my-radio"
-      aria-checked="true"
-      aria-disabled="false"
-      value="option-1"
-    />
-    <span class="leafygreen-ui-1l7rt9l">Label Text Goes Here</span>
-  </label>
-</div>
-```
-
 ## Properties
 
 | Prop        | Type                               | Description                                                                                                                                                                          | Default    |
@@ -84,21 +64,6 @@ _Any other properties will be spread on the root element._
 <Radio className="my-radio" value="option-1" disabled={true}>
   Label Text Goes Here
 </Radio>
-```
-
-## Output HTML
-
-```html
-<label class="leafygreen-ui-11wfvmq my-radio">
-  <input
-    type="radio"
-    class="leafygreen-ui-i6tne"
-    aria-checked="false"
-    aria-disabled="true"
-    value="option-1"
-  />
-  <span class="leafygreen-ui-1l7rt9l">Label Text Goes Here</span>
-</label>
 ```
 
 ## Properties
