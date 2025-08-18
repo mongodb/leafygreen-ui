@@ -1,5 +1,11 @@
 # @leafygreen-ui/badge
 
+## 10.1.0
+
+### Minor Changes
+
+- 036315f: Adds `purple` to Variant set
+
 ## 10.0.4
 
 ### Patch Changes

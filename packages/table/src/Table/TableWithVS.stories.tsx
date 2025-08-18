@@ -193,6 +193,122 @@ export const Basic: StoryFn<StoryTableProps> = args => {
   );
 };
 
+export const DynamicData: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const data = React.useMemo(() => makeData(false, 100), []);
+  const [showEmoji, setShowEmoji] = useState(true);
+
+  const columns = useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'index',
+        header: 'index',
+        size: 40,
+      },
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        size: 50,
+        align: 'center',
+        cell: info => {
+          return `${info.getValue()} ${showEmoji ? '🥬' : ''}`;
+        },
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+    ],
+    [showEmoji],
+  );
+
+  const table = useLeafyGreenVirtualTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+  });
+
+  return (
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
+        <p>{table?.virtual.getTotalSize()} virtual rows</p>
+        <Button onClick={() => setShowEmoji(!showEmoji)}>Toggle 🥬</Button>
+      </div>
+
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+      >
+        <TableHead isSticky>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
+                const row = virtualRow.row;
+                const cells = row.getVisibleCells();
+                return (
+                  <Row key={virtualRow.key} virtualRow={virtualRow} row={row}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
+        </TableBody>
+      </Table>
+    </>
+  );
+};
+DynamicData.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
 export const NestedRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000, 5, 3))[0];

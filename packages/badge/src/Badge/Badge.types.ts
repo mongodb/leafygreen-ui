@@ -26,6 +26,7 @@ export const Variant = {
   Yellow: 'yellow',
   Blue: 'blue',
   Green: 'green',
+  Purple: 'purple',
 } as const;
 
 export type Variant = (typeof Variant)[keyof typeof Variant];

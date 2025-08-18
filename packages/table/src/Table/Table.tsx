@@ -73,6 +73,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           virtualTable={virtualTable}
           verticalAlignment={verticalAlignment}
           lgIds={lgIds}
+          shouldMemoizeRows={table?.shouldMemoizeRows}
         >
           <table
             className={cx(

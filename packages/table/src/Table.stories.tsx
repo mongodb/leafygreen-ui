@@ -3,7 +3,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
@@ -20,6 +20,7 @@ import {
   makeKitchenSinkData,
   Person,
 } from './utils/makeData.testutils';
+import { DynamicDataComponent } from './utils/stories.testutils';
 import { AnyDict } from './utils/types';
 import {
   Cell,
@@ -390,6 +391,15 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
 HundredsOfRows.parameters = {
   chromatic: {
     disableSnapshot: true,
+  },
+};
+
+export const DynamicData: StoryObj<StoryTableProps> = {
+  render: DynamicDataComponent,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
 
@@ -897,6 +907,7 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
   return (
     <Table
       {...args}
+      table={table}
       ref={tableContainerRef}
       data-total-rows={table.getRowModel().rows.length}
     >

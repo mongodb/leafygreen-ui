@@ -81,5 +81,17 @@ export interface LeafyGreenTable<T extends LGRowData>
    * Whether the table will have selectable rows.
    */
   hasSelectableRows: boolean;
+
+  /**
+   * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) return from the Virtualizer instance.
+   */
   virtual: never;
+
+  /**
+   * Whether the rows should be memoized. This is determined by comparing changes in the column definitions passed to the `useLeafyGreenTable`/ `useLeafyGreenVirtualTable` hook.
+   *
+   * - If `true`, rows are memoized and only re-render when their data/props change, excluding children.
+   * - If `false`, all rows re-render (when column definitions change). This bypasses memoization and ensures that rows pick up new configurations immediately.
+   */
+  shouldMemoizeRows: boolean;
 }
