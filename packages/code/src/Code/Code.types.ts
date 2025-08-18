@@ -39,7 +39,7 @@ export type CodeProps = Omit<SyntaxProps, 'onCopy' | 'language' | 'onChange'> &
     expandable?: boolean;
 
     /**
-     * Callback fired when Code is copied via the copy button.
+     * Callback fired when the copy button is clicked via the copy button. Note: When using the `panel` prop, the copy button is rendered within the panel itself, so this callback should be passed as a prop to the `<Panel>` component instead of the `<Code>` component.
      *
      */
     onCopy?: Function;
