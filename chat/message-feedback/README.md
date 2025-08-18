@@ -7,12 +7,6 @@
 ### PNPM
 
 ```shell
-pnpm install @lg-chat/message-feedback
-```
-
-### PNPM
-
-```shell
 pnpm add @lg-chat/message-feedback
 ```
 
