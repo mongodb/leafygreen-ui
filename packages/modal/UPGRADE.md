@@ -15,7 +15,14 @@ Follow these steps to upgrade:
 
 1. In the root of your project, install [@lg-tools/cli](https://github.com/mongodb/leafygreen-ui/blob/main/tools/cli/README.md#installation) and [@lg-tools/codemods](https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#installation).
 2. Bump to the version of the Modal packages you'd like to upgrade and install the bumped packages.
-3. Run [modal-v20 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#modal-v20). By default, this will apply for all relevant packages in the specified directory. The `--packages` flag can be used to only modify specified packages. However, it is recommended to upgrade all packages simultaneously. If necessary, re-lint your project.
+3. Run the [modal-v20 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#modal-v20) to automatically update your codebase.  
+   You can run the following command from your project root:
+
+   ```shell
+   pnpm lg codemod modal-v20 <path>
+   ```
+
+   By default, this will apply the codemod to all relevant packages in the specified directory. The `--packages` flag can be used to only modify specified packages. However, it is recommended to upgrade all packages simultaneously. If necessary, re-lint your project after running the codemod.
 
 At this point, you're all set, and existing Modal components should have parity! New Modal instances should leverage top layer rendering, updated prop structure, and improved accessibility features.
 

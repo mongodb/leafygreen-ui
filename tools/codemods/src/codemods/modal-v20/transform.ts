@@ -73,9 +73,10 @@ export default function transformer(
   const packagesToCheck = providedPackages || defaultPackages;
 
   /**
-   * Step 1: Replace className → backdropClassName
-   * This must happen first to avoid conflicts with step 2
+   * Get all components to transform for each package upfront to avoid repetition
    */
+  const packageComponentsMap = new Map<LGPackage, Array<string>>();
+
   packagesToCheck.forEach(packageName => {
     const componentsToTransform = getImportSpecifiersForDeclaration({
       j,
@@ -83,6 +84,15 @@ export default function transformer(
       packageName,
       packageSpecifiersMap: lgPackageComponentMap,
     });
+    packageComponentsMap.set(packageName, componentsToTransform);
+  });
+
+  /**
+   * Step 1: Replace className → backdropClassName
+   * This must happen first to avoid conflicts with step 2
+   */
+  packagesToCheck.forEach(packageName => {
+    const componentsToTransform = packageComponentsMap.get(packageName)!;
 
     componentsToTransform.forEach(componentName => {
       const elements = source.findJSXElements(componentName);
@@ -110,12 +120,7 @@ export default function transformer(
    * This must happen after step 1 to avoid className being renamed to backdropClassName
    */
   packagesToCheck.forEach(packageName => {
-    const componentsToTransform = getImportSpecifiersForDeclaration({
-      j,
-      source,
-      packageName,
-      packageSpecifiersMap: lgPackageComponentMap,
-    });
+    const componentsToTransform = packageComponentsMap.get(packageName)!;
 
     componentsToTransform.forEach(componentName => {
       const elements = source.findJSXElements(componentName);
@@ -146,12 +151,7 @@ export default function transformer(
    * Step 3: Remove initialFocus prop and add guidance comment
    */
   packagesToCheck.forEach(packageName => {
-    const componentsToTransform = getImportSpecifiersForDeclaration({
-      j,
-      source,
-      packageName,
-      packageSpecifiersMap: lgPackageComponentMap,
-    });
+    const componentsToTransform = packageComponentsMap.get(packageName)!;
 
     componentsToTransform.forEach(componentName => {
       const elements = source.findJSXElements(componentName);
