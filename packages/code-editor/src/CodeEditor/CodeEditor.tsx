@@ -167,7 +167,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         {(copyButtonAppearance === CopyButtonAppearance.Hover ||
           copyButtonAppearance === CopyButtonAppearance.Persist) && (
           <CodeEditorCopyButton
-            getContents={getContents}
+            getContentsToCopy={getContents}
             className={getCopyButtonStyles(copyButtonAppearance)}
             variant={CopyButtonVariant.Button}
             disabled={isLoadingProp || isLoading}
