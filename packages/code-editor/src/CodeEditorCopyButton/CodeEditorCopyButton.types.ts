@@ -23,7 +23,7 @@ export interface CodeEditorCopyButtonProps
    * Function that returns the content to be copied to the clipboard.
    * This function is called when the copy button is clicked.
    */
-  getContents: () => string;
+  getContentsToCopy: () => string;
 
   /**
    * The variant of the button to render.

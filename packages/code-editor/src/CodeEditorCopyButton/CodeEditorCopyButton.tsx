@@ -28,7 +28,7 @@ import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
  * @example
  * ```tsx
  * <CodeEditorCopyButton
- *   getContents={() => "console.log('Hello World')"}
+ *   getContentsToCopy={() => "console.log('Hello World')"}
  *   onCopy={() => console.log('Content copied!')}
  *   isPanelVariant={false}
  * />
@@ -36,7 +36,7 @@ import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
  */
 export function CodeEditorCopyButton({
   onCopy,
-  getContents,
+  getContentsToCopy,
   className,
   variant = CopyButtonVariant.Button,
   disabled,
@@ -53,10 +53,10 @@ export function CodeEditorCopyButton({
   const copyToClipboard = async () => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(getContents());
+        await navigator.clipboard.writeText(getContentsToCopy());
       } else {
         const textArea = document.createElement('textarea');
-        textArea.value = getContents();
+        textArea.value = getContentsToCopy();
         textArea.style.position = 'fixed';
         textArea.style.left = '-999999px';
         textArea.style.top = '-999999px';

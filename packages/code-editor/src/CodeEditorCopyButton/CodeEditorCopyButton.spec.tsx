@@ -27,7 +27,7 @@ Object.defineProperty(window, 'isSecureContext', {
 });
 
 describe('CodeEditorCopyButton', () => {
-  const mockGetContents = jest.fn(() => 'test content');
+  const mockgetContentsToCopy = jest.fn(() => 'test content');
   const mockOnCopy = jest.fn();
 
   beforeEach(() => {
@@ -49,7 +49,7 @@ describe('CodeEditorCopyButton', () => {
     test('renders as Button variant by default', () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -62,7 +62,7 @@ describe('CodeEditorCopyButton', () => {
     test('renders as IconButton when variant is IconButton', () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
           variant={CopyButtonVariant.IconButton}
         />,
@@ -76,7 +76,7 @@ describe('CodeEditorCopyButton', () => {
     test('renders with custom className', () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
           className="custom-class"
         />,
@@ -89,7 +89,7 @@ describe('CodeEditorCopyButton', () => {
     test('renders as disabled when disabled prop is true', () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
           disabled={true}
         />,
@@ -104,7 +104,7 @@ describe('CodeEditorCopyButton', () => {
     test('shows copy text in tooltip by default', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -123,7 +123,7 @@ describe('CodeEditorCopyButton', () => {
     test('shows copied text in tooltip after successful copy', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -142,10 +142,10 @@ describe('CodeEditorCopyButton', () => {
   });
 
   describe('Copy functionality', () => {
-    test('calls getContents and clipboard API on click', async () => {
+    test('calls getContentsToCopy and clipboard API on click', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -157,7 +157,7 @@ describe('CodeEditorCopyButton', () => {
       });
 
       await waitFor(() => {
-        expect(mockGetContents).toHaveBeenCalledTimes(1);
+        expect(mockgetContentsToCopy).toHaveBeenCalledTimes(1);
         expect(mockWriteText).toHaveBeenCalledWith('test content');
         expect(mockOnCopy).toHaveBeenCalledTimes(1);
       });
@@ -169,7 +169,7 @@ describe('CodeEditorCopyButton', () => {
 
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -179,7 +179,7 @@ describe('CodeEditorCopyButton', () => {
         await userEvent.click(button);
       });
 
-      expect(mockGetContents).toHaveBeenCalledTimes(1);
+      expect(mockgetContentsToCopy).toHaveBeenCalledTimes(1);
       expect(mockExecCommand).toHaveBeenCalledWith('copy');
       expect(mockOnCopy).toHaveBeenCalledTimes(1);
 
@@ -195,7 +195,7 @@ describe('CodeEditorCopyButton', () => {
 
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -205,7 +205,7 @@ describe('CodeEditorCopyButton', () => {
         await userEvent.click(button);
       });
 
-      expect(mockGetContents).toHaveBeenCalledTimes(1);
+      expect(mockgetContentsToCopy).toHaveBeenCalledTimes(1);
       expect(mockExecCommand).toHaveBeenCalledWith('copy');
       expect(mockOnCopy).toHaveBeenCalledTimes(1);
 
@@ -219,7 +219,7 @@ describe('CodeEditorCopyButton', () => {
 
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -241,14 +241,16 @@ describe('CodeEditorCopyButton', () => {
     });
 
     test('works without onCopy callback', async () => {
-      render(<CodeEditorCopyButton getContents={mockGetContents} />);
+      render(
+        <CodeEditorCopyButton getContentsToCopy={mockgetContentsToCopy} />,
+      );
 
       const button = screen.getByRole('button', { name: COPY_TEXT });
       await act(async () => {
         await userEvent.click(button);
       });
 
-      expect(mockGetContents).toHaveBeenCalledTimes(1);
+      expect(mockgetContentsToCopy).toHaveBeenCalledTimes(1);
       expect(mockWriteText).toHaveBeenCalledWith('test content');
     });
   });
@@ -257,7 +259,7 @@ describe('CodeEditorCopyButton', () => {
     test('shows checkmark icon after successful copy', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -275,7 +277,7 @@ describe('CodeEditorCopyButton', () => {
     test('resets to copy icon after timeout', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -306,7 +308,7 @@ describe('CodeEditorCopyButton', () => {
     test('triggers copy on Enter key', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -318,7 +320,7 @@ describe('CodeEditorCopyButton', () => {
       });
 
       await waitFor(() => {
-        expect(mockGetContents).toHaveBeenCalledTimes(1);
+        expect(mockgetContentsToCopy).toHaveBeenCalledTimes(1);
         expect(mockWriteText).toHaveBeenCalledWith('test content');
         expect(mockOnCopy).toHaveBeenCalledTimes(1);
       });
@@ -327,7 +329,7 @@ describe('CodeEditorCopyButton', () => {
     test('triggers copy on Space key', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -339,7 +341,7 @@ describe('CodeEditorCopyButton', () => {
       });
 
       await waitFor(() => {
-        expect(mockGetContents).toHaveBeenCalledTimes(1);
+        expect(mockgetContentsToCopy).toHaveBeenCalledTimes(1);
         expect(mockWriteText).toHaveBeenCalledWith('test content');
         expect(mockOnCopy).toHaveBeenCalledTimes(1);
       });
@@ -348,7 +350,7 @@ describe('CodeEditorCopyButton', () => {
     test('does not trigger copy on Escape key', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -359,7 +361,7 @@ describe('CodeEditorCopyButton', () => {
         await userEvent.keyboard('{Escape}');
       });
 
-      expect(mockGetContents).not.toHaveBeenCalled();
+      expect(mockgetContentsToCopy).not.toHaveBeenCalled();
       expect(mockWriteText).not.toHaveBeenCalled();
       expect(mockOnCopy).not.toHaveBeenCalled();
     });
@@ -367,7 +369,7 @@ describe('CodeEditorCopyButton', () => {
     test('does not trigger copy on Tab key', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -378,7 +380,7 @@ describe('CodeEditorCopyButton', () => {
         await userEvent.keyboard('{Tab}');
       });
 
-      expect(mockGetContents).not.toHaveBeenCalled();
+      expect(mockgetContentsToCopy).not.toHaveBeenCalled();
       expect(mockWriteText).not.toHaveBeenCalled();
       expect(mockOnCopy).not.toHaveBeenCalled();
     });
@@ -388,7 +390,7 @@ describe('CodeEditorCopyButton', () => {
     test('has proper aria-label', () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -400,7 +402,7 @@ describe('CodeEditorCopyButton', () => {
     test('announces copy success to screen readers', async () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -419,7 +421,7 @@ describe('CodeEditorCopyButton', () => {
     test('is focusable and keyboard accessible', () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
         />,
       );
@@ -437,7 +439,7 @@ describe('CodeEditorCopyButton', () => {
     test('forwards additional props to button element', () => {
       render(
         <CodeEditorCopyButton
-          getContents={mockGetContents}
+          getContentsToCopy={mockgetContentsToCopy}
           onCopy={mockOnCopy}
           data-testid="custom-copy-button"
           title="Custom title"
