@@ -2,12 +2,18 @@ import React, { useRef, useState } from 'react';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import Button from '@leafygreen-ui/button';
+import { useBackdropClick } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
+import Tooltip, {
+  Align,
+  hoverDelay,
+  Justify,
+  RenderMode,
+} from '@leafygreen-ui/tooltip';
 
 import { getCopyButtonStyles } from './CodeEditorCopyButton.styles';
 import {
@@ -43,12 +49,31 @@ export function CodeEditorCopyButton({
   ...rest
 }: CodeEditorCopyButtonProps) {
   const [copied, setCopied] = useState(false);
+  /**
+   * `CodeEditorCopyButton` controls `tooltipOpen` state because when `copied` state
+   * changes, it causes the tooltip to re-render
+   */
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
 
   /**
-   * Copies the content to the clipboard using the modern Clipboard API when available,
-   * or falls back to the legacy document.execCommand method for older browsers.
+   * toggles `tooltipOpen` state
+   */
+  const closeTooltip = () => setTooltipOpen(false);
+  const openTooltip = () => setTooltipOpen(true);
+
+  /**
+   * forcibly closes tooltip if user tabs focus on tooltip and clicks
+   * outside of the trigger
+   */
+  useBackdropClick(closeTooltip, buttonRef, {
+    enabled: tooltipOpen,
+  });
+
+  /**
+   * Copies the content to the clipboard using the modern Clipboard API.
    */
   const copyToClipboard = async () => {
     try {
@@ -81,18 +106,43 @@ export function CodeEditorCopyButton({
     switch (e.key) {
       case keyMap.Escape:
       case keyMap.Tab: {
+        closeTooltip();
         break;
       }
 
       case keyMap.Enter:
       case keyMap.Space: {
         e.preventDefault();
-        handleClick(e as any);
+        buttonRef.current?.click();
         buttonRef.current?.focus();
         break;
       }
     }
   };
+
+  /**
+   * `handleMouseEnter` and `handleMouseLeave` are used to control `tooltipOpen`
+   * state when mouse hovers over tooltip trigger
+   */
+  const handleMouseEnter = () => {
+    timeoutRef.current = setTimeout(() => {
+      openTooltip();
+    }, hoverDelay);
+  };
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    closeTooltip();
+  };
+
+  /**
+   * `shouldClose` indicates to `Tooltip` component that tooltip should
+   * remain open even if trigger re-renders
+   */
+  const shouldClose = () => !tooltipOpen;
 
   const sharedButtonProps = {
     'aria-label': COPY_TEXT,
@@ -104,6 +154,8 @@ export function CodeEditorCopyButton({
     }),
     onClick: handleClick,
     onKeyDown: handleKeyDown,
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
     ref: buttonRef,
     disabled,
     ...rest,
@@ -113,8 +165,9 @@ export function CodeEditorCopyButton({
     <Tooltip
       align={Align.Top}
       justify={Justify.Middle}
+      open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
-      triggerEvent="hover"
+      setOpen={setTooltipOpen}
       trigger={
         variant === CopyButtonVariant.IconButton ? (
           <IconButton {...sharedButtonProps} aria-label="Copy text">
@@ -135,6 +188,7 @@ export function CodeEditorCopyButton({
           </Button>
         )
       }
+      shouldClose={shouldClose}
     >
       {copied ? COPIED_TEXT : COPY_TEXT}
     </Tooltip>

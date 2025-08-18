@@ -14,18 +14,6 @@ Object.assign(navigator, {
   },
 });
 
-// Mock document.execCommand for fallback testing
-const mockExecCommand = jest.fn();
-Object.assign(document, {
-  execCommand: mockExecCommand,
-});
-
-// Mock window.isSecureContext
-Object.defineProperty(window, 'isSecureContext', {
-  writable: true,
-  value: true,
-});
-
 describe('CodeEditorCopyButton', () => {
   const mockgetContentsToCopy = jest.fn(() => 'test content');
   const mockOnCopy = jest.fn();
@@ -35,7 +23,6 @@ describe('CodeEditorCopyButton', () => {
     jest.clearAllTimers();
     jest.useFakeTimers();
     mockWriteText.mockResolvedValue(undefined);
-    mockExecCommand.mockReturnValue(true);
   });
 
   afterEach(() => {
@@ -161,56 +148,6 @@ describe('CodeEditorCopyButton', () => {
         expect(mockWriteText).toHaveBeenCalledWith('test content');
         expect(mockOnCopy).toHaveBeenCalledTimes(1);
       });
-    });
-
-    test('falls back to execCommand when clipboard API is not available', async () => {
-      // Mock clipboard API as unavailable
-      Object.assign(navigator, { clipboard: undefined });
-
-      render(
-        <CodeEditorCopyButton
-          getContentsToCopy={mockgetContentsToCopy}
-          onCopy={mockOnCopy}
-        />,
-      );
-
-      const button = screen.getByRole('button', { name: COPY_TEXT });
-      await act(async () => {
-        await userEvent.click(button);
-      });
-
-      expect(mockgetContentsToCopy).toHaveBeenCalledTimes(1);
-      expect(mockExecCommand).toHaveBeenCalledWith('copy');
-      expect(mockOnCopy).toHaveBeenCalledTimes(1);
-
-      // Restore clipboard API for other tests
-      Object.assign(navigator, {
-        clipboard: { writeText: mockWriteText },
-      });
-    });
-
-    test('falls back to execCommand in non-secure context', async () => {
-      // Mock non-secure context
-      Object.defineProperty(window, 'isSecureContext', { value: false });
-
-      render(
-        <CodeEditorCopyButton
-          getContentsToCopy={mockgetContentsToCopy}
-          onCopy={mockOnCopy}
-        />,
-      );
-
-      const button = screen.getByRole('button', { name: COPY_TEXT });
-      await act(async () => {
-        await userEvent.click(button);
-      });
-
-      expect(mockgetContentsToCopy).toHaveBeenCalledTimes(1);
-      expect(mockExecCommand).toHaveBeenCalledWith('copy');
-      expect(mockOnCopy).toHaveBeenCalledTimes(1);
-
-      // Restore secure context for other tests
-      Object.defineProperty(window, 'isSecureContext', { value: true });
     });
 
     test('handles clipboard API errors gracefully', async () => {
