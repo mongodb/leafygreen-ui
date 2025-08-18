@@ -30,12 +30,4 @@ export interface CodeEditorCopyButtonProps
    * @default CopyButtonVariant.IconButton
    */
   variant?: CopyButtonVariant;
-
-  /**
-   * Whether to render the button as an icon-only variant for use in panels.
-   * When true, renders as an IconButton; when false, renders as a Button with text.
-   *
-   * @default false
-   */
-  isPanelVariant?: boolean;
 }

@@ -30,7 +30,7 @@ import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
  * <CodeEditorCopyButton
  *   getContentsToCopy={() => "console.log('Hello World')"}
  *   onCopy={() => console.log('Content copied!')}
- *   isPanelVariant={false}
+ *   variant={CopyButtonVariant.Button}
  * />
  * ```
  */
