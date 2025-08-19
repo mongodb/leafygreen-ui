@@ -12,6 +12,7 @@ export {
   LanguageName,
   useAutoCompleteExtension,
   useCodeFoldingExtension,
+  useCodeFormatter,
   useExtensions,
   useHighlightExtension,
   useHyperLinkExtension,

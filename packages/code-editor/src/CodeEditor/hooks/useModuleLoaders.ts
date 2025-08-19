@@ -3,40 +3,8 @@ import { useMemo } from 'react';
 import { type CodeEditorProps } from '../CodeEditor.types';
 
 import { LanguageName } from './extensions/useLanguageExtension';
+import { CodeEditorModules } from './moduleLoaders.types';
 import { type LoadersMap } from './useLazyModules';
-
-/**
- * Interface representing all the module dependencies that might be dynamically imported
- * by the CodeEditor component. This comprehensive mapping enables the lazy loading
- * system to properly type and load the required modules based on editor configuration.
- *
- * Each property represents a module that can be dynamically imported, with its type
- * corresponding to the result of importing that module.
- */
-export interface CodeEditorModules {
-  '@uiw/codemirror-extensions-hyper-link': typeof import('@uiw/codemirror-extensions-hyper-link');
-  '@codemirror/language': typeof import('@codemirror/language');
-  '@codemirror/lint': typeof import('@codemirror/lint');
-  '@codemirror/lang-cpp': typeof import('@codemirror/lang-cpp');
-  '@replit/codemirror-lang-csharp': typeof import('@replit/codemirror-lang-csharp');
-  '@codemirror/lang-css': typeof import('@codemirror/lang-css');
-  '@codemirror/lang-go': typeof import('@codemirror/lang-go');
-  '@codemirror/lang-html': typeof import('@codemirror/lang-html');
-  '@codemirror/lang-java': typeof import('@codemirror/lang-java');
-  '@codemirror/lang-javascript': typeof import('@codemirror/lang-javascript');
-  '@codemirror/lang-json': typeof import('@codemirror/lang-json');
-  '@codemirror/legacy-modes/mode/clike': typeof import('@codemirror/legacy-modes/mode/clike');
-  '@codemirror/lang-php': typeof import('@codemirror/lang-php');
-  '@codemirror/lang-python': typeof import('@codemirror/lang-python');
-  '@codemirror/legacy-modes/mode/ruby': typeof import('@codemirror/legacy-modes/mode/ruby');
-  '@codemirror/lang-rust': typeof import('@codemirror/lang-rust');
-  '@lezer/highlight': typeof import('@lezer/highlight');
-  codemirror: typeof import('codemirror');
-  '@codemirror/view': typeof import('@codemirror/view');
-  '@codemirror/state': typeof import('@codemirror/state');
-  '@codemirror/commands': typeof import('@codemirror/commands');
-  '@codemirror/autocomplete': typeof import('@codemirror/autocomplete');
-}
 
 /**
  * Hook that determines which module dependencies need to be dynamically loaded
