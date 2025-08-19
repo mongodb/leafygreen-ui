@@ -26,7 +26,7 @@ npm install @leafygreen-ui/confirmation-modal
 
 ## Example
 
-```js
+```tsx
 import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
 
 function ExampleComponent() {

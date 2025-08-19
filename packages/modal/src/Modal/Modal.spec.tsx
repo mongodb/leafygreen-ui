@@ -41,6 +41,27 @@ function renderModal(
 }
 
 describe('packages/modal', () => {
+  // Mock dialog methods for JSDOM environment
+  beforeAll(() => {
+    HTMLDialogElement.prototype.show = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.showModal = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.close = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = false;
+    });
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = renderModal({ open: true });
@@ -63,12 +84,12 @@ describe('packages/modal', () => {
     });
 
     test('uses "id" from props when set', () => {
-      const { getByTestId } = renderModal({
+      const { getModal } = renderModal({
         id: 'id-test',
         open: true,
       });
-      const container = getByTestId('modal-test-id');
-      expect(container.getAttribute('id')).toBe('id-test');
+      const modal = getModal();
+      expect(modal.getAttribute('id')).toBe('id-test');
     });
 
     test('closes modal when button is clicked', async () => {
@@ -78,8 +99,10 @@ describe('packages/modal', () => {
 
       userEvent.click(button);
 
-      await waitForElementToBeRemoved(modal);
-      expect(modal).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(modal).not.toHaveAttribute('open');
+        expect(modal).not.toBeVisible();
+      });
     });
 
     test('closes modal when escape key is pressed', async () => {
@@ -89,8 +112,10 @@ describe('packages/modal', () => {
 
       userEvent.type(modal, '{esc}');
 
-      await waitForElementToBeRemoved(modal);
-      expect(modal).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(modal).not.toHaveAttribute('open');
+        expect(modal).not.toBeVisible();
+      });
     });
 
     test('when "shouldClose" prop returns false', async () => {
@@ -116,8 +141,9 @@ describe('packages/modal', () => {
       const modal = getModal();
       userEvent.type(modal, '{esc}');
 
-      await waitForElementToBeRemoved(modal);
-      expect(modal).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(modal).not.toHaveAttribute('open');
+      });
     });
 
     test('backdrop click should do nothing', async () => {
@@ -129,13 +155,76 @@ describe('packages/modal', () => {
       userEvent.click(modal.parentElement!);
 
       await expectElementToNotBeRemoved(modal);
-
       expect(modal).toBeVisible();
+    });
+
+    test('clicking on modal content does not close modal', async () => {
+      const { getByText } = render(
+        <ModalView open={true}>
+          <div data-testid="modal-content">
+            <h2>Test Modal</h2>
+            <p>This is modal content</p>
+          </div>
+        </ModalView>,
+      );
+
+      const content = getByText('This is modal content');
+      const modal = content.closest('dialog');
+
+      expect(modal).toHaveAttribute('open');
+
+      // Click on the paragraph content
+      userEvent.click(content);
+
+      // Wait a bit to ensure no state change occurred
+      await new Promise(resolve => setTimeout(resolve, 100));
+      expect(modal).toHaveAttribute('open');
+    });
+
+    test('uses native dialog element', () => {
+      const { getModal } = renderModal({ open: true });
+      const modal = getModal();
+      expect(modal.tagName.toLowerCase()).toBe('dialog');
+      expect(modal).toHaveAttribute('open');
+    });
+
+    test('supports autofocus on child elements', () => {
+      const { getByTestId } = render(
+        <ModalView open={true}>
+          {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+          <input data-testid="auto-focus-input" autoFocus />
+          <button>Submit</button>
+        </ModalView>,
+      );
+
+      const input = getByTestId('auto-focus-input');
+      expect(input).toHaveFocus();
+    });
+
+    test('focuses first focusable element when no autoFocus is set', () => {
+      const { getByRole } = render(
+        <ModalView open={true}>
+          <button>Submit</button>
+          <input />
+        </ModalView>,
+      );
+
+      const submitButton = getByRole('button', { name: 'Submit' });
+      expect(submitButton).toHaveFocus();
+    });
+
+    test('deprecated backdropClassName still works', () => {
+      const { getModal } = renderModal({
+        open: true,
+        backdropClassName: 'my-backdrop-class',
+      });
+      const modal = getModal();
+      expect(modal).toHaveClass('my-backdrop-class');
     });
 
     test('popover renders inside same portal as modal', async () => {
       const { getByTestId } = render(
-        <ModalView data-testid="modal-test-id" open={true}>
+        <ModalView open={true}>
           {modalContent}
           <Select
             label="label"
@@ -153,7 +242,7 @@ describe('packages/modal', () => {
         </ModalView>,
       );
 
-      const modal = getByTestId('modal-test-id');
+      const modal = getByTestId('lg-modal'); // Use the correct test id
       const select = getByTestId('modal-select-test-id');
       userEvent.click(select);
 
@@ -164,10 +253,11 @@ describe('packages/modal', () => {
   });
 
   describe('when "open" prop is false', () => {
-    test('does not render to the DOM', () => {
+    test('renders to DOM but dialog is not open', () => {
       const { queryModal } = renderModal({ open: false });
       const modal = queryModal();
-      expect(modal).not.toBeInTheDocument();
+      expect(modal).not.toHaveAttribute('open');
+      expect(modal).not.toBeVisible();
     });
   });
 });
