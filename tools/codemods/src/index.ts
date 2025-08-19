@@ -57,12 +57,12 @@ export const migrator = async (
 
   let _files = files;
   // Gets the path of the codemod e.g: /Users/.../leafygreen-ui/tools/codemods/dist/codemod/[codemod]/transform.js
-  const codemodFile = path.join(
-    __dirname,
-    `./codemods/${codemod}/transform.js`,
-  );
-
-  console.log(chalk.greenBright('Codemod File:'), codemodFile);
+  // Handle different build output directories (dist/umd, dist/esm, or dist)
+  const distDir =
+    __dirname.endsWith('/umd') || __dirname.endsWith('/esm')
+      ? path.dirname(__dirname)
+      : __dirname;
+  const codemodFile = path.join(distDir, `./codemods/${codemod}/transform.js`);
 
   try {
     if (!fse.existsSync(codemodFile)) {

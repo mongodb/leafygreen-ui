@@ -6,8 +6,13 @@ import path from 'path';
  */
 export async function getAvailableCodemods(): Promise<Array<string>> {
   try {
-    // Note: when this is built, __dirname is `dist`
-    const codemodDir = path.join(__dirname, './codemods');
+    // Note: when this is built, __dirname could be `dist/umd`, `dist/esm`, or `dist`
+    // We need to identify the dist directory before looking for codemods
+    const distDir =
+      __dirname.endsWith('/umd') || __dirname.endsWith('/esm')
+        ? path.dirname(__dirname)
+        : __dirname;
+    const codemodDir = path.join(distDir, './codemods');
 
     // Make sure the directory exists
     if (!fsx.existsSync(codemodDir)) {
@@ -19,7 +24,6 @@ export async function getAvailableCodemods(): Promise<Array<string>> {
       .readdirSync(codemodDir, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name);
-
     return dirs;
   } catch (error) {
     console.error('Error listing codemods:', error);
