@@ -1,5 +1,6 @@
 import React, {
   forwardRef,
+  useCallback,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
@@ -10,7 +11,11 @@ import { type EditorView } from '@codemirror/view';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
+import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
+import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
+
 import {
+  getCopyButtonStyles,
   getEditorStyles,
   getLoaderStyles,
   getLoadingTextStyles,
@@ -18,6 +23,8 @@ import {
 import {
   CodeEditorHandle,
   type CodeEditorProps,
+  CopyButtonAppearance,
+  CopyButtonLgId,
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
 import { useExtensions, useLazyModules, useModuleLoaders } from './hooks';
@@ -50,6 +57,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       placeholder,
       readOnly,
       tooltips,
+      copyButtonAppearance,
       ...rest
     } = props;
 
@@ -67,6 +75,10 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       props,
       modules,
     });
+
+    const getContents = useCallback(() => {
+      return editorViewRef.current?.state.sliceDoc() ?? '';
+    }, []);
 
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
@@ -90,7 +102,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
           EditorView.EditorView.updateListener.of(update => {
             if (isControlled && update.docChanged) {
-              const editorText = editorViewRef.current?.state.sliceDoc() ?? '';
+              const editorText = getContents();
               onChangeProp?.(editorText);
               setControlledValue(editorText);
             }
@@ -130,6 +142,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       consumerExtensions,
       customExtensions,
       forceParsingProp,
+      getContents,
     ]);
 
     useImperativeHandle(forwardedRef, () => ({
@@ -147,9 +160,20 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           minHeight,
           maxHeight,
           className,
+          copyButtonAppearance,
         })}
         {...rest}
       >
+        {(copyButtonAppearance === CopyButtonAppearance.Hover ||
+          copyButtonAppearance === CopyButtonAppearance.Persist) && (
+          <CodeEditorCopyButton
+            getContentsToCopy={getContents}
+            className={getCopyButtonStyles(copyButtonAppearance)}
+            variant={CopyButtonVariant.Button}
+            disabled={isLoadingProp || isLoading}
+            data-lgid={CopyButtonLgId}
+          />
+        )}
         {(isLoadingProp || isLoading) && (
           <div
             className={getLoaderStyles({

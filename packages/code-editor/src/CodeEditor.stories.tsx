@@ -9,6 +9,7 @@ import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
 
+import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { codeSnippets } from './CodeEditor/testing';
 import { IndentUnits } from './CodeEditor';
@@ -85,6 +86,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     ),
   ],
   args: {
+    copyButtonAppearance: CopyButtonAppearance.None,
     enableClickableUrls: true,
     enableCodeFolding: true,
     enableLineNumbers: true,
@@ -108,6 +110,10 @@ const meta: StoryMetaType<typeof CodeEditor> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    copyButtonAppearance: {
+      control: { type: 'select' },
+      options: Object.values(CopyButtonAppearance),
+    },
     enableClickableUrls: {
       control: { type: 'boolean' },
     },

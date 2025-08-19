@@ -1,9 +1,10 @@
 import { forceParsing } from '@codemirror/language';
+import { EditorState } from '@codemirror/state';
 import { act, waitFor } from '@testing-library/react';
-import { EditorState } from '@uiw/react-codemirror';
 
 import { LanguageName } from './hooks/extensions/useLanguageExtension';
 import { renderCodeEditor } from './testing/testUtils';
+import { CopyButtonAppearance } from './CodeEditor.types';
 import { CodeEditorSelectors } from '.';
 
 global.MutationObserver = jest.fn().mockImplementation(() => ({
@@ -50,9 +51,11 @@ describe('packages/code-editor', () => {
     const { editor } = renderCodeEditor({ enableCodeFolding: true });
     await editor.waitForEditorView();
 
-    expect(
-      editor.getBySelector(CodeEditorSelectors.FoldGutter),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        editor.getBySelector(CodeEditorSelectors.FoldGutter),
+      ).toBeInTheDocument();
+    });
   });
 
   test('Fold gutter does not render when disabled', async () => {
@@ -71,11 +74,13 @@ describe('packages/code-editor', () => {
     });
     await editor.waitForEditorView();
 
-    expect(
-      editor.getBySelector(CodeEditorSelectors.GutterElement, {
-        text: '1',
-      }),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        editor.getBySelector(CodeEditorSelectors.GutterElement, {
+          text: '1',
+        }),
+      ).toBeInTheDocument();
+    });
   });
 
   test('Line numbers do not render when disabled', async () => {
@@ -98,9 +103,11 @@ describe('packages/code-editor', () => {
     });
     await editor.waitForEditorView();
 
-    expect(
-      editor.getBySelector(CodeEditorSelectors.HyperLink),
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        editor.getBySelector(CodeEditorSelectors.HyperLink),
+      ).toBeInTheDocument();
+    });
   });
 
   test('Clickable URLs do not render when disable', async () => {
@@ -119,7 +126,9 @@ describe('packages/code-editor', () => {
     const { editor } = renderCodeEditor({ readOnly: true });
     await editor.waitForEditorView();
 
-    expect(editor.isReadOnly()).toBe(true);
+    await waitFor(() => {
+      expect(editor.isReadOnly()).toBe(true);
+    });
   });
 
   test('Read-only not set on editor state when disabled', async () => {
@@ -133,7 +142,9 @@ describe('packages/code-editor', () => {
     const { editor } = renderCodeEditor({ enableLineWrapping: true });
     await editor.waitForEditorView();
 
-    expect(editor.isLineWrappingEnabled()).toBe(true);
+    await waitFor(() => {
+      expect(editor.isLineWrappingEnabled()).toBe(true);
+    });
   });
 
   test('Line wrapping not enabled when disabled', async () => {
@@ -149,9 +160,11 @@ describe('packages/code-editor', () => {
     });
     await editor.waitForEditorView();
 
-    expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
-      'Type your code here...',
-    );
+    await waitFor(() => {
+      expect(
+        editor.getBySelector(CodeEditorSelectors.Content),
+      ).toHaveTextContent('Type your code here...');
+    });
   });
 
   test('Editor displays HTMLElement placeholder when empty', async () => {
@@ -160,9 +173,11 @@ describe('packages/code-editor', () => {
     const { editor } = renderCodeEditor({ placeholder: placeholderElement });
     await editor.waitForEditorView();
 
-    expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
-      'Type your code here...',
-    );
+    await waitFor(() => {
+      expect(
+        editor.getBySelector(CodeEditorSelectors.Content),
+      ).toHaveTextContent('Type your code here...');
+    });
   });
 
   test('the forceParsing() method is called when enabled', async () => {
@@ -192,7 +207,9 @@ describe('packages/code-editor', () => {
     });
     await editor.waitForEditorView();
 
-    expect(editor.getIndentUnit()).toBe('    ');
+    await waitFor(() => {
+      expect(editor.getIndentUnit()).toBe('    ');
+    });
   });
 
   test('correct indentUnit is set on the editor when indentUnit is "tab"', async () => {
@@ -201,7 +218,9 @@ describe('packages/code-editor', () => {
     });
     await editor.waitForEditorView();
 
-    expect(editor.getIndentUnit()).toBe('\t');
+    await waitFor(() => {
+      expect(editor.getIndentUnit()).toBe('\t');
+    });
   });
 
   test('applies custom extensions to the editor', async () => {
@@ -259,5 +278,41 @@ describe('packages/code-editor', () => {
         container.querySelector(`[data-language="javascript"]`),
       ).toBeInTheDocument();
     });
+  });
+
+  test('renders copy button when copyButtonAppearance is "hover"', async () => {
+    const { container, editor } = renderCodeEditor({
+      copyButtonAppearance: CopyButtonAppearance.Hover,
+    });
+
+    await editor.waitForEditorView();
+
+    expect(
+      container.querySelector(CodeEditorSelectors.CopyButton),
+    ).toBeInTheDocument();
+  });
+
+  test('renders copy button when copyButtonAppearance is "persist"', async () => {
+    const { container, editor } = renderCodeEditor({
+      copyButtonAppearance: CopyButtonAppearance.Persist,
+    });
+
+    await editor.waitForEditorView();
+
+    expect(
+      container.querySelector(CodeEditorSelectors.CopyButton),
+    ).toBeInTheDocument();
+  });
+
+  test('does not render copy button when copyButtonAppearance is "none"', async () => {
+    const { container, editor } = renderCodeEditor({
+      copyButtonAppearance: CopyButtonAppearance.None,
+    });
+
+    await editor.waitForEditorView();
+
+    expect(
+      container.querySelector(CodeEditorSelectors.CopyButton),
+    ).not.toBeInTheDocument();
   });
 });
