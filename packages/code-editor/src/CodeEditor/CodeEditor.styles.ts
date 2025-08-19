@@ -17,7 +17,7 @@ import {
 import { CodeEditorSelectors, CopyButtonAppearance } from './CodeEditor.types';
 
 export const copyButtonClassName = createUniqueClassName(
-  'code_editor_copy_button',
+  'lg-code_editor-code_editor_copy_button',
 );
 
 export const getEditorStyles = ({
