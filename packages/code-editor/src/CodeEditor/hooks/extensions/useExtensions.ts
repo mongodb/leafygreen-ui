@@ -3,7 +3,7 @@ import { type EditorView } from 'codemirror';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';
-import { type CodeEditorModules } from '../useModuleLoaders';
+import { type CodeEditorModules } from '../moduleLoaders.types';
 
 import { useAutoCompleteExtension } from './useAutoCompleteExtension';
 import { useCodeFoldingExtension } from './useCodeFoldingExtension';
