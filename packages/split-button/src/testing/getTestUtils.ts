@@ -94,7 +94,7 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
       userEvent.keyboard('{escape}');
     } else {
       // Click outside the menu to close it
-      userEvent.click(document.body);
+      await userEvent.click(document.body);
     }
 
     // Wait for menu to disappear - we'll use a try/catch since the menu might not exist
