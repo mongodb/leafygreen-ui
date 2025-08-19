@@ -59,7 +59,7 @@ Follow this workflow for all development tasks:
 
    # Run tests
    pnpm test                              # All tests
-   pnpm test --filter="@leafygreen-ui/*"  # Specific scope
+   pnpm run test --filter="@leafygreen-ui/*"  # Specific scope
 
    # Linting
    pnpm lint           # Check only
