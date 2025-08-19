@@ -4,11 +4,14 @@ import { type EditorView } from '@codemirror/view';
 
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';
 import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
+
+const CUSTOM_ICON_SIZE = 10;
 
 /**
  * Hook for managing code folding functionality in the CodeMirror editor.
@@ -53,17 +56,17 @@ export function useCodeFoldingExtension({
             open ? (
               <Icon
                 glyph="ChevronDown"
-                size="small"
+                size={CUSTOM_ICON_SIZE}
                 className={css`
-                  margin-top: 2px;
+                  margin-top: ${spacing[100]}px;
                 `}
               />
             ) : (
               <Icon
                 glyph="ChevronRight"
-                size="small"
+                size={CUSTOM_ICON_SIZE}
                 className={css`
-                  margin-top: 2px;
+                  margin-top: ${spacing[100]}px;
                 `}
               />
             ),

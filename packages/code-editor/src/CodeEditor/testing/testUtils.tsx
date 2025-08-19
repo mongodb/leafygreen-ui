@@ -1,6 +1,6 @@
 import React from 'react';
 import { indentUnit } from '@codemirror/language';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { ChangeSpec } from '@uiw/react-codemirror';
 
 import {
@@ -20,22 +20,19 @@ let getEditorViewFn: (() => CodeMirrorView | null) | null = null;
  * @throws Error if timeout is reached
  */
 async function waitForEditorView(timeout = 5000): Promise<CodeMirrorView> {
-  const startTime = Date.now();
+  await waitFor(
+    () => {
+      const view = getEditorViewFn?.();
 
-  while (Date.now() - startTime < timeout) {
-    if (getEditorViewFn) {
-      const view = getEditorViewFn();
-
-      if (view) {
-        editorViewInstance = view;
-        return view;
+      if (!view) {
+        throw new Error('Editor view not available yet');
       }
-    }
-    // Wait a bit before checking again
-    await new Promise(resolve => setTimeout(resolve, 10));
-  }
+      editorViewInstance = view;
+    },
+    { timeout },
+  );
 
-  throw new Error(`Editor view not available after ${timeout}ms timeout`);
+  return ensureEditorView();
 }
 
 /**
