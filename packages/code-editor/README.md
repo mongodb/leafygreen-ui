@@ -140,21 +140,151 @@ import CloudIcon from '@leafygreen-ui/icon';
 | `label`                   | Text label for the button.                                             | `string`             | —           |
 | `onClick` _(optional)_    | Callback fired when the button is clicked.                             | `() => void`         | `undefined` |
 
+## Code Formatting
+
+The CodeEditor component includes built-in code formatting functionality that is integrated into the `Panel` component or can be used independently via the `useCodeFormatter` hook.
+
+### Supported Languages and Formatters
+
+The formatting system supports multiple languages using different formatting backends:
+
+#### Prettier-based Languages
+
+These languages use [Prettier](https://prettier.io/) for code formatting:
+
+- **JavaScript/JSX**: Uses `prettier/parser-babel`
+- **TypeScript/TSX**: Uses `prettier/parser-typescript`
+- **CSS**: Uses `prettier/parser-postcss`
+- **HTML**: Uses `prettier/parser-html`
+- **JSON**: Uses `prettier/parser-babel`
+- **Java**: Uses `prettier-plugin-java`
+- **Kotlin**: Uses `prettier-plugin-kotlin`
+- **PHP**: Uses `@prettier/plugin-php`
+- **Ruby**: Uses `@prettier/plugin-ruby`
+- **Rust**: Uses `prettier-plugin-rust`
+
+#### WASM-based Languages
+
+These languages use WebAssembly-compiled formatters for in-browser formatting:
+
+- **C/C++/C#**: Uses `@wasm-fmt/clang-format`
+- **Go**: Uses `@wasm-fmt/gofmt`
+- **Python**: Uses `@wasm-fmt/ruff_fmt`
+
+### Using Code Formatting
+
+#### Via CodeEditor and Panel
+
+The formatting functionality is accessible through the `CodeEditor` component and automatically available in the `Panel` component:
+
+```tsx
+import { useRef } from 'react';
+import {
+  CodeEditor,
+  Panel,
+  type CodeEditorHandle,
+  LanguageName,
+} from '@leafygreen-ui/code-editor';
+
+function MyComponent() {
+  const editorRef = useRef<CodeEditorHandle>(null);
+
+  const handleFormatCode = async () => {
+    if (editorRef.current?.isFormattingAvailable) {
+      const formattedCode = await editorRef.current.formatCode();
+      console.log('Formatted code:', formattedCode);
+    }
+  };
+
+  return (
+    <div>
+      <CodeEditor
+        ref={editorRef}
+        defaultValue="const x=1;const y=2;"
+        language={LanguageName.javascript}
+        panel={<Panel showFormatButton />}
+      />
+      <button onClick={handleFormatCode}>Format Code Externally</button>
+    </div>
+  );
+}
+```
+
+#### Via useCodeFormatter Hook
+
+For more advanced use cases, you can use the `useCodeFormatter` hook directly:
+
+```tsx
+import {
+  useCodeFormatter,
+  useLazyModules,
+  useFormattingModuleLoaders,
+  LanguageName,
+  type FormattingOptions,
+} from '@leafygreen-ui/code-editor';
+
+function MyFormattingComponent() {
+  const moduleLoaders = useFormattingModuleLoaders(LanguageName.javascript);
+  const { modules } = useLazyModules(moduleLoaders);
+
+  const { formatCode, isFormattingAvailable } = useCodeFormatter({
+    props: { language: LanguageName.javascript },
+    modules,
+  });
+
+  const handleFormat = async () => {
+    if (isFormattingAvailable) {
+      const options: FormattingOptions = {
+        semi: true,
+        singleQuote: true,
+        tabWidth: 2,
+      };
+
+      const formatted = await formatCode('const x=1;', options);
+      console.log(formatted); // "const x = 1;"
+    }
+  };
+
+  return <button onClick={handleFormat}>Format Code</button>;
+}
+```
+
+### Formatting Options
+
+The `FormattingOptions` interface provides configuration for different formatters:
+
+```tsx
+interface FormattingOptions {
+  // Prettier options
+  semi?: boolean; // Add semicolons (default: true)
+  singleQuote?: boolean; // Use single quotes (default: true)
+  tabWidth?: number; // Tab width (default: varies by language)
+  useTabs?: boolean; // Use tabs instead of spaces (default: false)
+  printWidth?: number; // Line length (default: varies by language)
+  trailingComma?: 'none' | 'es5' | 'all'; // Trailing commas
+  bracketSpacing?: boolean; // Spaces around object brackets
+  jsxBracketSameLine?: boolean; // JSX bracket placement
+  arrowParens?: 'avoid' | 'always'; // Arrow function parentheses
+}
+```
+
 ## Types and Variables
 
 | Name                        | Description                                                                                                     |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                   |
+| `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.          |
 | `CodeEditorProps`           | TypeScript interface defining all props that can be passed to the `CodeEditor` component.                       |
 | `CodeEditorSelectors`       | Constant object containing CSS selectors for common CodeEditor elements. Useful for testing and custom styling. |
-| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                   |
 | `CodeEditorTooltip`         | TypeScript interface defining the structure for tooltips displayed on hover in the editor.                      |
 | `CodeEditorTooltipSeverity` | Constant object defining possible severity levels for tooltips (`info`, `warning`, `error`, `hint`).            |
 | `CodeMirrorExtension`       | Re-export of CodeMirror's `Extension` type. See https://codemirror.net/docs/ref/#state.Extension.               |
+| `CodeEditorHandle`          | TypeScript interface for the imperative handle of the CodeEditor component, including formatting methods.       |
 | `CodeMirrorState`           | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.           |
 | `CodeMirrorView`            | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.              |
+| `FormattingOptions`         | TypeScript interface defining formatting options for different formatters (Prettier and WASM-based).            |
 | `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                        |
 | `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                         |
-| `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.          |
 | `PanelProps`                | TypeScript interface defining all props that can be passed to the `Panel` component.                            |
 
 ## Test Utilities
@@ -600,6 +730,38 @@ Adds hover tooltips to editor content with configurable severity levels.
 
 **Required Props:** `tooltips`  
 **Required Modules:** `@codemirror/view`, `@codemirror/state`
+
+#### `useCodeFormatter(config)`
+
+Provides code formatting functionality using language-specific formatters. This hook provides a formatting utility that can format code content. It supports multiple formatting backends:
+
+- **Prettier-based formatters**: For JavaScript, TypeScript, CSS, HTML, JSON, Java, Kotlin, PHP, Ruby, and Rust
+- **WASM-based formatters**: For C/C++, C#, Go, and Python
+
+**Required Props:** `language`  
+**Required Modules:** Depends on language:
+
+- Prettier languages: `prettier/standalone` + language-specific parser/plugin
+- WASM languages: `@wasm-fmt/clang-format`, `@wasm-fmt/gofmt`, or `@wasm-fmt/ruff_fmt`
+
+**Returns:**
+
+- `formatCode(code: string, options?: FormattingOptions): Promise<string>` - Formats the provided code
+- `isFormattingAvailable: boolean` - Stateful boolean indicating if formatting is available for the current language
+
+**Example:**
+
+```tsx
+const { formatCode, isFormattingAvailable } = useCodeFormatter({
+  props: { language: LanguageName.javascript },
+  modules: lazyModules,
+});
+
+if (isFormattingAvailable) {
+  const formatted = await formatCode('const x=1;');
+  console.log(formatted); // "const x = 1;"
+}
+```
 
 ### Example Usage
 
