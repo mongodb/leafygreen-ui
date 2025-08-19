@@ -1360,6 +1360,12 @@ importers:
       '@codemirror/view':
         specifier: ^6.38.1
         version: 6.38.1
+      '@leafygreen-ui/a11y':
+        specifier: workspace:^
+        version: link:../a11y
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -1369,6 +1375,9 @@ importers:
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../leafygreen-provider
@@ -1381,6 +1390,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
       '@leafygreen-ui/typography':
         specifier: ^22.1.0
         version: 22.1.0(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.3.1)
