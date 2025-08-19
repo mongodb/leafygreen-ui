@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useLayoutEffect } from 'react';
 
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 
@@ -20,6 +20,8 @@ import {
  *
  * DrawerToolbarLayoutContent is a component that provides a layout for displaying content in a drawer with a toolbar.
  * It manages the state of the drawer and toolbar, and renders the appropriate components based on the display mode.
+ *
+ * If all toolbar items are not visible, the toolbar will not be rendered.
  */
 export const DrawerToolbarLayoutContent = forwardRef<
   HTMLDivElement,
@@ -45,12 +47,24 @@ export const DrawerToolbarLayoutContent = forwardRef<
     } = getActiveDrawerContent() || {};
     const { onClose, displayMode, setIsDrawerOpen, setHasToolbar } =
       useDrawerLayoutContext();
+    const lgIds = getLgIds(dataLgId);
 
+    // This updates the drawer open state when the toolbar is inter
     useEffect(() => {
       setIsDrawerOpen(isDrawerOpen);
     }, [isDrawerOpen, setIsDrawerOpen]);
 
-    const lgIds = getLgIds(dataLgId);
+    // Calculate visibleToolbarItems in component body (needed for rendering)
+    const visibleToolbarItems = toolbarData?.filter(
+      toolbarItem => toolbarItem.visible ?? true,
+    );
+
+    const shouldRenderToolbar = visibleToolbarItems.length > 0;
+
+    // runs synchronously after the DOM is updated and before the browser paints to avoid flickering of the toolbar
+    useLayoutEffect(() => {
+      setHasToolbar(shouldRenderToolbar);
+    }, [shouldRenderToolbar, setHasToolbar]);
 
     const handleOnClose = (event: React.MouseEvent<HTMLButtonElement>) => {
       onClose?.(event);
@@ -65,18 +79,6 @@ export const DrawerToolbarLayoutContent = forwardRef<
       onClick?.(event);
       openDrawer(id);
     };
-
-    const visibleToolbarData = toolbarData?.filter(
-      toolbarItem => toolbarItem.glyph,
-    );
-
-    const hasVisibleToolbarData = visibleToolbarData.length > 0;
-
-    if (!hasVisibleToolbarData) {
-      setHasToolbar(false);
-    }
-
-    console.log({ toolbarData, visibleToolbarData });
 
     const renderDrawer = () => {
       return (
@@ -99,7 +101,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
     const renderToolbar = () => {
       return (
         <Toolbar data-lgid={lgIds.toolbar} data-testid={lgIds.toolbar}>
-          {visibleToolbarData?.map(toolbarItem => (
+          {visibleToolbarItems?.map(toolbarItem => (
             <ToolbarIconButton
               key={toolbarItem.glyph}
               glyph={toolbarItem.glyph}
@@ -128,7 +130,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
 
     return (
       <LayoutComponent {...rest} ref={forwardRef}>
-        {hasVisibleToolbarData ? (
+        {shouldRenderToolbar ? (
           <>
             <div className={contentStyles}>{children}</div>
             <DrawerWithToolbarWrapper>

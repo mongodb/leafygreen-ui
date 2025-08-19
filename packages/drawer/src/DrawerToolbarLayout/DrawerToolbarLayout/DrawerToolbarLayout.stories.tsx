@@ -24,30 +24,73 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
     label: 'Code',
     content: <DrawerContent />,
     title: 'Code Title',
-    // glyph: 'Code',
+    glyph: 'Code',
   },
   {
     id: 'Dashboard',
     label: 'Dashboard',
     content: <DrawerContent />,
     title: 'Dashboard Title',
-    // glyph: 'Dashboard',
+    glyph: 'Dashboard',
   },
   {
     id: 'Plus',
     label: "Perform some action, doesn't open a drawer",
-    // glyph: 'Plus',
+    glyph: 'Plus',
   },
   {
     id: 'Sparkle',
     label: 'Disabled item',
-    // glyph: 'Sparkle',
+    glyph: 'Sparkle',
     disabled: true,
   },
   {
-    id: 'Sparkle2',
-    label: 'Sparkle 2',
+    id: 'Apps',
+    label: 'Apps',
     content: <DrawerContent />,
+    glyph: 'Apps',
+    title: 'Apps Title',
+    visible: false,
+  },
+];
+
+const DRAWER_TOOLBAR_DATA_NOT_VISIBLE: DrawerLayoutProps['toolbarData'] = [
+  {
+    id: 'Code',
+    label: 'Code',
+    content: <DrawerContent />,
+    title: 'Code Title',
+    glyph: 'Code',
+    visible: false,
+  },
+  {
+    id: 'Dashboard',
+    label: 'Dashboard',
+    content: <DrawerContent />,
+    title: 'Dashboard Title',
+    glyph: 'Dashboard',
+    visible: false,
+  },
+  {
+    id: 'Plus',
+    label: "Perform some action, doesn't open a drawer",
+    glyph: 'Plus',
+    visible: false,
+  },
+  {
+    id: 'Sparkle',
+    label: 'Disabled item',
+    glyph: 'Sparkle',
+    disabled: true,
+    visible: false,
+  },
+  {
+    id: 'Apps',
+    label: 'Apps',
+    content: <DrawerContent />,
+    glyph: 'Apps',
+    title: 'Apps Title',
+    visible: false,
   },
 ];
 
@@ -149,8 +192,11 @@ const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
 );
 
 const Component: StoryFn<DrawerLayoutProps> = ({
+  toolbarData = DRAWER_TOOLBAR_DATA,
   ...args
 }: DrawerLayoutProps) => {
+  const [toolbarDataArr, setToolbarDataArr] = useState(DRAWER_TOOLBAR_DATA);
+
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -161,6 +207,17 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         `}
       >
         <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
+        <Button
+          onClick={() =>
+            setToolbarDataArr(prevData =>
+              prevData === DRAWER_TOOLBAR_DATA
+                ? DRAWER_TOOLBAR_DATA_NOT_VISIBLE
+                : DRAWER_TOOLBAR_DATA,
+            )
+          }
+        >
+          Toggle Toolbar visibility
+        </Button>
         <LongContent />
         <LongContent />
       </main>
@@ -174,7 +231,7 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerLayout {...args}>
+      <DrawerLayout {...args} toolbarData={toolbarDataArr}>
         <MainContent />
       </DrawerLayout>
     </div>
