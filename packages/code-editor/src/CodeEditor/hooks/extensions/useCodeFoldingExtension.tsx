@@ -56,21 +56,17 @@ export function useCodeFoldingExtension({
             open ? (
               <Icon
                 glyph="ChevronDown"
-                size="small"
+                size={CUSTOM_ICON_SIZE}
                 className={css`
                   margin-top: ${spacing[100]}px;
-                  height: ${CUSTOM_ICON_SIZE}px;
-                  width: ${CUSTOM_ICON_SIZE}px;
                 `}
               />
             ) : (
               <Icon
                 glyph="ChevronRight"
-                size="small"
+                size={CUSTOM_ICON_SIZE}
                 className={css`
                   margin-top: ${spacing[100]}px;
-                  height: 10px;
-                  width: 10px;
                 `}
               />
             ),
