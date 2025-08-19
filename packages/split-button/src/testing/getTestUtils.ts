@@ -74,7 +74,7 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
 
     if (options.withKeyboard) {
       trigger.focus();
-      userEvent.keyboard('{enter}');
+      await userEvent.keyboard('{enter}');
     } else {
       userEvent.click(trigger);
     }
