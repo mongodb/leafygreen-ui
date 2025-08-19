@@ -76,7 +76,7 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
       trigger.focus();
       await userEvent.keyboard('{enter}');
     } else {
-      userEvent.click(trigger);
+      await userEvent.click(trigger);
     }
 
     // Wait for menu to appear
