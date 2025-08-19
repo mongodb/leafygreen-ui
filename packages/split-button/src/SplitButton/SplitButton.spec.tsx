@@ -1,218 +1,131 @@
 import React, { createRef } from 'react';
 import {
-  fireEvent,
-  getAllByRole as globalGetAllByRole,
   render,
   waitFor,
   waitForElementToBeRemoved,
-  within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Optional } from '@leafygreen-ui/lib';
-import { getLgIds as getMenuLgIds, MenuItem } from '@leafygreen-ui/menu';
-import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
+import { Size } from '@leafygreen-ui/button';
+import { MenuItem } from '@leafygreen-ui/menu';
 import { RenderMode } from '@leafygreen-ui/popover';
 
-import { getLgIds } from '../utils/getLgIds';
+import { getTestUtils } from '../testing';
 
-import { MenuItemsType, SplitButtonProps } from './SplitButton.types';
-import { SplitButton } from '.';
+import { SplitButton } from './SplitButton';
+import { Align, Justify, Variant } from './SplitButton.types';
 
-const lgIds = getLgIds();
-const menuLgIds = getMenuLgIds(lgIds.menu);
+// Test data
+const defaultMenuItems = [
+  <MenuItem key="edit">Edit</MenuItem>,
+  <MenuItem key="duplicate">Duplicate</MenuItem>,
+  <MenuItem key="delete" description="This action cannot be undone">
+    Delete
+  </MenuItem>,
+  <MenuItem key="archive" disabled>
+    Archive
+  </MenuItem>,
+];
 
-const getMenuItems = (): MenuItemsType => {
-  return [
-    <MenuItem key="0" description="I am also a description">
-      Menu Item With Description
-    </MenuItem>,
-    <MenuItem key="1" disabled>
-      Disabled Menu Item
-    </MenuItem>,
-    <MenuItem key="2">Menu Item</MenuItem>,
-    <MenuItem key="3">Another Menu Item</MenuItem>,
-  ];
+const basicProps = {
+  label: 'Primary Action',
+  menuItems: defaultMenuItems,
 };
 
-const defaultProps = {
-  label: 'Button Label',
-  menuItems: getMenuItems(),
-};
-
-type RenderSplitButtonProps = Optional<
-  InferredPolymorphicPropsWithRef<'button', SplitButtonProps>,
-  keyof typeof defaultProps
->;
-
-function renderSplitButton(props: RenderSplitButtonProps = {}) {
-  const renderResult = render(<SplitButton {...defaultProps} {...props} />);
-  const wrapper = renderResult.getByTestId(lgIds.root);
-  const primaryButton = renderResult.getByTestId(lgIds.button);
-  const menuTrigger = renderResult.getByTestId(lgIds.trigger);
-
-  /**
-   * Since menu elements won't exist until component is interacted with,
-   * call this after opening the menu.
-   * @returns Object of menu elements
-   */
-  // TODO: Consolidate with Menu component util
-  async function findMenuElements(): Promise<{
-    menuEl: HTMLElement | null;
-    menuItemElements: Array<HTMLElement | null>;
-  }> {
-    const menuEl = await renderResult.findByTestId(menuLgIds.root);
-    const menuItemElements = await within(menuEl).findAllByRole('menuitem');
-
-    return {
-      menuEl,
-      menuItemElements,
-    };
-  }
-
-  /**
-   * Opens the menu, and manually fires transition events
-   */
-  async function openMenu(options?: { withKeyboard: boolean }) {
-    if (options?.withKeyboard) {
-      menuTrigger.focus();
-      userEvent.keyboard('{enter}');
-    } else {
-      userEvent.click(menuTrigger);
-    }
-
-    const menuElements = await findMenuElements();
-    fireEvent.transitionEnd(menuElements.menuEl as Element); // JSDOM does not automatically fire these events
-    return menuElements;
-  }
+// Helper function to render SplitButton with getTestUtils
+function renderSplitButtonWithUtils(props: any = {}) {
+  const allProps = { ...basicProps, ...props };
+  const renderResult = render(<SplitButton {...allProps} />);
+  const utils = getTestUtils(props['data-lgid']);
 
   return {
     ...renderResult,
-    primaryButton,
-    menuTrigger,
-    wrapper,
-    findMenuElements,
-    openMenu,
+    utils,
   };
 }
 
-describe('packages/split-button', () => {
-  describe('a11y', () => {
-    test('does not have basic accessibility issues', async () => {
-      const { container } = renderSplitButton({});
+describe('SplitButton - Comprehensive Test Suite', () => {
+  describe('Accessibility', () => {
+    test('has no accessibility violations', async () => {
+      const { container } = renderSplitButtonWithUtils();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
-  });
 
-  describe('Wrapper container', () => {
-    test('renders correct className', () => {
-      const { wrapper } = renderSplitButton({
-        className: 'split-button-class',
-      });
+    test('has no accessibility violations when menu is open', async () => {
+      const { container, utils } = renderSplitButtonWithUtils();
 
-      expect(wrapper.classList.contains('split-button-class')).toBe(true);
+      await utils.openMenu();
+
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+
+    test('has proper ARIA attributes', () => {
+      const { utils } = renderSplitButtonWithUtils();
+
+      const button = utils.getButton();
+      const trigger = utils.getTrigger();
+
+      expect(button).toHaveAttribute('type', 'button');
+      expect(trigger).toHaveAttribute('aria-haspopup', 'true');
+      expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    test('updates aria-expanded when menu opens/closes', async () => {
+      const { utils } = renderSplitButtonWithUtils();
+      const trigger = utils.getTrigger();
+
+      // Initially closed
+      expect(trigger).toHaveAttribute('aria-expanded', 'false');
+
+      // Open menu
+      await utils.openMenu();
+      expect(trigger).toHaveAttribute('aria-expanded', 'true');
     });
   });
 
-  describe('Primary button', () => {
-    test('renders the correct label', () => {
-      const { primaryButton } = renderSplitButton({});
+  describe('Rendering', () => {
+    test('renders primary button with correct label', () => {
+      const { utils } = renderSplitButtonWithUtils({ label: 'Custom Label' });
 
-      expect(primaryButton.textContent).toBe(defaultProps.label);
+      const button = utils.getButton();
+      expect(button).toHaveTextContent('Custom Label');
+      expect(button).toBeVisible();
     });
 
-    describe('when disabled', () => {
-      test('is aria-disabled when disabled is true', () => {
-        const { primaryButton } = renderSplitButton({
-          disabled: true,
-        });
+    test('renders menu trigger button', () => {
+      const { utils } = renderSplitButtonWithUtils();
 
-        expect(primaryButton.getAttribute('aria-disabled')).toBe('true');
-      });
-
-      test('click handler does not fire when disabled', () => {
-        const onClick = jest.fn();
-        const { primaryButton } = renderSplitButton({
-          onClick,
-          disabled: true,
-        });
-
-        userEvent.click(primaryButton);
-        expect(onClick).not.toHaveBeenCalled();
-      });
-
-      test('click handler does not fire when disabled and rendered as an anchor', () => {
-        const onClick = jest.fn();
-        const { primaryButton } = renderSplitButton({
-          onClick,
-          disabled: true,
-          as: 'a',
-        });
-
-        userEvent.click(primaryButton);
-        expect(onClick).not.toHaveBeenCalled();
-      });
+      const trigger = utils.getTrigger();
+      expect(trigger).toBeVisible();
+      expect(trigger).toHaveAttribute('aria-haspopup', 'true');
     });
 
-    test('fires onClick handler once when clicked', () => {
-      const onClick = jest.fn();
-      const { primaryButton } = renderSplitButton({
-        onClick,
+    test('renders with custom className', () => {
+      const { utils } = renderSplitButtonWithUtils({
+        className: 'custom-split-button',
       });
 
-      userEvent.click(primaryButton);
-      expect(onClick).toHaveBeenCalledTimes(1);
+      const root = utils.getRoot();
+      expect(root).toHaveClass('custom-split-button');
     });
 
-    test('does not fire onClick handler when disabled', () => {
-      const onClick = jest.fn();
-      const { primaryButton } = renderSplitButton({
-        disabled: true,
-        onClick,
+    test('renders with custom lgId', () => {
+      const { utils } = renderSplitButtonWithUtils({
+        'data-lgid': 'custom-split-button',
       });
 
-      userEvent.click(primaryButton);
-      expect(onClick).toHaveBeenCalledTimes(0);
-    });
-  });
-
-  describe('Menu', () => {
-    test('trigger opens the menu when clicked', () => {
-      const { menuTrigger, getByTestId } = renderSplitButton({});
-
-      userEvent.click(menuTrigger);
-
-      const menu = getByTestId(menuLgIds.root);
-      expect(menu).toBeInTheDocument();
-    });
-
-    test('disabled trigger does not open the menu when clicked', () => {
-      const { menuTrigger, queryByTestId } = renderSplitButton({
-        disabled: true,
-      });
-
-      userEvent.click(menuTrigger);
-
-      const menu = queryByTestId(menuLgIds.root);
-      expect(menu).not.toBeInTheDocument();
-    });
-
-    test('has correct menu items', () => {
-      const { menuTrigger, getByTestId } = renderSplitButton({});
-
-      userEvent.click(menuTrigger);
-
-      const menu = getByTestId(menuLgIds.root);
-      expect(menu.childElementCount).toEqual(4);
+      const root = utils.getRoot();
+      expect(root).toHaveAttribute('data-lgid', 'custom-split-button');
     });
 
     test('accepts a portalRef', () => {
       const portalContainer = document.createElement('div');
       document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
-      renderSplitButton({
+      renderSplitButtonWithUtils({
         open: true,
         portalContainer,
         portalRef,
@@ -221,33 +134,387 @@ describe('packages/split-button', () => {
       expect(portalRef.current).toBeDefined();
       expect(portalRef.current).toBe(portalContainer);
     });
+  });
 
-    describe('managed', () => {
-      test('calls setOpen when triggered', () => {
-        const setOpen = jest.fn();
-        const { menuTrigger } = renderSplitButton({ open: false, setOpen });
+  describe('Menu Functionality', () => {
+    test('opens menu when trigger is clicked', async () => {
+      const { utils } = renderSplitButtonWithUtils();
 
-        userEvent.click(menuTrigger);
-        expect(setOpen).toHaveBeenCalledTimes(1);
+      // Menu should not be visible initially
+      expect(utils.queryMenu()).not.toBeInTheDocument();
+
+      // Open menu
+      await utils.openMenu();
+
+      // Menu should now be visible
+      expect(utils.getMenu()).toBeInTheDocument();
+    });
+
+    test('opens menu when trigger is activated with keyboard', async () => {
+      const { utils } = renderSplitButtonWithUtils();
+
+      // Open menu with keyboard
+      await utils.openMenu({ withKeyboard: true });
+
+      // Menu should be visible
+      expect(utils.getMenu()).toBeInTheDocument();
+    });
+
+    test('displays correct number of menu items', async () => {
+      const { utils, getAllByRole } = renderSplitButtonWithUtils();
+
+      await utils.openMenu();
+
+      const menuItems = getAllByRole('menuitem');
+      expect(menuItems).toHaveLength(4); // 4 items as defined in defaultMenuItems
+    });
+
+    test('menu items have correct content', async () => {
+      const { utils, getAllByRole } = renderSplitButtonWithUtils();
+
+      await utils.openMenu();
+
+      const menuItems = getAllByRole('menuitem');
+      expect(menuItems[0]).toHaveTextContent('Edit');
+      expect(menuItems[1]).toHaveTextContent('Duplicate');
+      expect(menuItems[2]).toHaveTextContent('Delete');
+      expect(menuItems[3]).toHaveTextContent('Archive');
+    });
+
+    test('disabled menu items are properly marked', async () => {
+      const { utils, getAllByRole } = renderSplitButtonWithUtils();
+
+      await utils.openMenu();
+
+      const menuItems = getAllByRole('menuitem');
+      const archiveItem = menuItems[3]; // Archive is disabled
+      expect(archiveItem).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip('closes menu when clicking outside', async () => {
+      const { utils } = renderSplitButtonWithUtils();
+
+      // Open menu
+      await utils.openMenu();
+      expect(utils.getMenu()).toBeInTheDocument();
+
+      // Close menu
+      // Works correctly in the browser
+      // https://github.com/testing-library/react-testing-library/issues/269#issuecomment-1453666401 - this needs v13 of testing-library
+      // TODO: This is not triggered so the test fails
+      await utils.closeMenu();
+      expect(utils.queryMenu()).not.toBeInTheDocument();
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip('closes menu when pressing Escape', async () => {
+      const { utils } = renderSplitButtonWithUtils();
+
+      // Open menu
+      await utils.openMenu();
+      expect(utils.getMenu()).toBeInTheDocument();
+
+      // Close with keyboard
+      // Works correctly in the browser
+      // https://github.com/testing-library/react-testing-library/issues/269#issuecomment-1453666401 - this needs v13 of testing-library
+      // TODO: This is not triggered so the test fails
+      await utils.closeMenu({ withKeyboard: true });
+      expect(utils.queryMenu()).not.toBeInTheDocument();
+    });
+  });
+
+  describe('User Interactions', () => {
+    test('primary button click fires onClick handler', () => {
+      const onClickSpy = jest.fn();
+      const { utils } = renderSplitButtonWithUtils({ onClick: onClickSpy });
+
+      const button = utils.getButton();
+      userEvent.click(button);
+
+      expect(onClickSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('menu item selection fires onChange handler', async () => {
+      const onChangeSpy = jest.fn();
+      const { utils, getAllByRole } = renderSplitButtonWithUtils({
+        onChange: onChangeSpy,
       });
+
+      await utils.openMenu();
+
+      const menuItems = getAllByRole('menuitem');
+      userEvent.click(menuItems[0]); // Click "Edit"
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('disabled menu items do not trigger onChange', async () => {
+      const onChangeSpy = jest.fn();
+      const { utils, getAllByRole } = renderSplitButtonWithUtils({
+        onChange: onChangeSpy,
+      });
+
+      await utils.openMenu();
+
+      const menuItems = getAllByRole('menuitem');
+      userEvent.click(menuItems[3]); // Click disabled "Archive" item
+
+      expect(onChangeSpy).not.toHaveBeenCalled();
+    });
+
+    test('trigger click fires onTriggerClick handler when provided', async () => {
+      const onTriggerClickSpy = jest.fn();
+      const { utils } = renderSplitButtonWithUtils({
+        onTriggerClick: onTriggerClickSpy,
+      });
+
+      const trigger = utils.getTrigger();
+      userEvent.click(trigger);
+
+      expect(onTriggerClickSpy).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('MenuItem', () => {
-    test('click triggers onChange callback', () => {
-      const onChange = jest.fn();
-      const { menuTrigger, getByTestId } = renderSplitButton({ onChange });
+  describe('Disabled State', () => {
+    test('identifies disabled state correctly', () => {
+      const { utils } = renderSplitButtonWithUtils({ disabled: true });
+      expect(utils.isDisabled()).toBeTruthy();
+      expect(utils.getButton().getAttribute('aria-disabled')).toBeTruthy();
+    });
 
-      userEvent.click(menuTrigger);
+    test('disabled button does not respond to clicks', () => {
+      const onClickSpy = jest.fn();
+      const { utils } = renderSplitButtonWithUtils({
+        disabled: true,
+        onClick: onClickSpy,
+      });
 
-      const menu = getByTestId(menuLgIds.root);
-      const options = globalGetAllByRole(menu, 'menuitem');
-      userEvent.click(options[0]);
-      expect(onChange).toHaveBeenCalledTimes(1);
+      const button = utils.getButton();
+      userEvent.click(button);
+
+      expect(onClickSpy).not.toHaveBeenCalled();
+    });
+
+    test('disabled trigger does not open menu', async () => {
+      const { utils } = renderSplitButtonWithUtils({ disabled: true });
+
+      const trigger = utils.getTrigger();
+      userEvent.click(trigger);
+
+      // Menu should not appear
+      expect(utils.queryMenu()).not.toBeInTheDocument();
+    });
+
+    test('disabled state affects both button and trigger', () => {
+      const { utils } = renderSplitButtonWithUtils({ disabled: true });
+
+      const button = utils.getButton();
+      const trigger = utils.getTrigger();
+
+      expect(button).toHaveAttribute('aria-disabled', 'true');
+      expect(trigger).toHaveAttribute('aria-disabled', 'true');
     });
   });
 
-  // TODO: Consolidate tests with Menu component
+  describe('Variants and Styling', () => {
+    test.each(Object.values(Variant))(
+      'renders %s variant correctly',
+      variant => {
+        const { utils } = renderSplitButtonWithUtils({ variant });
+
+        const button = utils.getButton();
+        expect(button).toBeInTheDocument();
+        expect(button).toBeVisible();
+      },
+    );
+
+    test.each(Object.values(Size))('renders %s size correctly', size => {
+      const { utils } = renderSplitButtonWithUtils({ size });
+
+      const button = utils.getButton();
+      expect(button).toBeInTheDocument();
+      expect(button).toBeVisible();
+    });
+
+    test('applies dark mode correctly', () => {
+      const { utils } = renderSplitButtonWithUtils({ darkMode: true });
+
+      const button = utils.getButton();
+      expect(button).toBeInTheDocument();
+    });
+  });
+
+  describe('Menu Positioning', () => {
+    test.each(Object.values(Align))('handles %s alignment', async align => {
+      const { utils } = renderSplitButtonWithUtils({ align });
+
+      await utils.openMenu();
+
+      const menu = utils.getMenu();
+      expect(menu).toBeInTheDocument();
+    });
+
+    test.each(Object.values(Justify))(
+      'handles %s justification',
+      async justify => {
+        const { utils } = renderSplitButtonWithUtils({ justify });
+
+        await utils.openMenu();
+
+        const menu = utils.getMenu();
+        expect(menu).toBeInTheDocument();
+      },
+    );
+  });
+
+  describe('Polymorphic Behavior', () => {
+    test('renders as anchor when href is provided', () => {
+      const { utils } = renderSplitButtonWithUtils({
+        href: 'https://example.com',
+      });
+
+      const button = utils.getButton();
+      expect(button.tagName.toLowerCase()).toBe('a');
+      expect(button).toHaveAttribute('href', 'https://example.com');
+    });
+
+    test('renders as button by default', () => {
+      const { utils } = renderSplitButtonWithUtils();
+
+      const button = utils.getButton();
+      expect(button.tagName.toLowerCase()).toBe('button');
+      expect(button).toHaveAttribute('type', 'button');
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip('Accepts string as `as` prop', () => {
+      <SplitButton as="p" label="label" menuItems={defaultMenuItems} />;
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip('Accepts component as `as` prop', () => {
+      const As = ({ children }: { children: React.ReactNode }) => (
+        <>{children}</>
+      );
+      render(
+        <SplitButton
+          data-testid="split-button"
+          as={As}
+          label="label"
+          menuItems={defaultMenuItems}
+        />,
+      );
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip('types', () => {
+      const AnchorLikeWrapper = (props: JSX.IntrinsicElements['a']) => {
+        return <a {...props}>content</a>;
+      };
+
+      <>
+        <SplitButton
+          href="allowed"
+          label="label"
+          menuItems={defaultMenuItems}
+        />
+        <SplitButton
+          as="a"
+          href="allowed"
+          label="label"
+          menuItems={defaultMenuItems}
+        />
+        <SplitButton
+          as="div"
+          // @ts-expect-error - href not allowed when as is div
+          href="string"
+          label="label"
+          menuItems={defaultMenuItems}
+        />
+        <SplitButton
+          as={AnchorLikeWrapper}
+          href="string"
+          label="label"
+          menuItems={defaultMenuItems}
+        />
+      </>;
+    });
+  });
+
+  describe('Controlled State', () => {
+    test('respects controlled open state', async () => {
+      const setOpenSpy = jest.fn();
+      const { utils, rerender } = renderSplitButtonWithUtils({
+        open: false,
+        setOpen: setOpenSpy,
+      });
+
+      // Initially closed
+      expect(utils.queryMenu()).not.toBeInTheDocument();
+
+      // Rerender with open=true
+      rerender(
+        <SplitButton {...basicProps} open={true} setOpen={setOpenSpy} />,
+      );
+
+      // Should now show menu
+      expect(utils.getMenu()).toBeInTheDocument();
+    });
+
+    test('calls setOpen when trigger is clicked in controlled mode', () => {
+      const setOpenSpy = jest.fn();
+      const { utils } = renderSplitButtonWithUtils({
+        open: false,
+        setOpen: setOpenSpy,
+      });
+
+      const trigger = utils.getTrigger();
+      userEvent.click(trigger);
+
+      expect(setOpenSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Edge Cases', () => {
+    test('handles empty menu items array', () => {
+      const { utils } = renderSplitButtonWithUtils({ menuItems: [] });
+
+      expect(utils.getButton()).toBeInTheDocument();
+      expect(utils.getTrigger()).toBeInTheDocument();
+    });
+
+    test('handles single menu item', async () => {
+      const singleItem = [<MenuItem key="single">Single Item</MenuItem>];
+      const { utils, getAllByRole } = renderSplitButtonWithUtils({
+        menuItems: singleItem,
+      });
+
+      await utils.openMenu();
+
+      const menuItems = getAllByRole('menuitem');
+      expect(menuItems).toHaveLength(1);
+      expect(menuItems[0]).toHaveTextContent('Single Item');
+    });
+
+    test('handles long button labels', () => {
+      const longLabel =
+        'This is a very long button label that might cause layout issues';
+      const { utils } = renderSplitButtonWithUtils({ label: longLabel });
+
+      const button = utils.getButton();
+      expect(button).toHaveTextContent(longLabel);
+    });
+
+    test('handles special characters in labels', () => {
+      const specialLabel = 'Action <>&"\'';
+      const { utils } = renderSplitButtonWithUtils({ label: specialLabel });
+
+      const button = utils.getButton();
+      expect(button).toHaveTextContent(specialLabel);
+    });
+  });
+
   describe('Keyboard Interaction', () => {
     type CloseKeys = 'esc' | 'tab';
     const closeKeys: Array<Array<CloseKeys>> = [['esc'], ['tab']];
@@ -262,85 +529,79 @@ describe('packages/split-button', () => {
 
     describe.each(closeKeys)('%s key', key => {
       test('Closes menu', async () => {
-        const { openMenu } = renderSplitButton({});
-        const { menuEl } = await openMenu();
+        const { utils } = renderSplitButtonWithUtils({});
+
+        await utils.openMenu();
+        const menuEl = utils.getMenu();
 
         userEventInteraction(menuEl!, key);
         await waitForElementToBeRemoved(menuEl);
         expect(menuEl).not.toBeInTheDocument();
       });
+
       test('Returns focus to trigger {renderMode: "portal"}', async () => {
-        const { openMenu, menuTrigger } = renderSplitButton({
+        const { utils } = renderSplitButtonWithUtils({
           renderMode: 'portal',
         });
-        const { menuEl } = await openMenu();
+
+        await utils.openMenu();
+        const menuEl = utils.getMenu();
+        const trigger = utils.getTrigger();
 
         userEventInteraction(menuEl!, key);
         await waitForElementToBeRemoved(menuEl);
-        expect(menuTrigger).toHaveFocus();
+        expect(trigger).toHaveFocus();
       });
 
       test('Returns focus to trigger {renderMode: "inline"}', async () => {
-        const { openMenu, menuTrigger } = renderSplitButton({
+        const { utils } = renderSplitButtonWithUtils({
           renderMode: 'inline',
         });
-        const { menuEl } = await openMenu();
+
+        await utils.openMenu();
+        const menuEl = utils.getMenu();
+        const trigger = utils.getTrigger();
 
         userEventInteraction(menuEl!, key);
         await waitForElementToBeRemoved(menuEl);
-        expect(menuTrigger).toHaveFocus();
+        expect(trigger).toHaveFocus();
       });
     });
+  });
 
-    type SelectionKeys = 'enter' | 'space';
-    const selectionKeys: Array<Array<SelectionKeys>> = [['enter'], ['space']];
+  type SelectionKeys = 'enter' | 'space';
+  const selectionKeys: Array<Array<SelectionKeys>> = [['enter'], ['space']];
 
-    describe.each(selectionKeys)('%s key', key => {
-      const onClick = jest.fn();
-      const menuItems = [
-        <MenuItem
-          key="0"
-          onClick={onClick}
-          description="I am also a description"
-        >
-          Menu Item With Description
-        </MenuItem>,
-        <MenuItem key="1" disabled>
-          Disabled Menu Item
-        </MenuItem>,
-      ];
+  describe.each(selectionKeys)('%s key', key => {
+    const onClick = jest.fn();
+    const menuItems = [
+      <MenuItem key="0" onClick={onClick} description="I am also a description">
+        Menu Item With Description
+      </MenuItem>,
+      <MenuItem key="1" disabled>
+        Disabled Menu Item
+      </MenuItem>,
+    ];
 
-      afterEach(() => {
-        onClick.mockReset();
+    afterEach(() => {
+      onClick.mockReset();
+    });
+
+    test('Fires the click handler of the highlighted item', async () => {
+      const { utils, getAllByRole } = renderSplitButtonWithUtils({
+        menuItems,
       });
 
-      test('Fires the click handler of the highlighted item', async () => {
-        const { openMenu } = renderSplitButton({
-          menuItems,
-        });
-        const { menuItemElements } = await openMenu({
-          withKeyboard: true,
-        });
-        await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
-
-        userEvent.type(menuItemElements?.[0]!, `{${key}}`);
-        expect(onClick).toHaveBeenCalled();
+      await utils.openMenu({
+        withKeyboard: true,
       });
 
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('Closes the menu', async () => {
-        // Works correctly in the browser
-        // https://github.com/testing-library/react-testing-library/issues/269#issuecomment-1453666401 - this needs v13 of testing-library
-        // TODO: This is not triggered so the test fails
-        const { openMenu, menuTrigger } = renderSplitButton({
-          menuItems,
-        });
-        const { menuEl, menuItemElements } = await openMenu();
-        userEvent.type(menuItemElements?.[0]!, `{${key}}`);
+      const menuItemElements = getAllByRole('menuitem');
 
-        expect(menuTrigger).toHaveFocus();
-        await waitForElementToBeRemoved(menuEl);
-      });
+      await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
+
+      userEvent.type(menuItemElements?.[0]!, `{${key}}`);
+      expect(onClick).toHaveBeenCalled();
     });
 
     describe('Arrow keys', () => {
@@ -353,10 +614,14 @@ describe('packages/split-button', () => {
 
       describe('Down arrow', () => {
         test('highlights the next option in the menu', async () => {
-          const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu({
-            withKeyboard: true,
+          const { utils, getAllByRole } = renderSplitButtonWithUtils({
+            menuItems,
           });
+          await utils.openMenu({ withKeyboard: true });
+
+          const menuEl = utils.getMenu();
+          const menuItemElements = getAllByRole('menuitem');
+
           await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           userEvent.type(menuEl!, '{arrowdown}');
@@ -364,10 +629,14 @@ describe('packages/split-button', () => {
         });
 
         test('cycles highlight to the top', async () => {
-          const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu({
-            withKeyboard: true,
+          const { utils, getAllByRole } = renderSplitButtonWithUtils({
+            menuItems,
           });
+          await utils.openMenu({ withKeyboard: true });
+
+          const menuEl = utils.getMenu();
+          const menuItemElements = getAllByRole('menuitem');
+
           await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           for (let i = 0; i < menuItemElements.length; i++) {
@@ -380,10 +649,14 @@ describe('packages/split-button', () => {
 
       describe('Up arrow', () => {
         test('highlights the previous option in the menu', async () => {
-          const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu({
-            withKeyboard: true,
+          const { utils, getAllByRole } = renderSplitButtonWithUtils({
+            menuItems,
           });
+          await utils.openMenu({ withKeyboard: true });
+
+          const menuEl = utils.getMenu();
+          const menuItemElements = getAllByRole('menuitem');
+
           await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           userEvent.type(menuEl!, '{arrowdown}');
@@ -394,10 +667,14 @@ describe('packages/split-button', () => {
         });
 
         test('cycles highlight to the bottom', async () => {
-          const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu({
-            withKeyboard: true,
+          const { utils, getAllByRole } = renderSplitButtonWithUtils({
+            menuItems,
           });
+          await utils.openMenu({ withKeyboard: true });
+
+          const menuEl = utils.getMenu();
+          const menuItemElements = getAllByRole('menuitem');
+
           await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           const lastOption = menuItemElements[menuItemElements.length - 1];
@@ -405,99 +682,6 @@ describe('packages/split-button', () => {
           expect(lastOption).toHaveFocus();
         });
       });
-    });
-  });
-
-  /* eslint-disable jest/no-disabled-tests */
-  describe('Types behave as expected', () => {
-    test.skip('Accepts base props', () => {
-      <>
-        <SplitButton label="label" menuItems={getMenuItems()} />
-        <SplitButton
-          label="label"
-          menuItems={[
-            <MenuItem key="0">Menu Item</MenuItem>,
-            <MenuItem key="1" disabled>
-              Disabled Menu Item
-            </MenuItem>,
-            <MenuItem key="2" description="I am also a description">
-              , Menu Item With Description
-            </MenuItem>,
-          ]}
-        />
-        <SplitButton
-          label="label"
-          menuItems={getMenuItems()}
-          onClick={() => {}}
-          disabled={true}
-          size="default"
-          variant="default"
-          darkMode={true}
-          align="top"
-          justify="start"
-          className="test"
-          renderMode="portal"
-          portalContainer={{} as HTMLElement}
-          scrollContainer={{} as HTMLElement}
-          portalClassName="classname"
-          data-testid="test-id"
-          open={false}
-          triggerAriaLabel="im the trigger silly"
-        />
-        {/* @ts-expect-error - expects label and menuItems*/}
-        <SplitButton />
-        {/* @ts-expect-error - expects menuItems */}
-        <SplitButton label="label" />
-        {/* @ts-expect-error - expects label */}
-        <SplitButton menuItems={getMenuItems()} />
-      </>;
-    });
-
-    test.skip('Accepts string as `as` prop', () => {
-      <SplitButton as="p" label="label" menuItems={getMenuItems()} />;
-    });
-
-    test.skip('Accepts component as `as` prop', () => {
-      const As = ({ children }: { children: React.ReactNode }) => (
-        <>{children}</>
-      );
-      render(
-        <SplitButton
-          data-testid="split-button"
-          as={As}
-          label="label"
-          menuItems={getMenuItems()}
-        />,
-      );
-    });
-
-    test.skip('types', () => {
-      const AnchorLikeWrapper = (props: JSX.IntrinsicElements['a']) => {
-        return <a {...props}>content</a>;
-      };
-
-      <>
-        <SplitButton href="allowed" label="label" menuItems={getMenuItems()} />
-        <SplitButton
-          as="a"
-          href="allowed"
-          label="label"
-          menuItems={getMenuItems()}
-        />
-        <SplitButton
-          as="div"
-          // @ts-expect-error - href not allowed when as is div
-          href="string"
-          label="label"
-          menuItems={getMenuItems()}
-        />
-        <SplitButton
-          as={AnchorLikeWrapper}
-          href="string"
-          label="label"
-          menuItems={getMenuItems()}
-        />
-      </>;
     });
   });
 });

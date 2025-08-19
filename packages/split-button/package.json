@@ -39,6 +39,7 @@
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^"
   }
 }
