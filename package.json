@@ -45,6 +45,7 @@
     "@leafygreen-ui/testing-lib": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/cli": "workspace:^",
+    "@lg-tools/codemods": "workspace:^",
     "@lg-tools/lint": "workspace:^",
     "@lg-tools/meta": "workspace:^",
     "@lg-tools/prompt-kit": "workspace:^",
