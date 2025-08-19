@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/search-input
+```
+
 ### Yarn
 
 ```shell

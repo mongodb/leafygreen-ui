@@ -1,5 +1,13 @@
 # @lg-chat/input-bar
 
+## 10.0.1
+
+### Patch Changes
+
+- d3c0f1f: [LG-5431](https://jira.mongodb.org/browse/LG-5431): Fix `PRIMARY_BUTTON_INTERACTIVE_GREEN` constant export and transpilation
+- Updated dependencies [d3c0f1f]
+  - @leafygreen-ui/button@25.0.2
+
 ## 10.0.0
 
 ### Patch Changes

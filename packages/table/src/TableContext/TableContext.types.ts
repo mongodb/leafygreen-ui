@@ -27,6 +27,11 @@ interface BaseTableContextValue<T extends LGRowData> {
    * LGIDs for table components
    */
   lgIds: GetLgIdsReturnType;
+
+  /**
+   * Whether the rows should be memoized.
+   */
+  shouldMemoizeRows?: boolean;
 }
 
 type PartialTableProps<T extends LGRowData> = Pick<

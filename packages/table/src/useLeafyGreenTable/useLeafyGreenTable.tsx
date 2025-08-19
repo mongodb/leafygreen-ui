@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import isEqual from 'react-fast-compare';
 import {
   ExpandedState,
   getExpandedRowModel,
@@ -13,6 +14,7 @@ import {
 } from '@tanstack/react-table';
 import omit from 'lodash/omit';
 
+import { usePrevious } from '@leafygreen-ui/hooks';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { TableHeaderCheckbox } from './TableHeaderCheckbox';
@@ -33,6 +35,19 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   const [expanded, setExpanded] = useState<ExpandedState>(
     (rest.initialState?.expanded as ExpandedState) ?? {},
   );
+
+  const prevColumns = usePrevious(columnsProp);
+  /**
+   * Performance optimization flag that controls table row memoization inside `MemoizedInternalRowWithRT`.
+   *
+   * - `true`: Rows are memoized and only re-render when their data/props change, excluding children.
+   * - `false`: All rows re-render (when column definitions change). This bypasses memoization and ensures that rows pick up new configurations immediately.
+   *
+   * On initial load, prevColumns is undefined, so we enable memoization (return true)
+   * to avoid unnecessary re-renders after the first load
+   */
+  const shouldMemoizeRows =
+    prevColumns === undefined || isEqual(prevColumns, columnsProp);
 
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
@@ -121,6 +136,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   return {
     ...table,
     hasSelectableRows,
+    shouldMemoizeRows,
   } as LeafyGreenTable<T>;
 }
 

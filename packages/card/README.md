@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/card
+```
+
 ### Yarn
 
 ```shell
@@ -26,12 +32,6 @@ import Card from '@leafygreen-ui/card';
 <Card className="card-styles" as="article">
   This is my card component
 </Card>;
-```
-
-**Output HTML**
-
-```html
-<div class="leafygreen-ui-1lu17q2 card-styles">This is my card component</div>
 ```
 
 ## Properties

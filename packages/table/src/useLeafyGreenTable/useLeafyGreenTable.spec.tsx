@@ -114,6 +114,97 @@ describe('packages/table/useLeafyGreenTable', () => {
     );
   });
 
+  describe('shouldMemoizeRows logic', () => {
+    it('should return true on initial load', () => {
+      const { result } = renderHook(() => {
+        const columns = getDefaultTestColumns({});
+        return useLeafyGreenTable({
+          data: getDefaultTestData({}),
+          columns,
+        });
+      });
+
+      expect(result.current.shouldMemoizeRows).toBe(true);
+    });
+
+    it('should return true when columns are unchanged', () => {
+      const columns = getDefaultTestColumns({});
+
+      const { result, rerender } = renderHook(
+        ({ cols }) =>
+          useLeafyGreenTable({
+            data: getDefaultTestData({}),
+            columns: cols,
+          }),
+        { initialProps: { cols: columns } },
+      );
+
+      expect(result.current.shouldMemoizeRows).toBe(true);
+
+      // Re-render with same columns
+      rerender({ cols: columns });
+
+      expect(result.current.shouldMemoizeRows).toBe(true);
+    });
+
+    it('should return false when columns change', () => {
+      const initialColumns = getDefaultTestColumns({});
+      const changedColumns = [
+        ...initialColumns,
+        { accessorKey: 'newField', header: 'New Field' },
+      ];
+
+      const { result, rerender } = renderHook(
+        ({ cols }) =>
+          useLeafyGreenTable({
+            data: getDefaultTestData({}),
+            columns: cols,
+          }),
+        { initialProps: { cols: initialColumns } },
+      );
+
+      expect(result.current.shouldMemoizeRows).toBe(true);
+
+      // Change columns
+      rerender({ cols: changedColumns });
+
+      expect(result.current.shouldMemoizeRows).toBe(false);
+    });
+
+    it('should return false when cell renderer changes in existing column', () => {
+      const initialColumns = getDefaultTestColumns({});
+
+      // Create modified columns where we change the cell renderer for firstName column
+      const changedColumns = initialColumns.map(col => {
+        // @ts-expect-error: accessorKey may not exist on all ColumnDef types
+        if (col.accessorKey === 'firstName') {
+          return {
+            ...col,
+            cell: (info: any) => <strong>Bold: {info.getValue()}</strong>, // Changed from simple info.getValue()
+          };
+        }
+
+        return col;
+      });
+
+      const { result, rerender } = renderHook(
+        ({ cols }) =>
+          useLeafyGreenTable({
+            data: getDefaultTestData({}),
+            columns: cols,
+          }),
+        { initialProps: { cols: initialColumns } },
+      );
+
+      expect(result.current.shouldMemoizeRows).toBe(true);
+
+      // Change the cell renderer for firstName column
+      rerender({ cols: changedColumns });
+
+      expect(result.current.shouldMemoizeRows).toBe(false);
+    });
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('Typescript', () => {
     // @ts-expect-error - requires columns, data

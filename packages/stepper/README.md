@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/stepper
+```
+
 ### Yarn
 
 ```shell
@@ -34,29 +40,6 @@ or
   <Step>Step 1</Step>
   <Step>Step 2</Step>
 </Stepper>
-```
-
-**Output HTML**
-
-```html
-<ol class="leafygreen-ui-1pvgjhr" aria-label="progress">
-  <li>
-    <div class="leafygreen-ui-1x8f1m7" aria-label="step1" aria-current="step">
-      <div class="lg-ui-03f12bfd leafygreen-ui-1dyv85w">
-        <div class="leafygreen-ui-17xqetg">1</div>
-      </div>
-      <p class="lg-ui-d036aa4e leafygreen-ui-1u866nc">Step 1</p>
-    </div>
-  </li>
-  <li>
-    <div class="leafygreen-ui-1x8f1m7" aria-label="step2" aria-current="false">
-      <div class="lg-ui-03f12bfd leafygreen-ui-1oypnhq">
-        <div class="leafygreen-ui-17xqetg">2</div>
-      </div>
-      <p class="lg-ui-d036aa4e leafygreen-ui-1uk291k">Step 2</p>
-    </div>
-  </li>
-</ol>
 ```
 
 ## Properties

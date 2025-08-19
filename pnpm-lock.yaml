@@ -32,6 +32,9 @@ importers:
       '@lg-tools/cli':
         specifier: workspace:^
         version: link:tools/cli
+      '@lg-tools/codemods':
+        specifier: workspace:^
+        version: link:tools/codemods
       '@lg-tools/lint':
         specifier: workspace:^
         version: link:tools/lint
@@ -2594,6 +2597,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
+      '@oddbird/popover-polyfill':
+        specifier: ^0.5.2
+        version: 0.5.2
 
   packages/portal:
     dependencies:
@@ -5614,6 +5620,9 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@oddbird/popover-polyfill@0.5.2':
+    resolution: {integrity: sha512-iFrvar5SOMtKFOSjYvs4z9UlLqDdJbMx0mgISLcPedv+g0ac5sgeETLGtipHCVIae6HJPclNEH5aCyD1RZaEHw==}
 
   '@parcel/watcher-android-arm64@2.5.1':
     resolution: {integrity: sha512-KF8+j9nNbUN8vzOFDpRMsaKBHZ/mcjEjMToVMJOhTozkDonQFFrRcfdLWn6yWKCmJKmdVxSgHiYvTCef4/qcBA==}
@@ -13756,6 +13765,8 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@oddbird/popover-polyfill@0.5.2': {}
 
   '@parcel/watcher-android-arm64@2.5.1':
     optional: true

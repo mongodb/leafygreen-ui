@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/menu
+```
+
 ### Yarn
 
 ```shell
@@ -59,105 +65,6 @@ import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
   <MenuItem>Menu Item 2</MenuItem>
   <MenuItem>Menu Item 3</MenuItem>
 </Menu>;
-```
-
-**Output HTML**
-
-```html
-<!-- Trigger as an HTML Element -->
-<button>
-  trigger
-  <div class="leafygreen-ui-1hyfx7x"></div>
-</button>
-<div class="leafygreen-ui-19z0mfw">
-  <ul class="leafygreen-ui-1guv7w9" role="menu">
-    <li role="none">
-      <button
-        data-leafygreen-ui="menu-item-container"
-        class="leafygreen-ui-19xfwtd"
-        role="menuitem"
-        aria-disabled="false"
-      >
-        <div class="leafygreen-ui-14a8fex">Active Menu Item</div>
-      </button>
-    </li>
-    <li role="none">
-      <button
-        data-leafygreen-ui="menu-item-container"
-        class="leafygreen-ui-7pgwa0"
-        role="menuitem"
-        aria-disabled="true"
-        tabindex="-1"
-      >
-        <div class="leafygreen-ui-10xqyru">Disabled Menu Item</div>
-        <div class="leafygreen-ui-17sf9go">I am a description</div>
-      </button>
-    </li>
-    <li role="none">
-      <button
-        data-leafygreen-ui="menu-item-container"
-        class="leafygreen-ui-1sk3xcx"
-        role="menuitem"
-        aria-disabled="false"
-      >
-        <div class="leafygreen-ui-r0sqyc">Menu Item With Description</div>
-        <div class="leafygreen-ui-1dm36mc">I am also a description</div>
-      </button>
-    </li>
-    <li role="none">
-      <a
-        data-leafygreen-ui="menu-item-container"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="leafygreen-ui-1sk3xcx"
-        role="menuitem"
-        aria-disabled="false"
-        href="http://mongodb.design"
-        ><div class="leafygreen-ui-r0sqyc">I am a link!</div></a
-      >
-    </li>
-  </ul>
-</div>
-
-<!-- Trigger as a function -->
-<button>
-  Example Trigger
-  <div class="leafygreen-ui-1hyfx7x"></div>
-</button>
-<div class="leafygreen-ui-1td4qre">
-  <ul class="leafygreen-ui-1guv7w9" role="menu">
-    <li role="none">
-      <button
-        data-leafygreen-ui="menu-item-container"
-        class="leafygreen-ui-1sk3xcx"
-        role="menuitem"
-        aria-disabled="false"
-      >
-        <div class="leafygreen-ui-r0sqyc">Menu Item 1</div>
-      </button>
-    </li>
-    <li role="none">
-      <button
-        data-leafygreen-ui="menu-item-container"
-        class="leafygreen-ui-1sk3xcx"
-        role="menuitem"
-        aria-disabled="false"
-      >
-        <div class="leafygreen-ui-r0sqyc">Menu Item 2</div>
-      </button>
-    </li>
-    <li role="none">
-      <button
-        data-leafygreen-ui="menu-item-container"
-        class="leafygreen-ui-1sk3xcx"
-        role="menuitem"
-        aria-disabled="false"
-      >
-        <div class="leafygreen-ui-r0sqyc">Menu Item 3</div>
-      </button>
-    </li>
-  </ul>
-</div>
 ```
 
 ## Usage with NextJS Link components

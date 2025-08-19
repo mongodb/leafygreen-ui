@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "25.0.1",
+  "version": "25.0.2",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -26,7 +26,11 @@
       "import": "./dist/esm/testing/index.js",
       "types": "./dist/types/testing/index.d.ts"
     },
-    "./Button.styles": "./src/Button/index.ts"
+    "./constants": {
+      "require": "./dist/umd/constants.js",
+      "import": "./dist/esm/constants.js",
+      "types": "./dist/types/constants.d.ts"
+    }
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",

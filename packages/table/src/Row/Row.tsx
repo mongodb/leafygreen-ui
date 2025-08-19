@@ -20,7 +20,11 @@ const RowWithRef = <T extends LGRowData>(
   fwdRef: ForwardedRef<HTMLTableRowElement>,
 ) => {
   const { theme } = useDarkMode();
-  const { shouldAlternateRowColor = false, virtualTable } = useTableContext();
+  const {
+    shouldAlternateRowColor = false,
+    virtualTable,
+    shouldMemoizeRows,
+  } = useTableContext();
 
   const ref = useForwardedRef(fwdRef, null);
 
@@ -40,6 +44,7 @@ const RowWithRef = <T extends LGRowData>(
           isSelected={row.getIsSelected()}
           rowRef={ref}
           disabled={disabled}
+          shouldMemoizeRows={shouldMemoizeRows}
           {...rest}
         />
       ) : (
