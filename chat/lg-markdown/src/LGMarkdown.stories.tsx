@@ -42,6 +42,7 @@ const meta = {
     children: StoryMarkdown,
   },
   argTypes: {
+    baseFontSize: storybookArgTypes.baseFontSize,
     darkMode: storybookArgTypes.darkMode,
   },
 };
