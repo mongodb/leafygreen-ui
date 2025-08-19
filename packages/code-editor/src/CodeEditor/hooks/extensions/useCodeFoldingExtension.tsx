@@ -11,6 +11,8 @@ import { type CodeEditorModules } from '../useModuleLoaders';
 
 import { useExtension } from './useExtension';
 
+const CUSTOM_ICON_SIZE = 10;
+
 /**
  * Hook for managing code folding functionality in the CodeMirror editor.
  *
@@ -57,8 +59,8 @@ export function useCodeFoldingExtension({
                 size="small"
                 className={css`
                   margin-top: ${spacing[100]}px;
-                  height: 10px; // Custom icon height
-                  width: 10px; // Custom icon width
+                  height: ${CUSTOM_ICON_SIZE}px;
+                  width: ${CUSTOM_ICON_SIZE}px;
                 `}
               />
             ) : (
