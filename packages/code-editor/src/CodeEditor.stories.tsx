@@ -183,9 +183,10 @@ const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 export const LiveExample = Template.bind({});
 
 export const WithPanel = Template.bind({});
+const language = LanguageName.java;
 WithPanel.args = {
-  language: 'typescript',
-  defaultValue: codeSnippets.typescript,
+  language,
+  defaultValue: codeSnippets[language],
   panel: (
     <Panel
       showCopyButton

@@ -20,6 +20,9 @@ export const useFormattingModuleLoaders = (language?: LanguageName) => {
       return neededLoaders;
     }
 
+    // Check if we're in a Node.js environment (server-side)
+    // const isNodeEnvironment = typeof window === 'undefined';
+
     switch (language) {
       // Prettier with built-in parsers
       case LanguageName.javascript:
@@ -50,107 +53,52 @@ export const useFormattingModuleLoaders = (language?: LanguageName) => {
           import('prettier/parser-html');
         break;
 
-      // Prettier with external plugins
-      case LanguageName.java:
-        neededLoaders['prettier/standalone'] = () =>
-          import('prettier/standalone');
-        neededLoaders['prettier-plugin-java'] = async () => {
-          try {
-            const moduleName = 'prettier-plugin-java';
-            return await import(moduleName);
-          } catch {
-            console.warn('prettier-plugin-java is not installed');
-            return null;
-          }
-        };
-        break;
-      case LanguageName.kotlin:
-        neededLoaders['prettier/standalone'] = () =>
-          import('prettier/standalone');
-        neededLoaders['prettier-plugin-kotlin'] = async () => {
-          try {
-            const moduleName = 'prettier-plugin-kotlin';
-            return await import(moduleName);
-          } catch {
-            console.warn('prettier-plugin-kotlin is not installed');
-            return null;
-          }
-        };
-        break;
-      case LanguageName.php:
-        neededLoaders['prettier/standalone'] = () =>
-          import('prettier/standalone');
-        neededLoaders['@prettier/plugin-php'] = async () => {
-          try {
-            const moduleName = '@prettier/plugin-php';
-            return await import(moduleName);
-          } catch {
-            console.warn('@prettier/plugin-php is not installed');
-            return null;
-          }
-        };
-        break;
-      case LanguageName.ruby:
-        neededLoaders['prettier/standalone'] = () =>
-          import('prettier/standalone');
-        neededLoaders['@prettier/plugin-ruby'] = async () => {
-          try {
-            const moduleName = '@prettier/plugin-ruby';
-            return await import(moduleName);
-          } catch {
-            console.warn('@prettier/plugin-ruby is not installed');
-            return null;
-          }
-        };
-        break;
-      case LanguageName.rust:
-        neededLoaders['prettier/standalone'] = () =>
-          import('prettier/standalone');
-        neededLoaders['prettier-plugin-rust'] = async () => {
-          try {
-            const moduleName = 'prettier-plugin-rust';
-            return await import(moduleName);
-          } catch {
-            console.warn('prettier-plugin-rust is not installed');
-            return null;
-          }
-        };
-        break;
+      // Prettier with external plugins - disabled due to browser compatibility issues
+      // (Java is now supported via WASM clang-format instead)
+      // case LanguageName.kotlin:
+      //   neededLoaders['prettier/standalone'] = () =>
+      //     import('prettier/standalone');
+      //   // Only load Node.js-specific plugins in Node.js environment
+      //   if (isNodeEnvironment) {
+      //     neededLoaders['prettier-plugin-kotlin'] = () =>
+      //       import('prettier-plugin-kotlin');
+      //   }
+      //   break;
+      // case LanguageName.php:
+      //   neededLoaders['prettier/standalone'] = () =>
+      //     import('prettier/standalone');
+      //   neededLoaders['@prettier/plugin-php'] = () =>
+      //     import('@prettier/plugin-php/standalone');
+      //   break;
+      // case LanguageName.ruby:
+      //   neededLoaders['prettier/standalone'] = () =>
+      //     import('prettier/standalone');
+      //   // Only load Node.js-specific plugins in Node.js environment
+      //   if (isNodeEnvironment) {
+      //     neededLoaders['@prettier/plugin-ruby'] = () =>
+      //       import('@prettier/plugin-ruby');
+      //   }
+      //   break;
+      // case LanguageName.rust:
+      //   neededLoaders['prettier/standalone'] = () =>
+      //     import('prettier/standalone');
+      //   neededLoaders['prettier-plugin-rust'] = () =>
+      //     import('prettier-plugin-rust');
+      //   break;
 
       // WASM formatters
+      case LanguageName.java:
       case LanguageName.cpp:
       case LanguageName.csharp:
-        neededLoaders['@wasm-fmt/clang-format'] = async () => {
-          try {
-            const moduleName = '@wasm-fmt/clang-format';
-            return await import(moduleName);
-          } catch {
-            console.warn('@wasm-fmt/clang-format is not installed');
-            return null;
-          }
-        };
+        neededLoaders['@wasm-fmt/clang-format'] = () =>
+          import('@wasm-fmt/clang-format');
         break;
       case LanguageName.go:
-        neededLoaders['@wasm-fmt/gofmt'] = async () => {
-          try {
-            const moduleName = '@wasm-fmt/gofmt';
-            return await import(moduleName);
-          } catch {
-            console.warn('@wasm-fmt/gofmt is not installed');
-            return null;
-          }
-        };
+        neededLoaders['@wasm-fmt/gofmt'] = () => import('@wasm-fmt/gofmt');
         break;
       case LanguageName.python:
-        neededLoaders['@wasm-fmt/ruff_fmt'] = async () => {
-          try {
-            const moduleName = '@wasm-fmt/ruff_fmt';
-            return await import(moduleName);
-          } catch {
-            console.warn('@wasm-fmt/ruff_fmt is not installed');
-            return null;
-          }
-        };
+        neededLoaders['@wasm-fmt/ruff_fmt'] = () =>
+          import('@wasm-fmt/ruff_fmt');
         break;
     }
 

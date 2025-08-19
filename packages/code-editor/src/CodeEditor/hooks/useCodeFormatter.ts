@@ -173,110 +173,28 @@ export function useCodeFormatter({
           });
         }
 
-        // Prettier with external plugins
-        case LanguageName.java: {
-          const prettier = modules['prettier/standalone'];
-          const javaPlugin = modules['prettier-plugin-java'];
-
-          if (!prettier || !javaPlugin) {
-            console.warn('Prettier modules not loaded for Java formatting');
-            return code;
-          }
-
-          return prettier.format(code, {
-            parser: 'java',
-            plugins: [javaPlugin as any],
-            tabWidth: options.tabWidth ?? 4,
-            useTabs: options.useTabs ?? false,
-            printWidth: options.printWidth ?? 100,
-            ...options,
-          });
-        }
-
-        case LanguageName.kotlin: {
-          const prettier = modules['prettier/standalone'];
-          const kotlinPlugin = modules['prettier-plugin-kotlin'];
-
-          if (!prettier || !kotlinPlugin) {
-            console.warn('Prettier modules not loaded for Kotlin formatting');
-            return code;
-          }
-
-          return prettier.format(code, {
-            parser: 'kotlin',
-            plugins: [kotlinPlugin.default || kotlinPlugin],
-            tabWidth: options.tabWidth ?? 4,
-            useTabs: options.useTabs ?? false,
-            printWidth: options.printWidth ?? 100,
-            ...options,
-          });
-        }
-
-        case LanguageName.php: {
-          const prettier = modules['prettier/standalone'];
-          const phpPlugin = modules['@prettier/plugin-php'];
-
-          if (!prettier || !phpPlugin) {
-            console.warn('Prettier modules not loaded for PHP formatting');
-            return code;
-          }
-
-          return prettier.format(code, {
-            parser: 'php',
-            plugins: [phpPlugin.default || phpPlugin],
-            tabWidth: options.tabWidth ?? 4,
-            useTabs: options.useTabs ?? false,
-            printWidth: options.printWidth ?? 80,
-            ...options,
-          });
-        }
-
-        case LanguageName.ruby: {
-          const prettier = modules['prettier/standalone'];
-          const rubyPlugin = modules['@prettier/plugin-ruby'];
-
-          if (!prettier || !rubyPlugin) {
-            console.warn('Prettier modules not loaded for Ruby formatting');
-            return code;
-          }
-
-          return prettier.format(code, {
-            parser: 'ruby',
-            plugins: [rubyPlugin.default || rubyPlugin],
-            tabWidth: options.tabWidth ?? 2,
-            useTabs: options.useTabs ?? false,
-            printWidth: options.printWidth ?? 80,
-            ...options,
-          });
-        }
-
+        // External Prettier plugins - disabled due to browser compatibility issues
+        case LanguageName.kotlin:
+        case LanguageName.php:
+        case LanguageName.ruby:
         case LanguageName.rust: {
-          const prettier = modules['prettier/standalone'];
-          const rustPlugin = modules['prettier-plugin-rust'];
-
-          if (!prettier || !rustPlugin) {
-            console.warn('Prettier modules not loaded for Rust formatting');
-            return code;
-          }
-
-          return prettier.format(code, {
-            parser: 'rust',
-            plugins: [rustPlugin.default || rustPlugin],
-            tabWidth: options.tabWidth ?? 4,
-            useTabs: options.useTabs ?? false,
-            printWidth: options.printWidth ?? 100,
-            ...options,
-          });
+          console.warn(
+            `${language} code formatting is not supported in browser environments. ` +
+              'External Prettier plugins have compatibility issues with browser/standalone bundles. ' +
+              'Consider using server-side formatting for these languages.',
+          );
+          return code;
         }
 
         // WASM formatters
+        case LanguageName.java:
         case LanguageName.cpp:
         case LanguageName.csharp: {
           const clangFormat = modules['@wasm-fmt/clang-format'];
 
           if (!clangFormat) {
             console.warn(
-              'Clang-format module not loaded for C++/C# formatting',
+              `Clang-format module not loaded for ${language} formatting`,
             );
             return code;
           }
@@ -285,12 +203,33 @@ export function useCodeFormatter({
           await clangFormat.default();
 
           const filename =
-            language === LanguageName.cpp ? 'main.cpp' : 'main.cs';
-          const style = `{BasedOnStyle: LLVM, IndentWidth: ${
-            options.tabWidth ?? 2
-          }, UseTab: ${options.useTabs ? 'Always' : 'Never'}, ColumnLimit: ${
-            options.printWidth ?? 100
-          }}`;
+            language === LanguageName.java
+              ? 'Main.java'
+              : language === LanguageName.cpp
+              ? 'main.cpp'
+              : 'main.cs';
+
+          const style =
+            language === LanguageName.java
+              ? `{
+                BasedOnStyle: Google,
+                IndentWidth: ${options.tabWidth ?? 4},
+                UseTab: ${options.useTabs ? 'Always' : 'Never'},
+                ColumnLimit: ${options.printWidth ?? 100},
+                AllowShortFunctionsOnASingleLine: None,
+                AllowShortBlocksOnASingleLine: Never,
+                AllowShortIfStatementsOnASingleLine: Never,
+                AllowShortLoopsOnASingleLine: false,
+                BreakBeforeBraces: Attach,
+                IndentCaseLabels: true,
+                SpaceAfterCStyleCast: false,
+                SpaceBeforeParens: Never
+              }`
+              : `{BasedOnStyle: LLVM, IndentWidth: ${
+                  options.tabWidth ?? 2
+                }, UseTab: ${
+                  options.useTabs ? 'Always' : 'Never'
+                }, ColumnLimit: ${options.printWidth ?? 100}}`;
 
           return clangFormat.format(code, filename, style);
         }
@@ -378,38 +317,17 @@ export function useCodeFormatter({
         break;
 
       case LanguageName.java:
-        isReady = !!(
-          modules['prettier/standalone'] && modules['prettier-plugin-java']
-        );
-        break;
-
-      case LanguageName.kotlin:
-        isReady = !!(
-          modules['prettier/standalone'] && modules['prettier-plugin-kotlin']
-        );
-        break;
-
-      case LanguageName.php:
-        isReady = !!(
-          modules['prettier/standalone'] && modules['@prettier/plugin-php']
-        );
-        break;
-
-      case LanguageName.ruby:
-        isReady = !!(
-          modules['prettier/standalone'] && modules['@prettier/plugin-ruby']
-        );
-        break;
-
-      case LanguageName.rust:
-        isReady = !!(
-          modules['prettier/standalone'] && modules['prettier-plugin-rust']
-        );
-        break;
-
       case LanguageName.cpp:
       case LanguageName.csharp:
         isReady = !!modules['@wasm-fmt/clang-format'];
+        break;
+
+      case LanguageName.kotlin:
+      case LanguageName.php:
+      case LanguageName.ruby:
+      case LanguageName.rust:
+        // External Prettier plugins are not supported in browser environments
+        isReady = false;
         break;
 
       case LanguageName.go:
