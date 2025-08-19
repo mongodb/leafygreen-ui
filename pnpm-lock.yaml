@@ -3079,13 +3079,13 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@lg-tools/test-harnesses':
-        specifier: workspace:^
-        version: link:../../tools/test-harnesses
 
   packages/stepper:
     dependencies:
