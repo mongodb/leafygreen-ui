@@ -117,7 +117,7 @@ export function Panel({
         {showCopyButton && (
           <CodeEditorCopyButton
             variant={CopyButtonVariant.IconButton}
-            getContents={getContents ?? (() => '')}
+            getContentsToCopy={getContents ?? (() => '')}
             onCopy={onCopyClick}
           />
         )}
