@@ -15,7 +15,7 @@ export { usePlaceholderExtension } from './extensions/usePlaceholderExtension';
 export { useReadOnlyExtension } from './extensions/useReadOnlyExtension';
 export { useThemeExtension } from './extensions/useThemeExtension';
 export { useTooltipExtension } from './extensions/useTooltipExtension';
-export type { CodeEditorModules } from './moduleLoaders.types';
+export { type CodeEditorModules } from './moduleLoaders.types';
 export { useCodeFormatter } from './useCodeFormatter';
 export { useFormattingModuleLoaders } from './useFormattingModuleLoaders';
 export { useLazyModules } from './useLazyModules';

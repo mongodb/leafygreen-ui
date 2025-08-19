@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { LanguageName } from './extensions/useLanguageExtension';
-import { CodeEditorModules } from './moduleLoaders.types';
+import { type CodeEditorModules } from './moduleLoaders.types';
 import { type LoadersMap } from './useLazyModules';
 
 /**
