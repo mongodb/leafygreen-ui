@@ -129,6 +129,16 @@ import CloudIcon from '@leafygreen-ui/icon';
 | `showSecondaryMenuButton` _(optional)_ | Determines whether to show the secondary menu button (ellipsis icon) in the panel. When enabled, displays a menu with additional actions like undo, redo, download, and view shortcuts. | `boolean`                      | `undefined` |
 | `title` _(optional)_                   | Title text to display in the panel header. Typically used to show the current language or content description.                                                                          | `string`                       | `undefined` |
 
+#### `SecondaryButtonConfig`
+
+| Name                      | Description                                                            | Type                 | Default     |
+| ------------------------- | ---------------------------------------------------------------------- | -------------------- | ----------- |
+| `aria-label` _(optional)_ | Accessible label for the button to provide context for screen readers. | `string`             | `undefined` |
+| `glyph` _(optional)_      | Icon element to display in the button.                                 | `React.ReactElement` | `undefined` |
+| `href` _(optional)_       | URL to navigate to when the button is clicked.                         | `string`             | `undefined` |
+| `label`                   | Text label for the button.                                             | `string`             | —           |
+| `onClick` _(optional)_    | Callback fired when the button is clicked.                             | `() => void`         | `undefined` |
+
 ## Types and Variables
 
 | Name                        | Description                                                                                                     |
