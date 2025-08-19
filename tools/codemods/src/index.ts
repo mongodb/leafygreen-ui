@@ -63,6 +63,7 @@ export const migrator = async (
       ? path.dirname(__dirname)
       : __dirname;
   const codemodFile = path.join(distDir, `./codemods/${codemod}/transform.js`);
+  console.log(chalk.greenBright('Codemod File:'), codemodFile);
 
   try {
     if (!fse.existsSync(codemodFile)) {
