@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 20.0.4
+
+### Patch Changes
+
+- f9558fa: Update types TSDocs for `onCopy`, `copyButtonAppearance`, and `panel` props.
+
 ## 20.0.3
 
 ### Patch Changes
