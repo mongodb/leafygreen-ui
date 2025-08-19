@@ -43,7 +43,8 @@ export const DrawerToolbarLayoutContent = forwardRef<
       content,
       scrollable = true,
     } = getActiveDrawerContent() || {};
-    const { onClose, displayMode, setIsDrawerOpen } = useDrawerLayoutContext();
+    const { onClose, displayMode, setIsDrawerOpen, setHasToolbar } =
+      useDrawerLayoutContext();
 
     useEffect(() => {
       setIsDrawerOpen(isDrawerOpen);
@@ -65,49 +66,82 @@ export const DrawerToolbarLayoutContent = forwardRef<
       openDrawer(id);
     };
 
+    const visibleToolbarData = toolbarData?.filter(
+      toolbarItem => toolbarItem.glyph,
+    );
+
+    const hasVisibleToolbarData = visibleToolbarData.length > 0;
+
+    if (!hasVisibleToolbarData) {
+      setHasToolbar(false);
+    }
+
+    console.log({ toolbarData, visibleToolbarData });
+
+    const renderDrawer = () => {
+      return (
+        <Drawer
+          displayMode={displayMode}
+          open={isDrawerOpen}
+          onClose={handleOnClose}
+          title={title}
+          scrollable={scrollable}
+          data-lgid={`${dataLgId}`}
+          data-testid={`${dataLgId}`}
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {content}
+        </Drawer>
+      );
+    };
+
+    const renderToolbar = () => {
+      return (
+        <Toolbar data-lgid={lgIds.toolbar} data-testid={lgIds.toolbar}>
+          {visibleToolbarData?.map(toolbarItem => (
+            <ToolbarIconButton
+              key={toolbarItem.glyph}
+              glyph={toolbarItem.glyph}
+              label={toolbarItem.label}
+              onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                if (!toolbarItem.content) {
+                  // If the toolbar item does not have content, we don't want to open/update/close the drawer
+                  // but we still want to call the onClick function if it exists. E.g. open a modal or perform an action
+                  toolbarItem.onClick?.(event);
+                  return;
+                }
+
+                return handleIconClick(
+                  event,
+                  toolbarItem.id,
+                  toolbarItem.onClick,
+                );
+              }}
+              active={toolbarItem.id === id}
+              disabled={toolbarItem.disabled}
+            />
+          ))}
+        </Toolbar>
+      );
+    };
+
     return (
       <LayoutComponent {...rest} ref={forwardRef}>
-        <div className={contentStyles}>{children}</div>
-        <DrawerWithToolbarWrapper>
-          <Toolbar data-lgid={lgIds.toolbar} data-testid={lgIds.toolbar}>
-            {toolbarData?.map(toolbarItem => (
-              <ToolbarIconButton
-                key={toolbarItem.glyph}
-                glyph={toolbarItem.glyph}
-                label={toolbarItem.label}
-                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-                  if (!toolbarItem.content) {
-                    // If the toolbar item does not have content, we don't want to open/update/close the drawer
-                    // but we still want to call the onClick function if it exists. E.g. open a modal or perform an action
-                    toolbarItem.onClick?.(event);
-                    return;
-                  }
-
-                  return handleIconClick(
-                    event,
-                    toolbarItem.id,
-                    toolbarItem.onClick,
-                  );
-                }}
-                active={toolbarItem.id === id}
-                disabled={toolbarItem.disabled}
-              />
-            ))}
-          </Toolbar>
-          <Drawer
-            displayMode={displayMode}
-            open={isDrawerOpen}
-            onClose={handleOnClose}
-            title={title}
-            scrollable={scrollable}
-            data-lgid={`${dataLgId}`}
-            data-testid={`${dataLgId}`}
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            {content}
-          </Drawer>
-        </DrawerWithToolbarWrapper>
+        {hasVisibleToolbarData ? (
+          <>
+            <div className={contentStyles}>{children}</div>
+            <DrawerWithToolbarWrapper>
+              {renderToolbar()}
+              {renderDrawer()}
+            </DrawerWithToolbarWrapper>
+          </>
+        ) : (
+          <>
+            {children}
+            {renderDrawer()}
+          </>
+        )}
       </LayoutComponent>
     );
   },

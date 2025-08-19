@@ -24,25 +24,30 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
     label: 'Code',
     content: <DrawerContent />,
     title: 'Code Title',
-    glyph: 'Code',
+    // glyph: 'Code',
   },
   {
     id: 'Dashboard',
     label: 'Dashboard',
     content: <DrawerContent />,
     title: 'Dashboard Title',
-    glyph: 'Dashboard',
+    // glyph: 'Dashboard',
   },
   {
     id: 'Plus',
     label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
+    // glyph: 'Plus',
   },
   {
     id: 'Sparkle',
     label: 'Disabled item',
-    glyph: 'Sparkle',
+    // glyph: 'Sparkle',
     disabled: true,
+  },
+  {
+    id: 'Sparkle2',
+    label: 'Sparkle 2',
+    content: <DrawerContent />,
   },
 ];
 

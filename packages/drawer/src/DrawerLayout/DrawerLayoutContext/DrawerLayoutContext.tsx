@@ -20,6 +20,7 @@ export const DrawerLayoutContext = createContext<DrawerLayoutContextType>({
   hasToolbar: false,
   isDrawerResizing: false,
   drawerWidth: 0,
+  setHasToolbar: () => {},
   setIsDrawerOpen: () => {},
   setDrawerWidth: () => {},
   setIsDrawerResizing: () => {},
@@ -36,12 +37,13 @@ export const DrawerLayoutProvider = ({
   resizable,
   displayMode,
   onClose,
-  hasToolbar,
+  hasToolbar: hasToolbarProp = false,
   size,
 }: PropsWithChildren<DrawerLayoutProviderProps>) => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(isDrawerOpenProp);
   const [isDrawerResizing, setIsDrawerResizing] = React.useState(false);
   const [drawerWidth, setDrawerWidth] = React.useState(0);
+  const [hasToolbar, setHasToolbar] = React.useState(hasToolbarProp);
 
   useEffect(() => {
     setIsDrawerOpen(isDrawerOpenProp);
@@ -53,6 +55,7 @@ export const DrawerLayoutProvider = ({
     displayMode,
     onClose,
     hasToolbar,
+    setHasToolbar,
     setIsDrawerOpen,
     isDrawerResizing,
     setIsDrawerResizing,

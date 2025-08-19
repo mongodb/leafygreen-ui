@@ -29,11 +29,11 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
   ) => {
     const hasToolbar = toolbarData && toolbarData.length > 0;
 
-    if (!hasToolbar) {
-      consoleOnce.warn(
-        'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
-      );
-    }
+    // if (!hasToolbar) {
+    //   consoleOnce.warn(
+    //     'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
+    //   );
+    // }
 
     return (
       <DrawerLayoutProvider
