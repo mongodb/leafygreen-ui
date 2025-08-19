@@ -10,6 +10,12 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
+      "path": "../button"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -29,6 +35,12 @@
     },
     {
       "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
+      "path": "../tooltip"
     },
     {
       "path": "../typography"
