@@ -91,7 +91,7 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
    */
   const closeMenu = async (options: { withKeyboard?: boolean } = {}) => {
     if (options.withKeyboard) {
-      userEvent.keyboard('{escape}');
+      await userEvent.keyboard('{escape}');
     } else {
       // Click outside the menu to close it
       await userEvent.click(document.body);
