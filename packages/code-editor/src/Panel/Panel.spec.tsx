@@ -118,19 +118,19 @@ describe('Panel', () => {
   describe('Copy Button', () => {
     it('renders copy button when showCopyButton is true', () => {
       renderPanel({ showCopyButton: true });
-      expect(screen.getByLabelText('Copy text')).toBeInTheDocument();
+      expect(screen.getByLabelText('Copy')).toBeInTheDocument();
     });
 
     it('does not render copy button when showCopyButton is false', () => {
       renderPanel({ showCopyButton: false });
-      expect(screen.queryByLabelText('Copy text')).not.toBeInTheDocument();
+      expect(screen.queryByLabelText('Copy')).not.toBeInTheDocument();
     });
 
     it('calls onCopyClick when copy button is clicked', async () => {
       const onCopyClick = jest.fn();
       renderPanel({ showCopyButton: true, onCopyClick });
 
-      const copyButton = screen.getByLabelText('Copy text');
+      const copyButton = screen.getByLabelText('Copy');
 
       await act(async () => {
         await userEvent.click(copyButton);
@@ -142,7 +142,7 @@ describe('Panel', () => {
     it('shows tooltip on copy button hover', async () => {
       renderPanel({ showCopyButton: true });
 
-      const copyButton = screen.getByLabelText('Copy text');
+      const copyButton = screen.getByLabelText('Copy');
 
       await act(async () => {
         await userEvent.hover(copyButton);
@@ -157,7 +157,7 @@ describe('Panel', () => {
     it('shows success state after copying', async () => {
       renderPanel({ showCopyButton: true });
 
-      const copyButton = screen.getByLabelText('Copy text');
+      const copyButton = screen.getByLabelText('Copy');
 
       await act(async () => {
         await userEvent.click(copyButton);
@@ -165,7 +165,7 @@ describe('Panel', () => {
 
       // Wait for success tooltip to appear
       await waitFor(async () => {
-        expect(screen.getByText('Copied!')).toBeInTheDocument();
+        expect(screen.getByRole('tooltip')).toHaveTextContent('Copied!');
       });
     });
   });
@@ -397,7 +397,7 @@ describe('Panel', () => {
       renderPanel({ showCopyButton: true });
 
       // The copy button should receive the getContents function from context
-      expect(screen.getByLabelText('Copy text')).toBeInTheDocument();
+      expect(screen.getByLabelText('Copy')).toBeInTheDocument();
       // The actual integration works with real components now
     });
   });
