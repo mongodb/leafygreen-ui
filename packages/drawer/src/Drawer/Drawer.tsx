@@ -86,18 +86,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     });
 
     // Returns the resolved drawer sizes based on whether a toolbar is present.
-    const {
-      initialSize: resolvedInitialSize,
-      resizableMinWidth,
-      resizableMaxWidth,
-    } = getResolvedDrawerSizes(size, hasToolbar);
+    const { initialSize, resizableMinWidth, resizableMaxWidth } =
+      getResolvedDrawerSizes(size, hasToolbar);
 
-    const initialSize =
-      drawerWidth === 0
-        ? resolvedInitialSize
-        : hasToolbar
-        ? drawerWidth - 42
-        : drawerWidth;
+    // const initialSize =
+    //   drawerWidth === 0
+    //     ? resolvedInitialSize
+    //     : hasToolbar
+    //     ? drawerWidth - 42
+    //     : drawerWidth;
 
     const isEmbedded = displayMode === DisplayMode.Embedded;
     const isOverlay = displayMode === DisplayMode.Overlay;
