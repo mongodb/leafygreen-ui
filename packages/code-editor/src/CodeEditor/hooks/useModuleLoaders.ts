@@ -6,6 +6,33 @@ import { LanguageName } from './extensions/useLanguageExtension';
 import { type CodeEditorModules } from './moduleLoaders.types';
 import { type LoadersMap } from './useLazyModules';
 
+// Define stable import functions outside the hook to prevent infinite re-renders
+const importCodeMirror = () => import('codemirror');
+const importCodeMirrorView = () => import('@codemirror/view');
+const importCodeMirrorState = () => import('@codemirror/state');
+const importCodeMirrorCommands = () => import('@codemirror/commands');
+const importCodeMirrorLanguage = () => import('@codemirror/language');
+const importCodeMirrorLint = () => import('@codemirror/lint');
+const importLezerHighlight = () => import('@lezer/highlight');
+const importCodeMirrorAutocomplete = () => import('@codemirror/autocomplete');
+const importHyperLink = () => import('@uiw/codemirror-extensions-hyper-link');
+
+// Language-specific imports
+const importLangCpp = () => import('@codemirror/lang-cpp');
+const importLangCSharp = () => import('@replit/codemirror-lang-csharp');
+const importLangCss = () => import('@codemirror/lang-css');
+const importLangGo = () => import('@codemirror/lang-go');
+const importLangHtml = () => import('@codemirror/lang-html');
+const importLangJava = () => import('@codemirror/lang-java');
+const importLangJavaScript = () => import('@codemirror/lang-javascript');
+const importLangJson = () => import('@codemirror/lang-json');
+const importLegacyModeClike = () =>
+  import('@codemirror/legacy-modes/mode/clike');
+const importLangPhp = () => import('@codemirror/lang-php');
+const importLangPython = () => import('@codemirror/lang-python');
+const importLegacyModeRuby = () => import('@codemirror/legacy-modes/mode/ruby');
+const importLangRust = () => import('@codemirror/lang-rust');
+
 /**
  * Hook that determines which module dependencies need to be dynamically loaded
  * based on the current editor configuration.
@@ -38,30 +65,27 @@ export const useModuleLoaders = ({
      * fundamental editor functionality.
      */
     const neededLoaders: Partial<LoadersMap<CodeEditorModules>> = {
-      codemirror: () => import('codemirror'),
-      '@codemirror/view': () => import('@codemirror/view'),
-      '@codemirror/state': () => import('@codemirror/state'),
-      '@codemirror/commands': () => import('@codemirror/commands'),
+      codemirror: importCodeMirror,
+      '@codemirror/view': importCodeMirrorView,
+      '@codemirror/state': importCodeMirrorState,
+      '@codemirror/commands': importCodeMirrorCommands,
     };
 
     if (enableClickableUrls) {
-      neededLoaders['@uiw/codemirror-extensions-hyper-link'] = () =>
-        import('@uiw/codemirror-extensions-hyper-link');
+      neededLoaders['@uiw/codemirror-extensions-hyper-link'] = importHyperLink;
     }
 
     if (language || enableCodeFolding || forceParsing || !!indentUnit) {
-      neededLoaders['@codemirror/language'] = () =>
-        import('@codemirror/language');
+      neededLoaders['@codemirror/language'] = importCodeMirrorLanguage;
     }
 
     if (tooltips && tooltips.length > 0) {
-      neededLoaders['@codemirror/lint'] = () => import('@codemirror/lint');
+      neededLoaders['@codemirror/lint'] = importCodeMirrorLint;
     }
 
     if (language) {
-      neededLoaders['@lezer/highlight'] = () => import('@lezer/highlight');
-      neededLoaders['@codemirror/autocomplete'] = () =>
-        import('@codemirror/autocomplete');
+      neededLoaders['@lezer/highlight'] = importLezerHighlight;
+      neededLoaders['@codemirror/autocomplete'] = importCodeMirrorAutocomplete;
 
       /**
        * Load language-specific modules based on the selected language.
@@ -69,63 +93,50 @@ export const useModuleLoaders = ({
        */
       switch (language) {
         case LanguageName.cpp:
-          neededLoaders['@codemirror/lang-cpp'] = () =>
-            import('@codemirror/lang-cpp');
+          neededLoaders['@codemirror/lang-cpp'] = importLangCpp;
           break;
         case LanguageName.csharp:
-          neededLoaders['@replit/codemirror-lang-csharp'] = () =>
-            import('@replit/codemirror-lang-csharp');
+          neededLoaders['@replit/codemirror-lang-csharp'] = importLangCSharp;
           break;
         case LanguageName.css:
-          neededLoaders['@codemirror/lang-css'] = () =>
-            import('@codemirror/lang-css');
+          neededLoaders['@codemirror/lang-css'] = importLangCss;
           break;
         case LanguageName.go:
-          neededLoaders['@codemirror/lang-go'] = () =>
-            import('@codemirror/lang-go');
+          neededLoaders['@codemirror/lang-go'] = importLangGo;
           break;
         case LanguageName.html:
-          neededLoaders['@codemirror/lang-html'] = () =>
-            import('@codemirror/lang-html');
+          neededLoaders['@codemirror/lang-html'] = importLangHtml;
           break;
         case LanguageName.java:
-          neededLoaders['@codemirror/lang-java'] = () =>
-            import('@codemirror/lang-java');
+          neededLoaders['@codemirror/lang-java'] = importLangJava;
           break;
         case LanguageName.javascript:
         case LanguageName.jsx:
         case LanguageName.typescript:
         case LanguageName.tsx:
-          neededLoaders['@codemirror/lang-javascript'] = () =>
-            import('@codemirror/lang-javascript');
+          neededLoaders['@codemirror/lang-javascript'] = importLangJavaScript;
           break;
         case LanguageName.json:
-          neededLoaders['@codemirror/lang-json'] = () =>
-            import('@codemirror/lang-json');
+          neededLoaders['@codemirror/lang-json'] = importLangJson;
           break;
         case LanguageName.kotlin:
-          neededLoaders['@codemirror/language'] = () =>
-            import('@codemirror/language');
-          neededLoaders['@codemirror/legacy-modes/mode/clike'] = () =>
-            import('@codemirror/legacy-modes/mode/clike');
+          neededLoaders['@codemirror/language'] = importCodeMirrorLanguage;
+          neededLoaders['@codemirror/legacy-modes/mode/clike'] =
+            importLegacyModeClike;
           break;
         case LanguageName.php:
-          neededLoaders['@codemirror/lang-php'] = () =>
-            import('@codemirror/lang-php');
+          neededLoaders['@codemirror/lang-php'] = importLangPhp;
           break;
         case LanguageName.python:
-          neededLoaders['@codemirror/lang-python'] = () =>
-            import('@codemirror/lang-python');
+          neededLoaders['@codemirror/lang-python'] = importLangPython;
           break;
         case LanguageName.ruby:
-          neededLoaders['@codemirror/language'] = () =>
-            import('@codemirror/language');
-          neededLoaders['@codemirror/legacy-modes/mode/ruby'] = () =>
-            import('@codemirror/legacy-modes/mode/ruby');
+          neededLoaders['@codemirror/language'] = importCodeMirrorLanguage;
+          neededLoaders['@codemirror/legacy-modes/mode/ruby'] =
+            importLegacyModeRuby;
           break;
         case LanguageName.rust:
-          neededLoaders['@codemirror/lang-rust'] = () =>
-            import('@codemirror/lang-rust');
+          neededLoaders['@codemirror/lang-rust'] = importLangRust;
           break;
       }
     }

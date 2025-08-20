@@ -183,7 +183,7 @@ const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 export const LiveExample = Template.bind({});
 
 export const WithPanel = Template.bind({});
-const language = LanguageName.java;
+const language = LanguageName.cpp;
 WithPanel.args = {
   language,
   defaultValue: codeSnippets[language],
@@ -192,7 +192,6 @@ WithPanel.args = {
       showCopyButton
       showFormatButton
       showSecondaryMenuButton
-      title="index.tsx"
       customSecondaryButtons={[
         {
           label: 'Custom Button',
@@ -201,6 +200,7 @@ WithPanel.args = {
           glyph: <CloudIcon />,
         },
       ]}
+      title={`index.${language}`}
     />
   ),
 };
