@@ -198,7 +198,6 @@ WithPanel.args = {
           onClick: () => {},
           'aria-label': 'Custom Button',
           glyph: <CloudIcon />,
-          href: 'https://www.mongodb.com',
         },
       ]}
     />
