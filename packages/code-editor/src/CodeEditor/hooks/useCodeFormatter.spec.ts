@@ -43,7 +43,7 @@ const formattingTestCases = {
   },
   [LanguageName.csharp]: {
     unformatted: `using System;class Program{static void Main(){Console.WriteLine("Hello");}}`,
-    formatted: `using System;\nclass Program {\n  static void Main() { Console.WriteLine("Hello"); }\n}\n`,
+    formatted: `using System;\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine("Hello");\n    }\n}\n`,
   },
   [LanguageName.go]: {
     unformatted: `package main\nimport"fmt"\nfunc main(){fmt.Println("Hello")}`,

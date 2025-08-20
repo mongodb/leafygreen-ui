@@ -226,11 +226,36 @@ export function useCodeFormatter({
                 SpaceAfterCStyleCast: false,
                 SpaceBeforeParens: Never
               }`
-              : `{BasedOnStyle: LLVM, IndentWidth: ${
-                  options.tabWidth ?? 2
-                }, UseTab: ${
-                  options.useTabs ? 'Always' : 'Never'
-                }, ColumnLimit: ${options.printWidth ?? 100}}`;
+              : language === LanguageName.cpp
+              ? `{
+                BasedOnStyle: LLVM,
+                IndentWidth: ${options.tabWidth ?? 2},
+                UseTab: ${options.useTabs ? 'Always' : 'Never'},
+                ColumnLimit: ${options.printWidth ?? 100},
+                AllowShortFunctionsOnASingleLine: None,
+                AllowShortBlocksOnASingleLine: Never,
+                AllowShortIfStatementsOnASingleLine: Never,
+                AllowShortLoopsOnASingleLine: false,
+                BreakBeforeBraces: Attach,
+                IndentCaseLabels: true,
+                SpaceAfterCStyleCast: false,
+                SpaceBeforeParens: Never,
+                NamespaceIndentation: None
+              }`
+              : `{
+                BasedOnStyle: Microsoft,
+                IndentWidth: ${options.tabWidth ?? 4},
+                UseTab: ${options.useTabs ? 'Always' : 'Never'},
+                ColumnLimit: ${options.printWidth ?? 100},
+                AllowShortFunctionsOnASingleLine: None,
+                AllowShortBlocksOnASingleLine: Never,
+                AllowShortIfStatementsOnASingleLine: Never,
+                AllowShortLoopsOnASingleLine: false,
+                BreakBeforeBraces: Allman,
+                IndentCaseLabels: true,
+                SpaceAfterCStyleCast: false,
+                SpaceBeforeParens: Never
+              }`;
 
           return clangFormat.format(code, filename, style);
         }
