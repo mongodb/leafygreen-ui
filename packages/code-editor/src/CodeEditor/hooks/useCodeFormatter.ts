@@ -131,6 +131,7 @@ export function useCodeFormatter({
             plugins: [parserBabel],
             tabWidth: options.tabWidth ?? 2,
             useTabs: options.useTabs ?? false,
+            printWidth: options.printWidth ?? 40, // Force multi-line formatting for JSON
             ...options,
           });
         }
