@@ -1,20 +1,23 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { type MenuItemProps } from '@leafygreen-ui/menu';
 
 /**
  * Configuration object for custom secondary buttons that appear in the Panel's secondary menu.
- * Extends MenuItemProps to inherit all MenuItem functionality while adding required label.
  */
-type SecondaryButtonConfig = MenuItemProps & {
+export interface SecondaryButtonConfig {
   /**
    * Text label for the button that will be displayed in the menu item.
    */
   label: string;
 
   /**
-   * Optional icon element to display alongside the button label.
+   * Optional icon element to display in the button.
    */
   glyph?: React.ReactElement;
+
+  /**
+   * Optional callback fired when the button is clicked.
+   */
+  onClick?: () => void;
 
   /**
    * Optional URL to navigate to when the button is clicked.
@@ -23,16 +26,15 @@ type SecondaryButtonConfig = MenuItemProps & {
   href?: string;
 
   /**
-   * Optional callback function that will be called when the button is clicked.
-   */
-  onClick?: () => void;
-
-  /**
-   * Optional accessible label for the button to provide additional context for screen readers.
-   * If not provided, the label will be used as the aria-label.
+   * Optional accessible label for the button.
    */
   'aria-label'?: string;
-};
+
+  /**
+   * Optional boolean to disable the button.
+   */
+  disabled?: boolean;
+}
 
 export interface PanelProps extends DarkModeProps {
   /**

@@ -161,13 +161,21 @@ export function Panel({
               View shortcuts
             </MenuItem>
             {customSecondaryButtons?.map(
-              ({ label, glyph, onClick, href, 'aria-label': ariaLabel }) => (
+              ({
+                label,
+                glyph,
+                onClick,
+                href,
+                'aria-label': ariaLabel,
+                disabled,
+              }) => (
                 <MenuItem
                   glyph={glyph}
                   onClick={onClick}
                   href={href}
                   key={label}
                   aria-label={ariaLabel || label}
+                  disabled={disabled}
                 >
                   {label}
                 </MenuItem>

@@ -8,6 +8,8 @@ import type { StoryFn, StoryObj } from '@storybook/react';
 import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
+// @ts-ignore LG icons don't currently support TS
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 
 import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
@@ -190,6 +192,15 @@ WithPanel.args = {
       showFormatButton
       showSecondaryMenuButton
       title="index.tsx"
+      customSecondaryButtons={[
+        {
+          label: 'Custom Button',
+          onClick: () => {},
+          'aria-label': 'Custom Button',
+          glyph: <CloudIcon />,
+          href: 'https://www.mongodb.com',
+        },
+      ]}
     />
   ),
 };

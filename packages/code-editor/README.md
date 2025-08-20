@@ -134,6 +134,7 @@ import CloudIcon from '@leafygreen-ui/icon';
 | Name                      | Description                                                            | Type                 | Default     |
 | ------------------------- | ---------------------------------------------------------------------- | -------------------- | ----------- |
 | `aria-label` _(optional)_ | Accessible label for the button to provide context for screen readers. | `string`             | `undefined` |
+| `disabled` _(optional)_   | Whether the button is disabled.                                        | `boolean`            | `undefined` |
 | `glyph` _(optional)_      | Icon element to display in the button.                                 | `React.ReactElement` | `undefined` |
 | `href` _(optional)_       | URL to navigate to when the button is clicked.                         | `string`             | `undefined` |
 | `label`                   | Text label for the button.                                             | `string`             | —           |
