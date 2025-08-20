@@ -86,8 +86,6 @@ export function Panel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
 
-  // Get internal values from CodeEditor context
-  // This will only work when Panel is used within CodeEditor
   const { getContents, formatCode, isFormattingAvailable } =
     useCodeEditorContext();
 
