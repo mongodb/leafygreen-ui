@@ -15,8 +15,11 @@ export { usePlaceholderExtension } from './extensions/usePlaceholderExtension';
 export { useReadOnlyExtension } from './extensions/useReadOnlyExtension';
 export { useThemeExtension } from './extensions/useThemeExtension';
 export { useTooltipExtension } from './extensions/useTooltipExtension';
+export { useCodeFormatter } from './formatting';
+export {
+  type FormattingOptions,
+  useFormattingModuleLoaders,
+} from './formatting';
 export { type CodeEditorModules } from './moduleLoaders.types';
-export { useCodeFormatter } from './useCodeFormatter';
-export { useFormattingModuleLoaders } from './useFormattingModuleLoaders';
 export { useLazyModules } from './useLazyModules';
 export { useModuleLoaders } from './useModuleLoaders';
