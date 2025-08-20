@@ -4,6 +4,17 @@ import { LanguageName } from './extensions/useLanguageExtension';
 import { type CodeEditorModules } from './moduleLoaders.types';
 import { type LoadersMap } from './useLazyModules';
 
+// Define stable import functions outside the hook to prevent infinite re-renders
+const importPrettierStandalone = () => import('prettier/standalone');
+const importPrettierParserBabel = () => import('prettier/parser-babel');
+const importPrettierParserTypescript = () =>
+  import('prettier/parser-typescript');
+const importPrettierParserPostcss = () => import('prettier/parser-postcss');
+const importPrettierParserHtml = () => import('prettier/parser-html');
+const importWasmClangFormat = () => import('@wasm-fmt/clang-format');
+const importWasmGofmt = () => import('@wasm-fmt/gofmt');
+const importWasmRuffFmt = () => import('@wasm-fmt/ruff_fmt');
+
 /**
  * Hook that creates module loaders specifically for formatting functionality.
  * This hook is separate from useModuleLoaders to allow formatting modules
@@ -25,29 +36,22 @@ export const useFormattingModuleLoaders = (language?: LanguageName) => {
       case LanguageName.javascript:
       case LanguageName.jsx:
       case LanguageName.json:
-        neededLoaders['prettier/standalone'] = () =>
-          import('prettier/standalone');
-        neededLoaders['prettier/parser-babel'] = () =>
-          import('prettier/parser-babel');
+        neededLoaders['prettier/standalone'] = importPrettierStandalone;
+        neededLoaders['prettier/parser-babel'] = importPrettierParserBabel;
         break;
       case LanguageName.typescript:
       case LanguageName.tsx:
-        neededLoaders['prettier/standalone'] = () =>
-          import('prettier/standalone');
-        neededLoaders['prettier/parser-typescript'] = () =>
-          import('prettier/parser-typescript');
+        neededLoaders['prettier/standalone'] = importPrettierStandalone;
+        neededLoaders['prettier/parser-typescript'] =
+          importPrettierParserTypescript;
         break;
       case LanguageName.css:
-        neededLoaders['prettier/standalone'] = () =>
-          import('prettier/standalone');
-        neededLoaders['prettier/parser-postcss'] = () =>
-          import('prettier/parser-postcss');
+        neededLoaders['prettier/standalone'] = importPrettierStandalone;
+        neededLoaders['prettier/parser-postcss'] = importPrettierParserPostcss;
         break;
       case LanguageName.html:
-        neededLoaders['prettier/standalone'] = () =>
-          import('prettier/standalone');
-        neededLoaders['prettier/parser-html'] = () =>
-          import('prettier/parser-html');
+        neededLoaders['prettier/standalone'] = importPrettierStandalone;
+        neededLoaders['prettier/parser-html'] = importPrettierParserHtml;
         break;
 
       // Prettier with external plugins - disabled due to browser compatibility issues
@@ -86,15 +90,13 @@ export const useFormattingModuleLoaders = (language?: LanguageName) => {
       case LanguageName.java:
       case LanguageName.cpp:
       case LanguageName.csharp:
-        neededLoaders['@wasm-fmt/clang-format'] = () =>
-          import('@wasm-fmt/clang-format');
+        neededLoaders['@wasm-fmt/clang-format'] = importWasmClangFormat;
         break;
       case LanguageName.go:
-        neededLoaders['@wasm-fmt/gofmt'] = () => import('@wasm-fmt/gofmt');
+        neededLoaders['@wasm-fmt/gofmt'] = importWasmGofmt;
         break;
       case LanguageName.python:
-        neededLoaders['@wasm-fmt/ruff_fmt'] = () =>
-          import('@wasm-fmt/ruff_fmt');
+        neededLoaders['@wasm-fmt/ruff_fmt'] = importWasmRuffFmt;
         break;
     }
 
