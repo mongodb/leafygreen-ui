@@ -9,6 +9,53 @@ import {
 } from './utils';
 
 /**
+ * Helper function to format code using Prettier
+ */
+const formatWithPrettier = (
+  code: string,
+  parserModuleName: keyof CodeEditorModules,
+  config: any,
+  modules: Partial<CodeEditorModules>,
+  warningMessage: string,
+): string => {
+  const prettier = modules['prettier/standalone'];
+  const parser = modules[parserModuleName];
+
+  if (!prettier || !parser) {
+    console.warn(warningMessage);
+    return code;
+  }
+
+  return prettier.format(code, config);
+};
+
+/**
+ * Helper function to format code using WASM formatters
+ */
+const formatWithWasm = async <T extends Array<any>>(
+  code: string,
+  wasmModuleName: keyof CodeEditorModules,
+  modules: Partial<CodeEditorModules>,
+  warningMessage: string,
+  formatFn: (formatter: any, code: string, ...args: T) => string,
+  ...formatArgs: T
+): Promise<string> => {
+  const formatter = modules[wasmModuleName];
+
+  if (!formatter) {
+    console.warn(warningMessage);
+    return code;
+  }
+
+  // Initialize the WASM module if needed
+  if (typeof (formatter as any).default === 'function') {
+    await (formatter as any).default();
+  }
+
+  return formatFn(formatter, code, ...formatArgs);
+};
+
+/**
  * Formats code using the appropriate formatter based on the selected language.
  *
  * @param code - The code string to format
@@ -36,18 +83,10 @@ export const formatCode = async (
       // Prettier with built-in parsers
       case LanguageName.javascript:
       case LanguageName.jsx: {
-        const prettier = modules['prettier/standalone'];
         const parserBabel = modules['prettier/parser-babel'];
-
-        if (!prettier || !parserBabel) {
-          console.warn(
-            'Prettier modules not loaded for JavaScript/JSX formatting',
-          );
-          return code;
-        }
-
-        return prettier.format(
+        return formatWithPrettier(
           code,
+          'prettier/parser-babel',
           createJavaScriptConfig(
             'babel',
             [parserBabel],
@@ -55,23 +94,17 @@ export const formatCode = async (
             editorTabWidth,
             editorUseTabs,
           ),
+          modules,
+          'Prettier modules not loaded for JavaScript/JSX formatting',
         );
       }
 
       case LanguageName.typescript:
       case LanguageName.tsx: {
-        const prettier = modules['prettier/standalone'];
         const parserTypescript = modules['prettier/parser-typescript'];
-
-        if (!prettier || !parserTypescript) {
-          console.warn(
-            'Prettier modules not loaded for TypeScript/TSX formatting',
-          );
-          return code;
-        }
-
-        return prettier.format(
+        return formatWithPrettier(
           code,
+          'prettier/parser-typescript',
           createJavaScriptConfig(
             'typescript',
             [parserTypescript],
@@ -79,20 +112,16 @@ export const formatCode = async (
             editorTabWidth,
             editorUseTabs,
           ),
+          modules,
+          'Prettier modules not loaded for TypeScript/TSX formatting',
         );
       }
 
       case LanguageName.json: {
-        const prettier = modules['prettier/standalone'];
         const parserBabel = modules['prettier/parser-babel'];
-
-        if (!prettier || !parserBabel) {
-          console.warn('Prettier modules not loaded for JSON formatting');
-          return code;
-        }
-
-        return prettier.format(
+        return formatWithPrettier(
           code,
+          'prettier/parser-babel',
           createPrettierConfig(
             'json',
             [parserBabel],
@@ -103,20 +132,16 @@ export const formatCode = async (
             editorTabWidth,
             editorUseTabs,
           ),
+          modules,
+          'Prettier modules not loaded for JSON formatting',
         );
       }
 
       case LanguageName.css: {
-        const prettier = modules['prettier/standalone'];
         const parserPostcss = modules['prettier/parser-postcss'];
-
-        if (!prettier || !parserPostcss) {
-          console.warn('Prettier modules not loaded for CSS formatting');
-          return code;
-        }
-
-        return prettier.format(
+        return formatWithPrettier(
           code,
+          'prettier/parser-postcss',
           createPrettierConfig(
             'css',
             [parserPostcss],
@@ -125,20 +150,16 @@ export const formatCode = async (
             editorTabWidth,
             editorUseTabs,
           ),
+          modules,
+          'Prettier modules not loaded for CSS formatting',
         );
       }
 
       case LanguageName.html: {
-        const prettier = modules['prettier/standalone'];
         const parserHtml = modules['prettier/parser-html'];
-
-        if (!prettier || !parserHtml) {
-          console.warn('Prettier modules not loaded for HTML formatting');
-          return code;
-        }
-
-        return prettier.format(
+        return formatWithPrettier(
           code,
+          'prettier/parser-html',
           createPrettierConfig(
             'html',
             [parserHtml],
@@ -147,6 +168,8 @@ export const formatCode = async (
             editorTabWidth,
             editorUseTabs,
           ),
+          modules,
+          'Prettier modules not loaded for HTML formatting',
         );
       }
 
@@ -167,18 +190,6 @@ export const formatCode = async (
       case LanguageName.java:
       case LanguageName.cpp:
       case LanguageName.csharp: {
-        const clangFormat = modules['@wasm-fmt/clang-format'];
-
-        if (!clangFormat) {
-          console.warn(
-            `Clang-format module not loaded for ${language} formatting`,
-          );
-          return code;
-        }
-
-        // Initialize the WASM module if needed
-        await clangFormat.default();
-
         const filename =
           language === LanguageName.java
             ? 'Main.java'
@@ -218,41 +229,43 @@ export const formatCode = async (
                 editorUseTabs,
               );
 
-        return clangFormat.format(code, filename, style);
+        return formatWithWasm(
+          code,
+          '@wasm-fmt/clang-format',
+          modules,
+          `Clang-format module not loaded for ${language} formatting`,
+          (formatter, code, filename, style) =>
+            formatter.format(code, filename, style),
+          filename,
+          style,
+        );
       }
 
       case LanguageName.go: {
-        const gofmt = modules['@wasm-fmt/gofmt'];
-
-        if (!gofmt) {
-          console.warn('Gofmt module not loaded for Go formatting');
-          return code;
-        }
-
-        // Initialize the WASM module if needed
-        await gofmt.default();
-
-        return gofmt.format(code);
+        return formatWithWasm(
+          code,
+          '@wasm-fmt/gofmt',
+          modules,
+          'Gofmt module not loaded for Go formatting',
+          (formatter, code) => formatter.format(code),
+        );
       }
 
       case LanguageName.python: {
-        const ruffFmt = modules['@wasm-fmt/ruff_fmt'];
-
-        if (!ruffFmt) {
-          console.warn(
-            'Ruff formatter module not loaded for Python formatting',
-          );
-          return code;
-        }
-
-        // Initialize the WASM module if needed
-        await ruffFmt.default();
-
-        return ruffFmt.format(code, 'main.py', {
-          indent_width: editorTabWidth,
-          line_width: options.printWidth ?? 88,
-          // Add other ruff formatting options as needed
-        });
+        return formatWithWasm(
+          code,
+          '@wasm-fmt/ruff_fmt',
+          modules,
+          'Ruff formatter module not loaded for Python formatting',
+          (formatter, code, filename, options) =>
+            formatter.format(code, filename, options),
+          'main.py',
+          {
+            indent_width: editorTabWidth,
+            line_width: options.printWidth ?? 88,
+            // Add other ruff formatting options as needed
+          },
+        );
       }
 
       default:
