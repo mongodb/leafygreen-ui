@@ -1,14 +1,13 @@
-import ReactMarkdown from 'react-markdown';
+import { Options as ReactMarkdownOptions } from 'react-markdown';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-type ReactMarkdownProps = Parameters<typeof ReactMarkdown>[0];
-
-export interface LGMarkdownProps extends ReactMarkdownProps, DarkModeProps {
+export interface LGMarkdownProps extends DarkModeProps, ReactMarkdownOptions {
   baseFontSize?: BaseFontSize;
-}
 
-export type MarkdownCodeProps = HTMLElementProps<'code'> & {
-  inline?: boolean;
-};
+  /**
+   * CSS class name to apply to the wrapper element
+   */
+  className?: string;
+}
