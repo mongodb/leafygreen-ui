@@ -163,16 +163,14 @@ The formatting system supports the following languages:
 
 ### Using Code Formatting
 
-#### Via CodeEditor and Panel
+There are three ways to format code with the CodeEditor:
+
+#### 1. Via Panel Component (Automatic)
+
+Enable the format button in the Panel for user-triggered formatting. Formatting will occur automatically on click for supported languages:
 
 ```tsx
-import { useRef } from 'react';
-import {
-  CodeEditor,
-  Panel,
-  type CodeEditorHandle,
-  LanguageName,
-} from '@leafygreen-ui/code-editor';
+import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
 
 function MyComponent() {
   return (
@@ -185,7 +183,44 @@ function MyComponent() {
 }
 ```
 
-#### Via useCodeFormatter Hook
+#### 2. Via CodeEditor Ref (Programmatic)
+
+Access formatting programmatically through the CodeEditor ref:
+
+```tsx
+import { useRef } from 'react';
+import {
+  CodeEditor,
+  type CodeEditorHandle,
+  LanguageName,
+} from '@leafygreen-ui/code-editor';
+
+function MyComponent() {
+  const editorRef = useRef<CodeEditorHandle>(null);
+
+  const handleFormatCode = async () => {
+    if (editorRef.current?.isFormattingAvailable) {
+      const formatted = await editorRef.current.formatCode();
+      console.log('Formatted code:', formatted);
+    }
+  };
+
+  return (
+    <>
+      <CodeEditor
+        ref={editorRef}
+        defaultValue="const x=1;const y=2;"
+        language={LanguageName.javascript}
+      />
+      <button onClick={handleFormatCode}>Format Code</button>
+    </>
+  );
+}
+```
+
+#### 3. Via useCodeFormatter Hook (Standalone)
+
+Use the formatting functionality independently without the CodeEditor component:
 
 ```tsx
 import {
@@ -222,7 +257,7 @@ function MyFormattingComponent() {
 
 ### Formatting Options
 
-The `FormattingOptions` interface provides configuration for Prettier-based formatters:
+The `FormattingOptions` interface provides configuration for code formatting:
 
 ```tsx
 interface FormattingOptions {
@@ -235,6 +270,13 @@ interface FormattingOptions {
   arrowParens?: 'avoid' | 'always'; // Arrow function parentheses
 }
 ```
+
+**Option Support by Language:**
+
+- **JavaScript/JSX, TypeScript/TSX, CSS, HTML, JSON**: All options supported
+- **Python**: Only `printWidth` supported
+- **Java, C++, C#**: Limited support (uses language-specific defaults)
+- **Go**: No options supported (gofmt is opinionated)
 
 **Note:** Tab width and tab usage are controlled by the CodeEditor's `indentSize` and `indentUnit` props, not the formatting options.
 
