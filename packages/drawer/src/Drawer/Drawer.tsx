@@ -170,7 +170,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       isResizing,
     } = useResizable<HTMLDialogElement | HTMLDivElement>({
       enabled: isResizableEnabled,
-      initialSize: resolvedInitialSize,
+      initialSize,
       minSize: resizableMinWidth,
       maxSize: resizableMaxWidth,
       position: Position.Right,
