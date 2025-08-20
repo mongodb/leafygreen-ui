@@ -4,20 +4,23 @@ import {
   borderRadius,
   color,
   InteractionState,
+  spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
+
+const PANEL_HEIGHT = 36;
 
 export const getPanelStyles = (theme: Theme) => {
   return css`
     background-color: ${color[theme].background[Variant.Secondary][
       InteractionState.Default
     ]};
-    height: 36px;
+    height: ${PANEL_HEIGHT}px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px 0 10px;
+    padding: 0 ${spacing[400]}px 0 ${spacing[300]}px;
     border: 1px solid
       ${color[theme].border[Variant.Secondary][InteractionState.Default]};
     border-bottom: none;
@@ -25,7 +28,7 @@ export const getPanelStyles = (theme: Theme) => {
     border-top-right-radius: ${borderRadius[300]}px;
     display: grid;
     grid-template-columns: auto 1fr auto;
-    grid-template-areas: 'title children buttons';
+    grid-template-areas: 'title innerContent buttons';
   `;
 };
 
@@ -39,7 +42,7 @@ export const getPanelTitleStyles = (theme: Theme, baseFontSize: number) => {
 
 export const getPanelInnerContentStyles = () => {
   return css`
-    grid-area: children;
+    grid-area: innerContent;
   `;
 };
 
