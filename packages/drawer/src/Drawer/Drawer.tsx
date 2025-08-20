@@ -70,6 +70,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     } = useDrawerLayoutContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
+    const [previousWidth, setPreviousWidth] = useState(0);
 
     // const [initialSize, setInitialSize] = useState(0);
 
@@ -89,12 +90,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { initialSize, resizableMinWidth, resizableMaxWidth } =
       getResolvedDrawerSizes(size, hasToolbar);
 
-    // const initialSize =
+    // const initialSizeEmbedded =
     //   drawerWidth === 0
-    //     ? resolvedInitialSize
+    //     ? initialSize
     //     : hasToolbar
-    //     ? drawerWidth - 42
+    //     ? drawerWidth - 48
     //     : drawerWidth;
+
+    // console.log('🐙', { initialSizeEmbedded });
 
     const isEmbedded = displayMode === DisplayMode.Embedded;
     const isOverlay = displayMode === DisplayMode.Overlay;
@@ -170,18 +173,29 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       isResizing,
     } = useResizable<HTMLDialogElement | HTMLDivElement>({
       enabled: isResizableEnabled,
-      initialSize,
+      initialSize: previousWidth !== 0 ? previousWidth : initialSize,
       minSize: resizableMinWidth,
       maxSize: resizableMaxWidth,
       position: Position.Right,
     });
 
     useEffect(() => {
-      console.log('🥊drawer render', { drawerWidth, open, hasToolbar });
-      if (open && isEmbedded && drawerWidth) {
+      console.log('🥊drawer render', {
+        drawerWidth,
+        open,
+        hasToolbar,
+        initialSize,
+      });
+      if (open && isEmbedded && drawerWidth !== 0) {
         console.log('😡');
+        const prevWidth = hasToolbar ? drawerWidth + 48 : drawerWidth - 48;
+        setPreviousWidth(prevWidth);
       }
     }, []);
+
+    useEffect(() => {
+      if (!open) setPreviousWidth(0);
+    }, [open]);
 
     // In an embedded drawer, the parent grid container controls the drawer width with grid-template-columns, so we pass the width to the context where it is read by the parent grid container.
     useEffect(() => {
