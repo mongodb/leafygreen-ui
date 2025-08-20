@@ -9,17 +9,14 @@ import { CodeEditorModules } from './moduleLoaders.types';
  * Interface defining formatting options for different formatters
  */
 export interface FormattingOptions {
-  // Prettier options
   semi?: boolean;
   singleQuote?: boolean;
-  tabWidth?: number;
-  useTabs?: boolean;
   printWidth?: number;
   trailingComma?: 'none' | 'es5' | 'all';
   bracketSpacing?: boolean;
   jsxBracketSameLine?: boolean;
   arrowParens?: 'avoid' | 'always';
-  // WASM formatter options can be added here as needed
+  // Note: tabWidth and useTabs are derived from CodeEditor props (indentSize, indentUnit)
 }
 
 /**
@@ -40,6 +37,9 @@ export function useCodeFormatter({
   props: Partial<CodeEditorProps>;
   modules: Partial<CodeEditorModules>;
 }) {
+  // Extract editor configuration for consistent formatting
+  const editorTabWidth = props.indentSize ?? 2;
+  const editorUseTabs = props.indentUnit === 'tab';
   const [isFormattingAvailable, setIsFormattingReady] = useState(false);
 
   /**
@@ -79,8 +79,8 @@ export function useCodeFormatter({
             plugins: [parserBabel],
             semi: options.semi ?? true,
             singleQuote: options.singleQuote ?? true,
-            tabWidth: options.tabWidth ?? 2,
-            useTabs: options.useTabs ?? false,
+            tabWidth: editorTabWidth,
+            useTabs: editorUseTabs,
             printWidth: options.printWidth ?? 80,
             trailingComma: options.trailingComma ?? 'es5',
             bracketSpacing: options.bracketSpacing ?? true,
@@ -107,8 +107,8 @@ export function useCodeFormatter({
             plugins: [parserTypescript],
             semi: options.semi ?? true,
             singleQuote: options.singleQuote ?? true,
-            tabWidth: options.tabWidth ?? 2,
-            useTabs: options.useTabs ?? false,
+            tabWidth: editorTabWidth,
+            useTabs: editorUseTabs,
             printWidth: options.printWidth ?? 80,
             trailingComma: options.trailingComma ?? 'es5',
             bracketSpacing: options.bracketSpacing ?? true,
@@ -129,8 +129,8 @@ export function useCodeFormatter({
           return prettier.format(code, {
             parser: 'json',
             plugins: [parserBabel],
-            tabWidth: options.tabWidth ?? 2,
-            useTabs: options.useTabs ?? false,
+            tabWidth: editorTabWidth,
+            useTabs: editorUseTabs,
             printWidth: options.printWidth ?? 40, // Force multi-line formatting for JSON
             ...options,
           });
@@ -148,8 +148,8 @@ export function useCodeFormatter({
           return prettier.format(code, {
             parser: 'css',
             plugins: [parserPostcss],
-            tabWidth: options.tabWidth ?? 2,
-            useTabs: options.useTabs ?? false,
+            tabWidth: editorTabWidth,
+            useTabs: editorUseTabs,
             printWidth: options.printWidth ?? 80,
             ...options,
           });
@@ -167,8 +167,8 @@ export function useCodeFormatter({
           return prettier.format(code, {
             parser: 'html',
             plugins: [parserHtml],
-            tabWidth: options.tabWidth ?? 2,
-            useTabs: options.useTabs ?? false,
+            tabWidth: editorTabWidth,
+            useTabs: editorUseTabs,
             printWidth: options.printWidth ?? 80,
             ...options,
           });
@@ -214,8 +214,8 @@ export function useCodeFormatter({
             language === LanguageName.java
               ? `{
                 BasedOnStyle: Google,
-                IndentWidth: ${options.tabWidth ?? 4},
-                UseTab: ${options.useTabs ? 'Always' : 'Never'},
+                IndentWidth: ${editorTabWidth},
+                UseTab: ${editorUseTabs ? 'Always' : 'Never'},
                 ColumnLimit: ${options.printWidth ?? 100},
                 AllowShortFunctionsOnASingleLine: None,
                 AllowShortBlocksOnASingleLine: Never,
@@ -229,8 +229,8 @@ export function useCodeFormatter({
               : language === LanguageName.cpp
               ? `{
                 BasedOnStyle: LLVM,
-                IndentWidth: ${options.tabWidth ?? 2},
-                UseTab: ${options.useTabs ? 'Always' : 'Never'},
+                IndentWidth: ${editorTabWidth},
+                UseTab: ${editorUseTabs ? 'Always' : 'Never'},
                 ColumnLimit: ${options.printWidth ?? 100},
                 AllowShortFunctionsOnASingleLine: None,
                 AllowShortBlocksOnASingleLine: Never,
@@ -244,8 +244,8 @@ export function useCodeFormatter({
               }`
               : `{
                 BasedOnStyle: Microsoft,
-                IndentWidth: ${options.tabWidth ?? 4},
-                UseTab: ${options.useTabs ? 'Always' : 'Never'},
+                IndentWidth: ${editorTabWidth},
+                UseTab: ${editorUseTabs ? 'Always' : 'Never'},
                 ColumnLimit: ${options.printWidth ?? 100},
                 AllowShortFunctionsOnASingleLine: None,
                 AllowShortBlocksOnASingleLine: Never,
@@ -288,7 +288,7 @@ export function useCodeFormatter({
           await ruffFmt.default();
 
           return ruffFmt.format(code, 'main.py', {
-            indent_width: options.tabWidth ?? 4,
+            indent_width: editorTabWidth,
             line_width: options.printWidth ?? 88,
             // Add other ruff formatting options as needed
           });
