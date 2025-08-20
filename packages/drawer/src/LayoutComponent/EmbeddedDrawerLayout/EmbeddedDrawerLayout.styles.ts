@@ -15,6 +15,7 @@ const baseStyles = css`
   width: 100%;
   display: grid;
   grid-template-columns: auto 0;
+  grid-template-areas: '${GRID_AREA.content} ${GRID_AREA.drawer}';
   transition-property: grid-template-columns, grid-template-rows;
   transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
   transition-duration: ${TRANSITION_DURATION}ms;

@@ -17,25 +17,6 @@ import { getDrawerWidth } from '../../Drawer/Drawer.utils';
 const MOBILE_BREAKPOINT = breakpoints.Tablet;
 const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
-const getDrawerIn = (size: number) => keyframes`
-  from {
-    // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work when the Drawer is overlay.
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 1px;
-  }
-  to {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
-  }
-`;
-
-const getDrawerOut = (size: number) => keyframes`
-  from {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
-  }
-  to {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
-  }
-`;
-
 const drawerOutMobile = keyframes`
   from {
     grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${
@@ -72,20 +53,11 @@ const drawerPaddingOut = keyframes`
 `;
 
 const getOpenOverlayStyles = (size: number) => css`
-  animation-name: ${getDrawerIn(size)};
-  animation-fill-mode: forwards;
-
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    animation-name: ${drawerInMobile};
-  }
+  grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
 `;
 
 const getClosedOverlayStyles = (size: number) => css`
-  animation-name: ${getDrawerOut(size)};
-
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    animation-name: ${drawerOutMobile};
-  }
+  grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
 `;
 
 const openEmbeddedStyles = css`
@@ -165,6 +137,11 @@ const baseStyles = css`
 `;
 
 const baseOverlayStyles = css`
+  transition-property: grid-template-columns;
+  transition-duration: ${TRANSITION_DURATION}ms;
+  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
+  grid-template-columns: 1fr auto;
+
   .${drawerClassName} {
     width: 100%;
   }
@@ -207,8 +184,7 @@ export const getDrawerWithToolbarWrapperStyles = ({
       [closedOverlayShadowStyles]: isOverlay && !isDrawerOpen,
       [baseOverlayStyles]: isOverlay,
       [getOpenOverlayStyles(size)]: isDrawerOpen && isOverlay,
-      [getClosedOverlayStyles(size)]:
-        !isDrawerOpen && shouldAnimate && isOverlay, // This ensures that the drawer does not animate closed on initial render
+      [getClosedOverlayStyles(size)]: !isDrawerOpen && isOverlay, // This ensures that the drawer does not animate closed on initial render
       [baseEmbeddedStyles]: isEmbedded,
       [openEmbeddedStyles]: isDrawerOpen && isEmbedded,
       [closedEmbeddedStyles]: !isDrawerOpen && isEmbedded,

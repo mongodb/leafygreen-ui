@@ -129,22 +129,21 @@ export const DrawerToolbarLayoutContent = forwardRef<
     };
 
     return (
-      <LayoutComponent {...rest} ref={forwardRef}>
+      <>
         {shouldRenderToolbar ? (
-          <>
+          <LayoutComponent {...rest} ref={forwardRef}>
             <div className={contentStyles}>{children}</div>
             <DrawerWithToolbarWrapper>
               {renderToolbar()}
               {renderDrawer()}
             </DrawerWithToolbarWrapper>
-          </>
+          </LayoutComponent>
         ) : (
-          <>
-            {children}
-            {renderDrawer()}
-          </>
+          <LayoutComponent {...rest} drawer={renderDrawer()} ref={forwardRef}>
+            <div className={contentStyles}>{children}</div>
+          </LayoutComponent>
         )}
-      </LayoutComponent>
+      </>
     );
   },
 );

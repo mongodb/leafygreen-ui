@@ -2,8 +2,14 @@ import React, { forwardRef } from 'react';
 
 import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/DrawerLayoutContext';
 
-import { getOverlayDrawerLayoutStyles } from './OverlayDrawerLayout.styles';
+import {
+  getOverlayDrawerLayoutStyles,
+  getOverlayDrawerWrapperStyles,
+} from './OverlayDrawerLayout.styles';
 import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
+import { css } from '@leafygreen-ui/emotion';
+import { GRID_AREA } from '../../constants';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * @internal
@@ -16,8 +22,9 @@ import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
 export const OverlayDrawerLayout = forwardRef<
   HTMLDivElement,
   OverlayDrawerLayoutProps
->(({ children, className }: OverlayDrawerLayoutProps, forwardedRef) => {
-  const { hasToolbar } = useDrawerLayoutContext();
+>(({ children, className, drawer }: OverlayDrawerLayoutProps, forwardedRef) => {
+  const { hasToolbar, isDrawerOpen, size } = useDrawerLayoutContext();
+  const { theme } = useDarkMode();
 
   return (
     <div
@@ -27,7 +34,31 @@ export const OverlayDrawerLayout = forwardRef<
         hasToolbar,
       })}
     >
-      {children}
+      {drawer !== undefined ? (
+        <>
+          <div
+            data-bye="bye"
+            className={css`
+              grid-area: ${GRID_AREA.content};
+              overflow: scroll;
+              height: inherit;
+            `}
+          >
+            {children}
+          </div>
+          <div
+            className={getOverlayDrawerWrapperStyles({
+              isDrawerOpen,
+              theme,
+              size,
+            })}
+          >
+            {drawer}
+          </div>
+        </>
+      ) : (
+        children
+      )}
     </div>
   );
 });
