@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
-import { LanguageName } from './extensions/useLanguageExtension';
-import { type CodeEditorModules } from './moduleLoaders.types';
-import { type LoadersMap } from './useLazyModules';
+import { LanguageName } from '../extensions/useLanguageExtension';
+import { type CodeEditorModules } from '../moduleLoaders.types';
+import { type LoadersMap } from '../useLazyModules';
 
 // Define stable import functions outside the hook to prevent infinite re-renders
 const importPrettierStandalone = () => import('prettier/standalone');

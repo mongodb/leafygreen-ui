@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react';
 
-import { LanguageName } from './extensions/useLanguageExtension';
+import { LanguageName } from '../extensions/useLanguageExtension';
+
 import { useCodeFormatter } from './useCodeFormatter';
 
 // Test data: unformatted input -> expected formatted output
