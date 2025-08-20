@@ -26,10 +26,6 @@ beforeAll(() => {
       '@wasm-fmt/gofmt is not installed',
       'prettier-plugin-java is not installed',
       '@wasm-fmt/ruff_fmt is not installed',
-      '@prettier/plugin-ruby is not installed',
-      'prettier-plugin-kotlin is not installed',
-      '@prettier/plugin-php is not installed',
-      'prettier-plugin-rust is not installed',
     ];
 
     if (!suppressedWarnings.includes(message)) {

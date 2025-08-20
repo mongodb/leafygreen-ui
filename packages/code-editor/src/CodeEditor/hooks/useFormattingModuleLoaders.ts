@@ -20,6 +20,9 @@ const importWasmRuffFmt = () => import('@wasm-fmt/ruff_fmt');
  * This hook is separate from useModuleLoaders to allow formatting modules
  * to be loaded on-demand when formatting is needed.
  *
+ * Note: Kotlin, Ruby, Php, and Rust are not supported in browser environments
+ * so they are not included in the loaders.
+ *
  * @param language The language for which to load formatting modules
  * @returns A map of module names to their dynamic import functions
  */
@@ -53,38 +56,6 @@ export const useFormattingModuleLoaders = (language?: LanguageName) => {
         neededLoaders['prettier/standalone'] = importPrettierStandalone;
         neededLoaders['prettier/parser-html'] = importPrettierParserHtml;
         break;
-
-      // Prettier with external plugins - disabled due to browser compatibility issues
-      // case LanguageName.kotlin:
-      //   neededLoaders['prettier/standalone'] = () =>
-      //     import('prettier/standalone');
-      //   // Only load Node.js-specific plugins in Node.js environment
-      //   if (isNodeEnvironment) {
-      //     neededLoaders['prettier-plugin-kotlin'] = () =>
-      //       import('prettier-plugin-kotlin');
-      //   }
-      //   break;
-      // case LanguageName.php:
-      //   neededLoaders['prettier/standalone'] = () =>
-      //     import('prettier/standalone');
-      //   neededLoaders['@prettier/plugin-php'] = () =>
-      //     import('@prettier/plugin-php/standalone');
-      //   break;
-      // case LanguageName.ruby:
-      //   neededLoaders['prettier/standalone'] = () =>
-      //     import('prettier/standalone');
-      //   // Only load Node.js-specific plugins in Node.js environment
-      //   if (isNodeEnvironment) {
-      //     neededLoaders['@prettier/plugin-ruby'] = () =>
-      //       import('@prettier/plugin-ruby');
-      //   }
-      //   break;
-      // case LanguageName.rust:
-      //   neededLoaders['prettier/standalone'] = () =>
-      //     import('prettier/standalone');
-      //   neededLoaders['prettier-plugin-rust'] = () =>
-      //     import('prettier-plugin-rust');
-      //   break;
 
       // WASM formatters
       case LanguageName.java:

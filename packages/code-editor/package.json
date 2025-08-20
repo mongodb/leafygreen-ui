@@ -58,8 +58,6 @@
     "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "^22.1.0",
     "@lezer/highlight": "^1.2.1",
-    "@prettier/plugin-php": "^0.24.0",
-    "@prettier/plugin-ruby": "^4.0.4",
     "@replit/codemirror-lang-csharp": "^6.2.0",
     "@uiw/codemirror-extensions-hyper-link": "^4.23.12",
     "@uiw/react-codemirror": "^4.23.10",
@@ -68,9 +66,7 @@
     "@wasm-fmt/ruff_fmt": "^0.10.0",
     "codemirror": "^6.0.2",
     "prettier": "2.8.8",
-    "prettier-plugin-java": "^2.7.4",
-    "prettier-plugin-kotlin": "^2.1.0",
-    "prettier-plugin-rust": "^0.1.9"
+    "prettier-plugin-java": "^2.7.4"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",

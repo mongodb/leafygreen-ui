@@ -37,10 +37,6 @@ export interface CodeEditorModules {
   'prettier/parser-postcss': typeof import('prettier/parser-postcss');
   'prettier/parser-html': typeof import('prettier/parser-html');
   'prettier-plugin-java': typeof import('prettier-plugin-java');
-  'prettier-plugin-kotlin': any; // 'prettier-plugin-kotlin' doesn't have a type definition
-  '@prettier/plugin-php': typeof import('@prettier/plugin-php');
-  '@prettier/plugin-ruby': any; // '@prettier/plugin-ruby' doesn't have a type definition
-  'prettier-plugin-rust': typeof import('prettier-plugin-rust');
 
   // WASM formatting modules
   '@wasm-fmt/clang-format': typeof import('@wasm-fmt/clang-format');
