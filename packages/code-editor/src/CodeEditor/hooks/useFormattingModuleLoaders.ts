@@ -20,9 +20,6 @@ export const useFormattingModuleLoaders = (language?: LanguageName) => {
       return neededLoaders;
     }
 
-    // Check if we're in a Node.js environment (server-side)
-    // const isNodeEnvironment = typeof window === 'undefined';
-
     switch (language) {
       // Prettier with built-in parsers
       case LanguageName.javascript:
@@ -54,7 +51,6 @@ export const useFormattingModuleLoaders = (language?: LanguageName) => {
         break;
 
       // Prettier with external plugins - disabled due to browser compatibility issues
-      // (Java is now supported via WASM clang-format instead)
       // case LanguageName.kotlin:
       //   neededLoaders['prettier/standalone'] = () =>
       //     import('prettier/standalone');
