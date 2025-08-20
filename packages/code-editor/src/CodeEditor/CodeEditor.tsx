@@ -75,21 +75,21 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
 
+    // Load core modules
     const moduleLoaders = useModuleLoaders(props);
     const { isLoading, modules } = useLazyModules(moduleLoaders);
 
-    // Lazy load formatting modules
+    // Get formatting functionality
     const formattingModuleLoaders = useFormattingModuleLoaders(language);
     const { modules: formattingModules } = useLazyModules(
       formattingModuleLoaders,
     );
-
-    // Get formatting functionality
     const { formatCode, isFormattingAvailable } = useCodeFormatter({
       props: { language },
       modules: formattingModules,
     });
 
+    // Get custom extensions
     const customExtensions = useExtensions({
       editorViewInstance: editorViewRef.current,
       props: {
@@ -104,6 +104,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       modules,
     });
 
+    // Get the current contents of the editor
     const getContents = useCallback(() => {
       return editorViewRef.current?.state.sliceDoc() ?? '';
     }, []);
@@ -171,7 +172,6 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         extensions: [
           ...consumerExtensions.map(extension => Prec.highest(extension)),
 
-          // Core configurations ------------
           commands.history(),
 
           EditorView.EditorView.updateListener.of(update => {
@@ -187,7 +187,6 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
             ...commands.historyKeymap,
           ]),
 
-          // Custom extensions ------------
           ...customExtensions,
         ],
       });
