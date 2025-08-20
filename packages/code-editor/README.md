@@ -142,40 +142,28 @@ import CloudIcon from '@leafygreen-ui/icon';
 
 ## Code Formatting
 
-The CodeEditor component includes built-in code formatting functionality that is integrated into the `Panel` component or can be used independently via the `useCodeFormatter` hook.
+The CodeEditor component includes built-in code formatting functionality that integrates with the `Panel` component or can be used independently via the `useCodeFormatter` hook.
 
-### Supported Languages and Formatters
+### Supported Languages
 
-The formatting system supports multiple languages using different formatting backends:
+The formatting system supports the following languages:
 
-#### Prettier-based Languages
+- **JavaScript/JSX**
+- **TypeScript/TSX**
+- **CSS**
+- **HTML**
+- **JSON**
+- **Java**
+- **C++**
+- **C#**
+- **Go**
+- **Python**
 
-These languages use [Prettier](https://prettier.io/) for code formatting:
-
-- **JavaScript/JSX**: Uses `prettier/parser-babel`
-- **TypeScript/TSX**: Uses `prettier/parser-typescript`
-- **CSS**: Uses `prettier/parser-postcss`
-- **HTML**: Uses `prettier/parser-html`
-- **JSON**: Uses `prettier/parser-babel`
-- **Java**: Uses `prettier-plugin-java`
-- **Kotlin**: Uses `prettier-plugin-kotlin`
-- **PHP**: Uses `@prettier/plugin-php`
-- **Ruby**: Uses `@prettier/plugin-ruby`
-- **Rust**: Uses `prettier-plugin-rust`
-
-#### WASM-based Languages
-
-These languages use WebAssembly-compiled formatters for in-browser formatting:
-
-- **C/C++/C#**: Uses `@wasm-fmt/clang-format`
-- **Go**: Uses `@wasm-fmt/gofmt`
-- **Python**: Uses `@wasm-fmt/ruff_fmt`
+**Note:** Kotlin, PHP, Ruby, and Rust are not supported due to current browser compatibility limitations.
 
 ### Using Code Formatting
 
 #### Via CodeEditor and Panel
-
-The formatting functionality is accessible through the `CodeEditor` component and automatically available in the `Panel` component:
 
 ```tsx
 import { useRef } from 'react';
@@ -187,49 +175,32 @@ import {
 } from '@leafygreen-ui/code-editor';
 
 function MyComponent() {
-  const editorRef = useRef<CodeEditorHandle>(null);
-
-  const handleFormatCode = async () => {
-    if (editorRef.current?.isFormattingAvailable) {
-      const formattedCode = await editorRef.current.formatCode();
-      console.log('Formatted code:', formattedCode);
-    }
-  };
-
   return (
-    <div>
-      <CodeEditor
-        ref={editorRef}
-        defaultValue="const x=1;const y=2;"
-        language={LanguageName.javascript}
-        panel={<Panel showFormatButton />}
-      />
-      <button onClick={handleFormatCode}>Format Code Externally</button>
-    </div>
+    <CodeEditor
+      defaultValue="const x=1;const y=2;"
+      language={LanguageName.javascript}
+      panel={<Panel showFormatButton />}
+    />
   );
 }
 ```
 
 #### Via useCodeFormatter Hook
 
-For more advanced use cases, you can use the `useCodeFormatter` hook directly:
-
 ```tsx
 import {
   useCodeFormatter,
-  useLazyModules,
-  useFormattingModuleLoaders,
-  LanguageName,
   type FormattingOptions,
+  LanguageName,
 } from '@leafygreen-ui/code-editor';
 
 function MyFormattingComponent() {
-  const moduleLoaders = useFormattingModuleLoaders(LanguageName.javascript);
-  const { modules } = useLazyModules(moduleLoaders);
-
   const { formatCode, isFormattingAvailable } = useCodeFormatter({
-    props: { language: LanguageName.javascript },
-    modules,
+    props: {
+      language: LanguageName.javascript,
+      indentSize: 2,
+      indentUnit: 'space',
+    },
   });
 
   const handleFormat = async () => {
@@ -237,10 +208,10 @@ function MyFormattingComponent() {
       const options: FormattingOptions = {
         semi: true,
         singleQuote: true,
-        tabWidth: 2,
+        printWidth: 80,
       };
 
-      const formatted = await formatCode('const x=1;', options);
+      const formatted = await formatCode('const x=1', options);
       console.log(formatted); // "const x = 1;"
     }
   };
@@ -251,22 +222,21 @@ function MyFormattingComponent() {
 
 ### Formatting Options
 
-The `FormattingOptions` interface provides configuration for different formatters:
+The `FormattingOptions` interface provides configuration for Prettier-based formatters:
 
 ```tsx
 interface FormattingOptions {
-  // Prettier options
-  semi?: boolean; // Add semicolons (default: true)
-  singleQuote?: boolean; // Use single quotes (default: true)
-  tabWidth?: number; // Tab width (default: varies by language)
-  useTabs?: boolean; // Use tabs instead of spaces (default: false)
-  printWidth?: number; // Line length (default: varies by language)
+  semi?: boolean; // Add semicolons
+  singleQuote?: boolean; // Use single quotes
+  printWidth?: number; // Line length
   trailingComma?: 'none' | 'es5' | 'all'; // Trailing commas
   bracketSpacing?: boolean; // Spaces around object brackets
   jsxBracketSameLine?: boolean; // JSX bracket placement
   arrowParens?: 'avoid' | 'always'; // Arrow function parentheses
 }
 ```
+
+**Note:** Tab width and tab usage are controlled by the CodeEditor's `indentSize` and `indentUnit` props, not the formatting options.
 
 ## Types and Variables
 
@@ -582,55 +552,6 @@ const myExtension = useExtension({
 });
 ```
 
-### Aggregated Extension Hook
-
-#### `useExtensions(config)`
-
-A convenience hook that aggregates and configures all CodeMirror extensions used by the CodeEditor component. This hook internally calls all individual extension hooks and returns a complete array of configured extensions ready to be applied to a CodeMirror editor.
-
-This hook manages the initialization and configuration of all available extensions including auto-completion, code folding, syntax highlighting, hyperlinks, line wrapping, line numbers, indentation, placeholder text, tooltips, language support, theme styling, and read-only mode.
-
-**Parameters:**
-
-- `editorViewInstance`: The CodeMirror editor view instance
-- `props`: Partial CodeEditor props containing user configuration options
-- `modules`: Partial CodeEditor modules containing dynamically loaded CodeMirror modules
-
-**Returns:** Array of configured CodeMirror extensions
-
-**Example:**
-
-```tsx
-import {
-  useExtensions,
-  useLazyLoadedModules,
-  useModuleLoaders,
-} from '@leafygreen-ui/code-editor';
-
-const props = {
-  language: LanguageName.javascript,
-  enableLineNumbers: true,
-  enableCodeFolding: true,
-  readOnly: false,
-  // ... other props
-};
-
-const moduleLoaders = useModuleLoaders(props);
-const { isLoading, modules } = useLazyModules(moduleLoaders);
-
-const allExtensions = useExtensions({
-  editorViewInstance,
-  props,
-  modules,
-});
-
-// Apply all extensions to your CodeMirror editor
-const editorState = EditorState.create({
-  doc: initialContent,
-  extensions: allExtensions,
-});
-```
-
 ### Feature Extension Hooks
 
 #### `useAutoCompleteExtension(config)`
@@ -733,28 +654,29 @@ Adds hover tooltips to editor content with configurable severity levels.
 
 #### `useCodeFormatter(config)`
 
-Provides code formatting functionality using language-specific formatters. This hook provides a formatting utility that can format code content. It supports multiple formatting backends:
+Provides code formatting functionality using language-specific formatters. Automatically loads required dependencies for supported languages.
 
-- **Prettier-based formatters**: For JavaScript, TypeScript, CSS, HTML, JSON, Java, Kotlin, PHP, Ruby, and Rust
-- **WASM-based formatters**: For C/C++, C#, Go, and Python
+**Supported Languages:**
 
-**Required Props:** `language`  
-**Required Modules:** Depends on language:
+- **Prettier-based**: JavaScript/JSX, TypeScript/TSX, CSS, HTML, JSON
+- **WASM-based**: Java, C++, C#, Go, Python
 
-- Prettier languages: `prettier/standalone` + language-specific parser/plugin
-- WASM languages: `@wasm-fmt/clang-format`, `@wasm-fmt/gofmt`, or `@wasm-fmt/ruff_fmt`
+**Required Props:** `language`, `indentSize` _(optional)_, `indentUnit` _(optional)_
 
 **Returns:**
 
 - `formatCode(code: string, options?: FormattingOptions): Promise<string>` - Formats the provided code
-- `isFormattingAvailable: boolean` - Stateful boolean indicating if formatting is available for the current language
+- `isFormattingAvailable: boolean` - Whether formatting is available for the current language
 
 **Example:**
 
 ```tsx
 const { formatCode, isFormattingAvailable } = useCodeFormatter({
-  props: { language: LanguageName.javascript },
-  modules: lazyModules,
+  props: {
+    language: LanguageName.javascript,
+    indentSize: 2,
+    indentUnit: 'space',
+  },
 });
 
 if (isFormattingAvailable) {

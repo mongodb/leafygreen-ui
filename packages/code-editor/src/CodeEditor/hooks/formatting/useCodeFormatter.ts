@@ -1,34 +1,36 @@
 import { useEffect, useState } from 'react';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';
-import { CodeEditorModules } from '../moduleLoaders.types';
+import { useLazyModules } from '../useLazyModules';
 
 import { formatCode } from './formatters';
 import { FormattingOptions } from './types';
+import { useFormattingModuleLoaders } from './useFormattingModuleLoaders';
 import { areModulesLoaded } from './utils';
 
 /**
  * Hook for creating a code formatting utility that can format code based on the selected language.
  *
- * This hook provides language-specific code formatting capabilities using lazy-loaded
- * formatting modules. It supports both Prettier-based formatters and WASM-based formatters.
+ * This hook provides language-specific code formatting capabilities and automatically loads
+ * the required formatting modules. It supports both Prettier-based formatters and WASM-based formatters.
  *
  * @param params - Configuration object
- * @param params.props - Partial CodeEditor props containing language setting
- * @param params.modules - Module dependencies containing formatting modules
+ * @param params.props - Partial CodeEditor props containing language and indent configuration
  * @returns Object containing the format function and availability check
  */
 export function useCodeFormatter({
   props,
-  modules,
 }: {
   props: Partial<CodeEditorProps>;
-  modules: Partial<CodeEditorModules>;
 }) {
   // Extract editor configuration for consistent formatting
   const editorTabWidth = props.indentSize ?? 2;
   const editorUseTabs = props.indentUnit === 'tab';
   const [isFormattingAvailable, setIsFormattingReady] = useState(false);
+
+  // Load formatting modules based on the selected language
+  const moduleLoaders = useFormattingModuleLoaders(props.language);
+  const { modules } = useLazyModules(moduleLoaders);
 
   /**
    * Formats code using the appropriate formatter based on the selected language.
@@ -55,7 +57,7 @@ export function useCodeFormatter({
     setIsFormattingReady(
       (props.language && areModulesLoaded(props.language, modules)) || false,
     );
-  }, [modules, props]);
+  }, [modules, props.language]);
 
   return {
     formatCode: handleFormatCode,
