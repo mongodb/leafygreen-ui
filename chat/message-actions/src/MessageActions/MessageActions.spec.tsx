@@ -476,5 +476,232 @@ describe('packages/message-actions', () => {
 
       expect(screen.getByText('Feedback received!')).toBeInTheDocument();
     });
+
+    test('handles feedback submission failure gracefully', async () => {
+      const mockOnSubmitFeedback = jest
+        .fn()
+        .mockRejectedValue(new Error('Network error'));
+      const errorMessage = 'Failed to submit feedback. Please try again.';
+
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: mockOnSubmitFeedback,
+        errorMessage,
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Great response!');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      // Wait for the async operation to complete
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      // Verify error message is displayed
+      expect(screen.getByText(errorMessage)).toBeInTheDocument();
+
+      // Verify feedback form is still visible and interactive
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Submit' }),
+      ).toBeInTheDocument();
+
+      // Verify the form is not in submitted state
+      expect(screen.queryByText('Thanks for your feedback!')).toBeNull();
+    });
+
+    test('shows default error message when no custom error message is provided', async () => {
+      const mockOnSubmitFeedback = jest.fn().mockImplementation(() => {
+        throw new Error('Network error');
+      });
+
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: mockOnSubmitFeedback,
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Great response!');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      // Wait for the async operation to complete
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      // Verify default error message is displayed
+      expect(screen.getByText('Oops, please try again.')).toBeInTheDocument();
+    });
+
+    test('allows retry after feedback submission failure', async () => {
+      let callCount = 0;
+      const mockOnSubmitFeedback = jest.fn().mockImplementation(() => {
+        callCount++;
+        if (callCount === 1) {
+          throw new Error('Network error');
+        } else {
+          // Success on retry
+          return;
+        }
+      });
+      const errorMessage = 'Failed to submit feedback. Please try again.';
+
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: mockOnSubmitFeedback,
+        errorMessage,
+      });
+
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Great response!');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+
+      // First submission fails
+      userEvent.click(submitButton);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      // Verify error state
+      expect(screen.getByText(errorMessage)).toBeInTheDocument();
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
+
+      // Retry submission
+      userEvent.click(submitButton);
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      // Verify success state
+      expect(screen.getByText('Thanks for your feedback!')).toBeInTheDocument();
+      expect(screen.queryByText(errorMessage)).toBeNull();
+      expect(screen.queryByRole('textbox')).toBeNull();
+    });
+  });
+
+  describe('state management', () => {
+    test('transitions through all form states correctly', async () => {
+      const mockOnSubmitFeedback = jest.fn().mockImplementation(() => {
+        // Synchronous success
+        return;
+      });
+
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: mockOnSubmitFeedback,
+      });
+
+      // Initial state - no form visible
+      expect(screen.queryByRole('textbox')).toBeNull();
+
+      // Select rating - form becomes visible
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Submit' }),
+      ).toBeInTheDocument();
+
+      // Type feedback and submit
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Great response!');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      // Wait for submission to complete
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      // Verify submitted state
+      expect(screen.getByText('Thanks for your feedback!')).toBeInTheDocument();
+      expect(screen.queryByRole('textbox')).toBeNull();
+      expect(screen.queryByRole('button', { name: 'Submit' })).toBeNull();
+    });
+
+    test('resets state when feedback form is closed', () => {
+      const mockOnCloseFeedback = jest.fn();
+
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+        onCloseFeedback: mockOnCloseFeedback,
+      });
+
+      // Select rating
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      // Verify form is visible
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
+
+      // Close form
+      const closeButton = screen.getByRole('button', {
+        name: 'Close feedback window',
+      });
+      userEvent.click(closeButton);
+
+      // Verify form is hidden and state is reset
+      expect(screen.queryByRole('textbox')).toBeNull();
+      expect(mockOnCloseFeedback).toHaveBeenCalled();
+    });
+
+    test('maintains error state until form is closed or retried', async () => {
+      const mockOnSubmitFeedback = jest.fn().mockImplementation(() => {
+        throw new Error('Network error');
+      });
+
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: mockOnSubmitFeedback,
+        errorMessage: 'Submission failed',
+      });
+
+      // Select rating and submit
+      const thumbsUpButton = screen.getByRole('radio', {
+        name: 'Like this message',
+      });
+      userEvent.click(thumbsUpButton);
+
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Test feedback');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      // Wait for error to occur
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      // Verify error state persists
+      expect(screen.getByText('Submission failed')).toBeInTheDocument();
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
+
+      // Close form to reset state
+      const closeButton = screen.getByRole('button', {
+        name: 'Close feedback window',
+      });
+      userEvent.click(closeButton);
+
+      // Verify form is hidden
+      expect(screen.queryByRole('textbox')).toBeNull();
+      expect(screen.queryByText('Submission failed')).toBeNull();
+    });
   });
 });

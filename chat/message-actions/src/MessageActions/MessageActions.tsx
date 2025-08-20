@@ -11,7 +11,7 @@ import {
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
 import { useMessageContext } from '@lg-chat/message';
-import { InlineMessageFeedback } from '@lg-chat/message-feedback';
+import { FormState, InlineMessageFeedback } from '@lg-chat/message-feedback';
 import { MessageRating, MessageRatingValue } from '@lg-chat/message-rating';
 
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -36,6 +36,7 @@ export function MessageActions({
   children: _children,
   className,
   darkMode: darkModeProp,
+  errorMessage,
   onClickCopy,
   onClickRetry,
   onCloseFeedback,
@@ -55,7 +56,19 @@ export function MessageActions({
     MessageRatingValue.Unselected,
   );
   const [feedback, setFeedback] = useState<string | undefined>(undefined);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [feedbackFormState, setFeedbackFormState] = useState<FormState>(
+    FormState.Unset,
+  );
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+
+  const isSubmitState =
+    feedbackFormState === FormState.Submitted ||
+    feedbackFormState === FormState.Submitting;
+
+  const resetFeedback = useCallback(() => {
+    setFeedback('');
+    setFeedbackFormState(FormState.Unset);
+  }, []);
 
   const handleCopy = useCallback(
     async (e: MouseEvent<HTMLButtonElement>) => {
@@ -78,26 +91,28 @@ export function MessageActions({
 
   const handleRatingChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      if (isSubmitted) {
+      if (isSubmitState) {
         return;
       }
 
       const newRating = e.target.value as MessageRatingValue;
       setRating(newRating);
+      resetFeedback();
+      setShowFeedbackForm(true);
 
       onRatingChange?.(e, { rating: newRating });
     },
-    [isSubmitted, onRatingChange],
+    [isSubmitState, onRatingChange, resetFeedback],
   );
 
   const handleFeedbackChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
-      if (isSubmitted) {
+      if (isSubmitState) {
         return;
       }
       setFeedback(e.target.value);
     },
-    [isSubmitted],
+    [isSubmitState],
   );
 
   /**
@@ -106,29 +121,43 @@ export function MessageActions({
    * if it fails, it fails silently.
    */
   const handleFeedbackSubmit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
+    async (e: FormEvent<HTMLFormElement>) => {
       if (rating === MessageRatingValue.Unselected || !feedback) {
         return;
       }
 
-      onSubmitFeedback?.(e, { rating, feedback });
-      setIsSubmitted(true);
+      setFeedbackFormState(FormState.Submitting);
+      try {
+        if (onSubmitFeedback) {
+          const result = onSubmitFeedback(e, { rating, feedback });
+
+          // Handle both sync and async functions
+          if (result instanceof Promise) {
+            await result;
+          }
+        }
+        setFeedbackFormState(FormState.Submitted);
+        setShowFeedbackForm(false);
+      } catch (_error) {
+        setFeedbackFormState(FormState.Error);
+      }
     },
     [feedback, onSubmitFeedback, rating],
   );
 
   const handleCloseFeedback = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
-      setRating(MessageRatingValue.Unselected);
-      setFeedback(undefined);
+      resetFeedback();
+      setShowFeedbackForm(false);
       onCloseFeedback?.(e);
     },
-    [onCloseFeedback],
+    [onCloseFeedback, resetFeedback],
   );
 
   const showMessageRating = !!onRatingChange;
-  const showFeedbackForm =
-    rating !== MessageRatingValue.Unselected && !!onSubmitFeedback;
+  const showMessageFeedbackComponent =
+    (showFeedbackForm && !!onSubmitFeedback) ||
+    feedbackFormState === FormState.Submitted;
 
   const textareaProps = useMemo(
     () => ({
@@ -139,13 +168,27 @@ export function MessageActions({
     [handleFeedbackChange, feedback],
   );
 
+  const submitButtonProps = useMemo(
+    () => ({
+      isLoading: feedbackFormState === FormState.Submitting,
+      loadingText: 'Submitting...',
+    }),
+    [feedbackFormState],
+  );
+
   if (!isCompact) {
     return null;
   }
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <div className={getContainerStyles({ className, isSubmitted })} {...rest}>
+      <div
+        className={getContainerStyles({
+          className,
+          isSubmitted: feedbackFormState === FormState.Submitted,
+        })}
+        {...rest}
+      >
         <div className={actionBarStyles}>
           <div className={primaryActionsContainerStyles}>
             <IconButton
@@ -170,19 +213,21 @@ export function MessageActions({
               <div className={getDividerStyles(theme)} />
               <MessageRating
                 // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
-                inert={isSubmitted ? 'inert' : undefined}
+                inert={isSubmitState ? 'inert' : undefined}
                 onChange={handleRatingChange}
                 value={rating}
               />
             </>
           )}
         </div>
-        {showFeedbackForm && (
+        {showMessageFeedbackComponent && (
           <InlineMessageFeedback
-            isSubmitted={isSubmitted}
+            errorMessage={errorMessage}
             label="Provide feedback"
             onClose={handleCloseFeedback}
             onSubmit={handleFeedbackSubmit}
+            state={feedbackFormState}
+            submitButtonProps={submitButtonProps}
             submitButtonText={submitButtonText}
             submittedMessage={submittedMessage}
             textareaProps={textareaProps}
