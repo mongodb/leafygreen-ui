@@ -1377,12 +1377,6 @@ importers:
       '@lezer/highlight':
         specifier: ^1.2.1
         version: 1.2.1
-      '@prettier/plugin-php':
-        specifier: ^0.24.0
-        version: 0.24.0(prettier@2.8.8)
-      '@prettier/plugin-ruby':
-        specifier: ^4.0.4
-        version: 4.0.4(prettier@2.8.8)
       '@replit/codemirror-lang-csharp':
         specifier: ^6.2.0
         version: 6.2.0(@codemirror/autocomplete@6.18.6)(@codemirror/language@6.11.0)(@codemirror/state@6.5.2)(@codemirror/view@6.38.1)(@lezer/common@1.2.3)(@lezer/highlight@1.2.1)(@lezer/lr@1.4.2)
@@ -1410,12 +1404,6 @@ importers:
       prettier-plugin-java:
         specifier: ^2.7.4
         version: 2.7.4(prettier@2.8.8)
-      prettier-plugin-kotlin:
-        specifier: ^2.1.0
-        version: 2.1.0
-      prettier-plugin-rust:
-        specifier: ^0.1.9
-        version: 0.1.9
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
@@ -5794,9 +5782,6 @@ packages:
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
-  '@korzio/djv-draft-04@2.0.1':
-    resolution: {integrity: sha512-MeTVcNsfCIYxK6T7jW1sroC7dBAb4IfLmQe6RoCqlxHN5NFkzNpgdnBPR+/0D2wJDUJHM9s9NQv+ouhxKjvUjg==}
-
   '@leafygreen-ui/emotion@5.0.0':
     resolution: {integrity: sha512-MOfouBCmHuFa6UObhUl03CUFqXvD2PP+nI7CLk0ny8/UKOLgAX4N+JuuSX606u+Efxk4lI2m3FZiyCrfi6oeFQ==}
 
@@ -5981,16 +5966,6 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
-
-  '@prettier/plugin-php@0.24.0':
-    resolution: {integrity: sha512-x9l65fCE/pgoET6RQowgdgG8Xmzs44z6j6Hhg3coINCyCw9JBGJ5ZzMR2XHAM2jmAdbJAIgqB6cUn4/3W3XLTA==}
-    peerDependencies:
-      prettier: ^3.0.0
-
-  '@prettier/plugin-ruby@4.0.4':
-    resolution: {integrity: sha512-lCpvfS/dQU5WrwN3AQ5vR8qrvj2h5gE41X08NNzAAXvHdM4zwwGRcP2sHSxfu6n6No+ljWCVx95NvJPFTTjCTg==}
-    peerDependencies:
-      prettier: ^3.0.0
 
   '@replit/codemirror-lang-csharp@6.2.0':
     resolution: {integrity: sha512-6utbaWkoymhoAXj051mkRp+VIJlpwUgCX9Toevz3YatiZsz512fw3OVCedXQx+WcR0wb6zVHjChnuxqfCLtFVQ==}
@@ -7965,9 +7940,6 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
-  djv@2.1.4:
-    resolution: {integrity: sha512-giDn+BVbtLlwtkvtcsZjbjzpALHB77skiv3FIu6Wp8b5j8BunDcVJYH0cGUaexp6s0Sb7IkquXXjsLBJhXwQpA==}
-
   doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
@@ -9254,9 +9226,6 @@ packages:
       node-notifier:
         optional: true
 
-  jinx-rust@0.1.6:
-    resolution: {integrity: sha512-qP+wtQL1PrDDFwtPKhNGtjWOmijCrKdfUHWTV2G/ikxfjrh+cjdvkQTmny9RAsVF0jiui9m+F0INWu4cuRcZeQ==}
-
   joi@13.7.0:
     resolution: {integrity: sha512-xuY5VkHfeOYK3Hdi91ulocfuFopwgbSORmIwzcwHKESQhC7w1kD5jaVSPnqDxS2I8t3RZ9omCKAxNwXN5zG1/Q==}
     engines: {node: '>=8.9.0'}
@@ -9378,9 +9347,6 @@ packages:
 
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
-
-  linguist-languages@8.1.0:
-    resolution: {integrity: sha512-mg7zk9Lz89MJYvie41yUTmgeMwhN53gKQigNU1i+1JAGNqGRvF59RLhhkKCRYfZLt3rVgWcVSRrj0fxug5R98A==}
 
   load-json-file@4.0.0:
     resolution: {integrity: sha512-Kx8hMakjX03tiGTLAIdJ+lL0htKnXjEZN6hk/tozf/WOuYGdZBJrZ+rCJRbVCugsjB3jMLn9746NsQIf5VjBMw==}
@@ -10129,9 +10095,6 @@ packages:
     resolution: {integrity: sha512-wfRLBZ0feWRhCIkoMB6ete7czJcnNnqRpcoWQBLqatqXXmelSRqfdDK4F3u9T2s2cXas/hQJcryI/4lAL+XTlA==}
     engines: {node: '>=0.12'}
 
-  php-parser@3.2.5:
-    resolution: {integrity: sha512-M1ZYlALFFnESbSdmRtTQrBFUHSriHgPhgqtTF/LCbZM4h7swR5PHtUceB2Kzby5CfqcsYwBn7OXTJ0+8Sajwkw==}
-
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
@@ -10246,17 +10209,6 @@ packages:
     resolution: {integrity: sha512-RiRNkumIW9vaDpxirgIPI+oLSRmuCmoVZuTax9i3cWzWnxd+uKyAfDe4efS+ce00owAeh0a1DI5eFaH1xYWNPg==}
     peerDependencies:
       prettier: ^3.0.0
-
-  prettier-plugin-kotlin@2.1.0:
-    resolution: {integrity: sha512-DfffhPlGQqJJyUfaNJXzRlCbtQWHpFi3jzahOJ/6fxawPGnZuIWauMj9yN0daRcVLvv/pR8IXan1YkCTw5TaPw==}
-
-  prettier-plugin-rust@0.1.9:
-    resolution: {integrity: sha512-n1DTTJQaHMdnoG/+nKUvBm3EKsMVWsYES2UPCiOPiZdBrmuAO/pX++m7L3+Hz3uuhtddpH0HRKHB2F3jbtJBOQ==}
-
-  prettier@1.19.1:
-    resolution: {integrity: sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==}
-    engines: {node: '>=4'}
-    hasBin: true
 
   prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
@@ -14254,9 +14206,6 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
-  '@korzio/djv-draft-04@2.0.1':
-    optional: true
-
   '@leafygreen-ui/emotion@5.0.0(@babel/core@7.28.0)':
     dependencies:
       '@emotion/css': 11.9.0(@babel/core@7.28.0)
@@ -14491,16 +14440,6 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
-
-  '@prettier/plugin-php@0.24.0(prettier@2.8.8)':
-    dependencies:
-      linguist-languages: 8.1.0
-      php-parser: 3.2.5
-      prettier: 2.8.8
-
-  '@prettier/plugin-ruby@4.0.4(prettier@2.8.8)':
-    dependencies:
-      prettier: 2.8.8
 
   '@replit/codemirror-lang-csharp@6.2.0(@codemirror/autocomplete@6.18.6)(@codemirror/language@6.11.0)(@codemirror/state@6.5.2)(@codemirror/view@6.38.1)(@lezer/common@1.2.3)(@lezer/highlight@1.2.1)(@lezer/lr@1.4.2)':
     dependencies:
@@ -16946,10 +16885,6 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  djv@2.1.4:
-    optionalDependencies:
-      '@korzio/djv-draft-04': 2.0.1
-
   doctrine@2.1.0:
     dependencies:
       esutils: 2.0.3
@@ -18769,8 +18704,6 @@ snapshots:
       - supports-color
       - ts-node
 
-  jinx-rust@0.1.6: {}
-
   joi@13.7.0:
     dependencies:
       hoek: 5.0.4
@@ -18913,8 +18846,6 @@ snapshots:
       type-check: 0.4.0
 
   lines-and-columns@1.2.4: {}
-
-  linguist-languages@8.1.0: {}
 
   load-json-file@4.0.0:
     dependencies:
@@ -19980,8 +19911,6 @@ snapshots:
       sha.js: 2.4.12
       to-buffer: 1.2.1
 
-  php-parser@3.2.5: {}
-
   picocolors@1.1.1: {}
 
   picomatch@2.3.1: {}
@@ -20074,19 +20003,6 @@ snapshots:
     dependencies:
       java-parser: 3.0.1
       prettier: 2.8.8
-
-  prettier-plugin-kotlin@2.1.0:
-    dependencies:
-      djv: 2.1.4
-      glob: 7.2.3
-      prettier: 1.19.1
-
-  prettier-plugin-rust@0.1.9:
-    dependencies:
-      jinx-rust: 0.1.6
-      prettier: 2.8.8
-
-  prettier@1.19.1: {}
 
   prettier@2.8.8: {}
 

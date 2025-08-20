@@ -121,54 +121,6 @@ describe('useFormattingModuleLoaders', () => {
       expect(typeof loaders['prettier/standalone']).toBe('function');
       expect(typeof loaders['prettier-plugin-java']).toBe('function');
     });
-
-    it('returns correct loaders for Kotlin', () => {
-      const { result } = renderHook(() =>
-        useFormattingModuleLoaders(LanguageName.kotlin),
-      );
-
-      const loaders = result.current;
-      expect(loaders).toHaveProperty('prettier/standalone');
-      expect(loaders).toHaveProperty('prettier-plugin-kotlin');
-      expect(typeof loaders['prettier/standalone']).toBe('function');
-      expect(typeof loaders['prettier-plugin-kotlin']).toBe('function');
-    });
-
-    it('returns correct loaders for PHP', () => {
-      const { result } = renderHook(() =>
-        useFormattingModuleLoaders(LanguageName.php),
-      );
-
-      const loaders = result.current;
-      expect(loaders).toHaveProperty('prettier/standalone');
-      expect(loaders).toHaveProperty('@prettier/plugin-php');
-      expect(typeof loaders['prettier/standalone']).toBe('function');
-      expect(typeof loaders['@prettier/plugin-php']).toBe('function');
-    });
-
-    it('returns correct loaders for Ruby', () => {
-      const { result } = renderHook(() =>
-        useFormattingModuleLoaders(LanguageName.ruby),
-      );
-
-      const loaders = result.current;
-      expect(loaders).toHaveProperty('prettier/standalone');
-      expect(loaders).toHaveProperty('@prettier/plugin-ruby');
-      expect(typeof loaders['prettier/standalone']).toBe('function');
-      expect(typeof loaders['@prettier/plugin-ruby']).toBe('function');
-    });
-
-    it('returns correct loaders for Rust', () => {
-      const { result } = renderHook(() =>
-        useFormattingModuleLoaders(LanguageName.rust),
-      );
-
-      const loaders = result.current;
-      expect(loaders).toHaveProperty('prettier/standalone');
-      expect(loaders).toHaveProperty('prettier-plugin-rust');
-      expect(typeof loaders['prettier/standalone']).toBe('function');
-      expect(typeof loaders['prettier-plugin-rust']).toBe('function');
-    });
   });
 
   describe('WASM formatters', () => {
@@ -448,22 +400,6 @@ describe('useFormattingModuleLoaders', () => {
       {
         language: LanguageName.java,
         expectedModules: ['prettier/standalone', 'prettier-plugin-java'],
-      },
-      {
-        language: LanguageName.kotlin,
-        expectedModules: ['prettier/standalone', 'prettier-plugin-kotlin'],
-      },
-      {
-        language: LanguageName.php,
-        expectedModules: ['prettier/standalone', '@prettier/plugin-php'],
-      },
-      {
-        language: LanguageName.ruby,
-        expectedModules: ['prettier/standalone', '@prettier/plugin-ruby'],
-      },
-      {
-        language: LanguageName.rust,
-        expectedModules: ['prettier/standalone', 'prettier-plugin-rust'],
       },
       {
         language: LanguageName.cpp,
