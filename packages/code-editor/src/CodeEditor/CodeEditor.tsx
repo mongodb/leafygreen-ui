@@ -31,7 +31,6 @@ import { CodeEditorProvider } from './CodeEditorContext';
 import {
   useCodeFormatter,
   useExtensions,
-  useFormattingModuleLoaders,
   useLazyModules,
   useModuleLoaders,
 } from './hooks';
@@ -80,13 +79,8 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const { isLoading, modules } = useLazyModules(moduleLoaders);
 
     // Get formatting functionality
-    const formattingModuleLoaders = useFormattingModuleLoaders(language);
-    const { modules: formattingModules } = useLazyModules(
-      formattingModuleLoaders,
-    );
     const { formatCode, isFormattingAvailable } = useCodeFormatter({
-      props: { language },
-      modules: formattingModules,
+      props: { language, indentSize, indentUnit },
     });
 
     // Get custom extensions

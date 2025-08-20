@@ -180,11 +180,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats JavaScript code correctly', async () => {
-    const modules = createMockModules(LanguageName.javascript);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.javascript },
-        modules,
       }),
     );
 
@@ -196,11 +194,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('reports formatting as available for JavaScript', () => {
-    const modules = createMockModules(LanguageName.javascript);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.javascript },
-        modules,
       }),
     );
 
@@ -208,11 +204,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats TypeScript code correctly', async () => {
-    const modules = createMockModules(LanguageName.typescript);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.typescript },
-        modules,
       }),
     );
 
@@ -224,11 +218,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats JSON code correctly', async () => {
-    const modules = createMockModules(LanguageName.json);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.json },
-        modules,
       }),
     );
 
@@ -240,11 +232,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats CSS code correctly', async () => {
-    const modules = createMockModules(LanguageName.css);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.css },
-        modules,
       }),
     );
 
@@ -256,11 +246,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats HTML code correctly', async () => {
-    const modules = createMockModules(LanguageName.html);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.html },
-        modules,
       }),
     );
 
@@ -272,11 +260,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats Java code correctly', async () => {
-    const modules = createMockModules(LanguageName.java);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.java },
-        modules,
       }),
     );
 
@@ -288,11 +274,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats C++ code correctly', async () => {
-    const modules = createMockModules(LanguageName.cpp);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.cpp },
-        modules,
       }),
     );
 
@@ -304,11 +288,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats C# code correctly', async () => {
-    const modules = createMockModules(LanguageName.csharp);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.csharp },
-        modules,
       }),
     );
 
@@ -320,11 +302,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats Go code correctly', async () => {
-    const modules = createMockModules(LanguageName.go);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.go },
-        modules,
       }),
     );
 
@@ -336,11 +316,9 @@ describe('useCodeFormatter', () => {
   });
 
   test('formats Python code correctly', async () => {
-    const modules = createMockModules(LanguageName.python);
     const { result } = renderHook(() =>
       useCodeFormatter({
         props: { language: LanguageName.python },
-        modules,
       }),
     );
 
@@ -354,11 +332,9 @@ describe('useCodeFormatter', () => {
   describe('Unsupported languages', () => {
     unsupportedLanguages.forEach(language => {
       test(`warns and returns original code for ${language}`, async () => {
-        const modules = {};
         const { result } = renderHook(() =>
           useCodeFormatter({
             props: { language },
-            modules,
           }),
         );
 
@@ -382,7 +358,6 @@ describe('useCodeFormatter', () => {
       const { result } = renderHook(() =>
         useCodeFormatter({
           props: { language: LanguageName.javascript },
-          modules: {}, // No modules available
         }),
       );
 
@@ -401,7 +376,6 @@ describe('useCodeFormatter', () => {
       const { result } = renderHook(() =>
         useCodeFormatter({
           props: { language: LanguageName.java },
-          modules: {}, // No modules available
         }),
       );
 
@@ -422,7 +396,6 @@ describe('useCodeFormatter', () => {
       const { result } = renderHook(() =>
         useCodeFormatter({
           props: { language: undefined },
-          modules: {},
         }),
       );
 
@@ -435,11 +408,9 @@ describe('useCodeFormatter', () => {
     });
 
     test('returns original code when code is empty', async () => {
-      const modules = createMockModules(LanguageName.javascript);
       const { result } = renderHook(() =>
         useCodeFormatter({
           props: { language: LanguageName.javascript },
-          modules,
         }),
       );
 
@@ -450,11 +421,9 @@ describe('useCodeFormatter', () => {
     });
 
     test('returns original code when code is only whitespace', async () => {
-      const modules = createMockModules(LanguageName.javascript);
       const { result } = renderHook(() =>
         useCodeFormatter({
           props: { language: LanguageName.javascript },
-          modules,
         }),
       );
 
@@ -468,19 +437,9 @@ describe('useCodeFormatter', () => {
 
   describe('Error handling', () => {
     test('handles formatter errors gracefully', async () => {
-      const modules: any = {
-        'prettier/standalone': {
-          format: () => {
-            throw new Error('Formatting failed');
-          },
-        },
-        'prettier/parser-babel': {},
-      };
-
       const { result } = renderHook(() =>
         useCodeFormatter({
           props: { language: LanguageName.javascript },
-          modules,
         }),
       );
 
