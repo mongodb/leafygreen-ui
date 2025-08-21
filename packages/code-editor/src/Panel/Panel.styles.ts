@@ -42,7 +42,7 @@ export const getPanelTitleStyles = (theme: Theme, baseFontSize: number) => {
 
 export const getPanelInnerContentStyles = () => {
   return css`
-    grid-area: innerContent;
+    grid-area: inner-content;
   `;
 };
 

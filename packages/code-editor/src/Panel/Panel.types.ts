@@ -1,3 +1,5 @@
+import { ReactElement, ReactNode } from 'react';
+
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 /**
@@ -12,7 +14,7 @@ export interface SecondaryButtonConfig {
   /**
    * Optional icon element to display in the button.
    */
-  glyph?: React.ReactElement;
+  glyph?: ReactElement;
 
   /**
    * Optional callback fired when the button is clicked.
@@ -55,7 +57,7 @@ export interface PanelProps extends DarkModeProps {
    * Optional React node to render between the title and the buttons.
    * Can be used to add custom controls to the panel.
    */
-  innerContent?: React.ReactNode;
+  innerContent?: ReactNode;
 
   /**
    * Optional callback fired when the copy button is clicked.
@@ -116,5 +118,5 @@ export interface PanelProps extends DarkModeProps {
    * Optional title text to display in the panel header.
    * Typically used to show the current language or content description.
    */
-  title?: string;
+  title?: ReactNode;
 }
