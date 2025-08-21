@@ -7,6 +7,7 @@ import {
   DRAWER_TOOLBAR_WIDTH,
   EMBEDDED_TOOLBAR_OVERFLOW_PADDING,
   GRID_AREA,
+  MOBILE_BREAKPOINT,
   TRANSITION_DURATION,
   TRANSITION_TIMING_FUNCTION,
 } from '../../constants';
@@ -14,7 +15,6 @@ import { drawerClassName } from '../../Drawer/Drawer.styles';
 import { DisplayMode, Size } from '../../Drawer/Drawer.types';
 import { getDrawerWidth } from '../../Drawer/Drawer.utils';
 
-const MOBILE_BREAKPOINT = breakpoints.Tablet;
 const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
 const getOpenOverlayStyles = (size: number, hasToolbar: boolean) => css`
