@@ -350,4 +350,75 @@ describe('packages/code-editor', () => {
       container.querySelector(CodeEditorSelectors.CopyButton),
     ).not.toBeInTheDocument();
   });
+
+  describe('imperative handle', () => {
+    test('exposes undo and redo methods', async () => {
+      let editorRef: any = null;
+      const { editor } = renderCodeEditor({
+        ...({
+          ref: (ref: any) => {
+            editorRef = ref;
+          },
+        } as any),
+      });
+
+      await editor.waitForEditorView();
+
+      expect(typeof editorRef?.undo).toBe('function');
+      expect(typeof editorRef?.redo).toBe('function');
+    });
+
+    test('undo and redo actually work with content changes', async () => {
+      const initialContent = 'console.log("hello");';
+      const { editor } = renderCodeEditor({
+        defaultValue: initialContent,
+      });
+
+      await editor.waitForEditorView();
+
+      // Verify initial content
+      expect(editor.getContent()).toBe(initialContent);
+
+      // Make a change
+      editor.interactions.insertText('\nconsole.log("world");');
+      const changedContent = editor.getContent();
+      expect(changedContent).toBe(
+        'console.log("hello");\nconsole.log("world");',
+      );
+
+      // Undo the change
+      const undoResult = editor.interactions.undo();
+      expect(undoResult).toBe(true);
+      expect(editor.getContent()).toBe(initialContent);
+
+      // Redo the change
+      const redoResult = editor.interactions.redo();
+      expect(redoResult).toBe(true);
+      expect(editor.getContent()).toBe(changedContent);
+    });
+
+    test('undo returns false when there is nothing to undo', async () => {
+      const { editor } = renderCodeEditor({
+        defaultValue: 'test',
+      });
+
+      await editor.waitForEditorView();
+
+      // Try to undo when there's no history
+      const undoResult = editor.interactions.undo();
+      expect(undoResult).toBe(false);
+    });
+
+    test('redo returns false when there is nothing to redo', async () => {
+      const { editor } = renderCodeEditor({
+        defaultValue: 'test',
+      });
+
+      await editor.waitForEditorView();
+
+      // Try to redo when there's no redo history
+      const redoResult = editor.interactions.redo();
+      expect(redoResult).toBe(false);
+    });
+  });
 });

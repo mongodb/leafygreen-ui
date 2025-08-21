@@ -20,6 +20,15 @@ const defaultProps: Partial<PanelProps> = {
 
 const mockGetContents = jest.fn(() => 'test content');
 const mockFormatCode = jest.fn();
+const mockUndo = jest.fn(() => true);
+const mockRedo = jest.fn(() => true);
+
+beforeEach(() => {
+  mockGetContents.mockClear();
+  mockFormatCode.mockClear();
+  mockUndo.mockClear();
+  mockRedo.mockClear();
+});
 
 const renderPanel = (props: Partial<PanelProps> = {}) => {
   const mergedProps = { ...defaultProps, ...props };
@@ -31,6 +40,8 @@ const renderPanel = (props: Partial<PanelProps> = {}) => {
           getContents: mockGetContents,
           formatCode: mockFormatCode,
           isFormattingAvailable: true,
+          undo: mockUndo,
+          redo: mockRedo,
         }}
       >
         <Panel {...mergedProps} />
@@ -244,6 +255,106 @@ describe('Panel', () => {
       });
 
       expect(onRedoClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls context undo function when undo menu item is clicked', async () => {
+      renderPanel({ showSecondaryMenuButton: true });
+
+      const menuButton = screen.getByLabelText('Show more actions');
+
+      await act(async () => {
+        await userEvent.click(menuButton);
+      });
+
+      const undoItem = await screen.findByLabelText('Undo changes');
+
+      await act(async () => {
+        await userEvent.click(undoItem);
+      });
+
+      expect(mockUndo).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls context redo function when redo menu item is clicked', async () => {
+      renderPanel({ showSecondaryMenuButton: true });
+
+      const menuButton = screen.getByLabelText('Show more actions');
+
+      await act(async () => {
+        await userEvent.click(menuButton);
+      });
+
+      const redoItem = await screen.findByLabelText('Redo changes');
+
+      await act(async () => {
+        await userEvent.click(redoItem);
+      });
+
+      expect(mockRedo).toHaveBeenCalledTimes(1);
+    });
+
+    it('handles when undo function is not available', async () => {
+      render(
+        <LeafyGreenProvider>
+          <CodeEditorProvider
+            value={{
+              getContents: mockGetContents,
+              formatCode: mockFormatCode,
+              isFormattingAvailable: true,
+              undo: undefined as any,
+              redo: mockRedo,
+            }}
+          >
+            <Panel {...defaultProps} showSecondaryMenuButton />
+          </CodeEditorProvider>
+        </LeafyGreenProvider>,
+      );
+
+      const menuButton = screen.getByLabelText('Show more actions');
+
+      await act(async () => {
+        await userEvent.click(menuButton);
+      });
+
+      const undoItem = await screen.findByLabelText('Undo changes');
+
+      await act(async () => {
+        await userEvent.click(undoItem);
+      });
+
+      // Should not throw an error even when undo is undefined
+    });
+
+    it('handles when redo function is not available', async () => {
+      render(
+        <LeafyGreenProvider>
+          <CodeEditorProvider
+            value={{
+              getContents: mockGetContents,
+              formatCode: mockFormatCode,
+              isFormattingAvailable: true,
+              undo: mockUndo,
+              redo: undefined as any,
+            }}
+          >
+            <Panel {...defaultProps} showSecondaryMenuButton />
+          </CodeEditorProvider>
+        </LeafyGreenProvider>,
+      );
+
+      const menuButton = screen.getByLabelText('Show more actions');
+
+      await act(async () => {
+        await userEvent.click(menuButton);
+      });
+
+      const redoItem = await screen.findByLabelText('Redo changes');
+
+      await act(async () => {
+        await userEvent.click(redoItem);
+      });
+
+      // Should not throw an error even when redo is undefined
     });
 
     it('calls onDownloadClick when download menu item is clicked', async () => {
