@@ -259,27 +259,21 @@ Use the formatting functionality independently without the CodeEditor component:
 ```tsx
 import {
   useCodeFormatter,
-  useFormattingModuleLoaders,
-  useLazyModules,
   type FormattingOptions,
   LanguageName,
 } from '@leafygreen-ui/code-editor';
 
 function MyFormattingComponent() {
-  // Load formatting modules for the selected language
-  const formattingModuleLoaders = useFormattingModuleLoaders(
-    LanguageName.javascript,
-  );
-  const { modules: formattingModules } = useLazyModules(
-    formattingModuleLoaders,
-  );
-
   const { formatCode, isFormattingAvailable } = useCodeFormatter({
     props: {
       language: LanguageName.javascript,
       indentSize: 2,
       indentUnit: 'space',
     },
+    /*
+     * language-specific modules required for formatting (see Module Requirements
+     * by Language below)
+     */
     modules: formattingModules,
   });
 
