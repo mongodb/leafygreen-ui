@@ -262,6 +262,57 @@ describe('Panel', () => {
       expect(onDownloadClick).toHaveBeenCalledTimes(1);
     });
 
+    test('calls context downloadContent function when download menu item is clicked', async () => {
+      renderPanel({ showSecondaryMenuButton: true });
+
+      const menuButton = screen.getByLabelText('Show more actions');
+
+      await act(async () => {
+        await userEvent.click(menuButton);
+      });
+
+      const downloadItem = await screen.findByLabelText('Download code');
+
+      await act(async () => {
+        await userEvent.click(downloadItem);
+      });
+
+      expect(mockDownloadContent).toHaveBeenCalledTimes(1);
+    });
+
+    test('handles when downloadContent function is not available', async () => {
+      render(
+        <LeafyGreenProvider>
+          <CodeEditorProvider
+            value={{
+              getContents: mockGetContents,
+              formatCode: mockFormatCode,
+              isFormattingAvailable: true,
+              undo: mockUndo,
+              redo: mockRedo,
+              downloadContent: undefined as any,
+            }}
+          >
+            <Panel {...defaultProps} showSecondaryMenuButton />
+          </CodeEditorProvider>
+        </LeafyGreenProvider>,
+      );
+
+      const menuButton = screen.getByLabelText('Show more actions');
+
+      await act(async () => {
+        await userEvent.click(menuButton);
+      });
+
+      const downloadItem = await screen.findByLabelText('Download code');
+
+      await act(async () => {
+        await userEvent.click(downloadItem);
+      });
+
+      // Should not throw an error even when downloadContent is undefined
+    });
+
     test('calls onViewShortcutsClick when view shortcuts menu item is clicked', async () => {
       const onViewShortcutsClick = jest.fn();
       const { panel } = renderPanel({
