@@ -354,4 +354,11 @@ export interface CodeEditorHandle {
    * @returns boolean indicating if redo was successful
    */
   redo: () => boolean;
+
+  /**
+   * Downloads the current editor content as a file with an appropriate extension
+   * based on the selected language.
+   * @param filename - Optional custom filename (without extension). Defaults to 'code'
+   */
+  downloadContent: (filename?: string) => void;
 }

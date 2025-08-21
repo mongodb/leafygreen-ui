@@ -35,6 +35,28 @@ import {
   useModuleLoaders,
 } from './hooks';
 
+/**
+ * Mapping of language names to their corresponding file extensions
+ */
+const LANGUAGE_EXTENSION_MAP = {
+  cpp: 'cpp',
+  csharp: 'cs',
+  css: 'css',
+  go: 'go',
+  html: 'html',
+  java: 'java',
+  javascript: 'js',
+  jsx: 'jsx',
+  json: 'json',
+  kotlin: 'kt',
+  php: 'php',
+  python: 'py',
+  ruby: 'rb',
+  rust: 'rs',
+  typescript: 'ts',
+  tsx: 'tsx',
+} as const;
+
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
     const {
@@ -179,6 +201,51 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       return commands.redo(editorViewRef.current);
     }, [modules]);
 
+    /**
+     * Downloads the current editor content as a file with an appropriate extension
+     * based on the selected language.
+     * @param filename - Optional custom filename (without extension). Defaults to 'code'
+     */
+    const handleDownloadContent = useCallback(
+      (filename = 'code'): void => {
+        const content = getContents();
+
+        if (!content.trim()) {
+          console.warn('Cannot download empty content');
+          return;
+        }
+
+        // Determine file extension based on language
+        const extension =
+          language && language in LANGUAGE_EXTENSION_MAP
+            ? LANGUAGE_EXTENSION_MAP[
+                language as keyof typeof LANGUAGE_EXTENSION_MAP
+              ]
+            : 'txt';
+
+        const fullFilename = `${filename}.${extension}`;
+
+        // Create blob and download
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+
+        // Create temporary anchor element for download
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = fullFilename;
+        anchor.style.display = 'none';
+
+        // Trigger download
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+
+        // Clean up object URL
+        URL.revokeObjectURL(url);
+      },
+      [getContents, language],
+    );
+
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
       const commands = modules?.['@codemirror/commands'];
@@ -249,6 +316,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       isFormattingAvailable,
       undo: handleUndo,
       redo: handleRedo,
+      downloadContent: handleDownloadContent,
     }));
 
     const contextValue = {
@@ -258,6 +326,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       language,
       undo: handleUndo,
       redo: handleRedo,
+      downloadContent: handleDownloadContent,
     };
 
     return (
