@@ -14,13 +14,13 @@ afterEach(() => {
 });
 
 describe('useFormattingModuleLoaders', () => {
-  it('returns empty loaders object when language is undefined', () => {
+  test('returns empty loaders object when language is undefined', () => {
     const { result } = renderHook(() => useFormattingModuleLoaders(undefined));
 
     expect(result.current).toEqual({});
   });
 
-  it('returns empty object for languages without formatters', () => {
+  test('returns empty object for languages without formatters', () => {
     // Test with a language that's not handled by the formatter
     const { result } = renderHook(() =>
       useFormattingModuleLoaders('xml' as LanguageName),
@@ -102,7 +102,7 @@ describe('useFormattingModuleLoaders', () => {
   });
 
   describe('memoization behavior', () => {
-    it('returns the same object reference when language does not change', () => {
+    test('returns the same object reference when language does not change', () => {
       const { result, rerender } = renderHook(
         ({ language }: { language: LanguageName | undefined }) =>
           useFormattingModuleLoaders(language),
@@ -118,7 +118,7 @@ describe('useFormattingModuleLoaders', () => {
       expect(firstResult).toBe(secondResult);
     });
 
-    it('returns different object reference when language changes', () => {
+    test('returns different object reference when language changes', () => {
       const { result, rerender } = renderHook(
         ({ language }: { language: LanguageName | undefined }) =>
           useFormattingModuleLoaders(language),
@@ -136,7 +136,7 @@ describe('useFormattingModuleLoaders', () => {
       expect(firstResult).not.toBe(secondResult);
     });
 
-    it('returns the same object reference when re-rendering with undefined language', () => {
+    test('returns the same object reference when re-rendering with undefined language', () => {
       const { result, rerender } = renderHook(
         ({ language }: { language: LanguageName | undefined }) =>
           useFormattingModuleLoaders(language),

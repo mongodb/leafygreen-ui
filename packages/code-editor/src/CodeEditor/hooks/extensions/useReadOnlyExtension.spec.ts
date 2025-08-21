@@ -7,7 +7,7 @@ import { useReadOnlyExtension } from './useReadOnlyExtension';
 describe('useReadOnlyExtension', () => {
   const fakeStateModule = createMockStateModule();
 
-  it('returns empty when readOnly is false', () => {
+  test('returns empty when readOnly is false', () => {
     const { result } = renderHook(() =>
       useReadOnlyExtension({
         editorViewInstance: null,
@@ -18,7 +18,7 @@ describe('useReadOnlyExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns readonly extension when enabled', () => {
+  test('returns readonly extension when enabled', () => {
     const { result } = renderHook(() =>
       useReadOnlyExtension({
         editorViewInstance: null,

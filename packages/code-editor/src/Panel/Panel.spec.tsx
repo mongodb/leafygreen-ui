@@ -71,12 +71,12 @@ describe('Panel', () => {
   });
 
   describe('Basic Rendering', () => {
-    it('renders with title', () => {
+    test('renders with title', () => {
       renderPanel({ title: 'JavaScript Editor' });
       expect(screen.getByText('JavaScript Editor')).toBeInTheDocument();
     });
 
-    it('renders without title when not provided', () => {
+    test('renders without title when not provided', () => {
       const { container } = renderPanel({ title: undefined });
       // The title div should still exist but be empty
       const titleElement = container.querySelector('.leafygreen-ui-12f55h');
@@ -84,7 +84,7 @@ describe('Panel', () => {
       expect(titleElement).toHaveTextContent('');
     });
 
-    it('renders inner content when provided', () => {
+    test('renders inner content when provided', () => {
       const innerContent = (
         <span data-testid="inner-content">Custom Content</span>
       );
@@ -95,17 +95,17 @@ describe('Panel', () => {
   });
 
   describe('Format Button', () => {
-    it('renders format button when showFormatButton is true', () => {
+    test('renders format button when showFormatButton is true', () => {
       renderPanel({ showFormatButton: true });
       expect(screen.getByLabelText('Format code')).toBeInTheDocument();
     });
 
-    it('does not render format button when showFormatButton is false', () => {
+    test('does not render format button when showFormatButton is false', () => {
       renderPanel({ showFormatButton: false });
       expect(screen.queryByLabelText('Format code')).not.toBeInTheDocument();
     });
 
-    it('calls onFormatClick when format button is clicked', async () => {
+    test('calls onFormatClick when format button is clicked', async () => {
       const onFormatClick = jest.fn();
       renderPanel({ showFormatButton: true, onFormatClick });
 
@@ -118,7 +118,7 @@ describe('Panel', () => {
       expect(onFormatClick).toHaveBeenCalledTimes(1);
     });
 
-    it('shows tooltip on format button hover', async () => {
+    test('shows tooltip on format button hover', async () => {
       renderPanel({ showFormatButton: true });
 
       const formatButton = screen.getByLabelText('Format code');
@@ -135,17 +135,17 @@ describe('Panel', () => {
   });
 
   describe('Copy Button', () => {
-    it('renders copy button when showCopyButton is true', () => {
+    test('renders copy button when showCopyButton is true', () => {
       renderPanel({ showCopyButton: true });
       expect(screen.getByLabelText('Copy')).toBeInTheDocument();
     });
 
-    it('does not render copy button when showCopyButton is false', () => {
+    test('does not render copy button when showCopyButton is false', () => {
       renderPanel({ showCopyButton: false });
       expect(screen.queryByLabelText('Copy')).not.toBeInTheDocument();
     });
 
-    it('calls onCopyClick when copy button is clicked', async () => {
+    test('calls onCopyClick when copy button is clicked', async () => {
       const onCopyClick = jest.fn();
       renderPanel({ showCopyButton: true, onCopyClick });
 
@@ -158,7 +158,7 @@ describe('Panel', () => {
       expect(onCopyClick).toHaveBeenCalledTimes(1);
     });
 
-    it('shows tooltip on copy button hover', async () => {
+    test('shows tooltip on copy button hover', async () => {
       renderPanel({ showCopyButton: true });
 
       const copyButton = screen.getByLabelText('Copy');
@@ -173,7 +173,7 @@ describe('Panel', () => {
       });
     });
 
-    it('shows success state after copying', async () => {
+    test('shows success state after copying', async () => {
       renderPanel({ showCopyButton: true });
 
       const copyButton = screen.getByLabelText('Copy');
@@ -190,19 +190,19 @@ describe('Panel', () => {
   });
 
   describe('Secondary Menu', () => {
-    it('renders secondary menu button when showSecondaryMenuButton is true', () => {
+    test('renders secondary menu button when showSecondaryMenuButton is true', () => {
       renderPanel({ showSecondaryMenuButton: true });
       expect(screen.getByLabelText('Show more actions')).toBeInTheDocument();
     });
 
-    it('does not render secondary menu button when showSecondaryMenuButton is false', () => {
+    test('does not render secondary menu button when showSecondaryMenuButton is false', () => {
       renderPanel({ showSecondaryMenuButton: false });
       expect(
         screen.queryByLabelText('Show more actions'),
       ).not.toBeInTheDocument();
     });
 
-    it('opens menu when secondary menu button is clicked', async () => {
+    test('opens menu when secondary menu button is clicked', async () => {
       renderPanel({ showSecondaryMenuButton: true });
 
       const menuButton = screen.getByLabelText('Show more actions');
@@ -219,7 +219,7 @@ describe('Panel', () => {
       });
     });
 
-    it('calls onUndoClick when undo menu item is clicked', async () => {
+    test('calls onUndoClick when undo menu item is clicked', async () => {
       const onUndoClick = jest.fn();
       renderPanel({ showSecondaryMenuButton: true, onUndoClick });
 
@@ -238,7 +238,7 @@ describe('Panel', () => {
       expect(onUndoClick).toHaveBeenCalledTimes(1);
     });
 
-    it('calls onRedoClick when redo menu item is clicked', async () => {
+    test('calls onRedoClick when redo menu item is clicked', async () => {
       const onRedoClick = jest.fn();
       renderPanel({ showSecondaryMenuButton: true, onRedoClick });
 
@@ -257,7 +257,7 @@ describe('Panel', () => {
       expect(onRedoClick).toHaveBeenCalledTimes(1);
     });
 
-    it('calls context undo function when undo menu item is clicked', async () => {
+    test('calls context undo function when undo menu item is clicked', async () => {
       renderPanel({ showSecondaryMenuButton: true });
 
       const menuButton = screen.getByLabelText('Show more actions');
@@ -275,7 +275,7 @@ describe('Panel', () => {
       expect(mockUndo).toHaveBeenCalledTimes(1);
     });
 
-    it('calls context redo function when redo menu item is clicked', async () => {
+    test('calls context redo function when redo menu item is clicked', async () => {
       renderPanel({ showSecondaryMenuButton: true });
 
       const menuButton = screen.getByLabelText('Show more actions');
@@ -293,7 +293,7 @@ describe('Panel', () => {
       expect(mockRedo).toHaveBeenCalledTimes(1);
     });
 
-    it('handles when undo function is not available', async () => {
+    test('handles when undo function is not available', async () => {
       render(
         <LeafyGreenProvider>
           <CodeEditorProvider
@@ -325,7 +325,7 @@ describe('Panel', () => {
       // Should not throw an error even when undo is undefined
     });
 
-    it('handles when redo function is not available', async () => {
+    test('handles when redo function is not available', async () => {
       render(
         <LeafyGreenProvider>
           <CodeEditorProvider
@@ -357,7 +357,7 @@ describe('Panel', () => {
       // Should not throw an error even when redo is undefined
     });
 
-    it('calls onDownloadClick when download menu item is clicked', async () => {
+    test('calls onDownloadClick when download menu item is clicked', async () => {
       const onDownloadClick = jest.fn();
       renderPanel({ showSecondaryMenuButton: true, onDownloadClick });
 
@@ -376,7 +376,7 @@ describe('Panel', () => {
       expect(onDownloadClick).toHaveBeenCalledTimes(1);
     });
 
-    it('calls onViewShortcutsClick when view shortcuts menu item is clicked', async () => {
+    test('calls onViewShortcutsClick when view shortcuts menu item is clicked', async () => {
       const onViewShortcutsClick = jest.fn();
       renderPanel({ showSecondaryMenuButton: true, onViewShortcutsClick });
 
@@ -412,7 +412,7 @@ describe('Panel', () => {
       },
     ];
 
-    it('renders custom secondary buttons in the menu', async () => {
+    test('renders custom secondary buttons in the menu', async () => {
       renderPanel({
         showSecondaryMenuButton: true,
         customSecondaryButtons: customButtons,
@@ -430,7 +430,7 @@ describe('Panel', () => {
       });
     });
 
-    it('calls custom button onClick handler', async () => {
+    test('calls custom button onClick handler', async () => {
       const customButtonsWithMock = [
         {
           ...customButtons[0],
@@ -460,7 +460,7 @@ describe('Panel', () => {
       expect(customButtonsWithMock[0].onClick).toHaveBeenCalledTimes(1);
     });
 
-    it('uses label as aria-label when aria-label is not provided', async () => {
+    test('uses label as aria-label when aria-label is not provided', async () => {
       const buttonWithoutAriaLabel = [
         {
           label: 'Button Without Aria Label',
@@ -489,7 +489,7 @@ describe('Panel', () => {
   });
 
   describe('Dark Mode', () => {
-    it('passes darkMode prop to child components', () => {
+    test('passes darkMode prop to child components', () => {
       renderPanel({
         showFormatButton: true,
         showSecondaryMenuButton: true,
@@ -504,7 +504,7 @@ describe('Panel', () => {
   });
 
   describe('Font Size', () => {
-    it('accepts custom baseFontSize prop', () => {
+    test('accepts custom baseFontSize prop', () => {
       renderPanel({ baseFontSize: 16 });
       // The font size would affect styling, which is tested in styles tests
       expect(screen.getByText('Test Panel')).toBeInTheDocument();
@@ -512,7 +512,7 @@ describe('Panel', () => {
   });
 
   describe('Integration with CodeEditor Context', () => {
-    it('uses getContents from context for copy button', () => {
+    test('uses getContents from context for copy button', () => {
       renderPanel({ showCopyButton: true });
 
       // The copy button should receive the getContents function from context
@@ -522,7 +522,7 @@ describe('Panel', () => {
   });
 
   describe('Accessibility', () => {
-    it('has proper aria-labels for all buttons', () => {
+    test('has proper aria-labels for all buttons', () => {
       renderPanel({
         showFormatButton: true,
         showCopyButton: true,
@@ -533,7 +533,7 @@ describe('Panel', () => {
       expect(screen.getByLabelText('Show more actions')).toBeInTheDocument();
     });
 
-    it('has proper aria-labels for menu items', async () => {
+    test('has proper aria-labels for menu items', async () => {
       renderPanel({ showSecondaryMenuButton: true });
 
       const menuButton = screen.getByLabelText('Show more actions');
@@ -552,7 +552,7 @@ describe('Panel', () => {
   });
 
   describe('Edge Cases', () => {
-    it('handles empty customSecondaryButtons array', async () => {
+    test('handles empty customSecondaryButtons array', async () => {
       renderPanel({
         showSecondaryMenuButton: true,
         customSecondaryButtons: [],
@@ -573,7 +573,7 @@ describe('Panel', () => {
       });
     });
 
-    it('handles undefined callback functions gracefully', async () => {
+    test('handles undefined callback functions gracefully', async () => {
       renderPanel({
         showFormatButton: true,
         showSecondaryMenuButton: true,

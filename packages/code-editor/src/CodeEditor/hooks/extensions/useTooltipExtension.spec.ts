@@ -8,7 +8,7 @@ describe('useTooltipExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeLintModule = createMockLintModule();
 
-  it('returns empty when no tooltips provided or module missing', () => {
+  test('returns empty when no tooltips provided or module missing', () => {
     const { result } = renderHook(() =>
       useTooltipExtension({
         editorViewInstance: null,
@@ -19,7 +19,7 @@ describe('useTooltipExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns linter extension when tooltips provided', () => {
+  test('returns linter extension when tooltips provided', () => {
     const { result } = renderHook(() =>
       useTooltipExtension({
         editorViewInstance: null,

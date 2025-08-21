@@ -13,7 +13,7 @@ describe('useHighlightExtension', () => {
   const fakeLanguageModule = createMockLanguageModule();
   const fakeLezerHighlight = createMockLezerHighlightModule();
 
-  it('returns empty when missing modules or language', () => {
+  test('returns empty when missing modules or language', () => {
     const { result } = renderHook(() =>
       useHighlightExtension({
         editorViewInstance: null,
@@ -24,7 +24,7 @@ describe('useHighlightExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns syntax highlighting extension when modules present', () => {
+  test('returns syntax highlighting extension when modules present', () => {
     const { result } = renderHook(() =>
       useHighlightExtension({
         editorViewInstance: null,

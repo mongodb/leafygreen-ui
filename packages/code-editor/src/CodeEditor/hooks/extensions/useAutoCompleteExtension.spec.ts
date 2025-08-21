@@ -11,7 +11,7 @@ describe('useAutoCompleteExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeAutoModule = createMockAutoCompleteModule();
 
-  it('returns empty when language not set', () => {
+  test('returns empty when language not set', () => {
     const { result } = renderHook(() =>
       useAutoCompleteExtension({
         editorViewInstance: null,
@@ -22,7 +22,7 @@ describe('useAutoCompleteExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns autocompletion extension when language set', () => {
+  test('returns autocompletion extension when language set', () => {
     const { result } = renderHook(() =>
       useAutoCompleteExtension({
         editorViewInstance: null,
