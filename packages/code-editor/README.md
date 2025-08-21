@@ -77,7 +77,7 @@ console.log(greet('MongoDB user'));`;
 
 ### `<Panel>`
 
-The Panel component provides a toolbar interface for the CodeEditor with formatting, copying, and custom action buttons. It displays at the top of the CodeEditor and can include a title, action buttons, and custom content.
+The Panel component provides a toolbar interface for the CodeEditor with formatting, copying, download, and custom action buttons. It displays at the top of the CodeEditor and can include a title, action buttons, and custom content. When used within a CodeEditor, the Panel automatically integrates with the editor's functionality - the download button performs actual file downloads with appropriate extensions, undo/redo buttons operate on the editor history, and the format button processes the editor content.
 
 #### Example
 
@@ -112,22 +112,22 @@ import CloudIcon from '@leafygreen-ui/icon';
 
 #### Properties
 
-| Name                                   | Description                                                                                                                                                                             | Type                           | Default     |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------- |
-| `baseFontSize` _(optional)_            | Font size of text in the panel. Controls the typography scale used for the panel title and other text elements.                                                                         | `14 \| 16`                     | `14`        |
-| `customSecondaryButtons` _(optional)_  | Array of custom secondary buttons to display in the secondary menu. Each button can include a label, icon, click handler, href, and aria-label for accessibility.                       | `Array<SecondaryButtonConfig>` | `undefined` |
-| `darkMode` _(optional)_                | Determines if the component appears in dark mode. When not provided, the component will inherit the dark mode state from the LeafyGreen Provider.                                       | `boolean`                      | `undefined` |
-| `innerContent` _(optional)_            | React node to render between the title and the buttons. Can be used to add custom controls to the panel.                                                                                | `React.ReactNode`              | `undefined` |
-| `onCopyClick` _(optional)_             | Callback fired when the copy button is clicked. Called after the copy operation is attempted.                                                                                           | `() => void`                   | `undefined` |
-| `onDownloadClick` _(optional)_         | Callback fired when the download button in the secondary menu is clicked. Called after the download operation is attempted.                                                             | `() => void`                   | `undefined` |
-| `onFormatClick` _(optional)_           | Callback fired when the format button is clicked. Called after the formatting operation is attempted.                                                                                   | `() => void`                   | `undefined` |
-| `onRedoClick` _(optional)_             | Callback fired when the redo button in the secondary menu is clicked. Called after the redo operation is attempted.                                                                     | `() => void`                   | `undefined` |
-| `onUndoClick` _(optional)_             | Callback fired when the undo button in the secondary menu is clicked. Called after the undo operation is attempted.                                                                     | `() => void`                   | `undefined` |
-| `onViewShortcutsClick` _(optional)_    | Callback fired when the view shortcuts button in the secondary menu is clicked. Called after the view shortcuts operation is attempted.                                                 | `() => void`                   | `undefined` |
-| `showCopyButton` _(optional)_          | Determines whether to show the copy button in the panel. When enabled, users can copy the editor content to their clipboard.                                                            | `boolean`                      | `undefined` |
-| `showFormatButton` _(optional)_        | Determines whether to show the format button in the panel. When enabled and formatting is available for the current language, users can format/prettify their code.                     | `boolean`                      | `undefined` |
-| `showSecondaryMenuButton` _(optional)_ | Determines whether to show the secondary menu button (ellipsis icon) in the panel. When enabled, displays a menu with additional actions like undo, redo, download, and view shortcuts. | `boolean`                      | `undefined` |
-| `title` _(optional)_                   | Title text to display in the panel header. Typically used to show the current language or content description.                                                                          | `string`                       | `undefined` |
+| Name                                   | Description                                                                                                                                                                                            | Type                           | Default     |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ | ----------- |
+| `baseFontSize` _(optional)_            | Font size of text in the panel. Controls the typography scale used for the panel title and other text elements.                                                                                        | `14 \| 16`                     | `14`        |
+| `customSecondaryButtons` _(optional)_  | Array of custom secondary buttons to display in the secondary menu. Each button can include a label, icon, click handler, href, and aria-label for accessibility.                                      | `Array<SecondaryButtonConfig>` | `undefined` |
+| `darkMode` _(optional)_                | Determines if the component appears in dark mode. When not provided, the component will inherit the dark mode state from the LeafyGreen Provider.                                                      | `boolean`                      | `undefined` |
+| `innerContent` _(optional)_            | React node to render between the title and the buttons. Can be used to add custom controls to the panel.                                                                                               | `React.ReactNode`              | `undefined` |
+| `onCopyClick` _(optional)_             | Callback fired when the copy button is clicked. Called after the copy operation is attempted.                                                                                                          | `() => void`                   | `undefined` |
+| `onDownloadClick` _(optional)_         | Callback fired when the download button in the secondary menu is clicked. Called after the actual file download is triggered. When used within CodeEditor, downloads the editor content automatically. | `() => void`                   | `undefined` |
+| `onFormatClick` _(optional)_           | Callback fired when the format button is clicked. Called after the formatting operation is attempted.                                                                                                  | `() => void`                   | `undefined` |
+| `onRedoClick` _(optional)_             | Callback fired when the redo button in the secondary menu is clicked. Called after the redo operation is attempted.                                                                                    | `() => void`                   | `undefined` |
+| `onUndoClick` _(optional)_             | Callback fired when the undo button in the secondary menu is clicked. Called after the undo operation is attempted.                                                                                    | `() => void`                   | `undefined` |
+| `onViewShortcutsClick` _(optional)_    | Callback fired when the view shortcuts button in the secondary menu is clicked. Called after the view shortcuts operation is attempted.                                                                | `() => void`                   | `undefined` |
+| `showCopyButton` _(optional)_          | Determines whether to show the copy button in the panel. When enabled, users can copy the editor content to their clipboard.                                                                           | `boolean`                      | `undefined` |
+| `showFormatButton` _(optional)_        | Determines whether to show the format button in the panel. When enabled and formatting is available for the current language, users can format/prettify their code.                                    | `boolean`                      | `undefined` |
+| `showSecondaryMenuButton` _(optional)_ | Determines whether to show the secondary menu button (ellipsis icon) in the panel. When enabled, displays a menu with additional actions like undo, redo, download, and view shortcuts.                | `boolean`                      | `undefined` |
+| `title` _(optional)_                   | Title text to display in the panel header. Typically used to show the current language or content description.                                                                                         | `string`                       | `undefined` |
 
 #### `SecondaryButtonConfig`
 
@@ -238,6 +238,12 @@ function MyComponent() {
     }
   };
 
+  const handleDownload = () => {
+    if (editorRef.current) {
+      editorRef.current.downloadContent('my-script'); // Downloads as 'my-script.js'
+    }
+  };
+
   return (
     <>
       <CodeEditor
@@ -249,6 +255,7 @@ function MyComponent() {
       <button onClick={handleUndo}>Undo</button>
       <button onClick={handleRedo}>Redo</button>
       <button onClick={handleGetContents}>Get Contents</button>
+      <button onClick={handleDownload}>Download</button>
     </>
   );
 }
@@ -263,7 +270,24 @@ The `CodeEditorHandle` provides the following methods:
 - **`isFormattingAvailable`** - Boolean indicating if formatting is available for the current language
 - **`undo()`** - Undoes the last editor action, returns boolean indicating success
 - **`redo()`** - Redoes the last undone action, returns boolean indicating success
+- **`downloadContent(filename?)`** - Downloads the editor content as a file with appropriate extension based on language
 - **`getEditorViewInstance()`** - Returns the underlying CodeMirror EditorView instance
+
+#### Download Functionality
+
+The `downloadContent` method automatically determines the appropriate file extension based on the editor's language:
+
+```tsx
+// Downloads as 'script.js' (JavaScript extension)
+editorRef.current.downloadContent('script');
+
+// Downloads as 'code.py' (default filename with Python extension)
+editorRef.current.downloadContent(); // No filename provided
+
+// Downloads as 'document.txt' (fallback for unsupported/no language)
+```
+
+**Supported language extensions:** `.js`, `.ts`, `.tsx`, `.jsx`, `.py`, `.java`, `.css`, `.html`, `.json`, `.go`, `.rs`, `.cpp`, `.cs`, `.kt`, `.php`, `.rb`, and `.txt` (fallback).
 
 ## Types and Variables
 
@@ -516,6 +540,7 @@ await editor.waitForEditorView();
 const handle = editor.getHandle();
 expect(typeof handle.undo).toBe('function');
 expect(typeof handle.redo).toBe('function');
+expect(typeof handle.downloadContent).toBe('function');
 ```
 
 #### `editor.interactions.undo()`
