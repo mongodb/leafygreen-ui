@@ -163,7 +163,7 @@ The formatting system supports the following languages:
 
 ### Using Code Formatting
 
-There are three ways to format code with the CodeEditor:
+There are several ways to format code with the CodeEditor:
 
 #### 1. Via Panel Component (Automatic)
 
@@ -185,38 +185,7 @@ function MyComponent() {
 
 #### 2. Via CodeEditor Ref (Programmatic)
 
-Access formatting programmatically through the CodeEditor ref:
-
-```tsx
-import { useRef } from 'react';
-import {
-  CodeEditor,
-  type CodeEditorHandle,
-  LanguageName,
-} from '@leafygreen-ui/code-editor';
-
-function MyComponent() {
-  const editorRef = useRef<CodeEditorHandle>(null);
-
-  const handleFormatCode = async () => {
-    if (editorRef.current?.isFormattingAvailable) {
-      const formatted = await editorRef.current.formatCode();
-      console.log('Formatted code:', formatted);
-    }
-  };
-
-  return (
-    <>
-      <CodeEditor
-        ref={editorRef}
-        defaultValue="const x=1;const y=2;"
-        language={LanguageName.javascript}
-      />
-      <button onClick={handleFormatCode}>Format Code</button>
-    </>
-  );
-}
-```
+Access formatting programmatically through the CodeEditor ref. See the [Imperative API](#imperative-api) section for complete details and examples.
 
 #### 3. Via useCodeFormatter Hook (Standalone)
 
@@ -280,24 +249,98 @@ interface FormattingOptions {
 
 **Note:** Tab width and tab usage are controlled by the CodeEditor's `indentSize` and `indentUnit` props, not the formatting options.
 
+## Imperative API
+
+The CodeEditor exposes an imperative handle through a ref that provides programmatic access to editor functionality including content manipulation, formatting, and undo/redo operations.
+
+### CodeEditor Ref
+
+Access the editor's imperative methods through a ref:
+
+```tsx
+import { useRef } from 'react';
+import {
+  CodeEditor,
+  type CodeEditorHandle,
+  LanguageName,
+} from '@leafygreen-ui/code-editor';
+
+function MyComponent() {
+  const editorRef = useRef<CodeEditorHandle>(null);
+
+  const handleFormatCode = async () => {
+    if (editorRef.current?.isFormattingAvailable) {
+      const formatted = await editorRef.current.formatCode();
+      console.log('Formatted code:', formatted);
+    }
+  };
+
+  const handleUndo = () => {
+    if (editorRef.current) {
+      const success = editorRef.current.undo();
+      console.log('Undo successful:', success);
+    }
+  };
+
+  const handleRedo = () => {
+    if (editorRef.current) {
+      const success = editorRef.current.redo();
+      console.log('Redo successful:', success);
+    }
+  };
+
+  const handleGetContents = () => {
+    if (editorRef.current) {
+      const contents = editorRef.current.getContents();
+      console.log('Current contents:', contents);
+    }
+  };
+
+  return (
+    <>
+      <CodeEditor
+        ref={editorRef}
+        defaultValue="const x=1;const y=2;"
+        language={LanguageName.javascript}
+      />
+      <button onClick={handleFormatCode}>Format Code</button>
+      <button onClick={handleUndo}>Undo</button>
+      <button onClick={handleRedo}>Redo</button>
+      <button onClick={handleGetContents}>Get Contents</button>
+    </>
+  );
+}
+```
+
+### Available Methods
+
+The `CodeEditorHandle` provides the following methods:
+
+- **`getContents()`** - Returns the current text content of the editor
+- **`formatCode()`** - Formats the current code content (returns a Promise)
+- **`isFormattingAvailable`** - Boolean indicating if formatting is available for the current language
+- **`undo()`** - Undoes the last editor action, returns boolean indicating success
+- **`redo()`** - Redoes the last undone action, returns boolean indicating success
+- **`getEditorViewInstance()`** - Returns the underlying CodeMirror EditorView instance
+
 ## Types and Variables
 
-| Name                        | Description                                                                                                     |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                   |
-| `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.          |
-| `CodeEditorProps`           | TypeScript interface defining all props that can be passed to the `CodeEditor` component.                       |
-| `CodeEditorSelectors`       | Constant object containing CSS selectors for common CodeEditor elements. Useful for testing and custom styling. |
-| `CodeEditorTooltip`         | TypeScript interface defining the structure for tooltips displayed on hover in the editor.                      |
-| `CodeEditorTooltipSeverity` | Constant object defining possible severity levels for tooltips (`info`, `warning`, `error`, `hint`).            |
-| `CodeMirrorExtension`       | Re-export of CodeMirror's `Extension` type. See https://codemirror.net/docs/ref/#state.Extension.               |
-| `CodeEditorHandle`          | TypeScript interface for the imperative handle of the CodeEditor component, including formatting methods.       |
-| `CodeMirrorState`           | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.           |
-| `CodeMirrorView`            | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.              |
-| `FormattingOptions`         | TypeScript interface defining formatting options for different formatters (Prettier and WASM-based).            |
-| `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                        |
-| `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                         |
-| `PanelProps`                | TypeScript interface defining all props that can be passed to the `Panel` component.                            |
+| Name                        | Description                                                                                                             |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                           |
+| `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.                  |
+| `CodeEditorProps`           | TypeScript interface defining all props that can be passed to the `CodeEditor` component.                               |
+| `CodeEditorSelectors`       | Constant object containing CSS selectors for common CodeEditor elements. Useful for testing and custom styling.         |
+| `CodeEditorTooltip`         | TypeScript interface defining the structure for tooltips displayed on hover in the editor.                              |
+| `CodeEditorTooltipSeverity` | Constant object defining possible severity levels for tooltips (`info`, `warning`, `error`, `hint`).                    |
+| `CodeMirrorExtension`       | Re-export of CodeMirror's `Extension` type. See https://codemirror.net/docs/ref/#state.Extension.                       |
+| `CodeEditorHandle`          | TypeScript interface for the imperative handle of the CodeEditor component, including formatting and undo/redo methods. |
+| `CodeMirrorState`           | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.                   |
+| `CodeMirrorView`            | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.                      |
+| `FormattingOptions`         | TypeScript interface defining formatting options for different formatters (Prettier and WASM-based).                    |
+| `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                                |
+| `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                                 |
+| `PanelProps`                | TypeScript interface defining all props that can be passed to the `Panel` component.                                    |
 
 ## Test Utilities
 
@@ -473,7 +516,7 @@ Inserts text into the editor at the specified position.
 
 - `text`: The text to insert
 - `options` _(optional)_: Object with optional position properties
-  - `from`: Starting position for insertion (defaults to 0)
+  - `from`: Starting position for insertion (defaults to end of document)
   - `to`: End position for replacement (optional)
 
 **Example:**
@@ -491,6 +534,79 @@ act(() => {
 expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
   'new content',
 );
+```
+
+#### `editor.getContent()`
+
+Gets the current text content of the editor.
+
+**Returns:** String containing the current editor content
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ defaultValue: 'Hello World' });
+await editor.waitForEditorView();
+
+expect(editor.getContent()).toBe('Hello World');
+```
+
+#### `editor.getHandle()`
+
+Gets the imperative handle instance for testing imperative methods like undo/redo.
+
+**Returns:** The editor handle instance with all imperative methods
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor();
+await editor.waitForEditorView();
+
+const handle = editor.getHandle();
+expect(typeof handle.undo).toBe('function');
+expect(typeof handle.redo).toBe('function');
+```
+
+#### `editor.interactions.undo()`
+
+Performs an undo operation on the editor.
+
+**Returns:** Boolean indicating if undo was successful
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ defaultValue: 'original' });
+await editor.waitForEditorView();
+
+editor.interactions.insertText(' modified');
+expect(editor.getContent()).toBe('original modified');
+
+const success = editor.interactions.undo();
+expect(success).toBe(true);
+expect(editor.getContent()).toBe('original');
+```
+
+#### `editor.interactions.redo()`
+
+Performs a redo operation on the editor.
+
+**Returns:** Boolean indicating if redo was successful
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ defaultValue: 'original' });
+await editor.waitForEditorView();
+
+editor.interactions.insertText(' modified');
+editor.interactions.undo();
+expect(editor.getContent()).toBe('original');
+
+const success = editor.interactions.redo();
+expect(success).toBe(true);
+expect(editor.getContent()).toBe('original modified');
 ```
 
 ### Complete Test Example
@@ -531,8 +647,19 @@ test('comprehensive editor testing', async () => {
     editor.interactions.insertText('\nconsole.log(greeting);', { from: 25 });
   });
 
-  // Verify the new content
-  expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
+  // Verify the new content using getContent()
+  expect(editor.getContent()).toBe(
+    'const greeting = "Hello";\nconsole.log(greeting);',
+  );
+
+  // Test undo/redo functionality
+  const undoSuccess = editor.interactions.undo();
+  expect(undoSuccess).toBe(true);
+  expect(editor.getContent()).toBe('const greeting = "Hello";');
+
+  const redoSuccess = editor.interactions.redo();
+  expect(redoSuccess).toBe(true);
+  expect(editor.getContent()).toBe(
     'const greeting = "Hello";\nconsole.log(greeting);',
   );
 });
