@@ -161,6 +161,40 @@ The formatting system supports the following languages:
 
 **Note:** Kotlin, PHP, Ruby, and Rust are not supported due to current browser compatibility limitations.
 
+### Module Loading Requirements
+
+Code formatting requires specific modules to be loaded depending on the target language. The `useFormattingModuleLoaders` hook handles module loading configuration, while `useLazyModules` performs the actual loading.
+
+```tsx
+import {
+  useFormattingModuleLoaders,
+  useLazyModules,
+} from '@leafygreen-ui/code-editor';
+
+// Get module loaders for a specific language
+const formattingModuleLoaders = useFormattingModuleLoaders(
+  LanguageName.javascript,
+);
+
+// Load the modules
+const { modules: formattingModules, isLoading } = useLazyModules(
+  formattingModuleLoaders,
+);
+
+// Use with useCodeFormatter
+const { formatCode } = useCodeFormatter({
+  props: { language: LanguageName.javascript },
+  modules: formattingModules,
+});
+```
+
+**Important Notes:**
+
+- Modules are loaded asynchronously and may not be immediately available
+- Check `isFormattingAvailable` before attempting to format code
+- Different languages require different module combinations (see Module Requirements by Language above)
+- Formatting will gracefully fail and return the original code if modules are not loaded
+
 ### Using Code Formatting
 
 There are three ways to format code with the CodeEditor:
@@ -225,17 +259,28 @@ Use the formatting functionality independently without the CodeEditor component:
 ```tsx
 import {
   useCodeFormatter,
+  useFormattingModuleLoaders,
+  useLazyModules,
   type FormattingOptions,
   LanguageName,
 } from '@leafygreen-ui/code-editor';
 
 function MyFormattingComponent() {
+  // Load formatting modules for the selected language
+  const formattingModuleLoaders = useFormattingModuleLoaders(
+    LanguageName.javascript,
+  );
+  const { modules: formattingModules } = useLazyModules(
+    formattingModuleLoaders,
+  );
+
   const { formatCode, isFormattingAvailable } = useCodeFormatter({
     props: {
       language: LanguageName.javascript,
       indentSize: 2,
       indentUnit: 'space',
     },
+    modules: formattingModules,
   });
 
   const handleFormat = async () => {
@@ -696,34 +741,93 @@ Adds hover tooltips to editor content with configurable severity levels.
 
 #### `useCodeFormatter(config)`
 
-Provides code formatting functionality using language-specific formatters. Automatically loads required dependencies for supported languages.
+Provides code formatting functionality using language-specific formatters with pre-loaded modules.
 
 **Supported Languages:**
 
 - **Prettier-based**: JavaScript/JSX, TypeScript/TSX, CSS, HTML, JSON
 - **WASM-based**: Java, C++, C#, Go, Python
 
-**Required Props:** `language`, `indentSize` _(optional)_, `indentUnit` _(optional)_
+**Required Props:** `language`, `indentSize` _(optional)_, `indentUnit` _(optional)_  
+**Required Modules:** `modules` - Pre-loaded formatting modules (see Module Requirements below)
 
 **Returns:**
 
 - `formatCode(code: string, options?: FormattingOptions): Promise<string>` - Formats the provided code
 - `isFormattingAvailable: boolean` - Whether formatting is available for the current language
 
+**Module Requirements by Language:**
+
+- **JavaScript/JSX/JSON**:
+
+  - `prettier/standalone`
+  - `prettier/parser-babel`
+
+- **TypeScript/TSX**:
+
+  - `prettier/standalone`
+  - `prettier/parser-typescript`
+
+- **CSS**:
+
+  - `prettier/standalone`
+  - `prettier/parser-postcss`
+
+- **HTML**:
+
+  - `prettier/standalone`
+  - `prettier/parser-html`
+
+- **Java/C++/C#**:
+
+  - `@wasm-fmt/clang-format`
+
+- **Go**:
+
+  - `@wasm-fmt/gofmt`
+
+- **Python**:
+  - `@wasm-fmt/ruff_fmt`
+
 **Example:**
 
 ```tsx
-const { formatCode, isFormattingAvailable } = useCodeFormatter({
-  props: {
-    language: LanguageName.javascript,
-    indentSize: 2,
-    indentUnit: 'space',
-  },
-});
+import {
+  useFormattingModuleLoaders,
+  useLazyModules,
+} from '@leafygreen-ui/code-editor';
 
-if (isFormattingAvailable) {
-  const formatted = await formatCode('const x=1;');
-  console.log(formatted); // "const x = 1;"
+import * as PrettierStandaloneModule from 'prettier/standalone';
+import * as PrettierParserModule from 'prettier/parser-babel';
+
+function MyFormattingComponent() {
+  const formattingModuleLoaders = useFormattingModuleLoaders(
+    LanguageName.javascript,
+  );
+  const { modules: formattingModules } = useLazyModules(
+    formattingModuleLoaders,
+  );
+
+  const { formatCode, isFormattingAvailable } = useCodeFormatter({
+    props: {
+      language: LanguageName.javascript,
+      indentSize: 2,
+      indentUnit: 'space',
+    },
+    modules: {
+      'prettier/standalone': PrettierStandaloneModule,
+      'prettier/parser-babel': PrettierParserModule,
+    },
+  });
+
+  const handleFormat = async () => {
+    if (isFormattingAvailable) {
+      const formatted = await formatCode('const x=1;');
+      console.log(formatted); // "const x = 1;"
+    }
+  };
+
+  return <button onClick={handleFormat}>Format Code</button>;
 }
 ```
 

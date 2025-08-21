@@ -14,6 +14,7 @@ import { Body } from '@leafygreen-ui/typography';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
 
+import { useFormattingModuleLoaders } from './hooks/formatting/useFormattingModuleLoaders';
 import {
   getCopyButtonStyles,
   getEditorStyles,
@@ -74,13 +75,18 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
 
-    // Load core modules
-    const moduleLoaders = useModuleLoaders(props);
-    const { isLoading, modules } = useLazyModules(moduleLoaders);
+    // Load modules
+    const coreModuleLoaders = useModuleLoaders(props);
+    const formattingModuleLoaders = useFormattingModuleLoaders(language);
+    const { isLoading, modules } = useLazyModules({
+      ...coreModuleLoaders,
+      ...formattingModuleLoaders,
+    });
 
     // Get formatting functionality
     const { formatCode, isFormattingAvailable } = useCodeFormatter({
       props: { language, indentSize, indentUnit },
+      modules,
     });
 
     // Get custom extensions
