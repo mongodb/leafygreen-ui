@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useImperativeHandle,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -78,10 +79,14 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     // Load modules
     const coreModuleLoaders = useModuleLoaders(props);
     const formattingModuleLoaders = useFormattingModuleLoaders(language);
-    const { isLoading, modules } = useLazyModules({
-      ...coreModuleLoaders,
-      ...formattingModuleLoaders,
-    });
+    const allModuleLoaders = useMemo(
+      () => ({
+        ...coreModuleLoaders,
+        ...formattingModuleLoaders,
+      }),
+      [coreModuleLoaders, formattingModuleLoaders],
+    );
+    const { isLoading, modules } = useLazyModules(allModuleLoaders);
 
     // Get formatting functionality
     const { formatCode, isFormattingAvailable } = useCodeFormatter({
