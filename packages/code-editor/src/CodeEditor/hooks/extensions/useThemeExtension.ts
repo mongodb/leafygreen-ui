@@ -67,10 +67,15 @@ export function useThemeExtension({
               color[theme].background[Variant.Primary][
                 InteractionState.Default
               ],
-            color: color[theme].text[Variant.Primary][InteractionState.Default],
             border: `1px solid
-    ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
-            borderRadius: `${borderRadius[300]}px`,
+              ${
+                color[theme].border[Variant.Secondary][InteractionState.Default]
+              }`,
+            borderBottomLeftRadius: `${borderRadius[300]}px`,
+            borderBottomRightRadius: `${borderRadius[300]}px`,
+            borderTopLeftRadius: props.panel ? 0 : `${borderRadius[300]}px`,
+            borderTopRightRadius: props.panel ? 0 : `${borderRadius[300]}px`,
+            color: color[theme].text[Variant.Primary][InteractionState.Default],
             paddingTop: `${spacing[200]}px`,
             paddingBottom: `${spacing[200]}px`,
           },
