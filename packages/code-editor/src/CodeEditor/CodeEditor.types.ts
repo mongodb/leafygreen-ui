@@ -322,5 +322,36 @@ export type CodeEditorProps = DarkModeProps & {
  * Imperative handle for the CodeEditor component.
  */
 export interface CodeEditorHandle {
+  /**
+   * Returns the CodeMirror EditorView instance or null if not available.
+   */
   getEditorViewInstance: () => EditorView | null;
+
+  /**
+   * Returns the current contents of the editor as a string.
+   */
+  getContents: () => string;
+
+  /**
+   * Formats the current code content and updates the editor.
+   * @returns Promise resolving to the formatted code string
+   */
+  formatCode: () => Promise<string>;
+
+  /**
+   * Indicates whether code formatting is available for the current language.
+   */
+  isFormattingAvailable: boolean;
+
+  /**
+   * Undoes the last editor action if possible.
+   * @returns boolean indicating if undo was successful
+   */
+  undo: () => boolean;
+
+  /**
+   * Redoes the last undone editor action if possible.
+   * @returns boolean indicating if redo was successful
+   */
+  redo: () => boolean;
 }
