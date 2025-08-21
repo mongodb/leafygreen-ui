@@ -268,6 +268,8 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       formatCode: handleFormatCode,
       isFormattingAvailable,
       language,
+      undo: handleUndo,
+      redo: handleRedo,
     };
 
     return (
