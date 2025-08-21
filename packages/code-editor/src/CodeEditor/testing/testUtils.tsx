@@ -245,17 +245,34 @@ function getContent(): string {
 }
 
 /**
+ * Gets the editor handle instance for testing imperative methods
+ * @returns The editor handle instance
+ * @throws Error if editor handle is not available
+ */
+function getHandle(): any {
+  if (!editorHandleInstance) {
+    throw new Error(
+      'Editor handle not available. Make sure to call renderCodeEditor first.',
+    );
+  }
+
+  return editorHandleInstance;
+}
+
+/**
  * Inserts text into the editor at the specified position
  * @param text - The text to insert
  * @param options - Optional position options
- * @param options.from - Starting position for insertion (defaults to 0)
+ * @param options.from - Starting position for insertion (defaults to end of document)
  * @param options.to - End position for replacement (optional)
  * @throws Error if editor view is not initialized
  */
 function insertText(text: string, options?: { from?: number; to?: number }) {
   const view = ensureEditorView();
 
-  const changes: ChangeSpec = { insert: text, from: options?.from || 0 };
+  // Default to inserting at the end of the document
+  const defaultFrom = options?.from ?? view.state.doc.length;
+  const changes: ChangeSpec = { insert: text, from: defaultFrom };
 
   if (options?.to) {
     changes.to = options.to;
@@ -307,6 +324,7 @@ export const editor = {
   isReadOnly,
   getIndentUnit,
   getContent,
+  getHandle,
   interactions: {
     insertText,
     undo,
