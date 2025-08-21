@@ -8,7 +8,7 @@ describe('usePlaceholderExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeViewModule = createMockViewModule();
 
-  it('returns empty when no placeholder', () => {
+  test('returns empty when no placeholder', () => {
     const { result } = renderHook(() =>
       usePlaceholderExtension({
         editorViewInstance: null,
@@ -19,7 +19,7 @@ describe('usePlaceholderExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns placeholder extension when provided', () => {
+  test('returns placeholder extension when provided', () => {
     const { result } = renderHook(() =>
       usePlaceholderExtension({
         editorViewInstance: null,

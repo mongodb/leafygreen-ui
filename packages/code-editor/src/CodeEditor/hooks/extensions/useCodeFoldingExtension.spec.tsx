@@ -8,7 +8,7 @@ describe('useCodeFoldingExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeLanguageModule = createMockLanguageModule();
 
-  it('returns empty when disabled or module missing', () => {
+  test('returns empty when disabled or module missing', () => {
     const { result } = renderHook(() =>
       useCodeFoldingExtension({
         editorViewInstance: null,
@@ -19,7 +19,7 @@ describe('useCodeFoldingExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns fold gutter extension when enabled', () => {
+  test('returns fold gutter extension when enabled', () => {
     const { result } = renderHook(() =>
       useCodeFoldingExtension({
         editorViewInstance: null,
