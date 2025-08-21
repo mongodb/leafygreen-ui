@@ -161,6 +161,36 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       onChangeProp,
     ]);
 
+    /**
+     * Undoes the last editor action if possible.
+     * @returns boolean indicating if undo was successful
+     */
+    const handleUndo = useCallback((): boolean => {
+      const commands = modules?.['@codemirror/commands'];
+
+      if (!editorViewRef.current || !commands) {
+        console.warn('Undo is not available - editor or commands not loaded');
+        return false;
+      }
+
+      return commands.undo(editorViewRef.current);
+    }, [modules]);
+
+    /**
+     * Redoes the last undone editor action if possible.
+     * @returns boolean indicating if redo was successful
+     */
+    const handleRedo = useCallback((): boolean => {
+      const commands = modules?.['@codemirror/commands'];
+
+      if (!editorViewRef.current || !commands) {
+        console.warn('Redo is not available - editor or commands not loaded');
+        return false;
+      }
+
+      return commands.redo(editorViewRef.current);
+    }, [modules]);
+
     useLayoutEffect(() => {
       const EditorView = coreModules?.['@codemirror/view'];
       const commands = coreModules?.['@codemirror/commands'];
@@ -229,6 +259,8 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       getContents,
       formatCode: handleFormatCode,
       isFormattingAvailable,
+      undo: handleUndo,
+      redo: handleRedo,
     }));
 
     const contextValue = {
