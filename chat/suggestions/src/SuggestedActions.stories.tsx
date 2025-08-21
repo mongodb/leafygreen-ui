@@ -53,7 +53,7 @@ const meta: StoryMetaType<typeof SuggestedActions> = {
     darkMode: storybookArgTypes.darkMode,
     state: {
       options: Object.values(State),
-      control: { type: 'select' },
+      control: { type: 'radio' },
     },
     configurationParameters: {
       control: 'object',
