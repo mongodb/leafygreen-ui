@@ -163,37 +163,30 @@ The formatting system supports the following languages:
 
 ### Module Loading Requirements
 
-Code formatting requires specific modules to be loaded depending on the target language. The `useFormattingModuleLoaders` hook handles module loading configuration, while `useLazyModules` performs the actual loading.
+Code formatting requires specific modules to be loaded depending on the target language. Consumers are responsible for loading the required modules and passing them to the `useCodeFormatter` hook.
 
 ```tsx
-import {
-  useFormattingModuleLoaders,
-  useLazyModules,
-} from '@leafygreen-ui/code-editor';
-
-// Get module loaders for a specific language
-const formattingModuleLoaders = useFormattingModuleLoaders(
-  LanguageName.javascript,
-);
-
-// Load the modules
-const { modules: formattingModules, isLoading } = useLazyModules(
-  formattingModuleLoaders,
-);
+import { useCodeFormatter } from '@leafygreen-ui/code-editor';
+// Import the modules you need based on your target language
+import * as PrettierStandaloneModule from 'prettier/standalone';
+import * as PrettierParserBabelModule from 'prettier/parser-babel';
 
 // Use with useCodeFormatter
 const { formatCode } = useCodeFormatter({
   props: { language: LanguageName.javascript },
-  modules: formattingModules,
+  modules: {
+    'prettier/standalone': PrettierStandaloneModule,
+    'prettier/parser-babel': PrettierParserBabelModule,
+  },
 });
 ```
 
 **Important Notes:**
 
-- Modules are loaded asynchronously and may not be immediately available
+- You must load and provide the required modules for your target language(s)
 - Check `isFormattingAvailable` before attempting to format code
-- Different languages require different module combinations (see Module Requirements by Language above)
-- Formatting will gracefully fail and return the original code if modules are not loaded
+- Different languages require different module combinations (see Module Requirements by Language below)
+- Formatting will gracefully fail and return the original code if required modules are not provided
 
 ### Using Code Formatting
 
@@ -262,6 +255,9 @@ import {
   type FormattingOptions,
   LanguageName,
 } from '@leafygreen-ui/code-editor';
+// Import the modules you need based on your target language
+import * as PrettierStandaloneModule from 'prettier/standalone';
+import * as PrettierParserBabelModule from 'prettier/parser-babel';
 
 function MyFormattingComponent() {
   const { formatCode, isFormattingAvailable } = useCodeFormatter({
@@ -270,11 +266,10 @@ function MyFormattingComponent() {
       indentSize: 2,
       indentUnit: 'space',
     },
-    /*
-     * language-specific modules required for formatting (see Module Requirements
-     * by Language below)
-     */
-    modules: formattingModules,
+    modules: {
+      'prettier/standalone': PrettierStandaloneModule,
+      'prettier/parser-babel': PrettierParserBabelModule,
+    },
   });
 
   const handleFormat = async () => {
