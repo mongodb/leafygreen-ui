@@ -16,7 +16,7 @@ import { Position, useResizable } from '@leafygreen-ui/resizable';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { TRANSITION_DURATION } from '../constants';
+import { DRAWER_TOOLBAR_WIDTH, TRANSITION_DURATION } from '../constants';
 import { useDrawerLayoutContext } from '../DrawerLayout';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
@@ -172,12 +172,17 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
      */
     useEffect(() => {
       if (open && isEmbedded && drawerWidth !== 0) {
-        const prevWidth = hasToolbar ? drawerWidth + 48 : drawerWidth - 48;
+        const prevWidth = hasToolbar
+          ? drawerWidth + DRAWER_TOOLBAR_WIDTH
+          : drawerWidth - DRAWER_TOOLBAR_WIDTH;
         setPreviousWidth(prevWidth);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    /**
+     * Resets the previous width to 0 when the drawer is closed.
+     */
     useEffect(() => {
       if (!open) setPreviousWidth(0);
     }, [open]);

@@ -48,7 +48,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
       useDrawerLayoutContext();
     const lgIds = getLgIds(dataLgId);
 
-    // This updates the drawer open state when the toolbar is inter
+    // runs synchronously after the DOM is updated and before the browser paints to avoid flickering of the toolbar
     useLayoutEffect(() => {
       setIsDrawerOpen(isDrawerOpen);
     }, [isDrawerOpen, setIsDrawerOpen]);
