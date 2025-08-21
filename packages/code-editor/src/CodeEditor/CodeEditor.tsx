@@ -27,37 +27,39 @@ import {
   CopyButtonLgId,
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
+import { CodeEditorProvider } from './CodeEditorContext';
 import { useExtensions, useLazyModules, useModuleLoaders } from './hooks';
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
     const {
-      defaultValue,
-      value,
-      forceParsing: forceParsingProp = false,
-      onChange: onChangeProp,
-      isLoading: isLoadingProp = false,
-      extensions: consumerExtensions = [],
-      darkMode: darkModeProp,
       baseFontSize: baseFontSizeProp,
       className,
-      height,
-      maxHeight,
-      maxWidth,
-      minHeight,
-      minWidth,
-      width,
-      language,
+      copyButtonAppearance,
+      darkMode: darkModeProp,
+      defaultValue,
       enableClickableUrls,
       enableCodeFolding,
       enableLineNumbers,
       enableLineWrapping,
-      indentUnit,
+      extensions: consumerExtensions = [],
+      forceParsing: forceParsingProp = false,
+      height,
       indentSize,
+      indentUnit,
+      isLoading: isLoadingProp = false,
+      language,
+      maxHeight,
+      maxWidth,
+      minHeight,
+      minWidth,
+      onChange: onChangeProp,
+      panel,
       placeholder,
       readOnly,
       tooltips,
-      copyButtonAppearance,
+      value,
+      width,
       ...rest
     } = props;
 
@@ -147,7 +149,12 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     useImperativeHandle(forwardedRef, () => ({
       getEditorViewInstance: () => editorViewRef.current,
+      getContents,
     }));
+
+    const contextValue = {
+      getContents,
+    };
 
     return (
       <div
@@ -164,16 +171,20 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         })}
         {...rest}
       >
-        {(copyButtonAppearance === CopyButtonAppearance.Hover ||
-          copyButtonAppearance === CopyButtonAppearance.Persist) && (
-          <CodeEditorCopyButton
-            getContentsToCopy={getContents}
-            className={getCopyButtonStyles(copyButtonAppearance)}
-            variant={CopyButtonVariant.Button}
-            disabled={isLoadingProp || isLoading}
-            data-lgid={CopyButtonLgId}
-          />
+        {panel && (
+          <CodeEditorProvider value={contextValue}>{panel}</CodeEditorProvider>
         )}
+        {!panel &&
+          (copyButtonAppearance === CopyButtonAppearance.Hover ||
+            copyButtonAppearance === CopyButtonAppearance.Persist) && (
+            <CodeEditorCopyButton
+              getContentsToCopy={getContents}
+              className={getCopyButtonStyles(copyButtonAppearance)}
+              variant={CopyButtonVariant.Button}
+              disabled={isLoadingProp || isLoading}
+              data-lgid={CopyButtonLgId}
+            />
+          )}
         {(isLoadingProp || isLoading) && (
           <div
             className={getLoaderStyles({
