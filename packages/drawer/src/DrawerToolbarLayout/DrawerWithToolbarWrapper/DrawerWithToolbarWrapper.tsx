@@ -1,14 +1,14 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useDrawerLayoutContext } from '../../DrawerLayout';
-import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 
-import { getDrawerWithToolbarWrapperStyles } from './DrawerWithToolbarWrapper.styles';
+import {
+  contentStyles,
+  getDrawerWithToolbarWrapperStyles,
+} from './DrawerWithToolbarWrapper.styles';
 import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types';
-import { GRID_AREA } from '../../constants';
-import { css } from '@leafygreen-ui/emotion';
 
 /**
  * @internal
@@ -31,23 +31,11 @@ export const DrawerWithToolbarWrapper = forwardRef<
       size,
       hasToolbar = false,
       isDrawerOpen,
-      // isDrawerOpen: isDrawerOpenLayout,
     } = useDrawerLayoutContext();
-    // const { isDrawerOpen: isDrawerOpenToolbar } = useDrawerToolbarContext();
-
-    // const isDrawerOpen = isDrawerOpenToolbar ?? isDrawerOpenLayout;
 
     return (
       <>
-        <div
-          className={css`
-            grid-area: ${GRID_AREA.content};
-            overflow: scroll;
-            height: inherit;
-          `}
-        >
-          {children}
-        </div>
+        <div className={contentStyles}>{children}</div>
         <div
           ref={forwardedRef}
           className={getDrawerWithToolbarWrapperStyles({

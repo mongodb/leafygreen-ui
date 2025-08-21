@@ -130,6 +130,12 @@ const closedOverlayShadowStyles = css`
   }
 `;
 
+export const contentStyles = css`
+  grid-area: ${GRID_AREA.content};
+  overflow: scroll;
+  height: inherit;
+`;
+
 export const getDrawerWithToolbarWrapperStyles = ({
   className,
   isDrawerOpen,

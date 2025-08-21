@@ -9,7 +9,6 @@ import { DEFAULT_LGID_ROOT, getLgIds } from '../../utils';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
 import { DrawerWithToolbarWrapper } from '../DrawerWithToolbarWrapper/DrawerWithToolbarWrapper';
 
-import { contentStyles } from './DrawerToolbarLayout.styles';
 import {
   DrawerToolbarLayoutContentProps,
   LayoutData,
@@ -161,13 +160,37 @@ export const DrawerToolbarLayoutContent = forwardRef<
           </DrawerWithToolbarWrapper>
         </LayoutComponent> */}
 
-        <LayoutComponent
+        {/* <LayoutComponent
           {...rest}
           drawer={renderDrawerWithToolbar()}
           ref={forwardRef}
           key={shouldRenderToolbar ? 'toolbar' : 'no-toolbar'}
         >
           {children}
+        </LayoutComponent> */}
+
+        {/* {shouldRenderToolbar ? (
+          <LayoutComponent {...rest} ref={forwardRef}>
+            <DrawerWithToolbarWrapper drawer={renderDrawerWithToolbar()}>
+              {children}
+            </DrawerWithToolbarWrapper>
+          </LayoutComponent>
+        ) : (
+          <LayoutComponent {...rest} ref={forwardRef}>
+            <DrawerWithToolbarWrapper drawer={renderDrawer()}>
+              {children}
+            </DrawerWithToolbarWrapper>
+          </LayoutComponent>
+        )} */}
+
+        <LayoutComponent {...rest} ref={forwardRef}>
+          <DrawerWithToolbarWrapper
+            drawer={
+              shouldRenderToolbar ? renderDrawerWithToolbar() : renderDrawer()
+            }
+          >
+            {children}
+          </DrawerWithToolbarWrapper>
         </LayoutComponent>
       </>
     );
