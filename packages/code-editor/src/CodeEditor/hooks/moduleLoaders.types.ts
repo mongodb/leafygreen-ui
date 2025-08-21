@@ -36,7 +36,6 @@ export interface CodeEditorModules {
   'prettier/parser-typescript': typeof import('prettier/parser-typescript');
   'prettier/parser-postcss': typeof import('prettier/parser-postcss');
   'prettier/parser-html': typeof import('prettier/parser-html');
-  'prettier-plugin-java': typeof import('prettier-plugin-java');
 
   // WASM formatting modules
   '@wasm-fmt/clang-format': typeof import('@wasm-fmt/clang-format');

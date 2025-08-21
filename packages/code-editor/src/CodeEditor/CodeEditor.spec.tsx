@@ -24,7 +24,6 @@ beforeAll(() => {
     const suppressedWarnings = [
       '@wasm-fmt/clang-format is not installed',
       '@wasm-fmt/gofmt is not installed',
-      'prettier-plugin-java is not installed',
       '@wasm-fmt/ruff_fmt is not installed',
     ];
 
