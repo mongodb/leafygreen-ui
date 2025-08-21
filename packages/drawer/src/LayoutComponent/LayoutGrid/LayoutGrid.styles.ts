@@ -36,6 +36,7 @@ const getClosedOverlayStyles = (hasToolbar: boolean) => css`
 `;
 
 const getOpenEmbeddedStyles = (hasToolbar: boolean) => css`
+  width: 100%;
   grid-template-columns: ${hasToolbar
     ? `${DRAWER_TOOLBAR_WIDTH}px auto`
     : `auto`};
@@ -44,6 +45,7 @@ const getOpenEmbeddedStyles = (hasToolbar: boolean) => css`
   margin-left: -${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    width: auto;
     grid-template-columns: ${hasToolbar
       ? `${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${DRAWER_TOOLBAR_WIDTH * 2}px)`
       : `calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px)`};
@@ -81,12 +83,6 @@ const getBaseStyles = (hasToolbar: boolean) => css`
   grid-template-areas: ${hasToolbar
     ? `'${GRID_AREA.toolbar} ${GRID_AREA.innerDrawer}'`
     : `'${GRID_AREA.innerDrawer}'`};
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    grid-template-columns: ${hasToolbar
-      ? `${DRAWER_TOOLBAR_WIDTH}px 0px`
-      : `0px`};
-  }
-
   grid-area: ${GRID_AREA.drawer};
   justify-self: end;
   animation-timing-function: ${TRANSITION_TIMING_FUNCTION};
@@ -98,7 +94,6 @@ const getBaseStyles = (hasToolbar: boolean) => css`
   transition-property: grid-template-columns;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
-  grid-template-columns: 1fr auto;
 
   .${toolbarClassName} {
     grid-area: ${GRID_AREA.toolbar};

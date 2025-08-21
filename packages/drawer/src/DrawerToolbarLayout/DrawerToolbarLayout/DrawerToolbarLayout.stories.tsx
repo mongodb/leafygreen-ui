@@ -16,83 +16,11 @@ import { Size } from '../../Drawer/Drawer.types';
 import { DrawerLayout, DrawerLayoutProps } from '../../DrawerLayout';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
 
-import { DrawerContent, LongContent } from './DrawerToolbarLayout.testutils';
-
-const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <DrawerContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <DrawerContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-  },
-  {
-    id: 'Sparkle',
-    label: 'Disabled item',
-    glyph: 'Sparkle',
-    disabled: true,
-  },
-  {
-    id: 'Apps',
-    label: 'Apps',
-    content: <DrawerContent />,
-    glyph: 'Apps',
-    title: 'Apps Title',
-    visible: false,
-  },
-];
-
-const DRAWER_TOOLBAR_DATA_NOT_VISIBLE: DrawerLayoutProps['toolbarData'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <DrawerContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-    visible: false,
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <DrawerContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-    visible: false,
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-    visible: false,
-  },
-  {
-    id: 'Sparkle',
-    label: 'Disabled item',
-    glyph: 'Sparkle',
-    disabled: true,
-    visible: false,
-  },
-  {
-    id: 'Apps',
-    label: 'Apps',
-    content: <DrawerContent />,
-    glyph: 'Apps',
-    title: 'Apps Title',
-    visible: false,
-  },
-];
+import {
+  DRAWER_TOOLBAR_DATA,
+  DRAWER_TOOLBAR_DATA_NOT_VISIBLE,
+  LongContent,
+} from './DrawerToolbarLayout.testutils';
 
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,
