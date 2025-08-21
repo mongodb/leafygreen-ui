@@ -32,7 +32,8 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/tokens": "workspace:^"
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "devDependencies": {
     "@lg-tools/test-harnesses": "workspace:^"
