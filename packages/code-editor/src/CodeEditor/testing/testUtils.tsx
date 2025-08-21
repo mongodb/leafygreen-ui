@@ -1,7 +1,7 @@
 import React from 'react';
 import { indentUnit } from '@codemirror/language';
+import { type ChangeSpec } from '@codemirror/state';
 import { render, waitFor } from '@testing-library/react';
-import { ChangeSpec } from '@uiw/react-codemirror';
 
 import {
   CodeEditor,

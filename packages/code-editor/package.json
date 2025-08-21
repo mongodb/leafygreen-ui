@@ -60,7 +60,6 @@
     "@lezer/highlight": "^1.2.1",
     "@replit/codemirror-lang-csharp": "^6.2.0",
     "@uiw/codemirror-extensions-hyper-link": "^4.23.12",
-    "@uiw/react-codemirror": "^4.23.10",
     "@wasm-fmt/clang-format": "^20.1.7",
     "@wasm-fmt/gofmt": "^0.4.9",
     "@wasm-fmt/ruff_fmt": "^0.10.0",
