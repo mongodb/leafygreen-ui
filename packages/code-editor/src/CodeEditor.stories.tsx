@@ -8,12 +8,14 @@ import type { StoryFn, StoryObj } from '@storybook/react';
 import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
+// @ts-ignore LG icons don't currently support TS
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 
 import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { codeSnippets } from './CodeEditor/testing';
 import { IndentUnits } from './CodeEditor';
-import { CodeEditor } from '.';
+import { CodeEditor, Panel } from '.';
 
 const MyTooltip = ({
   line,
@@ -179,6 +181,28 @@ export default meta;
 const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 
 export const LiveExample = Template.bind({});
+
+export const WithPanel = Template.bind({});
+WithPanel.args = {
+  language: 'typescript',
+  defaultValue: codeSnippets.typescript,
+  panel: (
+    <Panel
+      showCopyButton
+      showFormatButton
+      showSecondaryMenuButton
+      title="index.tsx"
+      customSecondaryButtons={[
+        {
+          label: 'Custom Button',
+          onClick: () => {},
+          'aria-label': 'Custom Button',
+          glyph: <CloudIcon />,
+        },
+      ]}
+    />
+  ),
+};
 
 export const TooltipOnHover: StoryObj<{}> = {
   render: () => {
