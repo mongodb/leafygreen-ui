@@ -22,11 +22,6 @@ export interface SecondaryButtonConfig {
   onClick?: () => void;
 
   /**
-   * Optional callback fired when the button is clicked.
-   */
-  onClick?: () => void;
-
-  /**
    * Optional URL to navigate to when the button is clicked.
    * If provided, the button will behave as a link.
    */
