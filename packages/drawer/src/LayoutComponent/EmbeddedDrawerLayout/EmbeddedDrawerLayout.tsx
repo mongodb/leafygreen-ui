@@ -25,6 +25,8 @@ export const EmbeddedDrawerLayout = forwardRef<
     const { hasToolbar, isDrawerOpen, drawerWidth, isDrawerResizing, size } =
       useDrawerLayoutContext();
 
+    const hasDrawerProp = !!drawer;
+
     return (
       <div
         ref={forwardedRef}
@@ -34,11 +36,12 @@ export const EmbeddedDrawerLayout = forwardRef<
           hasToolbar,
           isDrawerResizing,
           size,
+          hasDrawerProp,
         })}
         // Prevents a new style class every time the width changes
         style={{ '--drawer-width': `${drawerWidth}` } as React.CSSProperties}
       >
-        {drawer !== undefined ? (
+        {hasDrawerProp ? (
           <LayoutGrid drawer={drawer}>{children}</LayoutGrid>
         ) : (
           children

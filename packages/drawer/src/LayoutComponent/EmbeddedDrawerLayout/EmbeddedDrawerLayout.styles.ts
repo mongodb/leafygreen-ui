@@ -55,22 +55,51 @@ const getBaseStyles = ({
 }) => cx(baseStyles, setDrawerDefaultWidth({ isDrawerOpen, hasToolbar, size }));
 
 // If there is no toolbar and the drawer is open, we need to shift the layout by the drawer width;
-const withoutToolbarBaseStyles = css`
-  grid-template-columns: auto min(
-      50vw,
-      calc(var(--drawer-width, var(--drawer-width-default)) * 1px)
-    );
+const getWithoutToolbarBaseStyles = ({
+  hasDrawerProp,
+}: {
+  hasDrawerProp: boolean;
+}) =>
+  cx(
+    css`
+      grid-template-columns: auto min(
+          50vw,
+          calc(var(--drawer-width, var(--drawer-width-default)) * 1px)
+        );
+    `,
+    {
+      [css`
+        @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+          grid-template-columns: auto 0;
+        }
+      `]: hasDrawerProp,
+      [css`
+        @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+          grid-template-columns: unset;
+          grid-template-rows: 100% 0;
+          grid-template-areas: unset;
+        }
+      `]: !hasDrawerProp,
+    },
+  );
 
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    grid-template-columns: auto 0;
-  }
-`;
-
-const withoutToolbarOpenStyles = css`
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    grid-template-columns: auto 0;
-  }
-`;
+const getWithoutToolbarOpenStyles = ({
+  hasDrawerProp,
+}: {
+  hasDrawerProp: boolean;
+}) =>
+  cx({
+    [css`
+      @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+        grid-template-columns: auto 0;
+      }
+    `]: hasDrawerProp,
+    [css`
+      @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+        grid-template-rows: 50% 50%;
+      }
+    `]: !hasDrawerProp,
+  });
 
 // If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + drawer width;
 const withToolbarBaseStyles = css`
@@ -100,12 +129,14 @@ export const getEmbeddedDrawerLayoutStyles = ({
   hasToolbar = false,
   isDrawerResizing = false,
   size = Size.Default,
+  hasDrawerProp = true,
 }: {
   className?: string;
   isDrawerOpen?: boolean;
   hasToolbar?: boolean;
   isDrawerResizing?: boolean;
   size?: Size;
+  hasDrawerProp?: boolean;
 }) =>
   cx(
     getBaseStyles({ isDrawerOpen, hasToolbar, size }),
@@ -113,8 +144,9 @@ export const getEmbeddedDrawerLayoutStyles = ({
       [resizingStyles]: isDrawerResizing,
       [withToolbarBaseStyles]: hasToolbar,
       [withToolbarOpenStyles]: isDrawerOpen && hasToolbar,
-      [withoutToolbarBaseStyles]: !hasToolbar,
-      [withoutToolbarOpenStyles]: isDrawerOpen && !hasToolbar,
+      [getWithoutToolbarBaseStyles({ hasDrawerProp })]: !hasToolbar,
+      [getWithoutToolbarOpenStyles({ hasDrawerProp })]:
+        isDrawerOpen && !hasToolbar,
     },
     className,
   );

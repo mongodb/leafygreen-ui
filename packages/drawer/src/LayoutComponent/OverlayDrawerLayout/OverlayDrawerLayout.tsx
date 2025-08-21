@@ -19,6 +19,7 @@ export const OverlayDrawerLayout = forwardRef<
   OverlayDrawerLayoutProps
 >(({ children, className, drawer }: OverlayDrawerLayoutProps, forwardedRef) => {
   const { hasToolbar } = useDrawerLayoutContext();
+  const hasDrawerProp = !!drawer;
 
   return (
     <div
@@ -28,7 +29,7 @@ export const OverlayDrawerLayout = forwardRef<
         hasToolbar,
       })}
     >
-      {drawer !== undefined ? (
+      {hasDrawerProp !== undefined ? (
         <LayoutGrid drawer={drawer}>{children}</LayoutGrid>
       ) : (
         children
