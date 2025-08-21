@@ -17,28 +17,6 @@ import { getDrawerWidth } from '../../Drawer/Drawer.utils';
 const MOBILE_BREAKPOINT = breakpoints.Tablet;
 const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
-const drawerOutMobile = keyframes`
-  from {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${
-  DRAWER_TOOLBAR_WIDTH * 2
-}px);
-  }
-  to {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
-  }
-`;
-
-const drawerInMobile = keyframes`
-  from {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 1px;
-  }
-  to {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${
-  DRAWER_TOOLBAR_WIDTH * 2
-}px);
-  }
-`;
-
 // This animation is used to animate the padding of the drawer when it closes, so that the padding does not block the content underneath it.
 const drawerPaddingOut = keyframes`
   0% {
@@ -54,6 +32,12 @@ const drawerPaddingOut = keyframes`
 
 const getOpenOverlayStyles = (size: number) => css`
   grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px calc(
+        100vw - ${DRAWER_TOOLBAR_WIDTH * 2}px
+      );
+  }
 `;
 
 const getClosedOverlayStyles = (size: number) => css`
@@ -67,15 +51,15 @@ const openEmbeddedStyles = css`
   margin-left: -${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    animation-name: ${drawerInMobile};
-    animation-fill-mode: forwards;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px calc(
+        100vw - ${DRAWER_TOOLBAR_WIDTH * 2}px
+      );
   }
 `;
 
 const closedEmbeddedStyles = css`
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    animation-name: ${drawerOutMobile};
-    animation-fill-mode: forwards;
+    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
   }
 `;
 

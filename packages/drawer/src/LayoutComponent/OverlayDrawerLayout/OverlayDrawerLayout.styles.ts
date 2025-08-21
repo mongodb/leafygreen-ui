@@ -2,7 +2,7 @@ import { DRAWER_TOOLBAR_WIDTH, GRID_AREA } from '../../constants';
 
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { addOverflowShadow, Side } from '@leafygreen-ui/tokens';
+import { addOverflowShadow, Side, breakpoints } from '@leafygreen-ui/tokens';
 import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
 import {
@@ -49,6 +49,7 @@ export const getOverlayDrawerLayoutStyles = ({
     className,
   );
 
+const MOBILE_BREAKPOINT = breakpoints.Tablet;
 const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
 // This animation is used to animate the padding of the drawer when it closes, so that the padding does not block the content underneath it.
@@ -66,6 +67,10 @@ const drawerPaddingOut = keyframes`
 
 const getOpenOverlayStyles = (size: number) => css`
   grid-template-columns: 0px ${size}px;
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    grid-template-columns: 0px calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px);
+  }
 `;
 
 const getClosedOverlayStyles = (size: number) => css`
@@ -104,7 +109,7 @@ const baseWrapperStyles = css`
     transform: unset;
     overflow: hidden;
     opacity: 1;
-    border-left: 0;
+    /* border-left: 0; */
     border-right: 0;
     height: 100%;
     animation: none;

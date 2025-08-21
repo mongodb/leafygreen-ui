@@ -37,7 +37,6 @@ export const OverlayDrawerLayout = forwardRef<
       {drawer !== undefined ? (
         <>
           <div
-            data-bye="bye"
             className={css`
               grid-area: ${GRID_AREA.content};
               overflow: scroll;

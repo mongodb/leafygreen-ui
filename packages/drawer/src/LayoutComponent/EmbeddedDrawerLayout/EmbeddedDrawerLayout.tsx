@@ -2,8 +2,14 @@ import React, { forwardRef } from 'react';
 
 import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/DrawerLayoutContext';
 
-import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
+import {
+  getEmbeddedDrawerLayoutStyles,
+  getEmbeddedDrawerWrapperStyles,
+} from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
+import { css } from '@leafygreen-ui/emotion';
+import { GRID_AREA } from '../../constants';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * @internal
@@ -23,6 +29,7 @@ export const EmbeddedDrawerLayout = forwardRef<
   ) => {
     const { hasToolbar, isDrawerOpen, drawerWidth, isDrawerResizing, size } =
       useDrawerLayoutContext();
+    const { theme } = useDarkMode();
 
     return (
       <div
@@ -37,8 +44,29 @@ export const EmbeddedDrawerLayout = forwardRef<
         // Prevents a new style class everytime the width changes
         style={{ '--drawer-width': `${drawerWidth}` } as React.CSSProperties}
       >
-        {children}
-        {drawer}
+        {drawer !== undefined ? (
+          <>
+            <div
+              className={css`
+                grid-area: ${GRID_AREA.content};
+                overflow: scroll;
+                height: inherit;
+              `}
+            >
+              {children}
+            </div>
+            <div
+              className={getEmbeddedDrawerWrapperStyles({
+                isDrawerOpen,
+                theme,
+              })}
+            >
+              {drawer}
+            </div>
+          </>
+        ) : (
+          children
+        )}
       </div>
     );
   },
