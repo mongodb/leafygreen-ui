@@ -26,6 +26,9 @@
     "@leafygreen-ui/modal": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/chat-disclaimer",
   "repository": {
     "type": "git",
