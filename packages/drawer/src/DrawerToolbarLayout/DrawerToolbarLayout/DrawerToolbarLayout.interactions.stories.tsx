@@ -339,7 +339,7 @@ export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutPropsWithDisplayM
     },
   };
 
-export const OverlayRemovesToolbarWhenDataUpdated: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+export const OverlayRemovesToolbarWhenAllItemsAreHidden: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
   {
     render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
       <TemplateWithToolbarToggle {...args} />
@@ -383,7 +383,7 @@ export const OverlayRemovesToolbarWhenDataUpdated: StoryObj<DrawerToolbarLayoutP
     },
   };
 
-export const EmbeddedRemovesToolbarWhenDataUpdated: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+export const EmbeddedRemovesToolbarWhenAllItemsAreHidden: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
   {
     render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
       <TemplateWithToolbarToggle {...args} />

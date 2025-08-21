@@ -19,6 +19,13 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
     glyph: 'Code',
     onClick: onClickMock,
   },
+  {
+    id: 'Code2',
+    label: 'Code2',
+    content: 'Drawer Content2',
+    title: `Drawer Title2`,
+    glyph: 'Code',
+  },
 ];
 
 const Component = ({
@@ -110,5 +117,82 @@ describe('packages/DrawerToolbarLayout', () => {
     expect(isOpen()).toBe(true);
     expect(drawer).toHaveTextContent('Rerendered Drawer Content');
     expect(drawer).toHaveTextContent('Rerendered Drawer Title');
+  });
+
+  test('renders the correct number of toolbar items', () => {
+    render(<Component />);
+    const { getToolbarTestUtils } = getTestUtils();
+    const { getAllToolbarIconButtons } = getToolbarTestUtils();
+    const items = getAllToolbarIconButtons();
+
+    expect(items).toHaveLength(2);
+  });
+
+  test('renders the correct number of toolbar items when some items are hidden', () => {
+    const { rerender } = render(<Component />);
+
+    const { getToolbarTestUtils } = getTestUtils();
+    const { getAllToolbarIconButtons } = getToolbarTestUtils();
+
+    expect(getAllToolbarIconButtons()).toHaveLength(2);
+
+    rerender(
+      <Component
+        data={[
+          {
+            id: 'Code',
+            label: 'Code',
+            content: 'Rerendered Drawer Content',
+            title: `Rerendered Drawer Title`,
+            glyph: 'Code',
+          },
+          {
+            id: 'Code2',
+            label: 'Code2',
+            content: 'Drawer Content2',
+            title: `Drawer Title2`,
+            glyph: 'Code',
+            visible: false,
+          },
+        ]}
+      />,
+    );
+
+    expect(getAllToolbarIconButtons()).toHaveLength(1);
+  });
+
+  test('does not renders the toolbar when all items are hidden', () => {
+    const { rerender } = render(<Component />);
+
+    const { getToolbarTestUtils } = getTestUtils();
+    const { getAllToolbarIconButtons, queryToolbar } = getToolbarTestUtils();
+
+    expect(queryToolbar()).toBeInTheDocument();
+    expect(getAllToolbarIconButtons()).toHaveLength(2);
+
+    rerender(
+      <Component
+        data={[
+          {
+            id: 'Code',
+            label: 'Code',
+            content: 'Rerendered Drawer Content',
+            title: `Rerendered Drawer Title`,
+            glyph: 'Code',
+            visible: false,
+          },
+          {
+            id: 'Code2',
+            label: 'Code2',
+            content: 'Drawer Content2',
+            title: `Drawer Title2`,
+            glyph: 'Code',
+            visible: false,
+          },
+        ]}
+      />,
+    );
+
+    expect(queryToolbar()).not.toBeInTheDocument();
   });
 });

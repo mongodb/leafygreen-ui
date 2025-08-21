@@ -1,6 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
+import { addOverflowShadow, Side } from '@leafygreen-ui/tokens';
 import { toolbarClassName } from '@leafygreen-ui/toolbar';
 
 import {

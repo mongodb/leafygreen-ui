@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 
