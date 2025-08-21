@@ -12,6 +12,7 @@ import { COPIED_TEXT } from '../CodeEditorCopyButton/constants';
 export interface CopyButtonTriggerProps {
   variant: CopyButtonVariant;
   copied: boolean;
+  iconFill?: string;
   // All the props that will be cloned by Tooltip
   children?: React.ReactNode;
   className?: string;
@@ -24,8 +25,15 @@ export interface CopyButtonTriggerProps {
 export const CopyButtonTrigger = React.forwardRef<
   HTMLButtonElement,
   CopyButtonTriggerProps
->(function CopyButtonTrigger({ variant, copied, children, ...props }, ref) {
-  const icon = copied ? <CheckmarkIcon /> : <CopyIcon />;
+>(function CopyButtonTrigger(
+  { variant, copied, iconFill, children, ...props },
+  ref,
+) {
+  const icon = copied ? (
+    <CheckmarkIcon fill={iconFill} />
+  ) : (
+    <CopyIcon fill={iconFill} />
+  );
   const copiedAlert = copied && (
     <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
   );
