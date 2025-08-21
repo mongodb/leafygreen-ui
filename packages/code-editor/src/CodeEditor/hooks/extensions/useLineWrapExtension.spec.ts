@@ -8,7 +8,7 @@ describe('useLineWrapExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeViewModule = createMockViewModule();
 
-  it('returns empty when disabled', () => {
+  test('returns empty when disabled', () => {
     const { result } = renderHook(() =>
       useLineWrapExtension({
         editorViewInstance: null,
@@ -19,7 +19,7 @@ describe('useLineWrapExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns wrapping extension when enabled and module present', () => {
+  test('returns wrapping extension when enabled and module present', () => {
     const { result } = renderHook(() =>
       useLineWrapExtension({
         editorViewInstance: null,

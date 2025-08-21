@@ -24,7 +24,7 @@ describe('useLazyModules', () => {
     moduleC: { valueC: boolean };
   }
 
-  it('returns empty modules and not loading when no loaders provided', () => {
+  test('returns empty modules and not loading when no loaders provided', () => {
     const { result } = renderHook(() => {
       const loaders = useMemo(() => ({}), []);
       return useLazyModules<TestModules>(loaders);
@@ -34,7 +34,7 @@ describe('useLazyModules', () => {
     expect(result.current.isLoading).toBe(false);
   });
 
-  it('loads single module successfully', async () => {
+  test('loads single module successfully', async () => {
     const mockModuleA = { valueA: 'test' };
 
     const { result } = renderHook(() => {
@@ -62,7 +62,7 @@ describe('useLazyModules', () => {
     expect(result.current.modules).toEqual({ moduleA: mockModuleA });
   });
 
-  it('loads multiple modules concurrently', async () => {
+  test('loads multiple modules concurrently', async () => {
     const mockModuleA = { valueA: 'test' };
     const mockModuleB = { valueB: 42 };
 
@@ -94,7 +94,7 @@ describe('useLazyModules', () => {
     });
   });
 
-  it('handles module loading errors gracefully', async () => {
+  test('handles module loading errors gracefully', async () => {
     const mockModuleA = { valueA: 'test' };
 
     const { result } = renderHook(() => {
@@ -124,7 +124,7 @@ describe('useLazyModules', () => {
     );
   });
 
-  it('handles loader functions that return undefined', async () => {
+  test('handles loader functions that return undefined', async () => {
     const mockModuleA = { valueA: 'test' };
 
     const { result } = renderHook(() => {

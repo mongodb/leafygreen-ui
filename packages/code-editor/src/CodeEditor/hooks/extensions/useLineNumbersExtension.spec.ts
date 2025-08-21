@@ -8,7 +8,7 @@ describe('useLineNumbersExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeViewModule = createMockViewModule();
 
-  it('returns empty when disabled', () => {
+  test('returns empty when disabled', () => {
     const { result } = renderHook(() =>
       useLineNumbersExtension({
         editorViewInstance: null,
@@ -19,7 +19,7 @@ describe('useLineNumbersExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns line numbers extension when enabled', () => {
+  test('returns line numbers extension when enabled', () => {
     const { result } = renderHook(() =>
       useLineNumbersExtension({
         editorViewInstance: null,

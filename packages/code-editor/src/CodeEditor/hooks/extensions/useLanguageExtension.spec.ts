@@ -8,7 +8,7 @@ describe('useLanguageExtension', () => {
   const fakeStateModule = createMockStateModule();
   const modulesBase = { '@codemirror/state': fakeStateModule } as any;
 
-  it('returns empty when language not provided', () => {
+  test('returns empty when language not provided', () => {
     const { result } = renderHook(() =>
       useLanguageExtension({
         editorViewInstance: null,
@@ -19,7 +19,7 @@ describe('useLanguageExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns javascript extension with correct options', () => {
+  test('returns javascript extension with correct options', () => {
     const jsMock = jest.fn(() => 'JS_EXT');
     const { result } = renderHook(() =>
       useLanguageExtension({
@@ -35,7 +35,7 @@ describe('useLanguageExtension', () => {
     expect(result.current).toBe('JS_EXT');
   });
 
-  it('returns jsx extension with correct options', () => {
+  test('returns jsx extension with correct options', () => {
     const jsMock = jest.fn(() => 'JSX_EXT');
     const { result } = renderHook(() =>
       useLanguageExtension({
@@ -51,7 +51,7 @@ describe('useLanguageExtension', () => {
     expect(result.current).toBe('JSX_EXT');
   });
 
-  it('returns tsx extension with correct options', () => {
+  test('returns tsx extension with correct options', () => {
     const jsMock = jest.fn(() => 'TSX_EXT');
     const { result } = renderHook(() =>
       useLanguageExtension({
@@ -67,7 +67,7 @@ describe('useLanguageExtension', () => {
     expect(result.current).toBe('TSX_EXT');
   });
 
-  it('returns typescript extension with correct options', () => {
+  test('returns typescript extension with correct options', () => {
     const jsMock = jest.fn(() => 'TS_EXT');
     const { result } = renderHook(() =>
       useLanguageExtension({
@@ -83,7 +83,7 @@ describe('useLanguageExtension', () => {
     expect(result.current).toBe('TS_EXT');
   });
 
-  it('returns kotlin and ruby via StreamLanguage.define', () => {
+  test('returns kotlin and ruby via StreamLanguage.define', () => {
     const defineMock = jest.fn((lang: any) => `STREAM_${lang.name || 'LANG'}`);
     const modules = {
       ...modulesBase,
@@ -111,7 +111,7 @@ describe('useLanguageExtension', () => {
     expect(rubyRes.current).toBe('STREAM_ruby');
   });
 
-  it('returns direct language factory results for simple languages', () => {
+  test('returns direct language factory results for simple languages', () => {
     const mk = (name: string) => ({
       [name]: jest.fn(() => `${name.toUpperCase()}_EXT`),
     });
