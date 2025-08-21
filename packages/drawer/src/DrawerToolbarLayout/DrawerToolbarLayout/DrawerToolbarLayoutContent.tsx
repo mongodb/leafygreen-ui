@@ -128,9 +128,18 @@ export const DrawerToolbarLayoutContent = forwardRef<
       );
     };
 
+    const renderDrawerWithToolbar = () => {
+      return (
+        <>
+          {shouldRenderToolbar && renderToolbar()}
+          {renderDrawer()}
+        </>
+      );
+    };
+
     return (
       <>
-        {shouldRenderToolbar ? (
+        {/* {shouldRenderToolbar ? (
           <LayoutComponent {...rest} ref={forwardRef}>
             <div className={contentStyles}>{children}</div>
             <DrawerWithToolbarWrapper>
@@ -140,9 +149,25 @@ export const DrawerToolbarLayoutContent = forwardRef<
           </LayoutComponent>
         ) : (
           <LayoutComponent {...rest} drawer={renderDrawer()} ref={forwardRef}>
-            <div className={contentStyles}>{children}</div>
+            {children}
           </LayoutComponent>
-        )}
+        )} */}
+
+        {/* <LayoutComponent {...rest} ref={forwardRef}>
+          <div className={contentStyles}>{children}</div>
+          <DrawerWithToolbarWrapper>
+            {shouldRenderToolbar && renderToolbar()}
+            {renderDrawer()}
+          </DrawerWithToolbarWrapper>
+        </LayoutComponent> */}
+
+        <LayoutComponent
+          {...rest}
+          drawer={renderDrawerWithToolbar()}
+          ref={forwardRef}
+        >
+          {children}
+        </LayoutComponent>
       </>
     );
   },

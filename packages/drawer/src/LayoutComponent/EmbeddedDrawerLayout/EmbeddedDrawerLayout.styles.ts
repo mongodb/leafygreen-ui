@@ -10,8 +10,6 @@ import {
 } from '../../constants';
 import { Size } from '../../Drawer/Drawer.types';
 import { getDrawerWidth } from '../../Drawer/Drawer.utils';
-import { Theme } from '@leafygreen-ui/lib';
-import { drawerClassName } from '../../Drawer/Drawer.styles';
 
 const baseStyles = css`
   width: 100%;
@@ -120,47 +118,3 @@ export const getEmbeddedDrawerLayoutStyles = ({
     },
     className,
   );
-
-export const baseWrapperStyles = css`
-  display: grid;
-  grid-template-columns: 0px auto;
-  grid-template-areas: 'filler ${GRID_AREA.innerDrawer}';
-  grid-area: ${GRID_AREA.drawer};
-  justify-self: end;
-  z-index: 0;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  transition-property: grid-template-columns;
-  transition-duration: ${TRANSITION_DURATION}ms;
-  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
-
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    grid-template-columns: 0px 0px;
-  }
-
-  .${drawerClassName} {
-    grid-area: ${GRID_AREA.innerDrawer};
-
-    @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-      height: unset;
-    }
-  }
-`;
-
-export const wrapperOpenStyles = css`
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    grid-template-columns: 0px calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px);
-  }
-`;
-
-export const getEmbeddedDrawerWrapperStyles = ({
-  isDrawerOpen,
-  theme,
-}: {
-  isDrawerOpen?: boolean;
-  theme: Theme;
-}) =>
-  cx(baseWrapperStyles, {
-    [wrapperOpenStyles]: isDrawerOpen,
-  });

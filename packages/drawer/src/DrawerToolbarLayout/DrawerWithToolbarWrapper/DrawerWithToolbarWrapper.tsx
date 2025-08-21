@@ -20,8 +20,15 @@ export const DrawerWithToolbarWrapper = forwardRef<
   DrawerWithToolbarWrapperProps
 >(({ children, className }: DrawerWithToolbarWrapperProps, forwardedRef) => {
   const { theme } = useDarkMode();
-  const { displayMode, size } = useDrawerLayoutContext();
-  const { isDrawerOpen } = useDrawerToolbarContext();
+  const {
+    displayMode,
+    size,
+    hasToolbar = false,
+    isDrawerOpen: isDrawerOpenLayout,
+  } = useDrawerLayoutContext();
+  const { isDrawerOpen: isDrawerOpenToolbar } = useDrawerToolbarContext();
+
+  const isDrawerOpen = isDrawerOpenToolbar ?? isDrawerOpenLayout;
 
   return (
     <div
@@ -32,7 +39,7 @@ export const DrawerWithToolbarWrapper = forwardRef<
         displayMode,
         theme,
         size,
-        hasToolbar: true,
+        hasToolbar,
       })}
     >
       {children}

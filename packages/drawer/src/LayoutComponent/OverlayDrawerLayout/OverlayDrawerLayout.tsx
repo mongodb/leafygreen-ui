@@ -2,14 +2,14 @@ import React, { forwardRef } from 'react';
 
 import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/DrawerLayoutContext';
 
-import {
-  getOverlayDrawerLayoutStyles,
-  getOverlayDrawerWrapperStyles,
-} from './OverlayDrawerLayout.styles';
+import { getOverlayDrawerLayoutStyles } from './OverlayDrawerLayout.styles';
 import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
 import { css } from '@leafygreen-ui/emotion';
 import { GRID_AREA } from '../../constants';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { getDrawerWithToolbarWrapperStyles } from '../../DrawerToolbarLayout/DrawerWithToolbarWrapper/DrawerWithToolbarWrapper.styles';
+import { DisplayMode } from '../../Drawer/Drawer.types';
+import { useDrawerToolbarContext } from '../../DrawerToolbarLayout/DrawerToolbarContext';
 
 /**
  * @internal
@@ -23,8 +23,17 @@ export const OverlayDrawerLayout = forwardRef<
   HTMLDivElement,
   OverlayDrawerLayoutProps
 >(({ children, className, drawer }: OverlayDrawerLayoutProps, forwardedRef) => {
-  const { hasToolbar, isDrawerOpen, size } = useDrawerLayoutContext();
+  const {
+    hasToolbar,
+    isDrawerOpen: isDrawerOpenLayout,
+    size,
+  } = useDrawerLayoutContext();
   const { theme } = useDarkMode();
+  const { isDrawerOpen: isDrawerOpenToolbar } = useDrawerToolbarContext();
+
+  console.log('🦄', { isDrawerOpenLayout, isDrawerOpenToolbar });
+
+  const isDrawerOpen = isDrawerOpenToolbar ?? isDrawerOpenLayout;
 
   return (
     <div
@@ -46,10 +55,12 @@ export const OverlayDrawerLayout = forwardRef<
             {children}
           </div>
           <div
-            className={getOverlayDrawerWrapperStyles({
+            className={getDrawerWithToolbarWrapperStyles({
               isDrawerOpen,
               theme,
               size,
+              hasToolbar,
+              displayMode: DisplayMode.Overlay,
             })}
           >
             {drawer}

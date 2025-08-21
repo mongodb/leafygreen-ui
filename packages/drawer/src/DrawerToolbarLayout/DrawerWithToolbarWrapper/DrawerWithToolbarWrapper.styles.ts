@@ -17,36 +17,44 @@ import { getDrawerWidth } from '../../Drawer/Drawer.utils';
 const MOBILE_BREAKPOINT = breakpoints.Tablet;
 const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
 
-const getOpenOverlayStyles = (size: number) => css`
-  grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
+const getOpenOverlayStyles = (size: number, hasToolbar: boolean) => css`
+  grid-template-columns: ${hasToolbar
+    ? `${DRAWER_TOOLBAR_WIDTH}px ${size}px`
+    : `${size}px`};
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px calc(
-        100vw - ${DRAWER_TOOLBAR_WIDTH * 2}px
-      );
+    grid-template-columns: ${hasToolbar
+      ? `${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${DRAWER_TOOLBAR_WIDTH * 2}px)`
+      : `calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px)`};
   }
 `;
 
-const getClosedOverlayStyles = (size: number) => css`
-  grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
+const getClosedOverlayStyles = (hasToolbar: boolean) => css`
+  grid-template-columns: ${hasToolbar
+    ? `${DRAWER_TOOLBAR_WIDTH}px 0px`
+    : `0px`};
 `;
 
-const openEmbeddedStyles = css`
-  grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px auto;
+const getOpenEmbeddedStyles = (hasToolbar: boolean) => css`
+  grid-template-columns: ${hasToolbar
+    ? `${DRAWER_TOOLBAR_WIDTH}px auto`
+    : `auto`};
   // To show focus outline since the wrapper has overflow hidden
   padding-left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
   margin-left: -${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px calc(
-        100vw - ${DRAWER_TOOLBAR_WIDTH * 2}px
-      );
+    grid-template-columns: ${hasToolbar
+      ? `${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${DRAWER_TOOLBAR_WIDTH * 2}px)`
+      : `calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px)`};
   }
 `;
 
-const closedEmbeddedStyles = css`
+const getClosedEmbeddedStyles = (hasToolbar: boolean) => css`
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
+    grid-template-columns: ${hasToolbar
+      ? `${DRAWER_TOOLBAR_WIDTH}px 0px`
+      : `0px`};
   }
 `;
 
@@ -65,10 +73,20 @@ const getOverlayShadowStyles = ({ theme }: { theme: Theme }) => css`
   }
 `;
 
-const baseStyles = css`
+const getBaseStyles = (hasToolbar: boolean) => css`
   display: grid;
-  grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px 0px;
-  grid-template-areas: '${GRID_AREA.toolbar} ${GRID_AREA.innerDrawer}';
+  grid-template-columns: ${hasToolbar
+    ? `${DRAWER_TOOLBAR_WIDTH}px 0px`
+    : `0px`};
+  grid-template-areas: ${hasToolbar
+    ? `'${GRID_AREA.toolbar} ${GRID_AREA.innerDrawer}'`
+    : `'${GRID_AREA.innerDrawer}'`};
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    grid-template-columns: ${hasToolbar
+      ? `${DRAWER_TOOLBAR_WIDTH}px 0px`
+      : `0px`};
+  }
+
   grid-area: ${GRID_AREA.drawer};
   justify-self: end;
   animation-timing-function: ${TRANSITION_TIMING_FUNCTION};
@@ -92,11 +110,11 @@ const baseStyles = css`
     transform: unset;
     overflow: hidden;
     opacity: 1;
-    border-left: 0;
     border-right: 0;
     height: 100%;
     animation: none;
     width: 100%;
+    ${hasToolbar ? 'border-left: 0;' : ''}
 
     > div::before {
       box-shadow: unset;
@@ -133,14 +151,14 @@ export const getDrawerWithToolbarWrapperStyles = ({
   const size = hasToolbar ? drawerWidth.withToolbar : drawerWidth.default;
 
   return cx(
-    baseStyles,
+    getBaseStyles(hasToolbar),
     {
       [getOverlayShadowStyles({ theme })]: isOverlay,
       [closedOverlayShadowStyles]: isOverlay && !isDrawerOpen,
-      [getOpenOverlayStyles(size)]: isDrawerOpen && isOverlay,
-      [getClosedOverlayStyles(size)]: !isDrawerOpen && isOverlay,
-      [openEmbeddedStyles]: isDrawerOpen && isEmbedded,
-      [closedEmbeddedStyles]: !isDrawerOpen && isEmbedded,
+      [getOpenOverlayStyles(size, hasToolbar)]: isDrawerOpen && isOverlay,
+      [getClosedOverlayStyles(hasToolbar)]: !isDrawerOpen && isOverlay,
+      [getOpenEmbeddedStyles(hasToolbar)]: isDrawerOpen && isEmbedded,
+      [getClosedEmbeddedStyles(hasToolbar)]: !isDrawerOpen && isEmbedded,
     },
     className,
   );
