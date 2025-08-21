@@ -7,7 +7,7 @@ import { useDrawerLayoutContext } from '../../DrawerLayout';
 import { LayoutComponent } from '../../LayoutComponent';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../../utils';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
-import { DrawerWithToolbarWrapper } from '../DrawerWithToolbarWrapper/DrawerWithToolbarWrapper';
+import { LayoutGrid } from '../../LayoutComponent/LayoutGrid';
 
 import {
   DrawerToolbarLayoutContentProps,
@@ -127,72 +127,23 @@ export const DrawerToolbarLayoutContent = forwardRef<
       );
     };
 
-    const renderDrawerWithToolbar = () => {
-      return (
-        <>
-          {shouldRenderToolbar && renderToolbar()}
-          {renderDrawer()}
-        </>
-      );
-    };
+    const renderDrawerWithToolbar = () => (
+      <>
+        {renderToolbar()}
+        {renderDrawer()}
+      </>
+    );
 
     return (
-      <>
-        {/* {shouldRenderToolbar ? (
-          <LayoutComponent {...rest} ref={forwardRef}>
-            <div className={contentStyles}>{children}</div>
-            <DrawerWithToolbarWrapper>
-              {renderToolbar()}
-              {renderDrawer()}
-            </DrawerWithToolbarWrapper>
-          </LayoutComponent>
-        ) : (
-          <LayoutComponent {...rest} drawer={renderDrawer()} ref={forwardRef}>
-            {children}
-          </LayoutComponent>
-        )} */}
-
-        {/* <LayoutComponent {...rest} ref={forwardRef}>
-          <div className={contentStyles}>{children}</div>
-          <DrawerWithToolbarWrapper>
-            {shouldRenderToolbar && renderToolbar()}
-            {renderDrawer()}
-          </DrawerWithToolbarWrapper>
-        </LayoutComponent> */}
-
-        {/* <LayoutComponent
-          {...rest}
-          drawer={renderDrawerWithToolbar()}
-          ref={forwardRef}
-          key={shouldRenderToolbar ? 'toolbar' : 'no-toolbar'}
+      <LayoutComponent {...rest} ref={forwardRef}>
+        <LayoutGrid
+          drawer={
+            shouldRenderToolbar ? renderDrawerWithToolbar() : renderDrawer()
+          }
         >
           {children}
-        </LayoutComponent> */}
-
-        {/* {shouldRenderToolbar ? (
-          <LayoutComponent {...rest} ref={forwardRef}>
-            <DrawerWithToolbarWrapper drawer={renderDrawerWithToolbar()}>
-              {children}
-            </DrawerWithToolbarWrapper>
-          </LayoutComponent>
-        ) : (
-          <LayoutComponent {...rest} ref={forwardRef}>
-            <DrawerWithToolbarWrapper drawer={renderDrawer()}>
-              {children}
-            </DrawerWithToolbarWrapper>
-          </LayoutComponent>
-        )} */}
-
-        <LayoutComponent {...rest} ref={forwardRef}>
-          <DrawerWithToolbarWrapper
-            drawer={
-              shouldRenderToolbar ? renderDrawerWithToolbar() : renderDrawer()
-            }
-          >
-            {children}
-          </DrawerWithToolbarWrapper>
-        </LayoutComponent>
-      </>
+        </LayoutGrid>
+      </LayoutComponent>
     );
   },
 );

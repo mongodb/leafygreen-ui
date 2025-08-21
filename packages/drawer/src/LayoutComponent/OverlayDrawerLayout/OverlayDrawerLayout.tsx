@@ -4,12 +4,12 @@ import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/D
 
 import { getOverlayDrawerLayoutStyles } from './OverlayDrawerLayout.styles';
 import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
-import { DrawerWithToolbarWrapper } from '../../DrawerToolbarLayout/DrawerWithToolbarWrapper/DrawerWithToolbarWrapper';
+import { LayoutGrid } from '../LayoutGrid';
 
 /**
  * @internal
  *
- * This layout wrapper is used to create a layout that has 2 grid columns. The main content is on the left and the drawer is on the right.
+ * This layout wrapper is used to create a layout that has 2 grid columns. The main content is on the left and the drawer and toolbar(if present) is on the right.
  *
  * Since this layout is used for overlay drawers, when the drawer is open, the layout will not shift. Instead the shifting is handled by the children of this component.
  *
@@ -29,9 +29,7 @@ export const OverlayDrawerLayout = forwardRef<
       })}
     >
       {drawer !== undefined ? (
-        <DrawerWithToolbarWrapper drawer={drawer}>
-          {children}
-        </DrawerWithToolbarWrapper>
+        <LayoutGrid drawer={drawer}>{children}</LayoutGrid>
       ) : (
         children
       )}

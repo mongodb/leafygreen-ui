@@ -136,7 +136,7 @@ export const contentStyles = css`
   height: inherit;
 `;
 
-export const getDrawerWithToolbarWrapperStyles = ({
+export const getLayoutGridStyles = ({
   className,
   isDrawerOpen,
   displayMode,

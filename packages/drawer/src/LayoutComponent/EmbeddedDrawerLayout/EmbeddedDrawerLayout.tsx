@@ -4,14 +4,14 @@ import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/D
 
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
-import { DrawerWithToolbarWrapper } from '../../DrawerToolbarLayout/DrawerWithToolbarWrapper/DrawerWithToolbarWrapper';
+import { LayoutGrid } from '../LayoutGrid';
 
 /**
  * @internal
  *
- * This layout wrapper is used to create a layout that has 2 grid columns. The main content is on the left and the drawer is on the right.
+ * This layout wrapper is used to create a layout that has 2 grid columns. The main content is on the left and the drawer and toolbar(if present) is on the right.
  *
- * Since this layout is used for embedded drawers, when the drawer is open, the layout will shift to the right by the width of the drawer + toolbar if it exists.
+ * Since this layout is used for embedded drawers, when the drawer is open, the layout will shift to the right by the width of the drawer + toolbar(if present).
  *
  */
 export const EmbeddedDrawerLayout = forwardRef<
@@ -39,9 +39,7 @@ export const EmbeddedDrawerLayout = forwardRef<
         style={{ '--drawer-width': `${drawerWidth}` } as React.CSSProperties}
       >
         {drawer !== undefined ? (
-          <DrawerWithToolbarWrapper drawer={drawer}>
-            {children}
-          </DrawerWithToolbarWrapper>
+          <LayoutGrid drawer={drawer}>{children}</LayoutGrid>
         ) : (
           children
         )}
