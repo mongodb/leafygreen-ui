@@ -163,7 +163,7 @@ The formatting system supports the following languages:
 
 ### Using Code Formatting
 
-There are three ways to format code with the CodeEditor:
+There are several ways to format code with the CodeEditor:
 
 #### 1. Via Panel Component (Automatic)
 
@@ -185,7 +185,19 @@ function MyComponent() {
 
 #### 2. Via CodeEditor Ref (Programmatic)
 
-Access formatting programmatically through the CodeEditor ref:
+Access formatting programmatically through the CodeEditor ref. See the [Imperative API](#imperative-api) section for complete details and examples.
+
+#### 3. Via useCodeFormatter Hook (Standalone)
+
+Use the formatting functionality independently without the CodeEditor component. For detailed documentation, examples, and module loading requirements, see the [`useCodeFormatter`](#usecodeformatterconfig) hook documentation in the CodeMirror Extension Hooks section.
+
+## Imperative API
+
+The CodeEditor exposes an imperative handle through a ref that provides programmatic access to editor functionality including content manipulation, formatting, and undo/redo operations.
+
+### CodeEditor Ref
+
+Access the editor's imperative methods through a ref:
 
 ```tsx
 import { useRef } from 'react';
@@ -205,6 +217,27 @@ function MyComponent() {
     }
   };
 
+  const handleUndo = () => {
+    if (editorRef.current) {
+      const success = editorRef.current.undo();
+      console.log('Undo successful:', success);
+    }
+  };
+
+  const handleRedo = () => {
+    if (editorRef.current) {
+      const success = editorRef.current.redo();
+      console.log('Redo successful:', success);
+    }
+  };
+
+  const handleGetContents = () => {
+    if (editorRef.current) {
+      const contents = editorRef.current.getContents();
+      console.log('Current contents:', contents);
+    }
+  };
+
   return (
     <>
       <CodeEditor
@@ -213,14 +246,24 @@ function MyComponent() {
         language={LanguageName.javascript}
       />
       <button onClick={handleFormatCode}>Format Code</button>
+      <button onClick={handleUndo}>Undo</button>
+      <button onClick={handleRedo}>Redo</button>
+      <button onClick={handleGetContents}>Get Contents</button>
     </>
   );
 }
 ```
 
-#### 3. Via useCodeFormatter Hook (Standalone)
+### Available Methods
 
-Use the formatting functionality independently without the CodeEditor component. For detailed documentation, examples, and module loading requirements, see the [`useCodeFormatter`](#usecodeformatterconfig) hook documentation in the CodeMirror Extension Hooks section.
+The `CodeEditorHandle` provides the following methods:
+
+- **`getContents()`** - Returns the current text content of the editor
+- **`formatCode()`** - Formats the current code content (returns a Promise)
+- **`isFormattingAvailable`** - Boolean indicating if formatting is available for the current language
+- **`undo()`** - Undoes the last editor action, returns boolean indicating success
+- **`redo()`** - Redoes the last undone action, returns boolean indicating success
+- **`getEditorViewInstance()`** - Returns the underlying CodeMirror EditorView instance
 
 ## Types and Variables
 
@@ -423,7 +466,7 @@ Inserts text into the editor at the specified position.
 
 - `text`: The text to insert
 - `options` _(optional)_: Object with optional position properties
-  - `from`: Starting position for insertion (defaults to 0)
+  - `from`: Starting position for insertion (defaults to end of document)
   - `to`: End position for replacement (optional)
 
 ##### Example
@@ -441,6 +484,79 @@ act(() => {
 expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
   'new content',
 );
+```
+
+#### `editor.getContent()`
+
+Gets the current text content of the editor.
+
+**Returns:** String containing the current editor content
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ defaultValue: 'Hello World' });
+await editor.waitForEditorView();
+
+expect(editor.getContent()).toBe('Hello World');
+```
+
+#### `editor.getHandle()`
+
+Gets the imperative handle instance for testing imperative methods like undo/redo.
+
+**Returns:** The editor handle instance with all imperative methods
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor();
+await editor.waitForEditorView();
+
+const handle = editor.getHandle();
+expect(typeof handle.undo).toBe('function');
+expect(typeof handle.redo).toBe('function');
+```
+
+#### `editor.interactions.undo()`
+
+Performs an undo operation on the editor.
+
+**Returns:** Boolean indicating if undo was successful
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ defaultValue: 'original' });
+await editor.waitForEditorView();
+
+editor.interactions.insertText(' modified');
+expect(editor.getContent()).toBe('original modified');
+
+const success = editor.interactions.undo();
+expect(success).toBe(true);
+expect(editor.getContent()).toBe('original');
+```
+
+#### `editor.interactions.redo()`
+
+Performs a redo operation on the editor.
+
+**Returns:** Boolean indicating if redo was successful
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ defaultValue: 'original' });
+await editor.waitForEditorView();
+
+editor.interactions.insertText(' modified');
+editor.interactions.undo();
+expect(editor.getContent()).toBe('original');
+
+const success = editor.interactions.redo();
+expect(success).toBe(true);
+expect(editor.getContent()).toBe('original modified');
 ```
 
 ### Complete Test Example
@@ -481,8 +597,19 @@ test('comprehensive editor testing', async () => {
     editor.interactions.insertText('\nconsole.log(greeting);', { from: 25 });
   });
 
-  // Verify the new content
-  expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
+  // Verify the new content using getContent()
+  expect(editor.getContent()).toBe(
+    'const greeting = "Hello";\nconsole.log(greeting);',
+  );
+
+  // Test undo/redo functionality
+  const undoSuccess = editor.interactions.undo();
+  expect(undoSuccess).toBe(true);
+  expect(editor.getContent()).toBe('const greeting = "Hello";');
+
+  const redoSuccess = editor.interactions.redo();
+  expect(redoSuccess).toBe(true);
+  expect(editor.getContent()).toBe(
     'const greeting = "Hello";\nconsole.log(greeting);',
   );
 });
