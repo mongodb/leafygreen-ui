@@ -786,22 +786,10 @@ Provides code formatting functionality using language-specific formatters with p
 **Example:**
 
 ```tsx
-import {
-  useFormattingModuleLoaders,
-  useLazyModules,
-} from '@leafygreen-ui/code-editor';
-
 import * as PrettierStandaloneModule from 'prettier/standalone';
 import * as PrettierParserModule from 'prettier/parser-babel';
 
 function MyFormattingComponent() {
-  const formattingModuleLoaders = useFormattingModuleLoaders(
-    LanguageName.javascript,
-  );
-  const { modules: formattingModules } = useLazyModules(
-    formattingModuleLoaders,
-  );
-
   const { formatCode, isFormattingAvailable } = useCodeFormatter({
     props: {
       language: LanguageName.javascript,
