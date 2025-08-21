@@ -24,8 +24,8 @@ const getOpenOverlayStyles = (size: number, hasToolbar: boolean) => css`
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-columns: ${hasToolbar
-      ? `${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${DRAWER_TOOLBAR_WIDTH * 2}px)`
-      : `calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px)`};
+      ? `${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px)`
+      : `100vw`};
   }
 `;
 
@@ -47,8 +47,8 @@ const getOpenEmbeddedStyles = (hasToolbar: boolean) => css`
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     width: auto;
     grid-template-columns: ${hasToolbar
-      ? `${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${DRAWER_TOOLBAR_WIDTH * 2}px)`
-      : `calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px)`};
+      ? `${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px)`
+      : `100vw`};
   }
 `;
 
