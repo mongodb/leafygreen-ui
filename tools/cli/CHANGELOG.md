@@ -1,5 +1,12 @@
 # @lg-tools/cli
 
+## 0.10.5
+
+### Patch Changes
+
+- Updated dependencies [5994b73]
+  - @lg-tools/codemods@0.4.0
+
 ## 0.10.4
 
 ### Patch Changes
