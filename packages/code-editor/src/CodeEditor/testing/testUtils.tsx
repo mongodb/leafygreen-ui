@@ -12,6 +12,7 @@ import {
 
 let editorViewInstance: CodeMirrorView | null = null;
 let getEditorViewFn: (() => CodeMirrorView | null) | null = null;
+let editorHandleInstance: any = null;
 
 /**
  * Waits for the editor view to be available
@@ -234,6 +235,16 @@ function isLineWrappingEnabled() {
 }
 
 /**
+ * Gets the current content of the editor
+ * @returns The current text content of the editor
+ * @throws Error if editor view is not initialized
+ */
+function getContent(): string {
+  const view = ensureEditorView();
+  return view.state.doc.toString();
+}
+
+/**
  * Inserts text into the editor at the specified position
  * @param text - The text to insert
  * @param options - Optional position options
@@ -257,6 +268,36 @@ function insertText(text: string, options?: { from?: number; to?: number }) {
   view.dispatch(transaction);
 }
 
+/**
+ * Performs an undo operation on the editor using the imperative handle
+ * @returns Boolean indicating if undo was successful
+ * @throws Error if editor handle is not available
+ */
+function undo(): boolean {
+  if (!editorHandleInstance) {
+    throw new Error(
+      'Editor handle not available. Make sure to call renderCodeEditor first.',
+    );
+  }
+
+  return editorHandleInstance.undo();
+}
+
+/**
+ * Performs a redo operation on the editor using the imperative handle
+ * @returns Boolean indicating if redo was successful
+ * @throws Error if editor handle is not available
+ */
+function redo(): boolean {
+  if (!editorHandleInstance) {
+    throw new Error(
+      'Editor handle not available. Make sure to call renderCodeEditor first.',
+    );
+  }
+
+  return editorHandleInstance.redo();
+}
+
 export const editor = {
   getBySelector,
   getAllBySelector,
@@ -265,8 +306,11 @@ export const editor = {
   isLineWrappingEnabled,
   isReadOnly,
   getIndentUnit,
+  getContent,
   interactions: {
     insertText,
+    undo,
+    redo,
   },
   waitForEditorView,
 };
@@ -283,6 +327,7 @@ export function renderCodeEditor(props: Partial<CodeEditorProps> = {}) {
       ref={ref => {
         getEditorViewFn = ref?.getEditorViewInstance ?? null;
         editorViewInstance = ref?.getEditorViewInstance() ?? null;
+        editorHandleInstance = ref;
       }}
     />,
   );
