@@ -26,7 +26,6 @@ const baseStyles = css`
   height: 100%;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    /* grid-template-areas: unset; */
   }
 `;
 
@@ -65,15 +64,12 @@ const withoutToolbarBaseStyles = css`
     );
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    /* grid-template-columns: unset;
-    grid-template-rows: 100% 0; */
     grid-template-columns: auto 0;
   }
 `;
 
 const withoutToolbarOpenStyles = css`
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    /* grid-template-rows: 50% 50%; */
     grid-template-columns: auto 0;
   }
 `;

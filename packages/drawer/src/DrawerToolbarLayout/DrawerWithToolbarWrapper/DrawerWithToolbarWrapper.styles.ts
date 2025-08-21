@@ -1,4 +1,4 @@
-import { css, cx, keyframes } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
 import { toolbarClassName } from '@leafygreen-ui/toolbar';
@@ -16,19 +16,6 @@ import { getDrawerWidth } from '../../Drawer/Drawer.utils';
 
 const MOBILE_BREAKPOINT = breakpoints.Tablet;
 const SHADOW_WIDTH = 36; // Width of the shadow padding on the left side
-
-// This animation is used to animate the padding of the drawer when it closes, so that the padding does not block the content underneath it.
-const drawerPaddingOut = keyframes`
-  0% {
-    padding-left: ${SHADOW_WIDTH}px;
-  }
-  99% {
-    padding-left: ${SHADOW_WIDTH}px;
-  }
-  100% {
-    padding-left: 0px;
-  }
-`;
 
 const getOpenOverlayStyles = (size: number) => css`
   grid-template-columns: ${DRAWER_TOOLBAR_WIDTH}px ${size}px;
@@ -63,14 +50,6 @@ const closedEmbeddedStyles = css`
   }
 `;
 
-const baseEmbeddedStyles = css`
-  transition-property: grid-template-columns;
-  transition-duration: ${TRANSITION_DURATION}ms;
-  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
-  grid-template-columns: 1fr auto;
-  width: 100%;
-`;
-
 const getOverlayShadowStyles = ({ theme }: { theme: Theme }) => css`
   ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
 
@@ -98,6 +77,10 @@ const baseStyles = css`
   height: 100%;
   overflow: hidden;
   position: relative;
+  transition-property: grid-template-columns;
+  transition-duration: ${TRANSITION_DURATION}ms;
+  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
+  grid-template-columns: 1fr auto;
 
   .${toolbarClassName} {
     grid-area: ${GRID_AREA.toolbar};
@@ -113,6 +96,7 @@ const baseStyles = css`
     border-right: 0;
     height: 100%;
     animation: none;
+    width: 100%;
 
     > div::before {
       box-shadow: unset;
@@ -120,22 +104,8 @@ const baseStyles = css`
   }
 `;
 
-const baseOverlayStyles = css`
-  transition-property: grid-template-columns;
-  transition-duration: ${TRANSITION_DURATION}ms;
-  transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
-  grid-template-columns: 1fr auto;
-
-  .${drawerClassName} {
-    width: 100%;
-  }
-`;
-
 const closedOverlayShadowStyles = css`
   padding-left: 0;
-  animation-name: ${drawerPaddingOut};
-  animation-timing-function: ${TRANSITION_TIMING_FUNCTION};
-  animation-duration: ${TRANSITION_DURATION}ms;
 
   ::before {
     opacity: 0;
@@ -145,31 +115,30 @@ const closedOverlayShadowStyles = css`
 export const getDrawerWithToolbarWrapperStyles = ({
   className,
   isDrawerOpen,
-  shouldAnimate,
   displayMode,
   theme,
+  hasToolbar,
   size: sizeProp = Size.Default,
 }: {
   className?: string;
   isDrawerOpen?: boolean;
-  shouldAnimate?: boolean;
   displayMode?: DisplayMode;
   theme: Theme;
+  hasToolbar: boolean;
   size?: Size;
 }) => {
   const isOverlay = displayMode === DisplayMode.Overlay;
   const isEmbedded = displayMode === DisplayMode.Embedded;
-  const size = getDrawerWidth({ size: sizeProp }).withToolbar;
+  const drawerWidth = getDrawerWidth({ size: sizeProp });
+  const size = hasToolbar ? drawerWidth.withToolbar : drawerWidth.default;
 
   return cx(
     baseStyles,
     {
       [getOverlayShadowStyles({ theme })]: isOverlay,
       [closedOverlayShadowStyles]: isOverlay && !isDrawerOpen,
-      [baseOverlayStyles]: isOverlay,
       [getOpenOverlayStyles(size)]: isDrawerOpen && isOverlay,
-      [getClosedOverlayStyles(size)]: !isDrawerOpen && isOverlay, // This ensures that the drawer does not animate closed on initial render
-      [baseEmbeddedStyles]: isEmbedded,
+      [getClosedOverlayStyles(size)]: !isDrawerOpen && isOverlay,
       [openEmbeddedStyles]: isDrawerOpen && isEmbedded,
       [closedEmbeddedStyles]: !isDrawerOpen && isEmbedded,
     },

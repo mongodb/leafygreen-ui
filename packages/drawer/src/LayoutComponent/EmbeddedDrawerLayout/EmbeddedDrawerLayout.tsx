@@ -41,7 +41,7 @@ export const EmbeddedDrawerLayout = forwardRef<
           isDrawerResizing,
           size,
         })}
-        // Prevents a new style class everytime the width changes
+        // Prevents a new style class every time the width changes
         style={{ '--drawer-width': `${drawerWidth}` } as React.CSSProperties}
       >
         {drawer !== undefined ? (
