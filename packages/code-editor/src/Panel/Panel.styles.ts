@@ -28,7 +28,7 @@ export const getPanelStyles = (theme: Theme) => {
     border-top-right-radius: ${borderRadius[300]}px;
     display: grid;
     grid-template-columns: auto 1fr auto;
-    grid-template-areas: 'title innerContent buttons';
+    grid-template-areas: 'title inner-content buttons';
   `;
 };
 
