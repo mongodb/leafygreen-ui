@@ -86,7 +86,8 @@ export function Panel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
 
-  const { getContents, formatCode, undo, redo } = useCodeEditorContext();
+  const { getContents, formatCode, undo, redo, downloadContent } =
+    useCodeEditorContext();
 
   const handleFormatClick = async () => {
     if (formatCode) {
@@ -113,6 +114,13 @@ export function Panel({
       redo();
     }
     onRedoClick?.();
+  };
+
+  const handleDownloadClick = () => {
+    if (downloadContent) {
+      downloadContent();
+    }
+    onDownloadClick?.();
   };
 
   return (
@@ -173,7 +181,7 @@ export function Panel({
             </MenuItem>
             <MenuItem
               glyph={<DownloadIcon />}
-              onClick={onDownloadClick}
+              onClick={handleDownloadClick}
               aria-label="Download code"
             >
               Download
