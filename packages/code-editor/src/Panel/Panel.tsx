@@ -86,8 +86,7 @@ export function Panel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
 
-  const { getContents, formatCode, isFormattingAvailable } =
-    useCodeEditorContext();
+  const { getContents, formatCode } = useCodeEditorContext();
 
   const handleFormatClick = async () => {
     if (formatCode) {
