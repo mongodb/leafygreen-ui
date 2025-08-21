@@ -352,20 +352,17 @@ describe('packages/code-editor', () => {
   });
 
   describe('imperative handle', () => {
-    test('exposes undo and redo methods', async () => {
-      let editorRef: any = null;
-      const { editor } = renderCodeEditor({
-        ...({
-          ref: (ref: any) => {
-            editorRef = ref;
-          },
-        } as any),
-      });
+    test('exposes complete imperative handle API', async () => {
+      const { editor } = renderCodeEditor();
 
       await editor.waitForEditorView();
 
-      expect(typeof editorRef?.undo).toBe('function');
-      expect(typeof editorRef?.redo).toBe('function');
+      const handle = editor.getHandle();
+      expect(typeof handle.undo).toBe('function');
+      expect(typeof handle.redo).toBe('function');
+      expect(typeof handle.getContents).toBe('function');
+      expect(typeof handle.formatCode).toBe('function');
+      expect(typeof handle.getEditorViewInstance).toBe('function');
     });
 
     test('undo and redo actually work with content changes', async () => {
