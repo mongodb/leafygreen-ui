@@ -3,6 +3,8 @@ import React, { useRef, useState } from 'react';
 import { useBackdropClick } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { color } from '@leafygreen-ui/tokens';
 import Tooltip, {
   Align,
   hoverDelay,
@@ -54,6 +56,17 @@ export function CodeEditorCopyButton({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
+
+  /**
+   * Gets the appropriate icon fill color based on theme and copied state
+   */
+  const getIconFill = () => {
+    if (copied) {
+      return theme === 'light' ? palette.white : palette.gray.dark3;
+    }
+
+    return disabled ? undefined : color[theme].icon.primary.default;
+  };
 
   /**
    * toggles `tooltipOpen` state
@@ -168,6 +181,7 @@ export function CodeEditorCopyButton({
         <CopyButtonTrigger
           variant={variant}
           copied={copied}
+          iconFill={getIconFill()}
           {...sharedButtonProps}
           ref={buttonRef}
         />
