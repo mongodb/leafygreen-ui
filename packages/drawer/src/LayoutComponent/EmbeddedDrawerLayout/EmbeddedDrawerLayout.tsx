@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 
 import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/DrawerLayoutContext';
+import { LayoutGrid } from '../LayoutGrid';
 
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
-import { LayoutGrid } from '../LayoutGrid';
 
 /**
  * @internal

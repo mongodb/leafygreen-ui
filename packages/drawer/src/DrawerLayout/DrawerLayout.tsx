@@ -1,7 +1,5 @@
 import React, { forwardRef } from 'react';
 
-import { consoleOnce } from '@leafygreen-ui/lib';
-
 import { DisplayMode, Size } from '../Drawer/Drawer.types';
 import { DrawerToolbarLayout } from '../DrawerToolbarLayout';
 import { LayoutComponent } from '../LayoutComponent';
@@ -28,12 +26,6 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
     forwardedRef,
   ) => {
     const hasToolbar = toolbarData && toolbarData.length > 0;
-
-    // if (!hasToolbar) {
-    //   consoleOnce.warn(
-    //     'Using a Drawer without a toolbar is not recommended. To include a toolbar, pass a toolbarData prop containing the desired toolbar items.',
-    //   );
-    // }
 
     return (
       <DrawerLayoutProvider

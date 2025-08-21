@@ -192,10 +192,10 @@ const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
 );
 
 const Component: StoryFn<DrawerLayoutProps> = ({
-  toolbarData = DRAWER_TOOLBAR_DATA,
+  toolbarData: _toolbarDataProp,
   ...args
 }: DrawerLayoutProps) => {
-  const [toolbarDataArr, setToolbarDataArr] = useState(DRAWER_TOOLBAR_DATA);
+  const [toolbarData, setToolbarData] = useState(DRAWER_TOOLBAR_DATA);
 
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
@@ -209,7 +209,7 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
         <Button
           onClick={() =>
-            setToolbarDataArr(prevData =>
+            setToolbarData(prevData =>
               prevData === DRAWER_TOOLBAR_DATA
                 ? DRAWER_TOOLBAR_DATA_NOT_VISIBLE
                 : DRAWER_TOOLBAR_DATA,
@@ -231,7 +231,7 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerLayout {...args} toolbarData={toolbarDataArr}>
+      <DrawerLayout {...args} toolbarData={toolbarData}>
         <MainContent />
       </DrawerLayout>
     </div>

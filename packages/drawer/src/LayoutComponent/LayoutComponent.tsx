@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 
 import LeafyGreenProvider, {
   useDarkMode,
@@ -10,8 +10,6 @@ import { useDrawerLayoutContext } from '../DrawerLayout';
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 import { LayoutComponentProps } from './LayoutComponent.types';
 import { OverlayDrawerLayout } from './OverlayDrawerLayout';
-import { GRID_AREA } from '../constants';
-import { css } from '@leafygreen-ui/emotion';
 
 /**
  * @internal
@@ -26,10 +24,6 @@ export const LayoutComponent = forwardRef<HTMLDivElement, LayoutComponentProps>(
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
     const { displayMode } = useDrawerLayoutContext();
-
-    useEffect(() => {
-      console.log('🥬 initial render');
-    }, []);
 
     const Component =
       displayMode === DisplayMode.Overlay

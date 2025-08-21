@@ -72,8 +72,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const [previousWidth, setPreviousWidth] = useState(0);
 
-    // const [initialSize, setInitialSize] = useState(0);
-
     // Returns the resolved displayMode, open state, and onClose function based on the component and context props.
     const { displayMode, open, onClose, size } = useResolvedDrawerProps({
       componentDisplayMode: displayModeProp,
@@ -89,15 +87,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     // Returns the resolved drawer sizes based on whether a toolbar is present.
     const { initialSize, resizableMinWidth, resizableMaxWidth } =
       getResolvedDrawerSizes(size, hasToolbar);
-
-    // const initialSizeEmbedded =
-    //   drawerWidth === 0
-    //     ? initialSize
-    //     : hasToolbar
-    //     ? drawerWidth - 48
-    //     : drawerWidth;
-
-    // console.log('🐙', { initialSizeEmbedded });
 
     const isEmbedded = displayMode === DisplayMode.Embedded;
     const isOverlay = displayMode === DisplayMode.Overlay;
@@ -168,7 +157,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const {
       resizableRef,
       size: drawerSize,
-      setSize,
       getResizerProps,
       isResizing,
     } = useResizable<HTMLDialogElement | HTMLDivElement>({
@@ -179,18 +167,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       position: Position.Right,
     });
 
+    /**
+     * On initial render, if the drawer is embedded and there was a previous width, that means that the previous drawer was open and may have been resized. This takes that previous width and uses it as the initial size.
+     */
     useEffect(() => {
-      console.log('🥊drawer render', {
-        drawerWidth,
-        open,
-        hasToolbar,
-        initialSize,
-      });
       if (open && isEmbedded && drawerWidth !== 0) {
-        console.log('😡');
         const prevWidth = hasToolbar ? drawerWidth + 48 : drawerWidth - 48;
         setPreviousWidth(prevWidth);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
