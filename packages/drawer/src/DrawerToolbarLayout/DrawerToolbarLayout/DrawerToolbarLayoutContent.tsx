@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useLayoutEffect } from 'react';
+import React, { forwardRef, useLayoutEffect } from 'react';
 
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 
@@ -50,7 +50,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
     const lgIds = getLgIds(dataLgId);
 
     // This updates the drawer open state when the toolbar is inter
-    useEffect(() => {
+    useLayoutEffect(() => {
       setIsDrawerOpen(isDrawerOpen);
     }, [isDrawerOpen, setIsDrawerOpen]);
 
@@ -165,6 +165,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
           {...rest}
           drawer={renderDrawerWithToolbar()}
           ref={forwardRef}
+          key={shouldRenderToolbar ? 'toolbar' : 'no-toolbar'}
         >
           {children}
         </LayoutComponent>

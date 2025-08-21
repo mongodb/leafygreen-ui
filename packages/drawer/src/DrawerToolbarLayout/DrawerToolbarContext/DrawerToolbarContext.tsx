@@ -14,11 +14,8 @@ import {
   DrawerToolbarProviderProps,
 } from './DrawerToolbarContext.types';
 
-export const DrawerToolbarContext = createContext<
-  Partial<DrawerToolbarContextType>
->({
-  isDrawerOpen: undefined,
-});
+export const DrawerToolbarContext =
+  createContext<DrawerToolbarContextType | null>(null);
 
 export const DrawerToolbarProvider = ({
   children,
@@ -92,11 +89,11 @@ export const DrawerToolbarProvider = ({
 export const useDrawerToolbarContext = () => {
   const context = useContext(DrawerToolbarContext);
 
-  // if (!context) {
-  //   throw new Error(
-  //     'useDrawerToolbarContext must be used within a DrawerToolbarProvider',
-  //   );
-  // }
+  if (!context) {
+    throw new Error(
+      'useDrawerToolbarContext must be used within a DrawerToolbarProvider',
+    );
+  }
 
   return context;
 };

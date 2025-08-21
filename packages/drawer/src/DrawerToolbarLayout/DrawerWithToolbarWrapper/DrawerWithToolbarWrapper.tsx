@@ -7,6 +7,8 @@ import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 
 import { getDrawerWithToolbarWrapperStyles } from './DrawerWithToolbarWrapper.styles';
 import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types';
+import { GRID_AREA } from '../../constants';
+import { css } from '@leafygreen-ui/emotion';
 
 /**
  * @internal
@@ -18,33 +20,50 @@ import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types'
 export const DrawerWithToolbarWrapper = forwardRef<
   HTMLDivElement,
   DrawerWithToolbarWrapperProps
->(({ children, className }: DrawerWithToolbarWrapperProps, forwardedRef) => {
-  const { theme } = useDarkMode();
-  const {
-    displayMode,
-    size,
-    hasToolbar = false,
-    isDrawerOpen: isDrawerOpenLayout,
-  } = useDrawerLayoutContext();
-  const { isDrawerOpen: isDrawerOpenToolbar } = useDrawerToolbarContext();
+>(
+  (
+    { children, className, drawer }: DrawerWithToolbarWrapperProps,
+    forwardedRef,
+  ) => {
+    const { theme } = useDarkMode();
+    const {
+      displayMode,
+      size,
+      hasToolbar = false,
+      isDrawerOpen,
+      // isDrawerOpen: isDrawerOpenLayout,
+    } = useDrawerLayoutContext();
+    // const { isDrawerOpen: isDrawerOpenToolbar } = useDrawerToolbarContext();
 
-  const isDrawerOpen = isDrawerOpenToolbar ?? isDrawerOpenLayout;
+    // const isDrawerOpen = isDrawerOpenToolbar ?? isDrawerOpenLayout;
 
-  return (
-    <div
-      ref={forwardedRef}
-      className={getDrawerWithToolbarWrapperStyles({
-        className,
-        isDrawerOpen,
-        displayMode,
-        theme,
-        size,
-        hasToolbar,
-      })}
-    >
-      {children}
-    </div>
-  );
-});
+    return (
+      <>
+        <div
+          className={css`
+            grid-area: ${GRID_AREA.content};
+            overflow: scroll;
+            height: inherit;
+          `}
+        >
+          {children}
+        </div>
+        <div
+          ref={forwardedRef}
+          className={getDrawerWithToolbarWrapperStyles({
+            className,
+            isDrawerOpen,
+            displayMode,
+            theme,
+            size,
+            hasToolbar,
+          })}
+        >
+          {drawer}
+        </div>
+      </>
+    );
+  },
+);
 
 DrawerWithToolbarWrapper.displayName = 'DrawerWithToolbarWrapper';

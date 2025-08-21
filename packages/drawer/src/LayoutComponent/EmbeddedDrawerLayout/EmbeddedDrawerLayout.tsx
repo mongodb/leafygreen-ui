@@ -4,11 +4,7 @@ import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/D
 
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
-import { css } from '@leafygreen-ui/emotion';
-import { GRID_AREA } from '../../constants';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { DisplayMode } from '../../Drawer/Drawer.types';
-import { getDrawerWithToolbarWrapperStyles } from '../../DrawerToolbarLayout/DrawerWithToolbarWrapper/DrawerWithToolbarWrapper.styles';
+import { DrawerWithToolbarWrapper } from '../../DrawerToolbarLayout/DrawerWithToolbarWrapper/DrawerWithToolbarWrapper';
 
 /**
  * @internal
@@ -28,7 +24,6 @@ export const EmbeddedDrawerLayout = forwardRef<
   ) => {
     const { hasToolbar, isDrawerOpen, drawerWidth, isDrawerResizing, size } =
       useDrawerLayoutContext();
-    const { theme } = useDarkMode();
 
     return (
       <div
@@ -44,28 +39,9 @@ export const EmbeddedDrawerLayout = forwardRef<
         style={{ '--drawer-width': `${drawerWidth}` } as React.CSSProperties}
       >
         {drawer !== undefined ? (
-          <>
-            <div
-              className={css`
-                grid-area: ${GRID_AREA.content};
-                overflow: scroll;
-                height: inherit;
-              `}
-            >
-              {children}
-            </div>
-            <div
-              className={getDrawerWithToolbarWrapperStyles({
-                isDrawerOpen,
-                theme,
-                size,
-                hasToolbar,
-                displayMode: DisplayMode.Embedded,
-              })}
-            >
-              {drawer}
-            </div>
-          </>
+          <DrawerWithToolbarWrapper drawer={drawer}>
+            {children}
+          </DrawerWithToolbarWrapper>
         ) : (
           children
         )}

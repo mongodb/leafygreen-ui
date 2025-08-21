@@ -4,12 +4,7 @@ import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/D
 
 import { getOverlayDrawerLayoutStyles } from './OverlayDrawerLayout.styles';
 import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
-import { css } from '@leafygreen-ui/emotion';
-import { GRID_AREA } from '../../constants';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { getDrawerWithToolbarWrapperStyles } from '../../DrawerToolbarLayout/DrawerWithToolbarWrapper/DrawerWithToolbarWrapper.styles';
-import { DisplayMode } from '../../Drawer/Drawer.types';
-import { useDrawerToolbarContext } from '../../DrawerToolbarLayout/DrawerToolbarContext';
+import { DrawerWithToolbarWrapper } from '../../DrawerToolbarLayout/DrawerWithToolbarWrapper/DrawerWithToolbarWrapper';
 
 /**
  * @internal
@@ -23,17 +18,7 @@ export const OverlayDrawerLayout = forwardRef<
   HTMLDivElement,
   OverlayDrawerLayoutProps
 >(({ children, className, drawer }: OverlayDrawerLayoutProps, forwardedRef) => {
-  const {
-    hasToolbar,
-    isDrawerOpen: isDrawerOpenLayout,
-    size,
-  } = useDrawerLayoutContext();
-  const { theme } = useDarkMode();
-  const { isDrawerOpen: isDrawerOpenToolbar } = useDrawerToolbarContext();
-
-  console.log('🦄', { isDrawerOpenLayout, isDrawerOpenToolbar });
-
-  const isDrawerOpen = isDrawerOpenToolbar ?? isDrawerOpenLayout;
+  const { hasToolbar } = useDrawerLayoutContext();
 
   return (
     <div
@@ -44,28 +29,9 @@ export const OverlayDrawerLayout = forwardRef<
       })}
     >
       {drawer !== undefined ? (
-        <>
-          <div
-            className={css`
-              grid-area: ${GRID_AREA.content};
-              overflow: scroll;
-              height: inherit;
-            `}
-          >
-            {children}
-          </div>
-          <div
-            className={getDrawerWithToolbarWrapperStyles({
-              isDrawerOpen,
-              theme,
-              size,
-              hasToolbar,
-              displayMode: DisplayMode.Overlay,
-            })}
-          >
-            {drawer}
-          </div>
-        </>
+        <DrawerWithToolbarWrapper drawer={drawer}>
+          {children}
+        </DrawerWithToolbarWrapper>
       ) : (
         children
       )}

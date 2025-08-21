@@ -1,3 +1,9 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export type DrawerWithToolbarWrapperProps = HTMLElementProps<'div'>;
+export type DrawerWithToolbarWrapperProps = Omit<
+  HTMLElementProps<'div'>,
+  'children'
+> & {
+  drawer: React.ReactNode;
+  children: React.ReactNode;
+};
