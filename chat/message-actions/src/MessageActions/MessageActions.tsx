@@ -55,7 +55,7 @@ export function MessageActions({
   const [rating, setRating] = useState<MessageRatingValue>(
     MessageRatingValue.Unselected,
   );
-  const [feedback, setFeedback] = useState<string | undefined>(undefined);
+  const [feedback, setFeedback] = useState<string>('');
   const [feedbackFormState, setFeedbackFormState] = useState<FormState>(
     FormState.Unset,
   );
