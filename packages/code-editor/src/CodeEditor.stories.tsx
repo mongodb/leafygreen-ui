@@ -183,7 +183,7 @@ const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 export const LiveExample = Template.bind({});
 
 export const WithPanel = Template.bind({});
-const language = LanguageName.html;
+const language = LanguageName.tsx;
 WithPanel.args = {
   language,
   defaultValue: codeSnippets[language],
