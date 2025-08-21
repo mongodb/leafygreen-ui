@@ -86,7 +86,7 @@ export function Panel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
 
-  const { getContents, formatCode } = useCodeEditorContext();
+  const { getContents, formatCode, undo, redo } = useCodeEditorContext();
 
   const handleFormatClick = async () => {
     if (formatCode) {
@@ -99,6 +99,20 @@ export function Panel({
     } else {
       onFormatClick?.();
     }
+  };
+
+  const handleUndoClick = () => {
+    if (undo) {
+      undo();
+    }
+    onUndoClick?.();
+  };
+
+  const handleRedoClick = () => {
+    if (redo) {
+      redo();
+    }
+    onRedoClick?.();
   };
 
   return (
@@ -145,14 +159,14 @@ export function Panel({
           >
             <MenuItem
               glyph={<UndoIcon />}
-              onClick={onUndoClick}
+              onClick={handleUndoClick}
               aria-label="Undo changes"
             >
               Undo
             </MenuItem>
             <MenuItem
               glyph={<RedoIcon />}
-              onClick={onRedoClick}
+              onClick={handleRedoClick}
               aria-label="Redo changes"
             >
               Redo
