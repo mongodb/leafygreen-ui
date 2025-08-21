@@ -4,6 +4,77 @@ import { LanguageName } from '../extensions/useLanguageExtension';
 
 import { useCodeFormatter } from './useCodeFormatter';
 
+// Mock only WASM formatters that don't work in Jest environment
+// Prettier-based formatters (JS/TS/JSON/CSS/HTML) work fine with real modules
+jest.mock('../useLazyModules', () => {
+  const actualUseLazyModules = jest.requireActual('../useLazyModules');
+
+  return {
+    useLazyModules: (moduleLoaders: any) => {
+      const { modules } = actualUseLazyModules.useLazyModules(moduleLoaders);
+
+      // Only mock WASM modules that fail to load in Jest
+      if (moduleLoaders && moduleLoaders['@wasm-fmt/clang-format']) {
+        modules['@wasm-fmt/clang-format'] = {
+          format: (code: string) => {
+            // Mock Java formatting
+            if (code.includes('public class Test')) {
+              return 'public class Test {\n  public static void main(String[] args) {\n    System.out.println("Hello");\n  }\n}\n';
+            }
+
+            // Mock C++ formatting
+            if (code.includes('#include<iostream>')) {
+              return '#include <iostream>\nint main() {\n  std::cout << "Hello" << std::endl;\n  return 0;\n}\n';
+            }
+
+            // Mock C# formatting
+            if (code.includes('class Program')) {
+              return 'using System;\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine("Hello");\n    }\n}\n';
+            }
+
+            return code;
+          },
+          default: async function () {
+            return this;
+          },
+        };
+      }
+
+      if (moduleLoaders && moduleLoaders['@wasm-fmt/gofmt']) {
+        modules['@wasm-fmt/gofmt'] = {
+          format: (code: string) => {
+            if (code.includes('package main')) {
+              return 'package main\n\nimport "fmt"\n\nfunc main() {\n\tfmt.Println("Hello")\n}\n';
+            }
+
+            return code;
+          },
+          default: async function () {
+            return this;
+          },
+        };
+      }
+
+      if (moduleLoaders && moduleLoaders['@wasm-fmt/ruff_fmt']) {
+        modules['@wasm-fmt/ruff_fmt'] = {
+          format: (code: string) => {
+            if (code.includes('def greet(name):')) {
+              return 'def greet(name):\n    print(f"Hello, {name}!")\n\n\ngreet("World")\n';
+            }
+
+            return code;
+          },
+          default: async function () {
+            return this;
+          },
+        };
+      }
+
+      return { modules };
+    },
+  };
+});
+
 // Test data: unformatted input -> expected formatted output
 const formattingTestCases = {
   [LanguageName.javascript]: {
@@ -106,20 +177,15 @@ describe('useCodeFormatter', () => {
       LanguageName.javascript,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.javascript];
-      const formatted = await formatCode(testCase.unformatted);
+    expect(isAvailable).toBe(true);
 
-      // Test that formatting actually occurred (should be different from input)
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('function greet(name)');
-      expect(formatted).toContain("greet('World')");
-    } else {
-      // If formatting is not available, test that it returns original code
-      const testCase = formattingTestCases[LanguageName.javascript];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
+    const testCase = formattingTestCases[LanguageName.javascript];
+    const formatted = await formatCode(testCase.unformatted);
+
+    // Test that formatting actually occurred (should be different from input)
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('function greet(name)');
+    expect(formatted).toContain("greet('World')");
   });
 
   test('reports formatting as available for JavaScript', async () => {
@@ -127,12 +193,7 @@ describe('useCodeFormatter', () => {
       LanguageName.javascript,
     );
 
-    if (isAvailable) {
-      expect(isAvailable).toBe(true);
-    } else {
-      // Test that formatting is correctly reported as unavailable
-      expect(isAvailable).toBe(false);
-    }
+    expect(isAvailable).toBe(true);
   });
 
   test('formats TypeScript code correctly', async () => {
@@ -140,19 +201,14 @@ describe('useCodeFormatter', () => {
       LanguageName.typescript,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.typescript];
-      const formatted = await formatCode(testCase.unformatted);
+    expect(isAvailable).toBe(true);
 
-      // Test that formatting actually occurred
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('function greet(name: string): void');
-    } else {
-      // Test that it returns original code when modules aren't available
-      const testCase = formattingTestCases[LanguageName.typescript];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
+    const testCase = formattingTestCases[LanguageName.typescript];
+    const formatted = await formatCode(testCase.unformatted);
+
+    // Test that formatting actually occurred
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('function greet(name: string): void');
   });
 
   test('formats JSON code correctly', async () => {
@@ -160,20 +216,15 @@ describe('useCodeFormatter', () => {
       LanguageName.json,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.json];
-      const formatted = await formatCode(testCase.unformatted);
+    expect(isAvailable).toBe(true);
 
-      // Test that formatting actually occurred (JSON should be prettified)
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('\n'); // Should have newlines
-      expect(formatted).toMatch(/"name":\s+"test"/); // Should have spacing
-    } else {
-      // Test that it returns original code when modules aren't available
-      const testCase = formattingTestCases[LanguageName.json];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
+    const testCase = formattingTestCases[LanguageName.json];
+    const formatted = await formatCode(testCase.unformatted);
+
+    // Test that formatting actually occurred (JSON should be prettified)
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('\n'); // Should have newlines
+    expect(formatted).toMatch(/"name":\s+"test"/); // Should have spacing
   });
 
   test('formats CSS code correctly', async () => {
@@ -181,141 +232,101 @@ describe('useCodeFormatter', () => {
       LanguageName.css,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.css];
-      const formatted = await formatCode(testCase.unformatted);
+    expect(isAvailable).toBe(true);
 
-      // Test that formatting actually occurred
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('body {');
-      expect(formatted).toContain('h1 {');
-    } else {
-      // Test that it returns original code when modules aren't available
-      const testCase = formattingTestCases[LanguageName.css];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
+    const testCase = formattingTestCases[LanguageName.css];
+    const formatted = await formatCode(testCase.unformatted);
+
+    // Test that formatting actually occurred
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('body {');
+    expect(formatted).toContain('h1 {');
   });
 
-  test.only('formats HTML code correctly', async () => {
+  test('formats HTML code correctly', async () => {
     const { formatCode, isAvailable } = await testFormattingForLanguage(
       LanguageName.html,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.html];
-      const formatted = await formatCode(testCase.unformatted);
+    expect(isAvailable).toBe(true);
 
-      // Test that formatting actually occurred
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('<html>');
-      expect(formatted).toContain('<head>');
-      expect(formatted).toContain('<body>');
-    } else {
-      // Test that it returns original code when modules aren't available
-      const testCase = formattingTestCases[LanguageName.html];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
+    const testCase = formattingTestCases[LanguageName.html];
+    const formatted = await formatCode(testCase.unformatted);
+
+    // Test that formatting actually occurred
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('<html>');
+    expect(formatted).toContain('<head>');
+    expect(formatted).toContain('<body>');
   });
 
   test('formats Java code correctly', async () => {
-    // WASM modules take ~3 seconds to load in Jest
+    // WASM modules are mocked in Jest since they don't work in Node environment
     const { formatCode, isAvailable } = await testFormattingForLanguage(
       LanguageName.java,
-      3000,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.java];
-      const formatted = await formatCode(testCase.unformatted);
+    expect(isAvailable).toBe(true);
 
-      // Test that formatting actually occurred
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('public static void main(String[] args)');
-    } else {
-      // If modules don't load, should return original code
-      const testCase = formattingTestCases[LanguageName.java];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
-  }, 10000); // 10 second Jest timeout
+    const testCase = formattingTestCases[LanguageName.java];
+    const formatted = await formatCode(testCase.unformatted);
+
+    // Test that formatting actually occurred
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('public static void main(String[] args)');
+  });
 
   test('formats C++ code correctly', async () => {
     const { formatCode, isAvailable } = await testFormattingForLanguage(
       LanguageName.cpp,
-      3000,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.cpp];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('#include <iostream>');
-    } else {
-      // If modules don't load, should return original code
-      const testCase = formattingTestCases[LanguageName.cpp];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
-  }, 10000);
+    expect(isAvailable).toBe(true);
+
+    const testCase = formattingTestCases[LanguageName.cpp];
+    const formatted = await formatCode(testCase.unformatted);
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('#include <iostream>');
+  });
 
   test('formats C# code correctly', async () => {
     const { formatCode, isAvailable } = await testFormattingForLanguage(
       LanguageName.csharp,
-      3000,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.csharp];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('class Program');
-    } else {
-      // If modules don't load, should return original code
-      const testCase = formattingTestCases[LanguageName.csharp];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
-  }, 10000);
+    expect(isAvailable).toBe(true);
+
+    const testCase = formattingTestCases[LanguageName.csharp];
+    const formatted = await formatCode(testCase.unformatted);
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('class Program');
+  });
 
   test('formats Go code correctly', async () => {
     const { formatCode, isAvailable } = await testFormattingForLanguage(
       LanguageName.go,
-      3000,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.go];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('import "fmt"');
-    } else {
-      // If modules don't load, should return original code
-      const testCase = formattingTestCases[LanguageName.go];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
-  }, 10000);
+    expect(isAvailable).toBe(true);
+
+    const testCase = formattingTestCases[LanguageName.go];
+    const formatted = await formatCode(testCase.unformatted);
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('import "fmt"');
+  });
 
   test('formats Python code correctly', async () => {
     const { formatCode, isAvailable } = await testFormattingForLanguage(
       LanguageName.python,
-      3000,
     );
 
-    if (isAvailable) {
-      const testCase = formattingTestCases[LanguageName.python];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).not.toBe(testCase.unformatted);
-      expect(formatted).toContain('def greet(name):');
-    } else {
-      // If modules don't load, should return original code
-      const testCase = formattingTestCases[LanguageName.python];
-      const formatted = await formatCode(testCase.unformatted);
-      expect(formatted).toBe(testCase.unformatted);
-    }
-  }, 10000);
+    expect(isAvailable).toBe(true);
+
+    const testCase = formattingTestCases[LanguageName.python];
+    const formatted = await formatCode(testCase.unformatted);
+    expect(formatted).not.toBe(testCase.unformatted);
+    expect(formatted).toContain('def greet(name):');
+  });
 
   describe('Unsupported languages', () => {
     unsupportedLanguages.forEach(language => {
