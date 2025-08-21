@@ -116,11 +116,7 @@ export function Panel({
             align="top"
             justify="middle"
             trigger={
-              <IconButton
-                onClick={handleFormatClick}
-                disabled={showFormatButton && !isFormattingAvailable}
-                aria-label="Format code"
-              >
+              <IconButton onClick={handleFormatClick} aria-label="Format code">
                 <FormatIcon />
               </IconButton>
             }
