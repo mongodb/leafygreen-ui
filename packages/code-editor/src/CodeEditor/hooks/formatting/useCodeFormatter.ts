@@ -28,7 +28,7 @@ export function useCodeFormatter({
   // Extract editor configuration for consistent formatting
   const editorTabWidth = props.indentSize ?? 2;
   const editorUseTabs = props.indentUnit === 'tab';
-  const [isFormattingAvailable, setIsFormattingReady] = useState(false);
+  const [isFormattingAvailable, setIsFormattingAvailable] = useState(false);
 
   /**
    * Formats code using the appropriate formatter based on the selected language.
@@ -52,7 +52,7 @@ export function useCodeFormatter({
   };
 
   useEffect(() => {
-    setIsFormattingReady(
+    setIsFormattingAvailable(
       (props.language && areModulesLoaded(props.language, modules)) || false,
     );
   }, [modules, props.language]);
