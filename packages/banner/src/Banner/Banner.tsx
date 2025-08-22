@@ -1,23 +1,14 @@
 import React, { forwardRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import {
-  bodyTypeScaleStyles,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import BannerDismissButton from '../BannerDismissButton';
 import BannerIcon from '../BannerIcon';
 import { BannerProps, Variant } from '../shared.types';
 
-import {
-  bannerDismissibleStyles,
-  baseBannerStyles,
-  textStyles,
-  variantStyles,
-} from './Banner.styles';
+import { getBannerStyles, getChildrenContainerStyles } from './Banner.styles';
 
 /**
  *
@@ -52,15 +43,13 @@ const Banner = forwardRef<HTMLDivElement, BannerProps>(
       <div
         role="alert"
         ref={ref}
-        className={cx(
-          baseBannerStyles,
-          bodyTypeScaleStyles[baseFontSize],
-          variantStyles[theme][variant],
-          {
-            [bannerDismissibleStyles]: dismissible,
-          },
+        className={getBannerStyles({
+          baseFontSize,
           className,
-        )}
+          dismissible,
+          theme,
+          variant,
+        })}
         {...rest}
       >
         <BannerIcon
@@ -69,7 +58,14 @@ const Banner = forwardRef<HTMLDivElement, BannerProps>(
           baseFontSize={baseFontSize}
           variant={variant}
         />
-        <div className={textStyles(image != null, dismissible)}>{children}</div>
+        <div
+          className={getChildrenContainerStyles({
+            dismissible,
+            hasImage: image !== null,
+          })}
+        >
+          {children}
+        </div>
         {dismissible && (
           <BannerDismissButton
             theme={theme}

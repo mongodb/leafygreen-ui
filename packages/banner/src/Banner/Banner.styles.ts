@@ -1,10 +1,17 @@
-import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
-import { anchorClassName } from '@leafygreen-ui/typography';
+import { BaseFontSize, fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
+import {
+  anchorClassName,
+  bodyTypeScaleStyles,
+} from '@leafygreen-ui/typography';
 
 import { Variant } from '../shared.types';
+
+export const bannerChildrenContainerClassName = createUniqueClassName(
+  'banner-children_container',
+);
 
 export const baseBannerStyles = css`
   position: relative;
@@ -257,11 +264,34 @@ export const variantStyles: Record<Theme, Record<Variant, string>> = {
   },
 };
 
-export const textStyles = (image: boolean, dismissible: boolean) => css`
+export const getBannerStyles = ({
+  baseFontSize,
+  className,
+  dismissible,
+  theme,
+  variant,
+}: {
+  baseFontSize: BaseFontSize;
+  className?: string;
+  dismissible: boolean;
+  theme: Theme;
+  variant: Variant;
+}) =>
+  cx(
+    baseBannerStyles,
+    bodyTypeScaleStyles[baseFontSize],
+    variantStyles[theme][variant],
+    {
+      [bannerDismissibleStyles]: dismissible,
+    },
+    className,
+  );
+
+export const textStyles = (hasImage: boolean, dismissible: boolean) => css`
   align-self: center;
   flex-grow: 1;
-  margin-left: ${getTextMargins(image, dismissible).marginLeft};
-  margin-right: ${getTextMargins(image, dismissible).marginRight};
+  margin-left: ${getTextMargins(hasImage, dismissible).marginLeft};
+  margin-right: ${getTextMargins(hasImage, dismissible).marginRight};
 
   .${anchorClassName}, a {
     font-size: inherit;
@@ -289,6 +319,14 @@ export const textStyles = (image: boolean, dismissible: boolean) => css`
     }
   }
 `;
+
+export const getChildrenContainerStyles = ({
+  dismissible,
+  hasImage,
+}: {
+  dismissible: boolean;
+  hasImage: boolean;
+}) => cx(textStyles(hasImage, dismissible), bannerChildrenContainerClassName);
 
 export const getTextMargins = (image: boolean, dismissible: boolean) => {
   const defaultIconSize = 16;
