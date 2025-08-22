@@ -13,8 +13,8 @@ import {
   baseStyles,
   renderedImageStyles,
   themeStyles,
-} from './styles';
-import BannerIconProps from './types';
+} from './BannerIcon.styles';
+import { BannerIconProps } from './BannerIcon.types';
 
 const Icons: Record<
   Variant,
