@@ -298,7 +298,7 @@ export const getResizerStyles = ({
   cx(
     css`
       position: absolute;
-      left: 2px;
+      left: 0px;
     `,
     {
       [css`

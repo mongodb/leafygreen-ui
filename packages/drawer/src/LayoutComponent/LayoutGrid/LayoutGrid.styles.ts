@@ -35,14 +35,14 @@ const getClosedOverlayStyles = (hasToolbar: boolean) => css`
     : `0px`};
 `;
 
-const getOpenEmbeddedStyles = (hasToolbar: boolean) => css`
+const baseEmbeddedStyles = css`
   width: 100%;
+`;
+
+const getOpenEmbeddedStyles = (hasToolbar: boolean) => css`
   grid-template-columns: ${hasToolbar
     ? `${DRAWER_TOOLBAR_WIDTH}px auto`
     : `auto`};
-  // To show focus outline since the wrapper has overflow hidden
-  padding-left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
-  margin-left: -${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     width: auto;
@@ -50,6 +50,12 @@ const getOpenEmbeddedStyles = (hasToolbar: boolean) => css`
       ? `${DRAWER_TOOLBAR_WIDTH}px calc(100vw - ${DRAWER_TOOLBAR_WIDTH}px)`
       : `100vw`};
   }
+`;
+
+const openEmbeddedPaddingStyles = css`
+  // Allows the focus outline since the wrapper has overflow hidden
+  padding-left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
+  margin-left: -${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px;
 `;
 
 const getClosedEmbeddedStyles = (hasToolbar: boolean) => css`
@@ -131,6 +137,36 @@ export const contentStyles = css`
   height: inherit;
 `;
 
+export const getEmbeddedStyles = ({
+  hasToolbar,
+  isDrawerOpen,
+}: {
+  hasToolbar: boolean;
+  isDrawerOpen?: boolean;
+}) =>
+  cx(baseEmbeddedStyles, {
+    [getOpenEmbeddedStyles(hasToolbar)]: isDrawerOpen,
+    [openEmbeddedPaddingStyles]: isDrawerOpen && hasToolbar,
+    [getClosedEmbeddedStyles(hasToolbar)]: !isDrawerOpen,
+  });
+
+export const getOverlayStyles = ({
+  hasToolbar,
+  isDrawerOpen,
+  size,
+  theme,
+}: {
+  hasToolbar: boolean;
+  isDrawerOpen?: boolean;
+  size: number;
+  theme: Theme;
+}) =>
+  cx(getOverlayShadowStyles({ theme }), {
+    [cx(closedOverlayShadowStyles, getClosedOverlayStyles(hasToolbar))]:
+      !isDrawerOpen,
+    [getOpenOverlayStyles(size, hasToolbar)]: isDrawerOpen,
+  });
+
 export const getLayoutGridStyles = ({
   className,
   isDrawerOpen,
@@ -154,12 +190,8 @@ export const getLayoutGridStyles = ({
   return cx(
     getBaseStyles(hasToolbar),
     {
-      [getOverlayShadowStyles({ theme })]: isOverlay,
-      [closedOverlayShadowStyles]: isOverlay && !isDrawerOpen,
-      [getOpenOverlayStyles(size, hasToolbar)]: isDrawerOpen && isOverlay,
-      [getClosedOverlayStyles(hasToolbar)]: !isDrawerOpen && isOverlay,
-      [getOpenEmbeddedStyles(hasToolbar)]: isDrawerOpen && isEmbedded,
-      [getClosedEmbeddedStyles(hasToolbar)]: !isDrawerOpen && isEmbedded,
+      [getOverlayStyles({ hasToolbar, isDrawerOpen, size, theme })]: isOverlay,
+      [getEmbeddedStyles({ hasToolbar, isDrawerOpen })]: isEmbedded,
     },
     className,
   );

@@ -29,7 +29,7 @@ export const OverlayDrawerLayout = forwardRef<
         hasToolbar,
       })}
     >
-      {hasDrawerProp !== undefined ? (
+      {hasDrawerProp ? (
         <LayoutGrid drawer={drawer}>{children}</LayoutGrid>
       ) : (
         children
