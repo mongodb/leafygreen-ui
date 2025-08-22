@@ -10,6 +10,7 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
+import { VerifiedAnswerBanner } from '../MessageBanner';
 import { Message, MessageProps, MessageSourceType } from '..';
 
 const MARKDOWN_TEXT = `
@@ -164,17 +165,22 @@ export const WithMessageRating: StoryObj<MessageStoryProps> = {
   },
 };
 
+const getVerifiedAnswerChildren = () => (
+  <>
+    <MessageFeedback />
+    <VerifiedAnswerBanner
+      verifier="MongoDB Staff"
+      verifiedAt={new Date('2023-08-24T16:20:00Z')}
+      learnMoreUrl="https://mongodb.com/docs"
+    />
+  </>
+);
 export const VerifiedAnswer: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    avatar: <Avatar variant="mongo" />,
-    children: <MessageFeedback />,
+    children: getVerifiedAnswerChildren(),
     isSender: false,
     messageBody: 'The MongoDB Atlas free tier includes 512MB of storage.',
-    verified: {
-      verifier: 'MongoDB Staff',
-      verifiedAt: new Date('2023-08-24T16:20:00Z'),
-    },
   },
 };
 

@@ -1,2 +1,2 @@
-export { default } from './Banner/Banner';
-export { type BannerProps, Variant } from './Banner/types';
+export { bannerChildrenContainerClassName, default } from './Banner';
+export { type BannerProps, Variant } from './shared.types';
