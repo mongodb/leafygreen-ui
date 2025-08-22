@@ -22,9 +22,6 @@ const baseStyles = css`
   overflow: hidden;
   position: relative;
   height: 100%;
-
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-  }
 `;
 
 const setDrawerDefaultWidth = ({
