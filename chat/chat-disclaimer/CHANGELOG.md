@@ -1,5 +1,14 @@
 # @lg-chat/chat-disclaimer
 
+## 4.0.7
+
+### Patch Changes
+
+- 2c06601: [LG-5453](https://jira.mongodb.org/browse/LG-5453)
+
+  - Update `DisclaimerText` component with theming and styling improvements
+  - Mark `DisclaimerModal` component deprecated. Use `@leafygreen-ui/marketing-modal` instead
+
 ## 4.0.6
 
 ### Patch Changes
