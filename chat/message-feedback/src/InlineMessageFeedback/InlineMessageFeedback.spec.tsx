@@ -6,7 +6,11 @@ import {
 import { render, RenderResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { InlineMessageFeedback, InlineMessageFeedbackProps } from '.';
+import {
+  FormState,
+  InlineMessageFeedback,
+  InlineMessageFeedbackProps,
+} from '.';
 
 const defaultProps = {
   label: 'label test',
@@ -35,26 +39,84 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
 }));
 
 describe('packages/inline-message-feedback', () => {
-  describe('submitted state', () => {
-    test('does not render label when isSubmitted is true', () => {
-      const { queryByText } = render(
-        <InlineMessageFeedback {...defaultProps} isSubmitted={true} />,
-      );
-      expect(queryByText(defaultProps.label)).not.toBeInTheDocument();
+  describe('state prop', () => {
+    describe('submitted state', () => {
+      test('does not render label when state is submitted', () => {
+        const { queryByText } = render(
+          <InlineMessageFeedback
+            {...defaultProps}
+            state={FormState.Submitted}
+          />,
+        );
+        expect(queryByText(defaultProps.label)).not.toBeInTheDocument();
+      });
+
+      test('renders submittedMessage when state is submitted', () => {
+        const { getByText } = render(
+          <InlineMessageFeedback
+            {...defaultProps}
+            state={FormState.Submitted}
+          />,
+        );
+        expect(getByText(defaultProps.submittedMessage)).toBeInTheDocument();
+      });
+
+      test('does not render submittedMessage when state is not submitted', () => {
+        const { queryByText } = render(
+          <InlineMessageFeedback {...defaultProps} state={FormState.Unset} />,
+        );
+        expect(
+          queryByText(defaultProps.submittedMessage),
+        ).not.toBeInTheDocument();
+      });
     });
-    test('renders submittedMessage when isSubmitted is true', () => {
-      const { getByText } = render(
-        <InlineMessageFeedback {...defaultProps} isSubmitted={true} />,
-      );
-      expect(getByText(defaultProps.submittedMessage)).toBeInTheDocument();
+
+    describe('submitting state', () => {
+      test('disables form elements when state is submitting', () => {
+        const { container } = render(
+          <InlineMessageFeedback
+            {...defaultProps}
+            state={FormState.Submitting}
+          />,
+        );
+
+        const textarea = container.querySelector('textarea');
+        const submitButton = container.querySelector('button[type="submit"]');
+        const cancelButton = container.querySelector('button[type="button"]');
+
+        expect(textarea).toHaveAttribute('aria-disabled', 'true');
+        expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+        if (cancelButton) {
+          expect(cancelButton).toHaveAttribute('aria-disabled', 'true');
+        }
+      });
     });
-    test('does not render submittedMessage when isSubmitted is false', () => {
-      const { queryByText } = render(
-        <InlineMessageFeedback {...defaultProps} isSubmitted={false} />,
-      );
-      expect(
-        queryByText(defaultProps.submittedMessage),
-      ).not.toBeInTheDocument();
+
+    describe('error state', () => {
+      test('shows error message when state is error', () => {
+        const errorMessage = 'Something went wrong';
+        const { getByText } = render(
+          <InlineMessageFeedback
+            {...defaultProps}
+            state={FormState.Error}
+            errorMessage={errorMessage}
+          />,
+        );
+
+        expect(getByText(errorMessage)).toBeInTheDocument();
+      });
+    });
+
+    describe('unset state', () => {
+      test('renders form normally when state is unset', () => {
+        const { getByText, container } = render(
+          <InlineMessageFeedback {...defaultProps} state={FormState.Unset} />,
+        );
+
+        expect(getByText(defaultProps.label)).toBeInTheDocument();
+        expect(container.querySelector('form')).toBeInTheDocument();
+        expect(container.querySelector('textarea')).toBeInTheDocument();
+      });
     });
   });
 
@@ -64,6 +126,7 @@ describe('packages/inline-message-feedback', () => {
       expect(getByText(defaultProps.label)).toBeInTheDocument();
     });
   });
+
   describe('cancel button props', () => {
     describe.each([
       [Variant.Spacious, true],
@@ -92,6 +155,7 @@ describe('packages/inline-message-feedback', () => {
       }
     });
   });
+
   describe('close button props', () => {
     test('does not render close button without onClose', () => {
       const { container } = renderInlineMessageFeedback();
@@ -100,6 +164,7 @@ describe('packages/inline-message-feedback', () => {
       );
       expect(closeButton).not.toBeInTheDocument();
     });
+
     test('renders close button when onClose prop is defined', () => {
       const closeHandler = jest.fn();
       const { container } = renderInlineMessageFeedback({
@@ -110,6 +175,7 @@ describe('packages/inline-message-feedback', () => {
       );
       expect(closeButton).toBeInTheDocument();
     });
+
     test('close button calls onClose', () => {
       const closeHandler = jest.fn();
       const { container } = renderInlineMessageFeedback({
@@ -122,31 +188,35 @@ describe('packages/inline-message-feedback', () => {
       expect(closeHandler).toHaveBeenCalled();
     });
   });
+
   describe('textarea props', () => {
-    // Latest TextArea (v8.0.20) does not pass aria-labelledby correctly, so this is currently not passing
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('is labelled by label by default', () => {
-      const { container, getByLabelText } = renderInlineMessageFeedback();
+    test('is labelled by label by default', () => {
+      const { container, getByText } = renderInlineMessageFeedback();
       const textarea = container.querySelector('textarea');
-      expect(getByLabelText(defaultProps.label)).toEqual(textarea);
+      const label = getByText(defaultProps.label);
+      expect(textarea).toHaveAttribute('aria-labelledby', label.id);
     });
+
     test('ref is passable to textarea', () => {
       const ref = createRef<HTMLTextAreaElement>();
       renderInlineMessageFeedback({ textareaProps: { ref } });
       expect(ref.current).toBeDefined();
     });
   });
+
   describe('submit button props', () => {
     test('renders submitButtonText', () => {
       const { container } = renderInlineMessageFeedback();
       const submitButton = container.querySelector('button[type="submit"]');
       expect(submitButton).toHaveTextContent(defaultProps.submitButtonText);
     });
+
     test('submit button does not call onSubmit when textarea is empty', () => {
       const { container } = renderInlineMessageFeedback();
       const submitButton = container.querySelector('button[type="submit"]');
       expect(submitButton!.getAttribute('aria-disabled')).toBe('true');
     });
+
     test('submit button calls onSubmit when textarea is not empty', () => {
       const { container } = renderInlineMessageFeedback({
         textareaProps: { value: 'test' },

@@ -4,7 +4,10 @@ import { PopoverProps } from '@leafygreen-ui/popover';
 import { InlineMessageFeedbackProps } from '../InlineMessageFeedback';
 
 export type PopoverMessageFeedbackProps = DarkModeProps &
-  Omit<InlineMessageFeedbackProps, 'isSubmitted' | 'submittedMessage'> &
+  Omit<
+    InlineMessageFeedbackProps,
+    'errorMessage' | 'state' | 'submittedMessage'
+  > &
   Omit<PopoverProps, 'children'> & {
     /**
      * Number that controls the z-index of the popover

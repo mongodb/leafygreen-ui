@@ -24,7 +24,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
-import TextArea from '@leafygreen-ui/text-area';
+import TextArea, { State as TextAreaState } from '@leafygreen-ui/text-area';
 import { Label } from '@leafygreen-ui/typography';
 
 import { SubmittedState } from './SubmittedState/SubmittedState';
@@ -48,12 +48,13 @@ export const InlineMessageFeedback = forwardRef(
       cancelButtonProps,
       submitButtonText = 'Submit',
       submitButtonProps,
-      isSubmitted,
+      state = 'unset',
       submittedMessage = 'Submitted! Thanks for your feedback.',
       onSubmit: onSubmitProp,
       darkMode: darkModeProp,
       onClose,
       textareaProps,
+      errorMessage = 'Oops, please try again.',
       ...rest
     }: InlineMessageFeedbackProps,
     forwardedRef: ForwardedRef<HTMLDivElement>,
@@ -73,9 +74,15 @@ export const InlineMessageFeedback = forwardRef(
     const textareaRef: MutableRefObject<HTMLTextAreaElement | null> =
       useRef<HTMLTextAreaElement>(null);
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
       e.preventDefault();
-      onSubmitProp?.(e);
+      if (onSubmitProp) {
+        try {
+          await onSubmitProp(e);
+        } catch (_error) {
+          // Error handling is delegated to the parent via the `state` prop.
+        }
+      }
     };
 
     const handleChange: ChangeEventHandler<HTMLTextAreaElement> = e => {
@@ -86,13 +93,16 @@ export const InlineMessageFeedback = forwardRef(
     const isTextareaEmpty = () =>
       (textareaProps?.value === undefined || textareaProps?.value.length < 1) &&
       (textareaRef?.current?.value === undefined ||
-        textareaRef?.current?.value.length < 1);
+        textareaRef.current?.value.length < 1);
 
     const [hasEmptyTextarea, setHasEmptyTextarea] = useState<boolean>(
       isTextareaEmpty(),
     );
 
     const showCancelButton = !isCompact && !!onCancel;
+    const isSubmitting = state === 'submitting';
+    const isSubmitted = state === 'submitted';
+    const isError = state === 'error';
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -105,14 +115,18 @@ export const InlineMessageFeedback = forwardRef(
               onSubmit={handleSubmit}
             >
               <div className={getHeaderContainerStyles({ isCompact })}>
-                {/* @ts-ignore htmlFor not necessary since aria-labelledby is used on TextArea */}
-                <Label id={labelId} className={labelStyles}>
+                <Label
+                  id={labelId}
+                  className={labelStyles}
+                  htmlFor={textareaId}
+                >
                   {label}
                 </Label>
                 {onClose && (
                   <IconButton
                     aria-label="Close feedback window"
                     onClick={onClose}
+                    disabled={isSubmitting}
                   >
                     <XIcon />
                   </IconButton>
@@ -124,8 +138,11 @@ export const InlineMessageFeedback = forwardRef(
                   aria-labelledby={labelId}
                   /* eslint-disable-next-line jsx-a11y/no-autofocus */
                   autoFocus={true}
+                  disabled={isSubmitting}
                   {...textareaProps}
                   className={getTextAreaStyles(textareaProps?.className)}
+                  errorMessage={errorMessage}
+                  state={isError ? TextAreaState.Error : TextAreaState.None}
                   ref={(el: HTMLTextAreaElement) => {
                     if (textareaProps?.ref) {
                       (
@@ -143,6 +160,7 @@ export const InlineMessageFeedback = forwardRef(
                       variant={ButtonVariant.Default}
                       size={ButtonSize.Small}
                       onClick={onCancel}
+                      disabled={isSubmitting}
                       {...cancelButtonProps}
                     >
                       {cancelButtonText}
@@ -152,7 +170,7 @@ export const InlineMessageFeedback = forwardRef(
                     type="submit"
                     variant={ButtonVariant[isCompact ? 'Default' : 'Primary']}
                     size={ButtonSize[isCompact ? 'Default' : 'Small']}
-                    disabled={!!hasEmptyTextarea}
+                    disabled={!!hasEmptyTextarea || isSubmitting}
                     {...submitButtonProps}
                   >
                     {submitButtonText}

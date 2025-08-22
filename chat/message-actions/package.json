@@ -37,6 +37,9 @@
     "@lg-chat/message-rating": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
   },
+  "devDependencies": {
+    "@storybook/test": "^8.6.14"
+  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^",
     "@lg-chat/leafygreen-chat-provider": "workspace:^"
