@@ -10,14 +10,14 @@ import {
 
 import BannerDismissButton from '../BannerDismissButton';
 import BannerIcon from '../BannerIcon';
+import { BannerProps, Variant } from '../shared.types';
 
 import {
   bannerDismissibleStyles,
   baseBannerStyles,
   textStyles,
   variantStyles,
-} from './styles';
-import { BannerProps, Variant } from './types';
+} from './Banner.styles';
 
 /**
  *

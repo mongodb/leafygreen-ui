@@ -6,7 +6,7 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
-import { Variant } from '../Banner/types';
+import { Variant } from '../shared.types';
 
 import {
   bannerIconPositionStyles,
