@@ -3,7 +3,6 @@ import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
   color,
-  fontWeights,
   spacing,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -27,18 +26,6 @@ export const getSuggestedActionsWrapperStyles = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
   gap: ${spacing[200]}px;
-  font-size: ${typeScales.body1.fontSize}px;
-  color: ${color[theme].text.primary.default};
-  line-height: ${typeScales.body1.lineHeight}px;
-`;
-
-export const applyButtonStyles = css`
-  width: 100%;
-  font-weight: ${fontWeights.regular};
-`;
-
-export const boldedTextStyle = css`
-  font-weight: ${fontWeights.bold};
 `;
 
 export const tableStyles = css`
