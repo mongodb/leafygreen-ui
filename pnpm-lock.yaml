@@ -603,6 +603,12 @@ importers:
       '@leafygreen-ui/hooks':
         specifier: workspace:^
         version: link:../../packages/hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../../packages/leafygreen-provider
