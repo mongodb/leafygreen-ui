@@ -24,6 +24,7 @@ describe('useDrawerLayoutContext', () => {
     expect(typeof result.current.setIsDrawerOpen).toBe('function');
     expect(typeof result.current.setDrawerWidth).toBe('function');
     expect(typeof result.current.setIsDrawerResizing).toBe('function');
+    expect(typeof result.current.setHasToolbar).toBe('function');
   });
 
   test('Returns the value passed to the provider', () => {
@@ -84,5 +85,18 @@ describe('useDrawerLayoutContext', () => {
       result?.current?.setIsDrawerResizing?.(true);
     });
     expect(result.current.isDrawerResizing).toBe(true);
+  });
+
+  test('Updates hasToolbar when setHasToolbar is called', () => {
+    const { result } = renderHook(() => useDrawerLayoutContext(), {
+      wrapper: ({ children }) => (
+        <DrawerLayoutProvider>{children}</DrawerLayoutProvider>
+      ),
+    });
+    expect(result.current.hasToolbar).toBe(false);
+    act(() => {
+      result?.current?.setHasToolbar?.(true);
+    });
+    expect(result.current.hasToolbar).toBe(true);
   });
 });

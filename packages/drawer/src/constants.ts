@@ -1,4 +1,4 @@
-import { transitionDuration } from '@leafygreen-ui/tokens';
+import { breakpoints, transitionDuration } from '@leafygreen-ui/tokens';
 import { TOOLBAR_WIDTH } from '@leafygreen-ui/toolbar';
 
 import { Size } from './Drawer/Drawer.types';
@@ -22,7 +22,7 @@ export const TRANSITION_DURATION = transitionDuration.slower;
 export const EMBEDDED_TOOLBAR_OVERFLOW_PADDING = 4;
 
 export const HEADER_HEIGHT = 48;
-export const MOBILE_BREAKPOINT = 390;
+export const MOBILE_BREAKPOINT = breakpoints.Tablet;
 export const DRAWER_MAX_WIDTH = 612;
 export const DRAWER_MAX_WIDTH_WITH_TOOLBAR =
   DRAWER_MAX_WIDTH - DRAWER_TOOLBAR_WIDTH;

@@ -13,6 +13,12 @@ interface LayoutBase extends PickedRequiredToolbarIconButtonProps {
    * The id of the layout. This is used to open the drawer.
    */
   id: string;
+
+  /**
+   * Determines if the current toolbar item is visible. If all toolbar items have `visible` set to `false`, the toolbar will not be rendered.
+   * @defaultValue true
+   */
+  visible?: boolean;
 }
 
 interface LayoutWithContent extends LayoutBase {

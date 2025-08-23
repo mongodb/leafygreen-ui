@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 
@@ -62,29 +61,75 @@ export const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
   {
     id: 'Code',
     label: 'Code',
-    content: <LongContent />,
+    content: <DrawerContent />,
     title: 'Code Title',
     glyph: 'Code',
-    onClick: () => {
-      console.log('Code clicked');
-    },
   },
   {
     id: 'Dashboard',
     label: 'Dashboard',
-    content: <LongContent />,
+    content: <DrawerContent />,
     title: 'Dashboard Title',
     glyph: 'Dashboard',
-    onClick: () => {
-      console.log('Dashboard clicked');
-    },
   },
   {
     id: 'Plus',
     label: "Perform some action, doesn't open a drawer",
     glyph: 'Plus',
-    onClick: () => {
-      console.log('Plus clicked, does not update drawer');
-    },
+  },
+  {
+    id: 'Sparkle',
+    label: 'Disabled item',
+    glyph: 'Sparkle',
+    disabled: true,
+  },
+  {
+    id: 'Apps',
+    label: 'Apps',
+    content: <DrawerContent />,
+    glyph: 'Apps',
+    title: 'Apps Title',
+    visible: false,
   },
 ];
+
+export const DRAWER_TOOLBAR_DATA_NOT_VISIBLE: DrawerToolbarLayoutProps['toolbarData'] =
+  [
+    {
+      id: 'Code',
+      label: 'Code',
+      content: <DrawerContent />,
+      title: 'Code Title',
+      glyph: 'Code',
+      visible: false,
+    },
+    {
+      id: 'Dashboard',
+      label: 'Dashboard',
+      content: <DrawerContent />,
+      title: 'Dashboard Title',
+      glyph: 'Dashboard',
+      visible: false,
+    },
+    {
+      id: 'Plus',
+      label: "Perform some action, doesn't open a drawer",
+      glyph: 'Plus',
+      visible: false,
+    },
+    {
+      id: 'Sparkle',
+      label: 'Disabled item',
+      glyph: 'Sparkle',
+      disabled: true,
+      visible: false,
+    },
+    {
+      id: 'Apps',
+      label: 'Apps',
+      content: <DrawerContent />,
+      glyph: 'Apps',
+      title: 'Apps Title',
+      visible: false,
+    },
+  ];

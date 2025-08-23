@@ -1,3 +1,3 @@
 import { LayoutComponentProps } from '../../LayoutComponent/LayoutComponent.types';
 
-export type EmbeddedDrawerLayoutProps = Omit<LayoutComponentProps, 'drawer'>;
+export type EmbeddedDrawerLayoutProps = LayoutComponentProps;

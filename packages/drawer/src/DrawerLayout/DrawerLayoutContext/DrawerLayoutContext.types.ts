@@ -57,4 +57,9 @@ export interface DrawerLayoutContextType extends DrawerLayoutProviderProps {
    * Function to set the drawer resizing state.
    */
   setIsDrawerResizing: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /**
+   * Function to set the drawer toolbar state.
+   */
+  setHasToolbar: React.Dispatch<React.SetStateAction<boolean>>;
 }
