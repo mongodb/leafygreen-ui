@@ -33,7 +33,6 @@ All `RichLink` components support the following props:
 | Prop             | Type                                                           | Description                                                              | Default  |
 | ---------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------ | -------- |
 | `children`       | `string`                                                       | The text that shows on the rich link                                     |          |
-| `imageUrl`       | `string?`                                                      | A URL for the background image of the rich link                          |          |
 | `variant`        | `Variant`                                                      | Render as a built-in Rich Link [Variant](#Variants)                      |          |
 | `badgeGlyph`     | `GlyphName`                                                    | A [@leafygreen-ui/icon](../../packages/icon/) glyph to show in the badge |          |
 | `badgeLabel`     | `string \| React.ReactNode`                                    | A string or component to show in the badge                               |          |
