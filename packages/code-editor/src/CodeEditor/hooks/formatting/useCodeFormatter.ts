@@ -41,14 +41,14 @@ export function useCodeFormatter({
     code: string,
     options: FormattingOptions = {},
   ): Promise<string> => {
-    return formatCode(
+    return formatCode({
       code,
-      props.language,
+      language: props.language,
       options,
       editorTabWidth,
       editorUseTabs,
       modules,
-    );
+    });
   };
 
   useEffect(() => {

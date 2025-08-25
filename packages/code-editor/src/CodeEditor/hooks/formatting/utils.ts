@@ -6,11 +6,14 @@ import { FormattingOptions } from './types';
 /**
  * Creates base Prettier configuration with common settings
  */
+/**
+ * Prettier parser plugin types - these are the actual modules we import
+ */
 export const createPrettierConfig = (
   parser: string,
-  plugins: Array<any>,
+  plugins: Array<unknown>, // Prettier plugins have complex interfaces, allowing any plugin type
   options: FormattingOptions = {},
-  overrides: Record<string, any> = {},
+  overrides: Record<string, string | number | boolean | unknown> = {},
   editorTabWidth: number,
   editorUseTabs: boolean,
 ) => ({
@@ -28,7 +31,7 @@ export const createPrettierConfig = (
  */
 export const createJavaScriptConfig = (
   parser: string,
-  plugins: Array<any>,
+  plugins: Array<unknown>,
   options: FormattingOptions = {},
   editorTabWidth: number,
   editorUseTabs: boolean,
@@ -55,7 +58,7 @@ export const createJavaScriptConfig = (
 export const createClangFormatConfig = (
   basedOnStyle: string,
   options: FormattingOptions = {},
-  overrides: Record<string, any> = {},
+  overrides: Record<string, string | number | boolean | unknown> = {},
   editorTabWidth: number,
   editorUseTabs: boolean,
 ) => `{
