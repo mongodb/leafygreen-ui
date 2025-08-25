@@ -1,10 +1,12 @@
 {
   "extends": "@lg-tools/build/config/node.tsconfig.json",
-   "compilerOptions": {},
+  "compilerOptions": {},
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "exclude": [
+    "**/*.stories.*"
+  ],
   "references": [
     {
       "path": "../meta"

@@ -14,7 +14,6 @@
     "src/**/*"
   ],
   "exclude": [
-    "**/*.spec.*",
     "**/*.story.*"
   ],
   "references": [

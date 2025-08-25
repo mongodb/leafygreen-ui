@@ -15,7 +15,6 @@
     "../tooltip/src/getTooltipTriggerHandlers.ts"
   ],
   "exclude": [
-    "**/*.spec.*",
     "**/*.stories.*"
   ],
   "references": [

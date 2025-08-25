@@ -15,7 +15,6 @@
     "../../typings"
   ],
   "exclude": [
-    "**/*.spec.*",
     "**/*.stories.*"
   ],
   "references": [

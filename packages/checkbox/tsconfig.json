@@ -16,7 +16,6 @@
     "../a11y/src/useReducedMotionQuery.ts"
   ],
   "exclude": [
-    "**/*.spec.*",
     "**/*.stories.*"
   ],
   "references": [
