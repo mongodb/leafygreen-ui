@@ -3,10 +3,11 @@ import React, {
   useCallback,
   useImperativeHandle,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
-import { type EditorView } from '@codemirror/view';
+import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
@@ -14,6 +15,7 @@ import { Body } from '@leafygreen-ui/typography';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
 
+import { useFormattingModuleLoaders } from './hooks/formatting/useFormattingModuleLoaders';
 import {
   getCopyButtonStyles,
   getEditorStyles,
@@ -28,7 +30,12 @@ import {
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
 import { CodeEditorProvider } from './CodeEditorContext';
-import { useExtensions, useLazyModules, useModuleLoaders } from './hooks';
+import {
+  useCodeFormatter,
+  useExtensions,
+  useLazyModules,
+  useModuleLoaders,
+} from './hooks';
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
@@ -69,18 +76,91 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
 
-    const moduleLoaders = useModuleLoaders(props);
-    const { isLoading, modules } = useLazyModules(moduleLoaders);
+    // Load modules
+    const coreModuleLoaders = useModuleLoaders(props);
+    const formattingModuleLoaders = useFormattingModuleLoaders(language);
+    const allModuleLoaders = useMemo(
+      () => ({
+        ...coreModuleLoaders,
+        ...formattingModuleLoaders,
+      }),
+      [coreModuleLoaders, formattingModuleLoaders],
+    );
+    const { isLoading, modules } = useLazyModules(allModuleLoaders);
 
-    const customExtensions = useExtensions({
-      editorViewInstance: editorViewRef.current,
-      props,
+    // Get formatting functionality
+    const { formatCode, isFormattingAvailable } = useCodeFormatter({
+      props: { language, indentSize, indentUnit },
       modules,
     });
 
+    // Get custom extensions
+    const customExtensions = useExtensions({
+      editorViewInstance: editorViewRef.current,
+      props: {
+        ...props,
+        forceParsing: forceParsingProp,
+        onChange: onChangeProp,
+        isLoading: isLoadingProp,
+        extensions: consumerExtensions,
+        darkMode: darkModeProp,
+        baseFontSize: baseFontSizeProp,
+      },
+      modules,
+    });
+
+    // Get the current contents of the editor
     const getContents = useCallback(() => {
       return editorViewRef.current?.state.sliceDoc() ?? '';
     }, []);
+
+    /**
+     * Formats the current code content and updates the editor.
+     * @returns Promise resolving to the formatted code string
+     */
+    const handleFormatCode = useCallback(async (): Promise<string> => {
+      const currentContent = getContents();
+
+      if (!isFormattingAvailable) {
+        console.warn('Formatting is not available for the current language');
+        return currentContent;
+      }
+
+      try {
+        const formattedContent = await formatCode(currentContent);
+
+        // Update the editor with formatted content
+        if (editorViewRef.current && formattedContent !== currentContent) {
+          const transaction = editorViewRef.current.state.update({
+            changes: {
+              from: 0,
+              to: editorViewRef.current.state.doc.length,
+              insert: formattedContent,
+            },
+          });
+
+          editorViewRef.current.dispatch(transaction);
+
+          onChangeProp?.(formattedContent);
+
+          // Update controlled value if in controlled mode
+          if (isControlled) {
+            setControlledValue(formattedContent);
+          }
+        }
+
+        return formattedContent;
+      } catch (error) {
+        console.error('Error formatting code:', error);
+        return getContents();
+      }
+    }, [
+      isFormattingAvailable,
+      getContents,
+      formatCode,
+      isControlled,
+      onChangeProp,
+    ]);
 
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
@@ -99,10 +179,9 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         extensions: [
           ...consumerExtensions.map(extension => Prec.highest(extension)),
 
-          // Core configurations ------------
           commands.history(),
 
-          EditorView.EditorView.updateListener.of(update => {
+          EditorView.EditorView.updateListener.of((update: ViewUpdate) => {
             if (isControlled && update.docChanged) {
               const editorText = getContents();
               onChangeProp?.(editorText);
@@ -115,7 +194,6 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
             ...commands.historyKeymap,
           ]),
 
-          // Custom extensions ------------
           ...customExtensions,
         ],
       });
@@ -150,10 +228,15 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     useImperativeHandle(forwardedRef, () => ({
       getEditorViewInstance: () => editorViewRef.current,
       getContents,
+      formatCode: handleFormatCode,
+      isFormattingAvailable,
     }));
 
     const contextValue = {
       getContents,
+      formatCode: handleFormatCode,
+      isFormattingAvailable,
+      language,
     };
 
     return (

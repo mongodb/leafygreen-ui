@@ -19,13 +19,20 @@ const defaultProps: Partial<PanelProps> = {
 };
 
 const mockGetContents = jest.fn(() => 'test content');
+const mockFormatCode = jest.fn();
 
 const renderPanel = (props: Partial<PanelProps> = {}) => {
   const mergedProps = { ...defaultProps, ...props };
 
   return render(
     <LeafyGreenProvider>
-      <CodeEditorProvider value={{ getContents: mockGetContents }}>
+      <CodeEditorProvider
+        value={{
+          getContents: mockGetContents,
+          formatCode: mockFormatCode,
+          isFormattingAvailable: true,
+        }}
+      >
         <Panel {...mergedProps} />
       </CodeEditorProvider>
     </LeafyGreenProvider>,
@@ -49,6 +56,7 @@ Object.assign(document, {
 describe('Panel', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockGetContents.mockReturnValue('test content');
   });
 
   describe('Basic Rendering', () => {

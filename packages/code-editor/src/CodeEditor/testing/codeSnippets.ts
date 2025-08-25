@@ -109,6 +109,26 @@ function greet(name) {
 greet('Earthlings');
 `,
 
+  jsx: `// CodeEditor
+import React from 'react';
+
+function AlienGreeting({ planet = "Earth" }) {
+  const message = \`Greetings, inhabitants of \${planet}!\`;
+  
+  return (
+    <div className="alien-message">
+      <h1>🛸 Transmission from Zeta Reticuli</h1>
+      <p>{message}</p>
+      <button onClick={() => alert('We come in peace!')}>
+        Respond to Aliens
+      </button>
+    </div>
+  );
+}
+
+export default AlienGreeting;
+`,
+
   json: `{
   "contactId": "ZR-20250606-WBG",
   "arrival": {
@@ -186,5 +206,61 @@ function greet(name: string): void {
 }
 
 greet('Earthlings');
+`,
+
+  tsx: `// CodeEditor
+import React, { useState } from 'react';
+
+interface ContactData {
+  species: string;
+  planet: string;
+  peaceful: boolean;
+}
+
+const AlienContactForm: React.FC = () => {
+  const [contact, setContact] = useState<ContactData>({
+    species: 'Human',
+    planet: 'Earth',
+    peaceful: true
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(\`Contact established with \${contact.species} from \${contact.planet}\`);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="contact-form">
+      <h2>🌌 Intergalactic Contact Protocol</h2>
+      <label>
+        Species:
+        <input 
+          type="text" 
+          value={contact.species}
+          onChange={(e) => setContact({...contact, species: e.target.value})}
+        />
+      </label>
+      <label>
+        Planet:
+        <input 
+          type="text" 
+          value={contact.planet}
+          onChange={(e) => setContact({...contact, planet: e.target.value})}
+        />
+      </label>
+      <label>
+        <input 
+          type="checkbox" 
+          checked={contact.peaceful}
+          onChange={(e) => setContact({...contact, peaceful: e.target.checked})}
+        />
+        We come in peace
+      </label>
+      <button type="submit">Establish Contact</button>
+    </form>
+  );
+};
+
+export default AlienContactForm;
 `,
 } as const;

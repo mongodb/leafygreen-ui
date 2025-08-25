@@ -183,15 +183,15 @@ const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 export const LiveExample = Template.bind({});
 
 export const WithPanel = Template.bind({});
+const language = LanguageName.tsx;
 WithPanel.args = {
-  language: 'typescript',
-  defaultValue: codeSnippets.typescript,
+  language,
+  defaultValue: codeSnippets[language],
   panel: (
     <Panel
       showCopyButton
       showFormatButton
       showSecondaryMenuButton
-      title="index.tsx"
       customSecondaryButtons={[
         {
           label: 'Custom Button',
@@ -200,6 +200,7 @@ WithPanel.args = {
           glyph: <CloudIcon />,
         },
       ]}
+      title={`index.${language}`}
     />
   ),
 };
@@ -320,6 +321,12 @@ Json.args = {
   defaultValue: codeSnippets.json,
 };
 
+export const Jsx = Template.bind({});
+Jsx.args = {
+  language: 'jsx',
+  defaultValue: codeSnippets.jsx,
+};
+
 export const Kotlin = Template.bind({});
 Kotlin.args = {
   language: 'kotlin',
@@ -348,6 +355,12 @@ export const Rust = Template.bind({});
 Rust.args = {
   language: 'rust',
   defaultValue: codeSnippets.rust,
+};
+
+export const Tsx = Template.bind({});
+Tsx.args = {
+  language: 'tsx',
+  defaultValue: codeSnippets.tsx,
 };
 
 export const Typescript = Template.bind({});
