@@ -265,6 +265,14 @@ describe('packages/button', () => {
       <Button onClick={() => {}} />;
     });
 
+    test('infers the onClick handler argument', () => {
+      <Button
+        onClick={event => {
+          event.preventDefault();
+        }}
+      />;
+    });
+
     test('accepts anchor tag attributes', () => {
       <Button href="http://mongodb.design" target="_blank" rel="noopener" />;
     });
