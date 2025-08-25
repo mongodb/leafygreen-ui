@@ -33,15 +33,15 @@ export function VerifiedAnswerBanner({
 
   return (
     <MessageBanner variant="success">
-      <Disclaimer className={textStyles}>{text}</Disclaimer>
-      {learnMoreUrl ? (
-        <>
-          {' | '}
-          <Link href={learnMoreUrl}>
-            <Disclaimer className={textStyles}>Learn More</Disclaimer>
-          </Link>
-        </>
-      ) : null}
+      <Disclaimer className={textStyles}>
+        {text}
+        {learnMoreUrl && (
+          <>
+            {' | '}
+            <Link href={learnMoreUrl}>Learn More</Link>
+          </>
+        )}
+      </Disclaimer>
     </MessageBanner>
   );
 }

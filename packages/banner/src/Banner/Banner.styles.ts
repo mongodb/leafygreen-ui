@@ -13,7 +13,7 @@ export const bannerChildrenContainerClassName = createUniqueClassName(
   'banner-children_container',
 );
 
-export const baseBannerStyles = css`
+const baseBannerStyles = css`
   position: relative;
   display: flex;
   padding: 10px 12px 10px 20px;
@@ -249,7 +249,7 @@ const lightModeSuccessBannerStyles = css`
   }
 `;
 
-export const variantStyles: Record<Theme, Record<Variant, string>> = {
+const variantStyles: Record<Theme, Record<Variant, string>> = {
   [Theme.Dark]: {
     [Variant.Info]: darkModeInfoBannerStyles,
     [Variant.Warning]: darkModeWarningBannerStyles,
@@ -263,6 +263,10 @@ export const variantStyles: Record<Theme, Record<Variant, string>> = {
     [Variant.Success]: lightModeSuccessBannerStyles,
   },
 };
+
+const bannerDismissibleStyles = css`
+  padding-right: 36px; // add space for the icon
+`;
 
 export const getBannerStyles = ({
   baseFontSize,
@@ -287,7 +291,36 @@ export const getBannerStyles = ({
     className,
   );
 
-export const textStyles = (hasImage: boolean, dismissible: boolean) => css`
+const getTextMargins = (image: boolean, dismissible: boolean) => {
+  const defaultIconSize = 16;
+  const defaultBorderSpacing = 12;
+
+  const styleObj: {
+    marginLeft?: string;
+    marginRight?: string;
+  } = {
+    marginLeft: undefined,
+    marginRight: undefined,
+  };
+
+  if (image) {
+    styleObj.marginLeft = '17px';
+    styleObj.marginRight = '4px';
+    if (dismissible) {
+      styleObj.marginRight = `${defaultIconSize + defaultBorderSpacing}px`;
+    }
+  } else {
+    styleObj.marginLeft = `13px`;
+    styleObj.marginRight = '10px';
+    if (dismissible) {
+      styleObj.marginRight = `${defaultIconSize + 16}px`;
+    }
+  }
+
+  return styleObj;
+};
+
+const textStyles = (hasImage: boolean, dismissible: boolean) => css`
   align-self: center;
   flex-grow: 1;
   margin-left: ${getTextMargins(hasImage, dismissible).marginLeft};
@@ -327,36 +360,3 @@ export const getChildrenContainerStyles = ({
   dismissible: boolean;
   hasImage: boolean;
 }) => cx(textStyles(hasImage, dismissible), bannerChildrenContainerClassName);
-
-export const getTextMargins = (image: boolean, dismissible: boolean) => {
-  const defaultIconSize = 16;
-  const defaultBorderSpacing = 12;
-
-  const styleObj: {
-    marginLeft?: string;
-    marginRight?: string;
-  } = {
-    marginLeft: undefined,
-    marginRight: undefined,
-  };
-
-  if (image) {
-    styleObj.marginLeft = '17px';
-    styleObj.marginRight = '4px';
-    if (dismissible) {
-      styleObj.marginRight = `${defaultIconSize + defaultBorderSpacing}px`;
-    }
-  } else {
-    styleObj.marginLeft = `13px`;
-    styleObj.marginRight = '10px';
-    if (dismissible) {
-      styleObj.marginRight = `${defaultIconSize + 16}px`;
-    }
-  }
-
-  return styleObj;
-};
-
-export const bannerDismissibleStyles = css`
-  padding-right: 36px; // add space for the icon
-`;
