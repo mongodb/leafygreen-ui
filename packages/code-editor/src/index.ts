@@ -8,7 +8,6 @@ export {
   type CodeMirrorExtension,
   type CodeMirrorState,
   type CodeMirrorView,
-  type FormattingOptions,
   IndentUnits,
   LanguageName,
   useAutoCompleteExtension,

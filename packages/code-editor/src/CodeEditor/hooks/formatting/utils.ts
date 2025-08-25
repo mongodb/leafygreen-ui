@@ -1,8 +1,6 @@
 import { LanguageName } from '../extensions/useLanguageExtension';
 import { CodeEditorModules } from '../moduleLoaders.types';
 
-import { FormattingOptions } from './types';
-
 /**
  * Creates base Prettier configuration with common settings
  */
@@ -12,7 +10,6 @@ import { FormattingOptions } from './types';
 export const createPrettierConfig = (
   parser: string,
   plugins: Array<unknown>, // Prettier plugins have complex interfaces, allowing any plugin type
-  options: FormattingOptions = {},
   overrides: Record<string, string | number | boolean | unknown> = {},
   editorTabWidth: number,
   editorUseTabs: boolean,
@@ -21,8 +18,7 @@ export const createPrettierConfig = (
   plugins,
   tabWidth: editorTabWidth,
   useTabs: editorUseTabs,
-  printWidth: options.printWidth ?? 80,
-  ...options,
+  printWidth: 80, // Opinionated default
   ...overrides,
 });
 
@@ -32,21 +28,20 @@ export const createPrettierConfig = (
 export const createJavaScriptConfig = (
   parser: string,
   plugins: Array<unknown>,
-  options: FormattingOptions = {},
   editorTabWidth: number,
   editorUseTabs: boolean,
 ) =>
   createPrettierConfig(
     parser,
     plugins,
-    options,
     {
-      semi: options.semi ?? true,
-      singleQuote: options.singleQuote ?? true,
-      trailingComma: options.trailingComma ?? 'es5',
-      bracketSpacing: options.bracketSpacing ?? true,
-      jsxBracketSameLine: options.jsxBracketSameLine ?? false,
-      arrowParens: options.arrowParens ?? 'avoid',
+      // Opinionated JavaScript/TypeScript formatting defaults
+      semi: true,
+      singleQuote: true,
+      trailingComma: 'es5',
+      bracketSpacing: true,
+      jsxBracketSameLine: false,
+      arrowParens: 'avoid',
     },
     editorTabWidth,
     editorUseTabs,
@@ -57,7 +52,6 @@ export const createJavaScriptConfig = (
  */
 export const createClangFormatConfig = (
   basedOnStyle: string,
-  options: FormattingOptions = {},
   overrides: Record<string, string | number | boolean | unknown> = {},
   editorTabWidth: number,
   editorUseTabs: boolean,
@@ -65,7 +59,7 @@ export const createClangFormatConfig = (
   BasedOnStyle: ${basedOnStyle},
   IndentWidth: ${editorTabWidth},
   UseTab: ${editorUseTabs ? 'Always' : 'Never'},
-  ColumnLimit: ${options.printWidth ?? 100},
+  ColumnLimit: 100,
   AllowShortFunctionsOnASingleLine: None,
   AllowShortBlocksOnASingleLine: Never,
   AllowShortIfStatementsOnASingleLine: Never,

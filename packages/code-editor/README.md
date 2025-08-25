@@ -250,11 +250,7 @@ function MyComponent() {
 Use the formatting functionality independently without the CodeEditor component:
 
 ```tsx
-import {
-  useCodeFormatter,
-  type FormattingOptions,
-  LanguageName,
-} from '@leafygreen-ui/code-editor';
+import { useCodeFormatter, LanguageName } from '@leafygreen-ui/code-editor';
 // Import the modules you need based on your target language
 import * as PrettierStandaloneModule from 'prettier/standalone';
 import * as PrettierParserBabelModule from 'prettier/parser-babel';
@@ -274,13 +270,7 @@ function MyFormattingComponent() {
 
   const handleFormat = async () => {
     if (isFormattingAvailable) {
-      const options: FormattingOptions = {
-        semi: true,
-        singleQuote: true,
-        printWidth: 80,
-      };
-
-      const formatted = await formatCode('const x=1', options);
+      const formatted = await formatCode('const x=1;');
       console.log(formatted); // "const x = 1;"
     }
   };
@@ -288,31 +278,6 @@ function MyFormattingComponent() {
   return <button onClick={handleFormat}>Format Code</button>;
 }
 ```
-
-### Formatting Options
-
-The `FormattingOptions` interface provides configuration for code formatting:
-
-```tsx
-interface FormattingOptions {
-  semi?: boolean; // Add semicolons
-  singleQuote?: boolean; // Use single quotes
-  printWidth?: number; // Line length
-  trailingComma?: 'none' | 'es5' | 'all'; // Trailing commas
-  bracketSpacing?: boolean; // Spaces around object brackets
-  jsxBracketSameLine?: boolean; // JSX bracket placement
-  arrowParens?: 'avoid' | 'always'; // Arrow function parentheses
-}
-```
-
-**Option Support by Language:**
-
-- **JavaScript/JSX, TypeScript/TSX, CSS, HTML, JSON**: All options supported
-- **Python**: Only `printWidth` supported
-- **Java, C++, C#**: Limited support (uses language-specific defaults)
-- **Go**: No options supported (gofmt is opinionated)
-
-**Note:** Tab width and tab usage are controlled by the CodeEditor's `indentSize` and `indentUnit` props, not the formatting options.
 
 ## Types and Variables
 
@@ -328,10 +293,10 @@ interface FormattingOptions {
 | `CodeEditorHandle`          | TypeScript interface for the imperative handle of the CodeEditor component, including formatting methods.       |
 | `CodeMirrorState`           | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.           |
 | `CodeMirrorView`            | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.              |
-| `FormattingOptions`         | TypeScript interface defining formatting options for different formatters (Prettier and WASM-based).            |
-| `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                        |
-| `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                         |
-| `PanelProps`                | TypeScript interface defining all props that can be passed to the `Panel` component.                            |
+
+| `IndentUnits` | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop. |
+| `LanguageName` | Constant object containing all supported programming languages for syntax highlighting. |
+| `PanelProps` | TypeScript interface defining all props that can be passed to the `Panel` component. |
 
 ## Test Utilities
 
@@ -742,7 +707,7 @@ Provides code formatting functionality using language-specific formatters with p
 
 **Returns:**
 
-- `formatCode(code: string, options?: FormattingOptions): Promise<string>` - Formats the provided code
+- `formatCode(code: string): Promise<string>` - Formats the provided code using opinionated defaults
 - `isFormattingAvailable: boolean` - Whether formatting is available for the current language
 
 **Module Requirements by Language:**

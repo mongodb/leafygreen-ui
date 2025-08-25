@@ -4,7 +4,6 @@ import { type CodeEditorProps } from '../../CodeEditor.types';
 import { type CodeEditorModules } from '../moduleLoaders.types';
 
 import { formatCode } from './formatters';
-import { FormattingOptions } from './types';
 import { areModulesLoaded } from './utils';
 
 /**
@@ -32,19 +31,15 @@ export function useCodeFormatter({
 
   /**
    * Formats code using the appropriate formatter based on the selected language.
+   * Uses opinionated formatting settings for consistency.
    *
    * @param code - The code string to format
-   * @param options - Optional formatting options
    * @returns Promise resolving to formatted code, or original code if formatting fails/unavailable
    */
-  const handleFormatCode = async (
-    code: string,
-    options: FormattingOptions = {},
-  ): Promise<string> => {
+  const handleFormatCode = async (code: string): Promise<string> => {
     return formatCode({
       code,
       language: props.language,
-      options,
       editorTabWidth,
       editorUseTabs,
       modules,

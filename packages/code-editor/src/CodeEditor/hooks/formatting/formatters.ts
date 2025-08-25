@@ -1,7 +1,6 @@
 import { LanguageName } from '../extensions/useLanguageExtension';
 import { CodeEditorModules } from '../moduleLoaders.types';
 
-import { FormattingOptions } from './types';
 import {
   createClangFormatConfig,
   createJavaScriptConfig,
@@ -114,11 +113,11 @@ const formatWithWasm = async <T extends ReadonlyArray<unknown>>({
 
 /**
  * Formats code using the appropriate formatter based on the selected language.
+ * Uses opinionated formatting settings for consistency.
  *
  * @param params - Object containing formatting parameters
  * @param params.code - The code string to format
  * @param params.language - The programming language of the code
- * @param params.options - Optional formatting options
  * @param params.editorTabWidth - Tab width from editor configuration
  * @param params.editorUseTabs - Whether to use tabs from editor configuration
  * @param params.modules - Module dependencies containing formatting modules
@@ -127,14 +126,12 @@ const formatWithWasm = async <T extends ReadonlyArray<unknown>>({
 export const formatCode = async ({
   code,
   language,
-  options = {},
   editorTabWidth,
   editorUseTabs,
   modules,
 }: {
   code: string;
   language: LanguageName | undefined;
-  options?: FormattingOptions;
   editorTabWidth: number;
   editorUseTabs: boolean;
   modules: Partial<CodeEditorModules>;
@@ -155,7 +152,6 @@ export const formatCode = async ({
           config: createJavaScriptConfig(
             'babel',
             [parserBabel],
-            options,
             editorTabWidth,
             editorUseTabs,
           ),
@@ -174,7 +170,6 @@ export const formatCode = async ({
           config: createJavaScriptConfig(
             'typescript',
             [parserTypescript],
-            options,
             editorTabWidth,
             editorUseTabs,
           ),
@@ -192,9 +187,8 @@ export const formatCode = async ({
           config: createPrettierConfig(
             'json',
             [parserBabel],
-            options,
             {
-              printWidth: options.printWidth ?? 40, // Force multi-line formatting for JSON
+              printWidth: 40, // Force multi-line formatting for JSON
             },
             editorTabWidth,
             editorUseTabs,
@@ -212,8 +206,7 @@ export const formatCode = async ({
           config: createPrettierConfig(
             'css',
             [parserPostcss],
-            options,
-            {},
+            {}, // No special overrides for CSS
             editorTabWidth,
             editorUseTabs,
           ),
@@ -230,8 +223,7 @@ export const formatCode = async ({
           config: createPrettierConfig(
             'html',
             [parserHtml],
-            options,
-            {},
+            {}, // No special overrides for HTML
             editorTabWidth,
             editorUseTabs,
           ),
@@ -268,7 +260,6 @@ export const formatCode = async ({
           language === LanguageName.java
             ? createClangFormatConfig(
                 'Google',
-                options,
                 {
                   BreakBeforeBraces: 'Attach',
                 },
@@ -278,7 +269,6 @@ export const formatCode = async ({
             : language === LanguageName.cpp
             ? createClangFormatConfig(
                 'LLVM',
-                options,
                 {
                   BreakBeforeBraces: 'Attach',
                   NamespaceIndentation: 'None',
@@ -288,7 +278,6 @@ export const formatCode = async ({
               )
             : createClangFormatConfig(
                 'Microsoft',
-                options,
                 {
                   BreakBeforeBraces: 'Allman',
                 },
@@ -331,7 +320,7 @@ export const formatCode = async ({
             'main.py',
             {
               indent_width: editorTabWidth,
-              line_width: options.printWidth ?? 88,
+              line_width: 88, // Opinionated default for Python
               // Add other ruff formatting options as needed
             },
           ] as const,

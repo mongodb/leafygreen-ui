@@ -13,8 +13,4 @@ export {
 } from './utils';
 
 // Types
-export type {
-  FormatCodeParams,
-  FormatCodeResult,
-  FormattingOptions,
-} from './types';
+export type { FormatCodeParams, FormatCodeResult } from './types';
