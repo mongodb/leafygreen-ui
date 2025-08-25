@@ -13,9 +13,7 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": [
-    "**/*.stories.*"
-  ],
+  "exclude": [],
   "references": [
     {
       "path": "../lib"
