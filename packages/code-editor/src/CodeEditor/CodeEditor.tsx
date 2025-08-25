@@ -138,12 +138,14 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               insert: formattedContent,
             },
           });
+
           editorViewRef.current.dispatch(transaction);
+
+          onChangeProp?.(formattedContent);
 
           // Update controlled value if in controlled mode
           if (isControlled) {
             setControlledValue(formattedContent);
-            onChangeProp?.(formattedContent);
           }
         }
 
