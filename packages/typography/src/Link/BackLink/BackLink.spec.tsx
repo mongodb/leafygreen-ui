@@ -6,11 +6,10 @@ import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
 import BackLink from './BackLink';
 import { BaseBackLinkProps } from './BackLink.types';
 
-type SpanLikeProps = InferredPolymorphicPropsWithRef<'span', BaseBackLinkProps>;
-
-type AnchorLikeProps = InferredPolymorphicPropsWithRef<'a', BaseBackLinkProps>;
-
-type BackLinkRenderProps = AnchorLikeProps | SpanLikeProps;
+type BackLinkRenderProps = InferredPolymorphicPropsWithRef<
+  'span',
+  BaseBackLinkProps
+>;
 
 const renderBackLink = (props: BackLinkRenderProps) => {
   const utils = render(
@@ -46,9 +45,9 @@ describe('packages/typography', () => {
     describe('inferred polymorphic behavior', () => {
       test('when the "as" prop is supplied its value is respected', () => {
         const { link } = renderBackLink({
-          href: 'http://localhost:9001',
-          /* @ts-expect-error to show that "as" overrides "href" */
           as: 'div',
+          /* @ts-expect-error - when "as" is supplied, "href" is ignored */
+          href: 'http://localhost:9001',
         });
 
         expect(link.tagName.toLowerCase()).toBe('div');
