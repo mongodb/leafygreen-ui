@@ -1,5 +1,11 @@
 # @lg-tools/install
 
+## 0.3.1
+
+### Patch Changes
+
+- d0977a9: Adds `postversion` script to ensure the ALL_PACKAGES.ts file gets updated correctly when new packages are added
+
 ## 0.3.0
 
 ### Minor Changes
