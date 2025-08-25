@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 
-import { Link } from '@leafygreen-ui/typography';
+import { Disclaimer, Link } from '@leafygreen-ui/typography';
 
 import { VerificationInfo } from '../Message';
 import { MessageBanner } from '../MessageBanner';
 
-import { verifiedAnswerBannerStyles } from './VerifiedAnswerBanner.styles';
+import { textStyles } from './VerifiedAnswerBanner.styles';
 
 export function VerifiedAnswerBanner({
   verifier,
@@ -32,14 +32,16 @@ export function VerifiedAnswerBanner({
   }, [verifier, verifiedAt]);
 
   return (
-    <MessageBanner className={verifiedAnswerBannerStyles} variant="success">
-      {text}
-      {learnMoreUrl ? (
-        <>
-          {' | '}
-          <Link href={learnMoreUrl}>Learn More</Link>
-        </>
-      ) : null}
+    <MessageBanner variant="success">
+      <Disclaimer className={textStyles}>
+        {text}
+        {learnMoreUrl && (
+          <>
+            {' | '}
+            <Link href={learnMoreUrl}>Learn More</Link>
+          </>
+        )}
+      </Disclaimer>
     </MessageBanner>
   );
 }
