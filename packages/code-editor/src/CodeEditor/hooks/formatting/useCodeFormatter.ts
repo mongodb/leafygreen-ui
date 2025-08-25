@@ -48,7 +48,9 @@ export function useCodeFormatter({
 
   useEffect(() => {
     setIsFormattingAvailable(
-      (props.language && areModulesLoaded(props.language, modules)) || false,
+      (props.language &&
+        areModulesLoaded({ language: props.language, modules })) ||
+        false,
     );
   }, [modules, props.language]);
 

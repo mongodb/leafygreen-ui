@@ -149,12 +149,12 @@ export const formatCode = async ({
         return formatWithPrettier({
           code,
           parserModuleName: 'prettier/parser-babel',
-          config: createJavaScriptConfig(
-            'babel',
-            [parserBabel],
+          config: createJavaScriptConfig({
+            parser: 'babel',
+            plugins: [parserBabel],
             editorTabWidth,
             editorUseTabs,
-          ),
+          }),
           modules,
           warningMessage:
             'Prettier modules not loaded for JavaScript/JSX formatting',
@@ -167,12 +167,12 @@ export const formatCode = async ({
         return formatWithPrettier({
           code,
           parserModuleName: 'prettier/parser-typescript',
-          config: createJavaScriptConfig(
-            'typescript',
-            [parserTypescript],
+          config: createJavaScriptConfig({
+            parser: 'typescript',
+            plugins: [parserTypescript],
             editorTabWidth,
             editorUseTabs,
-          ),
+          }),
           modules,
           warningMessage:
             'Prettier modules not loaded for TypeScript/TSX formatting',
@@ -184,15 +184,15 @@ export const formatCode = async ({
         return formatWithPrettier({
           code,
           parserModuleName: 'prettier/parser-babel',
-          config: createPrettierConfig(
-            'json',
-            [parserBabel],
-            {
+          config: createPrettierConfig({
+            parser: 'json',
+            plugins: [parserBabel],
+            overrides: {
               printWidth: 40, // Force multi-line formatting for JSON
             },
             editorTabWidth,
             editorUseTabs,
-          ),
+          }),
           modules,
           warningMessage: 'Prettier modules not loaded for JSON formatting',
         });
@@ -203,13 +203,13 @@ export const formatCode = async ({
         return formatWithPrettier({
           code,
           parserModuleName: 'prettier/parser-postcss',
-          config: createPrettierConfig(
-            'css',
-            [parserPostcss],
-            {}, // No special overrides for CSS
+          config: createPrettierConfig({
+            parser: 'css',
+            plugins: [parserPostcss],
+            overrides: {}, // No special overrides for CSS
             editorTabWidth,
             editorUseTabs,
-          ),
+          }),
           modules,
           warningMessage: 'Prettier modules not loaded for CSS formatting',
         });
@@ -220,13 +220,13 @@ export const formatCode = async ({
         return formatWithPrettier({
           code,
           parserModuleName: 'prettier/parser-html',
-          config: createPrettierConfig(
-            'html',
-            [parserHtml],
-            {}, // No special overrides for HTML
+          config: createPrettierConfig({
+            parser: 'html',
+            plugins: [parserHtml],
+            overrides: {}, // No special overrides for HTML
             editorTabWidth,
             editorUseTabs,
-          ),
+          }),
           modules,
           warningMessage: 'Prettier modules not loaded for HTML formatting',
         });
@@ -258,32 +258,32 @@ export const formatCode = async ({
 
         const style =
           language === LanguageName.java
-            ? createClangFormatConfig(
-                'Google',
-                {
+            ? createClangFormatConfig({
+                basedOnStyle: 'Google',
+                overrides: {
                   BreakBeforeBraces: 'Attach',
                 },
                 editorTabWidth,
                 editorUseTabs,
-              )
+              })
             : language === LanguageName.cpp
-            ? createClangFormatConfig(
-                'LLVM',
-                {
+            ? createClangFormatConfig({
+                basedOnStyle: 'LLVM',
+                overrides: {
                   BreakBeforeBraces: 'Attach',
                   NamespaceIndentation: 'None',
                 },
                 editorTabWidth,
                 editorUseTabs,
-              )
-            : createClangFormatConfig(
-                'Microsoft',
-                {
+              })
+            : createClangFormatConfig({
+                basedOnStyle: 'Microsoft',
+                overrides: {
                   BreakBeforeBraces: 'Allman',
                 },
                 editorTabWidth,
                 editorUseTabs,
-              );
+              });
 
         return formatWithWasm({
           code,

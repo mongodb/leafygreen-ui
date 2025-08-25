@@ -7,13 +7,19 @@ import { CodeEditorModules } from '../moduleLoaders.types';
 /**
  * Prettier parser plugin types - these are the actual modules we import
  */
-export const createPrettierConfig = (
-  parser: string,
-  plugins: Array<unknown>, // Prettier plugins have complex interfaces, allowing any plugin type
-  overrides: Record<string, string | number | boolean | unknown> = {},
-  editorTabWidth: number,
-  editorUseTabs: boolean,
-) => ({
+export const createPrettierConfig = ({
+  parser,
+  plugins,
+  overrides = {},
+  editorTabWidth,
+  editorUseTabs,
+}: {
+  parser: string;
+  plugins: Array<unknown>; // Prettier plugins have complex interfaces, allowing any plugin type
+  overrides?: Record<string, string | number | boolean | unknown>;
+  editorTabWidth: number;
+  editorUseTabs: boolean;
+}) => ({
   parser,
   plugins,
   tabWidth: editorTabWidth,
@@ -25,16 +31,21 @@ export const createPrettierConfig = (
 /**
  * Creates shared JavaScript/TypeScript configuration
  */
-export const createJavaScriptConfig = (
-  parser: string,
-  plugins: Array<unknown>,
-  editorTabWidth: number,
-  editorUseTabs: boolean,
-) =>
-  createPrettierConfig(
+export const createJavaScriptConfig = ({
+  parser,
+  plugins,
+  editorTabWidth,
+  editorUseTabs,
+}: {
+  parser: string;
+  plugins: Array<unknown>;
+  editorTabWidth: number;
+  editorUseTabs: boolean;
+}) =>
+  createPrettierConfig({
     parser,
     plugins,
-    {
+    overrides: {
       // Opinionated JavaScript/TypeScript formatting defaults
       semi: true,
       singleQuote: true,
@@ -45,17 +56,22 @@ export const createJavaScriptConfig = (
     },
     editorTabWidth,
     editorUseTabs,
-  );
+  });
 
 /**
  * Creates base clang-format configuration for C++/Java/C# languages
  */
-export const createClangFormatConfig = (
-  basedOnStyle: string,
-  overrides: Record<string, string | number | boolean | unknown> = {},
-  editorTabWidth: number,
-  editorUseTabs: boolean,
-) => `{
+export const createClangFormatConfig = ({
+  basedOnStyle,
+  overrides = {},
+  editorTabWidth,
+  editorUseTabs,
+}: {
+  basedOnStyle: string;
+  overrides?: Record<string, string | number | boolean | unknown>;
+  editorTabWidth: number;
+  editorUseTabs: boolean;
+}) => `{
   BasedOnStyle: ${basedOnStyle},
   IndentWidth: ${editorTabWidth},
   UseTab: ${editorUseTabs ? 'Always' : 'Never'},
@@ -72,10 +88,13 @@ export const createClangFormatConfig = (
     .join(',\n  ')}
 }`;
 
-export const areModulesLoaded = (
-  language: LanguageName,
-  modules: Partial<CodeEditorModules>,
-) => {
+export const areModulesLoaded = ({
+  language,
+  modules,
+}: {
+  language: LanguageName;
+  modules: Partial<CodeEditorModules>;
+}) => {
   if (!language) {
     return false;
   }
