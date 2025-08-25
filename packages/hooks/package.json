@@ -31,6 +31,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@types/react-test-renderer": "^18.0.0",
+    "react-test-renderer": "^18.2.0"
   }
 }
