@@ -47,6 +47,7 @@ async function buildBatch(
   batch: Array<string>,
   verbose = false,
 ): Promise<void> {
+  // Relative import paths need explicit file extensions in ECMAScript imports when 'moduleResolution' is 'NodeNext'
   const { DELIMITER } = await import('../../constants.mjs');
 
   const batchArg = batch.join(DELIMITER);

@@ -10,7 +10,9 @@
   },
   "include": [
     "src/**/*",
-    "scripts/**/*"
+    "scripts/**/*",
+    ".svgrrc.js",
+    "constants.mjs"
   ],
   "exclude": [
     "**/*.stories.*"
