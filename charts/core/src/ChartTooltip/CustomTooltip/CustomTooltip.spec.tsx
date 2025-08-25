@@ -69,11 +69,13 @@ function descendingCompareFn(
 }
 
 const renderCustomTooltip = (props: Partial<CustomTooltipProps> = {}) => {
-  const defaultProps: CustomTooltipProps = {
-    seriesData: mockSeriesData,
+  const resolvedProps: CustomTooltipProps = {
+    seriesData: props.seriesData || mockSeriesData,
+    chartId: props.chartId || 'test-chart',
+    tooltipPinned: props.tooltipPinned || false,
   };
 
-  return render(<CustomTooltip {...defaultProps} {...props} />);
+  return render(<CustomTooltip {...resolvedProps} />);
 };
 
 describe('@lg-charts/core/ChartTooltip/CustomTooltip', () => {
@@ -118,7 +120,7 @@ describe('@lg-charts/core/ChartTooltip/CustomTooltip', () => {
 
   test('should render custom series value with seriesValueFormatter', () => {
     renderCustomTooltip({
-      seriesValueFormatter: (value: number) => `$${value}`,
+      seriesValueFormatter: value => `$${value}`,
     });
 
     expect(screen.getByText('$100')).toBeInTheDocument();
