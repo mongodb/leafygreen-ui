@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { type EditorView } from '@codemirror/view';
+import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
@@ -179,7 +179,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
           commands.history(),
 
-          EditorView.EditorView.updateListener.of(update => {
+          EditorView.EditorView.updateListener.of((update: ViewUpdate) => {
             if (isControlled && update.docChanged) {
               const editorText = getContents();
               onChangeProp?.(editorText);
