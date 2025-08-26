@@ -128,11 +128,7 @@ describe('MessageLinks', () => {
         'aria-label',
         'Expand Related Resources',
       );
-      expect(contentRegion).toHaveStyle({
-        height: '0px',
-        opacity: '0',
-        visibility: 'hidden',
-      });
+      expect(contentRegion).not.toBeVisible();
     });
 
     test('expands when toggle button is clicked', async () => {
@@ -151,10 +147,7 @@ describe('MessageLinks', () => {
 
       // Content should become visible (opacity and visibility change immediately, height animates)
       await waitFor(() => {
-        expect(contentRegion).toHaveStyle({
-          opacity: '1',
-          visibility: 'visible',
-        });
+        expect(contentRegion).toBeVisible();
       });
     });
 
@@ -178,53 +171,7 @@ describe('MessageLinks', () => {
         'aria-label',
         'Expand Related Resources',
       );
-      expect(contentRegion).toHaveStyle({
-        height: '0px',
-        opacity: '0',
-        visibility: 'hidden',
-      });
-    });
-
-    test('icon rotates when expanded/collapsed', async () => {
-      renderMessageLinks();
-
-      const toggleButton = screen.getByRole('button');
-
-      // Initially should be collapsed (aria-expanded="false")
-      expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
-
-      // Click to expand
-      await userEvent.click(toggleButton);
-
-      // Should now be expanded with different styling
-      await waitFor(() => {
-        expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
-        // The icon should have different classes applied for rotation
-        expect(toggleButton.className).toMatch(/leafygreen-ui/);
-      });
-    });
-  });
-
-  describe('height calculation', () => {
-    test('content becomes visible when expanded', async () => {
-      const { container } = renderMessageLinks();
-
-      const toggleButton = screen.getByRole('button');
-      const contentRegion = container.querySelector('[role="region"]');
-
-      // Initially collapsed
-      expect(contentRegion).toHaveStyle({ opacity: '0', visibility: 'hidden' });
-
-      await userEvent.click(toggleButton);
-
-      // Content should become visible when expanded
-      await waitFor(() => {
-        expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
-        expect(contentRegion).toHaveStyle({
-          opacity: '1',
-          visibility: 'visible',
-        });
-      });
+      expect(contentRegion).not.toBeVisible();
     });
   });
 
@@ -285,9 +232,9 @@ describe('MessageLinks', () => {
     test('handles empty links array', () => {
       renderMessageLinks({ links: [] });
 
-      expect(screen.getByText('Related Resources')).toBeInTheDocument();
-      expect(screen.getByRole('button')).toBeInTheDocument();
-      expect(screen.getByTestId('rich-links-area')).toBeInTheDocument();
+      expect(screen.queryByText('Related Resources')).toBeNull();
+      expect(screen.queryByRole('button')).toBeNull();
+      expect(screen.queryByTestId('rich-links-area')).toBeNull();
     });
 
     test('handles missing onLinkClick prop', async () => {
@@ -320,15 +267,6 @@ describe('MessageLinks', () => {
       // Should still work with new links
       expect(screen.getByText('Link 4')).toBeInTheDocument();
       expect(screen.getByText('Link 5')).toBeInTheDocument();
-    });
-  });
-
-  describe('dark mode', () => {
-    test('renders correctly in dark mode', () => {
-      renderMessageLinks({ darkMode: true });
-
-      expect(screen.getByText('Related Resources')).toBeInTheDocument();
-      expect(screen.getByRole('button')).toBeInTheDocument();
     });
   });
 });

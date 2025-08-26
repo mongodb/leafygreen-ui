@@ -210,16 +210,16 @@ const links = [
     variant: 'Website',
   },
 ];
-const getWithRichLinksChildren = () => (
+const getWithMessageLinksChildren = () => (
   <>
     <MessageFeedback />
     <MessageLinks links={links} />
   </>
 );
-export const WithRichLinks: StoryObj<MessageStoryProps> = {
+export const WithMessageLinks: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    children: getWithRichLinksChildren(),
+    children: getWithMessageLinksChildren(),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
   },

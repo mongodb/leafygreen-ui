@@ -1,6 +1,13 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
+/**
+ * The length of the box shadow for the RichLink component that
+ * renders when a link is hovered.
+ */
+const LINK_BOX_SHADOW_LENGTH = 3;
+const TRANSITION_DURATION = transitionDuration.slower;
+
 export const containerStyles = css`
   display: flex;
   flex-direction: column;
@@ -13,7 +20,7 @@ export const headerStyles = css`
 `;
 
 const baseIconStyles = css`
-  transition: transform ${transitionDuration.slower}ms ease-in-out;
+  transition: transform ${TRANSITION_DURATION}ms ease-in-out;
   transform: rotate(0deg);
 `;
 
@@ -27,31 +34,29 @@ export const getIconStyles = (isExpanded: boolean) =>
   });
 
 const baseLinksWrapperStyles = css`
-  /* overflow: hidden; */
+  display: grid;
   padding-top: ${spacing[50]}px;
-  transition-property: height, opacity, visibility;
-  transition-duration: ${transitionDuration.slower}ms;
+  transition-property: height, grid-template-rows, opacity, visibility;
+  transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
-
-  /* Default collapsed state */
-  height: 0;
+  grid-template-rows: 0fr;
   opacity: 0;
   visibility: hidden;
 `;
 
-const getExpandedLinksWrapperStyles = (height: number) => css`
-  height: ${height}px;
+const expandedLinksWrapperStyles = css`
+  grid-template-rows: 1fr;
   opacity: 1;
   visibility: visible;
 `;
 
-export const getLinksWrapperStyles = ({
-  isExpanded,
-  height,
-}: {
-  isExpanded: boolean;
-  height: number;
-}) =>
+export const getLinksWrapperStyles = (isExpanded: boolean) =>
   cx(baseLinksWrapperStyles, {
-    [getExpandedLinksWrapperStyles(height)]: isExpanded,
+    [expandedLinksWrapperStyles]: isExpanded,
   });
+
+export const linksInnerWrapperStyles = css`
+  overflow: hidden;
+  margin: -${LINK_BOX_SHADOW_LENGTH}px;
+  padding: ${LINK_BOX_SHADOW_LENGTH}px;
+`;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { RichLinksArea } from '@lg-chat/rich-links';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -14,6 +14,7 @@ import {
   getIconStyles,
   getLinksWrapperStyles,
   headerStyles,
+  linksInnerWrapperStyles,
 } from './MessageLinks.styles';
 import { type MessageLinksProps } from './MessageLinks.types';
 
@@ -27,7 +28,6 @@ export function MessageLinks({
   const { darkMode } = useDarkMode(darkModeProp);
 
   const [isExpanded, setIsExpanded] = useState(false);
-  const [contentHeight, setContentHeight] = useState(0);
 
   const contentRef = useRef<HTMLDivElement>(null);
   const linksAreaRef = useRef<HTMLDivElement>(null);
@@ -35,38 +35,13 @@ export function MessageLinks({
   const headingId = useIdAllocator({ prefix: 'message-links-heading' });
   const contentId = useIdAllocator({ prefix: 'message-links-content' });
 
-  /**
-   * Measure content height for animation
-   */
-  const updateHeight = () => {
-    if (linksAreaRef.current) {
-      setContentHeight(linksAreaRef.current.offsetHeight);
-    }
-  };
-
-  /**
-   * Measure height on mount and when links change
-   */
-  useEffect(() => {
-    updateHeight();
-  }, [links]);
-
-  /**
-   * Re-measure height when content changes
-   */
-  useEffect(() => {
-    if (isExpanded && linksAreaRef.current) {
-      updateHeight();
-    }
-  }, [isExpanded]);
-
   const handleToggle = () => {
-    if (!isExpanded) {
-      // Measure height before expanding for smooth animation
-      updateHeight();
-    }
     setIsExpanded(!isExpanded);
   };
+
+  if (links.length === 0) {
+    return null;
+  }
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
@@ -88,12 +63,10 @@ export function MessageLinks({
           id={contentId}
           role="region"
           aria-labelledby={headingId}
-          className={getLinksWrapperStyles({
-            isExpanded,
-            height: contentHeight,
-          })}
+          className={getLinksWrapperStyles(isExpanded)}
         >
           <RichLinksArea
+            className={linksInnerWrapperStyles}
             links={links}
             onLinkClick={onLinkClick}
             ref={linksAreaRef}
