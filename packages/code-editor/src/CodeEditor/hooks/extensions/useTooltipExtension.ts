@@ -4,7 +4,7 @@ import { type Diagnostic } from '@codemirror/lint';
 import { type EditorView } from '@codemirror/view';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';
-import { type CodeEditorModules } from '../useModuleLoaders';
+import { type CodeEditorModules } from '../moduleLoaders.types';
 
 import { useExtension } from './useExtension';
 
