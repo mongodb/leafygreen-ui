@@ -4,7 +4,7 @@ import {
   createMockLanguageModule,
   createMockLezerHighlightModule,
   createMockStateModule,
-} from '../../testing';
+} from '../../../testing';
 
 import { useHighlightExtension } from './useHighlightExtension';
 

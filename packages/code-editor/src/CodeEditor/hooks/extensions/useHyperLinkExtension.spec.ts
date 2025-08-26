@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react';
 import {
   createMockHyperLinkModule,
   createMockStateModule,
-} from '../../testing';
+} from '../../../testing';
 
 import { useHyperLinkExtension } from './useHyperLinkExtension';
 

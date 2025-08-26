@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 
-import { createComprehensiveFakeModules } from '../../testing';
+import { createComprehensiveFakeModules } from '../../../testing';
 
 import { useExtensions } from './useExtensions';
 
