@@ -615,6 +615,200 @@ test('comprehensive editor testing', async () => {
 });
 ```
 
+### Panel Test Utilities
+
+The package also provides comprehensive testing utilities for the Panel component, making it easy to test Panel interactions and behaviors.
+
+#### `renderPanel(config?)`
+
+Renders a Panel component with proper LeafyGreen and CodeEditor context for testing.
+
+**Parameters:**
+
+- `config` _(optional)_: Configuration object with the following properties:
+  - `panelProps` _(optional)_: Partial `PanelProps` to pass to the Panel component
+  - `contextConfig` _(optional)_: Override the default CodeEditor context values
+
+**Returns:**
+
+- `container`: The rendered container element from `@testing-library/react`
+- `panel`: Panel test utilities object with methods for interacting with panel elements
+
+**Example:**
+
+```tsx
+import { renderPanel, PanelSelectors } from '@leafygreen-ui/code-editor';
+
+test('renders panel with format button', async () => {
+  const { container, panel } = renderPanel({
+    panelProps: {
+      title: 'JavaScript Editor',
+      showFormatButton: true,
+      showCopyButton: true,
+      showSecondaryMenuButton: true,
+    },
+  });
+
+  // Use utilities to interact with the panel
+  await panel.interactions.clickFormatButton();
+  await panel.interactions.clickUndoMenuItem();
+});
+```
+
+#### Panel Test Utilities Object
+
+The `panel` object provides access to Panel elements and interactions:
+
+##### Element Getters
+
+- `panel.getFormatButton()` - Gets the format button element
+- `panel.getCopyButton()` - Gets the copy button element
+- `panel.getSecondaryMenuButton()` - Gets the secondary menu button
+- `panel.getMenuItem(ariaLabel)` - Gets a menu item by aria-label
+- `panel.getUndoMenuItem()` - Gets the undo menu item
+- `panel.getRedoMenuItem()` - Gets the redo menu item
+- `panel.getDownloadMenuItem()` - Gets the download menu item
+- `panel.getViewShortcutsMenuItem()` - Gets the view shortcuts menu item
+- `panel.getCustomSecondaryButton(labelOrAriaLabel)` - Gets a custom secondary button
+
+##### Interactions
+
+All interaction methods are available under `panel.interactions`:
+
+- `clickFormatButton()` - Clicks the format button
+- `clickCopyButton()` - Clicks the copy button
+- `openSecondaryMenu()` - Opens the secondary menu
+- `clickMenuItem(ariaLabel)` - Clicks a menu item by aria-label
+- `clickUndoMenuItem()` - Opens menu and clicks undo
+- `clickRedoMenuItem()` - Opens menu and clicks redo
+- `clickDownloadMenuItem()` - Opens menu and clicks download
+- `clickViewShortcutsMenuItem()` - Opens menu and clicks view shortcuts
+- `clickCustomSecondaryButton(labelOrAriaLabel)` - Opens menu and clicks custom button
+- `hoverFormatButton()` - Hovers format button and waits for tooltip
+- `hoverCopyButton()` - Hovers copy button and waits for tooltip
+
+##### Utilities
+
+- `panel.waitForTooltip(text, timeout?)` - Waits for a tooltip with specific text
+- `panel.hasTitleText(expectedTitle)` - Checks if panel has expected title
+- `panel.hasInnerContent(testId)` - Checks if inner content with testId exists
+
+#### PanelSelectors
+
+Consistent selector constants for testing:
+
+```tsx
+import { PanelSelectors } from '@leafygreen-ui/code-editor';
+
+// Use instead of hardcoded strings
+panel.getMenuItem(PanelSelectors.UndoMenuItem);
+panel.getMenuItem(PanelSelectors.RedoMenuItem);
+panel.getMenuItem(PanelSelectors.DownloadMenuItem);
+panel.getMenuItem(PanelSelectors.ViewShortcutsMenuItem);
+```
+
+Available selectors:
+
+- `PanelSelectors.FormatButton`
+- `PanelSelectors.CopyButton`
+- `PanelSelectors.SecondaryMenuButton`
+- `PanelSelectors.UndoMenuItem`
+- `PanelSelectors.RedoMenuItem`
+- `PanelSelectors.DownloadMenuItem`
+- `PanelSelectors.ViewShortcutsMenuItem`
+
+#### Panel Test Examples
+
+##### Testing Format Button
+
+```tsx
+test('formats code when format button is clicked', async () => {
+  const onFormatClick = jest.fn();
+
+  const { panel } = renderPanel({
+    panelProps: {
+      showFormatButton: true,
+      onFormatClick,
+    },
+  });
+
+  await panel.interactions.clickFormatButton();
+
+  expect(onFormatClick).toHaveBeenCalled();
+  expect(mockPanelFunctions.formatCode).toHaveBeenCalled();
+});
+```
+
+##### Testing Secondary Menu
+
+```tsx
+test('performs undo when undo menu item is clicked', async () => {
+  const onUndoClick = jest.fn();
+
+  const { panel } = renderPanel({
+    panelProps: {
+      showSecondaryMenuButton: true,
+      onUndoClick,
+    },
+  });
+
+  await panel.interactions.clickUndoMenuItem();
+
+  expect(onUndoClick).toHaveBeenCalled();
+  expect(mockPanelFunctions.undo).toHaveBeenCalled();
+});
+```
+
+##### Testing Custom Secondary Buttons
+
+```tsx
+test('handles custom secondary button clicks', async () => {
+  const customOnClick = jest.fn();
+
+  const { panel } = renderPanel({
+    panelProps: {
+      showSecondaryMenuButton: true,
+      customSecondaryButtons: [
+        {
+          label: 'Custom Action',
+          onClick: customOnClick,
+          'aria-label': 'Perform custom action',
+        },
+      ],
+    },
+  });
+
+  await panel.interactions.clickCustomSecondaryButton('Perform custom action');
+
+  expect(customOnClick).toHaveBeenCalled();
+});
+```
+
+#### mockPanelFunctions
+
+The `mockPanelFunctions` object provides access to mock functions used in the CodeEditor context:
+
+```tsx
+import { mockPanelFunctions } from '@leafygreen-ui/code-editor';
+
+// Clear all mock calls before each test
+beforeEach(() => {
+  mockPanelFunctions.clearAll();
+});
+
+// Access individual mocks
+expect(mockPanelFunctions.undo).toHaveBeenCalled();
+expect(mockPanelFunctions.formatCode).toHaveBeenCalled();
+```
+
+Available mock functions:
+
+- `mockPanelFunctions.getContents`
+- `mockPanelFunctions.formatCode`
+- `mockPanelFunctions.undo`
+- `mockPanelFunctions.redo`
+- `mockPanelFunctions.clearAll()` - Clears all mock calls
+
 ## CodeMirror Extension Hooks
 
 The `CodeEditor` component is built on [CodeMirror v6](https://codemirror.net/) and provides a complete, ready-to-use editor experience. However, some applications may need highly customized CodeMirror implementations that don't fit the standard `CodeEditor` API, while still wanting to maintain consistency with the LeafyGreen design system.
