@@ -10,7 +10,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';
-import { type CodeEditorModules } from '../useModuleLoaders';
+import { type CodeEditorModules } from '../moduleLoaders.types';
 
 import { useExtension } from './useExtension';
 

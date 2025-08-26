@@ -61,7 +61,11 @@
     "@replit/codemirror-lang-csharp": "^6.2.0",
     "@uiw/codemirror-extensions-hyper-link": "^4.23.12",
     "@uiw/react-codemirror": "^4.23.10",
-    "codemirror": "^6.0.2"
+    "@wasm-fmt/clang-format": "^20.1.7",
+    "@wasm-fmt/gofmt": "^0.4.9",
+    "@wasm-fmt/ruff_fmt": "^0.10.0",
+    "codemirror": "^6.0.2",
+    "prettier": "2.8.8"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
