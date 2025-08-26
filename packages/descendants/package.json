@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
+    "@storybook/react": "^8.5.3",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/popover": "workspace:^",
