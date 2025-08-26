@@ -104,7 +104,7 @@ describe('packages/info-sprinkle', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('types behave as expected', () => {
     <>
-      {/* @ts-expect-error - Missing children */}
+      {/* FIXME:  add expect error @ts-expect-error - Missing children */}
       <InfoSprinkle />
 
       <InfoSprinkle>Tooltip</InfoSprinkle>
