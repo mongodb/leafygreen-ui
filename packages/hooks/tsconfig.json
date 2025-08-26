@@ -26,6 +26,9 @@
     },
     {
       "path": "../testing-lib"
+    },
+    {
+      "path": "../../tools/storybook-utils"
     }
   ]
 }

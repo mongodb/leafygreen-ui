@@ -1616,6 +1616,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
+      '@storybook/react':
+        specifier: ^8.5.3
+        version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
 
   packages/drawer:
     dependencies:
@@ -1943,6 +1946,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
+      '@lg-tools/storybook-utils':
+        specifier: workspace:^
+        version: link:../../tools/storybook-utils
       '@types/react-test-renderer':
         specifier: ^18.0.0
         version: 18.3.1
