@@ -19,6 +19,9 @@
   ],
   "references": [
     {
+      "path": "../button"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -26,6 +29,9 @@
     },
     {
       "path": "../lib"
+    },
+    {
+      "path": "../polymorphic"
     },
     {
       "path": "../portal"

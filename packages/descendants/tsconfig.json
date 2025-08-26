@@ -27,7 +27,13 @@
       "path": "../lib"
     },
     {
+      "path": "../popover"
+    },
+    {
       "path": "../testing-lib"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }
