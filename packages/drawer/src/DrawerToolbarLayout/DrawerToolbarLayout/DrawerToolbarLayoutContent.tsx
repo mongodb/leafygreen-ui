@@ -5,7 +5,6 @@ import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 import { Drawer } from '../../Drawer/Drawer';
 import { useDrawerLayoutContext } from '../../DrawerLayout';
 import { LayoutComponent } from '../../LayoutComponent';
-import { LayoutGrid } from '../../LayoutComponent/LayoutGrid';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../../utils';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
 
@@ -135,14 +134,14 @@ export const DrawerToolbarLayoutContent = forwardRef<
     );
 
     return (
-      <LayoutComponent {...rest} ref={forwardRef}>
-        <LayoutGrid
-          drawer={
-            shouldRenderToolbar ? renderDrawerWithToolbar() : renderDrawer()
-          }
-        >
-          {children}
-        </LayoutGrid>
+      <LayoutComponent
+        {...rest}
+        ref={forwardRef}
+        panelContent={
+          shouldRenderToolbar ? renderDrawerWithToolbar() : renderDrawer()
+        }
+      >
+        {children}
       </LayoutComponent>
     );
   },

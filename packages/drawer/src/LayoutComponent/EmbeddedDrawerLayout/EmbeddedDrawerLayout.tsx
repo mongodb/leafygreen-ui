@@ -1,7 +1,8 @@
 import React, { forwardRef } from 'react';
 
 import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/DrawerLayoutContext';
-import { LayoutGrid } from '../LayoutGrid';
+import { contentStyles } from '../LayoutComponent.styles';
+import { PanelGrid } from '../PanelGrid';
 
 import { getEmbeddedDrawerLayoutStyles } from './EmbeddedDrawerLayout.styles';
 import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
@@ -19,13 +20,13 @@ export const EmbeddedDrawerLayout = forwardRef<
   EmbeddedDrawerLayoutProps
 >(
   (
-    { children, className, drawer }: EmbeddedDrawerLayoutProps,
+    { children, className, panelContent }: EmbeddedDrawerLayoutProps,
     forwardedRef,
   ) => {
     const { hasToolbar, isDrawerOpen, drawerWidth, isDrawerResizing, size } =
       useDrawerLayoutContext();
 
-    const hasDrawerProp = !!drawer;
+    const hasPanelContentProp = !!panelContent;
 
     return (
       <div
@@ -36,13 +37,16 @@ export const EmbeddedDrawerLayout = forwardRef<
           hasToolbar,
           isDrawerResizing,
           size,
-          hasDrawerProp,
+          hasPanelContentProp,
         })}
         // Prevents a new style class every time the width changes
         style={{ '--drawer-width': `${drawerWidth}` } as React.CSSProperties}
       >
-        {hasDrawerProp ? (
-          <LayoutGrid drawer={drawer}>{children}</LayoutGrid>
+        {hasPanelContentProp ? (
+          <>
+            <div className={contentStyles}>{children}</div>
+            <PanelGrid>{panelContent}</PanelGrid>
+          </>
         ) : (
           children
         )}

@@ -17,10 +17,14 @@ import { DrawerLayout, DrawerLayoutProps } from '../../DrawerLayout';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
 
 import {
-  DRAWER_TOOLBAR_DATA,
-  DRAWER_TOOLBAR_DATA_NOT_VISIBLE,
+  getDrawerToolbarData,
   LongContent,
 } from './DrawerToolbarLayout.testutils';
+
+const DRAWER_TOOLBAR_DATA = getDrawerToolbarData({});
+const DRAWER_TOOLBAR_DATA_NOT_VISIBLE = getDrawerToolbarData({
+  isToolbarHidden: true,
+});
 
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,

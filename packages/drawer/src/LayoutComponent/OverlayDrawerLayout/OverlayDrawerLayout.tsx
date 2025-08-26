@@ -1,7 +1,8 @@
 import React, { forwardRef } from 'react';
 
 import { useDrawerLayoutContext } from '../../DrawerLayout/DrawerLayoutContext/DrawerLayoutContext';
-import { LayoutGrid } from '../LayoutGrid';
+import { contentStyles } from '../LayoutComponent.styles';
+import { PanelGrid } from '../PanelGrid';
 
 import { getOverlayDrawerLayoutStyles } from './OverlayDrawerLayout.styles';
 import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
@@ -17,25 +18,33 @@ import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
 export const OverlayDrawerLayout = forwardRef<
   HTMLDivElement,
   OverlayDrawerLayoutProps
->(({ children, className, drawer }: OverlayDrawerLayoutProps, forwardedRef) => {
-  const { hasToolbar } = useDrawerLayoutContext();
-  const hasDrawerProp = !!drawer;
+>(
+  (
+    { children, className, panelContent }: OverlayDrawerLayoutProps,
+    forwardedRef,
+  ) => {
+    const { hasToolbar } = useDrawerLayoutContext();
+    const hasPanelContentProp = !!panelContent;
 
-  return (
-    <div
-      ref={forwardedRef}
-      className={getOverlayDrawerLayoutStyles({
-        className,
-        hasToolbar,
-      })}
-    >
-      {hasDrawerProp ? (
-        <LayoutGrid drawer={drawer}>{children}</LayoutGrid>
-      ) : (
-        children
-      )}
-    </div>
-  );
-});
+    return (
+      <div
+        ref={forwardedRef}
+        className={getOverlayDrawerLayoutStyles({
+          className,
+          hasToolbar,
+        })}
+      >
+        {hasPanelContentProp ? (
+          <>
+            <div className={contentStyles}>{children}</div>
+            <PanelGrid>{panelContent}</PanelGrid>
+          </>
+        ) : (
+          children
+        )}
+      </div>
+    );
+  },
+);
 
 OverlayDrawerLayout.displayName = 'OverlayDrawerLayout';

@@ -21,6 +21,7 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
       resizable = false,
       onClose,
       size = Size.Default,
+      drawer,
       ...rest
     }: DrawerLayoutProps,
     forwardedRef,
@@ -45,7 +46,7 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
             {children}
           </DrawerToolbarLayout>
         ) : (
-          <LayoutComponent ref={forwardedRef} {...rest}>
+          <LayoutComponent panelContent={drawer} ref={forwardedRef} {...rest}>
             {children}
           </LayoutComponent>
         )}

@@ -57,79 +57,52 @@ export const DrawerContent = () => {
   );
 };
 
-export const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <DrawerContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <DrawerContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-  },
-  {
-    id: 'Sparkle',
-    label: 'Disabled item',
-    glyph: 'Sparkle',
-    disabled: true,
-  },
-  {
-    id: 'Apps',
-    label: 'Apps',
-    content: <DrawerContent />,
-    glyph: 'Apps',
-    title: 'Apps Title',
-    visible: false,
-  },
-];
-
-export const DRAWER_TOOLBAR_DATA_NOT_VISIBLE: DrawerToolbarLayoutProps['toolbarData'] =
-  [
+export const getDrawerToolbarData = ({
+  isToolbarHidden = false,
+  hasStaticContent = false,
+}: {
+  isToolbarHidden?: boolean;
+  hasStaticContent?: boolean;
+}) => {
+  const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
     {
       id: 'Code',
       label: 'Code',
-      content: <DrawerContent />,
+      content: hasStaticContent ? <LongContent /> : <DrawerContent />,
       title: 'Code Title',
       glyph: 'Code',
-      visible: false,
     },
     {
       id: 'Dashboard',
       label: 'Dashboard',
-      content: <DrawerContent />,
+      content: hasStaticContent ? <LongContent /> : <DrawerContent />,
       title: 'Dashboard Title',
       glyph: 'Dashboard',
-      visible: false,
     },
     {
       id: 'Plus',
       label: "Perform some action, doesn't open a drawer",
       glyph: 'Plus',
-      visible: false,
     },
     {
       id: 'Sparkle',
       label: 'Disabled item',
       glyph: 'Sparkle',
       disabled: true,
-      visible: false,
     },
     {
       id: 'Apps',
       label: 'Apps',
-      content: <DrawerContent />,
+      content: hasStaticContent ? <LongContent /> : <DrawerContent />,
       glyph: 'Apps',
       title: 'Apps Title',
       visible: false,
     },
   ];
+
+  if (isToolbarHidden) {
+    return DRAWER_TOOLBAR_DATA.map(item => ({ ...item, visible: false }));
+  }
+
+  return DRAWER_TOOLBAR_DATA;
+};

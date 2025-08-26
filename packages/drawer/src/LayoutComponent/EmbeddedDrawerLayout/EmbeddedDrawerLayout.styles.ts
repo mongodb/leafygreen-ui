@@ -53,9 +53,9 @@ const getBaseStyles = ({
 
 // If there is no toolbar and the drawer is open, we need to shift the layout by the drawer width;
 const getWithoutToolbarBaseStyles = ({
-  hasDrawerProp,
+  hasPanelContentProp,
 }: {
-  hasDrawerProp: boolean;
+  hasPanelContentProp: boolean;
 }) =>
   cx(
     css`
@@ -69,33 +69,33 @@ const getWithoutToolbarBaseStyles = ({
         @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
           grid-template-columns: auto 0;
         }
-      `]: hasDrawerProp,
+      `]: hasPanelContentProp,
       [css`
         @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
           grid-template-columns: unset;
           grid-template-rows: 100% 0;
           grid-template-areas: unset;
         }
-      `]: !hasDrawerProp,
+      `]: !hasPanelContentProp,
     },
   );
 
 const getWithoutToolbarOpenStyles = ({
-  hasDrawerProp,
+  hasPanelContentProp,
 }: {
-  hasDrawerProp: boolean;
+  hasPanelContentProp: boolean;
 }) =>
   cx({
     [css`
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
         grid-template-columns: auto 0;
       }
-    `]: hasDrawerProp,
+    `]: hasPanelContentProp,
     [css`
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
         grid-template-rows: 50% 50%;
       }
-    `]: !hasDrawerProp,
+    `]: !hasPanelContentProp,
   });
 
 // If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + drawer width;
@@ -126,14 +126,14 @@ export const getEmbeddedDrawerLayoutStyles = ({
   hasToolbar = false,
   isDrawerResizing = false,
   size = Size.Default,
-  hasDrawerProp = true,
+  hasPanelContentProp = true,
 }: {
   className?: string;
   isDrawerOpen?: boolean;
   hasToolbar?: boolean;
   isDrawerResizing?: boolean;
   size?: Size;
-  hasDrawerProp?: boolean;
+  hasPanelContentProp?: boolean;
 }) =>
   cx(
     getBaseStyles({ isDrawerOpen, hasToolbar, size }),
@@ -141,8 +141,8 @@ export const getEmbeddedDrawerLayoutStyles = ({
       [resizingStyles]: isDrawerResizing,
       [withToolbarBaseStyles]: hasToolbar,
       [withToolbarOpenStyles]: isDrawerOpen && hasToolbar,
-      [getWithoutToolbarBaseStyles({ hasDrawerProp })]: !hasToolbar,
-      [getWithoutToolbarOpenStyles({ hasDrawerProp })]:
+      [getWithoutToolbarBaseStyles({ hasPanelContentProp })]: !hasToolbar,
+      [getWithoutToolbarOpenStyles({ hasPanelContentProp })]:
         isDrawerOpen && !hasToolbar,
     },
     className,

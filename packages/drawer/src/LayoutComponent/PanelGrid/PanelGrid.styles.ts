@@ -167,7 +167,7 @@ export const getOverlayStyles = ({
     [getOpenOverlayStyles(size, hasToolbar)]: isDrawerOpen,
   });
 
-export const getLayoutGridStyles = ({
+export const getPanelGridStyles = ({
   className,
   isDrawerOpen,
   displayMode,

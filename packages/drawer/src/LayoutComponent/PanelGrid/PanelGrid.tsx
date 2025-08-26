@@ -4,8 +4,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useDrawerLayoutContext } from '../../DrawerLayout';
 
-import { contentStyles, getLayoutGridStyles } from './LayoutGrid.styles';
-import { LayoutGridProps } from './LayoutGrid.types';
+import { getPanelGridStyles } from './PanelGrid.styles';
+import { PanelGridProps } from './PanelGrid.types';
 
 /**
  * @internal
@@ -21,8 +21,8 @@ import { LayoutGridProps } from './LayoutGrid.types';
  *
  * If the drawer is embedded, the grid width is set to auto and inherits the column size of the parent column.
  */
-export const LayoutGrid = forwardRef<HTMLDivElement, LayoutGridProps>(
-  ({ children, className, drawer }: LayoutGridProps, forwardedRef) => {
+export const PanelGrid = forwardRef<HTMLDivElement, PanelGridProps>(
+  ({ children, className }: PanelGridProps, forwardedRef) => {
     const { theme } = useDarkMode();
     const {
       displayMode,
@@ -32,24 +32,21 @@ export const LayoutGrid = forwardRef<HTMLDivElement, LayoutGridProps>(
     } = useDrawerLayoutContext();
 
     return (
-      <>
-        <div className={contentStyles}>{children}</div>
-        <div
-          ref={forwardedRef}
-          className={getLayoutGridStyles({
-            className,
-            isDrawerOpen,
-            displayMode,
-            theme,
-            size,
-            hasToolbar,
-          })}
-        >
-          {drawer}
-        </div>
-      </>
+      <div
+        ref={forwardedRef}
+        className={getPanelGridStyles({
+          className,
+          isDrawerOpen,
+          displayMode,
+          theme,
+          size,
+          hasToolbar,
+        })}
+      >
+        {children}
+      </div>
     );
   },
 );
 
-LayoutGrid.displayName = 'LayoutGrid';
+PanelGrid.displayName = 'PanelGrid';

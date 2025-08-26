@@ -15,11 +15,16 @@ import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarCo
 
 import { DrawerToolbarLayout } from './DrawerToolbarLayout';
 import {
-  DRAWER_TOOLBAR_DATA,
-  DRAWER_TOOLBAR_DATA_NOT_VISIBLE,
+  getDrawerToolbarData,
   LongContent,
 } from './DrawerToolbarLayout.testutils';
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
+
+const DRAWER_TOOLBAR_DATA = getDrawerToolbarData({ hasStaticContent: true });
+const DRAWER_TOOLBAR_DATA_NOT_VISIBLE = getDrawerToolbarData({
+  hasStaticContent: true,
+  isToolbarHidden: true,
+});
 
 // The tooltip sometimes lingers after the drawer closes, which can cause
 // snapshot tests to fail if the tooltip is not in the correct position.
