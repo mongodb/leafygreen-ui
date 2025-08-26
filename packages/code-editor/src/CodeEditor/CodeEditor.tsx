@@ -166,7 +166,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
      * @returns boolean indicating if undo was successful
      */
     const handleUndo = useCallback((): boolean => {
-      const commands = modules?.['@codemirror/commands'];
+      const commands = coreModules?.['@codemirror/commands'];
 
       if (!editorViewRef.current || !commands) {
         console.warn('Undo is not available - editor or commands not loaded');
@@ -174,14 +174,14 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       }
 
       return commands.undo(editorViewRef.current);
-    }, [modules]);
+    }, [coreModules]);
 
     /**
      * Redoes the last undone editor action if possible.
      * @returns boolean indicating if redo was successful
      */
     const handleRedo = useCallback((): boolean => {
-      const commands = modules?.['@codemirror/commands'];
+      const commands = coreModules?.['@codemirror/commands'];
 
       if (!editorViewRef.current || !commands) {
         console.warn('Redo is not available - editor or commands not loaded');
@@ -189,7 +189,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       }
 
       return commands.redo(editorViewRef.current);
-    }, [modules]);
+    }, [coreModules]);
 
     useLayoutEffect(() => {
       const EditorView = coreModules?.['@codemirror/view'];
