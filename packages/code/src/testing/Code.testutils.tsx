@@ -42,6 +42,10 @@ export const languageOptions = [
     displayName: 'Python',
     language: Language.Python,
   },
+  {
+    displayName: 'macOS',
+    language: Language.Shell,
+  },
 ];
 
 export const renderCode = (

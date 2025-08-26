@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
 
 import { LanguageOption } from '../Panel/Panel.types';
+import { languageOptions } from '../testing/Code.testutils';
 import { Language } from '../types';
 import Code, { Panel } from '..';
-
-export const languageOptions = [
-  {
-    displayName: 'JavaScript',
-    language: Language.JavaScript,
-  },
-  {
-    displayName: 'Python',
-    language: Language.Python,
-  },
-];
 
 const jsSnippet = `
 
@@ -34,9 +24,17 @@ print (greeting("World"))
 
 `;
 
+const shellSnippet = `
+
+#!/bin/sh
+echo "Hello world"
+
+`;
+
 const snippetMap = {
   [Language.JavaScript]: jsSnippet,
   [Language.Python]: pythonSnippet,
+  [Language.Shell]: shellSnippet,
 };
 
 export function LanguageSwitcherWithPanelExample({
@@ -61,7 +59,7 @@ export function LanguageSwitcherWithPanelExample({
   return (
     <Code
       {...rest}
-      language={language.displayName}
+      language={language.language}
       panel={
         <Panel
           languageOptions={languageOptions}
@@ -72,7 +70,7 @@ export function LanguageSwitcherWithPanelExample({
         />
       }
     >
-      {snippetMap[languageIndex as 'javascript' | 'python']}
+      {snippetMap[languageIndex as 'javascript' | 'python' | 'shell']}
     </Code>
   );
 }
