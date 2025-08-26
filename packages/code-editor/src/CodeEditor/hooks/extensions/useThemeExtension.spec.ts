@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 
-import { createMockStateModule, createMockViewModule } from '../../testing';
+import { createMockStateModule, createMockViewModule } from '../../../testing';
 
 import { useThemeExtension } from './useThemeExtension';
 
