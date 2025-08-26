@@ -14,11 +14,11 @@ import {
   useMockTestRowData,
   useTestHookCall,
 } from '../utils/testHookCalls.testutils';
-import { Table } from '..';
+import { Table, TableProps } from '..';
 
 import { Row } from '.';
 
-const RowWithNestedRows = args => {
+const RowWithNestedRows = (args: TableProps<Person>) => {
   const { table } = useTestHookCall({
     rowProps: {
       subRows: [
