@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { RichLinksArea } from '@lg-chat/rich-links';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -29,9 +29,6 @@ export function MessageLinks({
 
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const contentRef = useRef<HTMLDivElement>(null);
-  const linksAreaRef = useRef<HTMLDivElement>(null);
-
   const headingId = useIdAllocator({ prefix: 'message-links-heading' });
   const contentId = useIdAllocator({ prefix: 'message-links-content' });
 
@@ -59,7 +56,6 @@ export function MessageLinks({
           </IconButton>
         </div>
         <div
-          ref={contentRef}
           id={contentId}
           role="region"
           aria-labelledby={headingId}
@@ -69,7 +65,6 @@ export function MessageLinks({
             className={linksInnerWrapperStyles}
             links={links}
             onLinkClick={onLinkClick}
-            ref={linksAreaRef}
           />
         </div>
       </div>

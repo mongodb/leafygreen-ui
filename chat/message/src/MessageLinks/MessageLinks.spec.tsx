@@ -248,25 +248,5 @@ describe('MessageLinks', () => {
         expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
       });
     });
-
-    test('updates height when links change', async () => {
-      const { rerender } = renderMessageLinks();
-
-      const newLinks = [
-        ...mockLinks,
-        { children: 'Link 4', href: 'https://example.com/4' },
-        { children: 'Link 5', href: 'https://example.com/5' },
-      ];
-
-      rerender(
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <MessageLinks {...defaultProps} links={newLinks} />
-        </LeafyGreenChatProvider>,
-      );
-
-      // Should still work with new links
-      expect(screen.getByText('Link 4')).toBeInTheDocument();
-      expect(screen.getByText('Link 5')).toBeInTheDocument();
-    });
   });
 });

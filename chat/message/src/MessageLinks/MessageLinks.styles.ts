@@ -5,7 +5,7 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
  * The length of the box shadow for the RichLink component that
  * renders when a link is hovered.
  */
-const LINK_BOX_SHADOW_LENGTH = 3;
+const LINK_BOX_SHADOW_LENGTH = 4;
 const TRANSITION_DURATION = transitionDuration.slower;
 
 export const containerStyles = css`
@@ -35,7 +35,7 @@ export const getIconStyles = (isExpanded: boolean) =>
 
 const baseLinksWrapperStyles = css`
   display: grid;
-  padding-top: ${spacing[50]}px;
+  padding-top: ${spacing[100]}px;
   transition-property: height, grid-template-rows, opacity, visibility;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
