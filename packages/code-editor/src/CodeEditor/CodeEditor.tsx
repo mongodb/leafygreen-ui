@@ -3,7 +3,6 @@ import React, {
   useCallback,
   useImperativeHandle,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -76,22 +75,22 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
 
-    // Load modules
+    // Load core modules
     const coreModuleLoaders = useModuleLoaders(props);
+    const { isLoading: isLoadingCoreModules, modules: coreModules } =
+      useLazyModules(coreModuleLoaders);
+
+    // Load formatting modules
     const formattingModuleLoaders = useFormattingModuleLoaders(language);
-    const allModuleLoaders = useMemo(
-      () => ({
-        ...coreModuleLoaders,
-        ...formattingModuleLoaders,
-      }),
-      [coreModuleLoaders, formattingModuleLoaders],
-    );
-    const { isLoading, modules } = useLazyModules(allModuleLoaders);
+    const {
+      isLoading: isLoadingFormattingModules,
+      modules: formattingModules,
+    } = useLazyModules(formattingModuleLoaders);
 
     // Get formatting functionality
     const { formatCode, isFormattingAvailable } = useCodeFormatter({
       props: { language, indentSize, indentUnit },
-      modules,
+      modules: formattingModules,
     });
 
     // Get custom extensions
@@ -106,7 +105,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         darkMode: darkModeProp,
         baseFontSize: baseFontSizeProp,
       },
-      modules,
+      modules: coreModules,
     });
 
     // Get the current contents of the editor
@@ -163,9 +162,9 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     ]);
 
     useLayoutEffect(() => {
-      const EditorView = modules?.['@codemirror/view'];
-      const commands = modules?.['@codemirror/commands'];
-      const Prec = modules?.['@codemirror/state']?.Prec;
+      const EditorView = coreModules?.['@codemirror/view'];
+      const commands = coreModules?.['@codemirror/commands'];
+      const Prec = coreModules?.['@codemirror/state']?.Prec;
 
       if (!editorContainerRef?.current || !EditorView || !Prec || !commands) {
         return;
@@ -199,7 +198,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       });
 
       if (forceParsingProp) {
-        const Language = modules?.['@codemirror/language'];
+        const Language = coreModules?.['@codemirror/language'];
         const docLength = editorViewRef.current?.state.doc.length;
 
         if (Language && Language.forceParsing && docLength > 0) {
@@ -214,7 +213,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       };
     }, [
       value,
-      modules,
+      coreModules,
       controlledValue,
       defaultValue,
       isControlled,
@@ -264,11 +263,13 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               getContentsToCopy={getContents}
               className={getCopyButtonStyles(copyButtonAppearance)}
               variant={CopyButtonVariant.Button}
-              disabled={isLoadingProp || isLoading}
+              disabled={isLoadingProp || isLoadingCoreModules}
               data-lgid={CopyButtonLgId}
             />
           )}
-        {(isLoadingProp || isLoading) && (
+        {(isLoadingProp ||
+          isLoadingCoreModules ||
+          isLoadingFormattingModules) && (
           <div
             className={getLoaderStyles({
               theme,
