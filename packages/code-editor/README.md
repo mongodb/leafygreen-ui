@@ -24,7 +24,7 @@ yarn add @leafygreen-ui/code-editor
 npm install @leafygreen-ui/code-editor
 ```
 
-## Component
+## Components
 
 ### `<CodeEditor>`
 
@@ -140,22 +140,106 @@ import CloudIcon from '@leafygreen-ui/icon';
 | `label`                   | Text label for the button.                                             | `string`             | —           |
 | `onClick` _(optional)_    | Callback fired when the button is clicked.                             | `() => void`         | `undefined` |
 
+## Code Formatting
+
+The CodeEditor component includes built-in code formatting functionality that integrates with the `Panel` component or can be used independently via the `useCodeFormatter` hook.
+
+### Supported Languages
+
+The formatting system supports the following languages:
+
+- **JavaScript/JSX**
+- **TypeScript/TSX**
+- **CSS**
+- **HTML**
+- **JSON**
+- **Java**
+- **C++**
+- **C#**
+- **Go**
+- **Python**
+
+**Note:** Kotlin, PHP, Ruby, and Rust are not supported due to current browser compatibility limitations.
+
+### Using Code Formatting
+
+There are three ways to format code with the CodeEditor:
+
+#### 1. Via Panel Component (Automatic)
+
+Enable the format button in the Panel for user-triggered formatting. Formatting will occur automatically on click for supported languages:
+
+```tsx
+import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
+
+function MyComponent() {
+  return (
+    <CodeEditor
+      defaultValue="const x=1;const y=2;"
+      language={LanguageName.javascript}
+      panel={<Panel showFormatButton />}
+    />
+  );
+}
+```
+
+#### 2. Via CodeEditor Ref (Programmatic)
+
+Access formatting programmatically through the CodeEditor ref:
+
+```tsx
+import { useRef } from 'react';
+import {
+  CodeEditor,
+  type CodeEditorHandle,
+  LanguageName,
+} from '@leafygreen-ui/code-editor';
+
+function MyComponent() {
+  const editorRef = useRef<CodeEditorHandle>(null);
+
+  const handleFormatCode = async () => {
+    if (editorRef.current?.isFormattingAvailable) {
+      const formatted = await editorRef.current.formatCode();
+      console.log('Formatted code:', formatted);
+    }
+  };
+
+  return (
+    <>
+      <CodeEditor
+        ref={editorRef}
+        defaultValue="const x=1;const y=2;"
+        language={LanguageName.javascript}
+      />
+      <button onClick={handleFormatCode}>Format Code</button>
+    </>
+  );
+}
+```
+
+#### 3. Via useCodeFormatter Hook (Standalone)
+
+Use the formatting functionality independently without the CodeEditor component. For detailed documentation, examples, and module loading requirements, see the [`useCodeFormatter`](#usecodeformatterconfig) hook documentation in the CodeMirror Extension Hooks section.
+
 ## Types and Variables
 
 | Name                        | Description                                                                                                     |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                   |
+| `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.          |
 | `CodeEditorProps`           | TypeScript interface defining all props that can be passed to the `CodeEditor` component.                       |
 | `CodeEditorSelectors`       | Constant object containing CSS selectors for common CodeEditor elements. Useful for testing and custom styling. |
-| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                   |
 | `CodeEditorTooltip`         | TypeScript interface defining the structure for tooltips displayed on hover in the editor.                      |
 | `CodeEditorTooltipSeverity` | Constant object defining possible severity levels for tooltips (`info`, `warning`, `error`, `hint`).            |
 | `CodeMirrorExtension`       | Re-export of CodeMirror's `Extension` type. See https://codemirror.net/docs/ref/#state.Extension.               |
+| `CodeEditorHandle`          | TypeScript interface for the imperative handle of the CodeEditor component, including formatting methods.       |
 | `CodeMirrorState`           | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.           |
 | `CodeMirrorView`            | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.              |
-| `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                        |
-| `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                         |
-| `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.          |
-| `PanelProps`                | TypeScript interface defining all props that can be passed to the `Panel` component.                            |
+
+| `IndentUnits` | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop. |
+| `LanguageName` | Constant object containing all supported programming languages for syntax highlighting. |
+| `PanelProps` | TypeScript interface defining all props that can be passed to the `Panel` component. |
 
 ## Test Utilities
 
@@ -197,13 +281,15 @@ The `editor` object returned by `renderCodeEditor` provides the following method
 
 Waits for the editor view to be available before proceeding with tests.
 
-**Parameters:**
+##### Parameters
 
 - `timeout` _(optional)_: Maximum time to wait in milliseconds (default: 5000)
 
-**Returns:** Promise that resolves when the editor view is available
+##### Returns
 
-**Example:**
+Promise that resolves when the editor view is available
+
+##### Example
 
 ```tsx
 const { editor } = renderCodeEditor();
@@ -214,12 +300,12 @@ await editor.waitForEditorView(); // Wait before interacting with editor
 
 Returns the first element matching a specific CodeEditor selector. Throws an error if no element or multiple elements are found.
 
-**Parameters:**
+##### Parameters
 
 - `selector`: The CSS selector from `CodeEditorSelectors` enum
 - `options` _(optional)_: Object with optional `text` property for filtering by text content
 
-**Example:**
+##### Example
 
 ```tsx
 // Get the content element
@@ -235,12 +321,12 @@ const lineNumber = editor.getBySelector(CodeEditorSelectors.GutterElement, {
 
 Returns all elements matching a specific CodeEditor selector. Throws an error if no elements are found.
 
-**Parameters:**
+##### Parameters
 
 - `selector`: The CSS selector from `CodeEditorSelectors` enum
 - `options` _(optional)_: Object with optional `text` property for filtering by text content
 
-**Example:**
+##### Example
 
 ```tsx
 // Get all line numbers
@@ -253,12 +339,12 @@ const allLineNumbers = editor.getAllBySelector(
 
 Returns the first element matching a specific CodeEditor selector, or null if not found. Useful when you're not sure if an element exists.
 
-**Parameters:**
+##### Parameters
 
 - `selector`: The CSS selector from `CodeEditorSelectors` enum
 - `options` _(optional)_: Object with optional `text` property for filtering by text content
 
-**Example:**
+##### Example
 
 ```tsx
 // Check if fold gutter exists
@@ -270,7 +356,7 @@ expect(foldGutter).not.toBeInTheDocument();
 
 Returns all elements matching a specific CodeEditor selector, or null if none are found.
 
-**Parameters:**
+##### Parameters
 
 - `selector`: The CSS selector from `CodeEditorSelectors` enum
 - `options` _(optional)_: Object with optional `text` property for filtering by text content
@@ -279,9 +365,11 @@ Returns all elements matching a specific CodeEditor selector, or null if none ar
 
 Checks if the editor is in read-only mode.
 
-**Returns:** Boolean indicating whether the editor is in read-only mode
+##### Returns
 
-**Example:**
+Boolean indicating whether the editor is in read-only mode
+
+##### Example
 
 ```tsx
 const { editor } = renderCodeEditor({ readOnly: true });
@@ -294,9 +382,11 @@ expect(editor.isReadOnly()).toBe(true);
 
 Retrieves the current indentation unit configuration from the editor.
 
-**Returns:** The string used for indentation (spaces or tab character)
+##### Returns
 
-**Example:**
+The string used for indentation (spaces or tab character)
+
+##### Example
 
 ```tsx
 const { editor } = renderCodeEditor({
@@ -312,9 +402,11 @@ expect(editor.getIndentUnit()).toBe('    '); // 4 spaces
 
 Checks if line wrapping is enabled in the editor.
 
-**Returns:** Boolean indicating whether line wrapping is enabled
+##### Returns
 
-**Example:**
+Boolean indicating whether line wrapping is enabled
+
+##### Example
 
 ```tsx
 const { editor } = renderCodeEditor({ enableLineWrapping: true });
@@ -327,14 +419,14 @@ expect(editor.isLineWrappingEnabled()).toBe(true);
 
 Inserts text into the editor at the specified position.
 
-**Parameters:**
+##### Parameters
 
 - `text`: The text to insert
 - `options` _(optional)_: Object with optional position properties
   - `from`: Starting position for insertion (defaults to 0)
   - `to`: End position for replacement (optional)
 
-**Example:**
+##### Example
 
 ```tsx
 import { act } from '@testing-library/react';
@@ -420,7 +512,7 @@ function useXExtension({
 }
 ```
 
-**Common Parameters:**
+##### Common Parameters
 
 - `editorViewInstance`: The CodeMirror editor view instance
 - `props`: Partial CodeEditor props containing relevant configuration
@@ -432,14 +524,14 @@ function useXExtension({
 
 The foundational hook that all other extension hooks build upon. It provides dynamic reconfiguration of CodeMirror extensions using compartments.
 
-**Parameters:**
+##### Parameters
 
 - `editorViewInstance`: The CodeMirror editor view instance
 - `value`: Value of type `T` to pass to the factory function
 - `factory`: Function that creates an extension from the provided value
 - `stateModule` _(optional)_: The `@codemirror/state` module for compartment management. While optional, if not provided, an empty extension will be returned since the state module is required to create compartments. This parameter is only optional because modules are lazy-loaded internally and may not be available on the initial call.
 
-**Example:**
+##### Example
 
 ```tsx
 import { useExtension } from '@leafygreen-ui/code-editor';
@@ -452,98 +544,79 @@ const myExtension = useExtension({
 });
 ```
 
-### Aggregated Extension Hook
-
-#### `useExtensions(config)`
-
-A convenience hook that aggregates and configures all CodeMirror extensions used by the CodeEditor component. This hook internally calls all individual extension hooks and returns a complete array of configured extensions ready to be applied to a CodeMirror editor.
-
-This hook manages the initialization and configuration of all available extensions including auto-completion, code folding, syntax highlighting, hyperlinks, line wrapping, line numbers, indentation, placeholder text, tooltips, language support, theme styling, and read-only mode.
-
-**Parameters:**
-
-- `editorViewInstance`: The CodeMirror editor view instance
-- `props`: Partial CodeEditor props containing user configuration options
-- `modules`: Partial CodeEditor modules containing dynamically loaded CodeMirror modules
-
-**Returns:** Array of configured CodeMirror extensions
-
-**Example:**
-
-```tsx
-import {
-  useExtensions,
-  useLazyLoadedModules,
-  useModuleLoaders,
-} from '@leafygreen-ui/code-editor';
-
-const props = {
-  language: LanguageName.javascript,
-  enableLineNumbers: true,
-  enableCodeFolding: true,
-  readOnly: false,
-  // ... other props
-};
-
-const moduleLoaders = useModuleLoaders(props);
-const { isLoading, modules } = useLazyModules(moduleLoaders);
-
-const allExtensions = useExtensions({
-  editorViewInstance,
-  props,
-  modules,
-});
-
-// Apply all extensions to your CodeMirror editor
-const editorState = EditorState.create({
-  doc: initialContent,
-  extensions: allExtensions,
-});
-```
-
 ### Feature Extension Hooks
 
 #### `useAutoCompleteExtension(config)`
 
 Provides intelligent code completion based on the selected language.
 
-**Required Props:** `language`  
-**Required Modules:** `@codemirror/autocomplete`, `@codemirror/state`
+##### Required Props
+
+`language`
+
+##### Required Modules
+
+`@codemirror/autocomplete`, `@codemirror/state`
 
 #### `useCodeFoldingExtension(config)`
 
 Enables code folding with custom LeafyGreen UI icons (ChevronDown/ChevronRight).
 
-**Required Props:** `enableCodeFolding`  
-**Required Modules:** `@codemirror/language`, `@codemirror/state`
+##### Required Props
+
+`enableCodeFolding`
+
+##### Required Modules
+
+`@codemirror/language`, `@codemirror/state`
 
 #### `useHighlightExtension(config)`
 
 Manages syntax highlighting and text search highlighting functionality.
 
-**Required Props:** `darkMode`  
-**Required Modules:** `@codemirror/search`, `@codemirror/view`, `@codemirror/state`
+##### Required Props
+
+`darkMode`
+
+##### Required Modules
+
+`@codemirror/search`, `@codemirror/view`, `@codemirror/state`
 
 #### `useHyperLinkExtension(config)`
 
 Makes URLs in the editor clickable when enabled.
 
-**Required Props:** `enableClickableUrls`  
-**Required Modules:** `@uiw/codemirror-extensions-hyper-link`, `@codemirror/state`
+##### Required Props
+
+`enableClickableUrls`
+
+##### Required Modules
+
+`@uiw/codemirror-extensions-hyper-link`, `@codemirror/state`
 
 #### `useIndentExtension(config)`
 
 Configures indentation behavior including tabs vs spaces and indent size.
 
-**Required Props:** `indentUnit`, `indentSize`  
-**Required Modules:** `@codemirror/language`, `@codemirror/state`
+##### Required Props
+
+`indentUnit`, `indentSize`
+
+##### Required Modules
+
+`@codemirror/language`, `@codemirror/state`
 
 #### `useLanguageExtension(config)`
 
 Provides language-specific syntax highlighting and features for supported languages.
 
-**Required Props:** `language`  
-**Required Modules:** `@codemirror/state` and language-specific modules based on selected language:
+##### Required Props
+
+`language`
+
+##### Required Modules
+
+`@codemirror/state` and language-specific modules based on selected language:
 
 - JavaScript/TypeScript/JSX/TSX: `@codemirror/lang-javascript`
 - Python: `@codemirror/lang-python`
@@ -563,45 +636,177 @@ Provides language-specific syntax highlighting and features for supported langua
 
 Displays line numbers in the editor's gutter when enabled.
 
-**Required Props:** `enableLineNumbers`  
-**Required Modules:** `@codemirror/view`, `@codemirror/state`
+##### Required Props
+
+`enableLineNumbers`
+
+##### Required Modules
+
+`@codemirror/view`, `@codemirror/state`
 
 #### `useLineWrapExtension(config)`
 
 Enables line wrapping to prevent horizontal scrolling.
 
-**Required Props:** `enableLineWrapping`  
-**Required Modules:** `@codemirror/view`, `@codemirror/state`
+##### Required Props
+
+`enableLineWrapping`
+
+##### Required Modules
+
+`@codemirror/view`, `@codemirror/state`
 
 #### `usePlaceholderExtension(config)`
 
 Shows placeholder text when the editor is empty.
 
-**Required Props:** `placeholder`  
-**Required Modules:** `@codemirror/view`, `@codemirror/state`
+##### Required Props
+
+`placeholder`
+
+##### Required Modules
+
+`@codemirror/view`, `@codemirror/state`
 
 #### `useReadOnlyExtension(config)`
 
 Controls the read-only state of the editor.
 
-**Required Props:** `readOnly`  
-**Required Modules:** `@codemirror/state`
+##### Required Props
+
+`readOnly`
+
+##### Required Modules
+
+`@codemirror/state`
 
 #### `useThemeExtension(config)`
 
 Applies LeafyGreen UI theming including colors, typography, and spacing.
 
-**Required Props:** `darkMode`, `baseFontSize`  
-**Required Modules:** `@codemirror/view`, `@codemirror/state`
+##### Required Props
+
+`darkMode`, `baseFontSize`
+
+##### Required Modules
+
+`@codemirror/view`, `@codemirror/state`
 
 #### `useTooltipExtension(config)`
 
 Adds hover tooltips to editor content with configurable severity levels.
 
-**Required Props:** `tooltips`  
-**Required Modules:** `@codemirror/view`, `@codemirror/state`
+##### Required Props
 
-### Example Usage
+`tooltips`
+
+##### Required Modules
+
+`@codemirror/view`, `@codemirror/state`
+
+#### `useCodeFormatter(config)`
+
+Provides code formatting functionality using language-specific formatters with pre-loaded modules.
+
+##### Supported Languages
+
+- **Prettier-based**: JavaScript/JSX, TypeScript/TSX, CSS, HTML, JSON
+- **WASM-based**: Java, C++, C#, Go, Python
+
+**Note:** Kotlin, PHP, Ruby, and Rust are not supported due to current browser compatibility limitations.
+
+##### Required Props
+
+- `language` - Target programming language
+- `indentSize` _(optional)_ - Number of spaces/tabs for indentation
+- `indentUnit` _(optional)_ - Whether to use spaces or tabs
+
+##### Required Modules
+
+`modules` - Pre-loaded formatting modules (see Module Requirements below)
+
+##### Returns
+
+- `formatCode(code: string): Promise<string>` - Formats the provided code using opinionated defaults
+- `isFormattingAvailable: boolean` - Whether formatting is available for the current language
+
+##### Module Loading Requirements
+
+Code formatting requires specific modules to be loaded depending on the target language. Consumers are responsible for loading the required modules and passing them to the `useCodeFormatter` hook.
+
+###### Important Notes
+
+- You must load and provide the required modules for your target language(s)
+- Check `isFormattingAvailable` before attempting to format code
+- Different languages require different module combinations (see Module Requirements by Language below)
+- Formatting will gracefully fail and return the original code if required modules are not provided
+
+###### Module Requirements by Language
+
+- **JavaScript/JSX/JSON**:
+
+  - `prettier/standalone`
+  - `prettier/parser-babel`
+
+- **TypeScript/TSX**:
+
+  - `prettier/standalone`
+  - `prettier/parser-typescript`
+
+- **CSS**:
+
+  - `prettier/standalone`
+  - `prettier/parser-postcss`
+
+- **HTML**:
+
+  - `prettier/standalone`
+  - `prettier/parser-html`
+
+- **Java/C++/C#**:
+
+  - `@wasm-fmt/clang-format`
+
+- **Go**:
+
+  - `@wasm-fmt/gofmt`
+
+- **Python**:
+  - `@wasm-fmt/ruff_fmt`
+
+##### Example
+
+```tsx
+import { useCodeFormatter, LanguageName } from '@leafygreen-ui/code-editor';
+// Import the modules you need based on your target language
+import * as PrettierStandaloneModule from 'prettier/standalone';
+import * as PrettierParserBabelModule from 'prettier/parser-babel';
+
+function MyFormattingComponent() {
+  const { formatCode, isFormattingAvailable } = useCodeFormatter({
+    props: {
+      language: LanguageName.javascript,
+      indentSize: 2,
+      indentUnit: 'space',
+    },
+    modules: {
+      'prettier/standalone': PrettierStandaloneModule,
+      'prettier/parser-babel': PrettierParserBabelModule,
+    },
+  });
+
+  const handleFormat = async () => {
+    if (isFormattingAvailable) {
+      const formatted = await formatCode('const x=1;');
+      console.log(formatted); // "const x = 1;"
+    }
+  };
+
+  return <button onClick={handleFormat}>Format Code</button>;
+}
+```
+
+### Full Hook Usage Example
 
 ```tsx
 import {
@@ -676,7 +881,7 @@ import {
 
 #### Usage Examples
 
-**Testing a Single Extension Hook:**
+##### Testing a Single Extension Hook
 
 ```tsx
 import { renderHook } from '@testing-library/react';
@@ -707,7 +912,7 @@ describe('useThemeExtension', () => {
 });
 ```
 
-**Testing Multiple Extensions:**
+##### Testing Multiple Extensions
 
 ```tsx
 import { renderHook } from '@testing-library/react';
@@ -736,7 +941,7 @@ describe('useExtensions', () => {
 });
 ```
 
-**Custom Module Configuration:**
+##### Custom Module Configuration
 
 ```tsx
 import { createMockStateModule } from '@leafygreen-ui/code-editor';

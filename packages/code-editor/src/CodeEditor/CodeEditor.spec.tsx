@@ -14,6 +14,41 @@ global.MutationObserver = jest.fn().mockImplementation(() => ({
   takeRecords: jest.fn().mockReturnValue([]),
 }));
 
+// Mock console methods to suppress expected warnings
+const originalConsoleWarn = console.warn;
+const originalConsoleError = console.error;
+
+beforeAll(() => {
+  console.warn = jest.fn().mockImplementation((message: string) => {
+    // Suppress warnings about optional formatting modules not being installed
+    const suppressedWarnings = [
+      '@wasm-fmt/clang-format is not installed',
+      '@wasm-fmt/gofmt is not installed',
+      '@wasm-fmt/ruff_fmt is not installed',
+    ];
+
+    if (!suppressedWarnings.includes(message)) {
+      originalConsoleWarn(message);
+    }
+  });
+
+  console.error = jest.fn().mockImplementation((message: string) => {
+    // Suppress React testing library deprecation warning
+    if (
+      typeof message === 'string' &&
+      message.includes('ReactDOMTestUtils.act')
+    ) {
+      return;
+    }
+    originalConsoleError(message);
+  });
+});
+
+afterAll(() => {
+  console.warn = originalConsoleWarn;
+  console.error = originalConsoleError;
+});
+
 jest.mock('@codemirror/language', () => {
   const actualModule = jest.requireActual('@codemirror/language');
   return {
