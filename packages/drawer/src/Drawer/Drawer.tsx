@@ -171,7 +171,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
      * On initial render, if the drawer is embedded and there was a previous width, that means that the previous drawer was open and may have been resized. This takes that previous width and uses it as the initial size.
      */
     useEffect(() => {
-      if (open && isEmbedded && drawerWidth !== 0) {
+      if (open && isEmbedded && resizable && drawerWidth !== 0) {
         const prevWidth = hasToolbar
           ? drawerWidth + DRAWER_TOOLBAR_WIDTH
           : drawerWidth - DRAWER_TOOLBAR_WIDTH;
