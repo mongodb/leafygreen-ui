@@ -16,7 +16,7 @@ import {
   type CodeEditorProps,
   CodeEditorSelectors,
 } from '../../CodeEditor.types';
-import { type CodeEditorModules } from '../useModuleLoaders';
+import { type CodeEditorModules } from '../moduleLoaders.types';
 
 import { useExtension } from './useExtension';
 

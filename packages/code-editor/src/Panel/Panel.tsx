@@ -86,9 +86,20 @@ export function Panel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
 
-  // Get internal values from CodeEditor context
-  // This will only work when Panel is used within CodeEditor
-  const { getContents } = useCodeEditorContext();
+  const { getContents, formatCode } = useCodeEditorContext();
+
+  const handleFormatClick = async () => {
+    if (formatCode) {
+      try {
+        await formatCode();
+        onFormatClick?.();
+      } catch (error) {
+        console.error('Error formatting code:', error);
+      }
+    } else {
+      onFormatClick?.();
+    }
+  };
 
   return (
     <div className={getPanelStyles(theme)}>
@@ -104,7 +115,7 @@ export function Panel({
             align="top"
             justify="middle"
             trigger={
-              <IconButton onClick={onFormatClick} aria-label="Format code">
+              <IconButton onClick={handleFormatClick} aria-label="Format code">
                 <FormatIcon />
               </IconButton>
             }
