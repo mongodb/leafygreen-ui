@@ -41,6 +41,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
       id,
       title,
       content,
+      hasPadding = true,
       scrollable = true,
     } = getActiveDrawerContent() || {};
     const { onClose, displayMode, setIsDrawerOpen } = useDrawerLayoutContext();
@@ -99,6 +100,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
             open={isDrawerOpen}
             onClose={handleOnClose}
             title={title}
+            hasPadding={hasPadding}
             scrollable={scrollable}
             data-lgid={`${dataLgId}`}
             data-testid={`${dataLgId}`}
