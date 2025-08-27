@@ -25,19 +25,38 @@ const shadowOffset: Record<Theme, number> = {
   [Theme.Dark]: 16,
 };
 
-const getPositionStyles = (
-  side: Side,
-  isInside: boolean,
-  shadowOffsetVal: number,
-  shadowColor: string,
-) => {
+const getZIndex = ({
+  isInside,
+  side,
+}: {
+  isInside: boolean;
+  side: Side;
+}): string => {
+  if (!isInside) {
+    return '-1';
+  }
+
+  if (side === Side.Top || side === Side.Left) {
+    return '1';
+  }
+
+  return 'initial';
+};
+
+const getPositionStyles = ({
+  isInside,
+  shadowColor,
+  shadowOffsetVal,
+  side,
+}: {
+  isInside: boolean;
+  shadowColor: string;
+  shadowOffsetVal: number;
+  side: Side;
+}) => {
   const sidePosition = isInside ? `-${SHORT_SIDE_SIZE}px` : '0';
 
-  const zIndex = isInside
-    ? side === Side.Top || side === Side.Left
-      ? '1'
-      : 'initial'
-    : '-1';
+  const zIndex = getZIndex({ isInside, side });
 
   const commonStyles = `
     content: '';
@@ -121,7 +140,7 @@ export const addOverflowShadow = ({
   return css`
     position: relative;
     ${pseudoElement} {
-      ${getPositionStyles(side, isInside, shadowOffsetVal, shadowColor)}
+      ${getPositionStyles({ isInside, shadowColor, shadowOffsetVal, side })}
     }
   `;
 };
