@@ -7,6 +7,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
+import { expect, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -14,22 +15,24 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import SparkleIcon from '@leafygreen-ui/icon/dist/Sparkle';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
   color,
   FontWeight,
   spacing,
 } from '@leafygreen-ui/tokens';
-import { Body, Subtitle } from '@leafygreen-ui/typography';
+import { Body } from '@leafygreen-ui/typography';
 
 import { Size } from './Drawer/Drawer.types';
+import { getLgIds } from './utils/getLgIds';
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerLayout } from './DrawerLayout';
 import { DrawerStackProvider } from './DrawerStackContext';
 
 const SEED = 0;
 faker.seed(SEED);
+
+const lgIds = getLgIds();
 
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,
@@ -404,29 +407,78 @@ export const Default: StoryObj<DrawerProps> = {
   },
 };
 
-const fullWidthHeightContentStyles = css`
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    135deg,
-    ${palette.green.light1},
-    ${palette.green.dark1}
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const FullWidthHeightContent = () => (
-  <div className={fullWidthHeightContentStyles}>
-    <Subtitle>Full Width/Height Content</Subtitle>
-  </div>
-);
-
-export const ScrollableTrue: StoryObj<DrawerProps> = {
+export const ScrollableAndPadded: StoryObj<DrawerProps> = {
   render: TemplateComponent,
   args: {
     children: <LongContent />,
     scrollable: true,
+    hasPadding: true,
+    open: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Find the scrollable content container
+    const scrollableContainer = canvas.getByTestId(lgIds.scrollContainer);
+    expect(scrollableContainer).toBeInTheDocument();
+
+    if (scrollableContainer) {
+      // Scroll down to show content below the fold
+      scrollableContainer.scrollTop = 400;
+
+      // Trigger scroll event to ensure any scroll-based effects are activated
+      scrollableContainer.dispatchEvent(new Event('scroll', { bubbles: true }));
+    }
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+    chromatic: {
+      delay: 300,
+    },
+  },
+};
+
+export const ScrollableAndNotPadded: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    scrollable: true,
+    hasPadding: false,
+    open: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Find the scrollable content container
+    const scrollableContainer = canvas.getByTestId(lgIds.scrollContainer);
+    expect(scrollableContainer).toBeInTheDocument();
+
+    if (scrollableContainer) {
+      // Scroll down further to emphasize the no-padding difference
+      scrollableContainer.scrollTop = 500;
+
+      // Trigger scroll event to ensure any scroll-based effects are activated
+      scrollableContainer.dispatchEvent(new Event('scroll', { bubbles: true }));
+    }
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+    chromatic: {
+      delay: 300,
+    },
+  },
+};
+
+export const NotScrollableAndPadded: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    scrollable: false,
+    hasPadding: true,
     open: true,
   },
   parameters: {
@@ -436,11 +488,12 @@ export const ScrollableTrue: StoryObj<DrawerProps> = {
   },
 };
 
-export const ScrollableFalse: StoryObj<DrawerProps> = {
+export const NotScrollableAndNotPadded: StoryObj<DrawerProps> = {
   render: TemplateComponent,
   args: {
-    children: <FullWidthHeightContent />,
+    children: <LongContent />,
     scrollable: false,
+    hasPadding: false,
     open: true,
   },
   parameters: {
