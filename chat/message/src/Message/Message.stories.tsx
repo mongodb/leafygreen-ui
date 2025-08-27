@@ -11,7 +11,7 @@ import { StoryFn, StoryObj } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { VerifiedAnswerBanner } from '../MessageBanner';
-import { Message, MessageProps, MessageSourceType } from '..';
+import { Message, MessageLinks, MessageProps, MessageSourceType } from '..';
 
 const MARKDOWN_TEXT = `
 # Heading 1
@@ -184,45 +184,49 @@ export const VerifiedAnswer: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const WithRichLinks: StoryObj<MessageStoryProps> = {
+const links = [
+  {
+    href: 'https://mongodb.design',
+    children: 'LeafyGreen UI',
+    variant: 'Website',
+  },
+  {
+    href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
+    children: 'LeafyGreen UI Docs',
+    variant: 'Docs',
+  },
+  {
+    href: 'https://learn.mongodb.com/',
+    children: 'MongoDB University',
+    variant: 'Learn',
+  },
+  {
+    href: 'https://mongodb.com/docs',
+    children: 'MongoDB Docs',
+    variant: 'Docs',
+  },
+  {
+    href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    children: 'Rick Astley - Never Gonna Give You Up',
+    variant: 'Video',
+  },
+  {
+    href: 'https://mongodb.com/',
+    children: 'MongoDB Homepage',
+    variant: 'Website',
+  },
+];
+const getWithMessageLinksChildren = () => (
+  <>
+    <MessageFeedback />
+    <MessageLinks links={links} />
+  </>
+);
+export const WithMessageLinks: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    avatar: <Avatar variant="mongo" />,
-    children: <MessageFeedback />,
+    children: getWithMessageLinksChildren(),
     isSender: false,
-    links: [
-      {
-        href: 'https://mongodb.design',
-        children: 'LeafyGreen UI',
-        variant: 'Website',
-      },
-      {
-        href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
-        children: 'LeafyGreen UI Docs',
-        variant: 'Docs',
-      },
-      {
-        href: 'https://learn.mongodb.com/',
-        children: 'MongoDB University',
-        variant: 'Learn',
-      },
-      {
-        href: 'https://mongodb.com/docs',
-        children: 'MongoDB Docs',
-        variant: 'Docs',
-      },
-      {
-        href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        children: 'Rick Astley - Never Gonna Give You Up',
-        variant: 'Video',
-        imageUrl: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
-      },
-      {
-        href: 'https://mongodb.com/',
-        children: 'MongoDB Homepage',
-        variant: 'Website',
-      },
-    ],
     messageBody: ASSISTANT_TEXT,
   },
 };
