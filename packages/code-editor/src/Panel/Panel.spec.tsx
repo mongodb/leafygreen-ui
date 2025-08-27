@@ -263,54 +263,25 @@ describe('Panel', () => {
     });
 
     test('calls context downloadContent function when download menu item is clicked', async () => {
-      renderPanel({ showSecondaryMenuButton: true });
-
-      const menuButton = screen.getByLabelText('Show more actions');
-
-      await act(async () => {
-        await userEvent.click(menuButton);
+      const mockDownloadContent = jest.fn();
+      const { panel } = renderPanel({
+        panelProps: { ...defaultProps, showSecondaryMenuButton: true },
+        contextConfig: { downloadContent: mockDownloadContent },
       });
 
-      const downloadItem = await screen.findByLabelText('Download code');
-
-      await act(async () => {
-        await userEvent.click(downloadItem);
-      });
+      await panel.interactions.clickDownloadMenuItem();
 
       expect(mockDownloadContent).toHaveBeenCalledTimes(1);
     });
 
     test('handles when downloadContent function is not available', async () => {
-      render(
-        <LeafyGreenProvider>
-          <CodeEditorProvider
-            value={{
-              getContents: mockGetContents,
-              formatCode: mockFormatCode,
-              isFormattingAvailable: true,
-              undo: mockUndo,
-              redo: mockRedo,
-              downloadContent: undefined as any,
-            }}
-          >
-            <Panel {...defaultProps} showSecondaryMenuButton />
-          </CodeEditorProvider>
-        </LeafyGreenProvider>,
-      );
-
-      const menuButton = screen.getByLabelText('Show more actions');
-
-      await act(async () => {
-        await userEvent.click(menuButton);
-      });
-
-      const downloadItem = await screen.findByLabelText('Download code');
-
-      await act(async () => {
-        await userEvent.click(downloadItem);
+      const { panel } = renderPanel({
+        panelProps: { ...defaultProps, showSecondaryMenuButton: true },
+        contextConfig: { downloadContent: undefined as any },
       });
 
       // Should not throw an error even when downloadContent is undefined
+      await panel.interactions.clickDownloadMenuItem();
     });
 
     test('calls onViewShortcutsClick when view shortcuts menu item is clicked', async () => {
