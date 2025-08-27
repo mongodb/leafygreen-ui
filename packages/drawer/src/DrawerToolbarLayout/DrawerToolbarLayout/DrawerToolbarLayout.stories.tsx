@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -19,6 +19,7 @@ import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarCo
 import {
   getDrawerToolbarData,
   LongContent,
+  useToolbarData,
 } from './DrawerToolbarLayout.testutils';
 
 const DRAWER_TOOLBAR_DATA = getDrawerToolbarData({});
@@ -124,25 +125,13 @@ const Component: StoryFn<DrawerLayoutProps> = ({
   toolbarData: _toolbarDataProp,
   ...args
 }: DrawerLayoutProps) => {
-  const [toolbarData, setToolbarData] = useState(DRAWER_TOOLBAR_DATA);
-  const [hasToolbarData, setHasToolbarData] = useState(true);
-  const [hasHiddenToolbarItem, setHasHiddenToolbarItem] = useState(false);
+  const { toolbarData, setHasToolbarData, setHasHiddenToolbarItem } =
+    useToolbarData(DRAWER_TOOLBAR_DATA);
 
   const props = {
     ...args,
     toolbarData,
   } as DrawerLayoutProps;
-
-  const getData = useCallback(() => {
-    return getDrawerToolbarData({
-      hasToolbarData,
-      hasHiddenToolbarItem,
-    });
-  }, [hasToolbarData, hasHiddenToolbarItem]);
-
-  useEffect(() => {
-    setToolbarData(getData());
-  }, [hasHiddenToolbarItem, hasToolbarData, getData]);
 
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
