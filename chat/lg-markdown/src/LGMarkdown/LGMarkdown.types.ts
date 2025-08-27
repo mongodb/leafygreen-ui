@@ -22,5 +22,5 @@ export interface LGMarkdownProps extends DarkModeProps, ReactMarkdownOptions {
  * react-markdown@9.0.0.
  */
 export interface ExtraProps {
-  node: any;
+  node: unknown;
 }
