@@ -1,24 +1,38 @@
 import React from 'react';
 
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import { FontWeight } from '@leafygreen-ui/tokens';
 import { Body, Disclaimer } from '@leafygreen-ui/typography';
 
-import { titleStyles } from './DisclaimerText.styles';
+import {
+  disclaimerStyles,
+  getContainerStyles,
+  getTitleStyles,
+} from './DisclaimerText.styles';
 import { DisclaimerTextProps } from './DisclaimerText.types';
 
 export const DisclaimerText = ({
-  title,
   children,
+  className,
+  darkMode: darkModeProp,
+  title,
   ...rest
 }: DisclaimerTextProps) => {
+  const { darkMode, theme } = useDarkMode(darkModeProp);
+
   return (
-    <div {...rest}>
-      {title && (
-        <Body weight="medium" className={titleStyles}>
-          {title}
-        </Body>
-      )}
-      <Disclaimer>{children}</Disclaimer>
-    </div>
+    <LeafyGreenProvider darkMode={darkMode}>
+      <div className={getContainerStyles(className)} {...rest}>
+        {title && (
+          <Body weight={FontWeight.SemiBold} className={getTitleStyles(theme)}>
+            {title}
+          </Body>
+        )}
+        <Disclaimer className={disclaimerStyles}>{children}</Disclaimer>
+      </div>
+    </LeafyGreenProvider>
   );
 };
 

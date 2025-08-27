@@ -9,11 +9,10 @@ import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { Message, MessageProps, MessageSourceType } from '..';
 
-const MarkdownText = `
+const MARKDOWN_TEXT = `
 # Heading 1
 
 ## Heading 2
@@ -45,9 +44,9 @@ function helloWorld() {
 - [https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs](https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs)
 `;
 
-const UserText = `How can I delete a massive amount of documents from a collection?`;
+const USER_MESSAGE = `How can I delete a massive amount of documents from a collection?`;
 
-const MongoText = `
+const ASSISTANT_TEXT = `
 To efficiently delete a large number of documents from a MongoDB collection, you can use the \`deleteMany()\` method. This method allows you to delete multiple documents that match a specified filter.
 
 Here's an example of how to use the \`deleteMany()\` method to delete a large number of documents:
@@ -93,7 +92,7 @@ const meta: StoryMetaType<typeof Message> = {
         darkMode: [false, true],
         isSender: [false, true],
         sourceType: Object.values(MessageSourceType),
-        messageBody: [UserText, MarkdownText, MongoText],
+        messageBody: [USER_MESSAGE, MARKDOWN_TEXT, ASSISTANT_TEXT],
       },
       decorator: (Instance, context) => {
         return (
@@ -122,7 +121,7 @@ const Template: StoryFn<MessageStoryProps> = ({ variant, ...props }) => (
 export const LiveExample: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    messageBody: UserText,
+    messageBody: USER_MESSAGE,
   },
   parameters: {
     chromatic: {
@@ -134,7 +133,7 @@ export const LiveExample: StoryObj<MessageStoryProps> = {
 export const Text: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    messageBody: MarkdownText,
+    messageBody: MARKDOWN_TEXT,
     sourceType: MessageSourceType.Text,
   },
 };
@@ -142,17 +141,16 @@ export const Text: StoryObj<MessageStoryProps> = {
 export const Markdown: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    messageBody: MarkdownText,
+    messageBody: MARKDOWN_TEXT,
     sourceType: MessageSourceType.Markdown,
   },
 };
 
-export const Mongo: StoryObj<MessageStoryProps> = {
+export const Assistant: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    avatar: <Avatar variant="mongo" />,
     isSender: false,
-    messageBody: MongoText,
+    messageBody: ASSISTANT_TEXT,
   },
 };
 
@@ -162,7 +160,7 @@ export const WithMessageRating: StoryObj<MessageStoryProps> = {
     avatar: <Avatar variant="mongo" />,
     children: <MessageFeedback />,
     isSender: false,
-    messageBody: MongoText,
+    messageBody: ASSISTANT_TEXT,
   },
 };
 
@@ -178,93 +176,6 @@ export const VerifiedAnswer: StoryObj<MessageStoryProps> = {
       verifiedAt: new Date('2023-08-24T16:20:00Z'),
     },
   },
-};
-
-const MultipleUserComponent = () => {
-  const baseFontSize = useUpdatedBaseFontSize();
-  return (
-    <LeafyGreenChatProvider>
-      <div>
-        {/* replicate empty span used in `MessageFeed` */}
-        <span />
-        <Message
-          {...meta.args}
-          baseFontSize={baseFontSize}
-          messageBody={UserText}
-        />
-        <Message
-          {...meta.args}
-          baseFontSize={baseFontSize}
-          messageBody="Another message!"
-        />
-        {/* replicate empty span used in `MessageFeed` */}
-        <span />
-      </div>
-    </LeafyGreenChatProvider>
-  );
-};
-export const MultipleUser: StoryObj<MessageStoryProps> = {
-  render: MultipleUserComponent,
-};
-
-const MultipleMongoComponent = () => {
-  const baseFontSize = useUpdatedBaseFontSize();
-  return (
-    <LeafyGreenChatProvider>
-      <div>
-        {/* replicate empty span used in `MessageFeed` */}
-        <span />
-        <Message
-          {...meta.args}
-          avatar={<Avatar variant="mongo" />}
-          messageBody="First message! Expect another from me right after this one."
-          baseFontSize={baseFontSize}
-          isSender={false}
-        />
-        <Message
-          {...meta.args}
-          avatar={<Avatar variant="mongo" />}
-          baseFontSize={baseFontSize}
-          isSender={false}
-          messageBody={MongoText}
-        />
-        {/* replicate empty span used in `MessageFeed` */}
-        <span />
-      </div>
-    </LeafyGreenChatProvider>
-  );
-};
-export const MultipleMongo: StoryObj<MessageStoryProps> = {
-  render: MultipleMongoComponent,
-};
-
-const AlternatingComponent = () => {
-  const baseFontSize = useUpdatedBaseFontSize();
-  return (
-    <LeafyGreenChatProvider>
-      <div>
-        {/* replicate empty span used in `MessageFeed` */}
-        <span />
-        <Message
-          {...meta.args}
-          baseFontSize={baseFontSize}
-          messageBody={UserText}
-        />
-        <Message
-          {...meta.args}
-          avatar={<Avatar variant="mongo" />}
-          baseFontSize={baseFontSize}
-          isSender={false}
-          messageBody={MongoText}
-        />
-        {/* replicate empty span used in `MessageFeed` */}
-        <span />
-      </div>
-    </LeafyGreenChatProvider>
-  );
-};
-export const Alternating: StoryObj<MessageStoryProps> = {
-  render: AlternatingComponent,
 };
 
 export const WithRichLinks: StoryObj<MessageStoryProps> = {
@@ -306,7 +217,7 @@ export const WithRichLinks: StoryObj<MessageStoryProps> = {
         variant: 'Website',
       },
     ],
-    messageBody: MongoText,
+    messageBody: ASSISTANT_TEXT,
   },
 };
 

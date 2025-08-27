@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/chat-disclaimer",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "LeafyGreen UI Kit Chat Disclaimer",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -25,6 +25,9 @@
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/modal": "workspace:^",
     "@lg-tools/build": "workspace:^"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/chat-disclaimer",
   "repository": {

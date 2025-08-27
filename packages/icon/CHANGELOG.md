@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 14.4.0
+
+### Minor Changes
+
+- f87b084: Adds "Award" glyph option for `Icon` component
+
 ## 14.3.0
 
 ### Minor Changes

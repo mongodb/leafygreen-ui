@@ -1,21 +1,105 @@
-import React from 'react';
+import React, { Children, ComponentPropsWithoutRef, ReactElement } from 'react';
+import {
+  Components as ReactMarkdownComponents,
+  ExtraProps,
+} from 'react-markdown';
 
 import Code, { Language } from '@leafygreen-ui/code';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { Body, H1, H2, H3, InlineCode, Link } from '@leafygreen-ui/typography';
 
-import { LGMarkdownProps, MarkdownCodeProps } from './LGMarkdown.types';
-
-const componentsMap: LGMarkdownProps['components'] = {
-  a: ({ children, href }: HTMLElementProps<'a'>) => {
-    return <Link href={href}>{children}</Link>;
+const componentsMap: ReactMarkdownComponents = {
+  a: ({
+    children,
+    href,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'a'> & ExtraProps) => {
+    return (
+      <Link href={href} {...rest}>
+        {children}
+      </Link>
+    );
   },
-  code: ({ inline, children, className }: MarkdownCodeProps) => {
-    const codeString = (children as Array<string>).join('\n');
+  code: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'code'> & ExtraProps) => {
+    return <InlineCode {...rest}>{children}</InlineCode>;
+  },
+  h1: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'h1'> & ExtraProps) => {
+    return <H1 {...rest}>{children}</H1>;
+  },
+  h2: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'h2'> & ExtraProps) => {
+    return <H2 {...rest}>{children}</H2>;
+  },
+  h3: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'h3'> & ExtraProps) => {
+    return <H3 {...rest}>{children}</H3>;
+  },
+  li: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'li'> & ExtraProps) => {
+    return (
+      <Body as="li" {...rest}>
+        {children}
+      </Body>
+    );
+  },
+  ol: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'ol'> & ExtraProps) => {
+    return (
+      <Body as="ol" {...rest}>
+        {children}
+      </Body>
+    );
+  },
+  p: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'p'> & ExtraProps) => {
+    return <Body {...rest}>{children}</Body>;
+  },
+  pre: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'pre'> & ExtraProps) => {
+    /**
+     * ReactMarkdown renders code blocks as:
+     * <pre>
+     *   <code class="language-xxx">...</code>
+     * </pre>
+     *
+     * To extract the language and code content, we must:
+     * 1. Get the first child of <pre> (the <code> element).
+     * 2. Read its className for the language.
+     * 3. Read its children for the code string.
+     *
+     * This is necessary because the <pre> element itself does not have the language or code content directly.
+     */
+    const codeElement = Children.toArray(children)[0] as ReactElement;
+    const className = codeElement?.props?.className || '';
+    const codeContent = codeElement?.props?.children || children;
 
-    if (inline) {
-      return <InlineCode>{codeString}</InlineCode>;
-    }
+    const codeString = Children.toArray(codeContent).join('\n');
 
     let language = className?.match(/language-(.+)/)?.[1] ?? 'none';
 
@@ -28,20 +112,23 @@ const componentsMap: LGMarkdownProps['components'] = {
       language = 'none';
     }
 
-    return <Code language={language as Language}>{codeString}</Code>;
+    return (
+      <Code language={language as Language} {...rest}>
+        {codeString}
+      </Code>
+    );
   },
-  h1: ({ children }: HTMLElementProps<'h1'>) => {
-    return <H1>{children}</H1>;
+  ul: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'ul'> & ExtraProps) => {
+    return (
+      <Body as="ul" {...rest}>
+        {children}
+      </Body>
+    );
   },
-  h2: ({ children }: HTMLElementProps<'h2'>) => {
-    return <H2>{children}</H2>;
-  },
-  h3: ({ children }: HTMLElementProps<'h3'>) => {
-    return <H3>{children}</H3>;
-  },
-  p: ({ children, ...rest }: HTMLElementProps<'p'>) => {
-    return <Body {...rest}>{children}</Body>;
-  },
-} as LGMarkdownProps['components'];
+};
 
 export default componentsMap;
