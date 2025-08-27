@@ -32,11 +32,18 @@ const getPositionStyles = (
   shadowColor: string,
 ) => {
   const sidePosition = isInside ? `-${SHORT_SIDE_SIZE}px` : '0';
+
+  const zIndex = isInside
+    ? side === Side.Top || side === Side.Left
+      ? '1'
+      : 'initial'
+    : '-1';
+
   const commonStyles = `
     content: '';
     position: absolute;
     border-radius: 40%;
-    z-index: ${isInside ? 'initial' : -1};
+    z-index: ${zIndex};
   `;
 
   switch (side) {
