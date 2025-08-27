@@ -1,4 +1,4 @@
-import React, { forwardRef, useLayoutEffect } from 'react';
+import React, { forwardRef, useEffect, useLayoutEffect } from 'react';
 
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 
@@ -58,6 +58,17 @@ export const DrawerToolbarLayoutContent = forwardRef<
     );
 
     const shouldRenderToolbar = visibleToolbarItems.length > 0;
+
+    // If there is an active toolbar item and it's visibility is set to false, close the drawer
+    useEffect(() => {
+      if (id && toolbarData && isDrawerOpen && shouldRenderToolbar) {
+        const activeToolbarItem = toolbarData.find(item => item.id === id);
+
+        if (activeToolbarItem && activeToolbarItem.visible === false) {
+          closeDrawer();
+        }
+      }
+    }, [id, toolbarData, closeDrawer, isDrawerOpen, shouldRenderToolbar]);
 
     // runs synchronously after the DOM is updated and before the browser paints to avoid flickering of the toolbar
     useLayoutEffect(() => {

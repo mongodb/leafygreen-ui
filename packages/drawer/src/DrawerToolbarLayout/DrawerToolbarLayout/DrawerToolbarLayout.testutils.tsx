@@ -58,11 +58,13 @@ export const DrawerContent = () => {
 };
 
 export const getDrawerToolbarData = ({
-  isToolbarHidden = false,
+  hasToolbarData = true,
   hasStaticContent = false,
+  hasHiddenToolbarItem = false,
 }: {
-  isToolbarHidden?: boolean;
+  hasToolbarData?: boolean;
   hasStaticContent?: boolean;
+  hasHiddenToolbarItem?: boolean;
 }) => {
   const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
     {
@@ -96,11 +98,11 @@ export const getDrawerToolbarData = ({
       content: hasStaticContent ? <LongContent /> : <DrawerContent />,
       glyph: 'Apps',
       title: 'Apps Title',
-      visible: false,
+      visible: hasHiddenToolbarItem ? false : true,
     },
   ];
 
-  if (isToolbarHidden) {
+  if (!hasToolbarData) {
     return DRAWER_TOOLBAR_DATA.map(item => ({ ...item, visible: false }));
   }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { storybookExcludedControlParams } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
@@ -21,10 +21,6 @@ import {
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 
 const DRAWER_TOOLBAR_DATA = getDrawerToolbarData({ hasStaticContent: true });
-const DRAWER_TOOLBAR_DATA_NOT_VISIBLE = getDrawerToolbarData({
-  hasStaticContent: true,
-  isToolbarHidden: true,
-});
 
 // The tooltip sometimes lingers after the drawer closes, which can cause
 // snapshot tests to fail if the tooltip is not in the correct position.
@@ -113,6 +109,19 @@ const TemplateWithToolbarToggle: StoryFn<
   displayMode = DisplayMode.Embedded,
 }: DrawerToolbarLayoutPropsWithDisplayMode) => {
   const [toolbarData, setToolbarData] = useState(DRAWER_TOOLBAR_DATA);
+  const [hasToolbarData, setHasToolbarData] = useState(true);
+  const [hasHiddenToolbarItem, setHasHiddenToolbarItem] = useState(false);
+
+  const getData = () => {
+    return getDrawerToolbarData({
+      hasToolbarData,
+      hasHiddenToolbarItem,
+    });
+  };
+
+  useEffect(() => {
+    setToolbarData(getData());
+  }, [hasHiddenToolbarItem, hasToolbarData, getData]);
 
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
@@ -124,16 +133,11 @@ const TemplateWithToolbarToggle: StoryFn<
         `}
       >
         <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
-        <Button
-          onClick={() =>
-            setToolbarData(prevData =>
-              prevData === DRAWER_TOOLBAR_DATA
-                ? DRAWER_TOOLBAR_DATA_NOT_VISIBLE
-                : DRAWER_TOOLBAR_DATA,
-            )
-          }
-        >
+        <Button onClick={() => setHasToolbarData(prev => !prev)}>
           Toggle Toolbar visibility
+        </Button>
+        <Button onClick={() => setHasHiddenToolbarItem(prev => !prev)}>
+          Toggle Toolbar item
         </Button>
         <LongContent />
         <LongContent />
@@ -250,6 +254,99 @@ export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutPropsWithDisplayMo
     },
   };
 
+export const OverlayRemovesToolbarWhenAllItemsAreHidden: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <TemplateWithToolbarToggle {...args} />
+    ),
+    args: {
+      displayMode: DisplayMode.Overlay,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const { getToolbarTestUtils, isOpen } = getTestUtils();
+      const { getToolbarIconButtonByLabel, queryToolbar } =
+        getToolbarTestUtils();
+
+      // Verify toolbar is initially visible
+      const toolbar = queryToolbar();
+      expect(toolbar).toBeInTheDocument();
+
+      const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+      expect(codeButton).toBeInTheDocument();
+
+      // Open the drawer
+      expect(isOpen()).toBe(false);
+      userEvent.click(codeButton!);
+
+      await waitFor(() => {
+        expect(isOpen()).toBe(true);
+        expect(canvas.getByText('Code Title')).toBeVisible();
+      });
+
+      // Click the toggle button to hide toolbar
+      const toggleButton = canvas.getByText('Toggle Toolbar visibility');
+      userEvent.click(toggleButton);
+
+      // Verify toolbar element is removed but drawer remains open
+      await waitFor(() => {
+        const hiddenToolbar = queryToolbar();
+        expect(hiddenToolbar).not.toBeInTheDocument();
+        expect(isOpen()).toBe(true);
+        expect(canvas.getByText('Code Title')).toBeVisible();
+      });
+    },
+  };
+
+export const OverlayClosesDrawerWhenActiveItemIsHidden: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <TemplateWithToolbarToggle {...args} />
+    ),
+    args: {
+      displayMode: DisplayMode.Overlay,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const { getToolbarTestUtils, isOpen } = getTestUtils();
+      const {
+        getToolbarIconButtonByLabel,
+        queryToolbar,
+        getAllToolbarIconButtons,
+      } = getToolbarTestUtils();
+
+      // Verify toolbar is initially visible
+      const toolbar = queryToolbar();
+      expect(toolbar).toBeInTheDocument();
+      expect(getAllToolbarIconButtons().length).toBe(5);
+
+      const activeButton = getToolbarIconButtonByLabel('Apps')?.getElement();
+      expect(activeButton).toBeInTheDocument();
+
+      // Open the drawer
+      expect(isOpen()).toBe(false);
+      userEvent.click(activeButton!);
+
+      await waitFor(() => {
+        expect(isOpen()).toBe(true);
+        expect(canvas.getByText('Apps Title')).toBeVisible();
+      });
+
+      // Click the toggle button remove 'Apps' item from toolbar
+      const toggleButton = canvas.getByText('Toggle Toolbar item');
+      userEvent.click(toggleButton);
+
+      // Verify toolbar element is visible but drawer is closed
+      await waitFor(() => {
+        const hiddenToolbar = queryToolbar();
+        expect(hiddenToolbar).toBeInTheDocument();
+        expect(isOpen()).toBe(false);
+        expect(canvas.getByText('Apps Title')).not.toBeVisible();
+        expect(getAllToolbarIconButtons().length).toBe(4);
+      });
+    },
+  };
+
 export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
   {
     render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
@@ -344,50 +441,6 @@ export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutPropsWithDisplayM
     },
   };
 
-export const OverlayRemovesToolbarWhenAllItemsAreHidden: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
-  {
-    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
-      <TemplateWithToolbarToggle {...args} />
-    ),
-    args: {
-      displayMode: DisplayMode.Overlay,
-    },
-    play: async ({ canvasElement }) => {
-      const canvas = within(canvasElement);
-      const { getToolbarTestUtils, isOpen } = getTestUtils();
-      const { getToolbarIconButtonByLabel, queryToolbar } =
-        getToolbarTestUtils();
-
-      // Verify toolbar is initially visible
-      const toolbar = queryToolbar();
-      expect(toolbar).toBeInTheDocument();
-
-      const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
-      expect(codeButton).toBeInTheDocument();
-
-      // Open the drawer
-      expect(isOpen()).toBe(false);
-      userEvent.click(codeButton!);
-
-      await waitFor(() => {
-        expect(isOpen()).toBe(true);
-        expect(canvas.getByText('Code Title')).toBeVisible();
-      });
-
-      // Click the toggle button to hide toolbar
-      const toggleButton = canvas.getByText('Toggle Toolbar visibility');
-      userEvent.click(toggleButton);
-
-      // Verify toolbar element is removed but drawer remains open
-      await waitFor(() => {
-        const hiddenToolbar = queryToolbar();
-        expect(hiddenToolbar).not.toBeInTheDocument();
-        expect(isOpen()).toBe(true);
-        expect(canvas.getByText('Code Title')).toBeVisible();
-      });
-    },
-  };
-
 export const EmbeddedRemovesToolbarWhenAllItemsAreHidden: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
   {
     render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
@@ -428,6 +481,55 @@ export const EmbeddedRemovesToolbarWhenAllItemsAreHidden: StoryObj<DrawerToolbar
         expect(hiddenToolbar).not.toBeInTheDocument();
         expect(isOpen()).toBe(true);
         expect(canvas.getByText('Code Title')).toBeVisible();
+      });
+    },
+  };
+
+export const EmbeddedClosesDrawerWhenActiveItemIsHidden: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <TemplateWithToolbarToggle {...args} />
+    ),
+    args: {
+      displayMode: DisplayMode.Embedded,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const { getToolbarTestUtils, isOpen } = getTestUtils();
+      const {
+        getToolbarIconButtonByLabel,
+        queryToolbar,
+        getAllToolbarIconButtons,
+      } = getToolbarTestUtils();
+
+      // Verify toolbar is initially visible
+      const toolbar = queryToolbar();
+      expect(toolbar).toBeInTheDocument();
+      expect(getAllToolbarIconButtons().length).toBe(5);
+
+      const activeButton = getToolbarIconButtonByLabel('Apps')?.getElement();
+      expect(activeButton).toBeInTheDocument();
+
+      // Open the drawer
+      expect(isOpen()).toBe(false);
+      userEvent.click(activeButton!);
+
+      await waitFor(() => {
+        expect(isOpen()).toBe(true);
+        expect(canvas.getByText('Apps Title')).toBeVisible();
+      });
+
+      // Click the toggle button remove 'Apps' item from toolbar
+      const toggleButton = canvas.getByText('Toggle Toolbar item');
+      userEvent.click(toggleButton);
+
+      // Verify toolbar element is visible but drawer is closed
+      await waitFor(() => {
+        const hiddenToolbar = queryToolbar();
+        expect(hiddenToolbar).toBeInTheDocument();
+        expect(isOpen()).toBe(false);
+        expect(canvas.getByText('Apps Title')).not.toBeVisible();
+        expect(getAllToolbarIconButtons().length).toBe(4);
       });
     },
   };
