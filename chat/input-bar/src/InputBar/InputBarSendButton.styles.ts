@@ -5,7 +5,8 @@ import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 /**
  * Off-palette value specific to primary button instances
- * @see TODO: https://jira.mongodb.org/browse/LG-5388
+ * @todo Consolidate usage of #00593F
+ * @see https://jira.mongodb.org/browse/LG-5388
  *
  * @remarks This is a temporary duplicate to avoid importing the
  * `PRIMARY_BUTTON_INTERACTIVE_GREEN` constant from
