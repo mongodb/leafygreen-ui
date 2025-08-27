@@ -724,18 +724,22 @@ Available selectors:
 ```tsx
 test('formats code when format button is clicked', async () => {
   const onFormatClick = jest.fn();
+  const mockFormatCode = jest.fn();
 
   const { panel } = renderPanel({
     panelProps: {
       showFormatButton: true,
       onFormatClick,
     },
+    contextConfig: {
+      formatCode: mockFormatCode,
+    },
   });
 
   await panel.interactions.clickFormatButton();
 
   expect(onFormatClick).toHaveBeenCalled();
-  expect(mockPanelFunctions.formatCode).toHaveBeenCalled();
+  expect(mockFormatCode).toHaveBeenCalled();
 });
 ```
 
@@ -744,18 +748,22 @@ test('formats code when format button is clicked', async () => {
 ```tsx
 test('performs undo when undo menu item is clicked', async () => {
   const onUndoClick = jest.fn();
+  const mockUndo = jest.fn(() => true);
 
   const { panel } = renderPanel({
     panelProps: {
       showSecondaryMenuButton: true,
       onUndoClick,
     },
+    contextConfig: {
+      undo: mockUndo,
+    },
   });
 
   await panel.interactions.clickUndoMenuItem();
 
   expect(onUndoClick).toHaveBeenCalled();
-  expect(mockPanelFunctions.undo).toHaveBeenCalled();
+  expect(mockUndo).toHaveBeenCalled();
 });
 ```
 
@@ -784,30 +792,38 @@ test('handles custom secondary button clicks', async () => {
 });
 ```
 
-#### mockPanelFunctions
+#### defaultPanelContextFunctions
 
-The `mockPanelFunctions` object provides access to mock functions used in the CodeEditor context:
+The `defaultPanelContextFunctions` object provides access to the default stub functions used in the CodeEditor context. These can be overridden in tests by providing `contextConfig` to `renderPanel`:
 
 ```tsx
-import { mockPanelFunctions } from '@leafygreen-ui/code-editor';
+import {
+  renderPanel,
+  defaultPanelContextFunctions,
+} from '@leafygreen-ui/code-editor';
 
-// Clear all mock calls before each test
-beforeEach(() => {
-  mockPanelFunctions.clearAll();
+// Override default functions with jest mocks in your test files
+const mockUndo = jest.fn(() => true);
+const mockFormatCode = jest.fn();
+
+const { panel } = renderPanel({
+  contextConfig: {
+    undo: mockUndo,
+    formatCode: mockFormatCode,
+  },
 });
 
-// Access individual mocks
-expect(mockPanelFunctions.undo).toHaveBeenCalled();
-expect(mockPanelFunctions.formatCode).toHaveBeenCalled();
+// Now you can assert on your custom mocks
+expect(mockUndo).toHaveBeenCalled();
+expect(mockFormatCode).toHaveBeenCalled();
 ```
 
-Available mock functions:
+Available default functions:
 
-- `mockPanelFunctions.getContents`
-- `mockPanelFunctions.formatCode`
-- `mockPanelFunctions.undo`
-- `mockPanelFunctions.redo`
-- `mockPanelFunctions.clearAll()` - Clears all mock calls
+- `defaultPanelContextFunctions.getContents`
+- `defaultPanelContextFunctions.formatCode`
+- `defaultPanelContextFunctions.undo`
+- `defaultPanelContextFunctions.redo`
 
 ## CodeMirror Extension Hooks
 
