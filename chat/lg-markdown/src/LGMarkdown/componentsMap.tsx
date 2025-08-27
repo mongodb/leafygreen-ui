@@ -1,11 +1,10 @@
 import React, { Children, ComponentPropsWithoutRef, ReactElement } from 'react';
-import {
-  Components as ReactMarkdownComponents,
-  ExtraProps,
-} from 'react-markdown';
+import { Components as ReactMarkdownComponents } from 'react-markdown';
 
 import Code, { Language } from '@leafygreen-ui/code';
 import { Body, H1, H2, H3, InlineCode, Link } from '@leafygreen-ui/typography';
+
+import { ExtraProps } from './LGMarkdown.types';
 
 const componentsMap: ReactMarkdownComponents = {
   a: ({
