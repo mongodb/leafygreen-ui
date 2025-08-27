@@ -2,7 +2,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom';
 
-import { mockPanelFunctions, renderPanel } from '../testing/panelTestUtils';
+import { renderPanel } from '../testing/panelTestUtils';
 
 import { PanelProps } from './Panel.types';
 
@@ -30,7 +30,6 @@ Object.assign(document, {
 describe('Panel', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockPanelFunctions.clearAll();
   });
 
   describe('Basic Rendering', () => {
@@ -201,23 +200,29 @@ describe('Panel', () => {
     });
 
     it('calls context undo function when undo menu item is clicked', async () => {
+      const mockUndo = jest.fn(() => true);
+
       const { panel } = renderPanel({
         panelProps: { ...defaultProps, showSecondaryMenuButton: true },
+        contextConfig: { undo: mockUndo },
       });
 
       await panel.interactions.clickUndoMenuItem();
 
-      expect(mockPanelFunctions.undo).toHaveBeenCalledTimes(1);
+      expect(mockUndo).toHaveBeenCalledTimes(1);
     });
 
     it('calls context redo function when redo menu item is clicked', async () => {
+      const mockRedo = jest.fn(() => true);
+
       const { panel } = renderPanel({
         panelProps: { ...defaultProps, showSecondaryMenuButton: true },
+        contextConfig: { redo: mockRedo },
       });
 
       await panel.interactions.clickRedoMenuItem();
 
-      expect(mockPanelFunctions.redo).toHaveBeenCalledTimes(1);
+      expect(mockRedo).toHaveBeenCalledTimes(1);
     });
 
     it('handles when undo function is not available', async () => {

@@ -1,6 +1,6 @@
 import { codeSnippets } from './codeSnippets';
 import {
-  mockPanelFunctions,
+  defaultPanelContextFunctions,
   PanelSelectors,
   renderPanel,
 } from './panelTestUtils';
@@ -8,7 +8,7 @@ import { renderCodeEditor } from './testUtils';
 
 export {
   codeSnippets,
-  mockPanelFunctions,
+  defaultPanelContextFunctions,
   PanelSelectors,
   renderCodeEditor,
   renderPanel,
