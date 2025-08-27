@@ -72,6 +72,13 @@ export interface PanelProps extends DarkModeProps {
   onDownloadClick?: () => void;
 
   /**
+   * Optional filename to use when downloading the editor content.
+   * If provided, the file will be downloaded with this exact filename.
+   * If not provided, uses the default filename 'code' with appropriate extension based on language.
+   */
+  downloadFileName?: string;
+
+  /**
    * Optional callback fired when the format button is clicked.
    * Called after the formatting operation is attempted.
    */

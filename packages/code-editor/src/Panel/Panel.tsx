@@ -54,6 +54,7 @@ import { PanelProps } from './Panel.types';
  *       showFormatButton
  *       showCopyButton
  *       showSecondaryMenuButton
+ *       downloadFileName="my-custom-script.js"
  *       customSecondaryButtons={[
  *         {
  *           label: 'My Custom Button',
@@ -71,6 +72,7 @@ export function Panel({
   baseFontSize: baseFontSizeProp,
   customSecondaryButtons,
   darkMode,
+  downloadFileName,
   innerContent,
   onCopyClick,
   onDownloadClick,
@@ -118,7 +120,7 @@ export function Panel({
 
   const handleDownloadClick = () => {
     if (downloadContent) {
-      downloadContent();
+      downloadContent(downloadFileName);
     }
     onDownloadClick?.();
   };
