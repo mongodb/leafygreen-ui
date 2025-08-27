@@ -129,6 +129,11 @@ const Component: StoryFn<DrawerLayoutProps> = ({
 }: DrawerLayoutProps) => {
   const [toolbarData, setToolbarData] = useState(DRAWER_TOOLBAR_DATA);
 
+  const props = {
+    ...args,
+    toolbarData,
+  } as DrawerLayoutProps;
+
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -163,7 +168,7 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerLayout {...args} toolbarData={toolbarData}>
+      <DrawerLayout {...props}>
         <MainContent />
       </DrawerLayout>
     </div>
