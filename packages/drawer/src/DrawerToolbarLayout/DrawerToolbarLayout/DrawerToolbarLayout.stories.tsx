@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -133,12 +133,12 @@ const Component: StoryFn<DrawerLayoutProps> = ({
     toolbarData,
   } as DrawerLayoutProps;
 
-  const getData = () => {
+  const getData = useCallback(() => {
     return getDrawerToolbarData({
       hasToolbarData,
       hasHiddenToolbarItem,
     });
-  };
+  }, [hasToolbarData, hasHiddenToolbarItem]);
 
   useEffect(() => {
     setToolbarData(getData());

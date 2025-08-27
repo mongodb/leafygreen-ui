@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { storybookExcludedControlParams } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
@@ -112,12 +112,12 @@ const TemplateWithToolbarToggle: StoryFn<
   const [hasToolbarData, setHasToolbarData] = useState(true);
   const [hasHiddenToolbarItem, setHasHiddenToolbarItem] = useState(false);
 
-  const getData = () => {
+  const getData = useCallback(() => {
     return getDrawerToolbarData({
       hasToolbarData,
       hasHiddenToolbarItem,
     });
-  };
+  }, [hasToolbarData, hasHiddenToolbarItem]);
 
   useEffect(() => {
     setToolbarData(getData());
