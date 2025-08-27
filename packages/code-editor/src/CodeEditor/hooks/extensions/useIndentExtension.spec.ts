@@ -1,10 +1,10 @@
 import { renderHook } from '@testing-library/react';
 
-import { IndentUnits } from '../../CodeEditor.types';
 import {
   createMockLanguageModule,
   createMockStateModule,
 } from '../../../testing';
+import { IndentUnits } from '../../CodeEditor.types';
 
 import { useIndentExtension } from './useIndentExtension';
 
