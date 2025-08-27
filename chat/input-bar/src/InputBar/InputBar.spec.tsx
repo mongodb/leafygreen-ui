@@ -138,6 +138,21 @@ describe('packages/input-bar', () => {
     expect(sendButton).toHaveAttribute('aria-disabled', 'true');
   });
 
+  test('disables the send button when whitespace is entered as a value', () => {
+    renderInputBar();
+    const textarea = screen.getByRole('textbox');
+    const sendButton = screen.getByRole('button');
+
+    // Initially the send button should be disabled (empty input)
+    expect(sendButton).toHaveAttribute('aria-disabled', 'true');
+
+    // Type whitespace characters
+    userEvent.type(textarea, '   \n\t  ');
+
+    // Send button should remain disabled
+    expect(sendButton).toHaveAttribute('aria-disabled', 'true');
+  });
+
   test('provides access to textarea element via textareaRef', () => {
     const TestComponent = () => {
       const textareaRef = useRef<HTMLTextAreaElement>(null);
