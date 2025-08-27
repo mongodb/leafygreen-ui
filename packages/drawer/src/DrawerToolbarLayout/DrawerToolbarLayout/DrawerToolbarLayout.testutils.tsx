@@ -145,7 +145,7 @@ export const useToolbarData = (
 
   useEffect(() => {
     setToolbarData(getData());
-  }, [getData]);
+  }, [getData, hasToolbarData, hasHiddenToolbarItem]);
 
   return {
     toolbarData,
