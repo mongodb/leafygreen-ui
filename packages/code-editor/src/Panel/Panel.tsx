@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // @ts-ignore LG icons don't currently support TS
 import DownloadIcon from '@leafygreen-ui/icon/dist/Download';
@@ -18,9 +18,11 @@ import {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuItem, MenuVariant } from '@leafygreen-ui/menu';
+import Modal from '@leafygreen-ui/modal';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import { useCodeEditorContext } from '../CodeEditor/CodeEditorContext';
+import { ShortcutMenu } from '../CodeEditor/ShortcutMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
 
@@ -29,6 +31,7 @@ import {
   getPanelInnerContentStyles,
   getPanelStyles,
   getPanelTitleStyles,
+  ModalStyles,
 } from './Panel.styles';
 import { PanelProps } from './Panel.types';
 
@@ -85,6 +88,7 @@ export function Panel({
   showSecondaryMenuButton,
   title,
 }: PanelProps) {
+  const [shortcutsModalOpen, setShortcutsModalOpen] = useState(false);
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
 
@@ -125,100 +129,120 @@ export function Panel({
     onDownloadClick?.();
   };
 
+  const handleViewShortcutsClick = () => {
+    setShortcutsModalOpen(true);
+    onViewShortcutsClick?.();
+  };
+
   return (
-    <div className={getPanelStyles(theme)}>
-      <div
-        className={getPanelTitleStyles(theme, baseFontSizeProp || baseFontSize)}
-      >
-        {title}
-      </div>
-      <div className={getPanelInnerContentStyles()}>{innerContent}</div>
-      <div className={getPanelButtonsStyles()}>
-        {showFormatButton && (
-          <Tooltip
-            align="top"
-            justify="middle"
-            trigger={
-              <IconButton onClick={handleFormatClick} aria-label="Format code">
-                <FormatIcon />
-              </IconButton>
-            }
-            triggerEvent="hover"
-            darkMode={darkMode}
-          >
-            Prettify code
-          </Tooltip>
-        )}
-        {showCopyButton && (
-          <CodeEditorCopyButton
-            variant={CopyButtonVariant.IconButton}
-            getContentsToCopy={getContents ?? (() => '')}
-            onCopy={onCopyClick}
-          />
-        )}
-        {showSecondaryMenuButton && (
-          <Menu
-            trigger={
-              <IconButton aria-label="Show more actions">
-                <EllipsisIcon />
-              </IconButton>
-            }
-            variant={MenuVariant.Compact}
-            darkMode={darkMode}
-            renderDarkMenu={false}
-          >
-            <MenuItem
-              glyph={<UndoIcon />}
-              onClick={handleUndoClick}
-              aria-label="Undo changes"
-            >
-              Undo
-            </MenuItem>
-            <MenuItem
-              glyph={<RedoIcon />}
-              onClick={handleRedoClick}
-              aria-label="Redo changes"
-            >
-              Redo
-            </MenuItem>
-            <MenuItem
-              glyph={<DownloadIcon />}
-              onClick={handleDownloadClick}
-              aria-label="Download code"
-            >
-              Download
-            </MenuItem>
-            <MenuItem
-              glyph={<QuestionMarkWithCircleIcon />}
-              onClick={onViewShortcutsClick}
-              aria-label="View shortcuts"
-            >
-              View shortcuts
-            </MenuItem>
-            {customSecondaryButtons?.map(
-              ({
-                label,
-                glyph,
-                onClick,
-                href,
-                'aria-label': ariaLabel,
-                disabled,
-              }) => (
-                <MenuItem
-                  glyph={glyph}
-                  onClick={onClick}
-                  href={href}
-                  key={label}
-                  aria-label={ariaLabel || label}
-                  disabled={disabled}
+    <>
+      <div className={getPanelStyles(theme)}>
+        <div
+          className={getPanelTitleStyles(
+            theme,
+            baseFontSizeProp || baseFontSize,
+          )}
+        >
+          {title}
+        </div>
+        <div className={getPanelInnerContentStyles()}>{innerContent}</div>
+        <div className={getPanelButtonsStyles()}>
+          {showFormatButton && (
+            <Tooltip
+              align="top"
+              justify="middle"
+              trigger={
+                <IconButton
+                  onClick={handleFormatClick}
+                  aria-label="Format code"
                 >
-                  {label}
-                </MenuItem>
-              ),
-            )}
-          </Menu>
-        )}
+                  <FormatIcon />
+                </IconButton>
+              }
+              triggerEvent="hover"
+              darkMode={darkMode}
+            >
+              Prettify code
+            </Tooltip>
+          )}
+          {showCopyButton && (
+            <CodeEditorCopyButton
+              variant={CopyButtonVariant.IconButton}
+              getContentsToCopy={getContents ?? (() => '')}
+              onCopy={onCopyClick}
+            />
+          )}
+          {showSecondaryMenuButton && (
+            <Menu
+              trigger={
+                <IconButton aria-label="Show more actions">
+                  <EllipsisIcon />
+                </IconButton>
+              }
+              variant={MenuVariant.Compact}
+              darkMode={darkMode}
+              renderDarkMenu={false}
+            >
+              <MenuItem
+                glyph={<UndoIcon />}
+                onClick={handleUndoClick}
+                aria-label="Undo changes"
+              >
+                Undo
+              </MenuItem>
+              <MenuItem
+                glyph={<RedoIcon />}
+                onClick={handleRedoClick}
+                aria-label="Redo changes"
+              >
+                Redo
+              </MenuItem>
+              <MenuItem
+                glyph={<DownloadIcon />}
+                onClick={handleDownloadClick}
+                aria-label="Download code"
+              >
+                Download
+              </MenuItem>
+              <MenuItem
+                glyph={<QuestionMarkWithCircleIcon />}
+                onClick={handleViewShortcutsClick}
+                aria-label="View shortcuts"
+              >
+                View shortcuts
+              </MenuItem>
+              {customSecondaryButtons?.map(
+                ({
+                  label,
+                  glyph,
+                  onClick,
+                  href,
+                  'aria-label': ariaLabel,
+                  disabled,
+                }) => (
+                  <MenuItem
+                    glyph={glyph}
+                    onClick={onClick}
+                    href={href}
+                    key={label}
+                    aria-label={ariaLabel || label}
+                    disabled={disabled}
+                  >
+                    {label}
+                  </MenuItem>
+                ),
+              )}
+            </Menu>
+          )}
+        </div>
       </div>
-    </div>
+      <Modal
+        open={true}
+        setOpen={setShortcutsModalOpen}
+        className={ModalStyles}
+      >
+        <ShortcutMenu />
+      </Modal>
+    </>
   );
 }
