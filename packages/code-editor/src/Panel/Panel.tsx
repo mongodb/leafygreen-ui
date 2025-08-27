@@ -237,7 +237,7 @@ export function Panel({
         </div>
       </div>
       <Modal
-        open={true}
+        open={shortcutsModalOpen}
         setOpen={setShortcutsModalOpen}
         className={ModalStyles}
       >
