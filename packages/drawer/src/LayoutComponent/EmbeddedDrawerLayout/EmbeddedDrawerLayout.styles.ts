@@ -45,11 +45,17 @@ const getBaseStyles = ({
   isDrawerOpen,
   hasToolbar,
   size,
+  hasPanelContentProp,
 }: {
   isDrawerOpen?: boolean;
   hasToolbar: boolean;
   size: Size;
-}) => cx(baseStyles, setDrawerDefaultWidth({ isDrawerOpen, hasToolbar, size }));
+  hasPanelContentProp: boolean;
+}) =>
+  cx(baseStyles, setDrawerDefaultWidth({ isDrawerOpen, hasToolbar, size }), {
+    [withToolbarBaseStyles]: hasToolbar,
+    [getWithoutToolbarBaseStyles({ hasPanelContentProp })]: !hasToolbar,
+  });
 
 // If there is no toolbar and the drawer is open, we need to shift the layout by the drawer width;
 const getWithoutToolbarBaseStyles = ({
@@ -120,6 +126,18 @@ const resizingStyles = css`
   transition: none;
 `;
 
+export const getOpenStyles = ({
+  hasToolbar,
+  hasPanelContentProp = false,
+}: {
+  hasToolbar: boolean;
+  hasPanelContentProp: boolean;
+}) =>
+  cx({
+    [withToolbarOpenStyles]: hasToolbar,
+    [getWithoutToolbarOpenStyles({ hasPanelContentProp })]: !hasToolbar,
+  });
+
 export const getEmbeddedDrawerLayoutStyles = ({
   className,
   isDrawerOpen,
@@ -136,14 +154,10 @@ export const getEmbeddedDrawerLayoutStyles = ({
   hasPanelContentProp?: boolean;
 }) =>
   cx(
-    getBaseStyles({ isDrawerOpen, hasToolbar, size }),
+    getBaseStyles({ isDrawerOpen, hasToolbar, size, hasPanelContentProp }),
     {
       [resizingStyles]: isDrawerResizing,
-      [withToolbarBaseStyles]: hasToolbar,
-      [withToolbarOpenStyles]: isDrawerOpen && hasToolbar,
-      [getWithoutToolbarBaseStyles({ hasPanelContentProp })]: !hasToolbar,
-      [getWithoutToolbarOpenStyles({ hasPanelContentProp })]:
-        isDrawerOpen && !hasToolbar,
+      [getOpenStyles({ hasToolbar, hasPanelContentProp })]: isDrawerOpen,
     },
     className,
   );
