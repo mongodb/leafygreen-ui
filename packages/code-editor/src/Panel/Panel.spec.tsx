@@ -284,6 +284,41 @@ describe('Panel', () => {
       await panel.interactions.clickDownloadMenuItem();
     });
 
+    test('passes downloadFileName to downloadContent function when specified', async () => {
+      const mockDownloadContent = jest.fn();
+      const customFilename = 'my-custom-file.js';
+      const { panel } = renderPanel({
+        panelProps: {
+          ...defaultProps,
+          showSecondaryMenuButton: true,
+          downloadFileName: customFilename,
+        },
+        contextConfig: { downloadContent: mockDownloadContent },
+      });
+
+      await panel.interactions.clickDownloadMenuItem();
+
+      expect(mockDownloadContent).toHaveBeenCalledTimes(1);
+      expect(mockDownloadContent).toHaveBeenCalledWith(customFilename);
+    });
+
+    test('passes undefined to downloadContent function when downloadFileName not specified', async () => {
+      const mockDownloadContent = jest.fn();
+      const { panel } = renderPanel({
+        panelProps: {
+          ...defaultProps,
+          showSecondaryMenuButton: true,
+          // downloadFileName not provided
+        },
+        contextConfig: { downloadContent: mockDownloadContent },
+      });
+
+      await panel.interactions.clickDownloadMenuItem();
+
+      expect(mockDownloadContent).toHaveBeenCalledTimes(1);
+      expect(mockDownloadContent).toHaveBeenCalledWith(undefined);
+    });
+
     test('calls onViewShortcutsClick when view shortcuts menu item is clicked', async () => {
       const onViewShortcutsClick = jest.fn();
       const { panel } = renderPanel({
