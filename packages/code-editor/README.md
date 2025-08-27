@@ -270,24 +270,29 @@ The `CodeEditorHandle` provides the following methods:
 - **`isFormattingAvailable`** - Boolean indicating if formatting is available for the current language
 - **`undo()`** - Undoes the last editor action, returns boolean indicating success
 - **`redo()`** - Redoes the last undone action, returns boolean indicating success
-- **`downloadContent(filename?)`** - Downloads the editor content as a file with appropriate extension based on language
+- **`downloadContent(filename?)`** - Downloads the editor content as a file. If filename is provided, used exactly as-is; if not provided, defaults to 'code' with appropriate extension
 - **`getEditorViewInstance()`** - Returns the underlying CodeMirror EditorView instance
 
 #### Download Functionality
 
-The `downloadContent` method automatically determines the appropriate file extension based on the editor's language:
+The `downloadContent` method uses a simple approach to filename handling:
+
+- **When a filename is provided**: Uses the filename exactly as provided, with no modifications
+- **When no filename is provided**: Uses the default filename 'code' and adds an appropriate extension based on the editor's language
 
 ```tsx
-// Downloads as 'script.js' (JavaScript extension)
+// Downloads as 'script' (uses filename exactly as provided)
 editorRef.current.downloadContent('script');
 
-// Downloads as 'code.py' (default filename with Python extension)
+// Downloads as 'my-file.py' (uses filename exactly as provided)
+editorRef.current.downloadContent('my-file.py');
+
+// Downloads as 'code' (uses filename exactly as provided, even though it's "code")
+editorRef.current.downloadContent('code');
+
+// Downloads as 'code.py' (default behavior - no filename parameter provided)
 editorRef.current.downloadContent(); // No filename provided
-
-// Downloads as 'document.txt' (fallback for unsupported/no language)
 ```
-
-**Supported language extensions:** `.js`, `.ts`, `.tsx`, `.jsx`, `.py`, `.java`, `.css`, `.html`, `.json`, `.go`, `.rs`, `.cpp`, `.cs`, `.kt`, `.php`, `.rb`, and `.txt` (fallback).
 
 ## Types and Variables
 

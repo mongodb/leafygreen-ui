@@ -193,12 +193,11 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     }, [coreModules]);
 
     /**
-     * Downloads the current editor content as a file with an appropriate extension
-     * based on the selected language.
-     * @param filename - Optional custom filename (without extension). Defaults to 'code'
+     * Downloads the current editor content as a file.
+     * @param filename - Optional custom filename. If provided, used exactly as-is with no modifications. If omitted, defaults to 'code' with appropriate extension based on language.
      */
     const handleDownloadContent = useCallback(
-      (filename = 'code'): void => {
+      (filename?: string): void => {
         const content = getContents();
 
         if (!content.trim()) {
@@ -206,10 +205,16 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           return;
         }
 
-        // Determine file extension based on language
-        const extension = language ? LANGUAGE_EXTENSION_MAP[language] : 'txt';
+        let fullFilename: string;
 
-        const fullFilename = `${filename}.${extension}`;
+        if (filename === undefined) {
+          // No filename provided, use default with appropriate extension
+          const extension = language ? LANGUAGE_EXTENSION_MAP[language] : 'txt';
+          fullFilename = `code.${extension}`;
+        } else {
+          // Use provided filename exactly as-is
+          fullFilename = filename;
+        }
 
         // Create blob and download
         const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });

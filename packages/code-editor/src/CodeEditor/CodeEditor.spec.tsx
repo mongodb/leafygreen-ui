@@ -469,7 +469,7 @@ describe('packages/code-editor', () => {
       jest.restoreAllMocks();
     });
 
-    test('triggers download with correct filename and extension for JavaScript', async () => {
+    test('uses provided filename exactly as-is when custom filename provided', async () => {
       try {
         downloadedFiles = [];
 
@@ -487,7 +487,7 @@ describe('packages/code-editor', () => {
 
         // Verify that a download was triggered
         expect(downloadedFiles).toHaveLength(1);
-        expect(downloadedFiles[0].filename).toBe('my-script.js');
+        expect(downloadedFiles[0].filename).toBe('my-script');
 
         // Verify URL methods were called (cleanup)
         expect(global.URL.createObjectURL).toHaveBeenCalled();
@@ -594,7 +594,7 @@ describe('packages/code-editor', () => {
       [LanguageName.php, 'php'],
       [LanguageName.ruby, 'rb'],
     ])(
-      'triggers download with correct extension for %s language',
+      'adds correct extension for %s language when using default filename',
       async (language, expectedExtension) => {
         try {
           // Reset for each test iteration
@@ -609,11 +609,11 @@ describe('packages/code-editor', () => {
           const handle = editor.getHandle();
 
           act(() => {
-            handle.downloadContent('test');
+            handle.downloadContent(); // No filename provided, uses default
           });
 
           expect(downloadedFiles).toHaveLength(1);
-          expect(downloadedFiles[0].filename).toBe(`test.${expectedExtension}`);
+          expect(downloadedFiles[0].filename).toBe(`code.${expectedExtension}`);
         } catch (error) {
           console.warn(
             `Skipping ${language} test due to environment issues:`,
@@ -623,7 +623,7 @@ describe('packages/code-editor', () => {
       },
     );
 
-    test('triggers download with txt extension for unsupported language', async () => {
+    test('adds txt extension for unsupported language when using default filename', async () => {
       try {
         downloadedFiles = [];
 
@@ -636,11 +636,34 @@ describe('packages/code-editor', () => {
         const handle = editor.getHandle();
 
         act(() => {
-          handle.downloadContent('document');
+          handle.downloadContent(); // No filename provided, uses default
         });
 
         expect(downloadedFiles).toHaveLength(1);
-        expect(downloadedFiles[0].filename).toBe('document.txt');
+        expect(downloadedFiles[0].filename).toBe('code.txt');
+      } catch (error) {
+        console.warn('Skipping test due to environment issues:', error);
+      }
+    });
+
+    test('uses provided filename exactly as-is regardless of extension', async () => {
+      try {
+        downloadedFiles = [];
+
+        const { editor } = renderCodeEditor({
+          defaultValue: 'console.log("Hello World");',
+          language: LanguageName.javascript,
+        });
+        await editor.waitForEditorView();
+
+        const handle = editor.getHandle();
+
+        act(() => {
+          handle.downloadContent('my-script.txt');
+        });
+
+        expect(downloadedFiles).toHaveLength(1);
+        expect(downloadedFiles[0].filename).toBe('my-script.txt');
       } catch (error) {
         console.warn('Skipping test due to environment issues:', error);
       }
