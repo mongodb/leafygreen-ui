@@ -8,11 +8,11 @@ import { CodeEditorProvider } from '../CodeEditor/CodeEditorContext';
 import { Panel } from '../Panel/Panel';
 import { PanelProps } from '../Panel/Panel.types';
 
-// Default mock functions for CodeEditor context
-const defaultMockGetContents = jest.fn(() => 'test content');
-const defaultMockFormatCode = jest.fn();
-const defaultMockUndo = jest.fn(() => true);
-const defaultMockRedo = jest.fn(() => true);
+// Default stub functions for CodeEditor context
+const defaultStubGetContents = () => 'test content';
+const defaultStubFormatCode = () => Promise.resolve('formatted content');
+const defaultStubUndo = () => true;
+const defaultStubRedo = () => true;
 
 /**
  * Panel-specific selectors for easier testing
@@ -55,11 +55,11 @@ export function renderPanel(config: RenderPanelConfig = {}) {
   const { panelProps = {}, contextConfig = {} } = config;
 
   const contextValue = {
-    getContents: defaultMockGetContents,
-    formatCode: defaultMockFormatCode,
+    getContents: defaultStubGetContents,
+    formatCode: defaultStubFormatCode,
     isFormattingAvailable: true,
-    undo: defaultMockUndo,
-    redo: defaultMockRedo,
+    undo: defaultStubUndo,
+    redo: defaultStubRedo,
     ...contextConfig,
   };
 
@@ -384,21 +384,12 @@ function createPanelUtilities() {
 }
 
 /**
- * Mock functions for resetting between tests
+ * Default stub functions for CodeEditor context
+ * These can be overridden in tests by providing contextConfig to renderPanel
  */
-export const mockPanelFunctions = {
-  getContents: defaultMockGetContents,
-  formatCode: defaultMockFormatCode,
-  undo: defaultMockUndo,
-  redo: defaultMockRedo,
-
-  /**
-   * Clears all mock function calls
-   */
-  clearAll() {
-    defaultMockGetContents.mockClear();
-    defaultMockFormatCode.mockClear();
-    defaultMockUndo.mockClear();
-    defaultMockRedo.mockClear();
-  },
+export const defaultPanelContextFunctions = {
+  getContents: defaultStubGetContents,
+  formatCode: defaultStubFormatCode,
+  undo: defaultStubUndo,
+  redo: defaultStubRedo,
 };
