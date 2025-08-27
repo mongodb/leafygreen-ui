@@ -59,12 +59,13 @@ export const DrawerToolbarLayoutContent = forwardRef<
 
     const shouldRenderToolbar = visibleToolbarItems.length > 0;
 
-    // If there is an active toolbar item and it's visibility is set to false, close the drawer
+    // If the drawer is open, there is an active toolbar item, it's visibility is set to false, and the toolbar is visible, close the drawer.
     useEffect(() => {
       if (id && toolbarData && isDrawerOpen && shouldRenderToolbar) {
         const activeToolbarItem = toolbarData.find(item => item.id === id);
+        const isActiveToolbarItemVisible = activeToolbarItem?.visible ?? true;
 
-        if (activeToolbarItem && activeToolbarItem.visible === false) {
+        if (activeToolbarItem && !isActiveToolbarItemVisible) {
           closeDrawer();
         }
       }
