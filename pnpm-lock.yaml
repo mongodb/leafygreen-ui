@@ -385,9 +385,6 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
-      '@lg-chat/avatar':
-        specifier: workspace:^
-        version: link:../avatar
       '@lg-chat/leafygreen-chat-provider':
         specifier: workspace:^
         version: link:../leafygreen-chat-provider
@@ -398,6 +395,9 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1(react@18.3.1)
     devDependencies:
+      '@lg-chat/avatar':
+        specifier: workspace:^
+        version: link:../avatar
       '@lg-chat/input-bar':
         specifier: workspace:^
         version: link:../input-bar
@@ -449,6 +449,9 @@ importers:
       '@lg-chat/chat-window':
         specifier: workspace:^
         version: link:../chat-window
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
       '@lg-chat/title-bar':
         specifier: workspace:^
         version: link:../title-bar
@@ -462,9 +465,6 @@ importers:
       '@lg-chat/input-bar':
         specifier: workspace:^
         version: link:../input-bar
-      '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message

@@ -19,12 +19,11 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@lg-chat/avatar": "workspace:^",
-    "@lg-chat/leafygreen-chat-provider": "workspace:^",
     "@lg-chat/title-bar": "workspace:^",
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {
+    "@lg-chat/avatar": "workspace:^",
     "@lg-chat/input-bar": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feed": "workspace:^",
@@ -33,6 +32,7 @@
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@lg-chat/leafygreen-chat-provider": "workspace:^"
   }
 }
