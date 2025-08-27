@@ -29,34 +29,13 @@ import {
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
 import { CodeEditorProvider } from './CodeEditorContext';
+import { LANGUAGE_EXTENSION_MAP } from './constants';
 import {
   useCodeFormatter,
   useExtensions,
   useLazyModules,
   useModuleLoaders,
 } from './hooks';
-
-/**
- * Mapping of language names to their corresponding file extensions
- */
-const LANGUAGE_EXTENSION_MAP = {
-  cpp: 'cpp',
-  csharp: 'cs',
-  css: 'css',
-  go: 'go',
-  html: 'html',
-  java: 'java',
-  javascript: 'js',
-  jsx: 'jsx',
-  json: 'json',
-  kotlin: 'kt',
-  php: 'php',
-  python: 'py',
-  ruby: 'rb',
-  rust: 'rs',
-  typescript: 'ts',
-  tsx: 'tsx',
-} as const;
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
@@ -228,12 +207,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         }
 
         // Determine file extension based on language
-        const extension =
-          language && language in LANGUAGE_EXTENSION_MAP
-            ? LANGUAGE_EXTENSION_MAP[
-                language as keyof typeof LANGUAGE_EXTENSION_MAP
-              ]
-            : 'txt';
+        const extension = language ? LANGUAGE_EXTENSION_MAP[language] : 'txt';
 
         const fullFilename = `${filename}.${extension}`;
 
