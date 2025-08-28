@@ -1,7 +1,18 @@
 import { codeSnippets } from './codeSnippets';
+import {
+  defaultPanelContextFunctions,
+  PanelSelectors,
+  renderPanel,
+} from './panelTestUtils';
 import { renderCodeEditor } from './testUtils';
 
-export { codeSnippets, renderCodeEditor };
+export {
+  codeSnippets,
+  defaultPanelContextFunctions,
+  PanelSelectors,
+  renderCodeEditor,
+  renderPanel,
+};
 
 // Extension testing utilities
 export {
