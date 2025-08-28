@@ -32,6 +32,7 @@
     "@lg-chat/rich-links": "workspace:^"
   },
   "devDependencies": {
+    "@emotion/styled": "^11.10.5",
     "@lg-tools/build": "workspace:^",
     "@storybook/test": "^8.6.14"
   },

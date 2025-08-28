@@ -2,16 +2,17 @@ import React, { useMemo } from 'react';
 
 import { Disclaimer, Link } from '@leafygreen-ui/typography';
 
-import { VerificationInfo } from '../Message';
 import { MessageBanner } from '../MessageBanner';
 
-import { textStyles } from './VerifiedAnswerBanner.styles';
+import { textStyles } from './MessageVerifiedBanner.styles';
+import { MessageVerifiedBannerProps } from './MessageVerifiedBanner.types';
 
-export function VerifiedAnswerBanner({
+export function MessageVerifiedBanner({
   verifier,
   verifiedAt,
   learnMoreUrl,
-}: VerificationInfo) {
+  ...rest
+}: MessageVerifiedBannerProps) {
   const text = useMemo(() => {
     const textParts = [`Verified`];
 
@@ -32,7 +33,7 @@ export function VerifiedAnswerBanner({
   }, [verifier, verifiedAt]);
 
   return (
-    <MessageBanner variant="success">
+    <MessageBanner variant="success" {...rest}>
       <Disclaimer className={textStyles}>
         {text}
         {learnMoreUrl && (

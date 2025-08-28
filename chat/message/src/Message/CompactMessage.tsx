@@ -3,6 +3,7 @@ import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { filterChildren, findChild } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
@@ -34,6 +35,18 @@ export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
     const { darkMode, theme } = useDarkMode();
     const { assistantName } = useLeafyGreenChatContext();
 
+    // Find subcomponents
+    const actions = findChild(children, 'isLGMessageActions');
+    const verifiedBanner = findChild(children, 'isLGMessageVerifiedBanner');
+    const links = findChild(children, 'isLGMessageLinks');
+
+    // Filter out subcomponents from children
+    const remainingChildren = filterChildren(children, [
+      'isLGMessageActions',
+      'isLGMessageVerifiedBanner',
+      'isLGMessageLinks',
+    ]);
+
     return (
       <div
         className={getContainerStyles({
@@ -64,7 +77,10 @@ export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
           >
             {messageBody ?? ''}
           </MessageContent>
-          {children}
+          {actions}
+          {verifiedBanner}
+          {links}
+          {remainingChildren}
         </MessageContainer>
       </div>
     );
