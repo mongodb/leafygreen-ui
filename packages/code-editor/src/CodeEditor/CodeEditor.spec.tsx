@@ -724,7 +724,7 @@ describe('packages/code-editor', () => {
       await waitFor(() => {
         // CodeMirror 6 search creates a panel with specific classes
         const searchPanel = container.querySelector(
-          '.cm-search, .cm-panel, .cm-search-top, .cm-search-bottom',
+          CodeEditorSelectors.SearchPanel,
         );
         expect(searchPanel).toBeInTheDocument();
       });
@@ -732,7 +732,7 @@ describe('packages/code-editor', () => {
       // Verify search input field is present and can be typed in
       await waitFor(() => {
         const searchInput = container.querySelector(
-          'input[type="text"], .cm-textfield, input[placeholder*="search" i]',
+          CodeEditorSelectors.SearchInput,
         );
         expect(searchInput).toBeInTheDocument();
       });
