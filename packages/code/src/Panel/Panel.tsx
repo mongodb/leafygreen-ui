@@ -41,7 +41,7 @@ function Panel({
     showCustomActionButtons && !!filteredCustomActionIconButtons.length;
 
   const currentLanguage = languageOptions?.find(
-    option => option.displayName === language,
+    option => option.displayName === language || option.language === language,
   );
 
   const shouldRenderLanguageSwitcher =

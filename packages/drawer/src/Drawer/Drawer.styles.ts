@@ -198,6 +198,26 @@ export const getDrawerStyles = ({
     drawerClassName,
   );
 
+export const getResizerStyles = ({
+  resizerClassName,
+  hasToolbar = false,
+}: {
+  resizerClassName?: string;
+  hasToolbar?: boolean;
+}) =>
+  cx(
+    css`
+      position: absolute;
+      left: 0px;
+    `,
+    {
+      [css`
+        left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px; // An embedded drawer with a toolbar needs to be offset to the right to account for the overflow padding.
+      `]: hasToolbar,
+    },
+    resizerClassName,
+  );
+
 export const getDrawerShadowStyles = ({
   theme,
   displayMode,
@@ -264,6 +284,11 @@ export const getHeaderStyles = ({ theme }: { theme: Theme }) => css`
   transition-timing-function: ${TRANSITION_TIMING_FUNCTION};
 `;
 
+export const titleStyles = css`
+  flex-grow: 1;
+  font-weight: ${fontWeights.semiBold};
+`;
+
 const baseChildrenContainerStyles = css`
   height: 100%;
   overflow: hidden;
@@ -281,42 +306,24 @@ export const getChildrenContainerStyles = ({
       hasShadowTop,
   });
 
-const baseScrollContainerStyles = css`
+const innerChildrenContainerScrollStyles = css`
   height: 100%;
-  padding: ${spacing[400]}px;
   overflow-y: auto;
   overscroll-behavior: contain;
 `;
 
-export const getResizerStyles = ({
-  resizerClassName,
-  hasToolbar = false,
-}: {
-  resizerClassName?: string;
-  hasToolbar?: boolean;
-}) =>
-  cx(
-    css`
-      position: absolute;
-      left: 0px;
-    `,
-    {
-      [css`
-        left: ${EMBEDDED_TOOLBAR_OVERFLOW_PADDING}px; // An embedded drawer with a toolbar needs to be offset to the right to account for the overflow padding.
-      `]: hasToolbar,
-    },
-    resizerClassName,
-  );
-export const getScrollContainerStyles = ({
+const innerChildrenContainerPaddingStyles = css`
+  padding: ${spacing[400]}px;
+`;
+
+export const getInnerChildrenContainerStyles = ({
+  hasPadding,
   scrollable,
 }: {
+  hasPadding: boolean;
   scrollable: boolean;
 }) =>
   cx({
-    [baseScrollContainerStyles]: scrollable,
+    [innerChildrenContainerPaddingStyles]: hasPadding,
+    [innerChildrenContainerScrollStyles]: scrollable,
   });
-
-export const titleStyles = css`
-  flex-grow: 1;
-  font-weight: ${fontWeights.semiBold};
-`;
