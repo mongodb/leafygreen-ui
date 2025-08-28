@@ -27,11 +27,9 @@ export function ShortcutMenu({ className }: { className?: string }) {
           <tr>
             <td>
               <Badge variant="lightgray">ESC</Badge>
-              <Disclaimer className={PlusSignStyles}>+</Disclaimer>
-              <Badge variant="lightgray">TAB</Badge>
             </td>
             <td>
-              <Disclaimer>to change focus</Disclaimer>
+              <Disclaimer>to unfocus editor</Disclaimer>
             </td>
           </tr>
           <tr>
