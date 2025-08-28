@@ -140,7 +140,8 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const [shouldRenderButtonText, setShouldRenderButtonText] =
       useState<boolean>(false);
 
-    const isSendButtonDisabled = disableSend || disabled || messageBody === '';
+    const isSendButtonDisabled =
+      disableSend || disabled || messageBody?.trim() === '';
     const shouldRenderGradient =
       !isCompact && shouldRenderGradientProp && isFocused && !disabled;
     const showHotkeyIndicator =
