@@ -50,45 +50,34 @@ export const filterChildren = (
   children: ReactNode,
   staticPropertiesToExclude: Array<string>,
 ): ReactNode => {
-  const allChildren = Children.toArray(children);
-  const filteredChildren: Array<ReactNode> = [];
+  // Handle empty/null children - Children.map returns null for these cases
+  if (!children) return [];
 
-  for (const child of allChildren) {
-    if (!isValidElement(child)) {
-      filteredChildren.push(child);
-      continue;
-    }
+  return Children.map(children, child => {
+    if (!isValidElement(child)) return child;
 
     // Handle fragments by filtering their children
     if (child.type === Fragment) {
-      const fragmentChildren = Children.toArray(child.props.children);
-      const filteredFragmentChildren: Array<ReactNode> = [];
-
-      for (const fragmentChild of fragmentChildren) {
-        if (!isValidElement(fragmentChild)) {
-          filteredFragmentChildren.push(fragmentChild);
-          continue;
-        }
+      // Children.map automatically flattens the returned array,
+      // maintaining the fragment flattening behavior
+      return Children.map(child.props.children, fragmentChild => {
+        if (!isValidElement(fragmentChild)) return fragmentChild;
 
         if (
-          !hasAnyStaticProperty(fragmentChild.type, staticPropertiesToExclude)
+          hasAnyStaticProperty(fragmentChild.type, staticPropertiesToExclude)
         ) {
-          filteredFragmentChildren.push(fragmentChild);
+          return null; // Filter out - React ignores null returns
         }
-        // If it matches, we skip it (filter it out)
-      }
 
-      // Add filtered fragment children directly to the result (flatten the fragment)
-      filteredChildren.push(...filteredFragmentChildren);
-      continue;
+        return fragmentChild;
+      });
     }
 
     // Filter direct children
-    if (!hasAnyStaticProperty(child.type, staticPropertiesToExclude)) {
-      filteredChildren.push(child);
+    if (hasAnyStaticProperty(child.type, staticPropertiesToExclude)) {
+      return null; // Filter out - React ignores null returns
     }
-    // If it matches, we skip it (filter it out)
-  }
 
-  return filteredChildren;
+    return child;
+  });
 };
