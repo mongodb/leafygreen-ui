@@ -2,8 +2,9 @@ import { forceParsing } from '@codemirror/language';
 import { EditorState } from '@codemirror/state';
 import { act, waitFor } from '@testing-library/react';
 
+import { renderCodeEditor } from '../testing/testUtils';
+
 import { LanguageName } from './hooks/extensions/useLanguageExtension';
-import { renderCodeEditor } from './testing/testUtils';
 import { CopyButtonAppearance } from './CodeEditor.types';
 import { CodeEditorSelectors } from '.';
 
@@ -349,5 +350,73 @@ describe('packages/code-editor', () => {
     expect(
       container.querySelector(CodeEditorSelectors.CopyButton),
     ).not.toBeInTheDocument();
+  });
+
+  describe('imperative handle', () => {
+    test('exposes complete imperative handle API', async () => {
+      const { editor } = renderCodeEditor();
+
+      await editor.waitForEditorView();
+
+      const handle = editor.getHandle();
+      expect(typeof handle.undo).toBe('function');
+      expect(typeof handle.redo).toBe('function');
+      expect(typeof handle.getContents).toBe('function');
+      expect(typeof handle.formatCode).toBe('function');
+      expect(typeof handle.getEditorViewInstance).toBe('function');
+    });
+
+    test('undo and redo actually work with content changes', async () => {
+      const initialContent = 'console.log("hello");';
+      const { editor } = renderCodeEditor({
+        defaultValue: initialContent,
+      });
+
+      await editor.waitForEditorView();
+
+      // Verify initial content
+      expect(editor.getContent()).toBe(initialContent);
+
+      // Make a change
+      editor.interactions.insertText('\nconsole.log("world");');
+      const changedContent = editor.getContent();
+      expect(changedContent).toBe(
+        'console.log("hello");\nconsole.log("world");',
+      );
+
+      // Undo the change
+      const undoResult = editor.interactions.undo();
+      expect(undoResult).toBe(true);
+      expect(editor.getContent()).toBe(initialContent);
+
+      // Redo the change
+      const redoResult = editor.interactions.redo();
+      expect(redoResult).toBe(true);
+      expect(editor.getContent()).toBe(changedContent);
+    });
+
+    test('undo returns false when there is nothing to undo', async () => {
+      const { editor } = renderCodeEditor({
+        defaultValue: 'test',
+      });
+
+      await editor.waitForEditorView();
+
+      // Try to undo when there's no history
+      const undoResult = editor.interactions.undo();
+      expect(undoResult).toBe(false);
+    });
+
+    test('redo returns false when there is nothing to redo', async () => {
+      const { editor } = renderCodeEditor({
+        defaultValue: 'test',
+      });
+
+      await editor.waitForEditorView();
+
+      // Try to redo when there's no redo history
+      const redoResult = editor.interactions.redo();
+      expect(redoResult).toBe(false);
+    });
   });
 });

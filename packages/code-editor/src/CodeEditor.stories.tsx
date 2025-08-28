@@ -13,8 +13,8 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 
 import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
-import { codeSnippets } from './CodeEditor/testing';
 import { IndentUnits } from './CodeEditor';
+import { codeSnippets } from './testing';
 import { CodeEditor, Panel } from '.';
 
 const MyTooltip = ({

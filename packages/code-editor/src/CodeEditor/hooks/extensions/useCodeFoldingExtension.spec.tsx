@@ -1,6 +1,9 @@
 import { renderHook } from '@testing-library/react';
 
-import { createMockLanguageModule, createMockStateModule } from '../../testing';
+import {
+  createMockLanguageModule,
+  createMockStateModule,
+} from '../../../testing';
 
 import { useCodeFoldingExtension } from './useCodeFoldingExtension';
 
