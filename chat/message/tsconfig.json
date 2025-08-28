@@ -28,6 +28,9 @@
       "path": "../message-feedback"
     },
     {
+      "path": "../message-rating"
+    },
+    {
       "path": "../rich-links"
     },
     {
