@@ -7,3 +7,6 @@ export {
   Variant,
 } from './SplitButton';
 export { DEFAULT_LGID_ROOT, getLgIds, type GetLgIdsReturnType } from './utils';
+
+// Testing utilities
+export { getTestUtils, type GetTestUtilsReturnType } from './testing';
