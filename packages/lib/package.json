@@ -32,6 +32,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
+    "@emotion/styled": "^11.10.5",
     "@lg-tools/build": "workspace:^"
   }
 }
