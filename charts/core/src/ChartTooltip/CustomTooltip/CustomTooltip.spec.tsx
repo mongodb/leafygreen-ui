@@ -73,6 +73,7 @@ const renderCustomTooltip = (props: Partial<CustomTooltipProps> = {}) => {
     seriesData: props.seriesData || mockSeriesData,
     chartId: props.chartId || 'test-chart',
     tooltipPinned: props.tooltipPinned || false,
+    ...props,
   };
 
   return render(<CustomTooltip {...resolvedProps} />);
