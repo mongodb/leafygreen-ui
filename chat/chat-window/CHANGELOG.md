@@ -1,5 +1,13 @@
 # @lg-chat/chat-window
 
+## 4.1.2
+
+### Patch Changes
+
+- 305ac2e: Remove redundant `LeafyGreenChatProvider` wrapper and make `TitleBar` props optional. Also add `LeafyGreenProvider` wrapper.
+- Updated dependencies [7b49fcf]
+  - @leafygreen-ui/tokens@3.2.2
+
 ## 4.1.1
 
 ### Patch Changes

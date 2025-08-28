@@ -11,10 +11,8 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
-import {
-  languageOptions,
-  LanguageSwitcherWithPanelExample,
-} from './LanguageSwitcher/LanguageSwitcherExample';
+import { LanguageSwitcherWithPanelExample } from './LanguageSwitcher/LanguageSwitcherExample';
+import { languageOptions } from './testing/Code.testutils';
 import Code, {
   CodeProps,
   CopyButton,
