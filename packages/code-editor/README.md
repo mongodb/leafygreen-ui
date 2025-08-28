@@ -895,7 +895,7 @@ describe('useThemeExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeViewModule = createMockViewModule();
 
-  it('should apply theme correctly', () => {
+  test('should apply theme correctly', () => {
     const { result } = renderHook(() =>
       useThemeExtension({
         editorViewInstance: null,
@@ -922,7 +922,7 @@ import { useExtensions } from '@leafygreen-ui/code-editor/hooks/extensions';
 describe('useExtensions', () => {
   const fakeModules = createComprehensiveFakeModules();
 
-  it('should aggregate all extensions', () => {
+  test('should aggregate all extensions', () => {
     const { result } = renderHook(() =>
       useExtensions({
         editorViewInstance: null,

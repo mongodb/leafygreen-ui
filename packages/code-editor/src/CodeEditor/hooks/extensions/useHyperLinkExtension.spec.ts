@@ -11,7 +11,7 @@ describe('useHyperLinkExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeHyperLinkModule = createMockHyperLinkModule();
 
-  it('returns empty when disabled', () => {
+  test('returns empty when disabled', () => {
     const { result } = renderHook(() =>
       useHyperLinkExtension({
         editorViewInstance: null,
@@ -22,7 +22,7 @@ describe('useHyperLinkExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns hyperlink extension when enabled', () => {
+  test('returns hyperlink extension when enabled', () => {
     const { result } = renderHook(() =>
       useHyperLinkExtension({
         editorViewInstance: null,
