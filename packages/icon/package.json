@@ -4,7 +4,7 @@
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/types/src/index.d.ts",
   "typesVersions": {},
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild/index.ts",
