@@ -12,6 +12,7 @@ import {
 
 let editorViewInstance: CodeMirrorView | null = null;
 let getEditorViewFn: (() => CodeMirrorView | null) | null = null;
+let editorHandleInstance: any = null;
 
 /**
  * Waits for the editor view to be available
@@ -234,17 +235,44 @@ function isLineWrappingEnabled() {
 }
 
 /**
+ * Gets the current content of the editor
+ * @returns The current text content of the editor
+ * @throws Error if editor view is not initialized
+ */
+function getContent(): string {
+  const view = ensureEditorView();
+  return view.state.doc.toString();
+}
+
+/**
+ * Gets the editor handle instance for testing imperative methods
+ * @returns The editor handle instance
+ * @throws Error if editor handle is not available
+ */
+function getHandle(): any {
+  if (!editorHandleInstance) {
+    throw new Error(
+      'Editor handle not available. Make sure to call renderCodeEditor first.',
+    );
+  }
+
+  return editorHandleInstance;
+}
+
+/**
  * Inserts text into the editor at the specified position
  * @param text - The text to insert
  * @param options - Optional position options
- * @param options.from - Starting position for insertion (defaults to 0)
+ * @param options.from - Starting position for insertion (defaults to end of document)
  * @param options.to - End position for replacement (optional)
  * @throws Error if editor view is not initialized
  */
 function insertText(text: string, options?: { from?: number; to?: number }) {
   const view = ensureEditorView();
 
-  const changes: ChangeSpec = { insert: text, from: options?.from || 0 };
+  // Default to inserting at the end of the document
+  const defaultFrom = options?.from ?? view.state.doc.length;
+  const changes: ChangeSpec = { insert: text, from: defaultFrom };
 
   if (options?.to) {
     changes.to = options.to;
@@ -257,6 +285,36 @@ function insertText(text: string, options?: { from?: number; to?: number }) {
   view.dispatch(transaction);
 }
 
+/**
+ * Performs an undo operation on the editor using the imperative handle
+ * @returns Boolean indicating if undo was successful
+ * @throws Error if editor handle is not available
+ */
+function undo(): boolean {
+  if (!editorHandleInstance) {
+    throw new Error(
+      'Editor handle not available. Make sure to call renderCodeEditor first.',
+    );
+  }
+
+  return editorHandleInstance.undo();
+}
+
+/**
+ * Performs a redo operation on the editor using the imperative handle
+ * @returns Boolean indicating if redo was successful
+ * @throws Error if editor handle is not available
+ */
+function redo(): boolean {
+  if (!editorHandleInstance) {
+    throw new Error(
+      'Editor handle not available. Make sure to call renderCodeEditor first.',
+    );
+  }
+
+  return editorHandleInstance.redo();
+}
+
 export const editor = {
   getBySelector,
   getAllBySelector,
@@ -265,8 +323,12 @@ export const editor = {
   isLineWrappingEnabled,
   isReadOnly,
   getIndentUnit,
+  getContent,
+  getHandle,
   interactions: {
     insertText,
+    undo,
+    redo,
   },
   waitForEditorView,
 };
@@ -283,6 +345,7 @@ export function renderCodeEditor(props: Partial<CodeEditorProps> = {}) {
       ref={ref => {
         getEditorViewFn = ref?.getEditorViewInstance ?? null;
         editorViewInstance = ref?.getEditorViewInstance() ?? null;
+        editorHandleInstance = ref;
       }}
     />,
   );

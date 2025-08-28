@@ -26,6 +26,18 @@ export interface CodeEditorContextValue {
    * Current language for formatting context.
    */
   language?: LanguageName;
+
+  /**
+   * Function to undo the last editor action.
+   * @returns boolean indicating if undo was successful
+   */
+  undo: () => boolean;
+
+  /**
+   * Function to redo the last undone editor action.
+   * @returns boolean indicating if redo was successful
+   */
+  redo: () => boolean;
 }
 
 // Default context value for when Panel is used standalone
@@ -34,6 +46,8 @@ const defaultContextValue: CodeEditorContextValue = {
   formatCode: async () => '',
   isFormattingAvailable: false,
   language: undefined,
+  undo: () => false,
+  redo: () => false,
 };
 
 const CodeEditorContext =
