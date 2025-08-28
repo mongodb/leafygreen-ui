@@ -1,4 +1,3 @@
-// import { EditorView } from '@uiw/react-codemirror';
 import { type EditorView } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';

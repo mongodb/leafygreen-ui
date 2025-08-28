@@ -8,7 +8,7 @@ describe('useThemeExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeEditorViewModule = createMockViewModule();
 
-  it('returns empty extension when view module not provided', () => {
+  test('returns empty extension when view module not provided', () => {
     const { result } = renderHook(() =>
       useThemeExtension({
         editorViewInstance: null,
@@ -20,7 +20,7 @@ describe('useThemeExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns theme extension when view module provided', () => {
+  test('returns theme extension when view module provided', () => {
     const { result } = renderHook(() =>
       useThemeExtension({
         editorViewInstance: null,

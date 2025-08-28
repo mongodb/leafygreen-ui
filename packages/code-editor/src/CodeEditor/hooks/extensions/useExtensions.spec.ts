@@ -7,7 +7,7 @@ import { useExtensions } from './useExtensions';
 describe('useExtensions (aggregator)', () => {
   const fakeModules = createComprehensiveFakeModules();
 
-  it('returns an array of extensions in expected order/length', () => {
+  test('returns an array of extensions in expected order/length', () => {
     const { result } = renderHook(() =>
       useExtensions({
         editorViewInstance: null,
