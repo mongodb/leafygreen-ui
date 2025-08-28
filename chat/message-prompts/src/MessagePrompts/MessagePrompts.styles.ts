@@ -1,22 +1,30 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  color,
+  InteractionState,
+  spacing,
+  transitionDuration,
+  Variant,
+} from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
-  margin-bottom: ${spacing[4]}px;
+const CONTAINER_MAX_WIDTH = 400;
+
+export const containerStyles = css`
+  max-width: ${CONTAINER_MAX_WIDTH}px;
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[200]}px;
+  align-items: flex-start;
+`;
+
+export const getLabelStyles = (theme: Theme) => css`
+  color: ${color[theme].text[Variant.Secondary][InteractionState.Default]};
+`;
+
+export const childrenContainerStyles = css`
   transition: opacity ${transitionDuration.slower}ms ease-in;
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[200]}px;
 `;
-
-export const labelStyles = css`
-  margin-bottom: ${spacing[2]}px;
-`;
-
-export const labelThemeStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    color: ${palette.gray.light1};
-  `,
-  [Theme.Light]: css`
-    color: ${palette.gray.dark1};
-  `,
-};
