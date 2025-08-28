@@ -19,9 +19,6 @@
   ],
   "references": [
     {
-      "path": "../avatar"
-    },
-    {
       "path": "../leafygreen-chat-provider"
     },
     {
@@ -29,6 +26,9 @@
     },
     {
       "path": "../message-feedback"
+    },
+    {
+      "path": "../message-rating"
     },
     {
       "path": "../rich-links"

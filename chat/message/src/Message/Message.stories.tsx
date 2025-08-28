@@ -1,5 +1,4 @@
 import React from 'react';
-import { Avatar } from '@lg-chat/avatar';
 import {
   LeafyGreenChatProvider,
   Variant,
@@ -70,7 +69,6 @@ const meta: StoryMetaType<typeof Message> = {
   title: 'Composition/Chat/Message',
   component: Message,
   args: {
-    avatar: <Avatar variant="user" name="Sean Park" />,
     sourceType: MessageSourceType.Markdown,
   },
   argTypes: {
@@ -158,7 +156,6 @@ export const Assistant: StoryObj<MessageStoryProps> = {
 export const WithMessageRating: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    avatar: <Avatar variant="mongo" />,
     children: <MessageFeedback />,
     isSender: false,
     messageBody: ASSISTANT_TEXT,
