@@ -1,106 +1,145 @@
 import { transparentize } from 'polished';
 
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  borderRadius,
   breakpoints,
+  color,
   fontFamilies,
+  InteractionState,
+  spacing,
   transitionDuration,
+  Variant,
 } from '@leafygreen-ui/tokens';
 
 import { ModalSize } from './Modal.types';
 
-// breakpoints for different screen sizes
-export const large = `${breakpoints.Desktop + 1}px`; // laptops/desktop screens, from 1025px and above
+const LARGE_SIZE_BREAKPOINT = `${breakpoints.Desktop + 1}px`;
+const TRANSITION_DURATION = transitionDuration.default;
 
-export const defaultHorizontalSpacing = 18;
-export const defaultVerticalSpacing = 64;
+const baseBackdropStyles = (theme: Theme) => {
+  const darkMode = theme === Theme.Dark;
+  return css`
+    &::backdrop {
+      background-color: ${transparentize(
+        0.4,
+        darkMode ? palette.gray.dark2 : palette.black,
+      )};
+      transition: opacity ${TRANSITION_DURATION}ms ease-in-out;
+      opacity: 0;
+    }
 
-export const backdropBaseStyle = css`
-  overflow-y: auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0;
-  transition: opacity ${transitionDuration.default}ms ease-in-out;
-`;
+    &[open]::backdrop {
+      opacity: 1;
+    }
 
-export const backdropThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${transparentize(0.4, palette.black)};
-  `,
-  [Theme.Dark]: css`
-    background-color: ${transparentize(0.4, palette.gray.dark2)};
-  `,
+    @starting-style {
+      &[open]::backdrop {
+        opacity: 0;
+      }
+    }
+  `;
 };
 
-export const visibleBackdrop = css`
-  opacity: 1;
-`;
+const getBackdropStyles = ({
+  className,
+  theme,
+}: {
+  className?: string;
+  theme: Theme;
+}) => cx(baseBackdropStyles(theme), className);
 
-export const scrollContainer = css`
-  position: absolute;
-  min-height: 100%;
-  width: 100%;
-  padding: ${defaultVerticalSpacing}px ${defaultHorizontalSpacing}px;
-  overflow-y: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const modalContentStyle = css`
-  font-family: ${fontFamilies.default};
-  transition: transform ${transitionDuration.default}ms ease-in-out,
-    opacity ${transitionDuration.default}ms ease-in-out;
-  margin: auto;
-  max-height: calc(100% - ${defaultVerticalSpacing}px);
-  position: relative;
-  pointer-events: all;
-  transform: translate3d(0, -16px, 0);
-  opacity: 0;
-  border-radius: 24px;
-  padding: 40px 36px;
+const getBaseDialogStyles = (theme: Theme) => css`
+  border: none;
+  border-radius: ${borderRadius[600]}px;
   box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
+  background-color: ${color[theme].background[Variant.Primary][
+    InteractionState.Default
+  ]};
+  padding: ${spacing[1000]}px ${spacing[900]}px;
+  color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
+  font-family: ${fontFamilies.default};
+
+  transition: opacity ${TRANSITION_DURATION}ms ease-in-out,
+    overlay ${TRANSITION_DURATION}ms allow-discrete,
+    display ${TRANSITION_DURATION}ms allow-discrete;
+  opacity: 0;
+
+  &[open] {
+    position: fixed;
+    opacity: 1;
+  }
+
+  @starting-style {
+    &[open] {
+      opacity: 0;
+    }
+  }
 
   &:focus {
     outline: none;
   }
 `;
 
-export const modalThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.black};
-    background-color: ${palette.white};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light2};
-    background-color: ${palette.black};
-  `,
-};
-
-export const visibleModalContentStyle = css`
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-`;
-
-export const modalSizes: Record<ModalSize, string> = {
-  small: css`
+const dialogSizeStyles: Record<ModalSize, string> = {
+  [ModalSize.Small]: css`
     width: 400px;
   `,
 
-  default: css`
+  [ModalSize.Default]: css`
     width: 600px;
   `,
 
-  large: css`
+  [ModalSize.Large]: css`
     width: 720px;
 
-    @media only screen and (min-width: ${large}) {
+    @media only screen and (min-width: ${LARGE_SIZE_BREAKPOINT}) {
       width: 960px;
     }
   `,
 };
+
+const getRootDialogStyles = ({
+  className,
+  size,
+  theme,
+}: {
+  className?: string;
+  size: ModalSize;
+  theme: Theme;
+}) => cx(getBaseDialogStyles(theme), dialogSizeStyles[size], className);
+
+export const getDialogStyles = ({
+  backdropClassName,
+  className,
+  size,
+  theme,
+}: {
+  backdropClassName?: string;
+  className?: string;
+  size: ModalSize;
+  theme: Theme;
+}) =>
+  cx(
+    getBackdropStyles({
+      className: backdropClassName,
+      theme,
+    }),
+    getRootDialogStyles({
+      className,
+      size,
+      theme,
+    }),
+  );
+
+export const portalContainerStyles = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+`;

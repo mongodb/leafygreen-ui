@@ -210,7 +210,7 @@ export const DarkModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps> 
     },
   };
 
-export const LightModeWithRatingSelectAndFeedbackAndSubmit: StoryObj<MessageActionsProps> =
+export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<MessageActionsProps> =
   {
     render: Template,
     args: {
@@ -249,7 +249,7 @@ export const LightModeWithRatingSelectAndFeedbackAndSubmit: StoryObj<MessageActi
     },
   };
 
-export const DarkModeWithRatingSelectAndFeedbackAndSubmit: StoryObj<MessageActionsProps> =
+export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<MessageActionsProps> =
   {
     render: Template,
     args: {
@@ -281,6 +281,101 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmit: StoryObj<MessageActio
       // Verify feedback form is no longer interactive
       expect(canvas.queryByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeNull();
       expect(canvas.queryByRole('button', { name: 'Submit' })).toBeNull();
+    },
+    parameters: {
+      chromatic: {
+        delay: 300,
+      },
+    },
+  };
+
+export const LightModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageActionsProps> =
+  {
+    render: Template,
+    args: {
+      onRatingChange: testOnRatingChange,
+      onSubmitFeedback: async () => {
+        // Simulate a failed submission by throwing an error
+        throw new Error('Network error');
+      },
+      errorMessage: 'Failed to submit feedback. Please try again.',
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+
+      // Click thumbs up button
+      const thumbsUpButton = canvas.getByRole('radio', {
+        name: 'Like this message',
+      });
+      await userEvent.click(thumbsUpButton);
+
+      // Type in feedback textarea
+      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
+      await userEvent.type(textarea, 'Lorem ipsum');
+
+      // Submit feedback (this will fail)
+      const submitButton = canvas.getByRole('button', { name: 'Submit' });
+      await userEvent.click(submitButton);
+
+      // Verify error message is shown
+      const errorMessage = canvas.getByText(
+        'Failed to submit feedback. Please try again.',
+      );
+      expect(errorMessage).toBeInTheDocument();
+
+      // Verify feedback form is still visible and interactive
+      expect(canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeInTheDocument();
+      expect(
+        canvas.getByRole('button', { name: 'Submit' }),
+      ).toBeInTheDocument();
+    },
+    parameters: {
+      chromatic: {
+        delay: 300,
+      },
+    },
+  };
+
+export const DarkModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageActionsProps> =
+  {
+    render: Template,
+    args: {
+      darkMode: true,
+      onRatingChange: testOnRatingChange,
+      onSubmitFeedback: async () => {
+        // Simulate a failed submission by throwing an error
+        throw new Error('Network error');
+      },
+      errorMessage: 'Failed to submit feedback. Please try again.',
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+
+      // Click thumbs up button
+      const thumbsUpButton = canvas.getByRole('radio', {
+        name: 'Like this message',
+      });
+      await userEvent.click(thumbsUpButton);
+
+      // Type in feedback textarea
+      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
+      await userEvent.type(textarea, 'Lorem ipsum');
+
+      // Submit feedback (this will fail)
+      const submitButton = canvas.getByRole('button', { name: 'Submit' });
+      await userEvent.click(submitButton);
+
+      // Verify error message is shown
+      const errorMessage = canvas.getByText(
+        'Failed to submit feedback. Please try again.',
+      );
+      expect(errorMessage).toBeInTheDocument();
+
+      // Verify feedback form is still visible and interactive
+      expect(canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeInTheDocument();
+      expect(
+        canvas.getByRole('button', { name: 'Submit' }),
+      ).toBeInTheDocument();
     },
     parameters: {
       chromatic: {

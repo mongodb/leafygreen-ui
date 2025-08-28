@@ -13,7 +13,11 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { InlineMessageFeedback, type InlineMessageFeedbackProps } from '.';
+import {
+  FormState,
+  InlineMessageFeedback,
+  type InlineMessageFeedbackProps,
+} from '.';
 
 const meta: StoryMetaType<typeof InlineMessageFeedback> = {
   title: 'Composition/Chat/MessageFeedback/InlineMessageFeedback',
@@ -23,6 +27,7 @@ const meta: StoryMetaType<typeof InlineMessageFeedback> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
+        state: Object.values(FormState),
         // eslint-disable-next-line no-console
         onClose: [undefined, () => console.log('closed')],
         textareaProps: [
@@ -34,6 +39,30 @@ const meta: StoryMetaType<typeof InlineMessageFeedback> = {
           },
         ],
       },
+      excludeCombinations: [
+        {
+          onClose: undefined,
+          state: FormState.Submitted,
+        },
+        {
+          textareaProps: {
+            value: '',
+          },
+          state: FormState.Error,
+        },
+        {
+          textareaProps: {
+            value: '',
+          },
+          state: FormState.Submitting,
+        },
+        {
+          textareaProps: {
+            value: '',
+          },
+          state: FormState.Submitted,
+        },
+      ],
       decorator: StoryFn => (
         <LeafyGreenChatProvider variant={Variant.Compact}>
           <StoryFn />
@@ -85,31 +114,36 @@ export const Controlled: StoryObj<InlineMessageFeedbackStoryProps> = {
 export const SubmittedState: StoryObj<InlineMessageFeedbackStoryProps> = {
   render: Template,
   args: {
-    isSubmitted: true,
+    state: FormState.Submitted,
   },
 };
 
 export const WithMessageRating: StoryFn<typeof MessageRating> = args => {
   const [rating, setRating] = useState<MessageRatingProps['value']>();
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [isDisplayingSubmitted, setIsDisplayingSubmitted] =
-    useState<boolean>(false);
+  const [feedbackFormState, setFeedbackFormState] = useState<FormState>(
+    FormState.Unset,
+  );
 
   const handleRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!isSubmitted) setRating(e.target.value as MessageRatingValue);
+    if (feedbackFormState !== FormState.Submitted)
+      setRating(e.target.value as MessageRatingValue);
   };
 
   const handleCancel = () => {
     setRating('unselected');
+    setFeedbackFormState(FormState.Unset);
   };
 
   const handleSubmit = () => {
-    setIsSubmitted(true);
-    setIsDisplayingSubmitted(true);
-    const timeout = setTimeout(() => {
-      setIsDisplayingSubmitted(false);
-      clearTimeout(timeout);
-    }, 3000);
+    setFeedbackFormState(FormState.Submitting);
+    // Simulate async submission
+    setTimeout(() => {
+      setFeedbackFormState(FormState.Submitted);
+      // Reset after 3 seconds
+      setTimeout(() => {
+        setFeedbackFormState(FormState.Unset);
+      }, 3000);
+    }, 1000);
   };
 
   return (
@@ -126,15 +160,15 @@ export const WithMessageRating: StoryFn<typeof MessageRating> = args => {
         {...args}
         value={rating}
         onChange={handleRatingChange}
-        hideThumbsUp={isSubmitted}
+        hideThumbsUp={feedbackFormState === FormState.Submitted}
       />
-      {rating === 'disliked' && (!isSubmitted || isDisplayingSubmitted) && (
+      {rating === 'disliked' && (
         <InlineMessageFeedback
           label="What do you think?"
           onCancel={handleCancel}
           onClose={handleCancel}
           onSubmit={handleSubmit}
-          isSubmitted={isDisplayingSubmitted}
+          state={feedbackFormState}
         />
       )}
     </div>
@@ -144,7 +178,6 @@ export const WithMessageRating: StoryFn<typeof MessageRating> = args => {
 export const Generated: StoryObj<InlineMessageFeedbackStoryProps> = {
   render: Template,
   args: {
-    isSubmitted: false,
     variant: Variant.Compact,
   },
 };

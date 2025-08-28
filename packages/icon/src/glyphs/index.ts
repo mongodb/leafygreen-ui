@@ -13,6 +13,7 @@ import ArrowDown from './ArrowDown.svg';
 import ArrowLeft from './ArrowLeft.svg';
 import ArrowRight from './ArrowRight.svg';
 import ArrowUp from './ArrowUp.svg';
+import Award from './Award.svg';
 import Beaker from './Beaker.svg';
 import Bell from './Bell.svg';
 import Biometric from './Biometric.svg';
@@ -196,6 +197,7 @@ const _glyphs = {
   ArrowLeft,
   ArrowRight,
   ArrowUp,
+  Award,
   Beaker,
   Bell,
   Biometric,

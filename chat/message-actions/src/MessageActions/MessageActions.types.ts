@@ -8,6 +8,12 @@ export interface MessageActionsProps
   extends DarkModeProps,
     HTMLElementProps<'div'> {
   /**
+   * Optional error message to display when feedback submission fails.
+   * @default 'Oops, please try again.'
+   */
+  errorMessage?: InlineMessageFeedbackProps['errorMessage'];
+
+  /**
    * Optional callback fired when the copy button is clicked.
    */
   onClickCopy?: MouseEventHandler<HTMLButtonElement>;
@@ -42,7 +48,7 @@ export interface MessageActionsProps
   onSubmitFeedback?: (
     e: FormEvent<HTMLFormElement>,
     options?: { rating: MessageRatingValue; feedback: string },
-  ) => void;
+  ) => Promise<void> | void;
 
   /**
    * Optional text for the feedback form's submit button.
@@ -52,7 +58,6 @@ export interface MessageActionsProps
 
   /**
    * Optional success message to display after feedback is submitted.
-   * Can be a string or a ReactNode.
    * @default 'Thanks for your feedback!'
    */
   submittedMessage?: InlineMessageFeedbackProps['submittedMessage'];

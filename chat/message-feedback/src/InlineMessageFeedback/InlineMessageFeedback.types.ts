@@ -1,8 +1,28 @@
-import { FormEventHandler, MouseEventHandler } from 'react';
+import {
+  FormEvent,
+  FormEventHandler,
+  MouseEventHandler,
+  ReactNode,
+} from 'react';
 
 import { BaseButtonProps } from '@leafygreen-ui/button';
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { TextAreaProps } from '@leafygreen-ui/text-area';
+
+/**
+ * Possible states for the feedback form.
+ */
+export const FormState = {
+  Unset: 'unset',
+  Submitting: 'submitting',
+  Error: 'error',
+  Submitted: 'submitted',
+} as const;
+
+/**
+ * Type representing the possible states of the feedback form.
+ */
+export type FormState = (typeof FormState)[keyof typeof FormState];
 
 export type InlineMessageFeedbackProps = Required<
   Pick<TextAreaProps, 'label'>
@@ -44,7 +64,9 @@ export type InlineMessageFeedbackProps = Required<
     /**
      * Event handler called when the form is submitted
      */
-    onSubmit?: FormEventHandler<HTMLFormElement>;
+    onSubmit?:
+      | FormEventHandler<HTMLFormElement>
+      | ((e: FormEvent<HTMLFormElement>) => Promise<void>);
 
     /**
      * Props passed directly to the textarea
@@ -52,17 +74,26 @@ export type InlineMessageFeedbackProps = Required<
     textareaProps?: Omit<TextAreaProps, 'label'>;
 
     /**
-     * Indicates if the component should render in its submitted state
-     * @default false
+     * Current state of the feedback component
+     * @default 'unset'
      */
-    isSubmitted?: boolean;
+    state?: FormState;
 
     /**
-     * Message rendered in submitted state
+     * Message rendered after the feedback form is submitted
      *
      * @default 'Submitted! Thanks for your feedback.'
+     * @remarks Only shown when state is 'submitted'
      */
-    submittedMessage?: string;
+    submittedMessage?: ReactNode;
+
+    /**
+     * Error message to display below the feedback form
+     *
+     * @default 'Oops, please try again.'
+     * @remarks Only shown when state is 'error'
+     */
+    errorMessage?: ReactNode;
 
     /**
      * Event handler called on close button click. Close button will not be rendered when undefined.

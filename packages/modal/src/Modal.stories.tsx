@@ -5,16 +5,17 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
-  StoryType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
 import Code, { Panel } from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
-import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { css } from '@leafygreen-ui/emotion';
+import { Option, OptionGroup, RenderMode, Select } from '@leafygreen-ui/select';
+import { ToastProvider, useToast } from '@leafygreen-ui/toast';
+import { spacing } from '@leafygreen-ui/tokens';
 import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
 
 import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
@@ -22,10 +23,17 @@ import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
 const SEED = 0;
 faker.seed(SEED);
 
-const margin = css`
-  & > * + * {
-    margin-top: ${spacing[3]}px;
-  }
+const MODAL_MIN_HEIGHT = 1000;
+
+const pageStyles = css`
+  height: 100vh;
+  min-height: ${MODAL_MIN_HEIGHT}px;
+`;
+
+const childrenContainerStyles = css`
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[300]}px;
 `;
 
 const meta: StoryMetaType<typeof Modal> = {
@@ -44,11 +52,8 @@ const meta: StoryMetaType<typeof Modal> = {
   },
   args: {
     open: true,
-    className: css`
-      z-index: 1;
-    `,
     children: (
-      <div className={margin}>
+      <div className={childrenContainerStyles}>
         <H3>Base modal</H3>
         <Body>Modal Content goes here.</Body>
       </div>
@@ -62,84 +67,135 @@ const meta: StoryMetaType<typeof Modal> = {
         'setOpen',
         'shouldClose',
         'children',
-        'open',
+        // 'open',
       ],
     },
   },
 };
 export default meta;
 
-export const LiveExample: StoryType<typeof Modal> = args => {
+const Template: StoryFn<ModalProps> = (props: ModalProps) => {
   const [open, setOpen] = useState(false);
+
   return (
-    <div>
+    <div className={pageStyles}>
       <Button onClick={() => setOpen(o => !o)}>Open Modal</Button>
-      <Modal {...args} open={open} setOpen={setOpen} />
+      <Modal {...props} open={open} setOpen={setOpen} />
     </div>
   );
 };
-LiveExample.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+
+export const LiveExample: StoryObj<ModalProps> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
-LiveExample.args = {
-  open: undefined,
+
+export const LightMode: StoryObj<ModalProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button', {
+      name: 'Open Modal',
+    });
+    await userEvent.click(button);
+
+    const title = canvas.getByText('Base modal');
+    expect(title).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 100,
+    },
+  },
 };
 
-const Template: StoryFn<ModalProps> = (args: ModalProps) => {
-  return (
-    <div
-      className={css`
-        height: 100vh;
-        min-height: ${breakpoints.Desktop};
-      `}
-    >
-      <Modal {...args} />
-    </div>
-  );
+export const DarkMode: StoryObj<ModalProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button', {
+      name: 'Open Modal',
+    });
+    await userEvent.click(button);
+
+    const title = canvas.getByText('Base modal');
+    expect(title).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 100,
+    },
+  },
 };
 
-export const Basic = Template.bind({});
-export const DarkMode = Template.bind({});
-DarkMode.args = {
-  darkMode: true,
-};
-
-export const Scroll = Template.bind({});
-Scroll.args = {
-  children: (
-    <div
-      className={cx(
-        css`
+export const Scroll: StoryObj<ModalProps> = {
+  render: Template,
+  args: {
+    className: css`
+      height: 500px;
+    `,
+    children: (
+      <div
+        className={css`
           height: 200vh;
-        `,
-        margin,
-      )}
-    >
-      <Subtitle>Modal Content goes here.</Subtitle>
-      {faker.lorem
-        .paragraphs(24, '\n')
-        .split('\n')
-        .map(p => (
-          <Body>{p}</Body>
-        ))}
-    </div>
-  ),
+          ${childrenContainerStyles}
+        `}
+      >
+        <Subtitle>Modal Content goes here.</Subtitle>
+        {faker.lorem
+          .paragraphs(24, '\n')
+          .split('\n')
+          .map(p => (
+            <Body>{p}</Body>
+          ))}
+      </div>
+    ),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button', {
+      name: 'Open Modal',
+    });
+    await userEvent.click(button);
+
+    const title = canvas.getByText('Base modal');
+    expect(title).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
-export const DefaultSelect = (args: ModalProps) => {
+type ModalWithRenderModeProps = ModalProps & {
+  renderMode?: RenderMode;
+};
+const WithSelectComponent: StoryFn<ModalProps> = ({
+  renderMode = RenderMode.TopLayer,
+  ...props
+}: ModalWithRenderModeProps) => {
+  const [open, setOpen] = useState(false);
   const [value, setValue] = useState('cat');
 
   return (
-    <div
-      className={css`
-        height: 100vh;
-        min-height: ${breakpoints.Desktop};
-      `}
-    >
-      <Modal {...args}>
-        <div className={margin}>
+    <div className={pageStyles}>
+      <Button onClick={() => setOpen(o => !o)}>Open Modal</Button>
+      <Modal {...props} open={open} setOpen={setOpen}>
+        <div className={childrenContainerStyles}>
           <Subtitle>Modal Content goes here.</Subtitle>
           {faker.lorem
             .paragraphs(2, '\n')
@@ -156,6 +212,7 @@ export const DefaultSelect = (args: ModalProps) => {
               name="pets"
               value={value}
               onChange={setValue}
+              renderMode={renderMode}
             >
               <OptionGroup label="Common">
                 <Option value="dog">Dog</Option>
@@ -169,49 +226,150 @@ export const DefaultSelect = (args: ModalProps) => {
     </div>
   );
 };
+export const WithTopLayerSelect: StoryObj<ModalProps> = {
+  render: WithSelectComponent,
+  args: {
+    renderMode: RenderMode.TopLayer,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-export function CopyableModal(args: ModalProps) {
-  const jsSnippet = `
+    const button = canvas.getByRole('button', {
+      name: 'Open Modal',
+    });
+    await userEvent.click(button);
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+export const WithPortalSelect: StoryObj<ModalProps> = {
+  render: WithSelectComponent,
+  args: {
+    renderMode: RenderMode.Portal,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
+    const button = canvas.getByRole('button', {
+      name: 'Open Modal',
+    });
+    await userEvent.click(button);
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+export const WithInlineSelect: StoryObj<ModalProps> = {
+  render: WithSelectComponent,
+  args: {
+    renderMode: RenderMode.Inline,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button', {
+      name: 'Open Modal',
+    });
+    await userEvent.click(button);
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+
+const jsSnippet = `
 const myVar = 42;
 
 var myObj = {
-  someProp: ['arr', 'ay'],
-  regex: /([A-Z])w+/
+someProp: ['arr', 'ay'],
+regex: /([A-Z])w+/
 }
 
 export default class myClass {
-  constructor(){
-    // access properties
-    this.myProp = false
-  }
+constructor(){
+// access properties
+this.myProp = false
+}
 }
 
 function greeting(entity) {
-  return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
+return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
 }
- 
+
 console.log(greeting('World'));
-
 `;
+const getWithCopyChildren = () => (
+  <div className={childrenContainerStyles}>
+    <div>Modal Content goes here.</div>
+    {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+    <Copyable autoFocus>Hello world in a modal</Copyable>
+    <Code language="javascript" panel={<Panel onCopy={() => {}} />}>
+      {jsSnippet}
+    </Code>
+  </div>
+);
+export const WithCopy: StoryObj<ModalProps> = {
+  render: Template,
+  args: {
+    children: getWithCopyChildren(),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-  return (
-    <div
-      className={css`
-        height: 100vh;
-        min-height: ${breakpoints.Desktop};
-      `}
-    >
-      <Modal {...args}>
-        <div className={margin}>
-          <div>Modal Content goes here.</div>
-          <Copyable>Hello world in a modal</Copyable>
+    const button = canvas.getByRole('button', {
+      name: 'Open Modal',
+    });
+    await userEvent.click(button);
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
 
-          <Code language="javascript" panel={<Panel onCopy={() => {}} />}>
-            {jsSnippet}
-          </Code>
-        </div>
-      </Modal>
-    </div>
-  );
-}
+const ToastContainer = () => {
+  const { pushToast } = useToast();
+
+  const createToast = () => {
+    pushToast({
+      title: 'Toast',
+      description: 'Toast description',
+      variant: 'success',
+    });
+  };
+
+  return <Button onClick={createToast}>Create Toast</Button>;
+};
+
+const getWithToastChildren = () => (
+  <ToastProvider>
+    <ToastContainer />
+  </ToastProvider>
+);
+export const WithToast: StoryObj<ModalProps> = {
+  render: Template,
+  args: {
+    children: getWithToastChildren(),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button', {
+      name: 'Open Modal',
+    });
+    await userEvent.click(button);
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};

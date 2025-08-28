@@ -1,5 +1,11 @@
 # @lg-chat/suggestions
 
+## 0.2.1
+
+### Patch Changes
+
+- 707923d: Hide "Apply configuration to your cluster?" title when component state is unset
+
 ## 0.2.0
 
 ### Minor Changes

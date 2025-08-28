@@ -1,5 +1,20 @@
 # @lg-chat/lg-markdown
 
+## 4.1.1
+
+### Patch Changes
+
+- e5cfcaf: [LG-5479](https://jira.mongodb.org/browse/LG-5479) downgrade `react-markdown` to 8.0.7 due to react 17 incompatibility
+- Updated dependencies [7b49fcf]
+  - @leafygreen-ui/tokens@3.2.2
+
+## 4.1.0
+
+### Minor Changes
+
+- 262cf95: [LG-5442](https://jira.mongodb.org/browse/LG-5442)
+  - Upgraded `react-markdown` to v10 and improved markdown styling with flexbox gap approach. Removed unintentionally exported `MarkdownCodeProps` type export.
+
 ## 4.0.4
 
 ### Patch Changes

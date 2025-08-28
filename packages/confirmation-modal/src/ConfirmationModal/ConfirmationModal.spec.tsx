@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  act,
-  fireEvent,
-  render,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -42,6 +37,27 @@ function renderModal(
 }
 
 describe('packages/confirmation-modal', () => {
+  // Mock dialog methods for JSDOM environment
+  beforeAll(() => {
+    HTMLDialogElement.prototype.show = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.showModal = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.close = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = false;
+    });
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container, getByText } = renderModal({ open: true });
@@ -49,7 +65,7 @@ describe('packages/confirmation-modal', () => {
       expect(results).toHaveNoViolations();
 
       let newResults = null as any;
-      act(() => void fireEvent.click(getByText('Confirm')));
+      act(() => void userEvent.click(getByText('Confirm')));
       await act(async () => {
         newResults = await axe(container);
       });
@@ -58,8 +74,8 @@ describe('packages/confirmation-modal', () => {
   });
 
   test('does not render if closed', () => {
-    renderModal();
-    expect(document.body.innerHTML).toEqual('<div></div>');
+    const { getByText } = renderModal();
+    expect(getByText('Content text')).not.toBeVisible();
   });
 
   test('renders if open', () => {
@@ -122,7 +138,7 @@ describe('packages/confirmation-modal', () => {
       const button = getByText('Confirm');
       expect(button).toBeVisible();
 
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(confirmSpy).toHaveBeenCalledTimes(1);
       expect(cancelSpy).not.toHaveBeenCalled();
     });
@@ -141,7 +157,7 @@ describe('packages/confirmation-modal', () => {
       const button = getByText('Confirm');
       expect(button).toBeVisible();
 
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(confirmSpy).toHaveBeenCalledTimes(1);
     });
   });
@@ -161,7 +177,7 @@ describe('packages/confirmation-modal', () => {
       const button = getByText('Cancel');
       expect(button).toBeVisible();
 
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(confirmSpy).not.toHaveBeenCalled();
       expect(cancelSpy).toHaveBeenCalledTimes(1);
     });
@@ -181,7 +197,7 @@ describe('packages/confirmation-modal', () => {
       const button = getByText('Cancel');
       expect(button).toBeVisible();
 
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(confirmSpy).not.toHaveBeenCalled();
       expect(cancelSpy).toHaveBeenCalledTimes(1);
     });
@@ -192,9 +208,9 @@ describe('packages/confirmation-modal', () => {
       const { getByRole } = renderModal({ open: true });
       const modal = getByRole('dialog');
 
-      fireEvent.keyDown(document, { key: 'Escape', keyCode: 27 });
+      userEvent.keyboard('{Escape}');
 
-      await waitForElementToBeRemoved(modal);
+      await waitFor(() => expect(modal).not.toBeVisible());
     });
 
     test('x icon is clicked', async () => {
@@ -202,9 +218,9 @@ describe('packages/confirmation-modal', () => {
       const modal = getByRole('dialog');
 
       const x = getByLabelText('Close modal');
-      fireEvent.click(x);
+      userEvent.click(x);
 
-      await waitForElementToBeRemoved(modal);
+      await waitFor(() => expect(modal).not.toBeVisible());
     });
   });
 
@@ -227,18 +243,22 @@ describe('packages/confirmation-modal', () => {
       expect(textInput).toBe(document.activeElement);
 
       // Should still be disabled after partial entry
-      fireEvent.change(textInput, { target: { value: 'Confir' } });
+      userEvent.clear(textInput);
+      userEvent.type(textInput, 'Confir');
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
 
-      fireEvent.change(textInput, { target: { value: 'Confirm' } });
+      userEvent.clear(textInput);
+      userEvent.type(textInput, 'Confirm');
       expect(confirmationButton).not.toHaveAttribute('aria-disabled', 'true');
 
       // Should be disabled again
-      fireEvent.change(textInput, { target: { value: 'Confirm?' } });
+      userEvent.clear(textInput);
+      userEvent.type(textInput, 'Confirm?');
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
 
       // Case matters
-      fireEvent.change(textInput, { target: { value: 'confirm' } });
+      userEvent.clear(textInput);
+      userEvent.type(textInput, 'confirm');
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
     });
 
@@ -287,9 +307,8 @@ describe('packages/confirmation-modal', () => {
             textInput = getByLabelText(
               `Type "${requiredInputText}" to confirm your action`,
             );
-            fireEvent.change(textInput, {
-              target: { value: requiredInputText },
-            });
+            userEvent.clear(textInput);
+            userEvent.type(textInput, requiredInputText);
             expect(confirmationButton).not.toHaveAttribute(
               'aria-disabled',
               'true',
@@ -298,7 +317,7 @@ describe('packages/confirmation-modal', () => {
 
           userEvent.click(buttonToClick);
 
-          await waitForElementToBeRemoved(modal);
+          await waitFor(() => expect(modal).not.toBeVisible());
 
           rerender(
             <ConfirmationModal
@@ -354,8 +373,8 @@ describe('packages/confirmation-modal', () => {
       expect(button).toBeVisible();
 
       // Modal doesn't close when button is clicked
-      fireEvent.click(button);
-      await waitForElementToBeRemoved(modal);
+      userEvent.click(button);
+      await waitFor(() => expect(modal).not.toBeVisible());
     });
 
     test('"confirmButtonProps" has "disabled: false"', async () => {
@@ -374,8 +393,8 @@ describe('packages/confirmation-modal', () => {
       expect(button).toBeVisible();
 
       // Modal doesn't close when button is clicked
-      fireEvent.click(button);
-      await waitForElementToBeRemoved(modal);
+      userEvent.click(button);
+      await waitFor(() => expect(modal).not.toBeVisible());
     });
   });
 
@@ -395,7 +414,7 @@ describe('packages/confirmation-modal', () => {
       expect(button).toBeVisible();
 
       // Modal doesn't close when button is clicked
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(button).toBeVisible();
     });
 
@@ -413,7 +432,7 @@ describe('packages/confirmation-modal', () => {
       expect(button).toBeVisible();
 
       // Modal doesn't close when button is clicked
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(button).toBeVisible();
     });
 
@@ -434,7 +453,7 @@ describe('packages/confirmation-modal', () => {
       expect(button).toBeVisible();
 
       // Modal doesn't close when button is clicked
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(button).toBeVisible();
     });
 
@@ -453,7 +472,8 @@ describe('packages/confirmation-modal', () => {
       const textInput = getByLabelText('Type "Confirm" to confirm your action');
       expect(textInput).toBeVisible();
 
-      fireEvent.change(textInput, { target: { value: 'Confirm' } });
+      userEvent.clear(textInput);
+      userEvent.type(textInput, 'Confirm');
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
     });
 
@@ -471,7 +491,8 @@ describe('packages/confirmation-modal', () => {
       const textInput = getByLabelText('Type "Confirm" to confirm your action');
       expect(textInput).toBeVisible();
 
-      fireEvent.change(textInput, { target: { value: 'Confirm' } });
+      userEvent.clear(textInput);
+      userEvent.type(textInput, 'Confirm');
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
     });
   });

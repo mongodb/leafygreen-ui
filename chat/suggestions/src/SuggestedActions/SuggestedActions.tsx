@@ -5,13 +5,13 @@ import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { FontWeight } from '@leafygreen-ui/tokens';
+import { Body } from '@leafygreen-ui/typography';
 
 import { State } from '../shared.types';
 import { StatusBanner } from '../StatusBanner/StatusBanner';
 
 import {
-  applyButtonStyles,
-  boldedTextStyle,
   getContainerStyles,
   getSuggestedActionsWrapperStyles,
   tableCellStyles,
@@ -46,20 +46,29 @@ const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
       <LeafyGreenProvider darkMode={darkMode}>
         <div ref={fwdRef} className={getContainerStyles(className)} {...rest}>
           <div className={getSuggestedActionsWrapperStyles(theme)}>
-            <div className={boldedTextStyle}>
-              Apply configuration to your cluster?
-            </div>
+            {state !== State.Unset && (
+              <Body weight={FontWeight.SemiBold}>
+                Apply configuration to your cluster?
+              </Body>
+            )}
             <table className={tableStyles}>
               {configurationParameters.map(param => (
                 <tr key={param.key}>
-                  <th className={tableHeaderStyles}>{param.key}</th>
-                  <td className={tableCellStyles}>{param.value}</td>
+                  <Body
+                    as="th"
+                    className={tableHeaderStyles}
+                    weight={FontWeight.SemiBold}
+                  >
+                    {param.key}
+                  </Body>
+                  <Body as="td" className={tableCellStyles}>
+                    {param.value}
+                  </Body>
                 </tr>
               ))}
             </table>
             {state === State.Apply && (
               <Button
-                className={applyButtonStyles}
                 variant="primary"
                 size="small"
                 leftGlyph={<ArrowLeftIcon />}

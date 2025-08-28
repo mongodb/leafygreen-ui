@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/install",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "LeafyGreen UI Kit Install",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -9,7 +9,8 @@
   "scripts": {
     "prebuild": "npx ts-node ./scripts/writePackageNames.ts",
     "build": "lg-build bundle",
-    "tsc": "lg-build tsc"
+    "tsc": "lg-build tsc",
+    "postversion": "npx ts-node ./scripts/writePackageNames.ts"
   },
   "publishConfig": {
     "access": "public"

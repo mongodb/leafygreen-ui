@@ -19,10 +19,19 @@
       "path": "../../packages/emotion"
     },
     {
+      "path": "../../packages/icon"
+    },
+    {
+      "path": "../../packages/leafygreen-provider"
+    },
+    {
       "path": "../../packages/lib"
     },
     {
-      "path": "../../packages/table"
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
     },
     {
       "path": "../../tools/test-harnesses"

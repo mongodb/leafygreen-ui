@@ -94,8 +94,29 @@ describe('chat/suggestions', () => {
   });
 
   describe('rendering', () => {
-    test('renders title text', () => {
-      renderSuggestedActions();
+    test('renders title text when state is not Unset', () => {
+      renderSuggestedActions({ state: State.Apply });
+      expect(
+        screen.getByText('Apply configuration to your cluster?'),
+      ).toBeInTheDocument();
+    });
+
+    test('does not render title text when state is Unset', () => {
+      renderSuggestedActions({ state: State.Unset });
+      expect(
+        screen.queryByText('Apply configuration to your cluster?'),
+      ).not.toBeInTheDocument();
+    });
+
+    test('renders title text when state is Success', () => {
+      renderSuggestedActions({ state: State.Success });
+      expect(
+        screen.getByText('Apply configuration to your cluster?'),
+      ).toBeInTheDocument();
+    });
+
+    test('renders title text when state is Error', () => {
+      renderSuggestedActions({ state: State.Error });
       expect(
         screen.getByText('Apply configuration to your cluster?'),
       ).toBeInTheDocument();
@@ -147,8 +168,8 @@ describe('chat/suggestions', () => {
       });
 
       expect(
-        screen.getByText('Apply configuration to your cluster?'),
-      ).toBeInTheDocument();
+        screen.queryByText('Apply configuration to your cluster?'),
+      ).toBeNull();
       const table = screen.getByRole('table');
       expect(table).toBeInTheDocument();
       expect(screen.queryAllByRole('columnheader')).toHaveLength(0);
@@ -183,11 +204,11 @@ describe('chat/suggestions', () => {
   });
 
   describe('Apply button', () => {
-    test('renders when state is Unset', () => {
+    test('does not render when state is Unset', () => {
       renderSuggestedActions({ state: State.Unset });
       expect(
-        screen.getByText('Apply configuration to your cluster?'),
-      ).toBeInTheDocument();
+        screen.queryByRole('button', { name: /apply these suggestions/i }),
+      ).not.toBeInTheDocument();
     });
 
     test('renders when state is Apply', () => {

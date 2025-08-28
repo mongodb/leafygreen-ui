@@ -48,7 +48,7 @@ const MarketingModal = ({
   return (
     <Modal
       {...modalProps}
-      contentClassName={baseModalStyle}
+      className={baseModalStyle}
       setOpen={onClose}
       darkMode={darkMode}
       closeIconColor={closeIconColor}
