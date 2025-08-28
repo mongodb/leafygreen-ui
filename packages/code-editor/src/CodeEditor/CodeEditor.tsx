@@ -265,6 +265,22 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           }),
 
           EditorView.keymap.of([
+            {
+              key: 'Escape',
+              run: view => {
+                // Move focus outside the editor to allow normal tab navigation
+                view.contentDOM.blur();
+                return true;
+              },
+            },
+            {
+              key: 'Tab',
+              run: commands.insertTab,
+            },
+            {
+              key: 'Shift-Tab',
+              run: commands.indentLess,
+            },
             ...commands.defaultKeymap,
             ...commands.historyKeymap,
           ]),
