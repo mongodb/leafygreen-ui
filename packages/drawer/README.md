@@ -430,7 +430,8 @@ You can also use the resizable feature with a toolbar-based drawer:
 | `title` _(optional)_      | `React.ReactNode` | The title of the `Drawer`. If it is a string, it will be rendered as a `<h2>` element. If it is a React node, it will be rendered as is. This is not required if the `Toolbar` item should not open a `Drawer`. |         |
 | `content` _(optional)_    | `React.ReactNode` | The content of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`.                                                                                                             |         |
 | `disabled` _(optional)_   | `boolean`         | Whether the toolbar item is disabled.                                                                                                                                                                           | `false` |
-| `scrollable` _(optional)_ | `boolean`         | Determines whether the drawer content should have its own scroll container with padding. When false, the content area will not have padding or scroll behavior, allowing full-width/height content.             | `true`  |
+| `hasPadding` _(optional)_ | `boolean`         | Determines whether the drawer content should have padding. When false, the content area will not have padding, allowing full-width/height content.                                                              | `true`  |
+| `scrollable` _(optional)_ | `boolean`         | Determines whether the drawer content should have its own scroll container. When false, the content area will not have scroll behavior.                                                                         | `true`  |
 
 \+ Extends the following from LG [Toolbar props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toolbar/README.md#toolbariconbutton): `glyph`, `label`, and `onClick`.
 
@@ -440,32 +441,35 @@ You can also use the resizable feature with a toolbar-based drawer:
 | -------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
 | `children`                 | `React.ReactNode`                            | Children that will be rendered inside the `Drawer`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |             |
 | `displayMode` _(optional)_ | `'embedded'` \| `'overlay'`                  | Options to control how the drawer element is displayed <br> \* `'embedded'` will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as container page content. It is recommended to wrap an embedded drawer within the `DrawerLayout` container<br> \* `'overlay'` will display a drawer as a `<dialog>` element that takes up the full parent container height and elevated above container page content. It is recommended to wrap an overlay drawer within the `DrawerLayout` container | `'overlay'` |
+| `hasPadding` _(optional)_  | `boolean`                                    | Determines whether the drawer content should have padding. When false, the content area will not have padding, allowing full-width/height content.                                                                                                                                                                                                                                                                                                                                                                                                     | `true`      |
 | `onClose` _(optional)_     | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called on close button click. If provided, a close button will be rendered in the `Drawer` header                                                                                                                                                                                                                                                                                                                                                                                                                                        |             |
 | `open` _(optional)_        | `boolean`                                    | Determines if the `Drawer` is open or closed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `false`     |
-| `scrollable` _(optional)_  | `boolean`                                    | Determines whether the drawer content should have its own scroll container with padding. When false, the content area will not have padding or scroll behavior, allowing full-width/height content.                                                                                                                                                                                                                                                                                                                                                    | `true`      |
-| `title`                    | `React.ReactNode`                            | Title of the `Drawer`. If it is a string, it will be rendered as a `<h2>` element. If it is a React node, it will be rendered as is.                                                                                                                                                                                                                                                                                                                                                                                                                   |             |
+| `scrollable` _(optional)_  | `boolean`                                    | Determines whether the drawer content should have its own scroll container. When false, the content area will not have scroll behavior.                                                                                                                                                                                                                                                                                                                                                                                                                | `true`      |
 | `size` _(optional)_        | `'default'` \| `'large'`                     | The size of the `Drawer`. <br><br>**Available sizes:** <br> \* `'default'`: 432px <br> \* `'large'`: 520px                                                                                                                                                                                                                                                                                                                                                                                                                                             | `'default'` |
+| `title`                    | `React.ReactNode`                            | Title of the `Drawer`. If it is a string, it will be rendered as a `<h2>` element. If it is a React node, it will be rendered as is.                                                                                                                                                                                                                                                                                                                                                                                                                   |             |
 
-### Scrolling Behavior
+### Padding and Scroll Behavior
 
-The `Drawer` component has a fixed position and does not scroll with the main page content. This ensures that:
+#### `hasPadding`
 
-- **Overlay drawers** remain visible and accessible regardless of main page scroll position
-- **Embedded drawers** maintain their position within the layout grid
-- **Drawer content** can scroll independently when `scrollable={true}` (default)
-- **Full width/height content** can be achieved by setting `scrollable={false}`
+- Controls whether the drawer content has internal padding.
+- When `hasPadding={true}` (default), padding is applied to the content area.
+- When `hasPadding={false}`, content spans the full width and height of the drawer.
 
-When `scrollable={true}` (default):
+#### `scrollable`
 
-- Drawer content has internal padding
-- Content can scroll vertically within the drawer
-- Shadow indicator appears when content overflows
+- Controls whether the drawer content has its own vertical scroll container.
+- When `scrollable={true}` (default), content can scroll vertically within the drawer, and a shadow appears when content overflows.
+- When `scrollable={false}`, no scroll container is applied; content will not scroll and should be sized to fit or manage its own scrolling.
 
-When `scrollable={false}`:
+#### Behavior Matrix
 
-- No internal padding is applied
-- Content takes full width/height of drawer
-- No scroll behavior - content should be sized to fit or have scroll behavior defined separately
+| `scrollable` | `hasPadding` | Drawer Content Behavior                |
+| ------------ | ------------ | -------------------------------------- |
+| true         | true         | Padded, scrollable (default)           |
+| true         | false        | No padding, scrollable                 |
+| false        | true         | Padded, not scrollable                 |
+| false        | false        | No padding, not scrollable (full area) |
 
 ### Height Considerations
 

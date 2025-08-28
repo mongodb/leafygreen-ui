@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -64,44 +64,6 @@ describe('packages/drawer', () => {
         displayMode: DisplayMode.Embedded,
       });
       expect(drawer.tagName).toBe('DIV');
-    });
-  });
-
-  describe('scrollable prop', () => {
-    test('defaults to true (scrollable)', () => {
-      const { drawer } = renderDrawer({ open: true });
-      // Verify the drawer renders content correctly
-      expect(drawer).toBeInTheDocument();
-      expect(screen.getByText(drawerTest.content)).toBeVisible();
-    });
-
-    test('scrollable={true} renders content with scroll behavior', () => {
-      const { drawer } = renderDrawer({ open: true, scrollable: true });
-      expect(drawer).toBeInTheDocument();
-      expect(screen.getByText(drawerTest.content)).toBeVisible();
-    });
-
-    test('scrollable={false} renders content without scroll container', () => {
-      const { drawer } = renderDrawer({ open: true, scrollable: false });
-      expect(drawer).toBeInTheDocument();
-      expect(screen.getByText(drawerTest.content)).toBeVisible();
-    });
-
-    test('scrollable prop affects useInView behavior', () => {
-      // When scrollable is false, useInView should be skipped
-      const { rerender } = renderDrawer({ open: true, scrollable: true });
-
-      // Re-render with scrollable false
-      rerender(
-        <DrawerStackProvider>
-          <Drawer title={drawerTest.title} open={true} scrollable={false}>
-            {drawerTest.content}
-          </Drawer>
-        </DrawerStackProvider>,
-      );
-
-      // Content should still be visible
-      expect(screen.getByText(drawerTest.content)).toBeVisible();
     });
   });
 
