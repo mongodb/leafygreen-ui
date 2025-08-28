@@ -6,17 +6,7 @@ import {
   ReactNode,
 } from 'react';
 
-/**
- * Check if a component has the specified static property.
- * Handles regular components, standard styled() components, and exotic forward ref styled components.
- */
-function hasStaticProperty(component: any, staticProperty: string): boolean {
-  return (
-    component[staticProperty] || // Direct property on component
-    component.target?.[staticProperty] || // Standard styled() components store original in target
-    component.__emotion_base?.[staticProperty] // Exotic forward ref styled components store original in __emotion_base
-  );
-}
+import { hasStaticProperty } from '../hasStaticProperty';
 
 /**
  * Find the first child component with a matching static property

@@ -1,20 +1,6 @@
 import { Children, Fragment, isValidElement, ReactNode } from 'react';
 
-/**
- * Check if a component has any of the specified static properties.
- * Handles regular components, standard styled() components, and exotic forward ref styled components.
- */
-function hasAnyStaticProperty(
-  component: any,
-  staticProperties: Array<string>,
-): boolean {
-  return staticProperties.some(
-    property =>
-      component[property] || // Direct property on component
-      component.target?.[property] || // Standard styled() components store original in target
-      component.__emotion_base?.[property], // Exotic forward ref styled components store original in __emotion_base
-  );
-}
+import { hasAnyStaticProperty } from '../hasStaticProperty';
 
 /**
  * Filter out child components that have any of the specified static properties

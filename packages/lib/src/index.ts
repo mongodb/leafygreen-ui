@@ -11,6 +11,7 @@ export { findChild } from './findChild';
 export { formatCssSize } from './formatCssSize';
 export { getClosestFocusableElement } from './getClosestFocusableElement';
 export { getMobileMediaQuery } from './getMobileMediaQuery';
+export { hasAnyStaticProperty, hasStaticProperty } from './hasStaticProperty';
 export * from './helpers';
 export {
   focusableElementSelector,
