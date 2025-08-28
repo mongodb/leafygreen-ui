@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 
 import { css } from '@leafygreen-ui/emotion';
@@ -10,6 +10,10 @@ import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 const SEED = 0;
 faker.seed(SEED);
 
+/**
+ * Returns the long content
+ * @returns The long content
+ */
 export const LongContent = () => {
   const paragraphs = useMemo(() => {
     faker.seed(SEED);
@@ -32,6 +36,10 @@ export const LongContent = () => {
   );
 };
 
+/**
+ * Returns the drawer content
+ * @returns The drawer content
+ */
 export const DrawerContent = () => {
   // Generate a unique seed based on timestamp for different content each time
   React.useEffect(() => {
@@ -57,12 +65,21 @@ export const DrawerContent = () => {
   );
 };
 
+/**
+ * Returns the toolbar data based on the provided parameters
+ * @param hasToolbarData - Whether the toolbar data should be visible
+ * @param hasStaticContent - Whether the content should be static
+ * @param hasHiddenToolbarItem - Whether the toolbar item should be hidden
+ * @returns The toolbar data
+ */
 export const getDrawerToolbarData = ({
-  isToolbarHidden = false,
+  hasToolbarData = true,
   hasStaticContent = false,
+  hasHiddenToolbarItem = false,
 }: {
-  isToolbarHidden?: boolean;
+  hasToolbarData?: boolean;
   hasStaticContent?: boolean;
+  hasHiddenToolbarItem?: boolean;
 }) => {
   const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
     {
@@ -96,13 +113,45 @@ export const getDrawerToolbarData = ({
       content: hasStaticContent ? <LongContent /> : <DrawerContent />,
       glyph: 'Apps',
       title: 'Apps Title',
-      visible: false,
+      visible: hasHiddenToolbarItem ? false : true,
     },
   ];
 
-  if (isToolbarHidden) {
+  if (!hasToolbarData) {
     return DRAWER_TOOLBAR_DATA.map(item => ({ ...item, visible: false }));
   }
 
   return DRAWER_TOOLBAR_DATA;
+};
+
+/**
+ * Custom hook for managing toolbar data state
+ * @param initialData - The initial data to use for the toolbar
+ * @returns An object containing the toolbar data, and functions to update the toolbar data
+ */
+export const useToolbarData = (
+  initialData: DrawerToolbarLayoutProps['toolbarData'],
+) => {
+  const [toolbarData, setToolbarData] = useState(initialData);
+  const [hasToolbarData, setHasToolbarData] = useState(true);
+  const [hasHiddenToolbarItem, setHasHiddenToolbarItem] = useState(false);
+
+  const getData = useCallback(() => {
+    return getDrawerToolbarData({
+      hasToolbarData,
+      hasHiddenToolbarItem,
+    });
+  }, [hasToolbarData, hasHiddenToolbarItem]);
+
+  useEffect(() => {
+    setToolbarData(getData());
+  }, [getData, hasToolbarData, hasHiddenToolbarItem]);
+
+  return {
+    toolbarData,
+    hasToolbarData,
+    setHasToolbarData,
+    hasHiddenToolbarItem,
+    setHasHiddenToolbarItem,
+  };
 };

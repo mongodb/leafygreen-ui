@@ -195,4 +195,40 @@ describe('packages/DrawerToolbarLayout', () => {
 
     expect(queryToolbar()).not.toBeInTheDocument();
   });
+
+  test('closes the drawer when the active item is hidden', () => {
+    const { rerender } = render(<Component />);
+
+    const { getToolbarTestUtils, isOpen } = getTestUtils();
+
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+    userEvent.click(codeButton!);
+
+    expect(isOpen()).toBe(true);
+
+    rerender(
+      <Component
+        data={[
+          {
+            id: 'Code',
+            label: 'Code',
+            content: 'Rerendered Drawer Content',
+            title: `Rerendered Drawer Title`,
+            glyph: 'Code',
+            visible: false,
+          },
+          {
+            id: 'Code2',
+            label: 'Code2',
+            content: 'Drawer Content2',
+            title: `Drawer Title2`,
+            glyph: 'Code',
+          },
+        ]}
+      />,
+    );
+
+    expect(isOpen()).toBe(false);
+  });
 });

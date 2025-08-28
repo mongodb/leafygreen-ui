@@ -19,12 +19,10 @@ import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarCo
 import {
   getDrawerToolbarData,
   LongContent,
+  useToolbarData,
 } from './DrawerToolbarLayout.testutils';
 
 const DRAWER_TOOLBAR_DATA = getDrawerToolbarData({});
-const DRAWER_TOOLBAR_DATA_NOT_VISIBLE = getDrawerToolbarData({
-  isToolbarHidden: true,
-});
 
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,
@@ -127,7 +125,8 @@ const Component: StoryFn<DrawerLayoutProps> = ({
   toolbarData: _toolbarDataProp,
   ...args
 }: DrawerLayoutProps) => {
-  const [toolbarData, setToolbarData] = useState(DRAWER_TOOLBAR_DATA);
+  const { toolbarData, setHasToolbarData, setHasHiddenToolbarItem } =
+    useToolbarData(DRAWER_TOOLBAR_DATA);
 
   const props = {
     ...args,
@@ -144,16 +143,11 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         `}
       >
         <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
-        <Button
-          onClick={() =>
-            setToolbarData(prevData =>
-              prevData === DRAWER_TOOLBAR_DATA
-                ? DRAWER_TOOLBAR_DATA_NOT_VISIBLE
-                : DRAWER_TOOLBAR_DATA,
-            )
-          }
-        >
+        <Button onClick={() => setHasToolbarData(prev => !prev)}>
           Toggle Toolbar visibility
+        </Button>
+        <Button onClick={() => setHasHiddenToolbarItem(prev => !prev)}>
+          Toggle Toolbar item
         </Button>
         <LongContent />
         <LongContent />
