@@ -19,7 +19,7 @@ import { OverlayDrawerLayout } from './OverlayDrawerLayout';
  */
 export const LayoutComponent = forwardRef<HTMLDivElement, LayoutComponentProps>(
   (
-    { children, darkMode: darkModeProp, drawer, ...rest }: LayoutComponentProps,
+    { children, darkMode: darkModeProp, ...rest }: LayoutComponentProps,
     forwardRef,
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
@@ -34,7 +34,6 @@ export const LayoutComponent = forwardRef<HTMLDivElement, LayoutComponentProps>(
       <LeafyGreenProvider darkMode={darkMode}>
         <Component ref={forwardRef} {...rest}>
           {children}
-          {drawer}
         </Component>
       </LeafyGreenProvider>
     );

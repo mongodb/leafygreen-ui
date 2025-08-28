@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 
@@ -58,33 +57,52 @@ export const DrawerContent = () => {
   );
 };
 
-export const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <LongContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-    onClick: () => {
-      console.log('Code clicked');
+export const getDrawerToolbarData = ({
+  isToolbarHidden = false,
+  hasStaticContent = false,
+}: {
+  isToolbarHidden?: boolean;
+  hasStaticContent?: boolean;
+}) => {
+  const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
+    {
+      id: 'Code',
+      label: 'Code',
+      content: hasStaticContent ? <LongContent /> : <DrawerContent />,
+      title: 'Code Title',
+      glyph: 'Code',
     },
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <LongContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-    onClick: () => {
-      console.log('Dashboard clicked');
+    {
+      id: 'Dashboard',
+      label: 'Dashboard',
+      content: hasStaticContent ? <LongContent /> : <DrawerContent />,
+      title: 'Dashboard Title',
+      glyph: 'Dashboard',
     },
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-    onClick: () => {
-      console.log('Plus clicked, does not update drawer');
+    {
+      id: 'Plus',
+      label: "Perform some action, doesn't open a drawer",
+      glyph: 'Plus',
     },
-  },
-];
+    {
+      id: 'Sparkle',
+      label: 'Disabled item',
+      glyph: 'Sparkle',
+      disabled: true,
+    },
+    {
+      id: 'Apps',
+      label: 'Apps',
+      content: hasStaticContent ? <LongContent /> : <DrawerContent />,
+      glyph: 'Apps',
+      title: 'Apps Title',
+      visible: false,
+    },
+  ];
+
+  if (isToolbarHidden) {
+    return DRAWER_TOOLBAR_DATA.map(item => ({ ...item, visible: false }));
+  }
+
+  return DRAWER_TOOLBAR_DATA;
+};

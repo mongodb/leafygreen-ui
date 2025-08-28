@@ -16,7 +16,7 @@ import { Position, useResizable } from '@leafygreen-ui/resizable';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { TRANSITION_DURATION } from '../constants';
+import { DRAWER_TOOLBAR_WIDTH, TRANSITION_DURATION } from '../constants';
 import { useDrawerLayoutContext } from '../DrawerLayout';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { getLgIds } from '../utils';
@@ -66,10 +66,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       hasToolbar,
       setIsDrawerResizing,
       setDrawerWidth,
+      drawerWidth,
       size: sizeContextProp,
     } = useDrawerLayoutContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
+    const [previousWidth, setPreviousWidth] = useState(0);
 
     // Returns the resolved displayMode, open state, and onClose function based on the component and context props.
     const { displayMode, open, onClose, size } = useResolvedDrawerProps({
@@ -160,11 +162,31 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       isResizing,
     } = useResizable<HTMLDialogElement | HTMLDivElement>({
       enabled: isResizableEnabled,
-      initialSize,
+      initialSize: previousWidth !== 0 ? previousWidth : initialSize,
       minSize: resizableMinWidth,
       maxSize: resizableMaxWidth,
       position: Position.Right,
     });
+
+    /**
+     * On initial render, if the drawer is embedded and there was a previous width, that means that the previous drawer was open and may have been resized. This takes that previous width and uses it as the initial size.
+     */
+    useEffect(() => {
+      if (open && isEmbedded && resizable && drawerWidth !== 0) {
+        const prevWidth = hasToolbar
+          ? drawerWidth + DRAWER_TOOLBAR_WIDTH
+          : drawerWidth - DRAWER_TOOLBAR_WIDTH;
+        setPreviousWidth(prevWidth);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    /**
+     * Resets the previous width to 0 when the drawer is closed.
+     */
+    useEffect(() => {
+      if (!open) setPreviousWidth(0);
+    }, [open]);
 
     // In an embedded drawer, the parent grid container controls the drawer width with grid-template-columns, so we pass the width to the context where it is read by the parent grid container.
     useEffect(() => {
