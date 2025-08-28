@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storybookExcludedControlParams } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
