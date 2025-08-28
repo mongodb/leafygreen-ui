@@ -22,9 +22,9 @@ import Modal from '@leafygreen-ui/modal';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import { useCodeEditorContext } from '../CodeEditor/CodeEditorContext';
-import { ShortcutMenu } from '../CodeEditor/ShortcutMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
+import { ShortcutMenu } from '../ShortcutMenu';
 
 import {
   getPanelButtonsStyles,
