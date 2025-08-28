@@ -6,7 +6,6 @@ export {
   lgMessageStyles,
   Message,
   type MessageProps,
-  type VerificationInfo,
 } from './Message';
 export {
   /**
