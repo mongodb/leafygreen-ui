@@ -30,7 +30,6 @@
     "@lg-chat/rich-links": "workspace:^"
   },
   "devDependencies": {
-    "@lg-chat/avatar": "workspace:^",
     "@lg-chat/message-feedback": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },

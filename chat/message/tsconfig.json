@@ -19,9 +19,6 @@
   ],
   "references": [
     {
-      "path": "../avatar"
-    },
-    {
       "path": "../leafygreen-chat-provider"
     },
     {

@@ -637,9 +637,6 @@ importers:
         specifier: workspace:^
         version: link:../rich-links
     devDependencies:
-      '@lg-chat/avatar':
-        specifier: workspace:^
-        version: link:../avatar
       '@lg-chat/message-feedback':
         specifier: workspace:^
         version: link:../message-feedback
