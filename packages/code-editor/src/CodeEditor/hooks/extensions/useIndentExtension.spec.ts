@@ -9,7 +9,7 @@ describe('useIndentExtension', () => {
   const fakeStateModule = createMockStateModule();
   const fakeLanguageModule = createMockLanguageModule();
 
-  it('returns empty when required modules missing', () => {
+  test('returns empty when required modules missing', () => {
     const { result } = renderHook(() =>
       useIndentExtension({
         editorViewInstance: null,
@@ -20,7 +20,7 @@ describe('useIndentExtension', () => {
     expect(result.current).toEqual([]);
   });
 
-  it('returns space-based indent configuration', () => {
+  test('returns space-based indent configuration', () => {
     const { result } = renderHook(() =>
       useIndentExtension({
         editorViewInstance: null,
@@ -34,7 +34,7 @@ describe('useIndentExtension', () => {
     expect(result.current).toEqual(['INDENT_"    "', 'TABSIZE_4']);
   });
 
-  it('returns tab-based indent configuration', () => {
+  test('returns tab-based indent configuration', () => {
     const { result } = renderHook(() =>
       useIndentExtension({
         editorViewInstance: null,

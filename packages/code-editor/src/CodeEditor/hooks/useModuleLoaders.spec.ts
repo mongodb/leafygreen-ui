@@ -15,7 +15,7 @@ describe('useModuleLoaders', () => {
     language: undefined,
   };
 
-  it('always includes core modules', () => {
+  test('always includes core modules', () => {
     const { result } = renderHook(() => useModuleLoaders(baseProps));
 
     const loaders = result.current;
@@ -29,7 +29,7 @@ describe('useModuleLoaders', () => {
     expect(typeof loaders['@codemirror/commands']).toBe('function');
   });
 
-  it('includes hyperlink module when enableClickableUrls is true', () => {
+  test('includes hyperlink module when enableClickableUrls is true', () => {
     const props: CodeEditorProps = {
       ...baseProps,
       enableClickableUrls: true,
@@ -42,7 +42,7 @@ describe('useModuleLoaders', () => {
     );
   });
 
-  it('does not include hyperlink module when enableClickableUrls is false', () => {
+  test('does not include hyperlink module when enableClickableUrls is false', () => {
     const props: CodeEditorProps = {
       ...baseProps,
       enableClickableUrls: false,
@@ -55,7 +55,7 @@ describe('useModuleLoaders', () => {
     );
   });
 
-  it('includes language module when enableCodeFolding is true', () => {
+  test('includes language module when enableCodeFolding is true', () => {
     const props: CodeEditorProps = {
       ...baseProps,
       enableCodeFolding: true,
@@ -66,7 +66,7 @@ describe('useModuleLoaders', () => {
     expect(result.current).toHaveProperty('@codemirror/language');
   });
 
-  it('includes language module when forceParsing is true', () => {
+  test('includes language module when forceParsing is true', () => {
     const props: CodeEditorProps = {
       ...baseProps,
       forceParsing: true,
@@ -77,7 +77,7 @@ describe('useModuleLoaders', () => {
     expect(result.current).toHaveProperty('@codemirror/language');
   });
 
-  it('includes language module when indentUnit is specified', () => {
+  test('includes language module when indentUnit is specified', () => {
     const props: CodeEditorProps = {
       ...baseProps,
       indentUnit: 'space' as any,
@@ -88,7 +88,7 @@ describe('useModuleLoaders', () => {
     expect(result.current).toHaveProperty('@codemirror/language');
   });
 
-  it('includes lint module when tooltips are provided', () => {
+  test('includes lint module when tooltips are provided', () => {
     const props: CodeEditorProps = {
       ...baseProps,
       tooltips: [
@@ -107,7 +107,7 @@ describe('useModuleLoaders', () => {
     expect(result.current).toHaveProperty('@codemirror/lint');
   });
 
-  it('does not include lint module when tooltips array is empty', () => {
+  test('does not include lint module when tooltips array is empty', () => {
     const props: CodeEditorProps = {
       ...baseProps,
       tooltips: [],
@@ -119,7 +119,7 @@ describe('useModuleLoaders', () => {
   });
 
   describe('language-specific modules', () => {
-    it('includes highlight and autocomplete modules for any language', () => {
+    test('includes highlight and autocomplete modules for any language', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.javascript,
@@ -131,7 +131,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/autocomplete');
     });
 
-    it('loads JavaScript module for JavaScript', () => {
+    test('loads JavaScript module for JavaScript', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.javascript,
@@ -142,7 +142,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-javascript');
     });
 
-    it('loads JavaScript module for JSX', () => {
+    test('loads JavaScript module for JSX', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.jsx,
@@ -153,7 +153,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-javascript');
     });
 
-    it('loads JavaScript module for TypeScript', () => {
+    test('loads JavaScript module for TypeScript', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.typescript,
@@ -164,7 +164,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-javascript');
     });
 
-    it('loads JavaScript module for TSX', () => {
+    test('loads JavaScript module for TSX', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.tsx,
@@ -175,7 +175,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-javascript');
     });
 
-    it('loads Python module for Python', () => {
+    test('loads Python module for Python', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.python,
@@ -186,7 +186,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-python');
     });
 
-    it('loads C++ module for C++', () => {
+    test('loads C++ module for C++', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.cpp,
@@ -197,7 +197,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-cpp');
     });
 
-    it('loads C# module for C#', () => {
+    test('loads C# module for C#', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.csharp,
@@ -208,7 +208,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@replit/codemirror-lang-csharp');
     });
 
-    it('loads CSS module for CSS', () => {
+    test('loads CSS module for CSS', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.css,
@@ -219,7 +219,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-css');
     });
 
-    it('loads Go module for Go', () => {
+    test('loads Go module for Go', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.go,
@@ -230,7 +230,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-go');
     });
 
-    it('loads HTML module for HTML', () => {
+    test('loads HTML module for HTML', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.html,
@@ -241,7 +241,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-html');
     });
 
-    it('loads Java module for Java', () => {
+    test('loads Java module for Java', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.java,
@@ -252,7 +252,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-java');
     });
 
-    it('loads JSON module for JSON', () => {
+    test('loads JSON module for JSON', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.json,
@@ -263,7 +263,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-json');
     });
 
-    it('loads Kotlin legacy mode modules for Kotlin', () => {
+    test('loads Kotlin legacy mode modules for Kotlin', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.kotlin,
@@ -277,7 +277,7 @@ describe('useModuleLoaders', () => {
       );
     });
 
-    it('loads PHP module for PHP', () => {
+    test('loads PHP module for PHP', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.php,
@@ -288,7 +288,7 @@ describe('useModuleLoaders', () => {
       expect(result.current).toHaveProperty('@codemirror/lang-php');
     });
 
-    it('loads Ruby legacy mode modules for Ruby', () => {
+    test('loads Ruby legacy mode modules for Ruby', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.ruby,
@@ -302,7 +302,7 @@ describe('useModuleLoaders', () => {
       );
     });
 
-    it('loads Rust module for Rust', () => {
+    test('loads Rust module for Rust', () => {
       const props: CodeEditorProps = {
         ...baseProps,
         language: LanguageName.rust,
@@ -314,7 +314,7 @@ describe('useModuleLoaders', () => {
     });
   });
 
-  it('memoizes results and only recalculates when dependencies change', () => {
+  test('memoizes results and only recalculates when dependencies change', () => {
     const props: CodeEditorProps = {
       ...baseProps,
       language: LanguageName.javascript,
@@ -347,7 +347,7 @@ describe('useModuleLoaders', () => {
     expect(result.current).not.toHaveProperty('@codemirror/lang-javascript');
   });
 
-  it('handles complex combinations of features', () => {
+  test('handles complex combinations of features', () => {
     const props: CodeEditorProps = {
       ...baseProps,
       language: LanguageName.typescript,
@@ -387,7 +387,7 @@ describe('useModuleLoaders', () => {
     expect(loaders).toHaveProperty('@codemirror/lang-javascript');
   });
 
-  it('does not include unnecessary modules when features are disabled', () => {
+  test('does not include unnecessary modules when features are disabled', () => {
     const props: CodeEditorProps = baseProps; // All features disabled
 
     const { result } = renderHook(() => useModuleLoaders(props));
