@@ -163,7 +163,7 @@ The formatting system supports the following languages:
 
 ### Using Code Formatting
 
-There are three ways to format code with the CodeEditor:
+There are several ways to format code with the CodeEditor:
 
 #### 1. Via Panel Component (Automatic)
 
@@ -185,7 +185,19 @@ function MyComponent() {
 
 #### 2. Via CodeEditor Ref (Programmatic)
 
-Access formatting programmatically through the CodeEditor ref:
+Access formatting programmatically through the CodeEditor ref. See the [Imperative API](#imperative-api) section for complete details and examples.
+
+#### 3. Via useCodeFormatter Hook (Standalone)
+
+Use the formatting functionality independently without the CodeEditor component. For detailed documentation, examples, and module loading requirements, see the [`useCodeFormatter`](#usecodeformatterconfig) hook documentation in the CodeMirror Extension Hooks section.
+
+## Imperative API
+
+The CodeEditor exposes an imperative handle through a ref that provides programmatic access to editor functionality including content manipulation, formatting, and undo/redo operations.
+
+### CodeEditor Ref
+
+Access the editor's imperative methods through a ref:
 
 ```tsx
 import { useRef } from 'react';
@@ -205,6 +217,27 @@ function MyComponent() {
     }
   };
 
+  const handleUndo = () => {
+    if (editorRef.current) {
+      const success = editorRef.current.undo();
+      console.log('Undo successful:', success);
+    }
+  };
+
+  const handleRedo = () => {
+    if (editorRef.current) {
+      const success = editorRef.current.redo();
+      console.log('Redo successful:', success);
+    }
+  };
+
+  const handleGetContents = () => {
+    if (editorRef.current) {
+      const contents = editorRef.current.getContents();
+      console.log('Current contents:', contents);
+    }
+  };
+
   return (
     <>
       <CodeEditor
@@ -213,14 +246,24 @@ function MyComponent() {
         language={LanguageName.javascript}
       />
       <button onClick={handleFormatCode}>Format Code</button>
+      <button onClick={handleUndo}>Undo</button>
+      <button onClick={handleRedo}>Redo</button>
+      <button onClick={handleGetContents}>Get Contents</button>
     </>
   );
 }
 ```
 
-#### 3. Via useCodeFormatter Hook (Standalone)
+### Available Methods
 
-Use the formatting functionality independently without the CodeEditor component. For detailed documentation, examples, and module loading requirements, see the [`useCodeFormatter`](#usecodeformatterconfig) hook documentation in the CodeMirror Extension Hooks section.
+The `CodeEditorHandle` provides the following methods:
+
+- **`getContents()`** - Returns the current text content of the editor
+- **`formatCode()`** - Formats the current code content (returns a Promise)
+- **`isFormattingAvailable`** - Boolean indicating if formatting is available for the current language
+- **`undo()`** - Undoes the last editor action, returns boolean indicating success
+- **`redo()`** - Redoes the last undone action, returns boolean indicating success
+- **`getEditorViewInstance()`** - Returns the underlying CodeMirror EditorView instance
 
 ## Types and Variables
 
@@ -423,7 +466,7 @@ Inserts text into the editor at the specified position.
 
 - `text`: The text to insert
 - `options` _(optional)_: Object with optional position properties
-  - `from`: Starting position for insertion (defaults to 0)
+  - `from`: Starting position for insertion (defaults to end of document)
   - `to`: End position for replacement (optional)
 
 ##### Example
@@ -441,6 +484,79 @@ act(() => {
 expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
   'new content',
 );
+```
+
+#### `editor.getContent()`
+
+Gets the current text content of the editor.
+
+**Returns:** String containing the current editor content
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ defaultValue: 'Hello World' });
+await editor.waitForEditorView();
+
+expect(editor.getContent()).toBe('Hello World');
+```
+
+#### `editor.getHandle()`
+
+Gets the imperative handle instance for testing imperative methods like undo/redo.
+
+**Returns:** The editor handle instance with all imperative methods
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor();
+await editor.waitForEditorView();
+
+const handle = editor.getHandle();
+expect(typeof handle.undo).toBe('function');
+expect(typeof handle.redo).toBe('function');
+```
+
+#### `editor.interactions.undo()`
+
+Performs an undo operation on the editor.
+
+**Returns:** Boolean indicating if undo was successful
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ defaultValue: 'original' });
+await editor.waitForEditorView();
+
+editor.interactions.insertText(' modified');
+expect(editor.getContent()).toBe('original modified');
+
+const success = editor.interactions.undo();
+expect(success).toBe(true);
+expect(editor.getContent()).toBe('original');
+```
+
+#### `editor.interactions.redo()`
+
+Performs a redo operation on the editor.
+
+**Returns:** Boolean indicating if redo was successful
+
+**Example:**
+
+```tsx
+const { editor } = renderCodeEditor({ defaultValue: 'original' });
+await editor.waitForEditorView();
+
+editor.interactions.insertText(' modified');
+editor.interactions.undo();
+expect(editor.getContent()).toBe('original');
+
+const success = editor.interactions.redo();
+expect(success).toBe(true);
+expect(editor.getContent()).toBe('original modified');
 ```
 
 ### Complete Test Example
@@ -481,12 +597,233 @@ test('comprehensive editor testing', async () => {
     editor.interactions.insertText('\nconsole.log(greeting);', { from: 25 });
   });
 
-  // Verify the new content
-  expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
+  // Verify the new content using getContent()
+  expect(editor.getContent()).toBe(
+    'const greeting = "Hello";\nconsole.log(greeting);',
+  );
+
+  // Test undo/redo functionality
+  const undoSuccess = editor.interactions.undo();
+  expect(undoSuccess).toBe(true);
+  expect(editor.getContent()).toBe('const greeting = "Hello";');
+
+  const redoSuccess = editor.interactions.redo();
+  expect(redoSuccess).toBe(true);
+  expect(editor.getContent()).toBe(
     'const greeting = "Hello";\nconsole.log(greeting);',
   );
 });
 ```
+
+### Panel Test Utilities
+
+The package also provides comprehensive testing utilities for the Panel component, making it easy to test Panel interactions and behaviors.
+
+#### `renderPanel(config?)`
+
+Renders a Panel component with proper LeafyGreen and CodeEditor context for testing.
+
+**Parameters:**
+
+- `config` _(optional)_: Configuration object with the following properties:
+  - `panelProps` _(optional)_: Partial `PanelProps` to pass to the Panel component
+  - `contextConfig` _(optional)_: Override the default CodeEditor context values
+
+**Returns:**
+
+- `container`: The rendered container element from `@testing-library/react`
+- `panel`: Panel test utilities object with methods for interacting with panel elements
+
+**Example:**
+
+```tsx
+import { renderPanel, PanelSelectors } from '@leafygreen-ui/code-editor';
+
+test('renders panel with format button', async () => {
+  const { container, panel } = renderPanel({
+    panelProps: {
+      title: 'JavaScript Editor',
+      showFormatButton: true,
+      showCopyButton: true,
+      showSecondaryMenuButton: true,
+    },
+  });
+
+  // Use utilities to interact with the panel
+  await panel.interactions.clickFormatButton();
+  await panel.interactions.clickUndoMenuItem();
+});
+```
+
+#### Panel Test Utilities Object
+
+The `panel` object provides access to Panel elements and interactions:
+
+##### Element Getters
+
+- `panel.getFormatButton()` - Gets the format button element
+- `panel.getCopyButton()` - Gets the copy button element
+- `panel.getSecondaryMenuButton()` - Gets the secondary menu button
+- `panel.getMenuItem(ariaLabel)` - Gets a menu item by aria-label
+- `panel.getUndoMenuItem()` - Gets the undo menu item
+- `panel.getRedoMenuItem()` - Gets the redo menu item
+- `panel.getDownloadMenuItem()` - Gets the download menu item
+- `panel.getViewShortcutsMenuItem()` - Gets the view shortcuts menu item
+- `panel.getCustomSecondaryButton(labelOrAriaLabel)` - Gets a custom secondary button
+
+##### Interactions
+
+All interaction methods are available under `panel.interactions`:
+
+- `clickFormatButton()` - Clicks the format button
+- `clickCopyButton()` - Clicks the copy button
+- `openSecondaryMenu()` - Opens the secondary menu
+- `clickMenuItem(ariaLabel)` - Clicks a menu item by aria-label
+- `clickUndoMenuItem()` - Opens menu and clicks undo
+- `clickRedoMenuItem()` - Opens menu and clicks redo
+- `clickDownloadMenuItem()` - Opens menu and clicks download
+- `clickViewShortcutsMenuItem()` - Opens menu and clicks view shortcuts
+- `clickCustomSecondaryButton(labelOrAriaLabel)` - Opens menu and clicks custom button
+- `hoverFormatButton()` - Hovers format button and waits for tooltip
+- `hoverCopyButton()` - Hovers copy button and waits for tooltip
+
+##### Utilities
+
+- `panel.waitForTooltip(text, timeout?)` - Waits for a tooltip with specific text
+- `panel.hasTitleText(expectedTitle)` - Checks if panel has expected title
+- `panel.hasInnerContent(testId)` - Checks if inner content with testId exists
+
+#### PanelSelectors
+
+Consistent selector constants for testing:
+
+```tsx
+import { PanelSelectors } from '@leafygreen-ui/code-editor';
+
+// Use instead of hardcoded strings
+panel.getMenuItem(PanelSelectors.UndoMenuItem);
+panel.getMenuItem(PanelSelectors.RedoMenuItem);
+panel.getMenuItem(PanelSelectors.DownloadMenuItem);
+panel.getMenuItem(PanelSelectors.ViewShortcutsMenuItem);
+```
+
+Available selectors:
+
+- `PanelSelectors.FormatButton`
+- `PanelSelectors.CopyButton`
+- `PanelSelectors.SecondaryMenuButton`
+- `PanelSelectors.UndoMenuItem`
+- `PanelSelectors.RedoMenuItem`
+- `PanelSelectors.DownloadMenuItem`
+- `PanelSelectors.ViewShortcutsMenuItem`
+
+#### Panel Test Examples
+
+##### Testing Format Button
+
+```tsx
+test('formats code when format button is clicked', async () => {
+  const onFormatClick = jest.fn();
+  const mockFormatCode = jest.fn();
+
+  const { panel } = renderPanel({
+    panelProps: {
+      showFormatButton: true,
+      onFormatClick,
+    },
+    contextConfig: {
+      formatCode: mockFormatCode,
+    },
+  });
+
+  await panel.interactions.clickFormatButton();
+
+  expect(onFormatClick).toHaveBeenCalled();
+  expect(mockFormatCode).toHaveBeenCalled();
+});
+```
+
+##### Testing Secondary Menu
+
+```tsx
+test('performs undo when undo menu item is clicked', async () => {
+  const onUndoClick = jest.fn();
+  const mockUndo = jest.fn(() => true);
+
+  const { panel } = renderPanel({
+    panelProps: {
+      showSecondaryMenuButton: true,
+      onUndoClick,
+    },
+    contextConfig: {
+      undo: mockUndo,
+    },
+  });
+
+  await panel.interactions.clickUndoMenuItem();
+
+  expect(onUndoClick).toHaveBeenCalled();
+  expect(mockUndo).toHaveBeenCalled();
+});
+```
+
+##### Testing Custom Secondary Buttons
+
+```tsx
+test('handles custom secondary button clicks', async () => {
+  const customOnClick = jest.fn();
+
+  const { panel } = renderPanel({
+    panelProps: {
+      showSecondaryMenuButton: true,
+      customSecondaryButtons: [
+        {
+          label: 'Custom Action',
+          onClick: customOnClick,
+          'aria-label': 'Perform custom action',
+        },
+      ],
+    },
+  });
+
+  await panel.interactions.clickCustomSecondaryButton('Perform custom action');
+
+  expect(customOnClick).toHaveBeenCalled();
+});
+```
+
+#### defaultPanelContextFunctions
+
+The `defaultPanelContextFunctions` object provides access to the default stub functions used in the CodeEditor context. These can be overridden in tests by providing `contextConfig` to `renderPanel`:
+
+```tsx
+import {
+  renderPanel,
+  defaultPanelContextFunctions,
+} from '@leafygreen-ui/code-editor';
+
+// Override default functions with jest mocks in your test files
+const mockUndo = jest.fn(() => true);
+const mockFormatCode = jest.fn();
+
+const { panel } = renderPanel({
+  contextConfig: {
+    undo: mockUndo,
+    formatCode: mockFormatCode,
+  },
+});
+
+// Now you can assert on your custom mocks
+expect(mockUndo).toHaveBeenCalled();
+expect(mockFormatCode).toHaveBeenCalled();
+```
+
+Available default functions:
+
+- `defaultPanelContextFunctions.getContents`
+- `defaultPanelContextFunctions.formatCode`
+- `defaultPanelContextFunctions.undo`
+- `defaultPanelContextFunctions.redo`
 
 ## CodeMirror Extension Hooks
 
