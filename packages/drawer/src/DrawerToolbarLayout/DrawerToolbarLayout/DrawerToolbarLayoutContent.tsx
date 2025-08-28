@@ -54,21 +54,29 @@ export const DrawerToolbarLayoutContent = forwardRef<
     }, [isDrawerOpen, setIsDrawerOpen]);
 
     // Calculate visibleToolbarItems in component body (needed for rendering)
-    const visibleToolbarItems = toolbarData?.filter(
+    const visibleToolbarItems = toolbarData.filter(
       toolbarItem => toolbarItem.visible ?? true,
     );
 
     const shouldRenderToolbar = visibleToolbarItems.length > 0;
 
-    // If the drawer is open, there is an active toolbar item, it's visibility is set to false, and the toolbar is visible, close the drawer.
+    // Close drawer if active toolbar item is no longer visible
     useEffect(() => {
-      if (id && toolbarData && isDrawerOpen && shouldRenderToolbar) {
-        const activeToolbarItem = toolbarData.find(item => item.id === id);
-        const isActiveToolbarItemVisible = activeToolbarItem?.visible ?? true;
+      if (!id || !isDrawerOpen || !shouldRenderToolbar) {
+        return;
+      }
 
-        if (activeToolbarItem && !isActiveToolbarItemVisible) {
-          closeDrawer();
-        }
+      const activeToolbarItem = toolbarData.find(item => item.id === id);
+
+      if (!activeToolbarItem) {
+        return;
+      }
+
+      const isActiveToolbarItemVisible = activeToolbarItem.visible ?? true;
+
+      // Close drawer if the active toolbar item is not visible
+      if (!isActiveToolbarItemVisible) {
+        closeDrawer();
       }
     }, [id, toolbarData, closeDrawer, isDrawerOpen, shouldRenderToolbar]);
 
