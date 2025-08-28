@@ -1,5 +1,14 @@
 # @lg-chat/input-bar
 
+## 10.0.2
+
+### Patch Changes
+
+- 0abf641: Temporarily inline `PRIMARY_BUTTON_INTERACTIVE_GREEN` in `InputBarSendButton.styles` to avoid import/type issues with `@leafygreen-ui/button`.
+- 1b1ca17: [LG-5470](https://jira.mongodb.org/browse/LG-5470): Fix send button being enabled when only whitespace is entered. The send button now properly trims input before checking if it should be enabled.
+- Updated dependencies [7b49fcf]
+  - @leafygreen-ui/tokens@3.2.2
+
 ## 10.0.1
 
 ### Patch Changes
