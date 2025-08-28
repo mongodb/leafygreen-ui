@@ -6,7 +6,7 @@ import { expect, userEvent, waitFor, within } from '@storybook/test';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 import { DisplayMode, Drawer } from '../../Drawer';
 import { DrawerLayoutProvider } from '../../DrawerLayout';
@@ -20,10 +20,16 @@ import {
 } from './DrawerToolbarLayout.testutils';
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 
-// The tooltip sometimes lingers after the drawer closes, which can cause
-// snapshot tests to fail if the tooltip is not in the correct position.
-// Setting a delay of 1 second allows the tooltip to be in the correct position
-const TOOLTIP_SNAPSHOT_DELAY = 1000; // ms
+// Helper function to wait for tooltip transitions and positioning to complete
+const waitForTooltipToSettle = async () => {
+  const tooltipHoverDelay = transitionDuration.slowest; // time before tooltip shows
+  const tooltipTransitionTime = transitionDuration.default; // transition duration
+  const buffer = 100;
+  const totalTooltipDelay = tooltipHoverDelay + tooltipTransitionTime + buffer;
+
+  // Wait for tooltip positioning to stabilize
+  await new Promise(resolve => setTimeout(resolve, totalTooltipDelay));
+};
 
 // For testing purposes. displayMode is read from the context, so we need to
 // pass it down to the DrawerToolbarLayoutProps.
@@ -120,8 +126,8 @@ export const OverlayOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutPropsWith
         expect(isOpen()).toBe(true);
         expect(canvas.getByText('Code Title')).toBeVisible();
       });
-      // Pause so the tooltip is in the correct position in the snapshot
-      await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
+      // Wait for tooltip to be positioned correctly
+      await waitForTooltipToSettle();
     },
   };
 
@@ -151,12 +157,17 @@ export const OverlaySwitchesToolbarItems: StoryObj<DrawerToolbarLayoutPropsWithD
       });
 
       userEvent.unhover(codeButton!);
+      // Wait for tooltip to be positioned correctly
+      await waitForTooltipToSettle();
       userEvent.click(dashboardButton!);
 
       await waitFor(() => {
         expect(canvas.getByText('Dashboard Title')).toBeVisible();
         expect(getDrawer().textContent).toContain('Dashboard Title');
       });
+
+      // Wait for tooltip to be positioned correctly
+      await waitForTooltipToSettle();
     },
   };
 
@@ -188,8 +199,8 @@ export const OverlayClosesDrawer: StoryObj<DrawerToolbarLayoutPropsWithDisplayMo
       userEvent.click(closeButton);
 
       await waitFor(() => expect(isOpen()).toBe(false));
-      // Pause so the tooltip is in the correct position in the snapshot
-      await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
+      // Wait for tooltip to be positioned correctly
+      await waitForTooltipToSettle();
     },
   };
 
@@ -215,8 +226,8 @@ export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutPropsWit
         expect(isOpen()).toBe(true);
         expect(canvas.getByText('Code Title')).toBeVisible();
       });
-      // Pause so the tooltip is in the correct position in the snapshot
-      await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
+      // Wait for tooltip to be positioned correctly
+      await waitForTooltipToSettle();
     },
   };
 
@@ -246,11 +257,17 @@ export const EmbeddedSwitchesToolbarItems: StoryObj<DrawerToolbarLayoutPropsWith
       });
 
       userEvent.unhover(codeButton!);
+
+      // Wait for tooltip to be positioned correctly
+      await waitForTooltipToSettle();
       userEvent.click(dashboardButton!);
 
       await waitFor(() =>
         expect(canvas.getByText('Dashboard Title')).toBeVisible(),
       );
+
+      // Wait for tooltip to be positioned correctly
+      await waitForTooltipToSettle();
     },
   };
 
@@ -282,7 +299,7 @@ export const EmbeddedClosesDrawer: StoryObj<DrawerToolbarLayoutPropsWithDisplayM
       userEvent.click(closeButton!);
 
       await waitFor(() => expect(isOpen()).toBe(false));
-      // Pause so the tooltip is in the correct position in the snapshot
-      await new Promise(resolve => setTimeout(resolve, TOOLTIP_SNAPSHOT_DELAY));
+      // Wait for tooltip to be positioned correctly
+      await waitForTooltipToSettle();
     },
   };
