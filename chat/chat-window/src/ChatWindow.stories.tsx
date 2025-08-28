@@ -21,6 +21,7 @@ const meta: StoryMetaType<typeof ChatWindow> = {
   title: 'Composition/Chat/ChatWindow',
   component: ChatWindow,
   args: {
+    assistantName: 'LeafyGreen Assistant',
     title: 'LG Chat Demo',
     badgeText: 'Beta',
   },
@@ -41,7 +42,10 @@ const meta: StoryMetaType<typeof ChatWindow> = {
       decorator: (Instance, context) => {
         return (
           <LeafyGreenProvider darkMode={context?.args.darkMode}>
-            <LeafyGreenChatProvider variant={context?.args.variant}>
+            <LeafyGreenChatProvider
+              assistantName={context?.args.assistantName}
+              variant={context?.args.variant}
+            >
               <Instance />
             </LeafyGreenChatProvider>
           </LeafyGreenProvider>
@@ -84,10 +88,15 @@ const MyMessage = ({
 };
 
 type ChatWindowStoryProps = ChatWindowProps & {
+  assistantName?: string;
   variant?: Variant;
 };
 
-const Template: StoryFn<ChatWindowStoryProps> = ({ variant, ...props }) => {
+const Template: StoryFn<ChatWindowStoryProps> = ({
+  assistantName,
+  variant,
+  ...props
+}) => {
   const [messages, setMessages] = useState<Array<any>>(baseMessages);
 
   const handleMessageSend = (messageBody: string) => {
@@ -98,7 +107,7 @@ const Template: StoryFn<ChatWindowStoryProps> = ({ variant, ...props }) => {
   };
 
   return (
-    <LeafyGreenChatProvider variant={variant}>
+    <LeafyGreenChatProvider assistantName={assistantName} variant={variant}>
       <ChatWindow {...props}>
         <MessageFeed>
           {messages.map(messageFields => (

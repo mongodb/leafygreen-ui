@@ -1,8 +1,20 @@
-import { PRIMARY_BUTTON_INTERACTIVE_GREEN } from '@leafygreen-ui/button/constants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
+
+/**
+ * Off-palette value specific to primary button instances
+ * @todo Consolidate usage of #00593F
+ * @see https://jira.mongodb.org/browse/LG-5388
+ *
+ * @remarks This is a temporary duplicate to avoid importing the
+ * `PRIMARY_BUTTON_INTERACTIVE_GREEN` constant from
+ * `@leafygreen-ui/button/constants`. Consumers are blocked from upgrading
+ * to the latest version of button package due to type issues from
+ * `@leafygreen-ui/button@23.0.0` https://jira.mongodb.org/browse/LG-5462
+ */
+const PRIMARY_BUTTON_INTERACTIVE_GREEN = '#00593F';
 
 export const getIconFill = ({
   disabled,

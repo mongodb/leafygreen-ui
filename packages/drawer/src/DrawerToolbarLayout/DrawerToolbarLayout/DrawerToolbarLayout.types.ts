@@ -33,8 +33,15 @@ interface LayoutWithContent extends LayoutBase {
   content: React.ReactNode;
 
   /**
-   * Determines whether the drawer content should have its own scroll container with padding.
-   * When false, the content area will not have padding or scroll behavior, allowing full-width/height content.
+   * Determines whether the drawer content should have padding.
+   * When false, the content area will not have padding, allowing full-width/height content.
+   * @defaultValue true
+   */
+  hasPadding?: boolean;
+
+  /**
+   * Determines whether the drawer content should have its own scroll container.
+   * When false, the content area will not have scroll behavior.
    * @defaultValue true
    */
   scrollable?: boolean;
@@ -52,8 +59,15 @@ interface LayoutWithoutContent extends LayoutBase {
   content?: never;
 
   /**
-   * Determines whether the drawer content should have its own scroll container with padding.
-   * When false, the content area will not have padding or scroll behavior, allowing full-width/height content.
+   * Determines whether the drawer content should have padding.
+   * When false, the content area will not have padding, allowing full-width/height content.
+   * @defaultValue true
+   */
+  hasPadding?: never;
+
+  /**
+   * Determines whether the drawer content should have its own scroll container.
+   * When false, the content area will not have scroll behavior.
    * @defaultValue true
    */
   scrollable?: never;

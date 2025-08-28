@@ -33,6 +33,13 @@ export interface DrawerProps
   displayMode?: DisplayMode;
 
   /**
+   * Determines whether the drawer content should have padding.
+   * When false, the content area will not have padding, allowing full-width/height content.
+   * @defaultValue true
+   */
+  hasPadding?: boolean;
+
+  /**
    * Determines if the Drawer is open or closed. If wrapping the Drawer in a `DrawerLayout`, this prop is not needed. The Drawer read the `isDrawerOpen` prop from `DrawerLayout`.
    */
   open?: boolean;
@@ -43,20 +50,20 @@ export interface DrawerProps
   onClose?: React.MouseEventHandler<HTMLButtonElement>;
 
   /**
-   * Determines whether the drawer content should have its own scroll container with padding.
-   * When false, the content area will not have padding or scroll behavior, allowing full-width/height content.
+   * Determines whether the drawer content should have its own scroll container.
+   * When false, the content area will not have scroll behavior.
    * @defaultValue true
    */
   scrollable?: boolean;
-
-  /**
-   * Title of the Drawer. If the title is a string, it will be rendered as a `<h2>` element. If the title is a React node, it will be rendered as is.
-   */
-  title: React.ReactNode;
 
   /**
    * The size of the Drawer.
    * @defaultValue 'default'
    */
   size?: Size;
+
+  /**
+   * Title of the Drawer. If the title is a string, it will be rendered as a `<h2>` element. If the title is a React node, it will be rendered as is.
+   */
+  title: React.ReactNode;
 }

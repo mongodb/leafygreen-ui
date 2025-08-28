@@ -409,6 +409,74 @@ describe('packages/Code', () => {
           );
         }
       });
+
+      describe('when the language and displayName are the same', () => {
+        test('renders the language picker', () => {
+          const { getLanguageSwitcherUtils } = renderCode({
+            language: languageOptions[0].displayName,
+            panel: (
+              <Panel onChange={() => {}} languageOptions={languageOptions} />
+            ),
+          });
+          expect(getLanguageSwitcherUtils().getInput()).toBeDefined();
+        });
+
+        test('the language pickers display the displayName', () => {
+          const { getLanguageSwitcherUtils } = renderCode({
+            language: languageOptions[0].displayName,
+            panel: (
+              <Panel onChange={() => {}} languageOptions={languageOptions} />
+            ),
+          });
+          expect(getLanguageSwitcherUtils().getInput()).toHaveTextContent(
+            'JavaScript',
+          );
+        });
+
+        test('sets the correct language', () => {
+          const { getLanguage } = renderCode({
+            language: languageOptions[0].displayName,
+            panel: (
+              <Panel onChange={() => {}} languageOptions={languageOptions} />
+            ),
+          });
+          expect(getLanguage()).toBe('JavaScript');
+        });
+      });
+
+      describe('when the language and displayName are different', () => {
+        test('renders the language picker', () => {
+          const { getLanguageSwitcherUtils } = renderCode({
+            language: languageOptions[2].language, // language is shell. displayName is macOS
+            panel: (
+              <Panel onChange={() => {}} languageOptions={languageOptions} />
+            ),
+          });
+          expect(getLanguageSwitcherUtils().getInput()).toBeDefined();
+        });
+
+        test('the language pickers displays the displayName', () => {
+          const { getLanguageSwitcherUtils } = renderCode({
+            language: languageOptions[2].language, // language is shell. displayName is macOS
+            panel: (
+              <Panel onChange={() => {}} languageOptions={languageOptions} />
+            ),
+          });
+          expect(getLanguageSwitcherUtils().getInput()).toHaveTextContent(
+            'macOS',
+          );
+        });
+
+        test('sets the correct language', () => {
+          const { getLanguage } = renderCode({
+            language: languageOptions[2].language, // language is shell. displayName is macOS
+            panel: (
+              <Panel onChange={() => {}} languageOptions={languageOptions} />
+            ),
+          });
+          expect(getLanguage()).toBe('shell');
+        });
+      });
     });
 
     describe('custom action buttons', () => {
@@ -490,7 +558,7 @@ describe('packages/Code', () => {
       const { getLanguageSwitcherUtils } = renderCodeWithLanguageSwitcher({});
       const trigger = getLanguageSwitcherUtils().getInput();
       userEvent.click(trigger!);
-      expect(getLanguageSwitcherUtils().getOptions()).toHaveLength(2);
+      expect(getLanguageSwitcherUtils().getOptions()).toHaveLength(3);
     });
 
     test('options displayed in select are based on the languageOptions prop', () => {

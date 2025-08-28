@@ -105,7 +105,7 @@ describe('packages/tabs/getTestUtils', () => {
             {},
           );
           userEvent.click(getLanguageSwitcherUtils().getInput()!);
-          expect(getLanguageSwitcherUtils().getOptions()).toHaveLength(2);
+          expect(getLanguageSwitcherUtils().getOptions()).toHaveLength(3);
         });
       });
 

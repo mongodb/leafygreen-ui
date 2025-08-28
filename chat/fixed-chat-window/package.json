@@ -30,7 +30,6 @@
   "devDependencies": {
     "@lg-chat/avatar": "workspace:^",
     "@lg-chat/input-bar": "workspace:^",
-    "@lg-chat/leafygreen-chat-provider": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feed": "workspace:^",
     "@lg-chat/message-feedback": "workspace:^",
@@ -38,7 +37,8 @@
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/fixed-chat-window",
   "repository": {

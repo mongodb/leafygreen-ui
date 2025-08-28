@@ -26,9 +26,9 @@ import {
   getDrawerShadowStyles,
   getDrawerStyles,
   getHeaderStyles,
+  getInnerChildrenContainerStyles,
   getInnerContainerStyles,
   getResizerStyles,
-  getScrollContainerStyles,
   titleStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
@@ -44,12 +44,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       className,
       'data-lgid': dataLgId,
       displayMode: displayModeProp,
+      hasPadding = true,
       id: idProp,
       onClose: onCloseProp,
       open: openProp,
       scrollable = true,
-      title,
       size: sizeProp,
+      title,
       ...rest
     },
     fwdRef,
@@ -285,8 +286,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                   theme,
                 })}
               >
-                {scrollable ? (
-                  <div className={getScrollContainerStyles({ scrollable })}>
+                {hasPadding || scrollable ? (
+                  <div
+                    className={getInnerChildrenContainerStyles({
+                      hasPadding,
+                      scrollable,
+                    })}
+                    data-lgid={lgIds.scrollContainer}
+                    data-testid={lgIds.scrollContainer}
+                  >
                     {/* Empty span element used to track if children container has scrolled down */}
                     <span ref={interceptRef} />
                     {children}
