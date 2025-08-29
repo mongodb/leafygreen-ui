@@ -1,5 +1,4 @@
-import { getPackageManager } from '@lg-tools/meta';
-import { SupportedPackageManager } from '@lg-tools/meta/src/getPackageManager';
+import { getPackageManager, SupportedPackageManager } from '@lg-tools/meta';
 import { spawn } from 'cross-spawn';
 import fsx from 'fs-extra';
 

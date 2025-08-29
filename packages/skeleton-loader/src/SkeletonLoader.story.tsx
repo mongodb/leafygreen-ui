@@ -1,5 +1,9 @@
 import React from 'react';
-import { storybookArgTypes, StoryType } from '@lg-tools/storybook-utils';
+import {
+  storybookArgTypes,
+  StoryMetaType,
+  StoryType,
+} from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -17,8 +21,9 @@ import {
   TableSkeleton,
 } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Skeleton> = {
   title: 'Composition/Loading/SkeletonLoader',
+  component: Skeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     enableAnimations: { control: 'boolean' },
@@ -30,6 +35,8 @@ export default {
     default: 'LiveExample',
   },
 };
+
+export default meta;
 
 const storyRootStyles = css`
   display: grid;
