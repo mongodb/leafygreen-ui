@@ -5,7 +5,12 @@ module.exports = function (api) {
 
   const presets = [
     '@babel/preset-typescript',
-    '@babel/preset-react',
+    [
+      '@babel/preset-react',
+      {
+        runtime: 'classic',
+      },
+    ],
     [
       '@babel/preset-env',
       {
