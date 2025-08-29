@@ -26,5 +26,20 @@
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./index.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js",
+      "types": "./dist/types/index.d.ts",
+      "types<5.0": "dist/types/ts4.9/index.d.ts"
+    }
   }
 }
