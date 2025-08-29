@@ -5,7 +5,11 @@
       "@lg-tools/*": [
         "../*/src"
       ]
-    }
+    },
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types"
   },
   "include": [
     "src/**/*"
