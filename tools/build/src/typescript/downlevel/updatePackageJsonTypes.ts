@@ -4,7 +4,11 @@ import fs from 'fs';
 import cloneDeep from 'lodash/cloneDeep';
 import path from 'path';
 
-import { DOWNLEVEL_VERSIONS, EXCLUDED_PACKAGES } from './TYPES_VERSIONS';
+import {
+  DEFAULT_TYPES_EXPORT_PATH,
+  DOWNLEVEL_VERSIONS,
+  EXCLUDED_PACKAGES,
+} from './TYPES_VERSIONS';
 
 /**
  * Updates the `typesVersions` and `exports` fields in a package's package.json file
@@ -70,51 +74,59 @@ export function updatePackageJsonTypes(
     };
 
     // Construct the exports field with types conditions
-    let exports = cloneDeep(packageJson.exports);
+    let packageExports = cloneDeep(packageJson.exports);
 
     // If exports field is a string, convert it to an object
-    if (typeof exports === 'string' || !exports) {
-      exports = { '.': exports };
+    if (typeof packageExports === 'string' || !packageExports) {
+      packageExports = { '.': packageExports };
     }
 
     // Ensure the main export path exists
-    if (!exports['.']) {
-      exports['.'] = {};
-    } else if (typeof exports['.'] === 'string') {
+    if (!packageExports['.']) {
+      packageExports['.'] = {
+        import: packageJson.module,
+        require: packageJson.main,
+        types: packageJson.types,
+      };
+    } else if (typeof packageExports['.'] === 'string') {
       // If the main export is a string, convert it to an object
-      const mainExport = exports['.'];
-      exports['.'] = {
+      const mainExport = packageExports['.'];
+      packageExports['.'] = {
         import: mainExport,
         require: mainExport,
       };
     }
 
     // set the default types export
-    if (!exports['.'].types) {
-      exports['.'].types = './index.d.ts';
+    if (!packageExports['.'].types) {
+      packageExports['.'].types = './index.d.ts';
     }
 
     // Add entries for each TypeScript version we support
     DOWNLEVEL_VERSIONS.forEach(({ condition, target }) => {
+      const typesExportPath = path.join(
+        DEFAULT_TYPES_EXPORT_PATH,
+        `ts${target}`,
+        'index.d.ts',
+      );
+
       // Add to typesVersions if target is less than 4.9
-      // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#exports-is-prioritized-over-typesversions
+      // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#packageExports-is-prioritized-over-typesversions
       if (parseFloat(target) < 4.9) {
         typesVersions[condition] = {
-          '.': [`./ts${target}/index.d.ts`],
+          '.': [typesExportPath],
         };
       }
 
-      // Add to exports field with types condition
-      if (typeof exports['.'] === 'object') {
-        exports['.'][`types${condition}`] = `./ts${target}/index.d.ts`;
+      // Add to packageExports field with types condition
+      if (typeof packageExports['.'] === 'object') {
+        packageExports['.'][`types${condition}`] = typesExportPath;
       }
     });
 
     // Update package.json
     packageJson.typesVersions = typesVersions;
-
-    // TODO: Add this once the multiple exports PR is merged
-    // packageJson.exports = exportsField;
+    packageJson.exports = packageExports;
 
     // Write the updated package.json
     fs.writeFileSync(

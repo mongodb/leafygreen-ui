@@ -25,3 +25,5 @@ export const EXCLUDED_PACKAGES = [
   '@lg-tools/update',
   '@lg-tools/validate',
 ];
+
+export const DEFAULT_TYPES_EXPORT_PATH = './dist/types';
