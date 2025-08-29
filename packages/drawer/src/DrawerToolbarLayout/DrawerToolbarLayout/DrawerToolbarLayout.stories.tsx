@@ -16,35 +16,13 @@ import { Size } from '../../Drawer/Drawer.types';
 import { DrawerLayout, DrawerLayoutProps } from '../../DrawerLayout';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
 
-import { DrawerContent, LongContent } from './DrawerToolbarLayout.testutils';
+import {
+  getDrawerToolbarData,
+  LongContent,
+  useToolbarData,
+} from './DrawerToolbarLayout.testutils';
 
-const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <DrawerContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <DrawerContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-  },
-  {
-    id: 'Sparkle',
-    label: 'Disabled item',
-    glyph: 'Sparkle',
-    disabled: true,
-  },
-];
+const DRAWER_TOOLBAR_DATA = getDrawerToolbarData({});
 
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,
@@ -144,8 +122,17 @@ const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
 );
 
 const Component: StoryFn<DrawerLayoutProps> = ({
+  toolbarData: _toolbarDataProp,
   ...args
 }: DrawerLayoutProps) => {
+  const { toolbarData, setHasToolbarData, setHasHiddenToolbarItem } =
+    useToolbarData(DRAWER_TOOLBAR_DATA);
+
+  const props = {
+    ...args,
+    toolbarData,
+  } as DrawerLayoutProps;
+
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
@@ -156,6 +143,12 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         `}
       >
         <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
+        <Button onClick={() => setHasToolbarData(prev => !prev)}>
+          Toggle Toolbar visibility
+        </Button>
+        <Button onClick={() => setHasHiddenToolbarItem(prev => !prev)}>
+          Toggle Toolbar item
+        </Button>
         <LongContent />
         <LongContent />
       </main>
@@ -169,7 +162,7 @@ const Component: StoryFn<DrawerLayoutProps> = ({
         width: 100%;
       `}
     >
-      <DrawerLayout {...args}>
+      <DrawerLayout {...props}>
         <MainContent />
       </DrawerLayout>
     </div>

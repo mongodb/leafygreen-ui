@@ -1,5 +1,188 @@
 # @leafygreen-ui/drawer
 
+## 5.0.0
+
+### Major Changes
+
+- 71c6daa: # Unified Drawer Layout System
+
+  ## Summary
+
+  This release introduces a unified grid layout system for all drawer instances, eliminating layout inconsistencies between drawers with and without toolbars. All drawers now use the same consistent grid-based layout, providing better visual consistency and easier customization.
+
+  ## Breaking Changes
+
+  ### Layout Unification Impact
+
+  Previously, drawers with toolbars used a different internal layout system than drawers without toolbars, leading to inconsistent spacing, positioning, and responsive behavior when adding new internal features. This change standardizes all drawer layouts (with one exception - see below) to use the same grid system.
+
+  **⚠️ Migration Required:** If you were using custom CSS to override drawer layout styles, you will need to update your styles to work with the new grid-based layout system.
+
+  ### What's Changed
+
+  #### 1. Drawer without toolbar using the `drawer` prop
+
+  Drawers passed via the `drawer` prop now use the unified grid layout. Mobile styles have been updated to match the responsive behavior of drawers with toolbars.
+
+  **Impact:** Custom style overrides will need to be updated to work with the new grid system.
+
+  ```tsx
+  // ✅ This usage is affected - now uses unified grid layout
+  <DrawerLayout
+    displayMode={DisplayMode.Embedded}
+    isDrawerOpen={open}
+    resizable
+    drawer={
+      <Drawer title="Resizable Drawer">
+        <div>Drawer content that can be resized by dragging the left edge</div>
+      </Drawer>
+    }
+    onClose={() => setOpen(false)}
+  >
+    <main>
+      <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+        Toggle Resizable Drawer
+      </Button>
+    </main>
+  </DrawerLayout>
+  ```
+
+  #### 2. Drawer passed as child (No changes required)
+
+  **Impact:** No changes needed. This usage pattern is unaffected.
+
+  When the drawer is passed as a child component, it cannot be wrapped in the new grid layout system, so this usage pattern remains unchanged.
+
+  ```tsx
+  // ✅ This usage is NOT affected - works exactly the same
+  <DrawerLayout displayMode={DisplayMode.Overlay} isDrawerOpen={open}>
+    <main>
+      <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+        Open Drawer
+      </Button>
+    </main>
+    <Drawer
+      displayMode={DisplayMode.Overlay}
+      onClose={() => setOpen(false)}
+      open={open}
+      title="Drawer Title"
+    >
+      Drawer content goes here
+    </Drawer>
+  </DrawerLayout>
+  ```
+
+  #### 3. Drawer with toolbar (No changes required)
+
+  **Impact:** No changes needed. This usage already used the unified grid layout.
+
+  ```tsx
+  // ✅ This usage is NOT affected - already used the unified layout
+  <DrawerLayout
+    toolbarData={DRAWER_TOOLBAR_DATA}
+    displayMode={DisplayMode.Overlay}
+    size={Size.Default}
+  >
+    <Main />
+  </DrawerLayout>
+  ```
+
+  ## Migration Guide
+
+  ### If you have custom CSS overrides:
+
+  1. **Review your custom styles:** Check if you have any CSS that targets drawer layout elements
+  2. **Test thoroughly:** The new grid system may affect positioning, spacing, or responsive behavior
+  3. **Update selectors:** You may need to update CSS selectors to target the new grid structure
+
+  ### Benefits of this change:
+
+  - **Consistent layout:** All drawers now have the same visual structure and behavior
+  - **Better mobile experience:** Unified responsive behavior across all drawer types
+  - **Easier customization:** Single grid system to understand and customize
+  - **Future-proof:** Consistent foundation for future drawer enhancements
+
+### Minor Changes
+
+- 71c6daa: # What's New
+
+  - **New `visible` property**: Toolbar items can now be conditionally shown/hidden using a `visible` boolean property (defaults to true). [LG-5460](https://jira.mongodb.org/browse/LG-5460)
+
+    ```tsx
+    export const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] =
+      [
+        {
+          id: 'Code',
+          label: 'Code',
+          content: <DrawerContent />,
+          title: 'Code Title',
+          glyph: 'Code',
+        },
+        {
+          id: 'Dashboard',
+          label: 'Dashboard',
+          content: <DrawerContent />,
+          title: 'Dashboard Title',
+          glyph: 'Dashboard',
+          visible: false, // This item will be hidden
+        },
+        {
+          id: 'Plus',
+          label: "Perform some action, doesn't open a drawer",
+          glyph: 'Plus',
+        },
+        {
+          id: 'Sparkle',
+          label: 'Disabled item',
+          glyph: 'Sparkle',
+          disabled: true,
+        },
+      ];
+    ```
+
+  - **Dynamic toolbar rendering**: When all toolbar items have `visible: false`, the entire toolbar element is removed from the DOM. [LG-5460](https://jira.mongodb.org/browse/LG-5460)
+
+    ```tsx
+      {
+        id: 'Code',
+        label: 'Code',
+        content: <DrawerContent />,
+        title: 'Code Title',
+        glyph: 'Code',
+        visible: false,
+      },
+      {
+        id: 'Dashboard',
+        label: 'Dashboard',
+        content: <DrawerContent />,
+        title: 'Dashboard Title',
+        glyph: 'Dashboard',
+        visible: false,
+      },
+      {
+        id: 'Plus',
+        label: "Perform some action, doesn't open a drawer",
+        glyph: 'Plus',
+        visible: false,
+      },
+      {
+        id: 'Sparkle',
+        label: 'Disabled item',
+        glyph: 'Sparkle',
+        disabled: true,
+        visible: false,
+      },
+    ```
+
+- 0e77720: [LG-5473](https://jira.mongodb.org/browse/LG-5473) Add `hasPadding` prop to `Drawer` to allow removing padding styles from container wrapping `children`. Also expose `hasPadding` prop in `toolbarData` objects.
+
+  Note: previously, padding styles could be removed by setting `scrollable` to `false`. This has been de-coupled from `scrollable`, and `hasPadding` and `scrollable` work independently. [Learn more here about padding and scroll behavior](https://github.com/mongodb/leafygreen-ui/blob/main/packages/drawer/README.md#padding-and-scroll-behavior)
+
+### Patch Changes
+
+- 92db431: Fixes bug where the drawer would not close when the active toolbar item became hidden.
+  When a drawer with a toolbar is open and its corresponding active toolbar item's visibility is set to false, the drawer will now automatically close.
+
 ## 4.2.1
 
 ### Patch Changes

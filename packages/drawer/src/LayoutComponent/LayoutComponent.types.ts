@@ -4,12 +4,12 @@ export interface LayoutComponentProps
   extends DarkModeProps,
     Omit<HTMLElementProps<'div'>, 'children'> {
   /**
-   * Slot prop for the drawer
+   * Slot prop for the content that should render in the drawer column.
    */
-  drawer?: React.ReactNode;
+  panelContent?: React.ReactNode;
 
   /**
-   * The content to be rendered inside the Drawer
+   * The content to be rendered in the content column.
    */
   children: React.ReactNode;
 }
