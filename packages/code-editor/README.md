@@ -292,7 +292,7 @@ editorRef.current.downloadContent('my-file.py');
 // Downloads as 'code' (uses filename exactly as provided, even though it's "code")
 editorRef.current.downloadContent('code');
 
-// Downloads as 'code.py' (default behavior - no filename parameter provided)
+// Downloads as 'code' (default behavior - no filename parameter provided)
 editorRef.current.downloadContent(); // No filename provided
 ```
 
