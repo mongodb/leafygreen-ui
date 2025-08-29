@@ -18,6 +18,7 @@ export const BasePolymorph = <T extends PolymorphicAs = 'div'>(
   const { Component } = usePolymorphic(as);
 
   return (
+    // @ts-expect-error FIXME: React17 types
     <Component {...rest} ref={ref}>
       {children}
     </Component>
