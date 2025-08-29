@@ -1,3 +1,6 @@
+// @ts-nocheck
+// FIXME: React17 types
+
 import React, { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
