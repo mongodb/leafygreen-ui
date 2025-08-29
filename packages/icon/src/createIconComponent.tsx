@@ -31,6 +31,7 @@ export function createIconComponent<G extends GlyphObject = GlyphObject>(
     const SVGComponent = glyphs[glyph];
 
     if (SVGComponent) {
+      // @ts-expect-error FIXME: React17 types
       return <SVGComponent {...rest} />;
     } else {
       // TODO: improve fuzzy match
