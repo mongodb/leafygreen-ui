@@ -9,12 +9,5 @@
   "include": [
     "src/**/*"
   ],
-  "references": [
-    {
-      "path": "../../packages/hooks"
-    },
-    {
-      "path": "../../packages/leafygreen-provider"
-    }
-  ]
+  "references": []
 }
