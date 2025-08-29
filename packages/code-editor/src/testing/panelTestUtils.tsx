@@ -14,6 +14,8 @@ const defaultStubFormatCode = () => Promise.resolve('formatted content');
 const defaultStubUndo = () => true;
 const defaultStubRedo = () => true;
 
+const defaultStubDownloadContent = () => {};
+
 /**
  * Panel-specific selectors for easier testing
  */
@@ -36,6 +38,7 @@ export interface PanelTestContextConfig {
   isFormattingAvailable?: boolean;
   undo?: () => boolean;
   redo?: () => boolean;
+  downloadContent?: () => void;
 }
 
 /**
@@ -60,6 +63,7 @@ export function renderPanel(config: RenderPanelConfig = {}) {
     isFormattingAvailable: true,
     undo: defaultStubUndo,
     redo: defaultStubRedo,
+    downloadContent: defaultStubDownloadContent,
     ...contextConfig,
   };
 
@@ -392,4 +396,5 @@ export const defaultPanelContextFunctions = {
   formatCode: defaultStubFormatCode,
   undo: defaultStubUndo,
   redo: defaultStubRedo,
+  downloadContent: defaultStubDownloadContent,
 };

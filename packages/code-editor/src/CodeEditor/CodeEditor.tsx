@@ -29,6 +29,7 @@ import {
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
 import { CodeEditorProvider } from './CodeEditorContext';
+import { LANGUAGE_EXTENSION_MAP } from './constants';
 import {
   useCodeFormatter,
   useExtensions,
@@ -191,6 +192,51 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       return commands.redo(editorViewRef.current);
     }, [coreModules]);
 
+    /**
+     * Downloads the current editor content as a file.
+     * @param filename - Optional custom filename. If provided, used exactly as-is with no modifications. If omitted, defaults to 'code' with appropriate extension based on language.
+     */
+    const handleDownloadContent = useCallback(
+      (filename?: string): void => {
+        const content = getContents();
+
+        if (!content.trim()) {
+          console.warn('Cannot download empty content');
+          return;
+        }
+
+        let fullFilename: string;
+
+        if (filename === undefined) {
+          // No filename provided, use default with appropriate extension
+          const extension = language ? LANGUAGE_EXTENSION_MAP[language] : 'txt';
+          fullFilename = `code.${extension}`;
+        } else {
+          // Use provided filename exactly as-is
+          fullFilename = filename;
+        }
+
+        // Create blob and download
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+
+        // Create temporary anchor element for download
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = fullFilename;
+        anchor.style.display = 'none';
+
+        // Trigger download
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+
+        // Clean up object URL
+        URL.revokeObjectURL(url);
+      },
+      [getContents, language],
+    );
+
     useLayoutEffect(() => {
       const EditorView = coreModules?.['@codemirror/view'];
       const commands = coreModules?.['@codemirror/commands'];
@@ -261,6 +307,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       isFormattingAvailable,
       undo: handleUndo,
       redo: handleRedo,
+      downloadContent: handleDownloadContent,
     }));
 
     const contextValue = {
@@ -270,6 +317,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       language,
       undo: handleUndo,
       redo: handleRedo,
+      downloadContent: handleDownloadContent,
     };
 
     return (
