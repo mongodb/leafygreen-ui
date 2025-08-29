@@ -1,5 +1,28 @@
 # @leafygreen-ui/select
 
+## 16.1.1
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [172c228]
+- Updated dependencies [172c228]
+  - @leafygreen-ui/hooks@9.1.2
+  - @leafygreen-ui/button@25.0.3
+  - @leafygreen-ui/emotion@5.0.1
+  - @leafygreen-ui/form-field@4.0.2
+  - @leafygreen-ui/icon@14.4.1
+  - @leafygreen-ui/input-option@4.0.4
+  - @leafygreen-ui/leafygreen-provider@5.0.3
+  - @leafygreen-ui/lib@15.2.1
+  - @leafygreen-ui/palette@5.0.1
+  - @leafygreen-ui/popover@14.0.4
+  - @leafygreen-ui/tokens@3.2.3
+  - @leafygreen-ui/typography@22.1.1
+  - @lg-tools/build@0.8.1
+  - @lg-tools/test-harnesses@0.3.3
+
 ## 16.1.0
 
 ### Minor Changes
