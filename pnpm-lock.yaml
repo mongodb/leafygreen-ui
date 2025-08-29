@@ -1958,6 +1958,9 @@ importers:
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
+      '@leafygreen-ui/testing-lib':
+        specifier: workspace:^
+        version: link:../testing-lib
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
