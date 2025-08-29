@@ -1,5 +1,14 @@
 # @leafygreen-ui/ripple
 
+## 2.0.4
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [172c228]
+  - @leafygreen-ui/tokens@3.2.3
+
 ## 2.0.3
 
 ### Patch Changes

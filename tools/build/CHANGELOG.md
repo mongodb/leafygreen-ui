@@ -1,5 +1,12 @@
 # @lg-tools/build
 
+## 0.8.1
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+
 ## 0.8.0
 
 ### Minor Changes

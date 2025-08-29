@@ -1,5 +1,17 @@
 # @lg-tools/validate
 
+## 0.6.0
+
+### Minor Changes
+
+- 172c228: Validate script no longer fails if a package is missing a `devDependency`. This was done due to a significant number of false positives, and since using `pnpm` to resolve packages should flag the true missing `devDeps` in the build, test, or stories step
+
+### Patch Changes
+
+- Updated dependencies [172c228]
+  - @lg-tools/build@0.8.1
+  - @lg-tools/meta@0.6.1
+
 ## 0.5.1
 
 ### Patch Changes
