@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@storybook/csf": "0.1.13",
-    "@storybook/react": "8.6.12",
+    "@storybook/react": "^7.0.0",
     "glob": "10.3.12",
     "lodash": "^4.17.21"
   },
