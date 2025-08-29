@@ -13,10 +13,7 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": [
-    "**/*.spec.*",
-    "**/*.stories.*"
-  ],
+  "exclude": [],
   "references": [
     {
       "path": "../lib"
@@ -26,6 +23,12 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../testing-lib"
+    },
+    {
+      "path": "../../tools/storybook-utils"
     }
   ]
 }

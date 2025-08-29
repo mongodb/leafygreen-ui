@@ -6,8 +6,8 @@ import { StoryObj } from '@storybook/react';
 
 import { useEventListener } from '@leafygreen-ui/hooks';
 
-import { TestDescendantContext } from '../../test/components.testutils';
 import { useDescendant, useInitDescendants } from '../Descendants';
+import { TestDescendantContext } from '../testUtils/components.testutils';
 
 import { useHighlightContext } from './useHighlightContext';
 import { createHighlightContext, useHighlight } from '.';

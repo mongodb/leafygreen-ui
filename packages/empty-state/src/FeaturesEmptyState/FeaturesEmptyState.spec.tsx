@@ -11,7 +11,8 @@ import { MAX_NUM_FEATURES, MIN_NUM_FEATURES } from './FeaturesEmptyState';
 import { FeaturesEmptyState } from '.';
 
 const testGraphics = Object.keys(graphics).reduce((acc, theme) => {
-  acc[theme] = graphics[theme].map((graphic, index: number) => (
+  // @ts-expect-error - graphics keys are typed as any
+  acc[theme] = graphics[theme].map((graphic: string, index: number) => (
     // jest will not process SVGs, so render them as <img /> elements
     <img key={index} src={graphic} alt="" />
   ));

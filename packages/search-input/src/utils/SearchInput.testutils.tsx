@@ -15,14 +15,12 @@ export function getSearchInputJSX(props?: Partial<SearchInputProps>) {
 }
 
 type RenderSearchInputReturn = RenderResult & {
-  rerenderWithProps?: (
-    newProps?: Partial<SearchInputProps> | undefined,
-  ) => void;
-  containerEl?: HTMLElement;
-  searchBoxEl?: HTMLElement;
-  inputEl?: HTMLElement;
-  openMenu?: Function;
-  getMenuElements?: Function;
+  rerenderWithProps: (newProps?: Partial<SearchInputProps> | undefined) => void;
+  containerEl: HTMLElement;
+  searchBoxEl: HTMLElement;
+  inputEl: HTMLInputElement;
+  openMenu: Function;
+  getMenuElements: Function;
 };
 
 export function renderSearchInput(

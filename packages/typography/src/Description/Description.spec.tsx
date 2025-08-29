@@ -9,8 +9,8 @@ const renderDescription = ({
   as,
   children = 'Test description',
 }: {
-  as: PolymorphicAs;
-  children: ReactNode;
+  as?: PolymorphicAs;
+  children?: ReactNode;
 }) => {
   return render(<Description as={as}>{children}</Description>);
 };

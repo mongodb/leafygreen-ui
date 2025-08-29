@@ -11,7 +11,6 @@
     "src/**/*"
   ],
   "exclude": [
-    "**/*.spec.*",
     "**/*.stories.*"
   ],
   "references": [
@@ -28,7 +27,13 @@
       "path": "../lib"
     },
     {
+      "path": "../popover"
+    },
+    {
       "path": "../testing-lib"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

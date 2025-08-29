@@ -1,6 +1,7 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
+    "rootDir": "./",
     "paths": {
       "@leafygreen-ui/*": [
         "../*/src"
@@ -8,15 +9,20 @@
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "scripts/**/*",
+    ".svgrrc.js",
+    "constants.mjs"
   ],
   "exclude": [
-    "**/*.spec.*",
     "**/*.stories.*"
   ],
   "references": [
     {
       "path": "../emotion"
+    },
+    {
+      "path": "../lib"
     }
   ]
 }

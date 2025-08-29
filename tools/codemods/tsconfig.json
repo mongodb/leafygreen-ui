@@ -13,7 +13,6 @@
   "exclude": [
     "**/*.input.*",
     "**/*.output.*",
-    "**/*.spec.*",
     "**/*.stories.*"
   ],
   "references": []

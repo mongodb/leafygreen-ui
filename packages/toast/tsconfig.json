@@ -13,11 +13,11 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": [
-    "**/*.spec.*",
-    "**/*.stories.*"
-  ],
+  "exclude": [],
   "references": [
+    {
+      "path": "../button"
+    },
     {
       "path": "../emotion"
     },

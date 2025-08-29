@@ -16,11 +16,11 @@ import {
   useMockTestRowData,
   useTestHookCall,
 } from '../utils/testHookCalls.testutils';
-import { Table } from '..';
+import { Table, TableProps } from '..';
 
 import ExpandedContent from './ExpandedContent';
 
-const RowWithExpandableContent = args => {
+const RowWithExpandableContent = (args: TableProps<Person>) => {
   const { table } = useTestHookCall({
     rowProps: {
       renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {

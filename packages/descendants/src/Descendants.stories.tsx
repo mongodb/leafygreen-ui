@@ -2,6 +2,7 @@
 import React, { ComponentProps, ElementType, useRef, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryObj } from '@storybook/react';
 import random from 'lodash/random';
 import range from 'lodash/range';
 import shuffle from 'lodash/shuffle';
@@ -17,9 +18,8 @@ import {
   TestDescendantContext,
   TestParent,
   TestParent2,
-} from '../test/components.testutils';
-import { TestSelectionContext } from '../test/testSelectionContext';
-
+} from './testUtils/components.testutils';
+import { TestSelectionContext } from './testUtils/testSelectionContext';
 import { useInitDescendants } from '.';
 
 faker.seed(0);
@@ -216,7 +216,7 @@ const Parent = ({
   );
 };
 
-export const WithPopover = {
+export const WithPopover: StoryObj<typeof Parent> = {
   render: ({ open }) => {
     return (
       <Parent open={open}>

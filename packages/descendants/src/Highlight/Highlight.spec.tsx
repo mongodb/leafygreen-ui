@@ -3,11 +3,11 @@ import { render, waitFor } from '@testing-library/react';
 
 import { act, renderHook } from '@leafygreen-ui/testing-lib';
 
+import { Descendant, useInitDescendants } from '../Descendants';
 import {
   TestDescendant,
   TestDescendantContext,
-} from '../../test/components.testutils';
-import { Descendant, useInitDescendants } from '../Descendants';
+} from '../testUtils/components.testutils';
 
 import { UseHighlightOptions } from './highlight.types';
 import { createHighlightContext } from './HighlightContext';

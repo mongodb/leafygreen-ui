@@ -1,13 +1,25 @@
 import React, { ReactNode } from 'react';
-import { render } from '@testing-library/react';
+import { render, RenderHookResult, RenderResult } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
+import { InitDescendantsReturnObject } from '../Descendants/useInitDescendants';
 import { useInitDescendants } from '..';
 
 import { TestDescendantContext } from './components.testutils';
 
-export const renderDescendantsTestContext = (children: ReactNode) => {
+export interface RenderDescendantsTestContextResult {
+  hook: RenderHookResult<
+    InitDescendantsReturnObject<HTMLDivElement>,
+    undefined
+  >;
+  renderResult: RenderResult;
+  rerender: (children: ReactNode) => void;
+}
+
+export const renderDescendantsTestContext = (
+  children: ReactNode,
+): RenderDescendantsTestContextResult => {
   const hook = renderHook(() => useInitDescendants(TestDescendantContext));
 
   const renderResult = render(

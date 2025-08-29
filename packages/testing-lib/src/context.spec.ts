@@ -75,14 +75,16 @@ describe('Context', () => {
       };
       const operation = jest.fn();
 
-      let exception: unknown;
+      let exception!: unknown;
 
       try {
         within(context, operation);
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(EnterException);
-        ({ exception } = error);
+        if (error instanceof EnterException) {
+          ({ exception } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
@@ -102,14 +104,16 @@ describe('Context', () => {
       const promise = within(context, operation);
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
 
-      let exception: unknown;
+      let exception!: unknown;
 
       try {
         await promise;
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(EnterException);
-        ({ exception } = error);
+        if (error instanceof EnterException) {
+          ({ exception } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
@@ -129,14 +133,16 @@ describe('Context', () => {
       // It would be nice if we were able to return a rejected promise
       // instead of throwing, but we have no way of knowing whether we
       // should do so without being able to call `exit`.
-      let exception: unknown;
+      let exception!: unknown;
 
       try {
         within(context, operation);
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(EnterException);
-        ({ exception } = error);
+        if (error instanceof EnterException) {
+          ({ exception } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
@@ -156,14 +162,16 @@ describe('Context', () => {
       // It would be nice if we were able to return a rejected promise
       // instead of throwing, but we have no way of knowing whether we
       // should do so without being able to call the operation.
-      let exception: unknown;
+      let exception!: unknown;
 
       try {
         within(context, operation);
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(EnterException);
-        ({ exception } = error);
+        if (error instanceof EnterException) {
+          ({ exception } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
@@ -181,15 +189,17 @@ describe('Context', () => {
         },
       };
 
-      let exception: unknown;
-      let result: ExitException<number>['result'];
+      let exception!: unknown;
+      let result!: ExitException<number>['result'];
 
       try {
         within(context, () => 1);
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(ExitException);
-        ({ exception, result } = error);
+        if (error instanceof ExitException) {
+          ({ exception, result } = error);
+        }
       }
 
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
@@ -208,15 +218,17 @@ describe('Context', () => {
       const promise = within(context, () => 1);
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
 
-      let exception: unknown;
-      let result: ExitException<number>['result'];
+      let exception!: unknown;
+      let result!: ExitException<number>['result'];
 
       try {
         await promise;
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(ExitException);
-        ({ exception, result } = error);
+        if (error instanceof ExitException) {
+          ({ exception, result } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
@@ -234,15 +246,17 @@ describe('Context', () => {
       const promise = within(context, () => 1);
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
 
-      let exception: unknown;
-      let result: ExitException<number>['result'];
+      let exception!: unknown;
+      let result!: ExitException<number>['result'];
 
       try {
         await promise;
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(ExitException);
-        ({ exception, result } = error);
+        if (error instanceof ExitException) {
+          ({ exception, result } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
@@ -260,15 +274,17 @@ describe('Context', () => {
       const promise = within(context, async () => 1);
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
 
-      let exception: unknown;
-      let result: ExitException<number>['result'];
+      let exception!: unknown;
+      let result!: ExitException<number>['result'];
 
       try {
         await promise;
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(ExitException);
-        ({ exception, result } = error);
+        if (error instanceof ExitException) {
+          ({ exception, result } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
@@ -285,17 +301,19 @@ describe('Context', () => {
         },
       };
 
-      let exception: unknown;
-      let result: ExitException<number>['result'];
+      let exception!: unknown;
+      let result!: ExitException<number>['result'];
 
       try {
         within(context, () => {
           throw Error('operation error');
         });
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(ExitException);
-        ({ exception, result } = error);
+        if (error instanceof ExitException) {
+          ({ exception, result } = error);
+        }
       }
 
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
@@ -316,15 +334,17 @@ describe('Context', () => {
       });
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
 
-      let exception: unknown;
-      let result: ExitException<number>['result'];
+      let exception!: unknown;
+      let result!: ExitException<number>['result'];
 
       try {
         await promise;
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(ExitException);
-        ({ exception, result } = error);
+        if (error instanceof ExitException) {
+          ({ exception, result } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
@@ -344,15 +364,17 @@ describe('Context', () => {
       });
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
 
-      let exception: unknown;
-      let result: ExitException<number>['result'];
+      let exception!: unknown;
+      let result!: ExitException<number>['result'];
 
       try {
         await promise;
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(ExitException);
-        ({ exception, result } = error);
+        if (error instanceof ExitException) {
+          ({ exception, result } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
@@ -372,15 +394,17 @@ describe('Context', () => {
       });
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
 
-      let exception: unknown;
-      let result: ExitException<number>['result'];
+      let exception!: unknown;
+      let result!: ExitException<number>['result'];
 
       try {
         await promise;
         throw Error('unreachable');
-      } catch (error) {
+      } catch (error: unknown) {
         expect(error).toBeInstanceOf(ExitException);
-        ({ exception, result } = error);
+        if (error instanceof ExitException) {
+          ({ exception, result } = error);
+        }
       }
 
       expect(exception).toEqual(Error('expected error'));
