@@ -1,12 +1,19 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
-  "compilerOptions": {},
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types"
+  },
   "include": [
     "src/**/*"
   ],
- "exclude": ["**/*.spec.*", "**/*.stories.*"],
-
- "references": [
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
+  "references": [
     {
       "path": "../../packages/banner"
     },
@@ -24,6 +31,6 @@
     },
     {
       "path": "../../tools/storybook-utils"
-    },
-  ],
+    }
+  ]
 }

@@ -11,7 +11,11 @@
       "highlight.js": [
         "./node_modules/highlight.js"
       ]
-    }
+    },
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types"
   },
   "include": [
     "src/**/*"

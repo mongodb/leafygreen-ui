@@ -1,6 +1,11 @@
 {
   "extends": "@lg-tools/build/config/node.tsconfig.json",
-   "compilerOptions": {},
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types"
+  },
   "include": [
     "src/**/*"
   ],
@@ -29,7 +34,6 @@
     },
     {
       "path": "../../tools/storybook-utils"
-    },
-
+    }
   ]
 }

@@ -2,12 +2,19 @@
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
     "noErrorTruncation": false,
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types"
   },
   "include": [
     "src/**/*"
   ],
-  "exclude": ["src/Example/*", "**/*.stories.*"],
+  "exclude": [
+    "src/Example/*",
+    "**/*.stories.*"
+  ],
   "references": [
     {
       "path": "../lib"

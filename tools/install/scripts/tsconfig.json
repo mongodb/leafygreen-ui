@@ -3,6 +3,9 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types"
   },
   "references": [
     {
