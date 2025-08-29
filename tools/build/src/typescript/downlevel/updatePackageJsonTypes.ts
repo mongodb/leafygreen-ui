@@ -69,7 +69,7 @@ export function updatePackageJsonTypes(
     // Construct the base typesVersions field
     const typesVersions: Record<string, Record<string, Array<string>>> = {
       '*': {
-        '.': ['./index.d.ts'],
+        '.': [`./${DEFAULT_TYPES_EXPORT_PATH}/index.d.ts`],
       },
     };
 
@@ -84,9 +84,9 @@ export function updatePackageJsonTypes(
     // Ensure the main export path exists
     if (!packageExports['.']) {
       packageExports['.'] = {
-        import: packageJson.module,
-        require: packageJson.main,
-        types: packageJson.types,
+        import: packageJson.module ?? '',
+        require: packageJson.main ?? '',
+        types: packageJson.types ?? '',
       };
     } else if (typeof packageExports['.'] === 'string') {
       // If the main export is a string, convert it to an object
@@ -99,16 +99,16 @@ export function updatePackageJsonTypes(
 
     // set the default types export
     if (!packageExports['.'].types) {
-      packageExports['.'].types = './index.d.ts';
+      packageExports['.'].types = `./${DEFAULT_TYPES_EXPORT_PATH}/index.d.ts`;
     }
 
     // Add entries for each TypeScript version we support
     DOWNLEVEL_VERSIONS.forEach(({ condition, target }) => {
-      const typesExportPath = path.join(
+      const typesExportPath = `./${path.join(
         DEFAULT_TYPES_EXPORT_PATH,
         `ts${target}`,
         'index.d.ts',
-      );
+      )}`;
 
       // Add to typesVersions if target is less than 4.9
       // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#packageExports-is-prioritized-over-typesversions
