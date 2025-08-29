@@ -51,3 +51,7 @@ export const getPanelButtonsStyles = () => {
     grid-area: buttons;
   `;
 };
+
+export const ModalStyles = css`
+  height: 354px;
+`;

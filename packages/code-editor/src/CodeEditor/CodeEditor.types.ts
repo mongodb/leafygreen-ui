@@ -68,6 +68,9 @@ export const CodeEditorSelectors = {
   Line: '.cm-line',
   LineNumbers: '.cm-lineNumbers',
   LineWrapping: '.cm-lineWrapping',
+  SearchInput:
+    'input[type="text"], .cm-textfield, input[placeholder*="search" i]',
+  SearchPanel: '.cm-search, .cm-panel',
   SelectionBackground: '.cm-selectionBackground',
   Tooltip: '.cm-tooltip',
 } as const;

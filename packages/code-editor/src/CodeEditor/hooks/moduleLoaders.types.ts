@@ -29,6 +29,7 @@ export interface CodeEditorModules {
   '@codemirror/state': typeof import('@codemirror/state');
   '@codemirror/commands': typeof import('@codemirror/commands');
   '@codemirror/autocomplete': typeof import('@codemirror/autocomplete');
+  '@codemirror/search': typeof import('@codemirror/search');
 
   // Prettier formatting modules
   'prettier/standalone': typeof import('prettier/standalone');

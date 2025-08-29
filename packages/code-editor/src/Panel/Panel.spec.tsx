@@ -4,6 +4,17 @@ import '@testing-library/jest-dom';
 
 import { renderPanel } from '../testing/panelTestUtils';
 
+// Mock Modal component to avoid HTMLDialogElement issues
+jest.mock('@leafygreen-ui/modal', () => {
+  return function MockModal({ children, open, ...props }: any) {
+    return open ? (
+      <div data-testid="mock-modal" {...props}>
+        {children}
+      </div>
+    ) : null;
+  };
+});
+
 import { PanelProps } from './Panel.types';
 
 const TestIcon = () => <div data-testid="test-icon" />;
