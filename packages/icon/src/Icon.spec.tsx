@@ -157,6 +157,7 @@ describe('packages/Icon/createGlyphComponent', () => {
   });
 
   test('returned function renders the glyph specified', () => {
+    // @ts-expect-error FIXME: React17 types
     const { getByTestId } = render(<GlyphComponent />);
     const glyph = getByTestId('my-glyph');
 
@@ -168,6 +169,7 @@ describe('packages/Icon/createGlyphComponent', () => {
 
   describe('returned funcion passes through props', () => {
     test('`size` prop as number', () => {
+      // @ts-expect-error FIXME: React17 types
       const { getByTestId } = render(<GlyphComponent size={20} />);
       const glyph = getByTestId('my-glyph');
       expect(glyph).toHaveAttribute('height', '20');
@@ -175,6 +177,7 @@ describe('packages/Icon/createGlyphComponent', () => {
     });
 
     test('`size` prop as Size', () => {
+      // @ts-expect-error FIXME: React17 types
       const { getByTestId } = render(<GlyphComponent size={Size.Large} />);
       const glyph = getByTestId('my-glyph');
       expect(glyph).toHaveAttribute('height', '20');
@@ -182,6 +185,7 @@ describe('packages/Icon/createGlyphComponent', () => {
     });
 
     test('`role`', () => {
+      // @ts-expect-error FIXME: React17 types
       const { getByTestId } = render(<GlyphComponent role="presentation" />);
       const glyph = getByTestId('my-glyph');
       expect(glyph).toHaveAttribute('role', 'presentation');
