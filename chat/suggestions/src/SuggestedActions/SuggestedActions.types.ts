@@ -7,7 +7,7 @@ export interface SuggestedActionsProps
     DarkModeProps {
   /**
    * Configuration parameters with their individual state values.
-   * Each parameter includes a key, value, and state (unset/apply/success/error).
+   * Each parameter includes a key, value, and state (unset/success/error).
    */
   configurationParameters: ConfigurationParameters;
 
