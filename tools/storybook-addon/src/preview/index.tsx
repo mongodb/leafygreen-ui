@@ -75,7 +75,7 @@ const parameters = {
 const preview: Preview = {
   parameters,
   decorators: [ReactStrictMode, ComponentPreview, PropCombinations],
-  tags: ['autodocs'],
+  // tags: ['autodocs'],
 };
 
 export default preview;
