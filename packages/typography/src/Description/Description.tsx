@@ -34,7 +34,6 @@ export const Description = Polymorphic<DescriptionProps>(
     const { Component } = usePolymorphic(as);
 
     return (
-      // @ts-expect-error FIXME: React17 types
       <Component
         data-lgid={getLgIds(dataLgId).description}
         data-testid={getLgIds(dataLgId).description}

@@ -26,7 +26,6 @@ const Error = Polymorphic<BaseErrorProps>(
     const { Component } = usePolymorphic(as);
 
     return (
-      // @ts-expect-error FIXME: React17 types
       <Component
         {...rest}
         className={cx(getErrorMessageStyle({ theme, baseFontSize }), className)}

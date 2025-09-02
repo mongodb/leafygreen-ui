@@ -24,7 +24,6 @@ const H2 = Polymorphic<BaseH2Props>(
     const { Component } = usePolymorphic(as);
 
     return (
-      // @ts-expect-error FIXME: React17 types
       <Component
         className={cx(
           baseTypographyStyles,

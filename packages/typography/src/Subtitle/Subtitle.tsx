@@ -24,7 +24,6 @@ const Subtitle = Polymorphic<BaseSubtitleProps>(
     const { Component } = usePolymorphic(as);
 
     return (
-      // @ts-expect-error FIXME: React17 types
       <Component
         className={cx(
           baseTypographyStyles,

@@ -39,7 +39,6 @@ export function createGlyphComponent(
     }
 
     return (
-      // @ts-expect-error FIXME: React17 types
       <Glyph
         className={cx(
           {
