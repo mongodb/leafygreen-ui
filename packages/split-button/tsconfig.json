@@ -49,6 +49,9 @@
     },
     {
       "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../../tools/test-harnesses"
     }
   ]
 }
