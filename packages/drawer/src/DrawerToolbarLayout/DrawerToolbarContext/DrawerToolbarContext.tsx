@@ -45,24 +45,6 @@ export const DrawerToolbarProvider = ({
     [data],
   );
 
-  // Checks if the active drawer id is removed from the data or if the active drawer item is not visible. If so, close the drawer.
-  useEffect(() => {
-    if (shouldRenderToolbar && activeDrawerId) {
-      const content = findActiveDrawerContent(activeDrawerId);
-      const isActiveItemVisible = content?.visible ?? true;
-
-      if (!content || !isActiveItemVisible) {
-        closeDrawer();
-      }
-    }
-  }, [
-    data,
-    activeDrawerId,
-    shouldRenderToolbar,
-    closeDrawer,
-    findActiveDrawerContent,
-  ]);
-
   /**
    * Checks if there is any content for the provided id.
    * If there is, it opens the drawer and sets the active drawer id.
@@ -95,6 +77,24 @@ export const DrawerToolbarProvider = ({
       setActiveDrawerId(null);
     }, TRANSITION_DURATION);
   }, [setActiveDrawerId]);
+
+  // Checks if the active drawer id is removed from the data or if the active drawer item is not visible. If so, close the drawer.
+  useEffect(() => {
+    if (shouldRenderToolbar && activeDrawerId) {
+      const content = findActiveDrawerContent(activeDrawerId);
+      const isActiveItemVisible = content?.visible ?? true;
+
+      if (!content || !isActiveItemVisible) {
+        closeDrawer();
+      }
+    }
+  }, [
+    data,
+    activeDrawerId,
+    shouldRenderToolbar,
+    closeDrawer,
+    findActiveDrawerContent,
+  ]);
 
   /**
    * Returns the content for the active drawer id.
