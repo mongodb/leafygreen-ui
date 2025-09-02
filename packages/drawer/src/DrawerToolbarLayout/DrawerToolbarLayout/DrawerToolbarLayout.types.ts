@@ -77,10 +77,6 @@ export type LayoutData = LayoutWithContent | LayoutWithoutContent;
 
 export type DrawerToolbarLayoutProps = DarkModeProps &
   LgIdProps & {
-    /**
-     * An array of data that will be used to render the toolbar items and the drawer content.
-     */
-    toolbarData: Array<LayoutData>;
     className?: string;
     children: React.ReactNode;
   };

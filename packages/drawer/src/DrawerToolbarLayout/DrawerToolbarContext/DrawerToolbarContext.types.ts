@@ -29,6 +29,21 @@ export interface DrawerToolbarContextType {
    * @returns The active drawer data
    */
   getActiveDrawerContent: () => ContextData;
+
+  /**
+   * Indicates whether the toolbar should be rendered. This is determined by the `visible` prop on the toolbar items. If all toolbar items have `visible` set to `false`, the toolbar will not be rendered.
+   */
+  shouldRenderToolbar: boolean;
+
+  /**
+   * An array of the visible toolbar items. This is determined by the `visible` prop on the toolbar items.
+   */
+  visibleToolbarItems: Array<LayoutData>;
+
+  /**
+   * An array of the toolbar items.
+   */
+  toolbarData: Array<LayoutData>;
 }
 
 export interface DrawerToolbarProviderProps {
@@ -40,5 +55,5 @@ export interface DrawerToolbarProviderProps {
   /**
    * The data to be used in the drawer
    */
-  data: Array<ContextData>;
+  data: Array<LayoutData>;
 }
