@@ -75,10 +75,11 @@
     "stream": "^0.0.3",
     "ts-node": "10.9.2",
     "turbo": "^2.0.6",
-    "typescript": "~5.0.0"
+    "typescript": "5.0.4"
   },
   "pnpm": {
     "overrides": {
+      "@emotion/react": "11.11.1",
       "@types/react": "16.9.56",
       "@types/react-dom": "16.9.18",
       "@types/react-is": "17.0.7",
@@ -87,13 +88,13 @@
       "@testing-library/react": "11.2.7",
       "@testing-library/react-hooks": "7.0.2",
       "@testing-library/user-event": "12.8.3",
+      "caniuse-lite": "^1.0.30001585",
+      "jackspeak": "2.1.1",
       "react-test-renderer": "17.0.2",
       "react": "$react",
       "react-dom": "$react-dom",
       "react-is": "17.0.2",
-      "@emotion/react": "11.11.1",
-      "caniuse-lite": "^1.0.30001585",
-      "jackspeak": "2.1.1"
+      "typescript": "5.0.4"
     },
     "peerDependencyRules": {
       "allowedVersions": {
