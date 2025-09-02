@@ -69,8 +69,8 @@ export const DrawerContent = () => {
  * Returns the toolbar data based on the provided parameters
  * @param hasToolbarData - Whether the toolbar data should be visible
  * @param hasStaticContent - Whether the content should be static
- * @param hasHiddenToolbarItem - Whether the toolbar item should be hidden
- * @param hasRemovedToolbarItem - Whether the toolbar item should be removed from the
+ * @param hasHiddenToolbarItem - Whether the toolbar item should be hidden with the visible prop
+ * @param hasRemovedToolbarItem - Whether the toolbar item should be removed from the data array
  * @returns The toolbar data
  */
 export const getDrawerToolbarData = ({
