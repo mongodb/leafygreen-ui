@@ -6,6 +6,7 @@ import { type SeriesOption } from '../Chart';
 
 import { EChartsInstance } from './Echart.types';
 import { useEchart } from './useEchart';
+import { EChartsInstance } from '.';
 
 // Mock echarts instance creation with all required methods
 const mockEchartsInstance = {
