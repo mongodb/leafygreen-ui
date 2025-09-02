@@ -32,6 +32,6 @@
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
-    "@storybook/test": "8.5.3"
+    "@storybook/test": "7.6.20"
   }
 }

@@ -55,7 +55,7 @@
     "@leafygreen-ui/pagination": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
     "@lg-tools/build": "workspace:^",
-    "@storybook/test": "^8.6.14"
+    "@storybook/test": "7.6.20"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
