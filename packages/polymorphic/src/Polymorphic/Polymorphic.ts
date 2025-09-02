@@ -32,7 +32,7 @@ export const Polymorphic = <
   const PolyComponent: PolymorphicComponentType<XP, DefaultAs> =
     render.length === 1
       ? render
-      : // @ts-expect-error In TS<5.0 this is `ReactElement` but in 5+ it's `ReactNode`
+      : // @ts-ignore React17 In TS<5.0 this is `ReactElement` but in 5+ it's `ReactNode`
         (forwardRef(render) as PolymorphicComponentType<XP, DefaultAs>);
 
   PolyComponent.displayName =

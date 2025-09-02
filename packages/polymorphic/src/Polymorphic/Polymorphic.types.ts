@@ -7,7 +7,6 @@ import {
   ElementType,
   PropsWithChildren,
   PropsWithoutRef,
-  ReactElement,
   ReactNode,
   RefAttributes,
   WeakValidationMap,
@@ -95,10 +94,7 @@ export type PolymorphicPropsWithRef<
 };
 
 // TODO: In TS<5.0 this is `ReactElement` but in 5+ it's `ReactNode`
-export type PolymorphicRenderFunctionReturnType =
-  | ReactElement
-  | ReactNode
-  | null;
+export type PolymorphicRenderFunctionReturnType = ReactNode | null;
 
 /**
  * An explicit definition of the component type
