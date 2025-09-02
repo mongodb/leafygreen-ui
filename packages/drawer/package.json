@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "@storybook/test": "8.5.3",
+    "@storybook/test": "7.6.20",
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
