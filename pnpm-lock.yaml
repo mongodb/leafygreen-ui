@@ -13,7 +13,7 @@ overrides:
   '@testing-library/jest-dom': 5.17.0
   '@testing-library/react': 11.2.7
   '@testing-library/react-hooks': 7.0.2
-  '@testing-library/user-event': 12.8.3
+  '@testing-library/user-event': 13.5.0
   caniuse-lite: ^1.0.30001585
   jackspeak: 2.1.1
   react-test-renderer: 17.0.2
@@ -75,8 +75,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2(react-dom@17.0.2(react@17.0.2))(react-test-renderer@17.0.2(react@17.0.2))(react@17.0.2)
       '@testing-library/user-event':
-        specifier: 12.8.3
-        version: 12.8.3(@testing-library/dom@9.3.4)
+        specifier: 13.5.0
+        version: 13.5.0(@testing-library/dom@9.3.4)
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -3301,8 +3301,8 @@ importers:
         specifier: 11.2.7
         version: 11.2.7(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@testing-library/user-event':
-        specifier: 12.8.3
-        version: 12.8.3(@testing-library/dom@9.3.4)
+        specifier: 13.5.0
+        version: 13.5.0(@testing-library/dom@9.3.4)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4270,8 +4270,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2(react-dom@17.0.2(react@17.0.2))(react-test-renderer@17.0.2(react@17.0.2))(react@17.0.2)
       '@testing-library/user-event':
-        specifier: 12.8.3
-        version: 12.8.3(@testing-library/dom@9.3.4)
+        specifier: 13.5.0
+        version: 13.5.0(@testing-library/dom@9.3.4)
       '@types/cross-spawn':
         specifier: 6.0.2
         version: 6.0.2
@@ -6977,8 +6977,8 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2
 
-  '@testing-library/user-event@12.8.3':
-    resolution: {integrity: sha512-IR0iWbFkgd56Bu5ZI/ej8yQwrkCv8Qydx6RzwbKz9faXazR/+5tvYKsZQgyXJiwgpcva127YO6JcWy7YlCfofQ==}
+  '@testing-library/user-event@13.5.0':
+    resolution: {integrity: sha512-5Kwtbo3Y/NowpkbRuSepbyMFkZmHgD+vPzYB/RJ4oxt5Gj/avFFBYjhw27cqSVPVw/3a67NK1PbiIr9k4Gwmdg==}
     engines: {node: '>=10', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': 9.3.4
@@ -16409,7 +16409,7 @@ snapshots:
       '@storybook/preview-api': 7.6.20
       '@testing-library/dom': 9.3.4
       '@testing-library/jest-dom': 5.17.0
-      '@testing-library/user-event': 12.8.3(@testing-library/dom@9.3.4)
+      '@testing-library/user-event': 13.5.0(@testing-library/dom@9.3.4)
       '@types/chai': 4.3.20
       '@vitest/expect': 0.34.7
       '@vitest/spy': 0.34.7
@@ -16771,7 +16771,7 @@ snapshots:
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
 
-  '@testing-library/user-event@12.8.3(@testing-library/dom@9.3.4)':
+  '@testing-library/user-event@13.5.0(@testing-library/dom@9.3.4)':
     dependencies:
       '@babel/runtime': 7.24.1
       '@testing-library/dom': 9.3.4
