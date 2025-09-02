@@ -64,7 +64,6 @@ const InlineCode = InferredPolymorphic<BaseInlineCodeProps, 'code'>(
 
     if (needsWrapper) {
       return (
-        // @ts-expect-error FIXME: React17 types
         <Component
           className={cx(anchorClassName, codeLinkWrapper, className)}
           {...rest}

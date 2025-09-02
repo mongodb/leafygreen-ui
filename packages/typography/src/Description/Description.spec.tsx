@@ -12,7 +12,6 @@ const renderDescription = ({
   as?: PolymorphicAs;
   children?: ReactNode;
 }) => {
-  // @ts-expect-error FIXME: React17 types
   return render(<Description as={as}>{children}</Description>);
 };
 

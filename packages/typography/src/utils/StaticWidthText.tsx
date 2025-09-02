@@ -98,7 +98,6 @@ export function StaticWidthText<T extends PolymorphicAs = 'span'>({
   // calling getNodeTextContent in case a node gets passed in without TS
   const textContent = getNodeTextContent(children);
   return (
-    // @ts-expect-error FIXME: React17 types
     <Polymorph
       className={cx(
         staticWidthTextStyle({ pseudoElement, maxFontWeight }),

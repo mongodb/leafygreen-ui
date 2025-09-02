@@ -34,7 +34,6 @@ export const Label = Polymorphic<BaseLabelProps>(
     const { Component } = usePolymorphic(as);
 
     return (
-      // @ts-expect-error FIXME: React17 types
       <Component
         data-lgid={getLgIds(dataLgId).label}
         data-testid={getLgIds(dataLgId).label}
