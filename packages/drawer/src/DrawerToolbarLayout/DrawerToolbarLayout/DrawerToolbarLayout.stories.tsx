@@ -137,8 +137,6 @@ const Component: StoryFn<DrawerLayoutProps> = ({
     toolbarData,
   } as DrawerLayoutProps;
 
-  // console.log({ toolbarData });
-
   const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 

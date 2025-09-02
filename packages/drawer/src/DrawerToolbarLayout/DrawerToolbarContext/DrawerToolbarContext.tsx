@@ -25,7 +25,6 @@ export const DrawerToolbarProvider = ({
   const [activeDrawerId, setActiveDrawerId] = useState<DataId | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  // Calculate derived values directly from data prop - no state needed
   const visibleToolbarItems = useMemo(() => {
     return data.filter(toolbarItem => toolbarItem.visible ?? true);
   }, [data]);
