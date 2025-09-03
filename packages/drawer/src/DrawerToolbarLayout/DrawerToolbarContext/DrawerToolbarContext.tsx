@@ -107,15 +107,26 @@ export const DrawerToolbarProvider = ({
     return content;
   }, [activeDrawerId, data]);
 
-  const value = {
-    openDrawer,
-    closeDrawer,
-    getActiveDrawerContent,
-    isDrawerOpen,
-    shouldRenderToolbar,
-    visibleToolbarItems,
-    toolbarData: data,
-  };
+  const value = useMemo(
+    () => ({
+      openDrawer,
+      closeDrawer,
+      getActiveDrawerContent,
+      isDrawerOpen,
+      shouldRenderToolbar,
+      visibleToolbarItems,
+      toolbarData: data,
+    }),
+    [
+      openDrawer,
+      closeDrawer,
+      getActiveDrawerContent,
+      isDrawerOpen,
+      shouldRenderToolbar,
+      visibleToolbarItems,
+      data,
+    ],
+  );
 
   return (
     <DrawerToolbarContext.Provider value={value}>
