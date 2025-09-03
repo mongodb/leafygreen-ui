@@ -97,43 +97,6 @@ function getBySelector(
 }
 
 /**
- * Returns all elements matching a specific CodeEditor selector
- * @param selector - The CSS selector to look for in the editor
- * @param options - Optional filtering options
- * @param options.text - Optional text content filter
- * @returns All DOM elements matching the selector and optional text filter
- * @throws Error if no elements are found
- */
-function getAllBySelector(
-  selector: CodeEditorSelectors,
-  options?: { text?: string },
-): Array<Element> {
-  const view = ensureEditorView();
-  const elements = view.dom.querySelectorAll(selector);
-
-  if (!elements || elements.length === 0) {
-    throw new Error(`No elements with selector "${selector}" found`);
-  }
-
-  // If text filter is provided, return only elements containing the text
-  if (options?.text) {
-    const matchingElements = Array.from(elements).filter(element =>
-      element.textContent?.includes(options.text as string),
-    );
-
-    if (!matchingElements || matchingElements.length === 0) {
-      throw new Error(
-        `No elements with selector "${selector}" and text "${options.text}" found`,
-      );
-    }
-
-    return matchingElements;
-  }
-
-  return Array.from(elements);
-}
-
-/**
  * Returns the first element matching a specific CodeEditor selector or null if not found
  * @param selector - The CSS selector to look for in the editor
  * @param options - Optional filtering options
@@ -172,40 +135,6 @@ function queryBySelector(
   }
 
   return elements[0];
-}
-
-/**
- * Returns all elements matching a specific CodeEditor selector or null if none are found
- * @param selector - The CSS selector to look for in the editor
- * @param options - Optional filtering options
- * @param options.text - Optional text content filter
- * @returns All DOM elements matching the selector and optional text filter, or null if none found
- */
-function queryAllBySelector(
-  selector: CodeEditorSelectors,
-  options?: { text?: string },
-): Array<Element> | null {
-  const view = ensureEditorView();
-  const elements = view.dom.querySelectorAll(selector);
-
-  if (!elements || elements.length === 0) {
-    return null;
-  }
-
-  // If text filter is provided, return only elements containing the text
-  if (options?.text) {
-    const matchingElements = Array.from(elements).filter(element =>
-      element.textContent?.includes(options.text as string),
-    );
-
-    if (!matchingElements || matchingElements.length === 0) {
-      return null;
-    }
-
-    return matchingElements;
-  }
-
-  return Array.from(elements);
 }
 
 /**
@@ -317,9 +246,7 @@ function redo(): boolean {
 
 export const editor = {
   getBySelector,
-  getAllBySelector,
   queryBySelector,
-  queryAllBySelector,
   isLineWrappingEnabled,
   isReadOnly,
   getIndentUnit,
