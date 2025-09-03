@@ -2,6 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
 const TABLE_WIDTH = '282px';
+const ROW_PADDING = spacing[300];
 
 export const TableContainerStyles = css`
   display: flex;
@@ -14,9 +15,8 @@ export const TableStyles = css`
   width: ${TABLE_WIDTH};
   border-spacing: 0;
 
-  tr {
-    margin-bottom: 12px;
-    display: block;
+  tr + tr td {
+    padding-top: ${ROW_PADDING}px;
   }
 
   td {
@@ -35,7 +35,8 @@ export const TableStyles = css`
 `;
 
 export const HeadingStyles = css`
-  margin-bottom: ${spacing[1000]}px;
+  margin-bottom: ${spacing[1000] -
+  ROW_PADDING}px; // Account for the padding on the first row
 `;
 
 export const PlusSignStyles = css`
