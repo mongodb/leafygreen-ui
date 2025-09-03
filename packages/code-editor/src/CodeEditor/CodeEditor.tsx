@@ -13,6 +13,7 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
+import { ContextMenuProvider } from '../ContextMenuProvider';
 import { getLgIds } from '../utils';
 
 import { useFormattingModuleLoaders } from './hooks/formatting/useFormattingModuleLoaders';
@@ -349,61 +350,76 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     };
 
     return (
-      <div
-        ref={editorContainerRef}
-        className={getEditorStyles({
-          width,
-          minWidth,
-          maxWidth,
-          height,
-          minHeight,
-          maxHeight,
-          className,
-          copyButtonAppearance,
-        })}
-        data-lgid={lgIds.root}
-        // Data attributes for test utilities - allow getTestUtils() to read actual prop values
-        // even in environments where CodeMirror doesn't fully render (like JSDOM)
-        data-default-value={defaultValue}
-        data-value={value}
-        data-language={language}
-        {...rest}
+      <ContextMenuProvider
+        menuItems={[
+          {
+            label: 'Copy',
+            action: context => {
+              console.log(context.selectedContent);
+              const textToCopy = context.selectedContent;
+              navigator.clipboard.writeText(textToCopy);
+            },
+          },
+        ]}
       >
-        {panel && (
-          <CodeEditorProvider value={contextValue}>{panel}</CodeEditorProvider>
-        )}
-        {!panel &&
-          (copyButtonAppearance === CopyButtonAppearance.Hover ||
-            copyButtonAppearance === CopyButtonAppearance.Persist) && (
-            <CodeEditorCopyButton
-              getContentsToCopy={getContents}
-              className={getCopyButtonStyles(copyButtonAppearance)}
-              variant={CopyButtonVariant.Button}
-              disabled={isLoadingProp || isLoadingCoreModules}
-              data-lgid={lgIds.copyButton}
-            />
+        <div
+          ref={editorContainerRef}
+          className={getEditorStyles({
+            width,
+            minWidth,
+            maxWidth,
+            height,
+            minHeight,
+            maxHeight,
+            className,
+            copyButtonAppearance,
+          })}
+          data-lgid={lgIds.root}
+          // Data attributes for test utilities - allow getTestUtils() to read actual prop values
+          // even in environments where CodeMirror doesn't fully render (like JSDOM)
+          data-default-value={defaultValue}
+          data-value={value}
+          data-language={language}
+          {...rest}
+        >
+          {panel && (
+            <CodeEditorProvider value={contextValue}>
+              {panel}
+            </CodeEditorProvider>
           )}
-        {(isLoadingProp ||
-          isLoadingCoreModules ||
-          isLoadingFormattingModules) && (
-          <div
-            className={getLoaderStyles({
-              theme,
-              width,
-              minWidth,
-              maxWidth,
-              height,
-              minHeight,
-              maxHeight,
-            })}
-            data-lgid={lgIds.loader}
-          >
-            <Body className={getLoadingTextStyles(theme)}>
-              Loading code editor...
-            </Body>
-          </div>
-        )}
-      </div>
+          {!panel &&
+            (copyButtonAppearance === CopyButtonAppearance.Hover ||
+              copyButtonAppearance === CopyButtonAppearance.Persist) && (
+              <CodeEditorCopyButton
+                getContentsToCopy={getContents}
+                className={getCopyButtonStyles(copyButtonAppearance)}
+                variant={CopyButtonVariant.Button}
+                disabled={isLoadingProp || isLoadingCoreModules}
+                data-lgid={lgIds.copyButton}
+              />
+            )}
+          {(isLoadingProp ||
+            isLoadingCoreModules ||
+            isLoadingFormattingModules) && (
+            <div
+              className={getLoaderStyles({
+                theme,
+                width,
+                minWidth,
+                maxWidth,
+                height,
+                minHeight,
+                maxHeight,
+              })}
+              data-lgid={lgIds.loader}
+            >
+              <Body className={getLoadingTextStyles(theme)}>
+                Loading code editor...
+              </Body>
+            </div>
+          )}
+        </div>
+      </ContextMenuProvider>
     );
   },
 );
