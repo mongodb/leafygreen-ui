@@ -10,8 +10,8 @@ import { TestDescendantContext } from './components.testutils';
 
 export interface RenderDescendantsTestContextResult {
   hook: RenderHookResult<
-    undefined,
-    InitDescendantsReturnObject<HTMLDivElement>
+    InitDescendantsReturnObject<HTMLDivElement>,
+    undefined
   >;
   renderResult: RenderResult;
   rerender: (children: ReactNode) => void;
