@@ -231,4 +231,32 @@ describe('packages/DrawerToolbarLayout', () => {
 
     expect(isOpen()).toBe(false);
   });
+
+  test('closes the drawer when the active item is removed from the toolbar data', () => {
+    const { rerender } = render(<Component />);
+
+    const { getToolbarTestUtils, isOpen } = getTestUtils();
+
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+    userEvent.click(codeButton!);
+
+    expect(isOpen()).toBe(true);
+
+    rerender(
+      <Component
+        data={[
+          {
+            id: 'Code2',
+            label: 'Code2',
+            content: 'Drawer Content2',
+            title: `Drawer Title2`,
+            glyph: 'Code',
+          },
+        ]}
+      />,
+    );
+
+    expect(isOpen()).toBe(false);
+  });
 });

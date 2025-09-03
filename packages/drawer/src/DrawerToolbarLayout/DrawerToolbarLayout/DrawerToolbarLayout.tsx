@@ -21,11 +21,7 @@ export const DrawerToolbarLayout = forwardRef<
     return (
       <DrawerToolbarProvider data={toolbarData}>
         {/* This extra content component allows us to use useDrawerToolbarContext since we can't use useDrawerToolbarContext in the same file that the provider is wrapped in */}
-        <DrawerToolbarLayoutContent
-          ref={forwardRef}
-          toolbarData={toolbarData}
-          {...rest}
-        >
+        <DrawerToolbarLayoutContent ref={forwardRef} {...rest}>
           {children}
         </DrawerToolbarLayoutContent>
       </DrawerToolbarProvider>

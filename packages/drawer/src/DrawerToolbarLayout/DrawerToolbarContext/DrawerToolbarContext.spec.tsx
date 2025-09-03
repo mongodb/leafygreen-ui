@@ -4,14 +4,14 @@ import { act, waitFor } from '@testing-library/react';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { TRANSITION_DURATION } from '../../constants';
+import { LayoutData } from '../DrawerToolbarLayout/DrawerToolbarLayout.types';
 
 import {
   DrawerToolbarProvider,
   useDrawerToolbarContext,
 } from './DrawerToolbarContext';
-import { ContextData } from './DrawerToolbarContext.types';
 
-const mockData: Array<ContextData> = [
+const mockData: Array<LayoutData> = [
   {
     id: 'one',
     content: <div>Drawer 1 Content</div>,
