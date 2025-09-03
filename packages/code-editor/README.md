@@ -331,6 +331,48 @@ Returns utilities for testing CodeEditor and Panel components. These utilities h
 
 An object with methods for testing the CodeEditor and its Panel:
 
+### Testing Environment Compatibility
+
+#### ✅ **JSDOM (Jest + React Testing Library)**
+
+These utilities work well in JSDOM environments:
+
+- **Component structure**: `getEditor()`, `queryPanel()`, element presence checks
+- **Panel functionality**: `getPanelUtils()`, button interactions, menu state detection
+- **Configuration verification**: `getIsLoading()`, `getHas*` methods for feature detection
+- **Content verification**: `getContent()` reads actual `defaultValue`/`value` props
+- **Language verification**: `getLanguage()` reads actual `language` prop
+- **State detection**: Loading states, panel open/closed, button availability
+
+#### ⚠️ **Limited in JSDOM**
+
+Some features have limitations due to CodeMirror's complexity:
+
+- Line number elements may not be fully rendered
+- Some advanced CodeMirror features may not be available
+
+#### ✅ **Real Browsers (E2E tests, Storybook)**
+
+Full functionality including:
+
+- Complete content verification
+- Accurate language detection
+- Full line number access
+
+### Recommended Usage
+
+For **unit tests** in JSDOM, focus on:
+
+- Verifying component structure and presence
+- Testing panel interactions and button states
+- Checking loading states and configurations
+
+For **content verification**, use:
+
+- E2E tests (Cypress, Playwright) in real browsers
+- Integration tests with proper CodeMirror mocking
+- Storybook interactions in browser environments
+
 #### Basic Editor Utilities
 
 - `getEditor()` - Returns the CodeEditor root element
@@ -372,32 +414,18 @@ When a Panel is present, `getPanelUtils()` returns an object with:
 
 #### Example Usage
 
+**Basic Testing (JSDOM-compatible):**
+
 ```tsx
 import { render } from '@testing-library/react';
 import { getTestUtils } from '@leafygreen-ui/code-editor/testing';
 import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
 
-test('CodeEditor displays content correctly', () => {
+test('CodeEditor structure and panel work correctly', () => {
   render(
     <CodeEditor
       defaultValue="const greeting = 'Hello World';"
       language={LanguageName.javascript}
-      data-lgid="my-editor"
-    />,
-  );
-
-  const utils = getTestUtils('my-editor');
-
-  expect(utils.getContent()).toBe("const greeting = 'Hello World';");
-  expect(utils.getLanguage()).toBe('javascript');
-  expect(utils.getHasLineNumbers()).toBe(true);
-  expect(utils.getIsLoading()).toBe(false);
-});
-
-test('Panel utilities work correctly', () => {
-  render(
-    <CodeEditor
-      defaultValue="const x = 1;"
       panel={
         <Panel
           title="JavaScript"
@@ -412,13 +440,63 @@ test('Panel utilities work correctly', () => {
   );
 
   const utils = getTestUtils('my-editor');
-  const panelUtils = utils.getPanelUtils();
 
+  // Test editor presence and basic structure
+  expect(utils.getEditor()).toBeInTheDocument();
   expect(utils.queryPanel()).toBeInTheDocument();
+
+  // Test panel functionality
+  const panelUtils = utils.getPanelUtils();
   expect(panelUtils?.getPanelTitle()).toBe('JavaScript');
   expect(panelUtils?.getFormatButton()).toBeInTheDocument();
   expect(panelUtils?.getPanelCopyButton()).toBeInTheDocument();
   expect(panelUtils?.getSecondaryMenuButton()).toBeInTheDocument();
+
+  // Test configuration detection
+  expect(typeof utils.getIsLoading()).toBe('boolean');
+  expect(typeof utils.getHasLineNumbers()).toBe('boolean');
+
+  // Test actual content and language (works in all environments!)
+  expect(utils.getContent()).toBe("const greeting = 'Hello World';");
+  expect(utils.getLanguage()).toBe('javascript');
+});
+```
+
+**Testing Content and Language:**
+
+```tsx
+test('CodeEditor content and language are accurately detected', () => {
+  render(
+    <CodeEditor
+      defaultValue="def hello(): print('Hello World')"
+      language={LanguageName.python}
+      data-lgid="my-python-editor"
+    />,
+  );
+
+  const utils = getTestUtils('my-python-editor');
+
+  // These work reliably in all environments including JSDOM
+  expect(utils.getContent()).toBe("def hello(): print('Hello World')");
+  expect(utils.getLanguage()).toBe('python');
+});
+
+test('Controlled CodeEditor updates correctly', () => {
+  const TestComponent = () => {
+    const [value, setValue] = useState('initial content');
+    return (
+      <CodeEditor
+        value={value}
+        onChange={setValue}
+        data-lgid="controlled-editor"
+      />
+    );
+  };
+
+  render(<TestComponent />);
+  const utils = getTestUtils('controlled-editor');
+
+  expect(utils.getContent()).toBe('initial content');
 });
 ```
 

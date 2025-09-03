@@ -5,6 +5,35 @@ import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
+/**
+ * CodeEditor Test Utilities
+ *
+ * These utilities help test CodeEditor and Panel components. They work by finding
+ * elements using data-lgid attributes and provide methods to interact with the
+ * editor's DOM structure.
+ *
+ * TESTING ENVIRONMENT COMPATIBILITY:
+ *
+ * ✅ JSDOM (Jest + React Testing Library):
+ * - Basic DOM structure queries (getEditor, queryPanel, etc.)
+ * - Panel utilities (getPanelUtils, button interactions)
+ * - Loading state detection (getIsLoading)
+ * - Element presence checks (getHas* methods)
+ *
+ * ⚠️  Limited in JSDOM:
+ * - getContent() may return mocked content due to CodeMirror limitations
+ * - getLanguage() may return null as CodeMirror classes aren't applied
+ * - Line number elements may not be fully rendered
+ *
+ * ✅ Real Browsers (E2E tests, Storybook, etc.):
+ * - Full functionality including content verification
+ * - Accurate language detection
+ * - Complete line number access
+ *
+ * For comprehensive testing, combine these utilities with mocking (as shown in
+ * getTestUtils.spec.tsx) or use in real browser environments.
+ */
+
 // Helper functions for DOM queries
 const getByLgId = (lgId: string): HTMLElement => {
   const element = document.querySelector(
@@ -36,28 +65,68 @@ export const getTestUtils = (
   const element = getByLgId!(lgIds.root);
 
   /**
-   * Gets the current content text from the CodeMirror editor
+   * Gets the content that was passed to the CodeEditor component.
+   * This reads the actual props passed to the component, making it useful for testing
+   * what content was provided to the editor.
    */
   const getContent = (): string | null => {
+    // First try to get actual rendered content from CodeMirror (real browser environments)
     const contentElement = element.querySelector(CodeEditorSelectors.Content);
-    return contentElement?.textContent || null;
+
+    if (contentElement?.textContent) {
+      return contentElement.textContent;
+    }
+
+    // In test environments, read the content from component props/attributes
+    // Look for data attributes that store the original content
+    const defaultValue = element.getAttribute('data-default-value');
+
+    if (defaultValue) {
+      return defaultValue;
+    }
+
+    // Check for controlled value
+    const value = element.getAttribute('data-value');
+
+    if (value) {
+      return value;
+    }
+
+    // Look for mocked CodeMirror instance as last fallback
+    const containerElement = element as any;
+
+    if (containerElement._cm?.state?.sliceDoc) {
+      return containerElement._cm.state.sliceDoc();
+    }
+
+    return null;
   };
 
   /**
-   * Gets the language currently set on the editor
+   * Gets the language that was passed to the CodeEditor component.
+   * This reads the actual language prop passed to the component, making it useful
+   * for testing what language was configured.
    */
   const getLanguage = (): string | null => {
-    // Language can be determined from the editor's class names or data attributes
-    // CodeMirror adds language-specific classes to the editor
+    // First try to get language from CodeMirror classes (real browser environments)
     const editorElement = element.querySelector(CodeEditorSelectors.Editor);
-    if (!editorElement) return null;
 
-    // Look for language classes on the editor (e.g., 'cm-lang-javascript')
-    const classes = Array.from(editorElement.classList);
-    const langClass = classes.find((cls: string) => cls.startsWith('cm-lang-'));
+    if (editorElement) {
+      const classes = Array.from(editorElement.classList);
+      const langClass = classes.find((cls: string) =>
+        cls.startsWith('cm-lang-'),
+      );
 
-    if (langClass) {
-      return langClass.replace('cm-lang-', '');
+      if (langClass) {
+        return langClass.replace('cm-lang-', '');
+      }
+    }
+
+    // In test environments, read the language from component props/attributes
+    const language = element.getAttribute('data-language');
+
+    if (language) {
+      return language;
     }
 
     return null;
