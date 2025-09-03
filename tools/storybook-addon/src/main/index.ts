@@ -19,7 +19,7 @@ export { previewHead } from './preview-head';
 const { scopes } = getLGConfig();
 const directories = Object.values(scopes);
 
-// @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
+// @ts-ignore React17 https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories({
   includePattern: [
     `../{${directories.join(',')}}/**/*.stor@(y|ies).@(js|ts)?(x)`,
