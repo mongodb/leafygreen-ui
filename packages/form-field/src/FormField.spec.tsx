@@ -648,7 +648,7 @@ describe('packages/form-field', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('Types', () => {
     render(
-      // FIXME: // @ts-expect-error - label is required
+      // @ts-expect-error - label is required
       <FormField>
         <div />
       </FormField>,
