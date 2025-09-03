@@ -8,9 +8,9 @@ import {
   PlusSignStyles,
   TableContainerStyles,
   TableStyles,
-} from './ShortcutMenu.styles';
+} from './ShortcutTable.styles';
 
-export function ShortcutMenu({ className }: { className?: string }) {
+export function ShortcutTable({ className }: { className?: string }) {
   return (
     <div className={className}>
       <H3 className={HeadingStyles}>Code Editor Shortcuts</H3>

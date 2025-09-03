@@ -24,7 +24,7 @@ import Tooltip from '@leafygreen-ui/tooltip';
 import { useCodeEditorContext } from '../CodeEditor/CodeEditorContext';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
-import { ShortcutMenu } from '../ShortcutMenu';
+import { ShortcutTable } from '../ShortcutTable';
 
 import {
   getPanelButtonsStyles,
@@ -239,7 +239,7 @@ export function Panel({
         setOpen={setShortcutsModalOpen}
         className={ModalStyles}
       >
-        <ShortcutMenu />
+        <ShortcutTable />
       </Modal>
     </>
   );

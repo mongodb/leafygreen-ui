@@ -1,1 +1,0 @@
-export { ShortcutMenu } from './ShortcutMenu';

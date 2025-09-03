@@ -15,7 +15,7 @@ import Modal from '@leafygreen-ui/modal';
 import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { IndentUnits } from './CodeEditor';
-import { ShortcutMenu } from './ShortcutMenu';
+import { ShortcutTable } from './ShortcutTable';
 import { codeSnippets } from './testing';
 import { CodeEditor, Panel } from '.';
 
@@ -375,7 +375,7 @@ export const ShortcutsMenu: StoryObj<{}> = {
   render: () => {
     return (
       <Modal open>
-        <ShortcutMenu />
+        <ShortcutTable />
       </Modal>
     );
   },
