@@ -289,11 +289,12 @@ describe('packages/password-input', () => {
       {/* @ts-expect-error - Must include stateNotification prop */}
       <PasswordInput aria-describedby="my-id" />
 
-      {/* @ts-expect-error : FIXME: React17 types */}
+      {/* Must include correct stateNotification type if using aria-describedBy */}
+      {/* @ts-ignore React17: Prop errors show up here in R17 */}
       <PasswordInput
         label="mylabel"
         aria-describedby="my-id"
-        //FIXME: // @ts-expect-error - Must include correct stateNotification type if using aria-describedBy
+        // @ts-ignore React 18: Prop errors show up here in R18
         stateNotifications={[{ notification: 'hi', state: 'error' }]}
       />
       <PasswordInput
