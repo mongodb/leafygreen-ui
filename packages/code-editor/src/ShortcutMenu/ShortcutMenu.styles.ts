@@ -17,10 +17,6 @@ export const TableStyles = css`
   tr {
     margin-bottom: 12px;
     display: block;
-
-    &:not(:last-child) {
-      margin-bottom: 12px;
-    }
   }
 
   td {
