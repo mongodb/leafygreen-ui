@@ -6,8 +6,6 @@
   "include": [
     "./prebuild/**/*",
     "./build/**/*",
-    "./postbuild/**/*",
-    "../.svgrrc.js",
-    "../constants.mjs"
+    "./postbuild/**/*"
   ]
 }

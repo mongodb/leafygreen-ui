@@ -2,6 +2,8 @@
 import { exec } from 'child_process';
 import { Command } from 'commander';
 
+import { DELIMITER } from '../constants';
+
 import { getChangedChecksums } from './compare-checksum';
 
 const BATCH_SIZE = 10;
@@ -47,9 +49,6 @@ async function buildBatch(
   batch: Array<string>,
   verbose = false,
 ): Promise<void> {
-  // Relative import paths need explicit file extensions in ECMAScript imports when 'moduleResolution' is 'NodeNext'
-  const { DELIMITER } = await import('../../constants.mjs');
-
   const batchArg = batch.join(DELIMITER);
   const cmd = `pnpm exec rollup -c ${ROLLUP_BATCH_CONFIG_PATH} --environment "ICONS:${batchArg}"`;
 

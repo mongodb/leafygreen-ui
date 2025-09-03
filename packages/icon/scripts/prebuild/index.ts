@@ -6,7 +6,8 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 
-import svgrrc from '../../.svgrrc';
+// @ts-ignore
+import svgrrc from '../.svgrrc';
 
 import { getChecksum } from './checksum';
 import { indexTemplate } from './indexTemplate';

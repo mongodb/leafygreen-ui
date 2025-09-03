@@ -1,5 +1,5 @@
 // https://www.smooth-code.com/open-source/svgr/docs/configuration-files/
-module.exports = {
+export default {
   titleProp: false,
   expandProps: 'end',
   svgProps: {
