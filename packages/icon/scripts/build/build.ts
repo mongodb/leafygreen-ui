@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { exec } from 'child_process';
 import { Command } from 'commander';
+import path from 'path';
 
 import { DELIMITER } from '../constants';
 
@@ -9,8 +10,11 @@ import { getChangedChecksums } from './compare-checksum';
 const BATCH_SIZE = 10;
 const NUM_WORKERS = 4;
 
-const ROLLUP_CONFIG_PATH = 'rollup.config.mjs';
-const ROLLUP_BATCH_CONFIG_PATH = 'rollup.batch.config.mjs';
+const ROLLUP_CONFIG_PATH = path.resolve(__dirname, '../../rollup.config.mjs');
+const ROLLUP_BATCH_CONFIG_PATH = path.resolve(
+  __dirname,
+  '../rollup.batch.config.mjs',
+);
 
 /**
  * Splits an array into chunks of a specified size.
