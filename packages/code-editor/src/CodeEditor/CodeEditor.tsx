@@ -42,7 +42,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const {
       baseFontSize: baseFontSizeProp,
       className,
-      copyButtonAppearance,
+      copyButtonAppearance = CopyButtonAppearance.Hover,
       'data-lgid': dataLgId,
       darkMode: darkModeProp,
       defaultValue,

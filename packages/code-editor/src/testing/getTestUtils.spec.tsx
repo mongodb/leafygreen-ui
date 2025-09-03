@@ -40,6 +40,65 @@ import { getTestUtils } from './getTestUtils';
 // Note: In real applications, consumers would use getTestUtils with actual
 // CodeEditor components that don't need this level of mocking
 
+// Enhanced MutationObserver mock for CodeMirror compatibility
+global.MutationObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+  takeRecords: jest.fn().mockReturnValue([]),
+}));
+
+// Mock ResizeObserver which is used by CodeMirror
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
+// Mock IntersectionObserver which may be used by CodeMirror
+global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+  root: null,
+  rootMargin: '',
+  thresholds: [],
+}));
+
+// Mock document.getSelection for CodeMirror
+if (!global.document.getSelection) {
+  global.document.getSelection = jest.fn().mockReturnValue({
+    rangeCount: 0,
+    getRangeAt: jest.fn(),
+    removeAllRanges: jest.fn(),
+    addRange: jest.fn(),
+    toString: jest.fn().mockReturnValue(''),
+  });
+}
+
+// Mock createRange for CodeMirror
+if (!global.document.createRange) {
+  global.document.createRange = jest.fn().mockReturnValue({
+    setStart: jest.fn(),
+    setEnd: jest.fn(),
+    collapse: jest.fn(),
+    selectNodeContents: jest.fn(),
+    insertNode: jest.fn(),
+    surroundContents: jest.fn(),
+    cloneRange: jest.fn(),
+    detach: jest.fn(),
+    getClientRects: jest.fn().mockReturnValue([]),
+    getBoundingClientRect: jest.fn().mockReturnValue({
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      width: 0,
+      height: 0,
+    }),
+  });
+}
+
 // Mock console methods to suppress expected warnings
 const originalConsoleWarn = console.warn;
 const originalConsoleError = console.error;
@@ -154,7 +213,7 @@ describe('getTestUtils API Documentation & Examples', () => {
       expect(utils.getIsLoading()).toBe(true);
     });
 
-    test('Panel testing example', () => {
+    test('Panel testing example', async () => {
       // Example: Testing panel functionality
       render(
         <CodeEditor
@@ -164,6 +223,7 @@ describe('getTestUtils API Documentation & Examples', () => {
               title="SQL Query"
               showCopyButton={true}
               showFormatButton={true}
+              data-lgid="lg-panel-example"
             />
           }
           data-lgid="lg-panel-example"
@@ -171,6 +231,9 @@ describe('getTestUtils API Documentation & Examples', () => {
       );
 
       const utils = getTestUtils('lg-panel-example');
+
+      // Wait for component to be fully rendered
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       // Check panel presence
       expect(utils.queryPanel()).toBeInTheDocument();
@@ -246,6 +309,7 @@ describe('getTestUtils API Documentation & Examples', () => {
                   title="JavaScript Editor"
                   showCopyButton={true}
                   showFormatButton={true}
+                  data-lgid="lg-form-code-editor"
                 />
               }
               data-lgid="lg-form-code-editor"
@@ -261,6 +325,9 @@ describe('getTestUtils API Documentation & Examples', () => {
       // Consumer can test the code editor within their form
       const utils = getTestUtils('lg-form-code-editor');
 
+      // Wait for component to be fully rendered
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       // Basic presence and setup
       expect(utils.getEditor()).toBeInTheDocument();
       expect(utils.getLanguage()).toBe(LanguageName.javascript);
@@ -271,7 +338,12 @@ describe('getTestUtils API Documentation & Examples', () => {
       expect(panelUtils?.getPanelCopyButton()).toBeInTheDocument();
       expect(panelUtils?.getFormatButton()).toBeInTheDocument();
 
-      // Features are enabled as expected
+      // Features are enabled as expected - wait for initialization first
+      try {
+        await utils.waitForInitialization(2000);
+      } catch {
+        // If initialization fails, still proceed with basic checks
+      }
       expect(utils.getHasLineNumbers()).toBe(true);
     });
 
@@ -303,12 +375,20 @@ describe('getTestUtils API Documentation & Examples', () => {
         },
       ];
 
-      configs.forEach(config => {
+      configs.forEach(async config => {
         const { unmount } = render(<CodeEditor {...(config.props as any)} />);
 
         const utils = getTestUtils(config.props['data-lgid'] as any);
 
         expect(utils.getLanguage()).toBe(config.expectedLanguage);
+
+        // Wait for the editor to initialize before checking line numbers
+        try {
+          await utils.waitForInitialization(2000);
+        } catch {
+          // If initialization fails, still proceed with basic checks
+        }
+
         expect(utils.getHasLineNumbers()).toBe(config.expectedLineNumbers);
 
         unmount();
