@@ -1,5 +1,25 @@
 # @lg-chat/message-feed
 
+## 7.0.1
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [172c228]
+- Updated dependencies [172c228]
+  - @lg-chat/leafygreen-chat-provider@5.0.1
+  - @leafygreen-ui/button@25.0.3
+  - @leafygreen-ui/emotion@5.0.1
+  - @leafygreen-ui/icon@14.4.1
+  - @leafygreen-ui/leafygreen-provider@5.0.3
+  - @leafygreen-ui/lib@15.2.1
+  - @leafygreen-ui/palette@5.0.1
+  - @leafygreen-ui/tokens@3.2.3
+  - @lg-chat/avatar@7.0.1
+  - @lg-chat/message@8.0.1
+  - @lg-chat/message-rating@5.0.1
+
 ## 7.0.0
 
 ### Patch Changes

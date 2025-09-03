@@ -1,5 +1,17 @@
 # @lg-charts/drag-provider
 
+## 1.0.7
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [e1bc444]
+- Updated dependencies [172c228]
+  - @lg-charts/chart-card@1.0.4
+  - @leafygreen-ui/leafygreen-provider@5.0.3
+  - @lg-charts/core@2.0.2
+
 ## 1.0.6
 
 ### Patch Changes
