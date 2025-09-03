@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/context-drawer",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "LeafyGreen UI Kit Context Drawer",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
