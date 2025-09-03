@@ -134,6 +134,7 @@ describe('packages/table/Row/ExpandableContent', () => {
       `;
 
       const { getByTestId } = render(
+        // @ts-expect-error ExpandedContent is incorrectly generic FIXME:
         <StyledExpandedContent row={mockRow} data-testid="styled" />,
       );
 
@@ -155,6 +156,7 @@ describe('packages/table/Row/ExpandableContent', () => {
       const { getByTestId } = render(
         <StyledExpandedContent
           data-testid="styled"
+          // @ts-expect-error ExpandedContent is incorrectly generic FIXME:
           row={mockRow}
           color="#69ffc6"
         />,
@@ -174,10 +176,14 @@ describe('packages/table/Row/ExpandableContent', () => {
       {/* @ts-expect-error - row is missing */}
       <ExpandedContent />
 
+      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} />
+      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} ref={ref} />
 
+      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} />
+      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} ref={ref} />
     </>;
   });
