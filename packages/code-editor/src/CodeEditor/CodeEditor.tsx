@@ -353,12 +353,20 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       <ContextMenuProvider
         menuItems={[
           {
+            label: 'Cut',
+            action: selectedText => {},
+          },
+          {
             label: 'Copy',
-            action: context => {
-              console.log(context.selectedContent);
-              const textToCopy = context.selectedContent;
+            action: selectedText => {
+              console.log(selectedText);
+              const textToCopy = selectedText;
               navigator.clipboard.writeText(textToCopy);
             },
+          },
+          {
+            label: 'Paste',
+            action: selectedText => {},
           },
         ]}
       >
