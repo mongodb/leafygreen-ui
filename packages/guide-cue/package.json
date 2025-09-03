@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/guide-cue",
-  "version": "8.0.4",
+  "version": "8.0.5",
   "description": "leafyGreen UI Kit GuideCue",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

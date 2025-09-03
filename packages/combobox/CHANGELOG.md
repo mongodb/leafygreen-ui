@@ -1,5 +1,28 @@
 # @leafygreen-ui/combobox
 
+## 12.0.5
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [172c228]
+- Updated dependencies [172c228]
+  - @leafygreen-ui/hooks@9.1.2
+  - @leafygreen-ui/checkbox@18.0.2
+  - @leafygreen-ui/chip@4.0.4
+  - @leafygreen-ui/emotion@5.0.1
+  - @leafygreen-ui/form-field@4.0.2
+  - @leafygreen-ui/icon@14.4.1
+  - @leafygreen-ui/icon-button@17.0.4
+  - @leafygreen-ui/input-option@4.0.4
+  - @leafygreen-ui/leafygreen-provider@5.0.3
+  - @leafygreen-ui/lib@15.2.1
+  - @leafygreen-ui/palette@5.0.1
+  - @leafygreen-ui/popover@14.0.4
+  - @leafygreen-ui/tokens@3.2.3
+  - @leafygreen-ui/typography@22.1.1
+
 ## 12.0.4
 
 ### Patch Changes

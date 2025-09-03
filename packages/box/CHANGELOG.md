@@ -1,5 +1,12 @@
 # @leafygreen-ui/box
 
+## 5.0.1
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+
 ## 5.0.0
 
 ### Major Changes

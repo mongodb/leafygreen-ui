@@ -1,5 +1,16 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 5.0.3
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [172c228]
+- Updated dependencies [172c228]
+  - @leafygreen-ui/hooks@9.1.2
+  - @leafygreen-ui/lib@15.2.1
+
 ## 5.0.2
 
 ### Patch Changes

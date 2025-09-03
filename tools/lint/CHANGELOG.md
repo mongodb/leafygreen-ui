@@ -1,5 +1,15 @@
 # @lg-tools/lint
 
+## 3.0.1
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [172c228]
+  - @lg-tools/build@0.8.1
+  - @lg-tools/meta@0.6.1
+
 ## 3.0.0
 
 ### Major Changes
