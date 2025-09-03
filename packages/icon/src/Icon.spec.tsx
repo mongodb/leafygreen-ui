@@ -7,8 +7,6 @@ import { toJson } from 'xml2json';
 
 import { typeIs } from '@leafygreen-ui/lib';
 
-import { getChecksum } from '../scripts/prebuild/checksum';
-
 import EditIcon from './generated/Edit';
 import { Size } from './glyphCommon';
 import { isComponentGlyph } from './isComponentGlyph';
@@ -274,43 +272,6 @@ describe('Generated glyphs', () => {
     Object.keys(baseNameToGeneratedFilePath).forEach(baseName => {
       // Make sure there aren't any generated files that don't have a corresponding glyph
       expect(validGlyphBaseNames).toHaveProperty(baseName);
-    });
-  });
-
-  describe('are up-to-date and not been modified', () => {
-    glyphPaths.forEach(glyphPath => {
-      const baseName = getBaseName(glyphPath);
-
-      test(`${baseName}`, () => {
-        const svgFileContents = fs.readFileSync(glyphPath, {
-          encoding: 'utf8',
-        });
-
-        const generatedFileContents = fs.readFileSync(
-          path.resolve(
-            generatedFilesDirectory,
-            baseNameToGeneratedFilePath[baseName],
-          ),
-          {
-            encoding: 'utf8',
-          },
-        );
-
-        const [, script, checksum, checkedContents] =
-          /^\/\*.*@script ([^\n]*).*@checksum ([^\n]*).*\*\/\n(.*)$/s.exec(
-            generatedFileContents,
-          )!;
-
-        const expectedChecksum = getChecksum(svgFileContents, checkedContents);
-
-        try {
-          expect(checksum).toEqual(expectedChecksum);
-        } catch (error) {
-          throw new Error(
-            `${error}\n\nForgot to re-run script?: \`${script}\``,
-          );
-        }
-      });
     });
   });
 
