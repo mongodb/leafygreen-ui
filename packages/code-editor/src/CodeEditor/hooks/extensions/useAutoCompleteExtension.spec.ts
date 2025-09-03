@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react';
 import {
   createMockAutoCompleteModule,
   createMockStateModule,
-} from '../../../testing';
+} from '../hooks.testUtils';
 
 import { useAutoCompleteExtension } from './useAutoCompleteExtension';
 
