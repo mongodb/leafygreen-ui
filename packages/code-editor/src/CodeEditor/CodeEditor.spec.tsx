@@ -2,9 +2,8 @@ import { forceParsing } from '@codemirror/language';
 import { EditorState } from '@codemirror/state';
 import { act, waitFor } from '@testing-library/react';
 
-import { renderCodeEditor } from '../testing/testUtils';
-
 import { LanguageName } from './hooks/extensions/useLanguageExtension';
+import { renderCodeEditor } from './CodeEditor.testUtils';
 import { CopyButtonAppearance } from './CodeEditor.types';
 import { CodeEditorSelectors } from '.';
 

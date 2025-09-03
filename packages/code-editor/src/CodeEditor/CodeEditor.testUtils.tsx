@@ -8,7 +8,7 @@ import {
   CodeEditorProps,
   CodeEditorSelectors,
   CodeMirrorView,
-} from '..';
+} from '.';
 
 let editorViewInstance: CodeMirrorView | null = null;
 let getEditorViewFn: (() => CodeMirrorView | null) | null = null;

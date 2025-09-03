@@ -4,13 +4,11 @@ import {
   PanelSelectors,
   renderPanel,
 } from './panelTestUtils';
-import { renderCodeEditor } from './testUtils';
 
 export {
   codeSnippets,
   defaultPanelContextFunctions,
   PanelSelectors,
-  renderCodeEditor,
   renderPanel,
 };
 
