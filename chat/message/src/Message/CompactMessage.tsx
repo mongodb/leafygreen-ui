@@ -7,6 +7,7 @@ import { filterChildren, findChild } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { MessageSubcomponentProperty } from '../constants';
 import {
   MessageContainer,
   Variant as MessageContainerVariant,
@@ -36,16 +37,18 @@ export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
     const { assistantName } = useLeafyGreenChatContext();
 
     // Find subcomponents
-    const actions = findChild(children, 'isLGMessageActions');
-    const verifiedBanner = findChild(children, 'isLGMessageVerifiedBanner');
-    const links = findChild(children, 'isLGMessageLinks');
+    const actions = findChild(children, MessageSubcomponentProperty.Actions);
+    const verifiedBanner = findChild(
+      children,
+      MessageSubcomponentProperty.VerifiedBanner,
+    );
+    const links = findChild(children, MessageSubcomponentProperty.Links);
 
     // Filter out subcomponents from children
-    const remainingChildren = filterChildren(children, [
-      'isLGMessageActions',
-      'isLGMessageVerifiedBanner',
-      'isLGMessageLinks',
-    ]);
+    const remainingChildren = filterChildren(
+      children,
+      Object.values(MessageSubcomponentProperty),
+    );
 
     return (
       <div

@@ -63,13 +63,6 @@ return (
 
 The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, and `Message.VerifiedBanner`.
 
-This pattern provides several benefits:
-
-- **Modularity**: Each subcomponent has its own props and encapsulated behavior.
-- **Flexibility**: Mix and match only the components you need for your use case.
-- **Type Safety**: Each compound component exposes its own TypeScript interface.
-- **Conditional Rendering**: Subcomponents only render when their required props are provided.
-
 **Note 1:** All compound components only render in the `compact` variant.  
 **Note 2:** The layout and order of compound components are enforced by the `Message` component itself. Even if you change the order of subcomponents in your JSX, they will be rendered in the correct, intended order within the message bubble. This ensures consistent UI and accessibility regardless of how you compose your message children.
 
