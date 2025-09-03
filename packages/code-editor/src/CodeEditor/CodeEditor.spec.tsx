@@ -370,7 +370,7 @@ describe('packages/code-editor', () => {
   test('renders copy button when copyButtonAppearance is "hover"', async () => {
     const { container, editor } = renderCodeEditor({
       copyButtonAppearance: CopyButtonAppearance.Hover,
-      'data-lgid': 'test-copy-hover',
+      'data-lgid': 'lg-test-copy-hover',
     });
 
     await editor.waitForEditorView();
@@ -380,14 +380,14 @@ describe('packages/code-editor', () => {
 
     // The copy button selector looks for the specific lgid structure
     expect(
-      container.querySelector('[data-lgid="test-copy-hover-copy_button"]'),
+      container.querySelector('[data-lgid="lg-test-copy-hover-copy_button"]'),
     ).toBeInTheDocument();
   });
 
   test('renders copy button when copyButtonAppearance is "persist"', async () => {
     const { container, editor } = renderCodeEditor({
       copyButtonAppearance: CopyButtonAppearance.Persist,
-      'data-lgid': 'test-copy-persist',
+      'data-lgid': 'lg-test-copy-persist',
     });
 
     await editor.waitForEditorView();
@@ -397,7 +397,7 @@ describe('packages/code-editor', () => {
 
     // The copy button selector looks for the specific lgid structure
     expect(
-      container.querySelector('[data-lgid="test-copy-persist-copy_button"]'),
+      container.querySelector('[data-lgid="lg-test-copy-persist-copy_button"]'),
     ).toBeInTheDocument();
   });
 
