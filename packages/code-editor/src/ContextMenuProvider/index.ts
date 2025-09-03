@@ -1,13 +1,2 @@
-export {
-  ContextMenuProvider,
-  ContextMenuWrapper,
-  useContextMenu,
-} from './ContextMenuProvider';
-export type {
-  ContextMenuContextType,
-  ContextMenuProviderProps,
-  ContextMenuWrapperProps,
-  MenuItemConfig,
-  MenuState,
-  SelectionContext,
-} from './ContextMenuProvider.types';
+export { ContextMenuProvider } from './ContextMenuProvider';
+export type { ContextMenuProviderProps } from './ContextMenuProvider.types';
