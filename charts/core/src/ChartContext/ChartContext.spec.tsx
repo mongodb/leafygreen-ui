@@ -46,6 +46,7 @@ describe('lg-chart/core/ChartContext', () => {
       const { result } = renderHook(useChartContext, {
         wrapper: ChartProviderMock,
       });
+      // @ts-expect-error - chartOptions is not defined in the ChartContextType
       const { chartOptions, updateChartOptions, addChartSeries } =
         result.current;
       expect(chartOptions).toBe(chartOptions);
