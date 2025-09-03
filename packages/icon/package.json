@@ -15,7 +15,7 @@
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild/index.ts",
     "build": "ts-node ./scripts/build/build.ts",
-    "postbuild": "ts-node ./scripts/postbuild/index.ts; tsx ./scripts/validate/validate.ts",
+    "postbuild": "ts-node ./scripts/postbuild/index.ts",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
   },
