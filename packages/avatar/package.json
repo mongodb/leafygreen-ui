@@ -5,13 +5,6 @@
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
-  "typesVersions": {
-    "*": {
-      ".": [
-        "././dist/types/index.d.ts"
-      ]
-    }
-  },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
@@ -40,8 +33,7 @@
     ".": {
       "import": "./dist/esm/index.js",
       "require": "./dist/umd/index.js",
-      "types": "./dist/types/index.d.ts",
-      "types<5.0": "./dist/types/ts4.9/index.d.ts"
+      "types": "./dist/types/index.d.ts"
     }
   }
 }

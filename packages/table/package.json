@@ -5,19 +5,11 @@
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
-  "typesVersions": {
-    "*": {
-      ".": [
-        "././dist/types/index.d.ts"
-      ]
-    }
-  },
   "exports": {
     ".": {
       "require": "./dist/umd/index.js",
       "import": "./dist/esm/index.js",
-      "types": "./dist/types/index.d.ts",
-      "types<5.0": "./dist/types/ts4.9/index.d.ts"
+      "types": "./dist/types/index.d.ts"
     },
     "./testing": {
       "require": "./dist/umd/testing/index.js",

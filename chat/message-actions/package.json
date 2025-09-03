@@ -10,8 +10,7 @@
     ".": {
       "require": "./dist/umd/index.js",
       "import": "./dist/esm/index.js",
-      "types": "./dist/types/index.d.ts",
-      "types<5.0": "./dist/types/ts4.9/index.d.ts"
+      "types": "./dist/types/index.d.ts"
     },
     "./testing": {
       "require": "./dist/umd/testing/index.js",
@@ -52,12 +51,5 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/LG/summary"
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "././dist/types/index.d.ts"
-      ]
-    }
   }
 }

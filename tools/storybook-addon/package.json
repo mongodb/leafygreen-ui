@@ -11,8 +11,7 @@
       "types": "./dist/types/index.d.ts",
       "node": "./dist/umd/index.js",
       "require": "./dist/umd/index.js",
-      "import": "./dist/esm/index.js",
-      "types<5.0": "./dist/types/ts4.9/index.d.ts"
+      "import": "./dist/esm/index.js"
     },
     "./main": {
       "types": "./dist/types/main.d.ts",
@@ -114,12 +113,5 @@
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "storybook": "^8.6.0"
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "././dist/types/index.d.ts"
-      ]
-    }
   }
 }
