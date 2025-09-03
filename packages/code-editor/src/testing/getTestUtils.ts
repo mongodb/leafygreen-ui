@@ -27,24 +27,6 @@ import { TestUtilsReturnType } from './getTestUtils.types';
  * // Check loading state
  * expect(utils.getIsLoading()).toBe(false);
  * ```
- *
- * TESTING ENVIRONMENT COMPATIBILITY:
- *
- * ✅ Real Browsers (E2E tests, Storybook, etc.):
- * - Full functionality including content verification from CodeMirror
- * - Accurate language detection
- * - Complete line number access
- * - Reliable loading state detection
- *
- * ✅ JSDOM (Jest + React Testing Library):
- * - Basic DOM structure queries (getEditor, queryPanel, etc.)
- * - Panel utilities (getPanelUtils, button interactions)
- * - Loading state detection (getIsLoading)
- * - Element presence checks (getHas* methods)
- * - Content retrieval via data attributes when CodeMirror unavailable
- *
- * The utilities automatically handle CodeMirror initialization and provide
- * graceful fallbacks for different testing environments.
  */
 
 // Helper functions for DOM queries
