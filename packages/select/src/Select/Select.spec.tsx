@@ -138,7 +138,7 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'error'), spy => {
       spy.mockImplementation();
       render(
-        //FIXME: // @ts-expect-error - label missing
+        // @ts-ignore React18 - label missing
         <Select {...defaultProps} label={undefined}>
           <Option>Option</Option>
         </Select>,
@@ -268,7 +268,7 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'warn'), spy => {
       spy.mockImplementation();
 
-      //FIXME: // @ts-expect-error - expecting `readOnly` prop
+      // @ts-ignore React18 - expecting `readOnly` prop
       render(<Select {...defaultProps} value="" />);
 
       expect(spy).toHaveBeenCalledTimes(1);
