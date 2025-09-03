@@ -257,7 +257,7 @@ describe('packages/tooltip', () => {
       await act(async () => {
         waitForTimeout(transitionDuration.slowest);
       });
-      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
+      await waitFor(() => expect(tooltip).toBeVisible());
 
       fireEvent.keyDown(button, {
         key: 'Escape',
@@ -277,7 +277,7 @@ describe('packages/tooltip', () => {
       await act(async () => {
         waitForTimeout(transitionDuration.slowest);
       });
-      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
+      await waitFor(() => expect(tooltip).toBeVisible());
 
       fireEvent.click(backdrop);
       await waitForElementToBeRemoved(tooltip);
@@ -294,7 +294,7 @@ describe('packages/tooltip', () => {
       await act(async () => {
         waitForTimeout(transitionDuration.slowest);
       });
-      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
+      await waitFor(() => expect(tooltip).toBeVisible());
 
       fireEvent.click(backdrop);
       expect(tooltip).toBeVisible();
@@ -746,7 +746,7 @@ describe('packages/tooltip', () => {
       await act(async () => {
         waitForTimeout(transitionDuration.slowest);
       });
-      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
+      await waitFor(() => expect(tooltip).toBeVisible());
 
       fireEvent.keyDown(button, {
         key: 'Escape',
