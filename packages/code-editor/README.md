@@ -315,6 +315,115 @@ editorRef.current.downloadContent(); // No filename provided
 | `LanguageName` | Constant object containing all supported programming languages for syntax highlighting. |
 | `PanelProps` | TypeScript interface defining all props that can be passed to the `Panel` component. |
 
+## Test Utilities
+
+The `@leafygreen-ui/code-editor` package provides test utilities to help test CodeEditor and Panel components in your applications.
+
+### `getTestUtils(lgId?)`
+
+Returns utilities for testing CodeEditor and Panel components. These utilities help you interact with and query the CodeEditor's DOM elements in tests.
+
+**Parameters:**
+
+- `lgId` _(optional)_: Custom lgId string to scope the queries. Defaults to `'lg-code_editor'`
+
+**Returns:**
+
+An object with methods for testing the CodeEditor and its Panel:
+
+#### Basic Editor Utilities
+
+- `getEditor()` - Returns the CodeEditor root element
+- `getContent()` - Gets the current text content from the editor
+- `getLanguage()` - Gets the programming language currently set on the editor (from CSS classes)
+- `getIsLoading()` - Checks if the editor is currently in a loading state
+- `getIsReadOnly()` - Checks if the editor is in read-only mode
+
+#### Feature Detection Utilities
+
+- `getHasLineNumbers()` - Checks if line numbers are enabled and visible
+- `getHasLineWrapping()` - Checks if line wrapping is enabled
+- `getHasCodeFolding()` - Checks if code folding is enabled
+- `getHasTooltips()` - Checks if any tooltips are currently visible
+- `getHasHyperlinks()` - Checks if hyperlinks/clickable URLs are enabled
+
+#### Element Utilities
+
+- `getAllLineNumbers()` - Gets all visible line number elements
+- `getLineNumberByIndex(lineNumber)` - Gets a specific line number element (1-based)
+- `getTooltips()` - Gets all tooltip elements currently visible in the editor
+- `getHyperlinks()` - Gets all hyperlink elements if clickable URLs are enabled
+- `getCopyButton()` - Gets the copy button element (when not using panel)
+
+#### Panel Utilities
+
+- `queryPanel()` - Queries for the panel element (returns null if no panel)
+- `getPanelUtils()` - Gets panel-specific utilities if panel is present
+
+When a Panel is present, `getPanelUtils()` returns an object with:
+
+- `getPanel()` - Returns the panel element
+- `getPanelTitle()` - Gets the panel title text
+- `getFormatButton()` - Gets the format button element
+- `getPanelCopyButton()` - Gets the panel's copy button element
+- `getSecondaryMenuButton()` - Gets the secondary menu button element
+- `getSecondaryMenu()` - Gets the secondary menu element
+- `isSecondaryMenuOpen()` - Checks if the secondary menu is currently open
+
+#### Example Usage
+
+```tsx
+import { render } from '@testing-library/react';
+import { getTestUtils } from '@leafygreen-ui/code-editor/testing';
+import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
+
+test('CodeEditor displays content correctly', () => {
+  render(
+    <CodeEditor
+      defaultValue="const greeting = 'Hello World';"
+      language={LanguageName.javascript}
+      data-lgid="my-editor"
+    />,
+  );
+
+  const utils = getTestUtils('my-editor');
+
+  expect(utils.getContent()).toBe("const greeting = 'Hello World';");
+  expect(utils.getLanguage()).toBe('javascript');
+  expect(utils.getHasLineNumbers()).toBe(true);
+  expect(utils.getIsLoading()).toBe(false);
+});
+
+test('Panel utilities work correctly', () => {
+  render(
+    <CodeEditor
+      defaultValue="const x = 1;"
+      panel={
+        <Panel
+          title="JavaScript"
+          showFormatButton
+          showCopyButton
+          showSecondaryMenuButton
+          data-lgid="my-editor"
+        />
+      }
+      data-lgid="my-editor"
+    />,
+  );
+
+  const utils = getTestUtils('my-editor');
+  const panelUtils = utils.getPanelUtils();
+
+  expect(utils.queryPanel()).toBeInTheDocument();
+  expect(panelUtils?.getPanelTitle()).toBe('JavaScript');
+  expect(panelUtils?.getFormatButton()).toBeInTheDocument();
+  expect(panelUtils?.getPanelCopyButton()).toBeInTheDocument();
+  expect(panelUtils?.getSecondaryMenuButton()).toBeInTheDocument();
+});
+```
+
+**Note:** When using a Panel, make sure to pass the same `data-lgid` to both the CodeEditor and Panel components for the test utilities to work correctly.
+
 ## CodeMirror Extension Hooks
 
 The `CodeEditor` component is built on [CodeMirror v6](https://codemirror.net/) and provides a complete, ready-to-use editor experience. However, some applications may need highly customized CodeMirror implementations that don't fit the standard `CodeEditor` API, while still wanting to maintain consistency with the LeafyGreen design system.

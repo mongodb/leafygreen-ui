@@ -23,6 +23,7 @@ import Tooltip from '@leafygreen-ui/tooltip';
 import { useCodeEditorContext } from '../CodeEditor/CodeEditorContext';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
+import { getLgIds } from '../utils';
 
 import {
   getPanelButtonsStyles,
@@ -71,6 +72,7 @@ import { PanelProps } from './Panel.types';
 export function Panel({
   baseFontSize: baseFontSizeProp,
   customSecondaryButtons,
+  'data-lgid': dataLgId,
   darkMode,
   downloadFileName,
   innerContent,
@@ -87,6 +89,7 @@ export function Panel({
 }: PanelProps) {
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
+  const lgIds = getLgIds(dataLgId);
 
   const { getContents, formatCode, undo, redo, downloadContent } =
     useCodeEditorContext();
@@ -126,9 +129,10 @@ export function Panel({
   };
 
   return (
-    <div className={getPanelStyles(theme)}>
+    <div className={getPanelStyles(theme)} data-lgid={lgIds.panel}>
       <div
         className={getPanelTitleStyles(theme, baseFontSizeProp || baseFontSize)}
+        data-lgid={lgIds.panelTitle}
       >
         {title}
       </div>
@@ -139,7 +143,11 @@ export function Panel({
             align="top"
             justify="middle"
             trigger={
-              <IconButton onClick={handleFormatClick} aria-label="Format code">
+              <IconButton
+                onClick={handleFormatClick}
+                aria-label="Format code"
+                data-lgid={lgIds.panelFormatButton}
+              >
                 <FormatIcon />
               </IconButton>
             }
@@ -154,18 +162,23 @@ export function Panel({
             variant={CopyButtonVariant.IconButton}
             getContentsToCopy={getContents ?? (() => '')}
             onCopy={onCopyClick}
+            data-lgid={lgIds.panelCopyButton}
           />
         )}
         {showSecondaryMenuButton && (
           <Menu
             trigger={
-              <IconButton aria-label="Show more actions">
+              <IconButton
+                aria-label="Show more actions"
+                data-lgid={lgIds.panelSecondaryMenuButton}
+              >
                 <EllipsisIcon />
               </IconButton>
             }
             variant={MenuVariant.Compact}
             darkMode={darkMode}
             renderDarkMenu={false}
+            data-lgid={lgIds.panelSecondaryMenu}
           >
             <MenuItem
               glyph={<UndoIcon />}
