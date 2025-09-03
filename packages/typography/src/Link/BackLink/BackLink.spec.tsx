@@ -1,20 +1,17 @@
 import React, { createRef } from 'react';
 import { render } from '@testing-library/react';
 
-import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
+import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 import BackLink from './BackLink';
-import { BaseBackLinkProps } from './BackLink.types';
+import { BackLinkProps } from './BackLink.types';
 
-type BackLinkRenderProps = InferredPolymorphicPropsWithRef<
-  'span',
-  BaseBackLinkProps
->;
-
-const renderBackLink = (props: BackLinkRenderProps) => {
+const renderBackLink = <TAs extends PolymorphicAs>({
+  ref,
+  ...props
+}: BackLinkProps<TAs>) => {
   const utils = render(
-    // @ts-ignore React17 Type 'SVGSymbolElement' is missing the following properties...
-    <BackLink data-testid="link" {...props}>
+    <BackLink ref={ref} data-testid="link" {...props}>
       Back link
     </BackLink>,
   );
