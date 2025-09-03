@@ -9,6 +9,7 @@ import { BaseLinkProps } from './Link.types';
 type LinkRenderProps = InferredPolymorphicProps<'span', BaseLinkProps>;
 
 const renderLink = (props: LinkRenderProps) => {
+  // @ts-expect-error FIXME: React 17 Type 'SVGSymbolElement' is missing the following properties
   render(<Link {...props}>Link</Link>);
 };
 

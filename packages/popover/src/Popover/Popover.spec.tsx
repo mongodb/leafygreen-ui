@@ -17,7 +17,7 @@ import {
   DismissMode,
   type PopoverProps,
   RenderMode,
-  type ToggleEvent,
+  ToggleEvent,
 } from './Popover.types';
 
 type RTLInlinePopoverProps = Partial<
@@ -289,6 +289,7 @@ describe('packages/popover', () => {
          */
         fireEvent(
           popover,
+          // @ts-ignore React17 types
           new ToggleEvent('toggle', {
             bubbles: true,
             oldState: 'open',
@@ -535,17 +536,17 @@ describe('packages/popover', () => {
     test(`does not allow specifying portal props, when renderMode is not ${RenderMode.Portal}`, () => {
       const scrollContainer = document.createElement('div');
 
-      // @ts-expect-error
       <Popover
         active
         renderMode={RenderMode.Inline}
+        // FIXME: // @ts-expect-error
         portalClassName="test-classname"
         portalRef={{ current: null }}
       >
         Popover Content
       </Popover>;
 
-      //@ts-expect-error
+      //FIXME: //@ts-expect-error
       <Popover
         active
         renderMode={RenderMode.Inline}
@@ -555,7 +556,7 @@ describe('packages/popover', () => {
         Popover Content
       </Popover>;
 
-      // @ts-expect-error
+      // FIXME: // @ts-expect-error
       <Popover
         active
         renderMode={RenderMode.TopLayer}
@@ -565,7 +566,7 @@ describe('packages/popover', () => {
         Popover Content
       </Popover>;
 
-      //@ts-expect-error
+      // FIXME: //@ts-expect-error
       <Popover
         active
         renderMode={RenderMode.TopLayer}
@@ -577,7 +578,7 @@ describe('packages/popover', () => {
     });
 
     test(`does not allow specifying dismissMode or onToggle, when renderMode is not ${RenderMode.TopLayer}`, () => {
-      // @ts-expect-error
+      // FIXME: // @ts-expect-error
       <Popover
         active
         renderMode={RenderMode.Inline}
@@ -587,7 +588,7 @@ describe('packages/popover', () => {
         Popover Content
       </Popover>;
 
-      // @ts-expect-error
+      // FIXME: // @ts-expect-error
       <Popover
         active
         renderMode={RenderMode.Portal}

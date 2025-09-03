@@ -13,6 +13,7 @@ type BackLinkRenderProps = InferredPolymorphicPropsWithRef<
 
 const renderBackLink = (props: BackLinkRenderProps) => {
   const utils = render(
+    // @ts-ignore React17 Type 'SVGSymbolElement' is missing the following properties...
     <BackLink data-testid="link" {...props}>
       Back link
     </BackLink>,

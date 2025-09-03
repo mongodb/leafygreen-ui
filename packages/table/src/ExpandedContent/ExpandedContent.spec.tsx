@@ -60,6 +60,7 @@ const RowWithExpandableContent = (args: TableProps<Person>) => {
                     })}
                   </Row>
                 )}
+                {/* @ts-expect-error FIXME: ExpandedContent is incorrectly generic */}
                 {isExpandedContent && <ExpandedContent row={row} />}
               </Fragment>
             );
@@ -130,7 +131,7 @@ describe('packages/table/Row/ExpandableContent', () => {
 
       const StyledExpandedContent = styled(ExpandedContent)`
         color: #69ffc6;
-      ` as typeof ExpandedContent;
+      `;
 
       const { getByTestId } = render(
         <StyledExpandedContent row={mockRow} data-testid="styled" />,
@@ -149,7 +150,7 @@ describe('packages/table/Row/ExpandableContent', () => {
 
       const StyledExpandedContent = styled(ExpandedContent)<StyledProps>`
         color: ${props => props.color};
-      ` as typeof ExpandedContent;
+      `;
 
       const { getByTestId } = render(
         <StyledExpandedContent
