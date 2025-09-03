@@ -1,16 +1,6 @@
 import { codeSnippets } from './codeSnippets';
-import {
-  defaultPanelContextFunctions,
-  PanelSelectors,
-  renderPanel,
-} from './panelTestUtils';
 
-export {
-  codeSnippets,
-  defaultPanelContextFunctions,
-  PanelSelectors,
-  renderPanel,
-};
+export { codeSnippets };
 
 // Extension testing utilities
 export {

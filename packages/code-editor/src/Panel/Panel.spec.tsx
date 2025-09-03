@@ -2,8 +2,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom';
 
-import { renderPanel } from '../testing/panelTestUtils';
-
+import { renderPanel } from './Panel.testUtils';
 import { PanelProps } from './Panel.types';
 
 const TestIcon = () => <div data-testid="test-icon" />;
