@@ -89,6 +89,7 @@ export function Panel({
   title,
 }: PanelProps) {
   const [shortcutsModalOpen, setShortcutsModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
 
@@ -130,6 +131,8 @@ export function Panel({
   };
 
   const handleViewShortcutsClick = () => {
+    // Close the menu first, then open the modal
+    setMenuOpen(false);
     setShortcutsModalOpen(true);
     onViewShortcutsClick?.();
   };
@@ -180,6 +183,8 @@ export function Panel({
               variant={MenuVariant.Compact}
               darkMode={darkMode}
               renderDarkMenu={false}
+              open={menuOpen}
+              setOpen={setMenuOpen}
             >
               <MenuItem
                 glyph={<UndoIcon />}
