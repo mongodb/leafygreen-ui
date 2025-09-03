@@ -12,26 +12,39 @@ import { TestUtilsReturnType } from './getTestUtils.types';
  * elements using data-lgid attributes and provide methods to interact with the
  * editor's DOM structure.
  *
+ * USAGE:
+ *
+ * Basic usage for testing CodeEditor:
+ * ```typescript
+ * const utils = getTestUtils('your-editor-lgid');
+ *
+ * // Wait for the editor to be fully initialized
+ * await utils.waitForInitialization();
+ *
+ * // Get the actual content from CodeMirror
+ * const content = await utils.getContent();
+ *
+ * // Check loading state
+ * expect(utils.getIsLoading()).toBe(false);
+ * ```
+ *
  * TESTING ENVIRONMENT COMPATIBILITY:
+ *
+ * ✅ Real Browsers (E2E tests, Storybook, etc.):
+ * - Full functionality including content verification from CodeMirror
+ * - Accurate language detection
+ * - Complete line number access
+ * - Reliable loading state detection
  *
  * ✅ JSDOM (Jest + React Testing Library):
  * - Basic DOM structure queries (getEditor, queryPanel, etc.)
  * - Panel utilities (getPanelUtils, button interactions)
  * - Loading state detection (getIsLoading)
  * - Element presence checks (getHas* methods)
+ * - Content retrieval via data attributes when CodeMirror unavailable
  *
- * ⚠️  Limited in JSDOM:
- * - getContent() may return mocked content due to CodeMirror limitations
- * - getLanguage() may return null as CodeMirror classes aren't applied
- * - Line number elements may not be fully rendered
- *
- * ✅ Real Browsers (E2E tests, Storybook, etc.):
- * - Full functionality including content verification
- * - Accurate language detection
- * - Complete line number access
- *
- * For comprehensive testing, combine these utilities with mocking (as shown in
- * getTestUtils.spec.tsx) or use in real browser environments.
+ * The utilities automatically handle CodeMirror initialization and provide
+ * graceful fallbacks for different testing environments.
  */
 
 // Helper functions for DOM queries
@@ -65,38 +78,83 @@ export const getTestUtils = (
   const element = getByLgId!(lgIds.root);
 
   /**
-   * Gets the content that was passed to the CodeEditor component.
-   * This reads the actual props passed to the component, making it useful for testing
-   * what content was provided to the editor.
+   * Waits for the CodeEditor to be fully initialized with CodeMirror instance
    */
-  const getContent = (): string | null => {
-    // First try to get actual rendered content from CodeMirror (real browser environments)
+  const waitForInitialization = async (timeout = 5000): Promise<void> => {
+    const startTime = Date.now();
+
+    while (Date.now() - startTime < timeout) {
+      const containerElement = element as any;
+
+      if (containerElement._cm) {
+        return;
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+
+    throw new Error(`CodeEditor not initialized within ${timeout}ms`);
+  };
+
+  /**
+   * Waits for any loading states to complete (both user and internal loading)
+   */
+  const waitForLoadingToComplete = async (timeout = 5000): Promise<void> => {
+    const startTime = Date.now();
+
+    while (Date.now() - startTime < timeout) {
+      if (!getIsLoading()) {
+        return;
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+
+    throw new Error(`Loading did not complete within ${timeout}ms`);
+  };
+
+  /**
+   * Gets the content that was passed to the CodeEditor component.
+   * This reads the actual content from CodeMirror when available, falling back to props.
+   */
+  const getContent = async (): Promise<string | null> => {
+    // First try to get content from actual CodeMirror instance if available
+    const containerElement = element as any;
+
+    if (containerElement._cm?.state?.sliceDoc) {
+      return containerElement._cm.state.sliceDoc();
+    }
+
+    // If CodeMirror isn't ready yet, wait for it and try again
+    try {
+      await waitForInitialization();
+
+      if (containerElement._cm?.state?.sliceDoc) {
+        return containerElement._cm.state.sliceDoc();
+      }
+    } catch {
+      // If initialization fails, fall back to other methods
+    }
+
+    // Try to get content from rendered CodeMirror content element
     const contentElement = element.querySelector(CodeEditorSelectors.Content);
 
     if (contentElement?.textContent) {
       return contentElement.textContent;
     }
 
-    // In test environments, read the content from component props/attributes
-    // Look for data attributes that store the original content
-    const defaultValue = element.getAttribute('data-default-value');
-
-    if (defaultValue) {
-      return defaultValue;
-    }
-
-    // Check for controlled value
+    // In test environments or when CodeMirror isn't available,
+    // read the content from component props/attributes
     const value = element.getAttribute('data-value');
 
     if (value) {
       return value;
     }
 
-    // Look for mocked CodeMirror instance as last fallback
-    const containerElement = element as any;
+    const defaultValue = element.getAttribute('data-default-value');
 
-    if (containerElement._cm?.state?.sliceDoc) {
-      return containerElement._cm.state.sliceDoc();
+    if (defaultValue) {
+      return defaultValue;
     }
 
     return null;
@@ -289,6 +347,8 @@ export const getTestUtils = (
 
   return {
     getEditor: () => element,
+    waitForInitialization,
+    waitForLoadingToComplete,
     getContent,
     getLanguage,
     getIsLoading,

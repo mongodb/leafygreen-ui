@@ -15,9 +15,19 @@ export interface TestUtilsReturnType {
   getEditor: () => HTMLElement;
 
   /**
+   * Waits for the CodeEditor to be fully initialized with CodeMirror instance
+   */
+  waitForInitialization: (timeout?: number) => Promise<void>;
+
+  /**
+   * Waits for any loading states to complete (both user and internal loading)
+   */
+  waitForLoadingToComplete: (timeout?: number) => Promise<void>;
+
+  /**
    * Gets the current text content from the editor
    */
-  getContent: () => string | null;
+  getContent: () => Promise<string | null>;
 
   /**
    * Gets the programming language currently set on the editor
