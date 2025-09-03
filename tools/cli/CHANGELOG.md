@@ -1,5 +1,22 @@
 # @lg-tools/cli
 
+## 0.10.6
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [172c228]
+- Updated dependencies [172c228]
+  - @lg-tools/validate@0.6.0
+  - @lg-tools/build@0.8.1
+  - @lg-tools/codemods@0.4.1
+  - @lg-tools/link@0.2.14
+  - @lg-tools/lint@3.0.1
+  - @lg-tools/prompt-kit@0.3.2
+  - @lg-tools/slackbot@0.2.18
+  - @lg-tools/update@0.1.19
+
 ## 0.10.5
 
 ### Patch Changes

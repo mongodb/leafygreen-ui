@@ -1,5 +1,12 @@
 # @leafygreen-ui/lib
 
+## 15.2.1
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+
 ## 15.2.0
 
 ### Minor Changes
