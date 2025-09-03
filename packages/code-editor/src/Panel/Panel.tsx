@@ -184,7 +184,6 @@ export function Panel({
                 </IconButton>
               }
               variant={MenuVariant.Compact}
-              darkMode={darkMode}
               renderDarkMenu={false}
               open={menuOpen}
               setOpen={setMenuOpen}
