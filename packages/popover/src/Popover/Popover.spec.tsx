@@ -536,17 +536,17 @@ describe('packages/popover', () => {
     test(`does not allow specifying portal props, when renderMode is not ${RenderMode.Portal}`, () => {
       const scrollContainer = document.createElement('div');
 
+      // @ts-expect-error
       <Popover
         active
         renderMode={RenderMode.Inline}
-        // FIXME: // @ts-expect-error
         portalClassName="test-classname"
         portalRef={{ current: null }}
       >
         Popover Content
       </Popover>;
 
-      //FIXME: //@ts-expect-error
+      //@ts-expect-error
       <Popover
         active
         renderMode={RenderMode.Inline}
@@ -556,7 +556,7 @@ describe('packages/popover', () => {
         Popover Content
       </Popover>;
 
-      // FIXME: // @ts-expect-error
+      // @ts-expect-error
       <Popover
         active
         renderMode={RenderMode.TopLayer}
@@ -566,7 +566,7 @@ describe('packages/popover', () => {
         Popover Content
       </Popover>;
 
-      // FIXME: //@ts-expect-error
+      //@ts-expect-error
       <Popover
         active
         renderMode={RenderMode.TopLayer}
@@ -578,7 +578,7 @@ describe('packages/popover', () => {
     });
 
     test(`does not allow specifying dismissMode or onToggle, when renderMode is not ${RenderMode.TopLayer}`, () => {
-      // FIXME: // @ts-expect-error
+      // @ts-expect-error
       <Popover
         active
         renderMode={RenderMode.Inline}
@@ -588,7 +588,7 @@ describe('packages/popover', () => {
         Popover Content
       </Popover>;
 
-      // FIXME: // @ts-expect-error
+      // @ts-expect-error
       <Popover
         active
         renderMode={RenderMode.Portal}
