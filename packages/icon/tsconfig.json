@@ -1,12 +1,15 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./",
     "paths": {
       "@leafygreen-ui/*": [
         "../*/src"
       ]
-    }
+    },
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types"
   },
   "include": [
     "src/**/*",

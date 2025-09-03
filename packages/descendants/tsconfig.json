@@ -5,7 +5,11 @@
       "@leafygreen-ui/*": [
         "../*/src"
       ]
-    }
+    },
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types"
   },
   "include": [
     "src/**/*"
