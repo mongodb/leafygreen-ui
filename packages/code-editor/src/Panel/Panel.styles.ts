@@ -9,6 +9,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 const PANEL_HEIGHT = 36;
+const MODAL_HEIGHT = 354;
 
 export const getPanelStyles = (theme: Theme) => {
   return css`
@@ -53,5 +54,5 @@ export const getPanelButtonsStyles = () => {
 };
 
 export const ModalStyles = css`
-  height: 354px;
+  height: ${MODAL_HEIGHT}px;
 `;
