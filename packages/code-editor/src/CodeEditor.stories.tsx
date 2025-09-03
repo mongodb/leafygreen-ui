@@ -10,10 +10,12 @@ import { expect, waitFor } from '@storybook/test';
 import { css } from '@leafygreen-ui/emotion';
 // @ts-ignore LG icons don't currently support TS
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import Modal from '@leafygreen-ui/modal';
 
 import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { IndentUnits } from './CodeEditor';
+import { ShortcutTable } from './ShortcutTable';
 import { codeSnippets } from './testing';
 import { CodeEditor, Panel } from '.';
 
@@ -367,4 +369,14 @@ export const Typescript = Template.bind({});
 Typescript.args = {
   language: 'typescript',
   defaultValue: codeSnippets.typescript,
+};
+
+export const ShortcutsMenu: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Modal open>
+        <ShortcutTable />
+      </Modal>
+    );
+  },
 };

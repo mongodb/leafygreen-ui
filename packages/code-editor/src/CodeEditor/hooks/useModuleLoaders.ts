@@ -15,6 +15,7 @@ const importCodeMirrorLanguage = () => import('@codemirror/language');
 const importCodeMirrorLint = () => import('@codemirror/lint');
 const importLezerHighlight = () => import('@lezer/highlight');
 const importCodeMirrorAutocomplete = () => import('@codemirror/autocomplete');
+const importCodeMirrorSearch = () => import('@codemirror/search');
 const importHyperLink = () => import('@uiw/codemirror-extensions-hyper-link');
 
 // Language-specific imports
@@ -69,6 +70,7 @@ export const useModuleLoaders = ({
       '@codemirror/view': importCodeMirrorView,
       '@codemirror/state': importCodeMirrorState,
       '@codemirror/commands': importCodeMirrorCommands,
+      '@codemirror/search': importCodeMirrorSearch,
     };
 
     if (enableClickableUrls) {
