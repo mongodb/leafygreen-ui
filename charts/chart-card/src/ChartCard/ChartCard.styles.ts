@@ -93,7 +93,7 @@ export const getHeaderStyles = ({
       height: 100%;
       padding: ${spacing[150]}px ${spacing[300]}px;
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: auto 1fr;
       background: 'none';
     `,
     {
