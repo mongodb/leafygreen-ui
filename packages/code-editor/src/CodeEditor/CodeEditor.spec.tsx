@@ -1,6 +1,7 @@
 import { forceParsing } from '@codemirror/language';
 import { EditorState } from '@codemirror/state';
 import { act, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { renderCodeEditor } from '../testing/testUtils';
 
@@ -667,6 +668,137 @@ describe('packages/code-editor', () => {
       } catch (error) {
         console.warn('Skipping test due to environment issues:', error);
       }
+    });
+  });
+
+  describe('Keybindings', () => {
+    test('Pressing ESC key unfocuses the editor', async () => {
+      const { editor, container } = renderCodeEditor({
+        defaultValue: 'console.log("test");',
+      });
+
+      await editor.waitForEditorView();
+
+      // Focus the editor by clicking on the content area
+      const contentElement = editor.getBySelector(CodeEditorSelectors.Content);
+      userEvent.click(contentElement);
+
+      // Verify the editor is focused
+      await waitFor(() => {
+        expect(
+          container.querySelector(CodeEditorSelectors.Focused),
+        ).toBeInTheDocument();
+      });
+
+      // Press the ESC key
+      userEvent.keyboard('{Escape}');
+
+      // Verify the editor is no longer focused
+      await waitFor(() => {
+        expect(
+          container.querySelector(CodeEditorSelectors.Focused),
+        ).not.toBeInTheDocument();
+      });
+    });
+
+    test('Pressing CMD+F brings up the search menu', async () => {
+      const { editor, container } = renderCodeEditor({
+        defaultValue: 'console.log("hello world");\nconsole.log("test");',
+      });
+
+      await editor.waitForEditorView();
+
+      // Focus the editor first
+      const contentElement = editor.getBySelector(CodeEditorSelectors.Content);
+      userEvent.click(contentElement);
+
+      // Verify editor is focused
+      await waitFor(() => {
+        expect(container.querySelector('.cm-focused')).toBeInTheDocument();
+      });
+
+      // Press Ctrl+F to open search (works on most platforms)
+      userEvent.keyboard('{Control>}f{/Control}');
+
+      // Check if the search panel appears
+      await waitFor(() => {
+        // CodeMirror 6 search creates a panel with specific classes
+        const searchPanel = container.querySelector(
+          CodeEditorSelectors.SearchPanel,
+        );
+        expect(searchPanel).toBeInTheDocument();
+      });
+
+      // Verify search input field is present and can be typed in
+      await waitFor(() => {
+        const searchInput = container.querySelector(
+          CodeEditorSelectors.SearchInput,
+        );
+        expect(searchInput).toBeInTheDocument();
+      });
+    });
+
+    test('Pressing TAB enters correct tab', async () => {
+      const { editor } = renderCodeEditor({
+        defaultValue: 'console.log("test");',
+        indentUnit: 'tab',
+      });
+
+      await editor.waitForEditorView();
+
+      // Focus the editor and position cursor at the start of the line
+      const contentElement = editor.getBySelector(CodeEditorSelectors.Content);
+      userEvent.click(contentElement);
+
+      // Position cursor at the beginning of the line
+      userEvent.keyboard('{Home}');
+
+      // Get initial content
+      const initialContent = editor.getContent();
+
+      // Press TAB
+      userEvent.keyboard('{Tab}');
+
+      // Verify that indentation was inserted
+      await waitFor(() => {
+        const newContent = editor.getContent();
+        // Should insert a tab character at the beginning
+        expect(newContent).toBe('\tconsole.log("test");');
+        expect(newContent).not.toBe(initialContent);
+        expect(newContent.length).toBeGreaterThan(initialContent.length);
+      });
+    });
+
+    test('Pressing SHIFT+TAB lessens line indentation', async () => {
+      const { editor } = renderCodeEditor({
+        defaultValue: '\tconsole.log("test");', // Start with indented content
+        indentUnit: 'tab',
+      });
+
+      await editor.waitForEditorView();
+
+      // Focus the editor and position cursor on the indented line
+      const contentElement = editor.getBySelector(CodeEditorSelectors.Content);
+      userEvent.click(contentElement);
+
+      // Position cursor at the beginning of the line
+      userEvent.keyboard('{Home}');
+
+      // Get initial content (should have tab indentation)
+      const initialContent = editor.getContent();
+      expect(initialContent).toBe('\tconsole.log("test");');
+
+      // Press SHIFT+TAB to reduce indentation
+      userEvent.keyboard('{Shift>}{Tab}{/Shift}');
+
+      // Verify that indentation was reduced
+      await waitFor(() => {
+        const newContent = editor.getContent();
+        // Should remove the tab indentation
+        expect(newContent).toBe('console.log("test");');
+        expect(newContent).not.toBe(initialContent);
+        expect(newContent.length).toBeLessThan(initialContent.length);
+      });
     });
   });
 });
