@@ -159,8 +159,6 @@ export function Panel({
                   <FormatIcon />
                 </IconButton>
               }
-              triggerEvent="hover"
-              darkMode={darkMode}
             >
               Prettify code
             </Tooltip>
