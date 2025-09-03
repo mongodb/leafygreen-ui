@@ -110,6 +110,7 @@ export function Panel({
   };
 
   const handleUndoClick = () => {
+    setMenuOpen(false);
     if (undo) {
       undo();
     }
@@ -117,6 +118,7 @@ export function Panel({
   };
 
   const handleRedoClick = () => {
+    setMenuOpen(false);
     if (redo) {
       redo();
     }
@@ -124,6 +126,7 @@ export function Panel({
   };
 
   const handleDownloadClick = () => {
+    setMenuOpen(false);
     if (downloadContent) {
       downloadContent(downloadFileName);
     }
