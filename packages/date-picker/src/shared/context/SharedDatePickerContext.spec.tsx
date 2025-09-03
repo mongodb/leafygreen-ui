@@ -17,7 +17,7 @@ import {
 const renderSharedDatePickerProvider = (
   props?: Partial<SharedDatePickerProviderProps>,
 ) => {
-  const { result, rerender } = renderHook<{}, SharedDatePickerContextProps>(
+  const { result, rerender } = renderHook<SharedDatePickerContextProps, {}>(
     useSharedDatePickerContext,
     {
       wrapper: ({ children }) => (
