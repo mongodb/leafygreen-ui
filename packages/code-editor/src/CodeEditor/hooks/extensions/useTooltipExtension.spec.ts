@@ -1,6 +1,9 @@
 import { renderHook } from '@testing-library/react';
 
-import { createMockLintModule, createMockStateModule } from '../../../testing';
+import {
+  createMockLintModule,
+  createMockStateModule,
+} from '../hooks.testUtils';
 
 import { useTooltipExtension } from './useTooltipExtension';
 

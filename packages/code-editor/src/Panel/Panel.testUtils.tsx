@@ -5,8 +5,9 @@ import userEvent from '@testing-library/user-event';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { CodeEditorProvider } from '../CodeEditor/CodeEditorContext';
-import { Panel } from '../Panel/Panel';
-import { PanelProps } from '../Panel/Panel.types';
+
+import { Panel } from './Panel';
+import { PanelProps } from './Panel.types';
 
 // Default stub functions for CodeEditor context
 const defaultStubGetContents = () => 'test content';

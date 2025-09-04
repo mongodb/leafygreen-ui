@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 
-import { createMockStateModule } from '../../../testing';
+import { createMockStateModule } from '../hooks.testUtils';
 
 import { LanguageName, useLanguageExtension } from './useLanguageExtension';
 

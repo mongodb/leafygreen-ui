@@ -317,545 +317,223 @@ editorRef.current.downloadContent(); // No filename provided
 
 ## Test Utilities
 
-The `@leafygreen-ui/code-editor` package provides a comprehensive testing utility to help you test CodeEditor components in your Jest tests.
+The `@leafygreen-ui/code-editor` package provides test utilities to help test CodeEditor and Panel components in your applications.
 
-### `renderCodeEditor(props?)`
+### `getTestUtils(lgId?)`
 
-Renders a CodeEditor component with the specified props for testing purposes.
+Returns utilities for testing CodeEditor and Panel components. These utilities help you interact with and query the CodeEditor's DOM elements in tests.
 
 **Parameters:**
 
-- `props` _(optional)_: Partial `CodeEditorProps` to pass to the CodeEditor component
+- `lgId` _(optional)_: Custom lgId string to scope the queries. Must follow the pattern `lg-${string}`. Defaults to `'lg-code_editor'`
 
 **Returns:**
 
-- `container`: The rendered container element from `@testing-library/react`
-- `editor`: Editor test utilities object with methods for interacting with the editor
+An object with methods for testing the CodeEditor and its Panel.
 
-**Example:**
+### Recommended Usage
+
+For **unit tests** in JSDOM, focus on:
+
+- Verifying component structure and presence
+- Testing panel interactions and button states
+- Checking loading states and configurations
+- Using `await utils.getContent()` for reliable content testing
+- Using `waitForLoadingToComplete()` for loading state transitions
+
+For **advanced content verification**, use:
+
+- `waitForInitialization()` before testing CodeMirror-specific features
+- E2E tests (Cypress, Playwright) in real browsers for full functionality
+- Integration tests with proper CodeMirror mocking
+- Storybook interactions in browser environments
+
+**Key Patterns:**
 
 ```tsx
-import { renderCodeEditor } from '@leafygreen-ui/code-editor';
+// Always use async/await for content testing
+const content = await utils.getContent();
 
-test('renders code editor with default value', async () => {
-  const { editor, container } = renderCodeEditor({
-    defaultValue: 'console.log("Hello World");',
-  });
-  await editor.waitForEditorView();
+// Wait for loading to complete when testing loading states
+await utils.waitForLoadingToComplete();
+expect(utils.getIsLoading()).toBe(false);
 
-  expect(container).toHaveTextContent('console.log("Hello World");');
-});
+// Wait for initialization before testing advanced features
+await utils.waitForInitialization();
+// Now test CodeMirror-specific functionality
 ```
 
-### Editor Test Utilities
+#### Basic Editor Utilities
 
-The `editor` object returned by `renderCodeEditor` provides the following methods:
+- `getEditor()` - Returns the CodeEditor root element
+- `getContent()` - Gets the current text content from the editor (returns `Promise<string | null>`)
+- `getLanguage()` - Gets the programming language currently set on the editor (from CSS classes)
+- `getIsLoading()` - Checks if the editor is currently in a loading state
+- `getIsReadOnly()` - Checks if the editor is in read-only mode
 
-#### `editor.waitForEditorView(timeout?)`
+#### Async Initialization Utilities
 
-Waits for the editor view to be available before proceeding with tests.
+- `waitForInitialization(timeout?)` - Waits for the CodeMirror instance to be fully initialized (returns `Promise<void>`)
+- `waitForLoadingToComplete(timeout?)` - Waits for the loading state to complete (returns `Promise<void>`)
 
-##### Parameters
+#### Feature Detection Utilities
 
-- `timeout` _(optional)_: Maximum time to wait in milliseconds (default: 5000)
+- `getHasLineNumbers()` - Checks if line numbers are enabled and visible
+- `getHasLineWrapping()` - Checks if line wrapping is enabled
+- `getHasCodeFolding()` - Checks if code folding is enabled
+- `getHasTooltips()` - Checks if any tooltips are currently visible
+- `getHasHyperlinks()` - Checks if hyperlinks/clickable URLs are enabled
 
-##### Returns
+#### Element Utilities
 
-Promise that resolves when the editor view is available
+- `getAllLineNumbers()` - Gets all visible line number elements
+- `getLineNumberByIndex(lineNumber)` - Gets a specific line number element (1-based)
+- `getTooltips()` - Gets all tooltip elements currently visible in the editor
+- `getHyperlinks()` - Gets all hyperlink elements if clickable URLs are enabled
+- `getCopyButton()` - Gets the copy button element (when not using panel)
 
-##### Example
+#### Panel Utilities
 
-```tsx
-const { editor } = renderCodeEditor();
-await editor.waitForEditorView(); // Wait before interacting with editor
-```
+- `queryPanel()` - Queries for the panel element (returns null if no panel)
+- `getPanelUtils()` - Gets panel-specific utilities if panel is present
 
-#### `editor.getBySelector(selector, options?)`
+When a Panel is present, `getPanelUtils()` returns an object with:
 
-Returns the first element matching a specific CodeEditor selector. Throws an error if no element or multiple elements are found.
+- `getPanel()` - Returns the panel element
+- `getPanelTitle()` - Gets the panel title text
+- `getFormatButton()` - Gets the format button element
+- `getPanelCopyButton()` - Gets the panel's copy button element
+- `getSecondaryMenuButton()` - Gets the secondary menu button element
+- `getSecondaryMenu()` - Gets the secondary menu element
+- `isSecondaryMenuOpen()` - Checks if the secondary menu is currently open
 
-##### Parameters
+#### Example Usage
 
-- `selector`: The CSS selector from `CodeEditorSelectors` enum
-- `options` _(optional)_: Object with optional `text` property for filtering by text content
-
-##### Example
-
-```tsx
-// Get the content element
-const content = editor.getBySelector(CodeEditorSelectors.Content);
-
-// Get a specific line number
-const lineNumber = editor.getBySelector(CodeEditorSelectors.GutterElement, {
-  text: '1',
-});
-```
-
-#### `editor.getAllBySelector(selector, options?)`
-
-Returns all elements matching a specific CodeEditor selector. Throws an error if no elements are found.
-
-##### Parameters
-
-- `selector`: The CSS selector from `CodeEditorSelectors` enum
-- `options` _(optional)_: Object with optional `text` property for filtering by text content
-
-##### Example
+**Basic Testing (JSDOM-compatible):**
 
 ```tsx
-// Get all line numbers
-const allLineNumbers = editor.getAllBySelector(
-  CodeEditorSelectors.GutterElement,
-);
-```
-
-#### `editor.queryBySelector(selector, options?)`
-
-Returns the first element matching a specific CodeEditor selector, or null if not found. Useful when you're not sure if an element exists.
-
-##### Parameters
-
-- `selector`: The CSS selector from `CodeEditorSelectors` enum
-- `options` _(optional)_: Object with optional `text` property for filtering by text content
-
-##### Example
-
-```tsx
-// Check if fold gutter exists
-const foldGutter = editor.queryBySelector(CodeEditorSelectors.FoldGutter);
-expect(foldGutter).not.toBeInTheDocument();
-```
-
-#### `editor.queryAllBySelector(selector, options?)`
-
-Returns all elements matching a specific CodeEditor selector, or null if none are found.
-
-##### Parameters
-
-- `selector`: The CSS selector from `CodeEditorSelectors` enum
-- `options` _(optional)_: Object with optional `text` property for filtering by text content
-
-#### `editor.isReadOnly()`
-
-Checks if the editor is in read-only mode.
-
-##### Returns
-
-Boolean indicating whether the editor is in read-only mode
-
-##### Example
-
-```tsx
-const { editor } = renderCodeEditor({ readOnly: true });
-await editor.waitForEditorView();
-
-expect(editor.isReadOnly()).toBe(true);
-```
-
-#### `editor.getIndentUnit()`
-
-Retrieves the current indentation unit configuration from the editor.
-
-##### Returns
-
-The string used for indentation (spaces or tab character)
-
-##### Example
-
-```tsx
-const { editor } = renderCodeEditor({
-  indentUnit: 'space',
-  indentSize: 4,
-});
-await editor.waitForEditorView();
-
-expect(editor.getIndentUnit()).toBe('    '); // 4 spaces
-```
-
-#### `editor.isLineWrappingEnabled()`
-
-Checks if line wrapping is enabled in the editor.
-
-##### Returns
-
-Boolean indicating whether line wrapping is enabled
-
-##### Example
-
-```tsx
-const { editor } = renderCodeEditor({ enableLineWrapping: true });
-await editor.waitForEditorView();
-
-expect(editor.isLineWrappingEnabled()).toBe(true);
-```
-
-#### `editor.interactions.insertText(text, options?)`
-
-Inserts text into the editor at the specified position.
-
-##### Parameters
-
-- `text`: The text to insert
-- `options` _(optional)_: Object with optional position properties
-  - `from`: Starting position for insertion (defaults to end of document)
-  - `to`: End position for replacement (optional)
-
-##### Example
-
-```tsx
-import { act } from '@testing-library/react';
-
-const { editor } = renderCodeEditor();
-await editor.waitForEditorView();
-
-act(() => {
-  editor.interactions.insertText('new content');
-});
-
-expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
-  'new content',
-);
-```
-
-#### `editor.getContent()`
-
-Gets the current text content of the editor.
-
-**Returns:** String containing the current editor content
-
-**Example:**
-
-```tsx
-const { editor } = renderCodeEditor({ defaultValue: 'Hello World' });
-await editor.waitForEditorView();
-
-expect(editor.getContent()).toBe('Hello World');
-```
-
-#### `editor.getHandle()`
-
-Gets the imperative handle instance for testing imperative methods like undo/redo.
-
-**Returns:** The editor handle instance with all imperative methods
-
-**Example:**
-
-```tsx
-const { editor } = renderCodeEditor();
-await editor.waitForEditorView();
-
-const handle = editor.getHandle();
-expect(typeof handle.undo).toBe('function');
-expect(typeof handle.redo).toBe('function');
-expect(typeof handle.downloadContent).toBe('function');
-```
-
-#### `editor.interactions.undo()`
-
-Performs an undo operation on the editor.
-
-**Returns:** Boolean indicating if undo was successful
-
-**Example:**
-
-```tsx
-const { editor } = renderCodeEditor({ defaultValue: 'original' });
-await editor.waitForEditorView();
-
-editor.interactions.insertText(' modified');
-expect(editor.getContent()).toBe('original modified');
-
-const success = editor.interactions.undo();
-expect(success).toBe(true);
-expect(editor.getContent()).toBe('original');
-```
-
-#### `editor.interactions.redo()`
-
-Performs a redo operation on the editor.
-
-**Returns:** Boolean indicating if redo was successful
-
-**Example:**
-
-```tsx
-const { editor } = renderCodeEditor({ defaultValue: 'original' });
-await editor.waitForEditorView();
-
-editor.interactions.insertText(' modified');
-editor.interactions.undo();
-expect(editor.getContent()).toBe('original');
-
-const success = editor.interactions.redo();
-expect(success).toBe(true);
-expect(editor.getContent()).toBe('original modified');
-```
-
-### Complete Test Example
-
-```tsx
-import {
-  renderCodeEditor,
-  CodeEditorSelectors,
-} from '@leafygreen-ui/code-editor';
-import { act } from '@testing-library/react';
-
-test('comprehensive editor testing', async () => {
-  const { editor, container } = renderCodeEditor({
-    defaultValue: 'const greeting = "Hello";',
-    language: LanguageName.javascript,
-    enableLineNumbers: true,
-    enableCodeFolding: true,
-  });
-
-  // Wait for editor to initialize
-  await editor.waitForEditorView();
-
-  // Check initial content
-  expect(container).toHaveTextContent('const greeting = "Hello";');
-
-  // Verify line numbers are present
-  expect(
-    editor.getBySelector(CodeEditorSelectors.GutterElement, { text: '1' }),
-  ).toBeInTheDocument();
-
-  // Verify fold gutter is present
-  expect(
-    editor.getBySelector(CodeEditorSelectors.FoldGutter),
-  ).toBeInTheDocument();
-
-  // Insert new text
-  act(() => {
-    editor.interactions.insertText('\nconsole.log(greeting);', { from: 25 });
-  });
-
-  // Verify the new content using getContent()
-  expect(editor.getContent()).toBe(
-    'const greeting = "Hello";\nconsole.log(greeting);',
+import { render } from '@testing-library/react';
+import { getTestUtils } from '@leafygreen-ui/code-editor/testing';
+import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
+
+test('CodeEditor structure and panel work correctly', async () => {
+  render(
+    <CodeEditor
+      defaultValue="const greeting = 'Hello World';"
+      language={LanguageName.javascript}
+      panel={
+        <Panel
+          title="JavaScript"
+          showFormatButton
+          showCopyButton
+          showSecondaryMenuButton
+          data-lgid="lg-my-editor"
+        />
+      }
+      data-lgid="lg-my-editor"
+    />,
   );
 
-  // Test undo/redo functionality
-  const undoSuccess = editor.interactions.undo();
-  expect(undoSuccess).toBe(true);
-  expect(editor.getContent()).toBe('const greeting = "Hello";');
+  const utils = getTestUtils('lg-my-editor');
 
-  const redoSuccess = editor.interactions.redo();
-  expect(redoSuccess).toBe(true);
-  expect(editor.getContent()).toBe(
-    'const greeting = "Hello";\nconsole.log(greeting);',
+  // Test editor presence and basic structure
+  expect(utils.getEditor()).toBeInTheDocument();
+  expect(utils.queryPanel()).toBeInTheDocument();
+
+  // Test panel functionality
+  const panelUtils = utils.getPanelUtils();
+  expect(panelUtils?.getPanelTitle()).toBe('JavaScript');
+  expect(panelUtils?.getFormatButton()).toBeInTheDocument();
+  expect(panelUtils?.getPanelCopyButton()).toBeInTheDocument();
+  expect(panelUtils?.getSecondaryMenuButton()).toBeInTheDocument();
+
+  // Test configuration detection
+  expect(typeof utils.getIsLoading()).toBe('boolean');
+  expect(typeof utils.getHasLineNumbers()).toBe('boolean');
+
+  // Test actual content and language (works in all environments!)
+  const content = await utils.getContent();
+  expect(content).toBe("const greeting = 'Hello World';");
+  expect(utils.getLanguage()).toBe('javascript');
+});
+```
+
+**Testing Content and Language:**
+
+```tsx
+test('CodeEditor content and language are accurately detected', async () => {
+  render(
+    <CodeEditor
+      defaultValue="def hello(): print('Hello World')"
+      language={LanguageName.python}
+      data-lgid="lg-my-python-editor"
+    />,
   );
+
+  const utils = getTestUtils('lg-my-python-editor');
+
+  // These work reliably in all environments including JSDOM
+  const content = await utils.getContent();
+  expect(content).toBe("def hello(): print('Hello World')");
+  expect(utils.getLanguage()).toBe('python');
+});
+
+test('Controlled CodeEditor updates correctly', async () => {
+  const TestComponent = () => {
+    const [value, setValue] = useState('initial content');
+    return (
+      <CodeEditor
+        value={value}
+        onChange={setValue}
+        data-lgid="lg-controlled-editor"
+      />
+    );
+  };
+
+  render(<TestComponent />);
+  const utils = getTestUtils('lg-controlled-editor');
+
+  const content = await utils.getContent();
+  expect(content).toBe('initial content');
+});
+
+test('Testing loading states and async initialization', async () => {
+  render(
+    <CodeEditor
+      defaultValue="console.log('test');"
+      isLoading={true}
+      data-lgid="lg-loading-editor"
+    />,
+  );
+
+  const utils = getTestUtils('lg-loading-editor');
+
+  // Test initial loading state
+  expect(utils.getIsLoading()).toBe(true);
+
+  // Wait for loading to complete (useful for testing loading state changes)
+  try {
+    await utils.waitForLoadingToComplete(1000); // 1 second timeout
+    expect(utils.getIsLoading()).toBe(false);
+  } catch {
+    // Timeout is acceptable in test environments
+    expect(typeof utils.getIsLoading()).toBe('boolean');
+  }
+
+  // For content testing, wait for initialization first
+  try {
+    await utils.waitForInitialization(1000);
+    const content = await utils.getContent();
+    expect(typeof content).toBe('string');
+  } catch {
+    // Graceful fallback for JSDOM environments
+    const content = await utils.getContent();
+    expect(content).toBe("console.log('test');");
+  }
 });
 ```
 
-### Panel Test Utilities
-
-The package also provides comprehensive testing utilities for the Panel component, making it easy to test Panel interactions and behaviors.
-
-#### `renderPanel(config?)`
-
-Renders a Panel component with proper LeafyGreen and CodeEditor context for testing.
-
-**Parameters:**
-
-- `config` _(optional)_: Configuration object with the following properties:
-  - `panelProps` _(optional)_: Partial `PanelProps` to pass to the Panel component
-  - `contextConfig` _(optional)_: Override the default CodeEditor context values
-
-**Returns:**
-
-- `container`: The rendered container element from `@testing-library/react`
-- `panel`: Panel test utilities object with methods for interacting with panel elements
-
-**Example:**
-
-```tsx
-import { renderPanel, PanelSelectors } from '@leafygreen-ui/code-editor';
-
-test('renders panel with format button', async () => {
-  const { container, panel } = renderPanel({
-    panelProps: {
-      title: 'JavaScript Editor',
-      showFormatButton: true,
-      showCopyButton: true,
-      showSecondaryMenuButton: true,
-    },
-  });
-
-  // Use utilities to interact with the panel
-  await panel.interactions.clickFormatButton();
-  await panel.interactions.clickUndoMenuItem();
-});
-```
-
-#### Panel Test Utilities Object
-
-The `panel` object provides access to Panel elements and interactions:
-
-##### Element Getters
-
-- `panel.getFormatButton()` - Gets the format button element
-- `panel.getCopyButton()` - Gets the copy button element
-- `panel.getSecondaryMenuButton()` - Gets the secondary menu button
-- `panel.getMenuItem(ariaLabel)` - Gets a menu item by aria-label
-- `panel.getUndoMenuItem()` - Gets the undo menu item
-- `panel.getRedoMenuItem()` - Gets the redo menu item
-- `panel.getDownloadMenuItem()` - Gets the download menu item
-- `panel.getViewShortcutsMenuItem()` - Gets the view shortcuts menu item
-- `panel.getCustomSecondaryButton(labelOrAriaLabel)` - Gets a custom secondary button
-
-##### Interactions
-
-All interaction methods are available under `panel.interactions`:
-
-- `clickFormatButton()` - Clicks the format button
-- `clickCopyButton()` - Clicks the copy button
-- `openSecondaryMenu()` - Opens the secondary menu
-- `clickMenuItem(ariaLabel)` - Clicks a menu item by aria-label
-- `clickUndoMenuItem()` - Opens menu and clicks undo
-- `clickRedoMenuItem()` - Opens menu and clicks redo
-- `clickDownloadMenuItem()` - Opens menu and clicks download
-- `clickViewShortcutsMenuItem()` - Opens menu and clicks view shortcuts
-- `clickCustomSecondaryButton(labelOrAriaLabel)` - Opens menu and clicks custom button
-- `hoverFormatButton()` - Hovers format button and waits for tooltip
-- `hoverCopyButton()` - Hovers copy button and waits for tooltip
-
-##### Utilities
-
-- `panel.waitForTooltip(text, timeout?)` - Waits for a tooltip with specific text
-- `panel.hasTitleText(expectedTitle)` - Checks if panel has expected title
-- `panel.hasInnerContent(testId)` - Checks if inner content with testId exists
-
-#### PanelSelectors
-
-Consistent selector constants for testing:
-
-```tsx
-import { PanelSelectors } from '@leafygreen-ui/code-editor';
-
-// Use instead of hardcoded strings
-panel.getMenuItem(PanelSelectors.UndoMenuItem);
-panel.getMenuItem(PanelSelectors.RedoMenuItem);
-panel.getMenuItem(PanelSelectors.DownloadMenuItem);
-panel.getMenuItem(PanelSelectors.ViewShortcutsMenuItem);
-```
-
-Available selectors:
-
-- `PanelSelectors.FormatButton`
-- `PanelSelectors.CopyButton`
-- `PanelSelectors.SecondaryMenuButton`
-- `PanelSelectors.UndoMenuItem`
-- `PanelSelectors.RedoMenuItem`
-- `PanelSelectors.DownloadMenuItem`
-- `PanelSelectors.ViewShortcutsMenuItem`
-
-#### Panel Test Examples
-
-##### Testing Format Button
-
-```tsx
-test('formats code when format button is clicked', async () => {
-  const onFormatClick = jest.fn();
-  const mockFormatCode = jest.fn();
-
-  const { panel } = renderPanel({
-    panelProps: {
-      showFormatButton: true,
-      onFormatClick,
-    },
-    contextConfig: {
-      formatCode: mockFormatCode,
-    },
-  });
-
-  await panel.interactions.clickFormatButton();
-
-  expect(onFormatClick).toHaveBeenCalled();
-  expect(mockFormatCode).toHaveBeenCalled();
-});
-```
-
-##### Testing Secondary Menu
-
-```tsx
-test('performs undo when undo menu item is clicked', async () => {
-  const onUndoClick = jest.fn();
-  const mockUndo = jest.fn(() => true);
-
-  const { panel } = renderPanel({
-    panelProps: {
-      showSecondaryMenuButton: true,
-      onUndoClick,
-    },
-    contextConfig: {
-      undo: mockUndo,
-    },
-  });
-
-  await panel.interactions.clickUndoMenuItem();
-
-  expect(onUndoClick).toHaveBeenCalled();
-  expect(mockUndo).toHaveBeenCalled();
-});
-```
-
-##### Testing Custom Secondary Buttons
-
-```tsx
-test('handles custom secondary button clicks', async () => {
-  const customOnClick = jest.fn();
-
-  const { panel } = renderPanel({
-    panelProps: {
-      showSecondaryMenuButton: true,
-      customSecondaryButtons: [
-        {
-          label: 'Custom Action',
-          onClick: customOnClick,
-          'aria-label': 'Perform custom action',
-        },
-      ],
-    },
-  });
-
-  await panel.interactions.clickCustomSecondaryButton('Perform custom action');
-
-  expect(customOnClick).toHaveBeenCalled();
-});
-```
-
-#### defaultPanelContextFunctions
-
-The `defaultPanelContextFunctions` object provides access to the default stub functions used in the CodeEditor context. These can be overridden in tests by providing `contextConfig` to `renderPanel`:
-
-```tsx
-import {
-  renderPanel,
-  defaultPanelContextFunctions,
-} from '@leafygreen-ui/code-editor';
-
-// Override default functions with jest mocks in your test files
-const mockUndo = jest.fn(() => true);
-const mockFormatCode = jest.fn();
-
-const { panel } = renderPanel({
-  contextConfig: {
-    undo: mockUndo,
-    formatCode: mockFormatCode,
-  },
-});
-
-// Now you can assert on your custom mocks
-expect(mockUndo).toHaveBeenCalled();
-expect(mockFormatCode).toHaveBeenCalled();
-```
-
-Available default functions:
-
-- `defaultPanelContextFunctions.getContents`
-- `defaultPanelContextFunctions.formatCode`
-- `defaultPanelContextFunctions.undo`
-- `defaultPanelContextFunctions.redo`
+**Note:** When using a Panel, make sure to pass the same `data-lgid` to both the CodeEditor and Panel components for the test utilities to work correctly. All `data-lgid` values must follow the pattern `lg-${string}` (e.g., `"lg-my-editor"`).
 
 ## CodeMirror Extension Hooks
 

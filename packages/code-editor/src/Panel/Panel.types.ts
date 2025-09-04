@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode } from 'react';
 
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 /**
  * Configuration object for custom secondary buttons that appear in the Panel's secondary menu.
@@ -38,7 +38,7 @@ export interface SecondaryButtonConfig {
   disabled?: boolean;
 }
 
-export interface PanelProps extends DarkModeProps {
+export interface PanelProps extends DarkModeProps, LgIdProps {
   /**
    * Font size of text in the panel.
    * Controls the typography scale used for the panel title and other text elements.

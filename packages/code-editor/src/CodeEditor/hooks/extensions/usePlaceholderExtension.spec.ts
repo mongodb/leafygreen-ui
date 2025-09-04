@@ -1,6 +1,9 @@
 import { renderHook } from '@testing-library/react';
 
-import { createMockStateModule, createMockViewModule } from '../../../testing';
+import {
+  createMockStateModule,
+  createMockViewModule,
+} from '../hooks.testUtils';
 
 import { usePlaceholderExtension } from './usePlaceholderExtension';
 
