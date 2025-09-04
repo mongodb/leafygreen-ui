@@ -1,10 +1,10 @@
-import fs from 'fs';
+import fsx from 'fs-extra';
 import path from 'path';
 
 const ICON_DIR = path.resolve(process.cwd(), 'src/generated');
 
 export function getAllIcons(): Array<string> {
-  const iconNames = fs
+  const iconNames = fsx
     .readdirSync(ICON_DIR)
     .filter(f => /\.tsx?$/.test(f))
     .map(f => path.basename(f, path.extname(f)));
@@ -15,8 +15,10 @@ function getChecksumsFilePath(): string {
   const relativePath = 'dist/checksums.json';
   const fullPath = path.resolve(process.cwd(), relativePath);
 
-  if (!fs.existsSync(fullPath)) {
-    fs.writeFileSync(fullPath, JSON.stringify({}, null, 2));
+  fsx.ensureDirSync(path.dirname(fullPath));
+
+  if (!fsx.existsSync(fullPath)) {
+    fsx.writeFileSync(fullPath, JSON.stringify({}, null, 2));
   }
 
   return fullPath;
@@ -28,7 +30,7 @@ function getChecksumsFilePath(): string {
  */
 function getPrevChecksums(): Record<string, string> {
   try {
-    return JSON.parse(fs.readFileSync(getChecksumsFilePath(), 'utf-8'));
+    return JSON.parse(fsx.readFileSync(getChecksumsFilePath(), 'utf-8'));
   } catch (err: any) {
     if (err.code === 'ENOENT') {
       // this is normal if the file doesn't exist yet
@@ -51,12 +53,12 @@ function getPrevChecksums(): Record<string, string> {
 
 /** Updates checksums in the .checksums.json file. */
 function saveNewChecksums(checksums: Record<string, string>) {
-  fs.writeFileSync(getChecksumsFilePath(), JSON.stringify(checksums, null, 2));
+  fsx.writeFileSync(getChecksumsFilePath(), JSON.stringify(checksums, null, 2));
 }
 
 /** Extracts the pre-computed checksum from a generated .tsx file. */
 function extractChecksumFromFile(filePath: string): string | null {
-  const content = fs.readFileSync(filePath, 'utf8');
+  const content = fsx.readFileSync(filePath, 'utf8');
   const match = content.match(/@checksum\s+([a-f0-9]+)/);
   return match ? match[1] : null;
 }
