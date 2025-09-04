@@ -18,12 +18,15 @@ import { ContextMenu } from './ContextMenu';
 jest.mock('../ContextMenuPopup', () => ({
   ContextMenuPopup: ({ state, hideMenu, 'data-lgid': dataLgId }: any) => {
     if (!state.isVisible) return null;
+    const lgIds = {
+      contextMenuPopup: dataLgId
+        ? `${dataLgId}-context_menu_popup`
+        : 'lg-context_menu_popup',
+    };
     return (
       <div
         data-testid="context-menu-popup"
-        data-lgid={
-          dataLgId ? `${dataLgId}-context-menu-popup` : 'lg-context-menu-popup'
-        }
+        data-lgid={lgIds.contextMenuPopup}
         style={{
           position: 'absolute',
           left: state.position.x,
@@ -152,11 +155,14 @@ test('allows default context menu for elements with data-no-context-menu attribu
   );
 
   const toolbarButton = screen.getByText('Toolbar button');
-  fireEvent.contextMenu(toolbarButton, {
-    pageX: 100,
-    pageY: 200,
-    preventDefault: preventDefaultSpy,
+  const event = new MouseEvent('contextmenu', {
+    bubbles: true,
+    clientX: 100,
+    clientY: 200,
   });
+  event.preventDefault = preventDefaultSpy;
+
+  fireEvent(toolbarButton, event);
 
   expect(screen.queryByTestId('context-menu-popup')).not.toBeInTheDocument();
   expect(preventDefaultSpy).not.toHaveBeenCalled();
@@ -172,11 +178,14 @@ test('prevents default context menu by default', () => {
   );
 
   const container = screen.getByText('Test content').parentElement;
-  fireEvent.contextMenu(container!, {
-    pageX: 100,
-    pageY: 200,
-    preventDefault: preventDefaultSpy,
+  const event = new MouseEvent('contextmenu', {
+    bubbles: true,
+    clientX: 100,
+    clientY: 200,
   });
+  event.preventDefault = preventDefaultSpy;
+
+  fireEvent(container!, event);
 
   expect(preventDefaultSpy).toHaveBeenCalled();
 });
@@ -191,11 +200,14 @@ test('does not prevent default context menu when preventDefaultContextMenu is fa
   );
 
   const container = screen.getByText('Test content').parentElement;
-  fireEvent.contextMenu(container!, {
-    pageX: 100,
-    pageY: 200,
-    preventDefault: preventDefaultSpy,
+  const event = new MouseEvent('contextmenu', {
+    bubbles: true,
+    clientX: 100,
+    clientY: 200,
   });
+  event.preventDefault = preventDefaultSpy;
+
+  fireEvent(container!, event);
 
   expect(preventDefaultSpy).not.toHaveBeenCalled();
   expect(screen.getByTestId('context-menu-popup')).toBeInTheDocument();
@@ -283,7 +295,7 @@ test('sets correct lgid attributes', async () => {
   const contextMenuContainer = screen.getByText('Test content').parentElement;
   expect(contextMenuContainer).toHaveAttribute(
     'data-lgid',
-    'lg-custom-editor-context-menu',
+    'lg-custom-editor-context_menu',
   );
 
   fireEvent.contextMenu(contextMenuContainer!);
@@ -291,6 +303,6 @@ test('sets correct lgid attributes', async () => {
   const menuPopup = screen.getByTestId('context-menu-popup');
   expect(menuPopup).toHaveAttribute(
     'data-lgid',
-    'lg-custom-editor-context-menu-popup',
+    'lg-custom-editor-context_menu_popup',
   );
 });
