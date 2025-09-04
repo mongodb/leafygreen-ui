@@ -55,12 +55,17 @@ export const CodeEditorContextMenu = ({
         // Copy the selected text to clipboard
         await navigator.clipboard.writeText(selectedText);
 
-        // Delete the selected text from the DOM
+        // Delete the selected text from the DOM and maintain cursor position
         const selection = window.getSelection();
 
         if (selection && selection.rangeCount > 0) {
           const range = selection.getRangeAt(0);
           range.deleteContents();
+          // Collapse the range to the start position (where text was cut)
+          range.collapse(true);
+          // Clear all selections and re-add the collapsed range to position cursor
+          selection.removeAllRanges();
+          selection.addRange(range);
         }
       } catch (err) {
         console.error('Failed to cut text:', err);
