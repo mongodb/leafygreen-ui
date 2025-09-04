@@ -170,8 +170,6 @@ export function Panel({
                   <FormatIcon />
                 </IconButton>
               }
-              triggerEvent="hover"
-              darkMode={darkMode}
             >
               Prettify code
             </Tooltip>
@@ -195,8 +193,9 @@ export function Panel({
                 </IconButton>
               }
               variant={MenuVariant.Compact}
-              darkMode={darkMode}
               renderDarkMenu={false}
+              open={menuOpen}
+              setOpen={setMenuOpen}
               data-lgid={lgIds.panelSecondaryMenu}
             >
               <MenuItem
@@ -222,7 +221,7 @@ export function Panel({
               </MenuItem>
               <MenuItem
                 glyph={<QuestionMarkWithCircleIcon />}
-                onClick={onViewShortcutsClick}
+                onClick={handleViewShortcutsClick}
                 aria-label="View shortcuts"
               >
                 View shortcuts
