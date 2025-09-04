@@ -98,9 +98,14 @@ export const ContextMenu: FC<ContextMenuProps> = ({
    */
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
+      // Only handle if menu is visible
+      if (!menuState.isVisible) return;
+
       // Don't close if clicking inside the menu
       const target = e.target as Element;
       if (target.closest('[data-lgid^="menu"]')) return;
+
+      // Hide menu without interfering with the click event
       hideMenu();
     };
 
@@ -110,14 +115,17 @@ export const ContextMenu: FC<ContextMenuProps> = ({
       }
     };
 
-    document.addEventListener('click', handleClick);
-    document.addEventListener('keydown', handleEscape);
+    // Only add listeners when menu is visible
+    if (menuState.isVisible) {
+      document.addEventListener('click', handleClick, { capture: true });
+      document.addEventListener('keydown', handleEscape);
+    }
 
     return () => {
-      document.removeEventListener('click', handleClick);
+      document.removeEventListener('click', handleClick, { capture: true });
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [hideMenu]);
+  }, [hideMenu, menuState.isVisible]);
 
   return (
     <div onContextMenu={handleContextMenu} className={containerStyles}>
