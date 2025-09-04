@@ -99,6 +99,25 @@ if (!global.document.createRange) {
   });
 }
 
+// Mock HTMLDialogElement methods for Modal component
+Object.defineProperty(HTMLDialogElement.prototype, 'showModal', {
+  value: jest.fn(),
+  writable: true,
+  configurable: true,
+});
+
+Object.defineProperty(HTMLDialogElement.prototype, 'close', {
+  value: jest.fn(),
+  writable: true,
+  configurable: true,
+});
+
+Object.defineProperty(HTMLDialogElement.prototype, 'open', {
+  value: false,
+  writable: true,
+  configurable: true,
+});
+
 // Mock console methods to suppress expected warnings
 const originalConsoleWarn = console.warn;
 const originalConsoleError = console.error;
@@ -134,7 +153,7 @@ afterAll(() => {
   console.error = originalConsoleError;
 });
 
-describe('getTestUtils API Documentation & Examples', () => {
+describe('getTestUtils', () => {
   describe('Consumer Usage Examples', () => {
     test('API Surface - demonstrates available methods', () => {
       // This test documents the available API methods for consumers
