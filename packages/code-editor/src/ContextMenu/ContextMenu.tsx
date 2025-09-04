@@ -11,6 +11,9 @@ import { ContextMenuProps } from './ContextMenu.types';
  * Automatically detects selected text using `window.getSelection()` and passes it to menu item actions.
  * No complex setup required - just wrap your content and provide menu items.
  *
+ * Elements with `data-no-context-menu="true"` will not trigger the custom context menu,
+ * allowing the default browser context menu to appear instead.
+ *
  * @example
  * ```tsx
  * <ContextMenu
@@ -28,6 +31,9 @@ import { ContextMenuProps } from './ContextMenu.types';
  *   ]}
  * >
  *   <div>Your content here</div>
+ *   <div data-no-context-menu="true">
+ *     This toolbar won't show custom context menu
+ *   </div>
  * </ContextMenu>
  * ```
  */
@@ -60,6 +66,14 @@ export const ContextMenu: FC<ContextMenuProps> = ({
   const handleContextMenu = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       if (disabled || menuItems.length === 0) return;
+
+      // Check if the target or any parent has the no-context-menu attribute
+      const target = event.target as Element;
+
+      if (target.closest('[data-no-context-menu="true"]')) {
+        // Allow default browser context menu for elements marked as no-context-menu
+        return;
+      }
 
       if (preventDefaultContextMenu) {
         event.preventDefault();

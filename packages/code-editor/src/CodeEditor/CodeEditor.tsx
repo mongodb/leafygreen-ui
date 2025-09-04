@@ -372,9 +372,11 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           {...rest}
         >
           {panel && (
-            <CodeEditorProvider value={contextValue}>
-              {panel}
-            </CodeEditorProvider>
+            <div data-no-context-menu="true">
+              <CodeEditorProvider value={contextValue}>
+                {panel}
+              </CodeEditorProvider>
+            </div>
           )}
           {!panel &&
             (copyButtonAppearance === CopyButtonAppearance.Hover ||
