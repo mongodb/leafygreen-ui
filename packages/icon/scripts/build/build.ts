@@ -51,6 +51,7 @@ async function buildAllBatches({
   const queue = new PQueue({ concurrency: numWorkers });
   const batches = chunkArray(fullBatch, batchSize);
 
+  verbose && console.log(`Building ${batches.length} batches...`);
   for (const batch of batches) {
     queue.add(() => buildBatch(batch, verbose));
   }
@@ -66,6 +67,9 @@ async function buildIcons(options: BuildIconOptions): Promise<void> {
     await buildIndex({ verbose });
 
     const iconsToBuild = force ? getAllIcons() : getChangedIcons();
+
+    verbose && console.log(`Building ${iconsToBuild} icons...`);
+
     await buildAllBatches({
       fullBatch: iconsToBuild,
       batchSize: BATCH_SIZE,
