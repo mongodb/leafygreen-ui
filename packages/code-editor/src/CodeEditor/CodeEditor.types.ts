@@ -5,6 +5,7 @@ import { type EditorView } from '@codemirror/view';
 import { type DarkModeProps } from '@leafygreen-ui/lib';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
+import { CodeEditorModules } from './hooks';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
@@ -251,6 +252,15 @@ export type CodeEditorProps = DarkModeProps & {
    * Value to display in the editor when it is empty.
    */
   placeholder?: HTMLElement | string;
+
+  /**
+   * Pre-loaded modules to be used instead of dynamically loading them.
+   * When provided, the editor will use ONLY these modules and skip all lazy loading,
+   * ensuring synchronous behavior. Missing required modules will generate console warnings
+   * but will not be loaded automatically. Consumers are responsible for providing all
+   * necessary modules for their editor configuration. Use with caution.
+   */
+  preLoadedModules?: Partial<CodeEditorModules>;
 
   /**
    * Enables read only mode, making the contents uneditable.

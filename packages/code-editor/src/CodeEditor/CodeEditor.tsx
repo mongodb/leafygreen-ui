@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useImperativeHandle,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -63,6 +64,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       onChange: onChangeProp,
       panel,
       placeholder,
+      preLoadedModules,
       readOnly,
       tooltips,
       value,
@@ -76,17 +78,44 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
 
-    // Load core modules
+    // Determine the required modules
     const coreModuleLoaders = useModuleLoaders(props);
-    const { isLoading: isLoadingCoreModules, modules: coreModules } =
-      useLazyModules(coreModuleLoaders);
-
-    // Load formatting modules
     const formattingModuleLoaders = useFormattingModuleLoaders(language);
+
+    const missingRequiredModules = useMemo(() => {
+      return preLoadedModules
+        ? Object.keys({
+            ...coreModuleLoaders,
+            ...formattingModuleLoaders,
+          }).filter(key => !(key in preLoadedModules))
+        : [];
+    }, [coreModuleLoaders, formattingModuleLoaders, preLoadedModules]);
+
+    if (preLoadedModules && missingRequiredModules.length > 0) {
+      console.warn(
+        'CodeEditor: Missing required modules in preLoadedModules:',
+        missingRequiredModules,
+        'This may cause editor functionality to break.',
+      );
+    }
+
+    // Lazy loading hooks (only used when preLoadedModules are not provided)
+    const { isLoading: lazyIsLoadingCoreModules, modules: lazyCoreModules } =
+      useLazyModules(preLoadedModules ? {} : coreModuleLoaders);
+
     const {
-      isLoading: isLoadingFormattingModules,
-      modules: formattingModules,
-    } = useLazyModules(formattingModuleLoaders);
+      isLoading: lazyIsLoadingFormattingModules,
+      modules: lazyFormattingModules,
+    } = useLazyModules(preLoadedModules ? {} : formattingModuleLoaders);
+
+    // Use preLoadedModules if available, otherwise use lazy loaded modules
+    const coreModules = preLoadedModules || lazyCoreModules;
+    const formattingModules = preLoadedModules || lazyFormattingModules;
+
+    // Loading states: false when using preLoadedModules, otherwise use lazy loading state
+    const isLoadingCoreModules = !preLoadedModules || lazyIsLoadingCoreModules;
+    const isLoadingFormattingModules =
+      !preLoadedModules || lazyIsLoadingFormattingModules;
 
     // Get formatting functionality
     const { formatCode, isFormattingAvailable } = useCodeFormatter({
