@@ -1,51 +1,114 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 
-import {
-  Menu,
-  MenuItem as LeafyMenuItem,
-  MenuSeparator,
-} from '@leafygreen-ui/menu';
+import { ContextMenuPopup, type MenuState } from '../ContextMenuPopup';
 
-import { getMenuContainerStyles } from './ContextMenu.styles';
+import { containerStyles } from './ContextMenu.styles';
 import { ContextMenuProps } from './ContextMenu.types';
 
 /**
- * Internal component that renders the actual context menu using LeafyGreen UI components.
- * Handles menu positioning, item rendering, and click interactions.
+ * A simple context menu that adds custom right-click functionality to all child elements.
  *
- * @internal
+ * Automatically detects selected text using `window.getSelection()` and passes it to menu item actions.
+ * No complex setup required - just wrap your content and provide menu items.
+ *
+ * @example
+ * ```tsx
+ * <ContextMenu
+ *   menuItems={[
+ *     {
+ *       label: 'Copy',
+ *       action: (selectedText) => navigator.clipboard.writeText(selectedText)
+ *     },
+ *     { isSeparator: true },
+ *     {
+ *       label: 'Delete',
+ *       action: () => deleteContent(),
+ *       disabled: !canDelete
+ *     }
+ *   ]}
+ * >
+ *   <div>Your content here</div>
+ * </ContextMenu>
+ * ```
  */
-export const ContextMenu: FC<ContextMenuProps> = ({ state, hideMenu }) => {
-  if (!state.isVisible) return null;
+export const ContextMenu: FC<ContextMenuProps> = ({
+  children,
+  menuItems = [],
+  preventDefaultContextMenu = true,
+  disabled = false,
+}) => {
+  const [menuState, setMenuState] = useState<MenuState>({
+    isVisible: false,
+    position: { x: 0, y: 0 },
+    items: [],
+    selectedText: '',
+  });
+
+  /**
+   * Hides the context menu if it's currently visible.
+   */
+  const hideMenu = useCallback(() => {
+    if (menuState.isVisible) {
+      setMenuState(s => ({ ...s, isVisible: false }));
+    }
+  }, [menuState.isVisible]);
+
+  /**
+   * Handles right-click events to show the context menu.
+   * Automatically captures selected text and positions the menu at cursor location.
+   */
+  const handleContextMenu = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (disabled || menuItems.length === 0) return;
+
+      if (preventDefaultContextMenu) {
+        event.preventDefault();
+      }
+
+      // Get selected text automatically using window.getSelection()
+      const selectedText = window.getSelection()?.toString() || '';
+
+      setMenuState({
+        isVisible: true,
+        position: { x: event.pageX, y: event.pageY },
+        items: menuItems,
+        selectedText,
+      });
+    },
+    [disabled, preventDefaultContextMenu, menuItems],
+  );
+
+  /**
+   * Set up global event listeners to close the menu when clicking outside or pressing Escape.
+   * Automatically cleans up listeners when component unmounts.
+   */
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      // Don't close if clicking inside the menu
+      const target = e.target as Element;
+      if (target.closest('[data-lgid^="menu"]')) return;
+      hideMenu();
+    };
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        hideMenu();
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [hideMenu]);
 
   return (
-    <div className={getMenuContainerStyles(state.position)}>
-      <Menu
-        open={state.isVisible}
-        setOpen={() => hideMenu()}
-        renderDarkMenu={false}
-      >
-        {state.items.map((item, index) => {
-          if (item.isSeparator) {
-            return <MenuSeparator key={index} />;
-          }
-
-          return (
-            <LeafyMenuItem
-              key={index}
-              disabled={item.disabled}
-              onClick={() => {
-                if (item.action && !item.disabled) {
-                  item.action(state.selectedText);
-                }
-                hideMenu();
-              }}
-            >
-              {item.label}
-            </LeafyMenuItem>
-          );
-        })}
-      </Menu>
+    <div onContextMenu={handleContextMenu} className={containerStyles}>
+      {children}
+      <ContextMenuPopup state={menuState} hideMenu={hideMenu} />
     </div>
   );
 };

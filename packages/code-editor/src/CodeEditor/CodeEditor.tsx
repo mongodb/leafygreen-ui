@@ -11,9 +11,9 @@ import { type EditorView, type ViewUpdate } from '@codemirror/view';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
+import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
-import { ContextMenuProvider } from '../ContextMenuProvider';
 import { getLgIds } from '../utils';
 
 import { useFormattingModuleLoaders } from './hooks/formatting/useFormattingModuleLoaders';
@@ -350,26 +350,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     };
 
     return (
-      <ContextMenuProvider
-        menuItems={[
-          {
-            label: 'Cut',
-            action: selectedText => {},
-          },
-          {
-            label: 'Copy',
-            action: selectedText => {
-              console.log(selectedText);
-              const textToCopy = selectedText;
-              navigator.clipboard.writeText(textToCopy);
-            },
-          },
-          {
-            label: 'Paste',
-            action: selectedText => {},
-          },
-        ]}
-      >
+      <CodeEditorContextMenu>
         <div
           ref={editorContainerRef}
           className={getEditorStyles({
@@ -427,7 +408,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
             </div>
           )}
         </div>
-      </ContextMenuProvider>
+      </CodeEditorContextMenu>
     );
   },
 );

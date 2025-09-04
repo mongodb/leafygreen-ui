@@ -1,46 +1,21 @@
-/**
- * A simple menu item configuration with only the essential properties.
- * Actions receive the currently selected text as a parameter.
- */
-export interface MenuItem {
-  /** Display label for the menu item */
-  label: string;
+import { ReactNode } from 'react';
 
-  /** Whether the item is disabled */
-  disabled?: boolean;
-
-  /** Action handler - receives the selected text */
-  action?: (selectedText: string) => void;
-
-  /** Whether this is a separator */
-  isSeparator?: boolean;
-}
-
-/**
- * Internal state for managing the context menu visibility and content.
- * @internal
- */
-export interface MenuState {
-  /** Whether the menu is currently visible */
-  isVisible: boolean;
-
-  /** Screen coordinates where the menu should appear */
-  position: { x: number; y: number };
-
-  /** Array of menu items to display */
-  items: Array<MenuItem>;
-
-  /** The text that was selected when the menu was triggered */
-  selectedText: string;
-}
+import { type MenuItem } from '../ContextMenuPopup';
 
 /**
  * Props for the ContextMenu component.
+ * Provides a simple context menu to all child elements.
  */
 export interface ContextMenuProps {
-  /** Current menu state including visibility, position, and items */
-  state: MenuState;
+  /** The content to provide context menu functionality to */
+  children: ReactNode;
 
-  /** Function to hide the context menu */
-  hideMenu: () => void;
+  /** Menu items to show on right-click */
+  menuItems?: Array<MenuItem>;
+
+  /** Whether to prevent the default context menu. @default true */
+  preventDefaultContextMenu?: boolean;
+
+  /** Whether the context menu is disabled. @default false */
+  disabled?: boolean;
 }
