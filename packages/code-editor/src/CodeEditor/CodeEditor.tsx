@@ -243,9 +243,16 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     useLayoutEffect(() => {
       const EditorView = coreModules?.['@codemirror/view'];
       const commands = coreModules?.['@codemirror/commands'];
+      const searchModule = coreModules?.['@codemirror/search'];
       const Prec = coreModules?.['@codemirror/state']?.Prec;
 
-      if (!editorContainerRef?.current || !EditorView || !Prec || !commands) {
+      if (
+        !editorContainerRef?.current ||
+        !EditorView ||
+        !Prec ||
+        !commands ||
+        !searchModule
+      ) {
         return;
       }
 
@@ -258,6 +265,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           ...consumerExtensions.map(extension => Prec.highest(extension)),
 
           commands.history(),
+          searchModule.search(),
 
           EditorView.EditorView.updateListener.of((update: ViewUpdate) => {
             if (isControlled && update.docChanged) {
@@ -268,6 +276,23 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           }),
 
           EditorView.keymap.of([
+            {
+              key: 'Escape',
+              run: view => {
+                // Move focus outside the editor to allow normal tab navigation
+                view.contentDOM.blur();
+                return true;
+              },
+            },
+            {
+              key: 'Tab',
+              run: commands.insertTab,
+            },
+            {
+              key: 'Shift-Tab',
+              run: commands.indentLess,
+            },
+            ...searchModule.searchKeymap,
             ...commands.defaultKeymap,
             ...commands.historyKeymap,
           ]),
