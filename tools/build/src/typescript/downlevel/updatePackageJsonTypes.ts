@@ -66,12 +66,7 @@ export function updatePackageJsonTypes(
       return;
     }
 
-    // Construct the base typesVersions field
-    const typesVersions: Record<string, Record<string, Array<string>>> = {
-      '*': {
-        '.': [`./${DEFAULT_TYPES_EXPORT_PATH}/index.d.ts`],
-      },
-    };
+    const typesExportPath = path.join(DEFAULT_TYPES_EXPORT_PATH, 'index.d.ts');
 
     // Construct the exports field with types conditions
     let packageExports = cloneDeep(packageJson.exports);
@@ -99,12 +94,15 @@ export function updatePackageJsonTypes(
 
     // set the default types export
     if (!packageExports['.'].types) {
-      packageExports['.'].types = `./${DEFAULT_TYPES_EXPORT_PATH}/index.d.ts`;
+      packageExports['.'].types = typesExportPath;
     }
+
+    // Construct the base typesVersions field
+    const typesVersions: Record<string, Record<string, Array<string>>> = {};
 
     // Add entries for each TypeScript version we support
     DOWNLEVEL_VERSIONS.forEach(({ condition, target }) => {
-      const typesExportPath = `./${path.join(
+      const downlevelExportPath = `./${path.join(
         DEFAULT_TYPES_EXPORT_PATH,
         `ts${target}`,
         'index.d.ts',
@@ -114,13 +112,13 @@ export function updatePackageJsonTypes(
       // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#packageExports-is-prioritized-over-typesversions
       if (parseFloat(target) < 4.9) {
         typesVersions[condition] = {
-          '.': [typesExportPath],
+          '.': [downlevelExportPath],
         };
       }
 
       // Add to packageExports field with types condition
       if (typeof packageExports['.'] === 'object') {
-        packageExports['.'][`types${condition}`] = typesExportPath;
+        packageExports['.'][`types@${condition}`] = downlevelExportPath;
       }
     });
 
