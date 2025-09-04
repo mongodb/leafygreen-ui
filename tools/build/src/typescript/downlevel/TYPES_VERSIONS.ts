@@ -1,6 +1,6 @@
 interface DownlevelVersion {
   /** If the consuming application's TS version satisfies the condition... */
-  condition: `${'<' | '>' | ''}${number}.${number}`;
+  condition: `${'<' | '<=' | '>' | '>=' | ''}${number}.${number}`;
   /** ...we should use this version of the package */
   target: `${number}.${number}`;
 }
@@ -8,7 +8,7 @@ interface DownlevelVersion {
 // TS Downlevel mapping
 // Note, conditions should be listed in order (i.e. as if they were multiple cascading `if` statements)
 export const DOWNLEVEL_VERSIONS = [
-  { condition: '<5.0', target: '4.9' },
+  { condition: '<=5.0', target: '4.9' },
 ] as const satisfies Readonly<Array<DownlevelVersion>>;
 
 // Packages to exclude from typesVersions updates
