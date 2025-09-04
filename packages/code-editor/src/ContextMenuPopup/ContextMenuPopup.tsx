@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 import {
   Menu,
@@ -18,11 +18,11 @@ import { ContextMenuPopupProps } from './ContextMenuPopup.types';
  *
  * @internal
  */
-export const ContextMenuPopup: FC<ContextMenuPopupProps> = ({
+export const ContextMenuPopup = ({
   state,
   hideMenu,
   'data-lgid': dataLgId,
-}) => {
+}: ContextMenuPopupProps) => {
   const lgIds = getLgIds(dataLgId);
 
   if (!state.isVisible) return null;

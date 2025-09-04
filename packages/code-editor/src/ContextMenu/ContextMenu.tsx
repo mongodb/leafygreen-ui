@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { ContextMenuPopup, type MenuState } from '../ContextMenuPopup';
 import { getLgIds } from '../utils';
@@ -38,13 +38,13 @@ import { ContextMenuProps } from './ContextMenu.types';
  * </ContextMenu>
  * ```
  */
-export const ContextMenu: FC<ContextMenuProps> = ({
+export const ContextMenu = ({
   children,
   menuItems = [],
   preventDefaultContextMenu = true,
   disabled = false,
   'data-lgid': dataLgId,
-}) => {
+}: ContextMenuProps) => {
   const lgIds = getLgIds(dataLgId);
   const [menuState, setMenuState] = useState<MenuState>({
     isVisible: false,

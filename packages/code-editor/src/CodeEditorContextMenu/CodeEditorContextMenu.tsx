@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { LgIdProps } from '@leafygreen-ui/lib';
-
 import { ContextMenu } from '../ContextMenu';
 import { type MenuItem } from '../ContextMenuPopup';
+
+import { CodeEditorContextMenuProps } from './CodeEditorContextMenu.types';
 
 /**
  * A context menu specifically designed for code editors with standard text editing operations.
@@ -36,12 +36,7 @@ export const CodeEditorContextMenu = ({
   children,
   customMenuItems = [],
   'data-lgid': dataLgId,
-}: {
-  /** The content to provide context menu functionality to */
-  children: React.ReactNode;
-  /** Additional menu items to show below the default Cut/Copy/Paste items */
-  customMenuItems?: Array<MenuItem>;
-} & LgIdProps) => {
+}: CodeEditorContextMenuProps) => {
   const handleCopy = async (selectedText: string) => {
     if (selectedText) {
       try {
