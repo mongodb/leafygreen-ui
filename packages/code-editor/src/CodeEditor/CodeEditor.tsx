@@ -351,7 +351,10 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     };
 
     return (
-      <CodeEditorContextMenu customMenuItems={customContextMenuItems}>
+      <CodeEditorContextMenu
+        customMenuItems={customContextMenuItems}
+        data-lgid={dataLgId}
+      >
         <div
           ref={editorContainerRef}
           className={getEditorStyles({

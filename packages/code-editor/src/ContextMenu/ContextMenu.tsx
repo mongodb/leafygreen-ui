@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 
 import { ContextMenuPopup, type MenuState } from '../ContextMenuPopup';
+import { getLgIds } from '../utils';
 
 import { containerStyles } from './ContextMenu.styles';
 import { ContextMenuProps } from './ContextMenu.types';
@@ -42,7 +43,9 @@ export const ContextMenu: FC<ContextMenuProps> = ({
   menuItems = [],
   preventDefaultContextMenu = true,
   disabled = false,
+  'data-lgid': dataLgId,
 }) => {
+  const lgIds = getLgIds(dataLgId);
   const [menuState, setMenuState] = useState<MenuState>({
     isVisible: false,
     position: { x: 0, y: 0 },
@@ -103,6 +106,11 @@ export const ContextMenu: FC<ContextMenuProps> = ({
 
       // Don't close if clicking inside the menu
       const target = e.target as Element;
+
+      // Check for our context menu popup LGID first
+      if (target.closest(`[data-lgid="${lgIds.contextMenuPopup}"]`)) return;
+
+      // Fallback: check for LeafyGreen menu attributes
       if (target.closest('[data-lgid^="menu"]')) return;
 
       // Hide menu without interfering with the click event
@@ -125,12 +133,20 @@ export const ContextMenu: FC<ContextMenuProps> = ({
       document.removeEventListener('click', handleClick, { capture: true });
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [hideMenu, menuState.isVisible]);
+  }, [hideMenu, menuState.isVisible, lgIds.contextMenuPopup]);
 
   return (
-    <div onContextMenu={handleContextMenu} className={containerStyles}>
+    <div
+      onContextMenu={handleContextMenu}
+      className={containerStyles}
+      data-lgid={lgIds.contextMenu}
+    >
       {children}
-      <ContextMenuPopup state={menuState} hideMenu={hideMenu} />
+      <ContextMenuPopup
+        state={menuState}
+        hideMenu={hideMenu}
+        data-lgid={dataLgId}
+      />
     </div>
   );
 };

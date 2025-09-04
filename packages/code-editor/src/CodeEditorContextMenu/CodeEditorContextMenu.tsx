@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { LgIdProps } from '@leafygreen-ui/lib';
+
 import { ContextMenu } from '../ContextMenu';
 import { type MenuItem } from '../ContextMenuPopup';
 
@@ -33,12 +35,13 @@ import { type MenuItem } from '../ContextMenuPopup';
 export const CodeEditorContextMenu = ({
   children,
   customMenuItems = [],
+  'data-lgid': dataLgId,
 }: {
   /** The content to provide context menu functionality to */
   children: React.ReactNode;
   /** Additional menu items to show below the default Cut/Copy/Paste items */
   customMenuItems?: Array<MenuItem>;
-}) => {
+} & LgIdProps) => {
   const handleCopy = async (selectedText: string) => {
     if (selectedText) {
       try {
@@ -105,5 +108,9 @@ export const CodeEditorContextMenu = ({
     menuItems.push(...customMenuItems);
   }
 
-  return <ContextMenu menuItems={menuItems}>{children}</ContextMenu>;
+  return (
+    <ContextMenu menuItems={menuItems} data-lgid={dataLgId}>
+      {children}
+    </ContextMenu>
+  );
 };

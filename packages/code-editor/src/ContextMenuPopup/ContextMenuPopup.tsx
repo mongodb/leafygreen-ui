@@ -7,6 +7,8 @@ import {
   MenuVariant,
 } from '@leafygreen-ui/menu';
 
+import { getLgIds } from '../utils';
+
 import { getMenuContainerStyles } from './ContextMenuPopup.styles';
 import { ContextMenuPopupProps } from './ContextMenuPopup.types';
 
@@ -19,11 +21,17 @@ import { ContextMenuPopupProps } from './ContextMenuPopup.types';
 export const ContextMenuPopup: FC<ContextMenuPopupProps> = ({
   state,
   hideMenu,
+  'data-lgid': dataLgId,
 }) => {
+  const lgIds = getLgIds(dataLgId);
+
   if (!state.isVisible) return null;
 
   return (
-    <div className={getMenuContainerStyles(state.position)}>
+    <div
+      className={getMenuContainerStyles(state.position)}
+      data-lgid={lgIds.contextMenuPopup}
+    >
       <Menu
         // Force re-mount when position changes so Menu recalculates its positioning
         key={`${state.position.x}-${state.position.y}`}

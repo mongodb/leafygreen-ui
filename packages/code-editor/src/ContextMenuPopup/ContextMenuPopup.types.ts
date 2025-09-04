@@ -1,3 +1,5 @@
+import { LgIdProps } from '@leafygreen-ui/lib';
+
 /**
  * A simple menu item configuration with only the essential properties.
  * Actions receive the currently selected text as a parameter.
@@ -37,7 +39,7 @@ export interface MenuState {
 /**
  * Props for the ContextMenuPopup component.
  */
-export interface ContextMenuPopupProps {
+export interface ContextMenuPopupProps extends LgIdProps {
   /** Current menu state including visibility, position, and items */
   state: MenuState;
 
