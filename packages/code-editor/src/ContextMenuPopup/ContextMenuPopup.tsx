@@ -25,6 +25,8 @@ export const ContextMenuPopup: FC<ContextMenuPopupProps> = ({
   return (
     <div className={getMenuContainerStyles(state.position)}>
       <Menu
+        // Force re-mount when position changes so Menu recalculates its positioning
+        key={`${state.position.x}-${state.position.y}`}
         open={state.isVisible}
         setOpen={() => hideMenu()}
         renderDarkMenu={false}
