@@ -10,6 +10,11 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/umd/index.js",
       "types": "./dist/types/index.d.ts"
+    },
+    "./dist/*": {
+      "import": "./dist/esm/*.js",
+      "require": "./dist/umd/*.js",
+      "types": "./dist/types/generated/*.d.ts"
     }
   },
   "scripts": {
