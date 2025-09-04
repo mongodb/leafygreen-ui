@@ -6,7 +6,7 @@ import { ContextMenu } from '../ContextMenu';
  * A context menu specifically designed for code editors with standard text editing operations.
  *
  * Provides Cut, Copy, and Paste functionality via right-click context menu.
- * Automatically handles clipboard permissions and selected text detection.
+ * Automatically handles selected text detection.
  *
  * @example
  * ```tsx
