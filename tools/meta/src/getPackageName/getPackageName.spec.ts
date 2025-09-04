@@ -13,7 +13,7 @@ console.log = jest.fn();
 
 describe('tools/meta/getPackageName', () => {
   beforeAll(() => {
-    fsx.mkdirSync('./tmp/');
+    fsx.ensureDirSync('./tmp/');
     // Mock the getLGConfig function
   });
   beforeEach(() => {
@@ -30,6 +30,7 @@ describe('tools/meta/getPackageName', () => {
     jest.clearAllMocks();
   });
   afterAll(() => {
+    fsx.emptyDirSync('./tmp');
     fsx.rmdirSync('./tmp/');
   });
 
