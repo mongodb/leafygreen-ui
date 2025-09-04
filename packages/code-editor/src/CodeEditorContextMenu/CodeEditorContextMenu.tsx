@@ -1,12 +1,14 @@
 import React from 'react';
 
 import { ContextMenu } from '../ContextMenu';
+import { type MenuItem } from '../ContextMenuPopup';
 
 /**
  * A context menu specifically designed for code editors with standard text editing operations.
  *
  * Provides Cut, Copy, and Paste functionality via right-click context menu.
- * Automatically handles selected text detection.
+ * Automatically handles selected text detection. Custom menu items can be added
+ * below the standard items.
  *
  * @example
  * ```tsx
@@ -17,7 +19,11 @@ import { ContextMenu } from '../ContextMenu';
  *
  * @example
  * ```tsx
- * <CodeEditorContextMenu>
+ * <CodeEditorContextMenu
+ *   customMenuItems={[
+ *     { label: 'Custom Action', action: () => customAction() },
+ *   ]}
+ * >
  *   <div contentEditable>
  *     Some editable code content
  *   </div>
@@ -26,9 +32,12 @@ import { ContextMenu } from '../ContextMenu';
  */
 export const CodeEditorContextMenu = ({
   children,
+  customMenuItems = [],
 }: {
   /** The content to provide context menu functionality to */
   children: React.ReactNode;
+  /** Additional menu items to show below the default Cut/Copy/Paste items */
+  customMenuItems?: Array<MenuItem>;
 }) => {
   const handleCopy = async (selectedText: string) => {
     if (selectedText) {
@@ -80,15 +89,16 @@ export const CodeEditorContextMenu = ({
     }
   };
 
-  return (
-    <ContextMenu
-      menuItems={[
-        { label: 'Cut', action: handleCut },
-        { label: 'Copy', action: handleCopy },
-        { label: 'Paste', action: handlePaste },
-      ]}
-    >
-      {children}
-    </ContextMenu>
-  );
+  const menuItems: Array<MenuItem> = [
+    { label: 'Cut', action: handleCut },
+    { label: 'Copy', action: handleCopy },
+    { label: 'Paste', action: handlePaste },
+  ];
+
+  if (customMenuItems.length > 0) {
+    menuItems.push({ label: '', isSeparator: true });
+    menuItems.push(...customMenuItems);
+  }
+
+  return <ContextMenu menuItems={menuItems}>{children}</ContextMenu>;
 };

@@ -91,6 +91,12 @@ const meta: StoryMetaType<typeof CodeEditor> = {
   ],
   args: {
     copyButtonAppearance: CopyButtonAppearance.None,
+    customContextMenuItems: [
+      {
+        label: 'Custom Action',
+        action: () => {},
+      },
+    ],
     enableClickableUrls: true,
     enableCodeFolding: true,
     enableLineNumbers: true,
@@ -117,6 +123,9 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     copyButtonAppearance: {
       control: { type: 'select' },
       options: Object.values(CopyButtonAppearance),
+    },
+    customContextMenuItems: {
+      control: { type: 'object' },
     },
     enableClickableUrls: {
       control: { type: 'boolean' },

@@ -44,6 +44,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       baseFontSize: baseFontSizeProp,
       className,
       copyButtonAppearance = CopyButtonAppearance.Hover,
+      customContextMenuItems,
       'data-lgid': dataLgId,
       darkMode: darkModeProp,
       defaultValue,
@@ -350,7 +351,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     };
 
     return (
-      <CodeEditorContextMenu>
+      <CodeEditorContextMenu customMenuItems={customContextMenuItems}>
         <div
           ref={editorContainerRef}
           className={getEditorStyles({
