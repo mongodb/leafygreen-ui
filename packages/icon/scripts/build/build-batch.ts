@@ -23,7 +23,7 @@ async function getBatchBuildOptions(
         output: [
           {
             ...umdConfig.output,
-            name: `${umdConfig.output?.name}/${icon}`,
+            name: `LeafyGreen_${icon}Icon`,
             dir: `dist/umd`,
           },
         ],
