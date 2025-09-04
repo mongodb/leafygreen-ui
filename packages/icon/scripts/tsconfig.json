@@ -5,7 +5,6 @@
   },
   "include": [
     "./prebuild/**/*",
-    "./build/**/*",
-    "./postbuild/**/*"
+    "./build/**/*"
   ]
 }
