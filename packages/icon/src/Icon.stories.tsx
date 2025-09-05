@@ -1,11 +1,9 @@
-// TODO: Generate Icon props with controls
 import React from 'react';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
-  StoryType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
@@ -32,7 +30,6 @@ const meta: StoryMetaType<typeof Icon> = {
       options: Object.values(Size),
       defaultValue: Size.Default,
     },
-    glyph: { control: 'none' },
     fill: {
       control: 'color',
     },
@@ -61,45 +58,62 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-export const Single: StoryType<typeof Icon> = (args: IconProps) => {
-  if (!args.glyph) {
-    args = {
-      ...args,
-      glyph: 'QuestionMarkWithCircle',
-    };
-  }
+export const Single: StoryObj<typeof Icon> = {
+  render: (args: IconProps) => {
+    if (!args.glyph) {
+      args = {
+        ...args,
+        glyph: 'QuestionMarkWithCircle',
+      };
+    }
 
-  return <Icon {...args} />;
-};
-
-Single.argTypes = {
-  glyph: {
-    control: 'select',
-    options: Object.keys(glyphs),
+    return <Icon {...args} />;
+  },
+  parameters: { chromatic: { disableSnapshot: true } },
+  argTypes: {
+    glyph: {
+      control: 'select',
+      options: Object.keys(glyphs),
+    },
   },
 };
-Single.parameters = { chromatic: { disableSnapshot: true } };
 
-export const LiveExample: StoryFn<IconProps> = (
-  args: Omit<IconProps, 'glyph'>,
-) => (
-  <div
-    className={css`
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    `}
-  >
-    {Object.keys(glyphs).map(glyph => {
-      return (
-        <div key={glyph} className={containerStyle}>
-          <Icon {...args} glyph={glyph as GlyphName} />
-          <div className={textStyle}>{glyph}</div>
-        </div>
-      );
-    })}
-  </div>
-);
+export const LiveExample: StoryObj<IconProps> = {
+  parameters: {
+    controls: {
+      exclude: [...meta.parameters.controls!.exclude!, 'glyph'],
+    },
+  },
+  render: (args: Omit<IconProps, 'glyph'>) => (
+    <div
+      className={css`
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      `}
+    >
+      {Object.keys(glyphs).map(glyph => {
+        return (
+          <div key={glyph} className={containerStyle}>
+            <Icon {...args} glyph={glyph as GlyphName} />
+            <div className={textStyle}>{glyph}</div>
+          </div>
+        );
+      })}
+    </div>
+  ),
+};
 
-export const Error = () => <Icon glyph="glyph-does-not-exist" />;
-Error.parameters = { chromatic: { disableSnapshot: true } };
+export const Generated: StoryObj<typeof Icon> = {
+  parameters: {
+    generate: {
+      args: {
+        glyph: 'Cloud',
+      },
+      combineArgs: {
+        size: Object.values(Size),
+        fill: [palette.gray.base, palette.green.base],
+      },
+    },
+  },
+};

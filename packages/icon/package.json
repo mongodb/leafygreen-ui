@@ -4,12 +4,27 @@
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/types/src/index.d.ts",
-  "typesVersions": {},
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./dist/*": {
+      "import": "./dist/esm/*.js",
+      "require": "./dist/umd/*.js",
+      "types": "./dist/types/generated/*.d.ts"
+    },
+    "./*": {
+      "import": "./dist/esm/*.js",
+      "require": "./dist/umd/*.js",
+      "types": "./dist/types/generated/*.d.ts"
+    }
+  },
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild/index.ts",
-    "build": "ts-node ./scripts/build/index.ts",
-    "postbuild": "ts-node ./scripts/postbuild/index.ts",
+    "build": "ts-node ./scripts/build/build.ts",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
   },
@@ -42,6 +57,6 @@
     "url": "https://github.com/mongodb/leafygreen-ui"
   },
   "bugs": {
-    "url": "https://jira.mongodb.org/projects/PD/summary"
+    "url": "https://jira.mongodb.org/projects/LG/summary"
   }
 }
