@@ -2635,8 +2635,8 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
       '@oddbird/popover-polyfill':
-        specifier: ^0.5.2
-        version: 0.5.2
+        specifier: ^0.6.1
+        version: 0.6.1
 
   packages/portal:
     dependencies:
@@ -5668,8 +5668,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@oddbird/popover-polyfill@0.5.2':
-    resolution: {integrity: sha512-iFrvar5SOMtKFOSjYvs4z9UlLqDdJbMx0mgISLcPedv+g0ac5sgeETLGtipHCVIae6HJPclNEH5aCyD1RZaEHw==}
+  '@oddbird/popover-polyfill@0.6.1':
+    resolution: {integrity: sha512-Papau51NPG+NajXvoEHCNT1CBJv4WIyvIGfH5gpJPLL8MZJt/4giC0jJ/mNZRtJmdzRuXWpUFB6QxkJa1RvMAQ==}
 
   '@oxc-project/runtime@0.82.3':
     resolution: {integrity: sha512-LNh5GlJvYHAnMurO+EyA8jJwN1rki7l3PSHuosDh2I7h00T6/u9rCkUjg/SvPmT1CZzvhuW0y+gf7jcqUy/Usg==}
@@ -15066,7 +15066,7 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
-  '@oddbird/popover-polyfill@0.5.2': {}
+  '@oddbird/popover-polyfill@0.6.1': {}
 
   '@oxc-project/runtime@0.82.3': {}
 
