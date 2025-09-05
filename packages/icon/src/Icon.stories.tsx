@@ -21,6 +21,15 @@ const meta: StoryMetaType<typeof Icon> = {
     controls: {
       exclude: [...storybookExcludedControlParams, 'title', 'data-testid'],
     },
+    generate: {
+      args: {
+        glyph: 'Cloud',
+      },
+      combineArgs: {
+        size: Object.values(Size),
+        fill: [undefined, palette.green.base],
+      },
+    },
   },
   args: {
     fill: palette.gray.base,
@@ -103,3 +112,5 @@ export const LiveExample: StoryFn<IconProps> = (
 
 export const Error = () => <Icon glyph="glyph-does-not-exist" />;
 Error.parameters = { chromatic: { disableSnapshot: true } };
+
+export const Generated = () => <></>;
