@@ -6,8 +6,6 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 
-import svgrrc from '../../.svgrrc';
-
 import { getChecksum } from './checksum';
 import { indexTemplate } from './indexTemplate';
 import { FileObject, PrebuildOptions } from './prebuild.types';
@@ -118,6 +116,10 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
     const svgContent = fs.readFileSync(file.path, {
       encoding: 'utf8',
     });
+
+    // Note: must use `require` since svgrrc is a CommonJS module
+    // @ts-ignore - svgrrc is not typed
+    const svgrrc = await require('../../.svgrrc.js');
 
     const processedSVGR = await svgr(
       svgContent,

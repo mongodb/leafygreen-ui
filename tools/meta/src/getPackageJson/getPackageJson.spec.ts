@@ -4,7 +4,7 @@ import { getPackageJson } from './getPackageJson';
 
 describe('tools/meta/getPackageJson', () => {
   beforeAll(() => {
-    fsx.mkdirSync('./tmp/');
+    fsx.ensureDirSync('./tmp/');
   });
   beforeEach(() => {
     jest.spyOn(process, 'cwd').mockReturnValue('./tmp');
@@ -14,6 +14,7 @@ describe('tools/meta/getPackageJson', () => {
     jest.clearAllMocks();
   });
   afterAll(() => {
+    fsx.emptyDirSync('./tmp');
     fsx.rmdirSync('./tmp/');
   });
 
