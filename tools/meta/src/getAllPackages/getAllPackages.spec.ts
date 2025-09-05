@@ -15,7 +15,7 @@ jest.mock('../getRepositoryRoot', () => ({
 
 describe('tools/meta/getAllPackages', () => {
   beforeAll(() => {
-    fsx.mkdirSync('./tmp/');
+    fsx.ensureDirSync('./tmp/');
   });
 
   beforeEach(() => {
