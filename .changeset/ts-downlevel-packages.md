@@ -103,4 +103,5 @@
 '@lg-tools/test-harnesses': patch
 ---
 
+Adds "exports" field to all packages
 Enables TS downleveling to TS 4.9
