@@ -125,8 +125,12 @@ const Component: StoryFn<DrawerLayoutProps> = ({
   toolbarData: _toolbarDataProp,
   ...args
 }: DrawerLayoutProps) => {
-  const { toolbarData, setHasToolbarData, setHasHiddenToolbarItem } =
-    useToolbarData(DRAWER_TOOLBAR_DATA);
+  const {
+    toolbarData,
+    setHasToolbarData,
+    setHasHiddenToolbarItem,
+    setHasRemovedToolbarItem,
+  } = useToolbarData(DRAWER_TOOLBAR_DATA);
 
   const props = {
     ...args,
@@ -142,13 +146,24 @@ const Component: StoryFn<DrawerLayoutProps> = ({
           padding: ${spacing[400]}px;
         `}
       >
-        <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
-        <Button onClick={() => setHasToolbarData(prev => !prev)}>
-          Toggle Toolbar visibility
-        </Button>
-        <Button onClick={() => setHasHiddenToolbarItem(prev => !prev)}>
-          Toggle Toolbar item
-        </Button>
+        <div
+          className={css`
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+          `}
+        >
+          <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
+          <Button onClick={() => setHasToolbarData(prev => !prev)}>
+            Toggle Toolbar visibility
+          </Button>
+          <Button onClick={() => setHasHiddenToolbarItem(prev => !prev)}>
+            Toggle Apps Toolbar item
+          </Button>
+          <Button onClick={() => setHasRemovedToolbarItem(prev => !prev)}>
+            Toggle Trash Toolbar item
+          </Button>
+        </div>
         <LongContent />
         <LongContent />
       </main>
