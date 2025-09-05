@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { MergedRollupOptions, rollup } from 'rollup';
+
 import { GENERATED_DIR } from './constants';
 
 async function getBatchBuildOptions(
