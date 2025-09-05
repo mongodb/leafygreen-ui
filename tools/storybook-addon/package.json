@@ -9,29 +9,29 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "node": "./dist/umd/index.js",
-      "require": "./dist/umd/index.js",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
-      "types@<5.0": "./dist/types/ts4.9/index.d.ts",
-      "types@<=5.0": "./dist/types/ts4.9/index.d.ts"
+      "require": "./dist/umd/index.js",
+      "node": "./dist/umd/index.js",
+      "types@<5.0": "./dist/types/ts4.9/index.d.ts"
     },
     "./main": {
       "types": "./dist/types/main.d.ts",
-      "node": "./dist/umd/main.js",
+      "import": "./dist/esm/main.js",
       "require": "./dist/umd/main.js",
-      "import": "./dist/esm/main.js"
+      "node": "./dist/umd/main.js"
     },
     "./manager": {
       "types": "./dist/types/manager.d.ts",
-      "node": "./dist/umd/manager.js",
+      "import": "./dist/esm/manager.js",
       "require": "./dist/umd/manager.js",
-      "import": "./dist/esm/manager.js"
+      "node": "./dist/umd/manager.js"
     },
     "./preview": {
       "types": "./dist/types/preview.d.ts",
-      "node": "./dist/umd/preview.js",
+      "import": "./dist/esm/preview.js",
       "require": "./dist/umd/preview.js",
-      "import": "./dist/esm/preview.js"
+      "node": "./dist/umd/preview.js"
     },
     "./preset": "./preset.js",
     "./package.json": "./package.json",

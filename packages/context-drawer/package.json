@@ -8,16 +8,16 @@
   "license": "Apache-2.0",
   "exports": {
     ".": {
-      "require": "./dist/umd/index.js",
-      "import": "./dist/esm/index.js",
       "types": "./dist/types/index.d.ts",
-      "types@<5.0": "./dist/types/ts4.9/index.d.ts",
-      "types@<=5.0": "./dist/types/ts4.9/index.d.ts"
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js",
+      "types@<5.0": "./dist/types/ts4.9/index.d.ts"
     },
     "./testing": {
-      "require": "./dist/umd/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts",
       "import": "./dist/esm/testing/index.js",
-      "types": "./dist/types/testing/index.d.ts"
+      "require": "./dist/umd/testing/index.js"
     }
   },
   "scripts": {
