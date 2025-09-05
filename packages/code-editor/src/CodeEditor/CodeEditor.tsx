@@ -3,7 +3,6 @@ import React, {
   useCallback,
   useImperativeHandle,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -15,7 +14,7 @@ import { Body } from '@leafygreen-ui/typography';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
 
-import { useFormattingModuleLoaders } from './hooks/formatting/useFormattingModuleLoaders';
+import { useModules } from './hooks/useModules';
 import {
   getCopyButtonStyles,
   getEditorStyles,
@@ -31,12 +30,7 @@ import {
 } from './CodeEditor.types';
 import { CodeEditorProvider } from './CodeEditorContext';
 import { LANGUAGE_EXTENSION_MAP } from './constants';
-import {
-  useCodeFormatter,
-  useExtensions,
-  useLazyModules,
-  useModuleLoaders,
-} from './hooks';
+import { useCodeFormatter, useExtensions } from './hooks';
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
@@ -78,49 +72,12 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
 
-    // Determine the required modules
-    const coreModuleLoaders = useModuleLoaders(props);
-    const formattingModuleLoaders = useFormattingModuleLoaders(language);
-
-    const missingRequiredModules = useMemo(() => {
-      return preLoadedModules
-        ? Object.keys({
-            ...coreModuleLoaders,
-            ...formattingModuleLoaders,
-          }).filter(key => !(key in preLoadedModules))
-        : [];
-    }, [coreModuleLoaders, formattingModuleLoaders, preLoadedModules]);
-
-    if (preLoadedModules && missingRequiredModules.length > 0) {
-      console.warn(
-        'CodeEditor: Missing required modules in preLoadedModules:',
-        missingRequiredModules,
-        'This may cause editor functionality to break.',
-      );
-    }
-
-    // Lazy loading hooks (only used when preLoadedModules are not provided)
-    const { isLoading: lazyIsLoadingCoreModules, modules: lazyCoreModules } =
-      useLazyModules(preLoadedModules ? {} : coreModuleLoaders);
-
-    const {
-      isLoading: lazyIsLoadingFormattingModules,
-      modules: lazyFormattingModules,
-    } = useLazyModules(preLoadedModules ? {} : formattingModuleLoaders);
-
-    // Use preLoadedModules if available, otherwise use lazy loaded modules
-    const coreModules = preLoadedModules || lazyCoreModules;
-    const formattingModules = preLoadedModules || lazyFormattingModules;
-
-    // Loading states: false when using preLoadedModules, otherwise use lazy loading state
-    const isLoadingCoreModules = !preLoadedModules || lazyIsLoadingCoreModules;
-    const isLoadingFormattingModules =
-      !preLoadedModules || lazyIsLoadingFormattingModules;
+    const { modules, isLoading } = useModules(props);
 
     // Get formatting functionality
     const { formatCode, isFormattingAvailable } = useCodeFormatter({
       props: { language, indentSize, indentUnit },
-      modules: formattingModules,
+      modules: modules,
     });
 
     // Get custom extensions
@@ -135,7 +92,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         darkMode: darkModeProp,
         baseFontSize: baseFontSizeProp,
       },
-      modules: coreModules,
+      modules: modules,
     });
 
     // Get the current contents of the editor
@@ -196,7 +153,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
      * @returns boolean indicating if undo was successful
      */
     const handleUndo = useCallback((): boolean => {
-      const commands = coreModules?.['@codemirror/commands'];
+      const commands = modules?.['@codemirror/commands'];
 
       if (!editorViewRef.current || !commands) {
         console.warn('Undo is not available - editor or commands not loaded');
@@ -204,14 +161,14 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       }
 
       return commands.undo(editorViewRef.current);
-    }, [coreModules]);
+    }, [modules]);
 
     /**
      * Redoes the last undone editor action if possible.
      * @returns boolean indicating if redo was successful
      */
     const handleRedo = useCallback((): boolean => {
-      const commands = coreModules?.['@codemirror/commands'];
+      const commands = modules?.['@codemirror/commands'];
 
       if (!editorViewRef.current || !commands) {
         console.warn('Redo is not available - editor or commands not loaded');
@@ -219,7 +176,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       }
 
       return commands.redo(editorViewRef.current);
-    }, [coreModules]);
+    }, [modules]);
 
     /**
      * Downloads the current editor content as a file.
@@ -267,10 +224,10 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     );
 
     useLayoutEffect(() => {
-      const EditorView = coreModules?.['@codemirror/view'];
-      const commands = coreModules?.['@codemirror/commands'];
-      const searchModule = coreModules?.['@codemirror/search'];
-      const Prec = coreModules?.['@codemirror/state']?.Prec;
+      const EditorView = modules?.['@codemirror/view'];
+      const commands = modules?.['@codemirror/commands'];
+      const searchModule = modules?.['@codemirror/search'];
+      const Prec = modules?.['@codemirror/state']?.Prec;
 
       if (
         !editorContainerRef?.current ||
@@ -328,7 +285,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       });
 
       if (forceParsingProp) {
-        const Language = coreModules?.['@codemirror/language'];
+        const Language = modules?.['@codemirror/language'];
         const docLength = editorViewRef.current?.state.doc.length;
 
         if (Language && Language.forceParsing && docLength > 0) {
@@ -343,7 +300,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       };
     }, [
       value,
-      coreModules,
+      modules,
       controlledValue,
       defaultValue,
       isControlled,
@@ -399,13 +356,11 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               getContentsToCopy={getContents}
               className={getCopyButtonStyles(copyButtonAppearance)}
               variant={CopyButtonVariant.Button}
-              disabled={isLoadingProp || isLoadingCoreModules}
+              disabled={isLoadingProp || isLoading}
               data-lgid={CopyButtonLgId}
             />
           )}
-        {(isLoadingProp ||
-          isLoadingCoreModules ||
-          isLoadingFormattingModules) && (
+        {(isLoadingProp || isLoading) && (
           <div
             className={getLoaderStyles({
               theme,
