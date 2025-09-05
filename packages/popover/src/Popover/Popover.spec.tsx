@@ -17,7 +17,7 @@ import {
   DismissMode,
   type PopoverProps,
   RenderMode,
-  ToggleEvent,
+  type ToggleEvent,
 } from './Popover.types';
 
 type RTLInlinePopoverProps = Partial<
