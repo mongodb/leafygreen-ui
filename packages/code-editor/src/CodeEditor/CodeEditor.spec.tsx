@@ -816,7 +816,7 @@ describe('packages/code-editor', () => {
   });
 
   describe('Pre Loaded Modules', () => {
-    test.only('editor is rendered immediately when pre loaded modules are provided', async () => {
+    test('editor is rendered immediately when pre loaded modules are provided', async () => {
       const { editor } = renderCodeEditor({
         language: LanguageName.typescript,
         defaultValue: codeSnippets.typescript,
