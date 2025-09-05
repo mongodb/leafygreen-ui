@@ -7,19 +7,20 @@
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/umd/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/umd/index.js"
     },
     "./dist/*": {
+      "types": "./dist/types/generated/*.d.ts",
       "import": "./dist/esm/*.js",
-      "require": "./dist/umd/*.js",
-      "types": "./dist/types/generated/*.d.ts"
+      "require": "./dist/umd/*.js"
     },
     "./*": {
+      "types": "./dist/types/generated/*.d.ts",
       "import": "./dist/esm/*.js",
-      "require": "./dist/umd/*.js",
-      "types": "./dist/types/generated/*.d.ts"
+      "require": "./dist/umd/*.js"
     }
   },
   "scripts": {
@@ -58,5 +59,6 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/LG/summary"
-  }
+  },
+  "typesVersions": {}
 }

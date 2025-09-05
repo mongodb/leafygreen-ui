@@ -5,17 +5,17 @@
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
-  "typesVersions": {},
   "exports": {
     ".": {
-      "require": "./dist/umd/index.js",
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/umd/index.js"
     },
     "./testing": {
-      "require": "./dist/umd/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts",
       "import": "./dist/esm/testing/index.js",
-      "types": "./dist/types/testing/index.d.ts"
+      "require": "./dist/umd/testing/index.js"
     }
   },
   "scripts": {
@@ -54,5 +54,6 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/LG/summary"
-  }
+  },
+  "typesVersions": {}
 }

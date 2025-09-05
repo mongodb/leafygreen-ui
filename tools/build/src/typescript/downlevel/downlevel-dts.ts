@@ -5,6 +5,8 @@ import { main as downlevel } from 'downlevel-dts';
 import fse from 'fs-extra';
 import path from 'path';
 
+import { DEFAULT_TYPES_EXPORT_PATH } from './TYPES_VERSIONS';
+
 interface DownlevelDtsOptions {
   /** Whether to print verbose output */
   verbose?: boolean;
@@ -30,13 +32,14 @@ export async function downlevelDts(
   const packageDir = process.cwd();
 
   // Default to types directory if not specified
-  const typesDirPath = path.resolve(packageDir, 'dist/types');
+  const typesDirPath = path.resolve(packageDir, DEFAULT_TYPES_EXPORT_PATH);
 
   // Default output directory
   const defaultOutDir = `ts${target}`;
   const outputDirPath = path.resolve(
     packageDir,
-    `dist/${outDir ?? defaultOutDir}`,
+    outDir ?? DEFAULT_TYPES_EXPORT_PATH,
+    outDir ? '' : defaultOutDir,
   );
 
   // Ensure types directory exists
