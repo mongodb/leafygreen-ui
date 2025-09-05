@@ -34,30 +34,23 @@ export const useModules = (props: CodeEditorProps) => {
     console.warn(
       'CodeEditor: Missing required modules in preLoadedModules:',
       missingRequiredModules,
-      'This may cause editor functionality to break.',
     );
   }
 
-  // Lazy load modules if needed
-  const { isLoading: lazyIsLoadingmodules, modules: lazymodules } =
-    useLazyModules(preLoadedModules ? {} : coreModuleLoaders);
-
-  const {
-    isLoading: lazyIsLoadingFormattingModules,
-    modules: lazyFormattingModules,
-  } = useLazyModules(preLoadedModules ? {} : formattingModuleLoaders);
-
-  // Determine if any modules are still loading
-  const isLoading = useMemo(() => {
+  const moduleLoadersToLazyLoad = useMemo(() => {
+    // if preLoadedModules are provided, no need to load any modules
     return preLoadedModules
-      ? false
-      : lazyIsLoadingmodules || lazyIsLoadingFormattingModules;
-  }, [preLoadedModules, lazyIsLoadingmodules, lazyIsLoadingFormattingModules]);
+      ? {}
+      : {
+          ...coreModuleLoaders,
+          ...formattingModuleLoaders,
+        };
+  }, [coreModuleLoaders, formattingModuleLoaders, preLoadedModules]);
 
-  // Determine the modules to use
-  const modules = useMemo(() => {
-    return preLoadedModules || { ...lazymodules, ...lazyFormattingModules };
-  }, [preLoadedModules, lazymodules, lazyFormattingModules]);
+  // Lazy load modules if needed
+  const { isLoading, modules: lazyModules } = useLazyModules(
+    moduleLoadersToLazyLoad,
+  );
 
-  return { modules, isLoading };
+  return { modules: preLoadedModules || lazyModules, isLoading };
 };
