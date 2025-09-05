@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { MergedRollupOptions, rollup } from 'rollup';
+import { GENERATED_DIR } from './constants';
 
 async function getBatchBuildOptions(
   batch: Array<string>,
@@ -12,14 +13,14 @@ async function getBatchBuildOptions(
     // ESM build can take an array of input files
     {
       ...esmConfig,
-      input: batch.map(icon => `src/generated/${icon}.tsx`),
+      input: batch.map(icon => `${GENERATED_DIR}/${icon}.tsx`),
       output: [esmConfig.output],
     },
     // UMD builds need a single input file
     ...batch.map(icon => {
       return {
         ...umdConfig,
-        input: `src/generated/${icon}.tsx`,
+        input: `${GENERATED_DIR}/${icon}.tsx`,
         output: [
           {
             ...umdConfig.output,

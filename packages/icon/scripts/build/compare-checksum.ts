@@ -1,8 +1,14 @@
 import fsx from 'fs-extra';
 import path from 'path';
 
-const ICON_DIR = path.resolve(process.cwd(), 'src/generated');
+import { CHECKSUMS_FILE, GENERATED_DIR } from './constants';
 
+const ICON_DIR = path.resolve(process.cwd(), GENERATED_DIR);
+
+/**
+ * Gets a list of all icon names in the generated icons directory.
+ * @returns An array of icon names (without extensions).
+ */
 export function getAllIcons(): Array<string> {
   const iconNames = fsx
     .readdirSync(ICON_DIR)
@@ -11,9 +17,12 @@ export function getAllIcons(): Array<string> {
   return iconNames;
 }
 
+/**
+ * Gets the file path for the checksums file.
+ * @returns The absolute path to the checksums file.
+ */
 function getChecksumsFilePath(): string {
-  const relativePath = 'dist/checksums.json';
-  const fullPath = path.resolve(process.cwd(), relativePath);
+  const fullPath = path.resolve(process.cwd(), CHECKSUMS_FILE);
 
   fsx.ensureDirSync(path.dirname(fullPath));
 

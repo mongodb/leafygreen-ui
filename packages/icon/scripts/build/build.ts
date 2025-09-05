@@ -59,6 +59,10 @@ async function buildAllBatches({
   await queue.onIdle();
 }
 
+/**
+ * Builds the icon assets.
+ * @param options The options for building icons.
+ */
 async function buildIcons(options: BuildIconOptions): Promise<void> {
   try {
     const verbose = options.verbose ?? false;
