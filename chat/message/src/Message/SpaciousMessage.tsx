@@ -6,7 +6,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize, breakpoints } from '@leafygreen-ui/tokens';
 
-import { VerifiedAnswerBanner } from '../MessageBanner';
+import { MessageVerifiedBanner } from '../MessageBanner';
 import {
   MessageContainer,
   Variant as MessageContainerVariant,
@@ -121,7 +121,7 @@ export const SpaciousMessage = forwardRef<HTMLDivElement, MessageProps>(
               theme,
             })}
           >
-            {isVerified ? <VerifiedAnswerBanner {...verified} /> : null}
+            {isVerified ? <MessageVerifiedBanner {...verified} /> : null}
             <Polymorph
               as={componentOverrides?.MessageContent ?? MessageContent}
               sourceType={sourceType}

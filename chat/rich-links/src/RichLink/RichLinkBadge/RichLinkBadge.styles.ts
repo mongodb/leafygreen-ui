@@ -10,13 +10,10 @@ import {
 
 export const baseStyles = css`
   display: inline-flex;
-  gap: ${spacing[150]}px;
+  gap: ${spacing[50]}px;
   align-items: center;
   border-radius: ${spacing[100]}px;
-  padding: 0px ${spacing[150]}px;
-  position: absolute;
-  bottom: ${spacing[200]}px;
-  left: ${spacing[200]}px;
+  padding: 0 ${spacing[100]}px;
 `;
 
 export const badgeVariants: Record<

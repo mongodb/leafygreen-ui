@@ -9,13 +9,22 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
+import { MessageSubcomponentProperty } from '../constants';
+import { MessageActions } from '../MessageActions';
+import { MessageVerifiedBanner } from '../MessageBanner';
 import { MessageContext } from '../MessageContext';
+import { MessageLinks } from '../MessageLinks';
 
 import { CompactMessage } from './CompactMessage';
-import { type MessageProps } from './Message.types';
+import {
+  ActionsType,
+  LinksType,
+  type MessageProps,
+  type VerifiedBannerType,
+} from './Message.types';
 import { SpaciousMessage } from './SpaciousMessage';
 
-export const Message = forwardRef<HTMLDivElement, MessageProps>(
+const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
   (
     {
       align,
@@ -88,4 +97,19 @@ export const Message = forwardRef<HTMLDivElement, MessageProps>(
   },
 );
 
-Message.displayName = 'Message';
+BaseMessage.displayName = 'Message';
+
+const Actions = MessageActions as ActionsType;
+Actions[MessageSubcomponentProperty.Actions] = true;
+
+const Links = MessageLinks as LinksType;
+Links[MessageSubcomponentProperty.Links] = true;
+
+const VerifiedBanner = MessageVerifiedBanner as VerifiedBannerType;
+VerifiedBanner[MessageSubcomponentProperty.VerifiedBanner] = true;
+
+export const Message = Object.assign(BaseMessage, {
+  Actions,
+  Links,
+  VerifiedBanner,
+});

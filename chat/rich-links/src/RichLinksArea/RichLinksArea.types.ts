@@ -4,7 +4,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { type RichLinkProps } from '..';
 
 export interface RichLinksAreaProps
-  extends HTMLElementProps<'div', never>,
+  extends Omit<HTMLElementProps<'div'>, 'children'>,
     DarkModeProps {
   links: Array<RichLinkProps>;
 

@@ -1,37 +1,34 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import LeafygreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
 import { RichLink } from '..';
 
-import { baseStyles } from './RichLinksArea.styles';
+import { getContainerStyles } from './RichLinksArea.styles';
 import { type RichLinksAreaProps } from './RichLinksArea.types';
 
-export function RichLinksArea({
-  links,
-  darkMode: darkModeProp,
-  onLinkClick,
-  ...props
-}: RichLinksAreaProps) {
-  const { darkMode } = useDarkMode(darkModeProp);
-  return (
-    <LeafygreenProvider darkMode={darkMode}>
-      <div className={cx(baseStyles)} {...props}>
-        {links.map(richLinkProps => {
-          return (
+export const RichLinksArea = forwardRef<HTMLDivElement, RichLinksAreaProps>(
+  (
+    { className, darkMode: darkModeProp, links, onLinkClick, ...props },
+    fwdRef,
+  ) => {
+    const { darkMode } = useDarkMode(darkModeProp);
+    return (
+      <LeafygreenProvider darkMode={darkMode}>
+        <div className={getContainerStyles(className)} ref={fwdRef} {...props}>
+          {links.map(richLinkProps => (
             <RichLink
               key={richLinkProps.href}
               onClick={() => onLinkClick?.(richLinkProps)}
               {...richLinkProps}
             />
-          );
-        })}
-      </div>
-    </LeafygreenProvider>
-  );
-}
+          ))}
+        </div>
+      </LeafygreenProvider>
+    );
+  },
+);
 
 RichLinksArea.displayName = 'RichLinksArea';

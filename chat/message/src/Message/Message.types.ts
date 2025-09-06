@@ -1,9 +1,14 @@
-import { ReactElement } from 'react';
+import { ForwardRefExoticComponent, ReactElement } from 'react';
 import { type RichLinkProps } from '@lg-chat/rich-links';
 
 import { type DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
+import { type MessageActionsProps } from '../MessageActions';
+import {
+  type BaseMessageVerifiedBannerProps,
+  type MessageVerifiedBannerProps,
+} from '../MessageBanner';
 import { type MessageContainerProps } from '../MessageContainer';
 import { type MessageContentProps } from '../MessageContent';
 import { type MessageLinksProps } from '../MessageLinks';
@@ -86,24 +91,18 @@ export interface MessageProps
    * displays information about the message.
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
    */
-  verified?: VerificationInfo;
+  verified?: BaseMessageVerifiedBannerProps;
 }
 
-export interface VerificationInfo {
-  /**
-   * URL to learn more about the verification.
-   */
-  learnMoreUrl?: string;
+export type ActionsType = ForwardRefExoticComponent<MessageActionsProps> & {
+  isLGMessageActions?: boolean;
+};
 
-  /**
-   * The time the message was last verified.
-   * @example new Date("2024-03-24T16:20:00Z")
-   */
-  verifiedAt?: Date;
+export type LinksType = ForwardRefExoticComponent<MessageLinksProps> & {
+  isLGMessageLinks?: boolean;
+};
 
-  /**
-   * The name of the entity that verified the message.
-   * @example "MongoDB Staff"
-   */
-  verifier?: string;
-}
+export type VerifiedBannerType =
+  ForwardRefExoticComponent<MessageVerifiedBannerProps> & {
+    isLGMessageVerifiedBanner?: boolean;
+  };

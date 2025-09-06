@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { Variant } from '../Banner/types';
+import { Variant } from '../shared.types';
 
 export const baseStyles = css`
   position: relative;

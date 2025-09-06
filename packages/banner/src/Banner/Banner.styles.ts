@@ -1,12 +1,19 @@
-import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
-import { anchorClassName } from '@leafygreen-ui/typography';
+import { BaseFontSize, fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
+import {
+  anchorClassName,
+  bodyTypeScaleStyles,
+} from '@leafygreen-ui/typography';
 
-import { Variant } from './types';
+import { Variant } from '../shared.types';
 
-export const baseBannerStyles = css`
+export const bannerChildrenContainerClassName = createUniqueClassName(
+  'banner-children_container',
+);
+
+const baseBannerStyles = css`
   position: relative;
   display: flex;
   padding: 10px 12px 10px 20px;
@@ -242,7 +249,7 @@ const lightModeSuccessBannerStyles = css`
   }
 `;
 
-export const variantStyles: Record<Theme, Record<Variant, string>> = {
+const variantStyles: Record<Theme, Record<Variant, string>> = {
   [Theme.Dark]: {
     [Variant.Info]: darkModeInfoBannerStyles,
     [Variant.Warning]: darkModeWarningBannerStyles,
@@ -257,40 +264,34 @@ export const variantStyles: Record<Theme, Record<Variant, string>> = {
   },
 };
 
-export const textStyles = (image: boolean, dismissible: boolean) => css`
-  align-self: center;
-  flex-grow: 1;
-  margin-left: ${getTextMargins(image, dismissible).marginLeft};
-  margin-right: ${getTextMargins(image, dismissible).marginRight};
-
-  .${anchorClassName}, a {
-    font-size: inherit;
-    line-height: inherit;
-    font-weight: ${fontWeights.semiBold};
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 2px;
-    border-radius: 4px;
-    display: inline;
-
-    &:hover,
-    &:focus,
-    &:focus-visible {
-      outline: none;
-      span {
-        &::after {
-          display: none;
-        }
-      }
-    }
-
-    &:focus-visible {
-      position: relative;
-    }
-  }
+const bannerDismissibleStyles = css`
+  padding-right: 36px; // add space for the icon
 `;
 
-export const getTextMargins = (image: boolean, dismissible: boolean) => {
+export const getBannerStyles = ({
+  baseFontSize,
+  className,
+  dismissible,
+  theme,
+  variant,
+}: {
+  baseFontSize: BaseFontSize;
+  className?: string;
+  dismissible: boolean;
+  theme: Theme;
+  variant: Variant;
+}) =>
+  cx(
+    baseBannerStyles,
+    bodyTypeScaleStyles[baseFontSize],
+    variantStyles[theme][variant],
+    {
+      [bannerDismissibleStyles]: dismissible,
+    },
+    className,
+  );
+
+const getTextMargins = (image: boolean, dismissible: boolean) => {
   const defaultIconSize = 16;
   const defaultBorderSpacing = 12;
 
@@ -319,6 +320,43 @@ export const getTextMargins = (image: boolean, dismissible: boolean) => {
   return styleObj;
 };
 
-export const bannerDismissibleStyles = css`
-  padding-right: 36px; // add space for the icon
+const textStyles = (hasImage: boolean, dismissible: boolean) => css`
+  align-self: center;
+  flex-grow: 1;
+  margin-left: ${getTextMargins(hasImage, dismissible).marginLeft};
+  margin-right: ${getTextMargins(hasImage, dismissible).marginRight};
+
+  .${anchorClassName}, a {
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: ${fontWeights.semiBold};
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+    border-radius: 4px;
+    display: inline;
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      span {
+        &::after {
+          display: none;
+        }
+      }
+    }
+
+    &:focus-visible {
+      position: relative;
+    }
+  }
 `;
+
+export const getChildrenContainerStyles = ({
+  dismissible,
+  hasImage,
+}: {
+  dismissible: boolean;
+  hasImage: boolean;
+}) => cx(textStyles(hasImage, dismissible), bannerChildrenContainerClassName);

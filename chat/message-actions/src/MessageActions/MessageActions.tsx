@@ -32,6 +32,9 @@ import {
 } from './MessageActions.styles';
 import { MessageActionsProps } from './MessageActions.types';
 
+/**
+ * @deprecated - consumers should use `Message.Actions` from @lg-chat/message instead
+ */
 export function MessageActions({
   children: _children,
   className,
