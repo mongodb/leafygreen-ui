@@ -22,7 +22,9 @@ npm install @lg-chat/message
 
 ## Example
 
-### Compact
+### Basic Usage
+
+#### Compact
 
 ```tsx
 import {
@@ -39,7 +41,7 @@ return (
 );
 ```
 
-### Spacious
+#### Spacious
 
 ```tsx
 import {
@@ -57,7 +59,14 @@ return (
 );
 ```
 
-### Message.Actions
+### Compound Components
+
+The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, and `Message.VerifiedBanner`.
+
+**Note 1:** All compound components only render in the `compact` variant.  
+**Note 2:** The layout and order of compound components are enforced by the `Message` component itself. Even if you change the order of subcomponents in your JSX, they will be rendered in the correct, intended order within the message bubble. This ensures consistent UI and accessibility regardless of how you compose your message children.
+
+#### Message.Actions
 
 ```tsx
 import React from 'react';
@@ -68,37 +77,22 @@ import {
 import { Message } from '@lg-chat/message';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 
-const Example = () => {
-  const handleCopy = () => {
-    // Handle copy action
-    console.log('Message copied');
-  };
-
-  const handleRetry = () => {
-    // Handle retry action
-    console.log('Message retried');
-  };
+const MessageWithActions = () => {
+  const handleCopy = () => console.log('Message copied');
+  const handleRetry = () => console.log('Message retried');
 
   const handleRatingChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     options: { rating: MessageRatingValue },
   ) => {
-    // Handle rating change
     console.log('Rating changed:', options.rating);
   };
 
-  const handleSubmitFeedback = (
+  const handleSubmitFeedback = async (
     e: React.FormEvent<HTMLFormElement>,
     options: { rating: MessageRatingValue; feedback?: string },
   ) => {
-    try {
-      // Simulate API call
-      await submitFeedbackToAPI(options);
-    } catch (error) {
-      // The component will automatically show error state
-      // and display the errorMessage prop
-      throw error;
-    }
+    console.log('Feedback submitted:', options);
   };
 
   return (
@@ -110,6 +104,141 @@ const Example = () => {
           onRatingChange={handleRatingChange}
           onSubmitFeedback={handleSubmitFeedback}
         />
+      </Message>
+    </LeafyGreenChatProvider>
+  );
+};
+```
+
+### Message.Links
+
+```tsx
+import React from 'react';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+
+const MessageWithLinks = () => {
+  const links = [
+    {
+      href: 'https://mongodb.design',
+      children: 'LeafyGreen UI',
+      variant: 'Website',
+    },
+    {
+      href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
+      children: 'LeafyGreen UI Docs',
+      variant: 'Docs',
+    },
+    {
+      href: 'https://learn.mongodb.com/',
+      children: 'MongoDB University',
+      variant: 'Learn',
+    },
+  ];
+
+  const handleLinkClick = () => console.log('Link clicked');
+
+  return (
+    <LeafyGreenChatProvider variant={Variant.Compact}>
+      <Message isSender={false} messageBody="Test message">
+        <Message.Links
+          links={links}
+          onLinkClick={handleLinkClick}
+          headingText="Related Resources"
+        />
+      </Message>
+    </LeafyGreenChatProvider>
+  );
+};
+```
+
+### Message.VerifiedBanner
+
+```tsx
+import React from 'react';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+
+const MessageWithVerifiedBanner = () => {
+  return (
+    <LeafyGreenChatProvider variant={Variant.Compact}>
+      <Message isSender={false} messageBody="Test message">
+        <Message.VerifiedBanner
+          verifier="MongoDB Staff"
+          verifiedAt={new Date('2024-03-24T16:20:00Z')}
+          learnMoreUrl="https://mongodb.com/docs"
+        />
+      </Message>
+    </LeafyGreenChatProvider>
+  );
+};
+```
+
+### Complete Example with All Subcomponents
+
+```tsx
+import React from 'react';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+import { MessageRatingValue } from '@lg-chat/message-rating';
+
+const Example = () => {
+  const handleCopy = () => console.log('Message copied');
+  const handleRetry = () => console.log('Message retried');
+
+  const handleRatingChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    options: { rating: MessageRatingValue },
+  ) => {
+    console.log('Rating changed:', options.rating);
+  };
+
+  const handleSubmitFeedback = async (
+    e: React.FormEvent<HTMLFormElement>,
+    options: { rating: MessageRatingValue; feedback?: string },
+  ) => {
+    console.log('Feedback submitted:', options);
+  };
+
+  const links = [
+    {
+      href: 'https://mongodb.design',
+      children: 'LeafyGreen UI',
+      variant: 'Website',
+    },
+    {
+      href: 'https://mongodb.com/docs',
+      children: 'MongoDB Docs',
+      variant: 'Docs',
+    },
+  ];
+
+  const handleLinkClick = () => console.log('Link clicked');
+
+  return (
+    <LeafyGreenChatProvider variant={Variant.Compact}>
+      <Message isSender={false} messageBody="Test message">
+        <Message.Actions
+          onClickCopy={handleCopy}
+          onClickRetry={handleRetry}
+          onRatingChange={handleRatingChange}
+          onSubmitFeedback={handleSubmitFeedback}
+        />
+        <Message.VerifiedBanner
+          verifier="MongoDB Staff"
+          verifiedAt={new Date('2024-03-24T16:20:00Z')}
+          learnMoreUrl="https://mongodb.com/docs"
+        />
+        <Message.Links links={links} onLinkClick={handleLinkClick} />
       </Message>
     </LeafyGreenChatProvider>
   );
@@ -148,22 +277,22 @@ const Example = () => {
 | `submitButtonText` _(optional)_ | `string`                                                                                              | Optional text for the feedback form's submit button                                                                                                                                                | `'Submit'`                    |
 | `submittedMessage` _(optional)_ | `ReactNode`                                                                                           | Optional success message to display after feedback is submitted.                                                                                                                                   | `'Thanks for your feedback!'` |
 
-### Message Links
+### Message.Links
 
-The message component includes the following built-in `variant` values for the `links` prop:
+| Prop                       | Type                             | Description                                                  | Default               |
+| -------------------------- | -------------------------------- | ------------------------------------------------------------ | --------------------- |
+| `headingText` _(optional)_ | `string`                         | The text to display as the heading of the links section.     | `'Related Resources'` |
+| `links`                    | `Array<RichLinkProps>`           | An array of link data to render in the links section.        |                       |
+| `onLinkClick` _(optional)_ | `({ children: string }) => void` | A callback function that is called when any link is clicked. |                       |
+| `...`                      | `HTMLElementProps<'div'>`        | Props spread on the root element                             |                       |
 
-- `"Blog"`
-- `"Book"`
-- `"Code"`
-- `"Docs"`
-- `"Learn"`
-- `"Video"`
-- `"Website"`
+### Message.VerifiedBanner
 
-These map to pre-defined badge glyphs, labels, and colors for specific use
-cases. If no variant serves your use case, you can create a custom link by
-omitting the `variant` prop and defining the `badgeGlyph`, `badgeLabel`, and
-optionally `badgeVariant` props.
+| Prop                        | Type     | Description                                       | Default |
+| --------------------------- | -------- | ------------------------------------------------- | ------- |
+| `learnMoreUrl` _(optional)_ | `string` | URL to learn more about the verification.         |         |
+| `verifiedAt` _(optional)_   | `Date`   | The time the message was last verified.           |         |
+| `verifier` _(optional)_     | `string` | The name of the entity that verified the message. |         |
 
 ## Behavior
 
@@ -207,3 +336,37 @@ The component manages its own internal state for:
 - Form state: `'unset'` | `'submitting'` | `'submitted'` | `'error'`
 
 Form state is reset when the feedback form is closed or when a new rating is selected.
+
+### Message.Links
+
+The `MessageLinks` component provides an expandable/collapsible section for displaying related links.
+
+#### Rendering Behavior
+
+- If the `links` array is empty, the component returns `null` and does not render anything
+- Links are displayed in an expandable section with a chevron toggle button
+- The section starts collapsed by default and can be expanded to show all links
+- The link objects provided to the `Message.Links` component's `links` prop can leverage the following `variant` values which map to pre-defined badge glyphs, labels, and colors.
+  - `"Blog"`
+  - `"Book"`
+  - `"Code"`
+  - `"Docs"`
+  - `"Learn"`
+  - `"Video"`
+  - `"Website"`
+
+#### State Management
+
+The component manages its own internal state for:
+
+- Expansion state: Controls whether the links section is expanded or collapsed
+
+### Message.VerifiedBanner
+
+The `VerifiedBanner` component displays verification information for messages.
+
+#### Rendering Behavior
+
+- If no verification props (`verifier`, `verifiedAt`, `learnMoreUrl`) are provided, basic "Verified" text is displayed
+- The banner automatically formats the verification date using `toLocaleDateString()`
+- "Learn More" link is displayed when optional `learnMoreUrl` is provided
