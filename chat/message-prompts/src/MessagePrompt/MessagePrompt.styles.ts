@@ -11,16 +11,12 @@ import {
 export const baseStyles = css`
   display: block;
   padding: ${spacing[2]}px ${spacing[3]}px;
-  margin-bottom: ${spacing[2]}px;
   border: 1px solid ${palette.green.dark1};
   border-radius: 12px;
   transition: all ${transitionDuration.slower}ms ease;
   box-shadow: none;
   outline: none;
   text-align: left;
-  &:not(:last-of-type) {
-    margin-bottom: ${spacing[1]}px;
-  }
   &[aria-disabled='false'][aria-pressed='false'] {
     cursor: pointer;
   }
