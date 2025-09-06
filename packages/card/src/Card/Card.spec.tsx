@@ -2,8 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
-
 import { Card, CardProps, ContentStyle } from '.';
 
 const defaultClassName = 'card-className';
@@ -15,20 +13,15 @@ function isVisuallyClickable(element: HTMLElement): boolean {
   );
 }
 
-type DivLikeProps = InferredPolymorphicProps<'div', CardProps>;
-
-type AnchorLikeProps = InferredPolymorphicProps<'a', CardProps>;
-
-type CardRenderProps = DivLikeProps | AnchorLikeProps;
-
 function renderCard({
   children = defaultChildren,
   className = defaultClassName,
   ...rest
-}: CardRenderProps = {}) {
+}: CardProps = {}) {
   const cardId = 'cardID';
 
   const { container, getByTestId } = render(
+    // @ts-ignore React17 types
     <Card data-testid={cardId} className={className} {...rest}>
       {children}
     </Card>,

@@ -22,13 +22,36 @@ export type Exists<
  *
  * (used when running in a React 17 test environment)
  */
-export const renderHook: Exists<typeof RTL, 'renderHook'> =
+export const renderHook: <TResult = any, TProps = any>(
+  render: (initialProps: TProps) => TResult,
+  options?: RenderHookOptions<TProps>,
+) => RenderHookResult<TResult, TProps> =
   (RTL as any).renderHook ??
   (() => {
     const RHTL = require('@testing-library/react-hooks');
     return RHTL.renderHook;
   })();
 
+export type RenderHookOptions<TProps> = Exists<
+  typeof RTL,
+  'RenderHookOptions',
+  RTL.RenderOptions & {
+    initialProps?: TProps;
+  }
+>;
+
+export type RenderHookResult<TResult, TProps> = Exists<
+  typeof RTL,
+  'RenderHookResult',
+  {
+    current: TResult;
+    rerender: (props?: TProps) => void;
+    unmount: () => void;
+    result: {
+      current: TResult;
+    };
+  }
+>;
 /**
  * Re-exports `act` from `"@testing-library/react"` if it exists,
  * or from `"@testing-library/react-hooks"`

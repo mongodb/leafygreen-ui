@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithoutRef } from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { DrawerProps } from '../Drawer/Drawer.types';
 import { DrawerToolbarLayoutProps } from '../DrawerToolbarLayout';
@@ -6,7 +8,7 @@ import { DrawerToolbarLayoutProps } from '../DrawerToolbarLayout';
 type PickedDrawerProps = Pick<DrawerProps, 'onClose' | 'size'>;
 
 export interface BaseDrawerLayoutPropsWithoutDisplayMode
-  extends HTMLElementProps<'div'>,
+  extends ComponentPropsWithoutRef<'div'>,
     DarkModeProps,
     PickedDrawerProps {
   children: React.ReactNode;

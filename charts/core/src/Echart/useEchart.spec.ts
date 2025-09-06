@@ -1,9 +1,10 @@
 import { act } from 'react-dom/test-utils';
 
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { renderHook, RenderHookResult } from '@leafygreen-ui/testing-lib';
 
 import { type SeriesOption } from '../Chart';
 
+import { EChartsInstance } from './Echart.types';
 import { useEchart } from './useEchart';
 
 // Mock echarts instance creation with all required methods
@@ -48,12 +49,10 @@ jest.mock('echarts/renderers', () => ({
 // Helper function to wait for hook initialization and state updates
 const setupHook = async () => {
   const mockContainer = document.createElement('div');
-  let result: ReturnType<
-    typeof renderHook<ReturnType<typeof useEchart>, void>
-  >['result'];
+  let result: RenderHookResult<any, EChartsInstance>['result'];
 
   await act(async () => {
-    const hookResult = renderHook(() =>
+    const hookResult = renderHook<any, EChartsInstance>(() =>
       useEchart({ theme: 'dark', container: mockContainer }),
     );
     result = hookResult.result;

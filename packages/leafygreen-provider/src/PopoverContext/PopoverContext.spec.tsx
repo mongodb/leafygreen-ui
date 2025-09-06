@@ -50,7 +50,9 @@ describe('usePopoverContext', () => {
 
   test('`setIsPopoverOpen` updates the value of `isPopoverOpen`', async () => {
     const { result, rerender } = renderHook(usePopoverContext, {
-      wrapper: ({ children }) => <PopoverProvider>{children}</PopoverProvider>,
+      wrapper: ({ children }: any) => (
+        <PopoverProvider>{children}</PopoverProvider>
+      ),
     });
 
     act(() => result.current.setIsPopoverOpen(true));

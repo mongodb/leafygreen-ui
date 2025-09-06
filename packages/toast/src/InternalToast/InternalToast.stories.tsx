@@ -5,7 +5,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { StoryContext, StoryFn } from '@storybook/react';
+import { StoryContext, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -106,38 +106,42 @@ const meta: StoryMetaType<typeof InternalToast> = {
   },
 };
 export default meta;
-export const Basic: StoryFn<InternalToastProps> = args => (
-  <InternalToast {...args} />
-);
-Basic.parameters = {
-  chromatic: { disableSnapshot: true },
+export const Basic: StoryObj<InternalToastProps> = {
+  render: args => <InternalToast {...args} />,
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
-export const WithLink = Basic.bind({});
-WithLink.args = {
-  description: (
-    <>
-      Exercitation incididunt ea proident. &nbsp;
-      <Link href="http://localhost:9001">Link style</Link>
-    </>
-  ),
-};
-WithLink.parameters = {
-  chromatic: { disableSnapshot: true },
+export const WithLink: StoryObj<InternalToastProps> = {
+  render: args => <InternalToast {...args} />,
+  args: {
+    description: (
+      <>
+        Exercitation incididunt ea proident. &nbsp;
+        <Link href="http://localhost:9001">Link style</Link>
+      </>
+    ),
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
-export const WithAction = Basic.bind({});
-WithAction.args = {
-  variant: Variant.Progress,
-  actionElement: <Button size="small">Action</Button>,
-  title: 'Velit ea exercitation qui aute.',
-  description: (
-    <>
-      Exercitation incididunt &nbsp;
-      <Link href="http://localhost:9001">Link style</Link>
-    </>
-  ),
-};
-WithAction.parameters = {
-  chromatic: { disableSnapshot: true },
+export const WithAction: StoryObj<InternalToastProps> = {
+  render: args => <InternalToast {...args} />,
+  args: {
+    variant: Variant.Progress,
+    actionElement: <Button size="small">Action</Button>,
+    title: 'Velit ea exercitation qui aute.',
+    description: (
+      <>
+        Exercitation incididunt &nbsp;
+        <Link href="http://localhost:9001">Link style</Link>
+      </>
+    ),
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };

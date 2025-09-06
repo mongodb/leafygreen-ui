@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { CalendarCell, CalendarCellState } from '.';
 
 /** Ensures valid DOM nesting when testing CalendarCells */
-const TestCellWrapper = ({ children }: PropsWithChildren) => (
+const TestCellWrapper = ({ children }: PropsWithChildren<{}>) => (
   <table>
     <tbody>
       <tr data-testid="tr">{children}</tr>

@@ -254,8 +254,10 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
-      await act(async () => waitForTimeout(transitionDuration.slowest));
-      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
+      await act(async () => {
+        waitForTimeout(transitionDuration.slowest);
+      });
+      await waitFor(() => expect(tooltip).toBeVisible());
 
       fireEvent.keyDown(button, {
         key: 'Escape',
@@ -272,8 +274,10 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
-      await act(async () => waitForTimeout(transitionDuration.slowest));
-      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
+      await act(async () => {
+        waitForTimeout(transitionDuration.slowest);
+      });
+      await waitFor(() => expect(tooltip).toBeVisible());
 
       fireEvent.click(backdrop);
       await waitForElementToBeRemoved(tooltip);
@@ -287,8 +291,10 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
-      await act(async () => waitForTimeout(transitionDuration.slowest));
-      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
+      await act(async () => {
+        waitForTimeout(transitionDuration.slowest);
+      });
+      await waitFor(() => expect(tooltip).toBeVisible());
 
       fireEvent.click(backdrop);
       expect(tooltip).toBeVisible();
@@ -737,8 +743,10 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
-      await act(async () => waitForTimeout(transitionDuration.slowest));
-      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
+      await act(async () => {
+        waitForTimeout(transitionDuration.slowest);
+      });
+      await waitFor(() => expect(tooltip).toBeVisible());
 
       fireEvent.keyDown(button, {
         key: 'Escape',

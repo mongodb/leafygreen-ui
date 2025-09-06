@@ -1,5 +1,5 @@
 import {
-  InferredPolymorphicProps,
+  InferredPolymorphicPropsWithRef,
   PolymorphicAs,
 } from '@leafygreen-ui/polymorphic';
 
@@ -9,4 +9,4 @@ export type BaseBackLinkProps = ResponsiveTypographyProps;
 
 // For external consumption only
 export type BackLinkProps<T extends PolymorphicAs = PolymorphicAs> =
-  InferredPolymorphicProps<T, BaseBackLinkProps>;
+  InferredPolymorphicPropsWithRef<T, BaseBackLinkProps>;
