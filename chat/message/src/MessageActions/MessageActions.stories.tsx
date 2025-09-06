@@ -11,6 +11,8 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+
 import { Message } from '../Message';
 
 import { FEEDBACK_TEXTAREA_TEST_ID } from './MessageActions.constants';
@@ -41,12 +43,14 @@ const meta: StoryMetaType<typeof MessageActions> = {
     darkMode: storybookArgTypes.darkMode,
   },
   decorators: [
-    (Story: StoryFn) => (
-      <LeafyGreenChatProvider variant={Variant.Compact}>
-        <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
-          <Story />
-        </Message>
-      </LeafyGreenChatProvider>
+    (Story: StoryFn, context) => (
+      <LeafyGreenProvider darkMode={context?.args.darkMode}>
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
+            <Story />
+          </Message>
+        </LeafyGreenChatProvider>
+      </LeafyGreenProvider>
     ),
   ],
   parameters: {
@@ -60,12 +64,14 @@ const meta: StoryMetaType<typeof MessageActions> = {
         onClickRetry: [undefined, testOnClickRetry],
         onRatingChange: [undefined, testOnRatingChange],
       },
-      decorator: StoryFn => (
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
-            <StoryFn />
-          </Message>
-        </LeafyGreenChatProvider>
+      decorator: (StoryFn, context) => (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <LeafyGreenChatProvider variant={Variant.Compact}>
+            <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
+              <StoryFn />
+            </Message>
+          </LeafyGreenChatProvider>
+        </LeafyGreenProvider>
       ),
     },
   },
