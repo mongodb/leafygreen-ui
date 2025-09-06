@@ -6,8 +6,9 @@ export {
   lgMessageStyles,
   Message,
   type MessageProps,
-  type VerificationInfo,
 } from './Message';
+export { type MessageActionsProps } from './MessageActions';
+export { type MessageVerifiedBannerProps } from './MessageBanner';
 export {
   /**
    * @deprecated 7.1.0 - This style object is deprecated and will be removed in a future version.
@@ -26,4 +27,8 @@ export {
   MessageContext,
   useMessageContext,
 } from './MessageContext/MessageContext';
-export { MessageLinks, type MessageLinksProps } from './MessageLinks';
+export {
+  /** @deprecated - use `Message.Links` instead */
+  MessageLinks,
+  type MessageLinksProps,
+} from './MessageLinks';

@@ -633,19 +633,25 @@ importers:
       '@lg-chat/lg-markdown':
         specifier: workspace:^
         version: link:../lg-markdown
+      '@lg-chat/message-feedback':
+        specifier: workspace:^
+        version: link:../message-feedback
+      '@lg-chat/message-rating':
+        specifier: workspace:^
+        version: link:../message-rating
       '@lg-chat/rich-links':
         specifier: workspace:^
         version: link:../rich-links
     devDependencies:
-      '@lg-chat/avatar':
-        specifier: workspace:^
-        version: link:../avatar
-      '@lg-chat/message-feedback':
-        specifier: workspace:^
-        version: link:../message-feedback
+      '@emotion/styled':
+        specifier: ^11.10.5
+        version: 11.14.1(@emotion/react@11.11.1(@types/react@18.2.23)(react@18.3.1))(@types/react@18.2.23)(react@18.3.1)
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
+      '@storybook/test':
+        specifier: ^8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   chat/message-actions:
     dependencies:
@@ -2157,6 +2163,9 @@ importers:
         specifier: ^17.0.0 || ^18.0.0
         version: 18.3.1
     devDependencies:
+      '@emotion/styled':
+        specifier: ^11.10.5
+        version: 11.14.1(@emotion/react@11.11.1(@types/react@18.2.23)(react@18.3.1))(@types/react@18.2.23)(react@18.3.1)
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build

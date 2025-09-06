@@ -10,7 +10,6 @@ import {
   useLeafyGreenChatContext,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
-import { useMessageContext } from '@lg-chat/message';
 import { FormState, InlineMessageFeedback } from '@lg-chat/message-feedback';
 import { MessageRating, MessageRatingValue } from '@lg-chat/message-rating';
 
@@ -22,8 +21,9 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { FEEDBACK_TEXTAREA_TEST_ID } from '../constants';
+import { useMessageContext } from '../MessageContext';
 
+import { FEEDBACK_TEXTAREA_TEST_ID } from './MessageActions.constants';
 import {
   actionBarStyles,
   getContainerStyles,
@@ -32,9 +32,6 @@ import {
 } from './MessageActions.styles';
 import { MessageActionsProps } from './MessageActions.types';
 
-/**
- * @deprecated - consumers should use `Message.Actions` from @lg-chat/message instead
- */
 export function MessageActions({
   children: _children,
   className,

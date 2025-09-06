@@ -1,17 +1,16 @@
 import React from 'react';
-import { Avatar } from '@lg-chat/avatar';
+import styled from '@emotion/styled';
 import {
   LeafyGreenChatProvider,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
-import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/stories';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/test';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { VerifiedAnswerBanner } from '../MessageBanner';
-import { Message, MessageLinks, MessageProps, MessageSourceType } from '..';
+import { Message, MessageProps, MessageSourceType } from '..';
 
 const MARKDOWN_TEXT = `
 # Heading 1
@@ -61,16 +60,68 @@ Keep in mind that deleting a large number of documents can be resource-intensive
 Let me know if you need any further assistance!
 `;
 
-const MessageFeedback = () => {
-  // @ts-ignore onChange is passed in the story itself
-  return <MessageFeedbackStory />;
-};
+const getActionsChild = () => (
+  <Message.Actions
+    // eslint-disable-next-line no-console
+    onClickCopy={() => console.log('Copy clicked')}
+    // eslint-disable-next-line no-console
+    onClickRetry={() => console.log('Retry clicked')}
+    // eslint-disable-next-line no-console
+    onRatingChange={() => console.log('Rating changed')}
+    // eslint-disable-next-line no-console
+    onSubmitFeedback={() => console.log('Feedback submitted')}
+  />
+);
+
+const getVerifiedBannerChild = () => (
+  <Message.VerifiedBanner
+    verifier="MongoDB Staff"
+    verifiedAt={new Date('2023-08-24T16:20:00Z')}
+    learnMoreUrl="https://mongodb.com/docs"
+  />
+);
+
+const getLinksChild = () => (
+  <Message.Links
+    links={[
+      {
+        href: 'https://mongodb.design',
+        children: 'LeafyGreen UI',
+        variant: 'Website',
+      },
+      {
+        href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
+        children: 'LeafyGreen UI Docs',
+        variant: 'Docs',
+      },
+      {
+        href: 'https://learn.mongodb.com/',
+        children: 'MongoDB University',
+        variant: 'Learn',
+      },
+      {
+        href: 'https://mongodb.com/docs',
+        children: 'MongoDB Docs',
+        variant: 'Docs',
+      },
+      {
+        href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        children: 'Rick Astley - Never Gonna Give You Up',
+        variant: 'Video',
+      },
+      {
+        href: 'https://mongodb.com/',
+        children: 'MongoDB Homepage',
+        variant: 'Website',
+      },
+    ]}
+  />
+);
 
 const meta: StoryMetaType<typeof Message> = {
   title: 'Composition/Chat/Message',
   component: Message,
   args: {
-    avatar: <Avatar variant="user" name="Sean Park" />,
     sourceType: MessageSourceType.Markdown,
   },
   argTypes: {
@@ -155,77 +206,92 @@ export const Assistant: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const WithMessageRating: StoryObj<MessageStoryProps> = {
+export const WithActions: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    avatar: <Avatar variant="mongo" />,
-    children: <MessageFeedback />,
+    children: getActionsChild(),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
   },
 };
 
-const getVerifiedAnswerChildren = () => (
-  <>
-    <MessageFeedback />
-    <VerifiedAnswerBanner
-      verifier="MongoDB Staff"
-      verifiedAt={new Date('2023-08-24T16:20:00Z')}
-      learnMoreUrl="https://mongodb.com/docs"
-    />
-  </>
-);
-export const VerifiedAnswer: StoryObj<MessageStoryProps> = {
+export const WithVerifiedBanner: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    children: getVerifiedAnswerChildren(),
+    children: getVerifiedBannerChild(),
     isSender: false,
-    messageBody: 'The MongoDB Atlas free tier includes 512MB of storage.',
+    messageBody: ASSISTANT_TEXT,
   },
 };
 
-const links = [
-  {
-    href: 'https://mongodb.design',
-    children: 'LeafyGreen UI',
-    variant: 'Website',
+const StyledVerifiedBanner = styled(Message.VerifiedBanner)`
+  background-color: lightgray;
+`;
+
+const WithStyledVerifiedBannerComponent = ({
+  variant,
+  ...props
+}: MessageStoryProps) => {
+  return (
+    <LeafyGreenChatProvider variant={variant}>
+      <Message {...props}>
+        <StyledVerifiedBanner
+          verifier="MongoDB Staff"
+          verifiedAt={new Date('2023-08-24T16:20:00Z')}
+          learnMoreUrl="https://mongodb.com/docs"
+        />
+      </Message>
+    </LeafyGreenChatProvider>
+  );
+};
+export const WithStyledVerifiedBanner: StoryObj<MessageStoryProps> = {
+  render: WithStyledVerifiedBannerComponent,
+  args: {
+    isSender: false,
+    messageBody: ASSISTANT_TEXT,
   },
-  {
-    href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
-    children: 'LeafyGreen UI Docs',
-    variant: 'Docs',
-  },
-  {
-    href: 'https://learn.mongodb.com/',
-    children: 'MongoDB University',
-    variant: 'Learn',
-  },
-  {
-    href: 'https://mongodb.com/docs',
-    children: 'MongoDB Docs',
-    variant: 'Docs',
-  },
-  {
-    href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    children: 'Rick Astley - Never Gonna Give You Up',
-    variant: 'Video',
-  },
-  {
-    href: 'https://mongodb.com/',
-    children: 'MongoDB Homepage',
-    variant: 'Website',
-  },
-];
-const getWithMessageLinksChildren = () => (
-  <>
-    <MessageFeedback />
-    <MessageLinks links={links} />
-  </>
-);
-export const WithMessageLinks: StoryObj<MessageStoryProps> = {
+};
+
+export const WithMessageLinksCollapsed: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    children: getWithMessageLinksChildren(),
+    children: getLinksChild(),
+    isSender: false,
+    messageBody: ASSISTANT_TEXT,
+  },
+};
+
+export const WithMessageLinksExpanded: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    children: getLinksChild(),
+    isSender: false,
+    messageBody: ASSISTANT_TEXT,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(
+      canvas.getByRole('button', { name: 'Expand Related Resources' }),
+    );
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
+};
+
+export const WithAllSubComponents: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    children: (
+      <>
+        {getActionsChild()}
+        {getLinksChild()}
+        {getVerifiedBannerChild()}
+      </>
+    ),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
   },
