@@ -69,7 +69,7 @@ export function hasStaticProperty(
  * ```
  */
 export function hasAnyStaticProperty(
-  component: string | ComponentType,
+  component: ComponentLike,
   staticProperties: Array<string>,
 ): boolean {
   return staticProperties.some(property =>
