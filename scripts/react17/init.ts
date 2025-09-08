@@ -57,10 +57,6 @@ async function main() {
   console.log('4️⃣ Updating TypeScript configurations...');
   await mergeTsConfigs();
 
-  // Step 5: Run pnpm install
-  console.log('5️⃣ Installing dependencies...');
-  spawnSync('pnpm', ['install'], { stdio: 'inherit', cwd: ROOT_DIR });
-
   console.log('⚛️ React 17 environment setup complete!');
 }
 
