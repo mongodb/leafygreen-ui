@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { sync as spawnSync } from 'cross-spawn';
 import fs from 'fs';
+import { defaultsDeep } from 'lodash';
 import path from 'path';
 
 const ROOT_DIR = path.resolve(__dirname, '../..');
@@ -111,26 +112,16 @@ async function mergePackageVersions() {
 
   // Merge dependencies - keep existing versions, add new ones from r17
   if (r17Package.dependencies) {
-    rootPackage.devDependencies = rootPackage.devDependencies || {};
-    for (const [pkg, version] of Object.entries(r17Package.dependencies)) {
-      // Keep existing version if it exists, otherwise use r17 version
-      if (!rootPackage.devDependencies[pkg]) {
-        rootPackage.devDependencies[pkg] = version;
-      }
-    }
+    rootPackage.devDependencies = defaultsDeep(
+      {},
+      r17Package.dependencies,
+      rootPackage.devDependencies,
+    );
   }
 
   // Merge pnpm overrides
   if (r17Package.pnpm?.overrides) {
-    rootPackage.pnpm = rootPackage.pnpm || {};
-    rootPackage.pnpm.overrides = rootPackage.pnpm.overrides || {};
-
-    for (const [pkg, version] of Object.entries(r17Package.pnpm.overrides)) {
-      // Keep existing override if it exists, otherwise use r17 override
-      if (!rootPackage.pnpm.overrides[pkg]) {
-        rootPackage.pnpm.overrides[pkg] = version;
-      }
-    }
+    rootPackage.pnpm = defaultsDeep({}, r17Package.pnpm, rootPackage.pnpm);
   }
 
   // Write the updated package.json
