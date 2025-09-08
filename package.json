@@ -10,7 +10,7 @@
   },
   "scripts": {
     "init": "pnpm install && pnpm build",
-    "init17": "pnpm install && pnpm build:cli && npx ts-node tools/test/scripts/install-react17.ts && pnpm build",
+    "init:react17": "pnpm install && npx ts-node ./scripts/react17/init.ts && pnpm run init",
     "create-package": "lg create",
     "build": "turbo run build tsc",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
