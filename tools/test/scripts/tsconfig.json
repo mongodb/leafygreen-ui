@@ -1,3 +1,0 @@
-{
-  "extends": "@lg-tools/build/config/scripts.tsconfig.json"
-}
