@@ -9,27 +9,28 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "node": "./dist/umd/index.js",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
       "require": "./dist/umd/index.js",
-      "import": "./dist/esm/index.js"
+      "node": "./dist/umd/index.js"
     },
     "./main": {
       "types": "./dist/types/main.d.ts",
-      "node": "./dist/umd/main.js",
+      "import": "./dist/esm/main.js",
       "require": "./dist/umd/main.js",
-      "import": "./dist/esm/main.js"
+      "node": "./dist/umd/main.js"
     },
     "./manager": {
       "types": "./dist/types/manager.d.ts",
-      "node": "./dist/umd/manager.js",
+      "import": "./dist/esm/manager.js",
       "require": "./dist/umd/manager.js",
-      "import": "./dist/esm/manager.js"
+      "node": "./dist/umd/manager.js"
     },
     "./preview": {
       "types": "./dist/types/preview.d.ts",
-      "node": "./dist/umd/preview.js",
+      "import": "./dist/esm/preview.js",
       "require": "./dist/umd/preview.js",
-      "import": "./dist/esm/preview.js"
+      "node": "./dist/umd/preview.js"
     },
     "./preset": "./preset.js",
     "./package.json": "./package.json",
@@ -113,5 +114,6 @@
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "storybook": "^8.6.0"
-  }
+  },
+  "typesVersions": {}
 }

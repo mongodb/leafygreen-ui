@@ -5,6 +5,18 @@
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    },
+    "./stories": {
+      "import": "./src/InlineMessageFeedback/InlineMessageFeedback.stories.tsx",
+      "types": "./src/InlineMessageFeedback/InlineMessageFeedback.stories.tsx"
+    }
+  },
   "typesVersions": {},
   "license": "Apache-2.0",
   "scripts": {

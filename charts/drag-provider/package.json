@@ -33,5 +33,14 @@
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
     "@storybook/test": "8.5.3"
-  }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    }
+  },
+  "typesVersions": {}
 }
