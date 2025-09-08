@@ -40,22 +40,14 @@ async function main() {
     fs.unlinkSync(PNPM_LOCK_PATH);
   } else {
     console.log('pnpm-lock.yaml not found, skipping');
-  }
+  
 
-  // Step 2: Remove node_modules
-  console.log('2️⃣ Removing builds & node_modules...');
-  if (fs.existsSync(NODE_MODULES_PATH)) {
-    spawnSync('pnpm', ['run', 'clean'], { stdio: 'inherit' });
-  } else {
-    console.log('node_modules not found, skipping');
-  }
-
-  // Step 3: Update package.json versions
-  console.log('3️⃣ Updating package.json...');
+  // Step 2: Update package.json versions
+  console.log('2️⃣ Updating package.json...');
   await mergePackageVersions();
 
-  // Step 4: Update tsconfig files
-  console.log('4️⃣ Updating TypeScript configurations...');
+  // Step 3: Update tsconfig files
+  console.log('3️⃣ Updating TypeScript configurations...');
   await mergeTsConfigs();
 
   console.log('⚛️ React 17 environment setup complete!');
