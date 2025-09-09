@@ -1,18 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "description": "Dependencies needed to test in a React 17 environment",
+  "description": "Dependencies needed to build & test in a React 17 environment",
   "dependencies": {
-    "@storybook/react": "^7.0.0",
-    "@testing-library/react": "^11.0.0",
-    "@testing-library/react-hooks": "^7.0.0",
-    "@testing-library/user-event": "^13.0.0",
+    "@storybook/react": "7.6.20",
+    "@testing-library/react": "11.2.7",
+    "@testing-library/react-hooks": "7.0.2",
+    "@testing-library/user-event": "13.5.0",
     "@types/react": "16.9.56",
     "@types/react-dom": "16.9.18",
     "@types/react-is": "17.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-test-renderer": "17.0.2",
-    "storybook": "^7.0.0",
+    "storybook": "7.6.20",
     "typescript": "5.0.4",
     "@lg-tools/storybook-addon": "0.2.8",
     "@lg-tools/storybook-utils": "0.1.3"
@@ -20,6 +20,9 @@
   "pnpm": {
     "overrides": {
       "@emotion/react": "11.11.1",
+      "@storybook/react": "7.6.20",
+      "@storybook/test": "7.6.20",
+      "@storybook/types": "7.6.20",
       "@types/react": "16.9.56",
       "@types/react-dom": "16.9.18",
       "@types/react-is": "17.0.7",

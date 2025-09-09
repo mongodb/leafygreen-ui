@@ -33,7 +33,7 @@ jobs:
         run: pnpm install --prefer-offline
 
       - name: Init React 17 environment
-        run: npx ts-node ./scripts/react17/init.ts
+        run: node ./scripts/react17/init.mjs
 
       - name: Install packages
         run: pnpm install --prefer-offline
