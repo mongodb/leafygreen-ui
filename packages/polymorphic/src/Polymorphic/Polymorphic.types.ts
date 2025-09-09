@@ -7,8 +7,6 @@ import {
   ElementType,
   FunctionComponent,
   PropsWithChildren,
-  PropsWithoutRef,
-  RefAttributes,
   WeakValidationMap,
 } from 'react';
 
@@ -117,13 +115,7 @@ export interface PolymorphicComponentType<
     ref: PolymorphicRef<T>,
   ): PolymorphicRenderFunctionReturnType;
   displayName?: string;
-  propTypes?:
-    | WeakValidationMap<
-        PropsWithoutRef<
-          PolymorphicPropsWithRef<PolymorphicAs, XP> & RefAttributes<any>
-        >
-      >
-    | undefined;
+  propTypes?: WeakValidationMap<PolymorphicProps<DefaultAs, XP>>;
 }
 
 /**
@@ -143,11 +135,3 @@ export interface PolymorphicRenderFunction<
   displayName?: string;
   propTypes?: never;
 }
-
-// (I'm not entirely clear why we can't use `Omit`, but that doesn't work - AT)
-// export type PolymorphicRenderFunction<
-//   XP = {},
-//   DefaultAs extends PolymorphicAs = PolymorphicAs,
-// > = Omit<PolymorphicComponentType<XP, DefaultAs>, 'propTypes'> & {
-//   propTypes: never;
-// };
