@@ -17,6 +17,7 @@ import {
 } from '@storybook/blocks';
 import type { Preview } from '@storybook/react';
 
+import { type Exists } from '@leafygreen-ui/lib';
 import {
   Body,
   H1,
@@ -72,7 +73,16 @@ const parameters = {
   },
 };
 
-const preview: Preview = {
+/**
+ * Temporary compatibility type in order to build in Storybook 7 and 8
+ * (while we support React 17 and 18)
+ */
+type Storybook7CompatiblePreviewType = Preview & {
+  /** Uses the `tags` property from the Preview type if it exists, otherwise defaults to an array */
+  tags: Exists<Preview, 'tags', Array<string>>;
+}
+
+const preview: Storybook7CompatiblePreviewType = {
   parameters,
   decorators: [ReactStrictMode, ComponentPreview, PropCombinations],
   tags: ['autodocs'],
