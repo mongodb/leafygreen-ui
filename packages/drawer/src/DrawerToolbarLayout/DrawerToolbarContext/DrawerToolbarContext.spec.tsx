@@ -46,9 +46,8 @@ describe('useDrawerToolbarContext', () => {
       .spyOn(console, 'error')
       .mockImplementation(() => {});
 
-    expect(() => {
-      renderHook(() => useDrawerToolbarContext());
-    }).toThrow(
+    const { result } = renderHook(() => useDrawerToolbarContext());
+    expect(result.error.message).toEqual(
       'useDrawerToolbarContext must be used within a DrawerToolbarProvider',
     );
 
