@@ -24,6 +24,7 @@ export type {
   DeepPick,
   DeepUnion,
   ExclusiveUnion,
+  Exists,
   Mutable,
   Only,
   Optional,
