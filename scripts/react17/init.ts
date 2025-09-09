@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { sync as spawnSync } from 'cross-spawn';
 import fs from 'fs';
 import { defaultsDeep } from 'lodash';
 import path from 'path';
@@ -9,7 +8,6 @@ const R17_PACKAGES_PATH = path.join(__dirname, 'r17-packages.json');
 const R17_TSCONFIG_PATH = path.join(__dirname, 'r17-tsconfig.json');
 const ROOT_PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
 const PNPM_LOCK_PATH = path.join(ROOT_DIR, 'pnpm-lock.yaml');
-const NODE_MODULES_PATH = path.join(ROOT_DIR, 'node_modules');
 
 interface PackageJson {
   dependencies?: Record<string, string>;
@@ -40,7 +38,7 @@ async function main() {
     fs.unlinkSync(PNPM_LOCK_PATH);
   } else {
     console.log('pnpm-lock.yaml not found, skipping');
-  
+  }
 
   // Step 2: Update package.json versions
   console.log('2️⃣ Updating package.json...');
