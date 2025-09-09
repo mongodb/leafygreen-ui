@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 /**
- * This file is intentionally a .mjs file using TSDoc for types, 
+ * This file is intentionally a .mjs file using TSDoc for types,
  * instead of .ts file so this can be run before any modules are installed
  */
 import fs from 'fs';
@@ -104,9 +104,7 @@ function findTsConfigFiles(dir) {
 async function mergePackageVersions() {
   // Read the React 17 package configuration
   /** @type {PackageJson} */
-  const r17Package = JSON.parse(
-    fs.readFileSync(R17_PACKAGES_PATH, 'utf-8'),
-  );
+  const r17Package = JSON.parse(fs.readFileSync(R17_PACKAGES_PATH, 'utf-8'));
 
   // Read the root package.json
   /** @type {PackageJson} */
@@ -142,9 +140,7 @@ async function mergePackageVersions() {
 async function mergeTsConfigs() {
   // Read the React 17 tsconfig configuration
   /** @type {TsConfig} */
-  const r17TsConfig = JSON.parse(
-    fs.readFileSync(R17_TSCONFIG_PATH, 'utf-8'),
-  );
+  const r17TsConfig = JSON.parse(fs.readFileSync(R17_TSCONFIG_PATH, 'utf-8'));
 
   // Find all package tsconfig.json files
   const tsConfigPaths = findTsConfigFiles(ROOT_DIR);
@@ -161,9 +157,7 @@ async function mergeTsConfigs() {
       }
 
       /** @type {TsConfig} */
-      const tsConfig = JSON.parse(
-        fs.readFileSync(tsConfigPath, 'utf-8'),
-      );
+      const tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf-8'));
 
       // Merge compilerOptions from r17 config
       if (r17TsConfig.compilerOptions) {
@@ -198,11 +192,15 @@ main().catch(error => {
  */
 function defaultsDeep(...objects) {
   const result = {};
-  
+
   objects.forEach(obj => {
     if (obj && typeof obj === 'object') {
       Object.keys(obj).forEach(key => {
-        if (obj[key] && typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+        if (
+          obj[key] &&
+          typeof obj[key] === 'object' &&
+          !Array.isArray(obj[key])
+        ) {
           result[key] = defaultsDeep(result[key] || {}, obj[key]);
         } else if (result[key] === undefined) {
           result[key] = obj[key];
@@ -210,6 +208,6 @@ function defaultsDeep(...objects) {
       });
     }
   });
-  
+
   return result;
 }

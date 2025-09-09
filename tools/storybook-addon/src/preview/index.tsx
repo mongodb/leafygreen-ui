@@ -80,7 +80,7 @@ const parameters = {
 type Storybook7CompatiblePreviewType = Preview & {
   /** Uses the `tags` property from the Preview type if it exists, otherwise defaults to an array */
   tags: Exists<Preview, 'tags', Array<string>>;
-}
+};
 
 const preview: Storybook7CompatiblePreviewType = {
   parameters,

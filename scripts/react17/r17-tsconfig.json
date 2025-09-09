@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig", 
+  "$schema": "https://json.schemastore.org/tsconfig",
   "description": "TypeScript configuration for building in a React 17 environment",
   "compilerOptions": {
     "baseUrl": ".",
