@@ -93,7 +93,7 @@ export type PolymorphicPropsWithRef<
 
 /**
  * The return type of a render function.
- * Note: This type changed from `ReactElement` to `ReactNode` in TS 5.1+
+ * Note: This type changed from `ReactElement` to `ReactNode` in React 18 + TS 5
  */
 export type PolymorphicRenderFunctionReturnType = ReturnType<FunctionComponent>;
 
