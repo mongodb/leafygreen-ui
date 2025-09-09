@@ -95,7 +95,7 @@ export type PolymorphicPropsWithRef<
  * The return type of a render function.
  * Note: This type changed from `ReactElement` to `ReactNode` in React 18 + TS 5
  */
-export type PolymorphicRenderFunctionReturnType = ReturnType<FunctionComponent>;
+export type PolymorphicReturnType = ReturnType<FunctionComponent>;
 
 /**
  * An explicit definition of the component type
@@ -113,7 +113,7 @@ export interface PolymorphicComponentType<
   <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
-  ): PolymorphicRenderFunctionReturnType;
+  ): PolymorphicReturnType;
   displayName?: string;
   propTypes?: WeakValidationMap<PolymorphicProps<DefaultAs, XP>>;
 }
@@ -131,7 +131,7 @@ export interface PolymorphicRenderFunction<
   <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
-  ): PolymorphicRenderFunctionReturnType;
+  ): PolymorphicReturnType;
   displayName?: string;
   propTypes?: never;
 }
