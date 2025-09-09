@@ -48,7 +48,9 @@ export type RenderHookResult<TResult, TProps> = Exists<
     rerender: (props?: TProps) => void;
     unmount: () => void;
     result: {
+      all: Array<TResult>;
       current: TResult;
+      error: Error;
     };
   }
 >;
