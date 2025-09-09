@@ -34,14 +34,12 @@ describe('transformToNestedData', () => {
     expect(getFlatLevelDataToNestedData).toHaveBeenCalledWith(flatLevelInput);
   });
 
-  test('throws error for unsupported data type', () => {
-    const renderWithInvalidType = () => {
-      renderHook(() =>
-        // @ts-expect-error Testing with invalid type
-        transformToNestedData({ type: 'invalidType', data: {} }),
-      );
-    };
+  test('throws error for unsupported data type', async () => {
+    const { result } = renderHook(() => {
+      // @ts-expect-error Testing with invalid type
+      transformToNestedData({ type: 'invalidType', data: {} });
+    });
 
-    expect(renderWithInvalidType).toThrow('Unsupported data type: invalidType');
+    expect(result.error.message).toEqual('Unsupported data type: invalidType');
   });
 });
