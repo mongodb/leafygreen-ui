@@ -363,11 +363,6 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           copyButtonAppearance,
         })}
         data-lgid={lgIds.root}
-        // Data attributes for test utilities - allow getTestUtils() to read actual prop values
-        // even in environments where CodeMirror doesn't fully render (like JSDOM)
-        data-default-value={defaultValue}
-        data-value={value}
-        data-language={language}
         {...rest}
       >
         {panel && (

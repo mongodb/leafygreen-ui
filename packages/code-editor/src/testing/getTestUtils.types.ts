@@ -1,11 +1,10 @@
 export interface PanelTestUtilsReturnType {
-  getPanel: () => HTMLElement;
+  getPanelElement: () => HTMLElement | null;
   getPanelTitle: () => string | null;
   getFormatButton: () => HTMLElement | null;
   getPanelCopyButton: () => HTMLElement | null;
   getSecondaryMenuButton: () => HTMLElement | null;
   getSecondaryMenu: () => HTMLElement | null;
-  isSecondaryMenuOpen: () => boolean;
 }
 
 export interface TestUtilsReturnType {
@@ -15,14 +14,14 @@ export interface TestUtilsReturnType {
   getEditor: () => HTMLElement;
 
   /**
-   * Waits for the CodeEditor to be fully initialized with CodeMirror instance
-   */
-  waitForInitialization: (timeout?: number) => Promise<void>;
-
-  /**
    * Waits for any loading states to complete (both user and internal loading)
    */
   waitForLoadingToComplete: (timeout?: number) => Promise<void>;
+
+  /**
+   * Gets the content element from the editor
+   */
+  getContentElement: () => HTMLElement | null;
 
   /**
    * Gets the current text content from the editor
@@ -30,9 +29,9 @@ export interface TestUtilsReturnType {
   getContent: () => Promise<string | null>;
 
   /**
-   * Gets the programming language currently set on the editor
+   * Types the text into the editor
    */
-  getLanguage: () => string | null;
+  typeContent: (text: string) => Promise<void>;
 
   /**
    * Checks if the editor is currently in a loading state
@@ -45,62 +44,12 @@ export interface TestUtilsReturnType {
   getIsReadOnly: () => boolean;
 
   /**
-   * Checks if line numbers are enabled and visible
-   */
-  getHasLineNumbers: () => boolean;
-
-  /**
-   * Checks if line wrapping is enabled
-   */
-  getHasLineWrapping: () => boolean;
-
-  /**
-   * Checks if code folding is enabled
-   */
-  getHasCodeFolding: () => boolean;
-
-  /**
-   * Gets all visible line number elements
-   */
-  getAllLineNumbers: () => Array<HTMLElement>;
-
-  /**
-   * Gets a specific line number element by its line number (1-based)
-   */
-  getLineNumberByIndex: (lineNumber: number) => HTMLElement | null;
-
-  /**
    * Gets the copy button element (when not using panel)
    */
   getCopyButton: () => HTMLElement | null;
 
   /**
-   * Queries for the panel element (returns null if no panel)
-   */
-  queryPanel: () => HTMLElement | null;
-
-  /**
    * Gets panel-specific test utilities if panel is present
    */
-  getPanelUtils: () => PanelTestUtilsReturnType | null;
-
-  /**
-   * Gets all tooltip elements currently visible in the editor
-   */
-  getTooltips: () => Array<HTMLElement>;
-
-  /**
-   * Checks if any tooltips are currently visible
-   */
-  getHasTooltips: () => boolean;
-
-  /**
-   * Gets all hyperlink elements if clickable URLs are enabled
-   */
-  getHyperlinks: () => Array<HTMLElement>;
-
-  /**
-   * Checks if hyperlinks/clickable URLs are enabled
-   */
-  getHasHyperlinks: () => boolean;
+  getPanelUtils: () => PanelTestUtilsReturnType;
 }
