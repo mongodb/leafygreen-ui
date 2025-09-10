@@ -25,7 +25,6 @@ import { useCodeEditorContext } from '../CodeEditor/CodeEditorContext';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
 import { ShortcutTable } from '../ShortcutTable';
-import { getLgIds } from '../utils';
 
 import {
   getPanelButtonsStyles,
@@ -75,7 +74,6 @@ import { PanelProps } from './Panel.types';
 export function Panel({
   baseFontSize: baseFontSizeProp,
   customSecondaryButtons,
-  'data-lgid': dataLgId,
   darkMode,
   downloadFileName,
   innerContent,
@@ -94,9 +92,8 @@ export function Panel({
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
-  const lgIds = getLgIds(dataLgId);
 
-  const { getContents, formatCode, undo, redo, downloadContent } =
+  const { getContents, formatCode, undo, redo, downloadContent, lgIds } =
     useCodeEditorContext();
 
   const handleFormatClick = async () => {

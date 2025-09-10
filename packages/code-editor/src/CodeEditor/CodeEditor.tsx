@@ -346,6 +346,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       undo: handleUndo,
       redo: handleRedo,
       downloadContent: handleDownloadContent,
+      lgIds,
     };
 
     return (
