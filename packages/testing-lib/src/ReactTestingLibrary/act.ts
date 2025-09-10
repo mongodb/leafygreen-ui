@@ -4,10 +4,7 @@ import { isReact17 } from './utils/isReact17';
  * Type of `act` from `@testing-library/react` if it exists,
  * otherwise defaults to compatible type.
  */
-export type ActType =
-  | ((cb: () => void) => void)
-  | ((cb: () => Promise<void>) => Promise<void>)
-  | ((cb: () => void) => Promise<void>); // Technically incorrect, but works for compatibility
+export type ActType = (cb: () => void | Promise<void>) => void | Promise<void>;
 
 /**
  * Re-exports `act` from `"@testing-library/react"` in React18+
