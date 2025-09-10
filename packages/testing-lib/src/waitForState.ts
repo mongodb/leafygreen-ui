@@ -10,7 +10,7 @@ export const waitForState = async <T extends any>(
   callback: () => T,
 ): Promise<T> => {
   let val: T;
-  await act(async () => {
+  await act(() => {
     val = callback();
   });
 
