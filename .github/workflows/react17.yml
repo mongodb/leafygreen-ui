@@ -53,6 +53,8 @@ jobs:
             tools/*/dist/*
           key: ${{ runner.os }}-react17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
+      - run: echo ${{ steps.build-cache.outputs.cache-primary-key }}
+
   test:
     name: Test in React 17
     runs-on: ubuntu-latest
@@ -77,6 +79,8 @@ jobs:
       - name: Init React 17 environment
         run: node ./scripts/react17/init.mjs
 
+      - run: echo ${{ needs.build.outputs.cache-primary-key }}
+
       - uses: actions/cache/restore@v4
         name: Check for build cache
         id: build-cache
@@ -86,7 +90,7 @@ jobs:
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{needs.build.outputs.cache-primary-key}}
+          key: ${{ needs.build.outputs.cache-primary-key }}
 
       - name: Install dependencies
         run: pnpm install --prefer-offline
