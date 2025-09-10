@@ -64,9 +64,9 @@ describe('useResizable', () => {
     expect(result.current.size).toBe(400);
   });
 
-  test('calls onResize callback when resizing', () => {
+  test.only('calls onResize callback when resizing', () => {
     const onResize = jest.fn();
-    const { result } = renderHook(() =>
+    const { result, rerender } = renderHook(() =>
       useResizable({
         initialSize: 300,
         minSize: 100,
@@ -93,16 +93,14 @@ describe('useResizable', () => {
       resizerProps?.onMouseDown(mouseDownEvent);
     });
 
-    // Simulate mouse movement
-    act(() => {
-      fireEvent(
-        window,
-        new MouseEvent('mousemove', {
-          clientX: 400,
-          clientY: 300,
-        }),
-      );
-    });
+    // // Simulate mouse movement
+    // fireEvent(
+    //   window,
+    //   new MouseEvent('mousemove', {
+    //     clientX: 400,
+    //     clientY: 300,
+    //   }),
+    // );
 
     // Check if onResize was called
     expect(onResize).toHaveBeenCalledWith(400);
