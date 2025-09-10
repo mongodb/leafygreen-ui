@@ -370,7 +370,7 @@ describe('packages/hooks', () => {
     });
   });
 
-  describe.only('useSsrCheck', () => {
+  describe('useSsrCheck', () => {
     test('should return true when server-side rendered and false after hydration', () => {
       const { result, hydrate } = renderHookServer(useSsrCheck);
       expect(result.current).toBe(true);
