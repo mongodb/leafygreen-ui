@@ -1,6 +1,6 @@
 import { fireEvent, waitFor } from '@testing-library/react';
 
-import { act } from '../RTLOverrides';
+import { act } from '../ReactTestingLibrary';
 
 /**
  * Fires the `transitionEnd` event on the provided element,
@@ -15,7 +15,7 @@ export async function waitForTransition(
 ) {
   if (element) {
     await waitFor(() => {
-      act(() => {
+      act(async () => {
         fireEvent.transitionEnd(element, options);
       });
     });
