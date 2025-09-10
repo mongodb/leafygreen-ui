@@ -1,3 +1,4 @@
+import { bannerChildrenContainerClassName } from '@leafygreen-ui/banner';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -15,7 +16,14 @@ export const baseStyles = css`
   border-radius: ${spacing[600]}px;
 
   max-width: fit-content;
-  padding: ${spacing[200]}px ${spacing[300]}px;
+  padding: ${spacing[150]}px ${spacing[200]}px;
+
+  display: flex;
+  gap: ${spacing[150]}px;
+
+  .${bannerChildrenContainerClassName} {
+    margin: 0;
+  }
 `;
 
 export const multilineStyles = css`
