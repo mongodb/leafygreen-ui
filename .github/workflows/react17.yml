@@ -13,8 +13,6 @@ jobs:
   build:
     name: Build in React 17
     runs-on: ubuntu-latest
-    outputs:
-      cache-primary-key: ${{ steps.build-cache.outputs.cache-primary-key }}
     steps:
       - uses: actions/checkout@v4
 
@@ -64,8 +62,6 @@ jobs:
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
-      - run: echo ${{ steps.build-cache.outputs.cache-primary-key }}
-
   test:
     name: Test in React 17
     runs-on: ubuntu-latest
@@ -80,8 +76,6 @@ jobs:
           version: 9.15.0
           cache: false
 
-      - run: echo ${{ needs.build.outputs.cache-primary-key }}
-
       - uses: actions/cache/restore@v4
         name: Check for build cache
         id: build-cache
@@ -91,7 +85,7 @@ jobs:
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{ needs.build.outputs.cache-primary-key }}
+          key: ${{ runner.os }}-react17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       - name: Setup Node 18
         uses: actions/setup-node@v4
