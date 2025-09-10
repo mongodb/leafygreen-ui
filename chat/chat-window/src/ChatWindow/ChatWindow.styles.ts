@@ -10,8 +10,13 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+const CONTAINER_MAX_WIDTH = 800;
+
 const baseContainerStyles = css`
   width: 100%;
+  max-width: ${CONTAINER_MAX_WIDTH}px;
+  padding: 0 ${spacing[800]}px;
+  justify-self: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
