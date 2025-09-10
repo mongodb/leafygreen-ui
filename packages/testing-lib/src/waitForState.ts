@@ -1,4 +1,4 @@
-import { act } from './RTLOverrides';
+import { act } from './ReactTestingLibrary';
 
 /**
  * Wrapper around `act`.
@@ -10,7 +10,7 @@ export const waitForState = async <T extends any>(
   callback: () => T,
 ): Promise<T> => {
   let val: T;
-  await act(() => {
+  await act(async () => {
     val = callback();
   });
 

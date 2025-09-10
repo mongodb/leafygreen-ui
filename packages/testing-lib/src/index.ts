@@ -3,10 +3,14 @@ import * as jest from './jest';
 import * as JestDOM from './jest-dom';
 export {
   act,
+  type ActType,
   renderHook,
+  type RenderHookOptions,
   type RenderHookResult,
   renderHookServer,
-} from './RTLOverrides';
+  type RenderHookServerOptions,
+  type RenderHookServerResult,
+} from './ReactTestingLibrary';
 export { useTraceUpdate } from './useTraceUpdate';
 export { waitForState } from './waitForState';
 export { waitForTransition } from './waitForTransition';
