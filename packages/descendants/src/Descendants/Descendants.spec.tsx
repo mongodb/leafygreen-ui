@@ -183,7 +183,8 @@ describe('packages/descendants', () => {
         </>,
       );
 
-      const appleDescendant = hook.result.current.descendants[0];
+      const current = hook.result.current;
+      const appleDescendant = current!.descendants?.[0];
       expect(appleDescendant).toBeDefined();
     });
 
@@ -199,7 +200,8 @@ describe('packages/descendants', () => {
         </>,
       );
 
-      const appleDescendant = hook.result.current.descendants[0];
+      const current = hook.result.current;
+      const appleDescendant = current!.descendants?.[0];
       expect(appleDescendant).toBeDefined();
     });
 
@@ -211,9 +213,9 @@ describe('packages/descendants', () => {
           <TestDescendant>Banana</TestDescendant>
         </>,
       );
-
+      const current = hook.result.current;
       const appleElement = renderResult.getByTestId('apple');
-      const appleDescendant = hook.result.current.descendants[0];
+      const appleDescendant = current!.descendants?.[0];
       expect(appleDescendant).toBeDefined();
       expect(appleDescendant.element).toEqual(appleElement);
     });
@@ -226,7 +228,8 @@ describe('packages/descendants', () => {
         </>,
       );
 
-      const appleDescendant = hook.result.current.descendants[0];
+      const current = hook.result.current;
+      const appleDescendant = current!.descendants?.[0];
       expect(appleDescendant.index).toEqual(0);
     });
 
@@ -238,7 +241,8 @@ describe('packages/descendants', () => {
         </>,
       );
 
-      const appleDescendant = hook.result.current.descendants[0];
+      const current = hook.result.current;
+      const appleDescendant = current!.descendants?.[0];
       expect(appleDescendant.props?.group).toEqual('fruit');
     });
 
@@ -259,7 +263,8 @@ describe('packages/descendants', () => {
         </>,
       );
 
-      const appleDescendant = hook.result.current.descendants[2];
+      const current = hook.result.current;
+      const appleDescendant = current!.descendants?.[2];
       expect(appleDescendant.element).toHaveTextContent('Apple');
       expect(appleDescendant.index).toEqual(2);
     });
@@ -280,8 +285,11 @@ describe('packages/descendants', () => {
         </>,
       );
 
-      for (let i = 0; i < hook.result.current.descendants.length; i++) {
-        const descendant = hook.result.current.descendants[i];
+      const current = hook.result.current;
+      const descendantCount = current!.descendants?.length ?? 0;
+
+      for (let i = 0; i < descendantCount; i++) {
+        const descendant = current!.descendants?.[i];
         expect(descendant.index).toEqual(i);
       }
     });

@@ -1,7 +1,12 @@
 import * as Context from './context';
 import * as jest from './jest';
 import * as JestDOM from './jest-dom';
-export { act, renderHook, renderHookServer } from './RTLOverrides';
+export {
+  act,
+  renderHook,
+  type RenderHookResult,
+  renderHookServer,
+} from './RTLOverrides';
 export { useTraceUpdate } from './useTraceUpdate';
 export { waitForState } from './waitForState';
 export { waitForTransition } from './waitForTransition';

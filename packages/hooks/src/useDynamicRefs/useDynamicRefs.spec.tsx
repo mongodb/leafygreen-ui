@@ -1,4 +1,3 @@
-// import { renderHook } from '@testing-library/react-hooks';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 

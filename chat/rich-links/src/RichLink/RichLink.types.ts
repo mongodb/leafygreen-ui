@@ -1,11 +1,13 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithoutRef } from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { RichLinkBadgeProps } from './RichLinkBadge/RichLinkBadge.types';
 import { RichLinkVariantName } from './richLinkVariants';
 
 export interface BaseRichLinkProps
   extends DarkModeProps,
-    HTMLElementProps<'a', never> {
+    ComponentPropsWithoutRef<'a'> {
   /**
    * The text that shows on the rich link
    */
