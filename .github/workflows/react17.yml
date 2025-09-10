@@ -35,7 +35,7 @@ jobs:
         run: node ./scripts/react17/init.mjs
 
       - name: Install packages
-        run: pnpm install --frozen-lockfile --prefer-offline
+        run: pnpm install --prefer-offline # Intentionally not using --frozen-lockfile to allow for pnpm-lock.yaml updates
 
       - name: Build packages
         run: pnpm build
@@ -87,7 +87,7 @@ jobs:
           key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --prefer-offline
+        run: pnpm install --prefer-offline
 
       - name: Run tests in React 17
         run: pnpm run test --react17
