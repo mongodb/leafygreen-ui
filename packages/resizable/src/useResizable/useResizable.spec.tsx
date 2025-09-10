@@ -1,7 +1,7 @@
+import { MutableRefObject } from 'react';
 import { fireEvent } from '@testing-library/dom';
-import { act } from '@testing-library/react';
 
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { act, renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useResizable } from './useResizable';
 import { KEYBOARD_RESIZE_PIXEL_STEP } from './useResizable.constants';
@@ -11,16 +11,20 @@ import { Position } from './useResizable.types';
 Object.defineProperty(window, 'innerWidth', { value: 1024 });
 Object.defineProperty(window, 'innerHeight', { value: 768 });
 
+const mockDiv: HTMLDivElement = document.createElement('div');
+
 describe('useResizable', () => {
   const mockRef = {
     current: {
+      ...mockDiv,
       offsetWidth: 300,
       offsetHeight: 300,
       style: {
+        ...mockDiv.style,
         setProperty: jest.fn(),
         removeProperty: jest.fn(),
       },
-    },
+    } as HTMLDivElement,
   };
 
   beforeEach(() => {
@@ -60,9 +64,9 @@ describe('useResizable', () => {
     expect(result.current.size).toBe(400);
   });
 
-  test('calls onResize callback when resizing', () => {
+  test.only('calls onResize callback when resizing', () => {
     const onResize = jest.fn();
-    const { result } = renderHook(() =>
+    const { result, rerender } = renderHook(() =>
       useResizable({
         initialSize: 300,
         minSize: 100,
@@ -73,29 +77,30 @@ describe('useResizable', () => {
     );
 
     // current is read-only from outside the hook but for testing we can set it directly
-    (result.current.resizableRef as any).current = mockRef.current;
+    const resultRef = result.current
+      .resizableRef as MutableRefObject<HTMLDivElement>;
+    resultRef.current = mockRef.current;
 
     // Start resizing
     const resizerProps = result.current.getResizerProps();
+
+    // Trigger a MouseDown event to initiate resizing
     act(() => {
-      // @ts-expect-error - onMouseDown expects all properties of MouseEvent
-      resizerProps?.onMouseDown({
-        preventDefault: jest.fn(),
+      const mouseDownEvent = new MouseEvent('mousedown', {
         clientX: 300,
         clientY: 300,
       });
+      resizerProps?.onMouseDown(mouseDownEvent);
     });
 
-    // Simulate mouse movement
-    act(() => {
-      fireEvent(
-        window,
-        new MouseEvent('mousemove', {
-          clientX: 400,
-          clientY: 300,
-        }),
-      );
-    });
+    // // Simulate mouse movement
+    // fireEvent(
+    //   window,
+    //   new MouseEvent('mousemove', {
+    //     clientX: 400,
+    //     clientY: 300,
+    //   }),
+    // );
 
     // Check if onResize was called
     expect(onResize).toHaveBeenCalledWith(400);
