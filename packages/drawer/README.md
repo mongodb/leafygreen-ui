@@ -73,6 +73,14 @@ const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = [
       console.log('Plus clicked, does not update drawer');
     },
   },
+  {
+    id: 'Settings',
+    label: 'Settings',
+    content: <DrawerContent />,
+    title: 'Settings Title',
+    glyph: 'Settings',
+    visible: false, // This item will be hidden
+  },
 ];
 
 const App = () => {
@@ -140,6 +148,10 @@ function App() {
 To use with a `Toolbar`, pass the `toolbarData` prop to render the `Toolbar` items and the `Drawer` content. Each object in the array defines a `Toolbar` item. If a `Toolbar` item is intended to perform an action other than opening a `Drawer` (for example, opening a modal), leave the `content` and `title` fields empty.
 
 The `Drawer` and `Toolbar` component will be rendered automatically based on the `toolbarData` provided.
+
+#### Toolbar Visibility
+
+Individual toolbar items can be controlled using the `visible` prop. When all toolbar items have `visible` set to `false`, the entire toolbar will be automatically hidden from view. This allows for dynamic toolbar management based on application state or user permissions.
 
 ### `useDrawerToolbarContext()`
 
@@ -432,6 +444,7 @@ You can also use the resizable feature with a toolbar-based drawer:
 | `disabled` _(optional)_   | `boolean`         | Whether the toolbar item is disabled.                                                                                                                                                                           | `false` |
 | `hasPadding` _(optional)_ | `boolean`         | Determines whether the drawer content should have padding. When false, the content area will not have padding, allowing full-width/height content.                                                              | `true`  |
 | `scrollable` _(optional)_ | `boolean`         | Determines whether the drawer content should have its own scroll container. When false, the content area will not have scroll behavior.                                                                         | `true`  |
+| `visible` _(optional)_    | `boolean`         | Determines if the current toolbar item is visible. If all toolbar items have `visible` set to `false`, the toolbar will not be rendered.                                                                        | `true`  |
 
 \+ Extends the following from LG [Toolbar props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toolbar/README.md#toolbariconbutton): `glyph`, `label`, and `onClick`.
 

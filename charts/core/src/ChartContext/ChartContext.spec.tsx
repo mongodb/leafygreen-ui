@@ -12,6 +12,8 @@ const addChartSeries = jest.fn();
 const ChartProviderMock = ({ children }: PropsWithChildren<{}>) => {
   return (
     <ChartContext.Provider
+      //  TODO: Fix this test context @tsck
+      // @ts-expect-error - chartOptions is not defined in the ChartContextType
       value={{ chartOptions, updateChartOptions, addChartSeries }}
     >
       {children}
@@ -24,6 +26,7 @@ describe('lg-chart/core/ChartContext', () => {
     test('renders children', async () => {
       const { getByTestId } = render(
         <ChartProvider
+          // @ts-expect-error - chartOptions is not defined in the ChartContextType
           chartOptions={{}}
           updateChartOptions={() => {}}
           addChartSeries={() => {}}
@@ -43,6 +46,7 @@ describe('lg-chart/core/ChartContext', () => {
       const { result } = renderHook(useChartContext, {
         wrapper: ChartProviderMock,
       });
+      // @ts-expect-error - chartOptions is not defined in the ChartContextType
       const { chartOptions, updateChartOptions, addChartSeries } =
         result.current;
       expect(chartOptions).toBe(chartOptions);

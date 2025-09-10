@@ -9,7 +9,7 @@ describe('tools/link/utils/install', () => {
   let spawnSpy: jest.SpyInstance<ChildProcess>;
 
   beforeAll(() => {
-    fsx.mkdirSync('./tmp/');
+    fsx.ensureDirSync('./tmp/');
   });
 
   beforeEach(() => {

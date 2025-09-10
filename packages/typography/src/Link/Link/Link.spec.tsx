@@ -6,11 +6,7 @@ import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
 import Link from './Link';
 import { BaseLinkProps } from './Link.types';
 
-type SpanLikeProps = InferredPolymorphicProps<'span', BaseLinkProps>;
-
-type AnchorLikeProps = InferredPolymorphicProps<'a', BaseLinkProps>;
-
-type LinkRenderProps = SpanLikeProps | AnchorLikeProps;
+type LinkRenderProps = InferredPolymorphicProps<'span', BaseLinkProps>;
 
 const renderLink = (props: LinkRenderProps) => {
   render(<Link {...props}>Link</Link>);
@@ -131,9 +127,9 @@ describe('packages/typography', () => {
     describe('inferred polymorphic behavior', () => {
       test('when the "as" prop is supplied its value is respected', () => {
         renderLink({
-          href: 'http://localhost:9001',
-          /* @ts-expect-error to show that "as" overrides "href" */
           as: 'div',
+          /* @ts-expect-error - when "as" is supplied, "href" is ignored */
+          href: 'http://localhost:9001',
         });
         const div = screen.getByText('Link').parentElement;
         expect(div).toBeVisible();
@@ -210,10 +206,12 @@ describe('packages/typography', () => {
           </Link>
 
           <Link as="div">some content</Link>
+
           {/* @ts-expect-error href is not allowed on explicit div */}
           <Link as="div" href="string">
             some content
           </Link>
+
           {/* @ts-expect-error target is not allowed on explicit div */}
           <Link as="div" target="string">
             some content

@@ -1,5 +1,59 @@
 # @leafygreen-ui/code
 
+## 20.0.6
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [172c228]
+- Updated dependencies [172c228]
+  - @leafygreen-ui/hooks@9.1.2
+  - @leafygreen-ui/a11y@3.0.3
+  - @leafygreen-ui/button@25.0.3
+  - @leafygreen-ui/emotion@5.0.1
+  - @leafygreen-ui/icon@14.4.1
+  - @leafygreen-ui/icon-button@17.0.4
+  - @leafygreen-ui/leafygreen-provider@5.0.3
+  - @leafygreen-ui/lib@15.2.1
+  - @leafygreen-ui/palette@5.0.1
+  - @leafygreen-ui/select@16.1.1
+  - @leafygreen-ui/skeleton-loader@3.0.4
+  - @leafygreen-ui/tokens@3.2.3
+  - @leafygreen-ui/tooltip@14.1.2
+  - @leafygreen-ui/typography@22.1.1
+  - @lg-tools/test-harnesses@0.3.3
+
+## 20.0.5
+
+### Patch Changes
+
+- 43e812e: Fixes bug that prevented the language select from rendering if the `displayName` and `language` differed.
+
+  ```tsx
+  // languageOptions passed to `<Panel`>
+  export const languageOptions = [
+    {
+      displayName: 'JavaScript',
+      language: 'javascript',
+    },
+    {
+      displayName: 'Python',
+      language: 'python',
+    },
+    {
+      displayName: 'macOS',
+      language: 'shell',
+    },
+  ];
+
+  // This will render the language selector.
+  <Code
+    language={languageOptions[2].language} // shell
+    panel={<Panel languageOptions={languageOptions} />}
+  />;
+  ```
+
 ## 20.0.4
 
 ### Patch Changes

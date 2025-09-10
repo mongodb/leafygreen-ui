@@ -1,12 +1,10 @@
 /* eslint-disable no-console */
 import { formatLG } from '@lg-tools/lint';
-// @ts-expect-error - no types in svgr v5.5
+// @ts-ignore - no types in svgr v5.5 // TODO: update to v8 LG-5484
 import { default as svgr } from '@svgr/core';
 import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
-
-import svgrrc from '../../.svgrrc';
 
 import { getChecksum } from './checksum';
 import { indexTemplate } from './indexTemplate';
@@ -118,6 +116,10 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
     const svgContent = fs.readFileSync(file.path, {
       encoding: 'utf8',
     });
+
+    // Note: must use `require` since svgrrc is a CommonJS module
+    // @ts-ignore - svgrrc is not typed
+    const svgrrc = await require('../../.svgrrc.js');
 
     const processedSVGR = await svgr(
       svgContent,

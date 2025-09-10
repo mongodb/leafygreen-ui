@@ -1,11 +1,10 @@
 {
   "name": "@leafygreen-ui/toast",
-  "version": "8.0.4",
+  "version": "8.0.5",
   "description": "leafyGreen UI Kit Toast",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
-  "typesVersions": {},
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
@@ -36,6 +35,7 @@
     "@faker-js/faker": "^8.0.0",
     "@leafygreen-ui/button": "workspace:^",
     "@lg-tools/build": "workspace:^",
+    "@storybook/types": "^8.5.3",
     "react-test-renderer": "^18.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast",
@@ -45,5 +45,14 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    }
+  },
+  "typesVersions": {}
 }

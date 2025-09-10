@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/fixed-chat-window",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "LeafyGreen UI Kit Fixed Chat Window",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -47,5 +47,14 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    }
+  },
+  "typesVersions": {}
 }

@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 
 import { css } from '@leafygreen-ui/emotion';
@@ -11,6 +10,10 @@ import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 const SEED = 0;
 faker.seed(SEED);
 
+/**
+ * Returns the long content
+ * @returns The long content
+ */
 export const LongContent = () => {
   const paragraphs = useMemo(() => {
     faker.seed(SEED);
@@ -33,6 +36,10 @@ export const LongContent = () => {
   );
 };
 
+/**
+ * Returns the drawer content
+ * @returns The drawer content
+ */
 export const DrawerContent = () => {
   // Generate a unique seed based on timestamp for different content each time
   React.useEffect(() => {
@@ -58,33 +65,111 @@ export const DrawerContent = () => {
   );
 };
 
-export const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <LongContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-    onClick: () => {
-      console.log('Code clicked');
+/**
+ * Returns the toolbar data based on the provided parameters
+ * @param hasToolbarData - Whether the toolbar data should be visible
+ * @param hasStaticContent - Whether the content should be static
+ * @param hasHiddenToolbarItem - Whether the toolbar item should be hidden with the visible prop
+ * @param hasRemovedToolbarItem - Whether the toolbar item should be removed from the data array
+ * @returns The toolbar data
+ */
+export const getDrawerToolbarData = ({
+  hasToolbarData = true,
+  hasStaticContent = false,
+  hasHiddenToolbarItem = false,
+  hasRemovedToolbarItem = false,
+}: {
+  hasToolbarData?: boolean;
+  hasStaticContent?: boolean;
+  hasHiddenToolbarItem?: boolean;
+  hasRemovedToolbarItem?: boolean;
+}) => {
+  const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['toolbarData'] = [
+    {
+      id: 'Code',
+      label: 'Code',
+      content: hasStaticContent ? <LongContent /> : <DrawerContent />,
+      title: 'Code Title',
+      glyph: 'Code',
     },
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <LongContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-    onClick: () => {
-      console.log('Dashboard clicked');
+    {
+      id: 'Dashboard',
+      label: 'Dashboard',
+      content: hasStaticContent ? <LongContent /> : <DrawerContent />,
+      title: 'Dashboard Title',
+      glyph: 'Dashboard',
     },
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-    onClick: () => {
-      console.log('Plus clicked, does not update drawer');
+    {
+      id: 'Apps',
+      label: 'Apps',
+      content: hasStaticContent ? <LongContent /> : <DrawerContent />,
+      glyph: 'Apps',
+      title: 'Apps Title',
+      visible: hasHiddenToolbarItem ? false : true,
     },
-  },
-];
+    ...(hasRemovedToolbarItem
+      ? []
+      : [
+          {
+            id: 'Trash',
+            label: 'Trash',
+            content: hasStaticContent ? <LongContent /> : <DrawerContent />,
+            title: 'Trash Title',
+            glyph: 'Trash' as const,
+          },
+        ]),
+    {
+      id: 'Plus',
+      label: "Perform some action, doesn't open a drawer",
+      glyph: 'Plus',
+    },
+    {
+      id: 'Sparkle',
+      label: 'Disabled item',
+      glyph: 'Sparkle',
+      disabled: true,
+    },
+  ];
+
+  if (!hasToolbarData) {
+    return DRAWER_TOOLBAR_DATA.map(item => ({ ...item, visible: false }));
+  }
+
+  return DRAWER_TOOLBAR_DATA;
+};
+
+/**
+ * Custom hook for managing toolbar data state
+ * @param initialData - The initial data to use for the toolbar
+ * @returns An object containing the toolbar data, and functions to update the toolbar data
+ */
+export const useToolbarData = (
+  initialData: DrawerToolbarLayoutProps['toolbarData'],
+) => {
+  const [toolbarData, setToolbarData] = useState(initialData);
+  const [hasToolbarData, setHasToolbarData] = useState(true);
+  const [hasHiddenToolbarItem, setHasHiddenToolbarItem] = useState(false);
+  const [hasRemovedToolbarItem, setHasRemovedToolbarItem] = useState(false);
+
+  const getData = useCallback(() => {
+    return getDrawerToolbarData({
+      hasToolbarData,
+      hasHiddenToolbarItem,
+      hasRemovedToolbarItem,
+    });
+  }, [hasToolbarData, hasHiddenToolbarItem, hasRemovedToolbarItem]);
+
+  useEffect(() => {
+    setToolbarData(getData());
+  }, [getData, hasToolbarData, hasHiddenToolbarItem]);
+
+  return {
+    toolbarData,
+    hasToolbarData,
+    setHasToolbarData,
+    hasHiddenToolbarItem,
+    setHasHiddenToolbarItem,
+    hasRemovedToolbarItem,
+    setHasRemovedToolbarItem,
+  };
+};

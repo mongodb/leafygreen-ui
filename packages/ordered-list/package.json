@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/ordered-list",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "LeafyGreen UI Kit Ordered List",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -34,5 +34,14 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    }
+  },
+  "typesVersions": {}
 }

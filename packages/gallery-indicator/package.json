@@ -1,21 +1,21 @@
 {
   "name": "@leafygreen-ui/gallery-indicator",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "LeafyGreen UI Kit Gallery Indicator",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
-  "typesVersions": {},
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/umd/index.js",
-      "types": "./dist/types/index.d.ts"
+      "require": "./dist/umd/index.js"
     },
     "./testing": {
+      "types": "./dist/types/testing/index.d.ts",
       "import": "./dist/esm/testing/index.js",
-      "require": "./dist/umd/testing/index.js",
-      "types": "./dist/types/testing/index.d.ts"
+      "require": "./dist/umd/testing/index.js"
     }
   },
   "license": "Apache-2.0",
@@ -47,5 +47,6 @@
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"
-  }
+  },
+  "typesVersions": {}
 }

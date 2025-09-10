@@ -1,5 +1,5 @@
-import { DateType } from '../../dist';
 import { mockTimeZone } from '../testing/mockTimeZone';
+import { DateType } from '../types';
 
 import {
   isDateObject,

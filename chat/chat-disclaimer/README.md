@@ -33,7 +33,3 @@ npm install @lg-chat/chat-disclaimer
 | `title`       | `string`                  | Heading text                 |         |
 | `description` | `string`                  | Subtext for fine print       |         |
 | `...`         | `HTMLElementProps<'div'>` | Props spread on root element |         |
-
-#### DisclaimerModal
-
-DisclaimerModal is an alias to LeafyGreen UI's [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/marketing-modal) that was created for visibility purposes in the context of building chat interfaces.

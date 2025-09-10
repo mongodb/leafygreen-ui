@@ -15,7 +15,6 @@
     "../../typings"
   ],
   "exclude": [
-    "**/*.spec.*",
     "**/*.stories.*"
   ],
   "references": [
@@ -38,7 +37,13 @@
       "path": "../palette"
     },
     {
+      "path": "../select"
+    },
+    {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     },
     {
       "path": "../leafygreen-provider"

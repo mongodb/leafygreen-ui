@@ -124,6 +124,7 @@ describe('packages/button', () => {
 
     test(`renders component inside of \`button\` tag when "href" prop is undefined`, () => {
       const { button } = renderButton({
+        // @ts-expect-error - by identifying an `href` property, TS expects it to be a string
         href: undefined,
       });
       expect(button.tagName.toLowerCase()).toBe('button');

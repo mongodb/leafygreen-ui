@@ -2,13 +2,24 @@
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../*/src"],
-      "highlight.js": ["./node_modules/highlight.js"]
+      "@leafygreen-ui/icon/dist/*": [
+        "../icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../*/src"
+      ],
+      "highlight.js": [
+        "./node_modules/highlight.js"
+      ]
     }
   },
-  "include": ["src/**/*"],
-  "exclude": ["**/*.spec.*", "**/*.stories.*", "node_modules"],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.stories.*",
+    "node_modules"
+  ],
   "references": [
     {
       "path": "../a11y"

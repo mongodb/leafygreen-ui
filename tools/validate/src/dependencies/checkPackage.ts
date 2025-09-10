@@ -91,11 +91,9 @@ export async function checkPackage(
   logDependencyIssues(pkgName, allDependencyIssues, verbose);
 
   // Only certain issues are blocking
-  const issuesExist = [
-    missingDependencies,
-    missingDevDependencies,
-    listedDevButUsedAsDependency,
-  ].some(prob => prob.length > 0);
+  const issuesExist = [missingDependencies, listedDevButUsedAsDependency].some(
+    prob => prob.length > 0,
+  );
 
   if (issuesExist && fix) {
     fixDependencies(pkgName, allDependencyIssues, verbose);

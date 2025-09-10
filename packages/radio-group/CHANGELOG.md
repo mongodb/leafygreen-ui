@@ -1,5 +1,21 @@
 # @leafygreen-ui/radio-group
 
+## 13.0.5
+
+### Patch Changes
+
+- 172c228: Removes `*.spec.ts` files from tsconfig `exclude` pattern, ensuring that tests are type-checked at build time.
+  Also adds missing TS "references" for packages that are imported into test files
+- Updated dependencies [172c228]
+- Updated dependencies [172c228]
+  - @leafygreen-ui/hooks@9.1.2
+  - @leafygreen-ui/emotion@5.0.1
+  - @leafygreen-ui/leafygreen-provider@5.0.3
+  - @leafygreen-ui/lib@15.2.1
+  - @leafygreen-ui/palette@5.0.1
+  - @leafygreen-ui/tokens@3.2.3
+  - @leafygreen-ui/typography@22.1.1
+
 ## 13.0.4
 
 ### Patch Changes

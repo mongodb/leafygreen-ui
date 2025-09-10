@@ -1,8 +1,8 @@
 import React from 'react';
+import { ChartHeaderProps } from '@lg-charts/core';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
-import { HeaderProps } from '../Header/Header.types';
 import { ChartCard } from '..';
 
 export default {
@@ -64,7 +64,7 @@ export default {
 };
 
 interface ChartCardProps {
-  chartCardTitle: HeaderProps['title'];
+  chartCardTitle: ChartHeaderProps['title'];
   children: React.ReactNode;
   headerContent: React.ReactNode;
 }
