@@ -11,7 +11,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the CodeEditor root element
    */
-  getEditor: () => HTMLElement;
+  getEditorElement: () => HTMLElement;
 
   /**
    * Waits for any loading states to complete (both user and internal loading)
@@ -36,12 +36,12 @@ export interface TestUtilsReturnType {
   /**
    * Checks if the editor is currently in a loading state
    */
-  getIsLoading: () => boolean;
+  isLoading: () => boolean;
 
   /**
    * Checks if the editor is in read-only mode
    */
-  getIsReadOnly: () => boolean;
+  isReadOnly: () => boolean;
 
   /**
    * Gets the copy button element (when not using panel)

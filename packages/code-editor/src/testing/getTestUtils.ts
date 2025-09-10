@@ -27,7 +27,7 @@ import { TestUtilsReturnType } from './getTestUtils.types';
  * const content = await utils.getContent();
  *
  * // Check loading state
- * expect(utils.getIsLoading()).toBe(false);
+ * expect(utils.isLoading()).toBe(false);
  * ```
  */
 
@@ -68,7 +68,7 @@ export const getTestUtils = (
     const startTime = Date.now();
 
     while (Date.now() - startTime < timeout) {
-      if (!getIsLoading()) {
+      if (!isLoading()) {
         return;
       }
 
@@ -111,14 +111,14 @@ export const getTestUtils = (
   /**
    * Checks if the editor is in a loading state
    */
-  const getIsLoading = (): boolean => {
+  const isLoading = (): boolean => {
     return !!queryByLgId(lgIds.loader);
   };
 
   /**
    * Checks if the editor is in read-only mode
    */
-  const getIsReadOnly = (): boolean => {
+  const isReadOnly = (): boolean => {
     const contentElement = getContentElement();
     return contentElement?.hasAttribute('aria-readonly') || false;
   };
@@ -170,13 +170,13 @@ export const getTestUtils = (
   };
 
   return {
-    getEditor: () => element,
+    getEditorElement: () => element,
     waitForLoadingToComplete,
     getContent,
     getContentElement,
     typeContent,
-    getIsLoading,
-    getIsReadOnly,
+    isLoading,
+    isReadOnly,
     getCopyButton,
     getPanelUtils,
   };

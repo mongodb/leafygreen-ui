@@ -40,13 +40,13 @@ const TestComponent = (props: Partial<CodeEditorProps>) => {
 };
 
 describe('getTestUtils', () => {
-  test('`getIsLoading` returns correct value when`waitForLoadingToComplete` resolves', async () => {
+  test('`isLoading` returns correct value when`waitForLoadingToComplete` resolves', async () => {
     // Not awaiting act because we want to test the loading state
     render(<TestComponent defaultValue="test" />);
     const utils = getTestUtils(DEFAULT_LGID);
-    expect(utils.getIsLoading()).toBe(true);
+    expect(utils.isLoading()).toBe(true);
     await utils.waitForLoadingToComplete();
-    expect(utils.getIsLoading()).toBe(false);
+    expect(utils.isLoading()).toBe(false);
   });
 
   test('`getContent` returns the correct content', async () => {
@@ -72,22 +72,22 @@ describe('getTestUtils', () => {
     expect(content).toBe('new content');
   });
 
-  test('`getIsReadOnly` returns correct value when readOnly is true', async () => {
+  test('`isReadOnly` returns correct value when readOnly is true', async () => {
     await act(() => {
       render(<TestComponent readOnly />);
     });
     const utils = getTestUtils(DEFAULT_LGID);
     await utils.waitForLoadingToComplete();
-    expect(utils.getIsReadOnly()).toBe(true);
+    expect(utils.isReadOnly()).toBe(true);
   });
 
-  test('`getIsReadOnly` returns correct value when readOnly is false', async () => {
+  test('`isReadOnly` returns correct value when readOnly is false', async () => {
     await act(() => {
       render(<TestComponent />);
     });
     const utils = getTestUtils(DEFAULT_LGID);
     await utils.waitForLoadingToComplete();
-    expect(utils.getIsReadOnly()).toBe(false);
+    expect(utils.isReadOnly()).toBe(false);
   });
 
   test('`getCopyButton` returns correct element when appearance is "hover"', async () => {
