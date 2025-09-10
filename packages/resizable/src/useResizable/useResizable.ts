@@ -72,6 +72,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    */
   const updateSize = useCallback(
     (nextSize: number | undefined) => {
+      console.log('[RESIZABLE] update size', { nextSize });
       if (nextSize !== undefined) {
         setSize(nextSize);
         onResize?.(nextSize);
@@ -86,6 +87,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    */
   const handleMouseMove = useCallback(
     (event: MouseEvent) => {
+      console.log('[RESIZABLE] mouse move');
+
       // Only proceed if resizing is enabled and the element is currently being resized
       if (!isResizingRef.current) return;
 
@@ -106,6 +109,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    * Handles the mouse up event to stop resizing.
    */
   const handleMouseUp = useCallback(() => {
+    console.log('[RESIZABLE] mouse up');
+
     // Use requestAnimationFrame to ensure any final size/transform changes
     // are rendered with transitions enabled before stopping resizing.
     requestAnimationFrame(() => {
@@ -147,6 +152,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    */
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent) => {
+      console.log('[RESIZABLE] key down', event);
+
       if (position === Position.Left || position === Position.Right) {
         if (
           // @ts-ignore React17 KeyboardEvent types differ
@@ -174,6 +181,8 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   const handleMouseDown = useCallback(
     (e: MouseEvent | React.MouseEvent) => {
       if (!enabled) return;
+
+      console.log('[RESIZABLE] mouse down');
 
       e.preventDefault();
 
