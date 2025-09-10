@@ -1,18 +1,13 @@
-import type { ReactNode } from 'react';
 import React from 'react';
-//@ts-ignore Cannot find module 'react-dom/client' or its corresponding type declarations
+// @ts-ignore Cannot find module 'react-dom/client' or its corresponding type declarations
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { act } from 'react-dom/test-utils';
 
-export interface RenderHookServerOptions {
-  wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
-}
-
-export interface RenderHookServerResult<Hook extends () => any> {
-  result: { current: ReturnType<Hook> };
-  hydrate: () => void;
-}
+import type {
+  RenderHookServerOptions,
+  RenderHookServerResult,
+} from './renderHookServer.types';
 
 /**
  * Allows you to mock the server side rendering of a hook.
@@ -38,7 +33,7 @@ export interface RenderHookServerResult<Hook extends () => any> {
  * ```
 }
  */
-export function renderHookServer<Hook extends () => any>(
+export function renderHookServer18<Hook extends () => any>(
   useHook: Hook,
   { wrapper: Wrapper }: RenderHookServerOptions = {},
 ): RenderHookServerResult<Hook> {
