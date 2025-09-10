@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { CodeEditorProvider } from '../CodeEditor/CodeEditorContext';
+import { getLgIds, type GetLgIdsReturnType } from '../utils/getLgIds';
 
 import { Panel } from './Panel';
 import { PanelProps } from './Panel.types';
@@ -40,6 +41,7 @@ export interface PanelTestContextConfig {
   undo?: () => boolean;
   redo?: () => boolean;
   downloadContent?: () => void;
+  lgIds?: GetLgIdsReturnType;
 }
 
 /**
@@ -65,6 +67,7 @@ export function renderPanel(config: RenderPanelConfig = {}) {
     undo: defaultStubUndo,
     redo: defaultStubRedo,
     downloadContent: defaultStubDownloadContent,
+    lgIds: getLgIds(),
     ...contextConfig,
   };
 
