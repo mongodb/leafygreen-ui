@@ -6,7 +6,8 @@ import { isReact17 } from './utils/isReact17';
  */
 export type ActType =
   | ((cb: () => void) => void)
-  | ((cb: () => Promise<void>) => Promise<void>);
+  | ((cb: () => Promise<void>) => Promise<void>)
+  | ((cb: () => void) => Promise<void>); // Technically incorrect, but works for compatibility
 
 /**
  * Re-exports `act` from `"@testing-library/react"` in React18+
