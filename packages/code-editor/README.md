@@ -331,85 +331,36 @@ Returns utilities for testing CodeEditor and Panel components. These utilities h
 
 An object with methods for testing the CodeEditor and its Panel.
 
-### Recommended Usage
-
-For **unit tests** in JSDOM, focus on:
-
-- Verifying component structure and presence
-- Testing panel interactions and button states
-- Checking loading states and configurations
-- Using `await utils.getContent()` for reliable content testing
-- Using `waitForLoadingToComplete()` for loading state transitions
-
-For **advanced content verification**, use:
-
-- `waitForInitialization()` before testing CodeMirror-specific features
-- E2E tests (Cypress, Playwright) in real browsers for full functionality
-- Integration tests with proper CodeMirror mocking
-- Storybook interactions in browser environments
-
-**Key Patterns:**
-
-```tsx
-// Always use async/await for content testing
-const content = await utils.getContent();
-
-// Wait for loading to complete when testing loading states
-await utils.waitForLoadingToComplete();
-expect(utils.getIsLoading()).toBe(false);
-
-// Wait for initialization before testing advanced features
-await utils.waitForInitialization();
-// Now test CodeMirror-specific functionality
-```
-
 #### Basic Editor Utilities
 
-- `getEditor()` - Returns the CodeEditor root element
+- `getEditorElement()` - Returns the CodeEditor root element
 - `getContent()` - Gets the current text content from the editor (returns `Promise<string | null>`)
-- `getLanguage()` - Gets the programming language currently set on the editor (from CSS classes)
-- `getIsLoading()` - Checks if the editor is currently in a loading state
-- `getIsReadOnly()` - Checks if the editor is in read-only mode
-
-#### Async Initialization Utilities
-
-- `waitForInitialization(timeout?)` - Waits for the CodeMirror instance to be fully initialized (returns `Promise<void>`)
-- `waitForLoadingToComplete(timeout?)` - Waits for the loading state to complete (returns `Promise<void>`)
-
-#### Feature Detection Utilities
-
-- `getHasLineNumbers()` - Checks if line numbers are enabled and visible
-- `getHasLineWrapping()` - Checks if line wrapping is enabled
-- `getHasCodeFolding()` - Checks if code folding is enabled
-- `getHasTooltips()` - Checks if any tooltips are currently visible
-- `getHasHyperlinks()` - Checks if hyperlinks/clickable URLs are enabled
-
-#### Element Utilities
-
-- `getAllLineNumbers()` - Gets all visible line number elements
-- `getLineNumberByIndex(lineNumber)` - Gets a specific line number element (1-based)
-- `getTooltips()` - Gets all tooltip elements currently visible in the editor
-- `getHyperlinks()` - Gets all hyperlink elements if clickable URLs are enabled
+- `getContentElement()` - Gets the content element from the editor
+- `typeContent(text)` - Types text into the editor
 - `getCopyButton()` - Gets the copy button element (when not using panel)
+- `isLoading()` - Checks if the editor is currently in a loading state
+- `isReadOnly()` - Checks if the editor is in read-only mode
+
+#### Async Utilities
+
+- `waitForLoadingToComplete(timeout?)` - Waits for the loading state to complete (returns `Promise<void>`)
 
 #### Panel Utilities
 
-- `queryPanel()` - Queries for the panel element (returns null if no panel)
 - `getPanelUtils()` - Gets panel-specific utilities if panel is present
 
-When a Panel is present, `getPanelUtils()` returns an object with:
+Returns an object with:
 
-- `getPanel()` - Returns the panel element
+- `getPanelElement()` - Returns the panel element
 - `getPanelTitle()` - Gets the panel title text
 - `getFormatButton()` - Gets the format button element
 - `getPanelCopyButton()` - Gets the panel's copy button element
 - `getSecondaryMenuButton()` - Gets the secondary menu button element
 - `getSecondaryMenu()` - Gets the secondary menu element
-- `isSecondaryMenuOpen()` - Checks if the secondary menu is currently open
 
 #### Example Usage
 
-**Basic Testing (JSDOM-compatible):**
+**Basic Testing:**
 
 ```tsx
 import { render } from '@testing-library/react';
@@ -437,103 +388,25 @@ test('CodeEditor structure and panel work correctly', async () => {
   const utils = getTestUtils('lg-my-editor');
 
   // Test editor presence and basic structure
-  expect(utils.getEditor()).toBeInTheDocument();
-  expect(utils.queryPanel()).toBeInTheDocument();
+  expect(utils.getEditorElement()).toBeInTheDocument();
 
   // Test panel functionality
   const panelUtils = utils.getPanelUtils();
+  expect(panelUtils?.getPanelElement()).toBeInTheDocument();
   expect(panelUtils?.getPanelTitle()).toBe('JavaScript');
   expect(panelUtils?.getFormatButton()).toBeInTheDocument();
   expect(panelUtils?.getPanelCopyButton()).toBeInTheDocument();
   expect(panelUtils?.getSecondaryMenuButton()).toBeInTheDocument();
 
   // Test configuration detection
-  expect(typeof utils.getIsLoading()).toBe('boolean');
-  expect(typeof utils.getHasLineNumbers()).toBe('boolean');
+  expect(typeof utils.isLoading()).toBe('boolean');
+  expect(typeof utils.isReadOnly()).toBe('boolean');
 
-  // Test actual content and language (works in all environments!)
+  // Test content
   const content = await utils.getContent();
   expect(content).toBe("const greeting = 'Hello World';");
-  expect(utils.getLanguage()).toBe('javascript');
 });
 ```
-
-**Testing Content and Language:**
-
-```tsx
-test('CodeEditor content and language are accurately detected', async () => {
-  render(
-    <CodeEditor
-      defaultValue="def hello(): print('Hello World')"
-      language={LanguageName.python}
-      data-lgid="lg-my-python-editor"
-    />,
-  );
-
-  const utils = getTestUtils('lg-my-python-editor');
-
-  // These work reliably in all environments including JSDOM
-  const content = await utils.getContent();
-  expect(content).toBe("def hello(): print('Hello World')");
-  expect(utils.getLanguage()).toBe('python');
-});
-
-test('Controlled CodeEditor updates correctly', async () => {
-  const TestComponent = () => {
-    const [value, setValue] = useState('initial content');
-    return (
-      <CodeEditor
-        value={value}
-        onChange={setValue}
-        data-lgid="lg-controlled-editor"
-      />
-    );
-  };
-
-  render(<TestComponent />);
-  const utils = getTestUtils('lg-controlled-editor');
-
-  const content = await utils.getContent();
-  expect(content).toBe('initial content');
-});
-
-test('Testing loading states and async initialization', async () => {
-  render(
-    <CodeEditor
-      defaultValue="console.log('test');"
-      isLoading={true}
-      data-lgid="lg-loading-editor"
-    />,
-  );
-
-  const utils = getTestUtils('lg-loading-editor');
-
-  // Test initial loading state
-  expect(utils.getIsLoading()).toBe(true);
-
-  // Wait for loading to complete (useful for testing loading state changes)
-  try {
-    await utils.waitForLoadingToComplete(1000); // 1 second timeout
-    expect(utils.getIsLoading()).toBe(false);
-  } catch {
-    // Timeout is acceptable in test environments
-    expect(typeof utils.getIsLoading()).toBe('boolean');
-  }
-
-  // For content testing, wait for initialization first
-  try {
-    await utils.waitForInitialization(1000);
-    const content = await utils.getContent();
-    expect(typeof content).toBe('string');
-  } catch {
-    // Graceful fallback for JSDOM environments
-    const content = await utils.getContent();
-    expect(content).toBe("console.log('test');");
-  }
-});
-```
-
-**Note:** When using a Panel, make sure to pass the same `data-lgid` to both the CodeEditor and Panel components for the test utilities to work correctly. All `data-lgid` values must follow the pattern `lg-${string}` (e.g., `"lg-my-editor"`).
 
 ## CodeMirror Extension Hooks
 
