@@ -8,10 +8,11 @@ import { ContextMenu } from './ContextMenu';
 
 const CHILD_TEST_ID = 'test-component';
 const MENU_LABEL = 'Menu Label';
+const actionMock = jest.fn();
 
 const TestComponent = (props: PropsWithChildren) => {
   return (
-    <ContextMenu menuItems={[{ label: MENU_LABEL, action: jest.fn() }]}>
+    <ContextMenu menuItems={[{ label: MENU_LABEL, action: actionMock }]}>
       <div data-testid={CHILD_TEST_ID}>Test</div>
       {props.children}
     </ContextMenu>
@@ -56,5 +57,28 @@ describe('ContextMenu', () => {
     expect(screen.queryByText(MENU_LABEL)).toBeInTheDocument();
     userEvent.click(screen.getByTestId(INNER_TEST_ID));
     expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
+  });
+
+  test('calls action when menu item is clicked', () => {
+    render(<TestComponent />);
+    userEvent.click(screen.getByTestId(CHILD_TEST_ID), { button: 2 });
+    userEvent.click(screen.getByText(MENU_LABEL));
+    expect(actionMock).toHaveBeenCalledTimes(1);
+  });
+
+  test('calls action with response from window.getSelection() when menu item is clicked', () => {
+    const SELECTED_TEXT = 'selected text';
+    Object.defineProperty(window, 'getSelection', {
+      writable: true,
+      value: jest.fn(() => ({
+        toString: () => SELECTED_TEXT,
+      })),
+    });
+
+    render(<TestComponent />);
+
+    userEvent.click(screen.getByTestId(CHILD_TEST_ID), { button: 2 });
+    userEvent.click(screen.getByText(MENU_LABEL));
+    expect(actionMock).toHaveBeenCalledWith(SELECTED_TEXT);
   });
 });
