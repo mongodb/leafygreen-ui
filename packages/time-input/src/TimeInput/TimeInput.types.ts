@@ -1,7 +1,8 @@
 import omit from 'lodash/omit';
 
 import { FormFieldState } from '@leafygreen-ui/form-field';
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
+import { ChangeEvent } from 'react';
 
 export const Size = {
   XSmall: 'xsmall',
@@ -16,7 +17,7 @@ export const TimeInputState = omit(FormFieldState, 'Valid');
 export type TimeInputState =
   (typeof TimeInputState)[keyof typeof TimeInputState];
 
-export interface BaseTimeInputProps extends DarkModeProps {
+export interface BaseTimeInputProps extends DarkModeProps, LgIdProps {
   /**
    * The current state of the input.
    *
@@ -24,15 +25,6 @@ export interface BaseTimeInputProps extends DarkModeProps {
    */
   state?: TimeInputState;
 
-  /**
-   * The current value of the input. If a value is passed to this prop, component will be controlled by consumer.
-   */
-  value?: string;
-
-  /**
-   * Callback fired when the input value changes
-   */
-  onTimeChange?: (value: string) => void;
 
   /**
    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.
@@ -58,9 +50,25 @@ export interface BaseTimeInputProps extends DarkModeProps {
    */
   size?: Size;
 
-  disabled?: boolean;
+   disabled?: boolean;
 
   className?: string;
 }
 
-export interface TimeInputProps extends BaseTimeInputProps {}
+export type TimeInputProps =  {
+  /**
+     * The selected time.
+     * // TODO: add more details
+     */
+  value?: string;
+
+  /**
+   * Callback fired when the user makes a value change.
+   * // TODO: add more details
+   */
+  onTimeChange?: (value: string) => void;
+
+  handleValidation?: (value: string) => void;
+
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+} & BaseTimeInputProps;
