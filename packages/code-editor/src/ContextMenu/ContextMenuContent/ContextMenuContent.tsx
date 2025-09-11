@@ -7,10 +7,10 @@ import {
   MenuVariant,
 } from '@leafygreen-ui/menu';
 
-import { getLgIds } from '../utils';
+import { getLgIds } from '../../utils';
 
-import { getMenuContainerStyles } from './ContextMenuPopup.styles';
-import { ContextMenuPopupProps } from './ContextMenuPopup.types';
+import { getMenuContainerStyles } from './ContextMenuContent.styles';
+import { ContextMenuContentProps } from './ContextMenuContent.types';
 
 /**
  * Internal component that renders the actual context menu using LeafyGreen UI components.
@@ -18,11 +18,11 @@ import { ContextMenuPopupProps } from './ContextMenuPopup.types';
  *
  * @internal
  */
-export const ContextMenuPopup = ({
+export const ContextMenuContent = ({
   state,
   hideMenu,
   'data-lgid': dataLgId,
-}: ContextMenuPopupProps) => {
+}: ContextMenuContentProps) => {
   const lgIds = getLgIds(dataLgId);
 
   if (!state.isVisible) return null;
@@ -30,7 +30,7 @@ export const ContextMenuPopup = ({
   return (
     <div
       className={getMenuContainerStyles(state.position)}
-      data-lgid={lgIds.contextMenuPopup}
+      data-lgid={lgIds.contextMenu}
     >
       <Menu
         // Force re-mount when position changes so Menu recalculates its positioning
@@ -50,6 +50,7 @@ export const ContextMenuPopup = ({
               key={index}
               disabled={item.disabled}
               onClick={() => {
+                console.log('clicked');
                 if (item.action && !item.disabled) {
                   item.action(state.selectedText);
                 }

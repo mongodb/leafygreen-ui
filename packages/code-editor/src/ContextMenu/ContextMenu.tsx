@@ -1,39 +1,35 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { ContextMenuPopup, type MenuState } from '../ContextMenuPopup';
 import { getLgIds } from '../utils';
 
 import { containerStyles } from './ContextMenu.styles';
 import { ContextMenuProps } from './ContextMenu.types';
+import { ContextMenuContent, type MenuState } from './ContextMenuContent';
 
 /**
- * A simple context menu that adds custom right-click functionality to all child elements.
+ * Context menu that adds custom right-click functionality to child elements.
  *
- * Automatically detects selected text using `window.getSelection()` and passes it to menu item actions.
- * No complex setup required - just wrap your content and provide menu items.
+ * This component wires up the even listeners and handles all of the hide/show
+ * logic, as well as positioning.
  *
- * Elements with `data-no-context-menu="true"` will not trigger the custom context menu,
- * allowing the default browser context menu to appear instead.
+ * Elements with `data-no-context-menu="true"` will not trigger the custom
+ * context menu, allowing the default browser context menu to appear instead.
  *
  * @example
  * ```tsx
  * <ContextMenu
  *   menuItems={[
  *     {
- *       label: 'Copy',
- *       action: (selectedText) => navigator.clipboard.writeText(selectedText)
+ *       label: 'Menu Item',
+ *       action: () => doTheThing()
  *     },
- *     { isSeparator: true },
- *     {
- *       label: 'Delete',
- *       action: () => deleteContent(),
- *       disabled: !canDelete
- *     }
  *   ]}
  * >
- *   <div>Your content here</div>
+ *   <div>
+ *     Custom context menu will be shown
+ *   </div>
  *   <div data-no-context-menu="true">
- *     This toolbar won't show custom context menu
+ *     Custom context menu won't be shown
  *   </div>
  * </ContextMenu>
  * ```
@@ -41,8 +37,6 @@ import { ContextMenuProps } from './ContextMenu.types';
 export const ContextMenu = ({
   children,
   menuItems = [],
-  preventDefaultContextMenu = true,
-  disabled = false,
   'data-lgid': dataLgId,
 }: ContextMenuProps) => {
   const lgIds = getLgIds(dataLgId);
@@ -58,33 +52,24 @@ export const ContextMenu = ({
    */
   const hideMenu = useCallback(() => {
     if (menuState.isVisible) {
-      setMenuState(s => ({ ...s, isVisible: false }));
+      setMenuState(prevMenuState => ({ ...prevMenuState, isVisible: false }));
     }
   }, [menuState.isVisible]);
 
   /**
-   * Handles right-click events to show the context menu.
-   * Automatically captures selected text and positions the menu at cursor location.
+   * Handle preventing default and showing and positioning custom menu onContextMenu
    */
   const handleContextMenu = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
-      if (disabled || menuItems.length === 0) return;
-
-      // Check if the target or any parent has the no-context-menu attribute
-      const target = event.target as Element;
-
-      if (target.closest('[data-no-context-menu="true"]')) {
-        // Allow default browser context menu for elements marked as no-context-menu
+      /**
+       * Allow default browser context menu for elements marked as no-context-menu
+       */
+      if ((event.target as Element).closest('[data-no-context-menu="true"]')) {
         return;
       }
 
-      if (preventDefaultContextMenu) {
-        event.preventDefault();
-      }
-
-      // Get selected text automatically using window.getSelection()
+      event.preventDefault();
       const selectedText = window.getSelection()?.toString() || '';
-
       setMenuState({
         isVisible: true,
         position: { x: event.pageX, y: event.pageY },
@@ -92,38 +77,48 @@ export const ContextMenu = ({
         selectedText,
       });
     },
-    [disabled, preventDefaultContextMenu, menuItems],
+    [menuItems],
   );
 
   /**
-   * Set up global event listeners to close the menu when clicking outside or pressing Escape.
-   * Automatically cleans up listeners when component unmounts.
+   * Handle hiding menu on Escape key press
    */
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      // Only handle if menu is visible
-      if (!menuState.isVisible) return;
-
-      // Don't close if clicking inside the menu
-      const target = e.target as Element;
-
-      // Check for our context menu popup LGID first
-      if (target.closest(`[data-lgid="${lgIds.contextMenuPopup}"]`)) return;
-
-      // Fallback: check for LeafyGreen menu attributes
-      if (target.closest('[data-lgid^="menu"]')) return;
-
-      // Hide menu without interfering with the click event
-      hideMenu();
-    };
-
-    const handleEscape = (e: KeyboardEvent) => {
+  const handleEscape = useCallback(
+    (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         hideMenu();
       }
-    };
+    },
+    [hideMenu],
+  );
 
-    // Only add listeners when menu is visible
+  /**
+   * Handle hiding menu on click outside of the menu
+   */
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      /**
+       * There's no menu to close if it's not visible
+       */
+      if (!menuState.isVisible) return;
+
+      /**
+       * Don't close if clicking inside the menu.
+       * ContextMenuContent will handle closing after action call.
+       */
+      const target = e.target as Element;
+      if (target.closest(`[data-lgid="${lgIds.contextMenuContent}"]`)) return;
+
+      hideMenu();
+    },
+    [hideMenu, lgIds.contextMenuContent, menuState.isVisible],
+  );
+
+  /**
+   * Set up global event listeners to close the menu when clicking outside or
+   * pressing Escape.
+   */
+  useEffect(() => {
     if (menuState.isVisible) {
       document.addEventListener('click', handleClick, { capture: true });
       document.addEventListener('keydown', handleEscape);
@@ -133,16 +128,12 @@ export const ContextMenu = ({
       document.removeEventListener('click', handleClick, { capture: true });
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [hideMenu, menuState.isVisible, lgIds.contextMenuPopup]);
+  }, [handleClick, handleEscape, menuState.isVisible]);
 
   return (
-    <div
-      onContextMenu={handleContextMenu}
-      className={containerStyles}
-      data-lgid={lgIds.contextMenu}
-    >
+    <div onContextMenu={handleContextMenu} className={containerStyles}>
       {children}
-      <ContextMenuPopup
+      <ContextMenuContent
         state={menuState}
         hideMenu={hideMenu}
         data-lgid={dataLgId}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ContextMenu } from '../ContextMenu';
-import { type MenuItem } from '../ContextMenuPopup';
+import { type MenuItem } from '../ContextMenu/ContextMenuContent';
 
 import { CodeEditorContextMenuProps } from './CodeEditorContextMenu.types';
 
