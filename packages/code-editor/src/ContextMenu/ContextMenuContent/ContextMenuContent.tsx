@@ -50,7 +50,6 @@ export const ContextMenuContent = ({
               key={index}
               disabled={item.disabled}
               onClick={() => {
-                console.log('clicked');
                 if (item.action && !item.disabled) {
                   item.action(state.selectedText);
                 }

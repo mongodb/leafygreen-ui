@@ -107,11 +107,12 @@ export const ContextMenu = ({
        * ContextMenuContent will handle closing after action call.
        */
       const target = e.target as Element;
-      if (target.closest(`[data-lgid="${lgIds.contextMenuContent}"]`)) return;
+
+      if (target.closest(`[data-lgid="${lgIds.contextMenu}"]`)) return;
 
       hideMenu();
     },
-    [hideMenu, lgIds.contextMenuContent, menuState.isVisible],
+    [hideMenu, lgIds.contextMenu, menuState.isVisible],
   );
 
   /**
