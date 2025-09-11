@@ -1,4 +1,4 @@
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
 
 import { getFlatLevelDataToNestedData } from '../getFlatLevelDataToNestedData';
 
@@ -35,11 +35,22 @@ describe('transformToNestedData', () => {
   });
 
   test('throws error for unsupported data type', async () => {
-    const { result } = renderHook(() => {
-      // @ts-expect-error Testing with invalid type
-      transformToNestedData({ type: 'invalidType', data: {} });
-    });
+    if (isReact17()) {
+      const { result } = renderHook(() => {
+        // @ts-expect-error Testing with invalid type
+        transformToNestedData({ type: 'invalidType', data: {} });
+      });
 
-    expect(result.error.message).toEqual('Unsupported data type: invalidType');
+      expect(result.error.message).toEqual(
+        'Unsupported data type: invalidType',
+      );
+    } else {
+      expect(() => {
+        renderHook(() => {
+          // @ts-expect-error Testing with invalid type
+          transformToNestedData({ type: 'invalidType', data: {} });
+        });
+      }).toThrow('Unsupported data type: invalidType');
+    }
   });
 });
