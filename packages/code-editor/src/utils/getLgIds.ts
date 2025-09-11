@@ -16,7 +16,6 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
     copyButton: `${root}-copy_button`,
     loader: `${root}-loader`,
     contextMenu: `${root}-context_menu`,
-    contextMenuContent: `${root}-context_menu_content`,
   } as const;
   return ids;
 };
