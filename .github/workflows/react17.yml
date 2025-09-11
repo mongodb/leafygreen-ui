@@ -40,7 +40,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: false
 
       - name: Install node-gyp
         run: pnpm add --global node-gyp
@@ -94,7 +93,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: false
 
       - name: Install node-gyp
         run: pnpm add --global node-gyp
