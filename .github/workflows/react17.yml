@@ -13,6 +13,8 @@ jobs:
   build:
     name: Build in React 17
     runs-on: ubuntu-latest
+    outputs:
+      cache-primary-key: ${{ steps.build-cache.outputs.cache-primary-key }}
     steps:
       - uses: actions/checkout@v4
 
@@ -38,6 +40,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: false
 
       - name: Install node-gyp
         run: pnpm add --global node-gyp
@@ -85,7 +88,19 @@ jobs:
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{ runner.os }}-react17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
+
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: false
+
+      - name: Install node-gyp
+        run: pnpm add --global node-gyp
+
+      - name: Init React 17 environment
+        run: node ./scripts/react17/init.mjs
 
       - name: Setup Node 18
         uses: actions/setup-node@v4
