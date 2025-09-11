@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import '@testing-library/jest-dom';
@@ -38,15 +38,18 @@ describe('ContextMenu', () => {
     expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
   });
 
-  test('hides when Escape key is pressed', () => {
+  test('hides when Escape key is pressed', async () => {
     render(<TestComponent />);
     userEvent.click(screen.getByTestId(CHILD_TEST_ID), { button: 2 });
     expect(screen.queryByText(MENU_LABEL)).toBeInTheDocument();
     userEvent.keyboard('{escape}');
-    expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
+    });
   });
 
-  test('hides when clicking outside of the menu', () => {
+  test('hides when clicking outside of the menu', async () => {
     const INNER_TEST_ID = 'inner-id';
     render(
       <TestComponent>
@@ -56,7 +59,10 @@ describe('ContextMenu', () => {
     userEvent.click(screen.getByTestId(CHILD_TEST_ID), { button: 2 });
     expect(screen.queryByText(MENU_LABEL)).toBeInTheDocument();
     userEvent.click(screen.getByTestId(INNER_TEST_ID));
-    expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
+    });
   });
 
   test('calls action when menu item is clicked', () => {
@@ -80,5 +86,16 @@ describe('ContextMenu', () => {
     userEvent.click(screen.getByTestId(CHILD_TEST_ID), { button: 2 });
     userEvent.click(screen.getByText(MENU_LABEL));
     expect(actionMock).toHaveBeenCalledWith(SELECTED_TEXT);
+  });
+
+  test('hides menu when menu item is clicked', async () => {
+    render(<TestComponent />);
+    userEvent.click(screen.getByTestId(CHILD_TEST_ID), { button: 2 });
+    expect(screen.queryByText(MENU_LABEL)).toBeInTheDocument();
+    userEvent.click(screen.getByText(MENU_LABEL));
+
+    await waitFor(() => {
+      expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
+    });
   });
 });
