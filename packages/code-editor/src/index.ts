@@ -1,5 +1,5 @@
-export { CodeEditor } from './CodeEditor';
 export {
+  CodeEditor,
   type CodeEditorModules,
   type CodeEditorProps,
   CodeEditorSelectors,
@@ -24,4 +24,5 @@ export {
   useThemeExtension,
   useTooltipExtension,
 } from './CodeEditor';
+export { type MenuItem } from './ContextMenuPopup';
 export { Panel, type PanelProps } from './Panel';
