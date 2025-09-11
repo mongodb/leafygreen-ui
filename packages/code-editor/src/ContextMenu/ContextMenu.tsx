@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   Menu,
@@ -46,6 +46,7 @@ export const ContextMenu = ({
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [selectedText, setSelectedText] = useState('');
+  const containerRef = useRef<HTMLDivElement>(null);
 
   /**
    * Handle showing and positioning custom menu onContextMenu
@@ -68,9 +69,37 @@ export const ContextMenu = ({
     },
     [],
   );
+  /**
+   * Close context menu when right-clicking outside of children
+   */
+  const handleGlobalContextMenu = useCallback(
+    (event: MouseEvent) => {
+      if (
+        isOpen &&
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    },
+    [isOpen],
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('contextmenu', handleGlobalContextMenu);
+      return () => {
+        document.removeEventListener('contextmenu', handleGlobalContextMenu);
+      };
+    }
+  }, [isOpen, handleGlobalContextMenu]);
 
   return (
-    <div onContextMenu={handleContextMenu} className={containerStyles}>
+    <div
+      ref={containerRef}
+      onContextMenu={handleContextMenu}
+      className={containerStyles}
+    >
       {children}
 
       <div className={getMenuContainerStyles(position)}>
