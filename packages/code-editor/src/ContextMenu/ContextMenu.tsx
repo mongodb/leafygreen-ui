@@ -4,7 +4,7 @@ import { getLgIds } from '../utils';
 
 import { containerStyles } from './ContextMenu.styles';
 import { ContextMenuProps } from './ContextMenu.types';
-import { ContextMenuContent, type MenuState } from './ContextMenuContent';
+import { ContextMenuView, type MenuState } from './ContextMenuView';
 
 /**
  * Context menu that adds custom right-click functionality to child elements.
@@ -104,7 +104,7 @@ export const ContextMenu = ({
 
       /**
        * Don't close if clicking inside the menu.
-       * ContextMenuContent will handle closing after action call.
+       * ContextMenuView will handle closing after action call.
        */
       const target = e.target as Element;
 
@@ -134,7 +134,7 @@ export const ContextMenu = ({
   return (
     <div onContextMenu={handleContextMenu} className={containerStyles}>
       {children}
-      <ContextMenuContent
+      <ContextMenuView
         state={menuState}
         hideMenu={hideMenu}
         data-lgid={dataLgId}

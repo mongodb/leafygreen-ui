@@ -37,7 +37,7 @@ export interface MenuState {
 }
 
 /**
- * Props for the ContextMenuContent component.
+ * Props for the ContextMenuView component.
  */
 export interface ContextMenuContentProps extends LgIdProps {
   /** Current menu state including visibility, position, and items */

@@ -9,8 +9,8 @@ import {
 
 import { getLgIds } from '../../utils';
 
-import { getMenuContainerStyles } from './ContextMenuContent.styles';
-import { ContextMenuContentProps } from './ContextMenuContent.types';
+import { getMenuContainerStyles } from './ContextMenuView.styles';
+import { ContextMenuContentProps } from './ContextMenuView.types';
 
 /**
  * Internal component that renders the actual context menu using LeafyGreen UI components.
@@ -18,7 +18,7 @@ import { ContextMenuContentProps } from './ContextMenuContent.types';
  *
  * @internal
  */
-export const ContextMenuContent = ({
+export const ContextMenuView = ({
   state,
   hideMenu,
   'data-lgid': dataLgId,

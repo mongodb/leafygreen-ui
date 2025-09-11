@@ -1,6 +1,6 @@
 import { LgIdProps } from '@leafygreen-ui/lib';
 
-import { MenuItem } from '../ContextMenu/ContextMenuContent';
+import { MenuItem } from '../ContextMenu/ContextMenuView';
 
 export interface CodeEditorContextMenuProps extends LgIdProps {
   /** The content to provide context menu functionality to */

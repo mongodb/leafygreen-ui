@@ -4,7 +4,7 @@ import { type EditorView } from '@codemirror/view';
 
 import { type DarkModeProps, type LgIdProps } from '@leafygreen-ui/lib';
 
-import { type MenuItem } from '../ContextMenu/ContextMenuContent';
+import { type MenuItem } from '../ContextMenu/ContextMenuView';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 

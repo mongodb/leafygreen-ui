@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { LgIdProps } from '@leafygreen-ui/lib';
 
-import { type MenuItem } from './ContextMenuContent';
+import { type MenuItem } from './ContextMenuView';
 
 /**
  * Props for the ContextMenu component.
