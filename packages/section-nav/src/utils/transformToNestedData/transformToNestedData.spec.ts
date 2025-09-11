@@ -41,11 +41,6 @@ describe('transformToNestedData', () => {
      * https://github.com/testing-library/react-hooks-testing-library/blob/main/src/index.ts#L5
      * */
     if (isReact17()) {
-      /**
-       * The version of `renderHook`  imported from "@testing-library/react-hooks", (used in React 17)
-       * has an error boundary, and doesn't throw errors as expected:
-       * https://github.com/testing-library/react-hooks-testing-library/blob/main/src/index.ts#L5
-       * */
       const { result } = renderHook(() => {
         // @ts-expect-error Testing with invalid type
         transformToNestedData({ type: 'invalidType', data: {} });
