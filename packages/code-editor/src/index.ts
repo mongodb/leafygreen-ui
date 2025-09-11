@@ -24,5 +24,5 @@ export {
   useThemeExtension,
   useTooltipExtension,
 } from './CodeEditor';
-export { type MenuItem } from './ContextMenu/ContextMenuView';
+export { type MenuItem } from './ContextMenu';
 export { Panel, type PanelProps } from './Panel';

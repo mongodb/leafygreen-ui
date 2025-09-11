@@ -1,16 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import {
+  Menu,
+  MenuItem,
+  MenuSeparator,
+  MenuVariant,
+} from '@leafygreen-ui/menu';
+
 import { getLgIds } from '../utils';
 
-import { containerStyles } from './ContextMenu.styles';
-import { ContextMenuProps } from './ContextMenu.types';
-import { ContextMenuView, type MenuState } from './ContextMenuView';
+import { containerStyles, getMenuContainerStyles } from './ContextMenu.styles';
+import type { ContextMenuProps } from './ContextMenu.types';
 
 /**
  * Context menu that adds custom right-click functionality to child elements.
- *
- * This component wires up the even listeners and handles all of the hide/show
- * logic, as well as positioning.
  *
  * Elements with `data-no-context-menu="true"` will not trigger the custom
  * context menu, allowing the default browser context menu to appear instead.
@@ -26,10 +29,10 @@ import { ContextMenuView, type MenuState } from './ContextMenuView';
  *   ]}
  * >
  *   <div>
- *     Custom context menu will be shown
+ *     Custom menu will show
  *   </div>
  *   <div data-no-context-menu="true">
- *     Custom context menu won't be shown
+ *     Custom menu won't show
  *   </div>
  * </ContextMenu>
  * ```
@@ -40,21 +43,16 @@ export const ContextMenu = ({
   'data-lgid': dataLgId,
 }: ContextMenuProps) => {
   const lgIds = getLgIds(dataLgId);
-  const [menuState, setMenuState] = useState<MenuState>({
-    isVisible: false,
-    position: { x: 0, y: 0 },
-    items: [],
-    selectedText: '',
-  });
+  const [isVisible, setIsVisible] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [selectedText, setSelectedText] = useState('');
 
   /**
    * Hides the context menu if it's currently visible.
    */
   const hideMenu = useCallback(() => {
-    if (menuState.isVisible) {
-      setMenuState(prevMenuState => ({ ...prevMenuState, isVisible: false }));
-    }
-  }, [menuState.isVisible]);
+    setIsVisible(false);
+  }, []);
 
   /**
    * Handle preventing default and showing and positioning custom menu onContextMenu
@@ -70,14 +68,11 @@ export const ContextMenu = ({
 
       event.preventDefault();
       const selectedText = window.getSelection()?.toString() || '';
-      setMenuState({
-        isVisible: true,
-        position: { x: event.pageX, y: event.pageY },
-        items: menuItems,
-        selectedText,
-      });
+      setIsVisible(true);
+      setPosition({ x: event.pageX, y: event.pageY });
+      setSelectedText(selectedText);
     },
-    [menuItems],
+    [],
   );
 
   /**
@@ -97,10 +92,8 @@ export const ContextMenu = ({
    */
   const handleClick = useCallback(
     (e: MouseEvent) => {
-      /**
-       * There's no menu to close if it's not visible
-       */
-      if (!menuState.isVisible) return;
+      /** There's no menu to close if it's not visible */
+      if (!isVisible) return;
 
       /**
        * Don't close if clicking inside the menu.
@@ -112,7 +105,7 @@ export const ContextMenu = ({
 
       hideMenu();
     },
-    [hideMenu, lgIds.contextMenu, menuState.isVisible],
+    [hideMenu, lgIds.contextMenu, isVisible],
   );
 
   /**
@@ -120,7 +113,7 @@ export const ContextMenu = ({
    * pressing Escape.
    */
   useEffect(() => {
-    if (menuState.isVisible) {
+    if (isVisible) {
       document.addEventListener('click', handleClick, { capture: true });
       document.addEventListener('keydown', handleEscape);
     }
@@ -129,16 +122,48 @@ export const ContextMenu = ({
       document.removeEventListener('click', handleClick, { capture: true });
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [handleClick, handleEscape, menuState.isVisible]);
+  }, [handleClick, handleEscape, isVisible]);
 
   return (
     <div onContextMenu={handleContextMenu} className={containerStyles}>
       {children}
-      <ContextMenuView
-        state={menuState}
-        hideMenu={hideMenu}
-        data-lgid={dataLgId}
-      />
+
+      {isVisible && (
+        <div
+          className={getMenuContainerStyles(position)}
+          data-lgid={lgIds.contextMenu}
+        >
+          <Menu
+            // Force re-mount when position changes so Menu recalculates its positioning
+            key={`${position.x}-${position.y}`}
+            open={true}
+            setOpen={() => hideMenu()}
+            renderDarkMenu={false}
+            variant={MenuVariant.Compact}
+          >
+            {menuItems.map((item, index) => {
+              if (item.isSeparator) {
+                return <MenuSeparator key={index} />;
+              }
+
+              return (
+                <MenuItem
+                  key={index}
+                  disabled={item.disabled}
+                  onClick={() => {
+                    if (item.action && !item.disabled) {
+                      item.action(selectedText);
+                    }
+                    hideMenu();
+                  }}
+                >
+                  {item.label}
+                </MenuItem>
+              );
+            })}
+          </Menu>
+        </div>
+      )}
     </div>
   );
 };
