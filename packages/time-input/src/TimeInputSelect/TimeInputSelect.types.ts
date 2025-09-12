@@ -1,5 +1,3 @@
-import { Size } from '../TimeInput/TimeInput.types';
-
 export interface UnitOption {
   displayName: string;
   value: string;

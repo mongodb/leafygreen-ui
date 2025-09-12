@@ -1,96 +1,43 @@
 import React, { useState } from 'react';
-import { TimeInputContentProps } from './TimeInputContent.types';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { Description, Label, Overline } from '@leafygreen-ui/typography';
-import { cx } from '@leafygreen-ui/emotion';
-import { Size } from '../TimeInput/TimeInput.types';
-import {
-  labelDescriptionStyles,
-  wrapperBaseStyles,
-  wrapperSizeStyles,
-  wrapperGapStyles,
-  unitBaseStyles,
-  getUnitThemeStyles,
-  getUnitDisabledStyles,
-} from './TimeInputContent.styles';
-import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
-import { TimeInputSelect } from '../TimeInputSelect';
-import { TimeInputInput } from '../TimeInputInput';
-import { unitOptions } from '../shared/constants';
 
-export function TimeInputContent({
-  label,
-  description,
-  className,
-  disabled,
-  size = Size.Default,
-  id: idProp,
-  ...props
-}: TimeInputContentProps) {
-  const { darkMode, theme } = useDarkMode();
+import { cx } from '@leafygreen-ui/emotion';
+import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
+
+import { unitOptions } from '../constants';
+import { TimeInputInput } from '../TimeInputInput';
+import { TimeInputSelect } from '../TimeInputSelect';
+import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
+
+import { wrapperBaseStyles } from './TimeInputContent.styles';
+import { TimeInputContentProps } from './TimeInputContent.types';
+
+/**
+ * @internal
+ */
+export const TimeInputContent = ({ className }: TimeInputContentProps) => {
   const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
 
-  const renderUnitOnly = false;
-  const renderSelectOnly = true;
-
-  const prefix = 'lg-time-input';
-  const inputId = useIdAllocator({ prefix, id: idProp });
-  // const feedbackId = useIdAllocator({ prefix, id: ariaDescribedbyProp });
-  const descriptionId = useIdAllocator({ prefix });
-  const selectId = useIdAllocator({ prefix });
-
-  const unit = '24 hours';
-
   const handleSelectChange = (unit: UnitOption) => {
-    console.log(unit);
     setSelectUnit(unit);
   };
 
   return (
     <div className={className}>
-      {(label || description) && (
-        <div className={labelDescriptionStyles}>
-          {label && (
-            <Label htmlFor={inputId} disabled={disabled}>
-              {label}
-            </Label>
-          )}
-          {description && (
-            <Description id={descriptionId} disabled={disabled}>
-              {description}
-            </Description>
-          )}
-        </div>
-      )}
-      <div
-        className={cx(wrapperBaseStyles, wrapperSizeStyles[size], {
-          [wrapperGapStyles]: renderUnitOnly,
-        })}
-      >
-        <TimeInputInput />
-        {renderUnitOnly && (
-          <Overline
-            className={cx(unitBaseStyles, getUnitThemeStyles(theme), {
-              [getUnitDisabledStyles(theme)]: disabled,
-            })}
-          >
-            {unit}
-          </Overline>
-        )}
-        {renderSelectOnly && (
+      <FormField aria-labelledby="temp" label="Time Input">
+        <div className={cx(wrapperBaseStyles)}>
+          <FormFieldInputContainer>
+            <TimeInputInput />
+          </FormFieldInputContainer>
           <TimeInputSelect
-            id={selectId}
             unit={selectUnit.displayName}
             onChange={unit => {
               handleSelectChange(unit);
             }}
           />
-        )}
-      </div>
-      {/* <FormFieldFeedback {...formFieldFeedbackProps} /> */}
+        </div>
+      </FormField>
     </div>
   );
-}
+};
 
 TimeInputContent.displayName = 'TimeInputContent';

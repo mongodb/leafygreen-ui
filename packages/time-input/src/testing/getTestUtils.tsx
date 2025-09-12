@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
 import { LgIdString } from '@leafygreen-ui/lib';

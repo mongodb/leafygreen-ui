@@ -2,8 +2,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { TimeInput } from '.';
+import { TimeInputContext } from '.';
 
-describe('packages/time-input', () => {
+describe('packages/time-input-context', () => {
   test('condition', () => {});
 });

@@ -1,9 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color, typeScales, fontWeights } from '@leafygreen-ui/tokens';
+import { color, fontWeights, typeScales } from '@leafygreen-ui/tokens';
 
 export const wrapperBaseStyles = css`
   margin-left: -1px;
+
+  // TODO: temp
+  min-width: 70px;
 
   &:hover,
   &:focus-within {

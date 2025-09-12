@@ -1,36 +1,31 @@
 import React from 'react';
-import { TimeInputSelectProps, UnitOption } from './TimeInputSelect.types';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { cx } from '@leafygreen-ui/emotion';
 import {
   DropdownWidthBasis,
   Option,
   RenderMode,
   Select as LGSelect,
 } from '@leafygreen-ui/select';
-import { cx } from '@leafygreen-ui/emotion';
-import {
-  wrapperBaseStyles,
-  selectStyles,
-  getSelectDisabledStyles,
-} from './TimeInputSelect.styles';
-import { unitOptions } from '../shared/constants';
-import { Size } from '../TimeInput/TimeInput.types';
 
-export function TimeInputSelect({
+import { unitOptions } from '../constants';
+
+import { selectStyles, wrapperBaseStyles } from './TimeInputSelect.styles';
+import { TimeInputSelectProps, UnitOption } from './TimeInputSelect.types';
+
+/**
+ * @internal
+ */
+export const TimeInputSelect = ({
   unit,
   id,
   className,
   onChange,
-}: TimeInputSelectProps) {
-  const { theme } = useDarkMode();
-
-  // Placeholders for now
-  const size = Size.Default;
-  const disabled = false;
-
+}: TimeInputSelectProps) => {
   /**
    * Gets the current unit option using the unit string
+   *
+   * @internal
    */
   const currentUnitOption = unitOptions.find(
     u => u.displayName === unit,
@@ -42,8 +37,6 @@ export function TimeInputSelect({
     if (selectedUnit !== undefined) {
       onChange(selectedUnit);
     }
-
-    console.log(selectedUnit);
   };
 
   return (
@@ -53,17 +46,9 @@ export function TimeInputSelect({
         onChange={handleChange}
         aria-labelledby="Unit Picker"
         value={currentUnitOption.displayName}
-        className={cx(
-          selectStyles,
-          {
-            [getSelectDisabledStyles(theme)]: disabled,
-          },
-          className,
-        )}
+        className={cx(selectStyles, className)}
         allowDeselect={false}
         dropdownWidthBasis={DropdownWidthBasis.Option}
-        disabled={disabled}
-        size={size}
         renderMode={RenderMode.TopLayer}
       >
         {unitOptions.map(option => (
@@ -74,6 +59,6 @@ export function TimeInputSelect({
       </LGSelect>
     </div>
   );
-}
+};
 
 TimeInputSelect.displayName = 'TimeInputSelect';
