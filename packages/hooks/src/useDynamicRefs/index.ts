@@ -33,7 +33,9 @@ export function getGetRef<T>(refMap: RefMap<T>) {
     }
 
     const ref = React.createRef<T>();
+    // @ts-expect-error REACT 19
     refMap.set(key, ref);
+    // @ts-expect-error REACT 19
     return ref;
   }
 

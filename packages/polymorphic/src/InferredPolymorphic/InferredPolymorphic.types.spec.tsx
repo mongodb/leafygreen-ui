@@ -381,7 +381,6 @@ describe.skip('Inferred Polymorphic types', () => {
     }
     const MyInferredPoly = InferredPolymorphic<MyProps, 'button'>(p => <></>);
     MyInferredPoly.displayName = 'MyInferredPoly';
-    MyInferredPoly.propTypes = {};
 
     // accepts empty props
     <MyInferredPoly />;

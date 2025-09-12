@@ -12,10 +12,12 @@ type Global = Omit<LGWindow, 'name'>;
 
 function ButtonWrapper() {
   const ref = useRef<HTMLButtonElement>(null);
+  // @ts-expect-error REACT 19
   const unregisterRipple = useRef<() => void>();
 
   useEffect(() => {
     if (ref.current != null) {
+      // @ts-expect-error REACT 19
       unregisterRipple.current = registerRipple(ref.current, buttonOptions);
     }
 

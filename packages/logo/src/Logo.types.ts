@@ -1,4 +1,5 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentProps } from 'react';
+
 import { palette } from '@leafygreen-ui/palette';
 
 const SupportedColors = {
@@ -22,7 +23,7 @@ type SupportedColorsMap =
 
 export { SupportedColors, SupportedColorsMap };
 
-export interface BaseLogoProps extends HTMLElementProps<'svg'> {
+export interface BaseLogoProps extends ComponentProps<'svg'> {
   /**
    * Determines Color of the Logo or LogoMark component.
    *
@@ -38,7 +39,7 @@ export interface BaseLogoProps extends HTMLElementProps<'svg'> {
   height?: number;
 }
 
-export type ProductLogoProps = HTMLElementProps<'svg', never> & {
+export type ProductLogoProps = ComponentProps<'svg'> & {
   knockout?: boolean;
   size?: number;
   darkMode?: boolean;

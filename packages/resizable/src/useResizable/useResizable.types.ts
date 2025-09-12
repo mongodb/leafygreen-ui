@@ -89,5 +89,5 @@ export interface ResizableReturn<T extends HTMLElement = HTMLElement> {
   /**
    * A ref to the resizable element that can be used to attach the resizer functionality.
    */
-  resizableRef: React.RefObject<T>;
+  resizableRef: React.RefObject<T | null>;
 }

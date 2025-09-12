@@ -1,13 +1,11 @@
-import {
-  ComponentPropsWithRef,
-  ComponentType,
-  ReactElement,
-  WeakValidationMap,
-} from 'react';
+import { ComponentPropsWithRef, ComponentType } from 'react';
 
 import { PartialRequired } from '@leafygreen-ui/lib';
 
-import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
+import {
+  PolymorphicAs,
+  PolymorphicReturnType,
+} from '../Polymorphic/Polymorphic.types';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
 import { PolymorphicRef } from '..';
 
@@ -131,9 +129,8 @@ export interface InferredPolymorphicRenderFunction<
   <TAsProp extends PolymorphicAs = TDefaultAs>(
     props: InferredPolymorphicPropsWithRef<TAsProp, TComponentProps>,
     ref: PolymorphicRef<TAsProp>,
-  ): ReactElement | null;
+  ): PolymorphicReturnType;
   displayName?: string;
-  // propTypes?: never;
 }
 
 /**
@@ -142,11 +139,4 @@ export interface InferredPolymorphicRenderFunction<
 export type InferredPolymorphicComponentType<
   TComponentProps = {},
   TDefaultAs extends PolymorphicAs = PolymorphicAs,
-> = InferredPolymorphicRenderFunction<TComponentProps, TDefaultAs> & {
-  // FIXME: propTypes will be broken for any inherited props
-  propTypes?:
-    | WeakValidationMap<
-        InferredPolymorphicProps<PolymorphicAs, TComponentProps>
-      >
-    | undefined;
-};
+> = InferredPolymorphicRenderFunction<TComponentProps, TDefaultAs> & {};

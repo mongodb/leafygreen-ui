@@ -14,6 +14,7 @@ test('should merge refs', () => {
 
   const {
     result: { current: mergedCallbackRef },
+    // @ts-expect-error REACT 19
   } = renderHook(() => useMergeRefs([callbackRef, mutableRef]));
 
   expect(mergedCallbackRef).toBeInstanceOf(Function);

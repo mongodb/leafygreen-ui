@@ -40,6 +40,7 @@ describe('packages/hooks/useAvailableSpace', () => {
       current: null,
     };
     mockUseViewportSize.mockReturnValue({ height: 400, width: 400 });
+    // @ts-expect-error REACT 19
     const { result } = renderHook(() => useAvailableSpace(ref));
     expect(result.current).toBeUndefined();
   });

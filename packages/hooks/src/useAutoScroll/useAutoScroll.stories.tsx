@@ -34,6 +34,7 @@ export const Basic = ({ selected }: { selected?: number }) => {
   const menuRef = useRef<HTMLUListElement>(null);
   const itemRefs = useDynamicRefs<HTMLLIElement>({ prefix: 'item' });
 
+  // @ts-expect-error REACT 19
   useAutoScroll(itemRefs(`${selected}`), menuRef);
 
   return (

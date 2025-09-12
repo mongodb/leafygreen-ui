@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import isEqual from 'lodash/isEqual';
 
 export default function useObjectDependency<T>(object: T): T {
+  // @ts-expect-error REACT 19
   const ref = useRef<T>();
 
   // we need isEqual for deep object comparison

@@ -7,7 +7,6 @@ import {
   ElementType,
   FunctionComponent,
   PropsWithChildren,
-  WeakValidationMap,
 } from 'react';
 
 export type IntrinsicElements<P = any> =
@@ -115,7 +114,6 @@ export interface PolymorphicComponentType<
     ref: PolymorphicRef<T>,
   ): PolymorphicReturnType;
   displayName?: string;
-  propTypes?: WeakValidationMap<PolymorphicProps<DefaultAs, XP>>;
 }
 
 /**

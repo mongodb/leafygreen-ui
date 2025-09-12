@@ -44,6 +44,7 @@ export default function usePoller(
   onPoll: OnPoll,
   { interval = 30e3, immediate = true, enabled = true }: PollerOptions = {},
 ) {
+  // @ts-expect-error REACT 19
   const savedCallback = useRef<OnPoll>();
   const isVisible = useVisibilityChange();
 
