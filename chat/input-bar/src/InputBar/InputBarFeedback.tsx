@@ -32,6 +32,7 @@ export const InputBarFeedback = forwardRef<
       className,
       darkMode: darkModeProp,
       errorMessage,
+      loadingMessage,
       state,
       ...rest
     },
@@ -51,7 +52,7 @@ export const InputBarFeedback = forwardRef<
           <div className={loadingContainerStyles}>
             <AssistantAvatar darkMode={darkMode} size={20} />
             <Body className={getLoadingTextStyles(theme)}>
-              {messages.loading}
+              {loadingMessage || messages.loading}
             </Body>
           </div>
         )}

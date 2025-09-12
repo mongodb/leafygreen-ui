@@ -74,6 +74,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       dropdownFooterSlot,
       dropdownProps,
       errorMessage,
+      loadingMessage,
       onMessageSend,
       onSubmit,
       shouldRenderGradient: shouldRenderGradientProp = true,
@@ -433,7 +434,11 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
           {...rest}
         >
           {isCompact && (
-            <InputBarFeedback errorMessage={errorMessage} state={state} />
+            <InputBarFeedback
+              errorMessage={errorMessage}
+              loadingMessage={loadingMessage}
+              state={state}
+            />
           )}
           <div className={outerFocusContainerStyles}>
             <div
