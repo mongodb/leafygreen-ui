@@ -122,7 +122,6 @@ function getModifiedTsConfigFiles() {
  * Find and reset all tsconfig.json files in package directories
  */
 async function resetTsConfigFiles() {
-  const allTsConfigPaths = findTsConfigFiles(ROOT_DIR);
   const modifiedTsConfigFiles = getModifiedTsConfigFiles();
 
   console.log(
