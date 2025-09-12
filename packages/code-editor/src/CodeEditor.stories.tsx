@@ -5,7 +5,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import type { StoryFn, StoryObj } from '@storybook/react';
-import { expect, userEvent, waitFor } from '@storybook/test';
+import { expect, waitFor } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
 // @ts-ignore LG icons don't currently support TS
