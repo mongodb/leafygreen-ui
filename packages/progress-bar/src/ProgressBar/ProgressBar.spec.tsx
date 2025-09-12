@@ -249,14 +249,14 @@ describe('packages/progress-bar', () => {
     });
 
     test('updates live region text for initial value', () => {
-      const { queryByRole } = render(
+      render(
         <ProgressBar
           value={TEST_VALUE_UNDER_50}
           maxValue={TEST_MAX_VALUE}
           {...requiredA11yArgs}
         />,
       );
-      const statusElement = queryByRole('status');
+      const statusElement = screen.queryByRole('status');
       const expectedMessage = getAnnouncementMessage(
         TEST_VALUE_UNDER_50,
         TEST_MAX_VALUE,
@@ -265,14 +265,14 @@ describe('packages/progress-bar', () => {
     });
 
     test('ignores further changes until next threshold met', () => {
-      const { rerender, queryByRole } = render(
+      const { rerender } = render(
         <ProgressBar
           value={TEST_VALUE_UNDER_50}
           maxValue={TEST_MAX_VALUE}
           {...requiredA11yArgs}
         />,
       );
-      const statusElement = queryByRole('status');
+      const statusElement = screen.queryByRole('status');
       const expectedMessage = getAnnouncementMessage(
         TEST_VALUE_UNDER_50,
         TEST_MAX_VALUE,
@@ -292,14 +292,14 @@ describe('packages/progress-bar', () => {
     });
 
     test('updates live region text if 50% threshold passed', async () => {
-      const { getByRole, rerender } = render(
+      const { rerender } = render(
         <ProgressBar
           value={TEST_VALUE_UNDER_50}
           maxValue={TEST_MAX_VALUE}
           {...requiredA11yArgs}
         />,
       );
-      const statusElement = getByRole('status');
+      const statusElement = screen.getByRole('status');
 
       expect(statusElement).toBeInTheDocument();
       expect(statusElement).toHaveTextContent(
