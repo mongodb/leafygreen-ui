@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, waitFor } from '@testing-library/react';
 
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
 
 import { TRANSITION_DURATION } from '../../constants';
 import { LayoutData } from '../DrawerToolbarLayout/DrawerToolbarLayout.types';
@@ -42,17 +42,21 @@ const mockData: Array<LayoutData> = [
 
 describe('useDrawerToolbarContext', () => {
   test('throws error when used outside of DrawerToolbarProvider', () => {
-    const consoleSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
-
-    expect(() => {
-      renderHook(() => useDrawerToolbarContext());
-    }).toThrow(
-      'useDrawerToolbarContext must be used within a DrawerToolbarProvider',
-    );
-
-    consoleSpy.mockRestore();
+    /**
+     * The version of `renderHook`  imported from "@testing-library/react-hooks", (used in React 17)
+     * has an error boundary, and doesn't throw errors as expected:
+     * https://github.com/testing-library/react-hooks-testing-library/blob/main/src/index.ts#L5
+     * */
+    if (isReact17()) {
+      const { result } = renderHook(() => useDrawerToolbarContext());
+      expect(result.error.message).toEqual(
+        'useDrawerToolbarContext must be used within a DrawerToolbarProvider',
+      );
+    } else {
+      expect(() => renderHook(() => useDrawerToolbarContext())).toThrow(
+        'useDrawerToolbarContext must be used within a DrawerToolbarProvider',
+      );
+    }
   });
 
   describe('getActiveDrawerContent', () => {
