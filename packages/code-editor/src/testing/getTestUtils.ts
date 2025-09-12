@@ -5,8 +5,8 @@ import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 
 /**
- * Returns a set of utility functions to query and get parts of a progress bar component for testing.
- * @param lgId - The base LeafyGreen ID prefix for the progress bar. Defaults to `DEFAULT_LGID_ROOT`.
+ * Returns a set of utility functions to query and get parts of a code editor component for testing.
+ * @param lgId - The base LeafyGreen ID prefix for the code editor. Defaults to `DEFAULT_LGID_ROOT`.
  */
 export const getTestUtils = <T extends HTMLElement = HTMLElement>(
   lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
