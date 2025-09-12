@@ -19,4 +19,10 @@ export interface SharedInputBarProps {
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="compact"`.
    */
   state?: State;
+
+  /**
+   * Custom loading message to display when `state='loading'`
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="compact"`.
+   */
+  loadingMessage?: string;
 }
