@@ -1,5 +1,7 @@
 import React, { createContext, useContext } from 'react';
 
+import { getLgIds, type GetLgIdsReturnType } from '../utils/getLgIds';
+
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 
 /**
@@ -45,6 +47,12 @@ export interface CodeEditorContextValue {
    * @param filename - Optional custom filename (without extension). Defaults to 'code'
    */
   downloadContent: (filename?: string) => void;
+
+  /**
+   * Generated lgIds from the CodeEditor component, enabling child components
+   * to inherit custom data-lgid prefixes passed to the parent CodeEditor.
+   */
+  lgIds: GetLgIdsReturnType;
 }
 
 // Default context value for when Panel is used standalone
@@ -58,6 +66,7 @@ const defaultContextValue: CodeEditorContextValue = {
   downloadContent: () => {
     console.warn('downloadContent is not available - editor context not found');
   },
+  lgIds: getLgIds(), // Use default lgIds when used standalone
 };
 
 const CodeEditorContext =

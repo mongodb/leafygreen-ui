@@ -13,6 +13,7 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
+import { getLgIds } from '../utils';
 
 import { useFormattingModuleLoaders } from './hooks/formatting/useFormattingModuleLoaders';
 import {
@@ -25,7 +26,6 @@ import {
   CodeEditorHandle,
   type CodeEditorProps,
   CopyButtonAppearance,
-  CopyButtonLgId,
   type HTMLElementWithCodeMirror,
 } from './CodeEditor.types';
 import { CodeEditorProvider } from './CodeEditorContext';
@@ -42,7 +42,8 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const {
       baseFontSize: baseFontSizeProp,
       className,
-      copyButtonAppearance,
+      copyButtonAppearance = CopyButtonAppearance.Hover,
+      'data-lgid': dataLgId,
       darkMode: darkModeProp,
       defaultValue,
       enableClickableUrls,
@@ -69,6 +70,8 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       width,
       ...rest
     } = props;
+
+    const lgIds = getLgIds(dataLgId);
 
     const { theme } = useDarkMode(darkModeProp);
     const [controlledValue, setControlledValue] = useState(value || '');
@@ -343,6 +346,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       undo: handleUndo,
       redo: handleRedo,
       downloadContent: handleDownloadContent,
+      lgIds,
     };
 
     return (
@@ -358,6 +362,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           className,
           copyButtonAppearance,
         })}
+        data-lgid={lgIds.root}
         {...rest}
       >
         {panel && (
@@ -371,7 +376,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               className={getCopyButtonStyles(copyButtonAppearance)}
               variant={CopyButtonVariant.Button}
               disabled={isLoadingProp || isLoadingCoreModules}
-              data-lgid={CopyButtonLgId}
+              data-lgid={lgIds.copyButton}
             />
           )}
         {(isLoadingProp ||
@@ -387,6 +392,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               minHeight,
               maxHeight,
             })}
+            data-lgid={lgIds.loader}
           >
             <Body className={getLoadingTextStyles(theme)}>
               Loading code editor...
