@@ -93,7 +93,7 @@ export function Panel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
 
-  const { getContents, formatCode, undo, redo, downloadContent } =
+  const { getContents, formatCode, undo, redo, downloadContent, lgIds } =
     useCodeEditorContext();
 
   const handleFormatClick = async () => {
@@ -142,12 +142,13 @@ export function Panel({
 
   return (
     <>
-      <div className={getPanelStyles(theme)}>
+      <div className={getPanelStyles(theme)} data-lgid={lgIds.panel}>
         <div
           className={getPanelTitleStyles(
             theme,
             baseFontSizeProp || baseFontSize,
           )}
+          data-lgid={lgIds.panelTitle}
         >
           {title}
         </div>
@@ -161,6 +162,7 @@ export function Panel({
                 <IconButton
                   onClick={handleFormatClick}
                   aria-label="Format code"
+                  data-lgid={lgIds.panelFormatButton}
                 >
                   <FormatIcon />
                 </IconButton>
@@ -174,12 +176,16 @@ export function Panel({
               variant={CopyButtonVariant.IconButton}
               getContentsToCopy={getContents ?? (() => '')}
               onCopy={onCopyClick}
+              data-lgid={lgIds.panelCopyButton}
             />
           )}
           {showSecondaryMenuButton && (
             <Menu
               trigger={
-                <IconButton aria-label="Show more actions">
+                <IconButton
+                  aria-label="Show more actions"
+                  data-lgid={lgIds.panelSecondaryMenuButton}
+                >
                   <EllipsisIcon />
                 </IconButton>
               }
@@ -187,6 +193,7 @@ export function Panel({
               renderDarkMenu={false}
               open={menuOpen}
               setOpen={setMenuOpen}
+              data-lgid={lgIds.panelSecondaryMenu}
             >
               <MenuItem
                 glyph={<UndoIcon />}
