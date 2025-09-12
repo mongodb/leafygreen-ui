@@ -267,10 +267,10 @@ describe('packages/menu', () => {
     test('onOpen callback is called when menu opens', async () => {
       const onOpen = jest.fn();
       const { triggerEl, findMenuElements } = renderMenu({ onOpen });
-      
+
       userEvent.click(triggerEl);
       const { menuEl } = await findMenuElements();
-      
+
       await waitFor(() => {
         expect(menuEl).toBeInTheDocument();
         expect(onOpen).toHaveBeenCalledTimes(1);
@@ -279,16 +279,16 @@ describe('packages/menu', () => {
 
     test('onClose callback is called when menu closes', async () => {
       const onClose = jest.fn();
-      const { triggerEl, openMenu, backdropEl } = renderMenu({ onClose });
-      
+      const { openMenu, backdropEl } = renderMenu({ onClose });
+
       // Open the menu first
       const { menuEl } = await openMenu();
       await waitFor(() => expect(menuEl).toBeInTheDocument());
-      
+
       // Close the menu by clicking outside
       userEvent.click(backdropEl);
       await waitForElementToBeRemoved(menuEl);
-      
+
       await waitFor(() => {
         expect(menuEl).not.toBeInTheDocument();
         expect(onClose).toHaveBeenCalledTimes(1);
