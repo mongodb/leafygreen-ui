@@ -2,7 +2,8 @@ import React from 'react';
 
 import '@testing-library/jest-dom';
 
-import { renderPanel } from '../testing/panelTestUtils';
+import { renderPanel } from './Panel.testUtils';
+import { PanelProps } from './Panel.types';
 
 // Mock Modal component to avoid HTMLDialogElement issues
 jest.mock('@leafygreen-ui/modal', () => {
@@ -14,8 +15,6 @@ jest.mock('@leafygreen-ui/modal', () => {
     ) : null;
   };
 });
-
-import { PanelProps } from './Panel.types';
 
 const TestIcon = () => <div data-testid="test-icon" />;
 TestIcon.displayName = 'TestIcon';

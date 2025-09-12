@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 
-import { createMockExtension, createMockStateModule } from '../../../testing';
+import { createMockExtension, createMockStateModule } from '../hooks.testUtils';
 
 import { useExtension } from './useExtension';
 
