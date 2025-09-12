@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react';
 import {
   createMockLanguageModule,
   createMockStateModule,
-} from '../../../testing';
+} from '../hooks.testUtils';
 
 import { useCodeFoldingExtension } from './useCodeFoldingExtension';
 
