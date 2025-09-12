@@ -6,25 +6,12 @@ import { type MenuItem } from '../ContextMenu';
 import { CodeEditorContextMenuProps } from './CodeEditorContextMenu.types';
 
 /**
- * A context menu specifically designed for code editors with standard text editing operations.
- *
- * Provides Cut, Copy, and Paste functionality via right-click context menu.
- * Automatically handles selected text detection. Custom menu items can be added
- * below the standard items.
- *
- * @example
- * ```tsx
- * <CodeEditorContextMenu>
- *   <textarea>Your code editor content</textarea>
- * </CodeEditorContextMenu>
- * ```
+ * A context menu specifically designed for CodeEditor.
  *
  * @example
  * ```tsx
  * <CodeEditorContextMenu
- *   customMenuItems={[
- *     { label: 'Custom Action', action: () => customAction() },
- *   ]}
+ *   customMenuItems={[ { label: 'Custom Action', action: () => {} } ]}
  * >
  *   <div contentEditable>
  *     Some editable code content

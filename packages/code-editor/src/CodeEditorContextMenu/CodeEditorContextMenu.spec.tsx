@@ -1,278 +1,125 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import '@testing-library/jest-dom';
 
 import { CodeEditorContextMenu } from './CodeEditorContextMenu';
+import { CodeEditorContextMenuProps } from './CodeEditorContextMenu.types';
 
-// Mock the ContextMenu component since we're testing CodeEditorContextMenu logic
-jest.mock('../ContextMenu', () => ({
-  ContextMenu: ({ children, menuItems, 'data-lgid': dataLgId }: any) => (
-    <div data-testid="context-menu" data-lgid={dataLgId}>
-      {children}
-      <div data-testid="menu-items">
-        {menuItems.map((item: any, index: number) => (
-          <button
-            key={index}
-            onClick={() => item.action?.('selected text')}
-            disabled={item.disabled}
-            data-testid={
-              item.isSeparator
-                ? 'separator'
-                : `menu-item-${item.label.toLowerCase()}`
-            }
-          >
-            {item.isSeparator ? '---' : item.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  ),
-}));
-
-// Mock navigator.clipboard
-const mockClipboard = {
-  writeText: jest.fn().mockResolvedValue(undefined),
-  readText: jest.fn().mockResolvedValue('clipboard content'),
-};
-
-Object.defineProperty(navigator, 'clipboard', {
-  writable: true,
-  value: mockClipboard,
+/**
+ * Create a stateful clipboard mock that remembers what was written to it.
+ * This is useful in the 'paste' test so that we can cut some text and then
+ * paste it and validate that works as expected.
+ */
+let clipboardText = '';
+Object.assign(navigator, {
+  clipboard: {
+    writeText: jest.fn((text: string) => {
+      clipboardText = text;
+      return Promise.resolve();
+    }),
+    readText: jest.fn(() => Promise.resolve(clipboardText)),
+  },
 });
 
-// Mock window.getSelection
-const mockRange = {
-  deleteContents: jest.fn(),
-  insertNode: jest.fn(),
-  collapse: jest.fn(),
-  getRangeAt: jest.fn().mockReturnThis(),
-};
-
-const mockSelection = {
-  rangeCount: 1,
-  getRangeAt: jest.fn().mockReturnValue(mockRange),
-  removeAllRanges: jest.fn(),
-  addRange: jest.fn(),
-};
-
-Object.defineProperty(window, 'getSelection', {
-  writable: true,
-  value: jest.fn().mockReturnValue(mockSelection),
-});
-
-// Mock document.createTextNode
-const mockTextNode = { nodeType: 3, textContent: 'clipboard content' };
-Object.defineProperty(document, 'createTextNode', {
-  writable: true,
-  value: jest.fn().mockReturnValue(mockTextNode),
-});
-
-// Mock console.error to avoid noise in tests
-const consoleErrorSpy = jest
-  .spyOn(console, 'error')
-  .mockImplementation(() => {});
-
+/** Reset clipboard state between tests */
 beforeEach(() => {
+  clipboardText = '';
   jest.clearAllMocks();
 });
 
-afterAll(() => {
-  consoleErrorSpy.mockRestore();
-});
-
-test('renders children and ContextMenu with default menu items', () => {
+function renderEditableContentWithContextMenu(
+  props?: Partial<CodeEditorContextMenuProps>,
+) {
+  /**
+   * The CodeEditor is not an input or textarea, so the implementation is
+   * slightly different than what would be needed for that. Therefore, we need
+   * to use a div with contentEditable instead, to more accurately test its
+   * functionality.
+   */
   render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
+    <CodeEditorContextMenu {...props}>
+      <div
+        data-testid="code-editor-content"
+        contentEditable
+        suppressContentEditableWarning={true}
+      >
+        content
+      </div>
     </CodeEditorContextMenu>,
   );
+  return screen.getByTestId('code-editor-content') as HTMLDivElement;
+}
 
-  expect(screen.getByText('Code editor content')).toBeInTheDocument();
-  expect(screen.getByTestId('context-menu')).toBeInTheDocument();
-  expect(screen.getByTestId('menu-item-cut')).toBeInTheDocument();
-  expect(screen.getByTestId('menu-item-copy')).toBeInTheDocument();
-  expect(screen.getByTestId('menu-item-paste')).toBeInTheDocument();
-});
+/**
+ * Utils to select text such as tripleClick and selectAll don't seem to be
+ * available on our version of userEvent. This manually makes a text selection.
+ */
+function selectAllText(element: HTMLElement) {
+  const range = document.createRange();
+  range.selectNodeContents(element);
+  const selection = window.getSelection();
+  selection?.removeAllRanges();
+  selection?.addRange(range);
+}
 
-test('includes custom menu items with separator when provided', () => {
-  const customMenuItems = [
-    { label: 'Format', action: jest.fn() },
-    { label: 'Lint', action: jest.fn() },
-  ];
+describe('CodeEditorContextMenu', () => {
+  test('renders default menu items in menu on right click', () => {
+    render(
+      <CodeEditorContextMenu>
+        <div data-testid="code-editor-content">content</div>
+      </CodeEditorContextMenu>,
+    );
 
-  render(
-    <CodeEditorContextMenu customMenuItems={customMenuItems}>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  expect(screen.getByTestId('separator')).toBeInTheDocument();
-  expect(screen.getByTestId('menu-item-format')).toBeInTheDocument();
-  expect(screen.getByTestId('menu-item-lint')).toBeInTheDocument();
-});
-
-test('does not include separator when no custom menu items provided', () => {
-  render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  expect(screen.queryByTestId('separator')).not.toBeInTheDocument();
-});
-
-test('forwards data-lgid prop to ContextMenu', () => {
-  render(
-    <CodeEditorContextMenu data-lgid="lg-test-editor">
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  expect(screen.getByTestId('context-menu')).toHaveAttribute(
-    'data-lgid',
-    'lg-test-editor',
-  );
-});
-
-test('copy action writes selected text to clipboard', async () => {
-  render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  await userEvent.click(screen.getByTestId('menu-item-copy'));
-
-  expect(mockClipboard.writeText).toHaveBeenCalledWith('selected text');
-});
-
-test('copy action handles empty selection gracefully', async () => {
-  render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  // Override the mock for this test to simulate no selection
-  const copyButton = screen.getByTestId('menu-item-copy');
-  fireEvent.click(copyButton);
-
-  // Simulate action being called with empty string
-  const contextMenu = screen.getByTestId('context-menu');
-  const menuItems = contextMenu.querySelector('[data-testid="menu-items"]');
-  expect(menuItems).toBeInTheDocument();
-});
-
-test('cut action copies text and manipulates DOM selection', async () => {
-  render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  await userEvent.click(screen.getByTestId('menu-item-cut'));
-
-  expect(mockClipboard.writeText).toHaveBeenCalledWith('selected text');
-  expect(mockRange.deleteContents).toHaveBeenCalled();
-  expect(mockRange.collapse).toHaveBeenCalledWith(true);
-  expect(mockSelection.removeAllRanges).toHaveBeenCalled();
-  expect(mockSelection.addRange).toHaveBeenCalledWith(mockRange);
-});
-
-test('paste action reads from clipboard and inserts text', async () => {
-  render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  await userEvent.click(screen.getByTestId('menu-item-paste'));
-
-  expect(mockClipboard.readText).toHaveBeenCalled();
-  expect(document.createTextNode).toHaveBeenCalledWith('clipboard content');
-  expect(mockRange.deleteContents).toHaveBeenCalled();
-  expect(mockRange.insertNode).toHaveBeenCalledWith(mockTextNode);
-  expect(mockRange.collapse).toHaveBeenCalledWith(false);
-  expect(mockSelection.removeAllRanges).toHaveBeenCalled();
-  expect(mockSelection.addRange).toHaveBeenCalledWith(mockRange);
-});
-
-test('handles clipboard write errors gracefully', async () => {
-  mockClipboard.writeText.mockRejectedValueOnce(
-    new Error('Clipboard access denied'),
-  );
-
-  render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  await userEvent.click(screen.getByTestId('menu-item-copy'));
-
-  expect(consoleErrorSpy).toHaveBeenCalledWith(
-    'Failed to copy text:',
-    expect.any(Error),
-  );
-});
-
-test('handles clipboard read errors gracefully', async () => {
-  mockClipboard.readText.mockRejectedValueOnce(
-    new Error('Clipboard access denied'),
-  );
-
-  render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  await userEvent.click(screen.getByTestId('menu-item-paste'));
-
-  expect(consoleErrorSpy).toHaveBeenCalledWith(
-    'Failed to paste text:',
-    expect.any(Error),
-  );
-});
-
-test('handles missing selection during cut operation', async () => {
-  const mockGetSelection = jest.fn().mockReturnValue(null);
-  Object.defineProperty(window, 'getSelection', {
-    writable: true,
-    value: mockGetSelection,
+    userEvent.click(screen.getByTestId('code-editor-content'), { button: 2 });
+    expect(screen.getByRole('menuitem', { name: 'Copy' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Cut' })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: 'Paste' })).toBeInTheDocument();
   });
 
-  render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
-
-  await userEvent.click(screen.getByTestId('menu-item-cut'));
-
-  expect(mockClipboard.writeText).toHaveBeenCalledWith('selected text');
-  // Should not attempt DOM manipulation when no selection
-  expect(mockRange.deleteContents).not.toHaveBeenCalled();
-});
-
-test('handles missing selection during paste operation', async () => {
-  const mockGetSelection = jest.fn().mockReturnValue(null);
-  Object.defineProperty(window, 'getSelection', {
-    writable: true,
-    value: mockGetSelection,
+  test('renders custom menu items in menu on right click', () => {
+    renderEditableContentWithContextMenu({
+      customMenuItems: [{ label: 'Custom Action', action: () => {} }],
+    });
+    userEvent.click(screen.getByTestId('code-editor-content'), { button: 2 });
+    expect(
+      screen.getByRole('menuitem', { name: 'Custom Action' }),
+    ).toBeInTheDocument();
   });
 
-  render(
-    <CodeEditorContextMenu>
-      <div>Code editor content</div>
-    </CodeEditorContextMenu>,
-  );
+  test('calls writeText() with the selected text when copy is clicked', () => {
+    const element = renderEditableContentWithContextMenu();
+    selectAllText(element);
+    userEvent.click(screen.getByTestId('code-editor-content'), { button: 2 });
+    userEvent.click(screen.getByRole('menuitem', { name: 'Copy' }));
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('content');
+  });
 
-  await userEvent.click(screen.getByTestId('menu-item-paste'));
+  test('calls writeText() with the selected text when cut is clicked', () => {
+    const element = renderEditableContentWithContextMenu();
+    selectAllText(element);
+    userEvent.click(screen.getByTestId('code-editor-content'), { button: 2 });
+    userEvent.click(screen.getByRole('menuitem', { name: 'Cut' }));
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('content');
+  });
 
-  expect(mockClipboard.readText).toHaveBeenCalled();
-  // Should not attempt DOM manipulation when no selection
-  expect(mockRange.insertNode).not.toHaveBeenCalled();
+  test('removes selected text when cut is clicked', async () => {
+    const element = renderEditableContentWithContextMenu();
+    selectAllText(element);
+    userEvent.click(screen.getByTestId('code-editor-content'), { button: 2 });
+    await userEvent.click(screen.getByRole('menuitem', { name: 'Cut' }));
+    expect(element.textContent).toBe('');
+  });
+
+  test('pastes text when paste is clicked', async () => {
+    const element = renderEditableContentWithContextMenu();
+    selectAllText(element);
+    userEvent.click(screen.getByTestId('code-editor-content'), { button: 2 });
+    await userEvent.click(screen.getByRole('menuitem', { name: 'Cut' }));
+    expect(element.textContent).toBe('');
+    userEvent.click(screen.getByTestId('code-editor-content'), { button: 2 });
+    await userEvent.click(screen.getByRole('menuitem', { name: 'Paste' }));
+    expect(element.textContent).toBe('content');
+  });
 });
