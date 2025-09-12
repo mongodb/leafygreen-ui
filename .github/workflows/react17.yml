@@ -22,6 +22,19 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9.15.0
+          cache: false
+
+      - uses: actions/cache/restore@v4
+        name: Check for build cache
+        id: build-cache
+        with:
+          # Note: `path` doesn't like complex glob patterns (i.e. `+(charts|chat|packages|tools)`)
+          path: |
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
+          key: ${{ runner.os }}-REACT17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       - name: Setup Node 18
         uses: actions/setup-node@v4
@@ -42,14 +55,14 @@ jobs:
 
       - uses: actions/cache/save@v4
         name: Save build cache
-        id: build-cache
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
           path: |
             charts/*/dist/*
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{ runner.os }}-react17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
+          key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
   test:
     name: Test in React 17
@@ -59,21 +72,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9.15.0
-
-      - name: Install node-gyp
-        run: pnpm add --global node-gyp
-
-      - name: Init React 17 environment
-        run: node ./scripts/react17/init.mjs
+          cache: false
 
       - uses: actions/cache/restore@v4
         name: Check for build cache
@@ -86,8 +89,19 @@ jobs:
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
 
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install node-gyp
+        run: pnpm add --global node-gyp
+
+      - name: Init React 17 environment
+        run: node ./scripts/react17/init.mjs
+
       - name: Install dependencies
-        run: pnpm install --prefer-offline
+        run: pnpm install --prefer-offline # Intentionally not using --frozen-lockfile to allow for pnpm-lock.yaml updates
 
       - name: Run tests in React 17
-        run: pnpm run test --react17
+        run: pnpm run test --react17 --ci

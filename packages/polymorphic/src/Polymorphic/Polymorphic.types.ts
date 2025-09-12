@@ -5,10 +5,8 @@ import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,
   ElementType,
+  FunctionComponent,
   PropsWithChildren,
-  PropsWithoutRef,
-  ReactNode,
-  RefAttributes,
   WeakValidationMap,
 } from 'react';
 
@@ -93,8 +91,11 @@ export type PolymorphicPropsWithRef<
   ref?: PolymorphicRef<T>;
 };
 
-// TODO: In TS<5.0 this is `ReactElement` but in 5+ it's `ReactNode`
-export type PolymorphicRenderFunctionReturnType = ReactNode | null;
+/**
+ * The return type of a render function.
+ * Note: This type changed from `ReactElement` to `ReactNode` in React 18 + TS 5
+ */
+export type PolymorphicReturnType = ReturnType<FunctionComponent>;
 
 /**
  * An explicit definition of the component type
@@ -112,15 +113,9 @@ export interface PolymorphicComponentType<
   <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
-  ): PolymorphicRenderFunctionReturnType;
+  ): PolymorphicReturnType;
   displayName?: string;
-  propTypes?:
-    | WeakValidationMap<
-        PropsWithoutRef<
-          PolymorphicPropsWithRef<PolymorphicAs, XP> & RefAttributes<any>
-        >
-      >
-    | undefined;
+  propTypes?: WeakValidationMap<PolymorphicProps<DefaultAs, XP>>;
 }
 
 /**
@@ -136,15 +131,7 @@ export interface PolymorphicRenderFunction<
   <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
-  ): PolymorphicRenderFunctionReturnType;
+  ): PolymorphicReturnType;
   displayName?: string;
   propTypes?: never;
 }
-
-// (I'm not entirely clear why we can't use `Omit`, but that doesn't work - AT)
-// export type PolymorphicRenderFunction<
-//   XP = {},
-//   DefaultAs extends PolymorphicAs = PolymorphicAs,
-// > = Omit<PolymorphicComponentType<XP, DefaultAs>, 'propTypes'> & {
-//   propTypes: never;
-// };

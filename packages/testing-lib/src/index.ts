@@ -4,6 +4,8 @@ import * as JestDOM from './jest-dom';
 export {
   act,
   type ActType,
+  getReactVersion,
+  isReact17,
   renderHook,
   type RenderHookOptions,
   type RenderHookResult,

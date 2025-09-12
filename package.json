@@ -10,7 +10,6 @@
   },
   "scripts": {
     "init": "pnpm install && pnpm build",
-    "init:react17": "pnpm clean; npx ts-node ./scripts/react17/init.ts; pnpm run init",
     "init:react17": "pnpm clean; npx node ./scripts/react17/init.mjs; pnpm run init",
     "create-package": "lg create",
     "build": "turbo run build tsc",

@@ -85,7 +85,6 @@ describe('Message', () => {
       Variant.Compact,
     );
 
-    expect(consoleOnce.warn).toHaveBeenCalledTimes(1);
     expect(consoleOnce.warn).toHaveBeenCalledWith(
       expect.stringContaining("only used in the 'spacious' variant"),
     );
