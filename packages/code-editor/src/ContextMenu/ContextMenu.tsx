@@ -85,14 +85,43 @@ export const ContextMenu = ({
     [isOpen],
   );
 
+  /**
+   * Handle hiding menu on click outside of the menu.
+   *
+   * This is typically handled inside of the Menu component. However, on close
+   * the Menu component tries to focus on the next focusable element. This is
+   * not desirable for a context menu. Instead we just hide the entire thing
+   * before the refocus occurs by setting the open state to false and only
+   * rendering the Menu when the open state is true.
+   */
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      /**
+       * Don't close if clicking inside the menu.
+       * This is handled in the MenuItem onClick handler.
+       */
+      const target = e.target as Element;
+      if (target.closest(`[data-lgid="${lgIds.contextMenu}"]`)) return;
+
+      setIsOpen(false);
+    },
+    [lgIds.contextMenu],
+  );
+
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('contextmenu', handleGlobalContextMenu);
+      /**
+       * Must capture click to prevent default Menu handling of clicks.
+       * See {@link handleClick} comment for more details.
+       */
+      document.addEventListener('click', handleClick, { capture: true });
       return () => {
         document.removeEventListener('contextmenu', handleGlobalContextMenu);
+        document.addEventListener('click', handleClick, { capture: true });
       };
     }
-  }, [isOpen, handleGlobalContextMenu]);
+  }, [isOpen, handleGlobalContextMenu, handleClick]);
 
   return (
     <div
@@ -102,38 +131,40 @@ export const ContextMenu = ({
     >
       {children}
 
-      <div className={getMenuContainerStyles(position)}>
-        <Menu
-          // Force re-mount when position changes so Menu recalculates its positioning
-          key={`${position.x}-${position.y}`}
-          open={isOpen}
-          setOpen={setIsOpen}
-          renderDarkMenu={false}
-          variant={MenuVariant.Compact}
-          data-lgid={lgIds.contextMenu}
-        >
-          {menuItems.map((item, index) => {
-            if (item.isSeparator) {
-              return <MenuSeparator key={index} />;
-            }
+      {isOpen && (
+        <div className={getMenuContainerStyles(position)}>
+          <Menu
+            /** Force re-mount when position changes so Menu recalculates its positioning */
+            key={`${position.x}-${position.y}`}
+            open={isOpen}
+            setOpen={setIsOpen}
+            renderDarkMenu={false}
+            variant={MenuVariant.Compact}
+            data-lgid={lgIds.contextMenu}
+          >
+            {menuItems.map((item, index) => {
+              if (item.isSeparator) {
+                return <MenuSeparator key={index} />;
+              }
 
-            return (
-              <MenuItem
-                key={index}
-                disabled={item.disabled}
-                onClick={() => {
-                  if (item.action && !item.disabled) {
-                    item.action(selectedText);
-                  }
-                  setIsOpen(false);
-                }}
-              >
-                {item.label}
-              </MenuItem>
-            );
-          })}
-        </Menu>
-      </div>
+              return (
+                <MenuItem
+                  key={index}
+                  disabled={item.disabled}
+                  onClick={() => {
+                    if (item.action && !item.disabled) {
+                      item.action(selectedText);
+                    }
+                    setIsOpen(false);
+                  }}
+                >
+                  {item.label}
+                </MenuItem>
+              );
+            })}
+          </Menu>
+        </div>
+      )}
     </div>
   );
 };
