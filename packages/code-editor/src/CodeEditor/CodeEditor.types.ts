@@ -4,7 +4,7 @@ import { type EditorView } from '@codemirror/view';
 
 import { type DarkModeProps, type LgIdProps } from '@leafygreen-ui/lib';
 
-import { type MenuItem } from '../ContextMenu/ContextMenuView';
+import { type ContextMenuItem } from '../ContextMenu';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 
@@ -282,7 +282,7 @@ export type CodeEditorProps = DarkModeProps &
      * Additional menu items to show in the context menu below the default Cut/Copy/Paste items.
      * A separator will automatically be added between default and custom items if custom items are provided.
      */
-    customContextMenuItems?: Array<MenuItem>;
+    customContextMenuItems?: Array<ContextMenuItem>;
   } & (
     | {
         /**

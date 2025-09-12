@@ -6,7 +6,7 @@ import { LgIdProps } from '@leafygreen-ui/lib';
  * A simple menu item configuration with only the essential properties.
  * Actions receive the currently selected text as a parameter.
  */
-export interface MenuItem {
+export interface ContextMenuItem {
   /** Display label for the menu item */
   label: string;
 
@@ -29,7 +29,7 @@ export interface ContextMenuProps extends LgIdProps {
   children: ReactNode;
 
   /** Menu items to show on right-click */
-  menuItems?: Array<MenuItem>;
+  menuItems?: Array<ContextMenuItem>;
 
   /** Whether to prevent the default context menu. @default true */
   preventDefaultContextMenu?: boolean;

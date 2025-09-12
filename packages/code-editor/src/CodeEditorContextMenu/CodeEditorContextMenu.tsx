@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ContextMenu } from '../ContextMenu';
-import { type MenuItem } from '../ContextMenu';
+import { type ContextMenuItem } from '../ContextMenu';
 
 import { CodeEditorContextMenuProps } from './CodeEditorContextMenu.types';
 
@@ -79,7 +79,7 @@ export const CodeEditorContextMenu = ({
     }
   };
 
-  const menuItems: Array<MenuItem> = [
+  const menuItems: Array<ContextMenuItem> = [
     { label: 'Cut', action: handleCut },
     { label: 'Copy', action: handleCopy },
     { label: 'Paste', action: handlePaste },
