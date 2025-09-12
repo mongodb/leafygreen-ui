@@ -3,18 +3,71 @@ import { EditorState } from '@codemirror/state';
 import { act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { renderCodeEditor } from '../testing/testUtils';
+import { getTestUtils } from '../testing';
 
 import { LanguageName } from './hooks/extensions/useLanguageExtension';
+import { renderCodeEditor } from './CodeEditor.testUtils';
 import { CopyButtonAppearance } from './CodeEditor.types';
 import { CodeEditorSelectors } from '.';
 
+// Enhanced MutationObserver mock for CodeMirror compatibility
 global.MutationObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
   takeRecords: jest.fn().mockReturnValue([]),
 }));
+
+// Mock ResizeObserver which is used by CodeMirror
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
+// Mock IntersectionObserver which may be used by CodeMirror
+global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+  root: null,
+  rootMargin: '',
+  thresholds: [],
+}));
+
+// Mock document.getSelection for CodeMirror
+if (!global.document.getSelection) {
+  global.document.getSelection = jest.fn().mockReturnValue({
+    rangeCount: 0,
+    getRangeAt: jest.fn(),
+    removeAllRanges: jest.fn(),
+    addRange: jest.fn(),
+    toString: jest.fn().mockReturnValue(''),
+  });
+}
+
+// Mock createRange for CodeMirror
+if (!global.document.createRange) {
+  global.document.createRange = jest.fn().mockReturnValue({
+    setStart: jest.fn(),
+    setEnd: jest.fn(),
+    collapse: jest.fn(),
+    selectNodeContents: jest.fn(),
+    insertNode: jest.fn(),
+    surroundContents: jest.fn(),
+    cloneRange: jest.fn(),
+    detach: jest.fn(),
+    getClientRects: jest.fn().mockReturnValue([]),
+    getBoundingClientRect: jest.fn().mockReturnValue({
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      width: 0,
+      height: 0,
+    }),
+  });
+}
 
 // Mock console methods to suppress expected warnings
 const originalConsoleWarn = console.warn;
@@ -318,27 +371,25 @@ describe('packages/code-editor', () => {
   });
 
   test('renders copy button when copyButtonAppearance is "hover"', async () => {
-    const { container, editor } = renderCodeEditor({
+    const lgId = 'lg-test-copy-hover';
+    const { editor } = renderCodeEditor({
       copyButtonAppearance: CopyButtonAppearance.Hover,
+      'data-lgid': lgId,
     });
-
     await editor.waitForEditorView();
-
-    expect(
-      container.querySelector(CodeEditorSelectors.CopyButton),
-    ).toBeInTheDocument();
+    const utils = getTestUtils(lgId);
+    expect(utils.getCopyButton()).toBeInTheDocument();
   });
 
   test('renders copy button when copyButtonAppearance is "persist"', async () => {
-    const { container, editor } = renderCodeEditor({
+    const lgId = 'lg-test-copy-persist';
+    const { editor } = renderCodeEditor({
       copyButtonAppearance: CopyButtonAppearance.Persist,
+      'data-lgid': lgId,
     });
-
     await editor.waitForEditorView();
-
-    expect(
-      container.querySelector(CodeEditorSelectors.CopyButton),
-    ).toBeInTheDocument();
+    const utils = getTestUtils(lgId);
+    expect(utils.getCopyButton()).toBeInTheDocument();
   });
 
   test('does not render copy button when copyButtonAppearance is "none"', async () => {

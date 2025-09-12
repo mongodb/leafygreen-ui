@@ -1412,6 +1412,9 @@ importers:
       '@lezer/highlight':
         specifier: ^1.2.1
         version: 1.2.1
+      '@lg-tools/test-harnesses':
+        specifier: ^0.3.4
+        version: 0.3.4
       '@replit/codemirror-lang-csharp':
         specifier: ^6.2.0
         version: 6.2.0(@codemirror/autocomplete@6.18.6)(@codemirror/language@6.11.0)(@codemirror/state@6.5.2)(@codemirror/view@6.38.1)(@lezer/common@1.2.3)(@lezer/highlight@1.2.1)(@lezer/lr@1.4.2)
@@ -5899,8 +5902,8 @@ packages:
   '@lezer/rust@1.0.2':
     resolution: {integrity: sha512-Lz5sIPBdF2FUXcWeCu1//ojFAZqzTQNRga0aYv6dYXqJqPfMdCAI0NzajWUd4Xijj1IKJLtjoXRPMvTKWBcqKg==}
 
-  '@lg-tools/test-harnesses@0.3.2':
-    resolution: {integrity: sha512-SShuDQP8jK9NSK9M3PeBTQ8OoVihrq1/fyrM55B5EABZPjle7tIrMjM5n71YnmDsXAAX5z8PFBpZQHySJmJAgA==}
+  '@lg-tools/test-harnesses@0.3.4':
+    resolution: {integrity: sha512-JfJj2LSMe5vTSDQoLxWUHx2r4wUgKqU1UrgqjvNYM7iebXE0JCE7RvLiEg5SnsRO8xXQbEMjgISErmCDR4DS7Q==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -14250,7 +14253,7 @@ snapshots:
       '@leafygreen-ui/lib': 15.2.0(react@18.3.1)
       '@leafygreen-ui/palette': 5.0.0
       '@leafygreen-ui/tokens': 3.2.1(@babel/core@7.28.0)(react@18.3.1)
-      '@lg-tools/test-harnesses': 0.3.2
+      '@lg-tools/test-harnesses': 0.3.4
       polished: 4.3.1
     transitivePeerDependencies:
       - '@babel/core'
@@ -14372,7 +14375,7 @@ snapshots:
       '@lezer/highlight': 1.2.1
       '@lezer/lr': 1.4.2
 
-  '@lg-tools/test-harnesses@0.3.2':
+  '@lg-tools/test-harnesses@0.3.4':
     dependencies:
       '@testing-library/dom': 9.3.4
 
