@@ -9,3 +9,5 @@ export {
   type RenderHookServerOptions,
   type RenderHookServerResult,
 } from './renderHookServer';
+export { getReactVersion } from './utils/getReactVersion';
+export { isReact17 } from './utils/isReact17';
