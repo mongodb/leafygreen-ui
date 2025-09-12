@@ -21,24 +21,6 @@ export interface MenuItem {
 }
 
 /**
- * Internal state for managing the context menu visibility and content.
- * @internal
- */
-export interface MenuState {
-  /** Whether the menu is currently visible */
-  isVisible: boolean;
-
-  /** Screen coordinates where the menu should appear */
-  position: { x: number; y: number };
-
-  /** Array of menu items to display */
-  menuItems: Array<MenuItem>;
-
-  /** The text that was selected when the menu was triggered */
-  selectedText: string;
-}
-
-/**
  * Props for the ContextMenu component.
  * Provides a simple context menu to all child elements.
  */

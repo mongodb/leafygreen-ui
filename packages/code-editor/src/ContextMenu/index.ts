@@ -1,6 +1,2 @@
 export { ContextMenu } from './ContextMenu';
-export type {
-  ContextMenuProps,
-  MenuItem,
-  MenuState,
-} from './ContextMenu.types';
+export type { ContextMenuProps, MenuItem } from './ContextMenu.types';
