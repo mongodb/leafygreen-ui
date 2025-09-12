@@ -1,4 +1,4 @@
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
 
 import { getFlatLevelDataToNestedData } from '../getFlatLevelDataToNestedData';
 
@@ -34,14 +34,28 @@ describe('transformToNestedData', () => {
     expect(getFlatLevelDataToNestedData).toHaveBeenCalledWith(flatLevelInput);
   });
 
-  test('throws error for unsupported data type', () => {
-    const renderWithInvalidType = () => {
-      renderHook(() =>
+  test('throws error for unsupported data type', async () => {
+    /**
+     * The version of `renderHook`  imported from "@testing-library/react-hooks", (used in React 17)
+     * has an error boundary, and doesn't throw errors as expected:
+     * https://github.com/testing-library/react-hooks-testing-library/blob/main/src/index.ts#L5
+     * */
+    if (isReact17()) {
+      const { result } = renderHook(() => {
         // @ts-expect-error Testing with invalid type
-        transformToNestedData({ type: 'invalidType', data: {} }),
-      );
-    };
+        transformToNestedData({ type: 'invalidType', data: {} });
+      });
 
-    expect(renderWithInvalidType).toThrow('Unsupported data type: invalidType');
+      expect(result.error.message).toEqual(
+        'Unsupported data type: invalidType',
+      );
+    } else {
+      expect(() => {
+        renderHook(() => {
+          // @ts-expect-error Testing with invalid type
+          transformToNestedData({ type: 'invalidType', data: {} });
+        });
+      }).toThrow('Unsupported data type: invalidType');
+    }
   });
 });

@@ -1,8 +1,25 @@
 {
-  "extends": "@lg-tools/build/config/script.tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "comment": "This config extends @lg-tools/build/config/script.tsconfig.json, but is written explicitly to not depend on that package",
   "compilerOptions": {
-    "noUnusedLocals": false,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "target": "ESNext",
+    "incremental": false,
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "noEmit": true,
+    "emitDeclarationOnly": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "strict": true,
+    "resolveJsonModule": true,
+    "pretty": true,
+    "skipLibCheck": true,
+    "lib": ["ESNext"],
+    "noUnusedLocals": false,
     "baseUrl": ".",
   }
 }

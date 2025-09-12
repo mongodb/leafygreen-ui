@@ -53,6 +53,10 @@
       "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/umd/index.js"
+    },
+    "./config/*": {
+      "import": "./config/*",
+      "require": "./config/*"
     }
   },
   "typesVersions": {}

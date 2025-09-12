@@ -6,13 +6,12 @@ import { getLGConfig } from '../getLGConfig';
 console.log = jest.fn();
 
 describe('tools/meta/getLGConfig', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     fsx.ensureDirSync('./tmp/');
   });
   afterEach(() => {
     fsx.emptyDirSync('./tmp');
   });
-
   afterAll(() => {
     fsx.rmdirSync('./tmp/');
   });

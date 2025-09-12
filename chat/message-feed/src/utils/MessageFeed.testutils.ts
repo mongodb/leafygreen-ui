@@ -22,7 +22,7 @@ type MongoMessageFields = MessageFieldsBase & {
 
 export type MessageFields = UserMessageFields | MongoMessageFields;
 
-export const baseMessages: Array<MessageFields> = [
+export const baseMessages = [
   {
     id: 1,
     messageBody: 'Hi! Ask me anything.',
@@ -74,4 +74,4 @@ Refer to [LeafyGreen UI](mongodb.design) or [LeafyGreen UI](mongodb.design) for 
         console.log(`Message 6 was ${e.target.value}.`),
     },
   },
-] as const;
+] as const satisfies Readonly<Array<MessageFields>>;

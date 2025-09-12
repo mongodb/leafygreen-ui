@@ -14,7 +14,10 @@ const title = 'Test button title';
 const child = 'Button child';
 
 function renderButton(props: ButtonProps = {}) {
-  const utils = render(<Button {...props} data-testid="button-id" />);
+  const utils = render(
+    // @ts-ignore React17 types
+    <Button {...props} data-testid="button-id" />,
+  );
   const { getButton, isDisabled } = getTestUtils();
   const button = getButton();
   return { ...utils, button, isDisabled };

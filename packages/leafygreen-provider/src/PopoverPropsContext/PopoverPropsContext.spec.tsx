@@ -32,7 +32,7 @@ describe('usePopoverPropsContext', () => {
       usePortal: true,
     };
     const { result } = renderHook(usePopoverPropsContext, {
-      wrapper: ({ children }) => (
+      wrapper: ({ children }: any) => (
         <PopoverPropsProvider {...customProps}>{children}</PopoverPropsProvider>
       ),
     });

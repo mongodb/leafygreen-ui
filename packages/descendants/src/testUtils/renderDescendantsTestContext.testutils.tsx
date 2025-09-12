@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
-import { render, RenderHookResult, RenderResult } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { renderHook, RenderHookResult } from '@leafygreen-ui/testing-lib';
 
-import { InitDescendantsReturnObject } from '../Descendants/useInitDescendants';
+import { type InitDescendantsReturnObject } from '../Descendants/useInitDescendants';
 import { useInitDescendants } from '..';
 
 import { TestDescendantContext } from './components.testutils';

@@ -1,4 +1,4 @@
-import { act } from './RTLOverrides';
+import { act } from './ReactTestingLibrary';
 
 /**
  * Wrapper around `act`.

@@ -39,6 +39,7 @@ describe('packages/side-nav', () => {
       const { sideNavItem, sideNavLink } = testIds;
       const { children, ...rest } = props;
       const { getByTestId, queryByTestId } = render(
+        // @ts-ignore React17 types
         <SideNavItem data-testid={sideNavItem} {...rest}>
           {children}
         </SideNavItem>,

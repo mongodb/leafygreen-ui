@@ -24,6 +24,6 @@
     },
     {
       "path": "../../tools/storybook-utils"
-    },
-  ],
+    }
+  ]
 }

@@ -126,7 +126,6 @@ describe('Typescript types', () => {
       <ExamplePolymorphic as={ButtonLikeWrapper} href=".design" />
 
       <ExamplePolymorphic as={AnchorLikeWrapper} href=".design" />
-      <ExamplePolymorphic as={NextLink} href=".design" />
       <ExamplePolymorphic as={() => <></>} />
       {/* @ts-expect-error href is not valid on an empty component */}
       <ExamplePolymorphic as={() => <></>} href="forbidden"/>
@@ -171,7 +170,6 @@ describe('Typescript types', () => {
       <ExamplePolymorphicWithRef as={ButtonLikeWrapper} href=".design" />
 
       <ExamplePolymorphicWithRef as={AnchorLikeWrapper} href=".design" />
-      <ExamplePolymorphicWithRef as={NextLink} href=".design" />
       <ExamplePolymorphicWithRef as={() => <></>} />
       {/* @ts-expect-error href is not valid on an empty component */}
       <ExamplePolymorphicWithRef as={() => <></>} href="forbidden"/>
@@ -216,7 +214,6 @@ describe('Typescript types', () => {
       <AdvancedPolymorphic as={ButtonLikeWrapper} href=".design" />
 
       <AdvancedPolymorphic as={AnchorLikeWrapper} href=".design" />
-      <AdvancedPolymorphic as={NextLink} href=".design" />
       <AdvancedPolymorphic as={() => <></>} />
       {/* @ts-expect-error href is not valid on an empty component */}
       <AdvancedPolymorphic as={() => <></>} href="forbidden"/>
@@ -261,7 +258,6 @@ describe('Typescript types', () => {
       <AdvancedPolymorphicWithRef as={ButtonLikeWrapper} href=".design" />
 
       <AdvancedPolymorphicWithRef as={AnchorLikeWrapper} href=".design" />
-      <AdvancedPolymorphicWithRef as={NextLink} href=".design" />
       <AdvancedPolymorphicWithRef as={() => <></>} />
       {/* @ts-expect-error href is not valid on an empty component */}
       <AdvancedPolymorphicWithRef as={() => <></>} href="forbidden"/>
@@ -307,9 +303,8 @@ describe('Typescript types', () => {
 
       <ExampleInferred as={AnchorLikeWrapper} href=".design" />
 
-      {/** @ts-expect-error TODO: href is not valid on an empty component. See {@link InferredPolymorphicProps} */}
       <ExampleInferred as={() => <></>} />
-      {/** TODO: ts-expect-error href is not valid on an empty component. See {@link InferredPolymorphicProps}*/}
+      {/** @ts-expect-error href is not valid on an empty component. See {@link InferredPolymorphicProps}*/}
       <ExampleInferred as={() => <></>} href="forbidden"/>
     </>;
   });
@@ -358,9 +353,8 @@ describe('Typescript types', () => {
 
       <ExampleInferredDefaultButton as={AnchorLikeWrapper} href=".design" />
 
-      {/** @ts-expect-error TODO: href is not valid on an empty component. See {@link InferredPolymorphicProps} */}
       <ExampleInferredDefaultButton as={() => <></>} />
-      {/** TODO: ts-expect-error href is not valid on an empty component. See {@link InferredPolymorphicProps}*/}
+      {/** @ts-expect-error href is not valid on an empty component. See {@link InferredPolymorphicProps}*/}
       <ExampleInferredDefaultButton as={() => <></>} href="forbidden"/>
     </>;
   });

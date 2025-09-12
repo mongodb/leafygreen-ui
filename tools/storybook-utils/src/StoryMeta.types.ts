@@ -125,4 +125,8 @@ export type PlayFn<
   T extends React.ElementType,
   /** Any eXtra Props the story should support */
   XP extends Record<string, any> = {},
-> = PlayFunction<ReactRenderer, ComponentProps<T> & XP>;
+> = PlayFunction<
+  // @ts-ignore React17 - ReactRenderer does not satisfy the constraint Renderer
+  ReactRenderer,
+  ComponentProps<T> & XP
+>;

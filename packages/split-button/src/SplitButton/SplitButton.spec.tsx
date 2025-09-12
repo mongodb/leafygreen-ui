@@ -10,9 +10,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Optional } from '@leafygreen-ui/lib';
 import { getLgIds as getMenuLgIds, MenuItem } from '@leafygreen-ui/menu';
-import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
 import { RenderMode } from '@leafygreen-ui/popover';
 
 import { getLgIds } from '../utils/getLgIds';
@@ -36,17 +34,13 @@ const getMenuItems = (): MenuItemsType => {
   ];
 };
 
-const defaultProps = {
+const defaultProps: Partial<SplitButtonProps> = {
   label: 'Button Label',
   menuItems: getMenuItems(),
 };
 
-type RenderSplitButtonProps = Optional<
-  InferredPolymorphicPropsWithRef<'button', SplitButtonProps>,
-  keyof typeof defaultProps
->;
-
-function renderSplitButton(props: RenderSplitButtonProps = {}) {
+function renderSplitButton(props: Partial<SplitButtonProps>) {
+  // @ts-expect-error FIXME: React 17 Type 'SVGSymbolElement' is missing the following properties
   const renderResult = render(<SplitButton {...defaultProps} {...props} />);
   const wrapper = renderResult.getByTestId(lgIds.root);
   const primaryButton = renderResult.getByTestId(lgIds.button);

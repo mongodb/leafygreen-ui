@@ -1,9 +1,9 @@
 import { renderHook } from '@testing-library/react-hooks/server';
 
-import {
+import type {
   RenderHookServerOptions,
   RenderHookServerResult,
-} from './renderHookServer';
+} from './renderHookServer.types';
 
 /**
  * Allows you to mock the server side rendering of a hook in pre React 18 versions.

@@ -1,15 +1,20 @@
 import React, { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
+import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 import Link from './Link';
-import { BaseLinkProps } from './Link.types';
+import { LinkProps } from './Link.types';
 
-type LinkRenderProps = InferredPolymorphicProps<'span', BaseLinkProps>;
-
-const renderLink = (props: LinkRenderProps) => {
-  render(<Link {...props}>Link</Link>);
+const renderLink = <TAs extends PolymorphicAs>({
+  ref,
+  ...props
+}: LinkProps<TAs>) => {
+  render(
+    <Link ref={ref} {...props}>
+      Link
+    </Link>,
+  );
 };
 
 describe('packages/typography', () => {
