@@ -100,17 +100,6 @@ jobs:
       - name: Init React 17 environment
         run: node ./scripts/react17/init.mjs
 
-      - name: Setup Node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install node-gyp
-        run: pnpm add --global node-gyp
-
-      - name: Init React 17 environment
-        run: node ./scripts/react17/init.mjs
-
       - name: Install dependencies
         run: pnpm install --prefer-offline # Intentionally not using --frozen-lockfile to allow for pnpm-lock.yaml updates
 
