@@ -47,11 +47,11 @@ async function main() {
 
   // Step 2: Update package.json versions
   console.log('2️⃣ Updating package.json...');
-  await mergePackageVersions();
+  mergePackageVersions();
 
   // Step 3: Update tsconfig files
   console.log('3️⃣ Updating TypeScript configurations...');
-  await mergeTsConfigs();
+  mergeTsConfigs();
 
   console.log('⚛️ React 17 environment setup complete!');
 }
