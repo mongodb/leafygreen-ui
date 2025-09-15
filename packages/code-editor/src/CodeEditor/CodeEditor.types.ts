@@ -282,7 +282,7 @@ export type CodeEditorProps = DarkModeProps &
      * Additional menu items to show in the context menu below the default Cut/Copy/Paste items.
      * A separator will automatically be added between default and custom items if custom items are provided.
      */
-    customContextMenuItems?: Array<ContextMenuItem>;
+    customContextMenuItems?: Array<Omit<ContextMenuItem, 'isSeparator'>>;
   } & (
     | {
         /**
