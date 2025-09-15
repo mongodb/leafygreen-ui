@@ -2,7 +2,9 @@ import { type ReactNode } from 'react';
 import { type EditorState, type Extension } from '@codemirror/state';
 import { type EditorView } from '@codemirror/view';
 
-import { type DarkModeProps } from '@leafygreen-ui/lib';
+import { type DarkModeProps, type LgIdProps } from '@leafygreen-ui/lib';
+
+import { type ContextMenuItem } from '../ContextMenu';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 import { CodeEditorModules } from './hooks';
@@ -121,170 +123,177 @@ export interface CodeEditorTooltip {
   severity?: CodeEditorTooltipSeverity;
 }
 
-export type CodeEditorProps = DarkModeProps & {
-  /**
-   * Font size of text in the editor.
-   *
-   * @default 14
-   */
-  baseFontSize?: 14 | 16;
+export type CodeEditorProps = DarkModeProps &
+  LgIdProps & {
+    /**
+     * Font size of text in the editor.
+     *
+     * @default 14
+     */
+    baseFontSize?: 14 | 16;
 
-  /**
-   * Styling prop
-   */
-  className?: string;
+    /**
+     * Styling prop
+     */
+    className?: string;
 
-  /**
-   * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
-   *
-   * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
-   *
-   * If `persist`, the copy button will always be visible.
-   *
-   * If `none`, the copy button will not be rendered.
-   *
-   * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
-   *
-   * @default `hover`
-   */
-  copyButtonAppearance?: CopyButtonAppearance;
+    /**
+     * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
+     *
+     * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
+     *
+     * If `persist`, the copy button will always be visible.
+     *
+     * If `none`, the copy button will not be rendered.
+     *
+     * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
+     *
+     * @default `hover`
+     */
+    copyButtonAppearance?: CopyButtonAppearance;
 
-  /**
-   * Initial value to render in the editor.
-   */
-  defaultValue?: string;
+    /**
+     * Initial value to render in the editor.
+     */
+    defaultValue?: string;
 
-  /**
-   * Renders URLs as clickable links in the editor.
-   */
-  enableClickableUrls?: boolean;
+    /**
+     * Renders URLs as clickable links in the editor.
+     */
+    enableClickableUrls?: boolean;
 
-  /**
-   * Enables code folding arrows in the gutter.
-   */
-  enableCodeFolding?: boolean;
+    /**
+     * Enables code folding arrows in the gutter.
+     */
+    enableCodeFolding?: boolean;
 
-  /**
-   * Enables line numbers in the editor’s gutter.
-   */
-  enableLineNumbers?: boolean;
+    /**
+     * Enables line numbers in the editor’s gutter.
+     */
+    enableLineNumbers?: boolean;
 
-  /**
-   * Enables line wrapping when the text exceeds the editor’s width.
-   */
-  enableLineWrapping?: boolean;
+    /**
+     * Enables line wrapping when the text exceeds the editor’s width.
+     */
+    enableLineWrapping?: boolean;
 
-  /**
-   * Additional CodeMirror extensions to apply to the editor. These will be applied
-   * with high precendence, meaning they can override extensions applied through
-   * built in props.
-   * @see {@link https://codemirror.net/docs/ref/#state.Extension}
-   */
-  extensions?: Array<CodeMirrorExtension>;
+    /**
+     * Additional CodeMirror extensions to apply to the editor. These will be applied
+     * with high precendence, meaning they can override extensions applied through
+     * built in props.
+     * @see {@link https://codemirror.net/docs/ref/#state.Extension}
+     */
+    extensions?: Array<CodeMirrorExtension>;
 
-  /**
-   * Forces parsing of complete document, even if it is not visible. USE WITH CAUTION!
-   * By default the editor only parses the visible part of the code on the
-   * screen. This significantly increases performance when there is a lot of
-   * code rendered. When enabled, this forces parsing of non-visible code.
-   * This should only be used in exceptional cases.
-   */
-  forceParsing?: boolean;
+    /**
+     * Forces parsing of complete document, even if it is not visible. USE WITH CAUTION!
+     * By default the editor only parses the visible part of the code on the
+     * screen. This significantly increases performance when there is a lot of
+     * code rendered. When enabled, this forces parsing of non-visible code.
+     * This should only be used in exceptional cases.
+     */
+    forceParsing?: boolean;
 
-  /**
-   * Sets the editor's height. If not set, the editor will automatically adjust
-   * its height based on the content.
-   */
-  height?: string;
+    /**
+     * Sets the editor's height. If not set, the editor will automatically adjust
+     * its height based on the content.
+     */
+    height?: string;
 
-  /**
-   * Sets the editor's indent size on tab click.
-   */
-  indentSize?: number;
+    /**
+     * Sets the editor's indent size on tab click.
+     */
+    indentSize?: number;
 
-  /**
-   * Sets the editor's indent unit on tab click.
-   */
-  indentUnit?: IndentUnits;
+    /**
+     * Sets the editor's indent unit on tab click.
+     */
+    indentUnit?: IndentUnits;
 
-  /**
-   * Renders the editor in a loading state.
-   *
-   * @remarks
-   * The CodeEditor is an asynchronous component that relies on lazy loading of
-   * modules. Due to this, regardless of the `isLoading` prop, the editor will
-   * always render a loading state until all required modules are loaded.
-   * This is to ensure that the editor is fully functional before it is displayed.
-   */
-  isLoading?: boolean;
+    /**
+     * Renders the editor in a loading state.
+     *
+     * @remarks
+     * The CodeEditor is an asynchronous component that relies on lazy loading of
+     * modules. Due to this, regardless of the `isLoading` prop, the editor will
+     * always render a loading state until all required modules are loaded.
+     * This is to ensure that the editor is fully functional before it is displayed.
+     */
+    isLoading?: boolean;
 
-  /**
-   * Language to use for syntax highlighting. Will have no highlighting if not set.
-   */
-  language?: LanguageName;
+    /**
+     * Language to use for syntax highlighting. Will have no highlighting if not set.
+     */
+    language?: LanguageName;
 
-  /**
-   * Sets the editor's max height.
-   */
-  maxHeight?: string;
+    /**
+     * Sets the editor's max height.
+     */
+    maxHeight?: string;
 
-  /**
-   * Sets the editor's max width.
-   */
-  maxWidth?: string;
+    /**
+     * Sets the editor's max width.
+     */
+    maxWidth?: string;
 
-  /**
-   * Sets the editor's minimum height.
-   */
-  minHeight?: string;
+    /**
+     * Sets the editor's minimum height.
+     */
+    minHeight?: string;
 
-  /**
-   * Sets the editor's minimum width.
-   */
-  minWidth?: string;
+    /**
+     * Sets the editor's minimum width.
+     */
+    minWidth?: string;
 
-  /**
-   * Callback that receives the updated editor value when changes are made.
-   */
-  onChange?: (value: string) => void;
+    /**
+     * Callback that receives the updated editor value when changes are made.
+     */
+    onChange?: (value: string) => void;
 
-  /**
-   * Value to display in the editor when it is empty.
-   */
-  placeholder?: HTMLElement | string;
+    /**
+     * Value to display in the editor when it is empty.
+     */
+    placeholder?: HTMLElement | string;
 
-  /**
-   * Pre-loaded modules to be used instead of dynamically loading them.
-   * When provided, the editor will use ONLY these modules and skip all lazy loading,
-   * ensuring synchronous behavior. Missing required modules will generate console warnings
-   * but will not be loaded automatically. Consumers are responsible for providing all
-   * necessary modules for their editor configuration. Use with caution.
-   */
-  preLoadedModules?: Partial<CodeEditorModules>;
+    /**
+     * Pre-loaded modules to be used instead of dynamically loading them.
+     * When provided, the editor will use ONLY these modules and skip all lazy loading,
+     * ensuring synchronous behavior. Missing required modules will generate console warnings
+     * but will not be loaded automatically. Consumers are responsible for providing all
+     * necessary modules for their editor configuration. Use with caution.
+     */
+    preLoadedModules?: Partial<CodeEditorModules>;
 
-  /**
-   * Enables read only mode, making the contents uneditable.
-   */
-  readOnly?: boolean;
+    /**
+     * Enables read only mode, making the contents uneditable.
+     */
+    readOnly?: boolean;
 
-  /**
-   * Add tooltips to the editor content.
-   */
-  tooltips?: Array<CodeEditorTooltip>;
+    /**
+     * Add tooltips to the editor content.
+     */
+    tooltips?: Array<CodeEditorTooltip>;
 
-  /**
-   * Controlled value of the editor. If set, the editor will not be editable
-   * and will not update its value on change. Use `onChange` to update the
-   * value externally.
-   */
-  value?: string;
+    /**
+     * Controlled value of the editor. If set, the editor will not be editable
+     * and will not update its value on change. Use `onChange` to update the
+     * value externally.
+     */
+    value?: string;
 
-  /**
-   * Sets the editor's width. If not set, the editor will be 100% width of its
-   * parent container.
-   */
-  width?: string;
-} & (
+    /**
+     * Sets the editor's width. If not set, the editor will be 100% width of its
+     * parent container.
+     */
+    width?: string;
+
+    /**
+     * Additional menu items to show in the context menu below the default Cut/Copy/Paste items.
+     * A separator will automatically be added between default and custom items if custom items are provided.
+     */
+    customContextMenuItems?: Array<Omit<ContextMenuItem, 'isSeparator'>>;
+  } & (
     | {
         /**
          * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.

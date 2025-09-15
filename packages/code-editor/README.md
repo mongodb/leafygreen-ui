@@ -45,36 +45,37 @@ console.log(greet('MongoDB user'));`;
 
 #### Properties
 
-| Name                                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Type                         | Default     |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | ----------- |
-| `baseFontSize` _(optional)_         | Font size of text in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `BaseFontSize`               | `14`        |
-| `className` _(optional)_            | CSS class name to apply to the editor container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                     | `undefined` |
-| `copyButtonAppearance` _(optional)_ | Determines the appearance of the copy button. The copy button allows the code block to be copied to the user's clipboard by clicking the button.<br><br>If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.<br><br>If `persist`, the copy button will always be visible.<br><br>If `none`, the copy button will not be rendered.                                                                                                                                                                                                                                     | `CopyButtonAppearance`       | `"hover"`   |
-| `darkMode` _(optional)_             | Determines if the component appears in dark mode. When not provided, the component will inherit the dark mode state from the LeafyGreen Provider.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `boolean`                    | `undefined` |
-| `defaultValue` _(optional)_         | Initial value to render in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `string`                     | `undefined` |
-| `enableClickableUrls` _(optional)_  | Renders URLs as clickable links in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `boolean`                    | `undefined` |
-| `enableCodeFolding` _(optional)_    | Enables code folding arrows in the gutter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `boolean`                    | `undefined` |
-| `enableLineNumbers` _(optional)_    | Enables line numbers in the editor’s gutter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `boolean`                    | `true`      |
-| `enableLineWrapping` _(optional)_   | Enables line wrapping when the text exceeds the editor’s width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `boolean`                    | `true`      |
-| `extensions` _(optional)_           | Additional CodeMirror extensions to apply to the editor. These will be applied with high precendence, meaning they can override extensions applied through built in props. See the [CodeMirror v6 System Guide](https://codemirror.net/docs/guide/) for more information.                                                                                                                                                                                                                                                                                                                                                                                          | `Array<CodeMirrorExtension>` | `[]`        |
-| `forceParsing` _(optional)_         | _**This should be used with caution as it can significantly impact performance!**_<br><br>Forces the parsing of the complete document, even parts not currently visible.<br><br>By default, the editor optimizes performance by only parsing the code that is visible on the screen, which is especially beneficial when dealing with large amounts of code. Enabling this option overrides this behavior and forces the parsing of all code, visible or not. This should generally be reserved for exceptional circumstances.                                                                                                                                     | `boolean`                    | `false`     |
-| `height` _(optional)_               | Sets the editor's height. If not set, the editor will automatically adjust its height based on the content.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `string`                     | `undefined` |
-| `indentSize` _(optional)_           | Sets the editor's indent size on tab click.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `number`                     | `undefined` |
-| `indentUnit` _(optional)_           | Sets the editor's indent unit on tab click.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `IndentUnits`                | `undefined` |
-| `isLoading` _(optional)_            | Renders the editor in a loading state. The CodeEditor is an asynchronous component that relies on lazy loading of modules. Due to this, regardless of the `isLoading` prop, the editor will always render a loading state until all required modules are loaded.                                                                                                                                                                                                                                                                                                                                                                                                   | `boolean`                    | `false`     |
-| `language` _(optional)_             | Specifies the language for syntax highlighting and autocompletion. The following languages are supported:<br><ul><li>cpp</li><li>csharp</li><li>css</li><li>go</li><li>html</li><li>java</li><li>javascript</li><li>jsx</li><li>json</li><li>kotlin</li><li>php</li><li>python</li><li>ruby</li><li>rust</li><li>typescript</li><li>tsx</li></ul>                                                                                                                                                                                                                                                                                                                  | `LanguageName`               | `undefined` |
-| `maxHeight` _(optional)_            | Sets the editor's maximum height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `string`                     | `undefined` |
-| `maxWidth` _(optional)_             | Sets the editor's maximum width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                     | `undefined` |
-| `minHeight` _(optional)_            | Sets the editor's minimum height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `string`                     | `undefined` |
-| `minWidth` _(optional)_             | Sets the editor's minimum width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                     | `undefined` |
-| `onChange` _(optional)_             | Callback that receives the updated editor value when changes are made.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `(value: string) => void`    | `undefined` |
-| `panel` _(optional)_                | Panel component to render at the top of the CodeEditor. Provides a toolbar interface with formatting, copying, and custom action buttons. See the Panel component documentation for available options.                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `React.ReactNode`            | `undefined` |
-| `placeholder` _(optional)_          | Value to display in the editor when it is empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `HTMLElement \| string`      | `undefined` |
-| `preLoadedModules` _(optional)_     | **Use with caution**. By default, the editor lazy loads required packages dynamically to reduce bundle size and improve load performance, causing a brief loading state on initial render. This prop allows passing pre-loaded modules instead. When used, the editor skips all dynamic loading and relies exclusively on the provided modules. You must include the core modules (`codemirror`, `@codemirror/view`, `@codemirror/state`, `@codemirror/commands`, `@codemirror/search`) plus any additional modules for your specific functionality. See the [CodeMirror Extension Hooks](#codemirror-extension-hooks) section for module requirements by feature. | `Partial<CodeEditorModules>` | `undefined` |
-| `readOnly` _(optional)_             | Enables read only mode, making the contents uneditable.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `boolean`                    | `false`     |
-| `tooltips` _(optional)_             | Add tooltips to the editor content that appear on hover.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `Array<CodeEditorTooltip>`   | `undefined` |
-| `value` _(optional)_                | Controlled value of the editor. If set, the editor will be controlled and will not update its value on change. Use `onChange` to update the value externally.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `string`                     | `undefined` |
-| `width` _(optional)_                | Sets the editor's width. If not set, the editor will be 100% width of its parent container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `string`                     | `undefined` |
+| Name                                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Type                         | Default     |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | ----------- |
+| `baseFontSize` _(optional)_           | Font size of text in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `BaseFontSize`               | `14`        |
+| `className` _(optional)_              | CSS class name to apply to the editor container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                     | `undefined` |
+| `copyButtonAppearance` _(optional)_   | Determines the appearance of the copy button. The copy button allows the code block to be copied to the user's clipboard by clicking the button.<br><br>If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.<br><br>If `persist`, the copy button will always be visible.<br><br>If `none`, the copy button will not be rendered.                                                                                                                                                                                                                                     | `CopyButtonAppearance`       | `"hover"`   |
+| `customContextMenuItems` _(optional)_ | Additional menu items to show in the context menu below the default Cut/Copy/Paste items. A separator will automatically be added between default and custom items if custom items are provided. Each item can include a label, action function, disabled state, and separator flag.                                                                                                                                                                                                                                                                                                                                                                               | `Array<MenuItem>`            | `undefined` |
+| `darkMode` _(optional)_               | Determines if the component appears in dark mode. When not provided, the component will inherit the dark mode state from the LeafyGreen Provider.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `boolean`                    | `undefined` |
+| `defaultValue` _(optional)_           | Initial value to render in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `string`                     | `undefined` |
+| `enableClickableUrls` _(optional)_    | Renders URLs as clickable links in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `boolean`                    | `undefined` |
+| `enableCodeFolding` _(optional)_      | Enables code folding arrows in the gutter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `boolean`                    | `undefined` |
+| `enableLineNumbers` _(optional)_      | Enables line numbers in the editor’s gutter.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `boolean`                    | `true`      |
+| `enableLineWrapping` _(optional)_     | Enables line wrapping when the text exceeds the editor’s width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `boolean`                    | `true`      |
+| `extensions` _(optional)_             | Additional CodeMirror extensions to apply to the editor. These will be applied with high precendence, meaning they can override extensions applied through built in props. See the [CodeMirror v6 System Guide](https://codemirror.net/docs/guide/) for more information.                                                                                                                                                                                                                                                                                                                                                                                          | `Array<CodeMirrorExtension>` | `[]`        |
+| `forceParsing` _(optional)_           | _**This should be used with caution as it can significantly impact performance!**_<br><br>Forces the parsing of the complete document, even parts not currently visible.<br><br>By default, the editor optimizes performance by only parsing the code that is visible on the screen, which is especially beneficial when dealing with large amounts of code. Enabling this option overrides this behavior and forces the parsing of all code, visible or not. This should generally be reserved for exceptional circumstances.                                                                                                                                     | `boolean`                    | `false`     |
+| `height` _(optional)_                 | Sets the editor's height. If not set, the editor will automatically adjust its height based on the content.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `string`                     | `undefined` |
+| `indentSize` _(optional)_             | Sets the editor's indent size on tab click.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `number`                     | `undefined` |
+| `indentUnit` _(optional)_             | Sets the editor's indent unit on tab click.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `IndentUnits`                | `undefined` |
+| `isLoading` _(optional)_              | Renders the editor in a loading state. The CodeEditor is an asynchronous component that relies on lazy loading of modules. Due to this, regardless of the `isLoading` prop, the editor will always render a loading state until all required modules are loaded.                                                                                                                                                                                                                                                                                                                                                                                                   | `boolean`                    | `false`     |
+| `language` _(optional)_               | Specifies the language for syntax highlighting and autocompletion. The following languages are supported:<br><ul><li>cpp</li><li>csharp</li><li>css</li><li>go</li><li>html</li><li>java</li><li>javascript</li><li>jsx</li><li>json</li><li>kotlin</li><li>php</li><li>python</li><li>ruby</li><li>rust</li><li>typescript</li><li>tsx</li></ul>                                                                                                                                                                                                                                                                                                                  | `LanguageName`               | `undefined` |
+| `maxHeight` _(optional)_              | Sets the editor's maximum height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `string`                     | `undefined` |
+| `maxWidth` _(optional)_               | Sets the editor's maximum width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                     | `undefined` |
+| `minHeight` _(optional)_              | Sets the editor's minimum height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `string`                     | `undefined` |
+| `minWidth` _(optional)_               | Sets the editor's minimum width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                     | `undefined` |
+| `onChange` _(optional)_               | Callback that receives the updated editor value when changes are made.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `(value: string) => void`    | `undefined` |
+| `panel` _(optional)_                  | Panel component to render at the top of the CodeEditor. Provides a toolbar interface with formatting, copying, and custom action buttons. See the Panel component documentation for available options.                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `React.ReactNode`            | `undefined` |
+| `placeholder` _(optional)_            | Value to display in the editor when it is empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `HTMLElement \| string`      | `undefined` |
+| `preLoadedModules` _(optional)_       | **Use with caution**. By default, the editor lazy loads required packages dynamically to reduce bundle size and improve load performance, causing a brief loading state on initial render. This prop allows passing pre-loaded modules instead. When used, the editor skips all dynamic loading and relies exclusively on the provided modules. You must include the core modules (`codemirror`, `@codemirror/view`, `@codemirror/state`, `@codemirror/commands`, `@codemirror/search`) plus any additional modules for your specific functionality. See the [CodeMirror Extension Hooks](#codemirror-extension-hooks) section for module requirements by feature. | `Partial<CodeEditorModules>` | `undefined` |
+| `readOnly` _(optional)_               | Enables read only mode, making the contents uneditable.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `boolean`                    | `false`     |
+| `tooltips` _(optional)_               | Add tooltips to the editor content that appear on hover.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `Array<CodeEditorTooltip>`   | `undefined` |
+| `value` _(optional)_                  | Controlled value of the editor. If set, the editor will be controlled and will not update its value on change. Use `onChange` to update the value externally.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `string`                     | `undefined` |
+| `width` _(optional)_                  | Sets the editor's width. If not set, the editor will be 100% width of its parent container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `string`                     | `undefined` |
 
 ### `<Panel>`
 
@@ -314,549 +315,95 @@ editorRef.current.downloadContent(); // No filename provided
 
 | `IndentUnits` | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop. |
 | `LanguageName` | Constant object containing all supported programming languages for syntax highlighting. |
+| `MenuItem` | TypeScript interface defining the structure for context menu items with label, action, disabled state, and separator flag. |
 | `PanelProps` | TypeScript interface defining all props that can be passed to the `Panel` component. |
 
 ## Test Utilities
 
-The `@leafygreen-ui/code-editor` package provides a comprehensive testing utility to help you test CodeEditor components in your Jest tests.
+The `@leafygreen-ui/code-editor` package provides test utilities to help test CodeEditor and Panel components in your applications.
 
-### `renderCodeEditor(props?)`
+### `getTestUtils(lgId?)`
 
-Renders a CodeEditor component with the specified props for testing purposes.
+Returns utilities for testing CodeEditor and Panel components. These utilities follow the `@testing-library` pattern with `get*`, `find*`, and `query*` variants for each element.
 
 **Parameters:**
 
-- `props` _(optional)_: Partial `CodeEditorProps` to pass to the CodeEditor component
+- `lgId` _(optional)_: Custom lgId string to scope the queries. Must follow the pattern `lg-${string}`. Defaults to `'lg-code_editor'`
 
 **Returns:**
 
-- `container`: The rendered container element from `@testing-library/react`
-- `editor`: Editor test utilities object with methods for interacting with the editor
+An object with methods for testing the CodeEditor and its Panel.
 
-**Example:**
+#### Editor Utilities
 
-```tsx
-import { renderCodeEditor } from '@leafygreen-ui/code-editor';
+- `getEditor()` / `findEditor()` / `queryEditor()` - Get the CodeEditor root element
+- `getContentContainer()` / `findContentContainer()` / `queryContentContainer()` - Get the content container element
+- `getCopyButton()` / `findCopyButton()` / `queryCopyButton()` - Get the copy button element (when not using panel)
 
-test('renders code editor with default value', async () => {
-  const { editor, container } = renderCodeEditor({
-    defaultValue: 'console.log("Hello World");',
-  });
-  await editor.waitForEditorView();
+#### Loading Utilities
 
-  expect(container).toHaveTextContent('console.log("Hello World");');
-});
-```
+- `isLoading()` - Checks if the editor is currently in a loading state
+- `waitForLoadingToComplete(timeout?)` - Waits for the loading state to complete (returns `Promise<void>`)
 
-### Editor Test Utilities
+#### Panel Utilities
 
-The `editor` object returned by `renderCodeEditor` provides the following methods:
+- `getPanelUtils()` - Gets panel-specific utilities if panel is present
 
-#### `editor.waitForEditorView(timeout?)`
+Returns an object with:
 
-Waits for the editor view to be available before proceeding with tests.
+- `getPanelElement()` / `findPanelElement()` / `queryPanelElement()` - Get the panel element
+- `getFormatButton()` / `findFormatButton()` / `queryFormatButton()` - Get the format button element
+- `getPanelCopyButton()` / `findPanelCopyButton()` / `queryPanelCopyButton()` - Get the panel's copy button element
+- `getSecondaryMenuButton()` / `findSecondaryMenuButton()` / `querySecondaryMenuButton()` - Get the secondary menu button element
+- `getSecondaryMenu()` / `findSecondaryMenu()` / `querySecondaryMenu()` - Get the secondary menu element
 
-##### Parameters
+#### Example Usage
 
-- `timeout` _(optional)_: Maximum time to wait in milliseconds (default: 5000)
-
-##### Returns
-
-Promise that resolves when the editor view is available
-
-##### Example
+**Basic Testing:**
 
 ```tsx
-const { editor } = renderCodeEditor();
-await editor.waitForEditorView(); // Wait before interacting with editor
-```
-
-#### `editor.getBySelector(selector, options?)`
-
-Returns the first element matching a specific CodeEditor selector. Throws an error if no element or multiple elements are found.
-
-##### Parameters
-
-- `selector`: The CSS selector from `CodeEditorSelectors` enum
-- `options` _(optional)_: Object with optional `text` property for filtering by text content
-
-##### Example
-
-```tsx
-// Get the content element
-const content = editor.getBySelector(CodeEditorSelectors.Content);
-
-// Get a specific line number
-const lineNumber = editor.getBySelector(CodeEditorSelectors.GutterElement, {
-  text: '1',
-});
-```
-
-#### `editor.getAllBySelector(selector, options?)`
-
-Returns all elements matching a specific CodeEditor selector. Throws an error if no elements are found.
-
-##### Parameters
-
-- `selector`: The CSS selector from `CodeEditorSelectors` enum
-- `options` _(optional)_: Object with optional `text` property for filtering by text content
-
-##### Example
-
-```tsx
-// Get all line numbers
-const allLineNumbers = editor.getAllBySelector(
-  CodeEditorSelectors.GutterElement,
-);
-```
-
-#### `editor.queryBySelector(selector, options?)`
-
-Returns the first element matching a specific CodeEditor selector, or null if not found. Useful when you're not sure if an element exists.
-
-##### Parameters
-
-- `selector`: The CSS selector from `CodeEditorSelectors` enum
-- `options` _(optional)_: Object with optional `text` property for filtering by text content
-
-##### Example
-
-```tsx
-// Check if fold gutter exists
-const foldGutter = editor.queryBySelector(CodeEditorSelectors.FoldGutter);
-expect(foldGutter).not.toBeInTheDocument();
-```
-
-#### `editor.queryAllBySelector(selector, options?)`
-
-Returns all elements matching a specific CodeEditor selector, or null if none are found.
-
-##### Parameters
-
-- `selector`: The CSS selector from `CodeEditorSelectors` enum
-- `options` _(optional)_: Object with optional `text` property for filtering by text content
-
-#### `editor.isReadOnly()`
-
-Checks if the editor is in read-only mode.
-
-##### Returns
-
-Boolean indicating whether the editor is in read-only mode
-
-##### Example
-
-```tsx
-const { editor } = renderCodeEditor({ readOnly: true });
-await editor.waitForEditorView();
-
-expect(editor.isReadOnly()).toBe(true);
-```
-
-#### `editor.getIndentUnit()`
-
-Retrieves the current indentation unit configuration from the editor.
-
-##### Returns
-
-The string used for indentation (spaces or tab character)
-
-##### Example
-
-```tsx
-const { editor } = renderCodeEditor({
-  indentUnit: 'space',
-  indentSize: 4,
-});
-await editor.waitForEditorView();
-
-expect(editor.getIndentUnit()).toBe('    '); // 4 spaces
-```
-
-#### `editor.isLineWrappingEnabled()`
-
-Checks if line wrapping is enabled in the editor.
-
-##### Returns
-
-Boolean indicating whether line wrapping is enabled
-
-##### Example
-
-```tsx
-const { editor } = renderCodeEditor({ enableLineWrapping: true });
-await editor.waitForEditorView();
-
-expect(editor.isLineWrappingEnabled()).toBe(true);
-```
-
-#### `editor.interactions.insertText(text, options?)`
-
-Inserts text into the editor at the specified position.
-
-##### Parameters
-
-- `text`: The text to insert
-- `options` _(optional)_: Object with optional position properties
-  - `from`: Starting position for insertion (defaults to end of document)
-  - `to`: End position for replacement (optional)
-
-##### Example
-
-```tsx
-import { act } from '@testing-library/react';
-
-const { editor } = renderCodeEditor();
-await editor.waitForEditorView();
-
-act(() => {
-  editor.interactions.insertText('new content');
-});
-
-expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
-  'new content',
-);
-```
-
-#### `editor.getContent()`
-
-Gets the current text content of the editor.
-
-**Returns:** String containing the current editor content
-
-**Example:**
-
-```tsx
-const { editor } = renderCodeEditor({ defaultValue: 'Hello World' });
-await editor.waitForEditorView();
-
-expect(editor.getContent()).toBe('Hello World');
-```
-
-#### `editor.getHandle()`
-
-Gets the imperative handle instance for testing imperative methods like undo/redo.
-
-**Returns:** The editor handle instance with all imperative methods
-
-**Example:**
-
-```tsx
-const { editor } = renderCodeEditor();
-await editor.waitForEditorView();
-
-const handle = editor.getHandle();
-expect(typeof handle.undo).toBe('function');
-expect(typeof handle.redo).toBe('function');
-expect(typeof handle.downloadContent).toBe('function');
-```
-
-#### `editor.interactions.undo()`
-
-Performs an undo operation on the editor.
-
-**Returns:** Boolean indicating if undo was successful
-
-**Example:**
-
-```tsx
-const { editor } = renderCodeEditor({ defaultValue: 'original' });
-await editor.waitForEditorView();
-
-editor.interactions.insertText(' modified');
-expect(editor.getContent()).toBe('original modified');
-
-const success = editor.interactions.undo();
-expect(success).toBe(true);
-expect(editor.getContent()).toBe('original');
-```
-
-#### `editor.interactions.redo()`
-
-Performs a redo operation on the editor.
-
-**Returns:** Boolean indicating if redo was successful
-
-**Example:**
-
-```tsx
-const { editor } = renderCodeEditor({ defaultValue: 'original' });
-await editor.waitForEditorView();
-
-editor.interactions.insertText(' modified');
-editor.interactions.undo();
-expect(editor.getContent()).toBe('original');
-
-const success = editor.interactions.redo();
-expect(success).toBe(true);
-expect(editor.getContent()).toBe('original modified');
-```
-
-### Complete Test Example
-
-```tsx
-import {
-  renderCodeEditor,
-  CodeEditorSelectors,
-} from '@leafygreen-ui/code-editor';
-import { act } from '@testing-library/react';
-
-test('comprehensive editor testing', async () => {
-  const { editor, container } = renderCodeEditor({
-    defaultValue: 'const greeting = "Hello";',
-    language: LanguageName.javascript,
-    enableLineNumbers: true,
-    enableCodeFolding: true,
-  });
-
-  // Wait for editor to initialize
-  await editor.waitForEditorView();
-
-  // Check initial content
-  expect(container).toHaveTextContent('const greeting = "Hello";');
-
-  // Verify line numbers are present
-  expect(
-    editor.getBySelector(CodeEditorSelectors.GutterElement, { text: '1' }),
-  ).toBeInTheDocument();
-
-  // Verify fold gutter is present
-  expect(
-    editor.getBySelector(CodeEditorSelectors.FoldGutter),
-  ).toBeInTheDocument();
-
-  // Insert new text
-  act(() => {
-    editor.interactions.insertText('\nconsole.log(greeting);', { from: 25 });
-  });
-
-  // Verify the new content using getContent()
-  expect(editor.getContent()).toBe(
-    'const greeting = "Hello";\nconsole.log(greeting);',
+import { render } from '@testing-library/react';
+import { getTestUtils } from '@leafygreen-ui/code-editor/testing';
+import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
+
+test('CodeEditor structure and panel work correctly', async () => {
+  render(
+    <CodeEditor
+      defaultValue="const greeting = 'Hello World';"
+      language={LanguageName.javascript}
+      panel={
+        <Panel
+          title="JavaScript"
+          showFormatButton
+          showCopyButton
+          showSecondaryMenuButton
+          data-lgid="lg-my-editor"
+        />
+      }
+      data-lgid="lg-my-editor"
+    />,
   );
 
-  // Test undo/redo functionality
-  const undoSuccess = editor.interactions.undo();
-  expect(undoSuccess).toBe(true);
-  expect(editor.getContent()).toBe('const greeting = "Hello";');
+  const utils = getTestUtils('lg-my-editor');
 
-  const redoSuccess = editor.interactions.redo();
-  expect(redoSuccess).toBe(true);
-  expect(editor.getContent()).toBe(
-    'const greeting = "Hello";\nconsole.log(greeting);',
-  );
+  // Test editor presence and basic structure
+  expect(utils.getEditor()).toBeInTheDocument();
+  expect(utils.getContentContainer()).toBeInTheDocument();
+
+  // Test panel functionality
+  const panelUtils = utils.getPanelUtils();
+  expect(panelUtils.getPanelElement()).toBeInTheDocument();
+  expect(panelUtils.getFormatButton()).toBeInTheDocument();
+  expect(panelUtils.getPanelCopyButton()).toBeInTheDocument();
+  expect(panelUtils.getSecondaryMenuButton()).toBeInTheDocument();
+
+  // Test loading state
+  expect(typeof utils.isLoading()).toBe('boolean');
+
+  // Wait for loading to complete if needed
+  await utils.waitForLoadingToComplete();
 });
 ```
-
-### Panel Test Utilities
-
-The package also provides comprehensive testing utilities for the Panel component, making it easy to test Panel interactions and behaviors.
-
-#### `renderPanel(config?)`
-
-Renders a Panel component with proper LeafyGreen and CodeEditor context for testing.
-
-**Parameters:**
-
-- `config` _(optional)_: Configuration object with the following properties:
-  - `panelProps` _(optional)_: Partial `PanelProps` to pass to the Panel component
-  - `contextConfig` _(optional)_: Override the default CodeEditor context values
-
-**Returns:**
-
-- `container`: The rendered container element from `@testing-library/react`
-- `panel`: Panel test utilities object with methods for interacting with panel elements
-
-**Example:**
-
-```tsx
-import { renderPanel, PanelSelectors } from '@leafygreen-ui/code-editor';
-
-test('renders panel with format button', async () => {
-  const { container, panel } = renderPanel({
-    panelProps: {
-      title: 'JavaScript Editor',
-      showFormatButton: true,
-      showCopyButton: true,
-      showSecondaryMenuButton: true,
-    },
-  });
-
-  // Use utilities to interact with the panel
-  await panel.interactions.clickFormatButton();
-  await panel.interactions.clickUndoMenuItem();
-});
-```
-
-#### Panel Test Utilities Object
-
-The `panel` object provides access to Panel elements and interactions:
-
-##### Element Getters
-
-- `panel.getFormatButton()` - Gets the format button element
-- `panel.getCopyButton()` - Gets the copy button element
-- `panel.getSecondaryMenuButton()` - Gets the secondary menu button
-- `panel.getMenuItem(ariaLabel)` - Gets a menu item by aria-label
-- `panel.getUndoMenuItem()` - Gets the undo menu item
-- `panel.getRedoMenuItem()` - Gets the redo menu item
-- `panel.getDownloadMenuItem()` - Gets the download menu item
-- `panel.getViewShortcutsMenuItem()` - Gets the view shortcuts menu item
-- `panel.getCustomSecondaryButton(labelOrAriaLabel)` - Gets a custom secondary button
-
-##### Interactions
-
-All interaction methods are available under `panel.interactions`:
-
-- `clickFormatButton()` - Clicks the format button
-- `clickCopyButton()` - Clicks the copy button
-- `openSecondaryMenu()` - Opens the secondary menu
-- `clickMenuItem(ariaLabel)` - Clicks a menu item by aria-label
-- `clickUndoMenuItem()` - Opens menu and clicks undo
-- `clickRedoMenuItem()` - Opens menu and clicks redo
-- `clickDownloadMenuItem()` - Opens menu and clicks download
-- `clickViewShortcutsMenuItem()` - Opens menu and clicks view shortcuts
-- `clickCustomSecondaryButton(labelOrAriaLabel)` - Opens menu and clicks custom button
-- `hoverFormatButton()` - Hovers format button and waits for tooltip
-- `hoverCopyButton()` - Hovers copy button and waits for tooltip
-
-##### Utilities
-
-- `panel.waitForTooltip(text, timeout?)` - Waits for a tooltip with specific text
-- `panel.hasTitleText(expectedTitle)` - Checks if panel has expected title
-- `panel.hasInnerContent(testId)` - Checks if inner content with testId exists
-
-#### PanelSelectors
-
-Consistent selector constants for testing:
-
-```tsx
-import { PanelSelectors } from '@leafygreen-ui/code-editor';
-
-// Use instead of hardcoded strings
-panel.getMenuItem(PanelSelectors.UndoMenuItem);
-panel.getMenuItem(PanelSelectors.RedoMenuItem);
-panel.getMenuItem(PanelSelectors.DownloadMenuItem);
-panel.getMenuItem(PanelSelectors.ViewShortcutsMenuItem);
-```
-
-Available selectors:
-
-- `PanelSelectors.FormatButton`
-- `PanelSelectors.CopyButton`
-- `PanelSelectors.SecondaryMenuButton`
-- `PanelSelectors.UndoMenuItem`
-- `PanelSelectors.RedoMenuItem`
-- `PanelSelectors.DownloadMenuItem`
-- `PanelSelectors.ViewShortcutsMenuItem`
-
-#### Panel Test Examples
-
-##### Testing Format Button
-
-```tsx
-test('formats code when format button is clicked', async () => {
-  const onFormatClick = jest.fn();
-  const mockFormatCode = jest.fn();
-
-  const { panel } = renderPanel({
-    panelProps: {
-      showFormatButton: true,
-      onFormatClick,
-    },
-    contextConfig: {
-      formatCode: mockFormatCode,
-    },
-  });
-
-  await panel.interactions.clickFormatButton();
-
-  expect(onFormatClick).toHaveBeenCalled();
-  expect(mockFormatCode).toHaveBeenCalled();
-});
-```
-
-##### Testing Secondary Menu
-
-```tsx
-test('performs undo when undo menu item is clicked', async () => {
-  const onUndoClick = jest.fn();
-  const mockUndo = jest.fn(() => true);
-
-  const { panel } = renderPanel({
-    panelProps: {
-      showSecondaryMenuButton: true,
-      onUndoClick,
-    },
-    contextConfig: {
-      undo: mockUndo,
-    },
-  });
-
-  await panel.interactions.clickUndoMenuItem();
-
-  expect(onUndoClick).toHaveBeenCalled();
-  expect(mockUndo).toHaveBeenCalled();
-});
-```
-
-##### Testing Custom Secondary Buttons
-
-```tsx
-test('handles custom secondary button clicks', async () => {
-  const customOnClick = jest.fn();
-
-  const { panel } = renderPanel({
-    panelProps: {
-      showSecondaryMenuButton: true,
-      customSecondaryButtons: [
-        {
-          label: 'Custom Action',
-          onClick: customOnClick,
-          'aria-label': 'Perform custom action',
-        },
-      ],
-    },
-  });
-
-  await panel.interactions.clickCustomSecondaryButton('Perform custom action');
-
-  expect(customOnClick).toHaveBeenCalled();
-});
-```
-
-#### defaultPanelContextFunctions
-
-The `defaultPanelContextFunctions` object provides access to the default stub functions used in the CodeEditor context. These can be overridden in tests by providing `contextConfig` to `renderPanel`:
-
-```tsx
-import {
-  renderPanel,
-  defaultPanelContextFunctions,
-} from '@leafygreen-ui/code-editor';
-
-// Override default functions with jest mocks in your test files
-const mockUndo = jest.fn(() => true);
-const mockFormatCode = jest.fn();
-
-const { panel } = renderPanel({
-  contextConfig: {
-    undo: mockUndo,
-    formatCode: mockFormatCode,
-  },
-});
-
-// Now you can assert on your custom mocks
-expect(mockUndo).toHaveBeenCalled();
-expect(mockFormatCode).toHaveBeenCalled();
-```
-
-Available default functions:
-
-- `defaultPanelContextFunctions.getContents`
-- `defaultPanelContextFunctions.formatCode`
-- `defaultPanelContextFunctions.undo`
-- `defaultPanelContextFunctions.redo`
 
 ## CodeMirror Extension Hooks
 

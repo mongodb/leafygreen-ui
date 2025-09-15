@@ -5,8 +5,10 @@ import userEvent from '@testing-library/user-event';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { CodeEditorProvider } from '../CodeEditor/CodeEditorContext';
-import { Panel } from '../Panel/Panel';
-import { PanelProps } from '../Panel/Panel.types';
+import { getLgIds, type GetLgIdsReturnType } from '../utils/getLgIds';
+
+import { Panel } from './Panel';
+import { PanelProps } from './Panel.types';
 
 // Default stub functions for CodeEditor context
 const defaultStubGetContents = () => 'test content';
@@ -39,6 +41,7 @@ export interface PanelTestContextConfig {
   undo?: () => boolean;
   redo?: () => boolean;
   downloadContent?: () => void;
+  lgIds?: GetLgIdsReturnType;
 }
 
 /**
@@ -64,6 +67,7 @@ export function renderPanel(config: RenderPanelConfig = {}) {
     undo: defaultStubUndo,
     redo: defaultStubRedo,
     downloadContent: defaultStubDownloadContent,
+    lgIds: getLgIds(),
     ...contextConfig,
   };
 

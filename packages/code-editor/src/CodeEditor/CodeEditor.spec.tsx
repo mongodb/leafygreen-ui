@@ -1,3 +1,4 @@
+import React from 'react';
 import * as AutocompleteModule from '@codemirror/autocomplete';
 import * as CodeMirrorCommandsModule from '@codemirror/commands';
 import * as JavascriptModule from '@codemirror/lang-javascript';
@@ -15,19 +16,71 @@ import * as CodeMirrorModule from 'codemirror';
 import * as ParserTypescriptModule from 'prettier/parser-typescript';
 import * as StandaloneModule from 'prettier/standalone';
 
-import { codeSnippets } from '../testing';
-import { renderCodeEditor } from '../testing/testUtils';
+import { codeSnippets, getTestUtils } from '../testing';
 
 import { LanguageName } from './hooks/extensions/useLanguageExtension';
+import { renderCodeEditor } from './CodeEditor.testUtils';
 import { CopyButtonAppearance } from './CodeEditor.types';
 import { CodeEditorSelectors } from '.';
 
+// Enhanced MutationObserver mock for CodeMirror compatibility
 global.MutationObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
   takeRecords: jest.fn().mockReturnValue([]),
 }));
+
+// Mock ResizeObserver which is used by CodeMirror
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
+// Mock IntersectionObserver which may be used by CodeMirror
+global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+  root: null,
+  rootMargin: '',
+  thresholds: [],
+}));
+
+// Mock document.getSelection for CodeMirror
+if (!global.document.getSelection) {
+  global.document.getSelection = jest.fn().mockReturnValue({
+    rangeCount: 0,
+    getRangeAt: jest.fn(),
+    removeAllRanges: jest.fn(),
+    addRange: jest.fn(),
+    toString: jest.fn().mockReturnValue(''),
+  });
+}
+
+// Mock createRange for CodeMirror
+if (!global.document.createRange) {
+  global.document.createRange = jest.fn().mockReturnValue({
+    setStart: jest.fn(),
+    setEnd: jest.fn(),
+    collapse: jest.fn(),
+    selectNodeContents: jest.fn(),
+    insertNode: jest.fn(),
+    surroundContents: jest.fn(),
+    cloneRange: jest.fn(),
+    detach: jest.fn(),
+    getClientRects: jest.fn().mockReturnValue([]),
+    getBoundingClientRect: jest.fn().mockReturnValue({
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      width: 0,
+      height: 0,
+    }),
+  });
+}
 
 // Mock console methods to suppress expected warnings
 const originalConsoleWarn = console.warn;
@@ -331,27 +384,25 @@ describe('packages/code-editor', () => {
   });
 
   test('renders copy button when copyButtonAppearance is "hover"', async () => {
-    const { container, editor } = renderCodeEditor({
+    const lgId = 'lg-test-copy-hover';
+    const { editor } = renderCodeEditor({
       copyButtonAppearance: CopyButtonAppearance.Hover,
+      'data-lgid': lgId,
     });
-
     await editor.waitForEditorView();
-
-    expect(
-      container.querySelector(CodeEditorSelectors.CopyButton),
-    ).toBeInTheDocument();
+    const utils = getTestUtils(lgId);
+    expect(utils.getCopyButton()).toBeInTheDocument();
   });
 
   test('renders copy button when copyButtonAppearance is "persist"', async () => {
-    const { container, editor } = renderCodeEditor({
+    const lgId = 'lg-test-copy-persist';
+    const { editor } = renderCodeEditor({
       copyButtonAppearance: CopyButtonAppearance.Persist,
+      'data-lgid': lgId,
     });
-
     await editor.waitForEditorView();
-
-    expect(
-      container.querySelector(CodeEditorSelectors.CopyButton),
-    ).toBeInTheDocument();
+    const utils = getTestUtils(lgId);
+    expect(utils.getCopyButton()).toBeInTheDocument();
   });
 
   test('does not render copy button when copyButtonAppearance is "none"', async () => {
@@ -681,6 +732,33 @@ describe('packages/code-editor', () => {
       } catch (error) {
         console.warn('Skipping test due to environment issues:', error);
       }
+    });
+  });
+
+  describe('Panel', () => {
+    test('does not render context menu when right-clicking on panel', async () => {
+      const PANEL_TEST_ID = 'test-panel';
+      const TestPanel = () => (
+        <div data-testid={PANEL_TEST_ID}>Test Panel Content</div>
+      );
+
+      const { editor, container } = renderCodeEditor({
+        panel: <TestPanel />,
+        'data-lgid': 'lg-test-editor',
+      });
+
+      await editor.waitForEditorView();
+      const panelElement = container.querySelector(
+        `[data-testid="${PANEL_TEST_ID}"]`,
+      );
+      expect(panelElement).toBeInTheDocument();
+
+      // Right-click on the panel to trigger context menu
+      userEvent.click(panelElement!, { button: 2 });
+
+      expect(
+        container.querySelector('[data-lgid="lg-test-editor-context_menu"]'),
+      ).not.toBeInTheDocument();
     });
   });
 
