@@ -1,10 +1,22 @@
 import React from 'react';
+import * as AutocompleteModule from '@codemirror/autocomplete';
+import * as CodeMirrorCommandsModule from '@codemirror/commands';
+import * as JavascriptModule from '@codemirror/lang-javascript';
 import { forceParsing } from '@codemirror/language';
+import * as LanguageModule from '@codemirror/language';
+import * as CodeMirrorSearchModule from '@codemirror/search';
 import { EditorState } from '@codemirror/state';
+import * as CodeMirrorStateModule from '@codemirror/state';
+import * as CodeMirrorViewModule from '@codemirror/view';
+import * as LezerHighlightModule from '@lezer/highlight';
 import { act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import * as HyperLinkModule from '@uiw/codemirror-extensions-hyper-link';
+import * as CodeMirrorModule from 'codemirror';
+import * as ParserTypescriptModule from 'prettier/parser-typescript';
+import * as StandaloneModule from 'prettier/standalone';
 
-import { getTestUtils } from '../testing';
+import { codeSnippets, getTestUtils } from '../testing';
 
 import { LanguageName } from './hooks/extensions/useLanguageExtension';
 import { renderCodeEditor } from './CodeEditor.testUtils';
@@ -878,6 +890,33 @@ describe('packages/code-editor', () => {
         expect(newContent).not.toBe(initialContent);
         expect(newContent.length).toBeLessThan(initialContent.length);
       });
+    });
+  });
+
+  describe('Pre Loaded Modules', () => {
+    test('editor is rendered immediately when pre loaded modules are provided', async () => {
+      const { editor } = renderCodeEditor({
+        language: LanguageName.typescript,
+        defaultValue: codeSnippets.typescript,
+        preLoadedModules: {
+          codemirror: CodeMirrorModule,
+          '@codemirror/view': CodeMirrorViewModule,
+          '@codemirror/state': CodeMirrorStateModule,
+          '@codemirror/commands': CodeMirrorCommandsModule,
+          '@codemirror/search': CodeMirrorSearchModule,
+          '@uiw/codemirror-extensions-hyper-link': HyperLinkModule,
+          '@codemirror/language': LanguageModule,
+          '@lezer/highlight': LezerHighlightModule,
+          '@codemirror/autocomplete': AutocompleteModule,
+          '@codemirror/lang-javascript': JavascriptModule,
+          'prettier/standalone': StandaloneModule,
+          'prettier/parser-typescript': ParserTypescriptModule,
+        },
+      });
+
+      expect(
+        editor.getBySelector(CodeEditorSelectors.Content),
+      ).toBeInTheDocument();
     });
   });
 });
