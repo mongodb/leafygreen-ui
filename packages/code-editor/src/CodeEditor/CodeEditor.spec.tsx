@@ -1,3 +1,4 @@
+import React from 'react';
 import { forceParsing } from '@codemirror/language';
 import { EditorState } from '@codemirror/state';
 import { act, waitFor } from '@testing-library/react';
@@ -719,6 +720,33 @@ describe('packages/code-editor', () => {
       } catch (error) {
         console.warn('Skipping test due to environment issues:', error);
       }
+    });
+  });
+
+  describe('Panel', () => {
+    test('does not render context menu when right-clicking on panel', async () => {
+      const PANEL_TEST_ID = 'test-panel';
+      const TestPanel = () => (
+        <div data-testid={PANEL_TEST_ID}>Test Panel Content</div>
+      );
+
+      const { editor, container } = renderCodeEditor({
+        panel: <TestPanel />,
+        'data-lgid': 'lg-test-editor',
+      });
+
+      await editor.waitForEditorView();
+      const panelElement = container.querySelector(
+        `[data-testid="${PANEL_TEST_ID}"]`,
+      );
+      expect(panelElement).toBeInTheDocument();
+
+      // Right-click on the panel to trigger context menu
+      userEvent.click(panelElement!, { button: 2 });
+
+      expect(
+        container.querySelector('[data-lgid="lg-test-editor-context_menu"]'),
+      ).not.toBeInTheDocument();
     });
   });
 
