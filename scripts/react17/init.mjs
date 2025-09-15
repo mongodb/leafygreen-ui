@@ -101,7 +101,7 @@ function findTsConfigFiles(dir) {
  * Merge package versions from React 17 configuration
  * @returns {Promise<void>}
  */
-async function mergePackageVersions() {
+function mergePackageVersions() {
   // Read the React 17 package configuration
   /** @type {PackageJson} */
   const r17Package = JSON.parse(fs.readFileSync(R17_PACKAGES_PATH, 'utf-8'));
@@ -137,7 +137,7 @@ async function mergePackageVersions() {
  * Merge TypeScript configurations from React 17 configuration
  * @returns {Promise<void>}
  */
-async function mergeTsConfigs() {
+function mergeTsConfigs() {
   // Read the React 17 tsconfig configuration
   /** @type {TsConfig} */
   const r17TsConfig = JSON.parse(fs.readFileSync(R17_TSCONFIG_PATH, 'utf-8'));
@@ -202,7 +202,7 @@ function defaultsDeep(...objects) {
           !Array.isArray(obj[key])
         ) {
           result[key] = defaultsDeep(result[key] || {}, obj[key]);
-        } else if (result[key] === undefined) {
+        } else {
           result[key] = obj[key];
         }
       });
