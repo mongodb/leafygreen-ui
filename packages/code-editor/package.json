@@ -61,6 +61,7 @@
     "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "^22.1.0",
     "@lezer/highlight": "^1.2.1",
+    "@lg-tools/test-harnesses": "^0.3.4",
     "@replit/codemirror-lang-csharp": "^6.2.0",
     "@uiw/codemirror-extensions-hyper-link": "^4.23.12",
     "@wasm-fmt/clang-format": "^20.1.7",

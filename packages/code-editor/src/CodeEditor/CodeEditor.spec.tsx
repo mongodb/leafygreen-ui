@@ -4,6 +4,8 @@ import { EditorState } from '@codemirror/state';
 import { act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { getTestUtils } from '../testing';
+
 import { LanguageName } from './hooks/extensions/useLanguageExtension';
 import { renderCodeEditor } from './CodeEditor.testUtils';
 import { CopyButtonAppearance } from './CodeEditor.types';
@@ -370,37 +372,25 @@ describe('packages/code-editor', () => {
   });
 
   test('renders copy button when copyButtonAppearance is "hover"', async () => {
-    const { container, editor } = renderCodeEditor({
+    const lgId = 'lg-test-copy-hover';
+    const { editor } = renderCodeEditor({
       copyButtonAppearance: CopyButtonAppearance.Hover,
-      'data-lgid': 'lg-test-copy-hover',
+      'data-lgid': lgId,
     });
-
     await editor.waitForEditorView();
-
-    // Wait a bit for copy button to be rendered
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    // The copy button selector looks for the specific lgid structure
-    expect(
-      container.querySelector('[data-lgid="lg-test-copy-hover-copy_button"]'),
-    ).toBeInTheDocument();
+    const utils = getTestUtils(lgId);
+    expect(utils.getCopyButton()).toBeInTheDocument();
   });
 
   test('renders copy button when copyButtonAppearance is "persist"', async () => {
-    const { container, editor } = renderCodeEditor({
+    const lgId = 'lg-test-copy-persist';
+    const { editor } = renderCodeEditor({
       copyButtonAppearance: CopyButtonAppearance.Persist,
-      'data-lgid': 'lg-test-copy-persist',
+      'data-lgid': lgId,
     });
-
     await editor.waitForEditorView();
-
-    // Wait a bit for copy button to be rendered
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    // The copy button selector looks for the specific lgid structure
-    expect(
-      container.querySelector('[data-lgid="lg-test-copy-persist-copy_button"]'),
-    ).toBeInTheDocument();
+    const utils = getTestUtils(lgId);
+    expect(utils.getCopyButton()).toBeInTheDocument();
   });
 
   test('does not render copy button when copyButtonAppearance is "none"', async () => {

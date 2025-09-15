@@ -1,6 +1,6 @@
 export { codeSnippets } from './codeSnippets';
 export { getTestUtils } from './getTestUtils';
 export type {
+  GetTestUtilsReturnType,
   PanelTestUtilsReturnType,
-  TestUtilsReturnType,
 } from './getTestUtils.types';

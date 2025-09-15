@@ -323,7 +323,7 @@ The `@leafygreen-ui/code-editor` package provides test utilities to help test Co
 
 ### `getTestUtils(lgId?)`
 
-Returns utilities for testing CodeEditor and Panel components. These utilities help you interact with and query the CodeEditor's DOM elements in tests.
+Returns utilities for testing CodeEditor and Panel components. These utilities follow the `@testing-library` pattern with `get*`, `find*`, and `query*` variants for each element.
 
 **Parameters:**
 
@@ -333,18 +333,15 @@ Returns utilities for testing CodeEditor and Panel components. These utilities h
 
 An object with methods for testing the CodeEditor and its Panel.
 
-#### Basic Editor Utilities
+#### Editor Utilities
 
-- `getEditorElement()` - Returns the CodeEditor root element
-- `getContent()` - Gets the current text content from the editor (returns `Promise<string | null>`)
-- `getContentElement()` - Gets the content element from the editor
-- `typeContent(text)` - Types text into the editor
-- `getCopyButton()` - Gets the copy button element (when not using panel)
+- `getEditor()` / `findEditor()` / `queryEditor()` - Get the CodeEditor root element
+- `getContentContainer()` / `findContentContainer()` / `queryContentContainer()` - Get the content container element
+- `getCopyButton()` / `findCopyButton()` / `queryCopyButton()` - Get the copy button element (when not using panel)
+
+#### Loading Utilities
+
 - `isLoading()` - Checks if the editor is currently in a loading state
-- `isReadOnly()` - Checks if the editor is in read-only mode
-
-#### Async Utilities
-
 - `waitForLoadingToComplete(timeout?)` - Waits for the loading state to complete (returns `Promise<void>`)
 
 #### Panel Utilities
@@ -353,12 +350,11 @@ An object with methods for testing the CodeEditor and its Panel.
 
 Returns an object with:
 
-- `getPanelElement()` - Returns the panel element
-- `getPanelTitle()` - Gets the panel title text
-- `getFormatButton()` - Gets the format button element
-- `getPanelCopyButton()` - Gets the panel's copy button element
-- `getSecondaryMenuButton()` - Gets the secondary menu button element
-- `getSecondaryMenu()` - Gets the secondary menu element
+- `getPanelElement()` / `findPanelElement()` / `queryPanelElement()` - Get the panel element
+- `getFormatButton()` / `findFormatButton()` / `queryFormatButton()` - Get the format button element
+- `getPanelCopyButton()` / `findPanelCopyButton()` / `queryPanelCopyButton()` - Get the panel's copy button element
+- `getSecondaryMenuButton()` / `findSecondaryMenuButton()` / `querySecondaryMenuButton()` - Get the secondary menu button element
+- `getSecondaryMenu()` / `findSecondaryMenu()` / `querySecondaryMenu()` - Get the secondary menu element
 
 #### Example Usage
 
@@ -390,23 +386,21 @@ test('CodeEditor structure and panel work correctly', async () => {
   const utils = getTestUtils('lg-my-editor');
 
   // Test editor presence and basic structure
-  expect(utils.getEditorElement()).toBeInTheDocument();
+  expect(utils.getEditor()).toBeInTheDocument();
+  expect(utils.getContentContainer()).toBeInTheDocument();
 
   // Test panel functionality
   const panelUtils = utils.getPanelUtils();
-  expect(panelUtils?.getPanelElement()).toBeInTheDocument();
-  expect(panelUtils?.getPanelTitle()).toBe('JavaScript');
-  expect(panelUtils?.getFormatButton()).toBeInTheDocument();
-  expect(panelUtils?.getPanelCopyButton()).toBeInTheDocument();
-  expect(panelUtils?.getSecondaryMenuButton()).toBeInTheDocument();
+  expect(panelUtils.getPanelElement()).toBeInTheDocument();
+  expect(panelUtils.getFormatButton()).toBeInTheDocument();
+  expect(panelUtils.getPanelCopyButton()).toBeInTheDocument();
+  expect(panelUtils.getSecondaryMenuButton()).toBeInTheDocument();
 
-  // Test configuration detection
+  // Test loading state
   expect(typeof utils.isLoading()).toBe('boolean');
-  expect(typeof utils.isReadOnly()).toBe('boolean');
 
-  // Test content
-  const content = await utils.getContent();
-  expect(content).toBe("const greeting = 'Hello World';");
+  // Wait for loading to complete if needed
+  await utils.waitForLoadingToComplete();
 });
 ```
 
