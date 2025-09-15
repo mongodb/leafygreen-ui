@@ -4,16 +4,21 @@ import Badge from '@leafygreen-ui/badge';
 import { Disclaimer, H3 } from '@leafygreen-ui/typography';
 
 import {
-  HeadingStyles,
   PlusSignStyles,
   TableContainerStyles,
   TableStyles,
 } from './ShortcutTable.styles';
 
+const PlusSign = () => (
+  <div className={PlusSignStyles}>
+    <Disclaimer>+</Disclaimer>
+  </div>
+);
+
 export function ShortcutTable({ className }: { className?: string }) {
   return (
     <div className={className}>
-      <H3 className={HeadingStyles}>Code Editor Shortcuts</H3>
+      <H3>Code Editor Shortcuts</H3>
       <div className={TableContainerStyles}>
         <table className={TableStyles}>
           <tbody>
@@ -36,7 +41,7 @@ export function ShortcutTable({ className }: { className?: string }) {
             <tr>
               <td>
                 <Badge variant="lightgray">⌘/CTRL</Badge>
-                <Disclaimer className={PlusSignStyles}>+</Disclaimer>
+                <PlusSign />
                 <Badge variant="lightgray">F</Badge>
               </td>
               <td>
@@ -46,7 +51,7 @@ export function ShortcutTable({ className }: { className?: string }) {
             <tr>
               <td>
                 <Badge variant="lightgray">⌘/CTRL</Badge>
-                <Disclaimer className={PlusSignStyles}>+</Disclaimer>
+                <PlusSign />
                 <Badge variant="lightgray">Z</Badge>
               </td>
               <td>
@@ -56,9 +61,9 @@ export function ShortcutTable({ className }: { className?: string }) {
             <tr>
               <td>
                 <Badge variant="lightgray">⌘/CTRL</Badge>
-                <Disclaimer className={PlusSignStyles}>+</Disclaimer>
+                <PlusSign />
                 <Badge variant="lightgray">SHIFT</Badge>
-                <Disclaimer className={PlusSignStyles}>+</Disclaimer>
+                <PlusSign />
                 <Badge variant="lightgray">Z</Badge>
               </td>
               <td>
