@@ -22,6 +22,7 @@ import * as StandaloneModule from 'prettier/standalone';
 import { css } from '@leafygreen-ui/emotion';
 // @ts-ignore LG icons don't currently support TS
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 
 import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
@@ -89,16 +90,17 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     },
   },
   decorators: [
-    StoryFn => (
-      <div
-        className={css`
-          width: 100vw;
-          height: 100vh;
-          padding: 0;
-        `}
-      >
-        <StoryFn />
-      </div>
+    (Story: StoryFn, context) => (
+      <LeafyGreenProvider darkMode={context?.args.darkMode}>
+        <div
+          className={css`
+            width: 100vw;
+            padding: 0;
+          `}
+        >
+          <Story />
+        </div>
+      </LeafyGreenProvider>
     ),
   ],
   args: {
