@@ -49,7 +49,6 @@ VideoVariant.args = {
   href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
   children: 'Never Gonna Give You Up - Rick Astley (Official Music Video)',
   variant: 'Video',
-  imageUrl: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
 };
 
 export const WebsiteVariant = Template.bind({});

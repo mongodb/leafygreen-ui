@@ -61,6 +61,16 @@ export interface MenuProps
   shouldClose?: () => boolean;
 
   /**
+   * Callback fired when the Menu is opened (after the popover transition finishes)
+   */
+  onOpen?: () => void;
+
+  /**
+   * Callback fired when the Menu is closed (after the popover transition finishes)
+   */
+  onClose?: () => void;
+
+  /**
    * The max height of the menu (in px). Defaults to 256
    */
   maxHeight?: number;

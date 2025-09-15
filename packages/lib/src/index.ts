@@ -6,9 +6,12 @@ import { type LgIdProps, type LgIdString } from './LgIdProps';
 import * as typeIs from './typeIs';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export { deepMapValues } from './deepMapValues';
+export { filterChildren } from './filterChildren';
+export { findChild } from './findChild';
 export { formatCssSize } from './formatCssSize';
 export { getClosestFocusableElement } from './getClosestFocusableElement';
 export { getMobileMediaQuery } from './getMobileMediaQuery';
+export { hasAnyStaticProperty, hasStaticProperty } from './hasStaticProperty';
 export * from './helpers';
 export {
   focusableElementSelector,
