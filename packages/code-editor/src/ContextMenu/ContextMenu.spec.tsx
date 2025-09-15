@@ -16,7 +16,7 @@ const TestComponent = (props: PropsWithChildren) => {
     <ContextMenu
       menuItems={[
         { label: MENU_LABEL, action: actionMock },
-        { label: MENU_LABEL_2, action: actionMock },
+        { label: MENU_LABEL_2, action: jest.fn() },
       ]}
     >
       <div data-testid={CHILD_TEST_ID}>Test</div>
