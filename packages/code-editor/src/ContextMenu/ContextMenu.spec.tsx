@@ -8,11 +8,17 @@ import { ContextMenu } from './ContextMenu';
 
 const CHILD_TEST_ID = 'test-component';
 const MENU_LABEL = 'Menu Label';
+const MENU_LABEL_2 = 'Menu Label 2';
 const actionMock = jest.fn();
 
 const TestComponent = (props: PropsWithChildren) => {
   return (
-    <ContextMenu menuItems={[{ label: MENU_LABEL, action: actionMock }]}>
+    <ContextMenu
+      menuItems={[
+        { label: MENU_LABEL, action: actionMock },
+        { label: MENU_LABEL_2, action: actionMock },
+      ]}
+    >
       <div data-testid={CHILD_TEST_ID}>Test</div>
       {props.children}
     </ContextMenu>
@@ -25,6 +31,13 @@ describe('ContextMenu', () => {
     expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
     userEvent.click(screen.getByTestId(CHILD_TEST_ID), { button: 2 });
     expect(screen.queryByText(MENU_LABEL)).toBeInTheDocument();
+  });
+
+  test('does not render when inner element is left clicked', () => {
+    render(<TestComponent />);
+    expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
+    userEvent.click(screen.getByTestId(CHILD_TEST_ID));
+    expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
   });
 
   test('does not render when inner element with data-no-context-menu="true" is right clicked', () => {
@@ -97,5 +110,28 @@ describe('ContextMenu', () => {
     await waitFor(() => {
       expect(screen.queryByText(MENU_LABEL)).not.toBeInTheDocument();
     });
+  });
+
+  test('arrow keys select menu items correctly when menu is open', () => {
+    render(<TestComponent />);
+    userEvent.click(screen.getByTestId(CHILD_TEST_ID), { button: 2 });
+
+    const menuButton1 = screen.getByText(MENU_LABEL).closest('button');
+    const menuButton2 = screen.getByText(MENU_LABEL_2).closest('button');
+
+    expect(menuButton1).not.toHaveAttribute('aria-selected', 'true');
+    expect(menuButton2).not.toHaveAttribute('aria-selected', 'true');
+
+    userEvent.keyboard('{arrowdown}');
+    expect(menuButton1).toHaveAttribute('aria-selected', 'true');
+    expect(menuButton2).not.toHaveAttribute('aria-selected', 'true');
+
+    userEvent.keyboard('{arrowdown}');
+    expect(menuButton1).not.toHaveAttribute('aria-selected', 'true');
+    expect(menuButton2).toHaveAttribute('aria-selected', 'true');
+
+    userEvent.keyboard('{arrowup}');
+    expect(menuButton1).toHaveAttribute('aria-selected', 'true');
+    expect(menuButton2).not.toHaveAttribute('aria-selected', 'true');
   });
 });
