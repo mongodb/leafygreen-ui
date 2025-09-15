@@ -3,12 +3,14 @@ import { spacing } from '@leafygreen-ui/tokens';
 
 const TABLE_WIDTH = '282px';
 const ROW_PADDING = spacing[300];
+const CONTAINER_MARGIN_TOP = spacing[1000] - ROW_PADDING; // Account for the padding on the first row
 
 export const TableContainerStyles = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: ${CONTAINER_MARGIN_TOP}px;
 `;
 
 export const TableStyles = css`
@@ -20,7 +22,6 @@ export const TableStyles = css`
   }
 
   td {
-    display: inline-block;
     vertical-align: top;
 
     &:first-child {
@@ -32,11 +33,6 @@ export const TableStyles = css`
       text-align: right;
     }
   }
-`;
-
-export const HeadingStyles = css`
-  margin-bottom: ${spacing[1000] -
-  ROW_PADDING}px; // Account for the padding on the first row
 `;
 
 export const PlusSignStyles = css`
