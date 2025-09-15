@@ -107,6 +107,7 @@ export function useThemeExtension({
           [`${CodeEditorSelectors.LineNumbers} ${CodeEditorSelectors.GutterElement}`]:
             {
               width: '48px',
+              userSelect: 'none',
             },
 
           [CodeEditorSelectors.Line]: {
