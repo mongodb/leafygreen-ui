@@ -197,7 +197,9 @@ describe('packages/menu', () => {
 
       const firstItem = menuItemElements[0];
       userEvent.click(firstItem!);
-      await act(async () => await waitForTimeout());
+      await act(async () => {
+        await waitForTimeout();
+      });
       expect(menuEl).toBeInTheDocument();
     });
 
@@ -483,7 +485,9 @@ describe('packages/menu', () => {
 
       userEvent.keyboard('[Enter]');
 
-      await act(async () => await waitForTimeout());
+      await act(async () => {
+        await waitForTimeout();
+      });
       expect(menuEl).toBeInTheDocument();
     });
 
@@ -501,7 +505,9 @@ describe('packages/menu', () => {
 
       userEvent.keyboard('[Space]');
 
-      await act(async () => await waitForTimeout());
+      await act(async () => {
+        await waitForTimeout();
+      });
       expect(menuEl).toBeInTheDocument();
     });
   });
