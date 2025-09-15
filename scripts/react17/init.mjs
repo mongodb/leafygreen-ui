@@ -116,14 +116,14 @@ function mergePackageVersions() {
   if (r17Package.dependencies) {
     rootPackage.devDependencies = defaultsDeep(
       {},
-      r17Package.dependencies,
       rootPackage.devDependencies,
+      r17Package.dependencies,
     );
   }
 
   // Merge pnpm overrides
   if (r17Package.pnpm?.overrides) {
-    rootPackage.pnpm = defaultsDeep({}, r17Package.pnpm, rootPackage.pnpm);
+    rootPackage.pnpm = defaultsDeep({}, rootPackage.pnpm, r17Package.pnpm);
   }
 
   // Write the updated package.json
