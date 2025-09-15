@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Menu,
   MenuItem,
+  MenuItemProps,
   MenuSeparator,
   MenuVariant,
 } from '@leafygreen-ui/menu';
@@ -10,7 +11,7 @@ import {
 import { getLgIds } from '../utils';
 
 import { containerStyles, getMenuContainerStyles } from './ContextMenu.styles';
-import type { ContextMenuProps } from './ContextMenu.types';
+import type { ContextMenuItem, ContextMenuProps } from './ContextMenu.types';
 
 /**
  * Context menu that adds custom right-click functionality to child elements.
@@ -108,6 +109,24 @@ export const ContextMenu = ({
     [lgIds.contextMenu],
   );
 
+  /**
+   * Handles the click event for a menu item.
+   * Closes the context menu and calls the action function for the selected item.
+   */
+  const handledClickItem = useCallback(
+    (item: ContextMenuItem) => {
+      if (item.action && !item.disabled) {
+        item.action(selectedText);
+      }
+      setIsOpen(false);
+    },
+    [selectedText],
+  );
+
+  /**
+   * Manages global event listeners while context menu is open.
+   * Closes menu on right-click or click outside the menu area.
+   */
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('contextmenu', handleGlobalContextMenu);
@@ -118,7 +137,7 @@ export const ContextMenu = ({
       document.addEventListener('click', handleClick, { capture: true });
       return () => {
         document.removeEventListener('contextmenu', handleGlobalContextMenu);
-        document.addEventListener('click', handleClick, { capture: true });
+        document.addEventListener('click', handleClick, { capture: false });
       };
     }
   }, [isOpen, handleGlobalContextMenu, handleClick]);
@@ -141,6 +160,7 @@ export const ContextMenu = ({
             renderDarkMenu={false}
             variant={MenuVariant.Compact}
             data-lgid={lgIds.contextMenu}
+            data-testid={lgIds.contextMenu}
           >
             {menuItems.map((item, index) => {
               if (item.isSeparator) {
@@ -151,12 +171,7 @@ export const ContextMenu = ({
                 <MenuItem
                   key={index}
                   disabled={item.disabled}
-                  onClick={() => {
-                    if (item.action && !item.disabled) {
-                      item.action(selectedText);
-                    }
-                    setIsOpen(false);
-                  }}
+                  onClick={() => handledClickItem(item)}
                 >
                   {item.label}
                 </MenuItem>

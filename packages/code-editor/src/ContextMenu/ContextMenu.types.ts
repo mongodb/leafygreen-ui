@@ -30,10 +30,4 @@ export interface ContextMenuProps extends LgIdProps {
 
   /** Menu items to show on right-click */
   menuItems?: Array<ContextMenuItem>;
-
-  /** Whether to prevent the default context menu. @default true */
-  preventDefaultContextMenu?: boolean;
-
-  /** Whether the context menu is disabled. @default false */
-  disabled?: boolean;
 }
