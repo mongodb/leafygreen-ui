@@ -10,7 +10,7 @@ export const Align = {
 export type Align = (typeof Align)[keyof typeof Align];
 
 export interface TitleBarProps
-  extends Omit<React.ComponentPropsWithRef<'div'>, 'children'>,
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'children'>,
     DarkModeProps {
   /**
    * Title text

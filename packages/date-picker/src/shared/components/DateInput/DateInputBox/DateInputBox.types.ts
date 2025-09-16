@@ -16,7 +16,7 @@ export type DateInputChangeEventHandler = (
 ) => void;
 
 export interface DateInputBoxProps
-  extends Omit<React.ComponentPropsWithRef<'div'>, 'onChange'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /**
    * Date value passed into the component, in UTC time
    */

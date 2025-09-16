@@ -12,7 +12,7 @@ export type MessageRatingValue =
   (typeof MessageRatingValue)[keyof typeof MessageRatingValue];
 
 export interface MessageRatingProps
-  extends React.ComponentPropsWithRef<'div'>,
+  extends React.ComponentPropsWithoutRef<'div'>,
     DarkModeProps {
   /**
    * Custom description text

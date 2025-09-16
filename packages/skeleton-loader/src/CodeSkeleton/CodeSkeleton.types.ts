@@ -7,4 +7,4 @@ import { SharedSkeletonProps } from '../Skeleton/Skeleton.types';
 export interface CodeSkeletonProps
   extends SharedSkeletonProps,
     DarkModeProps,
-    React.ComponentPropsWithRef<'div'> {}
+    React.ComponentPropsWithoutRef<'div'> {}

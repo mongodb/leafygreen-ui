@@ -4,7 +4,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface DisclaimerTextProps
   extends DarkModeProps,
-    React.ComponentPropsWithRef<'div'> {
+    React.ComponentPropsWithoutRef<'div'> {
   /**
    * Heading text
    */

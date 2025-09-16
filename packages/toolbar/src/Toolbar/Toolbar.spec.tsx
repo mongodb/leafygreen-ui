@@ -1,4 +1,5 @@
 import React, { createRef } from 'react';
+import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { getTestUtils } from '../testing';
@@ -25,7 +26,11 @@ describe('packages/toolbar', () => {
 
   test('accepts a ref', () => {
     const ref = createRef<HTMLDivElement>();
-    renderToolbar({ ref });
+    render(
+      <Toolbar ref={ref}>
+        <ToolbarIconButton label="Code" glyph="Code" onClick={() => {}} />
+      </Toolbar>,
+    );
     expect(ref.current).toBeDefined();
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
   });

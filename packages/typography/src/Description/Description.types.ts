@@ -2,5 +2,5 @@ import React from 'react';
 
 import { ResponsiveTypographyProps } from '../types';
 
-export type DescriptionProps = React.ComponentPropsWithRef<'p'> &
+export type DescriptionProps = React.ComponentPropsWithoutRef<'p'> &
   ResponsiveTypographyProps & { disabled?: boolean };

@@ -22,7 +22,7 @@ export const ChartStates = {
 } as const;
 export type ChartStates = (typeof ChartStates)[keyof typeof ChartStates];
 
-export type ChartProps = React.ComponentPropsWithRef<'div'> &
+export type ChartProps = React.ComponentPropsWithoutRef<'div'> &
   DarkModeProps &
   PropsWithChildren<{
     /**

@@ -7,7 +7,7 @@ import { SharedSkeletonProps } from '../Skeleton/Skeleton.types';
 export interface ListSkeletonProps
   extends SharedSkeletonProps,
     DarkModeProps,
-    React.ComponentPropsWithRef<'ul'> {
+    React.ComponentPropsWithoutRef<'ul'> {
   /**
    * Defines the number of skeleton list items to render
    */

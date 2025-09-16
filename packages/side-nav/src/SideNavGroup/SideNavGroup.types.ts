@@ -2,7 +2,7 @@ import React from 'react';
 
 import { OneOf } from '@leafygreen-ui/lib';
 
-interface SideNavGroupBaseProps extends React.ComponentPropsWithRef<'li'> {
+interface SideNavGroupBaseProps extends React.ComponentPropsWithoutRef<'li'> {
   /**
    * Content that will be rendered as the component's header. If a string is provided,
    * it will be rendered with default styling as a header tag.

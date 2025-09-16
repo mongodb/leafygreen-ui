@@ -9,7 +9,7 @@ export type ChartCardStates =
   (typeof ChartCardStates)[keyof typeof ChartCardStates];
 
 export interface ChartCardProps
-  extends Omit<React.ComponentPropsWithRef<'div'>, 'title'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /**
    * The title of the card
    */

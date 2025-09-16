@@ -6,7 +6,7 @@ import { PopoverRenderModeProps } from '@leafygreen-ui/popover';
 
 import { SharedInputBarProps } from './shared.types';
 
-export type InputBarProps = React.ComponentPropsWithRef<'form'> &
+export type InputBarProps = React.ComponentPropsWithoutRef<'form'> &
   DarkModeProps &
   SharedInputBarProps & {
     /**

@@ -46,6 +46,6 @@ interface BaseToggleProps extends DarkModeProps, LgIdProps {
 
 export type ToggleProps = Either<
   BaseToggleProps &
-    Omit<React.ComponentPropsWithRef<'button'>, keyof BaseToggleProps>,
+    Omit<React.ComponentPropsWithoutRef<'button'>, keyof BaseToggleProps>,
   'aria-label' | 'aria-labelledby'
 >;

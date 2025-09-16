@@ -1,3 +1,4 @@
 import React from 'react';
 
-export interface TableBodyProps extends React.ComponentPropsWithRef<'tbody'> {}
+export interface TableBodyProps
+  extends React.ComponentPropsWithoutRef<'tbody'> {}

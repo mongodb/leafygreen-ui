@@ -8,7 +8,7 @@ import { SharedSkeletonProps } from '../Skeleton/Skeleton.types';
 export interface TableSkeletonProps
   extends SharedSkeletonProps,
     DarkModeProps,
-    React.ComponentPropsWithRef<'table'> {
+    React.ComponentPropsWithoutRef<'table'> {
   /**
    * Base font size
    */

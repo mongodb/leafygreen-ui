@@ -7,7 +7,7 @@ import { SharedSkeletonProps } from '../Skeleton/Skeleton.types';
 export interface ParagraphSkeletonProps
   extends SharedSkeletonProps,
     DarkModeProps,
-    React.ComponentPropsWithRef<'div'> {
+    React.ComponentPropsWithoutRef<'div'> {
   /**
    * Determines whether the header skeleton should be rendered
    */

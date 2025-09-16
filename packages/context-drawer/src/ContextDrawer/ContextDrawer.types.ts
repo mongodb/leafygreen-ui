@@ -5,7 +5,7 @@ import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 export interface ContextDrawerProps
   extends DarkModeProps,
     LgIdProps,
-    Omit<React.ComponentPropsWithRef<'div'>, 'content'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'content'> {
   /**
    * The content to be displayed within the drawer.
    */

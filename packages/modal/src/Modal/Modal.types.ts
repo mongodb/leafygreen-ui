@@ -13,7 +13,7 @@ export const ModalSize = {
 export type ModalSize = (typeof ModalSize)[keyof typeof ModalSize];
 
 export interface ModalProps
-  extends React.ComponentPropsWithRef<'dialog'>,
+  extends React.ComponentPropsWithoutRef<'dialog'>,
     DarkModeProps,
     LgIdProps,
     CloseIconColorProp {

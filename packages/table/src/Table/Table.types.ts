@@ -15,7 +15,7 @@ export type VerticalAlignment =
   (typeof VerticalAlignment)[keyof typeof VerticalAlignment];
 
 export interface TableProps<T extends LGRowData>
-  extends React.ComponentPropsWithRef<'table'>,
+  extends React.ComponentPropsWithoutRef<'table'>,
     DarkModeProps,
     LgIdProps {
   /**

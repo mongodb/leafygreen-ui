@@ -12,7 +12,7 @@ export type MessageSourceType =
   (typeof MessageSourceType)[keyof typeof MessageSourceType];
 
 export interface MessageContentProps
-  extends Omit<React.ComponentPropsWithRef<'div'>, 'children'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> {
   /**
    * Base font size
    */

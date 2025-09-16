@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface ChartHeaderProps
-  extends Omit<React.ComponentPropsWithRef<'div'>, 'title'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /**
    * The title of the chart
    */

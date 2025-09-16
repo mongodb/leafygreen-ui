@@ -21,4 +21,4 @@ export interface BaseMessageVerifiedBannerProps {
 
 export interface MessageVerifiedBannerProps
   extends BaseMessageVerifiedBannerProps,
-    React.ComponentPropsWithRef<'div'> {}
+    React.ComponentPropsWithoutRef<'div'> {}

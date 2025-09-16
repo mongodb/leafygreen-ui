@@ -9,6 +9,6 @@ type IconSizeProp = Pick<IconProps, 'size'>;
 
 export interface IconSkeletonProps
   extends SharedSkeletonProps,
-    React.ComponentPropsWithRef<'div'>,
+    React.ComponentPropsWithoutRef<'div'>,
     DarkModeProps,
     IconSizeProp {}

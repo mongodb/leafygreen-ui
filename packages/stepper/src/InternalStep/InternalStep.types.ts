@@ -2,7 +2,8 @@ import React from 'react';
 
 import { StepState } from '../Stepper';
 
-export interface InternalStepProps extends React.ComponentPropsWithRef<'div'> {
+export interface InternalStepProps
+  extends React.ComponentPropsWithoutRef<'div'> {
   state: StepState;
   index?: number;
   stepIcon?: React.ReactNode;

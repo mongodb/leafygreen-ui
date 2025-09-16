@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface TabProps extends React.ComponentPropsWithRef<'div'> {
+export interface TabProps extends React.ComponentPropsWithoutRef<'div'> {
   /**
    * Content that will appear inside of Tab panel.
    * /

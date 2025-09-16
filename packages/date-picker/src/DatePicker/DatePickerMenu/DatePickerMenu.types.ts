@@ -14,4 +14,4 @@ export type DatePickerMenuProps = Omit<
   | 'renderMode'
   | 'scrollContainer'
 > &
-  React.ComponentPropsWithRef<'div'>;
+  React.ComponentPropsWithoutRef<'div'>;

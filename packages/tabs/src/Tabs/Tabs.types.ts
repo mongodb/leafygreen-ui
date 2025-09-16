@@ -17,7 +17,7 @@ export const Size = {
 export type Size = (typeof Size)[keyof typeof Size];
 
 export interface TabsProps<SelectedType extends number | string>
-  extends React.ComponentPropsWithRef<'div'>,
+  extends React.ComponentPropsWithoutRef<'div'>,
     DarkModeProps,
     LgIdProps {
   /**

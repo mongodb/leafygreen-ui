@@ -48,7 +48,7 @@ type ModifiedPopoverProps = Omit<
 >;
 
 export type TooltipProps = Omit<
-  React.ComponentPropsWithRef<'div'>,
+  React.ComponentPropsWithoutRef<'div'>,
   keyof ModifiedPopoverProps
 > &
   ModifiedPopoverProps & {

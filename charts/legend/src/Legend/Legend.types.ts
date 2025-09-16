@@ -5,7 +5,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface LegendProps
   extends DarkModeProps,
-    Omit<React.ComponentPropsWithRef<'div'>, 'title'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /**
    * An array of series names representing the data series to be displayed in the legend.
    */

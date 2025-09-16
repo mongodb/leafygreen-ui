@@ -14,7 +14,7 @@ export interface StateForStyles {
   size: Size;
 }
 
-export interface PipelineProps extends React.ComponentPropsWithRef<'div'> {
+export interface PipelineProps extends React.ComponentPropsWithoutRef<'div'> {
   /**
    * Content that will appear inside of the Pipeline component.
    */
@@ -39,7 +39,7 @@ export interface PipelineProps extends React.ComponentPropsWithRef<'div'> {
   darkMode?: boolean;
 }
 
-export interface StageProps extends React.ComponentPropsWithRef<'li'> {
+export interface StageProps extends React.ComponentPropsWithoutRef<'li'> {
   /**
    * Content that will appear inside of the Stage component.
    **/
@@ -57,7 +57,7 @@ export interface StageProps extends React.ComponentPropsWithRef<'li'> {
   threshold?: number | Array<number>;
 }
 
-export interface CounterProps extends React.ComponentPropsWithRef<'div'> {
+export interface CounterProps extends React.ComponentPropsWithoutRef<'div'> {
   /**
    * Content that will appear inside of the Counter component.
    */

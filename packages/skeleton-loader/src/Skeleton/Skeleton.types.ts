@@ -14,7 +14,7 @@ export interface SharedSkeletonProps {
 export interface SkeletonProps
   extends SharedSkeletonProps,
     DarkModeProps,
-    React.ComponentPropsWithRef<'div'> {
+    React.ComponentPropsWithoutRef<'div'> {
   /**
    * Determines the height of the skeleton
    * @default "default"

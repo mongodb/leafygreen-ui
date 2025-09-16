@@ -24,7 +24,7 @@ export type MenuWrapperProps = Omit<
   | 'renderMode'
   | 'scrollContainer'
 > &
-  React.ComponentPropsWithRef<'div'>;
+  React.ComponentPropsWithoutRef<'div'>;
 
 /**
  * A simple styled popover component
