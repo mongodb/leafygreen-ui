@@ -2,4 +2,4 @@
 '@lg-chat/input-bar': minor
 ---
 
-Add loadingMessage prop
+Add support for configurable loadingMessage prop to InputBar

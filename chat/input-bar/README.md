@@ -62,6 +62,7 @@ return (
 | `darkMode`                    | `boolean`                                      | Determines if the component will render in dark mode        | `false` |
 | `disabled`                    | `boolean`                                      | Determines whether the user can interact with the InputBar  | `false` |
 | `disableSend`                 | `boolean`                                      | When defined as `true`, disables the send action and button |         |
+| `loadingMessage`              | `string`                                       | Custom loading message to display when `state='loading'`    |     `MongoDB Assistant is thinking`    |
 | `errorMessage`                | `ReactNode`                                    | Custom error message to display when `state='error'`        |         |
 | `onMessageSend`               | `(messageBody: string, e?: FormEvent) => void` | Submit event handler.                                       |         |
 | `shouldRenderGradient`        | `boolean`                                      | Toggles the gradient animation around the input             | `true`  |
