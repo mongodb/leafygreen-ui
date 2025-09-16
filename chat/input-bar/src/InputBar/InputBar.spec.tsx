@@ -302,12 +302,21 @@ describe('packages/input-bar', () => {
   });
 
   describe('status states', () => {
-    test('renders loading state when state is "loading"', () => {
+    test('renders loading state with default message when state is "loading"', () => {
       renderInputBar({ state: State.Loading });
 
       expect(
         screen.getByText(/MongoDB Assistant is thinking/i),
       ).toBeInTheDocument();
+    });
+
+    test('renders loading state with custom message when state is "loading" and loadingMessage provided', () => {
+      renderInputBar({
+        state: State.Loading,
+        loadingMessage: 'Custom loading message',
+      });
+
+      expect(screen.getByText(/Custom loading message/i)).toBeInTheDocument();
     });
 
     test('renders error state with default message when state is "error" and no message provided', () => {
