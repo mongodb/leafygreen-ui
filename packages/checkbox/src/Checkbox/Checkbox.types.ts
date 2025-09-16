@@ -1,13 +1,14 @@
+import React from 'react';
+
 import {
   createUniqueClassName,
   Either,
-  HTMLElementProps,
   LgIdProps,
   Theme,
 } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-export interface InternalCheckboxProps extends HTMLElementProps<'input'> {
+export interface InternalCheckboxProps extends React.ComponentProps<'input'> {
   /**
    * Base font size of the component. Only effective when `size == 'default'`
    */

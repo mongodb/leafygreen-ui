@@ -1,8 +1,8 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 import { StepState } from '../Stepper';
 
-export interface StepIconProps extends HTMLElementProps<'div'> {
+export interface StepIconProps extends React.ComponentPropsWithRef<'div'> {
   state: StepState;
   size?: number;
 }

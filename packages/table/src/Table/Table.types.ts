@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { LeafyGreenTable, LGRowData } from '../useLeafyGreenTable';
@@ -13,7 +15,7 @@ export type VerticalAlignment =
   (typeof VerticalAlignment)[keyof typeof VerticalAlignment];
 
 export interface TableProps<T extends LGRowData>
-  extends HTMLElementProps<'table'>,
+  extends React.ComponentPropsWithRef<'table'>,
     DarkModeProps,
     LgIdProps {
   /**

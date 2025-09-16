@@ -1,5 +1,9 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
-export interface StepperProps extends HTMLElementProps<'ol'>, DarkModeProps {
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
+export interface StepperProps
+  extends React.ComponentPropsWithRef<'ol'>,
+    DarkModeProps {
   /**
    * The index of the step that should be marked as current. (zero-indexed)
    *

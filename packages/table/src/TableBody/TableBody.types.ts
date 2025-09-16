@@ -1,3 +1,3 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
-export interface TableBodyProps extends HTMLElementProps<'tbody'> {}
+export interface TableBodyProps extends React.ComponentPropsWithRef<'tbody'> {}

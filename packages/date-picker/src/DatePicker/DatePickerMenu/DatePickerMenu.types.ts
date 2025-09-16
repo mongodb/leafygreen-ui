@@ -1,4 +1,5 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
 import { PopoverProps } from '@leafygreen-ui/popover';
 
 export type DatePickerMenuProps = Omit<
@@ -13,4 +14,4 @@ export type DatePickerMenuProps = Omit<
   | 'renderMode'
   | 'scrollContainer'
 > &
-  HTMLElementProps<'div'>;
+  React.ComponentPropsWithRef<'div'>;

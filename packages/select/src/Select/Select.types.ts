@@ -2,12 +2,7 @@ import React from 'react';
 
 import { ButtonProps } from '@leafygreen-ui/button';
 import { FormFieldState } from '@leafygreen-ui/form-field';
-import {
-  DarkModeProps,
-  Either,
-  HTMLElementProps,
-  LgIdProps,
-} from '@leafygreen-ui/lib';
+import { DarkModeProps, Either, LgIdProps } from '@leafygreen-ui/lib';
 import { DismissMode, PopoverProps, RenderMode } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -33,10 +28,7 @@ export type DropdownWidthBasis =
   (typeof DropdownWidthBasis)[keyof typeof DropdownWidthBasis];
 
 export interface BaseSelectProps
-  extends Omit<
-      HTMLElementProps<'button', HTMLButtonElement>,
-      'onChange' | 'onClick'
-    >,
+  extends Omit<React.ComponentProps<'button'>, 'onChange' | 'onClick'>,
     Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle' | 'spacing'>,
     DarkModeProps,
     LgIdProps {

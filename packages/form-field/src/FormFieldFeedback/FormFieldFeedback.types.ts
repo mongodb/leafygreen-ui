@@ -1,9 +1,10 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 import { FormFieldState } from '../FormField/FormField.types';
 
-export interface FormFieldFeedbackProps extends HTMLElementProps<'div'> {
+export interface FormFieldFeedbackProps extends React.ComponentProps<'div'> {
   /**
    * Base font size of the component. Only effective when `size == 'default'`
    */

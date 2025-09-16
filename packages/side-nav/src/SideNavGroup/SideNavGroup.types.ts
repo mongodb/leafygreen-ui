@@ -1,6 +1,8 @@
-import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
+import React from 'react';
 
-interface SideNavGroupBaseProps extends HTMLElementProps<'li'> {
+import { OneOf } from '@leafygreen-ui/lib';
+
+interface SideNavGroupBaseProps extends React.ComponentPropsWithRef<'li'> {
   /**
    * Content that will be rendered as the component's header. If a string is provided,
    * it will be rendered with default styling as a header tag.

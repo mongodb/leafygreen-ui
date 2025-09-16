@@ -1,11 +1,11 @@
 import React from 'react';
 import { SeriesName } from '@lg-charts/series-provider';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface LegendProps
   extends DarkModeProps,
-    Omit<HTMLElementProps<'div'>, 'title'> {
+    Omit<React.ComponentPropsWithRef<'div'>, 'title'> {
   /**
    * An array of series names representing the data series to be displayed in the legend.
    */

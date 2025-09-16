@@ -1,12 +1,12 @@
-import { FormEvent, ReactElement, RefObject } from 'react';
+import React, { FormEvent, ReactElement, RefObject } from 'react';
 import { TextareaAutosizeProps } from 'react-textarea-autosize';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { PopoverRenderModeProps } from '@leafygreen-ui/popover';
 
 import { SharedInputBarProps } from './shared.types';
 
-export type InputBarProps = HTMLElementProps<'form'> &
+export type InputBarProps = React.ComponentPropsWithRef<'form'> &
   DarkModeProps &
   SharedInputBarProps & {
     /**

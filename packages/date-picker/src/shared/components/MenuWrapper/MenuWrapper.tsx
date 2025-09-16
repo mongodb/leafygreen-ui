@@ -5,7 +5,6 @@ import {
   PopoverProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import Popover, {
   DismissMode,
   PopoverProps,
@@ -25,7 +24,7 @@ export type MenuWrapperProps = Omit<
   | 'renderMode'
   | 'scrollContainer'
 > &
-  HTMLElementProps<'div'>;
+  React.ComponentPropsWithRef<'div'>;
 
 /**
  * A simple styled popover component

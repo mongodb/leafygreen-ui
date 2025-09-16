@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { SharedSkeletonProps } from '../Skeleton/Skeleton.types';
@@ -6,7 +8,7 @@ import { SharedSkeletonProps } from '../Skeleton/Skeleton.types';
 export interface TableSkeletonProps
   extends SharedSkeletonProps,
     DarkModeProps,
-    HTMLElementProps<'table'> {
+    React.ComponentPropsWithRef<'table'> {
   /**
    * Base font size
    */

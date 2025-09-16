@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps, keyMap } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps, keyMap } from '@leafygreen-ui/lib';
 
 import { DateSegment, DateSegmentValue } from '../../../types';
 
@@ -17,7 +19,7 @@ export type DateInputSegmentChangeEventHandler = (
 
 export interface DateInputSegmentProps
   extends DarkModeProps,
-    Omit<HTMLElementProps<'input'>, 'onChange'> {
+    Omit<React.ComponentPropsWithRef<'input'>, 'onChange'> {
   /** Which date segment this input represents. Determines the aria-label, and min/max values where relevant */
   segment: DateSegment;
 

@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface SharedSkeletonProps {
   /**
@@ -12,7 +14,7 @@ export interface SharedSkeletonProps {
 export interface SkeletonProps
   extends SharedSkeletonProps,
     DarkModeProps,
-    HTMLElementProps<'div'> {
+    React.ComponentPropsWithRef<'div'> {
   /**
    * Determines the height of the skeleton
    * @default "default"

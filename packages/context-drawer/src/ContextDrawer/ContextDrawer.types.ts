@@ -1,11 +1,11 @@
-import { ChangeEventHandler, ReactElement } from 'react';
+import React, { ChangeEventHandler, ReactElement } from 'react';
 
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export interface ContextDrawerProps
   extends DarkModeProps,
     LgIdProps,
-    Omit<HTMLElementProps<'div'>, 'content'> {
+    Omit<React.ComponentPropsWithRef<'div'>, 'content'> {
   /**
    * The content to be displayed within the drawer.
    */

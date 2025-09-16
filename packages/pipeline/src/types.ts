@@ -1,6 +1,4 @@
-import { ReactNode } from 'react';
-
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React, { ReactNode } from 'react';
 
 export const Size = {
   XSmall: 'xsmall',
@@ -16,7 +14,7 @@ export interface StateForStyles {
   size: Size;
 }
 
-export interface PipelineProps extends HTMLElementProps<'div', never> {
+export interface PipelineProps extends React.ComponentPropsWithRef<'div'> {
   /**
    * Content that will appear inside of the Pipeline component.
    */
@@ -41,7 +39,7 @@ export interface PipelineProps extends HTMLElementProps<'div', never> {
   darkMode?: boolean;
 }
 
-export interface StageProps extends HTMLElementProps<'li', never> {
+export interface StageProps extends React.ComponentPropsWithRef<'li'> {
   /**
    * Content that will appear inside of the Stage component.
    **/
@@ -59,7 +57,7 @@ export interface StageProps extends HTMLElementProps<'li', never> {
   threshold?: number | Array<number>;
 }
 
-export interface CounterProps extends HTMLElementProps<'div', never> {
+export interface CounterProps extends React.ComponentPropsWithRef<'div'> {
   /**
    * Content that will appear inside of the Counter component.
    */

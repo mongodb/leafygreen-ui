@@ -1,9 +1,9 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 import { RadioGroupProps } from '..';
 
 export interface RadioProps
-  extends Omit<HTMLElementProps<'input'>, 'size'>,
+  extends Omit<React.ComponentProps<'input'>, 'size'>,
     Pick<RadioGroupProps, 'darkMode' | 'size' | 'bold'> {
   /**
    * Used to determine what Radio is active.

@@ -1,9 +1,6 @@
-import {
-  DarkModeProps,
-  Either,
-  HTMLElementProps,
-  LgIdProps,
-} from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps, Either, LgIdProps } from '@leafygreen-ui/lib';
 
 export const Size = {
   Default: 'default',
@@ -49,6 +46,6 @@ interface BaseToggleProps extends DarkModeProps, LgIdProps {
 
 export type ToggleProps = Either<
   BaseToggleProps &
-    Omit<HTMLElementProps<'button', never>, keyof BaseToggleProps>,
+    Omit<React.ComponentPropsWithRef<'button'>, keyof BaseToggleProps>,
   'aria-label' | 'aria-labelledby'
 >;

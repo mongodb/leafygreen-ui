@@ -1,10 +1,9 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PolymorphicAs, PolymorphicProps } from '@leafygreen-ui/polymorphic';
 
 export interface BaseSegmentedControlOptionProps
-  extends HTMLElementProps<'div'> {
+  extends React.ComponentProps<'div'> {
   /**
    * Can be text and/or an icon element
    */

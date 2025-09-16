@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 /**
  * Types
@@ -8,7 +8,7 @@ import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 export interface ExpandableCardProps
   extends DarkModeProps,
     LgIdProps,
-    Omit<HTMLElementProps<'div'>, 'title'> {
+    Omit<React.ComponentPropsWithRef<'div'>, 'title'> {
   /**
    * The title of the card
    */

@@ -1,6 +1,6 @@
-import { SetStateAction } from 'react';
+import React, { SetStateAction } from 'react';
 
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 import { CloseIconColorProp } from '../shared.types';
 
@@ -13,7 +13,7 @@ export const ModalSize = {
 export type ModalSize = (typeof ModalSize)[keyof typeof ModalSize];
 
 export interface ModalProps
-  extends HTMLElementProps<'dialog'>,
+  extends React.ComponentPropsWithRef<'dialog'>,
     DarkModeProps,
     LgIdProps,
     CloseIconColorProp {

@@ -1,6 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 import { ResponsiveTypographyProps } from '../types';
 
-export type InlineKeyCodeProps = HTMLElementProps<'h1'> &
+export type InlineKeyCodeProps = React.ComponentPropsWithRef<'h1'> &
   ResponsiveTypographyProps;
