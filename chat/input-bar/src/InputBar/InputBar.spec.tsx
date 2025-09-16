@@ -311,7 +311,10 @@ describe('packages/input-bar', () => {
     });
 
     test('renders loading state with custom message when state is "loading" and loadingMessage provided', () => {
-      renderInputBar({ state: State.Loading, loadingMessage: 'Custom loading message' });
+      renderInputBar({
+        state: State.Loading,
+        loadingMessage: 'Custom loading message',
+      });
 
       expect(screen.getByText(/Custom loading message/i)).toBeInTheDocument();
     });
