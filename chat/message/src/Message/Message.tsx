@@ -24,6 +24,7 @@ import {
 } from './Message.types';
 import { SpaciousMessage } from './SpaciousMessage';
 
+// Builds the base message, can be either compact or spacious
 const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
   (
     {
@@ -33,6 +34,7 @@ const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
       children,
       componentOverrides,
       darkMode: darkModeProp,
+      promotion,
       links,
       linksHeading,
       onLinkClick,
@@ -81,6 +83,7 @@ const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
               avatar={avatar}
               baseFontSize={baseFontSize}
               componentOverrides={componentOverrides}
+              promotion={promotion}
               links={links}
               linksHeading={linksHeading}
               onLinkClick={onLinkClick}
@@ -99,6 +102,8 @@ const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
 
 BaseMessage.displayName = 'Message';
 
+// These are just FUNCTIONS. NOT instanced here
+// Name tag the FUNCTIONS (not the instances) so we can easily use findChild to get the instances of them
 const Actions = MessageActions as ActionsType;
 Actions[MessageSubcomponentProperty.Actions] = true;
 

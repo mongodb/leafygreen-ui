@@ -282,6 +282,15 @@ export const WithMessageLinksExpanded: StoryObj<MessageStoryProps> = {
   },
 };
 
+export const WithPromotion: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    isSender: false,
+    messageBody: ASSISTANT_TEXT,
+    promotion: "Want to learn more? Go to the Skills homepage!",
+  },
+};
+
 export const WithAllSubComponents: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
@@ -294,6 +303,7 @@ export const WithAllSubComponents: StoryObj<MessageStoryProps> = {
     ),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
+    promotion: "This response includes promotional content",
   },
 };
 
