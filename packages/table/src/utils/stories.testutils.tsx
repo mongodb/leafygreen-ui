@@ -127,6 +127,7 @@ export const DynamicDataComponent: StoryFn<StoryTableProps> = args => {
                     })}
                   </Row>
                 )}
+                {/* @ts-expect-error FIXME: ExpandedContent is incorrectly generic<unknown> */}
                 {isExpandedContent && <ExpandedContent row={row} />}
               </Fragment>
             );

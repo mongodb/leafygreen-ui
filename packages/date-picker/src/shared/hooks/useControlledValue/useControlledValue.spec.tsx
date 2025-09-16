@@ -1,7 +1,6 @@
 import React from 'react';
 import { ChangeEventHandler } from 'react';
 import { render } from '@testing-library/react';
-import { RenderHookResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { act, renderHook } from '@leafygreen-ui/testing-lib';
@@ -12,15 +11,12 @@ const errorSpy = jest.spyOn(console, 'error');
 
 const renderUseControlledValueHook = <T extends any>(
   ...[valueProp, callback, initial]: Parameters<typeof useControlledValue<T>>
-): RenderHookResult<
-  ReturnType<typeof useControlledValue<T>>,
-  typeof valueProp
-> => {
+) => {
   const result = renderHook(v => useControlledValue(v, callback, initial), {
     initialProps: valueProp,
   });
 
-  return { ...result };
+  return result;
 };
 
 describe('packages/date-picker/hooks/useControlledValue', () => {

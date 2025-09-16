@@ -60,6 +60,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     justify = Justify.End,
     adjustOnMutation = false,
     shouldClose = () => true,
+    onOpen,
+    onClose,
     spacing = 6,
     maxHeight = 344,
     initialOpen = false,
@@ -160,6 +162,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     if (keyboardUsedRef.current) {
       moveHighlight('first');
     }
+    onOpen?.();
+  };
+
+  // Callback fired when the popover exit transition finishes.
+  const handlePopoverClose = () => {
+    onClose?.();
   };
 
   // Fired on global keyDown event
@@ -232,6 +240,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           refEl={triggerRef}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
+          onExited={handlePopoverClose}
           ref={popoverRef}
           {...popoverProps}
         >

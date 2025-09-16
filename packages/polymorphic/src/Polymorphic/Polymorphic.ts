@@ -29,10 +29,11 @@ export const Polymorphic = <
   // (i.e. we don't know if `as="button"`, and if `type` is a valid prop)
 
   // If no `ref` arg was passed in, we use the plain render function
-  // Using ts-ignore instead of ts-expect-error since expect throws an unused expect TS error in a React 17 environment
-  // @ts-ignore FIXME: https://jira.mongodb.org/browse/LG-3410
   const PolyComponent: PolymorphicComponentType<XP, DefaultAs> =
-    render.length === 1 ? render : forwardRef(render);
+    render.length === 1
+      ? render
+      : // @ts-ignore React17 In TS<5.0 this is `ReactElement` but in 5+ it's `ReactNode`
+        (forwardRef(render) as PolymorphicComponentType<XP, DefaultAs>);
 
   PolyComponent.displayName =
     displayName ?? render.displayName ?? 'PolymorphicComponent';

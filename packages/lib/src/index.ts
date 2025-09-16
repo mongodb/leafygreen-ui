@@ -27,6 +27,7 @@ export type {
   DeepPick,
   DeepUnion,
   ExclusiveUnion,
+  Exists,
   Mutable,
   Only,
   Optional,
@@ -39,7 +40,11 @@ export { isComponentType, validateChildren } from './validateChildren';
 export { createUniqueClassName, getNodeTextContent, getTheme, Theme, typeIs };
 export type { DarkModeProps, LgIdProps, LgIdString };
 
-/** Helper type to extract an HTML element's valid props */
+/**
+ * Helper type to extract an HTML element's valid props
+ *
+ * @deprecated - Prefer the built-in React type {@link React.ComponentProps}
+ * */
 export type HTMLElementProps<
   Element extends keyof JSX.IntrinsicElements,
   RefType extends HTMLElement = never,
