@@ -8,6 +8,7 @@ import { type ContextMenuItem } from '../ContextMenu';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 import { CodeEditorModules } from './hooks';
+import { CodeEditorTooltipProps } from '../CodeEditorTooltip';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
@@ -95,7 +96,7 @@ export const CodeEditorTooltipSeverity = {
 export type CodeEditorTooltipSeverity =
   (typeof CodeEditorTooltipSeverity)[keyof typeof CodeEditorTooltipSeverity];
 
-export interface CodeEditorTooltip {
+export interface CodeEditorTooltip extends CodeEditorTooltipProps {
   /**
    * Which line in the document the tooltip should be rendered. 1 based.
    */
@@ -111,11 +112,6 @@ export interface CodeEditorTooltip {
    * Defaults to 1.
    */
   column?: number;
-
-  /**
-   * What gets rendered in the tooltip.
-   */
-  content: ReactNode;
 
   /**
    * Severity level of the tooltip. Defaults to 'info'.

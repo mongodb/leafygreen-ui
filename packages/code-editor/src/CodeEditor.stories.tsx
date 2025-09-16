@@ -31,6 +31,7 @@ import { IndentUnits } from './CodeEditor';
 import { ShortcutTable } from './ShortcutTable';
 import { codeSnippets } from './testing';
 import { CodeEditor, Panel } from '.';
+import { CodeEditorTooltip } from './CodeEditorTooltip';
 
 const MyTooltip = ({
   line,
@@ -338,6 +339,12 @@ export const Typescript = Template.bind({});
 Typescript.args = {
   language: 'typescript',
   defaultValue: codeSnippets.typescript,
+};
+
+export const Tooltip: StoryObj<{}> = {
+  render: () => {
+    return <CodeEditorTooltip content="CodeEditorTooltip" />;
+  },
 };
 
 export const TooltipOnHover: StoryObj<{}> = {
