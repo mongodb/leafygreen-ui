@@ -1,6 +1,8 @@
 #!/bin/bash
 # Based on https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html#configuring-npm-without-using-the-login-command
 
+# TODO: Create a shared script for lg-private
+
 # Declare our scope, domain, and repository
 DOMAIN="mongodb"
 REPOSITORY="leafygreen-ui"
