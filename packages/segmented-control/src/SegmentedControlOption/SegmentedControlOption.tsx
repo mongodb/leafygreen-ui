@@ -68,7 +68,7 @@ export const SegmentedControlOption =
       };
 
       const didComponentMount = useRef(false);
-      const buttonRef = useRef<HTMLButtonElement>(null);
+      const buttonRef = useRef<HTMLButtonElement | null>(null);
       useEffect(() => {
         // Check if the component did mount
         if (didComponentMount.current) {

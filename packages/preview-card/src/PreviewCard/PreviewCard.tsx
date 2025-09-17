@@ -44,7 +44,7 @@ export const PreviewCard = forwardRef<HTMLDivElement, PreviewCardProps>(
     );
     const lgIds = getLgIds(dataLgId);
 
-    const contentRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement | null>(null);
 
     const id = useIdAllocator({ prefix: 'preview-card', id: idProp });
     const contentId = `${id}-content`;
