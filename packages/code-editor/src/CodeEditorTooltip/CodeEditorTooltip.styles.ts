@@ -3,15 +3,16 @@ import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
   color,
+  fontFamilies,
   InteractionState,
   shadow,
   spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
 
-const TOOLTIP_WIDTH = 514;
+const MESSAGE_LINE_HEIGHT = 20;
 
-export const getTooltipStyles = (theme: Theme) => css`
+export const getTooltipStyles = (theme: Theme, baseFontSize: number) => css`
   background-color: ${color[theme].background[Variant.Secondary][
     InteractionState.Default
   ]};
@@ -19,10 +20,33 @@ export const getTooltipStyles = (theme: Theme) => css`
   border: 1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]};
   box-shadow: ${shadow[theme][100]};
-  padding: ${spacing[100]}px;
-  width: ${TOOLTIP_WIDTH}px;
+  font-family: ${fontFamilies.code};
+  font-size: ${baseFontSize}px;
+  line-height: ${MESSAGE_LINE_HEIGHT}px;
+  width: fit-content;
 `;
 
-export const tooltipCodeStyles = css`
-  border: none;
+export const tooltipMessageContainerStyles = css`
+  padding: ${spacing[100]}px ${spacing[200]}px 0; // Bottom margin added by last message
+`;
+
+export const tooltipMessageStyles = css`
+  margin: 0 0 ${spacing[100]}px 0;
+`;
+
+export const getTooltipLinksContainerStyles = (theme: Theme) => css`
+  border-top: 1px solid
+    ${color[theme].border[Variant.Secondary][InteractionState.Default]};
+  padding: ${spacing[100]}px ${spacing[200]}px;
+`;
+
+export const tooltipLinksListStyles = css`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+export const tooltipLinksListItemStyles = css`
+  display: inline-block;
+  margin-right: ${spacing[200]}px;
 `;

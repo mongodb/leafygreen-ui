@@ -1,9 +1,7 @@
-import { ReactNode } from "react";
-
 export interface CodeEditorTooltipProps {
-  content: ReactNode
+  messages?: Array<string>;
   links?: Array<{
     label: string;
     href: string;
-  }>
+  }>;
 }

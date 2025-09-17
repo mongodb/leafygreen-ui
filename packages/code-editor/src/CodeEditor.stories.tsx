@@ -28,10 +28,10 @@ import Modal from '@leafygreen-ui/modal';
 import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { IndentUnits } from './CodeEditor';
+import { CodeEditorTooltip } from './CodeEditorTooltip';
 import { ShortcutTable } from './ShortcutTable';
 import { codeSnippets } from './testing';
 import { CodeEditor, Panel } from '.';
-import { CodeEditorTooltip } from './CodeEditorTooltip';
 
 const MyTooltip = ({
   line,
@@ -92,7 +92,10 @@ const meta: StoryMetaType<typeof CodeEditor> = {
   },
   decorators: [
     (Story: StoryFn, context) => (
-      <LeafyGreenProvider darkMode={context?.args.darkMode}>
+      <LeafyGreenProvider
+        darkMode={context?.args.darkMode}
+        baseFontSize={context?.args.baseFontSize}
+      >
         <div
           className={css`
             width: 100vw;
@@ -343,7 +346,24 @@ Typescript.args = {
 
 export const Tooltip: StoryObj<{}> = {
   render: () => {
-    return <CodeEditorTooltip content="CodeEditorTooltip" />;
+    return (
+      <CodeEditorTooltip
+        messages={[
+          'Cannot use JSX unless the ‘--jsx’ flag is provided.',
+          '(parameter) props: HTMLElementProps<”svg”>',
+        ]}
+        links={[
+          {
+            label: 'HTMLElementProps',
+            href: 'https://developer.mozilla.org/en-US/docs/Web/API/HTMLElementProps',
+          },
+          {
+            label: 'svg',
+            href: 'https://developer.mozilla.org/en-US/docs/Web/API/svg',
+          },
+        ]}
+      />
+    );
   },
 };
 
