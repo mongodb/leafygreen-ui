@@ -338,7 +338,6 @@ export const WithPromotion: StoryObj<MessageStoryProps> = {
     children: getPromotionsChild(),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
-    promotion: "Want to learn more? Go to the Skills homepage!",
   },
 };
 

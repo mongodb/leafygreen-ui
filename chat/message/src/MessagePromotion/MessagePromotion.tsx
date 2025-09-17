@@ -6,10 +6,20 @@ import { MessageContent } from '../MessageContent';
 import { type MessagePromotionProps } from './MessagePromotion.types';
 import { containerStyles, iconStyles } from './MessagePromotion.styles';
 
+// Open markdown link in new tab
+function MarkdownLinkRenderer(props: any) {
+  return (
+    <a href={props.href} target="_blank" rel="noreferrer">
+      {props.children}
+    </a>
+  );
+}
+
 export function MessagePromotion({
   baseFontSize,
   promotionText,
-  onPromotionClick,   // TODO figure out link click callback.
+  onPromotionClick,
+  promotionContentType = "markdown",
   markdownProps,
   ...rest
 }: MessagePromotionProps) {
@@ -26,8 +36,9 @@ export function MessagePromotion({
       </div>
       <MessageContent
         baseFontSize={baseFontSize}
-        markdownProps={markdownProps}
-        sourceType="markdown"   // TODO Add a sourceType param to MessagePromotion
+        markdownProps={{ ...markdownProps, components: { a: MarkdownLinkRenderer } }}
+        sourceType={promotionContentType}
+        onClick={onPromotionClick}
         {...rest}
       >
         {promotionText}

@@ -1,22 +1,7 @@
 
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, spacing, typeScales } from '@leafygreen-ui/tokens';
-
-// TODO - Darkmode style(s)?
-
-// const fontStyles: Record<BaseFontSize, string> = {
-//   [BaseFontSize.Body1]: css`
-//     font-size: ${typeScales.body1.fontSize}px;
-//     line-height: ${typeScales.body1.lineHeight}px;
-//   `,
-//   [BaseFontSize.Body2]: css`
-//     font-size: ${typeScales.body2.fontSize}px;
-//     line-height: ${typeScales.body2.lineHeight}px;
-//   `,
-// };
-
-// export const getTextStyles = (baseFontSize: BaseFontSize) => fontStyles[baseFontSize];
+import { spacing } from '@leafygreen-ui/tokens';
 
 export const containerStyles = css`
   display: flex;
@@ -29,11 +14,10 @@ export const iconStyles = css`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   
-  padding: 4px 10px;
   width: ${spacing[900]}px;
   height: ${spacing[600]}px; 
-
   margin-right: ${spacing[200]}px;
   
   border-radius: ${spacing[600]}px;
