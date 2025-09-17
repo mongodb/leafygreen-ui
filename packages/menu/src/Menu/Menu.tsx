@@ -81,6 +81,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     portalRef,
     scrollContainer,
     popoverZIndex,
+    // Extract only ul-appropriate props from rest
+    id,
     ...rest
   }: MenuProps,
   forwardRef,
@@ -264,8 +266,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
             <ul
-              data-testid={lgIds.root}
-              {...rest}
+              data-testid={(rest as any)['data-testid'] || lgIds.root}
+              id={id}
               data-lgid={lgIds.root}
               className={scrollContainerStyle}
               role="menu"

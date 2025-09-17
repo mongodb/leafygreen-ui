@@ -639,4 +639,16 @@ describe('packages/menu', () => {
       });
     });
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('Types work as expected', () => {
+    test('Types work as expected', () => {
+      render(
+        <Menu data-testid="menu">
+          <MenuItem>Item</MenuItem>
+          <MenuItem>Item</MenuItem>
+        </Menu>,
+      );
+    });
+  });
 });
