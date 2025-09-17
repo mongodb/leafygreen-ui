@@ -1,5 +1,28 @@
 # @lg-chat/fixed-chat-window
 
+## 4.0.6
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [b92bc72]
+- Updated dependencies [a9eb172]
+- Updated dependencies [5ef631a]
+- Updated dependencies [dc3299b]
+  - @lg-chat/chat-window@4.1.4
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/icon@14.5.0
+  - @lg-chat/leafygreen-chat-provider@5.0.2
+  - @lg-chat/title-bar@4.0.7
+  - @leafygreen-ui/avatar@3.1.2
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/popover@14.0.5
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+
 ## 4.0.5
 
 ### Patch Changes

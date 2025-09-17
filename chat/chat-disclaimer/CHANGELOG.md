@@ -1,5 +1,24 @@
 # @lg-chat/chat-disclaimer
 
+## 5.0.0
+
+### Major Changes
+
+- a3dee88: Remove deprecated and unused `DisclaimerModal`
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/marketing-modal@8.0.2
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+
 ## 4.0.8
 
 ### Patch Changes

@@ -1,5 +1,24 @@
 # @leafygreen-ui/form-footer
 
+## 9.0.3
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [5ef631a]
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/icon@14.5.0
+  - @leafygreen-ui/banner@10.1.0
+  - @leafygreen-ui/button@25.0.4
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/split-button@6.1.4
+
 ## 9.0.2
 
 ### Patch Changes

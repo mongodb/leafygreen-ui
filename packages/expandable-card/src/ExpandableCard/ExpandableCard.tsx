@@ -85,8 +85,8 @@ const ExpandableCard = ({
   };
 
   // Keep track of the children wrapper
-  const childrenInnerRef = useRef<HTMLDivElement>(null);
-  const childrenWrapperRef = useRef<HTMLDivElement>(null);
+  const childrenInnerRef = useRef<HTMLDivElement | null>(null);
+  const childrenWrapperRef = useRef<HTMLDivElement | null>(null);
 
   const [childrenHeight, setChildrenHeight] = useState(0);
 

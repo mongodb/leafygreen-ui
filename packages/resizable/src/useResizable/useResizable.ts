@@ -42,7 +42,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   onResize,
   position,
 }: ResizableProps): ResizableReturn<T> => {
-  const resizableRef = useRef<T>(null);
+  const resizableRef = useRef<T | null>(null);
   const [isResizing, setIsResizing] = useState<boolean>(false);
   // Refs to store initial mouse position and element size at the start of a drag
   const initialMousePos = useRef<Readonly<{ x: number; y: number }>>({

@@ -1,5 +1,16 @@
 # @lg-tools/lint
 
+## 3.0.2
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [dc3299b]
+- Updated dependencies [dc3299b]
+  - @lg-tools/build@0.8.2
+  - @lg-tools/meta@0.6.2
+
 ## 3.0.1
 
 ### Patch Changes

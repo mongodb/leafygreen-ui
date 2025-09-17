@@ -175,7 +175,7 @@ export const CustomContainer = ({
   stateNotifications,
   ...rest
 }: PasswordInputProps) => {
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = useRef<HTMLInputElement | null>(null);
   return (
     <div
       style={{

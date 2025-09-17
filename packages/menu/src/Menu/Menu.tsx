@@ -89,7 +89,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const lgIds = getLgIds(dataLgId);
 
   const popoverRef = useRef<HTMLDivElement | null>(null);
-  const defaultTriggerRef = useRef<HTMLElement>(null);
+  const defaultTriggerRef = useRef<HTMLElement | null>(null);
   const triggerRef = refEl ?? defaultTriggerRef;
   const keyboardUsedRef = useRef<boolean>(false);
 

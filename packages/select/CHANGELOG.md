@@ -1,5 +1,30 @@
 # @leafygreen-ui/select
 
+## 16.1.2
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [dc3299b]
+- Updated dependencies [a9eb172]
+- Updated dependencies [5ef631a]
+- Updated dependencies [dc3299b]
+  - @lg-tools/build@0.8.2
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/icon@14.5.0
+  - @leafygreen-ui/button@25.0.4
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/form-field@4.0.3
+  - @leafygreen-ui/hooks@9.1.3
+  - @leafygreen-ui/input-option@4.0.5
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/popover@14.0.5
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+  - @lg-tools/test-harnesses@0.3.4
+
 ## 16.1.1
 
 ### Patch Changes

@@ -155,7 +155,7 @@ describe('packages/input-bar', () => {
 
   test('provides access to textarea element via textareaRef', () => {
     const TestComponent = () => {
-      const textareaRef = useRef<HTMLTextAreaElement>(null);
+      const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
       const handleClick = () => {
         if (textareaRef.current) {
