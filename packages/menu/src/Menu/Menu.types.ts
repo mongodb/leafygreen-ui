@@ -30,6 +30,11 @@ export interface MenuProps
   children: ReactNode;
 
   /**
+   * Test id for the menu element
+   */
+  'data-testid'?: string;
+
+  /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
    */

@@ -105,7 +105,6 @@ describe('packages/menu', () => {
     test('respects custom testid', async () => {
       const customTestId = 'custom-menu-test-id';
       const { getByTestId } = renderMenu({
-        // @ts-expect-error - data-testid is not a valid prop for MenuProps FIXME: LG-5477
         'data-testid': customTestId,
         initialOpen: true,
       });
