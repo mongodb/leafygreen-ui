@@ -8,7 +8,10 @@ import React, {
 } from 'react';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
 import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
@@ -72,6 +75,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const lgIds = getLgIds(dataLgId);
 
     const { theme } = useDarkMode(darkModeProp);
+    const baseFontSize = useBaseFontSize();
     const [controlledValue, setControlledValue] = useState(value || '');
     const isControlled = value !== undefined;
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
@@ -95,7 +99,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         isLoading: isLoadingProp,
         extensions: consumerExtensions,
         darkMode: darkModeProp,
-        baseFontSize: baseFontSizeProp,
+        baseFontSize: baseFontSizeProp || baseFontSize,
       },
       modules: modules,
     });

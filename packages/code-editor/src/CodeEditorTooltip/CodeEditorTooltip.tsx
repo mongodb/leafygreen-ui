@@ -8,26 +8,34 @@ import { Link } from '@leafygreen-ui/typography';
 
 import {
   getTooltipLinksContainerStyles,
+  getTooltipMessageStyles,
   getTooltipStyles,
   tooltipLinksListItemStyles,
   tooltipLinksListStyles,
   tooltipMessageContainerStyles,
-  tooltipMessageStyles,
 } from './CodeEditorTooltip.styles';
 import { CodeEditorTooltipProps } from './CodeEditorTooltip.types';
 
 /**
  * Tooltip to be used by the CodeEditor component.
  */
-export function CodeEditorTooltip({ messages, links }: CodeEditorTooltipProps) {
-  const { theme } = useDarkMode();
+export function CodeEditorTooltip({
+  messages,
+  links,
+  darkMode,
+  baseFontSize: baseFontSizeProp,
+}: CodeEditorTooltipProps) {
+  const { theme } = useDarkMode(darkMode);
   const baseFontSize = useBaseFontSize();
 
   return (
-    <div className={getTooltipStyles(theme, baseFontSize)} data-no-context-menu>
+    <div className={getTooltipStyles(theme)} data-no-context-menu>
       <div className={tooltipMessageContainerStyles}>
         {messages?.map(message => (
-          <p key={message} className={tooltipMessageStyles}>
+          <p
+            key={message}
+            className={getTooltipMessageStyles(theme, baseFontSize)}
+          >
             {message}
           </p>
         ))}

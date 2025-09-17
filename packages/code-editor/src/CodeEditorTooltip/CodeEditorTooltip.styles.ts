@@ -12,7 +12,7 @@ import {
 
 const MESSAGE_LINE_HEIGHT = 20;
 
-export const getTooltipStyles = (theme: Theme, baseFontSize: number) => css`
+export const getTooltipStyles = (theme: Theme) => css`
   background-color: ${color[theme].background[Variant.Secondary][
     InteractionState.Default
   ]};
@@ -20,8 +20,6 @@ export const getTooltipStyles = (theme: Theme, baseFontSize: number) => css`
   border: 1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]};
   box-shadow: ${shadow[theme][100]};
-  font-family: ${fontFamilies.code};
-  font-size: ${baseFontSize}px;
   line-height: ${MESSAGE_LINE_HEIGHT}px;
   width: fit-content;
 `;
@@ -30,8 +28,14 @@ export const tooltipMessageContainerStyles = css`
   padding: ${spacing[100]}px ${spacing[200]}px 0; // Bottom margin added by last message
 `;
 
-export const tooltipMessageStyles = css`
+export const getTooltipMessageStyles = (
+  theme: Theme,
+  baseFontSize: number,
+) => css`
   margin: 0 0 ${spacing[100]}px 0;
+  font-family: ${fontFamilies.code};
+  font-size: ${baseFontSize}px;
+  color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
 `;
 
 export const getTooltipLinksContainerStyles = (theme: Theme) => css`

@@ -31,7 +31,6 @@ import {
 } from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { IndentUnits } from './CodeEditor';
-import { CodeEditorTooltip } from './CodeEditorTooltip';
 import { ShortcutTable } from './ShortcutTable';
 import { codeSnippets } from './testing';
 import { CodeEditor, Panel } from '.';
@@ -297,29 +296,6 @@ export const Typescript = Template.bind({});
 Typescript.args = {
   language: 'typescript',
   defaultValue: codeSnippets.typescript,
-};
-
-export const Tooltip: StoryObj<{}> = {
-  render: () => {
-    return (
-      <CodeEditorTooltip
-        messages={[
-          'Cannot use JSX unless the ‘--jsx’ flag is provided.',
-          '(parameter) props: HTMLElementProps<”svg”>',
-        ]}
-        links={[
-          {
-            label: 'HTMLElementProps',
-            href: 'https://developer.mozilla.org/en-US/docs/Web/API/HTMLElementProps',
-          },
-          {
-            label: 'svg',
-            href: 'https://developer.mozilla.org/en-US/docs/Web/API/svg',
-          },
-        ]}
-      />
-    );
-  },
 };
 
 const tooltipPlayFunction = async ({
