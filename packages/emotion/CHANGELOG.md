@@ -1,5 +1,12 @@
 # @leafygreen-ui/emotion
 
+## 5.0.2
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+
 ## 5.0.1
 
 ### Patch Changes

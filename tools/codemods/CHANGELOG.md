@@ -1,5 +1,14 @@
 # @lg-tools/codemods
 
+## 0.4.2
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [dc3299b]
+  - @lg-tools/build@0.8.2
+
 ## 0.4.1
 
 ### Patch Changes

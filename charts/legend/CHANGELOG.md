@@ -1,5 +1,21 @@
 # @lg-charts/legend
 
+## 1.0.5
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @lg-charts/series-provider@1.0.4
+  - @leafygreen-ui/checkbox@18.0.3
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/tokens@3.2.4
+
 ## 1.0.4
 
 ### Patch Changes

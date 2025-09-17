@@ -1,5 +1,18 @@
 # @leafygreen-ui/lib
 
+## 15.3.0
+
+### Minor Changes
+
+- a9eb172: Add `findChild` and `filterChildren` utils for compound component patterns.
+  - `findChild` finds a child component by a static property with support for styled components and fragments.
+  - `filterChildren` filters children by one or more static properties with support for styled components and fragments.
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+
 ## 15.2.1
 
 ### Patch Changes
