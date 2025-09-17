@@ -36,54 +36,6 @@ import { ShortcutTable } from './ShortcutTable';
 import { codeSnippets } from './testing';
 import { CodeEditor, Panel } from '.';
 
-const MyTooltip = ({
-  line,
-  column,
-  length,
-}: {
-  line: number;
-  column: number;
-  length: number;
-}) => {
-  return (
-    <div
-      className={css`
-        padding: 8px;
-      `}
-    >
-      <div
-        className={css`
-          font-weight: bold;
-          margin-bottom: 4px;
-        `}
-      >
-        My Tooltip
-      </div>
-      <div
-        className={css`
-          margin-bottom: 4px;
-        `}
-      >
-        Line: {line}
-      </div>
-      <div
-        className={css`
-          margin-bottom: 4px;
-        `}
-      >
-        Column: {column}
-      </div>
-      <div
-        className={css`
-          margin-bottom: 4px;
-        `}
-      >
-        Length: {length}
-      </div>
-    </div>
-  );
-};
-
 const meta: StoryMetaType<typeof CodeEditor> = {
   title: 'Components/CodeEditor',
   component: CodeEditor,
