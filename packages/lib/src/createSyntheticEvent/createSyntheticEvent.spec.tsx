@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import { createSyntheticEvent } from '..';
 
-const MyInputComponent = ({ onChange }: HTMLElementProps<'input'>) => {
+const MyInputComponent = ({ onChange }: React.ComponentPropsWithoutRef<'input'>) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleClick = () => {
