@@ -1,5 +1,16 @@
 # @lg-charts/drag-provider
 
+## 1.0.8
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [dc3299b]
+  - @lg-charts/chart-card@1.0.5
+  - @lg-charts/core@2.0.3
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+
 ## 1.0.7
 
 ### Patch Changes

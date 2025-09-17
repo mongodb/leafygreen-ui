@@ -1,5 +1,28 @@
 # @leafygreen-ui/icon
 
+## 14.5.0
+
+### Minor Changes
+
+- 5ef631a: ### New Features
+
+  - Adds "exports" field to package json
+  - Adds direct icon import pattern (e.g. `import CloudIcon from "@leafygreen-ui/icon/Cloud"`)
+  - Ensures backwards compatibility using "dist/\*" imports
+
+  ### Tooling
+
+  - Isolates build script from component TS project
+  - Updates individual icon build script to use the Rollup API directly
+  - Removes `postbuild` script. It's now redundant with the `"./dist/*"` exports field
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/emotion@5.0.2
+
 ## 14.4.1
 
 ### Patch Changes

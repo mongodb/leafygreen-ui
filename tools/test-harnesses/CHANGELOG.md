@@ -1,5 +1,12 @@
 # @lg-tools/test-harnesses
 
+## 0.3.4
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+
 ## 0.3.3
 
 ### Patch Changes

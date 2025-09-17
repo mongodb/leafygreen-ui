@@ -1,5 +1,14 @@
 # @leafygreen-ui/ripple
 
+## 2.0.5
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/tokens@3.2.4
+
 ## 2.0.4
 
 ### Patch Changes
