@@ -20,7 +20,8 @@ export const MenuVariant = {
 export type MenuVariant = (typeof MenuVariant)[keyof typeof MenuVariant];
 
 export interface MenuProps
-  extends Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'>,
+  extends Omit<React.ComponentProps<'div'>, 'onClick'>,
+    Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'>,
     LgIdProps {
   /**
    * The menu items, or submenus
