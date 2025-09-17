@@ -63,8 +63,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
     const ref = useForwardedRef(fwdRef, null);
     const cellRefs = refs.calendarCellRefs;
-    const headerRef = useRef<HTMLDivElement>(null);
-    const calendarRef = useRef<HTMLTableElement>(null);
+    const headerRef = useRef<HTMLDivElement | null>(null);
+    const calendarRef = useRef<HTMLTableElement | null>(null);
 
     const prevValue = usePrevious(value);
 

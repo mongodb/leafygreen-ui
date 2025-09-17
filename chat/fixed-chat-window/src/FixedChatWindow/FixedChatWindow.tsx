@@ -41,7 +41,7 @@ export const FixedChatWindow = forwardRef(
     }: FixedChatWindowProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
-    const chatWindowRef = useRef<HTMLDivElement>(null);
+    const chatWindowRef = useRef<HTMLDivElement | null>(null);
     const [localOpen, setLocalOpen] = useState<boolean>(defaultOpen);
 
     const handleTriggerClick: MouseEventHandler<HTMLButtonElement> = e => {

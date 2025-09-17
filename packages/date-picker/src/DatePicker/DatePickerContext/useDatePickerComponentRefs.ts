@@ -12,10 +12,10 @@ export const useDateRangeComponentRefs = (): DatePickerComponentRefs => {
 
   const calendarCellRefs = useDynamicRefs<HTMLTableCellElement>();
 
-  const calendarButtonRef = useRef<HTMLButtonElement>(null);
+  const calendarButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const leftChevronRef = useRef<HTMLButtonElement>(null);
-  const rightChevronRef = useRef<HTMLButtonElement>(null);
+  const leftChevronRef = useRef<HTMLButtonElement | null>(null);
+  const rightChevronRef = useRef<HTMLButtonElement | null>(null);
   const chevronButtonRefs = {
     left: leftChevronRef,
     right: rightChevronRef,

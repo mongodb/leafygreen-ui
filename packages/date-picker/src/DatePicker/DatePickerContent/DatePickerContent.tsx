@@ -44,7 +44,7 @@ export const DatePickerContent = forwardRef<
   const prevMax = usePrevious(max);
 
   const formFieldRef = useForwardedRef(fwdRef, null);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
   const prevDisabledValue = usePrevious(disabled);
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], {

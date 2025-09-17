@@ -26,7 +26,7 @@ import { makeKitchenSinkData, Person } from './makeData.testutils';
 type StoryTableProps = TableProps<any>;
 
 export const DynamicDataComponent: StoryFn<StoryTableProps> = args => {
-  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const tableContainerRef = React.useRef<HTMLDivElement | null>(null);
   const [data] = useState(() => makeKitchenSinkData(10));
   const [showEmoji, setShowEmoji] = useState(true);
 

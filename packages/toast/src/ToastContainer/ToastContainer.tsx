@@ -67,8 +67,8 @@ export const ToastContainer = ({
 }: ToastContainerProps) => {
   const { popToast, getToast } = useToast();
   const regionId = useIdAllocator({ id: 'lg-toast-region' });
-  const toastContainerRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const toastContainerRef = useRef<HTMLDivElement | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const getToastRef = useDynamicRefs<HTMLDivElement>({ prefix: 'toast' });
   const { theme } = useDarkMode();
   // Track hover state

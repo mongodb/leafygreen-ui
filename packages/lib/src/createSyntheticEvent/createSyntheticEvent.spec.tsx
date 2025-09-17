@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { createSyntheticEvent, HTMLElementProps } from '..';
 
 const MyInputComponent = ({ onChange }: HTMLElementProps<'input'>) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleClick = () => {
     const nativeEvent = new Event('change', { bubbles: true });

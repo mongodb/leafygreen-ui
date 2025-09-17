@@ -94,11 +94,11 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const closeMenu = () => setOpen(false);
     const openMenu = () => setOpen(true);
 
-    const formRef = useRef<HTMLFormElement>(null);
-    const searchBoxRef = useRef<HTMLDivElement>(null);
-    const menuRef = useRef<HTMLUListElement>(null);
+    const formRef = useRef<HTMLFormElement | null>(null);
+    const searchBoxRef = useRef<HTMLDivElement | null>(null);
+    const menuRef = useRef<HTMLUListElement | null>(null);
     const inputRef = useForwardedRef(forwardRef, null);
-    const clearButtonRef = useRef<HTMLButtonElement>(null);
+    const clearButtonRef = useRef<HTMLButtonElement | null>(null);
     const resultRefs = useDynamicRefs<HTMLElement>({ prefix: 'result' });
     const [focusedElement, trackFocusedElement] = useState<Element>();
     const highlightedElementRef = resultRefs(`${highlightIndex}`);

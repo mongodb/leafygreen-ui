@@ -72,7 +72,7 @@ export const InlineMessageFeedback = forwardRef(
     const textareaId = useIdAllocator({ prefix: 'lg-chat-imf-input' });
     const labelId = useIdAllocator({ prefix: 'lg-chat-imf-label' });
     const textareaRef: MutableRefObject<HTMLTextAreaElement | null> =
-      useRef<HTMLTextAreaElement>(null);
+      useRef<HTMLTextAreaElement | null>(null);
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
       e.preventDefault();

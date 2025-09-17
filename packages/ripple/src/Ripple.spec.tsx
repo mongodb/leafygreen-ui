@@ -11,7 +11,7 @@ const buttonOptions: Options = { backgroundColor: 'black' };
 type Global = Omit<LGWindow, 'name'>;
 
 function ButtonWrapper() {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLButtonElement | null>(null);
   const unregisterRipple = useRef<() => void>();
 
   useEffect(() => {
