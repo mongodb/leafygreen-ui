@@ -70,6 +70,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     darkMode: darkModeProp,
     renderDarkMenu = true,
     'data-lgid': dataLgId,
+    'data-testid': dataTestId,
     children,
     className,
     refEl,
@@ -266,7 +267,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
             <ul
-              data-testid={(rest as any)['data-testid'] || lgIds.root}
+              data-testid={dataTestId || lgIds.root}
               id={id}
               data-lgid={lgIds.root}
               className={scrollContainerStyle}
