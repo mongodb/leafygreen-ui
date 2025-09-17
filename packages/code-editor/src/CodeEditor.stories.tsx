@@ -26,7 +26,6 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 
 import {
-  CodeEditorProps,
   CodeEditorTooltipSeverity,
   CopyButtonAppearance,
 } from './CodeEditor/CodeEditor.types';
@@ -37,7 +36,7 @@ import { codeSnippets } from './testing';
 import { CodeEditor, Panel } from '.';
 
 const meta: StoryMetaType<typeof CodeEditor> = {
-  title: 'Components/CodeEditor',
+  title: 'Components/Inputs/CodeEditor',
   component: CodeEditor,
   parameters: {
     default: 'LiveExample',

@@ -20,7 +20,7 @@ const EditorTooltipRoot = (Story: StoryFn, context: any) => (
 );
 
 const meta: StoryMetaType<typeof CodeEditorTooltip> = {
-  title: 'Components/CodeEditor/Tooltip',
+  title: 'Components/Inputs/CodeEditor/Tooltip',
   component: CodeEditorTooltip,
   parameters: {
     default: 'LiveExample',
