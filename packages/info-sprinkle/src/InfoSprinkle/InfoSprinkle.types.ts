@@ -6,6 +6,7 @@ export { Align, Justify };
 
 type ModifiedTooltipProps = Omit<
   TooltipProps,
+  | 'children'
   | 'dismissMode'
   | 'onClick'
   | 'popoverZIndex'
@@ -25,4 +26,9 @@ export interface InfoSprinkleProps extends ModifiedTooltipProps {
    * Trigger props, excludes `ref`
    */
   triggerProps?: Omit<ComponentProps<'button'>, 'ref'>;
+
+  /**
+   * Children of the InfoSprinkle
+   */
+  children: React.ReactNode;
 }
