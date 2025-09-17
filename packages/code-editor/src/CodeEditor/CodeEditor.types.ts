@@ -1,14 +1,13 @@
-import { type ReactNode } from 'react';
 import { type EditorState, type Extension } from '@codemirror/state';
 import { type EditorView } from '@codemirror/view';
 
 import { type DarkModeProps, type LgIdProps } from '@leafygreen-ui/lib';
 
+import { CodeEditorTooltipProps } from '../CodeEditorTooltip';
 import { type ContextMenuItem } from '../ContextMenu';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 import { CodeEditorModules } from './hooks';
-import { CodeEditorTooltipProps } from '../CodeEditorTooltip';
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
@@ -63,6 +62,8 @@ export const CodeEditorSelectors = {
   Content: '.cm-content',
   CopyButton: `[data-lgid="${CopyButtonLgId}"]`,
   Cursor: '.cm-cursor',
+  Diagnostic: '.cm-diagnostic',
+  DiagnosticInfo: '.cm-diagnostic-info',
   Editor: '.cm-editor',
   Focused: '.cm-focused',
   FoldGutter: '.cm-foldGutter',

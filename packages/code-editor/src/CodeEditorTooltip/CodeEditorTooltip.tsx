@@ -24,7 +24,7 @@ export function CodeEditorTooltip({ messages, links }: CodeEditorTooltipProps) {
   const baseFontSize = useBaseFontSize();
 
   return (
-    <div className={getTooltipStyles(theme, baseFontSize)}>
+    <div className={getTooltipStyles(theme, baseFontSize)} data-no-context-menu>
       <div className={tooltipMessageContainerStyles}>
         {messages?.map(message => (
           <p key={message} className={tooltipMessageStyles}>

@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { type Diagnostic } from '@codemirror/lint';
 import { type EditorView } from '@codemirror/view';
 
+import { CodeEditorTooltip } from '../../../CodeEditorTooltip';
 import { type CodeEditorProps } from '../../CodeEditor.types';
 import { type CodeEditorModules } from '../moduleLoaders.types';
 
@@ -45,37 +46,31 @@ export function useTooltipExtension({
 
       return module.linter(linterView => {
         const diagnostics: Array<Diagnostic> = tooltips.map(
-          ({ line, column = 1, content, severity, length }) => {
+          ({
+            line,
+            column = 1,
+            severity = 'info',
+            length,
+            messages,
+            links,
+          }) => {
             const lineInfo = linterView.state.doc.line(line);
             const from = lineInfo.from + column - 1;
             const to = from + length;
 
-            let message = '';
-            let renderMessage: (() => HTMLElement) | undefined;
-
-            if (typeof content === 'string') {
-              message = content;
-            } else if (
-              React.isValidElement(content) ||
-              Array.isArray(content)
-            ) {
-              renderMessage = () => {
-                const dom = document.createElement('div');
-                dom.innerHTML = renderToString(
-                  React.createElement(React.Fragment, null, content),
-                );
-                return dom;
-              };
-              message = ' '; // Provide a non-empty string to satisfy Diagnostic type
-            } else if (content) {
-              message = String(content);
-            }
+            const renderMessage = () => {
+              const dom = document.createElement('div');
+              dom.innerHTML = renderToString(
+                React.createElement(CodeEditorTooltip, { messages, links }),
+              );
+              return dom;
+            };
 
             return {
               from,
               to,
-              severity: severity || 'info',
-              message,
+              severity,
+              message: ' ', // Provide a non-empty string to satisfy Diagnostic type
               renderMessage,
             };
           },
