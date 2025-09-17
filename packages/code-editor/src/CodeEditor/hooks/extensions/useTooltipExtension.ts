@@ -61,7 +61,12 @@ export function useTooltipExtension({
             const renderMessage = () => {
               const dom = document.createElement('div');
               dom.innerHTML = renderToString(
-                React.createElement(CodeEditorTooltip, { messages, links }),
+                React.createElement(CodeEditorTooltip, {
+                  messages,
+                  links,
+                  darkMode: props.darkMode,
+                  baseFontSize: props.baseFontSize,
+                }),
               );
               return dom;
             };

@@ -12,6 +12,7 @@ import {
   useBaseFontSize,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
 import { Body } from '@leafygreen-ui/typography';
 
 import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
@@ -98,7 +99,12 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         onChange: onChangeProp,
         isLoading: isLoadingProp,
         extensions: consumerExtensions,
-        darkMode: darkModeProp,
+        /**
+         * CodeEditorTooltip in particular renders outside of the LeafyGreenProvider
+         * so it won't be able to access the darkMode from the provider. When
+         * there's no override, we need to pass the theme from the provider.
+         */
+        darkMode: darkModeProp || theme === Theme.Dark,
         baseFontSize: baseFontSizeProp || baseFontSize,
       },
       modules: modules,

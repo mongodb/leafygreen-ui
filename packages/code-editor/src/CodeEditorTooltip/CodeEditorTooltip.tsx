@@ -34,7 +34,10 @@ export function CodeEditorTooltip({
         {messages?.map(message => (
           <p
             key={message}
-            className={getTooltipMessageStyles(theme, baseFontSize)}
+            className={getTooltipMessageStyles(
+              theme,
+              baseFontSizeProp || baseFontSize,
+            )}
           >
             {message}
           </p>

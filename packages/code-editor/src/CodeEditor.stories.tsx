@@ -26,6 +26,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 
 import {
+  CodeEditorProps,
   CodeEditorTooltipSeverity,
   CopyButtonAppearance,
 } from './CodeEditor/CodeEditor.types';
