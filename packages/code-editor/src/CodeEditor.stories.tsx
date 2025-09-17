@@ -25,7 +25,10 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 
-import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
+import {
+  CodeEditorTooltipSeverity,
+  CopyButtonAppearance,
+} from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { IndentUnits } from './CodeEditor';
 import { CodeEditorTooltip } from './CodeEditorTooltip';
@@ -367,7 +370,47 @@ export const Tooltip: StoryObj<{}> = {
   },
 };
 
-export const TooltipOnHover: StoryObj<{}> = {
+const tooltipPlayFunction = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  // Wait for diagnostic to be applied
+  await waitFor(() => {
+    expect(canvasElement.querySelector('.cm-lintRange')).toBeInTheDocument();
+  });
+
+  // Find the third line (line: 2, zero-based)
+  const target = canvasElement.getElementsByClassName('cm-lintRange')[0];
+
+  // Find the text node and calculate the offset for column 2
+  const range = document.createRange();
+  range.setStart(target.firstChild!, 0); // column: 0
+  range.setEnd(target.firstChild!, 4); // column: 4
+
+  // Get the bounding rect for the character at column 2
+  const rect = range.getBoundingClientRect();
+
+  // Calculate the center of the character
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+
+  // Dispatch a mousemove event at the character position
+  target.dispatchEvent(
+    new MouseEvent('mousemove', {
+      bubbles: true,
+      clientX: x,
+      clientY: y,
+    }),
+  );
+
+  // Wait for the tooltip to appear
+  await waitFor(() => {
+    expect(canvasElement.querySelector('.cm-tooltip')).toBeInTheDocument();
+  });
+};
+
+export const ErrorTooltipOnHover: StoryObj<{}> = {
   render: () => {
     return (
       <CodeEditor
@@ -376,8 +419,15 @@ export const TooltipOnHover: StoryObj<{}> = {
           {
             line: 2,
             column: 1,
-            content: <MyTooltip line={2} column={1} length={4} />,
             length: 4,
+            messages: ['error text'],
+            links: [
+              {
+                label: 'External Link',
+                href: 'https://mongodb.com',
+              },
+            ],
+            severity: CodeEditorTooltipSeverity.Error,
           },
         ]}
       />
@@ -388,41 +438,100 @@ export const TooltipOnHover: StoryObj<{}> = {
    * in the editor. This is done here instead of in Jest because it depends on
    * bounding rects, which are not available in Jest's JSDOM environment.
    */
-  play: async ({ canvasElement }) => {
-    // Wait for diagnostic to be applied
-    await waitFor(() => {
-      expect(canvasElement.querySelector('.cm-lintRange')).toBeInTheDocument();
-    });
+  play: tooltipPlayFunction,
+};
 
-    // Find the third line (line: 2, zero-based)
-    const target = canvasElement.getElementsByClassName('cm-lintRange')[0];
-
-    // Find the text node and calculate the offset for column 2
-    const range = document.createRange();
-    range.setStart(target.firstChild!, 0); // column: 0
-    range.setEnd(target.firstChild!, 4); // column: 4
-
-    // Get the bounding rect for the character at column 2
-    const rect = range.getBoundingClientRect();
-
-    // Calculate the center of the character
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-
-    // Dispatch a mousemove event at the character position
-    target.dispatchEvent(
-      new MouseEvent('mousemove', {
-        bubbles: true,
-        clientX: x,
-        clientY: y,
-      }),
+export const HintTooltipOnHover: StoryObj<{}> = {
+  render: () => {
+    return (
+      <CodeEditor
+        defaultValue={'test\n'.repeat(5)}
+        tooltips={[
+          {
+            line: 2,
+            column: 1,
+            length: 4,
+            messages: ['hint text'],
+            links: [
+              {
+                label: 'External Link',
+                href: 'https://mongodb.com',
+              },
+            ],
+            severity: CodeEditorTooltipSeverity.Hint,
+          },
+        ]}
+      />
     );
-
-    // Wait for the tooltip to appear
-    await waitFor(() => {
-      expect(canvasElement.querySelector('.cm-tooltip')).toBeInTheDocument();
-    });
   },
+  /**
+   * Tests that the tooltip appears when hovering over a specific character
+   * in the editor. This is done here instead of in Jest because it depends on
+   * bounding rects, which are not available in Jest's JSDOM environment.
+   */
+  play: tooltipPlayFunction,
+};
+
+export const InfoTooltipOnHover: StoryObj<{}> = {
+  render: () => {
+    return (
+      <CodeEditor
+        defaultValue={'test\n'.repeat(5)}
+        tooltips={[
+          {
+            line: 2,
+            column: 1,
+            length: 4,
+            messages: ['informational text'],
+            links: [
+              {
+                label: 'External Link',
+                href: 'https://mongodb.com',
+              },
+            ],
+            severity: CodeEditorTooltipSeverity.Info,
+          },
+        ]}
+      />
+    );
+  },
+  /**
+   * Tests that the tooltip appears when hovering over a specific character
+   * in the editor. This is done here instead of in Jest because it depends on
+   * bounding rects, which are not available in Jest's JSDOM environment.
+   */
+  play: tooltipPlayFunction,
+};
+
+export const WarningTooltipOnHover: StoryObj<{}> = {
+  render: () => {
+    return (
+      <CodeEditor
+        defaultValue={'test\n'.repeat(5)}
+        tooltips={[
+          {
+            line: 2,
+            column: 1,
+            length: 4,
+            messages: ['warning text'],
+            links: [
+              {
+                label: 'External Link',
+                href: 'https://mongodb.com',
+              },
+            ],
+            severity: CodeEditorTooltipSeverity.Warning,
+          },
+        ]}
+      />
+    );
+  },
+  /**
+   * Tests that the tooltip appears when hovering over a specific character
+   * in the editor. This is done here instead of in Jest because it depends on
+   * bounding rects, which are not available in Jest's JSDOM environment.
+   */
+  play: tooltipPlayFunction,
 };
 
 export const ContextMenuOnRightClick: StoryObj<{}> = {
