@@ -43,6 +43,7 @@ export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
       MessageSubcomponentProperty.VerifiedBanner,
     );
     const links = findChild(children, MessageSubcomponentProperty.Links);
+    const promotion = findChild(children, MessageSubcomponentProperty.Promotion);
 
     // Filter out subcomponents from children
     const remainingChildren = filterChildren(
@@ -80,6 +81,7 @@ export const CompactMessage = forwardRef<HTMLDivElement, MessageProps>(
           >
             {messageBody ?? ''}
           </MessageContent>
+          {promotion}
           {actions}
           {verifiedBanner}
           {links}

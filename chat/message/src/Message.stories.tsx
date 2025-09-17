@@ -118,6 +118,56 @@ const getLinksChild = () => (
   />
 );
 
+const getPromotionsChild = () => (
+  <Message.Promotion
+    promotionText="This response includes promotional content"
+  />
+)
+
+const getAllSpaciousArgs = () => {
+  return {
+    promotion: "This response includes [promotional content](www.google.com)",
+    verified: {
+      verifier: "MongoDB Staff",
+      verifiedAt: new Date('2023-08-24T16:20:00Z'),
+      learnMoreUrl: "https://mongodb.com/docs",
+    },
+    links: [
+      {
+        href: 'https://mongodb.design',
+        children: 'LeafyGreen UI',
+        variant: 'Website',
+      },
+      {
+        href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
+        children: 'LeafyGreen UI Docs',
+        variant: 'Docs',
+      },
+      {
+        href: 'https://learn.mongodb.com/',
+        children: 'MongoDB University',
+        variant: 'Learn',
+      },
+      {
+        href: 'https://mongodb.com/docs',
+        children: 'MongoDB Docs',
+        variant: 'Docs',
+      },
+      {
+        href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        children: 'Rick Astley - Never Gonna Give You Up',
+        variant: 'Video',
+      },
+      {
+        href: 'https://mongodb.com/',
+        children: 'MongoDB Homepage',
+        variant: 'Website',
+      },
+    ],
+    linksHeading: 'Related Resources',
+  }
+}
+
 const meta: StoryMetaType<typeof Message> = {
   title: 'Composition/Chat/Message',
   component: Message,
@@ -285,25 +335,37 @@ export const WithMessageLinksExpanded: StoryObj<MessageStoryProps> = {
 export const WithPromotion: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
+    children: getPromotionsChild(),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
     promotion: "Want to learn more? Go to the Skills homepage!",
   },
 };
 
-export const WithAllSubComponents: StoryObj<MessageStoryProps> = {
+export const CompactWithAllSubComponents: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
+    variant: Variant.Compact,
     children: (
       <>
         {getActionsChild()}
         {getLinksChild()}
+        {getPromotionsChild()}
         {getVerifiedBannerChild()}
       </>
     ),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
-    promotion: "This response includes promotional content",
+  },
+};
+
+export const SpaciousWithAllSubComponents: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    variant: Variant.Spacious,
+    isSender: false,
+    messageBody: ASSISTANT_TEXT,
+    ...getAllSpaciousArgs(),
   },
 };
 

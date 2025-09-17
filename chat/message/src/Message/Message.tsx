@@ -14,11 +14,13 @@ import { MessageActions } from '../MessageActions';
 import { MessageVerifiedBanner } from '../MessageBanner';
 import { MessageContext } from '../MessageContext';
 import { MessageLinks } from '../MessageLinks';
+import { MessagePromotion } from '../MessagePromotion';
 
 import { CompactMessage } from './CompactMessage';
 import {
   ActionsType,
   LinksType,
+  PromotionType,
   type MessageProps,
   type VerifiedBannerType,
 } from './Message.types';
@@ -102,8 +104,6 @@ const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
 
 BaseMessage.displayName = 'Message';
 
-// These are just FUNCTIONS. NOT instanced here
-// Name tag the FUNCTIONS (not the instances) so we can easily use findChild to get the instances of them
 const Actions = MessageActions as ActionsType;
 Actions[MessageSubcomponentProperty.Actions] = true;
 
@@ -113,8 +113,12 @@ Links[MessageSubcomponentProperty.Links] = true;
 const VerifiedBanner = MessageVerifiedBanner as VerifiedBannerType;
 VerifiedBanner[MessageSubcomponentProperty.VerifiedBanner] = true;
 
+const Promotion = MessagePromotion as PromotionType;
+Promotion[MessageSubcomponentProperty.Promotion] = true;
+
 export const Message = Object.assign(BaseMessage, {
   Actions,
   Links,
   VerifiedBanner,
+  Promotion,
 });

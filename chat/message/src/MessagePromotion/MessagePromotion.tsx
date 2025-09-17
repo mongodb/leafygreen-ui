@@ -9,7 +9,7 @@ import { containerStyles, iconStyles } from './MessagePromotion.styles';
 export function MessagePromotion({
   baseFontSize,
   promotionText,
-  onLinkClick,   // TODO figure out link click callback.
+  onPromotionClick,   // TODO figure out link click callback.
   markdownProps,
   ...rest
 }: MessagePromotionProps) {

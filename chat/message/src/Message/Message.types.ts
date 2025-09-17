@@ -75,6 +75,12 @@ export interface MessageProps
   promotion?: string;
 
   /**
+   * Callback function for when promotional content is clicked.
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   */
+  onPromotionClick?: () => void; // TODO - Update the handler type
+
+  /**
    * A list of links to render as rich links for the message.
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
    */
@@ -117,3 +123,7 @@ export type VerifiedBannerType =
   ForwardRefExoticComponent<MessageVerifiedBannerProps> & {
     isLGMessageVerifiedBanner?: boolean;
   };
+
+export type PromotionType = ForwardRefExoticComponent<MessagePromotionProps> & {
+  isLGMessagePromotion?: boolean;
+};

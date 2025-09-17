@@ -36,6 +36,7 @@ export const SpaciousMessage = forwardRef<HTMLDivElement, MessageProps>(
       componentOverrides,
       isSender = true,
       promotion,
+      onPromotionClick,
       links,
       linksHeading,
       markdownProps,
@@ -137,7 +138,7 @@ export const SpaciousMessage = forwardRef<HTMLDivElement, MessageProps>(
                 as={componentOverrides?.MessagePromotion ?? MessagePromotion}
                 promotionText={promotion}
                 baseFontSize={baseFontSize}
-                onLinkClick={() => {}} // TODO: implement proper callback
+                onPromotionClick={onPromotionClick}
                 {...markdownProps}
               />
             ) : null}
