@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
-import { renderHook, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { type LoadersMap, useLazyModules } from './useLazyModules';
 
