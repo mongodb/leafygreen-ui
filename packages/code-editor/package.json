@@ -1,0 +1,88 @@
+{
+  "name": "@leafygreen-ui/code-editor",
+  "version": "0.1.0",
+  "description": "LeafyGreen UI Kit Code Editor",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.18.6",
+    "@codemirror/commands": "^6.8.1",
+    "@codemirror/lang-cpp": "^6.0.2",
+    "@codemirror/lang-css": "^6.3.1",
+    "@codemirror/lang-go": "^6.0.1",
+    "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/lang-java": "^6.0.1",
+    "@codemirror/lang-javascript": "^6.2.4",
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/lang-php": "^6.0.1",
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/lang-rust": "^6.0.1",
+    "@codemirror/language": "^6.11.0",
+    "@codemirror/legacy-modes": "^6.5.1",
+    "@codemirror/lint": "^6.8.5",
+    "@codemirror/search": "^6.5.11",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.1",
+    "@leafygreen-ui/a11y": "workspace:^",
+    "@leafygreen-ui/badge": "^10.1.0",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/menu": "workspace:^",
+    "@leafygreen-ui/modal": "^20.0.0",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
+    "@leafygreen-ui/typography": "^22.1.0",
+    "@lezer/highlight": "^1.2.1",
+    "@lg-tools/test-harnesses": "^0.3.4",
+    "@replit/codemirror-lang-csharp": "^6.2.0",
+    "@uiw/codemirror-extensions-hyper-link": "^4.23.12",
+    "@wasm-fmt/clang-format": "^20.1.7",
+    "@wasm-fmt/gofmt": "^0.4.9",
+    "@wasm-fmt/ruff_fmt": "^0.10.0",
+    "codemirror": "^6.0.2",
+    "prettier": "2.8.8"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@storybook/test": "^8.6.14"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/code-editor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  }
+}

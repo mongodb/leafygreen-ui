@@ -1,0 +1,38 @@
+import { renderHook } from '@leafygreen-ui/testing-lib';
+
+import {
+  createMockStateModule,
+  createMockViewModule,
+} from '../hooks.testUtils';
+
+import { useLineNumbersExtension } from './useLineNumbersExtension';
+
+describe('useLineNumbersExtension', () => {
+  const fakeStateModule = createMockStateModule();
+  const fakeViewModule = createMockViewModule();
+
+  test('returns empty when disabled', () => {
+    const { result } = renderHook(() =>
+      useLineNumbersExtension({
+        editorViewInstance: null,
+        props: { enableLineNumbers: false },
+        modules: { '@codemirror/state': fakeStateModule },
+      }),
+    );
+    expect(result.current).toEqual([]);
+  });
+
+  test('returns line numbers extension when enabled', () => {
+    const { result } = renderHook(() =>
+      useLineNumbersExtension({
+        editorViewInstance: null,
+        props: { enableLineNumbers: true },
+        modules: {
+          '@codemirror/state': fakeStateModule,
+          '@codemirror/view': fakeViewModule,
+        },
+      }),
+    );
+    expect(result.current).toBe('LINENUM_EXT');
+  });
+});
