@@ -11,9 +11,9 @@
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
   "scripts": {
-    "postinstall": "npx ts-node ./scripts/buildRulesIndex.ts",
-    "build": "lg-internal-build-package",
-    "tsc": "tsc --build tsconfig.json",
+    "prebuild": "npx ts-node ./scripts/buildRulesIndex.ts",
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
     "docs": "eslint-doc-generator",
     "lint": "npm-run-all \"lint:*\"",
     "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
