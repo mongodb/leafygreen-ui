@@ -75,7 +75,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     const lgIds = getLgIds(dataLgId);
 
-    const { theme } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
     const baseFontSize = useBaseFontSize();
     const [controlledValue, setControlledValue] = useState(value || '');
     const isControlled = value !== undefined;
@@ -99,13 +99,13 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         onChange: onChangeProp,
         isLoading: isLoadingProp,
         extensions: consumerExtensions,
+        baseFontSize: baseFontSizeProp || baseFontSize,
         /**
          * CodeEditorTooltip in particular renders outside of the LeafyGreenProvider
-         * so it won't be able to access the darkMode from the provider. When
-         * there's no override, we need to pass the theme from the provider.
+         * so it won't be able to access the theme from the provider. So we must
+         * pass the darkMode prop from the parent.
          */
-        darkMode: darkModeProp || theme === Theme.Dark,
-        baseFontSize: baseFontSizeProp || baseFontSize,
+        darkMode,
       },
       modules: modules,
     });
