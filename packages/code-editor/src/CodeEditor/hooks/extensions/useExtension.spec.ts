@@ -1,4 +1,6 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { createMockExtension, createMockStateModule } from '../hooks.testUtils';
 
