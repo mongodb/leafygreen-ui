@@ -1,26 +1,11 @@
 {
-  "extends": "@lg-tools/build/config/package.tsconfig.json",
   "//": "See https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/tsconfig.build.json",
-  "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "composite": false,
-    "declaration": false,
-    "declarationMap": false,
-    "emitDeclarationOnly": false,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "baseUrl": ".",
-    "noUnusedLocals": false
-  },
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {},
   "include": ["src/**/*"],
-  "exclude": ["**/*.spec.*"],
   "references": [
     {
       "path": "../build"
-    },
-    {
-      "path": "../meta"
     }
   ]
 }
