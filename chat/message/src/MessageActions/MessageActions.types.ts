@@ -1,12 +1,12 @@
-import { ChangeEvent, FormEvent, MouseEventHandler } from 'react';
+import React, { ChangeEvent, FormEvent, MouseEventHandler } from 'react';
 import { InlineMessageFeedbackProps } from '@lg-chat/message-feedback';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface MessageActionsProps
   extends DarkModeProps,
-    HTMLElementProps<'div'> {
+    React.ComponentProps<'div'> {
   /**
    * Optional error message to display when feedback submission fails.
    * @default 'Oops, please try again.'

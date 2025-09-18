@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const Align = {
   Center: 'center',
@@ -10,7 +10,7 @@ export const Align = {
 export type Align = (typeof Align)[keyof typeof Align];
 
 export interface TitleBarProps
-  extends Omit<HTMLElementProps<'div'>, 'children'>,
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'children'>,
     DarkModeProps {
   /**
    * Title text

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 /**
  * Options to control how the drawer element is displayed
@@ -20,7 +20,7 @@ export const Size = {
 export type Size = (typeof Size)[keyof typeof Size];
 
 export interface DrawerProps
-  extends Omit<HTMLElementProps<'dialog' | 'div'>, 'title'>,
+  extends Omit<React.ComponentPropsWithoutRef<'dialog' | 'div'>, 'title'>,
     DarkModeProps,
     LgIdProps {
   /**

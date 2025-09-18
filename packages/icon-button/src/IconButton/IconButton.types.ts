@@ -1,4 +1,6 @@
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { Either } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphicProps,
   PolymorphicAs,
@@ -67,7 +69,7 @@ export interface BaseIconButtonProps {
   /**
    * Sets the tabIndex for IconButton component.
    */
-  tabIndex?: HTMLElementProps<'button'>['tabIndex'];
+  tabIndex?: React.ComponentProps<'button'>['tabIndex'];
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';

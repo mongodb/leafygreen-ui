@@ -1,11 +1,11 @@
-import { ChangeEventHandler } from 'react';
+import React, { ChangeEventHandler } from 'react';
 
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export interface PreviewCardProps
   extends DarkModeProps,
     LgIdProps,
-    HTMLElementProps<'div'> {
+    React.ComponentProps<'div'> {
   /**
    * Height of the card when collapsed, can be a number (in pixels) or a string (e.g., '50%').
    * @default 140

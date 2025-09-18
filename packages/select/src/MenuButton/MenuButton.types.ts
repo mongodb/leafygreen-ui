@@ -1,10 +1,10 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { State } from '../Select/Select.types';
 
-export interface MenuButtonBaseProps
-  extends HTMLElementProps<'button', HTMLButtonElement> {
+export interface MenuButtonBaseProps extends React.ComponentProps<'button'> {
   value: string;
   text: React.ReactNode;
   name?: string;

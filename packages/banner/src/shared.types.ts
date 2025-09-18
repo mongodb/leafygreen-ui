@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const Variant = {
@@ -11,7 +13,7 @@ export const Variant = {
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
 export interface BannerProps
-  extends HTMLElementProps<'div', never>,
+  extends React.ComponentProps<'div'>,
     DarkModeProps {
   /**
    * Sets the variant for the Banner

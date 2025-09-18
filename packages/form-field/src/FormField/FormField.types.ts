@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 export const FormFieldState = {
@@ -9,7 +11,8 @@ export const FormFieldState = {
 export type FormFieldState =
   (typeof FormFieldState)[keyof typeof FormFieldState];
 
-export interface FormFieldInputWrapperProps extends HTMLElementProps<'div'> {
+export interface FormFieldInputWrapperProps
+  extends React.ComponentProps<'div'> {
   [key: `data-${string}`]: any;
 }
 
@@ -51,7 +54,7 @@ type AriaLabelProps =
       'aria-labelledby': string;
     };
 
-export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
+export type FormFieldProps = Omit<React.ComponentProps<'div'>, 'children'> &
   AriaLabelProps &
   DarkModeProps &
   LgIdProps & {

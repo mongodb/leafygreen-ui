@@ -1,11 +1,13 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { SharedSkeletonProps } from '../Skeleton/Skeleton.types';
 
 export interface ListSkeletonProps
   extends SharedSkeletonProps,
     DarkModeProps,
-    HTMLElementProps<'ul'> {
+    React.ComponentPropsWithoutRef<'ul'> {
   /**
    * Defines the number of skeleton list items to render
    */

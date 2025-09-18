@@ -1,6 +1,8 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
-export interface BadgeProps extends HTMLElementProps<'div'>, DarkModeProps {
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
+export interface BadgeProps extends React.ComponentProps<'div'>, DarkModeProps {
   /**
    * An additional className to add to the component's classList
    */

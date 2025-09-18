@@ -1,4 +1,4 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 export interface BaseMessageVerifiedBannerProps {
   /**
@@ -21,4 +21,4 @@ export interface BaseMessageVerifiedBannerProps {
 
 export interface MessageVerifiedBannerProps
   extends BaseMessageVerifiedBannerProps,
-    HTMLElementProps<'div'> {}
+    React.ComponentPropsWithoutRef<'div'> {}

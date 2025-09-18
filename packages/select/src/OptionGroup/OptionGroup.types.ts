@@ -1,11 +1,10 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 import { Option } from '../Option';
 
 export type ReactEmpty = null | undefined | false | '';
 
-export interface InternalOptionProps
-  extends HTMLElementProps<'div', HTMLDivElement> {
+export interface InternalOptionProps extends React.ComponentProps<'div'> {
   /**
    * Text shown above the group's options.
    */
