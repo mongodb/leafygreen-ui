@@ -273,6 +273,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               className={scrollContainerStyle}
               role="menu"
               onClick={e => e.stopPropagation()}
+              {...rest}
             >
               {children}
             </ul>
