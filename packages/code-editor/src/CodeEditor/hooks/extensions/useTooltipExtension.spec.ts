@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import {
   createMockLintModule,
