@@ -9,12 +9,12 @@
 export const constructUMDGlobalName = (packageName, suffix = '') => {
   const name = packageName.split('/').pop();
   const prefix = 'leafyGreen';
-  const sentenceCasePackageName = toSentenceCase(name);
-  const sentenceCaseSuffix = toSentenceCase(suffix);
+  const sentenceCasePackageName = toPascalCase(name);
+  const sentenceCaseSuffix = toPascalCase(suffix);
   return `${prefix}${sentenceCasePackageName}${sentenceCaseSuffix}`;
 };
 
-const toSentenceCase = str => {
+const toPascalCase = str => {
   return str
     .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
     .replace(/^[a-z]/, letter => letter.toUpperCase());
