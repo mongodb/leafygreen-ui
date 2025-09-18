@@ -1,6 +1,7 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 
 import { useDrawerLayoutContext } from '../../DrawerLayout';
 
@@ -40,7 +41,7 @@ export const PanelGrid = forwardRef<HTMLDivElement, PanelGridProps>(
      * Focuses the first focusable element in the drawer when the drawer is opened.
      * Also handles restoring focus when the drawer is closed.
      */
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (isDrawerOpen && !hasHandledFocusRef.current) {
         // Store the currently focused element when opening (only once per open session)
         previouslyFocusedRef.current = document.activeElement as HTMLElement;
