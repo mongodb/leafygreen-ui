@@ -53,7 +53,7 @@ function Code({
   baseFontSize: baseFontSizeProp,
   ...rest
 }: CodeProps) {
-  const scrollableElementRef = useRef<HTMLPreElement>(null);
+  const scrollableElementRef = useRef<HTMLPreElement | null>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [expanded, setExpanded] = useState(!expandable);
   const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();

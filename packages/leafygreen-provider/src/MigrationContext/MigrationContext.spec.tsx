@@ -24,7 +24,7 @@ describe('useMigrationContext', () => {
   test('passes provider props correctly', () => {
     const customProps = { forceUseTopLayer: true };
     const { result } = renderHook(useMigrationContext, {
-      wrapper: ({ children }) => (
+      wrapper: ({ children }: any) => (
         <MigrationProvider {...customProps}>{children}</MigrationProvider>
       ),
     });

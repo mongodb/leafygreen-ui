@@ -5,6 +5,7 @@ export type { DeepPathValues } from './DeepPathValues.types';
 export type { DeepPick } from './DeepPick.types';
 export type { DeepUnion } from './DeepUnion.types';
 export type { ExclusiveUnion } from './ExclusiveUnion.types';
+export type { Exists } from './Exists.types';
 export type { Mutable } from './Mutable.types';
 export type { Only } from './Only.types';
 export type { Optional } from './Optional.types';

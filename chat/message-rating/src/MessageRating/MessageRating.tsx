@@ -52,8 +52,8 @@ export const MessageRating = forwardRef(
       );
     }
 
-    const likeButtonRef = useRef<HTMLButtonElement>(null);
-    const dislikeButtonRef = useRef<HTMLButtonElement>(null);
+    const likeButtonRef = useRef<HTMLButtonElement | null>(null);
+    const dislikeButtonRef = useRef<HTMLButtonElement | null>(null);
 
     const { value, handleChange, updateValue } = useControlledValue<
       MessageRatingProps['value']

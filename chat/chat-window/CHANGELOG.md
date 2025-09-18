@@ -1,5 +1,22 @@
 # @lg-chat/chat-window
 
+## 4.1.4
+
+### Patch Changes
+
+- b92bc72: [LG-5486](https://jira.mongodb.org/browse/LG-5486) add styles to `ChatWindow` to support wide screen UIs
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @lg-chat/leafygreen-chat-provider@5.0.2
+  - @lg-chat/title-bar@4.0.7
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/tokens@3.2.4
+
 ## 4.1.3
 
 ### Patch Changes

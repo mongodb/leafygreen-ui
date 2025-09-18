@@ -1,8 +1,10 @@
+import React from 'react';
+
 import {
   BaseButtonProps,
   type Variant as ButtonVariant,
 } from '@leafygreen-ui/button';
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import {
   type InternalSplitButtonProps,
   type Variant as SplitButtonVariant,
@@ -40,7 +42,7 @@ type PrimarySplitButtonProps = OmittedSplitButtonProps & {
 type PrimaryButtonProps = PrimaryStandardButtonProps | PrimarySplitButtonProps;
 
 export interface FormFooterProps
-  extends HTMLElementProps<'footer'>,
+  extends React.ComponentProps<'footer'>,
     DarkModeProps,
     LgIdProps {
   /**

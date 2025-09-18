@@ -74,6 +74,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       dropdownFooterSlot,
       dropdownProps,
       errorMessage,
+      loadingMessage,
       onMessageSend,
       onSubmit,
       shouldRenderGradient: shouldRenderGradientProp = true,
@@ -105,9 +106,9 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     }
 
     const formRef = useForwardedRef(forwardedRef, null);
-    const focusContainerRef = useRef<HTMLDivElement>(null);
-    const menuRef = useRef<HTMLUListElement>(null);
-    const internalTextareaRef = useRef<HTMLTextAreaElement>(null);
+    const focusContainerRef = useRef<HTMLDivElement | null>(null);
+    const menuRef = useRef<HTMLUListElement | null>(null);
+    const internalTextareaRef = useRef<HTMLTextAreaElement | null>(null);
     const textareaRef = useMergeRefs([
       internalTextareaRef,
       externalTextareaRef,
@@ -433,7 +434,11 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
           {...rest}
         >
           {isCompact && (
-            <InputBarFeedback errorMessage={errorMessage} state={state} />
+            <InputBarFeedback
+              errorMessage={errorMessage}
+              loadingMessage={loadingMessage}
+              state={state}
+            />
           )}
           <div className={outerFocusContainerStyles}>
             <div

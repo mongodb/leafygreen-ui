@@ -36,7 +36,7 @@ describe('packages/Avatar', () => {
     /**
      * TEXT FORMAT
      */
-    // @ts-expect-error - Requires `text` prop
+    // @ts-ignore React18-expect-error - Requires `text` prop FIXME: React17 types
     <Avatar format="text" />;
     // Accepts null text prop
     <Avatar format="text" text={null} />;
@@ -55,7 +55,7 @@ describe('packages/Avatar', () => {
       Format.Text,
     ]) as Format;
 
-    // @ts-expect-error - requires defined text prop
+    // @ts-ignore React18-expect-error - Requires `text` prop FIXME: React17 types
     <Avatar format={arbitraryFormat} />;
     // Accepts null text prop
     <Avatar format={arbitraryFormat} text={null} />;

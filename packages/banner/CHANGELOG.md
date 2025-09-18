@@ -1,5 +1,27 @@
 # @leafygreen-ui/banner
 
+## 10.1.0
+
+### Minor Changes
+
+- a9eb172: Add and export `bannerChildrenContainerClassName` for customizing styles of `Banner` children container
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [5ef631a]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/icon@14.5.0
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/icon-button@17.0.5
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+
 ## 10.0.5
 
 ### Patch Changes

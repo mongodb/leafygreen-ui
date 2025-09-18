@@ -1,5 +1,22 @@
 # @lg-tools/storybook-decorators
 
+## 1.0.4
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [dc3299b]
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @lg-tools/build@0.8.2
+  - @leafygreen-ui/banner@10.1.0
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/tokens@3.2.4
+  - @lg-tools/storybook-utils@0.3.2
+
 ## 1.0.3
 
 ### Patch Changes

@@ -1,6 +1,7 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
-export interface TableHeadProps extends HTMLElementProps<'thead'> {
+export interface TableHeadProps
+  extends React.ComponentPropsWithoutRef<'thead'> {
   /**
    * Determines whether the table head will stick as the user scrolls down.
    */

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const visuallyHidden = css`
   clip: rect(0, 0, 0, 0);
@@ -18,7 +17,7 @@ function VisuallyHidden({
   children,
   className,
   ...rest
-}: HTMLElementProps<'div'>) {
+}: React.ComponentProps<'div'>) {
   return (
     <div {...rest} className={cx(visuallyHidden, className)}>
       {children}

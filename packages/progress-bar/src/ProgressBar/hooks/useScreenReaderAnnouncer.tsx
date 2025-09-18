@@ -1,11 +1,11 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { isDefined } from '@leafygreen-ui/lib';
 
 import { Role, Variant } from '../ProgressBar.types';
 import { getPercentage } from '../utils';
 
-const announcementThresholds = [0, 50, 100];
+const announcementThresholds = [0, 50, 100] as const;
 const variantsAnnounced = [Variant.Warning, Variant.Error] as Array<Variant>;
 
 interface UseScreenReaderAnnouncerParams {
@@ -23,7 +23,8 @@ interface UseScreenReaderAnnouncerParams {
 }
 
 /**
- * Generates an accessible live region message for screen readers when progress bar updates cross defined thresholds.
+ * Generates an accessible live region message for screen readers
+ * when the value updates pass defined thresholds. See: {@link announcementThresholds}.
  */
 export const useScreenReaderAnnouncer = ({
   role,
@@ -33,10 +34,13 @@ export const useScreenReaderAnnouncer = ({
 }: UseScreenReaderAnnouncerParams): string | undefined => {
   const thresholdIndexRef = useRef(-1);
 
-  const message = useMemo(() => {
+  const [message, setMessage] = useState<string | undefined>();
+
+  useEffect(() => {
     // no live region messages for non-loader types or if value is undefined
     if (role === Role.Meter || !isDefined(value)) {
       thresholdIndexRef.current = -1;
+      setMessage(undefined);
       return;
     }
 
@@ -52,7 +56,7 @@ export const useScreenReaderAnnouncer = ({
     }
 
     if (newThresholdIndex === thresholdIndexRef.current) {
-      return;
+      return; // no threshold crossed, do not update message (but don't remove message)
     }
 
     // if new threshold was passed, update live region message
@@ -68,7 +72,7 @@ export const useScreenReaderAnnouncer = ({
         ? `${baseMessage} Status is ${variant}.`
         : baseMessage;
 
-    return newMessage;
+    setMessage(newMessage);
   }, [role, value, maxValue, variant]);
 
   return message;

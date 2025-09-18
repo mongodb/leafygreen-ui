@@ -1,5 +1,12 @@
 # @lg-tools/build
 
+## 0.8.2
+
+### Patch Changes
+
+- dc3299b: Enables TS downleveling to 4.9.
+  Adds `lg-ts-downlevel` bin script
+
 ## 0.8.1
 
 ### Patch Changes

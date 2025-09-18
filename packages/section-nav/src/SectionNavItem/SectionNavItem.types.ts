@@ -1,7 +1,7 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 export interface SectionNavItemProps
-  extends Omit<HTMLElementProps<'a'>, 'href'> {
+  extends Omit<React.ComponentProps<'a'>, 'href'> {
   /**
    *  Whether the item is active.
    */

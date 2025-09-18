@@ -1,6 +1,6 @@
+import React from 'react';
 import { LGMarkdownProps } from '@lg-chat/lg-markdown';
 
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const MessageSourceType = {
@@ -12,7 +12,7 @@ export type MessageSourceType =
   (typeof MessageSourceType)[keyof typeof MessageSourceType];
 
 export interface MessageContentProps
-  extends Omit<HTMLElementProps<'div'>, 'children'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> {
   /**
    * Base font size
    */

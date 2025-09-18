@@ -105,7 +105,6 @@ describe('packages/menu', () => {
     test('respects custom testid', async () => {
       const customTestId = 'custom-menu-test-id';
       const { getByTestId } = renderMenu({
-        // @ts-expect-error - data-testid is not a valid prop for MenuProps FIXME: LG-5477
         'data-testid': customTestId,
         initialOpen: true,
       });
@@ -197,7 +196,9 @@ describe('packages/menu', () => {
 
       const firstItem = menuItemElements[0];
       userEvent.click(firstItem!);
-      await act(async () => await waitForTimeout());
+      await act(async () => {
+        await waitForTimeout();
+      });
       expect(menuEl).toBeInTheDocument();
     });
 
@@ -259,6 +260,39 @@ describe('packages/menu', () => {
       await waitFor(() => {
         expect(menu).toBeInTheDocument();
         expect(parentHandler).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('Callback functions', () => {
+    test('onOpen callback is called when menu opens', async () => {
+      const onOpen = jest.fn();
+      const { triggerEl, findMenuElements } = renderMenu({ onOpen });
+
+      userEvent.click(triggerEl);
+      const { menuEl } = await findMenuElements();
+
+      await waitFor(() => {
+        expect(menuEl).toBeInTheDocument();
+        expect(onOpen).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    test('onClose callback is called when menu closes', async () => {
+      const onClose = jest.fn();
+      const { openMenu, backdropEl } = renderMenu({ onClose });
+
+      // Open the menu first
+      const { menuEl } = await openMenu();
+      await waitFor(() => expect(menuEl).toBeInTheDocument());
+
+      // Close the menu by clicking outside
+      userEvent.click(backdropEl);
+      await waitForElementToBeRemoved(menuEl);
+
+      await waitFor(() => {
+        expect(menuEl).not.toBeInTheDocument();
+        expect(onClose).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -450,7 +484,9 @@ describe('packages/menu', () => {
 
       userEvent.keyboard('[Enter]');
 
-      await act(async () => await waitForTimeout());
+      await act(async () => {
+        await waitForTimeout();
+      });
       expect(menuEl).toBeInTheDocument();
     });
 
@@ -468,7 +504,9 @@ describe('packages/menu', () => {
 
       userEvent.keyboard('[Space]');
 
-      await act(async () => await waitForTimeout());
+      await act(async () => {
+        await waitForTimeout();
+      });
       expect(menuEl).toBeInTheDocument();
     });
   });
@@ -598,6 +636,18 @@ describe('packages/menu', () => {
         expect(onExited).toHaveBeenCalled();
         expect(queryByTestId('item-c')).toHaveFocus();
       });
+    });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('Types work as expected', () => {
+    test('Types work as expected', () => {
+      render(
+        <Menu data-testid="menu">
+          <MenuItem>Item</MenuItem>
+          <MenuItem>Item</MenuItem>
+        </Menu>,
+      );
     });
   });
 });

@@ -92,8 +92,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       }
     }, [rest.active, setOpen]);
 
-    const submenuRef = useRef<HTMLUListElement>(null);
-    const submenuTriggerRef = useRef<HTMLButtonElement>(null);
+    const submenuRef = useRef<HTMLUListElement | null>(null);
+    const submenuTriggerRef = useRef<HTMLButtonElement | null>(null);
     const subMenuHeight = useChildrenHeight(submenuRef, [open]);
 
     const handleClick: MouseEventHandler<

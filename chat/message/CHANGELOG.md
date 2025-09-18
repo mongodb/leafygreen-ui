@@ -1,5 +1,44 @@
 # @lg-chat/message
 
+## 8.1.0
+
+### Minor Changes
+
+- a9eb172: [LG-5437](https://jira.mongodb.org/browse/LG-5437): add expand/collapse functionality for `MessageLinks` and update to latest `@lg-chat/rich-links`
+- a9eb172: [LG-5437](https://jira.mongodb.org/browse/LG-5437): Enhanced Message component with compound components pattern. [Learn more about compound components here](https://github.com/mongodb/leafygreen-ui/blob/main/chat/message/README.md#compound-components)
+
+  - Migrated `MessageActions` from `@lg-chat/message-actions` into this package, now available as `Message.Actions`.
+  - Marked `MessageLinks` export as deprecated. Use `Message.Links` instead.
+  - Updated `Message.VerifiedBanner` to accept additional HTML props.
+
+### Patch Changes
+
+- a9eb172: [LG-5437](https://jira.mongodb.org/browse/LG-5437): update styles of verified answer banner
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [5ef631a]
+- Updated dependencies [a9eb172]
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/icon@14.5.0
+  - @leafygreen-ui/banner@10.1.0
+  - @lg-chat/rich-links@4.0.0
+  - @lg-chat/leafygreen-chat-provider@5.0.2
+  - @lg-chat/lg-markdown@4.1.3
+  - @lg-chat/message-feedback@7.0.2
+  - @lg-chat/message-rating@5.0.2
+  - @leafygreen-ui/avatar@3.1.2
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/hooks@9.1.3
+  - @leafygreen-ui/icon-button@17.0.5
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/polymorphic@3.0.4
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+
 ## 8.0.1
 
 ### Patch Changes

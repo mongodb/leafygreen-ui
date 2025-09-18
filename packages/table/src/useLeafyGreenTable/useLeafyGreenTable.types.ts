@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Cell,
   ColumnDef,
@@ -6,8 +7,6 @@ import {
   Table,
   TableOptions,
 } from '@tanstack/react-table';
-
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 /** LeafyGreen extension of `useReactTable` {@link RowData}*/
 export type LGRowData = RowData;
@@ -33,7 +32,7 @@ export type LGColumnDef<
   T extends LGRowData,
   V extends unknown = unknown,
 > = ColumnDef<LGTableDataType<T>, V> & {
-  align?: HTMLElementProps<'td'>['align'];
+  align?: React.ComponentProps<'td'>['align'];
 };
 
 /**
