@@ -292,7 +292,7 @@ export const formatCode = async ({
           warningMessage: `Clang-format module not loaded for ${language} formatting`,
           formatFn: (formatter, code, filename, style) =>
             formatter.format(code, filename, style),
-          formatArgs: [filename, style] as const,
+          formatArgs: [filename, style],
         });
       }
 
@@ -303,28 +303,29 @@ export const formatCode = async ({
           modules,
           warningMessage: 'Gofmt module not loaded for Go formatting',
           formatFn: (formatter, code) => formatter.format(code),
-          formatArgs: [] as const,
+          formatArgs: [],
         });
       }
 
       case LanguageName.python: {
-        return formatWithWasm({
-          code,
-          wasmModuleName: '@wasm-fmt/ruff_fmt',
-          modules,
-          warningMessage:
+        const formatter = modules['@wasm-fmt/ruff_fmt'] as
+          | WasmFormatter
+          | undefined;
+
+        if (!formatter) {
+          console.warn(
             'Ruff formatter module not loaded for Python formatting',
-          formatFn: (formatter, code, filename, options) =>
-            formatter.format(code, filename, options),
-          formatArgs: [
-            'main.py',
-            {
-              indent_width: editorTabWidth,
-              line_width: 88, // Opinionated default for Python
-              // Add other ruff formatting options as needed
-            },
-          ] as const,
-        });
+          );
+          return code;
+        }
+
+        const options: RuffFormatOptions = {
+          indent_width: editorTabWidth,
+          line_width: 88, // Opinionated default for Python
+          // Add other ruff formatting options as needed
+        };
+
+        return formatter.format(code, 'main.py', options);
       }
 
       default:
