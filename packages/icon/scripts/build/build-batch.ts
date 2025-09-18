@@ -6,6 +6,10 @@ import { GENERATED_DIR } from './constants';
 async function getBatchBuildOptions(
   batch: Array<string>,
 ): Promise<Array<MergedRollupOptions>> {
+  const { constructUMDGlobalName } = await import(
+    '@lg-tools/build/config/utils/constructUMDGlobalName.mjs'
+  );
+
   const { esmConfig, umdConfig } = await import(
     '@lg-tools/build/config/rollup.config.mjs'
   );
@@ -18,14 +22,14 @@ async function getBatchBuildOptions(
       output: [esmConfig.output],
     },
     // UMD builds need a single input file
-    ...batch.map(icon => {
+    ...batch.map(iconName => {
       return {
         ...umdConfig,
-        input: `${GENERATED_DIR}/${icon}.tsx`,
+        input: `${GENERATED_DIR}/${iconName}.tsx`,
         output: [
           {
             ...umdConfig.output,
-            name: `LeafyGreen_${icon}Icon`,
+            name: constructUMDGlobalName('icon', iconName),
             dir: `dist/umd`,
           },
         ],

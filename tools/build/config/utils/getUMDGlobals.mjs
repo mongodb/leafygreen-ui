@@ -1,12 +1,19 @@
+import fs from 'fs';
 import path from 'path';
+
+import { getDirectGlyphImports } from './getDirectGlyphImports.mjs';
+import { constructUMDGlobalName } from './constructUMDGlobalName.mjs';
 
 export function getUMDGlobals() {
   // Read from the current package's package.json
   // to get the package name and dependencies
-  const { dependencies, devDependencies, peerDependencies } = import(
-    path.resolve(process.cwd(), 'package.json'),
-    { with: { type: 'json' } }
-  );
+  const packageJsonPath = path.resolve(process.cwd(), 'package.json');
+  const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf8');
+  const {
+    dependencies = {},
+    devDependencies = {},
+    peerDependencies = {},
+  } = JSON.parse(packageJsonContent);
 
   const allDependencies = {
     ...dependencies,
@@ -14,15 +21,25 @@ export function getUMDGlobals() {
     ...peerDependencies,
   };
 
-  const lgGlobals = Object.keys(allDependencies).reduce((acc, pkg) => {
-    acc[pkg] = pkg;
-    return acc;
-  }, {});
+  const lgGlobals = Object.entries(allDependencies).reduce(
+    (acc, [pkg, version]) => {
+      // Only include packages in this monorepo
+      if (version.includes('workspace:')) {
+        acc[pkg] = constructUMDGlobalName(pkg);
+      }
+      return acc;
+    },
+    {},
+  );
 
-  const iconGlobals = getDirectGlyphImports().reduce((acc, glyph) => {
-    acc[glyph] = /[^/]+$/.exec(glyph)[0];
-    return acc;
-  }, {});
+  const iconGlobals = getDirectGlyphImports(allDependencies).reduce(
+    (acc, glyph) => {
+      const iconName = /[^/]+$/.exec(glyph)[0]; // Get the part after the last slash
+      acc[glyph] = constructUMDGlobalName('icon', iconName);
+      return acc;
+    },
+    {},
+  );
 
   // Mapping of packages to the `window` property they'd be
   // bound to if used in the browser without a module loader.
@@ -57,26 +74,6 @@ export function getUMDGlobals() {
     if (/highlight\.js\/lib\/languages/.test(id)) {
       return id.replace(/highlight\.js\/lib\/languages/, '');
     }
-  }
-
-  /**
-   * @returns An array of all glyph import paths
-   */
-  function getDirectGlyphImports() {
-    const pkgHasIconDependency = allDependencies['@leafygreen-ui/icon'];
-    const glyphsDir = path.resolve(process.cwd(), '../icon/src/glyphs');
-
-    if (pkgHasIconDependency && fs.existsSync(glyphsDir)) {
-      return fs
-        .readdirSync(glyphsDir)
-        .filter(path => /.svg/.test(path))
-        .map(
-          fileName =>
-            `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
-        );
-    }
-
-    return [];
   }
 
   return globals;
