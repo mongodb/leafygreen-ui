@@ -4,7 +4,7 @@
  *
  * @param {string} packageName - The name of the package (e.g., '@leafygreen-ui/button').
  * @param {string} [suffix] - An optional suffix to append to the global name (e.g., 'Icon').
- * @returns {string} - The constructed UMD global name (e.g., 'leafyGreenIcon_Beaker').
+ * @returns {string} - The constructed UMD global name (e.g., 'leafyGreenIconBeaker').
  */
 export const constructUMDGlobalName = (packageName, suffix = '') => {
   const name = packageName.split('/').pop();
