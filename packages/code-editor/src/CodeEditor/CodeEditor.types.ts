@@ -97,7 +97,8 @@ export const CodeEditorTooltipSeverity = {
 export type CodeEditorTooltipSeverity =
   (typeof CodeEditorTooltipSeverity)[keyof typeof CodeEditorTooltipSeverity];
 
-export interface CodeEditorTooltip extends CodeEditorTooltipProps {
+export interface CodeEditorTooltip
+  extends Omit<CodeEditorTooltipProps, 'darkMode' | 'baseFontSize'> {
   /**
    * Which line in the document the tooltip should be rendered. 1 based.
    */

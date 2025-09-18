@@ -144,35 +144,43 @@ import CloudIcon from '@leafygreen-ui/icon';
 | `label`                   | Text label for the button.                                             | `string`             | —           |
 | `onClick` _(optional)_    | Callback fired when the button is clicked.                             | `() => void`         | `undefined` |
 
-## Types and Variables
+## Types
 
-| Name                        | Description                                                                                                                |
-| --------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                              |
-| `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.                     |
-| `CodeEditorProps`           | TypeScript interface defining all props that can be passed to the `CodeEditor` component.                                  |
-| `CodeEditorSelectors`       | Constant object containing CSS selectors for common CodeEditor elements. Useful for testing and custom styling.            |
-| `CodeEditorTooltip`         | TypeScript interface defining the structure for tooltips displayed on hover in the editor. See below for full interface.   |
-| `CodeEditorTooltipSeverity` | Constant object defining possible severity levels for tooltips (`info`, `warning`, `error`, `hint`).                       |
-| `CodeMirrorExtension`       | Re-export of CodeMirror's `Extension` type. See https://codemirror.net/docs/ref/#state.Extension.                          |
-| `CodeEditorHandle`          | TypeScript interface for the imperative handle of the CodeEditor component, including formatting methods.                  |
-| `CodeMirrorState`           | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.                      |
-| `CodeMirrorView`            | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.                         |
-| `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                                   |
-| `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                                    |
-| `MenuItem`                  | TypeScript interface defining the structure for context menu items with label, action, disabled state, and separator flag. |
-| `PanelProps`                | TypeScript interface defining all props that can be passed to the `Panel` component.                                       |
+| Name                    | Description                                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `CodeEditorHandle`      | TypeScript interface for the imperative handle of the CodeEditor component, including formatting methods.                  |
+| `CodeEditorModules`     | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.                     |
+| `CodeEditorProps`       | TypeScript interface defining all props that can be passed to the `CodeEditor` component.                                  |
+| `CodeEditorTooltip`     | TypeScript interface defining the structure for tooltips displayed on hover in the editor. See below for full interface.   |
+| `CodeMirrorExtension`   | Re-export of CodeMirror's `Extension` type. See https://codemirror.net/docs/ref/#state.Extension.                          |
+| `CodeMirrorState`       | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.                      |
+| `CodeMirrorView`        | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.                         |
+| `ContextMenuItem`       | TypeScript interface defining the structure for context menu items with label, action, disabled state, and separator flag. |
+| `PanelProps`            | TypeScript interface defining all props that can be passed to the `Panel` component.                                       |
+| `SecondaryButtonConfig` | TypeScript interface defining the structure for custom secondary buttons in the Panel component.                           |
+
+## Constants & Variables
+
+| Name                        | Description                                                                                                     |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `CodeEditorSelectors`       | Constant object containing CSS selectors for common CodeEditor elements. Useful for testing and custom styling. |
+| `CodeEditorTooltipSeverity` | Constant object defining possible severity levels for tooltips (`info`, `warning`, `error`, `hint`).            |
+| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                   |
+| `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                        |
+| `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                         |
 
 #### `CodeEditorTooltip`
 
 TypeScript interface defining the structure for tooltips displayed on hover in the editor:
 
-| Name                        | Description                                                 | Type                                      | Default     |
-| --------------------------- | ----------------------------------------------------------- | ----------------------------------------- | ----------- |
-| `baseFontSize` _(optional)_ | Font size of text in the tooltip.                           | `14 \| 16`                                | `14`        |
-| `messages` _(optional)_     | Messages to display in the tooltip.                         | `Array<string>`                           | `undefined` |
-| `links` _(optional)_        | Links to display in a section at the bottom of the tooltip. | `Array<{ label: string; href: string; }>` | `undefined` |
-| `darkMode` _(optional)_     | Determines if the tooltip appears in dark mode.             | `boolean`                                 | `undefined` |
+| Name                    | Description                                                                   | Type                                       | Default     |
+| ----------------------- | ----------------------------------------------------------------------------- | ------------------------------------------ | ----------- |
+| `line`                  | Which line in the document the tooltip should be rendered. 1 based.           | `number`                                   | -           |
+| `length`                | The length the text that the tooltip should cover in characters.              | `number`                                   | -           |
+| `column` _(optional)_   | Which character, going from left to right, the tooltip should start. 1 based. | `number`                                   | `1`         |
+| `severity` _(optional)_ | Severity level of the tooltip.                                                | `'info' \| 'warning' \| 'error' \| 'hint'` | `'info'`    |
+| `messages` _(optional)_ | Messages to display in the tooltip.                                           | `Array<string>`                            | `undefined` |
+| `links` _(optional)_    | Links to display in a section at the bottom of the tooltip.                   | `Array<{ label: string; href: string; }>`  | `undefined` |
 
 ## Code Formatting
 
