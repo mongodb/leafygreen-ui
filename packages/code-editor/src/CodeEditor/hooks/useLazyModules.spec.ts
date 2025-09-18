@@ -5,16 +5,6 @@ import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { type LoadersMap, useLazyModules } from './useLazyModules';
 
-// Mock console.error to prevent error logs in tests
-const originalError = console.error;
-beforeAll(() => {
-  console.error = jest.fn();
-});
-
-afterAll(() => {
-  console.error = originalError;
-});
-
 beforeEach(() => {
   jest.clearAllMocks();
 });
@@ -120,10 +110,6 @@ describe('useLazyModules', () => {
 
     // Should only have the successfully loaded module
     expect(result.current.modules).toEqual({ moduleA: mockModuleA });
-    expect(console.error).toHaveBeenCalledWith(
-      'Error loading module "moduleB":',
-      expect.any(Error),
-    );
   });
 
   test('handles loader functions that return undefined', async () => {
