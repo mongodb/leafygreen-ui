@@ -55,7 +55,13 @@ export const PanelGrid = forwardRef<HTMLDivElement, PanelGridProps>(
       } else if (!isDrawerOpen && hasHandledFocusRef.current) {
         // Restore focus when closing (only if we had handled focus during this session)
         if (previouslyFocusedRef.current) {
-          previouslyFocusedRef.current.focus();
+          // Check if the previously focused element is still in the DOM
+          if (document.contains(previouslyFocusedRef.current)) {
+            previouslyFocusedRef.current.focus();
+          } else {
+            // If the previously focused element is no longer in the DOM, focus the body
+            document.body.focus();
+          }
           previouslyFocusedRef.current = null; // Clear the ref
         }
         hasHandledFocusRef.current = false; // Reset for next open session
