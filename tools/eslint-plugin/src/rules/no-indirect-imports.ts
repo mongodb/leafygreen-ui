@@ -9,8 +9,10 @@ export const noIndirectImportsRule = createRule({
     fixable: 'code',
     type: 'suggestion',
     messages: {
-      'issue:importFromPackages': 'Do not import from the `packages` directory',
-      'issue:importFromSrc': "Do not import from a package's `src` directory",
+      'issue:importFromPackages':
+        'Do not import @leafygreen-ui packages from the `packages` directory',
+      'issue:importFromSrc':
+        "Do not import @leafygreen-ui from a package's `src` directory",
     },
     schema: [],
   },
@@ -40,7 +42,7 @@ export const noIndirectImportsRule = createRule({
 
         if (isImportingFromSrc) {
           const relativePath = context.filename.split('src/')[1];
-          const levelsToSrc = relativePath?.split('/').length - 1 ?? 0;
+          const levelsToSrc = relativePath.split('/').length - 1;
 
           const pathToSource =
             levelsToSrc > 0
