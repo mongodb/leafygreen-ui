@@ -7,13 +7,13 @@ Lint Rules for LeafyGreen UI
 You'll first need to install [ESLint](https://eslint.org/):
 
 ```sh
-yarn add -D eslint
+pnpm install -D eslint
 ```
 
 Next, install `@lg-tools/eslint-plugin`:
 
 ```sh
-yarn add -D @lg-tools/eslint-plugin
+pnpm install -D @lg-tools/eslint-plugin
 ```
 
 ## Usage
@@ -39,17 +39,22 @@ Optionally configure the rules you want to use under the rules section.
 
 ## Rules
 
+<!--
+  Auto-generate this section with
+  `pnpm --filter="@lg-tools/eslint-plugin" run docs`
+-->
 <!-- begin auto-generated rules list -->
 
-⚠️ Configurations set to warn in.\
+💼 Configurations enabled in.\
+🚫 Configurations disabled in.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
-💡 Manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+💡 Manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-| Name                                                     | Description                                                              | ⚠️                  | 🔧  | 💡  |
-| :------------------------------------------------------- | :----------------------------------------------------------------------- | :------------------ | :-- | :-- |
-| [boolean-verb-prefix](docs/rules/boolean-verb-prefix.md) | Enforce prefixing boolean variables & properties with a conditional verb | ![badge-internal][] |     | 💡  |
-| [no-indirect-imports](docs/rules/no-indirect-imports.md) | Forbid indirect imports from `src/` or `packages/`                       | ![badge-internal][] | 🔧  |     |
-| [standard-testid](docs/rules/standard-testid.md)         | Enforce a consistent prefix for hard-coded `data-testid` attributes      | ![badge-internal][] | 🔧  |     |
+| Name                                                     | Description                                                              | 💼                  | 🚫                  | 🔧 | 💡 |
+| :------------------------------------------------------- | :----------------------------------------------------------------------- | :------------------ | :------------------ | :- | :- |
+| [boolean-verb-prefix](docs/rules/boolean-verb-prefix.md) | Enforce prefixing boolean variables & properties with a conditional verb |                     | ![badge-internal][] |    | 💡 |
+| [no-indirect-imports](docs/rules/no-indirect-imports.md) | Forbid indirect imports from `src/` or `packages/`                       | ![badge-internal][] |                     | 🔧 |    |
+| [standard-testid](docs/rules/standard-testid.md)         | Enforce a consistent prefix for hard-coded `data-testid` attributes      |                     | ![badge-internal][] | 🔧 |    |
 
 <!-- end auto-generated rules list -->
 
@@ -60,13 +65,7 @@ To create a new rule:
 ### 1. Run the `create-rule` script
 
 ```sh
-yarn workspace @lg-tools/eslint-plugin run create-rule <rule-name>
-```
-
-or, with npm:
-
-```sh
-cd tools/eslint-plugin && npm run create-rule <rule-name>
+pnpm --filter @lg-tools/eslint-plugin run create-rule <rule-name>
 ```
 
 This will create a new file in `src/rules`, and a test file in `src/tests`
