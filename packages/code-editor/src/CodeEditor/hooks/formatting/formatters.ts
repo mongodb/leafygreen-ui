@@ -292,7 +292,7 @@ export const formatCode = async ({
           warningMessage: `Clang-format module not loaded for ${language} formatting`,
           formatFn: (formatter, code, filename, style) =>
             formatter.format(code, filename, style),
-          formatArgs: [filename, style] as const,
+          formatArgs: [filename, style],
         });
       }
 
@@ -303,7 +303,7 @@ export const formatCode = async ({
           modules,
           warningMessage: 'Gofmt module not loaded for Go formatting',
           formatFn: (formatter, code) => formatter.format(code),
-          formatArgs: [] as const,
+          formatArgs: [],
         });
       }
 
@@ -314,8 +314,12 @@ export const formatCode = async ({
           modules,
           warningMessage:
             'Ruff formatter module not loaded for Python formatting',
-          formatFn: (formatter, code, filename, options) =>
-            formatter.format(code, filename, options),
+          formatFn: (
+            formatter: WasmFormatter,
+            code: string,
+            filename: string,
+            options: RuffFormatOptions,
+          ) => formatter.format(code, filename, options),
           formatArgs: [
             'main.py',
             {
@@ -323,7 +327,7 @@ export const formatCode = async ({
               line_width: 88, // Opinionated default for Python
               // Add other ruff formatting options as needed
             },
-          ] as const,
+          ],
         });
       }
 
