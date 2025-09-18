@@ -11,7 +11,7 @@ export function getDirectGlyphImports(allDependencies) {
   if (pkgHasIconDependency && fs.existsSync(glyphsDir)) {
     return fs
       .readdirSync(glyphsDir)
-      .filter(path => /.svg/.test(path))
+      .filter(filePath => /.svg/.test(filePath))
       .map(
         fileName =>
           `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
