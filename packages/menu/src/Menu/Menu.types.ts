@@ -20,13 +20,19 @@ export const MenuVariant = {
 export type MenuVariant = (typeof MenuVariant)[keyof typeof MenuVariant];
 
 export interface MenuProps
-  extends Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'>,
+  extends Omit<React.ComponentPropsWithoutRef<'ul'>, 'onClick'>,
+    Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'>,
     LgIdProps {
   /**
    * The menu items, or submenus
    * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`
    */
   children: ReactNode;
+
+  /**
+   * Test id for the menu element
+   */
+  'data-testid'?: string;
 
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
