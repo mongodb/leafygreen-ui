@@ -1,5 +1,17 @@
 # @leafygreen-ui/lib
 
+## 15.4.0
+
+### Minor Changes
+
+- 6f30c55: Exports `Exists` utility type
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- 6f30c55: Deprecates `HTMLElementProps`. Prefer the built-in React type `ComponentProps`
+
 ## 15.3.0
 
 ### Minor Changes

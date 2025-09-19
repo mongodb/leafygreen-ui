@@ -1,5 +1,20 @@
 # @leafygreen-ui/info-sprinkle
 
+## 5.0.6
+
+### Patch Changes
+
+- 0700607: `children` is now a required property
+- Updated dependencies [1a5c69f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/tooltip@14.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/emotion@5.0.3
+
 ## 5.0.5
 
 ### Patch Changes

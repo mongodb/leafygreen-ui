@@ -1,5 +1,23 @@
 # @leafygreen-ui/progress-bar
 
+## 1.0.3
+
+### Patch Changes
+
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- 6f30c55: Updates ProgressBar `useScreenReaderAnnouncer` to deterministically return a consistent status message (primarily a concern in React 17 strict mode)
+- Updated dependencies [1a5c69f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/emotion@5.0.3
+  - @leafygreen-ui/a11y@3.0.5
+
 ## 1.0.2
 
 ### Patch Changes
