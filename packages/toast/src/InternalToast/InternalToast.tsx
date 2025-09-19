@@ -100,7 +100,8 @@ export const InternalToast = React.forwardRef<
             })}
           >
             <VariantIcon
-              aria-hidden
+              role="img"
+              aria-label={`${variant} notification`}
               className={cx(baseIconStyle, iconThemeStyle[theme])}
               size={32}
             />
