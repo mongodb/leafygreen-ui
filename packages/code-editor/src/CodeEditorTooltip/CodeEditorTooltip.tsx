@@ -1,10 +1,7 @@
 import React from 'react';
 
-import {
-  useBaseFontSize,
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
-import { Link } from '@leafygreen-ui/typography';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Link, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
   getTooltipLinksContainerStyles,
@@ -26,7 +23,7 @@ export function CodeEditorTooltip({
   baseFontSize: baseFontSizeProp,
 }: CodeEditorTooltipProps) {
   const { theme } = useDarkMode(darkMode);
-  const baseFontSize = useBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize();
 
   return (
     <div className={getTooltipStyles(theme)} data-no-context-menu>

@@ -8,12 +8,8 @@ import React, {
 } from 'react';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
-import {
-  useBaseFontSize,
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
-import { Theme } from '@leafygreen-ui/lib';
-import { Body } from '@leafygreen-ui/typography';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
@@ -76,7 +72,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const lgIds = getLgIds(dataLgId);
 
     const { darkMode, theme } = useDarkMode(darkModeProp);
-    const baseFontSize = useBaseFontSize();
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const [controlledValue, setControlledValue] = useState(value || '');
     const isControlled = value !== undefined;
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
@@ -99,7 +95,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         onChange: onChangeProp,
         isLoading: isLoadingProp,
         extensions: consumerExtensions,
-        baseFontSize: baseFontSizeProp || baseFontSize,
+        baseFontSize,
         /**
          * CodeEditorTooltip in particular renders outside of the LeafyGreenProvider
          * so it won't be able to access the theme from the provider. So we must

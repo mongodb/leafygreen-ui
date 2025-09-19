@@ -1,12 +1,13 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export interface CodeEditorTooltipProps extends DarkModeProps {
   /**
    * Font size of text in the editor.
    *
-   * @default 14
+   * @default 13
    */
-  baseFontSize?: 14 | 16;
+  baseFontSize?: BaseFontSize;
 
   /**
    * Messages to display in the tooltip.

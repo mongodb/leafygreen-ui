@@ -2,6 +2,7 @@ import { type EditorState, type Extension } from '@codemirror/state';
 import { type EditorView } from '@codemirror/view';
 
 import { type DarkModeProps, type LgIdProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { CodeEditorTooltipProps } from '../CodeEditorTooltip';
 import { type ContextMenuItem } from '../ContextMenu';
@@ -126,9 +127,9 @@ export type CodeEditorProps = DarkModeProps &
     /**
      * Font size of text in the editor.
      *
-     * @default 14
+     * @default 13
      */
-    baseFontSize?: 14 | 16;
+    baseFontSize?: BaseFontSize;
 
     /**
      * Styling prop

@@ -7,6 +7,7 @@ import {
 import type { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { CodeEditorTooltip } from './CodeEditorTooltip';
 
@@ -30,14 +31,14 @@ const meta: StoryMetaType<typeof CodeEditorTooltip> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        baseFontSize: [14, 16],
+        baseFontSize: Object.values(BaseFontSize),
       },
       decorator: EditorTooltipRoot,
     },
   },
   decorators: [EditorTooltipRoot],
   args: {
-    baseFontSize: 14,
+    baseFontSize: BaseFontSize.Body1,
     darkMode: false,
     messages: [
       'Cannot use JSX unless the ‘--jsx’ flag is provided.',
@@ -56,10 +57,7 @@ const meta: StoryMetaType<typeof CodeEditorTooltip> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    baseFontSize: {
-      control: { type: 'select' },
-      options: [14, 16],
-    },
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
     messages: {
       control: { type: 'object' },
     },

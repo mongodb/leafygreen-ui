@@ -24,6 +24,7 @@ import { css } from '@leafygreen-ui/emotion';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import {
   CodeEditorTooltipSeverity,
@@ -48,7 +49,13 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     (Story: StoryFn, context) => (
       <LeafyGreenProvider
         darkMode={context?.args.darkMode}
-        baseFontSize={context?.args.baseFontSize}
+        /**
+         * useUpdatedBaseFontSize, which is used in the CodeEditor, returns 13 for 14 and 16 for 16.
+         * We need to convert it to 14 for 14 and 16 for 16 to be accepted by the LeafyGreenProvider.
+         */
+        baseFontSize={
+          context?.args.baseFontSize === BaseFontSize.Body1 ? 14 : 16
+        }
       >
         <div
           className={css`
@@ -73,7 +80,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     enableCodeFolding: true,
     enableLineNumbers: true,
     enableLineWrapping: true,
-    baseFontSize: 14,
+    baseFontSize: BaseFontSize.Body1,
     forceParsing: false,
     placeholder: 'Type your code here...',
     readOnly: false,
@@ -93,6 +100,7 @@ const meta: StoryMetaType<typeof CodeEditor> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
     copyButtonAppearance: {
       control: { type: 'select' },
       options: Object.values(CopyButtonAppearance),
@@ -111,10 +119,6 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     },
     enableLineWrapping: {
       control: { type: 'boolean' },
-    },
-    baseFontSize: {
-      control: { type: 'select' },
-      options: [14, 16],
     },
     placeholder: {
       control: { type: 'text' },
