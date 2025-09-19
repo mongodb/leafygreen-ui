@@ -24,8 +24,6 @@ const plugin: Plugin = {
       plugins: ['@lg-tools'],
       rules: {
         '@lg-tools/no-indirect-imports': ['error'],
-        '@lg-tools/boolean-verb-prefix': ['off'],
-        '@lg-tools/standard-testid': ['off'],
       },
     },
     external: {
