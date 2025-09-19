@@ -88,8 +88,6 @@ export const DrawerToolbarLayoutContent = forwardRef<
           scrollable={scrollable}
           data-lgid={`${dataLgId}`}
           data-testid={`${dataLgId}`}
-          aria-live="polite"
-          aria-atomic="true"
         >
           {content}
         </Drawer>

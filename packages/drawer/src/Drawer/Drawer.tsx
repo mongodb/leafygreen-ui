@@ -6,6 +6,7 @@ import {
   useIsomorphicLayoutEffect,
   useMergeRefs,
 } from '@leafygreen-ui/hooks';
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
@@ -134,26 +135,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
-    /**
-     * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
-     *
-     */
-    const handleAnimationEnd = () => {
-      const drawerElement = ref.current;
-
-      // Check if the drawerElement is null or is a div, which means it is not a dialog element.
-      if (!drawerElement || drawerElement instanceof HTMLDivElement) {
-        return;
-      }
-
-      if (open) {
-        const firstFocusable = drawerElement.querySelector(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
-        (firstFocusable as HTMLElement)?.focus();
-      }
-    };
-
     // Enables resizable functionality if the drawer is resizable, embedded and open.
     const {
       resizableRef,
@@ -218,6 +199,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
+        {/* Live region for announcing drawer state changes to screen readers */}
+        {open && (
+          <VisuallyHidden aria-live="polite" aria-atomic="true">
+            {`${title} drawer`}
+          </VisuallyHidden>
+        )}
         <Component
           aria-hidden={!open}
           aria-labelledby={titleId}
@@ -235,7 +222,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           data-testid={lgIds.root}
           id={id}
           ref={drawerRef}
-          onAnimationEnd={handleAnimationEnd}
           inert={!open ? 'inert' : undefined}
           {...rest}
         >
