@@ -29,6 +29,7 @@ ts-trace/
 
 # Environment variables
 .env
+.secrets
 
 # test coverage 
 coverage/
@@ -55,3 +56,4 @@ TODO.md
 # PR train config (https://github.com/realyze/pr-train)
 .pr-train.yml
 migration-storybook.log
+
