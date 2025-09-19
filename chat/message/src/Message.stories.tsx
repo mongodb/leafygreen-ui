@@ -121,23 +121,22 @@ const getLinksChild = () => (
 const getPromotionsChild = () => (
   <Message.Promotion
     promotionText="Go learn more about this skill!"
-    promotionUrl='https://learn.mongodb.com/skills'
+    promotionUrl="https://learn.mongodb.com/skills"
     // eslint-disable-next-line no-console
     onPromotionClick={() => console.log('Promotion clicked')}
   />
-
-)
+);
 
 const getAllSpaciousArgs = () => {
   return {
-    promotion: "Go learn more about this skill!",
-    promotionUrl: "https://learn.mongodb.com/skills",
+    promotion: 'Go learn more about this skill!',
+    promotionUrl: 'https://learn.mongodb.com/skills',
     // eslint-disable-next-line no-console
     onPromotionClick: () => console.log('Promotion clicked'),
     verified: {
-      verifier: "MongoDB Staff",
+      verifier: 'MongoDB Staff',
       verifiedAt: new Date('2023-08-24T16:20:00Z'),
-      learnMoreUrl: "https://mongodb.com/docs",
+      learnMoreUrl: 'https://mongodb.com/docs',
     },
     links: [
       {
@@ -172,8 +171,8 @@ const getAllSpaciousArgs = () => {
       },
     ],
     linksHeading: 'Related Resources',
-  }
-}
+  };
+};
 
 const meta: StoryMetaType<typeof Message> = {
   title: 'Composition/Chat/Message',

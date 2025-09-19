@@ -17,7 +17,11 @@ const defaultProps: MessagePromotionProps = {
 
 const renderMessagePromotion = (props: Partial<MessagePromotionProps> = {}) => {
   const { container } = render(
-    <MessagePromotion data-testid="message-promotion" {...defaultProps} {...props} />
+    <MessagePromotion
+      data-testid="message-promotion"
+      {...defaultProps}
+      {...props}
+    />,
   );
   return { container };
 };
@@ -41,7 +45,7 @@ describe('MessagePromotion', () => {
       expect(svg).toHaveAttribute('height', '16');
     });
 
-    test('renders promotion text', () => {
+    test('renders promotion text & link', () => {
       const promotionText = 'This is a test promotion message';
       renderMessagePromotion({
         promotionText,
@@ -49,14 +53,10 @@ describe('MessagePromotion', () => {
       });
 
       expect(screen.getByText(promotionText)).toBeInTheDocument();
+      expect(screen.getByText('Learn More')).toBeInTheDocument();
     });
 
-    test('renders learn more link', () => {
-      renderMessagePromotion();
-      expect(screen.getByText("Learn more")).toBeInTheDocument();
-    });
-
-    test('renders text but not external link when no URL', () => {
+    test('renders text but not external link when no URL provided', () => {
       const promotionText = 'This is a test promotion message';
       renderMessagePromotion({
         promotionText,
@@ -64,7 +64,34 @@ describe('MessagePromotion', () => {
       });
 
       expect(screen.getByText(promotionText)).toBeInTheDocument();
-      expect(screen.queryByText("Learn more")).not.toBeInTheDocument();
+      expect(screen.queryByText('Learn More')).not.toBeInTheDocument();
+    });
+
+    test('renders text but not external link when URL is empty string', () => {
+      renderMessagePromotion({
+        ...defaultProps,
+        promotionUrl: '',
+      });
+
+      expect(screen.queryByText('Learn More')).not.toBeInTheDocument();
+    });
+
+    test('if promotion text is empty, does not render anything', () => {
+      const { container } = renderMessagePromotion({
+        ...defaultProps,
+        promotionText: '',
+      });
+
+      expect(container.firstChild).toBeNull();
+    });
+
+    test('if promotion text is undefined, does not render anything', () => {
+      const { container } = renderMessagePromotion({
+        ...defaultProps,
+        promotionText: undefined,
+      });
+
+      expect(container.firstChild).toBeNull();
     });
   });
 
@@ -90,44 +117,6 @@ describe('MessagePromotion', () => {
           onPromotionClick: undefined,
         });
       }).not.toThrow();
-    });
-  });
-
-  describe('edge cases', () => {
-    test('if promotion text is empty, does not render anything', () => {
-      const { container } = renderMessagePromotion({
-        ...defaultProps,
-        promotionText: '',
-      });
-
-      expect(container.firstChild).toBeNull();
-    });
-
-    test('if promotion text is undefined, does not render anything', () => {
-      const { container } = renderMessagePromotion({
-        ...defaultProps,
-        promotionText: undefined,
-      });
-
-      expect(container.firstChild).toBeNull();
-    });
-
-    test('if promotion url is empty, does not render anything', () => {
-      const { container } = renderMessagePromotion({
-        ...defaultProps,
-        promotionUrl: '',
-      });
-
-      expect(container.firstChild).toBeNull();
-    });
-
-    test('if promotion url is undefined, does not render anything', () => {
-      const { container } = renderMessagePromotion({
-        ...defaultProps,
-        promotionUrl: undefined,
-      });
-
-      expect(container.firstChild).toBeNull();
     });
   });
 });
