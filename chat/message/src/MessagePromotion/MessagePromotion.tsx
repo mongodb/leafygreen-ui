@@ -1,23 +1,17 @@
 import React from 'react';
 
 import Icon from '@leafygreen-ui/icon';
+import { Disclaimer, Link } from '@leafygreen-ui/typography';
 
 import { MessageContent } from '../MessageContent';
-import { type MessagePromotionProps } from './MessagePromotion.types';
-import { containerStyles, iconStyles } from './MessagePromotion.styles';
 
-// Open markdown link in new tab
-function MarkdownLinkRenderer(props: any) {
-  return (
-    <a href={props.href} target="_blank" rel="noreferrer">
-      {props.children}
-    </a>
-  );
-}
+import { containerStyles, iconStyles, learnMoreStyles } from './MessagePromotion.styles';
+import { type MessagePromotionProps } from './MessagePromotion.types';
 
 export function MessagePromotion({
   baseFontSize,
   promotionText,
+  promotionUrl,
   onPromotionClick,
   promotionContentType = "markdown",
   markdownProps,
@@ -27,6 +21,7 @@ export function MessagePromotion({
   if (!promotionText) {
     return null;
   }
+
   return (
     <div className={containerStyles}>
       <div className={iconStyles} >
@@ -36,13 +31,23 @@ export function MessagePromotion({
       </div>
       <MessageContent
         baseFontSize={baseFontSize}
-        markdownProps={{ ...markdownProps, components: { a: MarkdownLinkRenderer } }}
+        markdownProps={{ ...markdownProps}}
         sourceType={promotionContentType}
         onClick={onPromotionClick}
         {...rest}
       >
         {promotionText}
       </MessageContent>
+      { promotionUrl ? (
+        <Disclaimer className={learnMoreStyles}>
+          {promotionUrl && (
+            <>
+              {' '}
+              <Link href={promotionUrl} onClick={onPromotionClick}>Learn More</Link>
+            </>
+          )}
+        </Disclaimer>
+      ) : null}
     </div>
   )
 }

@@ -75,6 +75,12 @@ export interface MessageProps
   promotion?: string;
 
   /**
+   * URL for the promotion to link the "Learn more" to.
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   */
+  promotionUrl?: string;
+
+  /**
    * Callback function for when promotional content is clicked.
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
    */

@@ -1,4 +1,3 @@
-
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -7,6 +6,7 @@ export const containerStyles = css`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: ${spacing[200]}px 0 0 0;
 `
 
 export const iconStyles = css`
@@ -28,3 +28,8 @@ export const iconStyles = css`
     color: ${palette.green.dark2};
   }
 `
+
+export const learnMoreStyles = css`
+  display: inline;
+  color: inherit;
+`;

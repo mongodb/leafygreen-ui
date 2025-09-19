@@ -20,8 +20,8 @@ import { CompactMessage } from './CompactMessage';
 import {
   ActionsType,
   LinksType,
-  PromotionType,
   type MessageProps,
+  PromotionType,
   type VerifiedBannerType,
 } from './Message.types';
 import { SpaciousMessage } from './SpaciousMessage';
@@ -37,6 +37,8 @@ const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
       componentOverrides,
       darkMode: darkModeProp,
       promotion,
+      promotionUrl,
+      onPromotionClick,
       links,
       linksHeading,
       onLinkClick,
@@ -86,6 +88,8 @@ const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
               baseFontSize={baseFontSize}
               componentOverrides={componentOverrides}
               promotion={promotion}
+              promotionUrl={promotionUrl}
+              onPromotionClick={onPromotionClick}
               links={links}
               linksHeading={linksHeading}
               onLinkClick={onLinkClick}

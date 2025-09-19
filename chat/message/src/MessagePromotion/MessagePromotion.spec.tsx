@@ -9,15 +9,15 @@ jest.mock('@lg-chat/lg-markdown', () => ({
   LGMarkdown: jest.fn(({ children }) => <div>{children}</div>),
 }));
 
-const renderMessagePromotion = (props: Partial<MessagePromotionProps> = {}) => {
-  const defaultProps: MessagePromotionProps = {
-    promotionText: 'This is a test promotion message',
-    baseFontSize: 16,
-    ...props,
-  };
+const defaultProps: MessagePromotionProps = {
+  promotionText: 'Go learn a new skill!',
+  promotionUrl: 'https://learn.mongodb.com/skills',
+  baseFontSize: 16,
+};
 
+const renderMessagePromotion = (props: Partial<MessagePromotionProps> = {}) => {
   const { container } = render(
-    <MessagePromotion data-testid="message-promotion" {...defaultProps} />
+    <MessagePromotion data-testid="message-promotion" {...defaultProps} {...props} />
   );
   return { container };
 };
@@ -25,9 +25,7 @@ const renderMessagePromotion = (props: Partial<MessagePromotionProps> = {}) => {
 describe('MessagePromotion', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
-      const { container } = renderMessagePromotion({
-        promotionText: 'Test promotion text',
-      });
+      const { container } = renderMessagePromotion();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
@@ -35,9 +33,7 @@ describe('MessagePromotion', () => {
 
   describe('rendering', () => {
     test('renders SVG icon at 16x16 size', () => {
-      renderMessagePromotion({
-        promotionText: 'Test promotion',
-      });
+      renderMessagePromotion();
 
       const svg = document.querySelector('svg');
       expect(svg).toBeInTheDocument();
@@ -49,9 +45,26 @@ describe('MessagePromotion', () => {
       const promotionText = 'This is a test promotion message';
       renderMessagePromotion({
         promotionText,
+        promotionUrl: 'https://learn.mongodb.com/skills',
       });
 
       expect(screen.getByText(promotionText)).toBeInTheDocument();
+    });
+
+    test('renders learn more link', () => {
+      renderMessagePromotion();
+      expect(screen.getByText("Learn more")).toBeInTheDocument();
+    });
+
+    test('renders text but not external link when no URL', () => {
+      const promotionText = 'This is a test promotion message';
+      renderMessagePromotion({
+        promotionText,
+        promotionUrl: undefined,
+      });
+
+      expect(screen.getByText(promotionText)).toBeInTheDocument();
+      expect(screen.queryByText("Learn more")).not.toBeInTheDocument();
     });
   });
 
@@ -60,7 +73,7 @@ describe('MessagePromotion', () => {
       const mockOnClick = jest.fn();
 
       renderMessagePromotion({
-        promotionText: 'Clickable promotion',
+        ...defaultProps,
         onPromotionClick: mockOnClick,
       });
 
@@ -73,7 +86,7 @@ describe('MessagePromotion', () => {
     test('onPromotionClick is not required', () => {
       expect(() => {
         renderMessagePromotion({
-          promotionText: 'Test promotion without click handler',
+          ...defaultProps,
           onPromotionClick: undefined,
         });
       }).not.toThrow();
@@ -83,15 +96,8 @@ describe('MessagePromotion', () => {
   describe('edge cases', () => {
     test('if promotion text is empty, does not render anything', () => {
       const { container } = renderMessagePromotion({
+        ...defaultProps,
         promotionText: '',
-      });
-
-      expect(container.firstChild).toBeNull();
-    });
-
-    test('if promotion text is null, does not render anything', () => {
-      const { container } = renderMessagePromotion({
-        promotionText: null as any,
       });
 
       expect(container.firstChild).toBeNull();
@@ -99,7 +105,26 @@ describe('MessagePromotion', () => {
 
     test('if promotion text is undefined, does not render anything', () => {
       const { container } = renderMessagePromotion({
-        promotionText: undefined as any,
+        ...defaultProps,
+        promotionText: undefined,
+      });
+
+      expect(container.firstChild).toBeNull();
+    });
+
+    test('if promotion url is empty, does not render anything', () => {
+      const { container } = renderMessagePromotion({
+        ...defaultProps,
+        promotionUrl: '',
+      });
+
+      expect(container.firstChild).toBeNull();
+    });
+
+    test('if promotion url is undefined, does not render anything', () => {
+      const { container } = renderMessagePromotion({
+        ...defaultProps,
+        promotionUrl: undefined,
       });
 
       expect(container.firstChild).toBeNull();

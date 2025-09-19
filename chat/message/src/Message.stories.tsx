@@ -120,13 +120,20 @@ const getLinksChild = () => (
 
 const getPromotionsChild = () => (
   <Message.Promotion
-    promotionText="This response includes promotional content"
+    promotionText="Go learn more about this skill!"
+    promotionUrl='https://learn.mongodb.com/skills'
+    // eslint-disable-next-line no-console
+    onPromotionClick={() => console.log('Promotion clicked')}
   />
+
 )
 
 const getAllSpaciousArgs = () => {
   return {
-    promotion: "This response includes [promotional content](www.google.com)",
+    promotion: "Go learn more about this skill!",
+    promotionUrl: "https://learn.mongodb.com/skills",
+    // eslint-disable-next-line no-console
+    onPromotionClick: () => console.log('Promotion clicked'),
     verified: {
       verifier: "MongoDB Staff",
       verifiedAt: new Date('2023-08-24T16:20:00Z'),

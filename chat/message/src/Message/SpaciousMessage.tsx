@@ -36,6 +36,7 @@ export const SpaciousMessage = forwardRef<HTMLDivElement, MessageProps>(
       componentOverrides,
       isSender = true,
       promotion,
+      promotionUrl,
       onPromotionClick,
       links,
       linksHeading,
@@ -133,10 +134,11 @@ export const SpaciousMessage = forwardRef<HTMLDivElement, MessageProps>(
             >
               {messageBody ?? ''}
             </Polymorph>
-            {promotion ? (
+            {promotion && promotionUrl ? (
               <Polymorph
                 as={componentOverrides?.MessagePromotion ?? MessagePromotion}
                 promotionText={promotion}
+                promotionUrl={promotionUrl}
                 baseFontSize={baseFontSize}
                 onPromotionClick={onPromotionClick}
                 {...markdownProps}
