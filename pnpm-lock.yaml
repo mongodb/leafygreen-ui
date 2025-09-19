@@ -1990,6 +1990,9 @@ importers:
       '@lg-tools/lint':
         specifier: workspace:^
         version: link:../../tools/lint
+      '@lg-tools/storybook-utils':
+        specifier: workspace:^
+        version: link:../../tools/storybook-utils
       '@svgr/core':
         specifier: ^5.3.1
         version: 5.5.0
@@ -3826,6 +3829,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../build
+      '@lg-tools/test':
+        specifier: workspace:^
+        version: link:../test
       '@types/eslint':
         specifier: 9.6.1
         version: 9.6.1
