@@ -1,5 +1,17 @@
 # @leafygreen-ui/resizable
 
+## 0.1.3
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/emotion@5.0.3
+
 ## 0.1.2
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @lg-tools/storybook-addon
 
+## 0.6.3
+
+### Patch Changes
+
+- 6f30c55: Updates Preview type with `Storybook7CompatiblePreviewType` in order to support multiple Storybook versions
+- Updated dependencies [1a5c69f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @lg-tools/build@0.8.3
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+
 ## 0.6.2
 
 ### Patch Changes
