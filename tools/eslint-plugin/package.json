@@ -8,8 +8,17 @@
     "eslint-plugin",
     "leafygreen"
   ],
-  "main": "./dist/index.js",
-  "exports": "./dist/index.js",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    }
+  },
   "scripts": {
     "prebuild": "npx ts-node ./scripts/buildRulesIndex.ts",
     "build": "lg-build bundle",
@@ -29,6 +38,7 @@
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
+    "@lg-tools/test": "workspace:^",
     "@types/eslint": "9.6.1",
     "@typescript-eslint/rule-tester": "8.44.0",
     "commander": "^11.0.0",
