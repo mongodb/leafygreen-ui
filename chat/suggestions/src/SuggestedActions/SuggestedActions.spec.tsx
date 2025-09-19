@@ -586,4 +586,57 @@ describe('chat/suggestions', () => {
       });
     });
   });
+
+  /* eslint-disable jest/no-disabled-tests */
+  describe.skip('types behave as expected', () => {
+    test('SuggestedActions throws error when no required props are provided', () => {
+      // @ts-expect-error - missing required props
+      <SuggestedActions />;
+    });
+
+    test('SuggestedActions throws error when missing configurationParameters', () => {
+      // @ts-expect-error - missing configurationParameters
+      <SuggestedActions state={State.Unset} onClickApply={() => {}} />;
+    });
+
+    test('SuggestedActions throws error when missing onClickApply', () => {
+      // @ts-expect-error - missing onClickApply
+      <SuggestedActions
+        state={State.Unset}
+        configurationParameters={[{ key: 'test', value: 'test' }]}
+      />;
+    });
+
+    test('SuggestedActions throws error when missing state', () => {
+      // @ts-expect-error - missing state
+      <SuggestedActions
+        configurationParameters={[{ key: 'test', value: 'test' }]}
+        onClickApply={() => {}}
+      />;
+    });
+
+    test('SuggestedActions accepts configurationParameters with allowed state values', () => {
+      <SuggestedActions
+        state={State.Success}
+        configurationParameters={[
+          { key: 'unset', value: 'value' },
+          { key: 'explicit-unset', value: 'value', state: 'unset' },
+          { key: 'success', value: 'value', state: 'success' },
+          { key: 'error', value: 'value', state: 'error' },
+        ]}
+        onClickApply={() => {}}
+      />;
+    });
+
+    test('SuggestedActions does not accept configurationParameters with state "apply"', () => {
+      <SuggestedActions
+        state={State.Success}
+        configurationParameters={[
+          // @ts-expect-error - "apply" is not a valid state for configurationParameters
+          { key: 'apply', value: 'value', state: State.Apply },
+        ]}
+        onClickApply={() => {}}
+      />;
+    });
+  });
 });
