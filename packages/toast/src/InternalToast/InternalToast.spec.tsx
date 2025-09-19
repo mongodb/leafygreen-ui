@@ -93,11 +93,11 @@ describe('packages/toast/internal-toast', () => {
 
     describe('the correct icon is rendered', () => {
       const expectedVariantIcons: Record<Variant, string> = {
-        [Variant.Success]: 'Checkmark With Circle Icon',
-        [Variant.Note]: 'Info With Circle Icon',
-        [Variant.Warning]: 'Warning Icon',
-        [Variant.Important]: 'Important With Circle Icon',
-        [Variant.Progress]: 'Refresh Icon',
+        [Variant.Success]: 'success notification',
+        [Variant.Note]: 'note notification',
+        [Variant.Warning]: 'warning notification',
+        [Variant.Important]: 'important notification',
+        [Variant.Progress]: 'progress notification',
       };
 
       test.each(Object.values(Variant) as Array<Variant>)(

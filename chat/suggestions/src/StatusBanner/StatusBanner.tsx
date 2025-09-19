@@ -2,7 +2,11 @@ import React from 'react';
 
 import Banner, { Variant as BannerVariant } from '@leafygreen-ui/banner';
 
-import { ConfigurationParameter, State } from '../shared.types';
+import {
+  ErrorConfigurationParameter,
+  State,
+  SuccessConfigurationParameter,
+} from '../shared.types';
 
 import {
   bannerWrapperStyles,
@@ -16,11 +20,13 @@ export const StatusBanner = ({
   failedParameters,
 }: {
   state: State;
-  appliedParameters?: Array<ConfigurationParameter>;
-  failedParameters?: Array<ConfigurationParameter>;
+  appliedParameters?: Array<SuccessConfigurationParameter>;
+  failedParameters?: Array<ErrorConfigurationParameter>;
 }) => {
   const clusterConfigurationBannerContent = (
-    parameters?: Array<ConfigurationParameter>,
+    parameters?: Array<
+      SuccessConfigurationParameter | ErrorConfigurationParameter
+    >,
   ) => {
     return (
       <ul className={listStyles}>
