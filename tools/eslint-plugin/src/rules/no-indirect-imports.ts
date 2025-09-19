@@ -3,11 +3,11 @@ import { createRule } from '../utils/createRule';
 export const noIndirectImportsRule = createRule({
   name: 'no-indirect-imports',
   meta: {
+    type: 'problem',
+    fixable: 'code',
     docs: {
       description: 'Forbid indirect imports from `src/` or `packages/`',
     },
-    fixable: 'code',
-    type: 'suggestion',
     messages: {
       'issue:importFromPackages':
         'Do not import @leafygreen-ui packages from the `packages` directory',
