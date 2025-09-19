@@ -1,6 +1,6 @@
 import { type EditorView } from 'codemirror';
 
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';
 import { type CodeEditorModules } from '../moduleLoaders.types';
@@ -50,7 +50,7 @@ export function useExtensions({
   props: Partial<CodeEditorProps>;
   modules: Partial<CodeEditorModules>;
 }) {
-  const baseFontSize = useBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize();
 
   const autoCompleteExtension = useAutoCompleteExtension({
     editorViewInstance,
