@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -8,6 +8,8 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import { GuideCue } from '@leafygreen-ui/guide-cue';
+import { usePrevious } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -441,6 +443,134 @@ export const EmbeddedDynamic: StoryObj<DrawerLayoutProps> = {
     },
     chromatic: {
       disableSnapshot: true,
+    },
+  },
+};
+
+interface MainContentProps {
+  setGuideCueKey: React.Dispatch<React.SetStateAction<number>>;
+  setGuideCueOpen: (open: boolean) => void;
+}
+
+const MainContent: React.FC<MainContentProps> = ({
+  setGuideCueKey,
+  setGuideCueOpen,
+}) => {
+  const { isDrawerOpen } = useDrawerToolbarContext();
+  const prevIsDrawerOpen = usePrevious(isDrawerOpen);
+
+  // Force GuideCue rerender when drawer state changes for immediate repositioning
+  useEffect(() => {
+    if (prevIsDrawerOpen !== undefined && prevIsDrawerOpen !== isDrawerOpen) {
+      setGuideCueKey((prev: number) => prev + 1);
+    }
+  }, [isDrawerOpen, prevIsDrawerOpen, setGuideCueKey]);
+
+  return (
+    <main
+      className={css`
+        padding: ${spacing[400]}px;
+      `}
+    >
+      <div
+        className={css`
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: ${spacing[200]}px;
+        `}
+      >
+        <Button onClick={() => setGuideCueOpen(true)}>
+          Show GuideCue on Dashboard Button
+        </Button>
+        <p>
+          This example demonstrates how to use refs in toolbarData to attach a
+          GuideCue to a toolbar icon button. The button tooltip is
+          automatically disabled while the GuideCue is visible to prevent
+          conflicts between the two overlays.
+        </p>
+      </div>
+      <LongContent />
+    </main>
+  );
+};
+
+const WithGuideCueComponent: StoryFn<DrawerLayoutProps> = ({
+  displayMode,
+}: DrawerLayoutProps) => {
+  const dashboardButtonRef = useRef<HTMLButtonElement>(null);
+  const [guideCueOpen, setGuideCueOpen] = useState(false);
+  const [guideCueKey, setGuideCueKey] = useState(0);
+
+  // Use useMemo to make toolbar data reactive to guideCueOpen state changes
+  const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = useMemo(
+    () => [
+      {
+        id: 'Code',
+        label: 'Code',
+        content: <LongContent />,
+        title: 'Code',
+        glyph: 'Code',
+      },
+      {
+        id: 'Dashboard',
+        label: 'Dashboard',
+        content: <LongContent />,
+        title: 'Dashboard',
+        glyph: 'Dashboard',
+        ref: dashboardButtonRef, // This ref is passed to the ToolbarIconButton
+        tooltipEnabled: !guideCueOpen, // Disable tooltip when guide cue is open
+      },
+      {
+        id: 'Apps',
+        label: 'Apps',
+        content: <LongContent />,
+        title: 'Apps',
+        glyph: 'Apps',
+      },
+    ],
+    [guideCueOpen],
+  ); // Re-compute when guideCueOpen changes
+
+  return (
+    <div
+      className={css`
+        height: 90vh;
+        width: 100%;
+      `}
+    >
+      <DrawerLayout displayMode={displayMode} toolbarData={DRAWER_TOOLBAR_DATA}>
+        <MainContent
+          setGuideCueKey={setGuideCueKey}
+          setGuideCueOpen={setGuideCueOpen}
+        />
+      </DrawerLayout>
+
+      <GuideCue
+        key={`guide-cue-${guideCueKey}`} // Force rerender on drawer state changes
+        open={guideCueOpen} // Always show when toggled
+        setOpen={setGuideCueOpen}
+        title="Dashboard Feature"
+        refEl={dashboardButtonRef}
+        numberOfSteps={1}
+        onPrimaryButtonClick={() => setGuideCueOpen(false)}
+        tooltipAlign="left"
+        tooltipJustify="start"
+      >
+        Click here to access your dashboard with analytics and insights!
+      </GuideCue>
+    </div>
+  );
+};
+
+export const WithGuideCue: StoryObj<DrawerLayoutProps> = {
+  render: WithGuideCueComponent,
+  args: {
+    displayMode: DisplayMode.Overlay,
+  },
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
     },
   },
 };

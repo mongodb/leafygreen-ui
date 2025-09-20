@@ -24,6 +24,9 @@
       "path": "../emotion"
     },
     {
+      "path": "../guide-cue"
+    },
+    {
       "path": "../hooks"
     },
     {
