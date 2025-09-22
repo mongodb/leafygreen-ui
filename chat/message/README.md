@@ -61,7 +61,7 @@ return (
 
 ### Compound Components
 
-The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, and `Message.VerifiedBanner`.
+The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, `Message.Promotion`, and `Message.VerifiedBanner`.
 
 **Note 1:** All compound components only render in the `compact` variant.  
 **Note 2:** The layout and order of compound components are enforced by the `Message` component itself. Even if you change the order of subcomponents in your JSX, they will be rendered in the correct, intended order within the message bubble. This ensures consistent UI and accessibility regardless of how you compose your message children.
@@ -180,6 +180,33 @@ const MessageWithVerifiedBanner = () => {
 };
 ```
 
+### Message.Promotion
+
+```tsx
+import React from 'react';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+
+const MessageWithPromotion = () => {
+  const handlePromotionClick = () => console.log('Promotion clicked');
+
+  return (
+    <LeafyGreenChatProvider variant={Variant.Compact}>
+      <Message isSender={false} messageBody="Test message">
+        <Message.Promotion
+          promotionText="Go learn more about this skill!"
+          promotionUrl="https://learn.mongodb.com/skills"
+          onPromotionClick={handlePromotionClick}
+        />
+      </Message>
+    </LeafyGreenChatProvider>
+  );
+};
+```
+
 ### Complete Example with All Subcomponents
 
 ```tsx
@@ -233,6 +260,11 @@ const Example = () => {
           onRatingChange={handleRatingChange}
           onSubmitFeedback={handleSubmitFeedback}
         />
+        <Message.Promotion
+          promotionText="Go learn more about this skill!"
+          promotionUrl="https://learn.mongodb.com/skills"
+          onPromotionClick={() => console.log('Promotion clicked')}
+        />
         <Message.VerifiedBanner
           verifier="MongoDB Staff"
           verifiedAt={new Date('2024-03-24T16:20:00Z')}
@@ -260,6 +292,9 @@ const Example = () => {
 | `markdownProps`                   | [`LGMarkdownProps`](https://github.com/mongodb/leafygreen-ui/tree/main/chat/lg-markdown#properties) | Props passed to the internal ReactMarkdown instance                               |                                                                                                                           |
 | `messageBody`                     | `string`                                                                                            | Message body text passed to LGMarkdown                                            |                                                                                                                           |
 | `onLinkClick`                     | `({ children: string; imageUrl?: string }) => void`                                                 | A callback function that is called when the link is clicked.                      |                                                                                                                           |
+| `onPromotionClick`                | `() => void`                                                                                        | Callback function for when promotional content is clicked           |                                                                                                                           |
+| `promotion`                       | `string`                                                                                            | Text to render as promotional content on the message            |                                                                                                                           |
+| `promotionUrl`                    | `string`                                                                                            | URL for the promotion to link the "Learn more" to                |                                                                                                                           |
 | `sourceType`                      | `'markdown' \| 'text'`                                                                              | Determines the rendering method of the message                                    |                                                                                                                           |
 | `verified`                        | `{ verifier?: string; verifiedAt?: Date; learnMoreUrl?: string; }`                                  | Sets if an answer is "verified" and controls the content of the message banner.   |                                                                                                                           |
 | `...`                             | `HTMLElementProps<'div'>`                                                                           | Props spread on the root element                                                  |                                                                                                                           |
@@ -285,6 +320,17 @@ const Example = () => {
 | `links`                    | `Array<RichLinkProps>`           | An array of link data to render in the links section.        |                       |
 | `onLinkClick` _(optional)_ | `({ children: string }) => void` | A callback function that is called when any link is clicked. |                       |
 | `...`                      | `HTMLElementProps<'div'>`        | Props spread on the root element                             |                       |
+
+### Message.Promotion
+
+| Prop                                 | Type                              | Description                                                   | Default     |
+| ------------------------------------ | --------------------------------- | ------------------------------------------------------------- | ----------- |
+| `promotionText`                      | `string`                          | Promotion text content.                                       |             |
+| `promotionUrl` _(optional)_          | `string`                          | Promotion URL for the "Learn More" link.                      |             |
+| `baseFontSize` _(optional)_          | `BaseFontSize`                    | Base font size.                                               |             |
+| `onPromotionClick` _(optional)_      | `() => void`                      | Promotion onClick callback handler.                           |             |
+| `markdownProps` _(optional)_         | `Omit<LGMarkdownProps, 'children'>` | Props passed to the internal ReactMarkdown instance.         |             |
+| `...`                                | `HTMLElementProps<'div'>`         | Props spread on the root element                              |             |
 
 ### Message.VerifiedBanner
 
@@ -360,6 +406,22 @@ The `MessageLinks` component provides an expandable/collapsible section for disp
 The component manages its own internal state for:
 
 - Expansion state: Controls whether the links section is expanded or collapsed
+
+### Message.Promotion
+
+The `MessagePromotion` component displays promotional content with an award icon and optional "Learn More" link.
+
+#### Rendering Behavior
+
+- If `promotionText` is empty or undefined, the component returns `null` and does not render anything
+- The component supports markdown content by default
+- If `promotionUrl` is provided, a "Learn More" link is displayed that opens in a new tab
+- If `promotionUrl` is not provided or is an empty string, no "Learn More" link is rendered
+- The component only renders in the `compact` variant when used as a compound component
+
+#### Callback Behavior
+
+- The `onPromotionClick` callback is triggered when clicking the "Learn More" link
 
 ### Message.VerifiedBanner
 

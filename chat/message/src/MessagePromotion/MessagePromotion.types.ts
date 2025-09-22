@@ -3,8 +3,6 @@ import { LGMarkdownProps } from '@lg-chat/lg-markdown';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { type MessageSourceType } from '../MessageContent';
-
 export interface MessagePromotionProps
   extends Omit<HTMLElementProps<'div'>, 'children'> {
   /**
@@ -21,12 +19,6 @@ export interface MessagePromotionProps
    * Base font size.
    */
   baseFontSize?: BaseFontSize;
-
-  /**
-   * Promotion text content rendering method.
-   * @default MessageSourceType.Markdown
-   */
-  promotionContentType?: MessageSourceType;
 
   /**
    * Promotion onClick callback handler

@@ -104,8 +104,8 @@ describe('MessagePromotion', () => {
         onPromotionClick: mockOnClick,
       });
 
-      const promotion = screen.getByTestId('message-promotion');
-      await userEvent.click(promotion);
+      const learnMoreLink = screen.getByText("Learn More");
+      await userEvent.click(learnMoreLink);
 
       expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
