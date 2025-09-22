@@ -414,7 +414,6 @@ The `MessagePromotion` component displays promotional content with an award icon
 #### Rendering Behavior
 
 - If `promotionText` is empty or undefined, the component returns `null` and does not render anything
-- The component supports markdown content by default
 - If `promotionUrl` is provided, a "Learn More" link is displayed that opens in a new tab
 - If `promotionUrl` is not provided or is an empty string, no "Learn More" link is rendered
 - The component only renders in the `compact` variant when used as a compound component
