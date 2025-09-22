@@ -32,12 +32,20 @@ export function MessagePromotion({
       <div className={promotionIconStyles}>
         <Icon glyph="Award" />
       </div>
-      <Body className={promotionLearnMoreStyles} baseFontSize={baseFontSize} {...rest}>
+      <Body
+        className={promotionLearnMoreStyles}
+        baseFontSize={baseFontSize}
+        {...rest}
+      >
         {promotionText}
         {promotionUrl && (
           <>
             {' '}
-            <Link href={promotionUrl} onClick={onPromotionClick} baseFontSize={baseFontSize}>
+            <Link
+              href={promotionUrl}
+              onClick={onPromotionClick}
+              baseFontSize={baseFontSize}
+            >
               Learn More
             </Link>
           </>

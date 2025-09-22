@@ -292,9 +292,9 @@ const Example = () => {
 | `markdownProps`                   | [`LGMarkdownProps`](https://github.com/mongodb/leafygreen-ui/tree/main/chat/lg-markdown#properties) | Props passed to the internal ReactMarkdown instance                               |                                                                                                                           |
 | `messageBody`                     | `string`                                                                                            | Message body text passed to LGMarkdown                                            |                                                                                                                           |
 | `onLinkClick`                     | `({ children: string; imageUrl?: string }) => void`                                                 | A callback function that is called when the link is clicked.                      |                                                                                                                           |
-| `onPromotionClick`                | `() => void`                                                                                        | Callback function for when promotional content is clicked           |                                                                                                                           |
-| `promotion`                       | `string`                                                                                            | Text to render as promotional content on the message            |                                                                                                                           |
-| `promotionUrl`                    | `string`                                                                                            | URL for the promotion to link the "Learn more" to                |                                                                                                                           |
+| `onPromotionClick`                | `() => void`                                                                                        | Callback function for when promotional content is clicked                         |                                                                                                                           |
+| `promotion`                       | `string`                                                                                            | Text to render as promotional content on the message                              |                                                                                                                           |
+| `promotionUrl`                    | `string`                                                                                            | URL for the promotion to link the "Learn more" to                                 |                                                                                                                           |
 | `sourceType`                      | `'markdown' \| 'text'`                                                                              | Determines the rendering method of the message                                    |                                                                                                                           |
 | `verified`                        | `{ verifier?: string; verifiedAt?: Date; learnMoreUrl?: string; }`                                  | Sets if an answer is "verified" and controls the content of the message banner.   |                                                                                                                           |
 | `...`                             | `HTMLElementProps<'div'>`                                                                           | Props spread on the root element                                                  |                                                                                                                           |
@@ -323,14 +323,14 @@ const Example = () => {
 
 ### Message.Promotion
 
-| Prop                                 | Type                              | Description                                                   | Default     |
-| ------------------------------------ | --------------------------------- | ------------------------------------------------------------- | ----------- |
-| `promotionText`                      | `string`                          | Promotion text content.                                       |             |
-| `promotionUrl` _(optional)_          | `string`                          | Promotion URL for the "Learn More" link.                      |             |
-| `baseFontSize` _(optional)_          | `BaseFontSize`                    | Base font size.                                               |             |
-| `onPromotionClick` _(optional)_      | `() => void`                      | Promotion onClick callback handler.                           |             |
-| `markdownProps` _(optional)_         | `Omit<LGMarkdownProps, 'children'>` | Props passed to the internal ReactMarkdown instance.         |             |
-| `...`                                | `HTMLElementProps<'div'>`         | Props spread on the root element                              |             |
+| Prop                            | Type                                | Description                                          | Default |
+| ------------------------------- | ----------------------------------- | ---------------------------------------------------- | ------- |
+| `promotionText`                 | `string`                            | Promotion text content.                              |         |
+| `promotionUrl` _(optional)_     | `string`                            | Promotion URL for the "Learn More" link.             |         |
+| `baseFontSize` _(optional)_     | `BaseFontSize`                      | Base font size.                                      |         |
+| `onPromotionClick` _(optional)_ | `() => void`                        | Promotion onClick callback handler.                  |         |
+| `markdownProps` _(optional)_    | `Omit<LGMarkdownProps, 'children'>` | Props passed to the internal ReactMarkdown instance. |         |
+| `...`                           | `HTMLElementProps<'div'>`           | Props spread on the root element                     |         |
 
 ### Message.VerifiedBanner
 
