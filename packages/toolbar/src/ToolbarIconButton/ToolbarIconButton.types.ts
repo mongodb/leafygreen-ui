@@ -28,4 +28,11 @@ export interface ToolbarIconButtonProps extends ButtonProps {
    *  Callback fired when the ToolbarIconButton is clicked
    */
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /**
+   * Enables the tooltip to trigger based on hover events.
+   * When false, the tooltip will not show on hover.
+   * @default true
+   */
+  tooltipEnabled?: boolean;
 }
