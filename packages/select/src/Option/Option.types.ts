@@ -1,9 +1,10 @@
+import React from 'react';
+
 import { LGGlyph } from '@leafygreen-ui/icon';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export type ReactEmpty = null | undefined | false | '';
 
-export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
+export interface InternalProps extends React.ComponentProps<'li'> {
   /**
    * Icon to display next to the option text.
    */

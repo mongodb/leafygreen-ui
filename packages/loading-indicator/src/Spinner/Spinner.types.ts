@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const DisplayOption = {
@@ -10,7 +12,9 @@ export const DisplayOption = {
 
 export type DisplayOption = (typeof DisplayOption)[keyof typeof DisplayOption];
 
-export interface SpinnerProps extends DarkModeProps, HTMLElementProps<'div'> {
+export interface SpinnerProps
+  extends DarkModeProps,
+    React.ComponentProps<'div'> {
   /**
    * Determines the size or orientation of the spinner and description text
    * @default 'default-vertical'

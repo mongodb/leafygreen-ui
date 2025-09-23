@@ -1,6 +1,4 @@
-import { MouseEventHandler } from 'react';
-
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React, { MouseEventHandler } from 'react';
 
 export const ChartCardStates = {
   Unset: 'unset',
@@ -10,7 +8,8 @@ export const ChartCardStates = {
 export type ChartCardStates =
   (typeof ChartCardStates)[keyof typeof ChartCardStates];
 
-export interface ChartCardProps extends Omit<HTMLElementProps<'div'>, 'title'> {
+export interface ChartCardProps
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /**
    * The title of the card
    */

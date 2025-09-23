@@ -1,10 +1,11 @@
+import React from 'react';
 import { type RichLinkProps } from '@lg-chat/rich-links';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface MessageLinksProps
   extends DarkModeProps,
-    Omit<HTMLElementProps<'div'>, 'children'> {
+    Omit<React.ComponentProps<'div'>, 'children'> {
   /**
    * The text to display as the heading of the links section.
    */

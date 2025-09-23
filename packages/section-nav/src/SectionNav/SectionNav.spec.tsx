@@ -1,4 +1,5 @@
 import React, { createRef } from 'react';
+import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { SectionNavItem } from '../SectionNavItem';
@@ -30,7 +31,11 @@ describe('packages/section-nav', () => {
 
   test('accepts a ref', () => {
     const ref = createRef<HTMLElement>();
-    renderSectionNav({ ref });
+    render(
+      <SectionNav ref={ref}>
+        <SectionNavItem href="#section-1" label="Section 1" />
+      </SectionNav>,
+    );
     expect(ref.current).toBeDefined();
     expect(ref.current).toBeInstanceOf(HTMLElement);
   });

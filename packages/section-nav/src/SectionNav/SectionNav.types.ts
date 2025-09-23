@@ -1,9 +1,9 @@
-import { ComponentPropsWithRef } from 'react';
+import React from 'react';
 
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export interface SectionNavProps
-  extends ComponentPropsWithRef<'nav'>,
+  extends React.ComponentPropsWithoutRef<'nav'>,
     DarkModeProps,
     LgIdProps {
   /**

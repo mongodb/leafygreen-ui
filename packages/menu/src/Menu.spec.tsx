@@ -105,7 +105,6 @@ describe('packages/menu', () => {
     test('respects custom testid', async () => {
       const customTestId = 'custom-menu-test-id';
       const { getByTestId } = renderMenu({
-        // @ts-expect-error - data-testid is not a valid prop for MenuProps FIXME: LG-5477
         'data-testid': customTestId,
         initialOpen: true,
       });
@@ -637,6 +636,18 @@ describe('packages/menu', () => {
         expect(onExited).toHaveBeenCalled();
         expect(queryByTestId('item-c')).toHaveFocus();
       });
+    });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('Types work as expected', () => {
+    test('Types work as expected', () => {
+      render(
+        <Menu data-testid="menu">
+          <MenuItem>Item</MenuItem>
+          <MenuItem>Item</MenuItem>
+        </Menu>,
+      );
     });
   });
 });

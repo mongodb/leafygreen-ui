@@ -1,8 +1,10 @@
+import React from 'react';
+
 import { Variant } from '@leafygreen-ui/banner';
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface MessageBannerProps
-  extends HTMLElementProps<'div', never>,
+  extends React.ComponentPropsWithoutRef<'div'>,
     DarkModeProps {
   /**
    * Determines the color and glyph of the MessageBanner.

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import {
   Align as PopoverAlign,
   DismissMode,
@@ -49,7 +48,7 @@ type ModifiedPopoverProps = Omit<
 >;
 
 export type TooltipProps = Omit<
-  HTMLElementProps<'div'>,
+  React.ComponentPropsWithoutRef<'div'>,
   keyof ModifiedPopoverProps
 > &
   ModifiedPopoverProps & {

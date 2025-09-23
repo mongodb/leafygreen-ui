@@ -1,8 +1,6 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-
-export interface SuggestedPromptsProps extends HTMLElementProps<'div'> {
+export interface SuggestedPromptsProps extends React.ComponentProps<'div'> {
   /**
    * Title for the group of options
    */

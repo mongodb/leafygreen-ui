@@ -1,7 +1,7 @@
-import { ForwardRefExoticComponent, ReactElement } from 'react';
+import React, { ForwardRefExoticComponent, ReactElement } from 'react';
 import { type RichLinkProps } from '@lg-chat/rich-links';
 
-import { type DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
+import { type DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { type MessageActionsProps } from '../MessageActions';
@@ -28,8 +28,11 @@ export interface ComponentOverrides {
 
 export interface MessageProps
   extends Omit<MessageContentProps, 'children'>,
-    HTMLElementProps<'div'>,
     DarkModeProps {
+  /**
+   * Component children
+   */
+  children?: React.ReactNode;
   /**
    * Determines whether the message is aligned to the left or right
    *

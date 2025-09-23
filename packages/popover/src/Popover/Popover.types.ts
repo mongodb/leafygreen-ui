@@ -2,8 +2,6 @@ import React from 'react';
 import { Transition } from 'react-transition-group';
 import { Placement } from '@floating-ui/react';
 
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-
 type TransitionProps = React.ComponentProps<typeof Transition<HTMLElement>>;
 
 type TransitionLifecycleCallbacks = Pick<
@@ -333,7 +331,10 @@ export type PopoverProps = {
   TransitionLifecycleCallbacks;
 
 /** Props used by the popover component */
-export type PopoverComponentProps = Omit<HTMLElementProps<'div'>, 'children'> &
+export type PopoverComponentProps = Omit<
+  React.ComponentProps<'div'>,
+  'children'
+> &
   PopoverProps;
 
 export interface UseReferenceElementReturnObj {
