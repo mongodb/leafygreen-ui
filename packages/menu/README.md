@@ -176,7 +176,7 @@ import TextInput from '@leafygreen-ui/text-input';
 ### Compact Variant
 
 ```tsx
-<Menu variant="compact" trigger={<Button size="small">Compact Menu</Button>}>
+<Menu variant={MenuVariant.Compact} trigger={<Button size="small">Compact Menu</Button>}>
   <MenuItem>Compact Item 1</MenuItem>
   <MenuItem description="This description will be hidden">
     Compact Item 2
