@@ -26,7 +26,6 @@ import {
 } from './Message.types';
 import { SpaciousMessage } from './SpaciousMessage';
 
-// Builds the base message, can be either compact or spacious
 const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
   (
     {
@@ -36,9 +35,6 @@ const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
       children,
       componentOverrides,
       darkMode: darkModeProp,
-      promotion,
-      promotionUrl,
-      onPromotionClick,
       links,
       linksHeading,
       onLinkClick,
@@ -87,9 +83,6 @@ const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
               avatar={avatar}
               baseFontSize={baseFontSize}
               componentOverrides={componentOverrides}
-              promotion={promotion}
-              promotionUrl={promotionUrl}
-              onPromotionClick={onPromotionClick}
               links={links}
               linksHeading={linksHeading}
               onLinkClick={onLinkClick}

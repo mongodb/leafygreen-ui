@@ -25,7 +25,6 @@ export interface ComponentOverrides {
   MessageContainer?: (props: MessageContainerProps) => JSX.Element;
   MessageContent?: (props: MessageContentProps) => JSX.Element;
   MessageLinks?: (props: MessageLinksProps) => JSX.Element;
-  MessagePromotion?: (props: MessagePromotionProps) => JSX.Element;
 }
 
 export interface MessageProps
@@ -67,24 +66,6 @@ export interface MessageProps
    * @default true
    */
   isSender?: boolean;
-
-  /**
-   * Text to render as promotional content on the message.
-   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-   */
-  promotion?: string;
-
-  /**
-   * URL for the promotion to link the "Learn more" to.
-   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-   */
-  promotionUrl?: string;
-
-  /**
-   * Callback function for when promotional content is clicked.
-   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-   */
-  onPromotionClick?: () => void; // TODO - Update the handler type
 
   /**
    * A list of links to render as rich links for the message.

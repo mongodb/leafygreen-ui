@@ -127,53 +127,6 @@ const getPromotionsChild = () => (
   />
 );
 
-const getAllSpaciousArgs = () => {
-  return {
-    promotion: 'Go learn more about this skill!',
-    promotionUrl: 'https://learn.mongodb.com/skills',
-    // eslint-disable-next-line no-console
-    onPromotionClick: () => console.log('Promotion clicked'),
-    verified: {
-      verifier: 'MongoDB Staff',
-      verifiedAt: new Date('2023-08-24T16:20:00Z'),
-      learnMoreUrl: 'https://mongodb.com/docs',
-    },
-    links: [
-      {
-        href: 'https://mongodb.design',
-        children: 'LeafyGreen UI',
-        variant: 'Website',
-      },
-      {
-        href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
-        children: 'LeafyGreen UI Docs',
-        variant: 'Docs',
-      },
-      {
-        href: 'https://learn.mongodb.com/',
-        children: 'MongoDB University',
-        variant: 'Learn',
-      },
-      {
-        href: 'https://mongodb.com/docs',
-        children: 'MongoDB Docs',
-        variant: 'Docs',
-      },
-      {
-        href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        children: 'Rick Astley - Never Gonna Give You Up',
-        variant: 'Video',
-      },
-      {
-        href: 'https://mongodb.com/',
-        children: 'MongoDB Homepage',
-        variant: 'Website',
-      },
-    ],
-    linksHeading: 'Related Resources',
-  };
-};
-
 const meta: StoryMetaType<typeof Message> = {
   title: 'Composition/Chat/Message',
   component: Message,
@@ -347,7 +300,7 @@ export const WithPromotion: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const CompactWithAllSubComponents: StoryObj<MessageStoryProps> = {
+export const WithAllSubComponents: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
     variant: Variant.Compact,
@@ -361,16 +314,6 @@ export const CompactWithAllSubComponents: StoryObj<MessageStoryProps> = {
     ),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
-  },
-};
-
-export const SpaciousWithAllSubComponents: StoryObj<MessageStoryProps> = {
-  render: Template,
-  args: {
-    variant: Variant.Spacious,
-    isSender: false,
-    messageBody: ASSISTANT_TEXT,
-    ...getAllSpaciousArgs(),
   },
 };
 

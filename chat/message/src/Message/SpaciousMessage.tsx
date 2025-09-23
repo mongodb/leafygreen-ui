@@ -13,7 +13,6 @@ import {
 } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
 import { MessageLinks } from '../MessageLinks';
-import { MessagePromotion } from '../MessagePromotion/MessagePromotion';
 
 import { Align, type MessageProps } from './Message.types';
 import {
@@ -35,9 +34,6 @@ export const SpaciousMessage = forwardRef<HTMLDivElement, MessageProps>(
       className,
       componentOverrides,
       isSender = true,
-      promotion,
-      promotionUrl,
-      onPromotionClick,
       links,
       linksHeading,
       markdownProps,
@@ -134,16 +130,6 @@ export const SpaciousMessage = forwardRef<HTMLDivElement, MessageProps>(
             >
               {messageBody ?? ''}
             </Polymorph>
-            {promotion && promotionUrl ? (
-              <Polymorph
-                as={componentOverrides?.MessagePromotion ?? MessagePromotion}
-                promotionText={promotion}
-                promotionUrl={promotionUrl}
-                baseFontSize={baseFontSize}
-                onPromotionClick={onPromotionClick}
-                {...markdownProps}
-              />
-            ) : null}
             {links ? (
               <Polymorph
                 as={componentOverrides?.MessageLinks ?? MessageLinks}
