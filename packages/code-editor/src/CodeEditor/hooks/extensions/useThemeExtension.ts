@@ -124,6 +124,20 @@ export function useThemeExtension({
              */
             background: 'rgba(1, 107, 248, 0.25) !important',
           },
+
+          [CodeEditorSelectors.Tooltip]: {
+            backgroundColor: 'none',
+            border: 'none',
+          },
+
+          [CodeEditorSelectors.Diagnostic]: {
+            border: 'none',
+            padding: 0,
+          },
+
+          [CodeEditorSelectors.DiagnosticInfo]: {
+            border: 'none',
+          },
         },
         { dark: theme === Theme.Dark },
       );
