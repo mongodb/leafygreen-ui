@@ -155,31 +155,6 @@ const MessageWithLinks = () => {
 };
 ```
 
-### Message.VerifiedBanner
-
-```tsx
-import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
-import { Message } from '@lg-chat/message';
-
-const MessageWithVerifiedBanner = () => {
-  return (
-    <LeafyGreenChatProvider variant={Variant.Compact}>
-      <Message isSender={false} messageBody="Test message">
-        <Message.VerifiedBanner
-          verifier="MongoDB Staff"
-          verifiedAt={new Date('2024-03-24T16:20:00Z')}
-          learnMoreUrl="https://mongodb.com/docs"
-        />
-      </Message>
-    </LeafyGreenChatProvider>
-  );
-};
-```
-
 ### Message.Promotion
 
 ```tsx
@@ -200,6 +175,31 @@ const MessageWithPromotion = () => {
           promotionText="Go learn more about this skill!"
           promotionUrl="https://learn.mongodb.com/skills"
           onPromotionClick={handlePromotionClick}
+        />
+      </Message>
+    </LeafyGreenChatProvider>
+  );
+};
+```
+
+### Message.VerifiedBanner
+
+```tsx
+import React from 'react';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+
+const MessageWithVerifiedBanner = () => {
+  return (
+    <LeafyGreenChatProvider variant={Variant.Compact}>
+      <Message isSender={false} messageBody="Test message">
+        <Message.VerifiedBanner
+          verifier="MongoDB Staff"
+          verifiedAt={new Date('2024-03-24T16:20:00Z')}
+          learnMoreUrl="https://mongodb.com/docs"
         />
       </Message>
     </LeafyGreenChatProvider>
@@ -250,20 +250,21 @@ const Example = () => {
   ];
 
   const handleLinkClick = () => console.log('Link clicked');
+  const handlePromotionClick = () => console.log('Promotion clicked');
 
   return (
     <LeafyGreenChatProvider variant={Variant.Compact}>
       <Message isSender={false} messageBody="Test message">
+        <Message.Promotion
+          promotionText="Go learn more about this skill!"
+          promotionUrl="https://learn.mongodb.com/skills"
+          onPromotionClick={handlePromotionClick}
+        />
         <Message.Actions
           onClickCopy={handleCopy}
           onClickRetry={handleRetry}
           onRatingChange={handleRatingChange}
           onSubmitFeedback={handleSubmitFeedback}
-        />
-        <Message.Promotion
-          promotionText="Go learn more about this skill!"
-          promotionUrl="https://learn.mongodb.com/skills"
-          onPromotionClick={() => console.log('Promotion clicked')}
         />
         <Message.VerifiedBanner
           verifier="MongoDB Staff"
