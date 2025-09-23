@@ -74,6 +74,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     } = props;
 
     const lgIds = getLgIds(dataLgId);
+    const panel = findChild(children, CodeEditorSubcomponentProperty.Panel);
 
     const { theme } = useDarkMode(darkModeProp);
     const [controlledValue, setControlledValue] = useState(value || '');
@@ -102,6 +103,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         baseFontSize: baseFontSizeProp,
       },
       modules: modules,
+      hasPanel: !!panel,
     });
 
     // Get the current contents of the editor
@@ -340,8 +342,6 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       downloadContent: handleDownloadContent,
       lgIds,
     };
-
-    const panel = findChild(children, CodeEditorSubcomponentProperty.Panel);
 
     return (
       <CodeEditorContextMenu

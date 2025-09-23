@@ -37,12 +37,14 @@ export function useThemeExtension({
   editorViewInstance,
   props,
   modules,
+  hasPanel,
 }: {
   editorViewInstance: EditorView | null;
   props: Partial<CodeEditorProps> & {
     baseFontSize: number;
   };
   modules: Partial<CodeEditorModules>;
+  hasPanel: boolean;
 }) {
   const { theme } = useDarkMode(props.darkMode);
 
@@ -72,8 +74,8 @@ export function useThemeExtension({
               }`,
             borderBottomLeftRadius: `${borderRadius[300]}px`,
             borderBottomRightRadius: `${borderRadius[300]}px`,
-            borderTopLeftRadius: props.panel ? 0 : `${borderRadius[300]}px`,
-            borderTopRightRadius: props.panel ? 0 : `${borderRadius[300]}px`,
+            borderTopLeftRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
+            borderTopRightRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             color: color[theme].text[Variant.Primary][InteractionState.Default],
             paddingTop: `${spacing[200]}px`,
             paddingBottom: `${spacing[200]}px`,
