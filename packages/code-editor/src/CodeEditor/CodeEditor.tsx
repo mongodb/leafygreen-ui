@@ -309,14 +309,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
       if (forceParsingProp) {
         const Language = modules?.['@codemirror/language'];
-        const docLength = editorViewRef.current?.state.doc.length;
+        const docLength = editorViewRef.current?.state.doc.length ?? 0;
 
-        if (
-          Language &&
-          Language.forceParsing &&
-          docLength !== undefined &&
-          docLength > 0
-        ) {
+        if (Language && Language.forceParsing && docLength > 0) {
           Language.forceParsing(editorViewRef.current, docLength, 150);
         }
       }

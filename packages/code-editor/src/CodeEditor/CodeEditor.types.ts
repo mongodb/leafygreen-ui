@@ -27,7 +27,7 @@ export type CodeEditorSubcomponentProperty =
   (typeof CodeEditorSubcomponentProperty)[keyof typeof CodeEditorSubcomponentProperty];
 
 export type PanelType = ForwardRefExoticComponent<PanelProps> & {
-  isLGPanel?: boolean;
+  [CodeEditorSubcomponentProperty.Panel]?: boolean;
 };
 
 /**
