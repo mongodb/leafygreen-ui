@@ -49,7 +49,7 @@ console.log(greet('MongoDB user'));`;
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | ----------- |
 | `baseFontSize` _(optional)_           | Font size of text in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `BaseFontSize`               | `14`        |
 | `className` _(optional)_              | CSS class name to apply to the editor container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                     | `undefined` |
-| `copyButtonAppearance` _(optional)_   | Determines the appearance of the copy button. The copy button allows the code block to be copied to the user's clipboard by clicking the button.<br><br>If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.<br><br>If `persist`, the copy button will always be visible.<br><br>If `none`, the copy button will not be rendered.                                                                                                                                                                                                                                     | `CopyButtonAppearance`       | `"hover"`   |
+| `copyButtonAppearance` _(optional)_   | Determines the appearance of the copy button when no panel is present. The copy button allows the code block to be copied to the user's clipboard by clicking the button.<br><br>If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.<br><br>If `persist`, the copy button will always be visible.<br><br>If `none`, the copy button will not be rendered.<br><br>**Note:** When a `<CodeEditor.Panel>` child component is present, this prop is ignored as the panel provides its own copy button.                                                                   | `CopyButtonAppearance`       | `"hover"`   |
 | `customContextMenuItems` _(optional)_ | Additional menu items to show in the context menu below the default Cut/Copy/Paste items. A separator will automatically be added between default and custom items if custom items are provided. Each item can include a label, action function, disabled state, and separator flag.                                                                                                                                                                                                                                                                                                                                                                               | `Array<MenuItem>`            | `undefined` |
 | `darkMode` _(optional)_               | Determines if the component appears in dark mode. When not provided, the component will inherit the dark mode state from the LeafyGreen Provider.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `boolean`                    | `undefined` |
 | `defaultValue` _(optional)_           | Initial value to render in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `string`                     | `undefined` |
@@ -69,7 +69,6 @@ console.log(greet('MongoDB user'));`;
 | `minHeight` _(optional)_              | Sets the editor's minimum height.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | `string`                     | `undefined` |
 | `minWidth` _(optional)_               | Sets the editor's minimum width.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                     | `undefined` |
 | `onChange` _(optional)_               | Callback that receives the updated editor value when changes are made.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `(value: string) => void`    | `undefined` |
-| `panel` _(optional)_                  | Panel component to render at the top of the CodeEditor. Provides a toolbar interface with formatting, copying, and custom action buttons. See the Panel component documentation for available options.                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `React.ReactNode`            | `undefined` |
 | `placeholder` _(optional)_            | Value to display in the editor when it is empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `HTMLElement \| string`      | `undefined` |
 | `preLoadedModules` _(optional)_       | **Use with caution**. By default, the editor lazy loads required packages dynamically to reduce bundle size and improve load performance, causing a brief loading state on initial render. This prop allows passing pre-loaded modules instead. When used, the editor skips all dynamic loading and relies exclusively on the provided modules. You must include the core modules (`codemirror`, `@codemirror/view`, `@codemirror/state`, `@codemirror/commands`, `@codemirror/search`) plus any additional modules for your specific functionality. See the [CodeMirror Extension Hooks](#codemirror-extension-hooks) section for module requirements by feature. | `Partial<CodeEditorModules>` | `undefined` |
 | `readOnly` _(optional)_               | Enables read only mode, making the contents uneditable.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `boolean`                    | `false`     |
@@ -77,40 +76,41 @@ console.log(greet('MongoDB user'));`;
 | `value` _(optional)_                  | Controlled value of the editor. If set, the editor will be controlled and will not update its value on change. Use `onChange` to update the value externally.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `string`                     | `undefined` |
 | `width` _(optional)_                  | Sets the editor's width. If not set, the editor will be 100% width of its parent container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `string`                     | `undefined` |
 
-### `<Panel>`
+### `<CodeEditor.Panel>`
 
 The Panel component provides a toolbar interface for the CodeEditor with formatting, copying, download, and custom action buttons. It displays at the top of the CodeEditor and can include a title, action buttons, and custom content. When used within a CodeEditor, the Panel automatically integrates with the editor's functionality - the download button performs actual file downloads with appropriate extensions, undo/redo buttons operate on the editor history, and the format button processes the editor content.
+
+**Note:** Panel is used as a compound component (`CodeEditor.Panel`) and passed as a child to the CodeEditor, not as a prop.
 
 #### Example
 
 ```tsx
-import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
+import { CodeEditor, LanguageName } from '@leafygreen-ui/code-editor';
 import CloudIcon from '@leafygreen-ui/icon';
 
 <CodeEditor
   defaultValue="const greeting = 'Hello World';"
   language={LanguageName.javascript}
-  panel={
-    <Panel
-      title="index.ts"
-      showFormatButton
-      showCopyButton
-      showSecondaryMenuButton
-      downloadFileName="my-script.js"
-      customSecondaryButtons={[
-        {
-          label: 'Deploy to Cloud',
-          glyph: <CloudIcon />,
-          onClick: () => console.log('Deploy clicked'),
-          'aria-label': 'Deploy code to cloud',
-        },
-      ]}
-      onFormatClick={() => console.log('Format clicked')}
-      onCopyClick={() => console.log('Copy clicked')}
-      onDownloadClick={() => console.log('Download clicked')}
-    />
-  }
-/>;
+>
+  <CodeEditor.Panel
+    title="index.ts"
+    showFormatButton
+    showCopyButton
+    showSecondaryMenuButton
+    downloadFileName="my-script.js"
+    customSecondaryButtons={[
+      {
+        label: 'Deploy to Cloud',
+        glyph: <CloudIcon />,
+        onClick: () => console.log('Deploy clicked'),
+        'aria-label': 'Deploy code to cloud',
+      },
+    ]}
+    onFormatClick={() => console.log('Format clicked')}
+    onCopyClick={() => console.log('Copy clicked')}
+    onDownloadClick={() => console.log('Download clicked')}
+  />
+</CodeEditor>;
 ```
 
 #### Properties
@@ -174,15 +174,16 @@ There are several ways to format code with the CodeEditor:
 Enable the format button in the Panel for user-triggered formatting. Formatting will occur automatically on click for supported languages:
 
 ```tsx
-import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
+import { CodeEditor, LanguageName } from '@leafygreen-ui/code-editor';
 
 function MyComponent() {
   return (
     <CodeEditor
       defaultValue="const x=1;const y=2;"
       language={LanguageName.javascript}
-      panel={<Panel showFormatButton />}
-    />
+    >
+      <CodeEditor.Panel showFormatButton />
+    </CodeEditor>
   );
 }
 ```
@@ -364,24 +365,23 @@ Returns an object with:
 ```tsx
 import { render } from '@testing-library/react';
 import { getTestUtils } from '@leafygreen-ui/code-editor/testing';
-import { CodeEditor, Panel, LanguageName } from '@leafygreen-ui/code-editor';
+import { CodeEditor, LanguageName } from '@leafygreen-ui/code-editor';
 
 test('CodeEditor structure and panel work correctly', async () => {
   render(
     <CodeEditor
       defaultValue="const greeting = 'Hello World';"
       language={LanguageName.javascript}
-      panel={
-        <Panel
-          title="JavaScript"
-          showFormatButton
-          showCopyButton
-          showSecondaryMenuButton
-          data-lgid="lg-my-editor"
-        />
-      }
       data-lgid="lg-my-editor"
-    />,
+    >
+      <CodeEditor.Panel
+        title="JavaScript"
+        showFormatButton
+        showCopyButton
+        showSecondaryMenuButton
+        data-lgid="lg-my-editor"
+      />
+    </CodeEditor>,
   );
 
   const utils = getTestUtils('lg-my-editor');
