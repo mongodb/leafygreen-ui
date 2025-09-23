@@ -69,6 +69,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/testing-lib',
   '@leafygreen-ui/text-area',
   '@leafygreen-ui/text-input',
+  '@leafygreen-ui/time-input',
   '@leafygreen-ui/toast',
   '@leafygreen-ui/toggle',
   '@leafygreen-ui/tokens',
