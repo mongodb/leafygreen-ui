@@ -28,7 +28,14 @@ describe('useTooltipExtension', () => {
         editorViewInstance: null,
         props: {
           tooltips: [
-            { line: 1, column: 1, length: 0, content: 'msg', severity: 'info' },
+            {
+              line: 1,
+              column: 1,
+              length: 0,
+              messages: ['msg'],
+              severity: 'info',
+              links: [],
+            },
           ],
         },
         modules: {

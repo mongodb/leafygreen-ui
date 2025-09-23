@@ -47,7 +47,7 @@ console.log(greet('MongoDB user'));`;
 
 | Name                                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Type                         | Default     |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | ----------- |
-| `baseFontSize` _(optional)_           | Font size of text in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `BaseFontSize`               | `14`        |
+| `baseFontSize` _(optional)_           | Font size of text in the editor.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `BaseFontSize`               | `13`        |
 | `className` _(optional)_              | CSS class name to apply to the editor container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `string`                     | `undefined` |
 | `copyButtonAppearance` _(optional)_   | Determines the appearance of the copy button. The copy button allows the code block to be copied to the user's clipboard by clicking the button.<br><br>If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.<br><br>If `persist`, the copy button will always be visible.<br><br>If `none`, the copy button will not be rendered.                                                                                                                                                                                                                                     | `CopyButtonAppearance`       | `"hover"`   |
 | `customContextMenuItems` _(optional)_ | Additional menu items to show in the context menu below the default Cut/Copy/Paste items. A separator will automatically be added between default and custom items if custom items are provided. Each item can include a label, action function, disabled state, and separator flag.                                                                                                                                                                                                                                                                                                                                                                               | `Array<MenuItem>`            | `undefined` |
@@ -73,7 +73,7 @@ console.log(greet('MongoDB user'));`;
 | `placeholder` _(optional)_            | Value to display in the editor when it is empty.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `HTMLElement \| string`      | `undefined` |
 | `preLoadedModules` _(optional)_       | **Use with caution**. By default, the editor lazy loads required packages dynamically to reduce bundle size and improve load performance, causing a brief loading state on initial render. This prop allows passing pre-loaded modules instead. When used, the editor skips all dynamic loading and relies exclusively on the provided modules. You must include the core modules (`codemirror`, `@codemirror/view`, `@codemirror/state`, `@codemirror/commands`, `@codemirror/search`) plus any additional modules for your specific functionality. See the [CodeMirror Extension Hooks](#codemirror-extension-hooks) section for module requirements by feature. | `Partial<CodeEditorModules>` | `undefined` |
 | `readOnly` _(optional)_               | Enables read only mode, making the contents uneditable.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `boolean`                    | `false`     |
-| `tooltips` _(optional)_               | Add tooltips to the editor content that appear on hover.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `Array<CodeEditorTooltip>`   | `undefined` |
+| `tooltips` _(optional)_               | Add tooltips to the editor content that appear on hover. See the [`CodeEditorTooltip`](#codeeditortooltip) interface for available properties.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `Array<CodeEditorTooltip>`   | `undefined` |
 | `value` _(optional)_                  | Controlled value of the editor. If set, the editor will be controlled and will not update its value on change. Use `onChange` to update the value externally.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `string`                     | `undefined` |
 | `width` _(optional)_                  | Sets the editor's width. If not set, the editor will be 100% width of its parent container.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `string`                     | `undefined` |
 
@@ -117,7 +117,7 @@ import CloudIcon from '@leafygreen-ui/icon';
 
 | Name                                   | Description                                                                                                                                                                                                                      | Type                           | Default     |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------- |
-| `baseFontSize` _(optional)_            | Font size of text in the panel. Controls the typography scale used for the panel title and other text elements.                                                                                                                  | `14 \| 16`                     | `14`        |
+| `baseFontSize` _(optional)_            | Font size of text in the panel. Controls the typography scale used for the panel title and other text elements.                                                                                                                  | `BaseFontSize`                 | `13`        |
 | `customSecondaryButtons` _(optional)_  | Array of custom secondary buttons to display in the secondary menu. Each button can include a label, icon, click handler, href, and aria-label for accessibility.                                                                | `Array<SecondaryButtonConfig>` | `undefined` |
 | `darkMode` _(optional)_                | Determines if the component appears in dark mode. When not provided, the component will inherit the dark mode state from the LeafyGreen Provider.                                                                                | `boolean`                      | `undefined` |
 | `downloadFileName` _(optional)_        | Optional filename to use when downloading the editor content. If provided, the file will be downloaded with this exact filename. If not provided, uses the default filename 'code' with appropriate extension based on language. | `string`                       | `undefined` |
@@ -143,6 +143,44 @@ import CloudIcon from '@leafygreen-ui/icon';
 | `href` _(optional)_       | URL to navigate to when the button is clicked.                         | `string`             | `undefined` |
 | `label`                   | Text label for the button.                                             | `string`             | —           |
 | `onClick` _(optional)_    | Callback fired when the button is clicked.                             | `() => void`         | `undefined` |
+
+## Types
+
+| Name                    | Description                                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `CodeEditorHandle`      | TypeScript interface for the imperative handle of the CodeEditor component, including formatting methods.                  |
+| `CodeEditorModules`     | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.                     |
+| `CodeEditorProps`       | TypeScript interface defining all props that can be passed to the `CodeEditor` component.                                  |
+| `CodeEditorTooltip`     | TypeScript interface defining the structure for tooltips displayed on hover in the editor. See below for full interface.   |
+| `CodeMirrorExtension`   | Re-export of CodeMirror's `Extension` type. See https://codemirror.net/docs/ref/#state.Extension.                          |
+| `CodeMirrorState`       | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.                      |
+| `CodeMirrorView`        | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.                         |
+| `ContextMenuItem`       | TypeScript interface defining the structure for context menu items with label, action, disabled state, and separator flag. |
+| `PanelProps`            | TypeScript interface defining all props that can be passed to the `Panel` component.                                       |
+| `SecondaryButtonConfig` | TypeScript interface defining the structure for custom secondary buttons in the Panel component.                           |
+
+## Constants & Variables
+
+| Name                        | Description                                                                                                     |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `CodeEditorSelectors`       | Constant object containing CSS selectors for common CodeEditor elements. Useful for testing and custom styling. |
+| `CodeEditorTooltipSeverity` | Constant object defining possible severity levels for tooltips (`info`, `warning`, `error`, `hint`).            |
+| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                   |
+| `IndentUnits`               | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop.                        |
+| `LanguageName`              | Constant object containing all supported programming languages for syntax highlighting.                         |
+
+#### `CodeEditorTooltip`
+
+TypeScript interface defining the structure for tooltips displayed on hover in the editor:
+
+| Name                    | Description                                                                   | Type                                       | Default     |
+| ----------------------- | ----------------------------------------------------------------------------- | ------------------------------------------ | ----------- |
+| `line`                  | Which line in the document the tooltip should be rendered. 1 based.           | `number`                                   | -           |
+| `length`                | The length the text that the tooltip should cover in characters.              | `number`                                   | -           |
+| `column` _(optional)_   | Which character, going from left to right, the tooltip should start. 1 based. | `number`                                   | `1`         |
+| `severity` _(optional)_ | Severity level of the tooltip.                                                | `'info' \| 'warning' \| 'error' \| 'hint'` | `'info'`    |
+| `messages` _(optional)_ | Messages to display in the tooltip.                                           | `Array<string>`                            | `undefined` |
+| `links` _(optional)_    | Links to display in a section at the bottom of the tooltip.                   | `Array<{ label: string; href: string; }>`  | `undefined` |
 
 ## Code Formatting
 
@@ -297,26 +335,6 @@ editorRef.current.downloadContent('code');
 // Downloads as 'code' (default behavior - no filename parameter provided)
 editorRef.current.downloadContent(); // No filename provided
 ```
-
-## Types and Variables
-
-| Name                        | Description                                                                                                     |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `CopyButtonAppearance`      | Constant object defining appearance options for the copy button (`hover`, `persist`, `none`).                   |
-| `CodeEditorModules`         | TypeScript interface defining the structure of lazy-loaded CodeMirror modules used by extension hooks.          |
-| `CodeEditorProps`           | TypeScript interface defining all props that can be passed to the `CodeEditor` component.                       |
-| `CodeEditorSelectors`       | Constant object containing CSS selectors for common CodeEditor elements. Useful for testing and custom styling. |
-| `CodeEditorTooltip`         | TypeScript interface defining the structure for tooltips displayed on hover in the editor.                      |
-| `CodeEditorTooltipSeverity` | Constant object defining possible severity levels for tooltips (`info`, `warning`, `error`, `hint`).            |
-| `CodeMirrorExtension`       | Re-export of CodeMirror's `Extension` type. See https://codemirror.net/docs/ref/#state.Extension.               |
-| `CodeEditorHandle`          | TypeScript interface for the imperative handle of the CodeEditor component, including formatting methods.       |
-| `CodeMirrorState`           | Re-export of CodeMirror's `EditorState` type. See https://codemirror.net/docs/ref/#state.EditorState.           |
-| `CodeMirrorView`            | Re-export of CodeMirror's `EditorView` type. See https://codemirror.net/docs/ref/#view.EditorView.              |
-
-| `IndentUnits` | Constant object defining indent unit options (`space`, `tab`) for the `indentUnit` prop. |
-| `LanguageName` | Constant object containing all supported programming languages for syntax highlighting. |
-| `MenuItem` | TypeScript interface defining the structure for context menu items with label, action, disabled state, and separator flag. |
-| `PanelProps` | TypeScript interface defining all props that can be passed to the `Panel` component. |
 
 ## Test Utilities
 
@@ -743,7 +761,7 @@ const languageExt = useLanguageExtension({
 
 const themeExt = useThemeExtension({
   editorViewInstance,
-  props: { theme: Theme.Dark, baseFontSize: 14 },
+  props: { theme: Theme.Dark, baseFontSize: 13 },
   modules: lazyModules,
 });
 
