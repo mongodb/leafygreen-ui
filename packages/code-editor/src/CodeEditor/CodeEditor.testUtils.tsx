@@ -263,9 +263,15 @@ export const editor = {
 /**
  * Renders a CodeEditor component with the specified props for testing
  * @param props - Props to pass to the CodeEditor component
+ * @param options - Optional rendering options
+ * @param options.children - Children to render inside the CodeEditor (e.g., Panel components)
  * @returns Object containing the rendered container and editor test utilities
  */
-export function renderCodeEditor(props: Partial<CodeEditorProps> = {}) {
+export function renderCodeEditor(
+  props: Partial<CodeEditorProps> = {},
+  options?: { children?: React.ReactNode },
+) {
+  const { children } = options || {};
   const { container } = render(
     <CodeEditor
       {...props}
@@ -274,7 +280,9 @@ export function renderCodeEditor(props: Partial<CodeEditorProps> = {}) {
         editorViewInstance = ref?.getEditorViewInstance() ?? null;
         editorHandleInstance = ref;
       }}
-    />,
+    >
+      {children}
+    </CodeEditor>,
   );
 
   return { container, editor };

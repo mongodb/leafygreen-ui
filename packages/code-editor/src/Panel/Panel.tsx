@@ -45,31 +45,6 @@ import { PanelProps } from './Panel.types';
  * - Secondary menu with additional actions (undo, redo, download, view shortcuts)
  * - Custom secondary buttons for application-specific actions
  * - Custom children content in the left slot
- *
- * @example
- * ```tsx
- * <CodeEditor
- *   defaultValue="const greeting = 'Hello World';"
- *   language={LanguageName.javascript}
- *   panel={
- *     <Panel
- *       title="JavaScript"
- *       showFormatButton
- *       showCopyButton
- *       showSecondaryMenuButton
- *       downloadFileName="my-custom-script.js"
- *       customSecondaryButtons={[
- *         {
- *           label: 'My Custom Button',
- *           glyph: <CloudIcon />,
- *           onClick: () => console.log('custom button clicked'),
- *           'aria-label': 'Do custom action',
- *         },
- *       ]}
- *     />
- *   }
- * />
- * ```
  */
 export function Panel({
   baseFontSize: baseFontSizeProp,

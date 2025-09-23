@@ -21,7 +21,7 @@ import { codeSnippets, getTestUtils } from '../testing';
 import { LanguageName } from './hooks/extensions/useLanguageExtension';
 import { renderCodeEditor } from './CodeEditor.testUtils';
 import { CopyButtonAppearance } from './CodeEditor.types';
-import { CodeEditorSelectors } from '.';
+import { CodeEditor, CodeEditorSelectors } from '.';
 
 // Enhanced MutationObserver mock for CodeMirror compatibility
 global.MutationObserver = jest.fn().mockImplementation(() => ({
@@ -109,6 +109,18 @@ beforeAll(() => {
       return;
     }
     originalConsoleError(message);
+  });
+
+  HTMLDialogElement.prototype.show = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = true;
+  });
+
+  HTMLDialogElement.prototype.close = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = false;
   });
 });
 
@@ -738,16 +750,23 @@ describe('packages/code-editor', () => {
   describe('Panel', () => {
     test('does not render context menu when right-clicking on panel', async () => {
       const PANEL_TEST_ID = 'test-panel';
-      const TestPanel = () => (
-        <div data-testid={PANEL_TEST_ID}>Test Panel Content</div>
+
+      const { editor, container } = renderCodeEditor(
+        { 'data-lgid': 'lg-test-editor' },
+        {
+          children: (
+            <CodeEditor.Panel
+              title="Test Panel"
+              innerContent={
+                <div data-testid={PANEL_TEST_ID}>Test Panel Content</div>
+              }
+            />
+          ),
+        },
       );
 
-      const { editor, container } = renderCodeEditor({
-        panel: <TestPanel />,
-        'data-lgid': 'lg-test-editor',
-      });
-
       await editor.waitForEditorView();
+
       const panelElement = container.querySelector(
         `[data-testid="${PANEL_TEST_ID}"]`,
       );
