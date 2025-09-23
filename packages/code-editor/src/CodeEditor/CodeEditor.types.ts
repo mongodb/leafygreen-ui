@@ -142,9 +142,8 @@ export interface CodeEditorTooltip
   severity?: CodeEditorTooltipSeverity;
 }
 
-export type CodeEditorProps = DarkModeProps &
-  LgIdProps &
-  PropsWithChildren & {
+type BaseCodeEditorProps = DarkModeProps &
+  LgIdProps & {
     /**
      * Font size of text in the editor.
      *
@@ -314,6 +313,8 @@ export type CodeEditorProps = DarkModeProps &
      */
     customContextMenuItems?: Array<Omit<ContextMenuItem, 'isSeparator'>>;
   };
+
+export type CodeEditorProps = PropsWithChildren<BaseCodeEditorProps>;
 
 /**
  * Imperative handle for the CodeEditor component.

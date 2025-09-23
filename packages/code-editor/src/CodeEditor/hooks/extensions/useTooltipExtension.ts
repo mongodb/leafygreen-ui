@@ -4,7 +4,10 @@ import { type Diagnostic } from '@codemirror/lint';
 import { type EditorView } from '@codemirror/view';
 
 import { CodeEditorTooltip } from '../../../CodeEditorTooltip';
-import { type CodeEditorProps } from '../../CodeEditor.types';
+import {
+  type CodeEditorProps,
+  type CodeEditorTooltip as CodeEditorTooltipType,
+} from '../../CodeEditor.types';
 import { type CodeEditorModules } from '../moduleLoaders.types';
 
 import { useExtension } from './useExtension';
@@ -53,7 +56,7 @@ export function useTooltipExtension({
             length,
             messages,
             links,
-          }) => {
+          }: CodeEditorTooltipType) => {
             const lineInfo = linterView.state.doc.line(line);
             const from = lineInfo.from + column - 1;
             const to = from + length;

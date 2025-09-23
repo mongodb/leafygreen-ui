@@ -29,6 +29,7 @@ import {
   CodeEditorHandle,
   type CodeEditorProps,
   CodeEditorSubcomponentProperty,
+  type CodeMirrorExtension,
   CopyButtonAppearance,
   type HTMLElementWithCodeMirror,
   PanelType,
@@ -212,7 +213,10 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
         if (filename === undefined) {
           // No filename provided, use default with appropriate extension
-          const extension = language ? LANGUAGE_EXTENSION_MAP[language] : 'txt';
+          const extension =
+            language && language in LANGUAGE_EXTENSION_MAP
+              ? LANGUAGE_EXTENSION_MAP[language]
+              : 'txt';
           fullFilename = `code.${extension}`;
         } else {
           // Use provided filename exactly as-is
@@ -262,7 +266,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         doc: controlledValue || defaultValue,
         parent: domNode,
         extensions: [
-          ...consumerExtensions.map(extension => Prec.highest(extension)),
+          ...consumerExtensions.map((extension: CodeMirrorExtension) =>
+            Prec.highest(extension),
+          ),
 
           commands.history(),
           searchModule.search(),
@@ -278,7 +284,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           EditorView.keymap.of([
             {
               key: 'Escape',
-              run: view => {
+              run: (view: EditorView) => {
                 // Move focus outside the editor to allow normal tab navigation
                 view.contentDOM.blur();
                 return true;
@@ -305,7 +311,12 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         const Language = modules?.['@codemirror/language'];
         const docLength = editorViewRef.current?.state.doc.length;
 
-        if (Language && Language.forceParsing && docLength > 0) {
+        if (
+          Language &&
+          Language.forceParsing &&
+          docLength !== undefined &&
+          docLength > 0
+        ) {
           Language.forceParsing(editorViewRef.current, docLength, 150);
         }
       }
