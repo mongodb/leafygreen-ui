@@ -4,7 +4,7 @@ import { TextareaAutosizeProps } from 'react-textarea-autosize';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { PopoverRenderModeProps } from '@leafygreen-ui/popover';
 
-import { SharedInputBarProps } from './shared.types';
+import { SharedInputBarProps } from '../shared.types';
 
 export type InputBarProps = React.ComponentPropsWithoutRef<'form'> &
   DarkModeProps &

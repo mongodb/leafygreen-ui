@@ -1,0 +1,1 @@
+export { InputBarSendButton } from './InputBarSendButton';

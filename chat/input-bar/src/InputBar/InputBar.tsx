@@ -45,6 +45,9 @@ import {
 import { SearchResultsMenu } from '@leafygreen-ui/search-input';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
+import { InputBarFeedback } from '../InputBarFeedback';
+import { InputBarSendButton } from '../InputBarSendButton';
+import { State } from '../shared.types';
 import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 
 import {
@@ -58,9 +61,6 @@ import {
   outerFocusContainerStyles,
 } from './InputBar.styles';
 import { type InputBarProps } from './InputBar.types';
-import { InputBarFeedback } from './InputBarFeedback';
-import { InputBarSendButton } from './InputBarSendButton';
-import { State } from './shared.types';
 
 export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
   (

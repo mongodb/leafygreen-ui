@@ -8,7 +8,8 @@ import userEvent from '@testing-library/user-event';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { State } from './shared.types';
+import { State } from '../shared.types';
+
 import { InputBar, InputBarProps } from '.';
 
 const TEST_INPUT_TEXT = 'test';
