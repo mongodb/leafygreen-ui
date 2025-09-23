@@ -9,7 +9,6 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { MessageSubcomponentProperty } from '../constants';
 import { MessageActions } from '../MessageActions';
 import { MessageVerifiedBanner } from '../MessageBanner';
 import { MessageContext } from '../MessageContext';
@@ -20,6 +19,7 @@ import {
   type ActionsType,
   type LinksType,
   type MessageProps,
+  MessageSubcomponentProperty,
   type VerifiedBannerType,
 } from './Message.types';
 import { SpaciousMessage } from './SpaciousMessage';

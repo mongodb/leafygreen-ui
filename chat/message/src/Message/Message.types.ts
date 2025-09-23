@@ -107,15 +107,31 @@ export interface MessageProps
   verified?: BaseMessageVerifiedBannerProps;
 }
 
+/**
+ * Static property names used to identify Message compound components.
+ * These are implementation details for the compound component pattern and should not be exported.
+ */
+export const MessageSubcomponentProperty = {
+  Actions: 'isLGMessageActions',
+  VerifiedBanner: 'isLGMessageVerifiedBanner',
+  Links: 'isLGMessageLinks',
+} as const;
+
+/**
+ * Type representing the possible static property names for Message subcomponents.
+ */
+export type MessageSubcomponentProperty =
+  (typeof MessageSubcomponentProperty)[keyof typeof MessageSubcomponentProperty];
+
 export type ActionsType = ForwardRefExoticComponent<MessageActionsProps> & {
-  isLGMessageActions?: boolean;
+  [MessageSubcomponentProperty.Actions]?: boolean;
 };
 
 export type LinksType = ForwardRefExoticComponent<MessageLinksProps> & {
-  isLGMessageLinks?: boolean;
+  [MessageSubcomponentProperty.Links]?: boolean;
 };
 
 export type VerifiedBannerType =
   ForwardRefExoticComponent<MessageVerifiedBannerProps> & {
-    isLGMessageVerifiedBanner?: boolean;
+    [MessageSubcomponentProperty.VerifiedBanner]?: boolean;
   };
