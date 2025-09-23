@@ -21,7 +21,7 @@ import {
   ActionsType,
   LinksType,
   type MessageProps,
-  PromotionType,
+  type PromotionType,
   type VerifiedBannerType,
 } from './Message.types';
 import { SpaciousMessage } from './SpaciousMessage';
