@@ -17,8 +17,8 @@ import { MessageLinks } from '../MessageLinks';
 
 import { CompactMessage } from './CompactMessage';
 import {
-  ActionsType,
-  LinksType,
+  type ActionsType,
+  type LinksType,
   type MessageProps,
   type VerifiedBannerType,
 } from './Message.types';
