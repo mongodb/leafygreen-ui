@@ -10,7 +10,7 @@ import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { findChild } from '@leafygreen-ui/lib';
-import { Body } from '@leafygreen-ui/typography';
+import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
@@ -76,7 +76,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const lgIds = getLgIds(dataLgId);
     const panel = findChild(children, CodeEditorSubcomponentProperty.Panel);
 
-    const { theme } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const [controlledValue, setControlledValue] = useState(value || '');
     const isControlled = value !== undefined;
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
@@ -99,8 +100,13 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         onChange: onChangeProp,
         isLoading: isLoadingProp,
         extensions: consumerExtensions,
-        darkMode: darkModeProp,
-        baseFontSize: baseFontSizeProp,
+        baseFontSize,
+        /**
+         * CodeEditorTooltip in particular renders outside of the LeafyGreenProvider
+         * so it won't be able to access the theme from the provider. So we must
+         * pass the darkMode prop from the parent.
+         */
+        darkMode,
       },
       modules: modules,
       hasPanel: !!panel,

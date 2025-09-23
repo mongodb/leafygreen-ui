@@ -1,13 +1,11 @@
-import {
-  ForwardRefExoticComponent,
-  PropsWithChildren,
-  type ReactNode,
-} from 'react';
+import { ForwardRefExoticComponent, PropsWithChildren } from 'react';
 import { type EditorState, type Extension } from '@codemirror/state';
 import { type EditorView } from '@codemirror/view';
 
 import { type DarkModeProps, type LgIdProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
+import { CodeEditorTooltipProps } from '../CodeEditorTooltip';
 import { type ContextMenuItem } from '../ContextMenu';
 import { PanelProps } from '../Panel';
 
@@ -85,6 +83,8 @@ export const CodeEditorSelectors = {
   Content: '.cm-content',
   CopyButton: `[data-lgid="${CopyButtonLgId}"]`,
   Cursor: '.cm-cursor',
+  Diagnostic: '.cm-diagnostic',
+  DiagnosticInfo: '.cm-diagnostic-info',
   Editor: '.cm-editor',
   Focused: '.cm-focused',
   FoldGutter: '.cm-foldGutter',
@@ -118,7 +118,8 @@ export const CodeEditorTooltipSeverity = {
 export type CodeEditorTooltipSeverity =
   (typeof CodeEditorTooltipSeverity)[keyof typeof CodeEditorTooltipSeverity];
 
-export interface CodeEditorTooltip {
+export interface CodeEditorTooltip
+  extends Omit<CodeEditorTooltipProps, 'darkMode' | 'baseFontSize'> {
   /**
    * Which line in the document the tooltip should be rendered. 1 based.
    */
@@ -136,11 +137,6 @@ export interface CodeEditorTooltip {
   column?: number;
 
   /**
-   * What gets rendered in the tooltip.
-   */
-  content: ReactNode;
-
-  /**
    * Severity level of the tooltip. Defaults to 'info'.
    */
   severity?: CodeEditorTooltipSeverity;
@@ -152,9 +148,9 @@ export type CodeEditorProps = DarkModeProps &
     /**
      * Font size of text in the editor.
      *
-     * @default 14
+     * @default 13
      */
-    baseFontSize?: 14 | 16;
+    baseFontSize?: BaseFontSize;
 
     /**
      * Styling prop

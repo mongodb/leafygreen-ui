@@ -329,18 +329,15 @@ async function hoverCopyButton() {
 }
 
 /**
- * Checks if the panel title is visible with specific text
- * @param expectedTitle - The expected title text
- * @returns Boolean indicating if the title is visible with the expected text
+ * Gets the current title text from the panel
+ * @returns The title text content or empty string if not found
  */
-function hasTitleText(expectedTitle: string): boolean {
-  // Handle empty title case by checking if any title element has empty text
-  if (expectedTitle === '') {
-    const titleElements = document.querySelectorAll('.leafygreen-ui-12f55h');
-    return Array.from(titleElements).some(el => el.textContent === '');
-  }
-
-  return screen.queryByText(expectedTitle) !== null;
+function getTitleText(): string {
+  // Query by the LGID used in Panel.tsx for the panel title
+  const titleElement = document.querySelector(
+    '[data-lgid="lg-code_editor-panel_title"]',
+  );
+  return titleElement?.textContent || '';
 }
 
 /**
@@ -386,7 +383,7 @@ function createPanelUtilities() {
 
     // Utilities
     waitForTooltip,
-    hasTitleText,
+    getTitleText,
     hasInnerContent,
   };
 }

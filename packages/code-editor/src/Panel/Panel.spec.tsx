@@ -47,14 +47,14 @@ describe('Panel', () => {
       const { panel } = renderPanel({
         panelProps: { ...defaultProps, title: 'JavaScript Editor' },
       });
-      expect(panel.hasTitleText('JavaScript Editor')).toBe(true);
+      expect(panel.getTitleText()).toBe('JavaScript Editor');
     });
 
     test('renders without title when not provided', () => {
       const { panel } = renderPanel({
         panelProps: { ...defaultProps, title: undefined },
       });
-      expect(panel.hasTitleText('')).toBe(true);
+      expect(panel.getTitleText()).toBe('');
     });
 
     test('renders inner content when provided', () => {
@@ -452,7 +452,7 @@ describe('Panel', () => {
         panelProps: { ...defaultProps, baseFontSize: 16 },
       });
       // The font size would affect styling, which is tested in styles tests
-      expect(panel.hasTitleText('Test Panel')).toBe(true);
+      expect(panel.getTitleText()).toBe('Test Panel');
     });
   });
 
