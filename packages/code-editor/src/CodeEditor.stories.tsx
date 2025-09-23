@@ -30,7 +30,7 @@ import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension
 import { IndentUnits } from './CodeEditor';
 import { ShortcutTable } from './ShortcutTable';
 import { codeSnippets } from './testing';
-import { CodeEditor, Panel } from '.';
+import { CodeEditor } from '.';
 
 const MyTooltip = ({
   line,
@@ -216,8 +216,8 @@ const language = LanguageName.tsx;
 WithPanel.args = {
   language,
   defaultValue: codeSnippets[language],
-  panel: (
-    <Panel
+  children: (
+    <CodeEditor.Panel
       showCopyButton
       showFormatButton
       showSecondaryMenuButton

@@ -9,11 +9,13 @@ import React, {
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { findChild } from '@leafygreen-ui/lib';
 import { Body } from '@leafygreen-ui/typography';
 
 import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
+import { Panel as CodeEditorPanel } from '../Panel';
 import { getLgIds } from '../utils';
 
 import { useModules } from './hooks/useModules';
@@ -26,17 +28,20 @@ import {
 import {
   CodeEditorHandle,
   type CodeEditorProps,
+  CodeEditorSubcomponentProperty,
   CopyButtonAppearance,
   type HTMLElementWithCodeMirror,
+  PanelType,
 } from './CodeEditor.types';
 import { CodeEditorProvider } from './CodeEditorContext';
 import { LANGUAGE_EXTENSION_MAP } from './constants';
 import { useCodeFormatter, useExtensions } from './hooks';
 
-export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
+const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
     const {
       baseFontSize: baseFontSizeProp,
+      children,
       className,
       copyButtonAppearance = CopyButtonAppearance.Hover,
       customContextMenuItems,
@@ -59,7 +64,6 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       minHeight,
       minWidth,
       onChange: onChangeProp,
-      panel,
       placeholder,
       preLoadedModules,
       readOnly,
@@ -337,6 +341,8 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       lgIds,
     };
 
+    const panel = findChild(children, CodeEditorSubcomponentProperty.Panel);
+
     return (
       <CodeEditorContextMenu
         customMenuItems={customContextMenuItems}
@@ -399,4 +405,9 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   },
 );
 
-CodeEditor.displayName = 'CodeEditor';
+BaseCodeEditor.displayName = 'CodeEditor';
+
+const Panel = CodeEditorPanel as PanelType;
+Panel[CodeEditorSubcomponentProperty.Panel] = true;
+
+export const CodeEditor = Object.assign(BaseCodeEditor, { Panel });

@@ -1,13 +1,36 @@
-import { type ReactNode } from 'react';
+import {
+  ForwardRefExoticComponent,
+  PropsWithChildren,
+  type ReactNode,
+} from 'react';
 import { type EditorState, type Extension } from '@codemirror/state';
 import { type EditorView } from '@codemirror/view';
 
 import { type DarkModeProps, type LgIdProps } from '@leafygreen-ui/lib';
 
 import { type ContextMenuItem } from '../ContextMenu';
+import { PanelProps } from '../Panel';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 import { CodeEditorModules } from './hooks';
+
+/**
+ * Static property names used to identify CodeEditor compound components.
+ * These are implementation details for the compound component pattern and should not be exported.
+ */
+export const CodeEditorSubcomponentProperty = {
+  Panel: 'isLGPanel',
+} as const;
+
+/**
+ * Type representing the possible static property names for CodeEditor subcomponents.
+ */
+export type CodeEditorSubcomponentProperty =
+  (typeof CodeEditorSubcomponentProperty)[keyof typeof CodeEditorSubcomponentProperty];
+
+export type PanelType = ForwardRefExoticComponent<PanelProps> & {
+  isLGPanel?: boolean;
+};
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
@@ -124,7 +147,8 @@ export interface CodeEditorTooltip {
 }
 
 export type CodeEditorProps = DarkModeProps &
-  LgIdProps & {
+  LgIdProps &
+  PropsWithChildren & {
     /**
      * Font size of text in the editor.
      *

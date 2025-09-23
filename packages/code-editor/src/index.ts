@@ -25,4 +25,4 @@ export {
   useTooltipExtension,
 } from './CodeEditor';
 export { type ContextMenuItem } from './ContextMenu';
-export { Panel, type PanelProps } from './Panel';
+export { type PanelProps } from './Panel';
