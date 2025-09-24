@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 import { act } from '@leafygreen-ui/testing-lib';
 
 import { CodeEditor, CodeEditorProps } from '../CodeEditor';
-import { Panel } from '../Panel';
 
 import { getTestUtils } from './getTestUtils';
 
@@ -19,11 +18,16 @@ global.MutationObserver = jest.fn().mockImplementation(() => ({
 
 const DEFAULT_LGID = 'lg-code-editor';
 
-const TestComponent = (props: Partial<CodeEditorProps>) => {
+const TestComponent = ({
+  children,
+  ...props
+}: Partial<CodeEditorProps> & { children?: React.ReactNode }) => {
   return (
     <div>
       <h1>Code Editor</h1>
-      <CodeEditor data-lgid={DEFAULT_LGID} {...props} />
+      <CodeEditor data-lgid={DEFAULT_LGID} {...props}>
+        {children}
+      </CodeEditor>
     </div>
   );
 };
@@ -154,7 +158,11 @@ describe('getTestUtils', () => {
   describe('getPanelUtils', () => {
     test('`getPanelElement` returns correct element when panel is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -164,7 +172,11 @@ describe('getTestUtils', () => {
 
     test('`findPanelElement` returns correct element when panel is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -175,7 +187,11 @@ describe('getTestUtils', () => {
 
     test('`queryPanelElement` returns correct element when panel is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -195,7 +211,11 @@ describe('getTestUtils', () => {
 
     test('`getFormatButton` returns correct element when format button is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showFormatButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showFormatButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -205,7 +225,11 @@ describe('getTestUtils', () => {
 
     test('`findFormatButton` returns correct element when format button is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showFormatButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showFormatButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -216,7 +240,11 @@ describe('getTestUtils', () => {
 
     test('`queryFormatButton` returns correct element when format button is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showFormatButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showFormatButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -226,7 +254,11 @@ describe('getTestUtils', () => {
 
     test('`queryFormatButton` returns `null` when format button is not present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showFormatButton={false} />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showFormatButton={false} />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -236,7 +268,11 @@ describe('getTestUtils', () => {
 
     test('`getPanelCopyButton` returns correct element when copy button is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showCopyButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showCopyButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -246,7 +282,11 @@ describe('getTestUtils', () => {
 
     test('`findPanelCopyButton` returns correct element when copy button is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showCopyButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showCopyButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -257,7 +297,11 @@ describe('getTestUtils', () => {
 
     test('`queryPanelCopyButton` returns correct element when copy button is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showCopyButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showCopyButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -267,7 +311,11 @@ describe('getTestUtils', () => {
 
     test('`queryPanelCopyButton` returns `null` when copy button is not present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showCopyButton={false} />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showCopyButton={false} />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -277,7 +325,11 @@ describe('getTestUtils', () => {
 
     test('`getSecondaryMenuButton` returns correct element when secondary menu button is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showSecondaryMenuButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showSecondaryMenuButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -287,7 +339,11 @@ describe('getTestUtils', () => {
 
     test('`findSecondaryMenuButton` returns correct element when secondary menu button is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showSecondaryMenuButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showSecondaryMenuButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -298,7 +354,11 @@ describe('getTestUtils', () => {
 
     test('`querySecondaryMenuButton` returns correct element when secondary menu button is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showSecondaryMenuButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showSecondaryMenuButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -309,7 +369,9 @@ describe('getTestUtils', () => {
     test('`querySecondaryMenuButton` returns `null` when secondary menu button is not present', async () => {
       await act(() => {
         render(
-          <TestComponent panel={<Panel showSecondaryMenuButton={false} />} />,
+          <TestComponent>
+            <CodeEditor.Panel showSecondaryMenuButton={false} />
+          </TestComponent>,
         );
       });
       const utils = getTestUtils(DEFAULT_LGID);
@@ -320,7 +382,11 @@ describe('getTestUtils', () => {
 
     test('`getSecondaryMenu` returns correct element when secondary menu is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showSecondaryMenuButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showSecondaryMenuButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -333,7 +399,11 @@ describe('getTestUtils', () => {
 
     test('`findSecondaryMenu` returns correct element when secondary menu is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showSecondaryMenuButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showSecondaryMenuButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -346,7 +416,11 @@ describe('getTestUtils', () => {
 
     test('`querySecondaryMenu` returns correct element when secondary menu is present', async () => {
       await act(() => {
-        render(<TestComponent panel={<Panel showSecondaryMenuButton />} />);
+        render(
+          <TestComponent>
+            <CodeEditor.Panel showSecondaryMenuButton />
+          </TestComponent>,
+        );
       });
       const utils = getTestUtils(DEFAULT_LGID);
       const panelUtils = utils.getPanelUtils();
@@ -360,7 +434,9 @@ describe('getTestUtils', () => {
     test('`querySecondaryMenu` returns `null` when secondary menu is not present', async () => {
       await act(() => {
         render(
-          <TestComponent panel={<Panel showSecondaryMenuButton={false} />} />,
+          <TestComponent>
+            <CodeEditor.Panel showSecondaryMenuButton={false} />
+          </TestComponent>,
         );
       });
       const utils = getTestUtils(DEFAULT_LGID);

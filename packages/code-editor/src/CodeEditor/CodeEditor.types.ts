@@ -1,3 +1,4 @@
+import { ForwardRefExoticComponent, PropsWithChildren } from 'react';
 import { type EditorState, type Extension } from '@codemirror/state';
 import { type EditorView } from '@codemirror/view';
 
@@ -6,9 +7,28 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { CodeEditorTooltipProps } from '../CodeEditorTooltip';
 import { type ContextMenuItem } from '../ContextMenu';
+import { PanelProps } from '../Panel';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 import { CodeEditorModules } from './hooks';
+
+/**
+ * Static property names used to identify CodeEditor compound components.
+ * These are implementation details for the compound component pattern and should not be exported.
+ */
+export const CodeEditorSubcomponentProperty = {
+  Panel: 'isLGPanel',
+} as const;
+
+/**
+ * Type representing the possible static property names for CodeEditor subcomponents.
+ */
+export type CodeEditorSubcomponentProperty =
+  (typeof CodeEditorSubcomponentProperty)[keyof typeof CodeEditorSubcomponentProperty];
+
+export type PanelType = ForwardRefExoticComponent<PanelProps> & {
+  [CodeEditorSubcomponentProperty.Panel]?: boolean;
+};
 
 /**
  * Re-export of CodeMirror's {@link Extension} type.
@@ -122,7 +142,7 @@ export interface CodeEditorTooltip
   severity?: CodeEditorTooltipSeverity;
 }
 
-export type CodeEditorProps = DarkModeProps &
+type BaseCodeEditorProps = DarkModeProps &
   LgIdProps & {
     /**
      * Font size of text in the editor.
@@ -137,7 +157,7 @@ export type CodeEditorProps = DarkModeProps &
     className?: string;
 
     /**
-     * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
+     * Determines the appearance of the copy button when no panel is present. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
      *
      * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
      *
@@ -145,7 +165,7 @@ export type CodeEditorProps = DarkModeProps &
      *
      * If `none`, the copy button will not be rendered.
      *
-     * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
+     * Note: When a `<CodeEditor.Panel>` child component is present, this prop is ignored as the panel provides its own copy button.
      *
      * @default `hover`
      */
@@ -167,12 +187,12 @@ export type CodeEditorProps = DarkModeProps &
     enableCodeFolding?: boolean;
 
     /**
-     * Enables line numbers in the editor’s gutter.
+     * Enables line numbers in the editor's gutter.
      */
     enableLineNumbers?: boolean;
 
     /**
-     * Enables line wrapping when the text exceeds the editor’s width.
+     * Enables line wrapping when the text exceeds the editor's width.
      */
     enableLineWrapping?: boolean;
 
@@ -292,52 +312,9 @@ export type CodeEditorProps = DarkModeProps &
      * A separator will automatically be added between default and custom items if custom items are provided.
      */
     customContextMenuItems?: Array<Omit<ContextMenuItem, 'isSeparator'>>;
-  } & (
-    | {
-        /**
-         * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
-         *
-         * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
-         *
-         * If `persist`, the copy button will always be visible.
-         *
-         * If `none`, the copy button will not be rendered.
-         *
-         * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
-         *
-         * @default `hover`
-         */
-        copyButtonAppearance?: CopyButtonAppearance;
+  };
 
-        /**
-         * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. Note: `copyButtonAppearance` cannot be used with `panel`. Either use `copyButtonAppearance` or `panel`, not both.
-         *
-         */
-        panel?: never;
-      }
-    | {
-        /**
-         * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
-         *
-         * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
-         *
-         * If `persist`, the copy button will always be visible.
-         *
-         * If `none`, the copy button will not be rendered.
-         *
-         * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
-         *
-         * @default `hover`
-         */
-        copyButtonAppearance?: never;
-
-        /**
-         * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. Note: `copyButtonAppearance` cannot be used with `panel`. Either use `copyButtonAppearance` or `panel`, not both.
-         *
-         */
-        panel?: React.ReactNode;
-      }
-  );
+export type CodeEditorProps = PropsWithChildren<BaseCodeEditorProps>;
 
 /**
  * Imperative handle for the CodeEditor component.

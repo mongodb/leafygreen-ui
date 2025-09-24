@@ -45,10 +45,12 @@ export function useExtensions({
   editorViewInstance,
   props,
   modules,
+  hasPanel,
 }: {
   editorViewInstance: EditorView | null;
   props: Partial<CodeEditorProps>;
   modules: Partial<CodeEditorModules>;
+  hasPanel: boolean;
 }) {
   const baseFontSize = useUpdatedBaseFontSize();
 
@@ -119,6 +121,7 @@ export function useExtensions({
       baseFontSize,
     },
     modules,
+    hasPanel,
   });
 
   const readOnlyExtension = useReadOnlyExtension({

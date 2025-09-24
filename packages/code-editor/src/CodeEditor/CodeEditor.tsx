@@ -9,11 +9,13 @@ import React, {
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { findChild } from '@leafygreen-ui/lib';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
+import { Panel as CodeEditorPanel } from '../Panel';
 import { getLgIds } from '../utils';
 
 import { useModules } from './hooks/useModules';
@@ -26,17 +28,21 @@ import {
 import {
   CodeEditorHandle,
   type CodeEditorProps,
+  CodeEditorSubcomponentProperty,
+  type CodeMirrorExtension,
   CopyButtonAppearance,
   type HTMLElementWithCodeMirror,
+  PanelType,
 } from './CodeEditor.types';
 import { CodeEditorProvider } from './CodeEditorContext';
 import { LANGUAGE_EXTENSION_MAP } from './constants';
 import { useCodeFormatter, useExtensions } from './hooks';
 
-export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
+const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   (props, forwardedRef) => {
     const {
       baseFontSize: baseFontSizeProp,
+      children,
       className,
       copyButtonAppearance = CopyButtonAppearance.Hover,
       customContextMenuItems,
@@ -59,7 +65,6 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       minHeight,
       minWidth,
       onChange: onChangeProp,
-      panel,
       placeholder,
       preLoadedModules,
       readOnly,
@@ -70,6 +75,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     } = props;
 
     const lgIds = getLgIds(dataLgId);
+    const panel = findChild(children, CodeEditorSubcomponentProperty.Panel);
 
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
@@ -104,6 +110,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         darkMode,
       },
       modules: modules,
+      hasPanel: !!panel,
     });
 
     // Get the current contents of the editor
@@ -206,7 +213,10 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
         if (filename === undefined) {
           // No filename provided, use default with appropriate extension
-          const extension = language ? LANGUAGE_EXTENSION_MAP[language] : 'txt';
+          const extension =
+            language && language in LANGUAGE_EXTENSION_MAP
+              ? LANGUAGE_EXTENSION_MAP[language]
+              : 'txt';
           fullFilename = `code.${extension}`;
         } else {
           // Use provided filename exactly as-is
@@ -256,7 +266,9 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         doc: controlledValue || defaultValue,
         parent: domNode,
         extensions: [
-          ...consumerExtensions.map(extension => Prec.highest(extension)),
+          ...consumerExtensions.map((extension: CodeMirrorExtension) =>
+            Prec.highest(extension),
+          ),
 
           commands.history(),
           searchModule.search(),
@@ -272,7 +284,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           EditorView.keymap.of([
             {
               key: 'Escape',
-              run: view => {
+              run: (view: EditorView) => {
                 // Move focus outside the editor to allow normal tab navigation
                 view.contentDOM.blur();
                 return true;
@@ -297,7 +309,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
       if (forceParsingProp) {
         const Language = modules?.['@codemirror/language'];
-        const docLength = editorViewRef.current?.state.doc.length;
+        const docLength = editorViewRef.current?.state.doc.length ?? 0;
 
         if (Language && Language.forceParsing && docLength > 0) {
           Language.forceParsing(editorViewRef.current, docLength, 150);
@@ -405,4 +417,9 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
   },
 );
 
-CodeEditor.displayName = 'CodeEditor';
+BaseCodeEditor.displayName = 'CodeEditor';
+
+const Panel = CodeEditorPanel as PanelType;
+Panel[CodeEditorSubcomponentProperty.Panel] = true;
+
+export const CodeEditor = Object.assign(BaseCodeEditor, { Panel });

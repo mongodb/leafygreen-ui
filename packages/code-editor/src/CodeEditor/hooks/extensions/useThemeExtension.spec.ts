@@ -17,6 +17,7 @@ describe('useThemeExtension', () => {
         editorViewInstance: null,
         props: { baseFontSize: 14, darkMode: true },
         modules: { '@codemirror/state': fakeStateModule },
+        hasPanel: false,
       }),
     );
 
@@ -32,6 +33,7 @@ describe('useThemeExtension', () => {
           '@codemirror/state': fakeStateModule,
           '@codemirror/view': fakeEditorViewModule,
         },
+        hasPanel: false,
       }),
     );
 
