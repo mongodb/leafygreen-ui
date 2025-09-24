@@ -16,6 +16,7 @@ import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
+import { Panel as CodeEditorPanel } from '../Panel';
 import { SearchForm } from '../SearchForm';
 import { getLgIds } from '../utils';
 
