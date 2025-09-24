@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import Banner from '@leafygreen-ui/banner';
@@ -18,7 +19,6 @@ import { State } from './shared.types';
 
 const messages = {
   defaultError: 'Oops... Something went wrong.',
-  loading: 'MongoDB Assistant is thinking',
   retryButton: 'Retry',
 } as const;
 
@@ -32,13 +32,13 @@ export const InputBarFeedback = forwardRef<
       className,
       darkMode: darkModeProp,
       errorMessage,
-      loadingMessage,
       state,
       ...rest
     },
     fwdRef,
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { assistantName } = useLeafyGreenChatContext();
 
     return (
       <div
@@ -52,7 +52,7 @@ export const InputBarFeedback = forwardRef<
           <div className={loadingContainerStyles}>
             <AssistantAvatar darkMode={darkMode} size={20} />
             <Body className={getLoadingTextStyles(theme)}>
-              {loadingMessage || messages.loading}
+              {`${assistantName} is thinking`}
             </Body>
           </div>
         )}
