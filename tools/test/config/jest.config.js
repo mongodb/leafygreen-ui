@@ -66,12 +66,11 @@ module.exports = {
   transformIgnorePatterns: ['/node_modules/(?!(react-children-utilities)/)'],
 
   setupFiles: [
-    '<rootDir>/node_modules/@lg-tools/test/config/shared.pre.setup.js',
-    '<rootDir>/node_modules/@lg-tools/test/config/pre.setup.js',
+    '<rootDir>/node_modules/@lg-tools/test/config/setup.js',
     'jest-canvas-mock',
   ],
 
   setupFilesAfterEnv: [
-    '<rootDir>/node_modules/@lg-tools/test/config/shared.post.setup.js',
+    '<rootDir>/node_modules/@lg-tools/test/config/common.setup.js',
   ],
 };
