@@ -1,4 +1,14 @@
-import React, { MouseEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, MouseEvent, useCallback, useState } from 'react';
+import {
+  closeSearchPanel,
+  findNext,
+  findPrevious,
+  replaceAll,
+  replaceNext,
+  SearchQuery,
+  selectMatches,
+  setSearchQuery,
+} from '@codemirror/search';
 
 import Button from '@leafygreen-ui/button';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -27,6 +37,33 @@ export function SearchForm({ view }: SearchFormProps) {
     [],
   );
 
+  const handleCloseButtonClick = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      closeSearchPanel(view);
+    },
+    [view],
+  );
+
+  const handleFindInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const newQuery = new SearchQuery({
+        search: 'test',
+        caseSensitive: true,
+        regexp: false,
+        wholeWord: false,
+        replace: '',
+      });
+
+      view.dispatch({ effects: setSearchQuery.of(newQuery) });
+
+      // if (!query || !query.eq(newQuery)) {
+      //   setQuery(newQuery);
+      //   view.dispatch({ effects: setSearchQuery.of(newQuery) });
+      // }
+    },
+    [view],
+  );
+
   return (
     <div className={getSearchFormContainerStyles(theme)}>
       <div className={findSectionStyles}>
@@ -39,7 +76,13 @@ export function SearchForm({ view }: SearchFormProps) {
           <Icon glyph="ChevronDown" className={getIconStyles(isOpen)} />
         </IconButton>
         <div className={findInputContainerStyles}>
-          <TextInput placeholder="Find" aria-labelledby="find" />
+          <TextInput
+            placeholder="Find"
+            aria-labelledby="find"
+            onChange={handleFindInputChange}
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus
+          />
           <IconButton
             className={findInputIconButtonStyles}
             aria-label="filter button"
@@ -63,7 +106,7 @@ export function SearchForm({ view }: SearchFormProps) {
         <Button>All</Button>
         <IconButton
           aria-label="close find menu button"
-          // onClick={}
+          onClick={handleCloseButtonClick}
         >
           <Icon glyph="X" />
         </IconButton>
