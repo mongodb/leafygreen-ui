@@ -1,17 +1,36 @@
-
 import React from 'react';
-import { StoryFn } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 
 import { Wizard } from '.';
 
 export default {
   title: 'Components/Wizard',
   component: Wizard,
-}
+};
 
-const Template: StoryFn<typeof Wizard> = (props) => (
-  <Wizard {...props} />
-);
+export const LiveExample: StoryObj<typeof Wizard> = {
+  parameters: {
+    controls: {
+      exclude: ['children', 'activeStep', 'onStepChange'],
+    },
+  },
+  render: props => <Wizard {...props}></Wizard>,
+};
 
-export const Basic = Template.bind({});
-
+export const Controlled: StoryObj<typeof Wizard> = {
+  parameters: {
+    controls: {
+      exclude: ['children', 'onStepChange'],
+    },
+  },
+  render: ({ activeStep, ...props }) => {
+    return (
+      <Wizard
+        activeStep={activeStep}
+        // eslint-disable-next-line no-console
+        onStepChange={x => console.log(`Set activeStep to ${x}`)}
+        {...props}
+      ></Wizard>
+    );
+  },
+};
