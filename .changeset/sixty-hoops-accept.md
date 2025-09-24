@@ -1,5 +1,5 @@
 ---
-'@lg-chat/input-bar': minor
+'@lg-chat/input-bar': patch
 ---
 
-Add support for configurable loadingMessage prop to InputBar
+Use `assistantName` value from `LeafyGreenChatContext` for loading message
