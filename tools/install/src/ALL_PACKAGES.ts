@@ -13,6 +13,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/checkbox',
   '@leafygreen-ui/chip',
   '@leafygreen-ui/code',
+  '@leafygreen-ui/code-editor',
   '@leafygreen-ui/combobox',
   '@leafygreen-ui/confirmation-modal',
   '@leafygreen-ui/context-drawer',

@@ -24,7 +24,6 @@ const meta: StoryMetaType<typeof InputBar> = {
         darkMode: [false, true],
         disabled: [false, true],
         disableSend: [false, true],
-        loadingMessage: [undefined, 'Custom loading message'],
         state: Object.values(State),
         textareaProps: [
           { value: '' },
