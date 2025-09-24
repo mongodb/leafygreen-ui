@@ -140,6 +140,14 @@ export function useThemeExtension({
           [CodeEditorSelectors.DiagnosticInfo]: {
             border: 'none',
           },
+
+          [CodeEditorSelectors.SearchPanelContainer]: {
+            backgroundColor: 'transparent',
+          },
+
+          [CodeEditorSelectors.SearchPanelContainerTop]: {
+            border: 'none',
+          },
         },
         { dark: theme === Theme.Dark },
       );

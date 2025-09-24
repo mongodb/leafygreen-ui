@@ -28,7 +28,7 @@ export const findSectionStyles = css`
   grid-template-columns: auto 1fr repeat(4, auto);
   align-items: center;
   gap: 0 ${spacing[100]}px;
-  margin: 8px 10px 8px;
+  padding: 8px 10px 8px;
 `;
 
 export const toggleIconStyles = css`
@@ -49,7 +49,6 @@ export const getIconStyles = (isOpen: boolean) =>
 
 export const findInputContainerStyles = css`
   position: relative;
-  /* width: 240px; */
 `;
 
 export const findInputIconButtonStyles = css`
