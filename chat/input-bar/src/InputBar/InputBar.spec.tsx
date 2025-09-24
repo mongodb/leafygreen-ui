@@ -302,7 +302,7 @@ describe('packages/input-bar', () => {
   });
 
   describe('status states', () => {
-    test('renders loading state with default message when state is "loading"', () => {
+    test('renders loading state with default assistantName when state is "loading"', () => {
       renderInputBar({ state: State.Loading });
 
       expect(
@@ -310,13 +310,19 @@ describe('packages/input-bar', () => {
       ).toBeInTheDocument();
     });
 
-    test('renders loading state with custom message when state is "loading" and loadingMessage provided', () => {
-      renderInputBar({
-        state: State.Loading,
-        loadingMessage: 'Custom loading message',
-      });
+    test('renders loading state with custom assistantName when state is "loading"', () => {
+      render(
+        <LeafyGreenChatProvider
+          variant={Variant.Compact}
+          assistantName="Custom Assistant"
+        >
+          <InputBar state={State.Loading} />
+        </LeafyGreenChatProvider>,
+      );
 
-      expect(screen.getByText(/Custom loading message/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/Custom Assistant is thinking/i),
+      ).toBeInTheDocument();
     });
 
     test('renders error state with default message when state is "error" and no message provided', () => {
