@@ -1,5 +1,14 @@
 # @leafygreen-ui/icon
 
+## 14.5.1
+
+### Patch Changes
+
+- 1a5c69f: Updates build script to use the new consistent UMD global names
+  Adds missing `@lg-tools/storybook-utils` devDependency
+- Updated dependencies [cee1e79]
+  - @leafygreen-ui/emotion@5.0.3
+
 ## 14.5.0
 
 ### Minor Changes

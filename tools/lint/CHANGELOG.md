@@ -1,5 +1,17 @@
 # @lg-tools/lint
 
+## 3.1.0
+
+### Minor Changes
+
+- 6f30c55: Lists `/config` directory in package "exports"
+
+### Patch Changes
+
+- 1a5c69f: Updates to latest @typescript-eslint packages
+- Updated dependencies [1a5c69f]
+  - @lg-tools/build@0.8.3
+
 ## 3.0.2
 
 ### Patch Changes
