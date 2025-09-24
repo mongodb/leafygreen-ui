@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { renderToString } from 'react-dom/server';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -15,7 +16,7 @@ import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
-import { Panel as CodeEditorPanel } from '../Panel';
+import { SearchForm } from '../SearchForm';
 import { getLgIds } from '../utils';
 
 import { useModules } from './hooks/useModules';
@@ -271,7 +272,17 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           ),
 
           commands.history(),
-          searchModule.search(),
+          searchModule.search({
+            createPanel: view => {
+              const dom = document.createElement('div');
+              dom.innerHTML = renderToString(
+                React.createElement(SearchForm, {
+                  view,
+                }),
+              );
+              return { dom, top: true };
+            },
+          }),
 
           EditorView.EditorView.updateListener.of((update: ViewUpdate) => {
             if (isControlled && update.docChanged) {

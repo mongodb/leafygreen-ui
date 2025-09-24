@@ -40,6 +40,9 @@
       "path": "../tokens"
     },
     {
+      "path": "../text-input"
+    },
+    {
       "path": "../leafygreen-provider"
     },
     {
