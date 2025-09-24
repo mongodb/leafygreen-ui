@@ -1308,6 +1308,142 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  packages/code-editor:
+    dependencies:
+      '@codemirror/autocomplete':
+        specifier: ^6.18.6
+        version: 6.18.7
+      '@codemirror/commands':
+        specifier: ^6.8.1
+        version: 6.8.1
+      '@codemirror/lang-cpp':
+        specifier: ^6.0.2
+        version: 6.0.3
+      '@codemirror/lang-css':
+        specifier: ^6.3.1
+        version: 6.3.1
+      '@codemirror/lang-go':
+        specifier: ^6.0.1
+        version: 6.0.1
+      '@codemirror/lang-html':
+        specifier: ^6.4.9
+        version: 6.4.10
+      '@codemirror/lang-java':
+        specifier: ^6.0.1
+        version: 6.0.2
+      '@codemirror/lang-javascript':
+        specifier: ^6.2.4
+        version: 6.2.4
+      '@codemirror/lang-json':
+        specifier: ^6.0.1
+        version: 6.0.2
+      '@codemirror/lang-php':
+        specifier: ^6.0.1
+        version: 6.0.2
+      '@codemirror/lang-python':
+        specifier: ^6.2.1
+        version: 6.2.1
+      '@codemirror/lang-rust':
+        specifier: ^6.0.1
+        version: 6.0.2
+      '@codemirror/language':
+        specifier: ^6.11.0
+        version: 6.11.3
+      '@codemirror/legacy-modes':
+        specifier: ^6.5.1
+        version: 6.5.1
+      '@codemirror/lint':
+        specifier: ^6.8.5
+        version: 6.8.5
+      '@codemirror/search':
+        specifier: ^6.5.11
+        version: 6.5.11
+      '@codemirror/state':
+        specifier: ^6.5.2
+        version: 6.5.2
+      '@codemirror/view':
+        specifier: ^6.38.1
+        version: 6.38.3
+      '@leafygreen-ui/a11y':
+        specifier: workspace:^
+        version: link:../a11y
+      '@leafygreen-ui/badge':
+        specifier: ^10.1.0
+        version: 10.1.2(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.3.1)
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../icon-button
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/menu':
+        specifier: workspace:^
+        version: link:../menu
+      '@leafygreen-ui/modal':
+        specifier: ^20.0.0
+        version: 20.0.2(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.3.1)
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
+      '@leafygreen-ui/typography':
+        specifier: ^22.1.0
+        version: 22.1.2(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.3.1)
+      '@lezer/highlight':
+        specifier: ^1.2.1
+        version: 1.2.1
+      '@lg-tools/test-harnesses':
+        specifier: ^0.3.4
+        version: 0.3.4
+      '@replit/codemirror-lang-csharp':
+        specifier: ^6.2.0
+        version: 6.2.0(@codemirror/autocomplete@6.18.7)(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.3)(@lezer/common@1.2.3)(@lezer/highlight@1.2.1)(@lezer/lr@1.4.2)
+      '@uiw/codemirror-extensions-hyper-link':
+        specifier: ^4.23.12
+        version: 4.25.2(@codemirror/state@6.5.2)(@codemirror/view@6.38.3)
+      '@wasm-fmt/clang-format':
+        specifier: ^20.1.7
+        version: 20.1.7
+      '@wasm-fmt/gofmt':
+        specifier: ^0.4.9
+        version: 0.4.9
+      '@wasm-fmt/ruff_fmt':
+        specifier: ^0.10.0
+        version: 0.10.0
+      codemirror:
+        specifier: ^6.0.2
+        version: 6.0.2
+      prettier:
+        specifier: 2.8.8
+        version: 2.8.8
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
+      '@storybook/test':
+        specifier: ^8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
+
   packages/combobox:
     dependencies:
       '@leafygreen-ui/checkbox':
@@ -5198,6 +5334,60 @@ packages:
   '@changesets/write@0.4.0':
     resolution: {integrity: sha512-CdTLvIOPiCNuH71pyDu3rA+Q0n65cmAbXnwWH84rKGiFumFzkmHNT8KHTMEchcxN+Kl8I54xGUhJ7l3E7X396Q==}
 
+  '@codemirror/autocomplete@6.18.7':
+    resolution: {integrity: sha512-8EzdeIoWPJDsMBwz3zdzwXnUpCzMiCyz5/A3FIPpriaclFCGDkAzK13sMcnsu5rowqiyeQN2Vs2TsOcoDPZirQ==}
+
+  '@codemirror/commands@6.8.1':
+    resolution: {integrity: sha512-KlGVYufHMQzxbdQONiLyGQDUW0itrLZwq3CcY7xpv9ZLRHqzkBSoteocBHtMCoY7/Ci4xhzSrToIeLg7FxHuaw==}
+
+  '@codemirror/lang-cpp@6.0.3':
+    resolution: {integrity: sha512-URM26M3vunFFn9/sm6rzqrBzDgfWuDixp85uTY49wKudToc2jTHUrKIGGKs+QWND+YLofNNZpxcNGRynFJfvgA==}
+
+  '@codemirror/lang-css@6.3.1':
+    resolution: {integrity: sha512-kr5fwBGiGtmz6l0LSJIbno9QrifNMUusivHbnA1H6Dmqy4HZFte3UAICix1VuKo0lMPKQr2rqB+0BkKi/S3Ejg==}
+
+  '@codemirror/lang-go@6.0.1':
+    resolution: {integrity: sha512-7fNvbyNylvqCphW9HD6WFnRpcDjr+KXX/FgqXy5H5ZS0eC5edDljukm/yNgYkwTsgp2busdod50AOTIy6Jikfg==}
+
+  '@codemirror/lang-html@6.4.10':
+    resolution: {integrity: sha512-h/SceTVsN5r+WE+TVP2g3KDvNoSzbSrtZXCKo4vkKdbfT5t4otuVgngGdFukOO/rwRD2++pCxoh6xD4TEVMkQA==}
+
+  '@codemirror/lang-java@6.0.2':
+    resolution: {integrity: sha512-m5Nt1mQ/cznJY7tMfQTJchmrjdjQ71IDs+55d1GAa8DGaB8JXWsVCkVT284C3RTASaY43YknrK2X3hPO/J3MOQ==}
+
+  '@codemirror/lang-javascript@6.2.4':
+    resolution: {integrity: sha512-0WVmhp1QOqZ4Rt6GlVGwKJN3KW7Xh4H2q8ZZNGZaP6lRdxXJzmjm4FqvmOojVj6khWJHIb9sp7U/72W7xQgqAA==}
+
+  '@codemirror/lang-json@6.0.2':
+    resolution: {integrity: sha512-x2OtO+AvwEHrEwR0FyyPtfDUiloG3rnVTSZV1W8UteaLL8/MajQd8DpvUb2YVzC+/T18aSDv0H9mu+xw0EStoQ==}
+
+  '@codemirror/lang-php@6.0.2':
+    resolution: {integrity: sha512-ZKy2v1n8Fc8oEXj0Th0PUMXzQJ0AIR6TaZU+PbDHExFwdu+guzOA4jmCHS1Nz4vbFezwD7LyBdDnddSJeScMCA==}
+
+  '@codemirror/lang-python@6.2.1':
+    resolution: {integrity: sha512-IRjC8RUBhn9mGR9ywecNhB51yePWCGgvHfY1lWN/Mrp3cKuHr0isDKia+9HnvhiWNnMpbGhWrkhuWOc09exRyw==}
+
+  '@codemirror/lang-rust@6.0.2':
+    resolution: {integrity: sha512-EZaGjCUegtiU7kSMvOfEZpaCReowEf3yNidYu7+vfuGTm9ow4mthAparY5hisJqOHmJowVH3Upu+eJlUji6qqA==}
+
+  '@codemirror/language@6.11.3':
+    resolution: {integrity: sha512-9HBM2XnwDj7fnu0551HkGdrUrrqmYq/WC5iv6nbY2WdicXdGbhR/gfbZOH73Aqj4351alY1+aoG9rCNfiwS1RA==}
+
+  '@codemirror/legacy-modes@6.5.1':
+    resolution: {integrity: sha512-DJYQQ00N1/KdESpZV7jg9hafof/iBNp9h7TYo1SLMk86TWl9uDsVdho2dzd81K+v4retmK6mdC7WpuOQDytQqw==}
+
+  '@codemirror/lint@6.8.5':
+    resolution: {integrity: sha512-s3n3KisH7dx3vsoeGMxsbRAgKe4O1vbrnKBClm99PU0fWxmxsx5rR2PfqQgIt+2MMJBHbiJ5rfIdLYfB9NNvsA==}
+
+  '@codemirror/search@6.5.11':
+    resolution: {integrity: sha512-KmWepDE6jUdL6n8cAAqIpRmLPBZ5ZKnicE8oGU/s3QrAVID+0VhLFrzUucVKHG5035/BSykhExDL/Xm7dHthiA==}
+
+  '@codemirror/state@6.5.2':
+    resolution: {integrity: sha512-FVqsPqtPWKVVL3dPSxy8wEF/ymIEuVzF1PK3VbUgrxXpJUSHQWWZz4JMToquRxnkw+36LTamCZG2iua2Ptq0fA==}
+
+  '@codemirror/view@6.38.3':
+    resolution: {integrity: sha512-x2t87+oqwB1mduiQZ6huIghjMt4uZKFEdj66IcXw7+a5iBEvv9lh7EWDRHI7crnD4BMGpnyq/RzmCGbiEZLcvQ==}
+
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
@@ -5668,11 +5858,102 @@ packages:
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
+  '@leafygreen-ui/a11y@3.0.4':
+    resolution: {integrity: sha512-kNqPkkVYNs3yj+s3ReFcJEe/JP347Zz9lGAWjNspZ12mPkyr5LUegbDj6Zf6d9ELiDwN5Ht8X7cggWI+KEAMcg==}
+
+  '@leafygreen-ui/badge@10.1.2':
+    resolution: {integrity: sha512-CsgqfxOqMimjCsTGSViF+uJ7NNJhF7xdlkGtAQXq2dR52OO4L/s5jVDNL/tWi52R/aJdTiFswGxlh36Eb6Zbug==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^5.0.4
+
+  '@leafygreen-ui/emotion@5.0.2':
+    resolution: {integrity: sha512-pnAWIg7iFZUtpUkhhFATyx+p2qzySKmWrqGNp409+v6EgkfbpQkZIr+52fDzU4Xzc8PgGT+yBg9CTw6W4yzumg==}
+
+  '@leafygreen-ui/hooks@9.1.3':
+    resolution: {integrity: sha512-M3fKuSiz+mEmIi1d8dK5pPbwbELbJFJsonRH+iTHM3vJPTo6w+bCws1g/sYiP7UryogZLogM9/i8NL6nejhRog==}
+
+  '@leafygreen-ui/icon-button@17.0.5':
+    resolution: {integrity: sha512-mmlQr8eXVcoQ7YEU29du/E2bJhzo96VbHO8oCmlNJlZzYB43dw1ImdYp3tgKXnd8Ah8K+sZgSgCrX5tYwDHNbw==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^5.0.4
+
+  '@leafygreen-ui/icon@14.5.0':
+    resolution: {integrity: sha512-dZIrwNxTJrDp12OSuk8TU5dzrWSK38zyyL8dZcdXpo3VtWaWnzwZDK6tr08dt+Tgj7Dj2Qchg7+iwotHHbv3Lg==}
+
+  '@leafygreen-ui/lib@15.3.0':
+    resolution: {integrity: sha512-WuEd60jLO2u3J2MdMHglKTvqC2DmjA/JI6BpCIU35Gim3ruf6+DF1WIyOhhxibqTtnn/5vEY0oAJrd3728UYCQ==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0
+
+  '@leafygreen-ui/modal@20.0.2':
+    resolution: {integrity: sha512-0pE8K/rDBkkLWguvGQOk1lrUgeazGA/TJSbeGGUUxBDuizhNr04uzsrGryWBjLPkuc2E0goOiGZgyFL6tAYjww==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^5.0.4
+
+  '@leafygreen-ui/palette@5.0.2':
+    resolution: {integrity: sha512-+PrfGeJSv4goxm/vKpfJJDOP7t/uElj+14K8jiIyu3qR3TcFRIZ5h1VMvICTUgqvRc8W+xIZYQwsLa2XCu2lvw==}
+
+  '@leafygreen-ui/polymorphic@3.0.4':
+    resolution: {integrity: sha512-PRpEkgJgke5jEaM4Q3heRzfsLc0HKnW4p7YiXlQxIe0qQcUOYSHiUeBBqh4UwgX7oMz699ZDM/sLC4hp/aNl7Q==}
+
+  '@leafygreen-ui/tokens@3.2.4':
+    resolution: {integrity: sha512-Bd11x/ext/vVozd/HL+AD8LbL71Z6B6VbtQ/+qLqoX8qHMsJt7VWL0CmmGs5NVHh3v5sAlfT5DYbB9uhwVM8Qw==}
+
+  '@leafygreen-ui/typography@22.1.2':
+    resolution: {integrity: sha512-sULk4TVstU2Zk1l5RZFkkgP7BomxjDX4P3/aFs/2L9kVHYxGBvtykZb3SALPNUSP1L9+U1KDe5qmSckqO2hbmA==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^5.0.4
+
+  '@lezer/common@1.2.3':
+    resolution: {integrity: sha512-w7ojc8ejBqr2REPsWxJjrMFsA/ysDCFICn8zEOR9mrqzOu2amhITYuLD8ag6XZf0CFXDrhKqw7+tW8cX66NaDA==}
+
+  '@lezer/cpp@1.1.3':
+    resolution: {integrity: sha512-ykYvuFQKGsRi6IcE+/hCSGUhb/I4WPjd3ELhEblm2wS2cOznDFzO+ubK2c+ioysOnlZ3EduV+MVQFCPzAIoY3w==}
+
+  '@lezer/css@1.3.0':
+    resolution: {integrity: sha512-pBL7hup88KbI7hXnZV3PQsn43DHy6TWyzuyk2AO9UyoXcDltvIdqWKE1dLL/45JVZ+YZkHe1WVHqO6wugZZWcw==}
+
+  '@lezer/go@1.0.1':
+    resolution: {integrity: sha512-xToRsYxwsgJNHTgNdStpcvmbVuKxTapV0dM0wey1geMMRc9aggoVyKgzYp41D2/vVOx+Ii4hmE206kvxIXBVXQ==}
+
+  '@lezer/highlight@1.2.1':
+    resolution: {integrity: sha512-Z5duk4RN/3zuVO7Jq0pGLJ3qynpxUVsh7IbUbGj88+uV2ApSAn6kWg2au3iJb+0Zi7kKtqffIESgNcRXWZWmSA==}
+
+  '@lezer/html@1.3.10':
+    resolution: {integrity: sha512-dqpT8nISx/p9Do3AchvYGV3qYc4/rKr3IBZxlHmpIKam56P47RSHkSF5f13Vu9hebS1jM0HmtJIwLbWz1VIY6w==}
+
+  '@lezer/java@1.1.3':
+    resolution: {integrity: sha512-yHquUfujwg6Yu4Fd1GNHCvidIvJwi/1Xu2DaKl/pfWIA2c1oXkVvawH3NyXhCaFx4OdlYBVX5wvz2f7Aoa/4Xw==}
+
+  '@lezer/javascript@1.5.4':
+    resolution: {integrity: sha512-vvYx3MhWqeZtGPwDStM2dwgljd5smolYD2lR2UyFcHfxbBQebqx8yjmFmxtJ/E6nN6u1D9srOiVWm3Rb4tmcUA==}
+
+  '@lezer/json@1.0.3':
+    resolution: {integrity: sha512-BP9KzdF9Y35PDpv04r0VeSTKDeox5vVr3efE7eBbx3r4s3oNLfunchejZhjArmeieBH+nVOpgIiBJpEAv8ilqQ==}
+
+  '@lezer/lr@1.4.2':
+    resolution: {integrity: sha512-pu0K1jCIdnQ12aWNaAVU5bzi7Bd1w54J3ECgANPmYLtQKP0HBj2cE/5coBD66MT10xbtIuUr7tg0Shbsvk0mDA==}
+
+  '@lezer/php@1.0.5':
+    resolution: {integrity: sha512-W7asp9DhM6q0W6DYNwIkLSKOvxlXRrif+UXBMxzsJUuqmhE7oVU+gS3THO4S/Puh7Xzgm858UNaFi6dxTP8dJA==}
+
+  '@lezer/python@1.1.18':
+    resolution: {integrity: sha512-31FiUrU7z9+d/ElGQLJFXl+dKOdx0jALlP3KEOsGTex8mvj+SoE1FgItcHWK/axkxCHGUSpqIHt6JAWfWu9Rhg==}
+
+  '@lezer/rust@1.0.2':
+    resolution: {integrity: sha512-Lz5sIPBdF2FUXcWeCu1//ojFAZqzTQNRga0aYv6dYXqJqPfMdCAI0NzajWUd4Xijj1IKJLtjoXRPMvTKWBcqKg==}
+
+  '@lg-tools/test-harnesses@0.3.4':
+    resolution: {integrity: sha512-JfJj2LSMe5vTSDQoLxWUHx2r4wUgKqU1UrgqjvNYM7iebXE0JCE7RvLiEg5SnsRO8xXQbEMjgISErmCDR4DS7Q==}
+
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
 
   '@manypkg/get-packages@1.1.3':
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
+
+  '@marijn/find-cluster-break@1.0.2':
+    resolution: {integrity: sha512-l0h88YhZFyKdXIFNfSWpyjStDjGHwZ/U7iobcK1cQQD8sejsONdQtTVU+1wVN1PBw40PiiHB1vA5S7VTfQiP9g==}
 
   '@mdx-js/react@2.3.0':
     resolution: {integrity: sha512-zQH//gdOmuu7nt2oJR29vFhDv88oGPmVw6BggmrHeMI+xgEkp1B2dX9/bMBSYtK0dyLX/aOmesKS09g222K1/g==}
@@ -5791,6 +6072,17 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@replit/codemirror-lang-csharp@6.2.0':
+    resolution: {integrity: sha512-6utbaWkoymhoAXj051mkRp+VIJlpwUgCX9Toevz3YatiZsz512fw3OVCedXQx+WcR0wb6zVHjChnuxqfCLtFVQ==}
+    peerDependencies:
+      '@codemirror/autocomplete': ^6.0.0
+      '@codemirror/language': ^6.0.0
+      '@codemirror/state': ^6.0.0
+      '@codemirror/view': ^6.0.0
+      '@lezer/common': ^1.0.0
+      '@lezer/highlight': ^1.0.0
+      '@lezer/lr': ^1.0.0
 
   '@rollup/plugin-babel@6.0.4':
     resolution: {integrity: sha512-YF7Y52kFdFT/xVSuVdjkV5ZdX/3YtmX0QulG+x0taQOtJdHYzVU61aSSkAgVJ7NOv6qPkIYiJSgSWWN/DM5sGw==}
@@ -6740,6 +7032,12 @@ packages:
     resolution: {integrity: sha512-zaz9u8EJ4GBmnehlrpoKvj/E3dNbuQ7q0ucyZImm3cLqJ8INTc970B1qEqDX/Rzq65r3TvVTN7kHWPBoyW7DWw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@uiw/codemirror-extensions-hyper-link@4.25.2':
+    resolution: {integrity: sha512-/3dyXRZM+B9HgtpFMIkC4ImkPklA4XxXDjT40DSpk9/Fp2qEQE1l4yW0Y6bHmkS9LpyHA9/0DddV7h0JxPJ1nA==}
+    peerDependencies:
+      '@codemirror/state': '>=6.0.0'
+      '@codemirror/view': '>=6.0.0'
+
   '@vitest/expect@2.0.5':
     resolution: {integrity: sha512-yHZtwuP7JZivj65Gxoi8upUN2OzHTi3zVfjwdpu2WrvCZPLwsJ2Ey5ILIPccoW23dd/zQBlJ4/dhi7DWNyXCpA==}
 
@@ -6772,6 +7070,18 @@ packages:
 
   '@vue/shared@3.5.18':
     resolution: {integrity: sha512-cZy8Dq+uuIXbxCZpuLd2GJdeSO/lIzIspC2WtkqIpje5QyFbvLaI5wZtdUjLHjGZrlVX6GilejatWwVYYRc8tA==}
+
+  '@wasm-fmt/clang-format@20.1.7':
+    resolution: {integrity: sha512-n4EKDtQl7fXfeg3AzrhVJmEqgbwWTLORfYYHT5+KboXLWQNLoDqjBM8y8o7MDh2HUy2A9xAJbKjMYIBwgU0bwQ==}
+    engines: {node: '>=16.17.0'}
+    hasBin: true
+
+  '@wasm-fmt/gofmt@0.4.9':
+    resolution: {integrity: sha512-YiJKASbwWHD9Rt4MD1Xwb5DanB0MQLYXgxeNGocxE5nu7ZyzPgm1nTn0sFVCJoxYMsGn5ypyXakuHTQtiJu4Ag==}
+    engines: {node: '>=16.17.0'}
+
+  '@wasm-fmt/ruff_fmt@0.10.0':
+    resolution: {integrity: sha512-U6tH4+2IE13puYg3KV33wYfnExkHG9NO7k3wW03Nrvajy2KMYpnPqd3r/atjvwRm758qIQ6awGDVMAaOyUeJHw==}
 
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
@@ -7331,6 +7641,9 @@ packages:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
 
+  codemirror@6.0.2:
+    resolution: {integrity: sha512-VhydHotNW5w1UGK0Qj96BwSk/Zqbp9WbnyK2W/eVMv4QyF41INRGpjUhFJY7/uDNuudSc33a/PKr4iDqRduvHw==}
+
   collect-v8-coverage@1.0.2:
     resolution: {integrity: sha512-lHl4d5/ONEbLlJvaJNtsF/Lz+WvB07u2ycqTYbdrq7UypDXailES4valYb2eWiJFxZlVmpGekfqoxQhzyFdT4Q==}
 
@@ -7454,6 +7767,9 @@ packages:
 
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
+
+  crelt@1.0.6:
+    resolution: {integrity: sha512-VQ2MBenTq1fWZUH9DJNGti7kKv6EeAuYr3cLwxUWhIu1baTaXh4Ib5W2CqHVqib4/MqbYGJqiL3Zb8GJZr3l4g==}
 
   cross-spawn-async@2.2.5:
     resolution: {integrity: sha512-snteb3aVrxYYOX9e8BabYFK9WhCDhTlw1YQktfTthBogxri4/2r9U2nQc0ffY73ZAxezDc+U8gvHAeU1wy1ubQ==}
@@ -10664,6 +10980,9 @@ packages:
     peerDependencies:
       webpack: ^5.0.0
 
+  style-mod@4.1.2:
+    resolution: {integrity: sha512-wnD1HyVqpJUI2+eKZ+eo1UwghftP6yuFheBqqe+bWCotBjC2K1YnteJILRMs3SM4V/0dLEW1SC27MWP5y+mwmw==}
+
   style-to-object@0.4.4:
     resolution: {integrity: sha512-HYNoHZa2GorYNyqiCaBgsxvcJIn7OHq6inEga+E6Ke3m5JkoqpQbnFssk4jwe+K7AhGa2fcha4wSOf1Kn01dMg==}
 
@@ -11139,6 +11458,9 @@ packages:
 
   vm-browserify@1.1.2:
     resolution: {integrity: sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==}
+
+  w3c-keyname@2.2.8:
+    resolution: {integrity: sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ==}
 
   w3c-xmlserializer@4.0.0:
     resolution: {integrity: sha512-d+BFHzbiCx6zGfz0HyQ6Rg69w9k19nviJspaj4yNscGjrHu94sVP+aRm75yEbCh+r2/yR+7q6hux9LVtbuTGBw==}
@@ -13126,6 +13448,130 @@ snapshots:
       human-id: 4.1.1
       prettier: 2.8.8
 
+  '@codemirror/autocomplete@6.18.7':
+    dependencies:
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+      '@lezer/common': 1.2.3
+
+  '@codemirror/commands@6.8.1':
+    dependencies:
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+      '@lezer/common': 1.2.3
+
+  '@codemirror/lang-cpp@6.0.3':
+    dependencies:
+      '@codemirror/language': 6.11.3
+      '@lezer/cpp': 1.1.3
+
+  '@codemirror/lang-css@6.3.1':
+    dependencies:
+      '@codemirror/autocomplete': 6.18.7
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@lezer/common': 1.2.3
+      '@lezer/css': 1.3.0
+
+  '@codemirror/lang-go@6.0.1':
+    dependencies:
+      '@codemirror/autocomplete': 6.18.7
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@lezer/common': 1.2.3
+      '@lezer/go': 1.0.1
+
+  '@codemirror/lang-html@6.4.10':
+    dependencies:
+      '@codemirror/autocomplete': 6.18.7
+      '@codemirror/lang-css': 6.3.1
+      '@codemirror/lang-javascript': 6.2.4
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+      '@lezer/common': 1.2.3
+      '@lezer/css': 1.3.0
+      '@lezer/html': 1.3.10
+
+  '@codemirror/lang-java@6.0.2':
+    dependencies:
+      '@codemirror/language': 6.11.3
+      '@lezer/java': 1.1.3
+
+  '@codemirror/lang-javascript@6.2.4':
+    dependencies:
+      '@codemirror/autocomplete': 6.18.7
+      '@codemirror/language': 6.11.3
+      '@codemirror/lint': 6.8.5
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+      '@lezer/common': 1.2.3
+      '@lezer/javascript': 1.5.4
+
+  '@codemirror/lang-json@6.0.2':
+    dependencies:
+      '@codemirror/language': 6.11.3
+      '@lezer/json': 1.0.3
+
+  '@codemirror/lang-php@6.0.2':
+    dependencies:
+      '@codemirror/lang-html': 6.4.10
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@lezer/common': 1.2.3
+      '@lezer/php': 1.0.5
+
+  '@codemirror/lang-python@6.2.1':
+    dependencies:
+      '@codemirror/autocomplete': 6.18.7
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@lezer/common': 1.2.3
+      '@lezer/python': 1.1.18
+
+  '@codemirror/lang-rust@6.0.2':
+    dependencies:
+      '@codemirror/language': 6.11.3
+      '@lezer/rust': 1.0.2
+
+  '@codemirror/language@6.11.3':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+      style-mod: 4.1.2
+
+  '@codemirror/legacy-modes@6.5.1':
+    dependencies:
+      '@codemirror/language': 6.11.3
+
+  '@codemirror/lint@6.8.5':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+      crelt: 1.0.6
+
+  '@codemirror/search@6.5.11':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+      crelt: 1.0.6
+
+  '@codemirror/state@6.5.2':
+    dependencies:
+      '@marijn/find-cluster-break': 1.0.2
+
+  '@codemirror/view@6.38.3':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      crelt: 1.0.6
+      style-mod: 4.1.2
+      w3c-keyname: 2.2.8
+
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
@@ -13711,6 +14157,200 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
+  '@leafygreen-ui/a11y@3.0.4(@babel/core@7.28.0)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.2(@babel/core@7.28.0)
+      '@leafygreen-ui/hooks': 9.1.3(@babel/core@7.28.0)(react@18.3.1)
+      '@leafygreen-ui/lib': 15.3.0(react@18.3.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@leafygreen-ui/badge@10.1.2(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.2(@babel/core@7.28.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 15.3.0(react@18.3.1)
+      '@leafygreen-ui/palette': 5.0.2
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.28.0)(react@18.3.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@leafygreen-ui/emotion@5.0.2(@babel/core@7.28.0)':
+    dependencies:
+      '@emotion/css': 11.9.0(@babel/core@7.28.0)
+      '@emotion/server': 11.11.0(@emotion/css@11.9.0(@babel/core@7.28.0))
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
+  '@leafygreen-ui/hooks@9.1.3(@babel/core@7.28.0)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/lib': 15.3.0(react@18.3.1)
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.28.0)(react@18.3.1)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@leafygreen-ui/icon-button@17.0.5(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/a11y': 3.0.4(@babel/core@7.28.0)(react@18.3.1)
+      '@leafygreen-ui/emotion': 5.0.2(@babel/core@7.28.0)
+      '@leafygreen-ui/icon': 14.5.0(@babel/core@7.28.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 15.3.0(react@18.3.1)
+      '@leafygreen-ui/palette': 5.0.2
+      '@leafygreen-ui/polymorphic': 3.0.4(react@18.3.1)
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.28.0)(react@18.3.1)
+      polished: 4.3.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@leafygreen-ui/icon@14.5.0(@babel/core@7.28.0)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.2(@babel/core@7.28.0)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
+  '@leafygreen-ui/lib@15.3.0(react@18.3.1)':
+    dependencies:
+      lodash: 4.17.21
+      react: 18.3.1
+
+  '@leafygreen-ui/modal@20.0.2(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.2(@babel/core@7.28.0)
+      '@leafygreen-ui/hooks': 9.1.3(@babel/core@7.28.0)(react@18.3.1)
+      '@leafygreen-ui/icon': 14.5.0(@babel/core@7.28.0)
+      '@leafygreen-ui/icon-button': 17.0.5(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.3.1)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 15.3.0(react@18.3.1)
+      '@leafygreen-ui/palette': 5.0.2
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.28.0)(react@18.3.1)
+      '@lg-tools/test-harnesses': 0.3.4
+      polished: 4.3.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@leafygreen-ui/palette@5.0.2': {}
+
+  '@leafygreen-ui/polymorphic@3.0.4(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/lib': 15.3.0(react@18.3.1)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - react
+
+  '@leafygreen-ui/tokens@3.2.4(@babel/core@7.28.0)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.2(@babel/core@7.28.0)
+      '@leafygreen-ui/lib': 15.3.0(react@18.3.1)
+      '@leafygreen-ui/palette': 5.0.2
+      polished: 4.3.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@leafygreen-ui/typography@22.1.2(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.2(@babel/core@7.28.0)
+      '@leafygreen-ui/icon': 14.5.0(@babel/core@7.28.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 15.3.0(react@18.3.1)
+      '@leafygreen-ui/palette': 5.0.2
+      '@leafygreen-ui/polymorphic': 3.0.4(react@18.3.1)
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.28.0)(react@18.3.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@lezer/common@1.2.3': {}
+
+  '@lezer/cpp@1.1.3':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/css@1.3.0':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/go@1.0.1':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/highlight@1.2.1':
+    dependencies:
+      '@lezer/common': 1.2.3
+
+  '@lezer/html@1.3.10':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/java@1.1.3':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/javascript@1.5.4':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/json@1.0.3':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/lr@1.4.2':
+    dependencies:
+      '@lezer/common': 1.2.3
+
+  '@lezer/php@1.0.5':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/python@1.1.18':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lezer/rust@1.0.2':
+    dependencies:
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
+
+  '@lg-tools/test-harnesses@0.3.4':
+    dependencies:
+      '@testing-library/dom': 9.3.4
+
   '@manypkg/find-root@1.1.0':
     dependencies:
       '@babel/runtime': 7.24.1
@@ -13726,6 +14366,8 @@ snapshots:
       fs-extra: 8.1.0
       globby: 11.1.0
       read-yaml-file: 1.1.0
+
+  '@marijn/find-cluster-break@1.0.2': {}
 
   '@mdx-js/react@2.3.0(react@18.3.1)':
     dependencies:
@@ -13822,6 +14464,16 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@replit/codemirror-lang-csharp@6.2.0(@codemirror/autocomplete@6.18.7)(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.3)(@lezer/common@1.2.3)(@lezer/highlight@1.2.1)(@lezer/lr@1.4.2)':
+    dependencies:
+      '@codemirror/autocomplete': 6.18.7
+      '@codemirror/language': 6.11.3
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+      '@lezer/common': 1.2.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.2
 
   '@rollup/plugin-babel@6.0.4(@babel/core@7.24.3)(@types/babel__core@7.20.5)(rollup@4.16.1)':
     dependencies:
@@ -14992,6 +15644,11 @@ snapshots:
       '@typescript-eslint/types': 8.44.0
       eslint-visitor-keys: 4.2.1
 
+  '@uiw/codemirror-extensions-hyper-link@4.25.2(@codemirror/state@6.5.2)(@codemirror/view@6.38.3)':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+
   '@vitest/expect@2.0.5':
     dependencies:
       '@vitest/spy': 2.0.5
@@ -15055,6 +15712,12 @@ snapshots:
       '@vue/shared': 3.5.18
 
   '@vue/shared@3.5.18': {}
+
+  '@wasm-fmt/clang-format@20.1.7': {}
+
+  '@wasm-fmt/gofmt@0.4.9': {}
+
+  '@wasm-fmt/ruff_fmt@0.10.0': {}
 
   '@webassemblyjs/ast@1.14.1':
     dependencies:
@@ -15741,6 +16404,16 @@ snapshots:
 
   co@4.6.0: {}
 
+  codemirror@6.0.2:
+    dependencies:
+      '@codemirror/autocomplete': 6.18.7
+      '@codemirror/commands': 6.8.1
+      '@codemirror/language': 6.11.3
+      '@codemirror/lint': 6.8.5
+      '@codemirror/search': 6.5.11
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.38.3
+
   collect-v8-coverage@1.0.2: {}
 
   color-convert@1.9.3:
@@ -15857,6 +16530,8 @@ snapshots:
       sha.js: 2.4.12
 
   create-require@1.1.1: {}
+
+  crelt@1.0.6: {}
 
   cross-spawn-async@2.2.5:
     dependencies:
@@ -20009,6 +20684,8 @@ snapshots:
     dependencies:
       webpack: 5.88.0(esbuild@0.25.8)
 
+  style-mod@4.1.2: {}
+
   style-to-object@0.4.4:
     dependencies:
       inline-style-parser: 0.1.1
@@ -20485,6 +21162,8 @@ snapshots:
       vfile-message: 4.0.2
 
   vm-browserify@1.1.2: {}
+
+  w3c-keyname@2.2.8: {}
 
   w3c-xmlserializer@4.0.0:
     dependencies:
