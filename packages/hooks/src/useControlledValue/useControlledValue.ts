@@ -3,27 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-interface ControlledValueReturnObject<T extends any> {
-  /** Whether the value is controlled */
-  isControlled: boolean;
-
-  /** The controlled or uncontrolled value */
-  value: T;
-
-  /**
-   * Either updates the uncontrolled value,
-   * or calls the provided `onChange` callback
-   */
-  updateValue: (newVal?: T) => void;
-
-  /**
-   * A setter for the internal value.
-   * Does not change the controlled value if the provided value has not changed.
-   * Prefer using `updateValue` to programmatically set the value.
-   * @internal
-   */
-  setUncontrolledValue: React.Dispatch<React.SetStateAction<T>>;
-}
+import { ControlledValueReturnObject } from './useControlledValue.types';
 
 /**
  * A hook that enables a component to be both controlled or uncontrolled.
