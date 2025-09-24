@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { renderToString } from 'react-dom/server';
+import { createRoot } from 'react-dom/client';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -276,7 +276,11 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           searchModule.search({
             createPanel: view => {
               const dom = document.createElement('div');
-              dom.innerHTML = renderToString(
+              dom.style.position = 'absolute';
+              dom.style.top = '-8px'; // Accounts for top padding of the editor
+              dom.style.right = '0';
+
+              createRoot(dom).render(
                 React.createElement(SearchForm, {
                   view,
                 }),
