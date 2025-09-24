@@ -11,7 +11,7 @@ const changeEventMock = {
 } as ChangeEvent<any>;
 
 const mutableRefMock = {
-  current: document.createElement('div'),
+  current: document.createElement('input'),
 };
 
 const errorSpy = jest.spyOn(console, 'error');
