@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useMemo, useRef } from 'react';
 
 import Button, { Size } from '@leafygreen-ui/button';
-import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
+import { useControlledInputValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import LeafyGreenProvider, {
   useDarkMode,
@@ -37,7 +37,7 @@ export const PreviewCard = forwardRef<HTMLDivElement, PreviewCardProps>(
     fwdRef,
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
-    const { value: isOpen, updateValue } = useControlledValue(
+    const { value: isOpen, updateValue } = useControlledInputValue(
       controlledIsOpen,
       onOpenChange,
       defaultOpen,
