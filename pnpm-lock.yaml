@@ -3813,6 +3813,18 @@ importers:
         specifier: workspace:^
         version: link:../../tools/storybook-utils
 
+  packages/wizard:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+
   tools/build:
     dependencies:
       '@babel/core':
