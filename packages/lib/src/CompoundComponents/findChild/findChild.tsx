@@ -6,7 +6,7 @@ import {
   ReactNode,
 } from 'react';
 
-import { hasStaticProperty } from '../hasStaticProperty';
+import { isChildWithProperty } from '../isChildWithProperty/isChildWithProperty';
 
 /**
  * Find the first child component with a matching static property
@@ -42,30 +42,21 @@ export const findChild = (
   children: ReactNode,
   staticProperty: string,
 ): ReactElement | undefined => {
-  const allChildren = Children.toArray(children);
+  if (!children || Children.count(children) === 0) {
+    return undefined;
+  }
 
-  for (const child of allChildren) {
-    if (!isValidElement(child)) continue;
+  let allChildren = Children.toArray(children);
 
-    // Handle fragments by checking their children first
-    if (child.type === Fragment) {
-      const fragmentChildren = Children.toArray(child.props.children);
+  // Since we don't recurse into nested fragments,
+  // we can unwrap the top-level fragment if it's the only child
+  if (Children.count(allChildren) === 1) {
+    const child = allChildren[0];
 
-      for (const fragmentChild of fragmentChildren) {
-        if (!isValidElement(fragmentChild)) continue;
-
-        if (hasStaticProperty(fragmentChild.type, staticProperty)) {
-          return fragmentChild as ReactElement;
-        }
-      }
-      continue;
-    }
-
-    // Check direct children
-    if (hasStaticProperty(child.type, staticProperty)) {
-      return child as ReactElement;
+    if (isValidElement(child) && child.type === Fragment) {
+      allChildren = Children.toArray(child.props.children);
     }
   }
 
-  return undefined;
+  return allChildren.find(child => isChildWithProperty(child, staticProperty));
 };
