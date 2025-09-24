@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/section-nav",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "LeafyGreen UI Kit Section Nav",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

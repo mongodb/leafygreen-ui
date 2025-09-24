@@ -1,5 +1,18 @@
 # @leafygreen-ui/testing-lib
 
+## 0.9.0
+
+### Minor Changes
+
+- 6f30c55: - Exports types `RenderHookOptions` & `RenderHookResult`.
+  - Updates type signature of `renderHook`
+  - Updates internal structure of RTL override files
+
+### Patch Changes
+
+- Updated dependencies [1a5c69f]
+  - @lg-tools/build@0.8.3
+
 ## 0.8.2
 
 ### Patch Changes

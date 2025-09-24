@@ -1,5 +1,24 @@
 # @lg-chat/fixed-chat-window
 
+## 4.0.7
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- Updated dependencies [1a5c69f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @lg-chat/chat-window@4.1.5
+  - @leafygreen-ui/emotion@5.0.3
+  - @leafygreen-ui/popover@14.0.6
+  - @lg-chat/title-bar@4.0.8
+
 ## 4.0.6
 
 ### Patch Changes
