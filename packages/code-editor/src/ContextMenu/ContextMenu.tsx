@@ -136,7 +136,7 @@ export const ContextMenu = ({
       document.addEventListener('click', handleClick, { capture: true });
       return () => {
         document.removeEventListener('contextmenu', handleGlobalContextMenu);
-        document.addEventListener('click', handleClick, { capture: false });
+        document.removeEventListener('click', handleClick, { capture: true });
       };
     }
   }, [isOpen, handleGlobalContextMenu, handleClick]);
