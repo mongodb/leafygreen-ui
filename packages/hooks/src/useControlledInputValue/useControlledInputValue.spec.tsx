@@ -32,7 +32,7 @@ describe('packages/hooks/useControlledInputValue', () => {
         initialProps: 'apple',
       });
 
-      // simulate responding to an event
+      // simulate responding to an eventw
       act(() => {
         result.current.handleChange(changeEventMock);
       });
