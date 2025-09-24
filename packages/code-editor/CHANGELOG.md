@@ -1,6 +1,6 @@
 # @leafygreen-ui/code-editor
 
-## 0.2.0
+## 0.1.0
 
 ### Minor Changes
 
@@ -33,25 +33,3 @@
   - Storybook integration with multiple usage examples
 
   The package includes extensive TypeScript support, modular architecture for tree-shaking, and follows LeafyGreen design system patterns for consistent styling and behavior.
-
-### Patch Changes
-
-- Updated dependencies [1a5c69f]
-- Updated dependencies [aeb3b3f]
-- Updated dependencies [3471b94]
-- Updated dependencies [6f30c55]
-- Updated dependencies [3c2464c]
-- Updated dependencies [cee1e79]
-- Updated dependencies [6f30c55]
-- Updated dependencies [c568585]
-  - @leafygreen-ui/icon@14.5.1
-  - @leafygreen-ui/icon-button@17.0.6
-  - @leafygreen-ui/tooltip@14.1.4
-  - @leafygreen-ui/hooks@9.1.4
-  - @leafygreen-ui/menu@32.1.0
-  - @leafygreen-ui/lib@15.4.0
-  - @leafygreen-ui/typography@22.1.3
-  - @leafygreen-ui/emotion@5.0.3
-  - @leafygreen-ui/badge@10.1.3
-  - @leafygreen-ui/modal@20.0.3
-  - @leafygreen-ui/a11y@3.0.5
