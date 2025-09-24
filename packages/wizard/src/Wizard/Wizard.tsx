@@ -1,5 +1,8 @@
 import React, { Children, cloneElement, isValidElement, useState } from 'react';
 
+import { WizardFooter } from '../WizardFooter';
+import { WizardStep } from '../WizardStep';
+
 import { stepContentStyles, wizardContainerStyles } from './Wizard.styles';
 import { WizardProps } from './Wizard.types';
 
@@ -74,3 +77,5 @@ export function Wizard({
 }
 
 Wizard.displayName = 'Wizard';
+Wizard.Step = WizardStep;
+Wizard.Footer = WizardFooter;

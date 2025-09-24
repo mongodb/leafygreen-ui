@@ -3792,9 +3792,15 @@ importers:
 
   packages/wizard:
     dependencies:
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
+      '@leafygreen-ui/form-footer':
+        specifier: workspace:^
+        version: link:../form-footer
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
