@@ -8,6 +8,7 @@ export function Wizard({
   onStepChange,
   children,
 }: WizardProps) {
+  // TODO: replace with `useControlledValue`
   // Internal state for uncontrolled mode
   const [internalActiveStep, setInternalActiveStep] = useState<number>(0);
 
