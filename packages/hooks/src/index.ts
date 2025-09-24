@@ -1,8 +1,8 @@
 export { useAutoScroll } from './useAutoScroll';
 export { default as useAvailableSpace } from './useAvailableSpace';
 export { useBackdropClick } from './useBackdropClick';
-export { useControlledValue } from './useControlledValue';
 export { useControlledInputValue } from './useControlledInputValue';
+export { useControlledValue } from './useControlledValue';
 export { type DynamicRefGetter, useDynamicRefs } from './useDynamicRefs';
 export { default as useEscapeKey } from './useEscapeKey';
 export { default as useEventListener } from './useEventListener';

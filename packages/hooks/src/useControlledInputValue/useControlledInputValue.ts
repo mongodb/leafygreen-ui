@@ -1,8 +1,8 @@
-import { ChangeEventHandler, MutableRefObject, useEffect } from 'react';
+import { ChangeEventHandler, MutableRefObject } from 'react';
 
 import { consoleOnce, createSyntheticEvent } from '@leafygreen-ui/lib';
+
 import { useControlledValue } from '../useControlledValue';
-import isUndefined from 'lodash/isUndefined';
 
 interface ControlledValueReturnObject<T extends any> {
   /** Whether the value is controlled */

@@ -14,12 +14,12 @@ interface ControlledValueReturnObject<T extends any> {
    * Either updates the uncontrolled value,
    * or calls the provided `onChange` callback
    */
-  updateValue: (newVal?: T, ...args: Array<any>) => void;
+  updateValue: (newVal?: T) => void;
 
   /**
    * A setter for the internal value.
    * Does not change the controlled value if the provided value has not changed.
-   * Prefer using `setValue` to programmatically set the value.
+   * Prefer using `updateValue` to programmatically set the value.
    * @internal
    */
   setUncontrolledValue: React.Dispatch<React.SetStateAction<T>>;
@@ -32,7 +32,7 @@ interface ControlledValueReturnObject<T extends any> {
  */
 export const useControlledValue = <T extends any>(
   controlledValue?: T,
-  onChange?: (val?: T, ...args: Array<any>) => void,
+  onChange?: (val?: T) => void,
   initialValue?: T,
 ): ControlledValueReturnObject<T | undefined> => {
   // isControlled should only be computed once

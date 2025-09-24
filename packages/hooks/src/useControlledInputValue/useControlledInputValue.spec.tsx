@@ -1,8 +1,8 @@
 import React, { ChangeEvent, ChangeEventHandler, useRef } from 'react';
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { act, renderHook } from '@leafygreen-ui/testing-lib';
-import userEvent from '@testing-library/user-event';
 
 import { useControlledInputValue } from './useControlledInputValue';
 
