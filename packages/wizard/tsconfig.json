@@ -10,7 +10,13 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../button"
+    },
+    {
       "path": "../emotion"
+    },
+    {
+      "path": "../form-footer"
     },
     {
       "path": "../lib"

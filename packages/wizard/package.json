@@ -28,7 +28,9 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/form-footer": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
   },
