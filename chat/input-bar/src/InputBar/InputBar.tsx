@@ -45,6 +45,7 @@ import {
 import { SearchResultsMenu } from '@leafygreen-ui/search-input';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
+import { DisclaimerText } from '../DisclaimerText';
 import { InputBarFeedback } from '../InputBarFeedback';
 import { InputBarSendButton } from '../InputBarSendButton';
 import { State } from '../shared.types';
@@ -53,6 +54,7 @@ import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 import {
   actionContainerStyles,
   adornmentContainerStyles,
+  disclaimerTextStyles,
   getContentWrapperStyles,
   getFormStyles,
   getHotkeyIndicatorStyles,
@@ -498,6 +500,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
               </div>
             </div>
           </div>
+          {isCompact && <DisclaimerText className={disclaimerTextStyles} />}
           {withTypeAhead && (
             <SearchResultsMenu
               open={isOpen}
