@@ -46,15 +46,11 @@ Optionally configure the rules you want to use under the rules section.
 <!-- begin auto-generated rules list -->
 
 💼 Configurations enabled in.\
-🚫 Configurations disabled in.\
-🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
-💡 Manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                     | Description                                                              | 💼                  | 🚫                  | 🔧  | 💡  |
-| :------------------------------------------------------- | :----------------------------------------------------------------------- | :------------------ | :------------------ | :-- | :-- |
-| [boolean-verb-prefix](docs/rules/boolean-verb-prefix.md) | Enforce prefixing boolean variables & properties with a conditional verb |                     | ![badge-internal][] |     | 💡  |
-| [no-indirect-imports](docs/rules/no-indirect-imports.md) | Forbid indirect imports from `src/` or `packages/`                       | ![badge-internal][] |                     | 🔧  |     |
-| [standard-testid](docs/rules/standard-testid.md)         | Enforce a consistent prefix for hard-coded `data-testid` attributes      |                     | ![badge-internal][] | 🔧  |     |
+| Name                                                     | Description                                        | 💼                  | 🔧  |
+| :------------------------------------------------------- | :------------------------------------------------- | :------------------ | :-- |
+| [no-indirect-imports](docs/rules/no-indirect-imports.md) | Forbid indirect imports from `src/` or `packages/` | ![badge-internal][] | 🔧  |
 
 <!-- end auto-generated rules list -->
 
