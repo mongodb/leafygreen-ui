@@ -1,5 +1,6 @@
-import React, { Children, cloneElement, isValidElement, useState } from 'react';
+import React, { Children, cloneElement, isValidElement } from 'react';
 
+import { useWizardControlledValue } from '../utils/useWizardControlledValue/useWizardControlledValue';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
 
@@ -7,17 +8,16 @@ import { stepContentStyles, wizardContainerStyles } from './Wizard.styles';
 import { WizardProps } from './Wizard.types';
 
 export function Wizard({
-  activeStep: controlledActiveStep,
+  activeStep: activeStepProp,
   onStepChange,
   children,
 }: WizardProps) {
-  // TODO: replace with `useControlledValue`
-  // Internal state for uncontrolled mode
-  const [internalActiveStep, setInternalActiveStep] = useState<number>(0);
-
-  // Use controlled prop if provided, otherwise use internal state
-  const isControlled = controlledActiveStep !== undefined;
-  const activeStep = isControlled ? controlledActiveStep : internalActiveStep;
+  // Controlled/Uncontrolled activeStep value
+  const {
+    isControlled,
+    value: activeStep,
+    setValue: setInternalActiveStep,
+  } = useWizardControlledValue<number>(activeStepProp, undefined, 0);
 
   // Handle step changes
   const handleStepChange = (newStep: number) => {
