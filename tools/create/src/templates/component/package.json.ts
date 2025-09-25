@@ -18,7 +18,8 @@ export const pkgJson = ({
   "license": "Apache-2.0",
   "exports": {
     ".": {
-      "require": "./dist/umd/index.js""import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
       "types": "./dist/types/index.d.ts"
     },
     "./testing": {
