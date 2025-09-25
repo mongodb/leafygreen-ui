@@ -23,13 +23,13 @@ const getBaseContainerStyles = (theme: Theme) => css`
   max-width: ${CONTAINER_MAX_WIDTH}px;
   width: 100%;
   display: grid;
-  grid-template-rows: 52px 0fr;
+  grid-template-rows: 1fr 0fr;
   overflow: hidden;
   transition: grid-template-rows ${transitionDuration.slower}ms ease-in-out;
 `;
 
 const openContainerStyles = css`
-  grid-template-rows: 52px 1fr;
+  grid-template-rows: 1fr 1fr;
 `;
 
 export const getContainerStyles = ({
