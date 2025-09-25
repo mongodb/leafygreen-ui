@@ -11,7 +11,7 @@ export {
   hasAnyStaticProperty,
   hasStaticProperty,
   isChildWithProperty,
-} from './componentQueries';
+} from './childQueries';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export { deepMapValues } from './deepMapValues';
 export { formatCssSize } from './formatCssSize';
