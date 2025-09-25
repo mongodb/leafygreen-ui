@@ -41,17 +41,6 @@ describe('MessagePromotion', () => {
       expect(screen.getByText(promotionText)).toBeInTheDocument();
       expect(screen.getByText('Learn More')).toBeInTheDocument();
     });
-
-    test('renders text but not external link when no URL provided', () => {
-      const promotionText = 'This is a test promotion message';
-      renderMessagePromotion({
-        promotionText,
-        promotionUrl: undefined,
-      });
-
-      expect(screen.getByText(promotionText)).toBeInTheDocument();
-      expect(screen.queryByText('Learn More')).not.toBeInTheDocument();
-    });
   });
 
   describe('callback handling', () => {

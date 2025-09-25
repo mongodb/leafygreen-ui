@@ -10,7 +10,7 @@ export interface MessagePromotionProps
   /**
    * Promotion URL.
    */
-  promotionUrl?: string;
+  promotionUrl: string;
 
   /**
    * Promotion onClick callback handler

@@ -14,8 +14,9 @@ const meta: StoryMetaType<typeof MessagePromotion> = {
         darkMode: [false, true],
         promotionText: [
           'Challenge your knowledge by earning the Advanced Schema Design skill!',
+          'Challenge your knowledge by earning the Advanced Schema Design skill! This is a really really really really really really really really really really really really really really really really really  really really really really really really really really long copy text to test how the component handles long text content.',
         ],
-        promotionUrl: ['https://learn.mongodb.com/skills', undefined],
+        promotionUrl: ['https://learn.mongodb.com/skills'],
       },
     },
   },
@@ -33,17 +34,6 @@ export const LiveExample = {
       'Challenge your knowledge by earning the Advanced Schema Design skill!',
     promotionUrl:
       'https://learn.mongodb.com/courses/advanced-schema-patterns-and-antipatterns',
-    // eslint-disable-next-line no-console
-    onPromotionClick: () => console.log('Promotion clicked'),
-  },
-};
-
-export const LongPromotionTextAndUrl = {
-  render: Template,
-  args: {
-    promotionText:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-    promotionUrl: 'https://learn.mongodb.com/skills',
     // eslint-disable-next-line no-console
     onPromotionClick: () => console.log('Promotion clicked'),
   },

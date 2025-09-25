@@ -30,14 +30,12 @@ export function MessagePromotion({
       </div>
       <Body as="span" {...rest}>
         {promotionText}
-        {promotionUrl && (
-          <>
-            {' '}
-            <Link href={promotionUrl} onClick={onPromotionClick}>
-              Learn More
-            </Link>
-          </>
-        )}
+        <>
+          {' '}
+          <Link href={promotionUrl} onClick={onPromotionClick}>
+            Learn More
+          </Link>
+        </>
       </Body>
     </div>
   );
