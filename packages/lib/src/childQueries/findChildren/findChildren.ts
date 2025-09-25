@@ -18,13 +18,27 @@ import { unwrapRootFragment } from '../unwrapRootFragment/unwrapRootFragment';
  *  * @example
  * ```ts
  * // ✅ Will find: Direct children
- * findChildren([<Foo />, <Foo />], 'isFoo') // [<Foo />, <Foo />]
+ * findChildren([
+ *   <Foo />,
+ *   <Foo />
+ * ], 'isFoo') // [<Foo />, <Foo />]
  *
  * // ✅ Will find: Children inside a single fragment
- * findChildren(<><Foo />, <Foo /></>, 'isFoo') // [<Foo />, <Foo />]
+ * findChildren((
+ *   <>
+ *     <Foo />
+ *     <Foo />
+ *   </>,
+ * 'isFoo') // [<Foo />, <Foo />]
  *
  * // ❌ Will NOT find: Deeply nested fragments
- * findChildren(<><><Foo /></></>, 'isFoo') // []
+ * findChildren((
+ *   <>
+ *     <>
+ *       <Foo />
+ *     </>
+ *   </>),
+ * 'isFoo') // []
  *
  * // ❌ Will NOT find: Nested in other elements
  * findChildren(<div><Foo /></div>, 'isFoo') // []
