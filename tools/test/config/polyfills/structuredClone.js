@@ -1,6 +1,15 @@
+/**
+ * Polyfill for structuredClone in Jest environment
+ *
+ * Added in Node 18+, but not available in Jest by default.
+ * Required by ESLint's flat config system.
+ * Uses JSON serialization for basic object cloning.
+ *
+ * @param {any} obj - The object to clone
+ * @returns {any} A deep clone of the input object
+ */
 function structuredClone(obj) {
-  // Simple polyfill using JSON parse/stringify for basic cloning
-  // This works for the types of objects ESLint uses in its config system
+  // Handle primitive values and null
   if (obj === null || typeof obj !== 'object') {
     return obj;
   }
