@@ -2,6 +2,9 @@ import React from 'react';
 
 import Badge, { Variant } from '@leafygreen-ui/badge';
 import Icon from '@leafygreen-ui/icon';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { Body, Link } from '@leafygreen-ui/typography';
 
 import {
@@ -19,24 +22,28 @@ export function MessagePromotion({
   promotionText,
   promotionUrl,
   onPromotionClick,
+  darkMode: darkModeProp,
   ...rest
 }: MessagePromotionProps) {
+  const { darkMode } = useDarkMode(darkModeProp);
   return (
-    <div className={promotionContainerStyles}>
-      <div>
-        <Badge variant={Variant.Green} className={badgeStyles}>
-          <Icon glyph="Award" />
-        </Badge>
+    <LeafyGreenProvider darkMode={darkMode}>
+      <div className={promotionContainerStyles}>
+        <div>
+          <Badge variant={Variant.Green} className={badgeStyles}>
+            <Icon glyph="Award" />
+          </Badge>
+        </div>
+        <Body as="span" {...rest}>
+          {promotionText}
+          <>
+            {' '}
+            <Link href={promotionUrl} onClick={onPromotionClick}>
+              Learn More
+            </Link>
+          </>
+        </Body>
       </div>
-      <Body as="span" {...rest}>
-        {promotionText}
-        <>
-          {' '}
-          <Link href={promotionUrl} onClick={onPromotionClick}>
-            Learn More
-          </Link>
-        </>
-      </Body>
-    </div>
+    </LeafyGreenProvider>
   );
 }

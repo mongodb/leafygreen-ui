@@ -1,5 +1,5 @@
 import React from 'react';
-import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { MessagePromotion, MessagePromotionProps } from '.';
@@ -19,6 +19,9 @@ const meta: StoryMetaType<typeof MessagePromotion> = {
         promotionUrl: ['https://learn.mongodb.com/skills'],
       },
     },
+  },
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
   },
 };
 
