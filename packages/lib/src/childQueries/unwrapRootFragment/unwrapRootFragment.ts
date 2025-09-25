@@ -6,7 +6,7 @@ import { Children, Fragment, isValidElement, ReactNode } from 'react';
  *
  * Otherwise, returns the `children` or an empty array
  *
- * e.g.
+ * @example
  * ```tsx
  * unwrapRootFragment(
  *  <Fragment>

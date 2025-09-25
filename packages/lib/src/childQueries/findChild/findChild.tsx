@@ -1,12 +1,7 @@
-import {
-  Children,
-  Fragment,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import { Children, ReactElement, ReactNode } from 'react';
 
 import { isChildWithProperty } from '../isChildWithProperty/isChildWithProperty';
+import { unwrapRootFragment } from '../unwrapRootFragment/unwrapRootFragment';
 
 /**
  * Find the first child component with a matching static property
@@ -22,16 +17,16 @@ import { isChildWithProperty } from '../isChildWithProperty/isChildWithProperty'
  * @example
  * ```ts
  * // ✅ Will find: Direct child
- * <Foo />
+ * findChild(<Foo />, 'isFoo') // <Foo />
  *
- * // ✅ Will find: Child inside fragment
- * <><Foo /></>
+ * // ✅ Will find: Child inside a single fragment
+ * findChild(<><Foo /></>, 'isFoo') // <Foo />
  *
- * // ❌ Will NOT find: Nested fragments
- * <><><Foo /></></>
+ * // ❌ Will NOT find: Deeply nested fragments
+ * findChild(<><><Foo /></></>, 'isFoo') // undefined
  *
- * // ❌ Will NOT find: Deeply nested
- * <div><Foo /></div>
+ * // ❌ Will NOT find: Nested in other elements
+ * findChild(<div><Foo /></div>, 'isFoo') // undefined
  * ```
  *
  * @param children Any React children
@@ -46,17 +41,9 @@ export const findChild = (
     return undefined;
   }
 
-  let allChildren = Children.toArray(children);
+  const allChildren = unwrapRootFragment(children);
 
-  // Since we don't recurse into nested fragments,
-  // we can unwrap the top-level fragment if it's the only child
-  if (allChildren.length === 1) {
-    const child = allChildren[0];
-
-    if (isValidElement(child) && child.type === Fragment) {
-      allChildren = Children.toArray(child.props.children);
-    }
-  }
-
-  return allChildren.find(child => isChildWithProperty(child, staticProperty));
+  return allChildren?.find(child =>
+    isChildWithProperty(child, staticProperty),
+  ) as ReactElement | undefined;
 };
