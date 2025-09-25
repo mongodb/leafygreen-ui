@@ -18,11 +18,18 @@ import TextInput from '@leafygreen-ui/text-input';
 import { Icon } from '../../../icon/src/Icon';
 
 import {
+  allButtonStyles,
+  closeButtonStyles,
   findInputContainerStyles,
   findInputIconButtonStyles,
   findSectionStyles,
-  getIconStyles,
-  getSearchFormContainerStyles,
+  getContainerStyles,
+  getReplaceInnerSectionStyles,
+  getToggleIconStyles,
+  replaceButtonStyles,
+  replaceInputContainerStyles,
+  replaceSectionStyles,
+  toggleButtonStyles,
 } from './SearchForm.styles';
 import { SearchFormProps } from './SearchForm.types';
 
@@ -46,16 +53,14 @@ export function SearchForm({ view }: SearchFormProps) {
 
   const handleFindInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      const newQuery = new SearchQuery({
-        search: 'test',
-        caseSensitive: true,
-        regexp: false,
-        wholeWord: false,
-        replace: '',
-      });
-
-      view.dispatch({ effects: setSearchQuery.of(newQuery) });
-
+      // const newQuery = new SearchQuery({
+      //   search: 'test',
+      //   caseSensitive: true,
+      //   regexp: false,
+      //   wholeWord: false,
+      //   replace: '',
+      // });
+      // view.dispatch({ effects: setSearchQuery.of(newQuery) });
       // if (!query || !query.eq(newQuery)) {
       //   setQuery(newQuery);
       //   view.dispatch({ effects: setSearchQuery.of(newQuery) });
@@ -65,15 +70,15 @@ export function SearchForm({ view }: SearchFormProps) {
   );
 
   return (
-    <div className={getSearchFormContainerStyles(theme)}>
+    <div className={getContainerStyles({ theme, isOpen })}>
       <div className={findSectionStyles}>
         <IconButton
-          // className={toggleButtonStyles}
+          className={toggleButtonStyles}
           aria-label="Toggle button"
           aria-expanded={isOpen}
           onClick={handleToggleButtonClick}
         >
-          <Icon glyph="ChevronDown" className={getIconStyles(isOpen)} />
+          <Icon glyph="ChevronDown" className={getToggleIconStyles(isOpen)} />
         </IconButton>
         <div className={findInputContainerStyles}>
           <TextInput
@@ -86,30 +91,39 @@ export function SearchForm({ view }: SearchFormProps) {
           <IconButton
             className={findInputIconButtonStyles}
             aria-label="filter button"
-            // onClick={}
           >
             <Icon glyph="Filter" />
           </IconButton>
         </div>
-        <IconButton
-          aria-label="next item button"
-          // onClick={}
-        >
+        <IconButton aria-label="next item button">
           <Icon glyph="ArrowUp" />
         </IconButton>
-        <IconButton
-          aria-label="previous item button"
-          // onClick={}
-        >
+        <IconButton aria-label="previous item button">
           <Icon glyph="ArrowDown" />
         </IconButton>
-        <Button>All</Button>
+        <Button className={allButtonStyles}>All</Button>
         <IconButton
           aria-label="close find menu button"
           onClick={handleCloseButtonClick}
+          className={closeButtonStyles}
         >
           <Icon glyph="X" />
         </IconButton>
+      </div>
+      <div className={replaceSectionStyles}>
+        <div className={getReplaceInnerSectionStyles(theme)}>
+          <TextInput
+            placeholder="Replace"
+            aria-labelledby="replace"
+            className={replaceInputContainerStyles}
+          />
+          <Button aria-label="replace button" className={replaceButtonStyles}>
+            Replace
+          </Button>
+          <Button aria-label="replace button" className={replaceButtonStyles}>
+            Replace All
+          </Button>
+        </div>
       </div>
     </div>
   );
