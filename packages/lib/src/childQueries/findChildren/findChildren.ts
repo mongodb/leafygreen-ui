@@ -28,8 +28,8 @@ import { unwrapRootFragment } from '../unwrapRootFragment/unwrapRootFragment';
  *   <>
  *     <Foo />
  *     <Foo />
- *   </>,
- * 'isFoo') // [<Foo />, <Foo />]
+ *   </>
+ * ), 'isFoo') // [<Foo />, <Foo />]
  *
  * // ❌ Will NOT find: Deeply nested fragments
  * findChildren((
@@ -37,8 +37,8 @@ import { unwrapRootFragment } from '../unwrapRootFragment/unwrapRootFragment';
  *     <>
  *       <Foo />
  *     </>
- *   </>),
- * 'isFoo') // []
+ *   </>
+ * ), 'isFoo') // []
  *
  * // ❌ Will NOT find: Nested in other elements
  * findChildren(<div><Foo /></div>, 'isFoo') // []
