@@ -50,7 +50,7 @@ export const findChild = (
 
   // Since we don't recurse into nested fragments,
   // we can unwrap the top-level fragment if it's the only child
-  if (Children.count(allChildren) === 1) {
+  if (allChildren.length === 1) {
     const child = allChildren[0];
 
     if (isValidElement(child) && child.type === Fragment) {
