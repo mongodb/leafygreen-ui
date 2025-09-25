@@ -7,14 +7,13 @@ const BADGE_WIDTH = spacing[900];
 export const promotionContainerStyles = css`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 0px ${spacing[200]}px;
 `;
 
 export const badgeStyles = css`
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
 
   width: ${BADGE_WIDTH}px;
