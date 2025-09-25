@@ -1,51 +1,39 @@
 import React from 'react';
 
+import Badge, { Variant } from '@leafygreen-ui/badge';
 import Icon from '@leafygreen-ui/icon';
 import { Body, Link } from '@leafygreen-ui/typography';
 
 import {
+  badgeStyles,
   promotionContainerStyles,
-  promotionIconStyles,
-  promotionLearnMoreStyles,
 } from './MessagePromotion.styles';
 import { type MessagePromotionProps } from './MessagePromotion.types';
 
 /**
  * Renders promotional content with an award icon and optional "Learn More" link.
  *
- * @returns The rendered promotional message component, or null if no promotionText is provided
+ * @returns The rendered promotional message component.
  */
 export function MessagePromotion({
-  baseFontSize,
   promotionText,
   promotionUrl,
   onPromotionClick,
-  markdownProps,
   ...rest
 }: MessagePromotionProps) {
-  if (!promotionText) {
-    return null;
-  }
-
   return (
     <div className={promotionContainerStyles}>
-      <div className={promotionIconStyles}>
-        <Icon glyph="Award" />
+      <div>
+        <Badge variant={Variant.Green} className={badgeStyles}>
+          <Icon glyph="Award" />
+        </Badge>
       </div>
-      <Body
-        className={promotionLearnMoreStyles}
-        baseFontSize={baseFontSize}
-        {...rest}
-      >
+      <Body as="span" {...rest}>
         {promotionText}
         {promotionUrl && (
           <>
             {' '}
-            <Link
-              href={promotionUrl}
-              onClick={onPromotionClick}
-              baseFontSize={baseFontSize}
-            >
+            <Link href={promotionUrl} onClick={onPromotionClick}>
               Learn More
             </Link>
           </>

@@ -1,10 +1,7 @@
-import { LGMarkdownProps } from '@lg-chat/lg-markdown';
-
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import React from 'react';
 
 export interface MessagePromotionProps
-  extends Omit<HTMLElementProps<'div'>, 'children'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> {
   /**
    * Promotion text content.
    */
@@ -16,17 +13,7 @@ export interface MessagePromotionProps
   promotionUrl?: string;
 
   /**
-   * Base font size.
-   */
-  baseFontSize?: BaseFontSize;
-
-  /**
    * Promotion onClick callback handler
    */
   onPromotionClick?: () => void;
-
-  /**
-   * Props passed to the internal ReactMarkdown instance
-   */
-  markdownProps?: Omit<LGMarkdownProps, 'children'>;
 }

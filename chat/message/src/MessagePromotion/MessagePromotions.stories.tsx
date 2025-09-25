@@ -7,11 +7,17 @@ import { MessagePromotion, MessagePromotionProps } from '.';
 const meta: StoryMetaType<typeof MessagePromotion> = {
   title: 'Composition/Chat/MessagePromotion',
   component: MessagePromotion,
-  args: {
-    baseFontSize: 13,
-  },
   parameters: {
     default: 'WithPromotionTextAndUrl',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        promotionText: [
+          'Challenge your knowledge by earning the Advanced Schema Design skill!',
+        ],
+        promotionUrl: ['https://learn.mongodb.com/skills', undefined],
+      },
+    },
   },
 };
 
@@ -20,11 +26,11 @@ export default meta;
 const Template: StoryFn<MessagePromotionProps> = props =>
   React.createElement(MessagePromotion, props);
 
-export const WithPromotionTextAndUrl = {
+export const LiveExample = {
   render: Template,
   args: {
     promotionText:
-      'Challenge your knowledge by earning the Advanced Schema Design skill! ',
+      'Challenge your knowledge by earning the Advanced Schema Design skill!',
     promotionUrl:
       'https://learn.mongodb.com/courses/advanced-schema-patterns-and-antipatterns',
     // eslint-disable-next-line no-console
@@ -32,15 +38,7 @@ export const WithPromotionTextAndUrl = {
   },
 };
 
-export const WithPromotionTextOnly = {
-  render: Template,
-  args: {
-    promotionText:
-      'Challenge your knowledge by earning the Advanced Schema Design skill! ',
-  },
-};
-
-export const WithLongPromotionTextAndUrl = {
+export const LongPromotionTextAndUrl = {
   render: Template,
   args: {
     promotionText:
@@ -50,3 +48,5 @@ export const WithLongPromotionTextAndUrl = {
     onPromotionClick: () => console.log('Promotion clicked'),
   },
 };
+
+export const Generated = () => {};

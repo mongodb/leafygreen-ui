@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/avatar": "workspace:^",
+    "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",

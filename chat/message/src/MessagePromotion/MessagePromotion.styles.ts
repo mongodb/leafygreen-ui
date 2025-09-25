@@ -1,35 +1,23 @@
 import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { borderRadius, spacing } from '@leafygreen-ui/tokens';
+
+const BADGE_HEIGHT = spacing[600];
+const BADGE_WIDTH = spacing[900];
 
 export const promotionContainerStyles = css`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  margin: ${spacing[200]}px 0 0 0;
+  align-items: flex-start;
+  gap: 0px ${spacing[200]}px;
 `;
 
-export const promotionIconStyles = css`
-  box-sizing: border-box;
+export const badgeStyles = css`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 
-  width: ${spacing[900]}px;
-  height: ${spacing[600]}px;
-  margin-right: ${spacing[200]}px;
-
-  border-radius: ${spacing[600]}px;
-  border: 1px solid ${palette.green.light2};
-  background-color: ${palette.green.light3};
-
-  & svg {
-    color: ${palette.green.dark2};
-  }
-`;
-
-export const promotionLearnMoreStyles = css`
-  display: inline;
-  color: inherit;
+  width: ${BADGE_WIDTH}px;
+  height: ${BADGE_HEIGHT}px;
+  border-radius: ${borderRadius[600]}px;
 `;
