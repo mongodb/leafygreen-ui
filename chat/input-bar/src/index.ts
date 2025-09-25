@@ -3,9 +3,9 @@ export {
   type InputBarProps,
   /** @deprecated */
   lgInputBarStyles,
-  State,
   type TextareaAutosizeProps,
 } from './InputBar';
+export { State } from './shared.types';
 export { SuggestedPrompt, type SuggestedPromptProps } from './SuggestedPrompt';
 export {
   SuggestedPrompts,
