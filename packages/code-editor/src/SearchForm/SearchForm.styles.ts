@@ -11,8 +11,9 @@ import {
 import { color } from '@leafygreen-ui/tokens';
 
 const CONTAINER_MAX_WIDTH = 500;
+const INPUT_WIDTH = 240;
 
-export const getSearchFormContainerStyles = (theme: Theme) => css`
+const getBaseContainerStyles = (theme: Theme) => css`
   background-color: ${color[theme].background[Variant.Secondary][
     InteractionState.Default
   ]};
@@ -21,38 +22,94 @@ export const getSearchFormContainerStyles = (theme: Theme) => css`
   box-shadow: ${shadow[theme][100]};
   max-width: ${CONTAINER_MAX_WIDTH}px;
   width: 100%;
+  display: grid;
+  grid-template-rows: 52px 0fr;
+  overflow: hidden;
+  transition: grid-template-rows ${transitionDuration.slower}ms ease-in-out;
 `;
+
+const openContainerStyles = css`
+  grid-template-rows: 52px 1fr;
+`;
+
+export const getContainerStyles = ({
+  theme,
+  isOpen,
+}: {
+  theme: Theme;
+  isOpen: boolean;
+}) =>
+  cx(getBaseContainerStyles(theme), {
+    [openContainerStyles]: isOpen,
+  });
 
 export const findSectionStyles = css`
-  display: grid;
-  grid-template-columns: auto 1fr repeat(4, auto);
+  display: flex;
   align-items: center;
-  gap: 0 ${spacing[100]}px;
-  padding: 8px 10px 8px;
+  padding: ${spacing[200]}px ${spacing[300]}px;
+  height: 100%;
 `;
 
-export const toggleIconStyles = css`
+export const replaceSectionStyles = css`
+  min-height: 0;
+  overflow: hidden;
+`;
+
+/**
+ * Inner section used for padding and border so that the outer section can
+ * fully close to 0px when set to 0fr.
+ */
+export const getReplaceInnerSectionStyles = (theme: Theme) => css`
+  display: flex;
+  align-items: center;
+  padding: 8px 10px 8px 44px;
+  border-top: 1px solid
+    ${color[theme].border[Variant.Secondary][InteractionState.Default]};
+`;
+
+export const toggleButtonStyles = css`
+  margin-right: ${spacing[100]}px;
+`;
+
+const toggleIconStyles = css`
   transform: rotate(-180deg);
   transition: transform ${transitionDuration.slower}ms ease-in-out;
 `;
 
-export const openToggleIconStyles = css`
+const openToggleIconStyles = css`
   transform: rotate(0deg);
 `;
 
-export const toggleButtonStyles = css``;
-
-export const getIconStyles = (isOpen: boolean) =>
+export const getToggleIconStyles = (isOpen: boolean) =>
   cx(toggleIconStyles, {
     [openToggleIconStyles]: isOpen,
   });
 
 export const findInputContainerStyles = css`
   position: relative;
+  width: ${INPUT_WIDTH}px;
+  margin-right: ${spacing[100]}px;
+`;
+
+export const allButtonStyles = css`
+  margin-left: ${spacing[100]}px;
+`;
+
+export const closeButtonStyles = css`
+  margin-left: auto;
 `;
 
 export const findInputIconButtonStyles = css`
   position: absolute;
   right: ${spacing[100]}px;
   top: ${spacing[100]}px;
+`;
+
+export const replaceInputContainerStyles = css`
+  position: relative;
+  width: ${INPUT_WIDTH}px;
+`;
+
+export const replaceButtonStyles = css`
+  margin-left: ${spacing[100]}px;
 `;
