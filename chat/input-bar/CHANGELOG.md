@@ -1,5 +1,31 @@
 # @lg-chat/input-bar
 
+## 10.0.5
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- 74a2c42: Use `assistantName` value from `LeafyGreenChatContext` for loading message
+- Updated dependencies [1a5c69f]
+- Updated dependencies [aeb3b3f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/icon-button@17.0.6
+  - @leafygreen-ui/search-input@6.0.6
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/emotion@5.0.3
+  - @leafygreen-ui/popover@14.0.6
+  - @leafygreen-ui/banner@10.1.1
+  - @leafygreen-ui/badge@10.1.3
+  - @leafygreen-ui/polymorphic@3.1.0
+
 ## 10.0.4
 
 ### Patch Changes

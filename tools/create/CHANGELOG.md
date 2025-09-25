@@ -1,5 +1,13 @@
 # @lg-tools/create
 
+## 0.4.1
+
+### Patch Changes
+
+- 23ce595: Fixes `package.json` template
+- Updated dependencies [1a5c69f]
+  - @lg-tools/build@0.8.3
+
 ## 0.4.0
 
 ### Minor Changes

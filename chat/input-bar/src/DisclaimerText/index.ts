@@ -1,0 +1,1 @@
+export { DisclaimerText } from './DisclaimerText';

@@ -7,6 +7,8 @@ import Button from '@leafygreen-ui/button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body, Error } from '@leafygreen-ui/typography';
 
+import { State } from '../shared.types';
+
 import {
   bannerContentContainerStyles,
   bannerStyles,
@@ -15,7 +17,6 @@ import {
   statusContainerStyles,
 } from './InputBarFeedback.styles';
 import { InputBarFeedbackProps } from './InputBarFeedback.types';
-import { State } from './shared.types';
 
 const messages = {
   defaultError: 'Oops... Something went wrong.',

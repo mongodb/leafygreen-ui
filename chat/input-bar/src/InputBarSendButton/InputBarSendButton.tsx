@@ -6,10 +6,11 @@ import StopIcon from '@leafygreen-ui/icon/dist/Stop';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { State } from '../shared.types';
+
 import { getIconButtonStyles, getIconFill } from './InputBarSendButton.styles';
 import { InputBarSendButtonProps } from './InputBarSendButton.types';
 import { ReturnIcon } from './ReturnIcon';
-import { State } from './shared.types';
 
 export const InputBarSendButton = forwardRef<
   HTMLButtonElement,
