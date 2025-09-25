@@ -11,6 +11,7 @@ import {
 import { color } from '@leafygreen-ui/tokens';
 
 const CONTAINER_MAX_WIDTH = 500;
+const SECTION_HEIGHT = 52;
 const INPUT_WIDTH = 240;
 
 const getBaseContainerStyles = (theme: Theme) => css`
@@ -23,13 +24,13 @@ const getBaseContainerStyles = (theme: Theme) => css`
   max-width: ${CONTAINER_MAX_WIDTH}px;
   width: 100%;
   display: grid;
-  grid-template-rows: 1fr 0fr;
+  grid-template-rows: ${SECTION_HEIGHT}px 0fr;
   overflow: hidden;
   transition: grid-template-rows ${transitionDuration.slower}ms ease-in-out;
 `;
 
 const openContainerStyles = css`
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: ${SECTION_HEIGHT}px 1fr;
 `;
 
 export const getContainerStyles = ({
