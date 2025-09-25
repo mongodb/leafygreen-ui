@@ -13,6 +13,9 @@ ruleTester.run('no-render-hook-from-rtl', noRenderHookFromRtlRule, {
     {
       code: `import { renderHook, type RenderHookResult } from '@leafygreen-ui/testing-lib'`,
     },
+    {
+      code: `import type { RenderHookResult } from '@leafygreen-ui/testing-lib'`,
+    },
   ],
   invalid: [
     // From RTL
