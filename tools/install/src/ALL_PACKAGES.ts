@@ -102,6 +102,7 @@ export const ALL_PACKAGES = [
   '@lg-tools/cli',
   '@lg-tools/codemods',
   '@lg-tools/create',
+  '@lg-tools/eslint-plugin',
   '@lg-tools/install',
   '@lg-tools/link',
   '@lg-tools/lint',
