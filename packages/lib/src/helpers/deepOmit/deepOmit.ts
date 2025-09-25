@@ -16,7 +16,7 @@ import omit from 'lodash/omit';
  *   }
  *  }
  * };
- * deepOmit(obj, ['b.d', 'd.e.f']);
+ * deepOmit(obj, ['b.d', 'b.e.f']);
  * // returns { a: 1, b: { c: 2, e: {} } }
  *```
  * @param obj
