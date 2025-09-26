@@ -1,19 +1,15 @@
 import React from 'react';
 
-import {
-  stepContentStyles,
-  stepDescriptionStyles,
-  stepTitleStyles,
-} from './WizardStep.styles';
+import { Description, H3 } from '@leafygreen-ui/typography';
+
+import { stepContentStyles } from './WizardStep.styles';
 import { WizardStepProps } from './WizardStep.types';
 
 export function WizardStep({ title, description, children }: WizardStepProps) {
   return (
     <div>
-      <div className={stepTitleStyles}>{title}</div>
-      {description && (
-        <div className={stepDescriptionStyles}>{description}</div>
-      )}
+      <H3>{title}</H3>
+      {description && <Description>{description}</Description>}
       <div className={stepContentStyles}>{children}</div>
     </div>
   );
