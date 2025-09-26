@@ -199,11 +199,7 @@ describe('packages/DrawerToolbarLayout', () => {
   test('closes the drawer when the active item is hidden', () => {
     const { rerender } = render(<Component />);
 
-    const { getToolbarTestUtils, isOpen } = getTestUtils();
-
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
-    userEvent.click(codeButton!);
+    const { isOpen } = getTestUtils();
 
     expect(isOpen()).toBe(true);
 
@@ -235,11 +231,7 @@ describe('packages/DrawerToolbarLayout', () => {
   test('closes the drawer when the active item is removed from the toolbar data', () => {
     const { rerender } = render(<Component />);
 
-    const { getToolbarTestUtils, isOpen } = getTestUtils();
-
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
-    userEvent.click(codeButton!);
+    const { isOpen } = getTestUtils();
 
     expect(isOpen()).toBe(true);
 
@@ -258,5 +250,37 @@ describe('packages/DrawerToolbarLayout', () => {
     );
 
     expect(isOpen()).toBe(false);
+  });
+
+  test('closes the drawer when clicking the same toolbar button while drawer is open', () => {
+    render(<Component />);
+
+    const { getToolbarTestUtils, isOpen } = getTestUtils();
+
+    expect(isOpen()).toBe(true);
+
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+
+    userEvent.click(codeButton!);
+
+    expect(isOpen()).toBe(false);
+  });
+
+  test('opens the drawer when clicking a different toolbar button while drawer is open', () => {
+    render(<Component />);
+
+    const { getToolbarTestUtils, isOpen, getDrawer } = getTestUtils();
+
+    expect(isOpen()).toBe(true);
+    expect(getDrawer()).toHaveTextContent('Drawer Title');
+
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+    const code2Button = getToolbarIconButtonByLabel('Code2')?.getElement();
+
+    userEvent.click(code2Button!);
+
+    expect(isOpen()).toBe(true);
+    expect(getDrawer()).toHaveTextContent('Drawer Title2');
   });
 });

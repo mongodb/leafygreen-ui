@@ -19,6 +19,15 @@ export interface DrawerToolbarContextType {
   closeDrawer: () => void;
 
   /**
+   * This function is used to handle toolbar button clicks with toggle behavior.
+   * If the drawer is already open with the same content, it closes the drawer.
+   * Otherwise, it opens the drawer with the new content.
+   * @param id - The id of the drawer to toggle
+   * @returns void
+   */
+  toggleDrawer: (id: DataId) => void;
+
+  /**
    * Indicates whether the drawer should be closed. Used to manage transition states.
    * For example, during close animations, content should remain until the transition completes.
    */
