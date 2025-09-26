@@ -1,5 +1,11 @@
 # @leafygreen-ui/ripple
 
+## 2.0.6
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+
 ## 2.0.5
 
 ### Patch Changes

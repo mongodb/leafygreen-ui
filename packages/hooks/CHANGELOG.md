@@ -1,5 +1,16 @@
 # @leafygreen-ui/hooks
 
+## 9.1.4
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/lib@15.4.0
+
 ## 9.1.3
 
 ### Patch Changes

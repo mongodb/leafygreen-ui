@@ -1,3 +1,4 @@
+export { changeset } from './changeset';
 export { pkgJson } from './component/package.json';
 export { readMe } from './component/readme.md';
 export { componentIndex } from './component/src/Component/component.index.template';

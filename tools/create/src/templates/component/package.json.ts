@@ -10,7 +10,7 @@ export const pkgJson = ({
 >) => `  
 {
   "name": "${scope}/${packageNameKebab}",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "LeafyGreen UI Kit ${packageNameTitle}",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -18,7 +18,8 @@ export const pkgJson = ({
   "license": "Apache-2.0",
   "exports": {
     ".": {
-      "require": "./dist/umd/index.js""import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
       "types": "./dist/types/index.d.ts"
     },
     "./testing": {
