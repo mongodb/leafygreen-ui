@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { borderRadius, spacing } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 
 const BADGE_HEIGHT = spacing[600];
 const BADGE_WIDTH = spacing[900];
@@ -18,5 +18,4 @@ export const badgeStyles = css`
 
   width: ${BADGE_WIDTH}px;
   height: ${BADGE_HEIGHT}px;
-  border-radius: ${borderRadius[600]}px;
 `;

@@ -14,14 +14,14 @@ import {
 import { type MessagePromotionProps } from './MessagePromotion.types';
 
 /**
- * Renders promotional content with an award icon and optional "Learn More" link.
+ * Renders promotional content with an award icon and "Learn More" link.
  *
  * @returns The rendered promotional message component.
  */
 export function MessagePromotion({
   promotionText,
   promotionUrl,
-  onPromotionClick,
+  onPromotionLinkClick,
   darkMode: darkModeProp,
   ...rest
 }: MessagePromotionProps) {
@@ -38,7 +38,7 @@ export function MessagePromotion({
           {promotionText}
           <>
             {' '}
-            <Link href={promotionUrl} onClick={onPromotionClick}>
+            <Link href={promotionUrl} onClick={onPromotionLinkClick}>
               Learn More
             </Link>
           </>

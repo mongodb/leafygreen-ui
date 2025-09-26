@@ -174,7 +174,7 @@ const MessageWithPromotion = () => {
         <Message.Promotion
           promotionText="Go learn more about this skill!"
           promotionUrl="https://learn.mongodb.com/skills"
-          onPromotionClick={handlePromotionClick}
+          onPromotionLinkClick={handlePromotionClick}
         />
       </Message>
     </LeafyGreenChatProvider>
@@ -258,7 +258,7 @@ const Example = () => {
         <Message.Promotion
           promotionText="Go learn more about this skill!"
           promotionUrl="https://learn.mongodb.com/skills"
-          onPromotionClick={handlePromotionClick}
+          onPromotionLinkClick={handlePromotionClick}
         />
         <Message.Actions
           onClickCopy={handleCopy}
@@ -292,10 +292,7 @@ const Example = () => {
 | `linksHeading`                    | `string`                                                                                            | The heading text to display for the links section.                                | "Related Resources"                                                                                                       |
 | `markdownProps`                   | [`LGMarkdownProps`](https://github.com/mongodb/leafygreen-ui/tree/main/chat/lg-markdown#properties) | Props passed to the internal ReactMarkdown instance                               |                                                                                                                           |
 | `messageBody`                     | `string`                                                                                            | Message body text passed to LGMarkdown                                            |                                                                                                                           |
-| `onLinkClick`                     | `({ children: string; imageUrl?: string }) => void`                                                 | A callback function that is called when the link is clicked.                      |                                                                                                                           |
-| `onPromotionClick`                | `() => void`                                                                                        | Callback function for when promotional content is clicked                         |                                                                                                                           |
-| `promotion`                       | `string`                                                                                            | Text to render as promotional content on the message                              |                                                                                                                           |
-| `promotionUrl`                    | `string`                                                                                            | URL for the promotion to link the "Learn more" to                                 |                                                                                                                           |
+| `onLinkClick`                     | `({ children: string; imageUrl?: string }) => void`                                                 | A callback function that is called when the link is clicked.                      |
 | `sourceType`                      | `'markdown' \| 'text'`                                                                              | Determines the rendering method of the message                                    |                                                                                                                           |
 | `verified`                        | `{ verifier?: string; verifiedAt?: Date; learnMoreUrl?: string; }`                                  | Sets if an answer is "verified" and controls the content of the message banner.   |                                                                                                                           |
 | `...`                             | `HTMLElementProps<'div'>`                                                                           | Props spread on the root element                                                  |                                                                                                                           |
@@ -324,14 +321,12 @@ const Example = () => {
 
 ### Message.Promotion
 
-| Prop                            | Type                                | Description                                          | Default |
-| ------------------------------- | ----------------------------------- | ---------------------------------------------------- | ------- |
-| `promotionText`                 | `string`                            | Promotion text content.                              |         |
-| `promotionUrl` _(optional)_     | `string`                            | Promotion URL for the "Learn More" link.             |         |
-| `baseFontSize` _(optional)_     | `BaseFontSize`                      | Base font size.                                      |         |
-| `onPromotionClick` _(optional)_ | `() => void`                        | Promotion onClick callback handler.                  |         |
-| `markdownProps` _(optional)_    | `Omit<LGMarkdownProps, 'children'>` | Props passed to the internal ReactMarkdown instance. |         |
-| `...`                           | `HTMLElementProps<'div'>`           | Props spread on the root element                     |         |
+| Prop                                | Type                      | Description                              | Default |
+| ----------------------------------- | ------------------------- | ---------------------------------------- | ------- |
+| `promotionText`                     | `string`                  | Promotion text content.                  |         |
+| `promotionUrl`                      | `string`                  | Promotion URL for the "Learn More" link. |         |
+| `onPromotionLinkClick` _(optional)_ | `() => void`              | Promotion onClick callback handler.      |         |
+| `...`                               | `HTMLElementProps<'div'>` | Props spread on the root element         |         |
 
 ### Message.VerifiedBanner
 
@@ -410,18 +405,17 @@ The component manages its own internal state for:
 
 ### Message.Promotion
 
-The `MessagePromotion` component displays promotional content with an award icon and optional "Learn More" link.
+The `MessagePromotion` component displays promotional content with an award icon and "Learn More" link.
 
 #### Rendering Behavior
 
-- If `promotionText` is empty or undefined, the component returns `null` and does not render anything
-- If `promotionUrl` is provided, a "Learn More" link is displayed that opens in a new tab
-- If `promotionUrl` is not provided or is an empty string, no "Learn More" link is rendered
-- The component only renders in the `compact` variant when used as a compound component
+- Both `promotionText` and `promotionUrl` are required for this component to render.
+- The promotion component renders after the Message body with an `Award` badge to distinguish it from the main body text.
+- The "Learn more" link is displayed inline with the promotion text.
 
 #### Callback Behavior
 
-- The `onPromotionClick` callback is triggered when clicking the "Learn More" link
+- The `onPromotionLinkClick` callback is triggered when clicking the "Learn More" link
 
 ### Message.VerifiedBanner
 

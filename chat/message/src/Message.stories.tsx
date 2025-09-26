@@ -118,12 +118,12 @@ const getLinksChild = () => (
   />
 );
 
-const getPromotionsChild = () => (
+const getPromotionChild = () => (
   <Message.Promotion
     promotionText="Go learn more about this skill!"
     promotionUrl="https://learn.mongodb.com/skills"
     // eslint-disable-next-line no-console
-    onPromotionClick={() => console.log('Promotion clicked')}
+    onPromotionLinkClick={() => console.log('Promotion clicked')}
   />
 );
 
@@ -294,7 +294,7 @@ export const WithMessageLinksExpanded: StoryObj<MessageStoryProps> = {
 export const WithPromotion: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
-    children: getPromotionsChild(),
+    children: getPromotionChild(),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
   },
@@ -308,7 +308,7 @@ export const WithAllSubComponents: StoryObj<MessageStoryProps> = {
       <>
         {getActionsChild()}
         {getLinksChild()}
-        {getPromotionsChild()}
+        {getPromotionChild()}
         {getVerifiedBannerChild()}
       </>
     ),

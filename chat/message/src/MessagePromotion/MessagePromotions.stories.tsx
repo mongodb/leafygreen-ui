@@ -38,7 +38,7 @@ export const LiveExample = {
     promotionUrl:
       'https://learn.mongodb.com/courses/advanced-schema-patterns-and-antipatterns',
     // eslint-disable-next-line no-console
-    onPromotionClick: () => console.log('Promotion clicked'),
+    onPromotionLinkClick: () => console.log('Promotion clicked'),
   },
 };
 

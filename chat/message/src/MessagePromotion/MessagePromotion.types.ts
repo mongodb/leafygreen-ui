@@ -18,5 +18,5 @@ export interface MessagePromotionProps
   /**
    * Promotion onClick callback handler
    */
-  onPromotionClick?: () => void;
+  onPromotionLinkClick?: () => void;
 }

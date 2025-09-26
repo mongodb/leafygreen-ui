@@ -44,12 +44,12 @@ describe('MessagePromotion', () => {
   });
 
   describe('callback handling', () => {
-    test('onPromotionClick is called when promotion element is clicked', async () => {
+    test('onPromotionLinkClick is called when promotion element is clicked', async () => {
       const mockOnClick = jest.fn();
 
       renderMessagePromotion({
         ...defaultProps,
-        onPromotionClick: mockOnClick,
+        onPromotionLinkClick: mockOnClick,
       });
 
       const learnMoreLink = screen.getByText('Learn More');
@@ -58,11 +58,11 @@ describe('MessagePromotion', () => {
       expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
 
-    test('onPromotionClick is not required', () => {
+    test('onPromotionLinkClick is not required', () => {
       expect(() => {
         renderMessagePromotion({
           ...defaultProps,
-          onPromotionClick: undefined,
+          onPromotionLinkClick: undefined,
         });
       }).not.toThrow();
     });
