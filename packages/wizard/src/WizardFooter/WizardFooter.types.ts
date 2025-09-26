@@ -14,15 +14,5 @@ export interface WizardFooterProps {
   /**
    * Props for the primary button (right-most button)
    */
-  primaryButtonProps?: FormFooterProps['primaryButtonProps'];
-
-  // Internal props passed by the Wizard component
-  /** @internal */
-  activeStep?: number;
-  /** @internal */
-  totalSteps?: number;
-  /** @internal */
-  onStepChange?: (step: number) => void;
-  /** @internal */
-  isControlled?: boolean;
+  primaryButtonProps: FormFooterProps['primaryButtonProps'];
 }
