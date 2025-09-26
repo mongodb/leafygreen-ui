@@ -1,6 +1,11 @@
-import React, { Children, cloneElement, isValidElement } from 'react';
+import React, { Children, isValidElement } from 'react';
 
+import { Direction } from '@leafygreen-ui/descendants';
+import { findChild } from '@leafygreen-ui/lib';
+
+import { WIZARD_FOOTER_KEY } from '../constants';
 import { useWizardControlledValue } from '../utils/useWizardControlledValue/useWizardControlledValue';
+import { WizardContext } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
 
@@ -16,23 +21,10 @@ export function Wizard({
   const {
     isControlled,
     value: activeStep,
-    setValue: setInternalActiveStep,
+    setValue: setActiveStep,
   } = useWizardControlledValue<number>(activeStepProp, undefined, 0);
 
-  // Handle step changes
-  const handleStepChange = (newStep: number) => {
-    if (!isControlled) {
-      setInternalActiveStep(newStep);
-    }
-    onStepChange?.(newStep);
-  };
-
-  // Filter children to separate steps from footer
-  const childrenArray = Children.toArray(children);
-
-  // For now, we'll look for components with displayName ending in 'Step' or 'Footer'
-  // This will be more precise once Wizard.Step and Wizard.Footer are implemented
-  const stepChildren = childrenArray.filter(child => {
+  const stepChildren = Children.toArray(children).filter(child => {
     if (isValidElement(child)) {
       const displayName = (child.type as any)?.displayName;
       return displayName && displayName.includes('Step');
@@ -41,38 +33,41 @@ export function Wizard({
     return false;
   });
 
-  const footerChild = childrenArray.find(child => {
-    if (isValidElement(child)) {
-      const displayName = (child.type as any)?.displayName;
-      return displayName && displayName.includes('Footer');
+  const updateStep = (direction: Direction) => {
+    const getNextStep = (curr: number) => {
+      switch (direction) {
+        case Direction.Next:
+          return Math.min(curr + 1, stepChildren.length - 1);
+        case Direction.Prev:
+          return Math.max(curr - 1, 0);
+      }
+    };
+
+    if (!isControlled) {
+      setActiveStep(getNextStep);
     }
 
-    return false;
-  });
+    onStepChange?.(getNextStep(activeStep));
+  };
+
+  const footerChild = findChild(children, WIZARD_FOOTER_KEY);
 
   // Get the current step to render
   const currentStep = stepChildren[activeStep] || null;
 
-  // Clone footer with step navigation handlers if it exists
-  const clonedFooter =
-    footerChild && isValidElement(footerChild)
-      ? cloneElement(footerChild as React.ReactElement<any>, {
-          activeStep,
-          totalSteps: stepChildren.length,
-          onStepChange: handleStepChange,
-          isControlled,
-        })
-      : null;
-
   return (
-    <div className={wizardContainerStyles}>
-      <code>activeStep: {activeStep}</code>
-      {/* Render current step */}
-      <div className={stepContentStyles}>{currentStep}</div>
-
-      {/* Render footer */}
-      {clonedFooter}
-    </div>
+    <WizardContext.Provider
+      value={{
+        activeStep,
+        updateStep,
+      }}
+    >
+      <div className={wizardContainerStyles}>
+        <div className={stepContentStyles}>{currentStep}</div>
+        {/* Render footer */}
+        {footerChild}
+      </div>
+    </WizardContext.Provider>
   );
 }
 
