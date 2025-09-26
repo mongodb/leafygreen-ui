@@ -8,9 +8,7 @@ import {
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { Size, TimeInputState } from '../../TimeInput/TimeInput.types';
-import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
-import { getLgIds } from '../../utils/getLgIds';
+import { Size } from '../../TimeInput/TimeInput.types';
 
 export type ContextPropKeys = keyof TimeInputDisplayProviderProps;
 
@@ -47,4 +45,6 @@ export const defaultTimeInputDisplayContext: TimeInputDisplayContextProps = {
   errorMessage: '',
   darkMode: false,
   className: '',
+  isDirty: false,
+  setIsDirty: () => {},
 };

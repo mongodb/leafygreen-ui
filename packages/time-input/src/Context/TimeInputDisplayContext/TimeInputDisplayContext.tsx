@@ -1,15 +1,49 @@
-import { createContext } from 'react';
-import { TimeInputDisplayContextProps } from './TimeInputDisplayContext.types';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from 'react';
+import {
+  TimeInputDisplayContextProps,
+  TimeInputDisplayProviderProps,
+} from './TimeInputDisplayContext.types';
+import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
+
+import defaults from 'lodash/defaults';
 
 export const TimeInputDisplayContext =
-  createContext<TimeInputDisplayContextProps>({});
+  createContext<TimeInputDisplayContextProps>(defaultTimeInputDisplayContext);
 
 export const TimeInputDisplayProvider = ({
   children,
-  ...props
+  label = '',
+  'aria-label': ariaLabelProp = '',
+  'aria-labelledby': ariaLabelledbyProp = '',
+  ...rest
 }: PropsWithChildren<TimeInputDisplayProviderProps>) => {
+  const [isDirty, setIsDirty] = useState(false);
+
+  /**
+   * If props are undefined, use the default values
+   */
+  const providerValue: TimeInputDisplayContextProps = {
+    ...defaults(rest, defaultTimeInputDisplayContext),
+  };
+
+  // TODO: min, max helpers
+
   return (
-    <TimeInputDisplayContext.Provider value={props}>
+    <TimeInputDisplayContext.Provider
+      value={{
+        ...providerValue,
+        label,
+        ariaLabelProp,
+        ariaLabelledbyProp,
+        isDirty,
+        setIsDirty,
+      }}
+    >
       {children}
     </TimeInputDisplayContext.Provider>
   );

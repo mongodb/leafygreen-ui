@@ -8,7 +8,6 @@ import { TimeInputContent } from '../TimeInputContent';
 
 import { TimeInputProps } from './TimeInput.types';
 import { TimeInputProvider } from '../TimeInputContext/TimeInputContext';
-import { useControlledValue } from '@leafygreen-ui/hooks';
 
 /**
  * @internal
@@ -25,9 +24,9 @@ export const TimeInput = ({
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      {/* TODO: need to use the useControlledValue hook to get the value */}
+      {/* TODO: need to use the useControlled hook to get the value */}
       <TimeInputProvider
-        value={''}
+        value={undefined}
         setValue={() => {}}
         handleValidation={handleValidation}
       >

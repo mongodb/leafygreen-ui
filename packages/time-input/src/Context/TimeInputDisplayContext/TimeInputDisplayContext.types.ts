@@ -18,6 +18,8 @@ export type TimeInputDisplayContextProps = Omit<
 > & {
   ariaLabelProp: string;
   ariaLabelledbyProp: string;
+  isDirty: boolean;
+  setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 /**
