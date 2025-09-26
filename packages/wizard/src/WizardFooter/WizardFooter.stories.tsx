@@ -1,132 +1,75 @@
-import React, { useState } from 'react';
-import {
-  storybookArgTypes,
-  StoryMetaType,
-  StoryType,
-} from '@lg-tools/storybook-utils';
+import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryObj } from '@storybook/react';
 
-import { WizardFooter } from '.';
+import { Variant } from '@leafygreen-ui/button';
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 
-const meta: StoryMetaType<typeof WizardFooter> = {
+import { WizardFooter, type WizardFooterProps } from '.';
+
+type PrimaryButtonVariant =
+  Required<WizardFooterProps>['primaryButtonProps']['variant'];
+interface StoryArgs {
+  backButtonText: string;
+  backButtonIcon: keyof typeof glyphs;
+  cancelButtonText: string;
+  primaryButtonText: string;
+  primaryButtonIcon: keyof typeof glyphs;
+  primaryButtonVariant: PrimaryButtonVariant;
+}
+
+const meta: StoryMetaType<typeof WizardFooter, StoryArgs> = {
   title: 'Components/Wizard/WizardFooter',
   component: WizardFooter,
   parameters: {
     default: 'LiveExample',
+    controls: {
+      exclude: ['backButtonProps', 'cancelButtonProps', 'primaryButtonProps'],
+    },
   },
+  args: {},
   argTypes: {
-    backButtonProps: { control: 'object' },
-    cancelButtonProps: { control: 'object' },
-    primaryButtonProps: { control: 'object' },
-    activeStep: { control: 'number' },
-    totalSteps: { control: 'number' },
-    onStepChange: storybookArgTypes.func,
-    isControlled: { control: 'boolean' },
+    backButtonText: { control: 'text' },
+    backButtonIcon: { control: 'select', options: Object.keys(glyphs) },
+    cancelButtonText: { control: 'text' },
+    primaryButtonText: { control: 'text' },
+    primaryButtonIcon: { control: 'select', options: Object.keys(glyphs) },
+    primaryButtonVariant: {
+      control: 'select',
+      options: [Variant.Primary, Variant.Danger],
+    },
   },
 };
 
 export default meta;
 
-const Template: StoryType<typeof WizardFooter> = args => {
-  const [step, setStep] = useState(args.activeStep || 0);
-
-  return (
+export const LiveExample: StoryObj<StoryArgs> = {
+  args: {
+    backButtonText: 'Back',
+    backButtonIcon: 'ArrowLeft',
+    cancelButtonText: 'Cancel',
+    primaryButtonText: 'Continue',
+    primaryButtonIcon: 'Ellipsis',
+    primaryButtonVariant: Variant.Primary,
+  },
+  render: args => (
     <WizardFooter
-      {...args}
-      activeStep={step}
-      onStepChange={newStep => {
-        setStep(newStep);
-        args.onStepChange?.(newStep);
+      backButtonProps={{
+        leftGlyph: args.backButtonIcon ? (
+          <Icon glyph={args.backButtonIcon} />
+        ) : undefined,
+        children: args.backButtonText,
+      }}
+      cancelButtonProps={{
+        children: args.cancelButtonText,
+      }}
+      primaryButtonProps={{
+        leftGlyph: args.primaryButtonIcon ? (
+          <Icon glyph={args.primaryButtonIcon} />
+        ) : undefined,
+        children: args.primaryButtonText,
+        variant: args.primaryButtonVariant,
       }}
     />
-  );
-};
-
-export const LiveExample = Template.bind({});
-LiveExample.args = {
-  activeStep: 1,
-  totalSteps: 3,
-  backButtonProps: {
-    children: 'Back',
-  },
-  cancelButtonProps: {
-    children: 'Cancel',
-  },
-  primaryButtonProps: {
-    children: 'Next',
-    variant: 'primary',
-  },
-};
-
-export const FirstStep = Template.bind({});
-FirstStep.args = {
-  activeStep: 0,
-  totalSteps: 3,
-  cancelButtonProps: {
-    children: 'Cancel',
-  },
-  primaryButtonProps: {
-    children: 'Get Started',
-    variant: 'primary',
-  },
-};
-
-export const LastStep = Template.bind({});
-LastStep.args = {
-  activeStep: 2,
-  totalSteps: 3,
-  backButtonProps: {
-    children: 'Back',
-  },
-  cancelButtonProps: {
-    children: 'Cancel',
-  },
-  primaryButtonProps: {
-    children: 'Finish',
-    variant: 'primary',
-  },
-};
-
-export const DangerousAction = Template.bind({});
-DangerousAction.args = {
-  activeStep: 1,
-  totalSteps: 2,
-  backButtonProps: {
-    children: 'Back',
-  },
-  cancelButtonProps: {
-    children: 'Cancel',
-  },
-  primaryButtonProps: {
-    children: 'Delete Resource',
-    variant: 'danger',
-  },
-};
-
-export const WithCustomHandlers = Template.bind({});
-WithCustomHandlers.args = {
-  activeStep: 1,
-  totalSteps: 3,
-  backButtonProps: {
-    children: 'Go Back',
-    onClick: () => alert('Custom back handler'),
-  },
-  cancelButtonProps: {
-    children: 'Exit',
-    onClick: () => alert('Custom cancel handler'),
-  },
-  primaryButtonProps: {
-    children: 'Continue',
-    variant: 'primary',
-    onClick: () => alert('Custom primary handler'),
-  },
-};
-
-export const MinimalFooter = Template.bind({});
-MinimalFooter.args = {
-  activeStep: 0,
-  totalSteps: 1,
-  primaryButtonProps: {
-    children: 'Done',
-    variant: 'primary',
-  },
+  ),
 };
