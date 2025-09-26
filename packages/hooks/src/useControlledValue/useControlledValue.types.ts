@@ -1,21 +1,21 @@
-export interface ControlledValueReturnObject<T extends any> {
-  /** Whether the value is controlled */
-  isControlled: boolean;
+import { ChangeEventHandler, MutableRefObject } from 'react';
 
-  /** The controlled or uncontrolled value */
-  value: T;
+import { ControlledReturnObject } from '../useControlled/useControlled.types';
+
+type PickedControlledReturnObject<T extends any> = Pick<
+  ControlledReturnObject<T>,
+  'isControlled' | 'value' | 'setUncontrolledValue'
+>;
+
+export interface ControlledValueReturnObject<T extends any>
+  extends PickedControlledReturnObject<T> {
+  /** A ChangeEventHandler to assign to any onChange event */
+  handleChange: ChangeEventHandler<any>;
 
   /**
-   * Either updates the uncontrolled value,
-   * or calls the provided `onChange` callback
+   * Synthetically triggers a change event within the `handleChange` callback.
+   * Signals that the value should change for controlled components,
+   * and updates the internal value for uncontrolled components
    */
-  updateValue: (newVal?: T) => void;
-
-  /**
-   * A setter for the internal value.
-   * Does not change the controlled value if the provided value has not changed.
-   * Prefer using `updateValue` to programmatically set the value.
-   * @internal
-   */
-  setUncontrolledValue: React.Dispatch<React.SetStateAction<T>>;
+  updateValue: (newVal: T, ref: MutableRefObject<any>) => void;
 }

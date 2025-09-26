@@ -1,7 +1,7 @@
 import React, { cloneElement, forwardRef, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useControlledInputValue, useIdAllocator } from '@leafygreen-ui/hooks';
+import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -40,7 +40,7 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
     fwdRef,
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
-    const { value: isOpen, updateValue } = useControlledInputValue(
+    const { value: isOpen, updateValue } = useControlledValue(
       controlledIsOpen,
       onOpenChange,
       defaultOpen,

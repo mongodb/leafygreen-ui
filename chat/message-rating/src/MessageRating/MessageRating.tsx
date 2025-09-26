@@ -4,7 +4,7 @@ import {
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
 
-import { useControlledInputValue, useIdAllocator } from '@leafygreen-ui/hooks';
+import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import ThumbsDown from '@leafygreen-ui/icon/dist/ThumbsDown';
 import ThumbsUp from '@leafygreen-ui/icon/dist/ThumbsUp';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -55,7 +55,7 @@ export const MessageRating = forwardRef(
     const likeButtonRef = useRef<HTMLButtonElement | null>(null);
     const dislikeButtonRef = useRef<HTMLButtonElement | null>(null);
 
-    const { value, handleChange, updateValue } = useControlledInputValue<
+    const { value, handleChange, updateValue } = useControlledValue<
       MessageRatingProps['value']
     >(valueProp, onChange, MessageRatingValue.Unselected);
     const inputName = useIdAllocator({

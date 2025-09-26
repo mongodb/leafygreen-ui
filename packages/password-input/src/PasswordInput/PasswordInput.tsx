@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { DEFAULT_MESSAGES } from '@leafygreen-ui/form-field';
-import { useControlledInputValue, useIdAllocator } from '@leafygreen-ui/hooks';
+import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -67,10 +67,7 @@ export const PasswordInput = React.forwardRef<
       id: ariaDescribedbyProp,
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
-    const { value, handleChange } = useControlledInputValue(
-      valueProp,
-      onChangeProp,
-    );
+    const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
     const lgIds = getLgIds(dataLgId);
 
     if (!label && !ariaLabelledbyProp && !ariaLabelProp) {

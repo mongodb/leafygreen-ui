@@ -1,57 +1,59 @@
-import { useEffect, useMemo, useState } from 'react';
-import isUndefined from 'lodash/isUndefined';
+import { ChangeEventHandler, MutableRefObject } from 'react';
 
-import { consoleOnce } from '@leafygreen-ui/lib';
+import { createSyntheticEvent } from '@leafygreen-ui/lib';
+
+import { useControlled } from '../useControlled';
 
 import { ControlledValueReturnObject } from './useControlledValue.types';
 
 /**
- * A hook that enables a component to be both controlled or uncontrolled.
+ * A hook that enables an input component to be both controlled or uncontrolled.
  *
- * Returns a {@link ControlledValueReturnObject}
+ * Returns a {@link ControlledValueReturnObject} with the controlled or uncontrolled `value`,
+ * `onChange` & `onClear` handlers, a `setInternalValue` setter, and a boolean `isControlled`
  */
-export const useControlledValue = <T extends any>(
+export const useControlledValue = <T>(
   controlledValue?: T,
-  onChange?: (val?: T) => void,
+  changeHandler?: ChangeEventHandler<any> | null,
   initialValue?: T,
 ): ControlledValueReturnObject<T | undefined> => {
-  // isControlled should only be computed once
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isControlled = useMemo(() => !isUndefined(controlledValue), []);
-
-  // Keep track of the uncontrolled value state internally
-  const [uncontrolledValue, setUncontrolledValue] = useState<T | undefined>(
+  // Use the new useControlled hook under the hood
+  const { isControlled, value, setUncontrolledValue } = useControlled(
+    controlledValue,
+    undefined, // We'll handle onChange differently for input-specific logic
     initialValue,
   );
 
-  // The returned value is either the provided value prop
-  // or the uncontrolled value
-  const value = useMemo(
-    () => (isControlled ? controlledValue : uncontrolledValue),
-    [isControlled, uncontrolledValue, controlledValue],
-  );
-
-  //
-  const updateValue = (newVal: T | undefined) => {
+  // Create a change event handler that either updates the internal state
+  // or fires an external change handler
+  const handleChange: ChangeEventHandler<any> = e => {
+    changeHandler?.(e);
     if (!isControlled) {
-      setUncontrolledValue(newVal);
+      setUncontrolledValue(e.target.value as T);
     }
-    onChange?.(newVal);
   };
 
-  useEffect(() => {
-    // Log a warning if neither controlled value or initialValue is provided
-    if (isUndefined(controlledValue) && isUndefined(initialValue)) {
-      consoleOnce.error(
-        `Warning: \`useControlledValue\` hook is being used without a value or initialValue. This will cause a React warning when the input changes. Please decide between using a controlled or uncontrolled input element, and provide either a controlledValue or initialValue to \`useControlledValue\``,
+  // A wrapper around `handleChange` that fires a simulated event
+  const updateValue = (newVal: T | undefined, ref: MutableRefObject<any>) => {
+    if (ref.current) {
+      ref.current.value = newVal;
+      const synthEvt = createSyntheticEvent(
+        new Event('change', {
+          cancelable: true,
+          bubbles: true,
+        }),
+        ref.current,
       );
+
+      handleChange(synthEvt);
     }
-  }, [controlledValue, initialValue]);
+  };
 
   return {
     isControlled,
     value,
-    updateValue,
+    handleChange,
     setUncontrolledValue,
+    updateValue,
   };
 };

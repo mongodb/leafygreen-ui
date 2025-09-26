@@ -27,7 +27,7 @@ import Badge from '@leafygreen-ui/badge';
 import {
   useAutoScroll,
   useBackdropClick,
-  useControlledInputValue,
+  useControlledValue,
   useDynamicRefs,
   useEventListener,
   useForwardedRef,
@@ -125,7 +125,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       handleChange,
       updateValue,
       isControlled,
-    } = useControlledInputValue<string>(
+    } = useControlledValue<string>(
       textareaProps?.value?.toString(),
       textareaProps?.onChange,
       '',

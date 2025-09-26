@@ -8,7 +8,7 @@ import React, {
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useControlledInputValue, useForwardedRef } from '@leafygreen-ui/hooks';
+import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
 
@@ -69,10 +69,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       };
     }, []);
 
-    const { value, handleChange } = useControlledInputValue(
-      valueProp,
-      onChangeProp,
-    );
+    const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
     /**
      * Custom arrow buttons do not trigger a change event on the input.
@@ -164,7 +161,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             inputSizeStyles[size],
           )}
           type="number"
-          value={isControlled ? valueProp : value} // TODO: temp fix for useControlledInputValue hook. The hook was not returning the correct value when controlled. For example when typing 2e3 the hook would return 3 but it should return 2e3 like a native number input would.
+          value={isControlled ? valueProp : value} // TODO: temp fix for useControlledValue hook. The hook was not returning the correct value when controlled. For example when typing 2e3 the hook would return 3 but it should return 2e3 like a native number input would.
           onChange={handleChange}
           aria-disabled={disabled}
           readOnly={disabled}

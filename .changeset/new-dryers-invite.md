@@ -1,5 +1,6 @@
 ---
-'@leafygreen-ui/hooks': major
+'@leafygreen-ui/hooks': minor
 ---
 
-Refactors `useControlledValue` to be more generic and adds input-specific logic to new `useControlledInputValue` hook.
+- Creates `useControlled` hook. This hook is a more generic version of `useControlledValue` that can be used for any component.
+- Refactors `useControlledValue` to use `useControlled` under the hood.

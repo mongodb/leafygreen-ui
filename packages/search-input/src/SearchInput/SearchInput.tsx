@@ -17,7 +17,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import {
   useAutoScroll,
   useBackdropClick,
-  useControlledInputValue,
+  useControlledValue,
   useDynamicRefs,
   useForwardedRef,
 } from '@leafygreen-ui/hooks';
@@ -105,10 +105,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const withTypeAhead = !isUndefined(children);
 
-    const { value, handleChange } = useControlledInputValue(
-      valueProp,
-      onChangeProp,
-    );
+    const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
     /** Fires a change event to update the input value */
     const changeInputValue = useCallback(
