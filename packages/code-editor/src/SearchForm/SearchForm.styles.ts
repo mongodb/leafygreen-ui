@@ -88,7 +88,8 @@ export const getToggleIconStyles = (isOpen: boolean) =>
 
 export const findInputContainerStyles = css`
   position: relative;
-  width: ${INPUT_WIDTH}px;
+  flex: 1 1 ${INPUT_WIDTH}px;
+  min-width: 100px;
   margin-right: ${spacing[100]}px;
 `;
 
@@ -108,9 +109,15 @@ export const findInputIconButtonStyles = css`
 
 export const replaceInputContainerStyles = css`
   position: relative;
-  width: ${INPUT_WIDTH}px;
+  flex: 1 1 ${INPUT_WIDTH}px;
+  min-width: 100px;
+  width: 100%;
 `;
 
 export const replaceButtonStyles = css`
   margin-left: ${spacing[100]}px;
+`;
+
+export const findInputStyles = css`
+  width: 100%;
 `;
