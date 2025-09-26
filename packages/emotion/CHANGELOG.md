@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 5.0.3
+
+### Patch Changes
+
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+
 ## 5.0.2
 
 ### Patch Changes
