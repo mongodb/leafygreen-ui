@@ -86,6 +86,74 @@ pnpm lg codemod <codemod-name> <path> --packages @leafygreen-ui/popover @leafygr
 
 ## Codemods
 
+### `named-exports`
+
+This codemod converts default imports to named imports for LeafyGreen UI components.
+
+By default, the codemod will apply for all below listed packages. Use the `--packages` flag to filter for a subset of these.
+
+- `@leafygreen-ui/badge`
+- `@leafygreen-ui/button`
+- `@leafygreen-ui/callout`
+- `@leafygreen-ui/card`
+- `@leafygreen-ui/checkbox`
+- `@leafygreen-ui/confirmation-modal`
+- `@leafygreen-ui/copyable`
+- `@leafygreen-ui/expandable-card`
+- `@leafygreen-ui/form-footer`
+- `@leafygreen-ui/guide-cue`
+- `@leafygreen-ui/icon`
+- `@leafygreen-ui/icon-button`
+- `@leafygreen-ui/inline-definition`
+- `@leafygreen-ui/marketing-modal`
+- `@leafygreen-ui/modal`
+- `@leafygreen-ui/pagination`
+- `@leafygreen-ui/popover`
+- `@leafygreen-ui/stepper`
+- `@leafygreen-ui/text-area`
+- `@leafygreen-ui/text-input`
+- `@leafygreen-ui/toggle`
+- `@leafygreen-ui/tooltip`
+- `@leafygreen-ui/box`
+- `@leafygreen-ui/code`
+- `@leafygreen-ui/logo`
+- `@leafygreen-ui/portal`
+
+This codemod does the following:
+
+1. Converts `import Button from '@leafygreen-ui/button'` to `import { Button } from '@leafygreen-ui/button'`
+2. Converts `import LGButton from '@leafygreen-ui/button'` to `import { Button as LGButton } from '@leafygreen-ui/button'`
+3. Merges default and named imports: `import Button, { Size } from '@leafygreen-ui/button'` to `import { Button, Size } from '@leafygreen-ui/button'`
+4. Skips files that already have the correct named import
+
+```shell
+pnpm lg codemod named-exports <path>
+```
+
+**Before**:
+
+```tsx
+import Button from '@leafygreen-ui/button';
+import LGPopover from '@leafygreen-ui/popover';
+import Modal, { ModalSize } from '@leafygreen-ui/modal';
+
+<Button>Click me</Button>
+<LGPopover>Popover content</LGPopover>
+<Modal size={ModalSize.Small}>Modal content</Modal>
+```
+
+**After**:
+
+```tsx
+import { Button } from '@leafygreen-ui/button';
+import { Popover as LGPopover } from '@leafygreen-ui/popover';
+import { Modal, ModalSize } from '@leafygreen-ui/modal';
+
+<Button>Click me</Button>
+<LGPopover>Popover content</LGPopover>
+<Modal size={ModalSize.Small}>Modal content</Modal>
+```
+
 ### `modal-v20`
 
 This codemod can be used to upgrade Modal components to v20.
