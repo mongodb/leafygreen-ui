@@ -26,6 +26,18 @@ describe('packages/lib/unwrapRootFragment', () => {
     expect(unwrapped).toHaveLength(2);
   });
 
+  test('only unwraps a single layer of Fragments', () => {
+    const unwrapped = unwrapRootFragment(
+      <Fragment>
+        <Fragment>
+          <div />
+          <div />
+        </Fragment>
+      </Fragment>,
+    );
+    expect(unwrapped).toHaveLength(1);
+  });
+
   test('returns an empty array children has no length', () => {
     const unwrapped = unwrapRootFragment([]);
     expect(unwrapped).toBeDefined();
