@@ -407,10 +407,6 @@ The component manages its own internal state for:
 
 The `MessagePromotion` component displays promotional content with an award icon and "Learn More" link.
 
-#### Callback Behavior
-
-- The `onPromotionLinkClick` callback is triggered when clicking the "Learn More" link
-
 ### Message.VerifiedBanner
 
 The `VerifiedBanner` component displays verification information for messages.
