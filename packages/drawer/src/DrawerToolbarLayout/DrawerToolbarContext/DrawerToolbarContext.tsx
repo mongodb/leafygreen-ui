@@ -78,6 +78,22 @@ export const DrawerToolbarProvider = ({
     }, TRANSITION_DURATION);
   }, [setActiveDrawerId]);
 
+  /**
+   * Handles toolbar button clicks with toggle behavior.
+   * If the drawer is already open with the same content, it closes the drawer.
+   * Otherwise, it opens the drawer with the new content.
+   */
+  const toggleDrawer = useCallback(
+    (id: DataId) => {
+      if (isDrawerOpen && activeDrawerId === id) {
+        closeDrawer();
+      } else {
+        openDrawer(id);
+      }
+    },
+    [isDrawerOpen, activeDrawerId, closeDrawer, openDrawer],
+  );
+
   // Checks if the active drawer id is removed from the data or if the active drawer item is not visible. If so, close the drawer.
   useEffect(() => {
     if (shouldRenderToolbar && activeDrawerId) {
@@ -111,6 +127,7 @@ export const DrawerToolbarProvider = ({
     () => ({
       openDrawer,
       closeDrawer,
+      toggleDrawer,
       getActiveDrawerContent,
       isDrawerOpen,
       shouldRenderToolbar,
@@ -120,6 +137,7 @@ export const DrawerToolbarProvider = ({
     [
       openDrawer,
       closeDrawer,
+      toggleDrawer,
       getActiveDrawerContent,
       isDrawerOpen,
       shouldRenderToolbar,

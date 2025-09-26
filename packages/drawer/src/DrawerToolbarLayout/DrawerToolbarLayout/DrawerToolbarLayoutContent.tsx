@@ -35,8 +35,8 @@ export const DrawerToolbarLayoutContent = forwardRef<
     forwardRef,
   ) => {
     const {
-      openDrawer,
       closeDrawer,
+      toggleDrawer,
       getActiveDrawerContent,
       isDrawerOpen,
       visibleToolbarItems,
@@ -74,7 +74,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
       onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void,
     ) => {
       onClick?.(event);
-      openDrawer(id);
+      toggleDrawer(id);
     };
 
     const renderDrawer = () => {
