@@ -1,3 +1,9 @@
+/**
+ * Disabling `react/jsx-key` lets us pass `children` as an Iterable<ReactNode> directly to the test function
+ * instead of needing to wrap everything in a Fragment,
+ * which is not representative of real use-cases
+ */
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import styled from '@emotion/styled';
 
@@ -24,15 +30,22 @@ Baz.displayName = 'Baz';
 (Bar as any).isBar = true;
 (Baz as any).isBaz = true;
 
-describe('findChild', () => {
+describe('packages/lib/findChild', () => {
+  test('should find a child component with matching static property', () => {
+    // Create an iterable to test different iteration scenarios
+    const children = [<Foo text="Foo" />, <Bar text="Bar" />];
+
+    const found = findChild(children, 'isFoo');
+    expect(found).toBeDefined();
+    expect((found as React.ReactElement).props.text).toBe('Foo');
+  });
+
   test('should find the first child component with matching static property', () => {
-    const children = (
-      <>
-        <Foo text="first" />
-        <Bar text="second" />
-        <Foo text="third" />
-      </>
-    );
+    const children = [
+      <Foo text="first" />,
+      <Bar text="second" />,
+      <Foo text="third" />,
+    ];
 
     const found = findChild(children, 'isFoo');
     expect(found).toBeDefined();
@@ -40,12 +53,7 @@ describe('findChild', () => {
   });
 
   test('should return undefined if no child matches', () => {
-    const children = (
-      <>
-        <Foo text="first" />
-        <Bar text="second" />
-      </>
-    );
+    const children = [<Foo text="first" />, <Bar text="second" />];
 
     const found = findChild(children, 'isBaz');
     expect(found).toBeUndefined();
@@ -56,18 +64,7 @@ describe('findChild', () => {
     expect(found).toBeUndefined();
   });
 
-  test('should work with array children', () => {
-    const children = [
-      <Foo key="1" text="first" />,
-      <Bar key="2" text="second" />,
-    ];
-
-    const found = findChild(children, 'isBar');
-    expect(found).toBeDefined();
-    expect((found as React.ReactElement).props.text).toBe('second');
-  });
-
-  test('should handle fragment children', () => {
+  test('should handle a single-level of fragment children', () => {
     const children = (
       <React.Fragment>
         <Foo text="in-fragment" />
@@ -80,62 +77,41 @@ describe('findChild', () => {
     expect((found as React.ReactElement).props.text).toBe('also-in-fragment');
   });
 
-  test('should find first match even with multiple matches', () => {
+  test('should NOT find components in deeply nested fragments (search depth limitation)', () => {
     const children = (
-      <>
-        <Foo text="first-match" />
-        <Foo text="second-match" />
-        <Bar text="different" />
-      </>
-    );
-
-    const found = findChild(children, 'isFoo');
-    expect(found).toBeDefined();
-    expect((found as React.ReactElement).props.text).toBe('first-match');
-  });
-
-  test('should NOT find deeply nested components (search depth limitation)', () => {
-    const children = (
-      <>
-        {/* Nested fragment - should NOT find */}
+      <React.Fragment>
         <React.Fragment>
-          <React.Fragment>
-            <Foo text="deeply-nested" />
-          </React.Fragment>
+          <Foo text="deeply-nested" />
+          <Bar text="also-in-fragment" />
         </React.Fragment>
-
-        {/* Component inside div - should NOT find */}
-        <div>
-          <Foo text="inside-div" />
-        </div>
-
-        <Bar text="direct-child" />
-      </>
+      </React.Fragment>
     );
 
     // Should NOT find the deeply nested Foo instances
     const found = findChild(children, 'isFoo');
     expect(found).toBeUndefined();
+  });
 
-    // Should find the direct Bar
-    const found2 = findChild(children, 'isBar');
-    expect(found2).toBeDefined();
-    expect((found2 as React.ReactElement).props.text).toBe('direct-child');
+  test('should NOT find components wrapped in other elements', () => {
+    const children = (
+      <div>
+        <Foo text="inside-div" />
+      </div>
+    );
+
+    // Should NOT find the deeply nested Foo instances
+    const found = findChild(children, 'isFoo');
+    expect(found).toBeUndefined();
   });
 
   test('should work with styled components from @emotion/styled', () => {
     // Create a real styled component using the actual styled() function
-    const RealStyledFoo = styled(Foo)`
+    const StyledFoo = styled(Foo)`
       background-color: red;
       padding: 8px;
     `;
 
-    const children = (
-      <>
-        <RealStyledFoo text="real-styled" />
-        <Bar text="regular" />
-      </>
-    );
+    const children = [<StyledFoo text="real-styled" />, <Bar text="regular" />];
 
     // The key test: findChild should find the styled component
     const found = findChild(children, 'isFoo');
