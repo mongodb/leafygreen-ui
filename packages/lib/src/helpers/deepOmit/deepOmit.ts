@@ -29,7 +29,11 @@ export function deepOmit(obj: Record<string, any>, paths: Array<string>) {
   for (const key in omittedObject) {
     const value = omittedObject[key];
 
-    if (isObject(value) && !Array.isArray(value)) {
+    if (
+      isObject(value) &&
+      // Only transform simple objects, not arrays or other complex classes
+      value.constructor === Object
+    ) {
       // Filter and transform paths for the nested object
       const nestedPaths = paths
         .filter(p => p.startsWith(key + '.'))

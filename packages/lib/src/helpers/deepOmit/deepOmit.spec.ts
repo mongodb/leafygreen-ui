@@ -218,15 +218,15 @@ describe('deepOmit', () => {
   });
 
   describe('complex data types', () => {
-    it('transforms complex objects (functions, Date, RegExp) to empty objects', () => {
+    it('complex objects (functions, Date, RegExp) are left intact', () => {
       const fn = () => 'test';
       const date = new Date('2023-01-01');
       const regex = /test/g;
       const obj = {
         a: 1,
-        fn: fn,
-        date: date,
-        regex: regex,
+        fn,
+        date,
+        regex,
         c: {
           d: 2,
         },
@@ -234,9 +234,9 @@ describe('deepOmit', () => {
       const result = deepOmit(obj, ['c.d']);
       expect(result).toEqual({
         a: 1,
-        fn: {},
-        date: {},
-        regex: {},
+        fn,
+        date,
+        regex,
         c: {},
       });
     });
