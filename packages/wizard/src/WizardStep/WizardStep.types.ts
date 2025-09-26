@@ -9,7 +9,7 @@ export interface WizardStepProps {
   /**
    * The description of the step
    */
-  description: ReactNode;
+  description?: ReactNode;
 
   /**
    * The content of the step

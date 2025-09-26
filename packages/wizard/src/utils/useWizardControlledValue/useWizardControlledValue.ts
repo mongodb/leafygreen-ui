@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
 import { usePrevious } from '@leafygreen-ui/hooks';
@@ -15,7 +15,7 @@ interface ControlledValueReturnObject<T extends any> {
    * Either updates the uncontrolled value,
    * or calls the provided `onChange` callback
    */
-  setValue: (newVal?: T, ...args: Array<any>) => void;
+  setValue: Dispatch<SetStateAction<T>>;
 }
 
 /**
@@ -61,14 +61,14 @@ export const useWizardControlledValue = <T extends any>(
 
   // We set the initial value to either the `value`
   // or the temporary `initialValue` prop
-  const initialValue = useMemo(
-    () => (isControlled ? valueProp : initialProp),
+  const initialValue: T = useMemo(
+    () => (isControlled ? (valueProp as T) : (initialProp as T)),
     [initialProp, isControlled, valueProp],
   );
 
   // Keep track of the internal value state
-  const [uncontrolledValue, setUncontrolledValue] = useState<T | undefined>(
-    initialValue,
+  const [uncontrolledValue, setUncontrolledValue] = useState<T>(
+    initialValue as T,
   );
 
   // The returned value is wither the provided value prop
@@ -79,12 +79,13 @@ export const useWizardControlledValue = <T extends any>(
   );
 
   // A wrapper around `handleChange` that fires a simulated event
-  const setValue = (newVal: T | undefined) => {
+  const setValue: Dispatch<SetStateAction<T>> = newVal => {
     if (!isControlled) {
       setUncontrolledValue(newVal);
     }
 
-    onChange?.(newVal);
+    const val = typeof newVal === 'function' ? (newVal as Function)() : newVal;
+    onChange?.(val);
   };
 
   return {
