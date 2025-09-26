@@ -174,7 +174,7 @@ describe('deepOmit', () => {
   });
 
   describe('array handling', () => {
-    it('transforms arrays to objects due to recursive processing', () => {
+    it('arrays are not transformed to objects', () => {
       const obj = {
         a: 1,
         b: [1, 2, 3],
@@ -186,14 +186,14 @@ describe('deepOmit', () => {
       const result = deepOmit(obj, ['c.e']);
       expect(result).toEqual({
         a: 1,
-        b: { '0': 1, '1': 2, '2': 3 },
+        b: [1, 2, 3],
         c: {
-          d: { '0': 4, '1': 5, '2': 6 },
+          d: [4, 5, 6],
         },
       });
     });
 
-    it('transforms arrays containing objects', () => {
+    it('arrays containing objects are not transformed to objects', () => {
       const obj = {
         a: 1,
         b: {
@@ -208,10 +208,10 @@ describe('deepOmit', () => {
       expect(result).toEqual({
         a: 1,
         b: {
-          c: {
-            '0': { x: 1, y: 2 },
-            '1': { x: 3, y: 4 },
-          },
+          c: [
+            { x: 1, y: 2 },
+            { x: 3, y: 4 },
+          ],
         },
       });
     });
