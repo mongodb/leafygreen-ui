@@ -57,14 +57,17 @@ const getBaseStyles = (theme: Theme) => css`
     ${getHrStyles(theme)}
   }
 
-  li > :first-child {
-    padding-top: ${VERTICAL_SPACING}px;
+  li,
+  ol,
+  ul {
+    white-space: normal;
   }
 
   ol,
   ul {
+    margin: 0;
     padding-inline-start: ${LIST_INDENT_SPACING}px;
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     gap: ${VERTICAL_SPACING}px;
   }
