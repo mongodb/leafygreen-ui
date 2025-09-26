@@ -3,8 +3,9 @@ import omit from 'lodash/omit';
 
 import { FormFieldState } from '@leafygreen-ui/form-field';
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
-import { DateType } from '@leafygreen-ui/date-utils';
+import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
+import { DateType, LocaleString } from '@leafygreen-ui/date-utils';
+import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 
 export const TimeInputState = omit(FormFieldState, 'Valid');
 export type TimeInputState =
@@ -12,14 +13,22 @@ export type TimeInputState =
 
 export { Size };
 
-export interface BaseTimeInputProps extends DarkModeProps, LgIdProps {
+export type BaseTimeInputProps = {
   state?: TimeInputState;
   label?: React.ReactNode;
   description?: string;
   size?: Size;
   disabled?: boolean;
   className?: string;
-}
+  locale?: LocaleString;
+  timeZone?: string;
+  min?: Date;
+  max?: Date;
+  baseFontSize?: BaseFontSize;
+  errorMessage?: string;
+} & DarkModeProps &
+  LgIdProps &
+  AriaLabelPropsWithLabel;
 
 export type TimeInputProps = {
   value?: DateType;
