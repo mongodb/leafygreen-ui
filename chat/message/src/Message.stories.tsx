@@ -118,6 +118,15 @@ const getLinksChild = () => (
   />
 );
 
+const getPromotionChild = () => (
+  <Message.Promotion
+    promotionText="Go learn more about this skill!"
+    promotionUrl="https://learn.mongodb.com/skills"
+    // eslint-disable-next-line no-console
+    onPromotionLinkClick={() => console.log('Promotion clicked')}
+  />
+);
+
 const meta: StoryMetaType<typeof Message> = {
   title: 'Composition/Chat/Message',
   component: Message,
@@ -282,13 +291,24 @@ export const WithMessageLinksExpanded: StoryObj<MessageStoryProps> = {
   },
 };
 
+export const WithPromotion: StoryObj<MessageStoryProps> = {
+  render: Template,
+  args: {
+    children: getPromotionChild(),
+    isSender: false,
+    messageBody: ASSISTANT_TEXT,
+  },
+};
+
 export const WithAllSubComponents: StoryObj<MessageStoryProps> = {
   render: Template,
   args: {
+    variant: Variant.Compact,
     children: (
       <>
         {getActionsChild()}
         {getLinksChild()}
+        {getPromotionChild()}
         {getVerifiedBannerChild()}
       </>
     ),

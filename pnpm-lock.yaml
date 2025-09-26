@@ -595,6 +595,9 @@ importers:
       '@leafygreen-ui/avatar':
         specifier: workspace:^
         version: link:../../packages/avatar
+      '@leafygreen-ui/badge':
+        specifier: workspace:^
+        version: link:../../packages/badge
       '@leafygreen-ui/banner':
         specifier: workspace:^
         version: link:../../packages/banner

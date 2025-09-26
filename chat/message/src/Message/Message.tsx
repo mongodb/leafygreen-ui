@@ -13,6 +13,7 @@ import { MessageActions } from '../MessageActions';
 import { MessageVerifiedBanner } from '../MessageBanner';
 import { MessageContext } from '../MessageContext';
 import { MessageLinks } from '../MessageLinks';
+import { MessagePromotion } from '../MessagePromotion';
 
 import { CompactMessage } from './CompactMessage';
 import {
@@ -20,6 +21,7 @@ import {
   type LinksType,
   type MessageProps,
   MessageSubcomponentProperty,
+  type PromotionType,
   type VerifiedBannerType,
 } from './Message.types';
 import { SpaciousMessage } from './SpaciousMessage';
@@ -108,8 +110,12 @@ Links[MessageSubcomponentProperty.Links] = true;
 const VerifiedBanner = MessageVerifiedBanner as VerifiedBannerType;
 VerifiedBanner[MessageSubcomponentProperty.VerifiedBanner] = true;
 
+const Promotion = MessagePromotion as PromotionType;
+Promotion[MessageSubcomponentProperty.Promotion] = true;
+
 export const Message = Object.assign(BaseMessage, {
   Actions,
   Links,
   VerifiedBanner,
+  Promotion,
 });
