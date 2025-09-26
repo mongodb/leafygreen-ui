@@ -1,1 +1,1 @@
-export { useControlledValue } from './useControlledValue';
+export { useWizardControlledValue } from './useWizardControlledValue';
