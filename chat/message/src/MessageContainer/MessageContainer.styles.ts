@@ -7,7 +7,8 @@ import { Variant } from './MessageContainer.types';
 
 const baseStyles = css`
   position: relative;
-  white-space: pre-wrap;
+  max-width: 100%;
+  white-space: pre-line;
   overflow-wrap: break-word;
   display: flex;
   flex-direction: column;

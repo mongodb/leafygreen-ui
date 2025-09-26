@@ -2,7 +2,14 @@ import React, { Children, ComponentPropsWithoutRef, ReactElement } from 'react';
 import { Components as ReactMarkdownComponents } from 'react-markdown';
 
 import Code, { Language } from '@leafygreen-ui/code';
-import { Body, H1, H2, H3, InlineCode, Link } from '@leafygreen-ui/typography';
+import { BaseFontSize, FontWeight } from '@leafygreen-ui/tokens';
+import {
+  Body,
+  H3,
+  InlineCode,
+  Link,
+  Subtitle,
+} from '@leafygreen-ui/typography';
 
 import { ExtraProps } from './LGMarkdown.types';
 
@@ -19,6 +26,13 @@ const componentsMap: ReactMarkdownComponents = {
       </Link>
     );
   },
+  blockquote: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'blockquote'> & ExtraProps) => {
+    return <blockquote {...rest}>{children}</blockquote>;
+  },
   code: ({
     children,
     node: _node,
@@ -31,21 +45,71 @@ const componentsMap: ReactMarkdownComponents = {
     node: _node,
     ...rest
   }: ComponentPropsWithoutRef<'h1'> & ExtraProps) => {
-    return <H1 {...rest}>{children}</H1>;
+    return (
+      <H3 as="h1" {...rest}>
+        {children}
+      </H3>
+    );
   },
   h2: ({
     children,
     node: _node,
     ...rest
   }: ComponentPropsWithoutRef<'h2'> & ExtraProps) => {
-    return <H2 {...rest}>{children}</H2>;
+    return (
+      <Subtitle as="h2" {...rest}>
+        {children}
+      </Subtitle>
+    );
   },
   h3: ({
     children,
     node: _node,
     ...rest
   }: ComponentPropsWithoutRef<'h3'> & ExtraProps) => {
-    return <H3 {...rest}>{children}</H3>;
+    return (
+      <Body
+        as="h3"
+        baseFontSize={BaseFontSize.Body2}
+        weight={FontWeight.SemiBold}
+        {...rest}
+      >
+        {children}
+      </Body>
+    );
+  },
+  h4: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'h4'> & ExtraProps) => {
+    return (
+      <Body as="h4" weight={FontWeight.SemiBold} {...rest}>
+        {children}
+      </Body>
+    );
+  },
+  // h5 is intentionally not supported, so return the markdown syntax as-is
+  h5: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'h5'> & ExtraProps) => {
+    return <Body {...rest}>##### {children}</Body>;
+  },
+  // h5 is intentionally not supported, so return the markdown syntax as-is
+  h6: ({
+    children,
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'h6'> & ExtraProps) => {
+    return <Body {...rest}>###### {children}</Body>;
+  },
+  hr: ({
+    node: _node,
+    ...rest
+  }: ComponentPropsWithoutRef<'hr'> & ExtraProps) => {
+    return <hr {...rest} />;
   },
   li: ({
     children,

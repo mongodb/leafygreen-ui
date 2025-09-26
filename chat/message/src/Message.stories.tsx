@@ -19,6 +19,14 @@ const MARKDOWN_TEXT = `
 
 ### Heading 3
 
+#### Heading 4
+
+##### Heading 5 (not supported)
+
+###### Heading 6 (not supported)
+
+---
+
 This is a paragraph.
 
 Each paragraph can span multiple lines. And have multiple sentences!
@@ -26,6 +34,10 @@ Each paragraph can span multiple lines. And have multiple sentences!
 A paragraph can also contain formatted text, like *italics* or **bold** words.
 
 You can link to a URL using markdown link notation, e.g. [LeafyGreen UI](mongodb.design)
+
+Long links will wrap to the next line: [https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs](https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs)
+
+---
 
 If you want to talk about code in a paragraph, you can use \`inline code\`. Wow!
 
@@ -39,9 +51,25 @@ function helloWorld() {
 }
 \`\`\`
 
-- [https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs](https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs)
-- [https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs](https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs)
-- [https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs](https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs)
+---
+
+> This is a blockquote element.
+
+Here's an ordered list:
+
+1. Ordered list item 1
+2. Ordered list item 2
+   1. Nested ordered list item 2.1
+   2. Nested ordered list item 2.2
+3. Ordered list item 3
+
+Here's an unordered list:
+
+- Unordered list item 1
+- Unordered list item 2
+  - Nested unordered list item 2.1
+  - Nested unordered list item 2.2
+- Unordered list item 3
 `;
 
 const USER_MESSAGE = `How can I delete a massive amount of documents from a collection?`;
