@@ -407,12 +407,6 @@ The component manages its own internal state for:
 
 The `MessagePromotion` component displays promotional content with an award icon and "Learn More" link.
 
-#### Rendering Behavior
-
-- Both `promotionText` and `promotionUrl` are required for this component to render.
-- The promotion component renders after the Message body with an `Award` badge to distinguish it from the main body text.
-- The "Learn more" link is displayed inline with the promotion text.
-
 #### Callback Behavior
 
 - The `onPromotionLinkClick` callback is triggered when clicking the "Learn More" link
