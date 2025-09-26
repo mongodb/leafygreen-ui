@@ -37,13 +37,13 @@ describe('packages/toolbar-icon-button', () => {
     expect(ref.current).toBeInstanceOf(HTMLButtonElement);
   });
 
-  test('shows tooltip on hover when tooltipEnabled is true', async () => {
+  test('shows tooltip on hover when isTooltipEnabled is true', async () => {
     const { getByRole, findByRole } = render(
       <Toolbar>
         <ToolbarIconButton
           glyph="Code"
           label="Code Tooltip"
-          tooltipEnabled={true}
+          isTooltipEnabled={true}
         />
       </Toolbar>,
     );
@@ -57,13 +57,13 @@ describe('packages/toolbar-icon-button', () => {
     expect(tooltip).toHaveTextContent('Code Tooltip');
   });
 
-  test('does not show tooltip on hover when tooltipEnabled is false', async () => {
+  test('does not show tooltip on hover when isTooltipEnabled is false', async () => {
     const { getByRole, queryByRole } = render(
       <Toolbar>
         <ToolbarIconButton
           glyph="Code"
           label="Code Tooltip"
-          tooltipEnabled={false}
+          isTooltipEnabled={false}
         />
       </Toolbar>,
     );

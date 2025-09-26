@@ -24,7 +24,7 @@ export const ToolbarIconButton = React.forwardRef<
       glyph,
       disabled = false,
       active = false,
-      tooltipEnabled = true,
+      isTooltipEnabled = true,
       'aria-label': ariaLabel,
       ...rest
     }: ToolbarIconButtonProps,
@@ -61,7 +61,7 @@ export const ToolbarIconButton = React.forwardRef<
         data-testid={`${lgIds.iconButtonTooltip}-${index}`}
         data-lgid={`${lgIds.iconButtonTooltip}-${index}`}
         align={Align.Left}
-        enabled={tooltipEnabled}
+        enabled={isTooltipEnabled}
         trigger={
           <div className={triggerStyles}>
             <IconButton

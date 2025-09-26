@@ -2,4 +2,4 @@
 '@leafygreen-ui/drawer': minor
 ---
 
-Enhance `DrawerLayout` component's `toolbarData` prop with `ref` and `tooltipEnabled` props for `ToolbarIconButton` integration
+Enhance `DrawerLayout` component's `toolbarData` prop with `ref` and `isTooltipEnabled` props for `ToolbarIconButton` integration

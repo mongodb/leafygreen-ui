@@ -121,7 +121,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
               active={toolbarItem.id === id}
               disabled={toolbarItem.disabled}
               ref={toolbarItem.ref}
-              tooltipEnabled={toolbarItem.tooltipEnabled}
+              isTooltipEnabled={toolbarItem.isTooltipEnabled}
             />
           ))}
         </Toolbar>

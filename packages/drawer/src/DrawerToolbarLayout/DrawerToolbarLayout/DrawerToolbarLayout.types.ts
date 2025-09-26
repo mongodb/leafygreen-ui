@@ -5,7 +5,7 @@ import { ToolbarIconButtonProps } from '@leafygreen-ui/toolbar';
 
 type PickedRequiredToolbarIconButtonProps = Pick<
   ToolbarIconButtonProps,
-  'glyph' | 'label' | 'onClick' | 'disabled' | 'tooltipEnabled'
+  'glyph' | 'label' | 'onClick' | 'disabled' | 'isTooltipEnabled'
 >;
 
 interface LayoutBase extends PickedRequiredToolbarIconButtonProps {

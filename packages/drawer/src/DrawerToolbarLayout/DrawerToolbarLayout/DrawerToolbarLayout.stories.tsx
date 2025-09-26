@@ -535,7 +535,7 @@ const WithGuideCueComponent: StoryFn<DrawerLayoutProps> = ({
         title: 'Dashboard',
         glyph: 'Dashboard',
         ref: dashboardButtonRef, // This ref is passed to the ToolbarIconButton
-        tooltipEnabled: !guideCueOpen, // Disable tooltip when guide cue is open
+        isTooltipEnabled: !guideCueOpen, // Disable tooltip when guide cue is open
       },
       {
         id: 'Apps',

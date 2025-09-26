@@ -51,11 +51,11 @@ import {Toolbar, ToolbarIconButton} from `@leafygreen-ui/toolbar`;
 
 #### Props
 
-| Prop                          | Type              | Description                                                                                                                                                                                         | Default |
-| ----------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `glyph`                       | `Glyph`           | Name of the icon glyph to display in the button. List of available glyphs can be found in the [Icon README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#properties). |         |
-| `label`                       | `React.ReactNode` | Text that appears in the tooltip on hover/focus                                                                                                                                                     |         |
-| `tooltipEnabled` _(optional)_ | `boolean`         | Enables the tooltip to trigger based on hover events. When false, the tooltip will not show on hover. Useful when other overlays (like `GuideCue`) are positioned on the button.                    | `true`  |
+| Prop                            | Type              | Description                                                                                                                                                                                         | Default |
+| ------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `glyph`                         | `Glyph`           | Name of the icon glyph to display in the button. List of available glyphs can be found in the [Icon README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#properties). |         |
+| `label`                         | `React.ReactNode` | Text that appears in the tooltip on hover/focus                                                                                                                                                     |         |
+| `isTooltipEnabled` _(optional)_ | `boolean`         | Enables the tooltip to trigger based on hover events. When false, the tooltip will not show on hover. Useful when other overlays (like `GuideCue`) are positioned on the button.                    | `true`  |
 
 \+ Extends LG [IconButton props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon-button#properties) with the exception of `as`, `children`, `darkMode`, `href`, `size`, and `tabIndex`
 

@@ -34,5 +34,5 @@ export interface ToolbarIconButtonProps extends ButtonProps {
    * When false, the tooltip will not show on hover.
    * @default true
    */
-  tooltipEnabled?: boolean;
+  isTooltipEnabled?: boolean;
 }
