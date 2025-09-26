@@ -18,7 +18,7 @@ export default {
   },
   decorators: [
     Fn => (
-      <div style={{ margin: -100, height: '100vh' }}>
+      <div style={{ margin: -100, height: '100vh', width: '100vw' }}>
         <Fn />
       </div>
     ),
