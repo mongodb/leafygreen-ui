@@ -32,7 +32,7 @@ describe('packages/hooks/useControlledValue', () => {
         initialProps: 'apple',
       });
 
-      // simulate responding to an eventw
+      // simulate responding to an event
       act(() => {
         result.current.handleChange(changeEventMock);
       });
