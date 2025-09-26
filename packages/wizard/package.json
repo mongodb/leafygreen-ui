@@ -36,7 +36,8 @@
     "@lg-tools/test-harnesses": "workspace:^"
   },
   "devDependencies" : {
-    "@leafygreen-ui/icon": "workspace:^"
+    "@leafygreen-ui/icon": "workspace:^",
+    "@faker-js/faker": "^8.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/wizard",
   "repository": {

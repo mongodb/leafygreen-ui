@@ -3804,9 +3804,19 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
+    devDependencies:
+      '@faker-js/faker':
+        specifier: ^8.0.0
+        version: 8.0.2
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
 
   tools/build:
     dependencies:
