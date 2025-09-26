@@ -1,5 +1,11 @@
 # @lg-tools/create
 
+## 0.5.0
+
+### Minor Changes
+
+- 2b6a7c0: Start init package.json at 0.0.1 and create corresponding changeset stub
+
 ## 0.4.1
 
 ### Patch Changes

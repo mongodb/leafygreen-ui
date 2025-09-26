@@ -1,5 +1,17 @@
 # @lg-chat/message
 
+## 8.2.0
+
+### Minor Changes
+
+- 882373b: Add `Message.Promotion` as `Message` subcomponent for promotional content
+
+### Patch Changes
+
+- 0870bea: Deprecate spacious variant props in `MessageProps`
+- Updated dependencies [ff6b87e]
+  - @leafygreen-ui/lib@15.5.0
+
 ## 8.1.1
 
 ### Patch Changes

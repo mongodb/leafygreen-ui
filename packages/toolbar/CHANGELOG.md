@@ -1,5 +1,16 @@
 # @leafygreen-ui/toolbar
 
+## 1.1.0
+
+### Minor Changes
+
+- ceccfc1: Add `isTooltipEnabled` prop to `ToolbarIconButton` component for customizable tooltip behavior
+
+### Patch Changes
+
+- Updated dependencies [ff6b87e]
+  - @leafygreen-ui/lib@15.5.0
+
 ## 1.0.6
 
 ### Patch Changes
