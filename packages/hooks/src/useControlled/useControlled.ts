@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
 import { ControlledReturnObject } from './useControlled.types';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 /**
  * A hook that enables a component to be both controlled or uncontrolled.
@@ -49,6 +50,17 @@ export const useControlled = <T extends any>(
     }
     onChange?.(newVal);
   };
+
+  /**
+   * Log a warning if neither controlled value or initialValue is provided
+   */
+  useEffect(() => {
+    if (isUndefined(controlledValue) && isUndefined(initialValue)) {
+      consoleOnce.error(
+        `Warning: \`useControlled\` hook is being used without a value or initialValue. If using an input, this will cause a React warning when an input changes. Please decide between using a controlled or uncontrolled input element, and provide either a controlledValue or initialValue to \`useControlled\``,
+      );
+    }
+  }, [controlledValue, initialValue]);
 
   return {
     isControlled,

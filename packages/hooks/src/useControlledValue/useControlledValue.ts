@@ -1,11 +1,10 @@
-import { ChangeEventHandler, MutableRefObject, useEffect } from 'react';
+import { ChangeEventHandler, MutableRefObject } from 'react';
 
-import { consoleOnce, createSyntheticEvent } from '@leafygreen-ui/lib';
+import { createSyntheticEvent } from '@leafygreen-ui/lib';
 
 import { useControlled } from '../useControlled';
 
 import { ControlledValueReturnObject } from './useControlledValue.types';
-import isUndefined from 'lodash/isUndefined';
 
 /**
  * A hook that enables an input component to be both controlled or uncontrolled.
@@ -49,17 +48,6 @@ export const useControlledValue = <T>(
       handleChange(synthEvt);
     }
   };
-
-  /**
-   * Log a warning if neither controlled value or initialValue is provided
-   */
-  useEffect(() => {
-    if (isUndefined(controlledValue) && isUndefined(initialValue)) {
-      consoleOnce.error(
-        `Warning: \`useControlledValue\` hook is being used without a value or initialValue. This will cause a React warning when the input changes. Please decide between using a controlled or uncontrolled input element, and provide either a controlled or initialValue to \`useControlled\``,
-      );
-    }
-  }, [controlledValue, initialValue]);
 
   return {
     isControlled,
