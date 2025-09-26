@@ -1,14 +1,5 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useState } from 'react';
-import {
-  closeSearchPanel,
-  findNext,
-  findPrevious,
-  replaceAll,
-  replaceNext,
-  SearchQuery,
-  selectMatches,
-  setSearchQuery,
-} from '@codemirror/search';
+import { closeSearchPanel } from '@codemirror/search';
 
 import Button from '@leafygreen-ui/button';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -22,6 +13,7 @@ import {
   closeButtonStyles,
   findInputContainerStyles,
   findInputIconButtonStyles,
+  findInputStyles,
   findSectionStyles,
   getContainerStyles,
   getReplaceInnerSectionStyles,
@@ -38,21 +30,21 @@ export function SearchForm({ view }: SearchFormProps) {
   const { theme } = useDarkMode();
 
   const handleToggleButtonClick = useCallback(
-    (e: MouseEvent<HTMLButtonElement>) => {
+    (_e: MouseEvent<HTMLButtonElement>) => {
       setIsOpen(currState => !currState);
     },
     [],
   );
 
   const handleCloseButtonClick = useCallback(
-    (e: MouseEvent<HTMLButtonElement>) => {
+    (_e: MouseEvent<HTMLButtonElement>) => {
       closeSearchPanel(view);
     },
     [view],
   );
 
   const handleFindInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
+    (_e: ChangeEvent<HTMLInputElement>) => {
       // const newQuery = new SearchQuery({
       //   search: 'test',
       //   caseSensitive: true,
@@ -66,7 +58,7 @@ export function SearchForm({ view }: SearchFormProps) {
       //   view.dispatch({ effects: setSearchQuery.of(newQuery) });
       // }
     },
-    [view],
+    [],
   );
 
   return (
@@ -85,6 +77,7 @@ export function SearchForm({ view }: SearchFormProps) {
             placeholder="Find"
             aria-labelledby="find"
             onChange={handleFindInputChange}
+            className={findInputStyles}
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           />
