@@ -311,4 +311,28 @@ describe('deepOmit', () => {
       });
     });
   });
+
+  it('does not filter literal key names', () => {
+    const obj = {
+      user: {
+        a: 1,
+        'b.c': 'should-stay',
+      },
+      b: {
+        c: 2,
+        d: ['3', '4'],
+      },
+    };
+    const result = deepOmit(obj, ['b.c']);
+
+    expect(result).toEqual({
+      user: {
+        a: 1,
+        'b.c': 'should-stay',
+      },
+      b: {
+        d: ['3', '4'],
+      },
+    });
+  });
 });
