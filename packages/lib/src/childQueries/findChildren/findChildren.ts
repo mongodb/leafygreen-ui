@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 
-import { isChildWithProperty } from '../isChildWithProperty/isChildWithProperty';
-import { unwrapRootFragment } from '../unwrapRootFragment/unwrapRootFragment';
+import { isChildWithProperty } from '../isChildWithProperty';
+import { unwrapRootFragment } from '../unwrapRootFragment';
 
 /**
  *
