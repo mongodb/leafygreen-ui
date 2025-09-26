@@ -89,6 +89,7 @@ const componentsMap: ReactMarkdownComponents = {
       </Body>
     );
   },
+  // h5 is intentionally not supported, so return the markdown syntax as-is
   h5: ({
     children,
     node: _node,
@@ -96,6 +97,7 @@ const componentsMap: ReactMarkdownComponents = {
   }: ComponentPropsWithoutRef<'h5'> & ExtraProps) => {
     return <Body {...rest}>##### {children}</Body>;
   },
+  // h5 is intentionally not supported, so return the markdown syntax as-is
   h6: ({
     children,
     node: _node,
