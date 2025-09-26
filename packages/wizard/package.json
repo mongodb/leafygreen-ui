@@ -32,7 +32,11 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/form-footer": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
+  },
+  "devDependencies" : {
+    "@leafygreen-ui/icon": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/wizard",
   "repository": {
