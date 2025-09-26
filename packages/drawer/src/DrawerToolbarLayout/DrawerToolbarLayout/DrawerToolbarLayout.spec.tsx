@@ -259,4 +259,38 @@ describe('packages/DrawerToolbarLayout', () => {
 
     expect(isOpen()).toBe(false);
   });
+
+  test('passes ref correctly to ToolbarIconButton instances', () => {
+    const codeButtonRef = React.createRef<HTMLButtonElement>();
+    const code2ButtonRef = React.createRef<HTMLButtonElement>();
+
+    const dataWithRefs: DrawerLayoutProps['toolbarData'] = [
+      {
+        id: 'Code',
+        label: 'Code',
+        content: 'Drawer Content',
+        title: `Drawer Title`,
+        glyph: 'Code',
+        ref: codeButtonRef,
+      },
+      {
+        id: 'Code2',
+        label: 'Code2',
+        content: 'Drawer Content2',
+        title: `Drawer Title2`,
+        glyph: 'Code',
+        ref: code2ButtonRef,
+      },
+    ];
+
+    render(<Component data={dataWithRefs} />);
+
+    // Verify that refs are properly assigned to DOM elements
+    expect(codeButtonRef.current).toBeInstanceOf(HTMLButtonElement);
+    expect(code2ButtonRef.current).toBeInstanceOf(HTMLButtonElement);
+
+    // Verify the elements have the correct labels
+    expect(codeButtonRef.current).toHaveAttribute('aria-label', 'Code');
+    expect(code2ButtonRef.current).toHaveAttribute('aria-label', 'Code2');
+  });
 });
