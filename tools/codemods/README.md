@@ -166,6 +166,57 @@ import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
 </ConfirmationModal>;
 ```
 
+### `named-exports`
+
+This codemod converts default imports to named imports for LeafyGreen UI components.
+
+By default, the codemod will apply for all below listed packages. Use the `--packages` flag to filter for a subset of these.
+
+- `@leafygreen-ui/badge`
+- `@leafygreen-ui/button`
+- `@leafygreen-ui/callout`
+- `@leafygreen-ui/card`
+- `@leafygreen-ui/checkbox`
+- `@leafygreen-ui/code`
+- `@leafygreen-ui/confirmation-modal`
+- `@leafygreen-ui/copyable`
+- `@leafygreen-ui/expandable-card`
+- `@leafygreen-ui/form-footer`
+- `@leafygreen-ui/icon`
+- `@leafygreen-ui/icon-button`
+- `@leafygreen-ui/inline-definition`
+- `@leafygreen-ui/logo`
+- `@leafygreen-ui/marketing-modal`
+- `@leafygreen-ui/modal`
+- `@leafygreen-ui/pagination`
+- `@leafygreen-ui/popover`
+- `@leafygreen-ui/portal`
+- `@leafygreen-ui/stepper`
+- `@leafygreen-ui/text-area`
+- `@leafygreen-ui/text-input`
+- `@leafygreen-ui/toggle`
+- `@leafygreen-ui/tooltip`
+
+```shell
+pnpm lg codemod named-exports <path>
+```
+
+**Before**:
+
+```tsx
+import Button, { Size } from '@leafygreen-ui/button';
+import LGModal from '@leafygreen-ui/modal';
+import Tooltip from '@leafygreen-ui/tooltip';
+```
+
+**After**:
+
+```tsx
+import { Button, Size } from '@leafygreen-ui/button';
+import { Modal as LGModal } from '@leafygreen-ui/modal';
+import { Tooltip } from '@leafygreen-ui/tooltip';
+```
+
 ### `popover-v12`
 
 This codemod can be used to get started in refactoring LG components dependent on v12+ of `@leafygreen-ui/popover`.
