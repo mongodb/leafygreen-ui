@@ -19,4 +19,7 @@ export {
 } from './Popover';
 export { getPopoverRenderModeProps } from './utils/getPopoverRenderModeProps';
 
+/**
+ * @deprecated Use named export `{ Popover }` instead. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+ */
 export default Popover;
