@@ -285,7 +285,7 @@ describe('packages/DrawerToolbarLayout', () => {
     expect(codeButtonRef.current).toHaveAttribute('aria-label', 'Code');
     expect(code2ButtonRef.current).toHaveAttribute('aria-label', 'Code2');
   });
-  
+
   test('closes the drawer when clicking the same toolbar button while drawer is open', () => {
     render(<Component />);
 
