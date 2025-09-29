@@ -203,7 +203,12 @@ export default $1;`,
       'packages/icon/' +
       path.relative(path.resolve(__dirname, process.cwd()), __filename);
 
-    const finalContent = customizedSVGR || processedSVGR;
+    if (customizedSVGR === null) {
+      throw new Error(
+        `Regex replacement failed for file "${file.name}.svg". The SVGR output could not be customized and would result in a broken icon component.`
+      );
+    }
+    const finalContent = customizedSVGR;
     const checksum = getChecksum(svgContent, finalContent);
 
     const outfilePath = path.resolve(outputDir, `${file.name}.tsx`);
