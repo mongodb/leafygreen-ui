@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { formatLG } from '@lg-tools/lint';
-// @ts-ignore - no types in svgr v5.5 // TODO: update to v8 LG-5484
-import { default as svgr } from '@svgr/core';
+import { transform } from '@svgr/core';
 import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
@@ -9,7 +8,6 @@ import path from 'path';
 import { getChecksum } from './checksum';
 import { indexTemplate } from './indexTemplate';
 import { FileObject, PrebuildOptions } from './prebuild.types';
-import { svgrTemplate } from './svgrTemplate';
 
 const SRC_PATH = path.resolve(__dirname, '..', '..', 'src');
 
@@ -117,32 +115,102 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
       encoding: 'utf8',
     });
 
-    // Note: must use `require` since svgrrc is a CommonJS module
-    // @ts-ignore - svgrrc is not typed
-    const svgrrc = await require('../../.svgrrc.js');
-
-    const processedSVGR = await svgr(
+    // Generate basic React component first
+    const processedSVGR = await transform(
       svgContent,
       {
-        ...svgrrc,
-        template: svgrTemplate,
+        plugins: ['@svgr/plugin-jsx'],
+        typescript: true,
+        jsx: {
+          babelConfig: {
+            plugins: [
+              [
+                '@svgr/babel-plugin-replace-jsx-attribute-value',
+                {
+                  values: [
+                    { value: '#000', newValue: 'currentColor' },
+                    { value: '#000000', newValue: 'currentColor' },
+                    { value: 'black', newValue: 'currentColor' },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
       },
+      { componentName: file.name },
+    );
+
+    // Post-process to add custom LeafyGreen wrapper
+    const customizedSVGR = processedSVGR.replace(
+      /import \* as React from "react";\nimport type \{ SVGProps \} from "react";\nconst (\w+) = \(props: SVGProps<SVGSVGElement>\) => (.*?);\nexport default \1;/s,
+      `import * as React from 'react';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+
+export interface $1Props extends LGGlyph.ComponentProps {}
+
+const $1 = ({
+  className,
+  size = 16,
+  title,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledby,
+  fill,
+  role = 'img',
+  ...props
+}: $1Props) => {
+  const fillStyle = css\`
+    color: \${fill};
+  \`;
+
+  const noFlexShrink = css\`
+    flex-shrink: 0;
+  \`;
+
+  const accessibleProps = generateAccessibleProps(role, '$1', { 
+    title, 
+    'aria-label': ariaLabel, 
+    'aria-labelledby': ariaLabelledby 
+  });
+
+  const svgElement = $2;
+
+  return React.cloneElement(svgElement, {
+    className: cx(
       {
-        componentName: file.name,
+        [fillStyle]: fill != null,
       },
+      noFlexShrink,
+      className,
+    ),
+    height: typeof size === 'number' ? size : sizeMap[size],
+    width: typeof size === 'number' ? size : sizeMap[size],
+    role,
+    ...accessibleProps,
+    ...props,
+  });
+};
+
+$1.displayName = '$1';
+$1.isGlyph = true;
+
+export default $1;`,
     );
 
     const scriptPath =
       'packages/icon/' +
       path.relative(path.resolve(__dirname, process.cwd()), __filename);
 
-    const checksum = getChecksum(svgContent, processedSVGR);
+    const finalContent = customizedSVGR || processedSVGR;
+    const checksum = getChecksum(svgContent, finalContent);
 
     const outfilePath = path.resolve(outputDir, `${file.name}.tsx`);
     const annotatedFileContent = annotateFileContent(
       scriptPath,
       checksum,
-      processedSVGR,
+      finalContent,
     );
 
     if (options?.verbose) {

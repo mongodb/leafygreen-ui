@@ -2,38 +2,58 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum a700d27f7ce1179149146df351bc239f
+* @checksum 1cc18bf75b74f7da69313598c23cadfc
 */
-import * as React from "react";
+import * as React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
+
 export interface FilterProps extends LGGlyph.ComponentProps {}
+
 const Filter = ({
   className,
   size = 16,
   title,
-  ['aria-label']: ariaLabel,
-  ['aria-labelledby']: ariaLabelledby,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledby,
   fill,
   role = 'img',
   ...props
 }: FilterProps) => {
   const fillStyle = css`
-        color: ${fill};
-      `;
+    color: ${fill};
+  `;
+
   const noFlexShrink = css`
-        flex-shrink: 0;
-      `;
-  const accessibleProps = generateAccessibleProps(role, 'Filter', {
-    title,
-    ['aria-label']: ariaLabel,
-    ['aria-labelledby']: ariaLabelledby
+    flex-shrink: 0;
+  `;
+
+  const accessibleProps = generateAccessibleProps(role, 'Filter', { 
+    title, 
+    'aria-label': ariaLabel, 
+    'aria-labelledby': ariaLabelledby 
   });
-  return <svg className={cx({
-    [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path fillRule="evenodd" clipRule="evenodd" d="M6 6.14834L2.19955 2.20776C1.79746 1.79085 2.04373 1 2.57564 1H13.4244C13.9563 1 14.2025 1.79085 13.8005 2.20776L10 6.14834V11.7731C10 11.9173 9.93776 12.0545 9.82925 12.1494L6.82925 14.7744C6.50596 15.0573 6 14.8277 6 14.3981V6.14834Z" fill={'currentColor'} /></svg>;
+
+  const svgElement = <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path fillRule="evenodd" clipRule="evenodd" d="M6 6.14834L2.19955 2.20776C1.79746 1.79085 2.04373 1 2.57564 1H13.4244C13.9563 1 14.2025 1.79085 13.8005 2.20776L10 6.14834V11.7731C10 11.9173 9.93776 12.0545 9.82925 12.1494L6.82925 14.7744C6.50596 15.0573 6 14.8277 6 14.3981V6.14834Z" fill="currentColor" /></svg>;
+
+  return React.cloneElement(svgElement, {
+    className: cx(
+      {
+        [fillStyle]: fill != null,
+      },
+      noFlexShrink,
+      className,
+    ),
+    height: typeof size === 'number' ? size : sizeMap[size],
+    width: typeof size === 'number' ? size : sizeMap[size],
+    role,
+    ...accessibleProps,
+    ...props,
+  });
 };
+
 Filter.displayName = 'Filter';
 Filter.isGlyph = true;
+
 export default Filter;
