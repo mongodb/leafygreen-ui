@@ -270,6 +270,12 @@ Note: it's important to follow the kebab-casing convention described above.
 - If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
 - Run `pnpm run init` to link all packages before starting development
 
+### Initial Release
+
+The starting version in the generated `package.json` will be 0.0.1, but this will not be published to npm automatically. A new package is only published after its first changeset is added and the resulting "Version Packages" pull request is merged into the `main` branch.
+
+Note: The `create-package` script automatically generates a starter changeset file. By default this is marked as a **minor** release, which will lead to an initial release of 0.1.0. If you'd like the initial release to be a **major** version (1.0.0), this starter changeset file must be manually edited.
+
 ## Formatting and linting
 
 When you run `pnpm fix`, we do the following:
