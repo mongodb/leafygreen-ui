@@ -62,7 +62,10 @@ export function SearchForm({ view }: SearchFormProps) {
   );
 
   return (
-    <div className={getContainerStyles({ theme, isOpen })}>
+    <div
+      className={getContainerStyles({ theme, isOpen })}
+      data-no-context-menu="true"
+    >
       <div className={findSectionStyles}>
         <IconButton
           className={toggleButtonStyles}
@@ -103,7 +106,12 @@ export function SearchForm({ view }: SearchFormProps) {
           <Icon glyph="X" />
         </IconButton>
       </div>
-      <div className={replaceSectionStyles}>
+      <div
+        className={replaceSectionStyles}
+        // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
+        inert={!isOpen ? 'inert' : undefined}
+        aria-hidden={!isOpen}
+      >
         <div className={getReplaceInnerSectionStyles(theme)}>
           <TextInput
             placeholder="Replace"
@@ -113,7 +121,10 @@ export function SearchForm({ view }: SearchFormProps) {
           <Button aria-label="replace button" className={replaceButtonStyles}>
             Replace
           </Button>
-          <Button aria-label="replace button" className={replaceButtonStyles}>
+          <Button
+            aria-label="replace all button"
+            className={replaceButtonStyles}
+          >
             Replace All
           </Button>
         </div>

@@ -279,6 +279,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               dom.style.position = 'absolute';
               dom.style.top = '-8px'; // Accounts for top padding of the editor
               dom.style.right = '0';
+              dom.style.left = '0';
+              dom.style.display = 'flex';
+              dom.style.justifyContent = 'flex-end';
 
               createRoot(dom).render(
                 React.createElement(SearchForm, {
