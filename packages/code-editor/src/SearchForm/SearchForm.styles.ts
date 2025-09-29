@@ -21,8 +21,8 @@ const getBaseContainerStyles = (theme: Theme) => css`
   border-bottom-left-radius: ${borderRadius[150]}px;
   border-bottom-right-radius: ${borderRadius[150]}px;
   box-shadow: ${shadow[theme][100]};
-  max-width: ${CONTAINER_MAX_WIDTH}px;
   width: 100%;
+  max-width: ${CONTAINER_MAX_WIDTH}px;
   display: grid;
   grid-template-rows: ${SECTION_HEIGHT}px 0fr;
   overflow: hidden;
@@ -90,6 +90,7 @@ export const findInputContainerStyles = css`
   position: relative;
   flex: 1 1 ${INPUT_WIDTH}px;
   min-width: 100px;
+  max-width: ${INPUT_WIDTH}px;
   margin-right: ${spacing[100]}px;
 `;
 
@@ -111,6 +112,7 @@ export const replaceInputContainerStyles = css`
   position: relative;
   flex: 1 1 ${INPUT_WIDTH}px;
   min-width: 100px;
+  max-width: ${INPUT_WIDTH}px;
   width: 100%;
 `;
 
