@@ -205,9 +205,10 @@ export default $1;`,
 
     if (customizedSVGR === null) {
       throw new Error(
-        `Regex replacement failed for file "${file.name}.svg". The SVGR output could not be customized and would result in a broken icon component.`
+        `Regex replacement failed for file "${file.name}.svg". The SVGR output could not be customized and would result in a broken icon component.`,
       );
     }
+
     const finalContent = customizedSVGR;
     const checksum = getChecksum(svgContent, finalContent);
 
