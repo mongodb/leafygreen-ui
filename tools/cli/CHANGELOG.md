@@ -1,5 +1,12 @@
 # @lg-tools/cli
 
+## 0.10.7
+
+### Patch Changes
+
+- Updated dependencies [2b6a7c0]
+  - @lg-tools/create@0.5.0
+
 ## 0.10.6
 
 ### Patch Changes

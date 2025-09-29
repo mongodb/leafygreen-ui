@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 15.5.0
+
+### Minor Changes
+
+- ff6b87e: Adds `deepOmit` util
+
 ## 15.4.0
 
 ### Minor Changes
