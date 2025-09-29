@@ -1,6 +1,10 @@
-# @lg-private/vertical-stepper
+# @leafygreen-ui/vertical-stepper
 
 ## 3.0.0
+
+### Major Changes
+
+- **Package has been renamed and moved!** This package is now published under the `@leafygreen-ui` scope. All dependencies and import paths must be updated from `@lg-private/vertical-stepper` to `@leafygreen-ui/vertical-stepper`.
 
 ### Major Changes
 

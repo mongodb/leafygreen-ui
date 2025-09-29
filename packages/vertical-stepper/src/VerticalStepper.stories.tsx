@@ -8,7 +8,7 @@ import { Link } from '@leafygreen-ui/typography';
 import { VerticalStep, VerticalStepper } from '.';
 
 export default {
-  title: 'Components/VerticalStepper',
+  title: 'Composition/Data Display/VerticalStepper',
   component: VerticalStepper,
   parameters: {
     default: 'LiveExample',

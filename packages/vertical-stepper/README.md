@@ -1,6 +1,6 @@
 # Vertical Stepper
 
-![npm (scoped)](https://img.shields.io/npm/v/@lg-private/vertical-stepper.svg)
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/vertical-stepper.svg)
 
 #### [View on MongoDB.design](https://www.mongodb.design/component/vertical-stepper/example/)
 
@@ -9,20 +9,20 @@
 ### Yarn
 
 ```shell
-yarn add @lg-private/vertical-stepper
+yarn add @leafygreen-ui/vertical-stepper
 ```
 
 ### NPM
 
 ```shell
-npm install @lg-private/vertical-stepper
+npm install @leafygreen-ui/vertical-stepper
 ```
 
 ## Example
 
 ```js
 import Button, { Size, Variant } from `@leafygreen-ui/button`;
-import { VerticalStepper, VerticalStep } from `@lg-private/vertical-stepper`;
+import { VerticalStepper, VerticalStep } from `@leafygreen-ui/vertical-stepper`;
 
 const [currentStep, setCurrentStep] = useState(0);
 

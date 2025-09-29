@@ -1,5 +1,5 @@
 {
-  "name": "@lg-private/vertical-stepper",
+  "name": "@leafygreen-ui/vertical-stepper",
   "version": "3.0.0",
   "description": "LeafyGreen UI Kit Vertical Stepper",
   "main": "./dist/umd/index.js",
@@ -22,26 +22,26 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^22.0.0",
-    "@leafygreen-ui/descendants": "^2.0.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/icon": "^13.0.0",
-    "@leafygreen-ui/lib": "^14.0.0",
-    "@leafygreen-ui/palette": "^4.1.1",
-    "@leafygreen-ui/tokens": "^2.11.0",
-    "@leafygreen-ui/typography": "^20.0.0"
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/descendants": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
-    "@lg-tools/build": "0.8.0",
-    "@lg-tools/storybook-utils": "^0.3.0"
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:^"
   },
-  "homepage": "https://github.com/10gen/leafygreen-ui-private/tree/main/packages/vertical-stepper",
+  "homepage": "https://github.com/10gen/leafygreen-ui/tree/main/packages/vertical-stepper",
   "repository": {
     "type": "git",
-    "url": "https://github.com/10gen/leafygreen-ui-private"
+    "url": "https://github.com/10gen/leafygreen-ui"
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
