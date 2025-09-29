@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/cli",
-  "version": "0.10.6",
+  "version": "0.10.7",
   "description": "Command Line tools for LeafyGreen",
   "license": "Apache-2.0",
   "main": "./dist/umd/index.js",
