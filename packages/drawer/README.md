@@ -157,10 +157,11 @@ Individual toolbar items can be controlled using the `visible` prop. When all to
 
 To control the `Drawer` state, use the `useDrawerToolbarContext` hook from within `<DrawerLayout>`. This hook provides the `openDrawer()` and `closeDrawer()` functions to open and close the drawer programmatically. The hook takes no arguments and returns the following functions:
 
-| Name        | Signature              | Description                                                                                        |
-| ----------- | ---------------------- | -------------------------------------------------------------------------------------------------- |
-| openDrawer  | `(id: string) => void` | Opens the `Drawer` associated with the `Toolbar` item that has the matching `id` in `toolbarData`. |
-| closeDrawer | `() => void`           | Closes the Drawer.                                                                                 |
+| Name         | Signature              | Description                                                                                                                    |
+| ------------ | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| openDrawer   | `(id: string) => void` | Opens the `Drawer` associated with the `Toolbar` item that has the matching `id` in `toolbarData`.                             |
+| closeDrawer  | `() => void`           | Closes the `Drawer`.                                                                                                           |
+| toggleDrawer | `(id: string) => void` | If clicking the currently active `Toolbar` item, it closes the `Drawer`. Otherwise, it open the `Drawer` with the new content. |
 
 ### Rendering
 
