@@ -10,7 +10,7 @@ export const pkgJson = ({
 >) => `  
 {
   "name": "${scope}/${packageNameKebab}",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "LeafyGreen UI Kit ${packageNameTitle}",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

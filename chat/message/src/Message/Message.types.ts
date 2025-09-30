@@ -12,6 +12,7 @@ import {
 import { type MessageContainerProps } from '../MessageContainer';
 import { type MessageContentProps } from '../MessageContent';
 import { type MessageLinksProps } from '../MessageLinks';
+import { type MessagePromotionProps } from '../MessagePromotion';
 
 export const Align = {
   Right: 'right',
@@ -115,6 +116,7 @@ export const MessageSubcomponentProperty = {
   Actions: 'isLGMessageActions',
   VerifiedBanner: 'isLGMessageVerifiedBanner',
   Links: 'isLGMessageLinks',
+  Promotion: 'isPromotion',
 } as const;
 
 /**
@@ -135,3 +137,7 @@ export type VerifiedBannerType =
   ForwardRefExoticComponent<MessageVerifiedBannerProps> & {
     [MessageSubcomponentProperty.VerifiedBanner]?: boolean;
   };
+
+export type PromotionType = ForwardRefExoticComponent<MessagePromotionProps> & {
+  [MessageSubcomponentProperty.Promotion]?: boolean;
+};

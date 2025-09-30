@@ -1,5 +1,20 @@
 # @lg-chat/message
 
+## 8.2.0
+
+### Minor Changes
+
+- 882373b: Add `Message.Promotion` as `Message` subcomponent for promotional content
+
+### Patch Changes
+
+- 8902552: [LG-5570](https://jira.mongodb.org/browse/LG-5570): fix text wrapping and overflow
+- 0870bea: Deprecate spacious variant props in `MessageProps`
+- Updated dependencies [8902552]
+- Updated dependencies [ff6b87e]
+  - @lg-chat/lg-markdown@4.2.0
+  - @leafygreen-ui/lib@15.5.0
+
 ## 8.1.1
 
 ### Patch Changes
