@@ -4,13 +4,19 @@ import React, {
   useContext,
   useState,
 } from 'react';
+import defaults from 'lodash/defaults';
+
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+
 import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
 import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
-
-import defaults from 'lodash/defaults';
 
 export const TimeInputDisplayContext =
   createContext<TimeInputDisplayContextProps>(defaultTimeInputDisplayContext);
@@ -20,8 +26,13 @@ export const TimeInputDisplayProvider = ({
   label = '',
   'aria-label': ariaLabelProp = '',
   'aria-labelledby': ariaLabelledbyProp = '',
+  darkMode: darkModeProp,
+  baseFontSize: basefontSizeProp,
   ...rest
 }: PropsWithChildren<TimeInputDisplayProviderProps>) => {
+  const { darkMode } = useDarkMode(darkModeProp);
+  const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
+
   const [isDirty, setIsDirty] = useState(false);
 
   /**
@@ -34,18 +45,23 @@ export const TimeInputDisplayProvider = ({
   // TODO: min, max helpers
 
   return (
-    <TimeInputDisplayContext.Provider
-      value={{
-        ...providerValue,
-        label,
-        ariaLabelProp,
-        ariaLabelledbyProp,
-        isDirty,
-        setIsDirty,
-      }}
+    <LeafyGreenProvider
+      darkMode={darkMode}
+      baseFontSize={baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize}
     >
-      {children}
-    </TimeInputDisplayContext.Provider>
+      <TimeInputDisplayContext.Provider
+        value={{
+          ...providerValue,
+          label,
+          ariaLabelProp,
+          ariaLabelledbyProp,
+          isDirty,
+          setIsDirty,
+        }}
+      >
+        {children}
+      </TimeInputDisplayContext.Provider>
+    </LeafyGreenProvider>
   );
 };
 

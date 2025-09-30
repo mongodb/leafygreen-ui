@@ -1,5 +1,6 @@
 import { DateType } from '@leafygreen-ui/date-utils';
-import { TimeInputProps } from '../TimeInput/TimeInput.types';
+
+import { TimeInputProps } from '../../TimeInput/TimeInput.types';
 
 /**
  * Context props for the time input

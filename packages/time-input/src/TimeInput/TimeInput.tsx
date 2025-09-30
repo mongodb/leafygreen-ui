@@ -1,39 +1,49 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+import { pickAndOmit } from '@leafygreen-ui/lib';
 
+import { TimeInputProvider } from '../Context/TimeInputContext/TimeInputContext';
+import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import {
+  DisplayContextPropKeys,
+  displayContextPropNames,
+} from '../Context/TimeInputDisplayContext/TimePickerDisplayContext.utils';
 import { TimeInputContent } from '../TimeInputContent';
 
 import { TimeInputProps } from './TimeInput.types';
-import { TimeInputProvider } from '../TimeInputContext/TimeInputContext';
 
-/**
- * @internal
- */
-export const TimeInput = ({
-  darkMode: darkModeProp,
-  value: valueProp,
-  onTimeChange: onChangeProp,
-  handleValidation,
-  initialValue,
-  ...props
-}: TimeInputProps) => {
-  const { darkMode } = useDarkMode(darkModeProp);
+export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
+  (
+    {
+      value: _valueProp,
+      onTimeChange: _onChangeProp,
+      handleValidation,
+      initialValue: _initialValueProp,
+      ...props
+    }: TimeInputProps,
+    forwardedRef,
+  ) => {
+    /**
+     * Separate the props that are added to the display context and the props that are added to the component
+     */
+    const [displayProps, componentProps] = pickAndOmit<
+      TimeInputProps,
+      DisplayContextPropKeys
+    >({ ...props }, displayContextPropNames);
 
-  return (
-    <LeafyGreenProvider darkMode={darkMode}>
-      {/* TODO: need to use the useControlled hook to get the value */}
-      <TimeInputProvider
-        value={undefined}
-        setValue={() => {}}
-        handleValidation={handleValidation}
-      >
-        <TimeInputContent {...props} />
-      </TimeInputProvider>
-    </LeafyGreenProvider>
-  );
-};
+    return (
+      <TimeInputDisplayProvider {...displayProps}>
+        {/* TODO: need to use the useControlled hook to get the value */}
+        <TimeInputProvider
+          value={undefined}
+          setValue={() => {}}
+          handleValidation={handleValidation}
+        >
+          <TimeInputContent ref={forwardedRef} {...componentProps} />
+        </TimeInputProvider>
+      </TimeInputDisplayProvider>
+    );
+  },
+);
 
 TimeInput.displayName = 'TimeInput';

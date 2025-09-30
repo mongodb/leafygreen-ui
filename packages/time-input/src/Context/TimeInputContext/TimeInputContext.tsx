@@ -1,10 +1,11 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
+import { DateType } from '@leafygreen-ui/date-utils';
+
 import {
   TimeInputContextProps,
   TimeInputProviderProps,
 } from './TimeInputContext.types';
-import { DateType } from '@leafygreen-ui/date-utils';
 
 export const TimeInputContext = createContext<TimeInputContextProps>(
   {} as TimeInputContextProps,

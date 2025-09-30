@@ -3,16 +3,21 @@ import {
   MIN_DATE,
   SupportedLocales,
 } from '@leafygreen-ui/date-utils';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
+import { Size } from '../../TimeInput/TimeInput.types';
+
 import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { Size } from '../../TimeInput/TimeInput.types';
 
-export type ContextPropKeys = keyof TimeInputDisplayProviderProps;
+export type DisplayContextPropKeys = keyof TimeInputDisplayProviderProps;
 
-export const contextPropNames: Array<ContextPropKeys> = [
+/**
+ * Props names that that are added to the context and used to pick and omit props
+ */
+export const displayContextPropNames: Array<DisplayContextPropKeys> = [
   'aria-label',
   'aria-labelledby',
   'label',
@@ -27,9 +32,11 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'errorMessage',
   'state',
   'darkMode',
-  'className',
 ];
 
+/**
+ * The default display context values
+ */
 export const defaultTimeInputDisplayContext: TimeInputDisplayContextProps = {
   ariaLabelProp: '',
   ariaLabelledbyProp: '',
@@ -44,7 +51,6 @@ export const defaultTimeInputDisplayContext: TimeInputDisplayContextProps = {
   size: Size.Default,
   errorMessage: '',
   darkMode: false,
-  className: '',
   isDirty: false,
   setIsDirty: () => {},
 };
