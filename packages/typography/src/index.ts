@@ -33,6 +33,7 @@ export type { OverlineProps } from './Overline/Overline.types';
 export { bodyTypeScaleStyles } from './styles';
 export { default as Subtitle } from './Subtitle/Subtitle';
 export type { SubtitleProps } from './Subtitle/Subtitle.types';
+export { TextNode } from './TextNode/TextNode';
 export { DEFAULT_LGID_ROOT, getLgIds, type GetLgIdsReturnType } from './utils';
 export { StaticWidthText } from './utils/StaticWidthText';
 export { useUpdatedBaseFontSize } from './utils/useUpdatedBaseFontSize';
