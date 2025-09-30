@@ -245,6 +245,11 @@ describe('packages/text-input', () => {
       <TextInput type="search" label="some label" />;
       <TextInput type="search" aria-labelledby="some label" />;
     });
+
+    test('TextInput takes a ref for a HTMLInputElement', () => {
+      const ref = React.createRef<HTMLInputElement>();
+      render(<TextInput ref={ref} />);
+    });
   });
   /* eslint-enable jest/no-disabled-tests */
 });
