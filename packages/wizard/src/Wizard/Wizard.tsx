@@ -1,7 +1,7 @@
 import React, { Children, isValidElement } from 'react';
 
 import { Direction } from '@leafygreen-ui/descendants';
-import { findChild } from '@leafygreen-ui/lib';
+import { findChild, findChildren } from '@leafygreen-ui/lib';
 
 import { useWizardControlledValue } from '../utils/useWizardControlledValue/useWizardControlledValue';
 import { WizardContext } from '../WizardContext/WizardContext';
@@ -24,14 +24,11 @@ export function Wizard({
     setValue: setActiveStep,
   } = useWizardControlledValue<number>(activeStepProp, undefined, 0);
 
-  const stepChildren = Children.toArray(children).filter(child => {
-    if (isValidElement(child)) {
-      const displayName = (child.type as any)?.displayName;
-      return displayName && displayName.includes('Step');
-    }
-
-    return false;
-  });
+  const stepChildren = findChildren(
+    children,
+    WizardSubComponentProperties.Step,
+  );
+  const footerChild = findChild(children, WizardSubComponentProperties.Footer);
 
   const updateStep = (direction: Direction) => {
     const getNextStep = (curr: number) => {
@@ -50,8 +47,6 @@ export function Wizard({
     onStepChange?.(getNextStep(activeStep));
   };
 
-  const footerChild = findChild(children, WizardSubComponentProperties.Footer);
-
   // Get the current step to render
   const currentStep = stepChildren[activeStep] || null;
 
@@ -64,7 +59,6 @@ export function Wizard({
     >
       <div className={wizardContainerStyles}>
         <div className={stepContentStyles}>{currentStep}</div>
-        {/* Render footer */}
         {footerChild}
       </div>
     </WizardContext.Provider>
