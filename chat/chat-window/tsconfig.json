@@ -18,9 +18,6 @@
   ],
   "references": [
     {
-      "path": "../avatar"
-    },
-    {
       "path": "../input-bar"
     },
     {
@@ -33,55 +30,25 @@
       "path": "../message-feed"
     },
     {
-      "path": "../message-prompts"
+      "path": "../message-feedback"
     },
     {
-      "path": "../message-feedback"
+      "path": "../message-prompts"
     },
     {
       "path": "../title-bar"
     },
     {
-      "path": "../../packages/badge"
-    },
-    {
-      "path": "../../packages/button"
-    },
-    {
-      "path": "../../packages/code"
-    },
-    {
       "path": "../../packages/emotion"
-    },
-    {
-      "path": "../../packages/hooks"
-    },
-    {
-      "path": "../../packages/icon"
-    },
-    {
-      "path": "../../packages/input-option"
     },
     {
       "path": "../../packages/lib"
     },
     {
-      "path": "../../packages/marketing-modal"
-    },
-    {
-      "path": "../../packages/polymorphic"
-    },
-    {
-      "path": "../../packages/search-input"
-    },
-    {
-      "path": "../../packages/text-area"
+      "path": "../../packages/palette"
     },
     {
       "path": "../../packages/tokens"
-    },
-    {
-      "path": "../../packages/typography"
     },
     {
       "path": "../../packages/leafygreen-provider"

@@ -3,7 +3,7 @@ const baseMessages: Array<unknown> = [
   {
     id: 0,
     messageBody: 'Hi! Ask me anything.',
-    isMongo: true,
+    isSender: false,
   },
   {
     id: 1,
@@ -13,7 +13,7 @@ const baseMessages: Array<unknown> = [
   {
     id: 2,
     messageBody: `This thing is \`something\`.`,
-    isMongo: true,
+    isSender: false,
     sourceType: 'text',
   },
   {
@@ -27,7 +27,7 @@ return "Hello, world!" satisfies HelloWorld;
 }
 \`\`\`
       `,
-    isMongo: true,
+    isSender: false,
     hasMessageRating: true,
   },
   {
@@ -41,7 +41,7 @@ return "Hello, world!" satisfies HelloWorld;
 
 Refer to [LeafyGreen UI](mongodb.design) or [LeafyGreen UI](mongodb.design) for more details. I'm filling out this space to see if the message will line up to the right side.
     `,
-    isMongo: true,
+    isSender: false,
     hasMessageRating: true,
   },
 ];

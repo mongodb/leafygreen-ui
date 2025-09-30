@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Avatar } from '@lg-chat/avatar';
 import { InputBar } from '@lg-chat/input-bar';
 import {
   LeafyGreenChatProvider,
@@ -56,19 +55,12 @@ const meta: StoryMetaType<typeof ChatWindow> = {
 };
 export default meta;
 
-const MyMessage = ({
-  id,
-  isMongo,
-  messageBody,
-  userName,
-  hasMessageRating,
-}: any) => {
+const MyMessage = ({ id, isSender, messageBody, hasMessageRating }: any) => {
   return (
     <Message
       key={id}
       sourceType="markdown"
-      avatar={<Avatar variant={isMongo ? 'mongo' : 'user'} />}
-      isSender={!!userName}
+      isSender={isSender}
       messageBody={messageBody}
     >
       {id === 0 && (

@@ -22,7 +22,6 @@
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {
-    "@lg-chat/avatar": "workspace:^",
     "@lg-chat/input-bar": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feed": "workspace:^",
