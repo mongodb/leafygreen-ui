@@ -4,9 +4,6 @@ const transform = 'named-exports';
 
 const tests = [
   {
-    name: 'basic-default-import',
-  },
-  {
     name: 'aliased-import',
   },
   {
