@@ -1,6 +1,6 @@
 import { FormFooterProps } from '@leafygreen-ui/form-footer';
 
-export interface WizardFooterProps {
+export interface WizardFooterProps extends React.ComponentProps<'footer'> {
   /**
    * Props for the back button (left-most button)
    */

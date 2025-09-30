@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { TextNode, Description, H3 } from '@leafygreen-ui/typography';
+import { Description, H3 } from '@leafygreen-ui/typography';
 
 import { stepStyles } from './WizardStep.styles';
 import { WizardStepProps } from './WizardStep.types';
 import { WizardSubComponentProperties } from '../constants';
+import { TextNode } from './TextNode';
 
 export function WizardStep({ title, description, children }: WizardStepProps) {
   return (

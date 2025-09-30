@@ -11,7 +11,7 @@ import { Wizard } from '.';
 faker.seed(0);
 
 export default {
-  title: 'Components/Wizard',
+  title: 'Composition/Data Display/Wizard',
   component: Wizard,
   parameters: {
     default: 'LiveExample',
