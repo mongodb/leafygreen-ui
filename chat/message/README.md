@@ -41,7 +41,7 @@ return (
 );
 ```
 
-#### Spacious
+#### Spaciouss
 
 ```tsx
 import {
