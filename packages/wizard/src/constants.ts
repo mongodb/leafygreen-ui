@@ -1,2 +1,6 @@
-export const WIZARD_STEP_KEY = 'isWizardStep';
-export const WIZARD_FOOTER_KEY = 'isWizardFooter';
+export const WizardSubComponentProperties = {
+  Step: 'isWizardStep',
+  Footer: 'isWizardFooter',
+} as const;
+export type WizardSubComponentProperties =
+  (typeof WizardSubComponentProperties)[keyof typeof WizardSubComponentProperties];

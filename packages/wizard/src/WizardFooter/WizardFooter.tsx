@@ -3,10 +3,10 @@ import React, { MouseEventHandler } from 'react';
 import { Direction } from '@leafygreen-ui/descendants';
 import FormFooter from '@leafygreen-ui/form-footer';
 
-import { WIZARD_FOOTER_KEY } from '../constants';
 import { useWizardContext } from '../WizardContext/WizardContext';
 
 import { WizardFooterProps } from './WizardFooter.types';
+import { WizardSubComponentProperties } from '../constants';
 
 export const WizardFooter = ({
   backButtonProps,
@@ -45,4 +45,4 @@ export const WizardFooter = ({
 };
 
 WizardFooter.displayName = 'WizardFooter';
-WizardFooter[WIZARD_FOOTER_KEY] = true;
+WizardFooter[WizardSubComponentProperties.Footer] = true;
