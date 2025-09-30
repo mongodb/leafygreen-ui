@@ -1,13 +1,11 @@
 import { ReactNode } from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
-import { LgIdProps } from '@leafygreen-ui/lib';
 
-import { BaseTimeInputProps } from '../../TimeInput/TimeInput.types';
+import { DisplayTimeInputProps } from '../../TimeInput/TimeInput.types';
 
 type AriaLabelKeys = keyof AriaLabelPropsWithLabel;
 type AriaLabelKeysWithoutLabel = Exclude<AriaLabelKeys, 'label'>;
-type DataLgIdKeys = keyof LgIdProps;
 
 /**
  * The values in context that can be used in the component
@@ -16,12 +14,27 @@ type DataLgIdKeys = keyof LgIdProps;
  * Omits the lgId prop
  */
 export type TimeInputDisplayContextProps = Omit<
-  Required<BaseTimeInputProps>,
-  AriaLabelKeysWithoutLabel | 'state' | DataLgIdKeys
+  Required<DisplayTimeInputProps>,
+  AriaLabelKeysWithoutLabel | 'state'
 > & {
+  /**
+   *  The aria-label prop
+   */
   ariaLabelProp: string;
+
+  /**
+   * The aria-labelledby prop
+   */
   ariaLabelledbyProp: string;
+
+  /**
+   * Whether the input has been interacted with
+   */
   isDirty: boolean;
+
+  /**
+   * Setter for whether the input has been interacted with
+   */
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -30,10 +43,21 @@ export type TimeInputDisplayContextProps = Omit<
  * Ensures that either label, aria-label, or aria-labelledby is included
  */
 export type TimeInputDisplayProviderProps = Omit<
-  BaseTimeInputProps,
+  DisplayTimeInputProps,
   AriaLabelKeys
 > & {
+  /**
+   * The label prop
+   */
   label?: ReactNode;
+
+  /**
+   * The aria-label prop
+   */
   'aria-label'?: string;
+
+  /**
+   * The aria-labelledby prop
+   */
   'aria-labelledby'?: string;
 };

@@ -21,6 +21,9 @@ import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils
 export const TimeInputDisplayContext =
   createContext<TimeInputDisplayContextProps>(defaultTimeInputDisplayContext);
 
+/**
+ * This provider is used for the display context of the TimeInput component
+ */
 export const TimeInputDisplayProvider = ({
   children,
   label = '',
@@ -33,6 +36,9 @@ export const TimeInputDisplayProvider = ({
   const { darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
 
+  /**
+   * Whether the input has been interacted with
+   */
   const [isDirty, setIsDirty] = useState(false);
 
   /**

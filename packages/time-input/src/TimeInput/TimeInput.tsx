@@ -19,6 +19,7 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
       onTimeChange: _onChangeProp,
       handleValidation,
       initialValue: _initialValueProp,
+      'data-lgid': _dataLgId,
       ...props
     }: TimeInputProps,
     forwardedRef,

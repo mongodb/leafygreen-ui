@@ -11,6 +11,9 @@ export const TimeInputContext = createContext<TimeInputContextProps>(
   {} as TimeInputContextProps,
 );
 
+/**
+ * This provider is used for the state context of the TimeInput component
+ */
 export const TimeInputProvider = ({
   children,
   value,
