@@ -4,14 +4,19 @@ import getNodeTextContent from './getNodeTextContent';
 import getTheme from './getTheme';
 import { type LgIdProps, type LgIdString } from './LgIdProps';
 import * as typeIs from './typeIs';
+export {
+  filterChildren,
+  findChild,
+  findChildren,
+  hasAnyStaticProperty,
+  hasStaticProperty,
+  isChildWithProperty,
+} from './childQueries';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export { deepMapValues } from './deepMapValues';
-export { filterChildren } from './filterChildren';
-export { findChild } from './findChild';
 export { formatCssSize } from './formatCssSize';
 export { getClosestFocusableElement } from './getClosestFocusableElement';
 export { getMobileMediaQuery } from './getMobileMediaQuery';
-export { hasAnyStaticProperty, hasStaticProperty } from './hasStaticProperty';
 export * from './helpers';
 export {
   focusableElementSelector,
