@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 15.6.0
+
+### Minor Changes
+
+- 394ba93: Adds `findChildren` utility to `lib`. Also adds `unwrapRootFragment` and `isChildWithProperty` helpers
+
 ## 15.5.0
 
 ### Minor Changes
