@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
-export interface WizardStepProps {
+export interface WizardStepProps
+  extends Omit<React.ComponentProps<'div'>, 'title'> {
   /**
    * The title of the step
    */

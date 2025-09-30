@@ -39,12 +39,11 @@ describe('packages/wizard', () => {
     });
 
     test('does not render any other elements', () => {
-      const { container, getByText, getByTestId, getByRole, queryByTestId } =
-        render(
-          <Wizard>
-            <div data-testid="invalid-element-1">This should not render</div>
-          </Wizard>,
-        );
+      const { queryByTestId } = render(
+        <Wizard>
+          <div data-testid="invalid-element-1">This should not render</div>
+        </Wizard>,
+      );
 
       // Non-wizard elements should not be rendered
       expect(queryByTestId('invalid-element-1')).not.toBeInTheDocument();

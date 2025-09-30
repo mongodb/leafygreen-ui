@@ -12,6 +12,7 @@ export const WizardFooter = ({
   backButtonProps,
   cancelButtonProps,
   primaryButtonProps,
+  ...rest
 }: WizardFooterProps) => {
   const { activeStep, updateStep } = useWizardContext();
 
@@ -27,6 +28,7 @@ export const WizardFooter = ({
 
   return (
     <FormFooter
+      {...rest}
       backButtonProps={
         activeStep > 0
           ? {

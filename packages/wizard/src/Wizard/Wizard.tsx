@@ -16,6 +16,7 @@ export function Wizard({
   activeStep: activeStepProp,
   onStepChange,
   children,
+  ...rest
 }: WizardProps) {
   // Controlled/Uncontrolled activeStep value
   const {
@@ -57,7 +58,7 @@ export function Wizard({
         updateStep,
       }}
     >
-      <div className={wizardContainerStyles}>
+      <div className={wizardContainerStyles} {...rest}>
         <div className={stepContentStyles}>{currentStep}</div>
         {footerChild}
       </div>
