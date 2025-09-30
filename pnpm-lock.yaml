@@ -396,6 +396,9 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1(react@18.3.1)
     devDependencies:
+      '@leafygreen-ui/drawer':
+        specifier: workspace:^
+        version: link:../../packages/drawer
       '@lg-chat/input-bar':
         specifier: workspace:^
         version: link:../input-bar

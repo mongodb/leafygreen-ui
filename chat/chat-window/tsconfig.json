@@ -39,6 +39,9 @@
       "path": "../title-bar"
     },
     {
+      "path": "../../packages/drawer"
+    },
+    {
       "path": "../../packages/emotion"
     },
     {

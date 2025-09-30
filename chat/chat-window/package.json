@@ -22,6 +22,7 @@
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {
+    "@leafygreen-ui/drawer": "workspace:^",
     "@lg-chat/input-bar": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feed": "workspace:^",
