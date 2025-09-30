@@ -13,6 +13,7 @@ import { color } from '@leafygreen-ui/tokens';
 const CONTAINER_MAX_WIDTH = 500;
 const SECTION_HEIGHT = 52;
 const INPUT_WIDTH = 240;
+const INPUT_MIN_WIDTH = 120;
 
 const getBaseContainerStyles = (theme: Theme) => css`
   background-color: ${color[theme].background[Variant.Secondary][
@@ -114,9 +115,13 @@ export const getToggleIconStyles = (isOpen: boolean) =>
 export const findInputContainerStyles = css`
   position: relative;
   flex: 1 1 ${INPUT_WIDTH}px;
-  min-width: 100px;
+  min-width: ${INPUT_MIN_WIDTH}px;
   max-width: ${INPUT_WIDTH}px;
   margin-right: ${spacing[100]}px;
+
+  & input {
+    padding-right: ${spacing[1200]}px;
+  }
 `;
 
 export const allButtonStyles = css`
@@ -127,11 +132,25 @@ export const closeButtonStyles = css`
   margin-left: auto;
 `;
 
-export const findInputIconButtonStyles = css`
+export const findOptionsContainerStyles = css`
   position: absolute;
   right: ${spacing[100]}px;
   top: ${spacing[100]}px;
+  display: flex;
+  align-items: center;
 `;
+
+// export const findInputIconButtonStyles = css`
+//   position: absolute;
+//   right: ${spacing[100]}px;
+//   top: ${spacing[100]}px;
+// `;
+
+// export const findCountStyles = css`
+//   position: absolute;
+//   right: ${spacing[200]}px;
+//   top: ${spacing[100]}px;
+// `;
 
 export const replaceInputContainerStyles = css`
   position: relative;

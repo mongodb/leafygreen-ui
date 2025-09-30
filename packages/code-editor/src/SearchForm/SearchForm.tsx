@@ -19,6 +19,7 @@ import Button from '@leafygreen-ui/button';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import TextInput from '@leafygreen-ui/text-input';
+import { Body } from '@leafygreen-ui/typography';
 
 import { Icon } from '../../../icon/src/Icon';
 
@@ -26,8 +27,8 @@ import {
   allButtonStyles,
   closeButtonStyles,
   findInputContainerStyles,
-  findInputIconButtonStyles,
   findInputStyles,
+  findOptionsContainerStyles,
   findSectionStyles,
   getContainerStyles,
   getReplaceInnerSectionStyles,
@@ -44,6 +45,7 @@ export function SearchForm({ view }: SearchFormProps) {
   const [searchString, setSearchString] = useState('');
   const [findCount, setFindCount] = useState(0);
   const { theme } = useDarkMode();
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const handleToggleButtonClick = useCallback(
     (_e: MouseEvent<HTMLButtonElement>) => {
@@ -66,6 +68,35 @@ export function SearchForm({ view }: SearchFormProps) {
     [],
   );
 
+  const computeSelectedIndex = useCallback(() => {
+    const query = new SearchQuery({
+      search: searchString,
+      caseSensitive: true,
+      regexp: false,
+      wholeWord: false,
+      replace: '',
+    });
+
+    const cursor = query.getCursor(view.state.doc);
+    const selection = view.state.selection.main;
+
+    let index = 1;
+    let result = cursor.next();
+
+    while (!result.done) {
+      if (
+        result.value.from === selection.from &&
+        result.value.to === selection.to
+      ) {
+        return index;
+      }
+      index++;
+      result = cursor.next();
+    }
+
+    return null;
+  }, [searchString, view]);
+
   useEffect(() => {
     const query = new SearchQuery({
       search: searchString,
@@ -87,15 +118,47 @@ export function SearchForm({ view }: SearchFormProps) {
     }
 
     setFindCount(count);
-  }, [searchString, view]);
+
+    // Update selected index if current selection matches one of the results
+    const selection = view.state.selection.main;
+    const cursor2 = query.getCursor(view.state.doc);
+    let idx = 1;
+    let res2 = cursor2.next();
+    let currentIndex: number | null = null;
+
+    while (!res2.done) {
+      if (
+        res2.value.from === selection.from &&
+        res2.value.to === selection.to
+      ) {
+        currentIndex = idx;
+        break;
+      }
+      idx++;
+      res2 = cursor2.next();
+    }
+
+    setSelectedIndex(currentIndex);
+  }, [searchString, view, computeSelectedIndex]);
 
   const handleFindFormSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       findNext(view);
+      setSelectedIndex(computeSelectedIndex());
     },
-    [view],
+    [view, computeSelectedIndex],
   );
+
+  const handleNextClick = useCallback(() => {
+    findNext(view);
+    setSelectedIndex(computeSelectedIndex());
+  }, [view, computeSelectedIndex]);
+
+  const handlePreviousClick = useCallback(() => {
+    findPrevious(view);
+    setSelectedIndex(computeSelectedIndex());
+  }, [view, computeSelectedIndex]);
 
   return (
     <div
@@ -123,31 +186,38 @@ export function SearchForm({ view }: SearchFormProps) {
               value={searchString}
             />
           </form>
-          <IconButton
-            className={findInputIconButtonStyles}
-            aria-label="filter button"
-          >
-            <Icon glyph="Filter" />
-          </IconButton>
+          <div className={findOptionsContainerStyles}>
+            {searchString && (
+              <Body>
+                {selectedIndex ?? '?'}/{findCount}
+              </Body>
+            )}
+            <IconButton aria-label="filter button">
+              <Icon glyph="Filter" />
+            </IconButton>
+          </div>
         </div>
         <IconButton
           aria-label="previous item button"
           disabled={!searchString || findCount === 0}
-          onClick={() => findPrevious(view)}
+          onClick={handlePreviousClick}
         >
           <Icon glyph="ArrowUp" />
         </IconButton>
         <IconButton
           aria-label="next item button"
           disabled={!searchString || findCount === 0}
-          onClick={() => findNext(view)}
+          onClick={handleNextClick}
         >
           <Icon glyph="ArrowDown" />
         </IconButton>
         <Button
           className={allButtonStyles}
           disabled={!searchString || findCount === 0}
-          onClick={() => selectMatches(view)}
+          onClick={() => {
+            selectMatches(view);
+            setSelectedIndex(null);
+          }}
         >
           All
         </Button>
