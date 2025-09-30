@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
+import { Theme } from '@leafygreen-ui/lib';
 
 import { DisplayTimeInputProps } from '../../TimeInput/TimeInput.types';
 
@@ -36,6 +37,11 @@ export type TimeInputDisplayContextProps = Omit<
    * Setter for whether the input has been interacted with
    */
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /**
+   * The theme of the input
+   */
+  theme: Theme;
 };
 
 /**

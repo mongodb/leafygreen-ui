@@ -3,6 +3,7 @@ import {
   MIN_DATE,
   SupportedLocales,
 } from '@leafygreen-ui/date-utils';
+import { Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Size } from '../../TimeInput/TimeInput.types';
@@ -51,6 +52,7 @@ export const defaultTimeInputDisplayContext: TimeInputDisplayContextProps = {
   size: Size.Default,
   errorMessage: '',
   darkMode: false,
+  theme: Theme.Light,
   isDirty: false,
   setIsDirty: () => {},
 };

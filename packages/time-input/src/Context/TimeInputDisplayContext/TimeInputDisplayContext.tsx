@@ -33,7 +33,7 @@ export const TimeInputDisplayProvider = ({
   baseFontSize: basefontSizeProp,
   ...rest
 }: PropsWithChildren<TimeInputDisplayProviderProps>) => {
-  const { darkMode } = useDarkMode(darkModeProp);
+  const { darkMode, theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
 
   /**
@@ -63,6 +63,8 @@ export const TimeInputDisplayProvider = ({
           ariaLabelledbyProp,
           isDirty,
           setIsDirty,
+          darkMode,
+          theme,
         }}
       >
         {children}

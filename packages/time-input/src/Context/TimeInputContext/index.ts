@@ -1,2 +1,9 @@
-export { TimeInputContext } from './TimeInputContext';
-export { type TimeInputContextProps } from './TimeInputContext.types';
+export {
+  TimeInputContext,
+  TimeInputProvider,
+  useTimeInputContext,
+} from './TimeInputContext';
+export {
+  type TimeInputContextProps,
+  type TimeInputProviderProps,
+} from './TimeInputContext.types';
