@@ -54,6 +54,7 @@ export function Wizard({
   return (
     <WizardContext.Provider
       value={{
+        isWizardContext: true,
         activeStep,
         updateStep,
       }}

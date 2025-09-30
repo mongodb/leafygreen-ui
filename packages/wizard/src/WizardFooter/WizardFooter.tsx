@@ -7,6 +7,7 @@ import { useWizardContext } from '../WizardContext/WizardContext';
 
 import { WizardFooterProps } from './WizardFooter.types';
 import { WizardSubComponentProperties } from '../constants';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 export const WizardFooter = ({
   backButtonProps,
@@ -14,7 +15,7 @@ export const WizardFooter = ({
   primaryButtonProps,
   ...rest
 }: WizardFooterProps) => {
-  const { activeStep, updateStep } = useWizardContext();
+  const { isWizardContext, activeStep, updateStep } = useWizardContext();
 
   const handleBackButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
     updateStep(Direction.Prev);
@@ -25,6 +26,13 @@ export const WizardFooter = ({
     updateStep(Direction.Next);
     primaryButtonProps.onClick?.(e);
   };
+
+  if (!isWizardContext) {
+    consoleOnce.error(
+      'Wizard.Footer component must be used within a Wizard context.',
+    );
+    return null;
+  }
 
   return (
     <FormFooter

@@ -2,7 +2,33 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { WizardFooter } from '.';
+import { Wizard } from '../Wizard/Wizard';
 
 describe('packages/wizard-footer', () => {
-  test('condition', () => {});
+  test('does not render outside WizardContext', () => {
+    const { container } = render(
+      <WizardFooter
+        data-testid="footer"
+        primaryButtonProps={{ children: 'Next' }}
+      >
+        Content
+      </WizardFooter>,
+    );
+
+    expect(container.firstChild).toBeNull();
+  });
+  test('renders in WizardContext', () => {
+    const { getByTestId } = render(
+      <Wizard>
+        <WizardFooter
+          data-testid="footer"
+          primaryButtonProps={{ children: 'Next' }}
+        >
+          Content
+        </WizardFooter>
+      </Wizard>,
+    );
+
+    expect(getByTestId('footer')).toBeInTheDocument();
+  });
 });
