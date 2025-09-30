@@ -1,5 +1,16 @@
 # @lg-chat/input-bar
 
+## 10.1.0
+
+### Minor Changes
+
+- 366e851: [LG-5527](https://jira.mongodb.org/browse/LG-5527): add legal disclaimer text with link below input
+
+### Patch Changes
+
+- Updated dependencies [ff6b87e]
+  - @leafygreen-ui/lib@15.5.0
+
 ## 10.0.5
 
 ### Patch Changes

@@ -5,7 +5,7 @@ import { ToolbarIconButtonProps } from '@leafygreen-ui/toolbar';
 
 type PickedRequiredToolbarIconButtonProps = Pick<
   ToolbarIconButtonProps,
-  'glyph' | 'label' | 'onClick' | 'disabled'
+  'glyph' | 'label' | 'onClick' | 'disabled' | 'isTooltipEnabled'
 >;
 
 interface LayoutBase extends PickedRequiredToolbarIconButtonProps {
@@ -19,6 +19,11 @@ interface LayoutBase extends PickedRequiredToolbarIconButtonProps {
    * @defaultValue true
    */
   visible?: boolean;
+
+  /**
+   * Optional ref to be passed to the ToolbarIconButton instance.
+   */
+  ref?: React.RefObject<HTMLButtonElement>;
 }
 
 interface LayoutWithContent extends LayoutBase {

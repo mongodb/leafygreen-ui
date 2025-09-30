@@ -199,11 +199,7 @@ describe('packages/DrawerToolbarLayout', () => {
   test('closes the drawer when the active item is hidden', () => {
     const { rerender } = render(<Component />);
 
-    const { getToolbarTestUtils, isOpen } = getTestUtils();
-
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
-    userEvent.click(codeButton!);
+    const { isOpen } = getTestUtils();
 
     expect(isOpen()).toBe(true);
 
@@ -235,11 +231,7 @@ describe('packages/DrawerToolbarLayout', () => {
   test('closes the drawer when the active item is removed from the toolbar data', () => {
     const { rerender } = render(<Component />);
 
-    const { getToolbarTestUtils, isOpen } = getTestUtils();
-
-    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
-    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
-    userEvent.click(codeButton!);
+    const { isOpen } = getTestUtils();
 
     expect(isOpen()).toBe(true);
 
@@ -258,5 +250,71 @@ describe('packages/DrawerToolbarLayout', () => {
     );
 
     expect(isOpen()).toBe(false);
+  });
+
+  test('passes ref correctly to ToolbarIconButton instances', () => {
+    const codeButtonRef = React.createRef<HTMLButtonElement>();
+    const code2ButtonRef = React.createRef<HTMLButtonElement>();
+
+    const dataWithRefs: DrawerLayoutProps['toolbarData'] = [
+      {
+        id: 'Code',
+        label: 'Code',
+        content: 'Drawer Content',
+        title: `Drawer Title`,
+        glyph: 'Code',
+        ref: codeButtonRef,
+      },
+      {
+        id: 'Code2',
+        label: 'Code2',
+        content: 'Drawer Content2',
+        title: `Drawer Title2`,
+        glyph: 'Code',
+        ref: code2ButtonRef,
+      },
+    ];
+
+    render(<Component data={dataWithRefs} />);
+
+    // Verify that refs are properly assigned to DOM elements
+    expect(codeButtonRef.current).toBeInstanceOf(HTMLButtonElement);
+    expect(code2ButtonRef.current).toBeInstanceOf(HTMLButtonElement);
+
+    // Verify the elements have the correct labels
+    expect(codeButtonRef.current).toHaveAttribute('aria-label', 'Code');
+    expect(code2ButtonRef.current).toHaveAttribute('aria-label', 'Code2');
+  });
+
+  test('closes the drawer when clicking the same toolbar button while drawer is open', () => {
+    render(<Component />);
+
+    const { getToolbarTestUtils, isOpen } = getTestUtils();
+
+    expect(isOpen()).toBe(true);
+
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+    const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+
+    userEvent.click(codeButton!);
+
+    expect(isOpen()).toBe(false);
+  });
+
+  test('opens the drawer when clicking a different toolbar button while drawer is open', () => {
+    render(<Component />);
+
+    const { getToolbarTestUtils, isOpen, getDrawer } = getTestUtils();
+
+    expect(isOpen()).toBe(true);
+    expect(getDrawer()).toHaveTextContent('Drawer Title');
+
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+    const code2Button = getToolbarIconButtonByLabel('Code2')?.getElement();
+
+    userEvent.click(code2Button!);
+
+    expect(isOpen()).toBe(true);
+    expect(getDrawer()).toHaveTextContent('Drawer Title2');
   });
 });
