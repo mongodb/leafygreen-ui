@@ -79,7 +79,6 @@ export function SearchForm({ view }: SearchFormProps) {
 
     const cursor = query.getCursor(view.state.doc);
     let count = 0;
-
     let result = cursor.next();
 
     while (!result.done) {
