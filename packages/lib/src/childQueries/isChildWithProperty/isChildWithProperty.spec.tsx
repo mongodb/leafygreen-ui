@@ -128,8 +128,7 @@ describe('isChildWithProperty', () => {
       expect(isChildWithProperty(element, 'nonExistent')).toBe(false);
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('should handle falsy static property values', () => {
+    test('should handle falsy static property values', () => {
       const FalsyPropComponent = ({ text }: { text: string }) => (
         <div>{text}</div>
       );
