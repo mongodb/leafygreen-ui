@@ -90,6 +90,22 @@ describe('packages/menu/menu-item', () => {
     });
   });
 
+  describe('when rendered inside a form', () => {
+    test('does not invoke a forms submit handler when clicked', () => {
+      const onSubmit = jest.fn();
+
+      const { getByTestId } = render(
+        <form onSubmit={onSubmit}>
+          <MenuItem data-testid="menu-item" />
+        </form>,
+      );
+
+      const menuItem = getByTestId('menu-item');
+      userEvent.click(menuItem);
+      expect(onSubmit).not.toHaveBeenCalled();
+    });
+  });
+
   /* eslint-disable jest/no-disabled-tests */
   describe('types behave as expected', () => {
     test.skip('Accepts string as `as` prop', () => {
