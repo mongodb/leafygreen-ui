@@ -3,7 +3,7 @@ import React, { MouseEventHandler } from 'react';
 import { Direction } from '@leafygreen-ui/descendants';
 import FormFooter from '@leafygreen-ui/form-footer';
 
-import { useWizardContext } from '../WizardContext/WizardContext';
+import { useWizardContext } from '../WizardContext';
 
 import { WizardFooterProps } from './WizardFooter.types';
 import { WizardSubComponentProperties } from '../constants';

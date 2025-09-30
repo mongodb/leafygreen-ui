@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 
 import { Direction } from '@leafygreen-ui/descendants';
 
-interface WizardContextData {
+export interface WizardContextData {
   isWizardContext: boolean;
   activeStep: number;
   updateStep: (direction: Direction) => void;

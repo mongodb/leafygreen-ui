@@ -4,7 +4,7 @@ import { Direction } from '@leafygreen-ui/descendants';
 import { findChild, findChildren } from '@leafygreen-ui/lib';
 
 import { useWizardControlledValue } from '../utils/useWizardControlledValue/useWizardControlledValue';
-import { WizardContext } from '../WizardContext/WizardContext';
+import { WizardContext } from '../WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
 

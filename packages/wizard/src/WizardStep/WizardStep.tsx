@@ -6,7 +6,7 @@ import { stepStyles } from './WizardStep.styles';
 import { WizardStepProps } from './WizardStep.types';
 import { WizardSubComponentProperties } from '../constants';
 import { TextNode } from './TextNode';
-import { useWizardContext } from '../WizardContext/WizardContext';
+import { useWizardContext } from '../WizardContext';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
 export function WizardStep({
