@@ -576,6 +576,9 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../../packages/palette
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
@@ -595,6 +598,9 @@ importers:
       '@leafygreen-ui/avatar':
         specifier: workspace:^
         version: link:../../packages/avatar
+      '@leafygreen-ui/badge':
+        specifier: workspace:^
+        version: link:../../packages/badge
       '@leafygreen-ui/banner':
         specifier: workspace:^
         version: link:../../packages/banner
@@ -1826,6 +1832,9 @@ importers:
       '@faker-js/faker':
         specifier: ^8.0.2
         version: 8.0.2
+      '@leafygreen-ui/guide-cue':
+        specifier: workspace:^
+        version: link:../guide-cue
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
