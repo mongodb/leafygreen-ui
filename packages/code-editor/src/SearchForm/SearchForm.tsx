@@ -1,5 +1,19 @@
-import React, { ChangeEvent, MouseEvent, useCallback, useState } from 'react';
-import { closeSearchPanel } from '@codemirror/search';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import {
+  closeSearchPanel,
+  findNext,
+  findPrevious,
+  SearchQuery,
+  selectMatches,
+  setSearchQuery,
+} from '@codemirror/search';
 
 import Button from '@leafygreen-ui/button';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -27,6 +41,8 @@ import { SearchFormProps } from './SearchForm.types';
 
 export function SearchForm({ view }: SearchFormProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchString, setSearchString] = useState('');
+  const [findCount, setFindCount] = useState(0);
   const { theme } = useDarkMode();
 
   const handleToggleButtonClick = useCallback(
@@ -43,22 +59,43 @@ export function SearchForm({ view }: SearchFormProps) {
     [view],
   );
 
-  const handleFindInputChange = useCallback(
+  const handleSearchQueryChange = useCallback(
     (_e: ChangeEvent<HTMLInputElement>) => {
-      // const newQuery = new SearchQuery({
-      //   search: 'test',
-      //   caseSensitive: true,
-      //   regexp: false,
-      //   wholeWord: false,
-      //   replace: '',
-      // });
-      // view.dispatch({ effects: setSearchQuery.of(newQuery) });
-      // if (!query || !query.eq(newQuery)) {
-      //   setQuery(newQuery);
-      //   view.dispatch({ effects: setSearchQuery.of(newQuery) });
-      // }
+      setSearchString(_e.target.value);
     },
     [],
+  );
+
+  useEffect(() => {
+    const query = new SearchQuery({
+      search: searchString,
+      caseSensitive: true,
+      regexp: false,
+      wholeWord: false,
+      replace: '',
+    });
+
+    view.dispatch({ effects: setSearchQuery.of(query) });
+
+    const cursor = query.getCursor(view.state.doc);
+    let count = 0;
+
+    let result = cursor.next();
+
+    while (!result.done) {
+      count++;
+      result = cursor.next();
+    }
+
+    setFindCount(count);
+  }, [searchString, view]);
+
+  const handleFindFormSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      findNext(view);
+    },
+    [view],
   );
 
   return (
@@ -76,14 +113,17 @@ export function SearchForm({ view }: SearchFormProps) {
           <Icon glyph="ChevronDown" className={getToggleIconStyles(isOpen)} />
         </IconButton>
         <div className={findInputContainerStyles}>
-          <TextInput
-            placeholder="Find"
-            aria-labelledby="find"
-            onChange={handleFindInputChange}
-            className={findInputStyles}
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
-          />
+          <form onSubmit={handleFindFormSubmit}>
+            <TextInput
+              placeholder="Find"
+              aria-labelledby="find"
+              onChange={handleSearchQueryChange}
+              className={findInputStyles}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
+              value={searchString}
+            />
+          </form>
           <IconButton
             className={findInputIconButtonStyles}
             aria-label="filter button"
@@ -91,13 +131,27 @@ export function SearchForm({ view }: SearchFormProps) {
             <Icon glyph="Filter" />
           </IconButton>
         </div>
-        <IconButton aria-label="next item button">
+        <IconButton
+          aria-label="previous item button"
+          disabled={!searchString || findCount === 0}
+          onClick={() => findPrevious(view)}
+        >
           <Icon glyph="ArrowUp" />
         </IconButton>
-        <IconButton aria-label="previous item button">
+        <IconButton
+          aria-label="next item button"
+          disabled={!searchString || findCount === 0}
+          onClick={() => findNext(view)}
+        >
           <Icon glyph="ArrowDown" />
         </IconButton>
-        <Button className={allButtonStyles}>All</Button>
+        <Button
+          className={allButtonStyles}
+          disabled={!searchString || findCount === 0}
+          onClick={() => selectMatches(view)}
+        >
+          All
+        </Button>
         <IconButton
           aria-label="close find menu button"
           onClick={handleCloseButtonClick}
