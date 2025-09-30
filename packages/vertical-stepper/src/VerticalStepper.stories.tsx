@@ -102,6 +102,11 @@ export default {
 
 export const LiveExample = {
   render: ({ ...args }) => <VerticalStepper {...args}></VerticalStepper>,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 } satisfies StoryObj<typeof VerticalStepper>;
 
 export const Generated = {
