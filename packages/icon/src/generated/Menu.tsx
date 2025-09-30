@@ -2,38 +2,58 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 1302681cd46d65becd40e8e91b091765
+* @checksum 23a1d0e1565c8761e97fc6bd20ab968b
 */
-import * as React from "react";
+import * as React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
+
 export interface MenuProps extends LGGlyph.ComponentProps {}
+
 const Menu = ({
   className,
   size = 16,
   title,
-  ['aria-label']: ariaLabel,
-  ['aria-labelledby']: ariaLabelledby,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledby,
   fill,
   role = 'img',
   ...props
 }: MenuProps) => {
   const fillStyle = css`
-        color: ${fill};
-      `;
+    color: ${fill};
+  `;
+
   const noFlexShrink = css`
-        flex-shrink: 0;
-      `;
-  const accessibleProps = generateAccessibleProps(role, 'Menu', {
-    title,
-    ['aria-label']: ariaLabel,
-    ['aria-labelledby']: ariaLabelledby
+    flex-shrink: 0;
+  `;
+
+  const accessibleProps = generateAccessibleProps(role, 'Menu', { 
+    title, 
+    'aria-label': ariaLabel, 
+    'aria-labelledby': ariaLabelledby 
   });
-  return <svg className={cx({
-    [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M2 4C2 3.44772 2.44772 3 3 3H13C13.5523 3 14 3.44772 14 4C14 4.55228 13.5523 5 13 5H3C2.44772 5 2 4.55228 2 4Z" fill={'currentColor'} /><path d="M2 8C2 7.44772 2.44772 7 3 7H13C13.5523 7 14 7.44772 14 8C14 8.55228 13.5523 9 13 9H3C2.44772 9 2 8.55228 2 8Z" fill={'currentColor'} /><path d="M3 11C2.44772 11 2 11.4477 2 12C2 12.5523 2.44772 13 3 13H13C13.5523 13 14 12.5523 14 12C14 11.4477 13.5523 11 13 11H3Z" fill={'currentColor'} /></svg>;
+
+  const svgElement = <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M2 4C2 3.44772 2.44772 3 3 3H13C13.5523 3 14 3.44772 14 4C14 4.55228 13.5523 5 13 5H3C2.44772 5 2 4.55228 2 4Z" fill="currentColor" /><path d="M2 8C2 7.44772 2.44772 7 3 7H13C13.5523 7 14 7.44772 14 8C14 8.55228 13.5523 9 13 9H3C2.44772 9 2 8.55228 2 8Z" fill="currentColor" /><path d="M3 11C2.44772 11 2 11.4477 2 12C2 12.5523 2.44772 13 3 13H13C13.5523 13 14 12.5523 14 12C14 11.4477 13.5523 11 13 11H3Z" fill="currentColor" /></svg>;
+
+  return React.cloneElement(svgElement, {
+    className: cx(
+      {
+        [fillStyle]: fill != null,
+      },
+      noFlexShrink,
+      className,
+    ),
+    height: typeof size === 'number' ? size : sizeMap[size],
+    width: typeof size === 'number' ? size : sizeMap[size],
+    role,
+    ...accessibleProps,
+    ...props,
+  });
 };
+
 Menu.displayName = 'Menu';
 Menu.isGlyph = true;
+
 export default Menu;

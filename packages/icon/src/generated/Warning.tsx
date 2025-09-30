@@ -2,38 +2,58 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 035040f166e113ed89f47afdcd0e6ba9
+* @checksum e82642fa3af30a8d6064226cd654828c
 */
-import * as React from "react";
+import * as React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
+
 export interface WarningProps extends LGGlyph.ComponentProps {}
+
 const Warning = ({
   className,
   size = 16,
   title,
-  ['aria-label']: ariaLabel,
-  ['aria-labelledby']: ariaLabelledby,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledby,
   fill,
   role = 'img',
   ...props
 }: WarningProps) => {
   const fillStyle = css`
-        color: ${fill};
-      `;
+    color: ${fill};
+  `;
+
   const noFlexShrink = css`
-        flex-shrink: 0;
-      `;
-  const accessibleProps = generateAccessibleProps(role, 'Warning', {
-    title,
-    ['aria-label']: ariaLabel,
-    ['aria-labelledby']: ariaLabelledby
+    flex-shrink: 0;
+  `;
+
+  const accessibleProps = generateAccessibleProps(role, 'Warning', { 
+    title, 
+    'aria-label': ariaLabel, 
+    'aria-labelledby': ariaLabelledby 
   });
-  return <svg className={cx({
-    [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path fillRule="evenodd" clipRule="evenodd" d="M8.8639 1.51357C8.49039 0.828811 7.50961 0.828811 7.1361 1.51357L1.12218 12.5388C0.763263 13.1968 1.23814 14 1.98608 14H14.0139C14.7619 14 15.2367 13.1968 14.8778 12.5388L8.8639 1.51357ZM7 5C7 4.44772 7.44772 4 8 4C8.55228 4 9 4.44772 9 5V9C9 9.55228 8.55228 10 8 10C7.44772 10 7 9.55228 7 9V5ZM9 12C9 12.5523 8.55228 13 8 13C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11C8.55228 11 9 11.4477 9 12Z" fill={'currentColor'} /></svg>;
+
+  const svgElement = <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path fillRule="evenodd" clipRule="evenodd" d="M8.8639 1.51357C8.49039 0.828811 7.50961 0.828811 7.1361 1.51357L1.12218 12.5388C0.763263 13.1968 1.23814 14 1.98608 14H14.0139C14.7619 14 15.2367 13.1968 14.8778 12.5388L8.8639 1.51357ZM7 5C7 4.44772 7.44772 4 8 4C8.55228 4 9 4.44772 9 5V9C9 9.55228 8.55228 10 8 10C7.44772 10 7 9.55228 7 9V5ZM9 12C9 12.5523 8.55228 13 8 13C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11C8.55228 11 9 11.4477 9 12Z" fill="currentColor" /></svg>;
+
+  return React.cloneElement(svgElement, {
+    className: cx(
+      {
+        [fillStyle]: fill != null,
+      },
+      noFlexShrink,
+      className,
+    ),
+    height: typeof size === 'number' ? size : sizeMap[size],
+    width: typeof size === 'number' ? size : sizeMap[size],
+    role,
+    ...accessibleProps,
+    ...props,
+  });
 };
+
 Warning.displayName = 'Warning';
 Warning.isGlyph = true;
+
 export default Warning;

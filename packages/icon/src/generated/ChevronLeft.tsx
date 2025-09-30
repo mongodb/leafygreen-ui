@@ -2,38 +2,58 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum b256a3ede62cb851b7e7e09ceb3fe12c
+* @checksum 07b56ed992e4a9003e8165edf8da37e3
 */
-import * as React from "react";
+import * as React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
+
 export interface ChevronLeftProps extends LGGlyph.ComponentProps {}
+
 const ChevronLeft = ({
   className,
   size = 16,
   title,
-  ['aria-label']: ariaLabel,
-  ['aria-labelledby']: ariaLabelledby,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledby,
   fill,
   role = 'img',
   ...props
 }: ChevronLeftProps) => {
   const fillStyle = css`
-        color: ${fill};
-      `;
+    color: ${fill};
+  `;
+
   const noFlexShrink = css`
-        flex-shrink: 0;
-      `;
-  const accessibleProps = generateAccessibleProps(role, 'ChevronLeft', {
-    title,
-    ['aria-label']: ariaLabel,
-    ['aria-labelledby']: ariaLabelledby
+    flex-shrink: 0;
+  `;
+
+  const accessibleProps = generateAccessibleProps(role, 'ChevronLeft', { 
+    title, 
+    'aria-label': ariaLabel, 
+    'aria-labelledby': ariaLabelledby 
   });
-  return <svg className={cx({
-    [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path fillRule="evenodd" clipRule="evenodd" d="M10.7782 1.63604C10.3877 1.24551 9.75449 1.24551 9.36396 1.63604L4.41421 6.58579L3.70711 7.29289C3.31658 7.68342 3.31658 8.31658 3.70711 8.70711L4.41421 9.41421L9.36396 14.364C9.75448 14.7545 10.3876 14.7545 10.7782 14.364L11.4853 13.6569C11.8758 13.2663 11.8758 12.6332 11.4853 12.2426L7.24264 8L11.4853 3.75736C11.8758 3.36684 11.8758 2.73367 11.4853 2.34315L10.7782 1.63604Z" fill={'currentColor'} /></svg>;
+
+  const svgElement = <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}><path fillRule="evenodd" clipRule="evenodd" d="M10.7782 1.63604C10.3877 1.24551 9.75449 1.24551 9.36396 1.63604L4.41421 6.58579L3.70711 7.29289C3.31658 7.68342 3.31658 8.31658 3.70711 8.70711L4.41421 9.41421L9.36396 14.364C9.75448 14.7545 10.3876 14.7545 10.7782 14.364L11.4853 13.6569C11.8758 13.2663 11.8758 12.6332 11.4853 12.2426L7.24264 8L11.4853 3.75736C11.8758 3.36684 11.8758 2.73367 11.4853 2.34315L10.7782 1.63604Z" fill="currentColor" /></svg>;
+
+  return React.cloneElement(svgElement, {
+    className: cx(
+      {
+        [fillStyle]: fill != null,
+      },
+      noFlexShrink,
+      className,
+    ),
+    height: typeof size === 'number' ? size : sizeMap[size],
+    width: typeof size === 'number' ? size : sizeMap[size],
+    role,
+    ...accessibleProps,
+    ...props,
+  });
 };
+
 ChevronLeft.displayName = 'ChevronLeft';
 ChevronLeft.isGlyph = true;
+
 export default ChevronLeft;
