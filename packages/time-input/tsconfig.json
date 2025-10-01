@@ -14,7 +14,6 @@
     "src/**/*"
   ],
   "exclude": [
-    "**/*.spec.*",
     "**/*.stories.*"
   ],
   "references": [
@@ -53,6 +52,6 @@
     },
     {
       "path": "../palette"
-    },
+    }
   ]
 }
