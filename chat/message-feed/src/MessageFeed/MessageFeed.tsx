@@ -31,7 +31,7 @@ export const MessageFeed = forwardRef(
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const { variant } = useLeafyGreenChatContext();
 
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const [showScrollButton, setShowScrollButton] = useState(false);

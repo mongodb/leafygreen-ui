@@ -45,11 +45,16 @@ import {
 import { SearchResultsMenu } from '@leafygreen-ui/search-input';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
+import { DisclaimerText } from '../DisclaimerText';
+import { InputBarFeedback } from '../InputBarFeedback';
+import { InputBarSendButton } from '../InputBarSendButton';
+import { State } from '../shared.types';
 import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 
 import {
   actionContainerStyles,
   adornmentContainerStyles,
+  disclaimerTextStyles,
   getContentWrapperStyles,
   getFormStyles,
   getHotkeyIndicatorStyles,
@@ -58,9 +63,6 @@ import {
   outerFocusContainerStyles,
 } from './InputBar.styles';
 import { type InputBarProps } from './InputBar.types';
-import { InputBarFeedback } from './InputBarFeedback';
-import { InputBarSendButton } from './InputBarSendButton';
-import { State } from './shared.types';
 
 export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
   (
@@ -105,9 +107,9 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     }
 
     const formRef = useForwardedRef(forwardedRef, null);
-    const focusContainerRef = useRef<HTMLDivElement>(null);
-    const menuRef = useRef<HTMLUListElement>(null);
-    const internalTextareaRef = useRef<HTMLTextAreaElement>(null);
+    const focusContainerRef = useRef<HTMLDivElement | null>(null);
+    const menuRef = useRef<HTMLUListElement | null>(null);
+    const internalTextareaRef = useRef<HTMLTextAreaElement | null>(null);
     const textareaRef = useMergeRefs([
       internalTextareaRef,
       externalTextareaRef,
@@ -498,6 +500,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
               </div>
             </div>
           </div>
+          {isCompact && <DisclaimerText className={disclaimerTextStyles} />}
           {withTypeAhead && (
             <SearchResultsMenu
               open={isOpen}

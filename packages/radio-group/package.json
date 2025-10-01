@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-group",
-  "version": "13.0.5",
+  "version": "13.0.7",
   "description": "leafyGreen UI Kit RadioGroup",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

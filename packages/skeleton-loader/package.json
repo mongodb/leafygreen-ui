@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/skeleton-loader",
-  "version": "3.0.4",
+  "version": "3.0.6",
   "description": "leafyGreen UI Kit Skeleton Loader",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

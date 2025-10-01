@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "14.0.4",
+  "version": "14.0.6",
   "description": "LeafyGreen UI Kit Popover",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -29,7 +29,7 @@
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@lg-tools/build": "workspace:^",
-    "@oddbird/popover-polyfill": "^0.5.2"
+    "@oddbird/popover-polyfill": "^0.6.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

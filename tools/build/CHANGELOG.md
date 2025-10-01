@@ -1,5 +1,18 @@
 # @lg-tools/build
 
+## 0.8.3
+
+### Patch Changes
+
+- 1a5c69f: Adds reusable `constructUMDGlobalName` function to generate consistent UMD global names when building
+
+## 0.8.2
+
+### Patch Changes
+
+- dc3299b: Enables TS downleveling to 4.9.
+  Adds `lg-ts-downlevel` bin script
+
 ## 0.8.1
 
 ### Patch Changes

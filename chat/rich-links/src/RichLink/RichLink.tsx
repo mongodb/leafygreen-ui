@@ -7,9 +7,7 @@ import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 import { Body } from '@leafygreen-ui/typography';
 
 import {
-  badgeAreaStyles,
   baseStyles,
-  imageBackgroundStyles,
   richLinkTextClassName,
   themeStyles,
 } from './RichLink.styles';
@@ -28,7 +26,6 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
 
     const {
       children,
-      imageUrl,
       badgeGlyph,
       badgeLabel,
       badgeColor,
@@ -44,8 +41,6 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
 
     const showBadge = badgeLabel !== undefined;
 
-    const showImageBackground = (imageUrl?.length ?? -1) > 0;
-
     const conditionalProps = href
       ? {
           as: 'a' as PolymorphicAs,
@@ -59,14 +54,12 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
     return (
       <Card
         darkMode={darkMode}
-        className={cx(baseStyles, themeStyles[theme], {
-          [badgeAreaStyles]: showBadge,
-          [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
-        })}
+        className={cx(baseStyles, themeStyles[theme])}
+        title={children}
         {...conditionalProps}
         onClick={() => onLinkClick?.(props)}
       >
-        <Body className={richLinkTextClassName} darkMode={darkMode}>
+        <Body as="span" className={richLinkTextClassName} darkMode={darkMode}>
           {children}
         </Body>
         {showBadge ? (

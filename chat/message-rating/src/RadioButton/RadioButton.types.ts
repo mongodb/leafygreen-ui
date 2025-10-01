@@ -1,5 +1,7 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface RadioButtonProps
-  extends HTMLElementProps<'input'>,
+  extends React.ComponentProps<'input'>,
     DarkModeProps {}

@@ -1,3 +1,5 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
-export type OrderedListProps = HTMLElementProps<'ol'> & DarkModeProps;
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
+export type OrderedListProps = React.ComponentProps<'ol'> & DarkModeProps;

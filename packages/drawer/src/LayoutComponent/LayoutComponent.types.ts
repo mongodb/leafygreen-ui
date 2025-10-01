@@ -1,8 +1,10 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface LayoutComponentProps
   extends DarkModeProps,
-    Omit<HTMLElementProps<'div'>, 'children'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> {
   /**
    * Slot prop for the content that should render in the drawer column.
    */

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
-import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export const Size = {
   Small: 'small',
@@ -51,7 +51,7 @@ export type Role = (typeof Role)[keyof typeof Role];
 type InheritedProps = DarkModeProps &
   AriaLabelPropsWithLabel &
   LgIdProps &
-  Omit<HTMLElementProps<'div'>, 'children' | 'role'>;
+  Omit<React.ComponentProps<'div'>, 'children' | 'role'>;
 
 type BaseProps = InheritedProps & {
   /** Optional size (thickness) of the progress bar. */

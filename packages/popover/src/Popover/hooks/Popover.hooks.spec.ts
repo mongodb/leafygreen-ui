@@ -1,5 +1,7 @@
 import { createRef, MutableRefObject } from 'react';
-import { act, renderHook } from '@testing-library/react';
+import { act } from '@testing-library/react';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useReferenceElement } from './Popover.hooks';
 

@@ -190,7 +190,9 @@ describe('DatePicker keyboard interaction', () => {
       expect(monthSelect).toHaveFocus();
 
       userEvent.keyboard('[Enter]');
-      await waitFor(() => jest.advanceTimersByTime(transitionDuration.default));
+      await waitFor(() => {
+        jest.advanceTimersByTime(transitionDuration.default);
+      });
 
       const options = await findAllByRole('option');
       const firstOption = options[0];

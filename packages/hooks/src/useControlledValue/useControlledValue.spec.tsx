@@ -258,7 +258,7 @@ describe('packages/hooks/useControlledValue', () => {
       handlerProp?: ChangeEventHandler;
     }) => {
       const initialVal = '';
-      const inputRef = useRef<HTMLInputElement>(null);
+      const inputRef = useRef<HTMLInputElement | null>(null);
 
       const { value, handleChange, updateValue } = useControlledValue(
         valueProp,

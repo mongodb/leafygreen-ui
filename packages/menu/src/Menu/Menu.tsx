@@ -60,6 +60,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     justify = Justify.End,
     adjustOnMutation = false,
     shouldClose = () => true,
+    onOpen,
+    onClose,
     spacing = 6,
     maxHeight = 344,
     initialOpen = false,
@@ -68,6 +70,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     darkMode: darkModeProp,
     renderDarkMenu = true,
     'data-lgid': dataLgId,
+    'data-testid': dataTestId,
     children,
     className,
     refEl,
@@ -79,6 +82,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     portalRef,
     scrollContainer,
     popoverZIndex,
+    // Extract only ul-appropriate props from rest
+    id,
     ...rest
   }: MenuProps,
   forwardRef,
@@ -87,7 +92,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const lgIds = getLgIds(dataLgId);
 
   const popoverRef = useRef<HTMLDivElement | null>(null);
-  const defaultTriggerRef = useRef<HTMLElement>(null);
+  const defaultTriggerRef = useRef<HTMLElement | null>(null);
   const triggerRef = refEl ?? defaultTriggerRef;
   const keyboardUsedRef = useRef<boolean>(false);
 
@@ -160,6 +165,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     if (keyboardUsedRef.current) {
       moveHighlight('first');
     }
+    onOpen?.();
+  };
+
+  // Callback fired when the popover exit transition finishes.
+  const handlePopoverClose = () => {
+    onClose?.();
   };
 
   // Fired on global keyDown event
@@ -232,6 +243,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           refEl={triggerRef}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
+          onExited={handlePopoverClose}
           ref={popoverRef}
           {...popoverProps}
         >
@@ -255,12 +267,13 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
             <ul
-              data-testid={lgIds.root}
-              {...rest}
+              data-testid={dataTestId || lgIds.root}
+              id={id}
               data-lgid={lgIds.root}
               className={scrollContainerStyle}
               role="menu"
               onClick={e => e.stopPropagation()}
+              {...rest}
             >
               {children}
             </ul>

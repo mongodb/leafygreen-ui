@@ -1,6 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
-export interface TabProps extends HTMLElementProps<'div'> {
+export interface TabProps extends React.ComponentPropsWithoutRef<'div'> {
   /**
    * Content that will appear inside of Tab panel.
    * /

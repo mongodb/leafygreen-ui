@@ -1,6 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 import { ResponsiveTypographyProps } from '../types';
 
-export type DescriptionProps = HTMLElementProps<'p'> &
+export type DescriptionProps = React.ComponentPropsWithoutRef<'p'> &
   ResponsiveTypographyProps & { disabled?: boolean };

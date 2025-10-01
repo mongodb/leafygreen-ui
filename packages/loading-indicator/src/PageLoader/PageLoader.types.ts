@@ -1,9 +1,11 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export interface PageLoaderProps
   extends DarkModeProps,
-    HTMLElementProps<'div'> {
+    React.ComponentProps<'div'> {
   /**
    * Description text
    */

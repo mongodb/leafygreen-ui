@@ -1,8 +1,8 @@
-import { MouseEventHandler, PropsWithChildren } from 'react';
+import React, { MouseEventHandler, PropsWithChildren } from 'react';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
-export type MessagePromptProps = HTMLElementProps<'button'> &
+export type MessagePromptProps = React.ComponentProps<'button'> &
   DarkModeProps &
   PropsWithChildren<{
     /**

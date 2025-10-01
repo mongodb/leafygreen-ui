@@ -1,10 +1,7 @@
+import React from 'react';
+
 import { FormFieldState } from '@leafygreen-ui/form-field';
-import {
-  DarkModeProps,
-  Either,
-  HTMLElementProps,
-  LgIdProps,
-} from '@leafygreen-ui/lib';
+import { DarkModeProps, Either, LgIdProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = FormFieldState;
@@ -73,7 +70,7 @@ interface TextInputTypeProp {
   type?: TextInputType;
 }
 export interface BaseTextInputProps
-  extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels>,
+  extends Omit<React.ComponentPropsWithoutRef<'input'>, AriaLabels>,
     DarkModeProps,
     LgIdProps {
   /**

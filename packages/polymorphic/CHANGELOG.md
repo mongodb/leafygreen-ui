@@ -1,5 +1,29 @@
 # @leafygreen-ui/polymorphic
 
+## 3.1.0
+
+### Minor Changes
+
+- 6f30c55: Updates `PolymorphicRenderFunctionReturnType` to reflect the discrepancy between React 17 & React 18 function component return types - [LG-5354](https://jira.mongodb.org/browse/LG-5354)
+
+### Patch Changes
+
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/lib@15.4.0
+
+## 3.0.4
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+
 ## 3.0.3
 
 ### Patch Changes

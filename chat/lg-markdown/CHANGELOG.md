@@ -1,5 +1,34 @@
 # @lg-chat/lg-markdown
 
+## 4.2.0
+
+### Minor Changes
+
+- 8902552: [LG-5570](https://jira.mongodb.org/browse/LG-5570)
+  - Expand markdown element coverage to include `<blockquote>`, `<hr>`, and `<h4>`
+  - Improve list spacing and indentation
+  - Fix header stylings
+
+### Patch Changes
+
+- Updated dependencies [ff6b87e]
+  - @leafygreen-ui/lib@15.5.0
+
+## 4.1.3
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/code@20.0.7
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+
 ## 4.1.2
 
 ### Patch Changes

@@ -146,11 +146,11 @@ export function Combobox<M extends boolean>({
   const labelId = useIdAllocator({ prefix: 'combobox-label' });
   const menuId = useIdAllocator({ prefix: 'combobox-menu' });
 
-  const comboboxRef = useRef<HTMLDivElement>(null);
-  const clearButtonRef = useRef<HTMLButtonElement>(null);
-  const inputWrapperRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const comboboxRef = useRef<HTMLDivElement | null>(null);
+  const clearButtonRef = useRef<HTMLButtonElement | null>(null);
+  const inputWrapperRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   const [isOpen, setOpen] = useState(false);
   const wasOpen = usePrevious(isOpen);

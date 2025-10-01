@@ -8,11 +8,14 @@ export const richLinkTextClassName = createUniqueClassName('lg-chat-rich-link');
 
 export const baseStyles = css`
   box-shadow: none;
-  padding: ${spacing[200]}px;
+  padding: ${spacing[100]}px ${spacing[200]}px;
   border-radius: ${spacing[200]}px;
   text-decoration: none;
-  min-height: ${spacing[900]}px;
-  min-width: 100px;
+  min-height: initial;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: ${spacing[200]}px;
 
   & .${richLinkTextClassName} {
     white-space: nowrap;
@@ -37,26 +40,3 @@ export const themeStyles = {
     }
   `,
 };
-
-export const badgeAreaStyles = css`
-  // Extra padding to make room for the absolutely positioned badge
-  // We have to account for the badge as well as "fake padding" from the "bottom" and "left" attributes.
-  // 1. "fake padding" below the badge (spacing[200])
-  // 2. badge height (18)
-  // 3. "fake padding" on top of the badge (spacing[200])
-  padding-bottom: calc(${spacing[200]}px + 18px + ${spacing[200]}px);
-`;
-
-export const imageBackgroundStyles = (imageUrl: string) => css`
-  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
-    url(${imageUrl});
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  border-radius: ${spacing[200]}px;
-  min-height: ${spacing[900]}px;
-
-  & .${richLinkTextClassName} {
-    color: ${palette.white};
-  }
-`;

@@ -47,8 +47,8 @@ export const ContextDrawer = forwardRef<HTMLDivElement, ContextDrawerProps>(
     );
     const lgIds = getLgIds(dataLgId);
 
-    const contentRef = useRef<HTMLDivElement>(null);
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
     const { ref: topInterceptRef, inView: isTopInView } = useInView({
       root: scrollContainerRef.current,

@@ -1,3 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
-export type ChatTriggerProps = DarkModeProps & HTMLElementProps<'button'> & {};
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
+export type ChatTriggerProps = DarkModeProps &
+  React.ComponentProps<'button'> & {};

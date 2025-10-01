@@ -1,4 +1,4 @@
-import {
+import React, {
   FormEvent,
   FormEventHandler,
   MouseEventHandler,
@@ -6,7 +6,7 @@ import {
 } from 'react';
 
 import { BaseButtonProps } from '@leafygreen-ui/button';
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { TextAreaProps } from '@leafygreen-ui/text-area';
 
 /**
@@ -28,7 +28,7 @@ export type InlineMessageFeedbackProps = Required<
   Pick<TextAreaProps, 'label'>
 > &
   DarkModeProps &
-  Omit<HTMLElementProps<'div'>, 'children' | 'onSubmit'> & {
+  Omit<React.ComponentPropsWithoutRef<'div'>, 'children' | 'onSubmit'> & {
     /**
      * Text displayed inside the cancel Button
      *

@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RichLinksArea } from '@lg-chat/rich-links';
 
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Subtitle } from '@leafygreen-ui/typography';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
+import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
+import IconButton from '@leafygreen-ui/icon-button';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import { Body } from '@leafygreen-ui/typography';
 
 import {
   containerStyles,
-  getDividerStyles,
-  linksHeadingStyles,
+  getIconStyles,
+  getLinksWrapperStyles,
+  headerStyles,
+  linksInnerWrapperStyles,
 } from './MessageLinks.styles';
 import { type MessageLinksProps } from './MessageLinks.types';
 
@@ -18,13 +25,50 @@ export function MessageLinks({
   onLinkClick,
   ...divProps
 }: MessageLinksProps) {
-  const { theme } = useDarkMode(darkModeProp);
+  const { darkMode } = useDarkMode(darkModeProp);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const headingId = useIdAllocator({ prefix: 'message-links-heading' });
+  const contentId = useIdAllocator({ prefix: 'message-links-content' });
+
+  const handleToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  if (links.length === 0) {
+    return null;
+  }
+
   return (
-    <div className={containerStyles} {...divProps}>
-      <hr className={getDividerStyles(theme)} />
-      <Subtitle className={linksHeadingStyles}>{headingText}</Subtitle>
-      <RichLinksArea links={links} onLinkClick={onLinkClick} />
-    </div>
+    <LeafyGreenProvider darkMode={darkMode}>
+      <div className={containerStyles} {...divProps}>
+        <div className={headerStyles}>
+          <Body id={headingId}>{headingText}</Body>
+          <IconButton
+            aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${headingText}`}
+            aria-expanded={isExpanded}
+            aria-controls={contentId}
+            onClick={handleToggle}
+            className={getIconStyles(isExpanded)}
+          >
+            <ChevronDownIcon />
+          </IconButton>
+        </div>
+        <div
+          id={contentId}
+          role="region"
+          aria-labelledby={headingId}
+          className={getLinksWrapperStyles(isExpanded)}
+        >
+          <RichLinksArea
+            className={linksInnerWrapperStyles}
+            links={links}
+            onLinkClick={onLinkClick}
+          />
+        </div>
+      </div>
+    </LeafyGreenProvider>
   );
 }
 

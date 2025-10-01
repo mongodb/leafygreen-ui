@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/suggestions",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "LeafyGreen UI Kit Suggestion Card",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

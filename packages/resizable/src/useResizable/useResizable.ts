@@ -42,7 +42,7 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
   onResize,
   position,
 }: ResizableProps): ResizableReturn<T> => {
-  const resizableRef = useRef<T>(null);
+  const resizableRef = useRef<T | null>(null);
   const [isResizing, setIsResizing] = useState<boolean>(false);
   // Refs to store initial mouse position and element size at the start of a drag
   const initialMousePos = useRef<Readonly<{ x: number; y: number }>>({
@@ -123,8 +123,10 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
    */
   const setNextKeyboardSize = useCallback(
     (event: React.KeyboardEvent | KeyboardEvent, position: Position | null) => {
+      // @ts-ignore React17 KeyboardEvent types differ
       if (position && event.code in SIZE_GROWTH_KEY_MAPPINGS[position]) {
         const sizeGrowth =
+          // @ts-ignore React17 KeyboardEvent types differ
           SIZE_GROWTH_KEY_MAPPINGS[position][event.code as Arrow];
         const nextSize = getNextKeyboardSize({
           sizeGrowth,
@@ -147,12 +149,15 @@ export const useResizable = <T extends HTMLElement = HTMLDivElement>({
     (event: React.KeyboardEvent | KeyboardEvent) => {
       if (position === Position.Left || position === Position.Right) {
         if (
+          // @ts-ignore React17 KeyboardEvent types differ
           event.code === keyMap.ArrowLeft ||
+          // @ts-ignore React17 KeyboardEvent types differ
           event.code === keyMap.ArrowRight
         ) {
           event.preventDefault();
         }
       } else {
+        // @ts-ignore React17 KeyboardEvent types differ
         if (event.code === keyMap.ArrowUp || event.code === keyMap.ArrowDown) {
           event.preventDefault();
         }

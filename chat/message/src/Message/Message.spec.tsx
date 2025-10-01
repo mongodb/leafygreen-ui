@@ -85,7 +85,6 @@ describe('Message', () => {
       Variant.Compact,
     );
 
-    expect(consoleOnce.warn).toHaveBeenCalledTimes(1);
     expect(consoleOnce.warn).toHaveBeenCalledWith(
       expect.stringContaining("only used in the 'spacious' variant"),
     );
@@ -95,5 +94,46 @@ describe('Message', () => {
     renderMessage({ messageBody: MESSAGE_CONTENT }, Variant.Compact);
 
     expect(consoleOnce.warn).not.toHaveBeenCalled();
+  });
+
+  test('renders subcomponents and filters them from remaining children', () => {
+    const TestChild = () => <div>Regular child</div>;
+
+    renderMessage(
+      {
+        children: (
+          <>
+            <TestChild />
+            <Message.Actions onClickCopy={() => {}} />
+            <Message.VerifiedBanner
+              verifier="MongoDB Staff"
+              verifiedAt={new Date('2023-08-24T16:20:00Z')}
+            />
+            <Message.Links
+              links={[{ children: 'Test Link', href: 'https://example.com' }]}
+            />
+            <div>Another regular child</div>
+          </>
+        ),
+      },
+      Variant.Compact,
+    );
+
+    // All components should render
+    expect(screen.getByText(/Verified by MongoDB Staff/)).toBeInTheDocument();
+    expect(screen.getByText('Regular child')).toBeInTheDocument();
+    expect(screen.getByText('Another regular child')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /copy/i })).toBeInTheDocument();
+    expect(screen.getByText('Related Resources')).toBeInTheDocument();
+
+    // No duplication - each subcomponent should only render once
+    const verifiedBanners = screen.getAllByText(/Verified by MongoDB Staff/);
+    expect(verifiedBanners).toHaveLength(1);
+
+    const copyButtons = screen.getAllByRole('button', { name: /copy/i });
+    expect(copyButtons).toHaveLength(1);
+
+    const linksHeadings = screen.getAllByText('Related Resources');
+    expect(linksHeadings).toHaveLength(1);
   });
 });

@@ -1,5 +1,44 @@
 # @leafygreen-ui/toast
 
+## 8.0.7
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- e245037: Updates the Toast Icon to be labeled for screen readers
+- Updated dependencies [1a5c69f]
+- Updated dependencies [aeb3b3f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/icon-button@17.0.6
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/emotion@5.0.3
+
+## 8.0.6
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [5ef631a]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/icon@14.5.0
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/hooks@9.1.3
+  - @leafygreen-ui/icon-button@17.0.5
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/portal@7.0.4
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+
 ## 8.0.5
 
 ### Patch Changes

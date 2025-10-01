@@ -105,6 +105,7 @@ const ModalView = React.forwardRef<HTMLDialogElement, ModalProps>(
            * Prevents the default <dialog> cancel behavior (ESC key) to ensure
            * the modal only closes via the custom escape key handler logic.
            */
+          // @ts-ignore React17 - `onCancel` is unavailable in React 17 types
           onCancel={e => e.preventDefault()}
         >
           {children}

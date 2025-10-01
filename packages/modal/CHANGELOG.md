@@ -1,5 +1,41 @@
 # @leafygreen-ui/modal
 
+## 20.0.3
+
+### Patch Changes
+
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- Updated dependencies [1a5c69f]
+- Updated dependencies [aeb3b3f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/icon-button@17.0.6
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/emotion@5.0.3
+
+## 20.0.2
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [5ef631a]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/icon@14.5.0
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/hooks@9.1.3
+  - @leafygreen-ui/icon-button@17.0.5
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/tokens@3.2.4
+  - @lg-tools/test-harnesses@0.3.4
+
 ## 20.0.1
 
 ### Patch Changes

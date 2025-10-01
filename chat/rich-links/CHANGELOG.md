@@ -1,5 +1,56 @@
 # @lg-chat/rich-links
 
+## 4.0.1
+
+### Patch Changes
+
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- 6f30c55: Updates `RichLinkProps` to extend `ComponentPropsWithoutRef<'a'>`
+- Updated dependencies [1a5c69f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/emotion@5.0.3
+  - @leafygreen-ui/polymorphic@3.1.0
+
+## 4.0.0
+
+### Major Changes
+
+- a9eb172: [LG-5437](https://jira.mongodb.org/browse/LG-5437)
+
+  #### Breaking Changes
+
+  - Removed `imageUrl` prop from `RichLink` component
+  - Updated `RichLink` to more compact styling
+
+  #### Non-breaking Changes
+
+  - Added `forwardRef` support to `RichLinksArea`
+  - Enhanced accessibility with `title` attribute on RichLink cards
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [5ef631a]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/icon@14.5.0
+  - @leafygreen-ui/card@13.0.5
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/polymorphic@3.0.4
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+
 ## 3.1.2
 
 ### Patch Changes

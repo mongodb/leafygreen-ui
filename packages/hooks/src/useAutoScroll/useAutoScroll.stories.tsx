@@ -31,7 +31,7 @@ export default meta;
 
 export const Basic = ({ selected }: { selected?: number }) => {
   const data = range(testItems);
-  const menuRef = useRef<HTMLUListElement>(null);
+  const menuRef = useRef<HTMLUListElement | null>(null);
   const itemRefs = useDynamicRefs<HTMLLIElement>({ prefix: 'item' });
 
   useAutoScroll(itemRefs(`${selected}`), menuRef);

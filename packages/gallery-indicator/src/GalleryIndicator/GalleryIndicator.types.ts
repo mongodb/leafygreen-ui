@@ -1,9 +1,9 @@
-import { ComponentPropsWithRef } from 'react';
+import { ComponentPropsWithoutRef } from 'react';
 
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export interface GalleryIndicatorProps
-  extends ComponentPropsWithRef<'ul'>,
+  extends ComponentPropsWithoutRef<'ul'>,
     DarkModeProps,
     LgIdProps {
   /**
