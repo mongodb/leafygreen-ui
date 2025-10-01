@@ -19,7 +19,7 @@ const renderTimeInputDisplayProvider = (
   props?: Partial<TimeInputDisplayProviderProps>,
 ) => {
   const { result, rerender } = renderHook(() => useTimeInputDisplayContext(), {
-    wrapper: ({ children }: { children: React.ReactNode }) => (
+    wrapper: ({ children }: { children?: React.ReactNode }) => (
       <TimeInputDisplayProvider {...props}>{children}</TimeInputDisplayProvider>
     ),
   });

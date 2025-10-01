@@ -17,7 +17,7 @@ const renderTimeInputProvider = (props?: Partial<TimeInputProviderProps>) => {
   };
 
   const { result, rerender } = renderHook(() => useTimeInputContext(), {
-    wrapper: ({ children }: { children: React.ReactNode }) => (
+    wrapper: ({ children }: { children?: React.ReactNode }) => (
       <TimeInputProvider {...defaultProps} {...props}>
         {children}
       </TimeInputProvider>
