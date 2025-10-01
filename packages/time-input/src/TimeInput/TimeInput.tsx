@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 
+import { useControlled } from '@leafygreen-ui/hooks';
 import { pickAndOmit } from '@leafygreen-ui/lib';
 
 import { TimeInputProvider } from '../Context/TimeInputContext/TimeInputContext';
@@ -15,15 +16,21 @@ import { TimeInputProps } from './TimeInput.types';
 export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
   (
     {
-      value: _valueProp,
-      onTimeChange: _onChangeProp,
+      value: valueProp,
+      onTimeChange: onChangeProp,
       handleValidation,
-      initialValue: _initialValueProp,
+      initialValue: initialValueProp,
       'data-lgid': _dataLgId,
       ...props
     }: TimeInputProps,
     forwardedRef,
   ) => {
+    const { value, updateValue } = useControlled(
+      valueProp,
+      onChangeProp,
+      initialValueProp,
+    );
+
     /**
      * Separate the props that are added to the display context and the props that are added to the component
      */
@@ -34,10 +41,9 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
 
     return (
       <TimeInputDisplayProvider {...displayProps}>
-        {/* TODO: need to use the useControlled hook to get the value */}
         <TimeInputProvider
-          value={undefined}
-          setValue={() => {}}
+          value={value}
+          setValue={updateValue}
           handleValidation={handleValidation}
         >
           <TimeInputContent ref={forwardedRef} {...componentProps} />
