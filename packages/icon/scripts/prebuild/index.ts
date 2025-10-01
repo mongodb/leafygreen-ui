@@ -7,6 +7,7 @@ import path from 'path';
 
 import { getChecksum } from './checksum';
 import { indexTemplate } from './indexTemplate';
+import { applyLeafyGreenTemplate } from './leafyGreenTemplate';
 import { FileObject, PrebuildOptions } from './prebuild.types';
 
 const SRC_PATH = path.resolve(__dirname, '..', '..', 'src');
@@ -141,71 +142,15 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
       { componentName: file.name },
     );
 
-    // Post-process to add custom LeafyGreen wrapper
-    const customizedSVGR = processedSVGR.replace(
-      /import \* as React from "react";\nimport type \{ SVGProps \} from "react";\nconst (\w+) = \(props: SVGProps<SVGSVGElement>\) => (.*?);\nexport default \1;/s,
-      `import * as React from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { generateAccessibleProps, sizeMap } from '../glyphCommon';
-import { LGGlyph } from '../types';
-
-export interface $1Props extends LGGlyph.ComponentProps {}
-
-const $1 = ({
-  className,
-  size = 16,
-  title,
-  'aria-label': ariaLabel,
-  'aria-labelledby': ariaLabelledby,
-  fill,
-  role = 'img',
-  ...props
-}: $1Props) => {
-  const fillStyle = css\`
-    color: \${fill};
-  \`;
-
-  const noFlexShrink = css\`
-    flex-shrink: 0;
-  \`;
-
-  const accessibleProps = generateAccessibleProps(role, '$1', { 
-    title, 
-    'aria-label': ariaLabel, 
-    'aria-labelledby': ariaLabelledby 
-  });
-
-  const svgElement = $2;
-
-  return React.cloneElement(svgElement, {
-    className: cx(
-      {
-        [fillStyle]: fill != null,
-      },
-      noFlexShrink,
-      className,
-    ),
-    height: typeof size === 'number' ? size : sizeMap[size],
-    width: typeof size === 'number' ? size : sizeMap[size],
-    role,
-    ...accessibleProps,
-    ...props,
-  });
-};
-
-$1.displayName = '$1';
-$1.isGlyph = true;
-
-export default $1;`,
-    );
-
+    // Apply custom LeafyGreen wrapper using template
+    const customizedSVGR = applyLeafyGreenTemplate(processedSVGR, file.name);
     const scriptPath =
       'packages/icon/' +
       path.relative(path.resolve(__dirname, process.cwd()), __filename);
 
-    if (customizedSVGR === null) {
+    if (!customizedSVGR) {
       throw new Error(
-        `Regex replacement failed for file "${file.name}.svg". The SVGR output could not be customized and would result in a broken icon component.`,
+        `SVGR transformation failed for file "${file.name}.svg". The component could not be generated.`,
       );
     }
 
