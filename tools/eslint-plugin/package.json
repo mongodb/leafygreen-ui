@@ -19,6 +19,9 @@
       "require": "./dist/umd/index.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "prebuild": "npx ts-node ./scripts/buildRulesIndex.ts",
     "build": "lg-build bundle",
