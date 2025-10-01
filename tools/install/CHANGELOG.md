@@ -1,5 +1,11 @@
 # @lg-tools/install
 
+## 0.4.0
+
+### Minor Changes
+
+- a366ec0: Adds 'eslint-plugin' to ALL_PACKAGES
+
 ## 0.3.1
 
 ### Patch Changes

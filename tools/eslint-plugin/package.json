@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/eslint-plugin",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "ESLint Rules for LeafyGreen",
   "keywords": [
     "eslint",
@@ -18,6 +18,9 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/umd/index.js"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "prebuild": "npx ts-node ./scripts/buildRulesIndex.ts",

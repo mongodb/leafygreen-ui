@@ -11,7 +11,13 @@ export { EnterpriseAdvancedLogoLockup } from './Logos/EnterpriseAdvancedLogoLock
 export { UniversityLogoLockup } from './Logos/UniversityLogoLockup';
 
 // Deprecated Product Logo Marks
-export { default } from './Logo';
+export {
+  /**
+   * @deprecated Use named export `{ Logo }` instead. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+   */
+  default,
+  default as Logo,
+} from './Logo';
 export { SupportedColors } from './Logo.types';
 export { AtlasLogoMark } from './Logos/AtlasLogoMark';
 export { ChartsLogoMark } from './Logos/ChartsLogoMark';

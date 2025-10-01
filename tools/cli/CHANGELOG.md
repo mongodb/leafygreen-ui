@@ -1,5 +1,16 @@
 # @lg-tools/cli
 
+## 0.10.8
+
+### Patch Changes
+
+- Updated dependencies [a366ec0]
+- Updated dependencies [a366ec0]
+  - @lg-tools/install@0.4.0
+  - @lg-tools/test@0.5.0
+  - @lg-tools/link@0.2.14
+  - @lg-tools/validate@0.6.0
+
 ## 0.10.7
 
 ### Patch Changes
