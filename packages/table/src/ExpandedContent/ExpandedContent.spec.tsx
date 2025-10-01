@@ -60,7 +60,6 @@ const RowWithExpandableContent = (args: TableProps<Person>) => {
                     })}
                   </Row>
                 )}
-                {/* @ts-expect-error FIXME: ExpandedContent is incorrectly generic */}
                 {isExpandedContent && <ExpandedContent row={row} />}
               </Fragment>
             );
@@ -175,15 +174,9 @@ describe('packages/table/Row/ExpandableContent', () => {
     <>
       {/* @ts-expect-error - row is missing */}
       <ExpandedContent />
-
-      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} />
-      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} ref={ref} />
-
-      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} />
-      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} ref={ref} />
     </>;
   });
