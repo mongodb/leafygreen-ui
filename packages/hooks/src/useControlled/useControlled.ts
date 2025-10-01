@@ -58,7 +58,7 @@ export const useControlled = <T extends any>(
   useEffect(() => {
     if (isUndefined(controlledValue) && isUndefined(initialValue)) {
       consoleOnce.error(
-        `Warning: \`useControlled\` hook is being used without a value or initialValue. If using an input, this will cause a React warning when an input changes. Please decide between using a controlled or uncontrolled input element, and provide either a controlledValue or initialValue to \`useControlled\``,
+        `Warning: \`useControlled\` hook is being used without a value or initialValue. If using an input, this will cause a React warning when an input changes. Please decide between using a controlled or uncontrolled element, and provide either a controlledValue or initialValue to \`useControlled\``,
       );
     }
   }, [controlledValue, initialValue]);
