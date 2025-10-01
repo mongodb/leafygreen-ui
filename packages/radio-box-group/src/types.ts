@@ -1,4 +1,4 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 export const Size = {
   Default: 'default',
@@ -8,7 +8,8 @@ export const Size = {
 
 export type Size = (typeof Size)[keyof typeof Size];
 
-export interface RadioBoxProps extends Omit<HTMLElementProps<'input'>, 'size'> {
+export interface RadioBoxProps
+  extends Omit<React.ComponentProps<'input'>, 'size'> {
   /**
    * Indicates whether or not the box will be checked
    * @default false
@@ -63,7 +64,7 @@ export interface RadioBoxProps extends Omit<HTMLElementProps<'input'>, 'size'> {
   darkMode?: boolean;
 }
 
-export interface RadioBoxGroupProps extends HTMLElementProps<'div'> {
+export interface RadioBoxGroupProps extends React.ComponentProps<'div'> {
   /**
    * Content that will appear inside of RadioBoxGroup component.
    * @type `<RadioBox />`

@@ -2,10 +2,12 @@ import React, { ChangeEvent, useRef } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { createSyntheticEvent, HTMLElementProps } from '..';
+import { createSyntheticEvent } from '..';
 
-const MyInputComponent = ({ onChange }: HTMLElementProps<'input'>) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+const MyInputComponent = ({
+  onChange,
+}: React.ComponentPropsWithoutRef<'input'>) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleClick = () => {
     const nativeEvent = new Event('change', { bubbles: true });

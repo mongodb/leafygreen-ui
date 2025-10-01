@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { getTheme } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import componentsMap from './componentsMap';
-import { baseStyles } from './LGMarkdown.styles';
+import { getWrapperStyles } from './LGMarkdown.styles';
 import { LGMarkdownProps } from '.';
 
 export const LGMarkdown = ({
@@ -24,7 +24,9 @@ export const LGMarkdown = ({
   const providerBaseFontSize: 14 | 16 = baseFontSize === 13 ? 14 : 16; // todo: update when LGProvider switches to 13/16
   return (
     <LeafyGreenProvider darkMode={darkMode} baseFontSize={providerBaseFontSize}>
-      <div className={cx(baseStyles, className)}>
+      <div
+        className={getWrapperStyles({ className, theme: getTheme(darkMode) })}
+      >
         <ReactMarkdown
           components={{ ...componentsMap, ...components }}
           {...rest}

@@ -1,5 +1,28 @@
 # @lg-tools/lint
 
+## 3.1.0
+
+### Minor Changes
+
+- 6f30c55: Lists `/config` directory in package "exports"
+
+### Patch Changes
+
+- 1a5c69f: Updates to latest @typescript-eslint packages
+- Updated dependencies [1a5c69f]
+  - @lg-tools/build@0.8.3
+
+## 3.0.2
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [dc3299b]
+- Updated dependencies [dc3299b]
+  - @lg-tools/build@0.8.2
+  - @lg-tools/meta@0.6.2
+
 ## 3.0.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
-import { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 
-import { DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import {
   EChartOptions,
@@ -22,7 +22,7 @@ export const ChartStates = {
 } as const;
 export type ChartStates = (typeof ChartStates)[keyof typeof ChartStates];
 
-export type ChartProps = HTMLElementProps<'div'> &
+export type ChartProps = React.ComponentPropsWithoutRef<'div'> &
   DarkModeProps &
   PropsWithChildren<{
     /**

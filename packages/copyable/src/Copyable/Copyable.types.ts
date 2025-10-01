@@ -1,4 +1,4 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 export const Size = {
   Default: 'default',
@@ -7,7 +7,7 @@ export const Size = {
 
 export type Size = (typeof Size)[keyof typeof Size];
 
-export interface CopyableProps extends HTMLElementProps<'div'> {
+export interface CopyableProps extends React.ComponentProps<'div'> {
   /**
    * Determines whether or not the component appears in dark theme.
    * @default false

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
 import { type ChipProps } from '@leafygreen-ui/chip';
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import { Either } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 
 import {
@@ -59,7 +59,7 @@ type PartialChipProps = Pick<
   'chipTruncationLocation' | 'chipCharacterLimit'
 >;
 
-export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
+export type BaseComboboxProps = Omit<React.ComponentProps<'div'>, 'onChange'> &
   Pick<
     PopoverProps,
     | 'popoverZIndex'

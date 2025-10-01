@@ -1,5 +1,37 @@
 # @lg-chat/chat-disclaimer
 
+## 5.0.1
+
+### Patch Changes
+
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/emotion@5.0.3
+
+## 5.0.0
+
+### Major Changes
+
+- a3dee88: Remove deprecated and unused `DisclaimerModal`
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/marketing-modal@8.0.2
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+
 ## 4.0.8
 
 ### Patch Changes

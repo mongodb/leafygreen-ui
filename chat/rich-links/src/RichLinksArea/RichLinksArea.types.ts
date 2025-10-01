@@ -1,10 +1,11 @@
+import React from 'react';
+
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { type RichLinkProps } from '..';
 
 export interface RichLinksAreaProps
-  extends HTMLElementProps<'div', never>,
+  extends Omit<React.ComponentProps<'div'>, 'children'>,
     DarkModeProps {
   links: Array<RichLinkProps>;
 

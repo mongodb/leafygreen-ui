@@ -32,7 +32,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
    * changes, it causes the tooltip to re-render
    */
   const [tooltipOpen, setTooltipOpen] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();

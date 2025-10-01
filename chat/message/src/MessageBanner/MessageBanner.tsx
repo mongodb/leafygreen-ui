@@ -13,7 +13,7 @@ export function MessageBanner({
   variant = 'info',
   ...divProps
 }: MessageBannerProps) {
-  const bannerRef = useRef<HTMLDivElement>(null);
+  const bannerRef = useRef<HTMLDivElement | null>(null);
   const [isMultiline, setIsMultiline] = useState(false);
   const baseFontSize = useBaseFontSize();
   useEffect(() => {

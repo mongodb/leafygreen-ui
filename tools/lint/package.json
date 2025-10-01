@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/lint",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Lint rules & config for LeafyGreen repositories",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -25,8 +25,8 @@
     "@types/cli-progress": "^3.11.6",
     "@types/cross-spawn": "6.0.2",
     "@types/prettier": "^2.7.0",
-    "@typescript-eslint/eslint-plugin": "8.17.0",
-    "@typescript-eslint/parser": "8.17.0",
+    "@typescript-eslint/eslint-plugin": "8.44.0",
+    "@typescript-eslint/parser": "8.44.0",
     "chalk": "4.1.2",
     "cross-spawn": "7.0.3",
     "eslint": "9.16.0",
@@ -53,6 +53,10 @@
       "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/umd/index.js"
+    },
+    "./config/*": {
+      "import": "./config/*",
+      "require": "./config/*"
     }
   },
   "typesVersions": {}

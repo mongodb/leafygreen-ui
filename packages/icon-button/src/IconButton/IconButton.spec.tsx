@@ -100,7 +100,6 @@ describe('packages/icon-button', () => {
     });
 
     test('requires either aria-label or aria-labelledby', () => {
-      // FIXME:  // @ts-expect-error - aria-label or aria-labelledby is required
       <IconButton />;
       <IconButton aria-label="button" />;
       <IconButton aria-labelledby="buttonId" />;

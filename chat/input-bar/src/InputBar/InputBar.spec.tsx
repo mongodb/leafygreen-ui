@@ -8,7 +8,8 @@ import userEvent from '@testing-library/user-event';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { State } from './shared.types';
+import { State } from '../shared.types';
+
 import { InputBar, InputBarProps } from '.';
 
 const TEST_INPUT_TEXT = 'test';
@@ -155,7 +156,7 @@ describe('packages/input-bar', () => {
 
   test('provides access to textarea element via textareaRef', () => {
     const TestComponent = () => {
-      const textareaRef = useRef<HTMLTextAreaElement>(null);
+      const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
       const handleClick = () => {
         if (textareaRef.current) {
@@ -302,11 +303,26 @@ describe('packages/input-bar', () => {
   });
 
   describe('status states', () => {
-    test('renders loading state when state is "loading"', () => {
+    test('renders loading state with default assistantName when state is "loading"', () => {
       renderInputBar({ state: State.Loading });
 
       expect(
         screen.getByText(/MongoDB Assistant is thinking/i),
+      ).toBeInTheDocument();
+    });
+
+    test('renders loading state with custom assistantName when state is "loading"', () => {
+      render(
+        <LeafyGreenChatProvider
+          variant={Variant.Compact}
+          assistantName="Custom Assistant"
+        >
+          <InputBar state={State.Loading} />
+        </LeafyGreenChatProvider>,
+      );
+
+      expect(
+        screen.getByText(/Custom Assistant is thinking/i),
       ).toBeInTheDocument();
     });
 

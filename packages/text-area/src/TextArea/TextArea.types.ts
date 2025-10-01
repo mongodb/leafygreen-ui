@@ -1,19 +1,14 @@
 import React from 'react';
 
 import { FormFieldState } from '@leafygreen-ui/form-field';
-import {
-  DarkModeProps,
-  Either,
-  HTMLElementProps,
-  LgIdProps,
-} from '@leafygreen-ui/lib';
+import { DarkModeProps, Either, LgIdProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = FormFieldState;
 export type State = (typeof State)[keyof typeof State];
 
 export interface BaseTextAreaProps
-  extends HTMLElementProps<'textarea', HTMLTextAreaElement>,
+  extends React.ComponentPropsWithRef<'textarea'>,
     DarkModeProps,
     LgIdProps {
   /**

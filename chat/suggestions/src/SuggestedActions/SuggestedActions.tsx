@@ -8,7 +8,11 @@ import LeafyGreenProvider, {
 import { FontWeight } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { State } from '../shared.types';
+import {
+  ErrorConfigurationParameter,
+  State,
+  SuccessConfigurationParameter,
+} from '../shared.types';
 import { StatusBanner } from '../StatusBanner/StatusBanner';
 
 import {
@@ -37,10 +41,10 @@ const SuggestedActions = forwardRef<HTMLDivElement, SuggestedActionsProps>(
     // Filter parameters by state
     const successParameters = configurationParameters.filter(
       param => param.state === State.Success,
-    );
+    ) as Array<SuccessConfigurationParameter>;
     const errorParameters = configurationParameters.filter(
       param => param.state === State.Error,
-    );
+    ) as Array<ErrorConfigurationParameter>;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>

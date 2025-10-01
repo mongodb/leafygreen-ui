@@ -399,6 +399,18 @@ describe.skip('Inferred Polymorphic types', () => {
       // @ts-expect-error - href is required
       <MyInferredPoly as={'a'} />;
       <MyInferredPoly as={'a'} href={'mongodb.design'} />;
+
+      // Infers the event argument of onClick callbacks
+      <MyInferredPoly
+        as="a"
+        href={'mongodb.design'}
+        onClick={event => {
+          event.preventDefault();
+          const _El: HTMLAnchorElement = event.currentTarget;
+          // @ts-expect-error - event.currentTarget is not a button
+          const _a: HTMLButtonElement = event.currentTarget;
+        }}
+      />;
     }
 
     // as = 'button'
@@ -408,6 +420,17 @@ describe.skip('Inferred Polymorphic types', () => {
       <MyInferredPoly as="button" href="mongodb.design" />;
       // @ts-expect-error misc. props not valid
       <MyInferredPoly as="button" foo="bar" />;
+
+      // Infers the event argument of onClick callbacks
+      <MyInferredPoly
+        as="button"
+        onClick={event => {
+          event.preventDefault();
+          const _El: HTMLButtonElement = event.currentTarget;
+          // @ts-expect-error - event.currentTarget is not an anchor
+          const _a: HTMLAnchorElement = event.currentTarget;
+        }}
+      />;
     }
 
     // anchor-like

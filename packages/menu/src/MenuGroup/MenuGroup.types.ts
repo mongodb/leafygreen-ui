@@ -1,5 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-export interface MenuGroupProps extends HTMLElementProps<'div'> {
+import React from 'react';
+
+export interface MenuGroupProps extends React.ComponentProps<'div'> {
   /**
    * Main text rendered in `MenuGroup`.
    */

@@ -20,13 +20,19 @@ export const MenuVariant = {
 export type MenuVariant = (typeof MenuVariant)[keyof typeof MenuVariant];
 
 export interface MenuProps
-  extends Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'>,
+  extends Omit<React.ComponentPropsWithoutRef<'ul'>, 'onClick'>,
+    Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'>,
     LgIdProps {
   /**
    * The menu items, or submenus
    * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`
    */
   children: ReactNode;
+
+  /**
+   * Test id for the menu element
+   */
+  'data-testid'?: string;
 
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
@@ -59,6 +65,16 @@ export interface MenuProps
    *
    */
   shouldClose?: () => boolean;
+
+  /**
+   * Callback fired when the Menu is opened (after the popover transition finishes)
+   */
+  onOpen?: () => void;
+
+  /**
+   * Callback fired when the Menu is closed (after the popover transition finishes)
+   */
+  onClose?: () => void;
 
   /**
    * The max height of the menu (in px). Defaults to 256

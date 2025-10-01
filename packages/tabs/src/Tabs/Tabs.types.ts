@@ -1,9 +1,6 @@
-import {
-  DarkModeProps,
-  Either,
-  HTMLElementProps,
-  LgIdProps,
-} from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps, Either, LgIdProps } from '@leafygreen-ui/lib';
 import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -20,7 +17,7 @@ export const Size = {
 export type Size = (typeof Size)[keyof typeof Size];
 
 export interface TabsProps<SelectedType extends number | string>
-  extends HTMLElementProps<'div'>,
+  extends React.ComponentPropsWithoutRef<'div'>,
     DarkModeProps,
     LgIdProps {
   /**

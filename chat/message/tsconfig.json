@@ -18,9 +18,6 @@
   ],
   "references": [
     {
-      "path": "../avatar"
-    },
-    {
       "path": "../leafygreen-chat-provider"
     },
     {
@@ -30,10 +27,16 @@
       "path": "../message-feedback"
     },
     {
+      "path": "../message-rating"
+    },
+    {
       "path": "../rich-links"
     },
     {
       "path": "../../packages/avatar"
+    },
+    {
+      "path": "../../packages/badge"
     },
     {
       "path": "../../packages/banner"
@@ -43,6 +46,12 @@
     },
     {
       "path": "../../packages/hooks"
+    },
+    {
+      "path": "../../packages/icon"
+    },
+    {
+      "path": "../../packages/icon-button"
     },
     {
       "path": "../../packages/leafygreen-provider"

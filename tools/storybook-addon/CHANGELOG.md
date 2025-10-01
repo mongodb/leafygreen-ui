@@ -1,5 +1,37 @@
 # @lg-tools/storybook-addon
 
+## 0.6.3
+
+### Patch Changes
+
+- 6f30c55: Updates Preview type with `Storybook7CompatiblePreviewType` in order to support multiple Storybook versions
+- Updated dependencies [1a5c69f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @lg-tools/build@0.8.3
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+
+## 0.6.2
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [dc3299b]
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @lg-tools/build@0.8.2
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/tokens@3.2.4
+  - @leafygreen-ui/typography@22.1.2
+  - @lg-tools/meta@0.6.2
+  - @lg-tools/storybook-decorators@1.0.4
+  - @lg-tools/storybook-utils@0.3.2
+
 ## 0.6.1
 
 ### Patch Changes

@@ -1,12 +1,18 @@
-import { ReactElement } from 'react';
+import React, { ForwardRefExoticComponent, ReactElement } from 'react';
 import { type RichLinkProps } from '@lg-chat/rich-links';
 
-import { type DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
+import { type DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
+import { type MessageActionsProps } from '../MessageActions';
+import {
+  type BaseMessageVerifiedBannerProps,
+  type MessageVerifiedBannerProps,
+} from '../MessageBanner';
 import { type MessageContainerProps } from '../MessageContainer';
 import { type MessageContentProps } from '../MessageContent';
 import { type MessageLinksProps } from '../MessageLinks';
+import { type MessagePromotionProps } from '../MessagePromotion';
 
 export const Align = {
   Right: 'right',
@@ -15,6 +21,9 @@ export const Align = {
 
 export type Align = (typeof Align)[keyof typeof Align];
 
+/**
+ * @deprecated
+ */
 export interface ComponentOverrides {
   MessageContainer?: (props: MessageContainerProps) => JSX.Element;
   MessageContent?: (props: MessageContentProps) => JSX.Element;
@@ -23,25 +32,30 @@ export interface ComponentOverrides {
 
 export interface MessageProps
   extends Omit<MessageContentProps, 'children'>,
-    HTMLElementProps<'div'>,
     DarkModeProps {
   /**
+   * Component children
+   */
+  children?: React.ReactNode;
+  /**
    * Determines whether the message is aligned to the left or right
-   *
    * By default, if `isSender === true`, the message is aligned to the right, and otherwise to the left. This prop overrides that behavior.
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   align?: Align;
 
   /**
    * Avatar element
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   avatar?: ReactElement;
 
   /**
    * Base font size
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   baseFontSize?: BaseFontSize;
 
@@ -49,6 +63,7 @@ export interface MessageProps
    * Component overrides for any subcomponents
    * @deprecated
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   componentOverrides?: ComponentOverrides;
 
@@ -61,12 +76,14 @@ export interface MessageProps
   /**
    * A list of links to render as rich links for the message.
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   links?: Array<RichLinkProps>;
 
   /**
    * The heading text to display for the links section.
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   linksHeading?: string;
 
@@ -78,6 +95,7 @@ export interface MessageProps
   /**
    * A callback function that is called when any link is clicked.
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   onLinkClick?: RichLinkProps['onLinkClick'];
 
@@ -85,25 +103,41 @@ export interface MessageProps
    * Configure a *verified message* which includes additional styles and
    * displays information about the message.
    * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
-  verified?: VerificationInfo;
+  verified?: BaseMessageVerifiedBannerProps;
 }
 
-export interface VerificationInfo {
-  /**
-   * URL to learn more about the verification.
-   */
-  learnMoreUrl?: string;
+/**
+ * Static property names used to identify Message compound components.
+ * These are implementation details for the compound component pattern and should not be exported.
+ */
+export const MessageSubcomponentProperty = {
+  Actions: 'isLGMessageActions',
+  VerifiedBanner: 'isLGMessageVerifiedBanner',
+  Links: 'isLGMessageLinks',
+  Promotion: 'isPromotion',
+} as const;
 
-  /**
-   * The time the message was last verified.
-   * @example new Date("2024-03-24T16:20:00Z")
-   */
-  verifiedAt?: Date;
+/**
+ * Type representing the possible static property names for Message subcomponents.
+ */
+export type MessageSubcomponentProperty =
+  (typeof MessageSubcomponentProperty)[keyof typeof MessageSubcomponentProperty];
 
-  /**
-   * The name of the entity that verified the message.
-   * @example "MongoDB Staff"
-   */
-  verifier?: string;
-}
+export type ActionsType = ForwardRefExoticComponent<MessageActionsProps> & {
+  [MessageSubcomponentProperty.Actions]?: boolean;
+};
+
+export type LinksType = ForwardRefExoticComponent<MessageLinksProps> & {
+  [MessageSubcomponentProperty.Links]?: boolean;
+};
+
+export type VerifiedBannerType =
+  ForwardRefExoticComponent<MessageVerifiedBannerProps> & {
+    [MessageSubcomponentProperty.VerifiedBanner]?: boolean;
+  };
+
+export type PromotionType = ForwardRefExoticComponent<MessagePromotionProps> & {
+  [MessageSubcomponentProperty.Promotion]?: boolean;
+};

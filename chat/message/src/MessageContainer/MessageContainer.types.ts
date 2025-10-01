@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const Variant = {
   Primary: 'primary',
@@ -7,7 +9,7 @@ export const Variant = {
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
 export interface MessageContainerProps
-  extends HTMLElementProps<'div'>,
+  extends React.ComponentProps<'div'>,
     DarkModeProps {
   /**
    * Determines the styles of the message container

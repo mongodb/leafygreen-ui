@@ -4,6 +4,14 @@ import getNodeTextContent from './getNodeTextContent';
 import getTheme from './getTheme';
 import { type LgIdProps, type LgIdString } from './LgIdProps';
 import * as typeIs from './typeIs';
+export {
+  filterChildren,
+  findChild,
+  findChildren,
+  hasAnyStaticProperty,
+  hasStaticProperty,
+  isChildWithProperty,
+} from './childQueries';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export { deepMapValues } from './deepMapValues';
 export { formatCssSize } from './formatCssSize';
@@ -24,6 +32,7 @@ export type {
   DeepPick,
   DeepUnion,
   ExclusiveUnion,
+  Exists,
   Mutable,
   Only,
   Optional,
@@ -36,7 +45,11 @@ export { isComponentType, validateChildren } from './validateChildren';
 export { createUniqueClassName, getNodeTextContent, getTheme, Theme, typeIs };
 export type { DarkModeProps, LgIdProps, LgIdString };
 
-/** Helper type to extract an HTML element's valid props */
+/**
+ * Helper type to extract an HTML element's valid props
+ *
+ * @deprecated - Prefer the built-in React type {@link React.ComponentProps}
+ * */
 export type HTMLElementProps<
   Element extends keyof JSX.IntrinsicElements,
   RefType extends HTMLElement = never,

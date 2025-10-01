@@ -1,5 +1,6 @@
+import React from 'react';
+
 import { DateType } from '@leafygreen-ui/date-utils';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { SegmentRefs } from '../../../hooks';
 import { DateSegmentsState } from '../../../types';
@@ -15,7 +16,7 @@ export type DateInputChangeEventHandler = (
 ) => void;
 
 export interface DateInputBoxProps
-  extends Omit<HTMLElementProps<'div'>, 'onChange'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /**
    * Date value passed into the component, in UTC time
    */

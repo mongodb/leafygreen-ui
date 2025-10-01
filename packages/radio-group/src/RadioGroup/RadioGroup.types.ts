@@ -1,8 +1,8 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 import { Size } from '../types';
 
-export interface RadioGroupProps extends HTMLElementProps<'div'> {
+export interface RadioGroupProps extends React.ComponentProps<'div'> {
   /**
    * Determines whether or not the RadioGroup will appear in dark mode.
    *

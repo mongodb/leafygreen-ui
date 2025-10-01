@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-
 export const Size = {
   XSmall: 'xsmall',
   Small: 'small',
@@ -12,7 +10,7 @@ export const Size = {
 export type Size = (typeof Size)[keyof typeof Size];
 
 export interface SegmentedControlProps
-  extends Omit<HTMLElementProps<'div'>, 'onChange'> {
+  extends Omit<React.ComponentProps<'div'>, 'onChange'> {
   /**
    * Options provided in the segmented control
    *

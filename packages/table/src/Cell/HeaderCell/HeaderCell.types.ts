@@ -1,4 +1,4 @@
-import {
+import React, {
   ComponentPropsWithRef,
   ForwardedRef,
   PropsWithoutRef,
@@ -7,8 +7,6 @@ import {
   WeakValidationMap,
 } from 'react';
 import { Header } from '@tanstack/react-table';
-
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { LGRowData } from '../../useLeafyGreenTable';
 
@@ -30,7 +28,7 @@ export interface HeaderCellProps<T extends LGRowData>
   /**
    * The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.
    */
-  align?: HTMLElementProps<'th'>['align'];
+  align?: React.ComponentPropsWithoutRef<'th'>['align'];
 
   /**
    * Header object passed from the `useLeafyGreenTable` hook.

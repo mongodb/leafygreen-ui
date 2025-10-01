@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "14.4.1",
+  "version": "14.5.1",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -42,6 +42,7 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/lint": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:^",
     "@svgr/core": "^5.3.1",
     "@types/xml2json": "^0.11.0",
     "commander": "^11.0.0",

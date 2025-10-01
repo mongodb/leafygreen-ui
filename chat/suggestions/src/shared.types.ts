@@ -9,14 +9,29 @@ export const State = {
 } as const;
 export type State = (typeof State)[keyof typeof State];
 
-/**
- * A single configuration parameter with its key, value, and current state
- */
-export interface ConfigurationParameter {
+interface BaseConfigurationParameter {
   key: string;
   value: string;
-  state?: State; // Defaults to 'unset' if not specified
 }
+
+interface UnsetConfigurationParameter extends BaseConfigurationParameter {
+  state?: 'unset';
+}
+
+export interface SuccessConfigurationParameter
+  extends BaseConfigurationParameter {
+  state: 'success';
+}
+
+export interface ErrorConfigurationParameter
+  extends BaseConfigurationParameter {
+  state: 'error';
+}
+
+export type ConfigurationParameter =
+  | SuccessConfigurationParameter
+  | ErrorConfigurationParameter
+  | UnsetConfigurationParameter;
 
 /**
  * Array of configuration parameters, each with their own state.

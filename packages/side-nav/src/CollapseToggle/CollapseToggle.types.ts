@@ -1,6 +1,7 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
-export interface CollapseToggleProps extends HTMLElementProps<'button'> {
+export interface CollapseToggleProps
+  extends React.ComponentPropsWithoutRef<'button'> {
   collapsed?: boolean;
   hideTooltip?: boolean;
 }

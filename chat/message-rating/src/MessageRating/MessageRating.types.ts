@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const MessageRatingValue = {
   Liked: 'liked',
@@ -10,7 +12,7 @@ export type MessageRatingValue =
   (typeof MessageRatingValue)[keyof typeof MessageRatingValue];
 
 export interface MessageRatingProps
-  extends HTMLElementProps<'div'>,
+  extends React.ComponentPropsWithoutRef<'div'>,
     DarkModeProps {
   /**
    * Custom description text

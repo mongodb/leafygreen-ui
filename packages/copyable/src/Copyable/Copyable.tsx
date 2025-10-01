@@ -59,7 +59,7 @@ export default function Copyable({
   const [copied, setCopied] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
   const [buttonRef, setButtonRef] = useState<HTMLButtonElement | null>(null);
-  const codeRef = useRef<HTMLElement>(null);
+  const codeRef = useRef<HTMLElement | null>(null);
 
   const { portalContainer } = usePopoverPortalContainer();
 

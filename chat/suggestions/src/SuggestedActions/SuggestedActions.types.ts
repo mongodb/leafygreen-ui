@@ -1,13 +1,15 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { ConfigurationParameters, State } from '../shared.types';
 
 export interface SuggestedActionsProps
-  extends HTMLElementProps<'div'>,
+  extends React.ComponentPropsWithoutRef<'div'>,
     DarkModeProps {
   /**
    * Configuration parameters with their individual state values.
-   * Each parameter includes a key, value, and state (unset/apply/success/error).
+   * Each parameter includes a key, value, and state (unset/success/error).
    */
   configurationParameters: ConfigurationParameters;
 

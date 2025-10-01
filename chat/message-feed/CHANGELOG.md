@@ -1,5 +1,46 @@
 # @lg-chat/message-feed
 
+## 7.0.3
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- Updated dependencies [1a5c69f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @lg-chat/message-rating@5.0.3
+  - @lg-chat/message@8.1.1
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/emotion@5.0.3
+
+## 7.0.2
+
+### Patch Changes
+
+- dc3299b: Adds "exports" field to all packages
+  Enables TS downleveling to TS 4.9
+- Updated dependencies [a9eb172]
+- Updated dependencies [a9eb172]
+- Updated dependencies [a9eb172]
+- Updated dependencies [5ef631a]
+- Updated dependencies [a9eb172]
+- Updated dependencies [dc3299b]
+  - @lg-chat/message@8.1.0
+  - @leafygreen-ui/lib@15.3.0
+  - @leafygreen-ui/icon@14.5.0
+  - @lg-chat/avatar@7.0.2
+  - @lg-chat/leafygreen-chat-provider@5.0.2
+  - @lg-chat/message-rating@5.0.2
+  - @leafygreen-ui/button@25.0.4
+  - @leafygreen-ui/emotion@5.0.2
+  - @leafygreen-ui/leafygreen-provider@5.0.4
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/tokens@3.2.4
+
 ## 7.0.1
 
 ### Patch Changes

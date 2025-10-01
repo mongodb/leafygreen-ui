@@ -109,7 +109,7 @@ function Tooltip({
   const setOpen =
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
 
   const existingId = id ?? tooltipRef.current?.id;
   const tooltipId = useIdAllocator({ prefix: 'tooltip', id: existingId });

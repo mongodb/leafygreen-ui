@@ -1,5 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 import { CommonTypographyProps } from '../types';
 
-export type DisclaimerProps = HTMLElementProps<'small'> & CommonTypographyProps;
+export type DisclaimerProps = React.ComponentPropsWithoutRef<'small'> &
+  CommonTypographyProps;

@@ -1,7 +1,7 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
 export interface ChartHeaderProps
-  extends Omit<HTMLElementProps<'div'>, 'title'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /**
    * The title of the chart
    */

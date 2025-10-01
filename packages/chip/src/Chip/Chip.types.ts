@@ -1,4 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export { BaseFontSize };
@@ -22,9 +24,7 @@ export const Variant = {
 } as const;
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
-export interface ChipProps
-  extends HTMLElementProps<'span', never>,
-    DarkModeProps {
+export interface ChipProps extends React.ComponentProps<'span'>, DarkModeProps {
   /**
    * Label rendered in the chip
    */

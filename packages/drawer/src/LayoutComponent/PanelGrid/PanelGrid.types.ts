@@ -1,5 +1,8 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
 
-export type PanelGridProps = Omit<HTMLElementProps<'div'>, 'children'> & {
+export type PanelGridProps = Omit<
+  React.ComponentPropsWithoutRef<'div'>,
+  'children'
+> & {
   children: React.ReactNode;
 };
