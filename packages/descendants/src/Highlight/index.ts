@@ -1,10 +1,11 @@
-export type {
+export {
   Direction,
-  HighlightChangeHandler,
-  HighlightContextProps,
-  HighlightHookReturnType,
-  Index,
-  UseHighlightOptions,
+  type HighlightChangeHandler,
+  type HighlightContextProps,
+  type HighlightHookReturnType,
+  type Index,
+  Position,
+  type UseHighlightOptions,
 } from './highlight.types';
 export {
   createHighlightContext,

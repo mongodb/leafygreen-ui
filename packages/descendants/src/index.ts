@@ -15,13 +15,14 @@ export {
 // Highlight
 export {
   createHighlightContext,
-  type Direction,
+  Direction,
   type HighlightChangeHandler,
   type HighlightContextProps,
   type HighlightContextType,
   type HighlightHookReturnType,
   HighlightProvider,
   type Index,
+  Position,
   useHighlight,
   useHighlightContext,
   type UseHighlightOptions,
