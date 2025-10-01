@@ -1,5 +1,19 @@
 # @leafygreen-ui/drawer
 
+## 5.1.0
+
+### Minor Changes
+
+- a464cb8: [LG-5571](https://jira.mongodb.org/browse/LG-5571): pressing active toolbar button instance will now close the drawer
+- ceccfc1: Enhance `DrawerLayout` component's `toolbarData` prop with `ref` and `isTooltipEnabled` props for `ToolbarIconButton` integration
+
+### Patch Changes
+
+- Updated dependencies [ceccfc1]
+- Updated dependencies [ff6b87e]
+  - @leafygreen-ui/toolbar@1.1.0
+  - @leafygreen-ui/lib@15.5.0
+
 ## 5.0.4
 
 ### Patch Changes

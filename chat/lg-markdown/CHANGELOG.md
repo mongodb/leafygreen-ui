@@ -1,5 +1,19 @@
 # @lg-chat/lg-markdown
 
+## 4.2.0
+
+### Minor Changes
+
+- 8902552: [LG-5570](https://jira.mongodb.org/browse/LG-5570)
+  - Expand markdown element coverage to include `<blockquote>`, `<hr>`, and `<h4>`
+  - Improve list spacing and indentation
+  - Fix header stylings
+
+### Patch Changes
+
+- Updated dependencies [ff6b87e]
+  - @leafygreen-ui/lib@15.5.0
+
 ## 4.1.3
 
 ### Patch Changes

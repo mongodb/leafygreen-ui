@@ -1,0 +1,11 @@
+{
+  "//": "See https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/tsconfig.build.json",
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {},
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../build"
+    }
+  ]
+}
