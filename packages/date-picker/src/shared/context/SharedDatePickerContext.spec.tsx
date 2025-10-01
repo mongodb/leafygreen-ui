@@ -2,10 +2,9 @@ import React from 'react';
 import { act, waitFor } from '@testing-library/react';
 
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
+import { MAX_DATE, MIN_DATE } from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { renderHook } from '@leafygreen-ui/testing-lib';
-
-import { MAX_DATE, MIN_DATE } from '../constants';
 
 import {
   SharedDatePickerContextProps,

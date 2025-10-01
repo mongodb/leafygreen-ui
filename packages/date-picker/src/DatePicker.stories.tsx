@@ -5,6 +5,8 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import {
   type DateType,
+  MAX_DATE,
+  MIN_DATE,
   Month,
   newUTC,
   SupportedLocales,
@@ -18,7 +20,6 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { MAX_DATE, MIN_DATE } from './shared/constants';
 import {
   SharedDatePickerContextProps,
   SharedDatePickerProvider,
