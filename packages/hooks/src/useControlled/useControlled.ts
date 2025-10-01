@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
-import { ControlledReturnObject } from './useControlled.types';
 import { consoleOnce } from '@leafygreen-ui/lib';
+
+import { ControlledReturnObject } from './useControlled.types';
 
 /**
  * A hook that enables a component to be both controlled or uncontrolled.
