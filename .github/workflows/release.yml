@@ -160,14 +160,6 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      - name: Updating .npmrc
-        run: |
-          cat << EOF > "$HOME/.npmrc"
-            //registry.npmjs.org/:_authToken=$NPM_TOKEN
-          EOF
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
@@ -187,6 +179,14 @@ jobs:
             tools/*/stories.js
           key: ${{needs.build.outputs.cache-primary-key}}
 
+      - name: Updating .npmrc
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+            //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Version packages
         id: changesets
         uses: changesets/action@v1
@@ -197,6 +197,61 @@ jobs:
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
+
+  release-aws:
+    name: Publish to AWS CodeArtifact
+    runs-on: ubuntu-latest
+    needs: [build, release]
+    if: ${{ needs.release.outputs.published == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - name: Use Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
+      
+      - uses: actions/cache/restore@v4
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            charts/*/dist/*
+            charts/*/tsdoc.json
+            charts/*/stories.js
+            chat/*/dist/*
+            chat/*/tsdoc.json
+            chat/*/stories.js
+            packages/*/dist/*
+            packages/*/tsdoc.json
+            packages/*/stories.js
+            tools/*/dist/*
+            tools/*/tsdoc.json
+            tools/*/stories.js
+          key: ${{needs.build.outputs.cache-primary-key}}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_CODEARTIFACT_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_CODEARTIFACT_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to CodeArtifact
+        run: scripts/login-codeartifact.sh
+
+      - name: Publish to CodeArtifact
+        run: pnpm publish -r --no-git-checks
 
   notify:
     name: Notify Slack & Website
