@@ -32,7 +32,4 @@ export {
   MessageLinks,
   type MessageLinksProps,
 } from './MessageLinks';
-export {
-  MessagePromotion,
-  type MessagePromotionProps,
-} from './MessagePromotion';
+export { type MessagePromotionProps } from './MessagePromotion';
