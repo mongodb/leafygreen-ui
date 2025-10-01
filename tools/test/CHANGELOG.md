@@ -1,5 +1,11 @@
 # @lg-tools/test
 
+## 0.5.0
+
+### Minor Changes
+
+- a366ec0: Adds `structuredClone` polyfill for testing eslint plugins
+
 ## 0.4.20
 
 ### Patch Changes

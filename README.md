@@ -141,6 +141,7 @@ import Button from '@leafygreen-ui/button';
 | [@leafygreen-ui/toolbar](./packages/toolbar)                         | [![version](https://img.shields.io/npm/v/@leafygreen-ui/toolbar)](https://www.npmjs.com/package/@leafygreen-ui/toolbar)                         | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/toolbar?color=white)             | [Live Example](http://mongodb.design/component/toolbar/live-example)                  |
 | [@leafygreen-ui/tooltip](./packages/tooltip)                         | [![version](https://img.shields.io/npm/v/@leafygreen-ui/tooltip)](https://www.npmjs.com/package/@leafygreen-ui/tooltip)                         | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/tooltip?color=white)             | [Live Example](http://mongodb.design/component/tooltip/live-example)                  |
 | [@leafygreen-ui/typography](./packages/typography)                   | [![version](https://img.shields.io/npm/v/@leafygreen-ui/typography)](https://www.npmjs.com/package/@leafygreen-ui/typography)                   | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/typography?color=white)          | [Live Example](http://mongodb.design/component/typography/live-example)               |
+| [@leafygreen-ui/vertical-stepper](./packages/vertical-stepper)       | [![version](https://img.shields.io/npm/v/@leafygreen-ui/vertical-stepper)](https://www.npmjs.com/package/@leafygreen-ui/vertical-stepper)       | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/vertical-stepper?color=white)    | [Live Example](http://mongodb.design/component/vertical-stepper/live-example)         |
 | [@lg-charts/chart-card](./charts/chart-card)                         | [![version](https://img.shields.io/npm/v/@lg-charts/chart-card)](https://www.npmjs.com/package/@lg-charts/chart-card)                           | ![downloads](https://img.shields.io/npm/dm/@lg-charts/chart-card?color=white)              | [Live Example](http://mongodb.design/component/chart-card/live-example)               |
 | [@lg-charts/colors](./charts/colors)                                 | [![version](https://img.shields.io/npm/v/@lg-charts/colors)](https://www.npmjs.com/package/@lg-charts/colors)                                   | ![downloads](https://img.shields.io/npm/dm/@lg-charts/colors?color=white)                  | [Live Example](http://mongodb.design/component/colors/live-example)                   |
 | [@lg-charts/core](./charts/core)                                     | [![version](https://img.shields.io/npm/v/@lg-charts/core)](https://www.npmjs.com/package/@lg-charts/core)                                       | ![downloads](https://img.shields.io/npm/dm/@lg-charts/core?color=white)                    | [Live Example](http://mongodb.design/component/core/live-example)                     |
@@ -269,6 +270,12 @@ Note: it's important to follow the kebab-casing convention described above.
 - Add the new component to `build.tsconfig.json`
 - If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
 - Run `pnpm run init` to link all packages before starting development
+
+### Initial Release
+
+The starting version in the generated `package.json` will be 0.0.1, but this will not be published to npm automatically. A new package is only published after its first changeset is added and the resulting "Version Packages" pull request is merged into the `main` branch.
+
+Note: The `create-package` script automatically generates a starter changeset file. By default this is marked as a **minor** release, which will lead to an initial release of 0.1.0. If you'd like the initial release to be a **major** version (1.0.0), this starter changeset file must be manually edited.
 
 ## Formatting and linting
 

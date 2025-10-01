@@ -83,6 +83,13 @@ export const InternalMenuItemContent = React.forwardRef<
           }
         : {};
 
+    const defaultButtonProps =
+      as === 'button'
+        ? {
+            type: 'button',
+          }
+        : {};
+
     return (
       <InputOption
         ref={fwdRef}
@@ -133,6 +140,7 @@ export const InternalMenuItemContent = React.forwardRef<
           },
           className,
         )}
+        {...defaultButtonProps}
         {...defaultAnchorProps}
         {...rest}
       >

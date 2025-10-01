@@ -157,10 +157,11 @@ Individual toolbar items can be controlled using the `visible` prop. When all to
 
 To control the `Drawer` state, use the `useDrawerToolbarContext` hook from within `<DrawerLayout>`. This hook provides the `openDrawer()` and `closeDrawer()` functions to open and close the drawer programmatically. The hook takes no arguments and returns the following functions:
 
-| Name        | Signature              | Description                                                                                        |
-| ----------- | ---------------------- | -------------------------------------------------------------------------------------------------- |
-| openDrawer  | `(id: string) => void` | Opens the `Drawer` associated with the `Toolbar` item that has the matching `id` in `toolbarData`. |
-| closeDrawer | `() => void`           | Closes the Drawer.                                                                                 |
+| Name         | Signature              | Description                                                                                                                    |
+| ------------ | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| openDrawer   | `(id: string) => void` | Opens the `Drawer` associated with the `Toolbar` item that has the matching `id` in `toolbarData`.                             |
+| closeDrawer  | `() => void`           | Closes the `Drawer`.                                                                                                           |
+| toggleDrawer | `(id: string) => void` | If clicking the currently active `Toolbar` item, it closes the `Drawer`. Otherwise, it open the `Drawer` with the new content. |
 
 ### Rendering
 
@@ -436,15 +437,17 @@ You can also use the resizable feature with a toolbar-based drawer:
 
 ### LayoutData
 
-| Prop                      | Type              | Description                                                                                                                                                                                                     | Default |
-| ------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `id`                      | `string`          | The required id of the layout. This is used to open the `Drawer` with `openDrawer(id)`.                                                                                                                         |         |
-| `title` _(optional)_      | `React.ReactNode` | The title of the `Drawer`. If it is a string, it will be rendered as a `<h2>` element. If it is a React node, it will be rendered as is. This is not required if the `Toolbar` item should not open a `Drawer`. |         |
-| `content` _(optional)_    | `React.ReactNode` | The content of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`.                                                                                                             |         |
-| `disabled` _(optional)_   | `boolean`         | Whether the toolbar item is disabled.                                                                                                                                                                           | `false` |
-| `hasPadding` _(optional)_ | `boolean`         | Determines whether the drawer content should have padding. When false, the content area will not have padding, allowing full-width/height content.                                                              | `true`  |
-| `scrollable` _(optional)_ | `boolean`         | Determines whether the drawer content should have its own scroll container. When false, the content area will not have scroll behavior.                                                                         | `true`  |
-| `visible` _(optional)_    | `boolean`         | Determines if the current toolbar item is visible. If all toolbar items have `visible` set to `false`, the toolbar will not be rendered.                                                                        | `true`  |
+| Prop                            | Type                                 | Description                                                                                                                                                                                                     | Default |
+| ------------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `id`                            | `string`                             | The required id of the layout. This is used to open the `Drawer` with `openDrawer(id)`.                                                                                                                         |         |
+| `title` _(optional)_            | `React.ReactNode`                    | The title of the `Drawer`. If it is a string, it will be rendered as a `<h2>` element. If it is a React node, it will be rendered as is. This is not required if the `Toolbar` item should not open a `Drawer`. |         |
+| `content` _(optional)_          | `React.ReactNode`                    | The content of the `Drawer`. This is not required if the `Toolbar` item should not open a `Drawer`.                                                                                                             |         |
+| `disabled` _(optional)_         | `boolean`                            | Whether the toolbar item is disabled.                                                                                                                                                                           | `false` |
+| `hasPadding` _(optional)_       | `boolean`                            | Determines whether the drawer content should have padding. When false, the content area will not have padding, allowing full-width/height content.                                                              | `true`  |
+| `scrollable` _(optional)_       | `boolean`                            | Determines whether the drawer content should have its own scroll container. When false, the content area will not have scroll behavior.                                                                         | `true`  |
+| `visible` _(optional)_          | `boolean`                            | Determines if the current toolbar item is visible. If all toolbar items have `visible` set to `false`, the toolbar will not be rendered.                                                                        | `true`  |
+| `ref` _(optional)_              | `React.RefObject<HTMLButtonElement>` | Optional ref to be passed to the ToolbarIconButton instance. Useful for integrating with components like `GuideCue` that need to position relative to the button.                                               | `null`  |
+| `isTooltipEnabled` _(optional)_ | `boolean`                            | Enables the tooltip to trigger based on hover events. When false, the tooltip will not show on hover. Useful when other overlays (like `GuideCue`) are positioned on the button.                                | `true`  |
 
 \+ Extends the following from LG [Toolbar props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toolbar/README.md#toolbariconbutton): `glyph`, `label`, and `onClick`.
 
