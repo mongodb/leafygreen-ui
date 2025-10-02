@@ -1,5 +1,7 @@
 import React, { forwardRef } from 'react';
 
+import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { Body } from '@leafygreen-ui/typography';
@@ -10,6 +12,7 @@ import {
   childrenContainerStyles,
   getContainerStyles,
   getLabelStyles,
+  headerStyles,
 } from './MessagePrompts.styles';
 import { MessagePromptsProps } from './MessagePrompts.types';
 
@@ -20,6 +23,7 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
       darkMode: darkModeProp,
       enableHideOnSelect = false,
       label,
+      onRefresh,
       ...rest
     },
     ref,
@@ -30,6 +34,7 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
     );
 
     const shouldHide = enableHideOnSelect && hasSelectedPrompt;
+    const showHeader = label || onRefresh;
 
     return (
       <MessagePromptsProvider hasSelectedPrompt={hasSelectedPrompt}>
@@ -41,7 +46,21 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
           ref={ref}
           {...rest}
         >
-          {label && <Body className={getLabelStyles(theme)}>{label}</Body>}
+          {showHeader && (
+            <div className={headerStyles}>
+              {label && <Body className={getLabelStyles(theme)}>{label}</Body>}
+              {onRefresh && (
+                <IconButton
+                  aria-label="Refresh prompts"
+                  onClick={onRefresh}
+                  title="Refresh prompts"
+                  disabled={hasSelectedPrompt}
+                >
+                  <RefreshIcon />
+                </IconButton>
+              )}
+            </div>
+          )}
           <div className={childrenContainerStyles}>{children}</div>
         </div>
       </MessagePromptsProvider>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { MessagePrompt } from '../MessagePrompt';
@@ -136,6 +137,86 @@ describe('MessagePrompts', () => {
       // All prompts should be enabled when none are selected
       expect(prompt1).toHaveAttribute('aria-disabled', 'false');
       expect(prompt2).toHaveAttribute('aria-disabled', 'false');
+    });
+  });
+
+  describe('onRefresh behavior', () => {
+    test('does not render refresh button when onRefresh is not provided', () => {
+      renderMessagePrompts();
+      const refreshButton = screen.queryByLabelText('Refresh prompts');
+      expect(refreshButton).not.toBeInTheDocument();
+    });
+
+    test('renders refresh button when onRefresh is provided and no prompt is selected', () => {
+      const mockOnRefresh = jest.fn();
+      renderMessagePrompts({ onRefresh: mockOnRefresh });
+      const refreshButton = screen.getByLabelText('Refresh prompts');
+      expect(refreshButton).toBeInTheDocument();
+      expect(refreshButton).toHaveAttribute('aria-disabled', 'false');
+    });
+
+    test('renders disabled refresh button when onRefresh is provided and a prompt is selected', () => {
+      const mockOnRefresh = jest.fn();
+      render(
+        <MessagePrompts onRefresh={mockOnRefresh}>
+          <MessagePrompt selected>Selected prompt</MessagePrompt>
+          <MessagePrompt>Another prompt</MessagePrompt>
+        </MessagePrompts>,
+      );
+      const refreshButton = screen.getByLabelText('Refresh prompts');
+      expect(refreshButton).toBeInTheDocument();
+      expect(refreshButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('calls onRefresh when refresh button is clicked and not disabled', async () => {
+      const mockOnRefresh = jest.fn();
+      renderMessagePrompts({ onRefresh: mockOnRefresh });
+
+      const refreshButton = screen.getByLabelText('Refresh prompts');
+      await userEvent.click(refreshButton);
+
+      expect(mockOnRefresh).toHaveBeenCalledTimes(1);
+    });
+
+    test('does not call onRefresh when refresh button is disabled and clicked', async () => {
+      const mockOnRefresh = jest.fn();
+      render(
+        <MessagePrompts onRefresh={mockOnRefresh}>
+          <MessagePrompt selected>Selected prompt</MessagePrompt>
+          <MessagePrompt>Another prompt</MessagePrompt>
+        </MessagePrompts>,
+      );
+
+      const refreshButton = screen.getByLabelText('Refresh prompts');
+      await userEvent.click(refreshButton);
+
+      expect(mockOnRefresh).not.toHaveBeenCalled();
+    });
+
+    test('disables refresh button when a prompt is selected', () => {
+      const mockOnRefresh = jest.fn();
+      const { rerender } = render(
+        <MessagePrompts onRefresh={mockOnRefresh}>
+          <MessagePrompt>Prompt 1</MessagePrompt>
+          <MessagePrompt>Prompt 2</MessagePrompt>
+        </MessagePrompts>,
+      );
+
+      const refreshButton = screen.getByLabelText('Refresh prompts');
+
+      // Refresh button should be enabled with no selection
+      expect(refreshButton).toHaveAttribute('aria-disabled', 'false');
+
+      // Select a prompt
+      rerender(
+        <MessagePrompts onRefresh={mockOnRefresh}>
+          <MessagePrompt selected>Prompt 1</MessagePrompt>
+          <MessagePrompt>Prompt 2</MessagePrompt>
+        </MessagePrompts>,
+      );
+
+      // Refresh button should be disabled after selection
+      expect(refreshButton).toHaveAttribute('aria-disabled', 'true');
     });
   });
 });

@@ -44,6 +44,12 @@ export const getContainerStyles = ({
     [hiddenContainerStyles]: shouldHide,
   });
 
+export const headerStyles = css`
+  display: flex;
+  align-items: center;
+  gap: ${spacing[50]}px;
+`;
+
 export const getLabelStyles = (theme: Theme) => css`
   color: ${color[theme].text[Variant.Secondary][InteractionState.Default]};
 `;
