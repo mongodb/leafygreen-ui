@@ -10,6 +10,8 @@ import {
   closeSearchPanel,
   findNext,
   findPrevious,
+  replaceAll,
+  replaceNext,
   SearchQuery,
   selectMatches,
   setSearchQuery,
@@ -43,9 +45,80 @@ import { SearchFormProps } from './SearchForm.types';
 export function SearchForm({ view }: SearchFormProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchString, setSearchString] = useState('');
+  const [replaceString, setReplaceString] = useState('');
+  const [isCaseSensitive, setIsCaseSensitive] = useState(false);
+  const [isWholeWord, setIsWholeWord] = useState(false);
+  const [isRegex, setIsRegex] = useState(false);
+  const [query, setQuery] = useState<SearchQuery>(
+    new SearchQuery({
+      search: searchString,
+      caseSensitive: isCaseSensitive,
+      regexp: isRegex,
+      wholeWord: isWholeWord,
+      replace: replaceString,
+    }),
+  );
   const [findCount, setFindCount] = useState(0);
   const { theme } = useDarkMode();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const updateSelectedIndex = useCallback(() => {
+    const cursor = query.getCursor(view.state.doc);
+    const selection = view.state.selection.main;
+
+    let index = 1;
+    let result = cursor.next();
+
+    while (!result.done) {
+      if (
+        result.value.from === selection.from &&
+        result.value.to === selection.to
+      ) {
+        setSelectedIndex(index);
+        return;
+      }
+      index++;
+      result = cursor.next();
+    }
+
+    setSelectedIndex(null);
+  }, [query, view]);
+
+  const updateFindCount = useCallback(() => {
+    const cursor = query.getCursor(view.state.doc);
+    let count = 0;
+    let result = cursor.next();
+
+    while (!result.done) {
+      count++;
+      result = cursor.next();
+    }
+
+    setFindCount(count);
+  }, [query, view]);
+
+  useEffect(() => {
+    const newQuery = new SearchQuery({
+      search: searchString,
+      caseSensitive: isCaseSensitive,
+      regexp: isRegex,
+      wholeWord: isWholeWord,
+      replace: replaceString,
+    });
+
+    setQuery(newQuery);
+    view.dispatch({ effects: setSearchQuery.of(query) });
+    updateFindCount();
+  }, [
+    replaceString,
+    searchString,
+    isCaseSensitive,
+    isRegex,
+    isWholeWord,
+    view,
+    updateFindCount,
+    query,
+  ]);
 
   const handleToggleButtonClick = useCallback(
     (_e: MouseEvent<HTMLButtonElement>) => {
@@ -68,97 +141,51 @@ export function SearchForm({ view }: SearchFormProps) {
     [],
   );
 
-  const computeSelectedIndex = useCallback(() => {
-    const query = new SearchQuery({
-      search: searchString,
-      caseSensitive: true,
-      regexp: false,
-      wholeWord: false,
-      replace: '',
-    });
-
-    const cursor = query.getCursor(view.state.doc);
-    const selection = view.state.selection.main;
-
-    let index = 1;
-    let result = cursor.next();
-
-    while (!result.done) {
-      if (
-        result.value.from === selection.from &&
-        result.value.to === selection.to
-      ) {
-        return index;
-      }
-      index++;
-      result = cursor.next();
-    }
-
-    return null;
-  }, [searchString, view]);
-
-  useEffect(() => {
-    const query = new SearchQuery({
-      search: searchString,
-      caseSensitive: true,
-      regexp: false,
-      wholeWord: false,
-      replace: '',
-    });
-
-    view.dispatch({ effects: setSearchQuery.of(query) });
-
-    const cursor = query.getCursor(view.state.doc);
-    let count = 0;
-    let result = cursor.next();
-
-    while (!result.done) {
-      count++;
-      result = cursor.next();
-    }
-
-    setFindCount(count);
-
-    // Update selected index if current selection matches one of the results
-    const selection = view.state.selection.main;
-    const cursor2 = query.getCursor(view.state.doc);
-    let idx = 1;
-    let res2 = cursor2.next();
-    let currentIndex: number | null = null;
-
-    while (!res2.done) {
-      if (
-        res2.value.from === selection.from &&
-        res2.value.to === selection.to
-      ) {
-        currentIndex = idx;
-        break;
-      }
-      idx++;
-      res2 = cursor2.next();
-    }
-
-    setSelectedIndex(currentIndex);
-  }, [searchString, view, computeSelectedIndex]);
+  const handleReplaceQueryChange = useCallback(
+    (_e: ChangeEvent<HTMLInputElement>) => {
+      setReplaceString(_e.target.value);
+    },
+    [],
+  );
 
   const handleFindFormSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       findNext(view);
-      setSelectedIndex(computeSelectedIndex());
+      updateSelectedIndex();
     },
-    [view, computeSelectedIndex],
+    [view, updateSelectedIndex],
   );
 
   const handleNextClick = useCallback(() => {
     findNext(view);
-    setSelectedIndex(computeSelectedIndex());
-  }, [view, computeSelectedIndex]);
+    updateSelectedIndex();
+  }, [view, updateSelectedIndex]);
 
   const handlePreviousClick = useCallback(() => {
     findPrevious(view);
-    setSelectedIndex(computeSelectedIndex());
-  }, [view, computeSelectedIndex]);
+    updateSelectedIndex();
+  }, [view, updateSelectedIndex]);
+
+  const handleReplace = useCallback(() => {
+    replaceNext(view);
+    updateSelectedIndex();
+    updateFindCount();
+  }, [view, updateSelectedIndex, updateFindCount]);
+
+  const handleReplaceAll = useCallback(() => {
+    replaceAll(view);
+    updateSelectedIndex();
+    updateFindCount();
+  }, [view, updateSelectedIndex, updateFindCount]);
+
+  const handleReplaceFormSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      handleReplace();
+    },
+    [handleReplace],
+  );
 
   return (
     <div
@@ -236,17 +263,26 @@ export function SearchForm({ view }: SearchFormProps) {
         aria-hidden={!isOpen}
       >
         <div className={getReplaceInnerSectionStyles(theme)}>
-          <TextInput
-            placeholder="Replace"
-            aria-labelledby="replace"
-            className={replaceInputContainerStyles}
-          />
-          <Button aria-label="replace button" className={replaceButtonStyles}>
+          <form onSubmit={handleReplaceFormSubmit}>
+            <TextInput
+              placeholder="Replace"
+              aria-labelledby="replace"
+              className={replaceInputContainerStyles}
+              value={replaceString}
+              onChange={handleReplaceQueryChange}
+            />
+          </form>
+          <Button
+            aria-label="replace button"
+            className={replaceButtonStyles}
+            onClick={handleReplace}
+          >
             Replace
           </Button>
           <Button
             aria-label="replace all button"
             className={replaceButtonStyles}
+            onClick={handleReplaceAll}
           >
             Replace All
           </Button>
