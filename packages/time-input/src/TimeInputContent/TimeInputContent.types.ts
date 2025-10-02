@@ -1,3 +1,6 @@
-import { TimeInputProps } from '../TimeInput/TimeInput.types';
+import { ComponentTimeInputProps } from '../TimeInput/TimeInput.types';
 
-export type TimeInputContentProps = TimeInputProps;
+/**
+ * Props that are passed to the component
+ */
+export interface TimeInputContentProps extends ComponentTimeInputProps {}

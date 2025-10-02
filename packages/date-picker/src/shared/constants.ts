@@ -1,18 +1,6 @@
-import { Month } from '@leafygreen-ui/date-utils';
+import { MAX_DATE, MIN_DATE } from '@leafygreen-ui/date-utils';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
-
-/**
- * The default earliest selectable date
- * (Unix epoch start: https://en.wikipedia.org/wiki/Unix_time)
- * */
-export const MIN_DATE = new Date(Date.UTC(1970, Month.January, 1));
-
-/**
- * The default latest selectable date
- * (Unix 32-bit rollover date: https://en.wikipedia.org/wiki/Year_2038_problem)
- */
-export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
 
 // TODO: Update how defaultMin & defaultMax are defined,
 // since day/month are constants,

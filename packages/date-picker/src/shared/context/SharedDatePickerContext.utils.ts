@@ -6,13 +6,14 @@ import {
   DateType,
   getISODate,
   isValidDate,
+  MAX_DATE,
+  MIN_DATE,
   SupportedLocales,
   toDate,
 } from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
-import { MAX_DATE, MIN_DATE } from '../constants';
 import { AutoComplete, BaseDatePickerProps, DatePickerState } from '../types';
 import { ModifiedPopoverProps } from '../types/BaseDatePickerProps.types';
 import { getFormatParts } from '../utils';

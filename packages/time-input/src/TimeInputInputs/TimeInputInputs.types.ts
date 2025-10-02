@@ -1,3 +1,3 @@
-export interface TimeInputInputsProps {
-  className?: string;
-}
+import { TimeInputContentProps } from '../TimeInputContent';
+
+export interface TimeInputInputsProps extends TimeInputContentProps {}
