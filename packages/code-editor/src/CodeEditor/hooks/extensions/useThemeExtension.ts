@@ -77,14 +77,17 @@ export function useThemeExtension({
             borderTopLeftRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             borderTopRightRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             color: color[theme].text[Variant.Primary][InteractionState.Default],
-            paddingTop: `${spacing[200]}px`,
-            paddingBottom: `${spacing[200]}px`,
           },
 
           [`&${CodeEditorSelectors.Focused}`]: {
             outline: 'none',
             border: `1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
+          },
+
+          [CodeEditorSelectors.InnerEditor]: {
+            paddingTop: `${spacing[200]}px`,
+            paddingBottom: `${spacing[200]}px`,
           },
 
           [CodeEditorSelectors.Content]: {
