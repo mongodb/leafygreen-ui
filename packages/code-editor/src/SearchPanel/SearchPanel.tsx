@@ -17,10 +17,10 @@ import {
   setSearchQuery,
 } from '@codemirror/search';
 
-import Button from '@leafygreen-ui/button';
-import IconButton from '@leafygreen-ui/icon-button';
+import { Button } from '@leafygreen-ui/button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import TextInput from '@leafygreen-ui/text-input';
+import { TextInput } from '@leafygreen-ui/text-input';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { Icon } from '../../../icon/src/Icon';
@@ -232,11 +232,13 @@ export function SearchPanel({
             onChange={handleSearchQueryChange}
             onKeyDown={handleFindInputKeyDown}
             className={findInputStyles}
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
             value={searchString}
             baseFontSize={baseFontSizeProp || baseFontSize}
             darkMode={darkMode}
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus
+            // CodeMirror looks for this attribute to refocus when CMD+F is pressed and the panel is already open
+            main-field="true"
           />
           <div className={findOptionsContainerStyles}>
             {searchString && (
