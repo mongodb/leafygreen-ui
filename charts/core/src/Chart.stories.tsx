@@ -5,7 +5,7 @@ import type { StoryObj } from '@storybook/react';
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
-import { LineProps } from './Line';
+import { LineProps } from './Series';
 import { makeLineData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
