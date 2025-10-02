@@ -90,11 +90,11 @@ const ModalView = React.forwardRef<HTMLDialogElement, ModalProps>(
         }}
       >
         <dialog
+          data-testid={lgIds.root}
+          data-lgid={lgIds.root}
           {...rest}
           ref={dialogRef}
           id={id}
-          data-testid={lgIds.root}
-          data-lgid={lgIds.root}
           className={getDialogStyles({
             backdropClassName,
             className,

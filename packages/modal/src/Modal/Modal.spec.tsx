@@ -260,6 +260,18 @@ describe('packages/modal', () => {
       expect(modal).not.toBeVisible();
     });
   });
+
+  describe('testid attribute', () => {
+    it('propagates to the dom element', () => {
+      const { getByTestId } = renderModal({
+        open: true,
+        'data-testid': 'my-modal',
+      });
+
+      const modal = getByTestId('my-modal');
+      expect(modal).toBeInTheDocument();
+    });
+  });
 });
 
 async function expectElementToNotBeRemoved(element: HTMLElement) {

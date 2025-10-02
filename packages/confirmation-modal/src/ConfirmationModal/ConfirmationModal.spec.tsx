@@ -497,6 +497,32 @@ describe('packages/confirmation-modal', () => {
     });
   });
 
+  describe('testid attribute', () => {
+    it('propagates to the dom element', () => {
+      const { getByTestId } = renderModal({
+        open: true,
+        'data-testid': 'my-modal',
+      });
+
+      const modal = getByTestId('my-modal');
+      expect(modal).toBeInTheDocument();
+    });
+
+    it('propagates to the buttons', () => {
+      const { getByTestId } = renderModal({
+        open: true,
+        confirmButtonProps: { 'data-testid': 'my-confirm-btn' },
+        cancelButtonProps: { 'data-testid': 'my-cancel-btn' },
+      });
+
+      const confirmButton = getByTestId('my-confirm-btn');
+      expect(confirmButton).toBeInTheDocument();
+
+      const cancelButton = getByTestId('my-cancel-btn');
+      expect(cancelButton).toBeInTheDocument();
+    });
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('types behave as expected', () => {
     <>
