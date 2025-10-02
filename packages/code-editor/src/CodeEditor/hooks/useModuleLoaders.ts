@@ -54,6 +54,7 @@ const importLangRust = () => import('@codemirror/lang-rust');
 export const useModuleLoaders = ({
   enableClickableUrls,
   enableCodeFolding,
+  enableSearchPanel,
   forceParsing,
   indentUnit,
   tooltips,
@@ -70,8 +71,11 @@ export const useModuleLoaders = ({
       '@codemirror/view': importCodeMirrorView,
       '@codemirror/state': importCodeMirrorState,
       '@codemirror/commands': importCodeMirrorCommands,
-      '@codemirror/search': importCodeMirrorSearch,
     };
+
+    if (enableSearchPanel) {
+      neededLoaders['@codemirror/search'] = importCodeMirrorSearch;
+    }
 
     if (enableClickableUrls) {
       neededLoaders['@uiw/codemirror-extensions-hyper-link'] = importHyperLink;
