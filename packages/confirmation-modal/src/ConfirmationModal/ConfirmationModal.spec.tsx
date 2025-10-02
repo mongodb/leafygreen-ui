@@ -497,6 +497,18 @@ describe('packages/confirmation-modal', () => {
     });
   });
 
+  describe('testid attribute', () => {
+    it('propagates to the dom element', () => {
+      const { getByTestId } = renderModal({
+        open: true,
+        'data-testid': 'my-modal',
+      });
+
+      const modal = getByTestId('my-modal');
+      expect(modal).toBeInTheDocument();
+    });
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('types behave as expected', () => {
     <>
