@@ -1,5 +1,4 @@
 import type { XAXisComponentOption, YAXisComponentOption } from 'echarts';
-import type { LineSeriesOption } from 'echarts/charts';
 import type {
   DatasetComponentOption,
   GridComponentOption,
@@ -9,6 +8,7 @@ import type {
   TooltipComponentOption,
 } from 'echarts/components';
 import type { ComposeOption, EChartsType } from 'echarts/core';
+import type { LineSeriesOption, SeriesOption } from 'echarts/types/dist/shared';
 
 import { Theme } from '@leafygreen-ui/lib';
 
@@ -16,9 +16,8 @@ import { Theme } from '@leafygreen-ui/lib';
 // reference: https://github.com/apache/echarts/blob/master/src/coord/axisCommonTypes.ts#L193
 export type AxisLabelValueFormatter = (value: number, index?: number) => string;
 
-type RequiredSeriesProps = 'type' | 'name' | 'data';
-export type EChartSeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
-  Partial<Omit<LineSeriesOption, RequiredSeriesProps>>;
+export type EChartLineSeriesOption = LineSeriesOption;
+export type EChartSeriesOption = { name: string } & SeriesOption;
 
 /**
  * TODO: This might need to be improved. `ComposeOption` appears to make most base option
