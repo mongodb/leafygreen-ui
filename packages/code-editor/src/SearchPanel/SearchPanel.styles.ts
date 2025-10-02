@@ -1,6 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import {
+  BaseFontSize,
   borderRadius,
   InteractionState,
   shadow,
@@ -15,10 +16,14 @@ const SECTION_HEIGHT = 52;
 const INPUT_WIDTH = 240;
 const INPUT_MIN_WIDTH = 120;
 
-const getBaseContainerStyles = (theme: Theme) => css`
+const getBaseContainerStyles = (
+  theme: Theme,
+  baseFontSize: BaseFontSize,
+) => css`
   background-color: ${color[theme].background[Variant.Secondary][
     InteractionState.Default
   ]};
+  font-size: ${baseFontSize}px;
   border-bottom-left-radius: ${borderRadius[150]}px;
   border-bottom-right-radius: ${borderRadius[150]}px;
   width: 100%;
@@ -62,11 +67,13 @@ const openContainerStyles = css`
 export const getContainerStyles = ({
   theme,
   isOpen,
+  baseFontSize,
 }: {
   theme: Theme;
   isOpen: boolean;
+  baseFontSize: BaseFontSize;
 }) =>
-  cx(getBaseContainerStyles(theme), {
+  cx(getBaseContainerStyles(theme, baseFontSize), {
     [openContainerStyles]: isOpen,
   });
 

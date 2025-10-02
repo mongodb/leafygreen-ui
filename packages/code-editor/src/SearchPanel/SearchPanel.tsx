@@ -21,7 +21,7 @@ import Button from '@leafygreen-ui/button';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import TextInput from '@leafygreen-ui/text-input';
-import { Body } from '@leafygreen-ui/typography';
+import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { Icon } from '../../../icon/src/Icon';
 
@@ -42,7 +42,11 @@ import {
 } from './SearchPanel.styles';
 import { SearchPanelProps } from './SearchPanel.types';
 
-export function SearchPanel({ view }: SearchPanelProps) {
+export function SearchPanel({
+  view,
+  darkMode,
+  baseFontSize: baseFontSizeProp,
+}: SearchPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchString, setSearchString] = useState('');
   const [replaceString, setReplaceString] = useState('');
@@ -59,7 +63,8 @@ export function SearchPanel({ view }: SearchPanelProps) {
     }),
   );
   const [findCount, setFindCount] = useState(0);
-  const { theme } = useDarkMode();
+  const { theme } = useDarkMode(darkMode);
+  const baseFontSize = useUpdatedBaseFontSize();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const updateSelectedIndex = useCallback(() => {
@@ -204,7 +209,11 @@ export function SearchPanel({ view }: SearchPanelProps) {
 
   return (
     <div
-      className={getContainerStyles({ theme, isOpen })}
+      className={getContainerStyles({
+        theme,
+        isOpen,
+        baseFontSize: baseFontSizeProp || baseFontSize,
+      })}
       data-no-context-menu="true"
     >
       <div className={findSectionStyles}>
@@ -226,6 +235,8 @@ export function SearchPanel({ view }: SearchPanelProps) {
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             value={searchString}
+            baseFontSize={baseFontSizeProp || baseFontSize}
+            darkMode={darkMode}
           />
           <div className={findOptionsContainerStyles}>
             {searchString && (
@@ -259,6 +270,8 @@ export function SearchPanel({ view }: SearchPanelProps) {
             selectMatches(view);
             setSelectedIndex(null);
           }}
+          baseFontSize={baseFontSizeProp || baseFontSize}
+          darkMode={darkMode}
         >
           All
         </Button>
@@ -284,11 +297,15 @@ export function SearchPanel({ view }: SearchPanelProps) {
             value={replaceString}
             onChange={handleReplaceQueryChange}
             onKeyDown={handleReplaceInputKeyDown}
+            baseFontSize={baseFontSizeProp || baseFontSize}
+            darkMode={darkMode}
           />
           <Button
             aria-label="replace button"
             className={replaceButtonStyles}
             onClick={handleReplace}
+            baseFontSize={baseFontSizeProp || baseFontSize}
+            darkMode={darkMode}
           >
             Replace
           </Button>
@@ -296,6 +313,8 @@ export function SearchPanel({ view }: SearchPanelProps) {
             aria-label="replace all button"
             className={replaceButtonStyles}
             onClick={handleReplaceAll}
+            baseFontSize={baseFontSizeProp || baseFontSize}
+            darkMode={darkMode}
           >
             Replace All
           </Button>
