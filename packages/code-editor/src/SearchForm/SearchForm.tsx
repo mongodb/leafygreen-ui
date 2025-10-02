@@ -1,6 +1,6 @@
 import React, {
   ChangeEvent,
-  FormEvent,
+  KeyboardEvent,
   MouseEvent,
   useCallback,
   useEffect,
@@ -84,18 +84,21 @@ export function SearchForm({ view }: SearchFormProps) {
     setSelectedIndex(null);
   }, [query, view]);
 
-  const updateFindCount = useCallback(() => {
-    const cursor = query.getCursor(view.state.doc);
-    let count = 0;
-    let result = cursor.next();
+  const updateFindCount = useCallback(
+    (searchQuery: SearchQuery) => {
+      const cursor = searchQuery.getCursor(view.state.doc);
+      let count = 0;
+      let result = cursor.next();
 
-    while (!result.done) {
-      count++;
-      result = cursor.next();
-    }
+      while (!result.done) {
+        count++;
+        result = cursor.next();
+      }
 
-    setFindCount(count);
-  }, [query, view]);
+      setFindCount(count);
+    },
+    [view],
+  );
 
   useEffect(() => {
     const newQuery = new SearchQuery({
@@ -107,8 +110,8 @@ export function SearchForm({ view }: SearchFormProps) {
     });
 
     setQuery(newQuery);
-    view.dispatch({ effects: setSearchQuery.of(query) });
-    updateFindCount();
+    view.dispatch({ effects: setSearchQuery.of(newQuery) });
+    updateFindCount(newQuery);
   }, [
     replaceString,
     searchString,
@@ -117,7 +120,6 @@ export function SearchForm({ view }: SearchFormProps) {
     isWholeWord,
     view,
     updateFindCount,
-    query,
   ]);
 
   const handleToggleButtonClick = useCallback(
@@ -148,21 +150,12 @@ export function SearchForm({ view }: SearchFormProps) {
     [],
   );
 
-  const handleFindFormSubmit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      findNext(view);
-      updateSelectedIndex();
-    },
-    [view, updateSelectedIndex],
-  );
-
-  const handleNextClick = useCallback(() => {
+  const handleFindNext = useCallback(() => {
     findNext(view);
     updateSelectedIndex();
   }, [view, updateSelectedIndex]);
 
-  const handlePreviousClick = useCallback(() => {
+  const handleFindPrevious = useCallback(() => {
     findPrevious(view);
     updateSelectedIndex();
   }, [view, updateSelectedIndex]);
@@ -170,21 +163,43 @@ export function SearchForm({ view }: SearchFormProps) {
   const handleReplace = useCallback(() => {
     replaceNext(view);
     updateSelectedIndex();
-    updateFindCount();
-  }, [view, updateSelectedIndex, updateFindCount]);
+    updateFindCount(query);
+  }, [view, updateSelectedIndex, updateFindCount, query]);
 
   const handleReplaceAll = useCallback(() => {
     replaceAll(view);
     updateSelectedIndex();
-    updateFindCount();
-  }, [view, updateSelectedIndex, updateFindCount]);
+    updateFindCount(query);
+  }, [view, updateSelectedIndex, updateFindCount, query]);
 
-  const handleReplaceFormSubmit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      handleReplace();
+  const handleFindInputKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (e.shiftKey) {
+          handleFindPrevious();
+        } else {
+          handleFindNext();
+        }
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeSearchPanel(view);
+      }
     },
-    [handleReplace],
+    [handleFindNext, handleFindPrevious, view],
+  );
+
+  const handleReplaceInputKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleReplace();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeSearchPanel(view);
+      }
+    },
+    [handleReplace, view],
   );
 
   return (
@@ -202,17 +217,16 @@ export function SearchForm({ view }: SearchFormProps) {
           <Icon glyph="ChevronDown" className={getToggleIconStyles(isOpen)} />
         </IconButton>
         <div className={findInputContainerStyles}>
-          <form onSubmit={handleFindFormSubmit}>
-            <TextInput
-              placeholder="Find"
-              aria-labelledby="find"
-              onChange={handleSearchQueryChange}
-              className={findInputStyles}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus
-              value={searchString}
-            />
-          </form>
+          <TextInput
+            placeholder="Find"
+            aria-labelledby="find"
+            onChange={handleSearchQueryChange}
+            onKeyDown={handleFindInputKeyDown}
+            className={findInputStyles}
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus
+            value={searchString}
+          />
           <div className={findOptionsContainerStyles}>
             {searchString && (
               <Body>
@@ -227,14 +241,14 @@ export function SearchForm({ view }: SearchFormProps) {
         <IconButton
           aria-label="previous item button"
           disabled={!searchString || findCount === 0}
-          onClick={handlePreviousClick}
+          onClick={handleFindPrevious}
         >
           <Icon glyph="ArrowUp" />
         </IconButton>
         <IconButton
           aria-label="next item button"
           disabled={!searchString || findCount === 0}
-          onClick={handleNextClick}
+          onClick={handleFindNext}
         >
           <Icon glyph="ArrowDown" />
         </IconButton>
@@ -263,15 +277,14 @@ export function SearchForm({ view }: SearchFormProps) {
         aria-hidden={!isOpen}
       >
         <div className={getReplaceInnerSectionStyles(theme)}>
-          <form onSubmit={handleReplaceFormSubmit}>
-            <TextInput
-              placeholder="Replace"
-              aria-labelledby="replace"
-              className={replaceInputContainerStyles}
-              value={replaceString}
-              onChange={handleReplaceQueryChange}
-            />
-          </form>
+          <TextInput
+            placeholder="Replace"
+            aria-labelledby="replace"
+            className={replaceInputContainerStyles}
+            value={replaceString}
+            onChange={handleReplaceQueryChange}
+            onKeyDown={handleReplaceInputKeyDown}
+          />
           <Button
             aria-label="replace button"
             className={replaceButtonStyles}
