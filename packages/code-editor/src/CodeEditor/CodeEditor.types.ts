@@ -91,6 +91,7 @@ export const CodeEditorSelectors = {
   GutterElement: '.cm-gutterElement',
   Gutters: '.cm-gutters',
   HyperLink: '.cm-hyper-link-icon',
+  InnerEditor: '.cm-scroller',
   Line: '.cm-line',
   LineNumbers: '.cm-lineNumbers',
   LineWrapping: '.cm-lineWrapping',
