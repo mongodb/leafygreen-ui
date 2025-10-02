@@ -9,6 +9,8 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
     popover: `${root}-popover`,
     trigger: `${root}-trigger`,
     buttonText: `${root}-button_text`,
+    label: `${root}-label`,
+    description: `${root}-description`,
   } as const;
   return ids;
 };
