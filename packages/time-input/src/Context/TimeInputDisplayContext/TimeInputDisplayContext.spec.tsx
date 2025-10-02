@@ -2,7 +2,6 @@ import React from 'react';
 import { act } from '@testing-library/react';
 
 import { SupportedLocales } from '@leafygreen-ui/date-utils';
-import { Theme } from '@leafygreen-ui/lib';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -57,10 +56,6 @@ describe('packages/time-input-display-context', () => {
       expect(result.current.errorMessage).toBe(
         defaultTimeInputDisplayContext.errorMessage,
       );
-      expect(result.current.darkMode).toBe(
-        defaultTimeInputDisplayContext.darkMode,
-      );
-      expect(result.current.theme).toBe(defaultTimeInputDisplayContext.theme);
       expect(result.current.isDirty).toBe(
         defaultTimeInputDisplayContext.isDirty,
       );
@@ -78,7 +73,6 @@ describe('packages/time-input-display-context', () => {
         disabled: true,
         size: Size.Large,
         errorMessage: 'Custom error message',
-        darkMode: true,
       };
 
       const { result } = renderTimeInputDisplayProvider(customProps);
@@ -92,8 +86,6 @@ describe('packages/time-input-display-context', () => {
       expect(result.current.disabled).toBe(true);
       expect(result.current.size).toBe(Size.Large);
       expect(result.current.errorMessage).toBe('Custom error message');
-      expect(result.current.darkMode).toBe(true);
-      expect(result.current.theme).toBe(Theme.Dark);
     });
 
     describe('isDirty', () => {

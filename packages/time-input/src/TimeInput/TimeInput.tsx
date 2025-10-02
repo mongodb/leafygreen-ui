@@ -1,7 +1,12 @@
 import React, { forwardRef } from 'react';
 
 import { useControlled } from '@leafygreen-ui/hooks';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { pickAndOmit } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { TimeInputProvider } from '../Context/TimeInputContext/TimeInputContext';
 import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
@@ -21,10 +26,15 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
       handleValidation,
       initialValue: initialValueProp,
       'data-lgid': _dataLgId,
+      darkMode: darkModeProp,
+      baseFontSize: basefontSizeProp,
       ...props
     }: TimeInputProps,
     forwardedRef,
   ) => {
+    const { darkMode } = useDarkMode(darkModeProp);
+    const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
+
     const { value, updateValue } = useControlled(
       valueProp,
       onChangeProp,
@@ -40,15 +50,20 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
     >({ ...props }, displayContextPropNames);
 
     return (
-      <TimeInputDisplayProvider {...displayProps}>
-        <TimeInputProvider
-          value={value}
-          setValue={updateValue}
-          handleValidation={handleValidation}
-        >
-          <TimeInputContent ref={forwardedRef} {...componentProps} />
-        </TimeInputProvider>
-      </TimeInputDisplayProvider>
+      <LeafyGreenProvider
+        darkMode={darkMode}
+        baseFontSize={baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize}
+      >
+        <TimeInputDisplayProvider {...displayProps}>
+          <TimeInputProvider
+            value={value}
+            setValue={updateValue}
+            handleValidation={handleValidation}
+          >
+            <TimeInputContent ref={forwardedRef} {...componentProps} />
+          </TimeInputProvider>
+        </TimeInputDisplayProvider>
+      </LeafyGreenProvider>
     );
   },
 );

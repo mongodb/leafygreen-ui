@@ -6,12 +6,6 @@ import React, {
 } from 'react';
 import defaults from 'lodash/defaults';
 
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
-
 import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProviderProps,
@@ -29,13 +23,8 @@ export const TimeInputDisplayProvider = ({
   label = '',
   'aria-label': ariaLabelProp = '',
   'aria-labelledby': ariaLabelledbyProp = '',
-  darkMode: darkModeProp,
-  baseFontSize: basefontSizeProp,
   ...rest
 }: PropsWithChildren<TimeInputDisplayProviderProps>) => {
-  const { darkMode, theme } = useDarkMode(darkModeProp);
-  const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
-
   /**
    * Whether the input has been interacted with
    */
@@ -51,25 +40,18 @@ export const TimeInputDisplayProvider = ({
   // TODO: min, max helpers
 
   return (
-    <LeafyGreenProvider
-      darkMode={darkMode}
-      baseFontSize={baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize}
+    <TimeInputDisplayContext.Provider
+      value={{
+        ...providerValue,
+        label,
+        ariaLabelProp,
+        ariaLabelledbyProp,
+        isDirty,
+        setIsDirty,
+      }}
     >
-      <TimeInputDisplayContext.Provider
-        value={{
-          ...providerValue,
-          label,
-          ariaLabelProp,
-          ariaLabelledbyProp,
-          isDirty,
-          setIsDirty,
-          darkMode,
-          theme,
-        }}
-      >
-        {children}
-      </TimeInputDisplayContext.Provider>
-    </LeafyGreenProvider>
+      {children}
+    </TimeInputDisplayContext.Provider>
   );
 };
 
