@@ -13,6 +13,8 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
     track: `${root}-track`,
     fill: `${root}-fill`,
     valueText: `${root}-value_text`,
+    label: `${root}-label`,
+    description: `${root}-description`,
   } as const;
 };
 
