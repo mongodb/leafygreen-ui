@@ -30,6 +30,7 @@ export function buildRulesIndexFile() {
     const indexContent = `/**
  * DO NOT MODIFY THIS FILE
  * ANY CHANGES WILL BE REMOVED ON THE NEXT BUILD
+ * USE THE "create-rule" SCRIPT TO ADD NEW RULES INSTEAD
  */
 ${importStatements}
 
