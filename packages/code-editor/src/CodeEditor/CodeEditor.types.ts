@@ -200,6 +200,11 @@ type BaseCodeEditorProps = DarkModeProps &
     enableLineWrapping?: boolean;
 
     /**
+     * Enables the search panel in the editor.
+     */
+    enableSearchPanel?: boolean;
+
+    /**
      * Additional CodeMirror extensions to apply to the editor. These will be applied
      * with high precendence, meaning they can override extensions applied through
      * built in props.

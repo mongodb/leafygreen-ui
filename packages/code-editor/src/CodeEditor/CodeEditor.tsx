@@ -55,6 +55,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       enableCodeFolding,
       enableLineNumbers,
       enableLineWrapping,
+      enableSearchPanel = true,
       extensions: consumerExtensions = [],
       forceParsing: forceParsingProp = false,
       height,
@@ -273,24 +274,27 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           ),
 
           commands.history(),
-          searchModule.search({
-            createPanel: view => {
-              const dom = document.createElement('div');
-              dom.style.position = 'absolute';
-              dom.style.top = '0';
-              dom.style.right = '0';
-              dom.style.left = '0';
-              dom.style.display = 'flex';
-              dom.style.justifyContent = 'flex-end';
 
-              createRoot(dom).render(
-                React.createElement(SearchPanel, {
-                  view,
-                }),
-              );
-              return { dom, top: true };
-            },
-          }),
+          enableSearchPanel
+            ? searchModule.search({
+                createPanel: view => {
+                  const dom = document.createElement('div');
+                  dom.style.position = 'absolute';
+                  dom.style.top = '0';
+                  dom.style.right = '0';
+                  dom.style.left = '0';
+                  dom.style.display = 'flex';
+                  dom.style.justifyContent = 'flex-end';
+
+                  createRoot(dom).render(
+                    React.createElement(SearchPanel, {
+                      view,
+                    }),
+                  );
+                  return { dom, top: true };
+                },
+              })
+            : [],
 
           EditorView.EditorView.updateListener.of((update: ViewUpdate) => {
             if (isControlled && update.docChanged) {
@@ -317,7 +321,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               key: 'Shift-Tab',
               run: commands.indentLess,
             },
-            ...searchModule.searchKeymap,
+            ...(enableSearchPanel ? searchModule.searchKeymap : []),
             ...commands.defaultKeymap,
             ...commands.historyKeymap,
           ]),
