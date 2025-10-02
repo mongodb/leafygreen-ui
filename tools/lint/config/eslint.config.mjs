@@ -10,6 +10,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
+import leafyGreenPlugin from '@lg-tools/eslint-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -222,6 +223,19 @@ export default [
       'jest/no-identical-title': 'error',
       'jest/valid-expect': 'error',
       'jest/expect-expect': 'off',
+    },
+  },
+  {
+    plugins: {
+      '@lg-tools': leafyGreenPlugin,
+    },
+
+    files: ['**/*.tsx'],
+
+    ignores: ['**/*.spec.tsx', '**/testing/**'],
+
+    rules: {
+      '@lg-tools/no-duplicate-ids': 'warn',
     },
   },
 ];

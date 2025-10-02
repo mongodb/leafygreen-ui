@@ -4035,6 +4035,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../build
+      '@lg-tools/eslint-plugin':
+        specifier: workspace:^
+        version: link:../eslint-plugin
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
