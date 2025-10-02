@@ -355,6 +355,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       customExtensions,
       forceParsingProp,
       getContents,
+      enableSearchPanel,
     ]);
 
     useImperativeHandle(forwardedRef, () => ({
