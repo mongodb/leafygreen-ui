@@ -9,6 +9,7 @@ export default {
   component: MessagePrompts,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    enableHideOnSelect: { control: 'boolean' },
   },
 };
 
