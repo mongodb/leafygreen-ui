@@ -94,8 +94,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             >
               {label && (
                 <Label
-                  data-lgid={lgIds.root}
-                  data-testid={lgIds.root}
+                  data-lgid={lgIds.label}
+                  data-testid={lgIds.label}
                   className={fontStyles}
                   htmlFor={inputId}
                   id={labelId}
@@ -106,8 +106,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
               {description && (
                 <Description
-                  data-lgid={lgIds.root}
-                  data-testid={lgIds.root}
+                  data-lgid={lgIds.description}
+                  data-testid={lgIds.description}
                   className={fontStyles}
                   id={descriptionId}
                   disabled={disabled}
