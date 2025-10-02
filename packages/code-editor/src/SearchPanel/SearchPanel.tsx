@@ -39,10 +39,10 @@ import {
   replaceInputContainerStyles,
   replaceSectionStyles,
   toggleButtonStyles,
-} from './SearchForm.styles';
-import { SearchFormProps } from './SearchForm.types';
+} from './SearchPanel.styles';
+import { SearchPanelProps } from './SearchPanel.types';
 
-export function SearchForm({ view }: SearchFormProps) {
+export function SearchPanel({ view }: SearchPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchString, setSearchString] = useState('');
   const [replaceString, setReplaceString] = useState('');

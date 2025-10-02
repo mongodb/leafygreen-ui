@@ -17,7 +17,7 @@ import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
 import { Panel as CodeEditorPanel } from '../Panel';
-import { SearchForm } from '../SearchForm';
+import { SearchPanel } from '../SearchPanel';
 import { getLgIds } from '../utils';
 
 import { useModules } from './hooks/useModules';
@@ -284,7 +284,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               dom.style.justifyContent = 'flex-end';
 
               createRoot(dom).render(
-                React.createElement(SearchForm, {
+                React.createElement(SearchPanel, {
                   view,
                 }),
               );

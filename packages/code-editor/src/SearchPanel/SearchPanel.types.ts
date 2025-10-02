@@ -1,5 +1,5 @@
 import { CodeMirrorView } from '../CodeEditor';
 
-export interface SearchFormProps {
+export interface SearchPanelProps {
   view: CodeMirrorView;
 }

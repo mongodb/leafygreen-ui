@@ -9,7 +9,7 @@ import type { StoryFn } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { SearchForm } from './SearchForm';
+import { SearchPanel } from './SearchPanel';
 
 const Root = (Story: StoryFn, context: any) => (
   <LeafyGreenProvider
@@ -20,9 +20,9 @@ const Root = (Story: StoryFn, context: any) => (
   </LeafyGreenProvider>
 );
 
-const meta: StoryMetaType<typeof SearchForm> = {
-  title: 'Components/Inputs/CodeEditor/SearchForm',
-  component: SearchForm,
+const meta: StoryMetaType<typeof SearchPanel> = {
+  title: 'Components/Inputs/CodeEditor/SearchPanel',
+  component: SearchPanel,
   parameters: {
     default: 'LiveExample',
     controls: {
@@ -49,7 +49,7 @@ const meta: StoryMetaType<typeof SearchForm> = {
 
 export default meta;
 
-const Template: StoryFn<typeof SearchForm> = args => <SearchForm {...args} />;
+const Template: StoryFn<typeof SearchPanel> = args => <SearchPanel {...args} />;
 
 export const LiveExample = Template.bind({});
 export const Generated = () => {};
