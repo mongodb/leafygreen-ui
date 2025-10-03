@@ -9,6 +9,9 @@ export const promotionContainerStyles = css`
   flex-direction: row;
   align-items: center;
   gap: 0px ${spacing[200]}px;
+  & div {
+    box-sizing: border-box;
+  }
 `;
 
 export const badgeStyles = css`
@@ -16,6 +19,6 @@ export const badgeStyles = css`
   flex-direction: row;
   justify-content: center;
 
-  width: ${BADGE_WIDTH}px;
-  height: ${BADGE_HEIGHT}px;
+  min-width: ${BADGE_WIDTH}px;
+  min-height: ${BADGE_HEIGHT}px;
 `;
