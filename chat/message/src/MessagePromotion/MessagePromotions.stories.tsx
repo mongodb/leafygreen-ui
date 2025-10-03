@@ -22,6 +22,7 @@ const meta: StoryMetaType<typeof MessagePromotion> = {
         promotionUrl: ['https://learn.mongodb.com/skills'],
         className: [
           css`
+            box-sizing: content-box;
             gap: 20px;
             & div {
               background-color: ${palette.blue.dark2};
