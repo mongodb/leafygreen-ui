@@ -338,37 +338,6 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
-  chat/chat-disclaimer:
-    dependencies:
-      '@leafygreen-ui/emotion':
-        specifier: workspace:^
-        version: link:../../packages/emotion
-      '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
-      '@leafygreen-ui/lib':
-        specifier: workspace:^
-        version: link:../../packages/lib
-      '@leafygreen-ui/marketing-modal':
-        specifier: workspace:^
-        version: link:../../packages/marketing-modal
-      '@leafygreen-ui/tokens':
-        specifier: workspace:^
-        version: link:../../packages/tokens
-      '@leafygreen-ui/typography':
-        specifier: workspace:^
-        version: link:../../packages/typography
-    devDependencies:
-      '@leafygreen-ui/button':
-        specifier: workspace:^
-        version: link:../../packages/button
-      '@leafygreen-ui/modal':
-        specifier: workspace:^
-        version: link:../../packages/modal
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
-
   chat/chat-window:
     dependencies:
       '@leafygreen-ui/emotion':
@@ -660,46 +629,6 @@ importers:
         specifier: ^8.6.14
         version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
-  chat/message-actions:
-    dependencies:
-      '@leafygreen-ui/emotion':
-        specifier: workspace:^
-        version: link:../../packages/emotion
-      '@leafygreen-ui/icon':
-        specifier: workspace:^
-        version: link:../../packages/icon
-      '@leafygreen-ui/icon-button':
-        specifier: workspace:^
-        version: link:../../packages/icon-button
-      '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
-      '@leafygreen-ui/lib':
-        specifier: workspace:^
-        version: link:../../packages/lib
-      '@leafygreen-ui/tokens':
-        specifier: workspace:^
-        version: link:../../packages/tokens
-      '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-chat-provider
-      '@lg-chat/message':
-        specifier: workspace:^
-        version: link:../message
-      '@lg-chat/message-feedback':
-        specifier: workspace:^
-        version: link:../message-feedback
-      '@lg-chat/message-rating':
-        specifier: workspace:^
-        version: link:../message-rating
-      '@lg-tools/test-harnesses':
-        specifier: workspace:^
-        version: link:../../tools/test-harnesses
-    devDependencies:
-      '@storybook/test':
-        specifier: ^8.6.14
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
-
   chat/message-feed:
     dependencies:
       '@leafygreen-ui/button':
@@ -742,12 +671,6 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1(react@18.3.1)
     devDependencies:
-      '@leafygreen-ui/typography':
-        specifier: workspace:^
-        version: link:../../packages/typography
-      '@lg-chat/chat-disclaimer':
-        specifier: workspace:^
-        version: link:../chat-disclaimer
       '@lg-chat/message-prompts':
         specifier: workspace:^
         version: link:../message-prompts
@@ -1063,12 +986,6 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
-
-  packages/box:
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^

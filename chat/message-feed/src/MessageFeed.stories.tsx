@@ -1,6 +1,5 @@
 import React, { ChangeEvent, Fragment, useState } from 'react';
 import { Avatar } from '@lg-chat/avatar';
-import { DisclaimerText } from '@lg-chat/chat-disclaimer';
 import {
   LeafyGreenChatProvider,
   Variant,
@@ -12,7 +11,6 @@ import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Link } from '@leafygreen-ui/typography';
 
 import {
   baseMessages,
@@ -92,19 +90,10 @@ const Template: StoryFn<MessageFeedStoryProps> = ({
 }) => (
   <LeafyGreenChatProvider variant={variant}>
     <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
-      {children ?? (
-        <>
-          {variant === Variant.Spacious && (
-            <DisclaimerText title="Terms and Conditions">
-              This is a test description. There&apos;s also a{' '}
-              <Link>link inside of it</Link>.
-            </DisclaimerText>
-          )}
-          {baseMessages.map(messageFields => (
-            <MyMessage key={messageFields.id} {...messageFields} />
-          ))}
-        </>
-      )}
+      {children ??
+        baseMessages.map(messageFields => (
+          <MyMessage key={messageFields.id} {...messageFields} />
+        ))}
     </MessageFeed>
   </LeafyGreenChatProvider>
 );
@@ -121,15 +110,7 @@ export const LiveExample: StoryObj<MessageFeedStoryProps> = {
 export const OneMessage: StoryObj<MessageFeedStoryProps> = {
   render: Template,
   args: {
-    children: (
-      <>
-        <DisclaimerText title="Terms and Conditions">
-          This is a test description. There&apos;s also a{' '}
-          <Link>link inside of it</Link>.
-        </DisclaimerText>
-        <MyMessage {...baseMessages[0]} />
-      </>
-    ),
+    children: <MyMessage {...baseMessages[0]} />,
   },
 };
 
@@ -175,10 +156,6 @@ const ChangingMessagesComponent = ({
     <div>
       <LeafyGreenChatProvider variant={variant}>
         <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
-          <DisclaimerText title="Terms and Conditions">
-            This is a test description. There&apos;s also a{' '}
-            <Link>link inside of it</Link>.
-          </DisclaimerText>
           {messages.map(message => {
             const { id, isMongo, messageBody, userName } =
               message as MessageFields;
@@ -244,10 +221,6 @@ export const SpaciousVariant: StoryObj<MessageFeedStoryProps> = {
   args: {
     children: (
       <>
-        <DisclaimerText title="Terms and Conditions">
-          This is a test description. There&apos;s also a{' '}
-          <Link>link inside of it</Link>.
-        </DisclaimerText>
         {baseMessages.map(messageFields => (
           <MyMessage key={messageFields.id} {...messageFields} />
         ))}
