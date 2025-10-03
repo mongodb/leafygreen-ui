@@ -33,10 +33,12 @@ export const Description = Polymorphic<DescriptionProps>(
     const as = asProp ?? asDerivedFromChildren;
     const { Component } = usePolymorphic(as);
 
+    const lgIds = getLgIds(dataLgId ?? getLgIds().description);
+
     return (
       <Component
-        data-lgid={getLgIds(dataLgId).description}
-        data-testid={getLgIds(dataLgId).description}
+        data-lgid={lgIds.root}
+        data-testid={lgIds.root}
         className={cx(
           getDescriptionStyle(theme),
           descriptionTypeScaleStyles[baseFontSize],
