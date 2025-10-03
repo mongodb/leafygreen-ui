@@ -23,13 +23,14 @@ const meta: StoryMetaType<typeof MessagePromotion> = {
         className: [
           css`
             gap: 20px;
-              & div {
-                background-color: ${palette.blue.dark2};
-                border-color: white;
-                color: ${palette.blue.light2};
-              }
-            `,
-          undefined]
+            & div {
+              background-color: ${palette.blue.dark2};
+              border-color: white;
+              color: ${palette.blue.light2};
+            }
+          `,
+          undefined,
+        ],
       },
     },
   },
