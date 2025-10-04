@@ -1,5 +1,23 @@
 # @leafygreen-ui/confirmation-modal
 
+## 10.1.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- 88e25a1: Fix data-testid attributes to allow consumer override
+- Updated dependencies [88e25a1]
+- Updated dependencies [88e25a1]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/modal@20.1.0
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/text-input@16.1.0
+  - @leafygreen-ui/button@25.1.0
+  - @leafygreen-ui/icon@14.6.0
+
 ## 10.0.2
 
 ### Patch Changes
