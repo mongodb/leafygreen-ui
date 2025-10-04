@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-input",
-  "version": "16.0.4",
+  "version": "16.1.0",
   "description": "leafyGreen UI Kit Text Input",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

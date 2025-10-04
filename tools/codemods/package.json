@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/codemods",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Codemods for LeafyGreen UI",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
