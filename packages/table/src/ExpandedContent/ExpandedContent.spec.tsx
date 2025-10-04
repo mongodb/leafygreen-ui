@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { ComponentType, Fragment } from 'react';
 import styled from '@emotion/styled';
 import { flexRender } from '@tanstack/react-table';
 import { render } from '@testing-library/react';
@@ -16,7 +16,7 @@ import {
   useMockTestRowData,
   useTestHookCall,
 } from '../utils/testHookCalls.testutils';
-import { Table, TableProps } from '..';
+import { ExpandedContentProps, Table, TableProps } from '..';
 
 import ExpandedContent from './ExpandedContent';
 
@@ -60,7 +60,6 @@ const RowWithExpandableContent = (args: TableProps<Person>) => {
                     })}
                   </Row>
                 )}
-                {/* @ts-expect-error FIXME: ExpandedContent is incorrectly generic */}
                 {isExpandedContent && <ExpandedContent row={row} />}
               </Fragment>
             );
@@ -129,12 +128,15 @@ describe('packages/table/Row/ExpandableContent', () => {
       const { result } = renderHook(() => useMockTestRowData());
       const mockRow = result.current.firstRow;
 
-      const StyledExpandedContent = styled(ExpandedContent)`
+      // type assertion is needed in R17 with R16 types(@types/react 16.9.56)
+      // styled is not preserving the required row prop
+      const StyledExpandedContent = styled(
+        ExpandedContent as ComponentType<ExpandedContentProps<any>>,
+      )`
         color: #69ffc6;
-      `;
+      ` as typeof ExpandedContent;
 
       const { getByTestId } = render(
-        // @ts-expect-error ExpandedContent is incorrectly generic FIXME:
         <StyledExpandedContent row={mockRow} data-testid="styled" />,
       );
 
@@ -149,14 +151,17 @@ describe('packages/table/Row/ExpandableContent', () => {
       const { result } = renderHook(() => useMockTestRowData());
       const mockRow = result.current.firstRow;
 
-      const StyledExpandedContent = styled(ExpandedContent)<StyledProps>`
+      // type assertion is needed in R17 with R16 types(@types/react 16.9.56)
+      // styled is not preserving the required row prop
+      const StyledExpandedContent = styled(
+        ExpandedContent as ComponentType<ExpandedContentProps<any>>,
+      )<StyledProps>`
         color: ${props => props.color};
-      `;
+      ` as typeof ExpandedContent;
 
       const { getByTestId } = render(
         <StyledExpandedContent
           data-testid="styled"
-          // @ts-expect-error ExpandedContent is incorrectly generic FIXME:
           row={mockRow}
           color="#69ffc6"
         />,
@@ -175,15 +180,9 @@ describe('packages/table/Row/ExpandableContent', () => {
     <>
       {/* @ts-expect-error - row is missing */}
       <ExpandedContent />
-
-      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} />
-      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} ref={ref} />
-
-      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} />
-      {/* @ts-expect-error - ExpandedContent is incorrectly generic */}
       <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} ref={ref} />
     </>;
   });
