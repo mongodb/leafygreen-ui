@@ -19,10 +19,16 @@
       "path": "../button"
     },
     {
+      "path": "../checkbox"
+    },
+    {
       "path": "../emotion"
     },
     {
       "path": "../hooks"
+    },
+    {
+      "path": "../input-option"
     },
     {
       "path": "../lib"

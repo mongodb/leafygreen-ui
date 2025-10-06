@@ -1296,6 +1296,9 @@ importers:
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
+      '@leafygreen-ui/checkbox':
+        specifier: workspace:^
+        version: link:../checkbox
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -1308,6 +1311,9 @@ importers:
       '@leafygreen-ui/icon-button':
         specifier: workspace:^
         version: link:../icon-button
+      '@leafygreen-ui/input-option':
+        specifier: workspace:^
+        version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../leafygreen-provider

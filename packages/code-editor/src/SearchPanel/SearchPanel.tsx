@@ -18,8 +18,11 @@ import {
 } from '@codemirror/search';
 
 import { Button } from '@leafygreen-ui/button';
+import { Checkbox } from '@leafygreen-ui/checkbox';
 import { IconButton } from '@leafygreen-ui/icon-button';
+import { InputOption } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Menu, MenuVariant } from '@leafygreen-ui/menu';
 import { TextInput } from '@leafygreen-ui/text-input';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -66,6 +69,15 @@ export function SearchPanel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useUpdatedBaseFontSize();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const findOptions = {
+    isCaseSensitive: 'Match case',
+    isRegex: 'Regexp',
+    isWholeWord: 'By word',
+  } as const;
+  const [highlightedOption, setHighlightedOption] = useState<string | null>(
+    null,
+  );
 
   const updateSelectedIndex = useCallback(() => {
     const cursor = query.getCursor(view.state.doc);
@@ -246,9 +258,41 @@ export function SearchPanel({
                 {selectedIndex ?? '?'}/{findCount}
               </Body>
             )}
-            <IconButton aria-label="filter button">
-              <Icon glyph="Filter" />
-            </IconButton>
+            <Menu
+              trigger={
+                <IconButton aria-label="filter button">
+                  <Icon glyph="Filter" />
+                </IconButton>
+              }
+              renderDarkMenu={false}
+              variant={MenuVariant.Compact}
+            >
+              {Object.entries(findOptions).map(([key, value]) => (
+                <InputOption
+                  key={key}
+                  as="li"
+                  highlighted={highlightedOption === key}
+                >
+                  <Checkbox
+                    label={value}
+                    onChange={() => {
+                      switch (key) {
+                        case 'isCaseSensitive':
+                          setIsCaseSensitive(!isCaseSensitive);
+                          break;
+                        case 'isRegex':
+                          setIsRegex(!isRegex);
+                          break;
+                        case 'isWholeWord':
+                          setIsWholeWord(!isWholeWord);
+                          break;
+                      }
+                      setHighlightedOption(key);
+                    }}
+                  />
+                </InputOption>
+              ))}
+            </Menu>
           </div>
         </div>
         <IconButton
