@@ -147,18 +147,6 @@ export const findOptionsContainerStyles = css`
   align-items: center;
 `;
 
-// export const findInputIconButtonStyles = css`
-//   position: absolute;
-//   right: ${spacing[100]}px;
-//   top: ${spacing[100]}px;
-// `;
-
-// export const findCountStyles = css`
-//   position: absolute;
-//   right: ${spacing[200]}px;
-//   top: ${spacing[100]}px;
-// `;
-
 export const replaceInputContainerStyles = css`
   position: relative;
   flex: 1 1 ${INPUT_WIDTH}px;
