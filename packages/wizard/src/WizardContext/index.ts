@@ -1,5 +1,5 @@
 export {
+  useWizardContext,
   WizardContext,
   type WizardContextData,
-  useWizardContext,
 } from './WizardContext';
