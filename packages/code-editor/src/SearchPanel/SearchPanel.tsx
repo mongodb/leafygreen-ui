@@ -19,14 +19,13 @@ import {
 
 import { Button } from '@leafygreen-ui/button';
 import { Checkbox } from '@leafygreen-ui/checkbox';
+import { Icon } from '@leafygreen-ui/icon';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { InputOption } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuVariant } from '@leafygreen-ui/menu';
 import { TextInput } from '@leafygreen-ui/text-input';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
-
-import { Icon } from '../../../icon/src/Icon';
 
 import {
   allButtonStyles,
