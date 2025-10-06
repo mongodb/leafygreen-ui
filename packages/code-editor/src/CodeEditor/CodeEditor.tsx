@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+//@ts-ignore Cannot find module 'react-dom/client' or its corresponding type declarations
 import { createRoot } from 'react-dom/client';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
