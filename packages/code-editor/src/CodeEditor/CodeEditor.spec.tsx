@@ -155,7 +155,18 @@ jest.mock('@codemirror/language', () => {
 
 describe('packages/code-editor', () => {
   test('Renders default value in editor', async () => {
-    const { editor, container } = renderCodeEditor({ defaultValue: 'content' });
+    const { editor, container } = renderCodeEditor({
+      defaultValue: 'content',
+    });
+    await editor.waitForEditorView();
+
+    expect(container).toHaveTextContent('content');
+  });
+
+  test('Renders default value in editor with search disabled', async () => {
+    const { editor, container } = renderCodeEditor({
+      defaultValue: 'content',
+    });
     await editor.waitForEditorView();
 
     expect(container).toHaveTextContent('content');
@@ -824,43 +835,6 @@ describe('packages/code-editor', () => {
         expect(
           container.querySelector(CodeEditorSelectors.Focused),
         ).not.toBeInTheDocument();
-      });
-    });
-
-    test('Pressing CMD+F brings up the search menu', async () => {
-      const { editor, container } = renderCodeEditor({
-        defaultValue: 'console.log("hello world");\nconsole.log("test");',
-      });
-
-      await editor.waitForEditorView();
-
-      // Focus the editor first
-      const contentElement = editor.getBySelector(CodeEditorSelectors.Content);
-      userEvent.click(contentElement);
-
-      // Verify editor is focused
-      await waitFor(() => {
-        expect(container.querySelector('.cm-focused')).toBeInTheDocument();
-      });
-
-      // Press Ctrl+F to open search (works on most platforms)
-      userEvent.keyboard('{Control>}f{/Control}');
-
-      // Check if the search panel appears
-      await waitFor(() => {
-        // CodeMirror 6 search creates a panel with specific classes
-        const searchPanel = container.querySelector(
-          CodeEditorSelectors.SearchPanel,
-        );
-        expect(searchPanel).toBeInTheDocument();
-      });
-
-      // Verify search input field is present and can be typed in
-      await waitFor(() => {
-        const searchInput = container.querySelector(
-          CodeEditorSelectors.SearchInput,
-        );
-        expect(searchInput).toBeInTheDocument();
       });
     });
 

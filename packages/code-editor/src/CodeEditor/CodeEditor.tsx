@@ -253,13 +253,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       const searchModule = modules?.['@codemirror/search'];
       const Prec = modules?.['@codemirror/state']?.Prec;
 
-      if (
-        !editorContainerRef?.current ||
-        !EditorView ||
-        !Prec ||
-        !commands ||
-        !searchModule
-      ) {
+      if (!editorContainerRef?.current || !EditorView || !Prec || !commands) {
         return;
       }
 
@@ -275,7 +269,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
           commands.history(),
 
-          enableSearchPanel
+          enableSearchPanel && searchModule
             ? searchModule.search({
                 createPanel: view => {
                   const dom = document.createElement('div');
@@ -322,7 +316,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               key: 'Shift-Tab',
               run: commands.indentLess,
             },
-            ...(enableSearchPanel ? searchModule.searchKeymap : []),
+            ...(enableSearchPanel && searchModule
+              ? searchModule.searchKeymap
+              : []),
             ...commands.defaultKeymap,
             ...commands.historyKeymap,
           ]),

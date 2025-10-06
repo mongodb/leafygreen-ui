@@ -151,6 +151,7 @@ export const useModuleLoaders = ({
   }, [
     enableClickableUrls,
     enableCodeFolding,
+    enableSearchPanel,
     forceParsing,
     indentUnit,
     tooltips,
