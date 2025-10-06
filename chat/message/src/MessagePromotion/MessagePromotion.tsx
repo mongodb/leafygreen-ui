@@ -30,11 +30,11 @@ export function MessagePromotion({
   const { darkMode } = useDarkMode(darkModeProp);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <div className={cx(promotionContainerStyles, className)}>
+      <div className={cx(promotionContainerStyles, className)} {...rest}>
         <Badge variant={Variant.Green} className={badgeStyles}>
           <Icon glyph="Award" />
         </Badge>
-        <Body as="span" {...rest}>
+        <Body as="span">
           {promotionText}
           <>
             {' '}
