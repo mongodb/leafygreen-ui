@@ -70,7 +70,7 @@
 
   #### Migration Guide
 
-  Use the [modal-v20 codemod]([popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#modal-v20) for migration assistance.
+  Use the [modal-v20 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#modal-v20) for migration assistance.
 
   ```shell
   pnpm lg codemod modal-v20 <path>
