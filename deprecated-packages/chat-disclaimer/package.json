@@ -1,6 +1,8 @@
 {
   "name": "@lg-chat/chat-disclaimer",
   "version": "5.0.1",
+  "private": true,
+  "deprecated": "This package is deprecated and will be removed in a future version. Use `@lg-chat/input-bar` v10.1.0 or greater instead.",
   "description": "LeafyGreen UI Kit Chat Disclaimer",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

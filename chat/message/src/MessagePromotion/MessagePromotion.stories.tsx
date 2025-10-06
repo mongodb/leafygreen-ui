@@ -8,7 +8,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { MessagePromotion, MessagePromotionProps } from '.';
 
 const meta: StoryMetaType<typeof MessagePromotion> = {
-  title: 'Composition/Chat/MessagePromotion',
+  title: 'Composition/Chat/Message/Promotion',
   component: MessagePromotion,
   parameters: {
     default: 'WithPromotionTextAndUrl',

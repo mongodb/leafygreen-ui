@@ -109,7 +109,6 @@ const meta: StoryMetaType<typeof Code> = {
   },
   argTypes: {
     isLoading: { control: 'boolean' },
-    copyable: { control: 'boolean' },
     expandable: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
     highlightLines: { control: 'boolean' },
@@ -231,7 +230,6 @@ WithLanguageSwitcher.parameters = {
     exclude: [
       'highlightLines',
       'copyButtonAppearance',
-      'copyable',
       'children',
       'expandable',
     ],
