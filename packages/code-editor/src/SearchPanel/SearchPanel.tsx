@@ -177,6 +177,11 @@ export function SearchPanel({
     updateSelectedIndex();
   }, [view, updateSelectedIndex]);
 
+  const handleFindAll = useCallback(() => {
+    selectMatches(view);
+    updateSelectedIndex();
+  }, [view, updateSelectedIndex]);
+
   const handleReplace = useCallback(() => {
     replaceNext(view);
     updateSelectedIndex();
@@ -312,10 +317,7 @@ export function SearchPanel({
         <Button
           className={allButtonStyles}
           disabled={!searchString || findCount === 0}
-          onClick={() => {
-            selectMatches(view);
-            setSelectedIndex(null);
-          }}
+          onClick={handleFindAll}
           baseFontSize={baseFontSizeProp || baseFontSize}
           darkMode={darkMode}
         >
