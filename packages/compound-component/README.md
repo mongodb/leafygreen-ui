@@ -52,7 +52,7 @@ const MyComponent = CompoundComponent(
   ({ children }) => <div className="main-component">{children}</div>,
   {
     displayName: 'MyComponent',
-    SubComponent: MySubComponent,
+    Sub: MySubComponent,
   },
 );
 
@@ -61,7 +61,7 @@ function App() {
   return (
     <MyComponent>
       Main content
-      <MyComponent.SubComponent>Sub content</MyComponent.SubComponent>
+      <MyComponent.Sub>Sub content</MyComponent.Sub>
     </MyComponent>
   );
 }
@@ -115,52 +115,159 @@ function App() {
 }
 ```
 
-### With TypeScript Props
+### Finding Sub-Components in Parent Components
 
-Both factories support typed props:
+Use `findChild` and `findChildren` utilities to locate specific sub-components within a parent component's children:
 
 ```tsx
-interface ButtonProps {
-  variant?: 'primary' | 'secondary';
-  onClick?: () => void;
-}
+import {
+  CompoundComponent,
+  CompoundSubComponent,
+  findChild,
+  findChildren,
+} from '@leafygreen-ui/compound-component';
 
-interface IconProps {
-  name: string;
-  size?: number;
-}
+// Define property constants for type safety and consistency
+const CardProperties = {
+  Header: 'isHeader',
+  Body: 'isBody',
+  Footer: 'isFooter',
+} as const;
 
-const Icon = CompoundSubComponent<'isIcon', IconProps>(
-  ({ name, size = 16 }) => (
-    <span className={`icon-${name}`} style={{ fontSize: size }} />
-  ),
+// Create sub-components with identifying properties
+const Header = CompoundSubComponent(
+  ({ children }) => <header>{children}</header>,
   {
-    displayName: 'Icon',
-    key: 'isIcon',
+    displayName: 'Header',
+    key: CardProperties.Header,
   },
 );
 
-const Button = CompoundComponent<ButtonProps>(
-  ({ variant = 'primary', onClick, children }) => (
-    <button className={`btn btn-${variant}`} onClick={onClick}>
-      {children}
-    </button>
-  ),
+const Body = CompoundSubComponent(({ children }) => <main>{children}</main>, {
+  displayName: 'Body',
+  key: CardProperties.Body,
+});
+
+const Footer = CompoundSubComponent(
+  ({ children }) => <footer>{children}</footer>,
   {
-    displayName: 'Button',
-    Icon,
+    displayName: 'Footer',
+    key: CardProperties.Footer,
   },
 );
 
-// Usage with props
+// Parent component that uses findChild/findChildren
+const Card = CompoundComponent(
+  ({ children }) => {
+    // Find specific sub-components using property constants
+    const header = findChild(children, CardProperties.Header);
+    const body = findChild(children, CardProperties.Body);
+    const footer = findChild(children, CardProperties.Footer);
+
+    // Find all instances of a sub-component type
+    const allBodies = findChildren(children, CardProperties.Body);
+
+    return (
+      <div className="card">
+        {header && <div className="card-header">{header}</div>}
+        {body && <div className="card-body">{body}</div>}
+        {footer && <div className="card-footer">{footer}</div>}
+        {allBodies.length > 1 && (
+          <div className="warning">Multiple body sections found!</div>
+        )}
+      </div>
+    );
+  },
+  {
+    displayName: 'Card',
+    Header,
+    Body,
+    Footer,
+  },
+);
+
+// Usage - parent can control layout and add wrapper elements
 function App() {
   return (
-    <Button variant="secondary" onClick={() => console.log('clicked')}>
-      <Button.Icon name="star" size={20} />
-      Click me
-    </Button>
+    <Card>
+      <Card.Header>Card Title</Card.Header>
+      <Card.Body>Main content here</Card.Body>
+      <Card.Footer>
+        <button>Action</button>
+      </Card.Footer>
+    </Card>
   );
 }
+```
+
+### Advanced Usage with Conditional Rendering
+
+```tsx
+// Define property constants for the Modal component
+const ModalProperties = {
+  Header: 'isModalHeader',
+  Body: 'isModalBody',
+  Footer: 'isModalFooter',
+} as const;
+
+const ModalHeader = CompoundSubComponent(
+  ({ children }) => <div>{children}</div>,
+  {
+    displayName: 'ModalHeader',
+    key: ModalProperties.Header,
+  },
+);
+
+const ModalBody = CompoundSubComponent(
+  ({ children }) => <div>{children}</div>,
+  {
+    displayName: 'ModalBody',
+    key: ModalProperties.Body,
+  },
+);
+
+const ModalFooter = CompoundSubComponent(
+  ({ children }) => <div>{children}</div>,
+  {
+    displayName: 'ModalFooter',
+    key: ModalProperties.Footer,
+  },
+);
+
+const Modal = CompoundComponent(
+  ({ children }) => {
+    // Use property constants instead of string literals
+    const header = findChild(children, ModalProperties.Header);
+    const body = findChild(children, ModalProperties.Body);
+    const footer = findChild(children, ModalProperties.Footer);
+
+    return (
+      <div className="modal">
+        {/* Only render header section if header component exists */}
+        {header && (
+          <div className="modal-header">
+            {header}
+            <button className="close-btn">×</button>
+          </div>
+        )}
+
+        {/* Body is required */}
+        <div className="modal-body">
+          {body || <div>No content provided</div>}
+        </div>
+
+        {/* Footer is optional */}
+        {footer && <div className="modal-footer">{footer}</div>}
+      </div>
+    );
+  },
+  {
+    displayName: 'Modal',
+    Header: ModalHeader,
+    Body: ModalBody,
+    Footer: ModalFooter,
+  },
+);
 ```
 
 ## API
@@ -186,6 +293,32 @@ Creates a sub-component with a static key property for identification.
 - `properties`: Object containing `displayName` and `key`
 
 **Returns:** A React component with the specified key property set to `true`
+
+### `findChild(children, staticProperty)`
+
+Finds the first child component with a matching static property.
+
+**Parameters:**
+
+- `children`: Any React children (ReactNode)
+- `staticProperty`: The static property name to check for (string)
+
+**Returns:** The first matching ReactElement or `undefined` if not found
+
+**Search Depth:** Only searches direct children and children inside a single React Fragment level.
+
+### `findChildren(children, staticProperty)`
+
+Finds all child components with a matching static property.
+
+**Parameters:**
+
+- `children`: Any React children (ReactNode)
+- `staticProperty`: The static property name to check for (string)
+
+**Returns:** Array of matching ReactElements (empty array if none found)
+
+**Search Depth:** Only searches direct children and children inside a single React Fragment level.
 
 ### Key Property
 
