@@ -15,4 +15,9 @@ export interface SearchPanelProps extends DarkModeProps {
    * The CodeMirror view instance.
    */
   view: CodeMirrorView;
+
+  /**
+   * Whether the CodeEditor is rendered within a panel component as well.
+   */
+  hasPanel: boolean;
 }

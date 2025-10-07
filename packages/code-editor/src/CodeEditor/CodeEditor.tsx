@@ -285,6 +285,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                     React.createElement(SearchPanel, {
                       view,
                       darkMode: props.darkMode,
+                      baseFontSize: props.baseFontSize,
+                      hasPanel: !!panel,
                     }),
                   );
                   return { dom, top: true };

@@ -68,13 +68,18 @@ export const getContainerStyles = ({
   theme,
   isOpen,
   baseFontSize,
+  hasPanel,
 }: {
   theme: Theme;
   isOpen: boolean;
   baseFontSize: BaseFontSize;
+  hasPanel: boolean;
 }) =>
   cx(getBaseContainerStyles(theme, baseFontSize), {
     [openContainerStyles]: isOpen,
+    [css`
+      border-top-right-radius: ${borderRadius[300]}px;
+    `]: !hasPanel,
   });
 
 export const findSectionStyles = css`

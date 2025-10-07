@@ -48,6 +48,7 @@ export function SearchPanel({
   view,
   darkMode,
   baseFontSize: baseFontSizeProp,
+  hasPanel,
 }: SearchPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchString, setSearchString] = useState('');
@@ -229,6 +230,7 @@ export function SearchPanel({
         theme,
         isOpen,
         baseFontSize: baseFontSizeProp || baseFontSize,
+        hasPanel,
       })}
       data-no-context-menu="true"
     >

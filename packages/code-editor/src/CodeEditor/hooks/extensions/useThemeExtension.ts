@@ -76,7 +76,6 @@ export function useThemeExtension({
             borderBottomRightRadius: `${borderRadius[300]}px`,
             borderTopLeftRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             borderTopRightRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
-            overflow: 'hidden',
             color: color[theme].text[Variant.Primary][InteractionState.Default],
           },
 
