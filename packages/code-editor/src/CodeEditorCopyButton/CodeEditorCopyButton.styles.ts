@@ -42,7 +42,10 @@ export const getCopyButtonStyles = ({
         height: 26px;
       }
 
-      transition: all ${transitionDuration.default}ms ease-in-out;
+      &,
+      & > div > svg {
+        transition: all ${transitionDuration.default}ms ease-in-out;
+      }
     `,
     {
       [copiedThemeStyle[theme]]: copied,
@@ -57,7 +60,16 @@ export const getCopyButtonStyles = ({
  */
 export const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.white};
+    &,
+    & > div > svg {
+      color: ${palette.white};
+
+      &:focus,
+      &:hover {
+        color: ${palette.white};
+      }
+    }
+
     background-color: ${palette.green.dark1};
 
     &:focus,
@@ -71,7 +83,16 @@ export const copiedThemeStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.dark3};
+    &,
+    & > div > svg {
+      color: ${palette.gray.dark3};
+
+      &:focus,
+      &:hover {
+        color: ${palette.gray.dark3};
+      }
+    }
+
     background-color: ${palette.green.base};
 
     &:focus,
