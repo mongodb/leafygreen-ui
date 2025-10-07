@@ -357,6 +357,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       getContents,
       enableSearchPanel,
       props.darkMode,
+      props.baseFontSize,
+      panel,
     ]);
 
     useImperativeHandle(forwardedRef, () => ({
