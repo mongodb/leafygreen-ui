@@ -22,9 +22,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "@leafygreen-ui/lib": "workspace:^"
-  },
+  "dependencies": {},
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/compound-component",
   "repository": {
     "type": "git",
