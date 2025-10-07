@@ -29,7 +29,6 @@ const transitionStyles = css`
 `;
 
 const hiddenWrapperStyles = css`
-  pointer-events: none;
   grid-template-rows: 0fr;
   opacity: 0;
   transform: scale(0.8);

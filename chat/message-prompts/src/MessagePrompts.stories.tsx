@@ -5,7 +5,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import { MessagePrompt, MessagePrompts, MessagePromptsProps } from '.';
 
@@ -86,6 +86,9 @@ export const LiveExample: StoryObj<MessagePromptsProps> = {
 
 export const SelectedWithoutHideOnSelect: StoryObj<MessagePromptsProps> = {
   render: Template,
+  args: {
+    enableHideOnSelect: false,
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -99,6 +102,11 @@ export const SelectedWithoutHideOnSelect: StoryObj<MessagePromptsProps> = {
     // Verify other prompts are disabled
     const secondPrompt = canvas.getByTestId('prompt-1');
     expect(secondPrompt).toHaveAttribute('aria-disabled', 'true');
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
   },
 };
 
@@ -118,7 +126,7 @@ export const SelectedWithHideOnSelect: StoryObj<MessagePromptsProps> = {
     expect(firstPrompt).toHaveAttribute('aria-pressed', 'true');
 
     // After selection with enableHideOnSelect, prompts should not be visible
-    expect(firstPrompt).not.toBeVisible();
+    await waitFor(() => expect(firstPrompt).not.toBeVisible());
   },
   parameters: {
     chromatic: {
