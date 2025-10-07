@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/confirmation-modal",
-  "version": "10.0.2",
+  "version": "10.1.0",
   "description": "leafyGreen UI Kit Confirmation Modal",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

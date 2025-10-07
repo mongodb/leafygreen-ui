@@ -1,5 +1,17 @@
 # @leafygreen-ui/hooks
 
+## 9.2.0
+
+### Minor Changes
+
+- 579e8c7: - Creates `useControlled` hook. This hook is a more generic version of `useControlledValue` that can be used for any component.
+  - Refactors `useControlledValue` to use `useControlled` under the hood.
+
+### Patch Changes
+
+- Updated dependencies [88e25a1]
+  - @leafygreen-ui/lib@15.6.1
+
 ## 9.1.4
 
 ### Patch Changes
