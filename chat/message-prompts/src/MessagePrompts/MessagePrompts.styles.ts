@@ -9,40 +9,51 @@ import {
 } from '@leafygreen-ui/tokens';
 
 const CONTAINER_MAX_WIDTH = 400;
+const FOCUS_RING_WIDTH = 4;
 
-const baseContainerStyles = css`
+const baseOuterWrapperStyles = css`
   max-width: ${CONTAINER_MAX_WIDTH}px;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
+  margin: -${FOCUS_RING_WIDTH}px;
+  padding: ${FOCUS_RING_WIDTH}px;
+  display: grid;
+  grid-template-rows: 1fr;
   gap: ${spacing[200]}px;
-  align-items: flex-start;
 `;
 
 const transitionStyles = css`
   transform-origin: bottom right;
-  transition: opacity ${transitionDuration.slower}ms ease-out,
-    transform ${transitionDuration.slower}ms ease-out,
-    display ${transitionDuration.slower}ms ease-out allow-discrete;
+  transition-property: grid-template-rows, opacity, transform;
+  transition-duration: ${transitionDuration.slower}ms;
+  transition-timing-function: ease-out;
 `;
 
-const hiddenContainerStyles = css`
+const hiddenWrapperStyles = css`
+  pointer-events: none;
+  grid-template-rows: 0fr;
   opacity: 0;
   transform: scale(0.8);
-  pointer-events: none;
-  display: none;
 `;
 
-export const getContainerStyles = ({
+export const getOuterWrapperStyles = ({
   enableTransition,
   shouldHide,
 }: {
   enableTransition: boolean;
   shouldHide: boolean;
 }) =>
-  cx(baseContainerStyles, {
+  cx(baseOuterWrapperStyles, {
     [transitionStyles]: enableTransition,
-    [hiddenContainerStyles]: shouldHide,
+    [hiddenWrapperStyles]: shouldHide,
   });
+
+export const innerWrapperStyles = css`
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[200]}px;
+  align-items: flex-start;
+`;
 
 export const headerStyles = css`
   display: flex;

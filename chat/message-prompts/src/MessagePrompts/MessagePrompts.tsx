@@ -10,9 +10,10 @@ import { MessagePromptsProvider } from '../MessagePromptsContext';
 
 import {
   childrenContainerStyles,
-  getContainerStyles,
   getLabelStyles,
+  getOuterWrapperStyles,
   headerStyles,
+  innerWrapperStyles,
 } from './MessagePrompts.styles';
 import { MessagePromptsProps } from './MessagePrompts.types';
 
@@ -28,7 +29,7 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
     },
     ref,
   ) => {
-    const { theme } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
     const hasSelectedPrompt: boolean = React.Children.toArray(children).some(
       child => isComponentType(child, 'MessagePrompt') && child.props.selected,
     );
@@ -39,29 +40,34 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
     return (
       <MessagePromptsProvider hasSelectedPrompt={hasSelectedPrompt}>
         <div
-          className={getContainerStyles({
+          className={getOuterWrapperStyles({
             enableTransition: enableHideOnSelect,
             shouldHide,
           })}
           ref={ref}
           {...rest}
         >
-          {showHeader && (
-            <div className={headerStyles}>
-              {label && <Body className={getLabelStyles(theme)}>{label}</Body>}
-              {onRefresh && (
-                <IconButton
-                  aria-label="Refresh prompts"
-                  onClick={onRefresh}
-                  title="Refresh prompts"
-                  disabled={hasSelectedPrompt}
-                >
-                  <RefreshIcon />
-                </IconButton>
-              )}
-            </div>
-          )}
-          <div className={childrenContainerStyles}>{children}</div>
+          <div className={innerWrapperStyles}>
+            {showHeader && (
+              <div className={headerStyles}>
+                {label && (
+                  <Body className={getLabelStyles(theme)}>{label}</Body>
+                )}
+                {onRefresh && (
+                  <IconButton
+                    aria-label="Refresh prompts"
+                    darkMode={darkMode}
+                    disabled={hasSelectedPrompt}
+                    onClick={onRefresh}
+                    title="Refresh prompts"
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                )}
+              </div>
+            )}
+            <div className={childrenContainerStyles}>{children}</div>
+          </div>
         </div>
       </MessagePromptsProvider>
     );
