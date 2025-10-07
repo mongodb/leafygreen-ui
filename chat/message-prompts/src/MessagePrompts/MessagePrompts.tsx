@@ -24,7 +24,7 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
       darkMode: darkModeProp,
       enableHideOnSelect = true,
       label,
-      onRefresh,
+      onClickRefresh,
       ...rest
     },
     ref,
@@ -35,7 +35,7 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
     );
 
     const shouldHide = enableHideOnSelect && hasSelectedPrompt;
-    const showHeader = label || onRefresh;
+    const showHeader = label || onClickRefresh;
 
     return (
       <MessagePromptsProvider hasSelectedPrompt={hasSelectedPrompt}>
@@ -53,12 +53,12 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
                 {label && (
                   <Body className={getLabelStyles(theme)}>{label}</Body>
                 )}
-                {onRefresh && (
+                {onClickRefresh && (
                   <IconButton
                     aria-label="Refresh prompts"
                     darkMode={darkMode}
                     disabled={hasSelectedPrompt}
-                    onClick={onRefresh}
+                    onClick={onClickRefresh}
                     title="Refresh prompts"
                   >
                     <RefreshIcon />

@@ -26,5 +26,5 @@ export type MessagePromptsProps = ComponentPropsWithRef<'div'> &
      * When provided, a refresh IconButton will be rendered next to the label.
      * The button is disabled when a prompt is selected.
      */
-    onRefresh?: MouseEventHandler<HTMLButtonElement>;
+    onClickRefresh?: MouseEventHandler<HTMLButtonElement>;
   }>;

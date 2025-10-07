@@ -33,7 +33,7 @@ function MyComponent() {
     'How do I create a database?',
   ]);
 
-  const handleRefresh = () => {
+  const handleClickRefresh = () => {
     // Fetch new prompts
     setPrompts(getNewPrompts());
   };
@@ -41,7 +41,7 @@ function MyComponent() {
   return (
     <MessagePrompts
       label="Suggested Prompts"
-      onRefresh={handleRefresh}
+      onClickRefresh={handleClickRefresh}
       enableHideOnSelect
     >
       {prompts.map(prompt => (
@@ -60,7 +60,7 @@ function MyComponent() {
 | --------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `enableHideOnSelect` _(optional)_ | `boolean`                                    | When true, the prompts container will transition (fade and shrink) when a prompt is selected.                                                                                      | `true`  |
 | `label` _(optional)_              | `string`                                     | Optional label displayed above the message prompts.                                                                                                                                |         |
-| `onRefresh` _(optional)_          | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called when the refresh button is clicked. When provided, a refresh IconButton will be rendered next to the label. The button is disabled when a prompt is selected. |         |
+| `onClickRefresh` _(optional)_     | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called when the refresh button is clicked. When provided, a refresh IconButton will be rendered next to the label. The button is disabled when a prompt is selected. |         |
 | `...`                             | `HTMLElementProps<'div'>`                    | Props spread on root div element                                                                                                                                                   |         |
 
 ## MessagePrompt Properties

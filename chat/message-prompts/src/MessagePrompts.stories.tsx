@@ -10,14 +10,14 @@ import { expect, userEvent, within } from '@storybook/test';
 import { MessagePrompt, MessagePrompts, MessagePromptsProps } from '.';
 
 // eslint-disable-next-line no-console
-const testOnRefresh = () => console.log('Refresh clicked');
+const testOnClickRefresh = () => console.log('Refresh clicked');
 
 const meta: StoryMetaType<typeof MessagePrompts> = {
   title: 'Composition/Chat/MessagePrompts',
   component: MessagePrompts,
   args: {
     label: 'Suggested Prompts',
-    onRefresh: testOnRefresh,
+    onClickRefresh: testOnClickRefresh,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -27,18 +27,18 @@ const meta: StoryMetaType<typeof MessagePrompts> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [...storybookExcludedControlParams, 'onRefresh'],
+      exclude: [...storybookExcludedControlParams, 'onClickRefresh'],
     },
     generate: {
       combineArgs: {
         darkMode: [false, true],
         label: [undefined, 'Suggested Prompts'],
-        onRefresh: [undefined, testOnRefresh],
+        onClickRefresh: [undefined, testOnClickRefresh],
       },
       excludeCombinations: [
         {
           label: undefined,
-          onRefresh: testOnRefresh,
+          onClickRefresh: testOnClickRefresh,
         },
       ],
     },

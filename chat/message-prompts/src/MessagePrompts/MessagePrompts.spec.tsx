@@ -140,25 +140,25 @@ describe('MessagePrompts', () => {
     });
   });
 
-  describe('onRefresh behavior', () => {
-    test('does not render refresh button when onRefresh is not provided', () => {
+  describe('onClickRefresh behavior', () => {
+    test('does not render refresh button when onClickRefresh is not provided', () => {
       renderMessagePrompts();
       const refreshButton = screen.queryByLabelText('Refresh prompts');
       expect(refreshButton).not.toBeInTheDocument();
     });
 
-    test('renders refresh button when onRefresh is provided and no prompt is selected', () => {
-      const mockOnRefresh = jest.fn();
-      renderMessagePrompts({ onRefresh: mockOnRefresh });
+    test('renders refresh button when onClickRefresh is provided and no prompt is selected', () => {
+      const mockOnClickRefresh = jest.fn();
+      renderMessagePrompts({ onClickRefresh: mockOnClickRefresh });
       const refreshButton = screen.getByLabelText('Refresh prompts');
       expect(refreshButton).toBeInTheDocument();
       expect(refreshButton).toHaveAttribute('aria-disabled', 'false');
     });
 
-    test('renders disabled refresh button when onRefresh is provided and a prompt is selected', () => {
-      const mockOnRefresh = jest.fn();
+    test('renders disabled refresh button when onClickRefresh is provided and a prompt is selected', () => {
+      const mockOnClickRefresh = jest.fn();
       render(
-        <MessagePrompts onRefresh={mockOnRefresh}>
+        <MessagePrompts onClickRefresh={mockOnClickRefresh}>
           <MessagePrompt selected>Selected prompt</MessagePrompt>
           <MessagePrompt>Another prompt</MessagePrompt>
         </MessagePrompts>,
@@ -168,20 +168,20 @@ describe('MessagePrompts', () => {
       expect(refreshButton).toHaveAttribute('aria-disabled', 'true');
     });
 
-    test('calls onRefresh when refresh button is clicked and not disabled', async () => {
-      const mockOnRefresh = jest.fn();
-      renderMessagePrompts({ onRefresh: mockOnRefresh });
+    test('calls onClickRefresh when refresh button is clicked and not disabled', async () => {
+      const mockOnClickRefresh = jest.fn();
+      renderMessagePrompts({ onClickRefresh: mockOnClickRefresh });
 
       const refreshButton = screen.getByLabelText('Refresh prompts');
       await userEvent.click(refreshButton);
 
-      expect(mockOnRefresh).toHaveBeenCalledTimes(1);
+      expect(mockOnClickRefresh).toHaveBeenCalledTimes(1);
     });
 
-    test('does not call onRefresh when refresh button is disabled and clicked', async () => {
-      const mockOnRefresh = jest.fn();
+    test('does not call onClickRefresh when refresh button is disabled and clicked', async () => {
+      const mockOnClickRefresh = jest.fn();
       render(
-        <MessagePrompts onRefresh={mockOnRefresh}>
+        <MessagePrompts onClickRefresh={mockOnClickRefresh}>
           <MessagePrompt selected>Selected prompt</MessagePrompt>
           <MessagePrompt>Another prompt</MessagePrompt>
         </MessagePrompts>,
@@ -190,13 +190,13 @@ describe('MessagePrompts', () => {
       const refreshButton = screen.getByLabelText('Refresh prompts');
       await userEvent.click(refreshButton);
 
-      expect(mockOnRefresh).not.toHaveBeenCalled();
+      expect(mockOnClickRefresh).not.toHaveBeenCalled();
     });
 
     test('disables refresh button when a prompt is selected', () => {
-      const mockOnRefresh = jest.fn();
+      const mockOnClickRefresh = jest.fn();
       const { rerender } = render(
-        <MessagePrompts onRefresh={mockOnRefresh}>
+        <MessagePrompts onClickRefresh={mockOnClickRefresh}>
           <MessagePrompt>Prompt 1</MessagePrompt>
           <MessagePrompt>Prompt 2</MessagePrompt>
         </MessagePrompts>,
@@ -209,7 +209,7 @@ describe('MessagePrompts', () => {
 
       // Select a prompt
       rerender(
-        <MessagePrompts onRefresh={mockOnRefresh}>
+        <MessagePrompts onClickRefresh={mockOnClickRefresh}>
           <MessagePrompt selected>Prompt 1</MessagePrompt>
           <MessagePrompt>Prompt 2</MessagePrompt>
         </MessagePrompts>,

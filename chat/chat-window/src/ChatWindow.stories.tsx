@@ -266,7 +266,7 @@ const WithMessagePromptsComponent = ({
                 <MessagePrompts
                   label="Suggested Prompts"
                   enableHideOnSelect
-                  onRefresh={() => {
+                  onClickRefresh={() => {
                     // eslint-disable-next-line no-console
                     console.log('Refresh prompts');
                     setSelectedPromptIndex(undefined);
