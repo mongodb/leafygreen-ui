@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+
 import { Polymorph, PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 /**
@@ -26,6 +27,6 @@ export const TextNode = ({
   return typeof children === 'string' || typeof children === 'number' ? (
     <Polymorph as={as}>{children}</Polymorph>
   ) : (
-    children
+    <>{children}</>
   );
 };
