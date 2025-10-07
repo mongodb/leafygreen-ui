@@ -56,7 +56,9 @@ export const findChildren = (
 
   if (!allChildren) return [];
 
-  return allChildren.filter(child =>
-    isChildWithProperty(child, staticProperty),
-  ) as Array<ReactElement>;
+  return allChildren
+    .flat()
+    .filter(child =>
+      isChildWithProperty(child, staticProperty),
+    ) as Array<ReactElement>;
 };

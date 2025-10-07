@@ -160,7 +160,7 @@ describe('packages/compound-component', () => {
       );
 
       const { getByTestId } = render(<TestComponent label="Hello World" />);
-      expect(getByTestId('sub-component')).toHaveTextContent('Hello World');
+      expect(getByTestId('main-component')).toHaveTextContent('Hello World');
     });
 
     test('one sub-component', () => {
