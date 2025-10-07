@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/modal",
-  "version": "20.0.3",
+  "version": "20.1.0",
   "description": "LeafyGreen UI Kit Modal",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

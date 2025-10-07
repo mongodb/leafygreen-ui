@@ -1,5 +1,19 @@
 # @leafygreen-ui/table
 
+## 15.1.5
+
+### Patch Changes
+
+- 7c79bb2: Fix ExtendedContent types to allow passing row prop
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/icon-button@17.1.0
+  - @leafygreen-ui/checkbox@18.1.0
+  - @leafygreen-ui/icon@14.6.0
+
 ## 15.1.4
 
 ### Patch Changes

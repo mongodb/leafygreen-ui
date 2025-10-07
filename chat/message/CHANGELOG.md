@@ -1,5 +1,20 @@
 # @lg-chat/message
 
+## 8.2.1
+
+### Patch Changes
+
+- fedb362: Add `className` prop to `Message.Promotion` for custom styles
+- c536066: Remove `MessagePromotion` export
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/icon-button@17.1.0
+  - @leafygreen-ui/badge@10.2.0
+  - @leafygreen-ui/icon@14.6.0
+
 ## 8.2.0
 
 ### Minor Changes
