@@ -3,7 +3,9 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
 import { Variant } from '@leafygreen-ui/button';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import { glyphs, Icon } from '@leafygreen-ui/icon';
+
+import { WizardProvider } from '../WizardContext';
 
 import { WizardFooter, type WizardFooterProps } from '.';
 
@@ -19,7 +21,7 @@ interface StoryArgs {
 }
 
 const meta: StoryMetaType<typeof WizardFooter, StoryArgs> = {
-  title: 'Components/Wizard/WizardFooter',
+  title: 'Composition/Wizard/WizardFooter',
   component: WizardFooter,
   parameters: {
     default: 'LiveExample',
@@ -52,6 +54,13 @@ export const LiveExample: StoryObj<StoryArgs> = {
     primaryButtonIcon: 'Ellipsis',
     primaryButtonVariant: Variant.Primary,
   },
+  decorators: [
+    Story => (
+      <WizardProvider activeStep={1} updateStep={() => {}}>
+        <Story />
+      </WizardProvider>
+    ),
+  ],
   render: args => (
     <WizardFooter
       backButtonProps={{

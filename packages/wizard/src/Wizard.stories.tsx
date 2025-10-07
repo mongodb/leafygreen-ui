@@ -4,14 +4,14 @@ import { faker } from '@faker-js/faker';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
-import Card from '@leafygreen-ui/card';
+import { Card } from '@leafygreen-ui/card';
 
 import { Wizard } from '.';
 
 faker.seed(0);
 
 export default {
-  title: 'Composition/Data Display/Wizard',
+  title: 'Composition/Wizard',
   component: Wizard,
   parameters: {
     default: 'LiveExample',
