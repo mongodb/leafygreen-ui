@@ -253,11 +253,13 @@ describe('packages/modal', () => {
   });
 
   describe('when "open" prop is false', () => {
-    test('renders to DOM but dialog is not open', () => {
-      const { queryModal } = renderModal({ open: false });
+    test('renders dialog element but children are not rendered', () => {
+      const { queryModal, queryByText } = renderModal({ open: false });
       const modal = queryModal();
+      expect(modal).toBeInTheDocument();
       expect(modal).not.toHaveAttribute('open');
       expect(modal).not.toBeVisible();
+      expect(queryByText(modalContent)).not.toBeInTheDocument();
     });
   });
 
