@@ -50,6 +50,8 @@ export const getPanelInnerContentStyles = () => {
 export const getPanelButtonsStyles = () => {
   return css`
     grid-area: buttons;
+    display: flex;
+    justify-content: center;
   `;
 };
 
