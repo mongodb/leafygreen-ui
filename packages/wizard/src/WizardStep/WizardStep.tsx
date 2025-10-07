@@ -1,37 +1,37 @@
 import React from 'react';
 
+import { consoleOnce } from '@leafygreen-ui/lib';
 import { Description, H3 } from '@leafygreen-ui/typography';
 
+import { WizardSubComponentProperties } from '../constants';
+import { CompoundSubComponent } from '../utils/CompoundSubComponent';
+import { useWizardContext } from '../WizardContext';
+
+import { TextNode } from './TextNode';
 import { stepStyles } from './WizardStep.styles';
 import { WizardStepProps } from './WizardStep.types';
-import { WizardSubComponentProperties } from '../constants';
-import { TextNode } from './TextNode';
-import { useWizardContext } from '../WizardContext';
-import { consoleOnce } from '@leafygreen-ui/lib';
 
-export function WizardStep({
-  title,
-  description,
-  children,
-  ...rest
-}: WizardStepProps) {
-  const { isWizardContext } = useWizardContext();
+export const WizardStep = CompoundSubComponent(
+  ({ title, description, children, ...rest }: WizardStepProps) => {
+    const { isWizardContext } = useWizardContext();
 
-  if (!isWizardContext) {
-    consoleOnce.error(
-      'Wizard.Step component must be used within a Wizard context.',
+    if (!isWizardContext) {
+      consoleOnce.error(
+        'Wizard.Step component must be used within a Wizard context.',
+      );
+      return null;
+    }
+
+    return (
+      <div className={stepStyles} {...rest}>
+        <TextNode as={H3}>{title}</TextNode>
+        {description && <TextNode as={Description}>{description}</TextNode>}
+        <div>{children}</div>
+      </div>
     );
-    return null;
-  }
-
-  return (
-    <div className={stepStyles} {...rest}>
-      <TextNode as={H3}>{title}</TextNode>
-      {description && <TextNode as={Description}>{description}</TextNode>}
-      <div>{children}</div>
-    </div>
-  );
-}
-
-WizardStep.displayName = 'WizardStep';
-WizardStep[WizardSubComponentProperties.Step] = true;
+  },
+  {
+    displayName: 'WizardStep',
+    [WizardSubComponentProperties.Step]: true,
+  },
+);
