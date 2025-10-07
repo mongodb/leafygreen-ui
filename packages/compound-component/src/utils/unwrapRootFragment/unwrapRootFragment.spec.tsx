@@ -38,7 +38,7 @@ describe('packages/compound-component/unwrapRootFragment', () => {
     expect(unwrapped).toHaveLength(1);
   });
 
-  test('returns an empty array children has no length', () => {
+  test('returns an empty array when children has no length', () => {
     const unwrapped = unwrapRootFragment([]);
     expect(unwrapped).toBeDefined();
     expect(unwrapped).toHaveLength(0);
