@@ -4,6 +4,7 @@ import React, {
   MouseEvent,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import {
@@ -69,7 +70,6 @@ export function SearchPanel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useUpdatedBaseFontSize();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
   const findOptions = {
     isCaseSensitive: 'Match case',
     isRegex: 'Regexp',
@@ -79,10 +79,12 @@ export function SearchPanel({
     null,
   );
 
+  const isInitialRender = useRef(true);
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const updateSelectedIndex = useCallback(() => {
     const cursor = query.getCursor(view.state.doc);
     const selection = view.state.selection.main;
-
     let index = 1;
     let result = cursor.next();
 
@@ -97,7 +99,6 @@ export function SearchPanel({
       index++;
       result = cursor.next();
     }
-
     setSelectedIndex(null);
   }, [query, view]);
 
@@ -111,7 +112,6 @@ export function SearchPanel({
         count++;
         result = cursor.next();
       }
-
       setFindCount(count);
     },
     [view],
@@ -127,7 +127,31 @@ export function SearchPanel({
     });
 
     setQuery(newQuery);
-    view.dispatch({ effects: setSearchQuery.of(newQuery) });
+
+    if (isInitialRender.current) {
+      /**
+       * This effect synchronizes the React component's state with the CodeMirror search extension.
+       * A race condition occurs on the initial render because this React component is created
+       * and rendered *during* an ongoing CodeMirror state update (a "transaction").
+       *
+       * If we dispatch our own transaction synchronously within this effect, CodeMirror could throw
+       * an error because it doesn't allow nested transactions.
+       *
+       * To solve this, we use `setTimeout(..., 0)` to defer the initial dispatch. This pushes our
+       * update to the end of the browser's event queue, ensuring it runs immediately after
+       * CodeMirror's current transaction is complete. Subsequent updates are dispatched
+       * synchronously for immediate UI feedback.
+       */
+      const timeoutId = setTimeout(() => {
+        view.dispatch({ effects: setSearchQuery.of(newQuery) });
+      }, 0);
+      isInitialRender.current = false;
+      return () => clearTimeout(timeoutId); // Cleanup the timeout on unmount
+    } else {
+      // On all subsequent updates (e.g., user typing), dispatch immediately.
+      view.dispatch({ effects: setSearchQuery.of(newQuery) });
+    }
+
     updateFindCount(newQuery);
   }, [
     replaceString,
@@ -138,6 +162,23 @@ export function SearchPanel({
     view,
     updateFindCount,
   ]);
+
+  /**
+   * This effect manually focuses the search input when the panel first opens. The standard
+   * `autoFocus` prop is unreliable here due to a race condition with CodeMirror's own
+   * focus management.
+   *
+   * When the panel is created, CodeMirror's logic often runs after React renders and may shift
+   * focus back to the main editor, "stealing" it from our input. By deferring the `focus()` call
+   * with `setTimeout(..., 0)`, we ensure our command runs last, winning the focus race.
+   */
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
+  }, []); // An empty dependency array ensures this runs only once when the component mounts
 
   const handleToggleButtonClick = useCallback(
     (_e: MouseEvent<HTMLButtonElement>) => {
@@ -253,10 +294,10 @@ export function SearchPanel({
             value={searchString}
             baseFontSize={baseFontSizeProp || baseFontSize}
             darkMode={darkMode}
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
             // CodeMirror looks for this attribute to refocus when CMD+F is pressed and the panel is already open
             main-field="true"
+            // @ts-expect-error - The TextInput component forwards refs, but the types do not explicitly include the `ref` prop.
+            ref={inputRef}
           />
           <div className={findOptionsContainerStyles}>
             {searchString && (
