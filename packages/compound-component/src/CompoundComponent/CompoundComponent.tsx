@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { ComponentType } from 'react';
 
 /** Generic properties applied to a Compound component */
 interface CompoundComponentProperties {
@@ -10,7 +10,7 @@ interface CompoundComponentProperties {
 export type CompoundComponentType<
   Props extends {} = {},
   Properties extends CompoundComponentProperties = CompoundComponentProperties,
-> = FunctionComponent<Props> & Properties;
+> = ComponentType<Props> & Properties;
 
 /**
  * Factory function used to create a compound component parent.
@@ -33,7 +33,7 @@ export const CompoundComponent = <
   Props extends {} = {},
   Properties extends CompoundComponentProperties = CompoundComponentProperties,
 >(
-  componentRenderFn: FunctionComponent<Props>,
+  componentRenderFn: ComponentType<Props>,
   properties: Properties,
 ): CompoundComponentType<Props, Properties> => {
   return Object.assign(componentRenderFn, properties);

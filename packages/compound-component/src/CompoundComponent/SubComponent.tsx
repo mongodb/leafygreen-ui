@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { ComponentType } from 'react';
 
 interface SubComponentProperties<Key extends string> {
   displayName: string;
@@ -8,7 +8,7 @@ interface SubComponentProperties<Key extends string> {
 export type SubComponentType<
   Key extends string,
   Props extends {} = {},
-> = FunctionComponent<Props> & {
+> = ComponentType<Props> & {
   [key in Key]: true;
 };
 
@@ -30,7 +30,7 @@ export type SubComponentType<
  * @returns {SubComponentType}
  */
 export const CompoundSubComponent = <Key extends string, Props extends {} = {}>(
-  componentRenderFn: FunctionComponent<Props>,
+  componentRenderFn: ComponentType<Props>,
   properties: SubComponentProperties<Key>,
 ): SubComponentType<Key, Props> => {
   const { key, ...rest } = properties;

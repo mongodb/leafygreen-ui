@@ -1,4 +1,4 @@
-import React, { createRef, forwardRef } from 'react';
+import React, { createRef, forwardRef, memo } from 'react';
 import { render } from '@testing-library/react';
 
 import { CompoundSubComponent } from './SubComponent';
@@ -78,6 +78,24 @@ describe('packages/compound-component', () => {
       expect(getByTestId('sub-component')).toHaveTextContent('Hello World');
       expect(testRef.current).toBe(getByTestId('sub-component'));
     });
+
+    test('renders memo sub-component', () => {
+      // A component created with the CompoundSubComponent factory renders, and has the given property
+      const TestSubComponent = CompoundSubComponent(
+        // eslint-disable-next-line react/display-name
+        memo(({ label }: { label: string }) => (
+          <div data-testid="sub-component">{label}</div>
+        )),
+        {
+          displayName: 'TestSubComponent',
+          key: 'isTestSubComponent',
+        },
+      );
+
+      // Test that the component renders
+      const { getByTestId } = render(<TestSubComponent label="Hello World" />);
+      expect(getByTestId('sub-component')).toHaveTextContent('Hello World');
+    });
   });
 
   describe('CompoundComponent', () => {
@@ -127,6 +145,22 @@ describe('packages/compound-component', () => {
       const testRef = createRef<HTMLDivElement>();
       const { getByTestId } = render(<TestComponent ref={testRef} />);
       expect(testRef.current).toBe(getByTestId('main-component'));
+    });
+
+    test('renders memo compound component', () => {
+      // A component created with the CompoundComponent factory renders
+      const TestComponent = CompoundComponent(
+        // eslint-disable-next-line react/display-name
+        memo(({ label }: { label: string }) => (
+          <div data-testid="main-component">{label}</div>
+        )),
+        {
+          displayName: 'TestComponent',
+        },
+      );
+
+      const { getByTestId } = render(<TestComponent label="Hello World" />);
+      expect(getByTestId('sub-component')).toHaveTextContent('Hello World');
     });
 
     test('one sub-component', () => {
