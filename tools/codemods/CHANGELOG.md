@@ -1,5 +1,11 @@
 # @lg-tools/codemods
 
+## 0.5.0
+
+### Minor Changes
+
+- d027d4c: Add `named-exports` codemod for migrating LG package default exports to named exports. [codemods README](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports)
+
 ## 0.4.2
 
 ### Patch Changes
