@@ -30,7 +30,7 @@ Baz.displayName = 'Baz';
 (Bar as any).isBar = true;
 (Baz as any).isBaz = true;
 
-describe('packages/lib/findChildren', () => {
+describe('packages/compound-component/findChildren', () => {
   describe('basic functionality', () => {
     it('should find all children with matching static property', () => {
       const children = [
