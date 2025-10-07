@@ -78,7 +78,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       errorMessage,
       onMessageSend,
       onSubmit,
-      shouldRenderGradient: shouldRenderGradientProp = true,
+      shouldRenderGradient: shouldRenderGradientProp = false,
       shouldRenderHotkeyIndicator = false,
       state,
       textareaProps,
