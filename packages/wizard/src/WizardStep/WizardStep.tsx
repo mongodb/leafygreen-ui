@@ -32,6 +32,6 @@ export const WizardStep = CompoundSubComponent(
   },
   {
     displayName: 'WizardStep',
-    [WizardSubComponentProperties.Step]: true,
+    key: WizardSubComponentProperties.Step,
   },
 );

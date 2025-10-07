@@ -59,6 +59,6 @@ export const WizardFooter = CompoundSubComponent(
   },
   {
     displayName: 'WizardFooter',
-    [WizardSubComponentProperties.Footer]: true,
+    key: WizardSubComponentProperties.Footer,
   },
 );
