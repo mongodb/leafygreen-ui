@@ -1,8 +1,8 @@
 import range from 'lodash/range';
 
-import { defaultMax, defaultMin } from '../../../../../constants';
-import { DateSegment } from '../../../../../types';
-import { getValueFormatter } from '../../../../../utils';
+import { charsPerSegment, defaultMax, defaultMin } from '../../../../constants';
+import { DateSegment } from '../../../../types';
+import { getValueFormatter } from '../../../../utils';
 
 import { getNewSegmentValueFromInputValue } from './getNewSegmentValueFromInputValue';
 
@@ -139,7 +139,7 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
     });
 
     describe('when current value is a full formatted value', () => {
-      const formatter = getValueFormatter(segment);
+      const formatter = getValueFormatter(segment, charsPerSegment);
       const testValues = [defaultMin[segment], defaultMax[segment]].map(
         formatter,
       );

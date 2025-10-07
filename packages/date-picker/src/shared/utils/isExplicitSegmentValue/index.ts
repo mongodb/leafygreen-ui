@@ -12,7 +12,7 @@ export const isExplicitSegmentValue = (
   segment: DateSegment,
   value: DateSegmentValue,
 ): boolean => {
-  if (!(isValidSegmentValue(value) && isValidSegmentName(segment)))
+  if (!(isValidSegmentValue(value) && isValidSegmentName(DateSegment, segment)))
     return false;
 
   switch (segment) {

@@ -1,5 +1,6 @@
 import { DateType } from '@leafygreen-ui/date-utils';
 
+import { charsPerSegment } from '../../constants';
 import { DateSegmentsState } from '../../types';
 import { getValueFormatter } from '../getValueFormatter';
 
@@ -12,8 +13,8 @@ export const getFormattedSegmentsFromDate = (
   const segments = getSegmentsFromDate(date);
 
   return {
-    day: getValueFormatter('day')(segments['day']),
-    month: getValueFormatter('month')(segments['month']),
-    year: getValueFormatter('year')(segments['year']),
+    day: getValueFormatter('day', charsPerSegment)(segments['day']),
+    month: getValueFormatter('month', charsPerSegment)(segments['month']),
+    year: getValueFormatter('year', charsPerSegment)(segments['year']),
   };
 };

@@ -19,7 +19,6 @@ import { DateInputSegmentChangeEventHandler } from '../../shared/components/Date
 import { useSharedDatePickerContext } from '../../shared/context';
 import {
   getFormattedDateStringFromSegments,
-  getRelativeSegmentRef,
   isElementInputSegment,
 } from '../../shared/utils';
 import { useDatePickerContext } from '../DatePickerContext';
@@ -66,6 +65,8 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         setValue(newVal);
       }
 
+      console.log('😈handleInputValueChange', { newVal, segments });
+
       if (!isNull(newVal) && isInvalidDateObject(newVal)) {
         const dateString = getFormattedDateStringFromSegments(segments, locale);
         setInternalErrorMessage(`${dateString} is not a valid date`);
@@ -110,77 +111,11 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       // if target is not a segment, do nothing
       if (!isSegment) return;
 
-      const isSegmentEmpty = !target.value;
-
       switch (key) {
-        case keyMap.ArrowLeft: {
-          // Without this, the input ignores `.select()`
-          e.preventDefault();
-          // if input is empty,
-          // set focus to prev input (if it exists)
-          const segmentToFocus = getRelativeSegmentRef('prev', {
-            segment: target,
-            formatParts,
-            segmentRefs,
-          });
-
-          segmentToFocus?.current?.focus();
-          segmentToFocus?.current?.select();
-          // otherwise, use default behavior
-
-          break;
-        }
-
-        case keyMap.ArrowRight: {
-          // Without this, the input ignores `.select()`
-          e.preventDefault();
-          // if input is empty,
-          // set focus to next. input (if it exists)
-          const segmentToFocus = getRelativeSegmentRef('next', {
-            segment: target,
-            formatParts,
-            segmentRefs,
-          });
-
-          segmentToFocus?.current?.focus();
-          segmentToFocus?.current?.select();
-          // otherwise, use default behavior
-
-          break;
-        }
-
-        case keyMap.ArrowUp:
-        case keyMap.ArrowDown: {
-          // increment/decrement logic implemented by DateInputSegment
-          break;
-        }
-
-        case keyMap.Backspace: {
-          if (isSegmentEmpty) {
-            // prevent the backspace in the previous segment
-            e.preventDefault();
-
-            const segmentToFocus = getRelativeSegmentRef('prev', {
-              segment: target,
-              formatParts,
-              segmentRefs,
-            });
-            segmentToFocus?.current?.focus();
-            segmentToFocus?.current?.select();
-          }
-          break;
-        }
-
         case keyMap.Space: {
           openMenu();
           break;
         }
-
-        case keyMap.Enter:
-        case keyMap.Escape:
-        case keyMap.Tab:
-          // Behavior handled by parent or menu
-          break;
       }
 
       // call any handler that was passed in
@@ -232,10 +167,9 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       <DateFormField
         ref={fwdRef}
         buttonRef={calendarButtonRef}
-        onKeyDown={handleInputKeyDown}
         onInputClick={handleInputClick}
-        onBlur={handleInputBlur}
         onIconButtonClick={handleIconButtonClick}
+        onBlur={handleInputBlur}
         {...rest}
       >
         <DateInputBox
@@ -243,6 +177,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           setValue={handleInputValueChange}
           segmentRefs={segmentRefs}
           onSegmentChange={handleSegmentChange}
+          onKeyDown={handleInputKeyDown}
         />
       </DateFormField>
     );

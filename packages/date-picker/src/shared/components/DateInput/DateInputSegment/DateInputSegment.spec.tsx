@@ -3,7 +3,7 @@ import { jest } from '@jest/globals';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { defaultMax, defaultMin } from '../../../constants';
+import { charsPerSegment, defaultMax, defaultMin } from '../../../constants';
 import {
   SharedDatePickerProvider,
   SharedDatePickerProviderProps,
@@ -244,7 +244,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
     describe('Arrow Keys', () => {
       describe('day input', () => {
-        const formatter = getValueFormatter('day');
+        const formatter = getValueFormatter('day', charsPerSegment);
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {
@@ -390,7 +390,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       describe('month input', () => {
-        const formatter = getValueFormatter('month');
+        const formatter = getValueFormatter('month', charsPerSegment);
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {
@@ -552,7 +552,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       describe('year input', () => {
-        const formatter = getValueFormatter('year');
+        const formatter = getValueFormatter('year', charsPerSegment);
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {

@@ -2,14 +2,12 @@ import padStart from 'lodash/padStart';
 
 import { isZeroLike } from '@leafygreen-ui/lib';
 
-import { charsPerSegment } from '../../constants';
-import { DateSegment } from '../../types';
-
 /**
  * @returns a value formatter function for the provided date segment
  */
 export const getValueFormatter =
-  (segment: DateSegment) => (val: string | number | undefined) => {
+  <T extends string>(segment: T, charsPerSegment: Record<T, number>) =>
+  (val: string | number | undefined) => {
     // If the value is any form of zero, we set it to an empty string
     if (isZeroLike(val)) return '';
 

@@ -1,4 +1,5 @@
 import { DateSegment, DateSegmentsState } from '../../../shared/types';
+import { charsPerSegment } from '../../../shared/constants';
 import { getFormatParts } from '../getFormatParts';
 import { getValueFormatter } from '../getValueFormatter';
 
@@ -16,7 +17,7 @@ export const getFormattedDateStringFromSegments = (
     }
 
     const segment = part.type as DateSegment;
-    const formatter = getValueFormatter(segment);
+    const formatter = getValueFormatter(segment, charsPerSegment);
     const formattedSegment = formatter(segments[segment]);
     return dateString + formattedSegment;
   }, '');

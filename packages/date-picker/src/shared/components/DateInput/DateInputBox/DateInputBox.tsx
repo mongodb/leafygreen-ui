@@ -1,4 +1,8 @@
-import React, { FocusEventHandler, useEffect } from 'react';
+import React, {
+  FocusEventHandler,
+  KeyboardEventHandler,
+  useEffect,
+} from 'react';
 import isEqual from 'lodash/isEqual';
 import isNull from 'lodash/isNull';
 
@@ -29,6 +33,8 @@ import {
   isEverySegmentValueExplicit,
   isExplicitSegmentValue,
   newDateFromSegments,
+  getRelativeSegmentRef,
+  isElementInputSegment,
 } from '../../../utils';
 import { DateInputSegment } from '../DateInputSegment';
 import { DateInputSegmentChangeEventHandler } from '../DateInputSegment/DateInputSegment.types';
@@ -39,6 +45,7 @@ import {
   separatorLiteralStyles,
 } from './DateInputBox.styles';
 import { DateInputBoxProps } from './DateInputBox.types';
+import { charsPerSegment } from '../../../constants';
 
 /**
  * Renders a styled date input with appropriate segment order & separator characters.
@@ -62,6 +69,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       labelledBy,
       segmentRefs,
       onSegmentChange,
+      onKeyDown,
       ...rest
     }: DateInputBoxProps,
     fwdRef,
@@ -77,7 +85,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       segmentName: DateSegment,
       segmentValue: DateSegmentValue,
     ): DateSegmentValue => {
-      const formatter = getValueFormatter(segmentName);
+      const formatter = getValueFormatter(segmentName, charsPerSegment);
       const formattedValue = formatter(segmentValue);
       return formattedValue;
     };
@@ -118,6 +126,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       }
     };
 
+    /** State Management for segments using a useReducer instead of useState */
     /** Keep track of each date segment */
     const { segments, setSegment } = useDateSegments(value, {
       onUpdate: handleSegmentUpdate,
@@ -153,6 +162,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
         setSegment(segmentName, segmentValue);
         onSegmentChange?.(segmentChangeEvent);
+        // TODO: onInputChange callback here
       };
 
     /** Triggered when a segment is blurred */
@@ -169,9 +179,92 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       }
     };
 
+    /** Called on any keydown within the input element */
+    const handleInputKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
+      const { target: _target, key } = e;
+      const target = _target as HTMLElement;
+      const isSegment = isElementInputSegment(target, segmentRefs);
+
+      // if target is not a segment, do nothing
+      if (!isSegment) return;
+
+      const isSegmentEmpty = !target.value;
+
+      switch (key) {
+        case keyMap.ArrowLeft: {
+          // Without this, the input ignores `.select()`
+          e.preventDefault();
+          // if input is empty,
+          // set focus to prev input (if it exists)
+          const segmentToFocus = getRelativeSegmentRef('prev', {
+            segment: target,
+            formatParts,
+            segmentRefs,
+          });
+
+          segmentToFocus?.current?.focus();
+          segmentToFocus?.current?.select();
+          // otherwise, use default behavior
+
+          break;
+        }
+
+        case keyMap.ArrowRight: {
+          // Without this, the input ignores `.select()`
+          e.preventDefault();
+          // if input is empty,
+          // set focus to next. input (if it exists)
+          const segmentToFocus = getRelativeSegmentRef('next', {
+            segment: target,
+            formatParts,
+            segmentRefs,
+          });
+
+          segmentToFocus?.current?.focus();
+          segmentToFocus?.current?.select();
+          // otherwise, use default behavior
+
+          break;
+        }
+
+        case keyMap.ArrowUp:
+        case keyMap.ArrowDown: {
+          // increment/decrement logic implemented by DateInputSegment
+          break;
+        }
+
+        case keyMap.Backspace: {
+          if (isSegmentEmpty) {
+            // prevent the backspace in the previous segment
+            e.preventDefault();
+
+            const segmentToFocus = getRelativeSegmentRef('prev', {
+              segment: target,
+              formatParts,
+              segmentRefs,
+            });
+            segmentToFocus?.current?.focus();
+            segmentToFocus?.current?.select();
+          }
+          break;
+        }
+
+        case keyMap.Space:
+        case keyMap.Enter:
+        case keyMap.Escape:
+        case keyMap.Tab:
+          // Behavior handled by parent or menu
+          break;
+      }
+
+      // call any handler that was passed in
+      onKeyDown?.(e);
+    };
+
     return (
       <div
         className={cx(segmentPartsWrapperStyles, className)}
+        onKeyDown={handleInputKeyDown}
         ref={containerRef}
         {...rest}
       >

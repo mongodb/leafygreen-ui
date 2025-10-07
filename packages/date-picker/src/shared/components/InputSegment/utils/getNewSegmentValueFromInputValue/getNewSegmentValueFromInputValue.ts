@@ -2,9 +2,9 @@ import last from 'lodash/last';
 
 import { truncateStart } from '@leafygreen-ui/lib';
 
-import { charsPerSegment } from '../../../../../constants';
-import { DateSegment, DateSegmentValue } from '../../../../../types';
-import { isValidValueForSegment } from '../../../../../utils';
+import { charsPerSegment } from '../../../../constants';
+import { DateSegment, DateSegmentValue } from '../../../../types';
+import { isValidValueForSegment } from '../../../../utils';
 
 /**
  * Calculates the new value for the segment given an incoming change.

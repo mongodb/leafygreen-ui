@@ -1,10 +1,11 @@
 import { DateSegment } from '../../types';
 
 import { getValueFormatter } from '.';
+import { charsPerSegment } from '../../constants';
 
 describe('packages/date-picker/utils/valueFormatter', () => {
   describe.each(['day', 'month'] as Array<DateSegment>)('', segment => {
-    const formatter = getValueFormatter(segment);
+    const formatter = getValueFormatter(segment, charsPerSegment);
 
     test('formats 2 digit values', () => {
       expect(formatter('12')).toEqual('12');
@@ -32,7 +33,7 @@ describe('packages/date-picker/utils/valueFormatter', () => {
   });
 
   describe('year', () => {
-    const formatter = getValueFormatter('year');
+    const formatter = getValueFormatter('year', charsPerSegment);
 
     test('formats 4 digit values', () => {
       expect(formatter('2023')).toEqual('2023');

@@ -12,7 +12,7 @@ export const isValidValueForSegment = (
   value: DateSegmentValue,
 ): boolean => {
   const isValidSegmentAndValue =
-    isValidSegmentValue(value) && isValidSegmentName(segment);
+    isValidSegmentValue(value) && isValidSegmentName(DateSegment, segment);
 
   if (segment === 'year') {
     // allow any 4-digit year value regardless of defined range

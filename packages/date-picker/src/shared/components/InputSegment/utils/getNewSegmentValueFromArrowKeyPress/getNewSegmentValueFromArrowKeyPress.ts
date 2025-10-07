@@ -1,6 +1,6 @@
 import { keyMap, rollover } from '@leafygreen-ui/lib';
 
-import { DateSegment, DateSegmentValue } from '../../../../../types';
+import { DateSegment, DateSegmentValue } from '../../../../types';
 
 interface DateSegmentKeypressContext {
   value: DateSegmentValue;
