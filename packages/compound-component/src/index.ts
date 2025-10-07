@@ -1,8 +1,8 @@
 export {
   CompoundComponent,
-  CompoundComponentType,
+  type CompoundComponentType,
   CompoundSubComponent,
-  SubComponentType,
+  type SubComponentType,
 } from './CompoundComponent';
 export {
   filterChildren,
