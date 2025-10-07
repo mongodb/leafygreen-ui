@@ -6,7 +6,7 @@ import { findChild, findChildren } from '@leafygreen-ui/lib';
 import { WizardSubComponentProperties } from '../constants';
 import { CompoundComponent } from '../utils/CompoundComponent';
 import { useWizardControlledValue } from '../utils/useWizardControlledValue/useWizardControlledValue';
-import { WizardContext } from '../WizardContext';
+import { WizardProvider } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
 
@@ -57,18 +57,12 @@ export const Wizard = CompoundComponent(
     const currentStep = stepChildren[activeStep] || null;
 
     return (
-      <WizardContext.Provider
-        value={{
-          isWizardContext: true,
-          activeStep,
-          updateStep,
-        }}
-      >
+      <WizardProvider activeStep={activeStep} updateStep={updateStep}>
         <div className={wizardContainerStyles} {...rest}>
           <div className={stepContentStyles}>{currentStep}</div>
           {footerChild}
         </div>
-      </WizardContext.Provider>
+      </WizardProvider>
     );
   },
   {
