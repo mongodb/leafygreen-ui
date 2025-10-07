@@ -13,8 +13,8 @@ const meta: StoryMetaType<typeof MessagePromotion> = {
       combineArgs: {
         darkMode: [false, true],
         promotionText: [
-          'Challenge your knowledge by earning the Advanced Schema Design skill!',
-          'Challenge your knowledge by earning the Advanced Schema Design skill! This is a really really really really really really really really really really really really really really really really really  really really really really really really really really long copy text to test how the component handles long text content.',
+          'Challenge your knowledge and earn the Schema Design badge!',
+          'Challenge your knowledge by earning the Advanced Schema Design skill! This is a really really really really really really really really really long copy text to test how the component handles multiline text content.',
         ],
         promotionUrl: ['https://learn.mongodb.com/skills'],
       },
