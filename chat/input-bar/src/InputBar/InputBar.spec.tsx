@@ -384,4 +384,107 @@ describe('packages/input-bar', () => {
       );
     });
   });
+
+  describe('onClickStop', () => {
+    test('enables send button during loading state even with empty message', () => {
+      renderInputBar({ state: State.Loading });
+
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+      expect(sendButton).not.toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('calls onClickStop when button is clicked during loading state', () => {
+      const onClickStop = jest.fn();
+      renderInputBar({ state: State.Loading, onClickStop });
+
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+      userEvent.click(sendButton);
+
+      expect(onClickStop).toHaveBeenCalledTimes(1);
+    });
+
+    test('restores previous message when stop is clicked in uncontrolled mode', () => {
+      const onClickStop = jest.fn();
+      const onMessageSend = jest.fn();
+      const { rerender } = renderInputBar({ onClickStop, onMessageSend });
+
+      const textarea = screen.getByRole('textbox');
+      let sendButton = screen.getByRole('button', { name: 'Send message' });
+
+      userEvent.type(textarea, TEST_INPUT_TEXT);
+      expect(textarea).toHaveValue(TEST_INPUT_TEXT);
+
+      userEvent.click(sendButton);
+      expect(onMessageSend).toHaveBeenCalledTimes(1);
+      expect(textarea).toHaveValue('');
+
+      rerender(
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <InputBar
+            state={State.Loading}
+            onClickStop={onClickStop}
+            onMessageSend={onMessageSend}
+          />
+        </LeafyGreenChatProvider>,
+      );
+
+      sendButton = screen.getByRole('button', { name: 'Send message' });
+
+      userEvent.click(sendButton);
+
+      expect(onClickStop).toHaveBeenCalledTimes(1);
+      expect(textarea).toHaveValue(TEST_INPUT_TEXT);
+    });
+
+    test('does not call onMessageSend when stopping during loading state', () => {
+      const onMessageSend = jest.fn();
+      const onClickStop = jest.fn();
+
+      renderInputBar({
+        state: State.Loading,
+        onMessageSend,
+        onClickStop,
+        textareaProps: { value: TEST_INPUT_TEXT },
+      });
+
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+      userEvent.click(sendButton);
+
+      expect(onClickStop).toHaveBeenCalledTimes(1);
+      expect(onMessageSend).not.toHaveBeenCalled();
+    });
+
+    test('disabled prop takes precedence over loading state', () => {
+      const onClickStop = jest.fn();
+      renderInputBar({ state: State.Loading, disabled: true, onClickStop });
+
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+      expect(sendButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('disableSend prop takes precedence over loading state', () => {
+      const onClickStop = jest.fn();
+      renderInputBar({ state: State.Loading, disableSend: true, onClickStop });
+
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+      expect(sendButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('does not call onClickStop if not in loading state', () => {
+      const onClickStop = jest.fn();
+      const onMessageSend = jest.fn();
+
+      renderInputBar({
+        onClickStop,
+        onMessageSend,
+        textareaProps: { value: TEST_INPUT_TEXT },
+      });
+
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+      userEvent.click(sendButton);
+
+      expect(onClickStop).not.toHaveBeenCalled();
+      expect(onMessageSend).toHaveBeenCalledTimes(1);
+    });
+  });
 });

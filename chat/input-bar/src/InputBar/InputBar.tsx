@@ -76,6 +76,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       dropdownFooterSlot,
       dropdownProps,
       errorMessage,
+      onClickStop,
       onMessageSend,
       onSubmit,
       shouldRenderGradient: shouldRenderGradientProp = true,
@@ -142,8 +143,9 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const [shouldRenderButtonText, setShouldRenderButtonText] =
       useState<boolean>(false);
 
+    const isLoading = state === State.Loading;
     const isSendButtonDisabled =
-      disableSend || disabled || messageBody?.trim() === '';
+      disabled || disableSend || (!isLoading && messageBody?.trim() === '');
     const shouldRenderGradient =
       !isCompact && shouldRenderGradientProp && isFocused && !disabled;
     const showHotkeyIndicator =
@@ -366,6 +368,12 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
         return;
       }
 
+      if (isLoading && onClickStop) {
+        onClickStop();
+        restorePreviousMessage();
+        return;
+      }
+
       if (onMessageSend && messageBody) {
         onMessageSend(messageBody, e);
         if (!isControlled) {
@@ -389,6 +397,18 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const handleBackdropClick = () => {
       closeMenu();
     };
+
+    /**
+     * Helper function to restore the previous message body.
+     * Used when stopping during loading or when an error occurs.
+     */
+    const restorePreviousMessage = useCallback(() => {
+      if (!isControlled) {
+        updateValue(prevMessageBody, internalTextareaRef);
+        setPrevMessageBody('');
+      }
+      internalTextareaRef.current?.focus();
+    }, [isControlled, prevMessageBody, updateValue]);
 
     useAutoScroll(highlightedElementRef, menuRef, 12);
     useBackdropClick(handleBackdropClick, [focusContainerRef, menuRef], {
@@ -418,13 +438,8 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
         return;
       }
 
-      if (!isControlled) {
-        updateValue(prevMessageBody, internalTextareaRef);
-        setPrevMessageBody('');
-      }
-
-      internalTextareaRef.current?.focus();
-    }, [state, prevState, isControlled, prevMessageBody, updateValue]);
+      restorePreviousMessage();
+    }, [state, prevState, restorePreviousMessage]);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
