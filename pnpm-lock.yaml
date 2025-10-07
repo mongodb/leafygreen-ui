@@ -3795,15 +3795,27 @@ importers:
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
+      '@leafygreen-ui/descendants':
+        specifier: workspace:^
+        version: link:../descendants
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/form-footer':
         specifier: workspace:^
         version: link:../form-footer
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@leafygreen-ui/polymorphic':
+        specifier: workspace:^
+        version: link:../polymorphic
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
