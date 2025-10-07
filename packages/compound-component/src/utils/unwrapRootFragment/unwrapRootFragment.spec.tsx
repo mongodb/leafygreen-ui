@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import { unwrapRootFragment } from './unwrapRootFragment';
 
-describe('packages/lib/unwrapRootFragment', () => {
+describe('packages/compound-component/unwrapRootFragment', () => {
   test('returns a single child that is not a Fragment', () => {
     const unwrapped = unwrapRootFragment(<div></div>);
     expect(unwrapped).toHaveLength(1);
