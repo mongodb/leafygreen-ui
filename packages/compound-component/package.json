@@ -24,7 +24,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@emotion/styled": "^11.10.5"
+    "@emotion/styled": "^11.10.5",
+    "@lg-tools/build": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/compound-component",
   "repository": {
