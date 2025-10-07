@@ -15,7 +15,7 @@ import { unwrapRootFragment } from '../unwrapRootFragment';
  * **Styled Component Support:** Checks component.target and component.__emotion_base
  * for styled() wrapped components.
  *
- *  * @example
+ * @example
  * ```ts
  * // ✅ Will find: Direct children
  * findChildren([

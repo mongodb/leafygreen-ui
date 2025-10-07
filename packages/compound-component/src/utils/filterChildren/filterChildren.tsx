@@ -14,18 +14,30 @@ import { hasAnyStaticProperty } from '../hasStaticProperty';
  * for styled() wrapped components.
  *
  * @example
- * ```ts
- * // ✅ Will filter out: Direct children with matching properties
- * <Foo isFoo={true} />
+ * ```tsx
+ * // Mark components with static properties
+ * Foo.isFoo = true;
+ * Bar.isBar = true;
+ * Baz.isBaz = true;
  *
- * // ✅ Will filter out: Children inside fragments with matching properties
- * <><Bar isBar={true} /></>
+ * // ✅ Will filter out: Direct children with matching static properties
+ * const children = (
+ *   <>
+ *     <Foo />
+ *     <Bar />
+ *     <div><Foo /></div>
+ *     <>
+ *       <Baz />
+ *     </>
+ *   </>
+ * );
  *
- * // ❌ Will NOT filter: Nested fragments
- * <><><Baz isBaz={true} /></></>
+ * // Filter out all children whose type has the static property "isFoo" or "isBar"
+ * const result = filterChildren(children, ["isFoo", "isBar"]);
  *
- * // ❌ Will NOT filter: Deeply nested
- * <div><Foo isFoo={true} /></div>
+ * // result will NOT include <Foo /> or <Bar />, but will include:
+ * // - <div><Foo /></div> (deeply nested, not filtered)
+ * // - <><Baz /></> (nested fragment, not filtered)
  * ```
  *
  * @param children Any React children
