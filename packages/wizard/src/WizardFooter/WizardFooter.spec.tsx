@@ -1,8 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { WizardFooter } from '.';
 import { Wizard } from '../Wizard';
+
+import { WizardFooter } from '.';
 
 describe('packages/wizard-footer', () => {
   test('does not render outside WizardContext', () => {
