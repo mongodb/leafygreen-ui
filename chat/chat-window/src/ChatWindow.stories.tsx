@@ -191,3 +191,113 @@ export const SpaciousVariant: StoryObj<ChatWindowStoryProps> = {
     variant: Variant.Spacious,
   },
 };
+
+const WithMessagePromptsComponent = ({
+  variant,
+  assistantName,
+  ...props
+}: ChatWindowStoryProps) => {
+  const [messages, setMessages] = useState<Array<any>>([
+    {
+      id: 0,
+      messageBody: 'Hello! How can I help you today?',
+      isMongo: true,
+    },
+  ]);
+  const [selectedPromptIndex, setSelectedPromptIndex] = useState<
+    number | undefined
+  >();
+
+  const prompts = [
+    'What is MongoDB?',
+    'How do I create a database?',
+    'Can you explain indexes?',
+  ];
+
+  const handlePromptSelect = (index: number) => {
+    setSelectedPromptIndex(index);
+    const selectedPrompt = prompts[index];
+
+    // Add user message with selected prompt
+    const userMessage = {
+      id: messages.length,
+      messageBody: selectedPrompt,
+      userName: 'User',
+    };
+
+    // Add assistant response
+    const assistantMessage = {
+      id: messages.length + 1,
+      messageBody: `Great question! Let me explain about "${selectedPrompt}"...`,
+      isMongo: true,
+    };
+
+    setMessages(prev => [...prev, userMessage, assistantMessage]);
+  };
+
+  const handleMessageSend = (messageBody: string) => {
+    const newMessage = {
+      id: messages.length,
+      messageBody,
+      userName: 'User',
+    };
+    setMessages(prev => [...prev, newMessage]);
+  };
+
+  return (
+    <LeafyGreenChatProvider assistantName={assistantName} variant={variant}>
+      <ChatWindow {...props}>
+        <MessageFeed>
+          <div style={{ flex: 1 }} aria-hidden="true" />
+          {messages.map((messageFields, index) => (
+            <Message
+              key={messageFields.id}
+              sourceType="markdown"
+              avatar={
+                <Avatar
+                  variant={messageFields.isMongo ? 'mongo' : 'user'}
+                  name={messageFields.userName}
+                />
+              }
+              isSender={!!messageFields.userName}
+              messageBody={messageFields.messageBody}
+            >
+              {index === 0 && (
+                <MessagePrompts
+                  label="Suggested Prompts"
+                  enableHideOnSelect
+                  onRefresh={() => {
+                    // eslint-disable-next-line no-console
+                    console.log('Refresh prompts');
+                    setSelectedPromptIndex(undefined);
+                  }}
+                >
+                  {prompts.map((prompt, promptIndex) => (
+                    <MessagePrompt
+                      key={prompt}
+                      selected={selectedPromptIndex === promptIndex}
+                      onClick={() => handlePromptSelect(promptIndex)}
+                      data-testid={`prompt-${promptIndex}`}
+                    >
+                      {prompt}
+                    </MessagePrompt>
+                  ))}
+                </MessagePrompts>
+              )}
+            </Message>
+          ))}
+        </MessageFeed>
+        <InputBar onMessageSend={handleMessageSend} />
+      </ChatWindow>
+    </LeafyGreenChatProvider>
+  );
+};
+
+export const WithMessagePrompts: StoryObj<ChatWindowStoryProps> = {
+  render: WithMessagePromptsComponent,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
