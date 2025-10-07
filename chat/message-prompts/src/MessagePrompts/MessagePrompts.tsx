@@ -22,7 +22,7 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
     {
       children,
       darkMode: darkModeProp,
-      enableHideOnSelect = false,
+      enableHideOnSelect = true,
       label,
       onRefresh,
       ...rest

@@ -10,9 +10,9 @@ export type MessagePromptsProps = ComponentPropsWithRef<'div'> &
   DarkModeProps &
   PropsWithChildren<{
     /**
-     * When true, the prompts container will transition (fade and shrink to bottom-right)
+     * When true, the prompts container will transition (fade and shrink)
      * when a prompt is selected.
-     * @default false
+     * @default true
      */
     enableHideOnSelect?: boolean;
 
@@ -23,7 +23,8 @@ export type MessagePromptsProps = ComponentPropsWithRef<'div'> &
 
     /**
      * Event handler called when the refresh button is clicked.
-     * When provided, a refresh IconButton will be rendered.
+     * When provided, a refresh IconButton will be rendered next to the label.
+     * The button is disabled when a prompt is selected.
      */
     onRefresh?: MouseEventHandler<HTMLButtonElement>;
   }>;
