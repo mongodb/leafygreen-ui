@@ -370,6 +370,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       maxWidth,
       minWidth,
       width,
+      readOnly,
     };
 
     return (

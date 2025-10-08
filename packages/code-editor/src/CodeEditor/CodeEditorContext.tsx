@@ -9,7 +9,10 @@ import { CodeEditorProps } from './CodeEditor.types';
  * Internal context values provided by CodeEditor to its children (like Panel).
  */
 export interface CodeEditorContextValue
-  extends Pick<CodeEditorProps, 'maxWidth' | 'minWidth' | 'width'> {
+  extends Pick<
+    CodeEditorProps,
+    'maxWidth' | 'minWidth' | 'width' | 'readOnly'
+  > {
   /**
    * Function to retrieve the current editor contents.
    */
@@ -72,6 +75,7 @@ const defaultContextValue: CodeEditorContextValue = {
   maxWidth: undefined,
   minWidth: undefined,
   width: undefined,
+  readOnly: false,
 };
 
 const CodeEditorContext =
