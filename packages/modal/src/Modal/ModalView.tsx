@@ -90,11 +90,11 @@ const ModalView = React.forwardRef<HTMLDialogElement, ModalProps>(
         }}
       >
         <dialog
+          data-testid={lgIds.root}
+          data-lgid={lgIds.root}
           {...rest}
           ref={dialogRef}
           id={id}
-          data-testid={lgIds.root}
-          data-lgid={lgIds.root}
           className={getDialogStyles({
             backdropClassName,
             className,
@@ -108,16 +108,23 @@ const ModalView = React.forwardRef<HTMLDialogElement, ModalProps>(
           // @ts-ignore React17 - `onCancel` is unavailable in React 17 types
           onCancel={e => e.preventDefault()}
         >
-          {children}
-          <CloseButton
-            data-lgid={lgIds.close}
-            data-testid={lgIds.close}
-            closeIconColor={closeIconColor}
-            onClick={handleClose}
-          />
-          {/* Backdrop portal container for floating elements that need to escape dialog overflow */}
-          {open && dialogEl && (
-            <div className={portalContainerStyles} ref={setPortalContainerEl} />
+          {open && (
+            <>
+              {children}
+              <CloseButton
+                data-lgid={lgIds.close}
+                data-testid={lgIds.close}
+                closeIconColor={closeIconColor}
+                onClick={handleClose}
+              />
+              {/* Backdrop portal container for floating elements that need to escape dialog overflow */}
+              {dialogEl && (
+                <div
+                  className={portalContainerStyles}
+                  ref={setPortalContainerEl}
+                />
+              )}
+            </>
           )}
         </dialog>
       </LeafyGreenProvider>

@@ -1,5 +1,26 @@
 # @lg-chat/chat-window
 
+## 4.1.6
+
+### Patch Changes
+
+- 9b2d156: [LG-5486](https://jira.mongodb.org/browse/LG-5486) reverts style changes from [v4.1.4](https://github.com/mongodb/leafygreen-ui/blob/main/chat/chat-window/CHANGELOG.md#414)
+- Updated dependencies [88e25a1]
+  - @leafygreen-ui/lib@15.6.1
+
+## 4.1.5
+
+### Patch Changes
+
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/emotion@5.0.3
+  - @lg-chat/title-bar@4.0.8
+
 ## 4.1.4
 
 ### Patch Changes

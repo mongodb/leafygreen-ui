@@ -1,5 +1,30 @@
 # @lg-tools/cli
 
+## 0.10.9
+
+### Patch Changes
+
+- Updated dependencies [d027d4c]
+  - @lg-tools/codemods@0.5.0
+
+## 0.10.8
+
+### Patch Changes
+
+- Updated dependencies [a366ec0]
+- Updated dependencies [a366ec0]
+  - @lg-tools/install@0.4.0
+  - @lg-tools/test@0.5.0
+  - @lg-tools/link@0.2.14
+  - @lg-tools/validate@0.6.0
+
+## 0.10.7
+
+### Patch Changes
+
+- Updated dependencies [2b6a7c0]
+  - @lg-tools/create@0.5.0
+
 ## 0.10.6
 
 ### Patch Changes

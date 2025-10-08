@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { storybookExcludedControlParams } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import { GuideCue } from '@leafygreen-ui/guide-cue';
+import { usePrevious } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { DisplayMode, Drawer } from '../../Drawer';
-import { DrawerLayoutProvider } from '../../DrawerLayout';
+import {
+  DrawerLayout,
+  DrawerLayoutProps,
+  DrawerLayoutProvider,
+} from '../../DrawerLayout';
 import { getTestUtils } from '../../testing';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext/DrawerToolbarContext';
 
@@ -672,3 +678,139 @@ export const EmbeddedButtonIsFocusedOnClose: StoryObj<DrawerToolbarLayoutPropsWi
     },
     play: playMainContentButtonFocusManagement,
   };
+
+interface MainContentProps {
+  dashboardButtonRef: React.RefObject<HTMLButtonElement>;
+  guideCueOpen: boolean;
+  setGuideCueOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const MainContent: React.FC<MainContentProps> = ({
+  dashboardButtonRef,
+  guideCueOpen,
+  setGuideCueOpen,
+}) => {
+  const { isDrawerOpen } = useDrawerToolbarContext();
+  const prevIsDrawerOpen = usePrevious(isDrawerOpen);
+
+  // Close GuideCue immediately when drawer begins transitioning (state change)
+  useEffect(() => {
+    if (prevIsDrawerOpen !== undefined && prevIsDrawerOpen !== isDrawerOpen) {
+      // Close guide cue immediately when drawer transition begins
+      if (guideCueOpen) {
+        setGuideCueOpen(false);
+      }
+    }
+  }, [isDrawerOpen, prevIsDrawerOpen, guideCueOpen, setGuideCueOpen]);
+
+  return (
+    <main
+      className={css`
+        padding: ${spacing[400]}px;
+      `}
+    >
+      <div
+        className={css`
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: ${spacing[200]}px;
+        `}
+      >
+        <Button onClick={() => setGuideCueOpen(true)}>Show GuideCue</Button>
+        <p>
+          This example demonstrates how to use refs in toolbarData to attach a
+          GuideCue to a toolbar icon button. The button tooltip is automatically
+          disabled while the GuideCue is visible to prevent conflicts between
+          the two overlays.
+        </p>
+      </div>
+      <LongContent />
+      <GuideCue
+        open={guideCueOpen}
+        setOpen={setGuideCueOpen}
+        title="Dashboard Feature"
+        refEl={dashboardButtonRef}
+        numberOfSteps={1}
+        onPrimaryButtonClick={() => setGuideCueOpen(false)}
+        tooltipAlign="left"
+        tooltipJustify="start"
+      >
+        Click here to access your dashboard with analytics and insights!
+      </GuideCue>
+    </main>
+  );
+};
+
+const WithGuideCueComponent: StoryFn<DrawerLayoutProps> = ({
+  displayMode,
+}: DrawerLayoutProps) => {
+  const dashboardButtonRef = useRef<HTMLButtonElement>(null);
+  const [guideCueOpen, setGuideCueOpen] = useState(false);
+
+  // Use useMemo to make toolbar data reactive to guideCueOpen state changes
+  const DRAWER_TOOLBAR_DATA: DrawerLayoutProps['toolbarData'] = useMemo(
+    () => [
+      {
+        id: 'Code',
+        label: 'Code',
+        content: <LongContent />,
+        title: 'Code',
+        glyph: 'Code',
+      },
+      {
+        id: 'Dashboard',
+        label: 'Dashboard',
+        content: <LongContent />,
+        title: 'Dashboard',
+        glyph: 'Dashboard',
+        ref: dashboardButtonRef, // This ref is passed to the ToolbarIconButton
+        isTooltipEnabled: !guideCueOpen, // Disable tooltip when guide cue is open
+      },
+      {
+        id: 'Apps',
+        label: 'Apps',
+        content: <LongContent />,
+        title: 'Apps',
+        glyph: 'Apps',
+      },
+    ],
+    [guideCueOpen],
+  );
+
+  return (
+    <div
+      className={css`
+        height: 90vh;
+        width: 100%;
+      `}
+    >
+      <DrawerLayout displayMode={displayMode} toolbarData={DRAWER_TOOLBAR_DATA}>
+        <MainContent
+          dashboardButtonRef={dashboardButtonRef}
+          guideCueOpen={guideCueOpen}
+          setGuideCueOpen={setGuideCueOpen}
+        />
+      </DrawerLayout>
+    </div>
+  );
+};
+
+export const WithGuideCue: StoryObj<DrawerLayoutProps> = {
+  render: WithGuideCueComponent,
+  args: {
+    displayMode: DisplayMode.Overlay,
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement);
+    const guideCueButton = await canvas.getByRole('button', {
+      name: 'Show GuideCue',
+    });
+    await userEvent.click(guideCueButton);
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
+};

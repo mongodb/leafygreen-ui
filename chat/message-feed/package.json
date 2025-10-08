@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-feed",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "description": "lg-chat Message Feed",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -27,8 +27,6 @@
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {
-    "@leafygreen-ui/typography": "workspace:^",
-    "@lg-chat/chat-disclaimer": "workspace:^",
     "@lg-chat/message-prompts": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },

@@ -1,5 +1,41 @@
 # @leafygreen-ui/table
 
+## 15.1.5
+
+### Patch Changes
+
+- 7c79bb2: Fix ExtendedContent types to allow passing row prop
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/icon-button@17.1.0
+  - @leafygreen-ui/checkbox@18.1.0
+  - @leafygreen-ui/icon@14.6.0
+
+## 15.1.4
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- Updated dependencies [1a5c69f]
+- Updated dependencies [aeb3b3f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/icon-button@17.0.6
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/checkbox@18.0.4
+  - @leafygreen-ui/emotion@5.0.3
+  - @leafygreen-ui/polymorphic@3.1.0
+
 ## 15.1.3
 
 ### Patch Changes

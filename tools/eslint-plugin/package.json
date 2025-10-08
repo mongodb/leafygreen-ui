@@ -1,0 +1,55 @@
+{
+  "name": "@lg-tools/eslint-plugin",
+  "version": "0.2.0",
+  "description": "ESLint Rules for LeafyGreen",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "leafygreen"
+  ],
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prebuild": "npx ts-node ./scripts/buildRulesIndex.ts",
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "eslint-doc-generator",
+    "lint": "npm-run-all \"lint:*\"",
+    "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
+    "lint:js": "eslint .",
+    "create-rule": "npx ts-node ./scripts/createNewRule.ts"
+  },
+  "dependencies": {
+    "@babel/eslint-parser": "7.28.4",
+    "@typescript-eslint/types": "8.44.0",
+    "@typescript-eslint/utils": "8.44.0",
+    "eslint": "9.16.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/test": "workspace:^",
+    "@types/eslint": "9.6.1",
+    "@typescript-eslint/rule-tester": "8.44.0",
+    "commander": "^11.0.0",
+    "eslint-doc-generator": "^2.2.2",
+    "fs-extra": "11.1.1"
+  },
+  "peerDependencies": {
+    "eslint": "^9.16.0"
+  },
+  "license": "Apache-2.0"
+}

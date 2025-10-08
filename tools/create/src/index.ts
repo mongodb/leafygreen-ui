@@ -4,6 +4,7 @@ import chalk from 'chalk';
 import { getComponentRootDirectory } from './utils/getComponentRootDirectory';
 import { getScope } from './utils/getScope';
 import { CreatePackageOptions } from './create.types';
+import { createChangeset } from './createChangeset';
 import { createComponent } from './createComponent';
 import { createSubComponent } from './createSubComponent';
 
@@ -34,6 +35,11 @@ export function createPackage(name: string, options: CreatePackageOptions) {
       scope,
       directory,
       name,
+    });
+    createChangeset({
+      ...options,
+      name,
+      scope,
     });
   }
 }

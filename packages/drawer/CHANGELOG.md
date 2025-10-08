@@ -1,5 +1,43 @@
 # @leafygreen-ui/drawer
 
+## 5.1.0
+
+### Minor Changes
+
+- a464cb8: [LG-5571](https://jira.mongodb.org/browse/LG-5571): pressing active toolbar button instance will now close the drawer
+- ceccfc1: Enhance `DrawerLayout` component's `toolbarData` prop with `ref` and `isTooltipEnabled` props for `ToolbarIconButton` integration
+
+### Patch Changes
+
+- Updated dependencies [ceccfc1]
+- Updated dependencies [ff6b87e]
+  - @leafygreen-ui/toolbar@1.1.0
+  - @leafygreen-ui/lib@15.5.0
+
+## 5.0.4
+
+### Patch Changes
+
+- 6f30c55: Updates `DrawerLayoutProps` to extend `ComponentPropsWithoutRef<'div'>`
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- Updated dependencies [1a5c69f]
+- Updated dependencies [aeb3b3f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/icon-button@17.0.6
+  - @leafygreen-ui/resizable@0.1.3
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/emotion@5.0.3
+  - @leafygreen-ui/toolbar@1.0.6
+  - @leafygreen-ui/tabs@17.0.4
+  - @leafygreen-ui/polymorphic@3.1.0
+
 ## 5.0.3
 
 ### Patch Changes

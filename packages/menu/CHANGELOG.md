@@ -1,5 +1,42 @@
 # @leafygreen-ui/menu
 
+## 32.1.1
+
+### Patch Changes
+
+- 94745fb: Adds semantically correct `type="button"` to MenuItem components that are rendered as a button. This prevents submitting forms when Menu components are rendered inside of forms.
+- Updated dependencies [394ba93]
+  - @leafygreen-ui/lib@15.6.0
+
+## 32.1.0
+
+### Minor Changes
+
+- 3c2464c: - Adds `onOpen` and `onClose` callback props to the Menu. These are fired when the popover enter/exit transition (respectively) is completed.
+
+  - Exports `MenuContext` from package. This is useful for testing custom `MenuItem` components without rendering a full popover menu
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- c568585: Improves MenuProps types to extend `React.ComponentProps<'ul'>`
+- Updated dependencies [1a5c69f]
+- Updated dependencies [aeb3b3f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/icon-button@17.0.6
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/emotion@5.0.3
+  - @leafygreen-ui/popover@14.0.6
+  - @leafygreen-ui/polymorphic@3.1.0
+
 ## 32.0.2
 
 ### Patch Changes

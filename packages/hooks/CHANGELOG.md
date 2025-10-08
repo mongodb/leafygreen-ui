@@ -1,5 +1,28 @@
 # @leafygreen-ui/hooks
 
+## 9.2.0
+
+### Minor Changes
+
+- 579e8c7: - Creates `useControlled` hook. This hook is a more generic version of `useControlledValue` that can be used for any component.
+  - Refactors `useControlledValue` to use `useControlled` under the hood.
+
+### Patch Changes
+
+- Updated dependencies [88e25a1]
+  - @leafygreen-ui/lib@15.6.1
+
+## 9.1.4
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/lib@15.4.0
+
 ## 9.1.3
 
 ### Patch Changes

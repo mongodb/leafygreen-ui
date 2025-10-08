@@ -1,5 +1,39 @@
 # @leafygreen-ui/modal
 
+## 20.1.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- 88e25a1: Fix data-testid attributes to allow consumer override
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/icon-button@17.1.0
+  - @leafygreen-ui/icon@14.6.0
+
+## 20.0.3
+
+### Patch Changes
+
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- Updated dependencies [1a5c69f]
+- Updated dependencies [aeb3b3f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/icon-button@17.0.6
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/emotion@5.0.3
+
 ## 20.0.2
 
 ### Patch Changes
@@ -53,7 +87,7 @@
 
   #### Migration Guide
 
-  Use the [modal-v20 codemod]([popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#modal-v20) for migration assistance.
+  Use the [modal-v20 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#modal-v20) for migration assistance.
 
   ```shell
   pnpm lg codemod modal-v20 <path>

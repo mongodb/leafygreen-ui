@@ -1,5 +1,46 @@
 # @leafygreen-ui/code
 
+## 20.1.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- e07939c: Remove mentions of props removed in v18
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/icon-button@17.1.0
+  - @leafygreen-ui/tooltip@14.2.0
+  - @leafygreen-ui/button@25.1.0
+  - @leafygreen-ui/icon@14.6.0
+
+## 20.0.8
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- Updated dependencies [1a5c69f]
+- Updated dependencies [aeb3b3f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/icon-button@17.0.6
+  - @leafygreen-ui/tooltip@14.1.4
+  - @leafygreen-ui/select@16.1.3
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/skeleton-loader@3.0.6
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/emotion@5.0.3
+  - @leafygreen-ui/a11y@3.0.5
+
 ## 20.0.7
 
 ### Patch Changes

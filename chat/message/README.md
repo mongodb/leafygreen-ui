@@ -61,7 +61,7 @@ return (
 
 ### Compound Components
 
-The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, and `Message.VerifiedBanner`.
+The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, `Message.Promotion`, and `Message.VerifiedBanner`.
 
 **Note 1:** All compound components only render in the `compact` variant.  
 **Note 2:** The layout and order of compound components are enforced by the `Message` component itself. Even if you change the order of subcomponents in your JSX, they will be rendered in the correct, intended order within the message bubble. This ensures consistent UI and accessibility regardless of how you compose your message children.
@@ -155,6 +155,33 @@ const MessageWithLinks = () => {
 };
 ```
 
+### Message.Promotion
+
+```tsx
+import React from 'react';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+
+const MessageWithPromotion = () => {
+  const handlePromotionClick = () => console.log('Promotion clicked');
+
+  return (
+    <LeafyGreenChatProvider variant={Variant.Compact}>
+      <Message isSender={false} messageBody="Test message">
+        <Message.Promotion
+          promotionText="Go learn more about this skill!"
+          promotionUrl="https://learn.mongodb.com/skills"
+          onPromotionLinkClick={handlePromotionClick}
+        />
+      </Message>
+    </LeafyGreenChatProvider>
+  );
+};
+```
+
 ### Message.VerifiedBanner
 
 ```tsx
@@ -223,10 +250,16 @@ const Example = () => {
   ];
 
   const handleLinkClick = () => console.log('Link clicked');
+  const handlePromotionClick = () => console.log('Promotion clicked');
 
   return (
     <LeafyGreenChatProvider variant={Variant.Compact}>
       <Message isSender={false} messageBody="Test message">
+        <Message.Promotion
+          promotionText="Go learn more about this skill!"
+          promotionUrl="https://learn.mongodb.com/skills"
+          onPromotionLinkClick={handlePromotionClick}
+        />
         <Message.Actions
           onClickCopy={handleCopy}
           onClickRetry={handleRetry}
@@ -285,6 +318,15 @@ const Example = () => {
 | `links`                    | `Array<RichLinkProps>`           | An array of link data to render in the links section.        |                       |
 | `onLinkClick` _(optional)_ | `({ children: string }) => void` | A callback function that is called when any link is clicked. |                       |
 | `...`                      | `HTMLElementProps<'div'>`        | Props spread on the root element                             |                       |
+
+### Message.Promotion
+
+| Prop                                | Type                      | Description                              | Default |
+| ----------------------------------- | ------------------------- | ---------------------------------------- | ------- |
+| `promotionText`                     | `string`                  | Promotion text content.                  |         |
+| `promotionUrl`                      | `string`                  | Promotion URL for the "Learn More" link. |         |
+| `onPromotionLinkClick` _(optional)_ | `() => void`              | Promotion onClick callback handler.      |         |
+| `...`                               | `HTMLElementProps<'div'>` | Props spread on the root element         |         |
 
 ### Message.VerifiedBanner
 
@@ -360,6 +402,10 @@ The `MessageLinks` component provides an expandable/collapsible section for disp
 The component manages its own internal state for:
 
 - Expansion state: Controls whether the links section is expanded or collapsed
+
+### Message.Promotion
+
+The `MessagePromotion` component displays promotional content with an award icon and "Learn More" link.
 
 ### Message.VerifiedBanner
 

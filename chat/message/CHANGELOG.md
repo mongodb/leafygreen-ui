@@ -1,5 +1,61 @@
 # @lg-chat/message
 
+## 8.2.1
+
+### Patch Changes
+
+- fedb362: Add `className` prop to `Message.Promotion` for custom styles
+- c536066: Remove `MessagePromotion` export
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/icon-button@17.1.0
+  - @leafygreen-ui/badge@10.2.0
+  - @leafygreen-ui/icon@14.6.0
+
+## 8.2.0
+
+### Minor Changes
+
+- 882373b: Add `Message.Promotion` as `Message` subcomponent for promotional content
+
+### Patch Changes
+
+- 8902552: [LG-5570](https://jira.mongodb.org/browse/LG-5570): fix text wrapping and overflow
+- 0870bea: Deprecate spacious variant props in `MessageProps`
+- Updated dependencies [8902552]
+- Updated dependencies [ff6b87e]
+  - @lg-chat/lg-markdown@4.2.0
+  - @leafygreen-ui/lib@15.5.0
+
+## 8.1.1
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- Updated dependencies [1a5c69f]
+- Updated dependencies [aeb3b3f]
+- Updated dependencies [3471b94]
+- Updated dependencies [6f30c55]
+- Updated dependencies [cee1e79]
+- Updated dependencies [6f30c55]
+- Updated dependencies [6f30c55]
+- Updated dependencies [6f30c55]
+  - @leafygreen-ui/icon@14.5.1
+  - @leafygreen-ui/icon-button@17.0.6
+  - @lg-chat/message-feedback@7.0.3
+  - @lg-chat/message-rating@5.0.3
+  - @leafygreen-ui/hooks@9.1.4
+  - @leafygreen-ui/lib@15.4.0
+  - @leafygreen-ui/typography@22.1.3
+  - @leafygreen-ui/emotion@5.0.3
+  - @lg-chat/rich-links@4.0.1
+  - @leafygreen-ui/banner@10.1.1
+  - @leafygreen-ui/polymorphic@3.1.0
+
 ## 8.1.0
 
 ### Minor Changes

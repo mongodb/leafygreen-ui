@@ -1,5 +1,35 @@
 # @leafygreen-ui/lib
 
+## 15.6.1
+
+### Patch Changes
+
+- 88e25a1: Add data-testid documentation in `LgIdProps`
+
+## 15.6.0
+
+### Minor Changes
+
+- 394ba93: Adds `findChildren` utility to `lib`. Also adds `unwrapRootFragment` and `isChildWithProperty` helpers
+
+## 15.5.0
+
+### Minor Changes
+
+- ff6b87e: Adds `deepOmit` util
+
+## 15.4.0
+
+### Minor Changes
+
+- 6f30c55: Exports `Exists` utility type
+
+### Patch Changes
+
+- 3471b94: Update React ref objects to be explicitly nullable
+- cee1e79: Interfaces now extend built-in `React.ComponentType` rather than custom `HTMLElementProps` for compatability with React 19
+- 6f30c55: Deprecates `HTMLElementProps`. Prefer the built-in React type `ComponentProps`
+
 ## 15.3.0
 
 ### Minor Changes
