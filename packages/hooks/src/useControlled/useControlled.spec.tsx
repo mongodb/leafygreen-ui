@@ -123,7 +123,7 @@ describe('packages/hooks/useControlled', () => {
   });
 
   describe('Uncontrolled', () => {
-    test('calling without a value sets value to `initialValue`', () => {
+    test('calling without a `controlledValue` sets value to `initialValue`', () => {
       const {
         result: { current },
       } = renderUseControlledHook(undefined, () => {}, 'apple');
@@ -274,7 +274,7 @@ describe('packages/hooks/useControlled', () => {
 
     // eslint-disable-next-line jest/no-disabled-tests
     describe.skip('types', () => {
-      test('type of `value` should be inferred from `controlledValue`', () => {
+      test('type of `value` is inferred from `controlledValue`', () => {
         {
           const { value } = useControlled(1);
           const _N: number = value;
@@ -291,16 +291,39 @@ describe('packages/hooks/useControlled', () => {
       });
 
       test('controlledValue and initial value must be the same type', () => {
-        useControlled(1, () => {}, 42);
+        useControlled(1, jest.fn(), 42);
         // @ts-expect-error
-        useControlled(1, () => {}, 'foo');
+        useControlled(1, jest.fn(), 'foo');
       });
 
       test('type of value is inferred from `initialValue` if controlledValue is undefined', () => {
-        const { value } = useControlled(undefined, () => {}, 42);
+        const { value } = useControlled(undefined, jest.fn(), 42);
         const _N: number = value;
         // @ts-expect-error
         const _S: string = value;
+      });
+
+      test('type of value is `any` if no initial or controlledValue are provided', () => {
+        const { value } = useControlled(undefined, jest.fn());
+        const _A: any = value;
+        const _N: number = value;
+        const _S: string = value;
+      });
+
+      test('value is explicitly typed if generic param is provided', () => {
+        {
+          const { value } = useControlled<number>(undefined, jest.fn());
+          const _N: number = value;
+          // @ts-expect-error
+          const _S: string = value;
+        }
+
+        {
+          const { value } = useControlled<undefined>(undefined, jest.fn());
+          const _U: undefined = value;
+          // @ts-expect-error
+          const _S: string = value;
+        }
       });
     });
   });
