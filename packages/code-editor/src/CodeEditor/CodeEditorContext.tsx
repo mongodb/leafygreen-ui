@@ -3,11 +3,13 @@ import React, { createContext, useContext } from 'react';
 import { getLgIds, type GetLgIdsReturnType } from '../utils/getLgIds';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
+import { CodeEditorProps } from './CodeEditor.types';
 
 /**
  * Internal context values provided by CodeEditor to its children (like Panel).
  */
-export interface CodeEditorContextValue {
+export interface CodeEditorContextValue
+  extends Pick<CodeEditorProps, 'maxWidth' | 'minWidth' | 'width'> {
   /**
    * Function to retrieve the current editor contents.
    */
@@ -67,6 +69,9 @@ const defaultContextValue: CodeEditorContextValue = {
     console.warn('downloadContent is not available - editor context not found');
   },
   lgIds: getLgIds(), // Use default lgIds when used standalone
+  maxWidth: undefined,
+  minWidth: undefined,
+  width: undefined,
 };
 
 const CodeEditorContext =
