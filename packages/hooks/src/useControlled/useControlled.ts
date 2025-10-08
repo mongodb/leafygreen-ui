@@ -23,9 +23,13 @@ export const useControlled = <T extends any = undefined>(
 
   /**
    * Keep track of the uncontrolled value state internally
+   *
+   * Note on type assertion:
+   * if `controlledValue` is undefined _and_ `initialValue` is also undefined,
+   * then T is necessarily `undefined`, so asserting `(initialValue as T)` is safe
    */
   const [uncontrolledValue, setUncontrolledValue] = useState<T>(
-    initialValue as T,
+    !isUndefined(controlledValue) ? controlledValue : (initialValue as T),
   );
 
   /**
