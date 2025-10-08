@@ -14,6 +14,8 @@ import { getAutoComplete } from '../../../utils';
 import { segmentWidthStyles } from './DateInputSegment.styles';
 import { DateInputSegmentProps } from './DateInputSegment.types';
 import { InputSegment } from '../../InputSegment/InputSegment';
+import { InputSegmentChangeEvent } from '../../InputSegment/InputSegment.types';
+import { DateSegment, DateSegmentValue } from '../../../types';
 
 /**
  * Controlled component
@@ -56,6 +58,15 @@ export const DateInputSegment = React.forwardRef<
     // const formatter = getValueFormatter(segment, charsPerSegment);
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
     // const pattern = `[0-9]{${charsPerSegment[segment]}}`;
+
+    const handleChange = (
+      inputSegmentChangeEvent: InputSegmentChangeEvent<
+        DateSegment,
+        DateSegmentValue
+      >,
+    ) => {
+      onChange(inputSegmentChangeEvent);
+    };
 
     // /**
     //  * Receives native input events,
@@ -202,10 +213,10 @@ export const DateInputSegment = React.forwardRef<
     // );
 
     return (
-      <InputSegment
+      <InputSegment<DateSegment, DateSegmentValue>
         segment={segment}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         onBlur={onBlur}
         onKeyDown={onKeyDown}
         min={min}

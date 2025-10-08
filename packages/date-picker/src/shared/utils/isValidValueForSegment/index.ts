@@ -1,18 +1,21 @@
 import inRange from 'lodash/inRange';
 
-import { defaultMax, defaultMin } from '../../constants';
-import { DateSegment, DateSegmentValue } from '../../types';
 import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
+
+// TODO: move to generic utils
 
 /**
  * Returns whether a value is valid for a given segment type
  */
-export const isValidValueForSegment = (
-  segment: DateSegment,
-  value: DateSegmentValue,
+export const isValidValueForSegment = <T extends string, V extends string>(
+  segment: T,
+  value: V,
+  defaultMin: Record<T, number>,
+  defaultMax: Record<T, number>,
+  segmentObj: Readonly<Record<string, T>>,
 ): boolean => {
   const isValidSegmentAndValue =
-    isValidSegmentValue(value) && isValidSegmentName(DateSegment, segment);
+    isValidSegmentValue(value) && isValidSegmentName(segmentObj, segment);
 
   if (segment === 'year') {
     // allow any 4-digit year value regardless of defined range

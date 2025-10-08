@@ -1,4 +1,5 @@
-import { DateSegment, DateSegmentsState } from '../../types';
+import { defaultMax, defaultMin } from '../../constants';
+import { DateSegment, DateSegmentValue, DateSegmentsState } from '../../types';
 import { isValidValueForSegment } from '../isValidValueForSegment';
 
 /**
@@ -6,6 +7,12 @@ import { isValidValueForSegment } from '../isValidValueForSegment';
  */
 export const isEverySegmentValid = (segments: DateSegmentsState): boolean => {
   return Object.entries(segments).every(([segment, value]) =>
-    isValidValueForSegment(segment as DateSegment, value),
+    isValidValueForSegment(
+      segment as DateSegment,
+      value as DateSegmentValue,
+      defaultMin,
+      defaultMax,
+      DateSegment,
+    ),
   );
 };

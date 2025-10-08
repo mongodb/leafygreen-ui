@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ForwardedRef, ReactElement } from 'react';
 
 import { keyMap } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
@@ -31,7 +31,7 @@ export interface InputSegmentProps<
   value: V;
 
   /** Custom onChange handler */
-  onChange: InputSegmentChangeEventHandler<T>;
+  onChange: InputSegmentChangeEventHandler<T, V>;
 
   charsPerSegment: Record<T, number>;
 
@@ -41,5 +41,22 @@ export interface InputSegmentProps<
   /** Maximum value. */
   max: number;
 
+  /** Segment object */
+  segmentObj: Readonly<Record<string, T>>;
+
+  /** Default minimum value */
+  defaultMin: Record<T, number>;
+
+  /** Default maximum value */
+  defaultMax: Record<T, number>;
+
   size: Size;
+}
+
+export interface InputSegmentComponentType {
+  <T extends string, V extends string>(
+    props: InputSegmentProps<T, V>,
+    ref: ForwardedRef<HTMLInputElement>,
+  ): ReactElement | null;
+  displayName?: string;
 }

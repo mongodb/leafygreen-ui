@@ -1,9 +1,6 @@
 import last from 'lodash/last';
 
 import { truncateStart } from '@leafygreen-ui/lib';
-
-import { charsPerSegment } from '../../../../constants';
-import { DateSegment, DateSegmentValue } from '../../../../types';
 import { isValidValueForSegment } from '../../../../utils';
 
 /**
@@ -14,11 +11,18 @@ import { isValidValueForSegment } from '../../../../utils';
  * - include a period
  * - would cause the segment to overflow
  */
-export const getNewSegmentValueFromInputValue = (
-  segmentName: DateSegment,
-  currentValue: DateSegmentValue,
-  incomingValue: DateSegmentValue,
-): DateSegmentValue => {
+export const getNewSegmentValueFromInputValue = <
+  T extends string,
+  V extends string,
+>(
+  segmentName: T,
+  currentValue: V,
+  incomingValue: V,
+  charsPerSegment: Record<T, number>,
+  defaultMin: Record<T, number>,
+  defaultMax: Record<T, number>,
+  segmentObj: Readonly<Record<string, T>>,
+): V => {
   // If the incoming value is not a valid number
   const isIncomingValueNumber = !isNaN(Number(incomingValue));
   // macOS adds a period when pressing SPACE twice inside a text input.
@@ -40,6 +44,9 @@ export const getNewSegmentValueFromInputValue = (
   const isIncomingValueValid = isValidValueForSegment(
     segmentName,
     incomingValue,
+    defaultMin,
+    defaultMax,
+    segmentObj,
   );
 
   if (isIncomingValueValid || segmentName === 'year') {
@@ -47,10 +54,10 @@ export const getNewSegmentValueFromInputValue = (
       length: charsPerSegment[segmentName],
     });
 
-    return newValue;
+    return newValue as V;
   }
 
   const typedChar = last(incomingValue.split(''));
   const newValue = typedChar === '0' ? '0' : typedChar ?? '';
-  return newValue;
+  return newValue as V;
 };

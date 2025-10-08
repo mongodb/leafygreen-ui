@@ -1,11 +1,9 @@
 import { keyMap, rollover } from '@leafygreen-ui/lib';
 
-import { DateSegment, DateSegmentValue } from '../../../../types';
-
-interface DateSegmentKeypressContext {
-  value: DateSegmentValue;
+interface DateSegmentKeypressContext<T extends string, V extends string> {
+  value: V;
   key: typeof keyMap.ArrowUp | typeof keyMap.ArrowDown;
-  segment: DateSegment;
+  segment: T;
   min: number;
   max: number;
 }
@@ -13,13 +11,16 @@ interface DateSegmentKeypressContext {
 /**
  * Returns a new segment value given the current state
  */
-export const getNewSegmentValueFromArrowKeyPress = ({
+export const getNewSegmentValueFromArrowKeyPress = <
+  T extends string,
+  V extends string,
+>({
   value,
   key,
   segment,
   min,
   max,
-}: DateSegmentKeypressContext): number => {
+}: DateSegmentKeypressContext<T, V>): number => {
   const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
   const defaultVal = key === keyMap.ArrowUp ? min : max;
 
