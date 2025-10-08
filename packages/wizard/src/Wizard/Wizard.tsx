@@ -71,3 +71,12 @@ export const Wizard = CompoundComponent(
     Footer: WizardFooter,
   },
 );
+
+/**
+ * 🤚 Wizard.
+ * 🤚 Wizard.
+ * 🤚 Wizard.
+ * ...
+ * 🤚 Wizard. 🤚 Wizard. 🤚 Wizard.
+ * https://youtu.be/5jGWMtEhS1c
+ */
