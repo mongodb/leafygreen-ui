@@ -134,8 +134,8 @@ export const ConfirmationModal = forwardRef<
         </div>
         <Footer>
           <Button
-            {...confirmButtonProps}
             data-testid={lgIds.confirm}
+            {...confirmButtonProps}
             disabled={!confirmEnabled || isConfirmDisabled}
             className={cx(buttonStyle, confirmButtonProps?.className)}
             variant={variant}
@@ -145,10 +145,10 @@ export const ConfirmationModal = forwardRef<
             {buttonText || confirmButtonProps?.children || 'Confirm'}
           </Button>
           <Button
+            data-testid={lgIds.cancel}
             {...cancelButtonProps}
             onClick={handleCancel}
             className={cx(buttonStyle, cancelButtonProps?.className)}
-            data-testid={lgIds.cancel}
           >
             Cancel
           </Button>

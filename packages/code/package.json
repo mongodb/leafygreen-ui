@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/code",
-  "version": "20.0.8",
+  "version": "20.1.0",
   "description": "leafyGreen UI Kit Code Blocks",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,7 @@
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs",
-    "postinstall": "npx ts-node scripts/postinstall.ts"
+    "prepare": "npx ts-node scripts/prepare.ts"
   },
   "keywords": [],
   "license": "Apache-2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/stepper",
-  "version": "6.0.6",
+  "version": "6.1.0",
   "description": "leafyGreen UI Kit Stepper",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
