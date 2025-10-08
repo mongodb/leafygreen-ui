@@ -1,10 +1,13 @@
 import React from 'react';
 
+import {
+  CompoundComponent,
+  findChild,
+  findChildren,
+} from '@leafygreen-ui/compound-component';
 import { Direction } from '@leafygreen-ui/descendants';
-import { findChild, findChildren } from '@leafygreen-ui/lib';
 
 import { WizardSubComponentProperties } from '../constants';
-import { CompoundComponent } from '../utils/CompoundComponent';
 import { useWizardControlledValue } from '../utils/useWizardControlledValue/useWizardControlledValue';
 import { WizardProvider } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
