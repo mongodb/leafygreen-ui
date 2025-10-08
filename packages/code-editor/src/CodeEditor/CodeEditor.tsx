@@ -85,6 +85,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const isControlled = value !== undefined;
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
+    const [undoDepth, setUndoDepth] = useState(1);
+    const [redoDepth, setRedoDepth] = useState(1);
 
     const { modules, isLoading } = useModules(props);
 
@@ -281,10 +283,21 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           searchPanelExtension,
 
           EditorView.EditorView.updateListener.of((update: ViewUpdate) => {
-            if (isControlled && update.docChanged) {
-              const editorText = getContents();
-              onChangeProp?.(editorText);
-              setControlledValue(editorText);
+            if (update.docChanged) {
+              const commands = modules?.['@codemirror/commands'];
+              const state = editorViewRef.current?.state;
+
+              if (isControlled) {
+                const editorText = getContents();
+                onChangeProp?.(editorText);
+                setControlledValue(editorText);
+              }
+
+              if (commands && state) {
+                console.log('update.docChanged');
+                setUndoDepth(commands.undoDepth(state));
+                setRedoDepth(commands.redoDepth(state));
+              }
             }
           }),
 
@@ -364,7 +377,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       isFormattingAvailable,
       language,
       undo: handleUndo,
+      undoDepth,
       redo: handleRedo,
+      redoDepth,
       downloadContent: handleDownloadContent,
       lgIds,
       maxWidth,

@@ -58,6 +58,16 @@ export interface CodeEditorContextValue
    * to inherit custom data-lgid prefixes passed to the parent CodeEditor.
    */
   lgIds: GetLgIdsReturnType;
+
+  /**
+   * Depth of the undo stack.
+   */
+  undoDepth: number;
+
+  /**
+   * Depth of the redo stack.
+   */
+  redoDepth: number;
 }
 
 // Default context value for when Panel is used standalone
@@ -76,6 +86,8 @@ const defaultContextValue: CodeEditorContextValue = {
   minWidth: undefined,
   width: undefined,
   readOnly: false,
+  undoDepth: 0,
+  redoDepth: 0,
 };
 
 const CodeEditorContext =
