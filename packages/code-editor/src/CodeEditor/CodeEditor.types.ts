@@ -88,6 +88,7 @@ export const CodeEditorSelectors = {
   Editor: '.cm-editor',
   Focused: '.cm-focused',
   FoldGutter: '.cm-foldGutter',
+  FoldPlaceholder: '.cm-foldPlaceholder',
   GutterElement: '.cm-gutterElement',
   Gutters: '.cm-gutters',
   HyperLink: '.cm-hyper-link-icon',
