@@ -70,7 +70,7 @@ interface TextInputTypeProp {
   type?: TextInputType;
 }
 export interface BaseTextInputProps
-  extends Omit<React.ComponentPropsWithoutRef<'input'>, AriaLabels>,
+  extends Omit<React.ComponentPropsWithRef<'input'>, AriaLabels>,
     DarkModeProps,
     LgIdProps {
   /**

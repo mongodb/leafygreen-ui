@@ -182,9 +182,14 @@ describe('packages/text-area', () => {
     });
   });
 
-  /* eslint-disable jest/no-disabled-tests */
-  describe.skip('types behave as expected', () => {
-    test('TextArea throws error when neither aria-labelledby or label is supplied', () => {
+  describe('types behave as expected', () => {
+    test('TextArea takes a ref for a HTMLTextAreaElement', () => {
+      const ref = React.createRef<HTMLTextAreaElement>();
+      render(<TextArea label="Some label" ref={ref} />);
+    });
+
+    /* eslint-disable jest/no-disabled-tests */
+    test.skip('TextArea throws error when neither aria-labelledby or label is supplied', () => {
       // @ts-expect-error
       <TextArea />;
       <TextArea label="Some label" />;
