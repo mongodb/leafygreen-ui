@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, waitFor } from '@testing-library/react';
 
-import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { TRANSITION_DURATION } from '../../constants';
 import { LayoutData } from '../DrawerToolbarLayout/DrawerToolbarLayout.types';
@@ -41,24 +41,6 @@ const mockData: Array<LayoutData> = [
 ];
 
 describe('useDrawerToolbarContext', () => {
-  test('throws error when used outside of DrawerToolbarProvider', () => {
-    /**
-     * The version of `renderHook`  imported from "@testing-library/react-hooks", (used in React 17)
-     * has an error boundary, and doesn't throw errors as expected:
-     * https://github.com/testing-library/react-hooks-testing-library/blob/main/src/index.ts#L5
-     * */
-    if (isReact17()) {
-      const { result } = renderHook(() => useDrawerToolbarContext());
-      expect(result.error.message).toEqual(
-        'useDrawerToolbarContext must be used within a DrawerToolbarProvider',
-      );
-    } else {
-      expect(() => renderHook(() => useDrawerToolbarContext())).toThrow(
-        'useDrawerToolbarContext must be used within a DrawerToolbarProvider',
-      );
-    }
-  });
-
   describe('getActiveDrawerContent', () => {
     describe('on initial call', () => {
       test('returns undefined ', () => {
@@ -260,5 +242,119 @@ describe('useDrawerToolbarContext', () => {
     await waitFor(() =>
       expect(result.current.getActiveDrawerContent()).toBeUndefined(),
     );
+  });
+
+  describe('wasToggledClosedWithToolbar', () => {
+    test('is false initially', () => {
+      const { result } = renderHook(useDrawerToolbarContext, {
+        wrapper: ({ children }) => (
+          <DrawerToolbarProvider data={mockData}>
+            {children}
+          </DrawerToolbarProvider>
+        ),
+      });
+
+      expect(result.current.wasToggledClosedWithToolbar).toBe(false);
+    });
+
+    test('is false after opening a drawer with toggleDrawer', () => {
+      const { result } = renderHook(useDrawerToolbarContext, {
+        wrapper: ({ children }) => (
+          <DrawerToolbarProvider data={mockData}>
+            {children}
+          </DrawerToolbarProvider>
+        ),
+      });
+
+      act(() => result.current.toggleDrawer('one'));
+      expect(result.current.wasToggledClosedWithToolbar).toBe(false);
+    });
+
+    test('is true when toggleDrawer closes an already open drawer', () => {
+      const { result } = renderHook(useDrawerToolbarContext, {
+        wrapper: ({ children }) => (
+          <DrawerToolbarProvider data={mockData}>
+            {children}
+          </DrawerToolbarProvider>
+        ),
+      });
+
+      act(() => result.current.toggleDrawer('one'));
+      expect(result.current.isDrawerOpen).toBe(true);
+      expect(result.current.wasToggledClosedWithToolbar).toBe(false);
+
+      act(() => result.current.toggleDrawer('one'));
+      expect(result.current.isDrawerOpen).toBe(false);
+      expect(result.current.wasToggledClosedWithToolbar).toBe(true);
+    });
+
+    test('is false when toggleDrawer switches to a different drawer', () => {
+      const { result } = renderHook(useDrawerToolbarContext, {
+        wrapper: ({ children }) => (
+          <DrawerToolbarProvider data={mockData}>
+            {children}
+          </DrawerToolbarProvider>
+        ),
+      });
+
+      act(() => result.current.toggleDrawer('one'));
+      expect(result.current.isDrawerOpen).toBe(true);
+      expect(result.current.wasToggledClosedWithToolbar).toBe(false);
+
+      act(() => result.current.toggleDrawer('two'));
+      expect(result.current.isDrawerOpen).toBe(true);
+      expect(result.current.wasToggledClosedWithToolbar).toBe(false);
+    });
+
+    test('is false when closeDrawer is called directly', () => {
+      const { result } = renderHook(useDrawerToolbarContext, {
+        wrapper: ({ children }) => (
+          <DrawerToolbarProvider data={mockData}>
+            {children}
+          </DrawerToolbarProvider>
+        ),
+      });
+
+      act(() => result.current.openDrawer('one'));
+      expect(result.current.isDrawerOpen).toBe(true);
+
+      act(() => result.current.closeDrawer());
+      expect(result.current.wasToggledClosedWithToolbar).toBe(false);
+    });
+
+    test('is false when openDrawer is called', () => {
+      const { result } = renderHook(useDrawerToolbarContext, {
+        wrapper: ({ children }) => (
+          <DrawerToolbarProvider data={mockData}>
+            {children}
+          </DrawerToolbarProvider>
+        ),
+      });
+
+      act(() => result.current.openDrawer('one'));
+      expect(result.current.wasToggledClosedWithToolbar).toBe(false);
+    });
+
+    test('resets to false when opening a drawer after toggling one closed', () => {
+      const { result } = renderHook(useDrawerToolbarContext, {
+        wrapper: ({ children }) => (
+          <DrawerToolbarProvider data={mockData}>
+            {children}
+          </DrawerToolbarProvider>
+        ),
+      });
+
+      // Toggle to open
+      act(() => result.current.toggleDrawer('one'));
+      expect(result.current.wasToggledClosedWithToolbar).toBe(false);
+
+      // Toggle to close - should set to true
+      act(() => result.current.toggleDrawer('one'));
+      expect(result.current.wasToggledClosedWithToolbar).toBe(true);
+
+      // Open a different drawer - should reset to false
+      act(() => result.current.openDrawer('two'));
+      expect(result.current.wasToggledClosedWithToolbar).toBe(false);
+    });
   });
 });

@@ -9,6 +9,7 @@ import { getPanelGridStyles } from './PanelGrid.styles';
 import { PanelGridProps } from './PanelGrid.types';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { queryFirstFocusableElement } from '@leafygreen-ui/lib';
+import { useDrawerToolbarContext } from '../../DrawerToolbarLayout/DrawerToolbarContext';
 
 /**
  * @internal
@@ -36,6 +37,8 @@ export const PanelGrid = forwardRef<HTMLDivElement, PanelGridProps>(
       isDrawerOpen,
     } = useDrawerLayoutContext();
 
+    const { wasToggledClosedWithToolbar } = useDrawerToolbarContext();
+
     const layoutRef = useForwardedRef(forwardedRef, null);
     const previouslyFocusedRef = useRef<HTMLElement | null>(null);
     const hasHandledFocusRef = useRef<boolean>(false);
@@ -59,7 +62,11 @@ export const PanelGrid = forwardRef<HTMLDivElement, PanelGridProps>(
           layoutRef.current,
         );
         firstFocusableElement?.focus();
-      } else if (!isDrawerOpen && hasHandledFocusRef.current) {
+      } else if (
+        !isDrawerOpen &&
+        hasHandledFocusRef.current &&
+        !wasToggledClosedWithToolbar
+      ) {
         // Restore focus when closing (only if we had handled focus during this session)
         if (previouslyFocusedRef.current) {
           // Check if the previously focused element is still in the DOM
@@ -74,7 +81,7 @@ export const PanelGrid = forwardRef<HTMLDivElement, PanelGridProps>(
         }
         hasHandledFocusRef.current = false; // Reset for next open session
       }
-    }, [isDrawerOpen]);
+    }, [isDrawerOpen, wasToggledClosedWithToolbar]);
 
     return (
       <div
