@@ -48,6 +48,7 @@ import { breakpoints } from '@leafygreen-ui/tokens';
 import { DisclaimerText } from '../DisclaimerText';
 import { InputBarFeedback } from '../InputBarFeedback';
 import { InputBarSendButton } from '../InputBarSendButton';
+import { InputBarStopButton } from '../InputBarStopButton';
 import { State } from '../shared.types';
 import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 
@@ -76,7 +77,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       dropdownFooterSlot,
       dropdownProps,
       errorMessage,
-      onClickStop,
+      onClickStopButton,
       onMessageSend,
       onSubmit,
       shouldRenderGradient: shouldRenderGradientProp = true,
@@ -145,7 +146,8 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
 
     const isLoading = state === State.Loading;
     const isSendButtonDisabled =
-      disabled || disableSend || (!isLoading && messageBody?.trim() === '');
+      disabled || disableSend || messageBody?.trim() === '';
+    const isStopButtonDisabled = disabled || !!disableSend;
     const shouldRenderGradient =
       !isCompact && shouldRenderGradientProp && isFocused && !disabled;
     const showHotkeyIndicator =
@@ -368,12 +370,6 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
         return;
       }
 
-      if (isLoading && onClickStop) {
-        onClickStop();
-        restorePreviousMessage();
-        return;
-      }
-
       if (onMessageSend && messageBody) {
         onMessageSend(messageBody, e);
         if (!isControlled) {
@@ -383,6 +379,13 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       }
 
       onSubmit?.(e);
+    };
+
+    const handleStop = () => {
+      if (onClickStopButton) {
+        onClickStopButton();
+      }
+      restorePreviousMessage();
     };
 
     const handleFocus: FocusEventHandler<HTMLTextAreaElement> = _ => {
@@ -505,12 +508,18 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                       /
                     </div>
                   )}
-                  <InputBarSendButton
-                    disabled={isSendButtonDisabled}
-                    isCompact={isCompact}
-                    shouldRenderButtonText={shouldRenderButtonText}
-                    state={state}
-                  />
+                  {isLoading && isCompact ? (
+                    <InputBarStopButton
+                      disabled={isStopButtonDisabled}
+                      onClick={handleStop}
+                    />
+                  ) : (
+                    <InputBarSendButton
+                      disabled={isSendButtonDisabled}
+                      isCompact={isCompact}
+                      shouldRenderButtonText={shouldRenderButtonText}
+                    />
+                  )}
                 </div>
               </div>
             </div>
