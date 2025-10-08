@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
 import { COPIED_TEXT } from '../CodeEditorCopyButton/constants';
