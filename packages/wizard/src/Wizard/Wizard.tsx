@@ -20,13 +20,6 @@ export const Wizard = CompoundComponent(
     children,
     ...rest
   }: WizardProps) => {
-    // Controlled/Uncontrolled activeStep value
-    const {
-      isControlled,
-      value: activeStep,
-      setValue: setActiveStep,
-    } = useWizardControlledValue<number>(activeStepProp, undefined, 0);
-
     const stepChildren = findChildren(
       children,
       WizardSubComponentProperties.Step,
@@ -35,6 +28,24 @@ export const Wizard = CompoundComponent(
       children,
       WizardSubComponentProperties.Footer,
     );
+
+    // Controlled/Uncontrolled activeStep value
+    const {
+      isControlled,
+      value: activeStep,
+      setValue: setActiveStep,
+    } = useWizardControlledValue<number>(activeStepProp, undefined, 0);
+
+    if (
+      activeStepProp &&
+      (activeStepProp < 0 || activeStepProp >= stepChildren.length)
+    ) {
+      // Not consoleOnce, since we want to warn again if the step changes
+      console.warn(
+        'LeafyGreen Wizard received (zero-indexed) `activeStep` prop exceeding the number of Steps provided\n',
+        `Received activeStep: ${activeStepProp}, Wizard.Steps count: ${stepChildren.length}`,
+      );
+    }
 
     const updateStep = (direction: Direction) => {
       const getNextStep = (curr: number) => {
