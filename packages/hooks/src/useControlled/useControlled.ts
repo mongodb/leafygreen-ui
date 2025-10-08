@@ -10,11 +10,11 @@ import { ControlledReturnObject } from './useControlled.types';
  *
  * Returns a {@link ControlledReturnObject}
  */
-export const useControlled = <T extends any>(
+export const useControlled = <T extends any = undefined>(
   controlledValue?: T,
   onChange?: (val?: T) => void,
   initialValue?: T,
-): ControlledReturnObject<T | undefined> => {
+): ControlledReturnObject<T> => {
   /**
    * isControlled should only be computed once
    */
@@ -24,8 +24,8 @@ export const useControlled = <T extends any>(
   /**
    * Keep track of the uncontrolled value state internally
    */
-  const [uncontrolledValue, setUncontrolledValue] = useState<T | undefined>(
-    initialValue,
+  const [uncontrolledValue, setUncontrolledValue] = useState<T>(
+    initialValue as T,
   );
 
   /**
@@ -34,7 +34,7 @@ export const useControlled = <T extends any>(
    * If the component is controlled, it will return the controlled value.
    */
   const value = useMemo(
-    () => (isControlled ? controlledValue : uncontrolledValue),
+    () => (isControlled ? (controlledValue as T) : uncontrolledValue),
     [isControlled, uncontrolledValue, controlledValue],
   );
 
@@ -45,7 +45,7 @@ export const useControlled = <T extends any>(
    *
    * onChange callback is called if provided.
    */
-  const updateValue = (newVal: T | undefined) => {
+  const updateValue = (newVal: T) => {
     if (!isControlled) {
       setUncontrolledValue(newVal);
     }
