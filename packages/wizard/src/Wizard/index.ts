@@ -1,3 +1,2 @@
-
-export  { Wizard } from './Wizard';
-export { type WizardProps } from './Wizard.types';
+export { Wizard } from './Wizard';
+export { type WizardComponent, type WizardProps } from './Wizard.types';
