@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon-button",
-  "version": "17.0.6",
+  "version": "17.1.0",
   "description": "LeafyGreen UI Kit Icon Buttons",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
