@@ -22,7 +22,7 @@
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs",
-    "prepare": "npx ts-node scripts/postinstall.ts"
+    "prepare": "npx ts-node scripts/prepare.ts"
   },
   "keywords": [],
   "license": "Apache-2.0",
