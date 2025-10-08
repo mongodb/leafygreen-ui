@@ -67,14 +67,15 @@ export function Panel({
   const baseFontSize = useUpdatedBaseFontSize();
 
   const {
-    getContents,
-    formatCode,
-    undo,
-    redo,
     downloadContent,
+    formatCode,
+    getContents,
     lgIds,
     maxWidth,
     minWidth,
+    readOnly,
+    redo,
+    undo,
     width,
   } = useCodeEditorContext();
 
@@ -184,6 +185,7 @@ export function Panel({
                 glyph={<UndoIcon />}
                 onClick={handleUndoClick}
                 aria-label="Undo changes"
+                disabled={readOnly}
               >
                 Undo
               </MenuItem>
@@ -191,6 +193,7 @@ export function Panel({
                 glyph={<RedoIcon />}
                 onClick={handleRedoClick}
                 aria-label="Redo changes"
+                disabled={readOnly}
               >
                 Redo
               </MenuItem>
