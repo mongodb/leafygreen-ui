@@ -114,6 +114,13 @@ export function useThemeExtension({
             {
               width: '48px',
               userSelect: 'none',
+              // Set on the fold gutter element instead so there's still padding when line numbers are disabled
+              paddingRight: 0,
+            },
+
+          [`${CodeEditorSelectors.FoldGutter} ${CodeEditorSelectors.GutterElement}`]:
+            {
+              paddingLeft: `${spacing[100]}px`,
             },
 
           [CodeEditorSelectors.Line]: {
