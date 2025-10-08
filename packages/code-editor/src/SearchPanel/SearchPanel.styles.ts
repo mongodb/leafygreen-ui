@@ -85,7 +85,7 @@ export const getContainerStyles = ({
 export const findSectionStyles = css`
   display: flex;
   align-items: center;
-  padding: ${spacing[200]}px ${spacing[300]}px;
+  padding: ${spacing[200]}px;
   height: 100%;
 `;
 
@@ -101,7 +101,8 @@ export const replaceSectionStyles = css`
 export const getReplaceInnerSectionStyles = (theme: Theme) => css`
   display: flex;
   align-items: center;
-  padding: 8px 10px 8px 44px;
+  padding: ${spacing[200]}px ${spacing[200]}px ${spacing[200]}px
+    ${spacing[1000]}px;
   border-top: 1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]};
 `;

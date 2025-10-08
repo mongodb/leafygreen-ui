@@ -45,6 +45,12 @@ import {
 } from './SearchPanel.styles';
 import { SearchPanelProps } from './SearchPanel.types';
 
+const findOptions = {
+  isCaseSensitive: 'Match case',
+  isRegex: 'Regexp',
+  isWholeWord: 'By word',
+} as const;
+
 export function SearchPanel({
   view,
   darkMode,
@@ -70,11 +76,6 @@ export function SearchPanel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useUpdatedBaseFontSize();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const findOptions = {
-    isCaseSensitive: 'Match case',
-    isRegex: 'Regexp',
-    isWholeWord: 'By word',
-  } as const;
   const [highlightedOption, setHighlightedOption] = useState<string | null>(
     null,
   );
