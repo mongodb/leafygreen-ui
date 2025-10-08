@@ -78,7 +78,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       errorMessage,
       onMessageSend,
       onSubmit,
-      shouldRenderGradient: shouldRenderGradientProp = false,
+      shouldRenderGradient: shouldRenderGradientProp = true,
       shouldRenderHotkeyIndicator = false,
       state,
       textareaProps,
@@ -91,10 +91,10 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const { containerWidth, variant } = useLeafyGreenChatContext();
     const isCompact = variant === Variant.Compact;
 
-    if (
-      isCompact &&
-      (shouldRenderHotkeyIndicator || shouldRenderGradientProp || badgeText)
-    ) {
+    // Note: `shouldRenderGradient` is intentionally excluded from this warning check
+    // as the prop is scheduled for removal in a future update.
+    // See: https://jira.mongodb.org/browse/LG-5575
+    if (isCompact && (shouldRenderHotkeyIndicator || badgeText)) {
       consoleOnce.warn(
         `@lg-chat/input-bar: The InputBar component's props 'shouldRenderHotkeyIndicator', 'shouldRenderGradient', and 'badgeText' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
       );

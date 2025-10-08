@@ -55,7 +55,7 @@ export type InputBarProps = React.ComponentPropsWithoutRef<'form'> &
 
     /**
      * Toggles the gradient animation around the input
-     * @default false
+     * @default true
      * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
      */
     shouldRenderGradient?: boolean;

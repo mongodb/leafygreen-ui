@@ -1,5 +1,5 @@
 ---
-'@lg-chat/input-bar': major
+'@lg-chat/input-bar': patch
 ---
 
-Update default setting for `shouldRenderGradient` prop to false. This will prevent warnings from being logged when compact variant is used.
+Remove console warning when `shouldRenderGradient` prop is true to avoid it requiring an explicit false value.

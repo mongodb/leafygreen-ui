@@ -64,7 +64,7 @@ return (
 | `disableSend`                 | `boolean`                                      | When defined as `true`, disables the send action and button |         |
 | `errorMessage`                | `ReactNode`                                    | Custom error message to display when `state='error'`        |         |
 | `onMessageSend`               | `(messageBody: string, e?: FormEvent) => void` | Submit event handler.                                       |         |
-| `shouldRenderGradient`        | `boolean`                                      | Toggles the gradient animation around the input             | `false` |
+| `shouldRenderGradient`        | `boolean`                                      | Toggles the gradient animation around the input             | `true`  |
 | `shouldRenderHotkeyIndicator` | `boolean`                                      | Toggles the hotkey indicator on the right side of the input | `false` |
 | `textareaProps`               | `TextareaAutosizeProps`                        | Props passed to the TextareaAutosize component.             |         |
 | `textareaRef`                 | `RefObject<HTMLTextAreaElement>`               | Ref object to access the textarea element directly          |         |
