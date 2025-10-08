@@ -37,7 +37,10 @@ export const getTestUtils = (
       element.querySelectorAll<HTMLButtonElement>(
         `[data-lgid^=${lgIds.iconButton}]`,
       ),
-    );
+    ).filter(button => {
+      const lgid = button.getAttribute('data-lgid');
+      return lgid && !lgid.includes('tooltip');
+    });
   };
 
   /**
