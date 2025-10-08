@@ -7,7 +7,6 @@ import React, {
   useState,
 } from 'react';
 import ReactDOM from 'react-dom';
-import type { Root } from 'react-dom/client';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -321,7 +320,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                     };
                   } else {
                     // --- React 18+ Path ---
-                    let root: Root | null = null;
+                    let root: any = null;
 
                     (async () => {
                       const { createRoot } = await import('react-dom/client');
