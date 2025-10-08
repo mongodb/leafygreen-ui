@@ -75,7 +75,9 @@ export function Panel({
     minWidth,
     readOnly,
     redo,
+    redoDepth,
     undo,
+    undoDepth,
     width,
   } = useCodeEditorContext();
 
@@ -185,7 +187,7 @@ export function Panel({
                 glyph={<UndoIcon />}
                 onClick={handleUndoClick}
                 aria-label="Undo changes"
-                disabled={readOnly}
+                disabled={readOnly || undoDepth === 0}
               >
                 Undo
               </MenuItem>
@@ -193,7 +195,7 @@ export function Panel({
                 glyph={<RedoIcon />}
                 onClick={handleRedoClick}
                 aria-label="Redo changes"
-                disabled={readOnly}
+                disabled={readOnly || redoDepth === 0}
               >
                 Redo
               </MenuItem>
