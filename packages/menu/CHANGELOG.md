@@ -1,5 +1,13 @@
 # @leafygreen-ui/menu
 
+## 32.1.1
+
+### Patch Changes
+
+- 94745fb: Adds semantically correct `type="button"` to MenuItem components that are rendered as a button. This prevents submitting forms when Menu components are rendered inside of forms.
+- Updated dependencies [394ba93]
+  - @leafygreen-ui/lib@15.6.0
+
 ## 32.1.0
 
 ### Minor Changes

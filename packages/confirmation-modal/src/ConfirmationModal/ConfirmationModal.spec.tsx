@@ -74,8 +74,8 @@ describe('packages/confirmation-modal', () => {
   });
 
   test('does not render if closed', () => {
-    const { getByText } = renderModal();
-    expect(getByText('Content text')).not.toBeVisible();
+    const { queryByText } = renderModal();
+    expect(queryByText('Content text')).toBeNull();
   });
 
   test('renders if open', () => {
@@ -329,6 +329,10 @@ describe('packages/confirmation-modal', () => {
             </ConfirmationModal>,
           );
 
+          const rerenderedConfirmationButton = await findByTestId(
+            lgIds.confirm,
+          );
+
           if (requiredInputText) {
             textInput = getByLabelText(
               `Type "${requiredInputText}" to confirm your action`,
@@ -336,7 +340,7 @@ describe('packages/confirmation-modal', () => {
             expect(textInput).toHaveValue('');
           }
 
-          expect(confirmationButton).toHaveAttribute(
+          expect(rerenderedConfirmationButton).toHaveAttribute(
             'aria-disabled',
             disabledAfterReopeningModal.toString(),
           );
@@ -494,6 +498,32 @@ describe('packages/confirmation-modal', () => {
       userEvent.clear(textInput);
       userEvent.type(textInput, 'Confirm');
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+    });
+  });
+
+  describe('testid attribute', () => {
+    it('propagates to the dom element', () => {
+      const { getByTestId } = renderModal({
+        open: true,
+        'data-testid': 'my-modal',
+      });
+
+      const modal = getByTestId('my-modal');
+      expect(modal).toBeInTheDocument();
+    });
+
+    it('propagates to the buttons', () => {
+      const { getByTestId } = renderModal({
+        open: true,
+        confirmButtonProps: { 'data-testid': 'my-confirm-btn' },
+        cancelButtonProps: { 'data-testid': 'my-cancel-btn' },
+      });
+
+      const confirmButton = getByTestId('my-confirm-btn');
+      expect(confirmButton).toBeInTheDocument();
+
+      const cancelButton = getByTestId('my-cancel-btn');
+      expect(cancelButton).toBeInTheDocument();
     });
   });
 

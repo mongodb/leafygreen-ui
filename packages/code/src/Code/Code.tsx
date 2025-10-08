@@ -67,25 +67,6 @@ function Code({
 
   const showPanel = !!panel;
 
-  if (
-    // @ts-expect-error detecting deprecated props
-    rest.copyable ||
-    // @ts-expect-error detecting deprecated props
-    rest.showCustomActionButtons ||
-    // @ts-expect-error detecting deprecated props
-    rest.languageOptions ||
-    // @ts-expect-error detecting deprecated props
-    rest.customActionButtons ||
-    // @ts-expect-error detecting deprecated props
-    rest.chromeTitle ||
-    // @ts-expect-error detecting deprecated props
-    rest.onChange
-  ) {
-    console.warn(
-      'The following props are deprecated and have been removed: copyable, showCustomActionButtons, languageOptions, customActionButtons, chromeTitle, onChange. Please use the Panel component instead.',
-    );
-  }
-
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
 

@@ -160,7 +160,7 @@ jobs:
       - name: Publish to Chromatic
         env:
           NODE_OPTIONS: '--max_old_space_size=16384'
-        uses: chromaui/action@v1
+        uses: chromaui/action@v11.29.0
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: 'build-storybook'

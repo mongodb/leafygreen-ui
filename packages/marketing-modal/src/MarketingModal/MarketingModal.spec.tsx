@@ -77,8 +77,8 @@ describe('packages/marketing-modal', () => {
     });
   });
   test('does not render if closed', () => {
-    const { getByText } = renderModal();
-    expect(getByText('Content text')).not.toBeVisible();
+    const { queryByText } = renderModal();
+    expect(queryByText('Content text')).toBeNull();
   });
 
   test('renders if open', () => {

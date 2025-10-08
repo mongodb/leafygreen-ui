@@ -1,5 +1,17 @@
 # @leafygreen-ui/lib
 
+## 15.6.1
+
+### Patch Changes
+
+- 88e25a1: Add data-testid documentation in `LgIdProps`
+
+## 15.6.0
+
+### Minor Changes
+
+- 394ba93: Adds `findChildren` utility to `lib`. Also adds `unwrapRootFragment` and `isChildWithProperty` helpers
+
 ## 15.5.0
 
 ### Minor Changes
