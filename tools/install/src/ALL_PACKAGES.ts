@@ -6,7 +6,6 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/avatar',
   '@leafygreen-ui/badge',
   '@leafygreen-ui/banner',
-  '@leafygreen-ui/box',
   '@leafygreen-ui/button',
   '@leafygreen-ui/callout',
   '@leafygreen-ui/card',
