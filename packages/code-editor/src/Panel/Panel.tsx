@@ -66,8 +66,17 @@ export function Panel({
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useUpdatedBaseFontSize();
 
-  const { getContents, formatCode, undo, redo, downloadContent, lgIds } =
-    useCodeEditorContext();
+  const {
+    getContents,
+    formatCode,
+    undo,
+    redo,
+    downloadContent,
+    lgIds,
+    maxWidth,
+    minWidth,
+    width,
+  } = useCodeEditorContext();
 
   const handleFormatClick = async () => {
     if (formatCode) {
@@ -115,7 +124,10 @@ export function Panel({
 
   return (
     <>
-      <div className={getPanelStyles(theme)} data-lgid={lgIds.panel}>
+      <div
+        className={getPanelStyles({ theme, width, minWidth, maxWidth })}
+        data-lgid={lgIds.panel}
+      >
         <div
           className={getPanelTitleStyles(
             theme,
