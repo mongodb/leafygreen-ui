@@ -23,7 +23,7 @@ export type InputSegmentChangeEventHandler<
 export interface InputSegmentProps<
   T extends string = string,
   V extends string = string,
-> extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'size'> {
+> extends Omit<React.ComponentPropsWithRef<'input'>, 'onChange' | 'size'> {
   /** Which segment this input represents */
   segment: T;
 

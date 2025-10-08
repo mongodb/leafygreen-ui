@@ -16,6 +16,7 @@ import { DateInputSegmentProps } from './DateInputSegment.types';
 import { InputSegment } from '../../InputSegment/InputSegment';
 import { InputSegmentChangeEvent } from '../../InputSegment/InputSegment.types';
 import { DateSegment, DateSegmentValue } from '../../../types';
+import { Size } from '@leafygreen-ui/tokens';
 
 /**
  * Controlled component
@@ -214,6 +215,7 @@ export const DateInputSegment = React.forwardRef<
 
     return (
       <InputSegment<DateSegment, DateSegmentValue>
+        ref={fwdRef}
         segment={segment}
         value={value}
         onChange={handleChange}
@@ -225,10 +227,12 @@ export const DateInputSegment = React.forwardRef<
         size={size}
         charsPerSegment={charsPerSegment}
         autoComplete={autoComplete}
-        ref={fwdRef}
         className={cx(segmentWidthStyles[segment])}
         disabled={disabled}
         data-testid="lg-date_picker_input-segment"
+        defaultMin={defaultMin}
+        defaultMax={defaultMax}
+        segmentObj={DateSegment}
         {...rest}
       />
     );
