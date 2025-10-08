@@ -91,6 +91,10 @@ export function useThemeExtension({
             paddingBottom: `${spacing[200]}px`,
           },
 
+          [CodeEditorSelectors.FoldPlaceholder]: {
+            backgroundColor: 'transparent',
+          },
+
           [CodeEditorSelectors.Content]: {
             fontFamily: fontFamilies.code,
             fontSize: `${fontSize}px`,
