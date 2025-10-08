@@ -353,6 +353,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       redo: handleRedo,
       downloadContent: handleDownloadContent,
       lgIds,
+      maxWidth,
+      minWidth,
+      width,
     };
 
     return (
