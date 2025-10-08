@@ -14,6 +14,14 @@ import { queryFirstFocusableElement } from '@leafygreen-ui/lib';
 export const focusModalChildElement = (
   modalElement: HTMLDialogElement,
 ): HTMLElement | null => {
+  // If focus is already within the modal, do nothing
+  if (
+    document.activeElement instanceof HTMLElement &&
+    modalElement.contains(document.activeElement)
+  ) {
+    return document.activeElement;
+  }
+
   // First, check if any child element has autoFocus
   const autoFocusElement = modalElement.querySelector(
     '[autofocus]',

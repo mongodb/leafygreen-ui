@@ -33,6 +33,24 @@ describe('focusModalChildElement', () => {
     jest.clearAllMocks();
   });
 
+  describe('when a child element already has focus', () => {
+    test('returns the focussed element without calling querySelector() nor focus()', () => {
+      const mockFocussedElement = mockDialogElement.appendChild(
+        document.createElement('input'),
+      );
+      // Pre-focus the element
+      mockFocussedElement.focus();
+
+      jest.spyOn(mockFocussedElement, 'focus').mockImplementation(mockFocus);
+
+      const result = focusModalChildElement(mockDialogElement);
+
+      expect(mockQuerySelector).not.toHaveBeenCalled(); // No need to check for autoFocus
+      expect(mockFocus).not.toHaveBeenCalled(); // Browser handles autoFocus
+      expect(result).toBe(mockFocussedElement);
+    });
+  });
+
   describe('when a child element has autoFocus', () => {
     test('returns the autoFocus element without calling focus()', () => {
       const mockAutoFocusElement = document.createElement('input');
