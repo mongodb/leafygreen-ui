@@ -22,9 +22,12 @@ describe('focusModalChildElement', () => {
     mockQuerySelector = jest.fn();
 
     // Create a mock dialog element
-    mockDialogElement = {
-      querySelector: mockQuerySelector,
-    } as unknown as HTMLDialogElement;
+    mockDialogElement = document.body.appendChild(
+      document.createElement('dialog'),
+    );
+    jest
+      .spyOn(mockDialogElement, 'querySelector')
+      .mockImplementation(mockQuerySelector);
 
     // Reset mocks
     jest.clearAllMocks();
@@ -32,9 +35,8 @@ describe('focusModalChildElement', () => {
 
   describe('when a child element has autoFocus', () => {
     test('returns the autoFocus element without calling focus()', () => {
-      const mockAutoFocusElement = {
-        focus: mockFocus,
-      } as unknown as HTMLElement;
+      const mockAutoFocusElement = document.createElement('input');
+      jest.spyOn(mockAutoFocusElement, 'focus').mockImplementation(mockFocus);
       mockQuerySelector.mockReturnValue(mockAutoFocusElement);
 
       const result = focusModalChildElement(mockDialogElement);
@@ -45,9 +47,7 @@ describe('focusModalChildElement', () => {
     });
 
     test('returns the autoFocus element', () => {
-      const mockAutoFocusElement = {
-        focus: mockFocus,
-      } as unknown as HTMLElement;
+      const mockAutoFocusElement = document.createElement('input');
       mockQuerySelector.mockReturnValue(mockAutoFocusElement);
 
       const result = focusModalChildElement(mockDialogElement);
@@ -58,9 +58,10 @@ describe('focusModalChildElement', () => {
 
   describe('when no child element has autoFocus', () => {
     test('focuses and returns the first focusable element', () => {
-      const mockFirstFocusableElement = {
-        focus: mockFocus,
-      } as unknown as HTMLElement;
+      const mockFirstFocusableElement = document.createElement('input');
+      jest
+        .spyOn(mockFirstFocusableElement, 'focus')
+        .mockImplementation(mockFocus);
 
       // No autoFocus element found
       mockQuerySelector.mockReturnValue(null);
@@ -77,9 +78,10 @@ describe('focusModalChildElement', () => {
     });
 
     test('returns the focused element', () => {
-      const mockFirstFocusableElement = {
-        focus: mockFocus,
-      } as unknown as HTMLElement;
+      const mockFirstFocusableElement = document.createElement('input');
+      jest
+        .spyOn(mockFirstFocusableElement, 'focus')
+        .mockImplementation(mockFocus);
 
       mockQuerySelector.mockReturnValue(null);
       mockQueryFirstFocusableElement.mockReturnValue(mockFirstFocusableElement);
