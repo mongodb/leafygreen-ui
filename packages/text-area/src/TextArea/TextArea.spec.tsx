@@ -190,6 +190,11 @@ describe('packages/text-area', () => {
       <TextArea label="Some label" />;
       <TextArea aria-labelledby="some-id" />;
     });
+
+    test('TextArea takes a ref for a HTMLTextAreaElement', () => {
+      const ref = React.createRef<HTMLTextAreaElement>();
+      render(<TextArea label="Some label" ref={ref} />);
+    });
   });
   /* eslint-enable jest/no-disabled-tests */
 });
