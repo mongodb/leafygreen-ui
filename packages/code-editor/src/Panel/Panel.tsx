@@ -12,11 +12,11 @@ import QuestionMarkWithCircleIcon from '@leafygreen-ui/icon/dist/QuestionMarkWit
 import RedoIcon from '@leafygreen-ui/icon/dist/Redo';
 // @ts-ignore LG icons don't currently support TS
 import UndoIcon from '@leafygreen-ui/icon/dist/Undo';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuItem, MenuVariant } from '@leafygreen-ui/menu';
-import Modal from '@leafygreen-ui/modal';
-import Tooltip from '@leafygreen-ui/tooltip';
+import { Modal } from '@leafygreen-ui/modal';
+import { Tooltip } from '@leafygreen-ui/tooltip';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { useCodeEditorContext } from '../CodeEditor/CodeEditorContext';
