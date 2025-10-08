@@ -85,8 +85,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const isControlled = value !== undefined;
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
-    const [undoDepth, setUndoDepth] = useState(1);
-    const [redoDepth, setRedoDepth] = useState(1);
+    const [undoDepth, setUndoDepth] = useState(0);
+    const [redoDepth, setRedoDepth] = useState(0);
 
     const { modules, isLoading } = useModules(props);
 
@@ -260,9 +260,6 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
-      const commands = modules?.['@codemirror/commands'];
-      const searchModule = modules?.['@codemirror/search'];
-      const Prec = modules?.['@codemirror/state']?.Prec;
 
       if (!editorContainerRef?.current || !EditorView || !Prec || !commands) {
         return;
@@ -270,10 +267,43 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
       const domNode = editorContainerRef.current as HTMLElementWithCodeMirror;
 
+      // Create editor with minimal setup - extensions will be configured in separate effect
       editorViewRef.current = new EditorView.EditorView({
         doc: controlledValue || defaultValue,
         parent: domNode,
-        extensions: [
+      });
+
+      return () => {
+        /** Delete the CodeMirror instance from the DOM node */
+        delete domNode._cm;
+        editorViewRef.current?.destroy();
+      };
+      // Only recreate editor when modules are loaded
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modules]);
+
+    // Configure/update extensions whenever relevant props change
+    useLayoutEffect(() => {
+      const EditorView = modules?.['@codemirror/view'];
+      const commands = modules?.['@codemirror/commands'];
+      const searchModule = modules?.['@codemirror/search'];
+      const Prec = modules?.['@codemirror/state']?.Prec;
+      const StateEffect = modules?.['@codemirror/state']?.StateEffect;
+
+      if (
+        !editorViewRef.current ||
+        !EditorView ||
+        !Prec ||
+        !commands ||
+        !searchModule ||
+        !StateEffect
+      ) {
+        return;
+      }
+
+      // Configure the editor with necessary extensions
+      editorViewRef.current.dispatch({
+        effects: StateEffect.reconfigure.of([
           ...consumerExtensions.map((extension: CodeMirrorExtension) =>
             Prec.highest(extension),
           ),
@@ -294,7 +324,6 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               }
 
               if (commands && state) {
-                console.log('update.docChanged');
                 setUndoDepth(commands.undoDepth(state));
                 setRedoDepth(commands.redoDepth(state));
               }
@@ -326,7 +355,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           ]),
 
           ...customExtensions,
-        ],
+        ]),
       });
 
       if (forceParsingProp) {
@@ -337,19 +366,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           Language.forceParsing(editorViewRef.current, docLength, 150);
         }
       }
-
-      return () => {
-        /** Delete the CodeMirror instance from the DOM node */
-        delete domNode._cm;
-        editorViewRef.current?.destroy();
-      };
     }, [
-      value,
-      modules,
-      controlledValue,
-      defaultValue,
-      isControlled,
-      onChangeProp,
       consumerExtensions,
       customExtensions,
       forceParsingProp,
@@ -359,6 +376,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       props.baseFontSize,
       panel,
       searchPanelExtension,
+      isControlled,
+      modules,
+      onChangeProp,
     ]);
 
     useImperativeHandle(forwardedRef, () => ({
