@@ -271,5 +271,37 @@ describe('packages/hooks/useControlled', () => {
         expect(input).toHaveValue('carrot');
       });
     });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('types', () => {
+      test('type of `value` should be inferred from `controlledValue`', () => {
+        {
+          const { value } = useControlled(1);
+          const _N: number = value;
+          // @ts-expect-error
+          const _S: string = value;
+        }
+
+        {
+          const { value } = useControlled('hello');
+          const _S: string = value;
+          // @ts-expect-error
+          const _N: number = value;
+        }
+      });
+
+      test('controlledValue and initial value must be the same type', () => {
+        useControlled(1, () => {}, 42);
+        // @ts-expect-error
+        useControlled(1, () => {}, 'foo');
+      });
+
+      test('type of value is inferred from `initialValue` if controlledValue is undefined', () => {
+        const { value } = useControlled(undefined, () => {}, 42);
+        const _N: number = value;
+        // @ts-expect-error
+        const _S: string = value;
+      });
+    });
   });
 });
