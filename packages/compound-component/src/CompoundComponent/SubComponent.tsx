@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-interface SubComponentProperties<Key extends string> {
+interface SubComponentStaticProperties<Key extends string> {
   displayName: string;
   key: Key;
 }
@@ -26,14 +26,14 @@ export type SubComponentType<
  * ```
  *
  * @param componentRenderFn The component render function
- * @param properties Object describing the `displayName` and `key`
+ * @param staticProperties Object describing the `displayName` and `key`
  * @returns {SubComponentType}
  */
 export const CompoundSubComponent = <Key extends string, Props extends {} = {}>(
   componentRenderFn: ComponentType<Props>,
-  properties: SubComponentProperties<Key>,
+  staticProperties: SubComponentStaticProperties<Key>,
 ): SubComponentType<Key, Props> => {
-  const { key, ...rest } = properties;
+  const { key, ...rest } = staticProperties;
   return Object.assign(componentRenderFn, {
     ...rest,
     [key]: true,
