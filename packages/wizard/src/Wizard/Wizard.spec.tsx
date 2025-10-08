@@ -7,7 +7,7 @@ import { Wizard } from '.';
 describe('packages/wizard', () => {
   describe('rendering', () => {
     test('renders first Wizard.Step', () => {
-      const { getByText, getByTestId, queryByText, queryByTestId } = render(
+      const { getByTestId, queryByTestId } = render(
         <Wizard>
           <Wizard.Step title="Step 1" description="First step">
             <div data-testid="step-1-content">Step 1 content</div>
@@ -188,7 +188,7 @@ describe('packages/wizard', () => {
 
     describe('uncontrolled', () => {
       test('does not increment step beyond Steps count', async () => {
-        const { getByText, queryByText, getByRole, queryByRole } = render(
+        const { getByText, queryByText, getByRole } = render(
           <Wizard>
             <Wizard.Step title="Step 1">
               <div data-testid="step-1-content">Content 1</div>
@@ -219,7 +219,7 @@ describe('packages/wizard', () => {
       test('does not change steps internally when controlled', async () => {
         const onStepChange = jest.fn();
 
-        const { getByText, queryByText, getByRole, queryByRole } = render(
+        const { getByText, queryByText, getByRole } = render(
           <Wizard activeStep={0} onStepChange={onStepChange}>
             <Wizard.Step title="Step 1">
               <div data-testid="step-1-content">Content 1</div>
@@ -243,6 +243,54 @@ describe('packages/wizard', () => {
 
         // But onStepChange should have been called
         expect(onStepChange).toHaveBeenCalledWith(1);
+      });
+
+      test('warns when activeStep exceeds number of steps', () => {
+        const consoleWarnSpy = jest
+          .spyOn(console, 'warn')
+          .mockImplementation(() => {});
+
+        render(
+          <Wizard activeStep={5}>
+            <Wizard.Step title="Step 1">
+              <div data-testid="step-1-content">Content 1</div>
+            </Wizard.Step>
+            <Wizard.Step title="Step 2">
+              <div data-testid="step-2-content">Content 2</div>
+            </Wizard.Step>
+          </Wizard>,
+        );
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          'LeafyGreen Wizard received (zero-indexed) `activeStep` prop exceeding the number of Steps provided\n',
+          'Received activeStep: 5, Wizard.Steps count: 2',
+        );
+
+        consoleWarnSpy.mockRestore();
+      });
+
+      test('warns when activeStep is negative', () => {
+        const consoleWarnSpy = jest
+          .spyOn(console, 'warn')
+          .mockImplementation(() => {});
+
+        render(
+          <Wizard activeStep={-1}>
+            <Wizard.Step title="Step 1">
+              <div data-testid="step-1-content">Content 1</div>
+            </Wizard.Step>
+            <Wizard.Step title="Step 2">
+              <div data-testid="step-2-content">Content 2</div>
+            </Wizard.Step>
+          </Wizard>,
+        );
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+          'LeafyGreen Wizard received (zero-indexed) `activeStep` prop exceeding the number of Steps provided\n',
+          'Received activeStep: -1, Wizard.Steps count: 2',
+        );
+
+        consoleWarnSpy.mockRestore();
       });
     });
   });
