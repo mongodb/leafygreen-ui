@@ -3792,15 +3792,43 @@ importers:
 
   packages/wizard:
     dependencies:
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
+      '@leafygreen-ui/descendants':
+        specifier: workspace:^
+        version: link:../descendants
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
+      '@leafygreen-ui/form-footer':
+        specifier: workspace:^
+        version: link:../form-footer
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@leafygreen-ui/polymorphic':
+        specifier: workspace:^
+        version: link:../polymorphic
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
+    devDependencies:
+      '@faker-js/faker':
+        specifier: ^8.0.0
+        version: 8.0.2
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
 
   tools/build:
     dependencies:

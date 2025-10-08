@@ -30,7 +30,7 @@ Baz.displayName = 'Baz';
 (Bar as any).isBar = true;
 (Baz as any).isBaz = true;
 
-describe('packages/lib/findChild', () => {
+describe('packages/compound-component/findChild', () => {
   test('should find a child component with matching static property', () => {
     // Create an iterable to test different iteration scenarios
     const children = [<Foo text="Foo" />, <Bar text="Bar" />];
@@ -75,6 +75,30 @@ describe('packages/lib/findChild', () => {
     const found = findChild(children, 'isBar');
     expect(found).toBeDefined();
     expect((found as React.ReactElement).props.text).toBe('also-in-fragment');
+  });
+
+  test('should find mapped children', () => {
+    const COUNT = 5;
+    const children = new Array(COUNT).fill(null).map((_, i) => {
+      return <Foo text={`Foo number ${i}`} />;
+    });
+
+    const found = findChild(children, 'isFoo');
+    expect((found as React.ReactElement).props.text).toBe('Foo number 0');
+  });
+
+  test('should find deeply mapped children', () => {
+    const COUNT = 5;
+    const children = (
+      <>
+        {new Array(COUNT).fill(null).map((_, i) => {
+          return <Foo text={`Foo number ${i}`} />;
+        })}
+      </>
+    );
+
+    const found = findChild(children, 'isFoo');
+    expect((found as React.ReactElement).props.text).toBe('Foo number 0');
   });
 
   test('should NOT find components in deeply nested fragments (search depth limitation)', () => {

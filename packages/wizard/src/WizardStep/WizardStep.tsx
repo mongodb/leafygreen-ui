@@ -1,8 +1,38 @@
 import React from 'react';
+
+import { cx } from '@leafygreen-ui/emotion';
+import { consoleOnce } from '@leafygreen-ui/lib';
+import { Description, H3 } from '@leafygreen-ui/typography';
+
+import { WizardSubComponentProperties } from '../constants';
+import { CompoundSubComponent } from '../utils/CompoundSubComponent';
+import { useWizardContext } from '../WizardContext';
+
+import { TextNode } from './TextNode';
+import { stepStyles } from './WizardStep.styles';
 import { WizardStepProps } from './WizardStep.types';
 
-export function WizardStep({}: WizardStepProps) {
-  return <div>your content here</div>;
-}
+export const WizardStep = CompoundSubComponent(
+  ({ title, description, children, className, ...rest }: WizardStepProps) => {
+    const { isWizardContext } = useWizardContext();
 
-WizardStep.displayName = 'WizardStep';
+    if (!isWizardContext) {
+      consoleOnce.error(
+        'Wizard.Step component must be used within a Wizard context.',
+      );
+      return null;
+    }
+
+    return (
+      <div className={cx(stepStyles, className)} {...rest}>
+        <TextNode as={H3}>{title}</TextNode>
+        {description && <TextNode as={Description}>{description}</TextNode>}
+        <div>{children}</div>
+      </div>
+    );
+  },
+  {
+    displayName: 'WizardStep',
+    key: WizardSubComponentProperties.Step,
+  },
+);
