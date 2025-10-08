@@ -352,6 +352,21 @@ describe('packages/hooks/useControlled', () => {
           // @ts-expect-error
           updateValue(undefined);
         }
+
+        {
+          const { value, updateValue } = useControlled<number | undefined>(
+            undefined,
+            () => {},
+          );
+          const _N: number | undefined = value;
+          // @ts-expect-error
+          const _S: string = value;
+
+          updateValue(5);
+          updateValue(undefined);
+          // @ts-expect-error
+          updateValue('foo');
+        }
       });
     });
   });
