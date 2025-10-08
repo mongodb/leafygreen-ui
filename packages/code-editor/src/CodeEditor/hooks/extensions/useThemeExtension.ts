@@ -87,6 +87,10 @@ export function useThemeExtension({
     ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
           },
 
+          [CodeEditorSelectors.FoldPlaceholder]: {
+            backgroundColor: 'transparent',
+          },
+
           [CodeEditorSelectors.Content]: {
             fontFamily: fontFamilies.code,
             fontSize: `${fontSize}px`,
