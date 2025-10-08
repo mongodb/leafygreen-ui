@@ -33,8 +33,14 @@ export function useReadOnlyExtension({
     value: {
       enable: props.readOnly,
       module: modules?.['@codemirror/state'],
+      EditorViewModule: modules?.['@codemirror/view'],
     },
-    factory: ({ enable, module }) =>
-      enable && module ? module.EditorState.readOnly.of(true) : [],
+    factory: ({ enable, module, EditorViewModule }) =>
+      enable && module && EditorViewModule
+        ? [
+            module.EditorState.readOnly.of(true),
+            EditorViewModule.EditorView.editable.of(false),
+          ]
+        : [],
   });
 }
