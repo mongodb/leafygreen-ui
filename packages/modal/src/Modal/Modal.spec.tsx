@@ -10,31 +10,24 @@ import { axe } from 'jest-axe';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 
 import { getTestUtils } from '../utils/getTestUtils';
-import ModalView from '..';
+import { Modal } from '..';
 
 const modalContent = 'Modal Content';
 
 const ModalWrapper = ({
   open: initialOpen,
   ...props
-}: Partial<React.ComponentProps<typeof ModalView>>) => {
+}: Partial<React.ComponentProps<typeof Modal>>) => {
   const [open, setOpen] = useState(initialOpen);
 
   return (
-    <ModalView
-      data-testid="modal-test-id"
-      {...props}
-      open={open}
-      setOpen={setOpen}
-    >
+    <Modal data-testid="modal-test-id" {...props} open={open} setOpen={setOpen}>
       {modalContent}
-    </ModalView>
+    </Modal>
   );
 };
 
-function renderModal(
-  props: Partial<React.ComponentProps<typeof ModalView>> = {},
-) {
+function renderModal(props: Partial<React.ComponentProps<typeof Modal>> = {}) {
   const utils = render(<ModalWrapper {...props}>{modalContent}</ModalWrapper>);
   const { getModal, findModal, queryModal } = getTestUtils();
   return { ...utils, getModal, findModal, queryModal };
@@ -160,12 +153,12 @@ describe('packages/modal', () => {
 
     test('clicking on modal content does not close modal', async () => {
       const { getByText } = render(
-        <ModalView open={true}>
+        <Modal open={true}>
           <div data-testid="modal-content">
             <h2>Test Modal</h2>
             <p>This is modal content</p>
           </div>
-        </ModalView>,
+        </Modal>,
       );
 
       const content = getByText('This is modal content');
@@ -190,11 +183,11 @@ describe('packages/modal', () => {
 
     test('supports autofocus on child elements', () => {
       const { getByTestId } = render(
-        <ModalView open={true}>
+        <Modal open={true}>
           {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
           <input data-testid="auto-focus-input" autoFocus />
           <button>Submit</button>
-        </ModalView>,
+        </Modal>,
       );
 
       const input = getByTestId('auto-focus-input');
@@ -203,10 +196,10 @@ describe('packages/modal', () => {
 
     test('focuses first focusable element when no autoFocus is set', () => {
       const { getByRole } = render(
-        <ModalView open={true}>
+        <Modal open={true}>
           <button>Submit</button>
           <input />
-        </ModalView>,
+        </Modal>,
       );
 
       const submitButton = getByRole('button', { name: 'Submit' });
@@ -224,7 +217,7 @@ describe('packages/modal', () => {
 
     test('popover renders inside same portal as modal', async () => {
       const { getByTestId } = render(
-        <ModalView open={true}>
+        <Modal open={true}>
           {modalContent}
           <Select
             label="label"
@@ -239,7 +232,7 @@ describe('packages/modal', () => {
               <Option value="axolotl">Axolotl</Option>
             </OptionGroup>
           </Select>
-        </ModalView>,
+        </Modal>,
       );
 
       const modal = getByTestId('lg-modal'); // Use the correct test id
