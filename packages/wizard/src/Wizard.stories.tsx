@@ -5,6 +5,7 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
 import { Card } from '@leafygreen-ui/card';
+import { css } from '@leafygreen-ui/emotion';
 
 import { Wizard } from '.';
 
@@ -35,6 +36,9 @@ export const LiveExample: StoryObj<typeof Wizard> = {
     <Wizard {...props}>
       {['Apple', 'Banana', 'Carrot'].map((title, i) => (
         <Wizard.Step
+          className={css`
+            margin-top: 24px;
+          `}
           key={i}
           title={`Step ${i + 1}: ${title}`}
           description={faker.lorem.paragraph()}
@@ -79,6 +83,9 @@ export const Controlled: StoryObj<typeof Wizard> = {
       >
         {['Apple', 'Banana', 'Carrot'].map((title, i) => (
           <Wizard.Step
+            className={css`
+              margin-top: 24px;
+            `}
             key={i}
             title={`Step ${i + 1}: ${title}`}
             description={faker.lorem.paragraph()}

@@ -15,6 +15,7 @@ export const WizardFooter = CompoundSubComponent(
     backButtonProps,
     cancelButtonProps,
     primaryButtonProps,
+    className,
     ...rest
   }: WizardFooterProps) => {
     const { isWizardContext, activeStep, updateStep } = useWizardContext();
@@ -41,6 +42,7 @@ export const WizardFooter = CompoundSubComponent(
     return (
       <FormFooter
         {...rest}
+        className={className}
         backButtonProps={
           activeStep > 0
             ? {

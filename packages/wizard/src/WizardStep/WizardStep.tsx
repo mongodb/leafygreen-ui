@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { cx } from '@leafygreen-ui/emotion';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { Description, H3 } from '@leafygreen-ui/typography';
 
@@ -12,7 +13,7 @@ import { stepStyles } from './WizardStep.styles';
 import { WizardStepProps } from './WizardStep.types';
 
 export const WizardStep = CompoundSubComponent(
-  ({ title, description, children, ...rest }: WizardStepProps) => {
+  ({ title, description, children, className, ...rest }: WizardStepProps) => {
     const { isWizardContext } = useWizardContext();
 
     if (!isWizardContext) {
@@ -23,7 +24,7 @@ export const WizardStep = CompoundSubComponent(
     }
 
     return (
-      <div className={stepStyles} {...rest}>
+      <div className={cx(stepStyles, className)} {...rest}>
         <TextNode as={H3}>{title}</TextNode>
         {description && <TextNode as={Description}>{description}</TextNode>}
         <div>{children}</div>
