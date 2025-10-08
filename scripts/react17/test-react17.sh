@@ -52,7 +52,7 @@ cd "${PROJECT_ROOT}"
 
 # Backup existing .dockerignore if present
 if [ -f ".dockerignore" ]; then
-    DOCKERIGNORE_BACKUP=".dockerignore.backup.$$"
+    DOCKERIGNORE_BACKUP=".dockerignore.backup.$(date +%s%N)"
     mv .dockerignore "${DOCKERIGNORE_BACKUP}"
 fi
 
