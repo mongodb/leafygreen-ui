@@ -274,55 +274,83 @@ describe('packages/hooks/useControlled', () => {
 
     // eslint-disable-next-line jest/no-disabled-tests
     describe.skip('types', () => {
-      test('type of `value` is inferred from `controlledValue`', () => {
-        {
-          const { value } = useControlled(1);
-          const _N: number = value;
-          // @ts-expect-error
-          const _S: string = value;
-        }
-
-        {
-          const { value } = useControlled('hello');
-          const _S: string = value;
-          // @ts-expect-error
-          const _N: number = value;
-        }
-      });
-
       test('controlledValue and initial value must be the same type', () => {
         useControlled(1, jest.fn(), 42);
         // @ts-expect-error
         useControlled(1, jest.fn(), 'foo');
       });
 
-      test('type of value is inferred from `initialValue` if controlledValue is undefined', () => {
-        const { value } = useControlled(undefined, jest.fn(), 42);
-        const _N: number = value;
-        // @ts-expect-error
-        const _S: string = value;
-      });
-
-      test('type of value is `any` if no initial or controlledValue are provided', () => {
-        const { value } = useControlled(undefined, jest.fn());
-        const _A: any = value;
-        const _N: number = value;
-        const _S: string = value;
-      });
-
-      test('value is explicitly typed if generic param is provided', () => {
+      test('return type is inferred from `controlledValue`', () => {
         {
-          const { value } = useControlled<number>(undefined, jest.fn());
+          const { value, updateValue } = useControlled(1);
           const _N: number = value;
           // @ts-expect-error
           const _S: string = value;
+
+          updateValue(5);
+          // @ts-expect-error
+          updateValue('foo');
         }
 
         {
-          const { value } = useControlled<undefined>(undefined, jest.fn());
-          const _U: undefined = value;
+          const { value, updateValue } = useControlled('hello');
+          const _S: string = value;
+          // @ts-expect-error
+          const _N: number = value;
+
+          updateValue('foo');
+          // @ts-expect-error
+          updateValue(5);
+        }
+      });
+
+      test('return type is inferred from `initialValue` if controlledValue is undefined', () => {
+        const { value, updateValue } = useControlled(undefined, () => {}, 1);
+        const _N: number = value;
+        // @ts-expect-error
+        const _S: string = value;
+
+        updateValue(5);
+        // @ts-expect-error
+        updateValue('foo');
+        // @ts-expect-error
+        updateValue(undefined);
+      });
+
+      test('return type is `undefined` if no initial or controlledValue are provided', () => {
+        const { value, updateValue } = useControlled(
+          undefined,
+          _v => {},
+          undefined,
+        );
+        const _A: undefined = value;
+        // @ts-expect-error
+        const _N: number = value;
+        // @ts-expect-error
+        const _S: string = value;
+
+        updateValue(undefined);
+        // @ts-expect-error
+        updateValue(5);
+        // @ts-expect-error
+        updateValue('foo');
+      });
+
+      test('return type is explicit if generic param is provided', () => {
+        {
+          const { value, updateValue } = useControlled<number>(
+            undefined,
+            () => {},
+          );
+          const _N: number = value;
           // @ts-expect-error
           const _S: string = value;
+
+          updateValue(5);
+          // @ts-expect-error
+          updateValue('foo');
+          // @ts-expect-error
+          updateValue(undefined);
         }
       });
     });
