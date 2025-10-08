@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import {
   CompoundComponent,
@@ -6,9 +6,9 @@ import {
   findChildren,
 } from '@leafygreen-ui/compound-component';
 import { Direction } from '@leafygreen-ui/descendants';
+import { useControlled } from '@leafygreen-ui/hooks';
 
 import { WizardSubComponentProperties } from '../constants';
-import { useWizardControlledValue } from '../utils/useWizardControlledValue/useWizardControlledValue';
 import { WizardProvider } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
@@ -36,8 +36,8 @@ export const Wizard = CompoundComponent(
     const {
       isControlled,
       value: activeStep,
-      setValue: setActiveStep,
-    } = useWizardControlledValue<number>(activeStepProp, undefined, 0);
+      updateValue: setActiveStep,
+    } = useControlled<number>(activeStepProp, undefined, 0);
 
     if (
       activeStepProp &&
@@ -50,22 +50,34 @@ export const Wizard = CompoundComponent(
       );
     }
 
-    const updateStep = (direction: Direction) => {
-      const getNextStep = (curr: number) => {
-        switch (direction) {
-          case Direction.Next:
-            return Math.min(curr + 1, stepChildren.length - 1);
-          case Direction.Prev:
-            return Math.max(curr - 1, 0);
+    const updateStep = useCallback(
+      (direction: Direction) => {
+        const getNextStep = (curr: number) => {
+          switch (direction) {
+            case Direction.Next:
+              return Math.min(curr + 1, stepChildren.length - 1);
+            case Direction.Prev:
+              return Math.max(curr - 1, 0);
+          }
+        };
+
+        const nextStep = getNextStep(activeStep);
+
+        if (!isControlled) {
+          // TODO pass getNextStep into setter as callback https://jira.mongodb.org/browse/LG-5607
+          setActiveStep(nextStep);
         }
-      };
 
-      if (!isControlled) {
-        setActiveStep(getNextStep);
-      }
-
-      onStepChange?.(getNextStep(activeStep));
-    };
+        onStepChange?.(nextStep);
+      },
+      [
+        activeStep,
+        isControlled,
+        onStepChange,
+        setActiveStep,
+        stepChildren.length,
+      ],
+    );
 
     // Get the current step to render
     const currentStep = stepChildren[activeStep] || null;
