@@ -12,10 +12,11 @@ import { textInputStyle } from './TextInput.styles';
 import {
   SizeVariant,
   State,
-  TextInputComponentType,
   TextInputProps,
   TextInputType,
 } from './TextInput.types';
+
+type TextInput = React.ForwardRefExoticComponent<TextInputProps>;
 
 /**
  *
@@ -39,7 +40,7 @@ import {
  * @param props.sizeVariant determines the size of the text and the height of the input.
  */
 
-const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
+const TextInput: TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       label,
@@ -182,7 +183,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       </FormField>
     );
   },
-) as TextInputComponentType;
+);
 
 TextInput.displayName = 'TextInput';
 

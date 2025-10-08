@@ -248,7 +248,7 @@ describe('packages/text-input', () => {
 
     test('TextInput takes a ref for a HTMLInputElement', () => {
       const ref = React.createRef<HTMLInputElement>();
-      render(<TextInput ref={ref} />);
+      render(<TextInput label="some label" ref={ref} />);
     });
   });
   /* eslint-enable jest/no-disabled-tests */
