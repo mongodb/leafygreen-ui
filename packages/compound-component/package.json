@@ -1,7 +1,6 @@
-  
 {
   "name": "@leafygreen-ui/compound-component",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "LeafyGreen UI Kit Compound Component",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

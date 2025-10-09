@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 15.6.2
+
+### Patch Changes
+
+- a565b3f: Deprecates child query exports. Prefer using the exports from `@leafygreen-ui/compound-component`
+
 ## 15.6.1
 
 ### Patch Changes
