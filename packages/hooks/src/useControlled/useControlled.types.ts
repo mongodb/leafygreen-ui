@@ -9,7 +9,7 @@ export interface ControlledReturnObject<T extends any> {
    * Either updates the uncontrolled value,
    * or calls the provided `onChange` callback
    */
-  updateValue: (newVal?: T) => void;
+  updateValue: (newVal: T) => void;
 
   /**
    * A setter for the internal value.
