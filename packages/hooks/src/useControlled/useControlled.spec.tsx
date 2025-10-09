@@ -123,7 +123,7 @@ describe('packages/hooks/useControlled', () => {
   });
 
   describe('Uncontrolled', () => {
-    test('calling without a value sets value to `initialValue`', () => {
+    test('calling without a `controlledValue` sets value to `initialValue`', () => {
       const {
         result: { current },
       } = renderUseControlledHook(undefined, () => {}, 'apple');
@@ -269,6 +269,104 @@ describe('packages/hooks/useControlled', () => {
         const button = result.getByTestId('test-button');
         userEvent.click(button);
         expect(input).toHaveValue('carrot');
+      });
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('types', () => {
+      test('controlledValue and initial value must be the same type', () => {
+        useControlled(1, jest.fn(), 42);
+        // @ts-expect-error
+        useControlled(1, jest.fn(), 'foo');
+      });
+
+      test('return type is inferred from `controlledValue`', () => {
+        {
+          const { value, updateValue } = useControlled(1);
+          const _N: number = value;
+          // @ts-expect-error
+          const _S: string = value;
+
+          updateValue(5);
+          // @ts-expect-error
+          updateValue('foo');
+        }
+
+        {
+          const { value, updateValue } = useControlled('hello');
+          const _S: string = value;
+          // @ts-expect-error
+          const _N: number = value;
+
+          updateValue('foo');
+          // @ts-expect-error
+          updateValue(5);
+        }
+      });
+
+      test('return type is inferred from `initialValue` if controlledValue is undefined', () => {
+        const { value, updateValue } = useControlled(undefined, () => {}, 1);
+        const _N: number = value;
+        // @ts-expect-error
+        const _S: string = value;
+
+        updateValue(5);
+        // @ts-expect-error
+        updateValue('foo');
+        // @ts-expect-error
+        updateValue(undefined);
+      });
+
+      test('return type is `undefined` if no initial or controlledValue are provided', () => {
+        const { value, updateValue } = useControlled(
+          undefined,
+          _v => {},
+          undefined,
+        );
+        const _A: undefined = value;
+        // @ts-expect-error
+        const _N: number = value;
+        // @ts-expect-error
+        const _S: string = value;
+
+        updateValue(undefined);
+        // @ts-expect-error
+        updateValue(5);
+        // @ts-expect-error
+        updateValue('foo');
+      });
+
+      test('return type is explicit if generic param is provided', () => {
+        {
+          const { value, updateValue } = useControlled<number>(
+            undefined,
+            () => {},
+          );
+          const _N: number = value;
+          // @ts-expect-error
+          const _S: string = value;
+
+          updateValue(5);
+          // @ts-expect-error
+          updateValue('foo');
+          // @ts-expect-error
+          updateValue(undefined);
+        }
+
+        {
+          const { value, updateValue } = useControlled<number | undefined>(
+            undefined,
+            () => {},
+          );
+          const _N: number | undefined = value;
+          // @ts-expect-error
+          const _S: string = value;
+
+          updateValue(5);
+          updateValue(undefined);
+          // @ts-expect-error
+          updateValue('foo');
+        }
       });
     });
   });
