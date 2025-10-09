@@ -1,5 +1,13 @@
 # @leafygreen-ui/select
 
+## 16.1.4
+
+### Patch Changes
+
+- 6e0615c: Remove dev dependency from prod dependencies; Rename file to trigger a release
+- Updated dependencies [a565b3f]
+  - @leafygreen-ui/lib@15.6.2
+
 ## 16.1.3
 
 ### Patch Changes

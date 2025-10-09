@@ -1,17 +1,11 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
 import { useMessagePromptsContext } from '../MessagePromptsContext';
 
-import {
-  baseStyles,
-  disabledStyles,
-  selectedStyles,
-  themeStyles,
-} from './MessagePrompt.styles';
+import { getButtonStyles } from './MessagePrompt.styles';
 import { MessagePromptProps } from './MessagePrompt.types';
 
 export const MessagePrompt = forwardRef(
@@ -23,6 +17,7 @@ export const MessagePrompt = forwardRef(
       selected,
       className,
       darkMode: darkModeProp,
+      ...rest
     }: MessagePromptProps,
     ref: ForwardedRef<HTMLButtonElement>,
   ) => {
@@ -30,22 +25,27 @@ export const MessagePrompt = forwardRef(
     const { theme } = useDarkMode(darkModeProp);
     const disabled = disabledProp ?? (!selected && hasSelectedPrompt);
 
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (disabled || !onClick) return;
+
+      onClick(e);
+    };
+
     return (
       <button
-        className={cx(
-          baseStyles,
-          themeStyles[theme],
-          {
-            [disabledStyles[theme]]: disabled,
-            [selectedStyles]: selected,
-          },
+        className={getButtonStyles({
           className,
-        )}
-        onClick={!disabled ? onClick : undefined}
+          disabled,
+          selected,
+          theme,
+        })}
+        onClick={handleClick}
         aria-disabled={!!disabled}
         aria-pressed={!!selected}
-        tabIndex={selected || disabled ? 0 : 1}
+        tabIndex={selected || disabled ? -1 : 0}
         ref={ref}
+        type="button"
+        {...rest}
       >
         <Body style={{ color: 'inherit' }}>{children}</Body>
       </button>
