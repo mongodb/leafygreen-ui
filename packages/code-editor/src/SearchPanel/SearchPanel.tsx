@@ -23,7 +23,9 @@ import { Checkbox } from '@leafygreen-ui/checkbox';
 import { Icon } from '@leafygreen-ui/icon';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { InputOption } from '@leafygreen-ui/input-option';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuVariant } from '@leafygreen-ui/menu';
 import { TextInput } from '@leafygreen-ui/text-input';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
@@ -74,7 +76,8 @@ export function SearchPanel({
   );
   const [findCount, setFindCount] = useState(0);
   const { theme } = useDarkMode(darkMode);
-  const baseFontSize = useUpdatedBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const providerBaseFontSize: 14 | 16 = baseFontSize === 13 ? 14 : 16; // todo: update when LGProvider switches to 13/16
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [highlightedOption, setHighlightedOption] = useState<string | null>(
     null,
@@ -267,150 +270,143 @@ export function SearchPanel({
   );
 
   return (
-    <div
-      className={getContainerStyles({
-        theme,
-        isOpen,
-        baseFontSize: baseFontSizeProp || baseFontSize,
-        hasPanel,
-      })}
-      data-no-context-menu="true"
-    >
-      <div className={findSectionStyles}>
-        <IconButton
-          className={toggleButtonStyles}
-          aria-label="Toggle button"
-          aria-expanded={isOpen}
-          onClick={handleToggleButtonClick}
+    /** This component is rendered outside of the root so children won't have access to the LGProvider context without this */
+    <LeafyGreenProvider darkMode={darkMode} baseFontSize={providerBaseFontSize}>
+      <div
+        className={getContainerStyles({
+          theme,
+          isOpen,
+          baseFontSize: baseFontSizeProp || baseFontSize,
+          hasPanel,
+        })}
+        data-no-context-menu="true"
+      >
+        <div className={findSectionStyles}>
+          <IconButton
+            className={toggleButtonStyles}
+            aria-label="Toggle button"
+            aria-expanded={isOpen}
+            onClick={handleToggleButtonClick}
+          >
+            <Icon glyph="ChevronDown" className={getToggleIconStyles(isOpen)} />
+          </IconButton>
+          <div className={findInputContainerStyles}>
+            <TextInput
+              placeholder="Find"
+              aria-labelledby="find"
+              onChange={handleSearchQueryChange}
+              onKeyDown={handleFindInputKeyDown}
+              className={findInputStyles}
+              value={searchString}
+              // CodeMirror looks for this attribute to refocus when CMD+F is pressed and the panel is already open
+              main-field="true"
+              // @ts-expect-error - The TextInput component forwards refs, but the types do not explicitly include the `ref` prop.
+              ref={inputRef}
+            />
+            <div className={findOptionsContainerStyles}>
+              {searchString && (
+                <Body>
+                  {selectedIndex ?? '?'}/{findCount}
+                </Body>
+              )}
+              <Menu
+                trigger={
+                  <IconButton aria-label="filter button">
+                    <Icon glyph="Filter" />
+                  </IconButton>
+                }
+                renderDarkMenu={false}
+                variant={MenuVariant.Compact}
+              >
+                {Object.entries(findOptions).map(([key, value]) => (
+                  <InputOption
+                    key={key}
+                    as="li"
+                    highlighted={highlightedOption === key}
+                  >
+                    <Checkbox
+                      label={value}
+                      onChange={() => {
+                        switch (key) {
+                          case 'isCaseSensitive':
+                            setIsCaseSensitive(!isCaseSensitive);
+                            break;
+                          case 'isRegex':
+                            setIsRegex(!isRegex);
+                            break;
+                          case 'isWholeWord':
+                            setIsWholeWord(!isWholeWord);
+                            break;
+                        }
+                        setHighlightedOption(key);
+                      }}
+                    />
+                  </InputOption>
+                ))}
+              </Menu>
+            </div>
+          </div>
+          <IconButton
+            aria-label="previous item button"
+            disabled={!searchString || findCount === 0}
+            onClick={handleFindPrevious}
+          >
+            <Icon glyph="ArrowUp" />
+          </IconButton>
+          <IconButton
+            aria-label="next item button"
+            disabled={!searchString || findCount === 0}
+            onClick={handleFindNext}
+          >
+            <Icon glyph="ArrowDown" />
+          </IconButton>
+          <Button
+            className={allButtonStyles}
+            disabled={!searchString || findCount === 0}
+            onClick={handleFindAll}
+          >
+            All
+          </Button>
+          <IconButton
+            aria-label="close find menu button"
+            onClick={handleCloseButtonClick}
+            className={closeButtonStyles}
+          >
+            <Icon glyph="X" />
+          </IconButton>
+        </div>
+        <div
+          className={replaceSectionStyles}
+          // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
+          inert={!isOpen}
+          aria-hidden={!isOpen}
         >
-          <Icon glyph="ChevronDown" className={getToggleIconStyles(isOpen)} />
-        </IconButton>
-        <div className={findInputContainerStyles}>
-          <TextInput
-            placeholder="Find"
-            aria-labelledby="find"
-            onChange={handleSearchQueryChange}
-            onKeyDown={handleFindInputKeyDown}
-            className={findInputStyles}
-            value={searchString}
-            baseFontSize={baseFontSizeProp || baseFontSize}
-            darkMode={darkMode}
-            // CodeMirror looks for this attribute to refocus when CMD+F is pressed and the panel is already open
-            main-field="true"
-            // @ts-expect-error - The TextInput component forwards refs, but the types do not explicitly include the `ref` prop.
-            ref={inputRef}
-          />
-          <div className={findOptionsContainerStyles}>
-            {searchString && (
-              <Body>
-                {selectedIndex ?? '?'}/{findCount}
-              </Body>
-            )}
-            <Menu
-              trigger={
-                <IconButton aria-label="filter button">
-                  <Icon glyph="Filter" />
-                </IconButton>
-              }
-              renderDarkMenu={false}
-              variant={MenuVariant.Compact}
+          <div className={getReplaceInnerSectionStyles(theme)}>
+            <TextInput
+              placeholder="Replace"
+              aria-labelledby="replace"
+              className={replaceInputContainerStyles}
+              value={replaceString}
+              onChange={handleReplaceQueryChange}
+              onKeyDown={handleReplaceInputKeyDown}
+            />
+            <Button
+              aria-label="replace button"
+              className={replaceButtonStyles}
+              onClick={handleReplace}
             >
-              {Object.entries(findOptions).map(([key, value]) => (
-                <InputOption
-                  key={key}
-                  as="li"
-                  highlighted={highlightedOption === key}
-                >
-                  <Checkbox
-                    label={value}
-                    onChange={() => {
-                      switch (key) {
-                        case 'isCaseSensitive':
-                          setIsCaseSensitive(!isCaseSensitive);
-                          break;
-                        case 'isRegex':
-                          setIsRegex(!isRegex);
-                          break;
-                        case 'isWholeWord':
-                          setIsWholeWord(!isWholeWord);
-                          break;
-                      }
-                      setHighlightedOption(key);
-                    }}
-                  />
-                </InputOption>
-              ))}
-            </Menu>
+              Replace
+            </Button>
+            <Button
+              aria-label="replace all button"
+              className={replaceButtonStyles}
+              onClick={handleReplaceAll}
+            >
+              Replace All
+            </Button>
           </div>
         </div>
-        <IconButton
-          aria-label="previous item button"
-          disabled={!searchString || findCount === 0}
-          onClick={handleFindPrevious}
-        >
-          <Icon glyph="ArrowUp" />
-        </IconButton>
-        <IconButton
-          aria-label="next item button"
-          disabled={!searchString || findCount === 0}
-          onClick={handleFindNext}
-        >
-          <Icon glyph="ArrowDown" />
-        </IconButton>
-        <Button
-          className={allButtonStyles}
-          disabled={!searchString || findCount === 0}
-          onClick={handleFindAll}
-          baseFontSize={baseFontSizeProp || baseFontSize}
-          darkMode={darkMode}
-        >
-          All
-        </Button>
-        <IconButton
-          aria-label="close find menu button"
-          onClick={handleCloseButtonClick}
-          className={closeButtonStyles}
-        >
-          <Icon glyph="X" />
-        </IconButton>
       </div>
-      <div
-        className={replaceSectionStyles}
-        // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
-        inert={!isOpen}
-        aria-hidden={!isOpen}
-      >
-        <div className={getReplaceInnerSectionStyles(theme)}>
-          <TextInput
-            placeholder="Replace"
-            aria-labelledby="replace"
-            className={replaceInputContainerStyles}
-            value={replaceString}
-            onChange={handleReplaceQueryChange}
-            onKeyDown={handleReplaceInputKeyDown}
-            baseFontSize={baseFontSizeProp || baseFontSize}
-            darkMode={darkMode}
-          />
-          <Button
-            aria-label="replace button"
-            className={replaceButtonStyles}
-            onClick={handleReplace}
-            baseFontSize={baseFontSizeProp || baseFontSize}
-            darkMode={darkMode}
-          >
-            Replace
-          </Button>
-          <Button
-            aria-label="replace all button"
-            className={replaceButtonStyles}
-            onClick={handleReplaceAll}
-            baseFontSize={baseFontSizeProp || baseFontSize}
-            darkMode={darkMode}
-          >
-            Replace All
-          </Button>
-        </div>
-      </div>
-    </div>
+    </LeafyGreenProvider>
   );
 }
