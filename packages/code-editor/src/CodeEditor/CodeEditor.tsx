@@ -273,13 +273,23 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
             ? searchModule.search({
                 createPanel: view => {
                   const dom = document.createElement('div');
-                  // Your styles remain the same
-                  dom.style.position = 'absolute';
-                  dom.style.top = '0';
-                  dom.style.right = '0';
-                  dom.style.left = '0';
-                  dom.style.display = 'flex';
-                  dom.style.justifyContent = 'flex-end';
+
+                  const baseStyles = {
+                    position: 'absolute',
+                    top: '0',
+                    right: '0',
+                    left: '0',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    overflow: 'hidden',
+                    paddingBottom: '5px', // accounts for childs shadow
+                  };
+                  Object.assign(dom.style, baseStyles);
+
+                  if (!panel) {
+                    dom.style.borderTopRightRadius = '12px';
+                    dom.style.borderTopLeftRadius = '12px';
+                  }
 
                   const isReact17 = React.version.startsWith('17');
                   const searchPanelElement = (
