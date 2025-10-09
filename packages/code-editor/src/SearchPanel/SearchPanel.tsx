@@ -14,7 +14,6 @@ import {
   replaceAll,
   replaceNext,
   SearchQuery,
-  selectMatches,
   setSearchQuery,
 } from '@codemirror/search';
 
@@ -31,7 +30,6 @@ import { TextInput } from '@leafygreen-ui/text-input';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
-  allButtonStyles,
   closeButtonStyles,
   findInputContainerStyles,
   findInputStyles,
@@ -222,11 +220,6 @@ export function SearchPanel({
     updateSelectedIndex();
   }, [view, updateSelectedIndex]);
 
-  const handleFindAll = useCallback(() => {
-    selectMatches(view);
-    updateSelectedIndex();
-  }, [view, updateSelectedIndex]);
-
   const handleReplace = useCallback(() => {
     replaceNext(view);
     updateSelectedIndex();
@@ -360,13 +353,6 @@ export function SearchPanel({
           >
             <Icon glyph="ArrowDown" />
           </IconButton>
-          <Button
-            className={allButtonStyles}
-            disabled={!searchString || findCount === 0}
-            onClick={handleFindAll}
-          >
-            All
-          </Button>
           <IconButton
             aria-label="close find menu button"
             onClick={handleCloseButtonClick}

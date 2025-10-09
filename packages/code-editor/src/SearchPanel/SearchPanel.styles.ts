@@ -137,10 +137,6 @@ export const findInputContainerStyles = css`
   }
 `;
 
-export const allButtonStyles = css`
-  margin-left: ${spacing[100]}px;
-`;
-
 export const closeButtonStyles = css`
   margin-left: auto;
 `;
