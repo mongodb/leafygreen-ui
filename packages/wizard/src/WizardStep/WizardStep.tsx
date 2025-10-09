@@ -1,11 +1,11 @@
 import React from 'react';
 
+import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { cx } from '@leafygreen-ui/emotion';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { Description, H3 } from '@leafygreen-ui/typography';
 
 import { WizardSubComponentProperties } from '../constants';
-import { CompoundSubComponent } from '../utils/CompoundSubComponent';
 import { useWizardContext } from '../WizardContext';
 
 import { TextNode } from './TextNode';

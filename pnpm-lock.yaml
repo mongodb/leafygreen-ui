@@ -3730,6 +3730,9 @@ importers:
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
+      '@leafygreen-ui/compound-component':
+        specifier: workspace:^
+        version: link:../compound-component
       '@leafygreen-ui/descendants':
         specifier: workspace:^
         version: link:../descendants
