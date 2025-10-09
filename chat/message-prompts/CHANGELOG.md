@@ -1,5 +1,12 @@
 # @lg-chat/message-prompts
 
+## 4.1.0
+
+### Minor Changes
+
+- 9c44076: - [LG-5438](https://jira.mongodb.org/browse/LG-5438) add `onClickRefresh` prop which conditionally renders refresh button
+  - [LG-5440](https://jira.mongodb.org/browse/LG-5440) add `enableHideOnSelect` prop which causes fade/shrink transition when a prompt is selected. This is set to `true` by default.
+
 ## 4.0.6
 
 ### Patch Changes
