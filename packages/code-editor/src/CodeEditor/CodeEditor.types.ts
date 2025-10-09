@@ -97,6 +97,8 @@ export const CodeEditorSelectors = {
   LineWrapping: '.cm-lineWrapping',
   SearchInput:
     'input[type="text"], .cm-textfield, input[placeholder*="search" i]',
+  SearchMatch: '.cm-searchMatch',
+  SearchMatchSelected: '.cm-searchMatch-selected',
   SearchPanel: '.cm-panel',
   SearchPanelContainer: '.cm-panels',
   SearchPanelContainerTop: '.cm-panels-top',
