@@ -5,11 +5,17 @@ import getTheme from './getTheme';
 import { type LgIdProps, type LgIdString } from './LgIdProps';
 import * as typeIs from './typeIs';
 export {
+  /** @deprecated Use the utility exported from `@leafygreen-ui/compound-component` */
   filterChildren,
+  /** @deprecated Use the utility exported from `@leafygreen-ui/compound-component` */
   findChild,
+  /** @deprecated Use the utility exported from `@leafygreen-ui/compound-component` */
   findChildren,
+  /** @deprecated Use the utility exported from `@leafygreen-ui/compound-component` */
   hasAnyStaticProperty,
+  /** @deprecated Use the utility exported from `@leafygreen-ui/compound-component` */
   hasStaticProperty,
+  /** @deprecated Use the utility exported from `@leafygreen-ui/compound-component` */
   isChildWithProperty,
 } from './childQueries';
 export { createSyntheticEvent } from './createSyntheticEvent';

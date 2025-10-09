@@ -1,5 +1,16 @@
 # @leafygreen-ui/code
 
+## 20.1.1
+
+### Patch Changes
+
+- 708b5fc: Replaces `postinstall` script with `prepare`. This ensures that the step is performed only pre-publish and not when the package is installed by consumers
+- 6e0615c: Remove dev dependency from prod dependencies; Rename file to trigger a release
+- Updated dependencies [6e0615c]
+- Updated dependencies [a565b3f]
+  - @leafygreen-ui/select@16.1.4
+  - @leafygreen-ui/lib@15.6.2
+
 ## 20.1.0
 
 ### Minor Changes
