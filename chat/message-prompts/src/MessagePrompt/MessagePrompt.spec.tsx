@@ -67,15 +67,6 @@ describe('MessagePrompt', () => {
   });
 
   describe('onClick behavior', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(() => {
-      jest.runOnlyPendingTimers();
-      jest.useRealTimers();
-    });
-
     test('calls onClick when clicked', async () => {
       const mockOnClick = jest.fn();
 
