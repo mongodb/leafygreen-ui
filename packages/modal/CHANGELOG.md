@@ -80,14 +80,17 @@
   #### Breaking Changes
 
   - **Top layer rendering**: Component renders in [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer) instead of portaling
-  - **Props**: `className` → `backdropClassName`, `contentClassName` → `className`, `initialFocus` prop removed
+  - **Props**: `className` → `backdropClassName`, `contentClassName` → `className`, `initialFocus` prop removed (restored in v20.2)
   - **Backdrop styling**: `backdropClassName` deprecated in favor of CSS `::backdrop` pseudo-element
-  - **Focus management**: Specifying `autoFocus` on focusable child element replaces manual `initialFocus` prop
+  - **Focus management**: Modal now automatically focuses the first focusable element by default. Use `autoFocus` attribute on a child element to specify focus target.
+    - **Note: Automatic focus management introduced in v20 may cause unexpected behavior. Please use v20.2 which has `initialFocus` prop added back.**
   - **Type changes**: Component now extends `HTMLElementProps<'dialog'>` instead of `HTMLElementProps<'div'>`
 
   #### Migration Guide
 
   Use the [modal-v20 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#modal-v20) for migration assistance.
+
+  **Note: this has been updated to support the migration to v20.2**
 
   ```shell
   pnpm lg codemod modal-v20 <path>
@@ -97,7 +100,7 @@
 
   1. Rename `className` prop to `backdropClassName`
   2. Rename `contentClassName` prop to `className`
-  3. Remove `initialFocus` prop and add guidance comments
+  3. Add guidance comment for `initialFocus` prop (prop was removed in v20 but is now available again in v20.2)
 
 ## 19.0.1
 
