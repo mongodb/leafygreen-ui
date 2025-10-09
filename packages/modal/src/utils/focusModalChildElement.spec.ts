@@ -22,14 +22,12 @@ describe('focusModalChildElement', () => {
   beforeEach(() => {
     mockFocus = jest.fn();
     mockQuerySelector = jest.fn();
+    mockQueryFirstFocusableElement.mockClear();
 
     // Create a mock dialog element
     mockDialogElement = {
       querySelector: mockQuerySelector,
     } as unknown as HTMLDialogElement;
-
-    // Reset mocks
-    jest.clearAllMocks();
   });
 
   describe('when initialFocus is null', () => {
@@ -184,24 +182,27 @@ describe('focusModalChildElement', () => {
           <button id="secondary">Secondary</button>
         </dialog>
       `;
-      document.body.appendChild(container);
 
-      const dialogElement = container.querySelector(
-        'dialog',
-      ) as HTMLDialogElement;
-      const secondaryButton = container.querySelector(
-        '#secondary',
-      ) as HTMLButtonElement;
+      try {
+        document.body.appendChild(container);
 
-      const mockFocus = jest.fn();
-      secondaryButton.focus = mockFocus;
+        const dialogElement = container.querySelector(
+          'dialog',
+        ) as HTMLDialogElement;
+        const secondaryButton = container.querySelector(
+          '#secondary',
+        ) as HTMLButtonElement;
 
-      const result = focusModalChildElement(dialogElement, '#secondary');
+        const mockFocus = jest.fn();
+        secondaryButton.focus = mockFocus;
 
-      expect(mockFocus).toHaveBeenCalled();
-      expect(result).toBe(secondaryButton);
+        const result = focusModalChildElement(dialogElement, '#secondary');
 
-      document.body.removeChild(container);
+        expect(mockFocus).toHaveBeenCalled();
+        expect(result).toBe(secondaryButton);
+      } finally {
+        document.body.removeChild(container);
+      }
     });
 
     test('focuses element by ref', () => {
@@ -212,28 +213,31 @@ describe('focusModalChildElement', () => {
           <button id="secondary">Secondary</button>
         </dialog>
       `;
-      document.body.appendChild(container);
 
-      const dialogElement = container.querySelector(
-        'dialog',
-      ) as HTMLDialogElement;
-      const secondaryButton = container.querySelector(
-        '#secondary',
-      ) as HTMLButtonElement;
+      try {
+        document.body.appendChild(container);
 
-      const mockFocus = jest.fn();
-      secondaryButton.focus = mockFocus;
+        const dialogElement = container.querySelector(
+          'dialog',
+        ) as HTMLDialogElement;
+        const secondaryButton = container.querySelector(
+          '#secondary',
+        ) as HTMLButtonElement;
 
-      const buttonRef = {
-        current: secondaryButton,
-      } as React.RefObject<HTMLButtonElement>;
+        const mockFocus = jest.fn();
+        secondaryButton.focus = mockFocus;
 
-      const result = focusModalChildElement(dialogElement, buttonRef);
+        const buttonRef = {
+          current: secondaryButton,
+        } as React.RefObject<HTMLButtonElement>;
 
-      expect(mockFocus).toHaveBeenCalled();
-      expect(result).toBe(secondaryButton);
+        const result = focusModalChildElement(dialogElement, buttonRef);
 
-      document.body.removeChild(container);
+        expect(mockFocus).toHaveBeenCalled();
+        expect(result).toBe(secondaryButton);
+      } finally {
+        document.body.removeChild(container);
+      }
     });
 
     test('identifies autoFocus element without calling focus()', () => {
@@ -244,22 +248,27 @@ describe('focusModalChildElement', () => {
           <button>Close</button>
         </dialog>
       `;
-      document.body.appendChild(container);
 
-      const dialogElement = container.querySelector(
-        'dialog',
-      ) as HTMLDialogElement;
-      const inputElement = container.querySelector('input') as HTMLInputElement;
+      try {
+        document.body.appendChild(container);
 
-      const mockFocus = jest.fn();
-      inputElement.focus = mockFocus;
+        const dialogElement = container.querySelector(
+          'dialog',
+        ) as HTMLDialogElement;
+        const inputElement = container.querySelector(
+          'input',
+        ) as HTMLInputElement;
 
-      const result = focusModalChildElement(dialogElement, 'auto');
+        const mockFocus = jest.fn();
+        inputElement.focus = mockFocus;
 
-      expect(mockFocus).not.toHaveBeenCalled(); // Browser handles autoFocus
-      expect(result).toBe(inputElement);
+        const result = focusModalChildElement(dialogElement, 'auto');
 
-      document.body.removeChild(container);
+        expect(mockFocus).not.toHaveBeenCalled(); // Browser handles autoFocus
+        expect(result).toBe(inputElement);
+      } finally {
+        document.body.removeChild(container);
+      }
     });
 
     test('focuses first focusable element when no autoFocus exists', () => {
@@ -270,26 +279,29 @@ describe('focusModalChildElement', () => {
           <input />
         </dialog>
       `;
-      document.body.appendChild(container);
 
-      const dialogElement = container.querySelector(
-        'dialog',
-      ) as HTMLDialogElement;
-      const buttonElement = container.querySelector(
-        'button',
-      ) as HTMLButtonElement;
+      try {
+        document.body.appendChild(container);
 
-      const mockFocus = jest.fn();
-      buttonElement.focus = mockFocus;
+        const dialogElement = container.querySelector(
+          'dialog',
+        ) as HTMLDialogElement;
+        const buttonElement = container.querySelector(
+          'button',
+        ) as HTMLButtonElement;
 
-      mockQueryFirstFocusableElement.mockReturnValue(buttonElement);
+        const mockFocus = jest.fn();
+        buttonElement.focus = mockFocus;
 
-      const result = focusModalChildElement(dialogElement, 'auto');
+        mockQueryFirstFocusableElement.mockReturnValue(buttonElement);
 
-      expect(mockFocus).toHaveBeenCalled();
-      expect(result).toBe(buttonElement);
+        const result = focusModalChildElement(dialogElement, 'auto');
 
-      document.body.removeChild(container);
+        expect(mockFocus).toHaveBeenCalled();
+        expect(result).toBe(buttonElement);
+      } finally {
+        document.body.removeChild(container);
+      }
     });
 
     test('does not focus when initialFocus is null', () => {
@@ -299,24 +311,27 @@ describe('focusModalChildElement', () => {
           <button>Submit</button>
         </dialog>
       `;
-      document.body.appendChild(container);
 
-      const dialogElement = container.querySelector(
-        'dialog',
-      ) as HTMLDialogElement;
-      const buttonElement = container.querySelector(
-        'button',
-      ) as HTMLButtonElement;
+      try {
+        document.body.appendChild(container);
 
-      const mockFocus = jest.fn();
-      buttonElement.focus = mockFocus;
+        const dialogElement = container.querySelector(
+          'dialog',
+        ) as HTMLDialogElement;
+        const buttonElement = container.querySelector(
+          'button',
+        ) as HTMLButtonElement;
 
-      const result = focusModalChildElement(dialogElement, null);
+        const mockFocus = jest.fn();
+        buttonElement.focus = mockFocus;
 
-      expect(mockFocus).not.toHaveBeenCalled();
-      expect(result).toBeNull();
+        const result = focusModalChildElement(dialogElement, null);
 
-      document.body.removeChild(container);
+        expect(mockFocus).not.toHaveBeenCalled();
+        expect(result).toBeNull();
+      } finally {
+        document.body.removeChild(container);
+      }
     });
   });
 });
