@@ -151,13 +151,6 @@ export function useThemeExtension({
           [CodeEditorSelectors.SearchPanelContainerTop]: {
             border: 'none',
           },
-
-          [`${CodeEditorSelectors.SearchMatch}:not(${CodeEditorSelectors.SearchMatchSelected})`]:
-            {
-              backgroundColor: 'rgba(254, 247, 219, 1)',
-              borderTop: '1px solid rgba(255, 236, 158, 1)',
-              borderBottom: '1px solid rgba(255, 236, 158, 1)',
-            },
         },
         { dark: theme === Theme.Dark },
       );
