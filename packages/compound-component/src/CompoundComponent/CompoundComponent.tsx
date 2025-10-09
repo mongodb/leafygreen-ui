@@ -1,7 +1,7 @@
 import { ComponentType } from 'react';
 
 /** Generic properties applied to a Compound component */
-interface CompoundComponentProperties {
+interface CompoundComponentStaticProperties {
   displayName: string;
   [key: string]: any; // Typed as `any` to avoid issues with a mapped object
 }
@@ -9,8 +9,8 @@ interface CompoundComponentProperties {
 /** Return type of a CompoundComponent */
 export type CompoundComponentType<
   Props extends {} = {},
-  Properties extends CompoundComponentProperties = CompoundComponentProperties,
-> = ComponentType<Props> & Properties;
+  StaticProperties extends CompoundComponentStaticProperties = CompoundComponentStaticProperties,
+> = ComponentType<Props> & StaticProperties;
 
 /**
  * Factory function used to create a compound component parent.
@@ -26,15 +26,15 @@ export type CompoundComponentType<
  * <MyComponent.SubComponent /> // Renders <MySubComponent />
  * ```
  * @param componentRenderFn The component render function
- * @param properties  Object describing the `displayName` and any sub-components
+ * @param staticProperties  Object describing the `displayName` and any sub-components
  * @returns {CompoundComponentType}
  */
 export const CompoundComponent = <
   Props extends {} = {},
-  Properties extends CompoundComponentProperties = CompoundComponentProperties,
+  StaticProperties extends CompoundComponentStaticProperties = CompoundComponentStaticProperties,
 >(
   componentRenderFn: ComponentType<Props>,
-  properties: Properties,
-): CompoundComponentType<Props, Properties> => {
-  return Object.assign(componentRenderFn, properties);
+  staticProperties: StaticProperties,
+): CompoundComponentType<Props, StaticProperties> => {
+  return Object.assign(componentRenderFn, staticProperties);
 };
