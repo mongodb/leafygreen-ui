@@ -1,11 +1,11 @@
 import React, { MouseEventHandler } from 'react';
 
+import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { Direction } from '@leafygreen-ui/descendants';
 import { FormFooter } from '@leafygreen-ui/form-footer';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { WizardSubComponentProperties } from '../constants';
-import { CompoundSubComponent } from '../utils/CompoundSubComponent';
 import { useWizardContext } from '../WizardContext';
 
 import { WizardFooterProps } from './WizardFooter.types';
