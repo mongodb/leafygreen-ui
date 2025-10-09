@@ -6,7 +6,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import ReactDOM from 'react-dom';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -17,7 +16,6 @@ import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
 import { CodeEditorCopyButton } from '../CodeEditorCopyButton';
 import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.types';
 import { Panel as CodeEditorPanel } from '../Panel';
-import { SearchPanel } from '../SearchPanel';
 import { getLgIds } from '../utils';
 
 import { useSearchPanelExtension } from './hooks/extensions/useSearchPanelExtension';
