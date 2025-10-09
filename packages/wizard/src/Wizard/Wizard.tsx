@@ -33,10 +33,8 @@ export const Wizard = CompoundComponent(
     );
 
     // Controlled/Uncontrolled activeStep value
-    const {
-      value: activeStep,
-      updateValue: setActiveStep,
-    } = useControlled<number>(activeStepProp, onStepChange, 0);
+    const { value: activeStep, updateValue: setActiveStep } =
+      useControlled<number>(activeStepProp, onStepChange, 0);
 
     if (
       activeStepProp &&
