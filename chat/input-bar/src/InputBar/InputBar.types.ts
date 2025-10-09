@@ -46,7 +46,13 @@ export type InputBarProps = React.ComponentPropsWithoutRef<'form'> &
     >;
 
     /**
-     * Submit event handler.
+     * Callback fired when the stop button is clicked during a loading state.
+     * When triggered, the message input will be restored to the previous message body.
+     */
+    onClickStopButton?: () => void;
+
+    /**
+     * Callback fired when the user sends a message.
      */
     onMessageSend?: (
       messageBody: string,
