@@ -12,7 +12,7 @@ import { ControlledReturnObject } from './useControlled.types';
  */
 export const useControlled = <T extends any = undefined>(
   controlledValue?: T,
-  onChange?: (val?: T) => void,
+  onChange?: (val: T) => void,
   initialValue?: T,
 ): ControlledReturnObject<T> => {
   /**
