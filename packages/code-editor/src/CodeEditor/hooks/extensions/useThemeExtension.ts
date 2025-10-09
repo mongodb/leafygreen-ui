@@ -2,6 +2,7 @@ import { type EditorView } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
   borderRadius,
   color,
@@ -152,11 +153,23 @@ export function useThemeExtension({
             border: 'none',
           },
 
-          [`${CodeEditorSelectors.SearchMatch}:not(${CodeEditorSelectors.SearchMatchSelected})`]:
+          [`${CodeEditorSelectors.SearchMatch}:not(${CodeEditorSelectors.SearchMatchSelected}), 
+            ${CodeEditorSelectors.SearchMatch}:not(${CodeEditorSelectors.SearchMatchSelected}) > *`]:
             {
-              backgroundColor: 'rgba(254, 247, 219, 1)',
-              borderTop: '1px solid rgba(255, 236, 158, 1)',
-              borderBottom: '1px solid rgba(255, 236, 158, 1)',
+              backgroundColor: palette.yellow.light2,
+              color:
+                color[Theme.Light].text[Variant.Primary][
+                  InteractionState.Default
+                ],
+            },
+
+          [`${CodeEditorSelectors.SearchMatchSelected}, ${CodeEditorSelectors.SearchMatchSelected} > *`]:
+            {
+              backgroundColor: `${palette.yellow.base}`,
+              color:
+                color[Theme.Light].text[Variant.Primary][
+                  InteractionState.Default
+                ],
             },
         },
         { dark: theme === Theme.Dark },
