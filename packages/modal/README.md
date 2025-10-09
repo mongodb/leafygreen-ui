@@ -140,7 +140,7 @@ When a Modal opens, it automatically manages focus to ensure proper accessibilit
 
 1. **`initialFocus` prop**: The specified element receives focus
    - String selector: `initialFocus="#submit-button"`
-   - React ref: `initialFocus={submitButtonRef}`
+   - React ref: `initialFocus={submitButtonRef}` (recommended over string selector for better type safety)
 2. **`autoFocus` attribute**: If any child element has the `autoFocus` attribute, that element receives focus
 3. **First focusable element**: If `initialFocus` is `"auto"` and no child element has the `autoFocus` attribute, the first focusable element receives focus
 4. **No focus**: If `initialFocus` is `null`, no automatic focus occurs

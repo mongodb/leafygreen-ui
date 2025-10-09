@@ -52,7 +52,7 @@ export interface ModalProps
    * **Options:**
    * - `"auto"`: Automatically focuses the first focusable element in the modal
    * - `string`: CSS selector passed to `querySelector()` to specify an element
-   * - `React.RefObject<HTMLElement>`: Reference to the element that should receive focus
+   * - `React.RefObject<HTMLElement>`: Reference to the element that should receive focus. This is recommended over using a CSS selector for better type safety.
    * - `null`: Disables automatic focus management. Use sparingly - disabling focus management may create accessibility issues
    *
    * **Priority order:**
@@ -70,7 +70,7 @@ export interface ModalProps
    * </Modal>
    *
    * @example
-   * // Using a ref
+   * // Using a ref (recommended over selector)
    * const submitRef = useRef<HTMLButtonElement>(null);
    * <Modal initialFocus={submitRef}>
    *   <button ref={submitRef}>Submit</button>
