@@ -34,10 +34,9 @@ export const Wizard = CompoundComponent(
 
     // Controlled/Uncontrolled activeStep value
     const {
-      isControlled,
       value: activeStep,
       updateValue: setActiveStep,
-    } = useControlled<number>(activeStepProp, undefined, 0);
+    } = useControlled<number>(activeStepProp, onStepChange, 0);
 
     if (
       activeStepProp &&
@@ -61,22 +60,11 @@ export const Wizard = CompoundComponent(
           }
         };
 
+        // TODO pass getNextStep into setter as callback https://jira.mongodb.org/browse/LG-5607
         const nextStep = getNextStep(activeStep);
-
-        if (!isControlled) {
-          // TODO pass getNextStep into setter as callback https://jira.mongodb.org/browse/LG-5607
-          setActiveStep(nextStep);
-        }
-
-        onStepChange?.(nextStep);
+        setActiveStep(nextStep);
       },
-      [
-        activeStep,
-        isControlled,
-        onStepChange,
-        setActiveStep,
-        stepChildren.length,
-      ],
+      [activeStep, setActiveStep, stepChildren.length],
     );
 
     // Get the current step to render
