@@ -30,7 +30,7 @@ Baz.displayName = 'Baz';
 (Bar as any).isBar = true;
 (Baz as any).isBaz = true;
 
-describe('packages/lib/findChildren', () => {
+describe('packages/compound-component/findChildren', () => {
   describe('basic functionality', () => {
     it('should find all children with matching static property', () => {
       const children = [
@@ -67,120 +67,142 @@ describe('packages/lib/findChildren', () => {
     });
   });
 
-  describe('empty and null children handling', () => {
-    it('should handle null children', () => {
-      const found = findChildren(null, 'isFoo');
-      expect(found).toEqual([]);
+  it('should find mapped children', () => {
+    const COUNT = 5;
+    const children = new Array(COUNT).fill(null).map((_, i) => {
+      return <Foo text={`Foo number ${i}`} />;
     });
 
-    it('should handle undefined children', () => {
-      const found = findChildren(undefined, 'isFoo');
-      expect(found).toEqual([]);
-    });
-
-    it('should handle empty fragment', () => {
-      const children = <></>;
-      const found = findChildren(children, 'isFoo');
-      expect(found).toEqual([]);
-    });
-
-    it('should handle empty array children', () => {
-      const children: Array<React.ReactElement> = [];
-      const found = findChildren(children, 'isFoo');
-      expect(found).toEqual([]);
-    });
+    const found = findChildren(children, 'isFoo');
+    expect(found).toHaveLength(COUNT);
   });
 
-  describe('Fragment handling', () => {
-    it('should handle single-level fragment children', () => {
-      const children = (
-        <React.Fragment>
-          <Foo text="foo-in-fragment" />
-          <Bar text="bar-in-fragment" />
-          <Foo text="another-foo" />
-        </React.Fragment>
-      );
+  it('should find deeply mapped children', () => {
+    const COUNT = 5;
+    const children = (
+      <>
+        {new Array(COUNT).fill(null).map((_, i) => {
+          return <Foo text={`Foo number ${i}`} />;
+        })}
+      </>
+    );
 
-      const found = findChildren(children, 'isFoo');
-      expect(found).toHaveLength(2);
-      expect(found[0].props.text).toBe('foo-in-fragment');
-      expect(found[1].props.text).toBe('another-foo');
-    });
+    const found = findChildren(children, 'isFoo');
+    expect(found).toHaveLength(COUNT);
+  });
+});
 
-    it('should NOT find children in deeply nested Fragments', () => {
-      const children = (
+describe('empty and null children handling', () => {
+  it('should handle null children', () => {
+    const found = findChildren(null, 'isFoo');
+    expect(found).toEqual([]);
+  });
+
+  it('should handle undefined children', () => {
+    const found = findChildren(undefined, 'isFoo');
+    expect(found).toEqual([]);
+  });
+
+  it('should handle empty fragment', () => {
+    const children = <></>;
+    const found = findChildren(children, 'isFoo');
+    expect(found).toEqual([]);
+  });
+
+  it('should handle empty array children', () => {
+    const children: Array<React.ReactElement> = [];
+    const found = findChildren(children, 'isFoo');
+    expect(found).toEqual([]);
+  });
+});
+
+describe('Fragment handling', () => {
+  it('should handle single-level fragment children', () => {
+    const children = (
+      <React.Fragment>
+        <Foo text="foo-in-fragment" />
+        <Bar text="bar-in-fragment" />
+        <Foo text="another-foo" />
+      </React.Fragment>
+    );
+
+    const found = findChildren(children, 'isFoo');
+    expect(found).toHaveLength(2);
+    expect(found[0].props.text).toBe('foo-in-fragment');
+    expect(found[1].props.text).toBe('another-foo');
+  });
+
+  it('should NOT find children in deeply nested Fragments', () => {
+    const children = (
+      <React.Fragment>
+        <Foo text="direct-foo" />
         <React.Fragment>
-          <Foo text="direct-foo" />
           <React.Fragment>
-            <React.Fragment>
-              <Foo text="deeply-nested-foo" />
-            </React.Fragment>
+            <Foo text="deeply-nested-foo" />
           </React.Fragment>
-          <Bar text="direct-bar" />
         </React.Fragment>
-      );
+        <Bar text="direct-bar" />
+      </React.Fragment>
+    );
 
-      // Should only find direct children, not double-nested ones
-      const found = findChildren(children, 'isFoo');
-      expect(found).toHaveLength(1);
-      expect(found[0].props.text).toBe('direct-foo');
-    });
+    // Should only find direct children, not double-nested ones
+    const found = findChildren(children, 'isFoo');
+    expect(found).toHaveLength(1);
+    expect(found[0].props.text).toBe('direct-foo');
   });
+});
 
-  describe('styled components', () => {
-    it('should work with styled components from @emotion/styled', () => {
-      const StyledFoo = styled(Foo)`
-        background-color: red;
-        padding: 8px;
-      `;
+describe('styled components', () => {
+  it('should work with styled components from @emotion/styled', () => {
+    const StyledFoo = styled(Foo)`
+      background-color: red;
+      padding: 8px;
+    `;
 
-      const children = [
-        <Foo text="regular-foo" />,
-        <StyledFoo text="styled-foo" />,
-        <StyledFoo text="styled-foo-two" />,
-        <Bar text="regular-bar" />,
-        <Foo text="another-foo" />,
-      ];
+    const children = [
+      <Foo text="regular-foo" />,
+      <StyledFoo text="styled-foo" />,
+      <StyledFoo text="styled-foo-two" />,
+      <Bar text="regular-bar" />,
+      <Foo text="another-foo" />,
+    ];
 
-      const found = findChildren(children, 'isFoo');
-      expect(found).toHaveLength(4);
-      expect(found.map(c => c.props.text)).toEqual([
-        'regular-foo',
-        'styled-foo',
-        'styled-foo-two',
-        'another-foo',
-      ]);
+    const found = findChildren(children, 'isFoo');
+    expect(found).toHaveLength(4);
+    expect(found.map(c => c.props.text)).toEqual([
+      'regular-foo',
+      'styled-foo',
+      'styled-foo-two',
+      'another-foo',
+    ]);
 
-      // Verify the styled component is actually styled
-      const styledComponent = found[1];
-      const styledType = styledComponent.type as any;
-      const hasEmotionProps = !!(
-        styledType.target || styledType.__emotion_base
-      );
-      expect(hasEmotionProps).toBe(true);
-    });
+    // Verify the styled component is actually styled
+    const styledComponent = found[1];
+    const styledType = styledComponent.type as any;
+    const hasEmotionProps = !!(styledType.target || styledType.__emotion_base);
+    expect(hasEmotionProps).toBe(true);
   });
+});
 
-  describe('search depth limitations', () => {
-    it('should NOT find deeply nested components', () => {
-      const children = [
+describe('search depth limitations', () => {
+  it('should NOT find deeply nested components', () => {
+    const children = [
+      <Fragment>
+        <Foo text="single-fragment" />
+      </Fragment>,
+      <Fragment>
         <Fragment>
-          <Foo text="single-fragment" />
-        </Fragment>,
-        <Fragment>
-          <Fragment>
-            <Foo text="double-nested" />
-          </Fragment>
-        </Fragment>,
-        <div>
-          <Foo text="inside-div" />
-        </div>,
-        <Foo text="direct-child" />,
-      ];
+          <Foo text="double-nested" />
+        </Fragment>
+      </Fragment>,
+      <div>
+        <Foo text="inside-div" />
+      </div>,
+      <Foo text="direct-child" />,
+    ];
 
-      const found = findChildren(children, 'isFoo');
-      expect(found).toHaveLength(1);
-      expect(found[0].props.text).toBe('direct-child');
-    });
+    const found = findChildren(children, 'isFoo');
+    expect(found).toHaveLength(1);
+    expect(found[0].props.text).toBe('direct-child');
   });
 });
