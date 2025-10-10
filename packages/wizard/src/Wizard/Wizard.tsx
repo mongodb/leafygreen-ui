@@ -9,6 +9,7 @@ import { Direction } from '@leafygreen-ui/descendants';
 import { useControlled } from '@leafygreen-ui/hooks';
 
 import { WizardSubComponentProperties } from '../constants';
+import { getLgIds } from '../utils/getLgIds';
 import { WizardProvider } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
@@ -21,8 +22,10 @@ export const Wizard = CompoundComponent(
     activeStep: activeStepProp,
     onStepChange,
     children,
+    'data-lgid': dataLgid,
     ...rest
   }: WizardProps) => {
+    const LGIDs = getLgIds(dataLgid);
     const stepChildren = findChildren(
       children,
       WizardSubComponentProperties.Step,
@@ -70,7 +73,12 @@ export const Wizard = CompoundComponent(
 
     return (
       <WizardProvider activeStep={activeStep} updateStep={updateStep}>
-        <div className={wizardContainerStyles} {...rest}>
+        <div
+          className={wizardContainerStyles}
+          data-lgid={LGIDs.root}
+          data-testid={LGIDs.root}
+          {...rest}
+        >
           <div className={stepContentStyles}>{currentStep}</div>
           {footerChild}
         </div>

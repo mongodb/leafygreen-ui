@@ -6,6 +6,7 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 import { Description, H3 } from '@leafygreen-ui/typography';
 
 import { WizardSubComponentProperties } from '../constants';
+import { getLgIds } from '../utils/getLgIds';
 import { useWizardContext } from '../WizardContext';
 
 import { TextNode } from './TextNode';
@@ -15,6 +16,7 @@ import { WizardStepProps } from './WizardStep.types';
 export const WizardStep = CompoundSubComponent(
   ({ title, description, children, className, ...rest }: WizardStepProps) => {
     const { isWizardContext } = useWizardContext();
+    const LGIDs = getLgIds();
 
     if (!isWizardContext) {
       consoleOnce.error(
@@ -24,7 +26,7 @@ export const WizardStep = CompoundSubComponent(
     }
 
     return (
-      <div className={cx(stepStyles, className)} {...rest}>
+      <div className={cx(stepStyles, className)} data-lgid={LGIDs.step} data-testid={LGIDs.step} {...rest}>
         <TextNode as={H3}>{title}</TextNode>
         {description && <TextNode as={Description}>{description}</TextNode>}
         <div>{children}</div>
