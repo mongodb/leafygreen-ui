@@ -83,6 +83,16 @@ export function useSearchPanelExtension({
         };
       } else {
         // --- React 18+ Path ---
+
+        /**
+         * We use require() instead of import() here to avoid TypeScript build errors
+         * in React 17 environments. While import() would be more idiomatic for dynamic
+         * imports, TypeScript attempts to resolve 'react-dom/client' types at compile
+         * time even for dynamic imports, causing the build to fail when this module
+         * doesn't exist (React 17). The require() call bypasses this strict type
+         * checking, allowing the code to build for both React 17 and 18, while still
+         * loading the module correctly at runtime when React 18 is detected.
+         */
         const { createRoot } = require('react-dom/client');
         const root = createRoot(dom);
         root.render(searchPanelElement);
