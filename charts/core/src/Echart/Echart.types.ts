@@ -8,7 +8,11 @@ import type {
   TooltipComponentOption,
 } from 'echarts/components';
 import type { ComposeOption, EChartsType } from 'echarts/core';
-import type { LineSeriesOption, SeriesOption } from 'echarts/types/dist/shared';
+import type {
+  BarSeriesOption,
+  LineSeriesOption,
+  SeriesOption,
+} from 'echarts/types/dist/shared';
 
 import { Theme } from '@leafygreen-ui/lib';
 
@@ -17,6 +21,7 @@ import { Theme } from '@leafygreen-ui/lib';
 export type AxisLabelValueFormatter = (value: number, index?: number) => string;
 
 export type EChartLineSeriesOption = LineSeriesOption;
+export type EChartBarSeriesOption = BarSeriesOption;
 export type EChartSeriesOption = { name: string } & SeriesOption;
 
 /**
