@@ -1,1 +1,0 @@
-export { defaultLineOptions } from './defaultLineOptions';
