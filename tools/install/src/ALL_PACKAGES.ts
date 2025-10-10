@@ -14,6 +14,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/code',
   '@leafygreen-ui/code-editor',
   '@leafygreen-ui/combobox',
+  '@leafygreen-ui/compound-component',
   '@leafygreen-ui/confirmation-modal',
   '@leafygreen-ui/context-drawer',
   '@leafygreen-ui/copyable',
