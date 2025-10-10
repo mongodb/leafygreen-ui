@@ -12,7 +12,8 @@ import {
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
 
-import Button, {
+import {
+  Button,
   Size as ButtonSize,
   Variant as ButtonVariant,
 } from '@leafygreen-ui/button';
@@ -52,6 +53,7 @@ export const InlineMessageFeedback = forwardRef(
       submittedMessage = 'Submitted! Thanks for your feedback.',
       onSubmit: onSubmitProp,
       darkMode: darkModeProp,
+      disabledSend = false,
       onClose,
       textareaProps,
       errorMessage = 'Oops, please try again.',
@@ -170,7 +172,9 @@ export const InlineMessageFeedback = forwardRef(
                     type="submit"
                     variant={ButtonVariant[isCompact ? 'Default' : 'Primary']}
                     size={ButtonSize[isCompact ? 'Default' : 'Small']}
-                    disabled={!!hasEmptyTextarea || isSubmitting}
+                    disabled={
+                      !!hasEmptyTextarea || isSubmitting || disabledSend
+                    }
                     {...submitButtonProps}
                   >
                     {submitButtonText}

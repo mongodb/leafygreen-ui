@@ -90,6 +90,15 @@ describe('packages/inline-message-feedback', () => {
           expect(cancelButton).toHaveAttribute('aria-disabled', 'true');
         }
       });
+
+      test('disables form elements when disabledSend prop is true', () => {
+        const { container } = render(
+          <InlineMessageFeedback {...defaultProps} disabledSend={true} />,
+        );
+
+        const submitButton = container.querySelector('button[type="submit"]');
+        expect(submitButton).toHaveAttribute('aria-disabled', 'true');
+      });
     });
 
     describe('error state', () => {
