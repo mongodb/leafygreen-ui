@@ -15,8 +15,8 @@ import { WizardStepProps } from './WizardStep.types';
 
 export const WizardStep = CompoundSubComponent(
   ({ title, description, children, className, ...rest }: WizardStepProps) => {
-    const { isWizardContext } = useWizardContext();
-    const LGIDs = getLgIds();
+    const { isWizardContext, lgId } = useWizardContext();
+    const LGIDs = getLgIds(lgId);
 
     if (!isWizardContext) {
       consoleOnce.error(
@@ -26,7 +26,12 @@ export const WizardStep = CompoundSubComponent(
     }
 
     return (
-      <div className={cx(stepStyles, className)} data-lgid={LGIDs.step} data-testid={LGIDs.step} {...rest}>
+      <div
+        className={cx(stepStyles, className)}
+        data-lgid={LGIDs.step}
+        data-testid={LGIDs.step}
+        {...rest}
+      >
         <TextNode as={H3}>{title}</TextNode>
         {description && <TextNode as={Description}>{description}</TextNode>}
         <div>{children}</div>

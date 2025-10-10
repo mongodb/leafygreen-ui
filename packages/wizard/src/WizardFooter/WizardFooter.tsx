@@ -19,8 +19,9 @@ export const WizardFooter = CompoundSubComponent(
     className,
     ...rest
   }: WizardFooterProps) => {
-    const LGIDs = getLgIds();
-    const { isWizardContext, activeStep, updateStep } = useWizardContext();
+    const { isWizardContext, activeStep, updateStep, lgId } =
+      useWizardContext();
+    const LGIDs = getLgIds(lgId);
 
     const handleBackButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
       updateStep(Direction.Prev);

@@ -72,7 +72,11 @@ export const Wizard = CompoundComponent(
     const currentStep = stepChildren[activeStep] || null;
 
     return (
-      <WizardProvider activeStep={activeStep} updateStep={updateStep}>
+      <WizardProvider
+        activeStep={activeStep}
+        updateStep={updateStep}
+        lgId={dataLgid}
+      >
         <div
           className={wizardContainerStyles}
           data-lgid={LGIDs.root}
