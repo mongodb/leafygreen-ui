@@ -247,7 +247,11 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     );
 
     const searchPanelExtension = useSearchPanelExtension({
-      props,
+      props: {
+        ...props,
+        darkMode,
+        baseFontSize,
+      },
       modules,
       hasPanel: !!panel,
     });

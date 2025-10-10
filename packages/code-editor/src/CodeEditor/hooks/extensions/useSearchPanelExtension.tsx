@@ -14,10 +14,11 @@ export function useSearchPanelExtension({
   modules: Partial<CodeEditorModules>;
   hasPanel: boolean;
 }) {
-  const { enableSearchPanel } = props;
+  const { enableSearchPanel, darkMode, baseFontSize } = props;
   const searchModule = modules?.['@codemirror/search'];
 
-  if (!enableSearchPanel || !searchModule) {
+  /** If enableSearchPanel is undefined, we default to true */
+  if (enableSearchPanel === false || !searchModule) {
     return [];
   }
 
@@ -48,8 +49,8 @@ export function useSearchPanelExtension({
       const searchPanelElement = (
         <SearchPanel
           view={view}
-          darkMode={props.darkMode}
-          baseFontSize={props.baseFontSize}
+          darkMode={darkMode}
+          baseFontSize={baseFontSize}
           hasPanel={true}
         />
       );
