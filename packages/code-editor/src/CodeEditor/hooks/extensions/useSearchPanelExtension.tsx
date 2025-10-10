@@ -83,18 +83,14 @@ export function useSearchPanelExtension({
         };
       } else {
         // --- React 18+ Path ---
-        let root: any = null;
-
-        (async () => {
-          const { createRoot } = await import('react-dom/client');
-          root = createRoot(dom);
-          root.render(searchPanelElement);
-        })();
+        const { createRoot } = require('react-dom/client');
+        const root = createRoot(dom);
+        root.render(searchPanelElement);
 
         return {
           dom,
           top: true,
-          unmount: () => root?.unmount(),
+          unmount: () => root.unmount(),
         };
       }
     },
