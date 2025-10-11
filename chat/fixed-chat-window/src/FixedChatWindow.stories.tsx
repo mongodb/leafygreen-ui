@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Avatar } from '@lg-chat/avatar';
 import { InputBar } from '@lg-chat/input-bar';
-import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
+import {
+  LeafyGreenChatProvider,
+  Variant,
+} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessageFeed } from '@lg-chat/message-feed';
 import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/stories';
@@ -93,7 +96,7 @@ export const Uncontrolled: StoryFn<typeof FixedChatWindow> = props => {
 
   return (
     <div className={containerStyles}>
-      <LeafyGreenChatProvider>
+      <LeafyGreenChatProvider variant={Variant.Spacious}>
         <FixedChatWindow
           {...props}
           defaultOpen
