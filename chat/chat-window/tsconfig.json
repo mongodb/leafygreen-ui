@@ -51,6 +51,9 @@
       "path": "../../packages/code"
     },
     {
+      "path": "../../packages/drawer"
+    },
+    {
       "path": "../../packages/emotion"
     },
     {
