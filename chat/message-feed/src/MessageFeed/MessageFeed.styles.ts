@@ -3,10 +3,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { addOverflowShadow, Side } from '@leafygreen-ui/tokens';
 
-const DEFAULT_MESSAGE_FEED_HEIGHT = 500;
-
 const baseWrapperStyles = css`
-  height: ${DEFAULT_MESSAGE_FEED_HEIGHT}px;
+  max-height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
