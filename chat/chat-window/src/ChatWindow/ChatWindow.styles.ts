@@ -11,12 +11,15 @@ import {
 } from '@leafygreen-ui/tokens';
 
 const baseContainerStyles = css`
+  overflow: hidden;
+  position: relative;
   width: 100%;
+  height: 100%;
+  max-height: 100%;
   justify-self: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  position: relative;
+  align-items: center;
 `;
 
 const getSpaciousContainerStyles = (theme: Theme) => css`
@@ -47,10 +50,8 @@ export const getContainerStyles = ({
     className,
   );
 
-export const contentContainerStyles = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+export const hiddenSpacerStyles = css`
+  flex: 1;
 `;
 
 const baseInputBarWrapperStyles = css`
