@@ -12,12 +12,6 @@ const baseMessages: Array<unknown> = [
   },
   {
     id: 2,
-    messageBody: `This thing is \`something\`.`,
-    isMongo: true,
-    sourceType: 'text',
-  },
-  {
-    id: 3,
     messageBody: `This should do the trick.\n
 \`\`\`typescript
 type HelloWorld = "Hello, world!"
@@ -25,24 +19,22 @@ type HelloWorld = "Hello, world!"
 function helloWorld() {
 return "Hello, world!" satisfies HelloWorld;
 }
-\`\`\`
-      `,
+\`\`\``,
     isMongo: true,
-    hasMessageRating: true,
+    hasMessageActions: true,
   },
   {
-    id: 4,
+    id: 3,
     messageBody: 'How about another question?',
     userName: 'Sean Park',
   },
   {
-    id: 5,
+    id: 4,
     messageBody: `Sorry, MongoAI can't do that right now.
 
-Refer to [LeafyGreen UI](mongodb.design) or [LeafyGreen UI](mongodb.design) for more details. I'm filling out this space to see if the message will line up to the right side.
-    `,
+Refer to [LeafyGreen UI](mongodb.design) or [LeafyGreen UI](mongodb.design) for more details. I'm filling out this space to see if the message will line up to the right side.`,
     isMongo: true,
-    hasMessageRating: true,
+    hasMessageActions: true,
   },
 ];
 
