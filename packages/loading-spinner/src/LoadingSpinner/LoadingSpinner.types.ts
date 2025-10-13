@@ -24,4 +24,10 @@ export interface LoadingSpinnerProps
    * @internal
    */
   colorOverride?: string;
+
+  /**
+   * Disables the spinner animation for testing
+   * @internal
+   */
+  disableAnimation?: boolean;
 }

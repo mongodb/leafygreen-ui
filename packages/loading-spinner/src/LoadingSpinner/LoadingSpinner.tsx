@@ -3,10 +3,10 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { getSpinnerSize } from './constants';
 import {
   getCircleStyles,
   getCircleSVGArgs,
-  getSpinnerSize,
   getSvgStyles,
 } from './LoadingSpinner.styles';
 import {
@@ -25,6 +25,7 @@ import {
  */
 export function LoadingSpinner({
   size = LoadingSpinnerSize.Default,
+  disableAnimation = false,
   colorOverride,
   darkMode,
   className,
@@ -35,13 +36,18 @@ export function LoadingSpinner({
 
   return (
     <svg
-      className={cx(getSvgStyles(size), className)}
+      className={cx(getSvgStyles({ size, disableAnimation }), className)}
       viewBox={`0 0 ${sizeInPx} ${sizeInPx}`}
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
       <circle
-        className={getCircleStyles({ size, theme, colorOverride })}
+        className={getCircleStyles({
+          size,
+          theme,
+          colorOverride,
+          disableAnimation,
+        })}
         {...getCircleSVGArgs(size)}
       />
     </svg>

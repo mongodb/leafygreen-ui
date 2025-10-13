@@ -1,46 +1,18 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color, spacing } from '@leafygreen-ui/tokens';
+import { color } from '@leafygreen-ui/tokens';
 
+import {
+  DASH_DURATION,
+  getSpinnerSize,
+  getStrokeWidth,
+  ROTATION_DURATION,
+} from './constants';
 import { LoadingSpinnerSize } from './LoadingSpinner.types';
 
-const ROTATION_DURATION = 1500; // ms
-const DASH_DURATION = 4000;
-
-export const getSpinnerSize = (size: LoadingSpinnerSize | number): number => {
-  switch (size) {
-    case LoadingSpinnerSize.XSmall:
-      return spacing[200];
-    case LoadingSpinnerSize.Small:
-      return spacing[400];
-    case LoadingSpinnerSize.Default:
-      return spacing[600];
-    case LoadingSpinnerSize.Large:
-      return spacing[1200];
-    case LoadingSpinnerSize.XLarge:
-      return spacing[1600];
-    default:
-      return size as number;
-  }
-};
-
-const getStrokeWidth = (size: LoadingSpinnerSize | number): number => {
-  switch (size) {
-    case LoadingSpinnerSize.XSmall:
-      return spacing[50];
-    case LoadingSpinnerSize.Small:
-      return spacing[50] + spacing[25];
-    case LoadingSpinnerSize.Default:
-      return spacing[100];
-    case LoadingSpinnerSize.Large:
-      return spacing[200];
-    case LoadingSpinnerSize.XLarge:
-      return spacing[200] + spacing[50];
-    default:
-      return size as number;
-  }
-};
-
+/**
+ * Defines the outer SVG element keyframes
+ */
 const rotate = keyframes`
   0% {
     transform: rotate(0deg);
@@ -50,17 +22,38 @@ const rotate = keyframes`
   }
 `;
 
-export const getSvgStyles = (size: LoadingSpinnerSize | number) => css`
-  width: ${getSpinnerSize(size)}px;
-  height: ${getSpinnerSize(size)}px;
-  animation: ${rotate} ${ROTATION_DURATION}ms linear infinite;
+/**
+ * Returns the outer SVG element styles
+ */
+export const getSvgStyles = ({
+  size,
+  disableAnimation,
+}: {
+  size: LoadingSpinnerSize | number;
+  disableAnimation?: boolean;
+}) =>
+  cx(
+    css`
+      width: ${getSpinnerSize(size)}px;
+      height: ${getSpinnerSize(size)}px;
+    `,
+    {
+      [css`
+        animation: ${rotate} ${ROTATION_DURATION}ms linear infinite;
+        @media (prefers-reduced-motion: reduce) {
+          animation: unset;
+        }
+      `]: !disableAnimation,
+    },
+  );
 
-  @media (prefers-reduced-motion: reduce) {
-    animation: unset;
-  }
-`;
-
-const getCircleAnimation = (size: LoadingSpinnerSize | number) => {
+/**
+ * Defines the SVG Circle animation keyframes
+ */
+const getCircleAnimation = (
+  size: LoadingSpinnerSize | number,
+  disableAnimation?: boolean,
+) => {
   const sizeInPx = getSpinnerSize(size);
   const strokeWidth = getStrokeWidth(size);
   const circumference = (sizeInPx - strokeWidth) * Math.PI;
@@ -117,24 +110,34 @@ const getCircleAnimation = (size: LoadingSpinnerSize | number) => {
       stroke-dashoffset: -${percentToPx(100)}px;
     }
   `;
-  return css`
-    animation: ${dash} ${DASH_DURATION}ms linear infinite;
+  return cx({
+    [css`
+      animation: ${dash} ${DASH_DURATION}ms linear infinite;
 
-    @media (prefers-reduced-motion: reduce) {
+      @media (prefers-reduced-motion: reduce) {
+        stroke-dasharray: ${percentToPx(75)}px, ${percentToPx(25)}px;
+        animation: unset;
+      }
+    `]: !disableAnimation,
+    [css`
       stroke-dasharray: ${percentToPx(75)}px, ${percentToPx(25)}px;
-      animation: unset;
-    }
-  `;
+    `]: disableAnimation,
+  });
 };
 
+/**
+ * Returns the SVG Circle styles
+ */
 export const getCircleStyles = ({
   size,
   theme,
   colorOverride,
+  disableAnimation,
 }: {
   size: LoadingSpinnerSize | number;
   theme: Theme;
   colorOverride?: string;
+  disableAnimation?: boolean;
 }) => {
   const strokeWidth = getStrokeWidth(size);
   return cx(
@@ -144,10 +147,13 @@ export const getCircleStyles = ({
       fill: none;
       stroke-width: ${strokeWidth};
     `,
-    getCircleAnimation(size),
+    getCircleAnimation(size, disableAnimation),
   );
 };
 
+/**
+ * Returns the SVG Circle args (`cx`, `cy`, `r`)
+ */
 export const getCircleSVGArgs = (size: LoadingSpinnerSize | number) => {
   const sizeInPx = getSpinnerSize(size);
   const strokeWidth = getStrokeWidth(size);
