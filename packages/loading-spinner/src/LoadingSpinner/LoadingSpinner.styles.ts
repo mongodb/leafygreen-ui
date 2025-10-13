@@ -72,7 +72,7 @@ const getCircleAnimation = (
     // Expanded @ 0
     12.5% {
       stroke-dasharray: ${percentToPx(25)}px, ${percentToPx(75)}px;
-      stroke-dashoffset: 0
+      stroke-dashoffset: 0;
     }
     // Collapsed @ 90deg origin
     25% {
