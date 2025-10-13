@@ -41,7 +41,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/progress-bar",
   "repository": {
