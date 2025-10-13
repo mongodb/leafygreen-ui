@@ -24,9 +24,6 @@ importers:
       '@changesets/cli':
         specifier: ^2.26.0
         version: 2.29.5
-      '@leafygreen-ui/leafygreen-provider':
-        specifier: 3.0.0
-        version: 3.0.0(react@18.3.1)
       '@leafygreen-ui/testing-lib':
         specifier: workspace:^
         version: link:packages/testing-lib
@@ -5845,14 +5842,8 @@ packages:
   '@leafygreen-ui/emotion@5.0.3':
     resolution: {integrity: sha512-elu8af9Qh8Oy/IwqXcNKitHAQBAO4+zmHuLi0fRzY46kTwXvLYqPpJFRcySqITWLPyBcMsF56ta8yQKXghEYOA==}
 
-  '@leafygreen-ui/hooks@7.7.8':
-    resolution: {integrity: sha512-8n0GjAxIxXN1e7XcZ2bobdI56XCqbtH3AZTbWTgQdILnTdxuA/9+yif1zIP4L8shoUbcosuMwU5HRu4UnX9n1g==}
-
   '@leafygreen-ui/hooks@9.2.0':
     resolution: {integrity: sha512-h4xgZsZhHs4GwPOC9hXxgmfIbFMsTYLyoPcUP4dG9s9CY5oDVMRuqLyN9jsrV+VZxL/z5k7MzPgh5o5HIak/Yg==}
-
-  '@leafygreen-ui/leafygreen-provider@3.0.0':
-    resolution: {integrity: sha512-wDsjlaPt0eGeTcL0ollLsvQxATYp49NfdyGa4BpD9PZwjUurFsqGPcU39zBCGBn3gpigqXcMfU7KwvHPxan33g==}
 
   '@leafygreen-ui/leafygreen-provider@5.0.4':
     resolution: {integrity: sha512-VDlmjTiIqlITVhq4VKUDq8FLySWnHkTxSV2n1sxOanLNPuatOXjxsPmCkPUBXhmQKk/fBf4yQnDKOwJvkyzE6Q==}
@@ -5861,11 +5852,6 @@ packages:
     resolution: {integrity: sha512-HsjXXovBqyrXL3Y7V09g2bEidGn58AK/mfoIPMlen/hEcWlbXbefoCzXF7AQqWLhd0F/lS2XgX7+BqVUHXx2/Q==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
-
-  '@leafygreen-ui/lib@9.5.2':
-    resolution: {integrity: sha512-soC5ZSnhqoqbFv9b2kAe+1s7nUnAcdcBzrI0yIJZymExCJsZnmI3VWjLTUbViuTrsO1GfnmLDdsUeDr3ezTOOg==}
-    peerDependencies:
-      react: ^17.0.0
 
   '@leafygreen-ui/palette@5.0.2':
     resolution: {integrity: sha512-+PrfGeJSv4goxm/vKpfJJDOP7t/uElj+14K8jiIyu3qR3TcFRIZ5h1VMvICTUgqvRc8W+xIZYQwsLa2XCu2lvw==}
@@ -14142,10 +14128,6 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  '@leafygreen-ui/hooks@7.7.8':
-    dependencies:
-      lodash: 4.17.21
-
   '@leafygreen-ui/hooks@9.2.0(@babel/core@7.24.3)(react@18.3.1)':
     dependencies:
       '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
@@ -14165,13 +14147,6 @@ snapshots:
       - '@babel/core'
       - react
       - supports-color
-
-  '@leafygreen-ui/leafygreen-provider@3.0.0(react@18.3.1)':
-    dependencies:
-      '@leafygreen-ui/hooks': 7.7.8
-      '@leafygreen-ui/lib': 9.5.2(react@18.3.1)
-    transitivePeerDependencies:
-      - react
 
   '@leafygreen-ui/leafygreen-provider@5.0.4(@babel/core@7.24.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -14196,11 +14171,6 @@ snapshots:
       - supports-color
 
   '@leafygreen-ui/lib@15.6.2(react@18.3.1)':
-    dependencies:
-      lodash: 4.17.21
-      react: 18.3.1
-
-  '@leafygreen-ui/lib@9.5.2(react@18.3.1)':
     dependencies:
       lodash: 4.17.21
       react: 18.3.1
