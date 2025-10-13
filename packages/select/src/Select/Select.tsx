@@ -530,7 +530,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       }),
     } as const;
 
-    // Compose aria-label with selected value for screen readers
+    /**
+     * When aria-label is provided, we compose it with the selected value for screen readers. This is the default
+     * behavior for native select elements. When not doing this, only aria-label was being announced even when a value
+     * was selected.
+     */
     const composedAriaLabel = useMemo(() => {
       if (!ariaLabel || label || ariaLabelledby) {
         return undefined;
