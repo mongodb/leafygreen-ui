@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 export const LoadingSpinnerSize = {
@@ -12,6 +12,7 @@ export type LoadingSpinnerSize =
 
 export interface LoadingSpinnerProps
   extends DarkModeProps,
+    LgIdProps,
     React.ComponentProps<'svg'> {
   /**
    * Provide a standard `Size` enum, or a custom number in px.
