@@ -3,7 +3,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { LoadingSpinnerSize } from './LoadingSpinner.types';
 
 export const ROTATION_DURATION = 1500; // ms
-export const DASH_DURATION = 4000; // ms
+export const DASH_DURATION = ROTATION_DURATION * 3; // ms
 
 export const getSpinnerSize = (size: LoadingSpinnerSize | number): number => {
   switch (size) {
