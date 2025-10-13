@@ -153,6 +153,7 @@ export const LiveExample: StoryFn<SelectProps> = ({
     )}
     // eslint-disable-next-line no-console
     onChange={v => console.log(v)}
+    aria-label="hello world"
   />
 );
 LiveExample.parameters = {
