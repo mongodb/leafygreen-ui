@@ -6,7 +6,7 @@ import { LoadingSpinnerSize } from './LoadingSpinner/LoadingSpinner.types';
 import { LoadingSpinner } from '.';
 
 export default {
-  title: 'Components/LoadingSpinner',
+  title: 'Composition/Loading/LoadingSpinner',
   component: LoadingSpinner,
   parameters: {
     default: 'LiveExample',
