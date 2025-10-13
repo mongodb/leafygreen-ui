@@ -6,10 +6,10 @@
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "prebuild": "ts-node scripts/prebuild.ts",
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
-    "docs": "lg-build docs"
+    "docs": "lg-build docs",
+    "postversion": "ts-node scripts/postversion.ts"
   },
   "keywords": [],
   "license": "Apache-2.0",
