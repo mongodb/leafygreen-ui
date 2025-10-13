@@ -22,8 +22,8 @@ import {
  * Provide the `size` prop to define a standard size,
  * or provide a custom number in px
  *
- * @param param0
- * @returns
+ * @param {LoadingSpinnerProps} props - Props for the LoadingSpinner component.
+ * @returns {JSX.Element} SVG element representing the loading spinner.
  */
 export function LoadingSpinner({
   size = LoadingSpinnerSize.Default,
