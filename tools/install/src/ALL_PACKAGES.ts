@@ -38,6 +38,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/leafygreen-provider',
   '@leafygreen-ui/lib',
   '@leafygreen-ui/loading-indicator',
+  '@leafygreen-ui/loading-spinner',
   '@leafygreen-ui/logo',
   '@leafygreen-ui/marketing-modal',
   '@leafygreen-ui/menu',

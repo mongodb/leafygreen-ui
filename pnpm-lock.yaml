@@ -2282,6 +2282,21 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  packages/loading-spinner:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+
   packages/logo:
     dependencies:
       '@leafygreen-ui/emotion':
