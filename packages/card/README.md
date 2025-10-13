@@ -40,6 +40,7 @@ Card is a styled wrapper for the Box component. Any properties you would pass to
 
 | Prop           | Type                    | Description                                                       | Default                                                                 |
 | -------------- | ----------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `children`     | `React.ReactNode`       | Content rendered inside of the `<Card />` component                |                                                                         |
 | `className`    | `string`                | Adds a className to the class attribute                           |                                                                         |
 | `contentStyle` | `'none'`, `'clickable'` | Whether the card should display as a visually clickable element.  | `'clickable'` when a valid `onClick` handler or `href` link is provided |
 | `darkMode`     | `boolean`               | Determines whether or not the component will appear in dark mode. | `false`                                                                 |
