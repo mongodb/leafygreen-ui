@@ -362,13 +362,13 @@ import { Spinner } from '@leafygreen-ui/loading-indicator';
 ```tsx
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 
-{
-  /* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */
-}
+/* Previous description: "Loading data..." */
+/* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */
+
 <Spinner size="default" darkMode={true} />;
-{
-  /* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */
-}
+
+/* Previous description: "Processing..." */
+/* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */
 <Spinner size="large" />;
 ```
 

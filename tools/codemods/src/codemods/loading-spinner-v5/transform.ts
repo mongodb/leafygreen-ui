@@ -138,6 +138,32 @@ export default function transformer(
         );
 
         if (descriptionAttributes.length > 0) {
+          // Extract the description value
+          let descriptionValue = '';
+          descriptionAttributes.forEach(attr => {
+            const value = attr.node.value;
+
+            if (value) {
+              if (value.type === 'StringLiteral') {
+                descriptionValue = value.value;
+              } else if (value.type === 'JSXExpressionContainer') {
+                // For expression containers, convert to source code
+                descriptionValue = j(value.expression).toSource();
+              }
+            }
+          });
+
+          // Add previous description comment first (if there was a description value)
+          // Then add the TODO comment (which will appear above the previous description comment)
+          if (descriptionValue) {
+            insertJSXComment(
+              j,
+              element,
+              `Previous description: "${descriptionValue}"`,
+              'before',
+            );
+          }
+
           // Add guidance comment before removing the prop
           insertJSXComment(
             j,

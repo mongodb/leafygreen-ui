@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { PageLoader, Spinner } from '@leafygreen-ui/loading-indicator';
 
 export default function App() {
