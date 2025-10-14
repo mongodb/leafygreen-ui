@@ -111,7 +111,7 @@ export const CalendarCell = React.forwardRef<
       >
         <div className={cx(indicatorBaseStyles, indicatorClassName)}></div>
         <span
-          aria-hidden // hidden, since the `td` announces the value via `aria-label`
+          aria-hidden={true} // hidden, since the `td` announces the value via `aria-label`
           className={cx(cellTextStyles, {
             [cellTextCurrentStyles]: isCurrent,
           })}
