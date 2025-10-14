@@ -213,6 +213,22 @@ export const LiveExample: StoryObj<{
         category: 'XAxis',
       },
     },
+    xAxisMin: {
+      control: 'number',
+      description: 'Minimum value of x-axis',
+      name: 'Min',
+      table: {
+        category: 'XAxis',
+      },
+    },
+    xAxisMax: {
+      control: 'number',
+      description: 'Maximum value of x-axis',
+      name: 'Max',
+      table: {
+        category: 'XAxis',
+      },
+    },
     renderYAxis: {
       control: 'boolean',
       description: 'Render Y-axis',
@@ -241,6 +257,22 @@ export const LiveExample: StoryObj<{
       control: 'text',
       description: 'Y-axis label',
       name: 'Label',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    yAxisMin: {
+      control: 'number',
+      description: 'Minimum value of y-axis',
+      name: 'Min',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    yAxisMax: {
+      control: 'number',
+      description: 'Maximum value of y-axis',
+      name: 'Max',
       table: {
         category: 'YAxis',
       },
@@ -450,8 +482,12 @@ export const LiveExample: StoryObj<{
     renderYAxis,
     xAxisType,
     xAxisFormatter,
+    xAxisMin,
+    xAxisMax,
     yAxisType,
     yAxisFormatter,
+    yAxisMin,
+    yAxisMax,
     xAxisLabel,
     yAxisLabel,
     renderTooltip,
@@ -519,6 +555,8 @@ export const LiveExample: StoryObj<{
             type={xAxisType}
             formatter={xAxisFormatter}
             label={xAxisLabel}
+            min={xAxisMin}
+            max={xAxisMax}
           />
         )}
         {renderYAxis && (
@@ -526,6 +564,8 @@ export const LiveExample: StoryObj<{
             type={yAxisType}
             formatter={yAxisFormatter}
             label={yAxisLabel}
+            min={yAxisMin}
+            max={yAxisMax}
           />
         )}
         {data.map(({ name, data }) => (
