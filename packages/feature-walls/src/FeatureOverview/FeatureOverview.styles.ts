@@ -18,7 +18,6 @@ const baseSectionStyles = css`
   max-width: ${CONTAINER_MAX_WIDTH}px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  overflow: hidden;
 
   @media (max-width: ${breakpoints.Tablet}px) {
     grid-template-columns: 1fr;

@@ -1917,9 +1917,6 @@ importers:
       '@leafygreen-ui/vertical-stepper':
         specifier: workspace:^
         version: link:../vertical-stepper
-      react-transition-group:
-        specifier: ^4.4.5
-        version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
