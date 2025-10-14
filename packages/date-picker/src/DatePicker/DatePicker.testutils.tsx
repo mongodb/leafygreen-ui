@@ -114,12 +114,14 @@ export const renderDatePicker = (
     const calendarGrid = withinElement(menuContainerEl)?.queryByRole('grid');
     const calendarCells =
       withinElement(menuContainerEl)?.getAllByRole('gridcell');
-    const leftChevron =
-      withinElement(menuContainerEl)?.queryByLabelText('Previous month') ||
-      withinElement(menuContainerEl)?.queryByLabelText('Previous valid month');
-    const rightChevron =
-      withinElement(menuContainerEl)?.queryByLabelText('Next month') ||
-      withinElement(menuContainerEl)?.queryByLabelText('Next valid month');
+
+    // TODO: date-picker test harnesses https://jira.mongodb.org/browse/LG-4176
+    const leftChevron = withinElement(menuContainerEl)?.queryByTestId(
+      'lg-date_picker-menu-prev_month_button',
+    );
+    const rightChevron = withinElement(menuContainerEl)?.queryByTestId(
+      'lg-date_picker-menu-next_month_button',
+    );
     const monthSelect = withinElement(menuContainerEl)?.queryByLabelText(
       'Select month',
       {
