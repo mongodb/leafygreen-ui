@@ -1,5 +1,16 @@
 # @lg-charts/core
 
+## 2.1.0
+
+### Minor Changes
+
+- e0c767c: Updates `ChartHeader` component's `title` prop to accept a `React.ReactNode` rather than a `string`
+
+### Patch Changes
+
+- Updated dependencies [e0c767c]
+  - @lg-charts/chart-card@1.1.0
+
 ## 2.0.4
 
 ### Patch Changes
