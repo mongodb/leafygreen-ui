@@ -8,12 +8,13 @@ import {
 } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import { Icon } from '@leafygreen-ui/icon';
+import { IconButton } from '@leafygreen-ui/icon-button';
 
 import { LanguageSwitcherWithPanelExample } from './LanguageSwitcher/LanguageSwitcherExample';
 import { languageOptions } from './testing/Code.testutils';
-import Code, {
+import {
+  Code,
   CodeProps,
   CopyButton,
   CopyButtonAppearance,
