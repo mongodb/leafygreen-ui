@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 16.1.1
+
+### Patch Changes
+
+- 5d8f337: Fixes props such that component now accepts a properly typed `ref`
+
 ## 16.1.0
 
 ### Minor Changes
