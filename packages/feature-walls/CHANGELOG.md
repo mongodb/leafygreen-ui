@@ -2,10 +2,6 @@
 
 ## 4.1.1
 
-### Major Changes
-
-- **Package has been renamed and moved!** This package is now published under the `@leafygreen-ui` scope. All dependencies and import paths must be updated from `@lg-private/feature-walls` to `@leafygreen-ui/feature-walls`.
-
 ### Patch Changes
 
 - 408a10c: Adds a parent level stories file which will be displayed on .design
