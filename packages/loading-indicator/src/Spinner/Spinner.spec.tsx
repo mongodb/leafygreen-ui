@@ -2,9 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Spinner from './Spinner';
+import { getTestUtils } from '../testing';
 
-describe('packages/loading-indicator/spinner', () => {
+import { SpinnerSize } from './Spinner.types';
+import { Spinner } from '.';
+
+describe('packages/loading-spinner', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = render(<Spinner />);
@@ -12,11 +15,33 @@ describe('packages/loading-indicator/spinner', () => {
       expect(results).toHaveNoViolations();
     });
   });
-  describe('description prop', () => {
-    test('renders description', async () => {
-      const descriptionText = 'test description';
-      const { getByText } = render(<Spinner description={descriptionText} />);
-      expect(getByText(descriptionText)).toBeInTheDocument();
-    });
+  test('renders with default props', () => {
+    render(<Spinner />);
+    const { getLoadingSpinner } = getTestUtils();
+
+    expect(getLoadingSpinner()).toBeInTheDocument();
+  });
+
+  test('renders with custom size', () => {
+    render(<Spinner size={SpinnerSize.Large} />);
+    const { getLoadingSpinner } = getTestUtils();
+
+    expect(getLoadingSpinner()).toBeInTheDocument();
+  });
+
+  test('renders with custom size in pixels', () => {
+    render(<Spinner size={100} />);
+    const { getLoadingSpinner } = getTestUtils();
+    const spinner = getLoadingSpinner();
+
+    expect(spinner).toBeInTheDocument();
+    expect(spinner).toHaveAttribute('viewBox', '0 0 100 100');
+  });
+
+  test('renders with colorOverride', () => {
+    render(<Spinner colorOverride="red" />);
+    const { getLoadingSpinner } = getTestUtils();
+
+    expect(getLoadingSpinner()).toBeInTheDocument();
   });
 });

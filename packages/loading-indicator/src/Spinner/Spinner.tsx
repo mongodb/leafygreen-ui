@@ -1,83 +1,57 @@
 import React from 'react';
-import Lottie from 'react-lottie-player';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { lottieRendererSettings } from '../constants';
-import { descriptionThemeColor } from '../LoadingIndicator.styles';
+import { getLgIds } from '../utils/getLgIds';
 
-import animationJson from './animation';
+import { getSpinnerSize } from './constants';
 import {
-  colorOverrideStyles,
-  darkModeSpinnerStyles,
-  horizontalDisplayOptionStyles,
-  rootStyles,
-  SpinnerBottomMargins,
-  SpinnerSizes,
-  verticalDisplayOptionStyles,
+  getCircleStyles,
+  getCircleSVGArgs,
+  getSvgStyles,
 } from './Spinner.styles';
-import { DisplayOption, SpinnerProps } from './Spinner.types';
+import { SpinnerProps, SpinnerSize } from './Spinner.types';
 
 /**
- * Displays an spinner animation paired with description text
+ * SVG-based spinner loading indicator
+ *
+ * Provide the `size` prop to define a standard size,
+ * or provide a custom number in px
+ *
+ * @param {SpinnerProps} props - Props for the Spinner component.
+ * @returns {JSX.Element} SVG element representing the loading spinner.
  */
-const Spinner = ({
-  baseFontSize: baseFontSizeProp,
-  displayOption = DisplayOption.DefaultVertical,
-  description,
-  sizeOverride,
+export const Spinner = ({
+  size = SpinnerSize.Default,
+  disableAnimation = false,
   colorOverride,
-  darkMode: darkModeProp,
+  darkMode,
   className,
+  'data-lgid': lgid,
   ...rest
 }: SpinnerProps) => {
-  const size = sizeOverride ?? SpinnerSizes[displayOption];
-  const spinnerMarginBottom = SpinnerBottomMargins[displayOption];
-  const { darkMode, theme } = useDarkMode(darkModeProp);
-  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const sizeInPx = getSpinnerSize(size);
+  const { theme } = useDarkMode(darkMode);
 
   return (
-    <div
-      className={cx(
-        rootStyles,
-        {
-          [horizontalDisplayOptionStyles]:
-            displayOption === DisplayOption.DefaultHorizontal,
-          [verticalDisplayOptionStyles]:
-            displayOption !== DisplayOption.DefaultHorizontal,
-        },
-        className,
-      )}
+    <svg
+      className={cx(getSvgStyles({ size, disableAnimation }), className)}
+      viewBox={`0 0 ${sizeInPx} ${sizeInPx}`}
+      xmlns="http://www.w3.org/2000/svg"
+      data-lgid={getLgIds(lgid).spinner}
+      data-testid={getLgIds(lgid).spinner}
       {...rest}
     >
-      <Lottie
-        play
-        loop
-        animationData={animationJson}
-        className={cx({
-          [darkModeSpinnerStyles]: darkMode,
-          [colorOverrideStyles(colorOverride as string)]: !!colorOverride,
+      <circle
+        className={getCircleStyles({
+          size,
+          theme,
+          colorOverride,
+          disableAnimation,
         })}
-        style={{
-          display: 'flex',
-          width: size,
-          height: size,
-          marginBottom: description ? spinnerMarginBottom : undefined,
-        }}
-        rendererSettings={lottieRendererSettings}
+        {...getCircleSVGArgs(size)}
       />
-      {description && (
-        <Body
-          className={descriptionThemeColor[theme]}
-          baseFontSize={baseFontSize}
-        >
-          {description}
-        </Body>
-      )}
-    </div>
+    </svg>
   );
 };
-
-export default Spinner;

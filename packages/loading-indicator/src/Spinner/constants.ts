@@ -1,38 +1,38 @@
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { LoadingSpinnerSize } from './LoadingSpinner.types';
+import { SpinnerSize } from './Spinner.types';
 
 export const ROTATION_DURATION = 1500; // ms
 export const DASH_DURATION = ROTATION_DURATION * 3; // ms
 
-export const getSpinnerSize = (size: LoadingSpinnerSize | number): number => {
+export const getSpinnerSize = (size: SpinnerSize | number): number => {
   switch (size) {
-    case LoadingSpinnerSize.XSmall:
+    case SpinnerSize.XSmall:
       return spacing[200];
-    case LoadingSpinnerSize.Small:
+    case SpinnerSize.Small:
       return spacing[400];
-    case LoadingSpinnerSize.Default:
+    case SpinnerSize.Default:
       return spacing[600];
-    case LoadingSpinnerSize.Large:
+    case SpinnerSize.Large:
       return spacing[1200];
-    case LoadingSpinnerSize.XLarge:
+    case SpinnerSize.XLarge:
       return spacing[1600];
     default:
       return size as number;
   }
 };
 
-export const getStrokeWidth = (size: LoadingSpinnerSize | number): number => {
+export const getStrokeWidth = (size: SpinnerSize | number): number => {
   switch (size) {
-    case LoadingSpinnerSize.XSmall:
+    case SpinnerSize.XSmall:
       return spacing[50];
-    case LoadingSpinnerSize.Small:
+    case SpinnerSize.Small:
       return spacing[50] + spacing[25];
-    case LoadingSpinnerSize.Default:
+    case SpinnerSize.Default:
       return spacing[100];
-    case LoadingSpinnerSize.Large:
+    case SpinnerSize.Large:
       return spacing[200];
-    case LoadingSpinnerSize.XLarge:
+    case SpinnerSize.XLarge:
       return spacing[200] + spacing[50];
     default:
       return (size / 6) as number;
