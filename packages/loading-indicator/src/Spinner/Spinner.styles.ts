@@ -1,14 +1,14 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color } from '@leafygreen-ui/tokens';
+import { color, Size } from '@leafygreen-ui/tokens';
 
 import {
   DASH_DURATION,
+  getPadding,
   getSpinnerSize,
   getStrokeWidth,
   ROTATION_DURATION,
 } from './constants';
-import { SpinnerSize } from './Spinner.types';
 
 /**
  * Defines the outer SVG element keyframes
@@ -29,13 +29,14 @@ export const getSvgStyles = ({
   size,
   disableAnimation,
 }: {
-  size: SpinnerSize | number;
+  size: Size | number;
   disableAnimation?: boolean;
 }) =>
   cx(
     css`
       width: ${getSpinnerSize(size)}px;
       height: ${getSpinnerSize(size)}px;
+      padding: ${getPadding(size)}px;
     `,
     {
       [css`
@@ -51,7 +52,7 @@ export const getSvgStyles = ({
  * Defines the SVG Circle animation keyframes
  */
 const getCircleAnimation = (
-  size: SpinnerSize | number,
+  size: Size | number,
   disableAnimation?: boolean,
 ) => {
   const sizeInPx = getSpinnerSize(size);
@@ -134,7 +135,7 @@ export const getCircleStyles = ({
   colorOverride,
   disableAnimation,
 }: {
-  size: SpinnerSize | number;
+  size: Size | number;
   theme: Theme;
   colorOverride?: string;
   disableAnimation?: boolean;
@@ -154,7 +155,7 @@ export const getCircleStyles = ({
 /**
  * Returns the SVG Circle args (`cx`, `cy`, `r`)
  */
-export const getCircleSVGArgs = (size: SpinnerSize | number) => {
+export const getCircleSVGArgs = (size: Size | number) => {
   const sizeInPx = getSpinnerSize(size);
   const strokeWidth = getStrokeWidth(size);
 

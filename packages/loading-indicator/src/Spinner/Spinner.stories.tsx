@@ -2,7 +2,8 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
-import { SpinnerSize } from './Spinner.types';
+import { Size } from '@leafygreen-ui/tokens';
+
 import { Spinner } from '.';
 
 export default {
@@ -14,14 +15,14 @@ export default {
   argTypes: {
     size: {
       control: 'select',
-      options: Object.values(SpinnerSize),
+      options: Object.values(Size),
     },
     colorOverride: {
       control: 'color',
     },
   },
   args: {
-    size: SpinnerSize.Default,
+    size: Size.Default,
   },
 } satisfies StoryMetaType<typeof Spinner>;
 
@@ -43,7 +44,7 @@ export const Generated: StoryObj<typeof Spinner> = {
       },
       combineArgs: {
         darkMode: [false, true],
-        size: [...Object.values(SpinnerSize), 87],
+        size: [...Object.values(Size), 87],
         colorOverride: [undefined, '#f00'],
       },
     },

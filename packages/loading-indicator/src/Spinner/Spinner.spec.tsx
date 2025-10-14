@@ -2,9 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { Size } from '@leafygreen-ui/tokens';
+
 import { getTestUtils } from '../testing';
 
-import { SpinnerSize } from './Spinner.types';
 import { Spinner } from '.';
 
 describe('packages/loading-spinner', () => {
@@ -23,7 +24,7 @@ describe('packages/loading-spinner', () => {
   });
 
   test('renders with custom size', () => {
-    render(<Spinner size={SpinnerSize.Large} />);
+    render(<Spinner size={Size.Large} />);
     const { getSpinner } = getTestUtils();
 
     expect(getSpinner()).toBeInTheDocument();

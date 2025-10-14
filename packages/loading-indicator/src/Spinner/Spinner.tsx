@@ -2,6 +2,7 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Size } from '@leafygreen-ui/tokens';
 
 import { getLgIds } from '../utils/getLgIds';
 
@@ -11,7 +12,7 @@ import {
   getCircleSVGArgs,
   getSvgStyles,
 } from './Spinner.styles';
-import { SpinnerProps, SpinnerSize } from './Spinner.types';
+import { SpinnerProps } from './Spinner.types';
 
 /**
  * SVG-based spinner loading indicator
@@ -23,7 +24,7 @@ import { SpinnerProps, SpinnerSize } from './Spinner.types';
  * @returns {JSX.Element} SVG element representing the loading spinner.
  */
 export const Spinner = ({
-  size = SpinnerSize.Default,
+  size = Size.Default,
   disableAnimation = false,
   colorOverride,
   darkMode,

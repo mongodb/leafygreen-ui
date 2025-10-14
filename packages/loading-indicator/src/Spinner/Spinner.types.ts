@@ -3,12 +3,6 @@ import React from 'react';
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
-export const SpinnerSize = {
-  ...Size,
-  XLarge: 'xlarge',
-} as const;
-export type SpinnerSize = (typeof SpinnerSize)[keyof typeof SpinnerSize];
-
 export interface SpinnerProps
   extends DarkModeProps,
     LgIdProps,
@@ -16,7 +10,7 @@ export interface SpinnerProps
   /**
    * Provide a standard `Size` enum, or a custom number in px.
    */
-  size?: SpinnerSize | number;
+  size?: Size | number;
 
   /**
    * An override for the spinner animation’s color.
