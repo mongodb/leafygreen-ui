@@ -6,6 +6,7 @@ import { hasNamedImport, mergeImportSpecifiers } from '../../utils/imports';
 
 const lgPackageComponentMap: Partial<Record<LGPackage, string>> = {
   [LGPackage.Badge]: 'Badge',
+  [LGPackage.Banner]: 'Banner',
   [LGPackage.Button]: 'Button',
   [LGPackage.Callout]: 'Callout',
   [LGPackage.Card]: 'Card',
