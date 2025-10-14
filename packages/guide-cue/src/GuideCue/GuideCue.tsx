@@ -143,24 +143,23 @@ function GuideCue({
         <TooltipContent {...tooltipContentProps}>{children}</TooltipContent>
       ) : (
         // Multistep tooltip
-        <Popover
-          active={popoverOpen}
-          refEl={refEl}
-          align={beaconAlign}
-          justify={TooltipJustify.Middle}
-          spacing={-12} // width of beacon is 24px, 24/2 = 12
-          adjustOnMutation={true}
-          dismissMode={DismissMode.Manual}
-          renderMode={RenderMode.TopLayer}
-        >
-          {/* The beacon is using the popover component to position itself */}
-          <div
+        <>
+          <Popover
+            active={popoverOpen}
+            refEl={refEl}
+            align={beaconAlign}
+            justify={TooltipJustify.Middle}
+            spacing={-12} // width of beacon is 24px, 24/2 = 12
+            adjustOnMutation={true}
+            dismissMode={DismissMode.Manual}
+            renderMode={RenderMode.TopLayer}
             ref={beaconRef}
-            className={beaconStyles(prefersReducedMotion, darkMode)}
           >
-            <div />
-          </div>
-
+            {/* The beacon is using the popover component to position itself */}
+            <div className={beaconStyles(prefersReducedMotion, darkMode)}>
+              <div />
+            </div>
+          </Popover>
           {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
           {/* Instead of passing the beacon as the tooltip trigger prop we pass a reference to the beacon to the `refEl` prop. By passing only the reference we avoid default tooltip behaviors such as closing the tooltip on background click or showing and hiding the tooltip on hover. */}
           <TooltipContent
@@ -170,7 +169,7 @@ function GuideCue({
           >
             {children}
           </TooltipContent>
-        </Popover>
+        </>
       )}
     </>
   );
