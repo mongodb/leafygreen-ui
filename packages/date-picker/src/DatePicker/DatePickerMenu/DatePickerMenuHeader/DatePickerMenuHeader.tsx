@@ -108,7 +108,7 @@ export const DatePickerMenuHeader = forwardRef<
     const newMonthString = formatMonth(newMonth);
     return [
       dirLabel,
-      isNewMonthInvalid ? 'valid ' : undefined,
+      isNewMonthInvalid ? 'valid' : undefined,
       'month',
       `(${newMonthString})`,
     ]
