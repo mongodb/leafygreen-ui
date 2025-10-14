@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 9.2.1
+
+### Patch Changes
+
+- bab8e2a: The type of the returned `value` is now inferred from the types of the parameters in `useControlled`
+
 ## 9.2.0
 
 ### Minor Changes
