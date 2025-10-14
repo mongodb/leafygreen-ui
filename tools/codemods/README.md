@@ -322,6 +322,56 @@ import Copyable from '@leafygreen-ui/copyable';
 <Tooltip justify="middle" renderMode="top-layer" />
 ```
 
+### `loading-spinner-v5`
+
+This codemod can be used to upgrade Spinner components to v4 of `@leafygreen-ui/loading-indicator`.
+
+This codemod applies to the following package:
+
+- `@leafygreen-ui/loading-indicator`
+
+This codemod does the following:
+
+1. Converts `displayOption` prop to `size` prop with appropriate value mapping
+2. Removes `description` prop and adds guidance comment
+3. Removes `baseFontSize` prop if present
+
+```shell
+pnpm lg codemod loading-spinner-v5 <path>
+```
+
+**Before**:
+
+```tsx
+import { Spinner } from '@leafygreen-ui/loading-indicator';
+
+<Spinner
+  displayOption="default-vertical"
+  description="Loading data..."
+  darkMode={true}
+/>
+<Spinner
+  displayOption="large-vertical"
+  description="Processing..."
+  baseFontSize={16}
+/>
+```
+
+**After**:
+
+```tsx
+import { Spinner } from '@leafygreen-ui/loading-indicator';
+
+{
+  /* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */
+}
+<Spinner size="default" darkMode={true} />;
+{
+  /* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */
+}
+<Spinner size="large" />;
+```
+
 ### `tabs-v17`
 
 This codemod can be used to get started in upgrading LG `Tabs` instances to v17 of `@leafygreen-ui/tabs`.
