@@ -78,10 +78,14 @@ export const LiveExample: StoryObj<{
   xAxisType: XAxisProps['type'];
   xAxisFormatter: XAxisProps['formatter'];
   xAxisLabel: XAxisProps['label'];
+  xAxisMin: XAxisProps['min'];
+  xAxisMax: XAxisProps['max'];
   renderYAxis: boolean;
   yAxisType: YAxisProps['type'];
   yAxisFormatter: YAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
+  yAxisMin: YAxisProps['min'];
+  yAxisMax: YAxisProps['max'];
   renderTooltip: boolean;
   tooltipSeriesValueFormatter: ChartTooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
@@ -89,7 +93,7 @@ export const LiveExample: StoryObj<{
   headerShowDivider: ChartHeaderProps['showDivider'];
   zoomSelectXAxis: boolean;
   zoomSelectYAxis: boolean;
-  zoomSelectCallback;
+  zoomSelectCallback: ChartProps['onZoomSelect'];
   renderEventMarkerLine: boolean;
   eventMarkerLineMessage: EventMarkerLineProps['message'];
   eventMarkerLineLabel: EventMarkerLineProps['label'];
@@ -158,7 +162,6 @@ export const LiveExample: StoryObj<{
         category: 'Chart',
       },
     },
-    category: 'Chart',
     verticalGridLines: {
       control: 'boolean',
       description: 'Show vertical grid lines',
