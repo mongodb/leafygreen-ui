@@ -11,7 +11,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
-import { DisplayOption } from './Spinner/Spinner.types';
+import { SpinnerSize } from './Spinner/Spinner.types';
 import { PageLoader, Spinner } from '.';
 
 const meta: StoryMetaType<any> = {
@@ -58,11 +58,11 @@ const Template: StoryFn<typeof Spinner> = (
   } & DarkModeProps,
 ) => (
   <div className={storyRootStyles}>
-    {Object.values(DisplayOption).map(displayOption => (
-      <div key={displayOption} className={displayOptionContainerStyles}>
-        <Spinner displayOption={displayOption} {...props} />
+    {Object.values(SpinnerSize).map(size => (
+      <div key={size}>
+        <Spinner size={size} {...props} />
         <Body className={labelStyles} weight="medium">
-          <InlineCode>{displayOption}</InlineCode> Spinner
+          <InlineCode>{size}</InlineCode> Spinner
         </Body>
       </div>
     ))}
@@ -70,12 +70,9 @@ const Template: StoryFn<typeof Spinner> = (
       <PageLoader {...props} />
       <Body className={labelStyles} weight="medium">
         Blob Loader
-      </Body>{' '}
+      </Body>
     </div>
   </div>
 );
 
 export const LiveExample = Template.bind({});
-LiveExample.args = {
-  description: 'Loading dot dot...',
-};

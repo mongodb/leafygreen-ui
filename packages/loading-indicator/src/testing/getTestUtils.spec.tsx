@@ -1,61 +1,59 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 
-import { LoadingSpinner } from '../LoadingSpinner';
+import { Spinner } from '../Spinner';
 
 import { getTestUtils } from './getTestUtils';
 
 describe('packages/loading-spinner/getTestUtils', () => {
-  describe('single LoadingSpinner', () => {
-    test('findLoadingSpinner', async () => {
-      render(<LoadingSpinner />);
-      const { findLoadingSpinner } = getTestUtils();
+  describe('single Spinner', () => {
+    test('findSpinner', async () => {
+      render(<Spinner />);
+      const { findSpinner } = getTestUtils();
 
       await waitFor(async () => {
-        const spinner = await findLoadingSpinner();
+        const spinner = await findSpinner();
         expect(spinner).toBeInTheDocument();
       });
     });
 
-    test('getLoadingSpinner', () => {
-      render(<LoadingSpinner />);
-      const { getLoadingSpinner } = getTestUtils();
+    test('getSpinner', () => {
+      render(<Spinner />);
+      const { getSpinner } = getTestUtils();
 
-      expect(getLoadingSpinner()).toBeInTheDocument();
+      expect(getSpinner()).toBeInTheDocument();
     });
 
-    test('queryLoadingSpinner', () => {
+    test('querySpinner', () => {
       render(<div />);
-      const { queryLoadingSpinner } = getTestUtils();
+      const { querySpinner } = getTestUtils();
 
-      expect(queryLoadingSpinner()).toBeNull();
+      expect(querySpinner()).toBeNull();
     });
 
-    test('queryLoadingSpinner returns element when it exists', () => {
-      render(<LoadingSpinner />);
-      const { queryLoadingSpinner } = getTestUtils();
+    test('querySpinner returns element when it exists', () => {
+      render(<Spinner />);
+      const { querySpinner } = getTestUtils();
 
-      expect(queryLoadingSpinner()).toBeInTheDocument();
+      expect(querySpinner()).toBeInTheDocument();
     });
   });
 
-  describe('multiple LoadingSpinner instances', () => {
-    test('getLoadingSpinner with custom lgId', () => {
+  describe('multiple Spinner instances', () => {
+    test('getSpinner with custom lgId', () => {
       render(
         <>
-          <LoadingSpinner data-lgid="lg-spinner-1" />
-          <LoadingSpinner data-lgid="lg-spinner-2" />
+          <Spinner data-lgid="lg-spinner-1" />
+          <Spinner data-lgid="lg-spinner-2" />
         </>,
       );
 
       const utilsOne = getTestUtils('lg-spinner-1');
       const utilsTwo = getTestUtils('lg-spinner-2');
 
-      expect(utilsOne.getLoadingSpinner()).toBeInTheDocument();
-      expect(utilsTwo.getLoadingSpinner()).toBeInTheDocument();
-      expect(utilsOne.getLoadingSpinner()).not.toBe(
-        utilsTwo.getLoadingSpinner(),
-      );
+      expect(utilsOne.getSpinner()).toBeInTheDocument();
+      expect(utilsTwo.getSpinner()).toBeInTheDocument();
+      expect(utilsOne.getSpinner()).not.toBe(utilsTwo.getSpinner());
     });
   });
 });

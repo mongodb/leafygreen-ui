@@ -17,22 +17,22 @@ describe('packages/loading-spinner', () => {
   });
   test('renders with default props', () => {
     render(<Spinner />);
-    const { getLoadingSpinner } = getTestUtils();
+    const { getSpinner } = getTestUtils();
 
-    expect(getLoadingSpinner()).toBeInTheDocument();
+    expect(getSpinner()).toBeInTheDocument();
   });
 
   test('renders with custom size', () => {
     render(<Spinner size={SpinnerSize.Large} />);
-    const { getLoadingSpinner } = getTestUtils();
+    const { getSpinner } = getTestUtils();
 
-    expect(getLoadingSpinner()).toBeInTheDocument();
+    expect(getSpinner()).toBeInTheDocument();
   });
 
   test('renders with custom size in pixels', () => {
     render(<Spinner size={100} />);
-    const { getLoadingSpinner } = getTestUtils();
-    const spinner = getLoadingSpinner();
+    const { getSpinner } = getTestUtils();
+    const spinner = getSpinner();
 
     expect(spinner).toBeInTheDocument();
     expect(spinner).toHaveAttribute('viewBox', '0 0 100 100');
@@ -40,8 +40,8 @@ describe('packages/loading-spinner', () => {
 
   test('renders with colorOverride', () => {
     render(<Spinner colorOverride="red" />);
-    const { getLoadingSpinner } = getTestUtils();
+    const { getSpinner } = getTestUtils();
 
-    expect(getLoadingSpinner()).toBeInTheDocument();
+    expect(getSpinner()).toBeInTheDocument();
   });
 });
