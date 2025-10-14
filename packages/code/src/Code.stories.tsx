@@ -106,6 +106,7 @@ const meta: StoryMetaType<typeof Code> = {
     baseFontSize: 14,
     children: shortJsSnippet,
     copyButtonAppearance: CopyButtonAppearance.Hover,
+    collapsedLines: 5,
   },
   argTypes: {
     isLoading: { control: 'boolean' },
@@ -127,6 +128,7 @@ const meta: StoryMetaType<typeof Code> = {
         type: 'select',
       },
     },
+    collapsedLines: { control: 'number' },
   },
 };
 
