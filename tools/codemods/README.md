@@ -173,6 +173,7 @@ This codemod converts default imports to named imports for LeafyGreen UI compone
 By default, the codemod will apply for all below listed packages. Use the `--packages` flag to filter for a subset of these.
 
 - `@leafygreen-ui/badge`
+- `@leafygreen-ui/banner`
 - `@leafygreen-ui/button`
 - `@leafygreen-ui/callout`
 - `@leafygreen-ui/card`

@@ -1,5 +1,11 @@
 # @leafygreen-ui/confirmation-modal
 
+## 10.1.1
+
+### Patch Changes
+
+- fb93ebb: Update `@leafygreen-ui/modal` dependency to use version 20.1.1
+
 ## 10.1.0
 
 ### Minor Changes

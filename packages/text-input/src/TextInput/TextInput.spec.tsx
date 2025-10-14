@@ -228,8 +228,12 @@ describe('packages/text-input', () => {
     });
   });
 
-  /* eslint-disable jest/no-disabled-tests */
-  describe.skip('types behave as expected', () => {
+  describe('types behave as expected', () => {
+    test('TextInput takes a ref for a HTMLInputElement', () => {
+      const ref = React.createRef<HTMLInputElement>();
+      render(<TextInput label="some label" ref={ref} />);
+    });
+
     test('TextInput throws error when no label is supplied', () => {
       // @ts-expect-error
       <TextInput />;
@@ -246,5 +250,4 @@ describe('packages/text-input', () => {
       <TextInput type="search" aria-labelledby="some label" />;
     });
   });
-  /* eslint-enable jest/no-disabled-tests */
 });

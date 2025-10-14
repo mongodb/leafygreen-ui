@@ -6,6 +6,7 @@ import { FormFooter } from '@leafygreen-ui/form-footer';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { WizardSubComponentProperties } from '../constants';
+import { getLgIds } from '../utils/getLgIds';
 import { useWizardContext } from '../WizardContext';
 
 import { WizardFooterProps } from './WizardFooter.types';
@@ -18,7 +19,9 @@ export const WizardFooter = CompoundSubComponent(
     className,
     ...rest
   }: WizardFooterProps) => {
-    const { isWizardContext, activeStep, updateStep } = useWizardContext();
+    const { isWizardContext, activeStep, updateStep, lgId } =
+      useWizardContext();
+    const LGIDs = getLgIds(lgId);
 
     const handleBackButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
       updateStep(Direction.Prev);
@@ -41,8 +44,10 @@ export const WizardFooter = CompoundSubComponent(
 
     return (
       <FormFooter
-        {...rest}
+        data-lgid={LGIDs.footer}
+        data-testid={LGIDs.footer}
         className={className}
+        {...rest}
         backButtonProps={
           activeStep > 0
             ? {

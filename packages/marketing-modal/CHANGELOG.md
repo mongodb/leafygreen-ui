@@ -1,5 +1,11 @@
 # @leafygreen-ui/marketing-modal
 
+## 8.1.1
+
+### Patch Changes
+
+- fb93ebb: Update `@leafygreen-ui/modal` dependency to use version 20.1.1
+
 ## 8.1.0
 
 ### Minor Changes

@@ -1,9 +1,11 @@
 import { ComponentPropsWithRef, ReactNode } from 'react';
 
+import { LgIdProps } from '@leafygreen-ui/lib';
+
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
 
-export interface WizardProps extends ComponentPropsWithRef<'div'> {
+export interface WizardProps extends LgIdProps, ComponentPropsWithRef<'div'> {
   /**
    * The current active step index (0-based). If provided, the component operates in controlled mode.
    */
