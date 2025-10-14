@@ -1876,6 +1876,61 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  packages/feature-walls:
+    dependencies:
+      '@leafygreen-ui/badge':
+        specifier: workspace:^
+        version: link:../badge
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
+      '@leafygreen-ui/card':
+        specifier: workspace:^
+        version: link:../card
+      '@leafygreen-ui/descendants':
+        specifier: workspace:^
+        version: link:../descendants
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
+      '@leafygreen-ui/vertical-stepper':
+        specifier: workspace:^
+        version: link:../vertical-stepper
+      react-transition-group:
+        specifier: ^4.4.5
+        version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
+      '@lg-tools/storybook-utils':
+        specifier: workspace:^
+        version: link:../../tools/storybook-utils
+      '@svgr/core':
+        specifier: ^8.1.0
+        version: 8.1.0(typescript@5.8.3)
+
   packages/form-field:
     dependencies:
       '@leafygreen-ui/emotion':

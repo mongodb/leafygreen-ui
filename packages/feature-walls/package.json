@@ -1,0 +1,55 @@
+{
+  "name": "@leafygreen-ui/feature-walls",
+  "version": "4.1.1",
+  "description": "LeafyGreen UI Kit Feature Walls",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/badge": "workspace:^",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/card": "workspace:^",
+    "@leafygreen-ui/descendants": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
+    "@leafygreen-ui/vertical-stepper": "workspace:^",
+    "react-transition-group": "^4.4.5"
+  },
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "@svgr/core": "^8.1.0"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
+  "homepage": "https://github.com/10gen/leafygreen-ui/tree/main/packages/feature-walls",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/10gen/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}
