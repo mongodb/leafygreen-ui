@@ -159,6 +159,29 @@ LiveExample.parameters = {
     disableSnapshot: true,
   },
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Collapsed: StoryType<typeof Code, FontSizeProps> = ({
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <Code
+    {...(args as CodeProps)}
+    highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+    className={css`
+      width: 100%;
+    `}
+    showLineNumbers={true}
+    collapsedLines={3}
+    expandable={true}
+  >
+    {jsSnippet}
+  </Code>
+);
 
 export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,
