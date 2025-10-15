@@ -8,10 +8,9 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { spacing } from '@leafygreen-ui/tokens';
+import { Size, spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
-import { SpinnerSize } from './Spinner/Spinner.types';
 import { PageLoader, Spinner } from '.';
 
 const meta: StoryMetaType<any> = {
@@ -58,7 +57,7 @@ const Template: StoryFn<typeof Spinner> = (
   } & DarkModeProps,
 ) => (
   <div className={storyRootStyles}>
-    {Object.values(SpinnerSize).map(size => (
+    {Object.values(Size).map(size => (
       <div key={size}>
         <Spinner size={size} {...props} />
         <Body className={labelStyles} weight="medium">
