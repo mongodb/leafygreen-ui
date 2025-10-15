@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
@@ -16,12 +15,9 @@ export const useMenuHeight = ({
 }: MenuHeightArgs) => {
   const availableSpace = useAvailableSpace(refEl, spacing);
 
-  const memoizedAvailableSpace = useMemo(
-    () => availableSpace,
-    [availableSpace],
-  );
-  const maxMenuHeightValue = !isUndefined(memoizedAvailableSpace)
-    ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
+  const maxMenuHeightValue = !isUndefined(availableSpace)
+    ? `${Math.min(availableSpace, maxHeight)}px`
     : 'unset';
+
   return maxMenuHeightValue;
 };
