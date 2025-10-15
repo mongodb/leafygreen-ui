@@ -22,11 +22,17 @@ import {
   XAxis,
   XAxisProps,
   YAxis,
-  YAxisProps
+  YAxisProps,
 } from '.';
 
 const numOfLineColors = 15;
 const seriesData = makeSeriesData(numOfLineColors);
+const lowDensitySeriesData = seriesData
+  .filter((_, i) => i < 3)
+  .map(series => ({
+    ...series,
+    data: series.data.filter((d, i) => i % 4 === 0),
+  }));
 
 // Dynamically calculate x-axis min/max from the generated data to avoid timezone issues
 const allXValues =
@@ -874,12 +880,43 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
   },
 };
 
-export const Basic: StoryObj<{}> = {
+export const _Line: StoryObj<{}> = {
+  name: 'Line',
   render: () => {
     return (
       <Chart>
         {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const _Bar: StoryObj<{}> = {
+  name: 'Bar',
+  render: () => {
+    return (
+      <Chart>
+        {lowDensitySeriesData.map(({ name, data }) => (
+          <Bar name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const BarStacked: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        {lowDensitySeriesData.map(({ name, data }, index) => (
+          <Bar
+            name={name}
+            data={data}
+            key={name}
+            stack={index < 2 ? 'same' : undefined}
+          />
         ))}
       </Chart>
     );
