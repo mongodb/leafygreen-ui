@@ -89,7 +89,8 @@
       "@leafygreen-ui": "packages",
       "@lg-charts": "charts",
       "@lg-chat": "chat",
-      "@lg-tools": "tools"
+      "@lg-tools": "tools",
+      "@lg-templates": "templates"
     }
   },
   "keywords": [

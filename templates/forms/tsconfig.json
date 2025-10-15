@@ -1,0 +1,44 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+   "compilerOptions": {
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
+      "@leafygreen-ui/*": ["../../packages/*/src"],
+      "@lg-templates/*": ["../../templates/*/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "references": [
+    {
+      "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/modal"
+    },
+    {
+      "path": "../../packages/text-input"
+    },
+    {
+      "path": "../../packages/button"
+    },
+    {
+      "path": "../../packages/form-footer"
+    },
+    {
+      "path": "../../packages/typography"
+    },
+    {
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/loading-indicator"
+    },
+    {
+      "path": "../../tools/test-harnesses"
+    }
+  ]
+}

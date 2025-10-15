@@ -158,7 +158,8 @@ packages/component-name/
       "@leafygreen-ui/*": ["packages/*/src"],
       "@lg-charts/*": ["charts/*/src"],
       "@lg-chat/*": ["chat/*/src"],
-      "@lg-tools/*": ["tools/*/src"]
+      "@lg-tools/*": ["tools/*/src"],
+      "@lg-templates/*": ["templates/*/src"]
     }
   }
   ```

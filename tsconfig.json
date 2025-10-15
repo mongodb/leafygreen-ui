@@ -12,9 +12,10 @@
       "@leafygreen-ui/*": ["packages/*/src"],
       "@lg-charts/*": ["charts/*/src"],
       "@lg-chat/*": ["chat/*/src"],
-      "@lg-tools/*": ["tools/*/src"]
+      "@lg-tools/*": ["tools/*/src"],
+      "@lg-templates/*": ["templates/*/src"]
     }
   },
-  "include": ["./charts", "./chat", "./packages", "./tools"],
+  "include": ["./charts", "./chat", "./packages", "./tools", "./templates"],
   "exclude": ["node_modules", "**/dist"]
 }
