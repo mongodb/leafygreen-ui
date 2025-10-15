@@ -1,6 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithRef } from 'react';
 
-export interface AccordionItemProps extends HTMLElementProps<'div'> {
+export interface AccordionItemProps extends ComponentPropsWithRef<'div'> {
   /**
    * Content that is typically a pairing of an `AccordionButton` and
    * `AccordionPanel`. It can accept other components if content that

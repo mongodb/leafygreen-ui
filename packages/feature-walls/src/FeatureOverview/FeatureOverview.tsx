@@ -23,7 +23,7 @@ import {
 } from './FeatureOverview.styles';
 import { FeatureOverviewProps } from './FeatureOverview.types';
 
-export const FeatureOverview = forwardRef<HTMLDivElement, FeatureOverviewProps>(
+export const FeatureOverview = forwardRef<HTMLElement, FeatureOverviewProps>(
   ({ className, darkMode: darkModeProp, features, title, ...rest }, fwdRef) => {
     const { darkMode } = useDarkMode(darkModeProp);
 

@@ -1,6 +1,10 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithRef } from 'react';
 
-export interface AccordionProps extends HTMLElementProps<'div'>, DarkModeProps {
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
+export interface AccordionProps
+  extends ComponentPropsWithRef<'div'>,
+    DarkModeProps {
   /**
    * Required children which can be `AccordionItem` components
    */

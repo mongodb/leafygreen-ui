@@ -275,7 +275,7 @@ describe('packages/feature-walls/InfoBlock', () => {
       <InfoBlock variant={Variant.Icon} {...defaultProps} />
       <InfoBlock variant={Variant.Image} {...defaultProps} />
 
-      {/* @ts-expect-error - in 'card' variant, cannot set badgePropsArray */}
+      {/* @ts-ignore - in 'card' variant, cannot set badgePropsArray */}
       <InfoBlock
         variant={Variant.Card}
         media={defaultProps.media}
@@ -285,7 +285,7 @@ describe('packages/feature-walls/InfoBlock', () => {
         badgePropsArray={[{ children: 'TAG' }]}
       />
 
-      {/* @ts-expect-error - in 'icon' variant, cannot set badgeProps or badgePropsArray */}
+      {/* @ts-ignore - in 'icon' variant, cannot set badgeProps or badgePropsArray */}
       <InfoBlock
         variant={Variant.Icon}
         media={defaultProps.media}
@@ -295,7 +295,7 @@ describe('packages/feature-walls/InfoBlock', () => {
         badgePropsArray={[{ children: 'TAG' }]}
       />
 
-      {/* @ts-expect-error - in 'image' variant, cannot set badgeProps */}
+      {/* @ts-ignore - in 'image' variant, cannot set badgeProps */}
       <InfoBlock
         variant={Variant.Image}
         media={defaultProps.media}
@@ -308,14 +308,14 @@ describe('packages/feature-walls/InfoBlock', () => {
       <InfoBlock
         variant={Variant.Card}
         {...defaultProps}
-        // @ts-expect-error - cannot set variant in badgeProps
+        // @ts-ignore - cannot set variant in badgeProps
         badgeProps={{ children: 'TAG', variant: 'red' }}
       />
 
       <InfoBlock
         variant={Variant.Image}
         {...defaultProps}
-        // @ts-expect-error - cannot set variant in badgePropsArray
+        // @ts-ignore - cannot set variant in badgePropsArray
         badgePropsArray={[{ children: 'TAG', variant: 'red' }]}
       />
     </>;

@@ -1,7 +1,9 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithRef } from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface SectionProps
-  extends HTMLElementProps<'section'>,
+  extends ComponentPropsWithRef<'section'>,
     DarkModeProps {
   /**
    * Optional boolean to render section in a Card UI

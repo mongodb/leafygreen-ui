@@ -1,7 +1,9 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithRef } from 'react';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface ExpandableGridProps
-  extends HTMLElementProps<'div'>,
+  extends ComponentPropsWithRef<'div'>,
     DarkModeProps {
   /**
    * Determines the maximum number of columns the grid should allow

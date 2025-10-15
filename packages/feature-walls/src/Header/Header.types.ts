@@ -1,11 +1,18 @@
-import { ButtonProps } from '@leafygreen-ui/button';
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithRef } from 'react';
 
-type ButtonPropsOmittingVariantWithRequired = Omit<ButtonProps, 'variant'> & {
+import { BaseButtonProps } from '@leafygreen-ui/button';
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
+type ButtonPropsOmittingVariantWithRequired = Omit<
+  BaseButtonProps,
+  'variant'
+> & {
   children: React.ReactNode;
 };
 
-export interface HeaderProps extends HTMLElementProps<'div'>, DarkModeProps {
+export interface HeaderProps
+  extends ComponentPropsWithRef<'div'>,
+    DarkModeProps {
   /**
    * Required title text
    */

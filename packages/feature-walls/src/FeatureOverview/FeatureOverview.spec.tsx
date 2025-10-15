@@ -15,8 +15,8 @@ const mockFeatures = generateMockFeatures(3);
 const renderFeatureOverview = (props?: Partial<FeatureOverviewProps>) => {
   return render(
     <FeatureOverview
-      title={MOCK_SECTION_TITLE}
-      features={mockFeatures}
+      title={props?.title ?? MOCK_SECTION_TITLE}
+      features={props?.features ?? mockFeatures}
       {...props}
     />,
   );

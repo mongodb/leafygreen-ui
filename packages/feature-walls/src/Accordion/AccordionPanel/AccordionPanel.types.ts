@@ -1,6 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithRef } from 'react';
 
-export interface AccordionPanelProps extends HTMLElementProps<'div'> {
+export interface AccordionPanelProps extends ComponentPropsWithRef<'div'> {
   /**
    * Content that will expand and collapse for the `AccordionItem`
    */

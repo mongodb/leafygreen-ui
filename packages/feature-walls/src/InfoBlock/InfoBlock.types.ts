@@ -1,6 +1,8 @@
+import { ComponentPropsWithRef } from 'react';
+
 import { BadgeProps } from '@leafygreen-ui/badge';
-import { ButtonProps } from '@leafygreen-ui/button';
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { BaseButtonProps } from '@leafygreen-ui/button';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 type BadgePropsOmittingVariant = Omit<BadgeProps, 'variant'>;
 
@@ -13,7 +15,7 @@ export const Variant = {
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
 export interface BaseInfoBlockProps
-  extends HTMLElementProps<'div'>,
+  extends ComponentPropsWithRef<'div'>,
     DarkModeProps {
   /**
    * Sets the variant of the InfoBlock which determines component UI:
@@ -45,7 +47,7 @@ export interface BaseInfoBlockProps
    *
    * darkMode is handled internally so you do not have to pass the `darkMode` prop.
    */
-  buttonProps?: ButtonProps;
+  buttonProps?: BaseButtonProps;
 }
 
 export interface CardInfoBlockProps extends BaseInfoBlockProps {
