@@ -1,52 +1,44 @@
 import React from 'react';
-import { useSeriesContext } from '@lg-charts/series-provider';
-import _ from 'lodash';
 
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-
-import { EChartSeriesOption } from '../../Echart';
-import { EChartLineSeriesOption } from '../../Echart/Echart.types';
+import { EChartSeriesOptions, StylingContext } from '../../Echart/Echart.types';
 import { Series } from '../Series';
 import { SeriesProps } from '../Series.types';
 
 export type LineProps = SeriesProps;
 
-const defaultLineOptions: EChartLineSeriesOption = {
-  type: 'line',
-  showSymbol: false,
-  symbol: 'circle',
-  clip: false,
-  symbolSize: 7,
-  emphasis: {
-    focus: 'series',
-  },
-  blur: {
-    lineStyle: {
-      opacity: 0.5,
+function getDefaultLineOptions(
+  stylingContext: StylingContext,
+): EChartSeriesOptions['line']['stylingOptions'] {
+  return {
+    showSymbol: false,
+    symbol: 'circle',
+    clip: false,
+    symbolSize: 7,
+    emphasis: {
+      focus: 'series',
     },
-  },
-  lineStyle: {
-    width: 1,
-  },
-};
-
-export function Line(props: LineProps) {
-  const { getColor } = useSeriesContext();
-  const { theme } = useDarkMode();
-  const color = getColor(props.name, theme);
-  const colorOverrides: EChartLineSeriesOption = {
-    lineStyle: { color: color || undefined },
-    itemStyle: { color: color || undefined },
+    blur: {
+      lineStyle: {
+        opacity: 0.5,
+      },
+    },
+    itemStyle: {
+      color: stylingContext.seriesColor,
+    },
+    lineStyle: {
+      color: stylingContext.seriesColor,
+      width: 1,
+    },
   };
-
-  const options: EChartSeriesOption = _.merge(
-    {},
-    defaultLineOptions,
-    props,
-    colorOverrides,
-  );
-
-  return <Series {...options} />;
 }
+
+export const Line = (props: LineProps) => (
+  <Series
+    type={'line'}
+    name={props.name}
+    data={props.data}
+    stylingOptions={getDefaultLineOptions}
+  />
+);
 
 Line.displayName = 'Line';

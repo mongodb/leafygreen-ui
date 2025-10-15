@@ -8,16 +8,45 @@ import type {
   TooltipComponentOption,
 } from 'echarts/components';
 import type { ComposeOption, EChartsType } from 'echarts/core';
-import type { LineSeriesOption, SeriesOption } from 'echarts/types/dist/shared';
+import {
+  BarSeriesOption,
+  LineSeriesOption,
+  SeriesOption,
+} from 'echarts/types/dist/shared';
 
-import { Theme } from '@leafygreen-ui/lib';
+import { Theme, ValuesOf } from '@leafygreen-ui/lib';
 
 // Type not exported by echarts.
 // reference: https://github.com/apache/echarts/blob/master/src/coord/axisCommonTypes.ts#L193
 export type AxisLabelValueFormatter = (value: number, index?: number) => string;
 
-export type EChartLineSeriesOption = LineSeriesOption;
-export type EChartSeriesOption = { name: string } & SeriesOption;
+export interface StylingContext {
+  seriesColor?: string;
+}
+
+// to convert an SeriesOption type of echarts into a more structured form aligned with LeafyGreen design standards,
+// where the 'type', 'name', and 'data' fields are explicitly required and typed,
+// and all additional properties related to series styling are encapsulated within the 'stylingOptions' object
+interface DisciplinedSeriesOption<EChartType extends SeriesOption> {
+  type: NonNullable<EChartType['type']>;
+  name: string;
+  data: NonNullable<EChartType['data']>;
+  stylingOptions: Omit<EChartType, 'type' | 'name' | 'data'>;
+}
+
+// all supported series options types disciplined and grouped into a single interface
+export interface EChartSeriesOptions {
+  line: DisciplinedSeriesOption<LineSeriesOption>;
+  // TODO: to be leveraged in a follow-up PR that adds Bar chart support
+  bar: DisciplinedSeriesOption<BarSeriesOption>;
+}
+
+// a disciplined substitute for SeriesOption type of echarts limited to the ones supported here
+export type EChartSeriesOption = Omit<
+  ValuesOf<EChartSeriesOptions>,
+  'stylingOptions'
+> &
+  ValuesOf<EChartSeriesOptions>['stylingOptions'];
 
 /**
  * TODO: This might need to be improved. `ComposeOption` appears to make most base option
@@ -107,6 +136,7 @@ interface EChartsEventHandlerType {
     callback: (params: any) => void,
     options?: Partial<{ useCanvasAsTrigger: boolean }>,
   ): void;
+
   (
     event: 'zoomselect',
     callback: (params: EChartZoomSelectionEvent) => void,

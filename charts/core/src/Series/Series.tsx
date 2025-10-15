@@ -1,24 +1,44 @@
 import { useEffect } from 'react';
 import { useSeriesContext } from '@lg-charts/series-provider';
 
-import { useChartContext } from '../ChartContext';
-import { EChartSeriesOption } from '../Echart';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { ValuesOf } from '@leafygreen-ui/lib';
 
-export function Series(options: EChartSeriesOption) {
+import { useChartContext } from '../ChartContext';
+import { EChartSeriesOptions, StylingContext } from '../Echart/Echart.types';
+
+export function Series<T extends ValuesOf<EChartSeriesOptions>>({
+  type,
+  name,
+  data,
+  stylingOptions,
+}: {
+  type: T['type'];
+  name: T['name'];
+  data: T['data'];
+  stylingOptions: (ctx: StylingContext) => T['stylingOptions'];
+}) {
   const {
     chart: { addSeries, ready, removeSeries },
   } = useChartContext();
-  const { isChecked } = useSeriesContext();
-
-  const isVisible = isChecked(options.name);
+  const { theme } = useDarkMode();
+  const { isChecked, getColor } = useSeriesContext();
+  const seriesColor = getColor(name, theme) || undefined;
+  const isVisible = isChecked(name);
 
   useEffect(() => {
     if (!ready) return;
 
     if (isVisible) {
-      addSeries(options);
+      const context = { seriesColor };
+      addSeries({
+        type,
+        name,
+        data,
+        ...stylingOptions(context),
+      });
     } else {
-      removeSeries(options.name);
+      removeSeries(name);
     }
 
     return () => {
@@ -26,9 +46,19 @@ export function Series(options: EChartSeriesOption) {
        * Remove the series when the component unmounts to make sure the series
        * is removed when a `Series` is hidden.
        */
-      removeSeries(options.name);
+      removeSeries(name);
     };
-  }, [addSeries, isVisible, ready, removeSeries]);
+  }, [
+    addSeries,
+    isVisible,
+    seriesColor,
+    ready,
+    removeSeries,
+    type,
+    name,
+    data,
+    stylingOptions,
+  ]);
 
   return null;
 }
