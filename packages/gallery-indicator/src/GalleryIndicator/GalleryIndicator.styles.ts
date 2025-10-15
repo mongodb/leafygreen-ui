@@ -1,7 +1,9 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+
+import { Variant } from './GalleryIndicator.types';
 
 const TRANSITION_DURATION_SLOW = transitionDuration.slower;
 const TRANSITION_DURATION_DEFAULT = transitionDuration.default;
@@ -25,23 +27,48 @@ export const getGalleryIndicatorStyles = ({
     className,
   );
 
+const baseColorSet: Record<Theme, Record<Variant, string>> = {
+  [Theme.Light]: {
+    [Variant.Default]: palette.gray.light2,
+    [Variant.BaseGreen]: palette.green.light3,
+  },
+  [Theme.Dark]: {
+    [Variant.Default]: palette.gray.dark2,
+    [Variant.BaseGreen]: palette.green.dark2,
+  },
+};
+
+const activeColorSet: Record<Theme, Record<Variant, string>> = {
+  [Theme.Light]: {
+    [Variant.Default]: palette.gray.base,
+    [Variant.BaseGreen]: palette.green.base,
+  },
+  [Theme.Dark]: {
+    [Variant.Default]: palette.gray.base,
+    [Variant.BaseGreen]: palette.green.base,
+  },
+};
+
 export const getIndicatorStyles = ({
   theme,
   isActive,
+  variant,
 }: {
   theme: Theme;
   isActive: boolean;
-}) =>
-  cx(
+  variant: Variant;
+}) => {
+  const baseColor = baseColorSet[theme][variant];
+  const activeColor = activeColorSet[theme][variant];
+
+  return cx(
     css`
       &::after {
         content: '';
         display: block;
         width: ${DOT_SIZE}px;
         height: ${DOT_SIZE}px;
-        background-color: ${theme === Theme.Light
-          ? palette.gray.light2
-          : palette.gray.dark2};
+        background-color: ${baseColor};
         border-radius: 50%;
         transition-property: background-color, width, border-radius;
         transition-duration: ${TRANSITION_DURATION_SLOW}ms,
@@ -54,8 +81,9 @@ export const getIndicatorStyles = ({
         &::after {
           width: ${ACTIVE_DOT_SIZE}px;
           border-radius: 100px;
-          background-color: ${color[theme].icon.secondary.default};
+          background-color: ${activeColor};
         }
       `]: isActive,
     },
   );
+};
