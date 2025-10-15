@@ -12,7 +12,7 @@ const baseGridStyles = css`
   transition-timing-function: ease-in-out;
   grid-template-rows: 0fr;
   margin-bottom: 0;
-  opacity: 0.6;
+  opacity: 0;
 `;
 
 const expandedGridStyles = css`

@@ -58,17 +58,19 @@ describe('packages/feature-walls/Accordion', () => {
     });
 
     test('buttons and panels render with correctly related aria tags', () => {
-      const { getByText } = renderAccordion();
+      const { getByText, getAllByRole } = renderAccordion();
 
       const button1 = getByText('Button 1');
-      const panel1 = getByText('Lorem ipsum 1');
+      const buttonId = button1.getAttribute('id');
+      const panelId = button1.getAttribute('aria-controls');
 
-      expect(button1.getAttribute('id')).toEqual(
-        panel1.getAttribute('aria-labelledby'),
+      const panel1 = getAllByRole('region').find(
+        el => el.getAttribute('aria-labelledby') === buttonId,
       );
-      expect(panel1.getAttribute('id')).toEqual(
-        button1.getAttribute('aria-controls'),
-      );
+
+      expect(panel1).toBeDefined();
+      expect(buttonId).toEqual(panel1?.getAttribute('aria-labelledby'));
+      expect(panelId).toEqual(panel1?.getAttribute('id'));
     });
   });
 
