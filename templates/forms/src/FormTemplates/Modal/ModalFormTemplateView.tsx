@@ -77,6 +77,7 @@ const ModalFormTemplateView = React.forwardRef<
 
   const displayFields: Array<React.ReactNode> = [];
 
+  console.log('fieldProperties: ', fieldProperties);
   fieldProperties.forEach((properties, name) => {
     if (isStringInput(properties)) {
       displayFields.push(

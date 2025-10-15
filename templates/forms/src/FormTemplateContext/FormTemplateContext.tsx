@@ -36,24 +36,25 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
   const [fieldProperties, setFieldProperties] = React.useState<FieldMap>(
     new Map(),
   );
-  const invalidFields: Array<string> = [];
-  // const [invalidFields, setInvalidFields] = React.useState<Array<string>>([]);
+  const [invalidFields, setInvalidFields] = React.useState<Array<string>>([]);
 
   function addInvalidField(name: string) {
-    // if (!invalidFields.includes(name)) {
-    //   setInvalidFields([...invalidFields, name]);
-    // }
+    if (!invalidFields.includes(name)) {
+      setInvalidFields([...invalidFields, name]);
+    }
   }
 
   function removeInvalidField(name: string) {
-    // if (invalidFields.includes(name)) {
-    //   const newInvalidFields = [...invalidFields];
-    //   const index = newInvalidFields.indexOf(name);
-    //   if (index > -1) {
-    //     newInvalidFields.splice(index, 1);
-    //   }
-    //   setInvalidFields(newInvalidFields);
-    // }
+    if (invalidFields.includes(name)) {
+      const newInvalidFields = [...invalidFields];
+      const index = newInvalidFields.indexOf(name);
+
+      if (index > -1) {
+        newInvalidFields.splice(index, 1);
+      }
+
+      setInvalidFields(newInvalidFields);
+    }
   }
 
   const providerValue: ProviderValue = {
@@ -62,7 +63,6 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
 
     addField: (name, value) => {
       console.log('addField', name, value);
-      const newFieldMap = new Map(fieldProperties);
 
       const completeFieldProperties = {
         ...value,
@@ -73,16 +73,22 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
         addInvalidField(name);
       }
 
-      newFieldMap.set(name, completeFieldProperties);
+      const newFieldMap = new Map(fieldProperties).set(
+        name,
+        completeFieldProperties,
+      );
 
       setFieldProperties(newFieldMap);
+
+      console.log('old: ', fieldProperties);
+      console.log('new: ', newFieldMap);
 
       return newFieldMap;
     },
 
     removeField: name => {
       console.log('removeField', name);
-      console.trace();
+
       const newFieldMap = new Map(fieldProperties);
       newFieldMap.delete(name);
 
@@ -94,10 +100,9 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
 
     setFieldValue: (name, value) => {
       console.log('setFieldValue', name, value);
+
       const newFieldMap = new Map(fieldProperties);
       const currentFieldProperties = newFieldMap.get(name);
-
-      console.log(name, value, currentFieldProperties, fieldProperties);
 
       if (!currentFieldProperties) {
         console.error(`Field with name ${name} does not exist`);
@@ -107,7 +112,10 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
 
       currentFieldProperties.value = value;
 
-      const valid = value.required ? value != null : true;
+      const valid = currentFieldProperties.required
+        ? !!currentFieldProperties.value
+        : true;
+
       currentFieldProperties.valid = valid;
 
       if (!valid) {
@@ -117,7 +125,6 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
       }
 
       // TODO: Add logic when validation function is supported. Must support return values of boolean | Promise<boolean>
-      currentFieldProperties.valid = valid;
       newFieldMap.set(name, currentFieldProperties);
 
       setFieldProperties(newFieldMap);
@@ -127,6 +134,7 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
 
     clearFormValues: () => {
       console.log('clearFormValues');
+
       const newFieldMap = new Map(fieldProperties);
 
       newFieldMap.forEach((properties, name) => {

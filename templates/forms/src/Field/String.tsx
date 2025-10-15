@@ -27,11 +27,8 @@ function String({
       ...rest,
     });
 
-    // console.log('added input', fields);
-
     return () => {
       removeField(name);
-      // console.log('removed input', newFields);
     };
   }, []);
 

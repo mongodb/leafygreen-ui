@@ -34,7 +34,14 @@ const Template: StoryFn<FormTemplateKnobProps> = ({
         }}
         {...props}
       >
-        <Field.String type="text" name="example" label="Example String Input" />
+        <Field.String
+          required
+          type="text"
+          name="first"
+          label="Example String Input"
+        />
+
+        <Field.String type="text" name="second" label="Second input" />
       </FormTemplate.Modal>
     </>
   );
