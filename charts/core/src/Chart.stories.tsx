@@ -28,6 +28,11 @@ import {
 const numOfLineColors = 15;
 const lineData = makeLineData(numOfLineColors);
 
+const xAxisMin = 1704085200000;
+const xAxisMax = 1704088740000;
+const yAxisMin = 0;
+const yAxisMax = 2500;
+
 export default {
   title: 'Composition/Charts/Core',
   component: Chart,
@@ -119,9 +124,13 @@ export const LiveExample: StoryObj<{
     renderXAxis: true,
     xAxisType: 'time',
     xAxisLabel: 'X-Axis Label',
+    xAxisMin,
+    xAxisMax,
     renderYAxis: true,
     yAxisType: 'value',
     yAxisLabel: 'Y-Axis Label',
+    yAxisMin,
+    yAxisMax,
     renderTooltip: true,
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
@@ -194,7 +203,7 @@ export const LiveExample: StoryObj<{
     },
     xAxisType: {
       control: 'select',
-      options: ['time', 'value', 'category', 'log'],
+      options: ['time', 'value', 'log'],
       description: 'Type of x-axis',
       name: 'Type',
       table: {
@@ -242,7 +251,7 @@ export const LiveExample: StoryObj<{
     },
     yAxisType: {
       control: 'select',
-      options: ['time', 'value', 'category', 'log'],
+      options: ['time', 'value', 'log'],
       description: 'Type of y-axis',
       name: 'Type',
       table: {
