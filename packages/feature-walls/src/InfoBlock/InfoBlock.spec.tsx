@@ -172,7 +172,7 @@ describe('packages/feature-walls/InfoBlock', () => {
         buttonProps: undefined,
       });
 
-      expect(queryByTestId('lg-info-block_button')).not.toBeInTheDocument();
+      expect(queryByTestId(LGIDS_INFO_BLOCK.button)).not.toBeInTheDocument();
     });
   });
 

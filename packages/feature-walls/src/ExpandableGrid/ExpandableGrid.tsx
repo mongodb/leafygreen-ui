@@ -1,15 +1,6 @@
-import React, {
-  Children,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Children, forwardRef, useMemo, useState } from 'react';
 
 import Button, { Size, Variant } from '@leafygreen-ui/button';
-import { cx } from '@leafygreen-ui/emotion';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import LeafyGreenProvider, {
@@ -18,9 +9,11 @@ import LeafyGreenProvider, {
 
 import {
   childContainerStyles,
-  containerStyles,
-  getChildrenContainerStyles,
+  getContainerStyles,
+  getExpandableChildrenContainerStyles,
+  getExpandableWrapperStyles,
   getExpandButtonStyles,
+  getVisibleChildrenContainerStyles,
 } from './ExpandableGrid.styles';
 import { ExpandableGridProps } from './ExpandableGrid.types';
 
@@ -31,14 +24,15 @@ export const ExpandableGrid = forwardRef<HTMLDivElement, ExpandableGridProps>(
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
-    const containerRef = useRef<HTMLDivElement>(null);
-
     const [isExpanded, setIsExpanded] = useState(false);
-    const [containerHeight, setContainerHeight] = useState('auto');
 
     const childrenArray = Children.toArray(children);
 
-    const numberOfExpandableChildren = Children.count(children) - maxColumns;
+    // Split children into visible (first row) and expandable (remaining rows)
+    const visibleChildren = childrenArray.slice(0, maxColumns);
+    const expandableChildren = childrenArray.slice(maxColumns);
+
+    const numberOfExpandableChildren = expandableChildren.length;
     const isExpandable = numberOfExpandableChildren > 0;
 
     const expandButtonProps = useMemo(
@@ -58,68 +52,50 @@ export const ExpandableGrid = forwardRef<HTMLDivElement, ExpandableGridProps>(
       [isExpandable, isExpanded, numberOfExpandableChildren, theme],
     );
 
-    const updateHeight = useCallback(() => {
-      const containerElement = containerRef.current;
-
-      if (!containerElement) {
-        return;
-      }
-
-      const collapsedContainerHeightVal = Array.from(containerElement.children)
-        .slice(0, maxColumns)
-        .reduce(
-          (maxHeight, child) => Math.max(maxHeight, child.scrollHeight),
-          0,
-        );
-
-      setContainerHeight(
-        isExpanded
-          ? `${containerElement.scrollHeight}px`
-          : `${collapsedContainerHeightVal}px`,
-      );
-      // TODO: Remove eslint disable
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [containerRef, isExpanded]);
-
-    useEffect(() => {
-      updateHeight();
-      // TODO: Remove eslint disable
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isExpanded]);
-
-    useEffect(() => {
-      window.addEventListener('resize', updateHeight);
-      return () => window.removeEventListener('resize', updateHeight);
-    }, [isExpanded, updateHeight]);
-
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div className={cx(containerStyles, className)} ref={fwdRef} {...rest}>
+        <div className={getContainerStyles(className)} ref={fwdRef} {...rest}>
+          {/* First row - always visible */}
           <div
-            className={cx(
-              getChildrenContainerStyles({
-                height: containerHeight,
-                isExpandable,
-                repeatCount: maxColumns,
-              }),
-            )}
-            ref={containerRef}
-          >
-            {childrenArray.map((child, index) => {
-              const hidden = index >= maxColumns && !isExpanded;
-              return (
-                <div
-                  key={index}
-                  className={childContainerStyles}
-                  aria-hidden={hidden}
-                  // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
-                  inert={hidden ? '' : undefined}
-                >
-                  {child}
-                </div>
-              );
+            className={getVisibleChildrenContainerStyles({
+              repeatCount: maxColumns,
             })}
+          >
+            {visibleChildren.map((child, index) => (
+              <div key={index} className={childContainerStyles}>
+                {child}
+              </div>
+            ))}
           </div>
+
+          {/* Expandable rows */}
+          {isExpandable && (
+            <div
+              className={getExpandableWrapperStyles({
+                isExpanded,
+              })}
+              aria-hidden={!isExpanded}
+            >
+              <div
+                className={getExpandableChildrenContainerStyles({
+                  repeatCount: maxColumns,
+                })}
+              >
+                {expandableChildren.map((child, index) => (
+                  <div
+                    key={index + maxColumns}
+                    className={childContainerStyles}
+                    aria-hidden={!isExpanded}
+                    // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
+                    inert={!isExpanded ? '' : undefined}
+                  >
+                    {child}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {isExpandable && <Button {...expandButtonProps} />}
         </div>
       </LeafyGreenProvider>

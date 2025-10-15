@@ -36,9 +36,8 @@
     "@leafygreen-ui/vertical-stepper": "workspace:^"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "workspace:^",
     "@lg-tools/build": "workspace:^",
-    "@svgr/core": "^8.1.0"
+    "@lg-tools/storybook-utils": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

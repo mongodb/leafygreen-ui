@@ -1924,9 +1924,6 @@ importers:
       '@lg-tools/storybook-utils':
         specifier: workspace:^
         version: link:../../tools/storybook-utils
-      '@svgr/core':
-        specifier: ^8.1.0
-        version: 8.1.0(typescript@5.8.3)
 
   packages/form-field:
     dependencies:

@@ -131,7 +131,7 @@ export const DarkMode: StoryType<typeof ActivationSteps> = Template.bind({});
 DarkMode.args = {
   darkMode: true,
 };
-LightMode.parameters = {
+DarkMode.parameters = {
   controls: {
     exclude: [
       ...storybookExcludedControlParams,

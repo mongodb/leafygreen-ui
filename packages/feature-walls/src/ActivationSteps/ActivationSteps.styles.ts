@@ -4,7 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 const CARD_HORIZONTAL_SPACING = spacing[800];
-export const TRANSITION_DURATION = transitionDuration.slower;
+const TRANSITION_DURATION = transitionDuration.slower;
 
 export const cardStyles = css`
   overflow: hidden;

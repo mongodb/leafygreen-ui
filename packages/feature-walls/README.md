@@ -42,7 +42,7 @@ import { ActivationSteps } from `@leafygreen-ui/feature-walls`;
 
   const steps = [
     {
-      title: 'Step 1'
+      title: 'Step 1',
       description: (
         <>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur nunc mattis magna pretium, id mattis metus vestibulum. Integer cursus ex ante, ut molestie lorem vestibulum id.
@@ -60,7 +60,7 @@ import { ActivationSteps } from `@leafygreen-ui/feature-walls`;
       }
     },
     {
-      title: 'Step 2'
+      title: 'Step 2',
       description:
         'In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
       actions={
@@ -82,7 +82,7 @@ import { ActivationSteps } from `@leafygreen-ui/feature-walls`;
       }
     },
     {
-      title: 'Step 3'
+      title: 'Step 3',
       description:
         'In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis.',
       media: <img alt="Test" src="https://placehold.co/170x100" />,
@@ -376,7 +376,7 @@ import { UseCases } from `@leafygreen-ui/feature-walls`;
 | Prop         | Type             | Description                                                    | Default |
 | ------------ | ---------------- | -------------------------------------------------------------- | ------- |
 | `darkMode`   | `boolean`        | Determines if the component renders in dark mode               | `false` |
-| `maxColumns` | `2 \| 3 \| 4`    | Determines the maximum number of columns the grid should allow |         |
+| `maxColumns` | `2 \| 3 \| 4`    | Determines the maximum number of columns the grid should allow | `3`     |
 | `title`      | `string`         | Required title text                                            |         |
 | `cases`      | `Array<UseCase>` | Required array of useCase objects                              |         |
 

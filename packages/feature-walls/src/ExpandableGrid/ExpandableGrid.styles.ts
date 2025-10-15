@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import {
   color,
@@ -7,36 +7,57 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-export const TRANSITION_DURATION = transitionDuration.slower;
+const TRANSITION_DURATION = transitionDuration.slower;
 
-export const containerStyles = css`
+const baseContainerStyles = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: ${spacing[600]}px;
+  gap: ${spacing[400]}px;
 `;
 
-export const getChildrenContainerStyles = ({
-  height,
-  isExpandable,
-  repeatCount,
-}: {
-  height: string;
-  isExpandable: boolean;
-  repeatCount: number;
-}) => css`
-  overflow: hidden;
+export const getContainerStyles = (className?: string) =>
+  cx(baseContainerStyles, className);
+
+const getGridStyles = ({ repeatCount }: { repeatCount: number }) => css`
   display: grid;
   grid-template-columns: repeat(${repeatCount}, 1fr);
   gap: ${spacing[400]}px;
-  transition: height ${TRANSITION_DURATION}ms ease-in-out;
   width: 100%;
-  height: ${isExpandable ? height : '100%'};
+`;
+
+export const getVisibleChildrenContainerStyles = ({
+  repeatCount,
+}: {
+  repeatCount: number;
+}) => css`
+  ${getGridStyles({ repeatCount })}
 `;
 
 export const childContainerStyles = css`
   width: 100%;
   height: fit-content;
+`;
+
+export const getExpandableWrapperStyles = ({
+  isExpanded,
+}: {
+  isExpanded: boolean;
+}) => css`
+  display: grid;
+  grid-template-rows: ${isExpanded ? '1fr' : '0fr'};
+  transition: grid-template-rows ${TRANSITION_DURATION}ms ease-in-out;
+  width: 100%;
+`;
+
+export const getExpandableChildrenContainerStyles = ({
+  repeatCount,
+}: {
+  repeatCount: number;
+}) => css`
+  ${getGridStyles({ repeatCount })}
+  overflow: hidden;
+  min-height: 0;
 `;
 
 export const getExpandButtonStyles = (theme: Theme) => css`
