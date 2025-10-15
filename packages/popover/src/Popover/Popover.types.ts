@@ -344,11 +344,6 @@ export interface UseReferenceElementReturnObj {
   referenceElement: HTMLElement | null;
 
   /**
-   * Document position details of the reference element
-   */
-  referenceElDocumentPos: ElementPosition;
-
-  /**
    * Callback ref attached to placeholder span element to access the parent element
    */
   setPlaceholderElement: React.Dispatch<

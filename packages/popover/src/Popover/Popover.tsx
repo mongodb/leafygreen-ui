@@ -15,7 +15,12 @@ import {
   getWindowSafePlacementValues,
 } from '../utils/positionUtils';
 
-import { useContentNode, usePopoverProps, useReferenceElement } from './hooks';
+import {
+  useContentNode,
+  usePopoverProps,
+  useReferenceElement,
+  useReferenceElementPosition,
+} from './hooks';
 import {
   contentClassName,
   getPopoverStyles,
@@ -119,8 +124,14 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     };
     const rootProps = usePortal ? portalProps : {};
 
-    const { referenceElement, referenceElDocumentPos, setPlaceholderElement } =
-      useReferenceElement(refEl, scrollContainer);
+    const { referenceElement, setPlaceholderElement } =
+      useReferenceElement(refEl);
+
+    const referenceElDocumentPos = useReferenceElementPosition(
+      referenceElement,
+      scrollContainer,
+    );
+
     const { contentNodeRef, setContentNode } = useContentNode();
 
     const { context, elements, placement, refs, strategy, x, y } = useFloating({
