@@ -1,12 +1,6 @@
 import React, { forwardRef, Fragment } from 'react';
 import { Transition } from 'react-transition-group';
-import {
-  autoUpdate,
-  flip,
-  hide,
-  offset,
-  useFloating,
-} from '@floating-ui/react';
+import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
@@ -127,16 +121,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       useReferenceElement(refEl, scrollContainer);
     const { contentNodeRef, setContentNode } = useContentNode();
 
-    const {
-      context,
-      elements,
-      middlewareData,
-      placement,
-      refs,
-      strategy,
-      x,
-      y,
-    } = useFloating({
+    const { context, elements, placement, refs, strategy, x, y } = useFloating({
       elements: {
         reference: referenceElement,
       },
@@ -151,11 +136,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
           crossAxis: adjustOnMutation,
           fallbackAxisSideDirection: 'start',
         }),
-        hide(),
       ],
       open: active,
       placement: getFloatingPlacement(align, justify),
-      // strategy: renderMode === RenderMode.TopLayer ? 'fixed' : 'absolute',
       strategy: 'absolute',
       transform: false,
       whileElementsMounted: autoUpdate,
@@ -244,7 +227,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
                   ref={popoverRef}
                   className={getPopoverStyles({
                     className,
-                    isReferenceHidden: middlewareData.hide?.referenceHidden,
                     left: x,
                     placement: extendedPlacement,
                     popoverZIndex,

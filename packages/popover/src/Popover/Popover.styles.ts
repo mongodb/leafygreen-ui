@@ -22,9 +22,8 @@ const basePopoverStyles = css`
   overflow: visible;
   background-color: transparent;
   width: max-content;
-  visibility: visible;
 
-  transition-property: opacity, transform, overlay, visibility;
+  transition-property: opacity, transform, overlay;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
   transition-behavior: allow-discrete;
@@ -205,7 +204,6 @@ const getOpenStyles = (transformAlign: TransformAlign) => {
 
 export const getPopoverStyles = ({
   className,
-  isReferenceHidden,
   left,
   placement,
   popoverZIndex,
@@ -216,7 +214,6 @@ export const getPopoverStyles = ({
   transformAlign,
 }: {
   className?: string;
-  isReferenceHidden?: boolean;
   left: number;
   placement: ExtendedPlacement;
   popoverZIndex?: number;
@@ -236,9 +233,6 @@ export const getPopoverStyles = ({
       [css`
         z-index: ${popoverZIndex};
       `]: typeof popoverZIndex === 'number',
-      [css`
-        visibility: hidden;
-      `]: isReferenceHidden,
     },
     className,
   );
