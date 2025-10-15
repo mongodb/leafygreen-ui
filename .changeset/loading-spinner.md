@@ -9,7 +9,17 @@ Importing `Spinner` component from the package root is not recommended, since th
 
 For simple loading spinners, prefer importing the spinner directly from  `@leafygreen-ui/loading-indicator/spinner`
 
-Additionally, removes the explicit `description` prop from the spinner. To add a description to the spinner, use the `Description` component from `@leafygreen-ui/typography` directly
+Prop changes:
+- Replaces `displayOption` (and `sizeOverride`) prop with a single `size` prop. The size mapping has also been updated to reflect the Figma spec. 
+```
+Size.XSmall: 16px;
+Size.Small: 24px;
+Size.Default: 48px;
+Size.Large: 64px;
+```
+
+- Removes `baseFontSize` prop
+- Removes the explicit `description` prop. 
 ```tsx
 <div>
   <Spinner size="default" />
