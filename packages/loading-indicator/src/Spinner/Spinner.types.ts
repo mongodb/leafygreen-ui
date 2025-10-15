@@ -1,43 +1,27 @@
 import React from 'react';
 
-import { DarkModeProps } from '@leafygreen-ui/lib';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-
-export const DisplayOption = {
-  DefaultHorizontal: 'default-horizontal',
-  DefaultVertical: 'default-vertical',
-  LargeVertical: 'large-vertical',
-  XlargeVertical: 'xlarge-vertical',
-};
-
-export type DisplayOption = (typeof DisplayOption)[keyof typeof DisplayOption];
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
 export interface SpinnerProps
   extends DarkModeProps,
-    React.ComponentProps<'div'> {
+    LgIdProps,
+    React.ComponentProps<'svg'> {
   /**
-   * Determines the size or orientation of the spinner and description text
-   * @default 'default-vertical'
+   * Provide a standard `Size` enum, or a custom number in px.
    */
-  displayOption?: DisplayOption;
+  size?: Size | number;
 
   /**
-   * Description text
-   */
-  description?: string;
-
-  /**
-   * An override for the spinner animation’s size in pixels. Intended for internal use.
-   */
-  sizeOverride?: number;
-
-  /**
-   * An override for the spinner animation’s color. Intended for internal use.
+   * An override for the spinner animation’s color.
+   * Intended for internal use.
+   * @internal
    */
   colorOverride?: string;
 
   /**
-   * The base font size of the description text.
+   * Disables the spinner animation for testing
+   * @internal
    */
-  baseFontSize?: BaseFontSize;
+  disableAnimation?: boolean;
 }
