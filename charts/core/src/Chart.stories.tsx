@@ -5,8 +5,8 @@ import type { StoryObj } from '@storybook/react';
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
-import { LineProps } from './Series';
-import { makeLineData } from './testUtils';
+import { Bar, LineProps } from './Series';
+import { makeSeriesData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
   Chart,
@@ -22,15 +22,15 @@ import {
   XAxis,
   XAxisProps,
   YAxis,
-  YAxisProps,
+  YAxisProps
 } from '.';
 
 const numOfLineColors = 15;
-const lineData = makeLineData(numOfLineColors);
+const seriesData = makeSeriesData(numOfLineColors);
 
 // Dynamically calculate x-axis min/max from the generated data to avoid timezone issues
 const allXValues =
-  lineData[0]?.data
+  seriesData[0]?.data
     ?.filter(([date]) => date != null)
     .map(([date]) => new Date(date!).getTime()) ?? [];
 const xAxisMin = Math.min(...allXValues);
@@ -121,7 +121,7 @@ export const LiveExample: StoryObj<{
   thresholdLinePosition: ThresholdLineProps['position'];
 }> = {
   args: {
-    data: lineData,
+    data: seriesData,
     state: 'unset',
     horizontalGridLines: true,
     verticalGridLines: true,
@@ -666,7 +666,7 @@ export const DarkMode: StoryObj<{}> = {
           position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
           level="warning"
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -718,7 +718,7 @@ export const LoadingState: StoryObj<{}> = {
           position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
           level="warning"
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -764,7 +764,7 @@ export const OverlayState: StoryObj<{}> = {
           position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
           level="warning"
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -810,7 +810,7 @@ export const DraggingState: StoryObj<{}> = {
           position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
           level="warning"
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -865,7 +865,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
             position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
             level="warning"
           />
-          {lineData.map(({ name, data }) => (
+          {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
@@ -878,7 +878,7 @@ export const Basic: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -911,7 +911,7 @@ export const WithTooltip: StoryObj<{}> = {
     return (
       <Chart>
         <ChartTooltip />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -924,7 +924,7 @@ export const WithXAxis: StoryObj<{}> = {
     return (
       <Chart>
         <XAxis type="time" />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -937,7 +937,7 @@ export const WithXAxisWithLabel: StoryObj<{}> = {
     return (
       <Chart>
         <XAxis type="time" label="X-Axis Label" />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -950,7 +950,7 @@ export const WithYAxis: StoryObj<{}> = {
     return (
       <Chart>
         <YAxis type="value" />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -963,7 +963,7 @@ export const WithYAxisWithLabel: StoryObj<{}> = {
     return (
       <Chart>
         <YAxis type="value" label="Y-Axis Label" />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -976,7 +976,7 @@ export const WithGrid: StoryObj<{}> = {
     return (
       <Chart>
         <ChartGrid />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -989,7 +989,7 @@ export const WithVerticalGrid: StoryObj<{}> = {
     return (
       <Chart>
         <ChartGrid horizontal={false} />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1002,7 +1002,7 @@ export const WithHorizontalGrid: StoryObj<{}> = {
     return (
       <Chart>
         <ChartGrid vertical={false} />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1015,7 +1015,7 @@ export const WithHeader: StoryObj<{}> = {
     return (
       <Chart>
         <ChartHeader title="Header" />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1028,7 +1028,7 @@ export const WithHeaderAndDivider: StoryObj<{}> = {
     return (
       <Chart>
         <ChartHeader title="Header" showDivider />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1056,7 +1056,7 @@ export const WithHeaderContent: StoryObj<{}> = {
             </div>
           }
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1127,7 +1127,7 @@ export const WithHeaderTitleIcon: StoryObj<{
             </div>
           }
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1140,7 +1140,7 @@ export const WithThresholdLine: StoryObj<{}> = {
     return (
       <Chart>
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1158,7 +1158,7 @@ export const WithInfoEventMarkerPoint: StoryObj<{}> = {
           position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
           level="info"
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1176,7 +1176,7 @@ export const WithWarningEventMarkerPoint: StoryObj<{}> = {
           position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
           level="warning"
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1194,7 +1194,7 @@ export const WithInfoEventMarkerLine: StoryObj<{}> = {
           message="Event marker line message"
           level="info"
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1212,7 +1212,7 @@ export const WithWarningEventMarkerLine: StoryObj<{}> = {
           message="Event marker line message"
           level="warning"
         />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1229,7 +1229,7 @@ export const WithZoom: StoryObj<{}> = {
           yAxis: true,
         }}
       >
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1245,7 +1245,7 @@ export const WithXAxisZoom: StoryObj<{}> = {
           xAxis: true,
         }}
       >
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1261,7 +1261,7 @@ export const WithYAxisZoom: StoryObj<{}> = {
           yAxis: true,
         }}
       >
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1279,7 +1279,7 @@ export const WithZoomAndTooltip: StoryObj<{}> = {
         }}
       >
         <ChartTooltip />
-        {lineData.map(({ name, data }) => (
+        {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
@@ -1305,19 +1305,19 @@ export const SyncedByGroupIDWithTooltipSync: StoryObj<{}> = {
       >
         <Chart groupId="group1" enableGroupTooltipSync>
           <ChartTooltip />
-          {lineData.map(({ name, data }) => (
+          {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
         <Chart groupId="group1" enableGroupTooltipSync>
           <ChartTooltip />
-          {lineData.map(({ name, data }) => (
+          {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
         <Chart groupId="group1" enableGroupTooltipSync>
           <ChartTooltip />
-          {lineData.map(({ name, data }) => (
+          {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
@@ -1344,19 +1344,19 @@ export const SyncedByGroupIDWithoutTooltipSync: StoryObj<{}> = {
       >
         <Chart groupId="group1" enableGroupTooltipSync={false}>
           <ChartTooltip />
-          {lineData.map(({ name, data }) => (
+          {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
         <Chart groupId="group1" enableGroupTooltipSync={false}>
           <ChartTooltip />
-          {lineData.map(({ name, data }) => (
+          {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
         <Chart groupId="group1" enableGroupTooltipSync={false}>
           <ChartTooltip />
-          {lineData.map(({ name, data }) => (
+          {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
