@@ -1,5 +1,6 @@
 import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -183,33 +184,38 @@ export const DateInputSegment = React.forwardRef<
     // stripping leading zeros on number inputs - Thanks @matt-d-rat
     // Number inputs also don't support the `selectionStart`/`End` API
     return (
-      <input
-        {...rest}
-        aria-label={segment}
-        id={segment}
-        ref={inputRef}
-        type="text"
-        pattern={pattern}
-        role="spinbutton"
-        value={value}
-        min={min}
-        max={max}
-        placeholder={defaultPlaceholder[segment]}
-        onChange={handleChange}
-        onBlur={onBlur}
-        onKeyDown={handleKeyDown}
-        disabled={disabled}
-        data-testid="lg-date_picker_input-segment"
-        data-segment={segment}
-        className={cx(
-          baseStyles,
-          fontSizeStyles[baseFontSize],
-          segmentThemeStyles[theme],
-          segmentSizeStyles[size ?? Size.Default],
-          segmentWidthStyles[segment],
-        )}
-        autoComplete={autoComplete}
-      />
+      <>
+        <input
+          {...rest}
+          aria-label={segment}
+          id={segment}
+          ref={inputRef}
+          type="text"
+          pattern={pattern}
+          role="spinbutton"
+          value={value}
+          min={min}
+          max={max}
+          placeholder={defaultPlaceholder[segment]}
+          onChange={handleChange}
+          onBlur={onBlur}
+          onKeyDown={handleKeyDown}
+          disabled={disabled}
+          data-testid="lg-date_picker_input-segment"
+          data-segment={segment}
+          className={cx(
+            baseStyles,
+            fontSizeStyles[baseFontSize],
+            segmentThemeStyles[theme],
+            segmentSizeStyles[size ?? Size.Default],
+            segmentWidthStyles[segment],
+          )}
+          autoComplete={autoComplete}
+        />
+        <VisuallyHidden aria-live="polite" aria-atomic="true">
+          {value && `${segment} ${value}`}
+        </VisuallyHidden>
+      </>
     );
   },
 );
