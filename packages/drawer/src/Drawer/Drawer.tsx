@@ -1,17 +1,18 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import {
   useIdAllocator,
   useIsomorphicLayoutEffect,
   useMergeRefs,
 } from '@leafygreen-ui/hooks';
-import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { queryFirstFocusableElement } from '@leafygreen-ui/lib';
 import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { Position, useResizable } from '@leafygreen-ui/resizable';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -135,7 +136,58 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
-    // Enables resizable functionality if the drawer is resizable, embedded and open.
+    const previouslyFocusedRef = useRef<HTMLElement | null>(null);
+    const hasHandledFocusRef = useRef<boolean>(false);
+
+    /**
+     * Focuses the first focusable element in the drawer when the drawer is opened.
+     * Also handles restoring focus when the drawer is closed.
+     *
+     * This is only necessary for embedded drawers. Overlay drawers use the native focus behavior of the dialog element.
+     */
+    useIsomorphicLayoutEffect(() => {
+      if (isOverlay) return;
+
+      if (open && !hasHandledFocusRef.current) {
+        // Store the currently focused element when opening (only once per open session)
+        previouslyFocusedRef.current = document.activeElement as HTMLElement;
+        hasHandledFocusRef.current = true;
+
+        if (ref.current === null) {
+          return;
+        }
+
+        // Find and focus the first focusable element in the drawer
+        const firstFocusableElement = queryFirstFocusableElement(ref.current);
+        firstFocusableElement?.focus();
+      } else if (!open && hasHandledFocusRef.current) {
+        // Check if the current focus is not in the drawer
+        // This means the user has navigated away from the drawer, like the toolbar, and we should not restore focus.
+        if (!ref.current?.contains(document.activeElement)) {
+          hasHandledFocusRef.current = false;
+          previouslyFocusedRef.current = null;
+          return;
+        }
+
+        // Restore focus when closing (only if we had handled focus during this session)
+        if (previouslyFocusedRef.current) {
+          // Check if the previously focused element is still in the DOM
+          if (document.contains(previouslyFocusedRef.current)) {
+            previouslyFocusedRef.current.focus();
+          } else {
+            // If the previously focused element is no longer in the DOM, focus the body
+            // This mimics the behavior of the native HTML Dialog element
+            document.body.focus();
+          }
+          previouslyFocusedRef.current = null; // Clear the ref
+        }
+        hasHandledFocusRef.current = false; // Reset for next open session
+      }
+    }, [isDrawerOpen, isOverlay, open]);
+
+    /**
+     * Enables resizable functionality if the drawer is resizable, embedded and open.
+     */
     const {
       resizableRef,
       size: drawerSize,
