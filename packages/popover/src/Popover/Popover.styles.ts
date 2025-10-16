@@ -9,6 +9,11 @@ import { ExtendedPlacement, TransformAlign } from './Popover.types';
 const TRANSFORM_INITIAL_SCALE = 0.8;
 export const TRANSITION_DURATION = transitionDuration.default;
 
+export const popoverCSSProperties = {
+  maxHeight: '--lg-popover-max_height',
+  maxWidth: '--lg-popover-max_width',
+} as const;
+
 export const contentClassName = createUniqueClassName('popover-content');
 
 export const hiddenPlaceholderStyle = css`
@@ -47,10 +52,13 @@ const getPositionStyles = ({
   left: number;
   position: 'absolute' | 'fixed';
   top: number;
+  /** The full CSS value string (incl. "px") */
 }) => css`
   left: ${left}px;
   position: ${position};
   top: ${top}px;
+  max-height: var(${popoverCSSProperties.maxHeight}, unset);
+  max-width: var(${popoverCSSProperties.maxWidth}, unset);
 `;
 
 const transformOriginStyles: Record<ExtendedPlacement, string> = {

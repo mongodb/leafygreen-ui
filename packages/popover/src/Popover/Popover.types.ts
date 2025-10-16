@@ -306,6 +306,24 @@ export type PopoverProps = {
   justify?: Justify;
 
   /**
+   * Restricts the height of the popover.
+   * If the `maxHeight` provided is _greater than_ the available space above or below the referent element,
+   * the height will be restricted to the available space (i.e. the popover will not overflow the viewport)
+   *
+   * @default undefined
+   */
+  maxHeight?: number;
+
+  /**
+   * Restricts the width of the popover.
+   * If the `maxWidth` provided is _greater than_ the available space left or right of the referent element,
+   * the width will be restricted to the available space (i.e. the popover will not overflow the viewport)
+   *
+   * @default undefined
+   */
+  maxWidth?: number;
+
+  /**
    * Click event handler passed to the root div element within the portal container.
    */
   onClick?: React.MouseEventHandler;
