@@ -207,6 +207,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       whileElementsMounted: autoUpdate,
     });
 
+    console.log('Rendering popover');
     const popoverRef = useMergeRefs<HTMLDivElement>([refs.setFloating, fwdRef]);
 
     const { align: windowSafeAlign, justify: windowSafeJustify } =
