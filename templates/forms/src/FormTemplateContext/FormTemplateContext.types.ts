@@ -5,7 +5,7 @@ export type FieldDetails =
 
 export interface UniversalFieldProperties {
   // Set to true if the field is required
-  required: boolean; // Default false
+  required?: boolean; // Default false
 
   // The label to display for the field.
   label: string; // No default
@@ -38,6 +38,9 @@ export interface StringFieldProperties extends UniversalFieldProperties {
 
   // The current input value
   value: string; // No default
+
+  // The default value for the input
+  defaultValue?: string;
 }
 
 export interface OptionProperties {
@@ -85,16 +88,20 @@ export type FieldProperties =
   | SingleSelectFieldProperties
   | MultiSelectFieldProperties;
 
+export type InternalFieldProperties = 'value' | 'valid';
+
 export type FieldMap = Map<string, FieldProperties>; // String is the field name
 
 export interface ProviderValue {
-  fieldProperties: FieldMap;
-  invalidFields: Array<string>;
+  fields: {
+    fieldProperties: FieldMap;
+    invalidFields: Array<string>;
+  };
   addField: (
     name: string,
     value: Omit<FieldProperties, 'valid'> & { valid?: boolean },
-  ) => FieldMap;
-  removeField: (name: string) => FieldMap;
-  setFieldValue: (name: string, value: any) => FieldMap;
-  clearFormValues: () => FieldMap;
+  ) => void;
+  removeField: (name: string) => void;
+  setFieldValue: (name: string, value: any) => void;
+  clearFormValues: () => void;
 }

@@ -4,65 +4,18 @@
 import React from 'react';
 import { Modal } from '@leafygreen-ui/modal';
 import { ModalFormTemplatePassthroughProps } from './ModalFormTemplate.types';
-import {
-  StringFieldProperties,
-  stringInputTypes,
-  singleSelectTypes,
-  multiSelectTypes,
-  FieldProperties,
-  SingleSelectFieldProperties,
-  MultiSelectFieldProperties,
-} from '../../FormTemplateContext/FormTemplateContext.types';
 import { useFormTemplateContext } from '../../FormTemplateContext/FormTemplateContext';
-import TextInput from '@leafygreen-ui/text-input';
 import FormFooter from '@leafygreen-ui/form-footer';
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
-
-interface StringInputFieldViewProps extends StringFieldProperties {
-  name: string;
-}
-
-function StringInputFieldView({
-  type,
-  label,
-  name,
-  value,
-  required,
-}: StringInputFieldViewProps) {
-  const { setFieldValue } = useFormTemplateContext();
-
-  if (type === 'textarea') {
-    return null; // TODO: Implement TextArea component
-  }
-
-  return (
-    <TextInput
-      type={type}
-      label={label}
-      value={value}
-      required={required}
-      onChange={({ target }) => setFieldValue(name, target.value)}
-    />
-  );
-}
-
-const isStringInput = (
-  properties: FieldProperties,
-): properties is StringFieldProperties =>
-  stringInputTypes.includes(properties.type as any);
-
-const isSingleSelect = (
-  properties: FieldProperties,
-): properties is SingleSelectFieldProperties =>
-  singleSelectTypes.includes(properties.type as any);
-
-const isMultiSelect = (
-  properties: FieldProperties,
-): properties is MultiSelectFieldProperties =>
-  multiSelectTypes.includes(properties.type as any);
+import {
+  isStringInput,
+  isSingleSelect,
+  isMultiSelect,
+} from '../../Field/fieldTypeGuards';
+import StringInputFieldView from './ModalStringInputFieldView';
 
 const isPromise = (value: any): value is Promise<any> =>
   value instanceof Promise;
@@ -71,8 +24,8 @@ const ModalFormTemplateView = React.forwardRef<
   HTMLDialogElement,
   ModalFormTemplatePassthroughProps
 >(({ children, open, setOpen, onSubmit, title, onClose }, ref) => {
-  const { fieldProperties, clearFormValues, invalidFields } =
-    useFormTemplateContext();
+  const { fields, clearFormValues } = useFormTemplateContext();
+  const { fieldProperties, invalidFields } = fields;
   const [isLoading, setIsLoading] = React.useState(false);
 
   const displayFields: Array<React.ReactNode> = [];
@@ -89,6 +42,7 @@ const ModalFormTemplateView = React.forwardRef<
       // Handle Multi Select
     }
   });
+  console.log('invalidFields', invalidFields);
 
   function closeModal() {
     setOpen(false);

@@ -1,13 +1,12 @@
 import React, { createContext, useCallback, useContext } from 'react';
-import {
-  ProviderValue,
-  FieldProperties,
-  FieldMap,
-} from './FormTemplateContext.types';
+import { ProviderValue, FieldProperties } from './FormTemplateContext.types';
+import { isStringInput } from '../Field/fieldTypeGuards';
 
 const FormTemplateContext = createContext<ProviderValue>({
-  invalidFields: [],
-  fieldProperties: new Map(),
+  fields: {
+    invalidFields: [],
+    fieldProperties: new Map(),
+  },
   addField: () => new Map(),
   removeField: () => new Map(),
   setFieldValue: () => new Map(),
@@ -33,119 +32,133 @@ interface FormTemplateProviderProps {
 export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
   children,
 }) => {
-  const [fieldProperties, setFieldProperties] = React.useState<FieldMap>(
-    new Map(),
-  );
-  const [invalidFields, setInvalidFields] = React.useState<Array<string>>([]);
+  const [fields, setFields] = React.useState<ProviderValue['fields']>({
+    fieldProperties: new Map(),
+    invalidFields: [],
+  });
 
-  function addInvalidField(name: string) {
-    if (!invalidFields.includes(name)) {
-      setInvalidFields([...invalidFields, name]);
+  // Returns an array that omits the string that's passed to the function
+  function removeStringFromArray(str: string, arr: Array<string>) {
+    const newArray = [...arr];
+    const index = newArray.indexOf(str);
+
+    if (index > -1) {
+      newArray.splice(index, 1);
     }
-  }
 
-  function removeInvalidField(name: string) {
-    if (invalidFields.includes(name)) {
-      const newInvalidFields = [...invalidFields];
-      const index = newInvalidFields.indexOf(name);
-
-      if (index > -1) {
-        newInvalidFields.splice(index, 1);
-      }
-
-      setInvalidFields(newInvalidFields);
-    }
+    return newArray;
   }
 
   const providerValue: ProviderValue = {
-    fieldProperties,
-    invalidFields,
+    fields,
 
-    addField: (name, value) => {
-      console.log('addField', name, value);
+    addField: (name, properties) => {
+      // console.log('addField', name, properties);
 
-      const completeFieldProperties = {
-        ...value,
-        valid: value.valid ?? !value.required,
-      } as FieldProperties;
+      setFields(current => {
+        const completeFieldProperties = {
+          ...properties, // TODO: Handle default values here
+          valid: properties.valid ?? !properties.required,
+        } as FieldProperties;
 
-      if (!completeFieldProperties.valid) {
-        addInvalidField(name);
-      }
+        current.fieldProperties.set(name, completeFieldProperties);
 
-      const newFieldMap = new Map(fieldProperties).set(
-        name,
-        completeFieldProperties,
-      );
+        const newInvalidFields = [...current.invalidFields];
 
-      setFieldProperties(newFieldMap);
+        if (!completeFieldProperties.valid) {
+          newInvalidFields.push(name);
+        }
 
-      console.log('old: ', fieldProperties);
-      console.log('new: ', newFieldMap);
-
-      return newFieldMap;
+        return {
+          fieldProperties: current.fieldProperties,
+          invalidFields: newInvalidFields,
+        };
+      });
     },
 
     removeField: name => {
-      console.log('removeField', name);
+      // console.log('removeField', name);
 
-      const newFieldMap = new Map(fieldProperties);
-      newFieldMap.delete(name);
+      setFields(current => {
+        const newInvalidFields = removeStringFromArray(
+          name,
+          current.invalidFields,
+        );
 
-      setFieldProperties(newFieldMap);
-      removeInvalidField(name);
+        current.fieldProperties.delete(name);
 
-      return newFieldMap;
+        return {
+          fieldProperties: current.fieldProperties,
+          invalidFields: newInvalidFields,
+        };
+      });
     },
 
     setFieldValue: (name, value) => {
-      console.log('setFieldValue', name, value);
+      // console.log('setFieldValue', name, value);
 
-      const newFieldMap = new Map(fieldProperties);
-      const currentFieldProperties = newFieldMap.get(name);
+      setFields(current => {
+        const currentFieldProperties = current.fieldProperties.get(name);
 
-      if (!currentFieldProperties) {
-        console.error(`Field with name ${name} does not exist`);
+        if (!currentFieldProperties) {
+          console.error(`Field with name ${name} does not exist`);
 
-        return fieldProperties;
-      }
+          return current;
+        }
 
-      currentFieldProperties.value = value;
+        currentFieldProperties.value = value;
 
-      const valid = currentFieldProperties.required
-        ? !!currentFieldProperties.value
-        : true;
+        // TODO: Add logic when validation function is supported. Must support return values of boolean | Promise<boolean>
+        const valid = currentFieldProperties.required
+          ? !!currentFieldProperties.value
+          : true;
 
-      currentFieldProperties.valid = valid;
+        let newInvalidFields = [...current.invalidFields];
 
-      if (!valid) {
-        addInvalidField(name);
-      } else {
-        removeInvalidField(name);
-      }
+        if (!valid && !newInvalidFields.includes(name)) {
+          newInvalidFields.push(name);
+        } else {
+          newInvalidFields = removeStringFromArray(name, newInvalidFields);
+        }
 
-      // TODO: Add logic when validation function is supported. Must support return values of boolean | Promise<boolean>
-      newFieldMap.set(name, currentFieldProperties);
+        currentFieldProperties.valid = valid;
 
-      setFieldProperties(newFieldMap);
+        current.fieldProperties.set(name, currentFieldProperties);
 
-      return newFieldMap;
+        return {
+          fieldProperties: current.fieldProperties,
+          invalidFields: newInvalidFields,
+        };
+      });
     },
 
     clearFormValues: () => {
       console.log('clearFormValues');
 
-      const newFieldMap = new Map(fieldProperties);
+      const newInvalidFields: Array<string> = [];
 
-      newFieldMap.forEach((properties, name) => {
-        properties.value = '';
-        properties.valid = !properties.required;
-        newFieldMap.set(name, properties);
+      setFields(current => {
+        current.fieldProperties.forEach((properties, name) => {
+          // Need to add type guard here to be able to reference .defaultValue
+          if (isStringInput(properties)) {
+            properties.value = properties.defaultValue || '';
+          } else {
+            properties.value = '';
+          }
+          properties.valid = !properties.required;
+
+          if (!properties.valid) {
+            newInvalidFields.push(name);
+          }
+
+          current.fieldProperties.set(name, properties);
+        });
+
+        return {
+          fieldProperties: current.fieldProperties,
+          invalidFields: newInvalidFields,
+        };
       });
-
-      setFieldProperties(newFieldMap);
-
-      return newFieldMap;
     },
   };
 

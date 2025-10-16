@@ -29,7 +29,6 @@ const Template: StoryFn<FormTemplateKnobProps> = ({
         setOpen={setOpen}
         title={title}
         onSubmit={() => {
-          console.log('onSubmit called');
           return new Promise(resolve => setTimeout(resolve, 2000));
         }}
         {...props}
