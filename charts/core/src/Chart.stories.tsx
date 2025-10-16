@@ -28,8 +28,13 @@ import {
 const numOfLineColors = 15;
 const lineData = makeLineData(numOfLineColors);
 
-const xAxisMin = 1704085200000;
-const xAxisMax = 1704088740000;
+// Dynamically calculate x-axis min/max from the generated data to avoid timezone issues
+const allXValues =
+  lineData[0]?.data
+    ?.filter(([date]) => date != null)
+    .map(([date]) => new Date(date!).getTime()) ?? [];
+const xAxisMin = Math.min(...allXValues);
+const xAxisMax = Math.max(...allXValues);
 const yAxisMin = 0;
 const yAxisMax = 2500;
 
