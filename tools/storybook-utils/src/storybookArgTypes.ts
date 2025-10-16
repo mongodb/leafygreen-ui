@@ -1,4 +1,4 @@
-import { InputType } from '@storybook/csf';
+import { InputType } from '@storybook/core/csf';
 
 import IntrinsicElements from './IntrinsicElements';
 
