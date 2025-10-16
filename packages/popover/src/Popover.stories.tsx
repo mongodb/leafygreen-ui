@@ -8,6 +8,7 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import { Button } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useEventListener } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import { color } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
@@ -560,5 +561,66 @@ export const MaxWidth: StoryObj<PopoverStoryProps> = {
         </tr>
       </table>
     );
+  },
+};
+
+export const MovingPopover: StoryObj<PopoverStoryProps> = {
+  render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const triggerRef = useRef<HTMLDivElement>(null);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [position, setPosition] = useState({ top: 0, left: 0 });
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEventListener(
+      'click',
+      event => {
+        const { clientX, clientY } = event;
+        const position = { top: clientY, left: clientX };
+        // @ts-ignore
+        setPosition(position);
+      },
+      {
+        dependencies: [setPosition],
+      },
+    );
+
+    return (
+      <>
+        <div
+          style={{ position: 'absolute', width: 1, height: 1, ...position }}
+          ref={triggerRef}
+        ></div>
+        <Popover
+          active
+          refEl={triggerRef}
+          dismissMode={DismissMode.Manual}
+          renderMode={RenderMode.TopLayer}
+          className={popoverStyle}
+        >
+          Popover with refEl position{' '}
+          <code>{JSON.stringify(position, null, 2)}</code>
+        </Popover>
+      </>
+    );
+  },
+  play: async () => {
+    // We'll simulate a click at coordinates {left: 200, top: 180}
+    await new Promise(r => setTimeout(r, 200)); // Let the story render
+
+    const clickX = 200;
+    const clickY = 180;
+
+    // Simulate click event on the document at (clickX, clickY)
+    // Use the 'pointerEvents' API if available, otherwise dispatch manually
+    const event = new MouseEvent('click', {
+      clientX: clickX,
+      clientY: clickY,
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+    document.dispatchEvent(event);
   },
 };
