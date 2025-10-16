@@ -2,15 +2,17 @@ import React from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
-  StoryType,
+  StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
+
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { UseCases, UseCasesProps } from '..';
 
 import { generateMockUseCases, MOCK_SECTION_TITLE } from './UseCases.utils';
 
-export default {
+const meta: StoryMetaType<typeof UseCases> = {
   title: 'Composition/FeatureWalls/UseCases',
   component: UseCases,
   parameters: {
@@ -28,6 +30,11 @@ export default {
           generateMockUseCases(6),
         ],
       },
+      decorator: (Instance, context) => (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Instance />
+        </LeafyGreenProvider>
+      ),
     },
   },
   args: {
@@ -53,6 +60,7 @@ export default {
     },
   },
 };
+export default meta;
 
 type TemplateProps = UseCasesProps & {
   numberOfUseCases: number;
@@ -67,7 +75,7 @@ LiveExample.parameters = {
   chromatic: { disableSnapshot: true },
 };
 
-export const ThreeColumn: StoryType<typeof UseCases> = Template.bind({});
+export const ThreeColumn = Template.bind({});
 ThreeColumn.args = {
   maxColumns: 3,
 };
@@ -84,7 +92,7 @@ ThreeColumn.parameters = {
   },
 };
 
-export const FourColumn: StoryType<typeof UseCases> = Template.bind({});
+export const FourColumn = Template.bind({});
 FourColumn.args = {
   maxColumns: 4,
 };

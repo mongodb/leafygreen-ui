@@ -5,6 +5,8 @@ import {
   StoryType,
 } from '@lg-tools/storybook-utils';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+
 import { generateMockTemplates, MOCK_SECTION_TITLE } from './Templates.utils';
 import { Templates } from '.';
 
@@ -20,6 +22,11 @@ export default {
       combineArgs: {
         darkMode: [false, true],
       },
+      decorator: (Instance: React.ComponentType, context?: any) => (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Instance />
+        </LeafyGreenProvider>
+      ),
     },
   },
   args: {

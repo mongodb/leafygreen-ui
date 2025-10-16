@@ -6,6 +6,7 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Description, Subtitle } from '@leafygreen-ui/typography';
 
@@ -43,6 +44,11 @@ export default {
         darkMode: [false, true],
         maxColumns: [2, 3, 4],
       },
+      decorator: (Instance: React.ComponentType, context?: any) => (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Instance />
+        </LeafyGreenProvider>
+      ),
     },
   },
   args: {

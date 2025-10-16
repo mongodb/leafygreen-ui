@@ -5,6 +5,8 @@ import {
   StoryType,
 } from '@lg-tools/storybook-utils';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+
 import { FeatureOverview } from '..';
 
 import {
@@ -25,6 +27,11 @@ export default {
       combineArgs: {
         darkMode: [false, true],
       },
+      decorator: (Instance: React.ComponentType, context?: any) => (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Instance />
+        </LeafyGreenProvider>
+      ),
     },
   },
   args: {
