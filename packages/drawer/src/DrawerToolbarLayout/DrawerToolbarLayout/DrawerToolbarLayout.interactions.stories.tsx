@@ -281,8 +281,7 @@ const playToolbarFocusManagement = async ({
   canvasElement: HTMLElement;
 }) => {
   const canvas = within(canvasElement);
-  const { getToolbarTestUtils, getCloseButtonUtils, isOpen, getDrawer } =
-    getTestUtils();
+  const { getToolbarTestUtils, isOpen, getDrawer } = getTestUtils();
   const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
   const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
   // Wait for the component to be fully rendered and find the button by test ID
@@ -298,14 +297,14 @@ const playToolbarFocusManagement = async ({
     expect(getDrawer()).toContain(document.activeElement);
   });
 
-  // Click the close button
+  // Toggle the drawer close
   userEvent.click(codeButton!);
 
   await waitFor(() => {
     expect(isOpen()).toBe(false);
   });
 
-  // Focus should return to the original toolbar button that opened the drawer
+  // Focus should remain on the toolbar button
   await waitFor(() => {
     expect(document.activeElement).toBe(codeButton);
   });
@@ -326,14 +325,6 @@ const playMainContentButtonFocusManagement = async ({
   // Verify initial state
   expect(isOpen()).toBe(false);
   expect(openCodeButton).toBeInTheDocument();
-
-  // Focus and click the "Open Code Drawer" button to open drawer
-  openCodeButton.focus();
-
-  // Verify focus is on the button - wait for focus to be applied
-  await waitFor(() => {
-    expect(document.activeElement).toBe(openCodeButton);
-  });
 
   userEvent.click(openCodeButton);
 
