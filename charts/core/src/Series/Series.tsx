@@ -11,12 +11,12 @@ export function Series<T extends ValuesOf<EChartSeriesOptions>>({
   type,
   name,
   data,
-  stylingOptions,
+  options,
 }: {
   type: T['type'];
   name: T['name'];
   data: T['data'];
-  stylingOptions: (ctx: StylingContext) => T['stylingOptions'];
+  options: (ctx: StylingContext) => T['options'];
 }) {
   const {
     chart: { addSeries, ready, removeSeries },
@@ -35,7 +35,7 @@ export function Series<T extends ValuesOf<EChartSeriesOptions>>({
         type,
         name,
         data,
-        ...stylingOptions(context),
+        ...options(context),
       });
     } else {
       removeSeries(name);
@@ -57,7 +57,7 @@ export function Series<T extends ValuesOf<EChartSeriesOptions>>({
     type,
     name,
     data,
-    stylingOptions,
+    options,
   ]);
 
   return null;

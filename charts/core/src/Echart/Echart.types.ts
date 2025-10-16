@@ -24,29 +24,29 @@ export interface StylingContext {
   seriesColor?: string;
 }
 
-// to convert an SeriesOption type of echarts into a more structured form aligned with LeafyGreen design standards,
+// to convert an SeriesOption type of echarts into a structured form more aligned with LeafyGreen design standards,
 // where the 'type', 'name', and 'data' fields are explicitly required and typed,
-// and all additional properties related to series styling are encapsulated within the 'stylingOptions' object
+// and all additional series properties encapsulated within the 'options' object
 interface DisciplinedSeriesOption<EChartType extends SeriesOption> {
   type: NonNullable<EChartType['type']>;
   name: string;
   data: NonNullable<EChartType['data']>;
-  stylingOptions: Omit<EChartType, 'type' | 'name' | 'data'>;
+  options: Omit<EChartType, 'type' | 'name' | 'data'>;
 }
 
 // all supported series options types disciplined and grouped into a single interface
 export interface EChartSeriesOptions {
   line: DisciplinedSeriesOption<LineSeriesOption>;
-  // TODO: to be leveraged in a follow-up PR that adds Bar chart support
+  // TODO: to be leveraged in a follow-up PR to add Bar chart support
   bar: DisciplinedSeriesOption<BarSeriesOption>;
 }
 
 // a disciplined substitute for SeriesOption type of echarts limited to the ones supported here
 export type EChartSeriesOption = Omit<
   ValuesOf<EChartSeriesOptions>,
-  'stylingOptions'
+  'options'
 > &
-  ValuesOf<EChartSeriesOptions>['stylingOptions'];
+  ValuesOf<EChartSeriesOptions>['options'];
 
 /**
  * TODO: This might need to be improved. `ComposeOption` appears to make most base option

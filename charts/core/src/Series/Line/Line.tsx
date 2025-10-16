@@ -8,7 +8,7 @@ export type LineProps = SeriesProps;
 
 function getDefaultLineOptions(
   stylingContext: StylingContext,
-): EChartSeriesOptions['line']['stylingOptions'] {
+): EChartSeriesOptions['line']['options'] {
   return {
     showSymbol: false,
     symbol: 'circle',
@@ -37,7 +37,7 @@ export const Line = (props: LineProps) => (
     type={'line'}
     name={props.name}
     data={props.data}
-    stylingOptions={getDefaultLineOptions}
+    options={getDefaultLineOptions}
   />
 );
 
