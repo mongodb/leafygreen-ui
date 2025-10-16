@@ -31,7 +31,7 @@ import { getLgIds } from '../utils';
 
 import {
   DEFAULT_MAX_HEIGHT,
-  DEFAULT_MAX_WIDTH,
+  DEFAULT_WIDTH,
   getDarkInLightModeMenuStyles,
   getMenuStyles,
   scrollContainerStyle,
@@ -217,6 +217,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }),
   } as const;
 
+  console.log('[menu] render');
+
   const popoverContent = (
     <MenuDescendantsProvider>
       <MenuContext.Provider
@@ -241,7 +243,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           onEntered={handlePopoverOpen}
           onExited={handlePopoverClose}
           maxHeight={maxHeight}
-          maxWidth={DEFAULT_MAX_WIDTH}
+          maxWidth={DEFAULT_WIDTH}
           ref={popoverRef}
           {...popoverProps}
         >

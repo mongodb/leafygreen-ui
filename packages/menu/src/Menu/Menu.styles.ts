@@ -16,14 +16,14 @@ export interface MenuStyleArgs {
 }
 
 export const DEFAULT_MAX_HEIGHT = 344;
-export const DEFAULT_MAX_WIDTH = 210;
+export const DEFAULT_WIDTH = 210;
 const DEFAULT_MENU_PADDING = spacing[300];
 const COMPACT_MENU_PADDING = spacing[150];
 
 export const getMenuStyles = ({ theme, variant }: MenuStyleArgs) => {
   return css`
-    width: ${DEFAULT_MAX_WIDTH}px;
-    height: var(${popoverCSSProperties.maxHeight}, ${DEFAULT_MAX_HEIGHT});
+    width: ${DEFAULT_WIDTH}px;
+    max-height: var(${popoverCSSProperties.maxHeight}, ${DEFAULT_MAX_HEIGHT});
     border-radius: ${spacing[300]}px;
     overflow: auto;
     padding: ${variant === MenuVariant.Default
