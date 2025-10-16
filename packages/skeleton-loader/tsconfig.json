@@ -18,6 +18,9 @@
   ],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
       "path": "../card"
     },
     {

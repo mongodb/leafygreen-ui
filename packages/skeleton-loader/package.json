@@ -23,6 +23,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/a11y": "workspace:^",
     "@leafygreen-ui/card": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
