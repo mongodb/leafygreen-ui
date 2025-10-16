@@ -29,7 +29,7 @@ const displayOptionToSizeMap: Record<string, string> = {
 };
 
 /**
- * Transformer function that will transform the Spinner component from v3 to v4
+ * Transformer function that will transform the Spinner component from v3 to v5
  *
  * This codemod transforms the following packages:
  * - `@leafygreen-ui/loading-indicator`

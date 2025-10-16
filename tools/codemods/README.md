@@ -324,7 +324,7 @@ import Copyable from '@leafygreen-ui/copyable';
 
 ### `loading-spinner-v5`
 
-This codemod can be used to upgrade Spinner components to v4 of `@leafygreen-ui/loading-indicator`.
+This codemod can be used to upgrade Spinner components to v5 of `@leafygreen-ui/loading-indicator`.
 
 This codemod applies to the following package:
 
