@@ -284,6 +284,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 resizerClassName: resizerProps?.className,
                 hasToolbar,
               })}
+              data-lgid={lgIds.resizer}
+              data-testid={lgIds.resizer}
             />
           )}
           <div className={getDrawerShadowStyles({ theme, displayMode })}>

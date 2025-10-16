@@ -1,8 +1,9 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import React, { useState } from 'react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { DrawerLayout } from '../DrawerLayout';
 import { DrawerStackProvider } from '../DrawerStackContext';
 import { getTestUtils } from '../testing';
 
@@ -12,6 +13,23 @@ const drawerTest = {
   content: 'Drawer content',
   title: 'Drawer title',
 } as const;
+
+const DrawerWithButton = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => setIsOpen(true);
+  return (
+    <DrawerLayout
+      isDrawerOpen={isOpen}
+      onClose={() => setIsOpen(false)}
+      displayMode={DisplayMode.Embedded}
+    >
+      <button data-testid="open-drawer-button" onClick={handleOpen}>
+        Open Drawer
+      </button>
+      <Drawer title={drawerTest.title}>{drawerTest.content}</Drawer>
+    </DrawerLayout>
+  );
+};
 
 function renderDrawer(props: Partial<DrawerProps> = {}) {
   const utils = render(
@@ -46,6 +64,45 @@ describe('packages/drawer', () => {
       const { container } = renderDrawer({ open: true });
       const results = await axe(container);
       expect(results).toHaveNoViolations();
+    });
+
+    test('focus is on the first focusable element when the drawer is opened by pressing the enter key on the open button', async () => {
+      const { getByTestId } = render(<DrawerWithButton />);
+      const { isOpen, getCloseButtonUtils } = getTestUtils();
+
+      expect(isOpen()).toBe(false);
+      const openDrawerButton = getByTestId('open-drawer-button');
+      openDrawerButton.focus();
+      userEvent.keyboard('{enter}');
+
+      await waitFor(() => {
+        expect(isOpen()).toBe(true);
+        const closeButton = getCloseButtonUtils().getButton();
+        expect(closeButton).toHaveFocus();
+      });
+    });
+
+    test('focus returns to the open button when the drawer is closed', async () => {
+      const { getByTestId } = render(<DrawerWithButton />);
+      const { isOpen, getCloseButtonUtils } = getTestUtils();
+
+      expect(isOpen()).toBe(false);
+      const openDrawerButton = getByTestId('open-drawer-button');
+      openDrawerButton.focus();
+      userEvent.keyboard('{enter}');
+
+      await waitFor(() => {
+        expect(isOpen()).toBe(true);
+        const closeButton = getCloseButtonUtils().getButton();
+        expect(closeButton).toHaveFocus();
+      });
+
+      userEvent.keyboard('{enter}');
+
+      await waitFor(() => {
+        expect(isOpen()).toBe(false);
+        expect(openDrawerButton).toHaveFocus();
+      });
     });
   });
 
