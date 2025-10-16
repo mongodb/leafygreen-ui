@@ -546,18 +546,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       return `${ariaLabel}, ${selectedText}`;
     }, [ariaLabel, ariaLabelledby, label, placeholder, selectedOption]);
 
-    /**
-     * When aria-label is provided and a value is selected, set aria-current to help screen readers
-     * announce the current selection state.
-     */
-    const ariaCurrent = useMemo(() => {
-      if (!ariaLabel || label || ariaLabelledby) {
-        return undefined;
-      }
-
-      return selectedOption !== null ? 'true' : undefined;
-    }, [ariaLabel, ariaLabelledby, label, selectedOption]);
-
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div
@@ -647,7 +635,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               onClose={onClose}
               aria-labelledby={labelId}
               aria-label={composedAriaLabel}
-              aria-current={ariaCurrent}
               aria-controls={menuId}
               aria-expanded={open}
               aria-describedby={descriptionId}
