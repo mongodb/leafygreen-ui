@@ -1712,6 +1712,9 @@ importers:
 
   packages/drawer:
     dependencies:
+      '@leafygreen-ui/a11y':
+        specifier: workspace:^
+        version: link:../a11y
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -1742,9 +1745,6 @@ importers:
       '@leafygreen-ui/resizable':
         specifier: workspace:^
         version: link:../resizable
-      '@leafygreen-ui/tabs':
-        specifier: workspace:^
-        version: link:../tabs
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens

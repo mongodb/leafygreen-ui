@@ -183,7 +183,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         }
         hasHandledFocusRef.current = false; // Reset for next open session
       }
-    }, [isDrawerOpen, isOverlay, open]);
+    }, [isOverlay, open]);
 
     /**
      * Enables resizable functionality if the drawer is resizable, embedded and open.

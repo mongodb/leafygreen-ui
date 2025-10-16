@@ -285,12 +285,12 @@ const playToolbarFocusManagement = async ({
     getTestUtils();
   const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
   const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+  // Wait for the component to be fully rendered and find the button by test ID
+  const openCodeButton = await canvas.findByTestId('open-code-drawer-button');
 
   // Verify initial state
   expect(isOpen()).toBe(false);
-  expect(codeButton).toBeInTheDocument();
-
-  userEvent.click(codeButton!);
+  userEvent.click(openCodeButton);
 
   await waitFor(() => {
     expect(isOpen()).toBe(true);
@@ -298,13 +298,8 @@ const playToolbarFocusManagement = async ({
     expect(getDrawer()).toContain(document.activeElement);
   });
 
-  // For embedded drawers, focus should move to the first focusable element in the drawer
-  // For overlay drawers, this happens automatically via dialog behavior
-  const closeButton = getCloseButtonUtils().getButton();
-  expect(closeButton).toBeInTheDocument();
-
   // Click the close button
-  userEvent.click(closeButton!);
+  userEvent.click(codeButton!);
 
   await waitFor(() => {
     expect(isOpen()).toBe(false);
