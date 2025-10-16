@@ -30,11 +30,11 @@ export const getGalleryIndicatorStyles = ({
 const baseColorSet: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
     [Variant.Default]: palette.gray.light2,
-    [Variant.BaseGreen]: palette.green.light3,
+    [Variant.BaseGreen]: palette.green.dark2,
   },
   [Theme.Dark]: {
     [Variant.Default]: palette.gray.dark2,
-    [Variant.BaseGreen]: palette.green.dark2,
+    [Variant.BaseGreen]: palette.green.light3,
   },
 };
 
