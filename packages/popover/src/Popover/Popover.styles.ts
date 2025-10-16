@@ -9,6 +9,11 @@ import { ExtendedPlacement, TransformAlign } from './Popover.types';
 const TRANSFORM_INITIAL_SCALE = 0.8;
 export const TRANSITION_DURATION = transitionDuration.default;
 
+/**
+ * CSS property names that we assign during the `size` callback of `useFloating`.
+ * This is done since the `size` middleware is run immediately and does not return values.
+ * @see https://floating-ui.com/docs/size#apply
+ */
 export const popoverCSSProperties = {
   maxHeight: '--lg-popover-max_height',
   maxWidth: '--lg-popover-max_width',
