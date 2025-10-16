@@ -53,7 +53,6 @@ describe('useModules', () => {
       '@codemirror/view',
       '@codemirror/state',
       '@codemirror/commands',
-      '@codemirror/search',
     ];
 
     expect(Object.keys(result.current.modules).sort()).toEqual(
