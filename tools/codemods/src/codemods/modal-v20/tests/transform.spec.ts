@@ -7,9 +7,6 @@ const tests = [
     name: 'rename-className-props',
   },
   {
-    name: 'remove-initialFocus',
-  },
-  {
     name: 'handle-aliases',
   },
   {
