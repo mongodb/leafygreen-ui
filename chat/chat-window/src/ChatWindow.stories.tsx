@@ -158,16 +158,24 @@ const EmptyComponent = ({ variant, ...props }: ChatWindowStoryProps) => {
   };
 
   return (
-    <LeafyGreenChatProvider variant={variant}>
-      <ChatWindow {...props}>
-        <MessageFeed>
-          {messages.map(messageFields => (
-            <MyMessage key={messageFields.id} {...messageFields} />
-          ))}
-        </MessageFeed>
-        <InputBar onMessageSend={handleMessageSend} />
-      </ChatWindow>
-    </LeafyGreenChatProvider>
+    <div
+      className={css`
+        height: 100vh;
+        width: 100vw;
+        margin: -100px;
+      `}
+    >
+      <LeafyGreenChatProvider variant={variant}>
+        <ChatWindow {...props}>
+          <MessageFeed>
+            {messages.map(messageFields => (
+              <MyMessage key={messageFields.id} {...messageFields} />
+            ))}
+          </MessageFeed>
+          <InputBar onMessageSend={handleMessageSend} />
+        </ChatWindow>
+      </LeafyGreenChatProvider>
+    </div>
   );
 };
 export const Empty: StoryObj<ChatWindowStoryProps> = {
