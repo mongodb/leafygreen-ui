@@ -34,7 +34,7 @@
     "weekstart": "^2.0.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

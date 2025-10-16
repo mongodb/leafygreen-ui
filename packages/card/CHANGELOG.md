@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 13.1.1
+
+### Patch Changes
+
+- b94ca60: Add children to Card type
+
 ## 13.1.0
 
 ### Minor Changes
