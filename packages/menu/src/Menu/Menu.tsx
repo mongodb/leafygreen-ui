@@ -217,8 +217,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }),
   } as const;
 
-  console.log('[menu] render');
-
   const popoverContent = (
     <MenuDescendantsProvider>
       <MenuContext.Provider
