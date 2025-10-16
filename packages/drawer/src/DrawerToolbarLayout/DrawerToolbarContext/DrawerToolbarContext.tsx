@@ -15,17 +15,8 @@ import {
   DrawerToolbarProviderProps,
 } from './DrawerToolbarContext.types';
 
-export const DrawerToolbarContext = createContext<DrawerToolbarContextType>({
-  openDrawer: () => {},
-  closeDrawer: () => {},
-  toggleDrawer: () => {},
-  isDrawerOpen: false,
-  getActiveDrawerContent: () => undefined,
-  shouldRenderToolbar: false,
-  visibleToolbarItems: [],
-  toolbarData: [],
-  wasToggledClosedWithToolbar: false,
-});
+export const DrawerToolbarContext =
+  createContext<DrawerToolbarContextType | null>(null);
 
 export const DrawerToolbarProvider = ({
   children,
@@ -33,8 +24,6 @@ export const DrawerToolbarProvider = ({
 }: DrawerToolbarProviderProps) => {
   const [activeDrawerId, setActiveDrawerId] = useState<DataId | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const [wasToggledClosedWithToolbar, setWasToggledClosedWithToolbar] =
-    useState<boolean>(false);
 
   const visibleToolbarItems = useMemo(() => {
     return data.filter(toolbarItem => toolbarItem.visible ?? true);
@@ -64,7 +53,6 @@ export const DrawerToolbarProvider = ({
   const openDrawer = useCallback(
     (id: DataId) => {
       const activeDrawerContent = findActiveDrawerContent(id);
-      setWasToggledClosedWithToolbar(false);
 
       if (activeDrawerContent) {
         setIsDrawerOpen(true);
@@ -84,7 +72,6 @@ export const DrawerToolbarProvider = ({
    */
   const closeDrawer = useCallback(() => {
     setIsDrawerOpen(false);
-    setWasToggledClosedWithToolbar(false);
     // Delay the removal of the content to allow the drawer to close before removing the content
     setTimeout(() => {
       setActiveDrawerId(null);
@@ -100,10 +87,8 @@ export const DrawerToolbarProvider = ({
     (id: DataId) => {
       if (isDrawerOpen && activeDrawerId === id) {
         closeDrawer();
-        setWasToggledClosedWithToolbar(true);
       } else {
         openDrawer(id);
-        setWasToggledClosedWithToolbar(false);
       }
     },
     [isDrawerOpen, activeDrawerId, closeDrawer, openDrawer],
@@ -148,7 +133,6 @@ export const DrawerToolbarProvider = ({
       shouldRenderToolbar,
       visibleToolbarItems,
       toolbarData: data,
-      wasToggledClosedWithToolbar,
     }),
     [
       openDrawer,
@@ -159,7 +143,6 @@ export const DrawerToolbarProvider = ({
       shouldRenderToolbar,
       visibleToolbarItems,
       data,
-      wasToggledClosedWithToolbar,
     ],
   );
 
@@ -172,5 +155,12 @@ export const DrawerToolbarProvider = ({
 
 export const useDrawerToolbarContext = () => {
   const context = useContext(DrawerToolbarContext);
+
+  if (!context) {
+    throw new Error(
+      'useDrawerToolbarContext must be used within a DrawerToolbarProvider',
+    );
+  }
+
   return context;
 };

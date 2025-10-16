@@ -53,11 +53,6 @@ export interface DrawerToolbarContextType {
    * An array of the toolbar items.
    */
   toolbarData: Array<LayoutData>;
-
-  /**
-   * Indicates whether the drawer was toggled closed with the toolbar. Used to manage focus management.
-   */
-  wasToggledClosedWithToolbar: boolean;
 }
 
 export interface DrawerToolbarProviderProps {
