@@ -100,7 +100,9 @@ This codemod does the following:
 
 1. Renames `className` prop to `backdropClassName`
 2. Renames `contentClassName` prop to `className`
-3. Removes `initialFocus` prop and adds guidance comment
+3. Adds guidance comment for `initialFocus` prop usage
+
+   **Note**: The `initialFocus` prop was temporarily removed in Modal v20.0.0 but has been restored in v20.2+ with enhanced functionality. The codemod now preserves the prop and adds a recommendation to use refs instead of selector strings for better type safety.
 
 ```shell
 pnpm lg codemod modal-v20 <path>
@@ -134,32 +136,34 @@ import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
 </ConfirmationModal>
 ```
 
-**After**:
+**After** (as of Modal v20.2+):
 
 ```tsx
 import Modal from '@leafygreen-ui/modal';
 import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
 
 {
-  /* TODO: Please specify autoFocus prop on the element that should receive initial focus. Alternatively, you may rely on the default focus behavior which will focus the first focusable element in the children. */
+  /* Note: The initialFocus prop now supports React refs in addition to selector strings. Consider using a ref for better type safety. */
 }
 <Modal
   open={open}
   setOpen={setOpen}
   backdropClassName="backdrop-style"
   className="modal-content"
+  initialFocus="#primary-button"
 >
   <button id="primary-button">Primary Action</button>
 </Modal>;
 
 {
-  /* TODO: Please specify autoFocus prop on the element that should receive initial focus. Alternatively, you may rely on the default focus behavior which will focus the first focusable element in the children. */
+  /* Note: The initialFocus prop now supports React refs in addition to selector strings. Consider using a ref for better type safety. */
 }
 <ConfirmationModal
   open={open}
   setOpen={setOpen}
   backdropClassName="confirmation-backdrop"
   className="confirmation-content"
+  initialFocus="#confirm-button"
   title="Confirm"
 >
   <button id="confirm-button">Confirm</button>
@@ -173,6 +177,7 @@ This codemod converts default imports to named imports for LeafyGreen UI compone
 By default, the codemod will apply for all below listed packages. Use the `--packages` flag to filter for a subset of these.
 
 - `@leafygreen-ui/badge`
+- `@leafygreen-ui/banner`
 - `@leafygreen-ui/button`
 - `@leafygreen-ui/callout`
 - `@leafygreen-ui/card`

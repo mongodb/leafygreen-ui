@@ -55,8 +55,8 @@ importers:
         specifier: workspace:^
         version: link:tools/test
       '@storybook/react':
-        specifier: ^8.5.3
-        version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+        specifier: 8.6.14
+        version: 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
       '@testing-library/react':
         specifier: ^14.0.0
         version: 14.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -103,7 +103,7 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
       storybook:
-        specifier: ^8.6.12
+        specifier: 8.6.14
         version: 8.6.14(prettier@2.8.8)
       stream:
         specifier: ^0.0.3
@@ -139,8 +139,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -158,8 +158,8 @@ importers:
   charts/colors:
     dependencies:
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -198,8 +198,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -244,8 +244,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@lg-charts/chart-card':
         specifier: workspace:^
         version: link:../chart-card
@@ -269,8 +269,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -297,8 +297,8 @@ importers:
   charts/series-provider:
     dependencies:
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -319,8 +319,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -344,8 +344,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -399,8 +399,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -481,8 +481,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -540,8 +540,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -586,8 +586,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -641,8 +641,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -696,8 +696,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -732,9 +732,15 @@ importers:
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../../packages/emotion
-      '@leafygreen-ui/leafygreen-provider':
+      '@leafygreen-ui/icon':
         specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        version: link:../../packages/icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../../packages/icon-button
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -751,6 +757,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
+      '@storybook/test':
+        specifier: ^8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   chat/message-rating:
     dependencies:
@@ -767,8 +776,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -838,8 +847,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -869,8 +878,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -916,8 +925,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -944,8 +953,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -972,8 +981,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -997,8 +1006,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1040,8 +1049,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1068,8 +1077,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1102,8 +1111,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1139,8 +1148,8 @@ importers:
         specifier: workspace:^
         version: link:../inline-definition
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1176,8 +1185,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1394,8 +1403,8 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1449,8 +1458,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1489,8 +1498,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1535,8 +1544,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1587,8 +1596,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.24.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1673,8 +1682,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1698,8 +1707,8 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
       '@storybook/react':
-        specifier: ^8.5.3
-        version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+        specifier: 8.6.14
+        version: 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
 
   packages/drawer:
     dependencies:
@@ -1719,8 +1728,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1799,8 +1808,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1836,8 +1845,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1873,8 +1882,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1913,8 +1922,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1941,8 +1950,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1981,8 +1990,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2101,8 +2110,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2132,8 +2141,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2157,8 +2166,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2188,8 +2197,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2251,8 +2260,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2265,6 +2274,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
       react-lottie-player:
         specifier: ^1.5.6
         version: 1.5.6(react@18.3.1)
@@ -2298,8 +2310,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2341,8 +2353,8 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2396,8 +2408,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2460,8 +2472,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2497,8 +2509,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2528,8 +2540,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2589,8 +2601,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2620,8 +2632,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2670,8 +2682,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2738,8 +2750,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2778,8 +2790,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2815,8 +2827,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2843,8 +2855,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2905,8 +2917,8 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2942,8 +2954,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2972,8 +2984,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3024,8 +3036,8 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3076,8 +3088,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3125,8 +3137,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3162,8 +3174,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3196,8 +3208,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3236,8 +3248,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3318,8 +3330,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3392,8 +3404,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3426,8 +3438,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3460,8 +3472,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3515,8 +3527,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3577,8 +3589,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3617,8 +3629,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3660,8 +3672,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3694,8 +3706,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-provider
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -4202,47 +4214,47 @@ importers:
         specifier: 2.3.0
         version: 2.3.0(react@18.3.1)
       '@storybook/addon-a11y':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/addon-essentials':
-        specifier: 8.6.12
-        version: 8.6.12(@types/react@18.2.23)(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(@types/react@18.2.23)(storybook@8.6.14(prettier@2.8.8))
       '@storybook/addon-interactions':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/addon-links':
-        specifier: 8.6.12
-        version: 8.6.12(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
       '@storybook/addon-mdx-gfm':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/blocks':
-        specifier: 8.6.12
-        version: 8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
       '@storybook/components':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/core-events':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/manager-api':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/preview-api':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/react':
-        specifier: 8.6.12
-        version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+        specifier: 8.6.14
+        version: 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
       '@storybook/react-webpack5':
-        specifier: 8.6.12
-        version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(esbuild@0.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+        specifier: 8.6.14
+        version: 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
       '@storybook/test':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/theming':
-        specifier: 8.6.12
-        version: 8.6.12(storybook@8.6.14(prettier@2.8.8))
+        specifier: 8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@svgr/webpack':
         specifier: 8.0.1
         version: 8.0.1(typescript@5.8.3)
@@ -4251,7 +4263,7 @@ importers:
         version: 2.1.0
       babel-loader:
         specifier: 9.2.1
-        version: 9.2.1(@babel/core@7.24.3)(webpack@5.88.0(esbuild@0.25.8))
+        version: 9.2.1(@babel/core@7.24.3)(webpack@5.88.0)
       buffer:
         specifier: 6.0.3
         version: 6.0.3
@@ -4263,7 +4275,7 @@ importers:
         version: 3.3.0
       file-loader:
         specifier: 6.2.0
-        version: 6.2.0(webpack@5.88.0(esbuild@0.25.8))
+        version: 6.2.0(webpack@5.88.0)
       glob:
         specifier: 10.3.12
         version: 10.3.12
@@ -4272,7 +4284,7 @@ importers:
         version: 4.17.21
       node-polyfill-webpack-plugin:
         specifier: ^4.1.0
-        version: 4.1.0(webpack@5.88.0(esbuild@0.25.8))
+        version: 4.1.0(webpack@5.88.0)
       os-browserify:
         specifier: 0.3.0
         version: 0.3.0
@@ -4292,7 +4304,7 @@ importers:
         specifier: ^17.0.0 || ^18.0.0
         version: 18.3.1(react@18.3.1)
       storybook:
-        specifier: ^8.6.0
+        specifier: 8.6.14
         version: 8.6.14(prettier@2.8.8)
       storybook-dark-mode:
         specifier: ^4.0.1
@@ -4302,7 +4314,7 @@ importers:
         version: 3.0.0
       string-replace-loader:
         specifier: ^3.1.0
-        version: 3.2.0(webpack@5.88.0(esbuild@0.25.8))
+        version: 3.2.0(webpack@5.88.0)
       string_decoder:
         specifier: ^1.3.0
         version: 1.3.0
@@ -4314,13 +4326,13 @@ importers:
         version: 0.11.4
       url-loader:
         specifier: 4.1.1
-        version: 4.1.1(file-loader@6.2.0(webpack@5.88.0(esbuild@0.25.8)))(webpack@5.88.0(esbuild@0.25.8))
+        version: 4.1.1(file-loader@6.2.0(webpack@5.88.0))(webpack@5.88.0)
       util:
         specifier: ^0.12.5
         version: 0.12.5
       webpack:
         specifier: 5.88.0
-        version: 5.88.0(esbuild@0.25.8)
+        version: 5.88.0
 
   tools/storybook-decorators:
     dependencies:
@@ -4346,20 +4358,20 @@ importers:
         specifier: workspace:^
         version: link:../storybook-utils
       '@storybook/react':
-        specifier: 8.6.12
-        version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+        specifier: 8.6.14
+        version: 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
       lodash:
         specifier: 4.17.21
         version: 4.17.21
 
   tools/storybook-utils:
     dependencies:
-      '@storybook/csf':
-        specifier: 0.1.13
-        version: 0.1.13
+      '@storybook/core':
+        specifier: 8.6.14
+        version: 8.6.14(prettier@2.8.8)(storybook@8.6.14(prettier@2.8.8))
       '@storybook/react':
-        specifier: 8.6.12
-        version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+        specifier: 8.6.14
+        version: 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
       glob:
         specifier: 10.3.12
         version: 10.3.12
@@ -5830,6 +5842,26 @@ packages:
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
+  '@leafygreen-ui/emotion@5.0.3':
+    resolution: {integrity: sha512-elu8af9Qh8Oy/IwqXcNKitHAQBAO4+zmHuLi0fRzY46kTwXvLYqPpJFRcySqITWLPyBcMsF56ta8yQKXghEYOA==}
+
+  '@leafygreen-ui/hooks@9.2.0':
+    resolution: {integrity: sha512-h4xgZsZhHs4GwPOC9hXxgmfIbFMsTYLyoPcUP4dG9s9CY5oDVMRuqLyN9jsrV+VZxL/z5k7MzPgh5o5HIak/Yg==}
+
+  '@leafygreen-ui/leafygreen-provider@5.0.4':
+    resolution: {integrity: sha512-VDlmjTiIqlITVhq4VKUDq8FLySWnHkTxSV2n1sxOanLNPuatOXjxsPmCkPUBXhmQKk/fBf4yQnDKOwJvkyzE6Q==}
+
+  '@leafygreen-ui/lib@15.6.2':
+    resolution: {integrity: sha512-HsjXXovBqyrXL3Y7V09g2bEidGn58AK/mfoIPMlen/hEcWlbXbefoCzXF7AQqWLhd0F/lS2XgX7+BqVUHXx2/Q==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0
+
+  '@leafygreen-ui/palette@5.0.2':
+    resolution: {integrity: sha512-+PrfGeJSv4goxm/vKpfJJDOP7t/uElj+14K8jiIyu3qR3TcFRIZ5h1VMvICTUgqvRc8W+xIZYQwsLa2XCu2lvw==}
+
+  '@leafygreen-ui/tokens@3.2.4':
+    resolution: {integrity: sha512-Bd11x/ext/vVozd/HL+AD8LbL71Z6B6VbtQ/+qLqoX8qHMsJt7VWL0CmmGs5NVHh3v5sAlfT5DYbB9uhwVM8Qw==}
+
   '@lezer/common@1.2.3':
     resolution: {integrity: sha512-w7ojc8ejBqr2REPsWxJjrMFsA/ysDCFICn8zEOR9mrqzOu2amhITYuLD8ag6XZf0CFXDrhKqw7+tW8cX66NaDA==}
 
@@ -6172,115 +6204,115 @@ packages:
     resolution: {integrity: sha512-Aa2E/7NtGagd7mVsFCrc69iZMoviR2032SBOic06sYVvptdzJlvNsSQVqLCb1Aqz7r/jodb2fnXO1gl016OcWQ==}
     engines: {node: '>= 12.13.0', npm: '>= 6.12.0'}
 
-  '@storybook/addon-a11y@8.6.12':
-    resolution: {integrity: sha512-H28zHiL8uuv29XsVNf9VjNWsCeht/l66GPYHT7aom1jh+f3fS9+sutrCGEBC/T7cnRpy8ZyuHCtihUqS+RI4pg==}
+  '@storybook/addon-a11y@8.6.14':
+    resolution: {integrity: sha512-fozv6enO9IgpWq2U8qqS8MZ21Nt+MVHiRQe3CjnCpBOejTyo/ATm690PeYYRVHVG6M/15TVePb0h3ngKQbrrzQ==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-actions@8.6.12':
-    resolution: {integrity: sha512-B5kfiRvi35oJ0NIo53CGH66H471A3XTzrfaa6SxXEJsgxxSeKScG5YeXcCvLiZfvANRQ7QDsmzPUgg0o3hdMXw==}
+  '@storybook/addon-actions@8.6.14':
+    resolution: {integrity: sha512-mDQxylxGGCQSK7tJPkD144J8jWh9IU9ziJMHfB84PKpI/V5ZgqMDnpr2bssTrUaGDqU5e1/z8KcRF+Melhs9pQ==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-backgrounds@8.6.12':
-    resolution: {integrity: sha512-lmIAma9BiiCTbJ8YfdZkXjpnAIrOUcgboLkt1f6XJ78vNEMnLNzD9gnh7Tssz1qrqvm34v9daDjIb+ggdiKp3Q==}
+  '@storybook/addon-backgrounds@8.6.14':
+    resolution: {integrity: sha512-l9xS8qWe5n4tvMwth09QxH2PmJbCctEvBAc1tjjRasAfrd69f7/uFK4WhwJAstzBTNgTc8VXI4w8ZR97i1sFbg==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-controls@8.6.12':
-    resolution: {integrity: sha512-9VSRPJWQVb9wLp21uvpxDGNctYptyUX0gbvxIWOHMH3R2DslSoq41lsC/oQ4l4zSHVdL+nq8sCTkhBxIsjKqdQ==}
+  '@storybook/addon-controls@8.6.14':
+    resolution: {integrity: sha512-IiQpkNJdiRyA4Mq9mzjZlvQugL/aE7hNgVxBBGPiIZG6wb6Ht9hNnBYpap5ZXXFKV9p2qVI0FZK445ONmAa+Cw==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-docs@8.6.12':
-    resolution: {integrity: sha512-kEezQjAf/p3SpDzLABgg4fbT48B6dkT2LiZCKTRmCrJVtuReaAr4R9MMM6Jsph6XjbIj/SvOWf3CMeOPXOs9sg==}
+  '@storybook/addon-docs@8.6.14':
+    resolution: {integrity: sha512-Obpd0OhAF99JyU5pp5ci17YmpcQtMNgqW2pTXV8jAiiipWpwO++hNDeQmLmlSXB399XjtRDOcDVkoc7rc6JzdQ==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-essentials@8.6.12':
-    resolution: {integrity: sha512-Y/7e8KFlttaNfv7q2zoHMPdX6hPXHdsuQMAjYl5NG9HOAJREu4XBy4KZpbcozRe4ApZ78rYsN/MO1EuA+bNMIA==}
+  '@storybook/addon-essentials@8.6.14':
+    resolution: {integrity: sha512-5ZZSHNaW9mXMOFkoPyc3QkoNGdJHETZydI62/OASR0lmPlJ1065TNigEo5dJddmZNn0/3bkE8eKMAzLnO5eIdA==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-highlight@8.6.12':
-    resolution: {integrity: sha512-9FITVxdoycZ+eXuAZL9ElWyML/0fPPn9UgnnAkrU7zkMi+Segq/Tx7y+WWanC5zfWZrXAuG6WTOYEXeWQdm//w==}
+  '@storybook/addon-highlight@8.6.14':
+    resolution: {integrity: sha512-4H19OJlapkofiE9tM6K/vsepf4ir9jMm9T+zw5L85blJZxhKZIbJ6FO0TCG9PDc4iPt3L6+aq5B0X29s9zicNQ==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-interactions@8.6.12':
-    resolution: {integrity: sha512-cTAJlTq6uVZBEbtwdXkXoPQ4jHOAGKQnYSezBT4pfNkdjn/FnEeaQhMBDzf14h2wr5OgBnJa6Lmd8LD9ficz4A==}
+  '@storybook/addon-interactions@8.6.14':
+    resolution: {integrity: sha512-8VmElhm2XOjh22l/dO4UmXxNOolGhNiSpBcls2pqWSraVh4a670EyYBZsHpkXqfNHo2YgKyZN3C91+9zfH79qQ==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-links@8.6.12':
-    resolution: {integrity: sha512-AfKujFHoAxhxq4yu+6NwylltS9lf5MPs1eLLXvOlwo3l7Y/c68OdxJ7j68vLQhs9H173WVYjKyjbjFxJWf/YYg==}
+  '@storybook/addon-links@8.6.14':
+    resolution: {integrity: sha512-DRlXHIyZzOruAZkxmXfVgTF+4d6K27pFcH4cUsm3KT1AXuZbr23lb5iZHpUZoG6lmU85Sru4xCEgewSTXBIe1w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.6.12
+      storybook: ^8.6.14
     peerDependenciesMeta:
       react:
         optional: true
 
-  '@storybook/addon-mdx-gfm@8.6.12':
-    resolution: {integrity: sha512-OKI5+O8xyK8axGPFwkl38NGJ6Rjf7kyhiBPxw5NuHOjOnU/FL4Pw3QmY47TT96TVws27vP3gF5+FX8lj3Dd3rQ==}
+  '@storybook/addon-mdx-gfm@8.6.14':
+    resolution: {integrity: sha512-ClfngOSwFrhc3x2dXSzfBSSbzz4VHzUs0XOg9V8fj1bgQhmPoMz9OD3vIjbnJOC33wORbC0ZpfcQPt3RGILYrA==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-measure@8.6.12':
-    resolution: {integrity: sha512-tACmwqqOvutaQSduw8SMb62wICaT1rWaHtMN3vtWXuxgDPSdJQxLP+wdVyRYMAgpxhLyIO7YRf++Hfha9RHgFg==}
+  '@storybook/addon-measure@8.6.14':
+    resolution: {integrity: sha512-1Tlyb72NX8aAqm6I6OICsUuGOP6hgnXcuFlXucyhKomPa6j3Eu2vKu561t/f0oGtAK2nO93Z70kVaEh5X+vaGw==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-outline@8.6.12':
-    resolution: {integrity: sha512-1ylwm+n1s40S91No0v9T4tCjZORu3GbnjINlyjYTDLLhQHyBQd3nWR1Y1eewU4xH4cW9SnSLcMQFS/82xHqU6A==}
+  '@storybook/addon-outline@8.6.14':
+    resolution: {integrity: sha512-CW857JvN6OxGWElqjlzJO2S69DHf+xO3WsEfT5mT3ZtIjmsvRDukdWfDU9bIYUFyA2lFvYjncBGjbK+I91XR7w==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-toolbars@8.6.12':
-    resolution: {integrity: sha512-HEcSzo1DyFtIu5/ikVOmh5h85C1IvK9iFKSzBR6ice33zBOaehVJK+Z5f487MOXxPsZ63uvWUytwPyViGInj+g==}
+  '@storybook/addon-toolbars@8.6.14':
+    resolution: {integrity: sha512-W/wEXT8h3VyZTVfWK/84BAcjAxTdtRiAkT2KAN0nbSHxxB5KEM1MjKpKu2upyzzMa3EywITqbfy4dP6lpkVTwQ==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/addon-viewport@8.6.12':
-    resolution: {integrity: sha512-EXK2LArAnABsPP0leJKy78L/lbMWow+EIJfytEP5fHaW4EhMR6h7Hzaqzre6U0IMMr/jVFa1ci+m0PJ0eQc2bw==}
+  '@storybook/addon-viewport@8.6.14':
+    resolution: {integrity: sha512-gNzVQbMqRC+/4uQTPI2ZrWuRHGquTMZpdgB9DrD88VTEjNudP+J6r8myLfr2VvGksBbUMHkGHMXHuIhrBEnXYA==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/blocks@8.6.12':
-    resolution: {integrity: sha512-DohlTq6HM1jDbHYiXL4ZvZ00VkhpUp5uftzj/CZDLY1fYHRjqtaTwWm2/OpceivMA8zDitLcq5atEZN+f+siTg==}
+  '@storybook/blocks@8.6.14':
+    resolution: {integrity: sha512-rBMHAfA39AGHgkrDze4RmsnQTMw1ND5fGWobr9pDcJdnDKWQWNRD7Nrlxj0gFlN3n4D9lEZhWGdFrCbku7FVAQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      storybook: ^8.6.12
+      storybook: ^8.6.14
     peerDependenciesMeta:
       react:
         optional: true
       react-dom:
         optional: true
 
-  '@storybook/builder-webpack5@8.6.12':
-    resolution: {integrity: sha512-Z7RsQ/1+HbxdbM69JrEFcTL+pnVKUTMmeURMn5/eOvYTGjBtM18vbQTj0LjCUDIjC+v9U+uX8ZJEUVxFbGcxBw==}
+  '@storybook/builder-webpack5@8.6.14':
+    resolution: {integrity: sha512-YZYAqc6NBKoMTKZpjxnkMch6zDtMkBZdS/yaji1+wJX2QPFBwTbSh7SpeBxDp1S11gXSAJ4f1btUWeqSqo8nJA==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
       typescript: '*'
     peerDependenciesMeta:
       typescript:
         optional: true
 
-  '@storybook/components@8.6.12':
-    resolution: {integrity: sha512-FiaE8xvCdvKC2arYusgtlDNZ77b8ysr8njAYQZwwaIHjy27TbR2tEpLDCmUwSbANNmivtc/xGEiDDwcNppMWlQ==}
+  '@storybook/components@8.6.14':
+    resolution: {integrity: sha512-HNR2mC5I4Z5ek8kTrVZlIY/B8gJGs5b3XdZPBPBopTIN6U/YHXiDyOjY3JlaS4fSG1fVhp/Qp1TpMn1w/9m1pw==}
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
-  '@storybook/core-events@8.6.12':
-    resolution: {integrity: sha512-j2MUlSfYOhTsjlruRWTqSVwYreJGFIsWeqHFAhCdtmXe3qpFBM/LuxTKuaM1uWvs6vEAyGEzDw8+DXwuO6uISg==}
+  '@storybook/core-events@8.6.14':
+    resolution: {integrity: sha512-RrJ95u3HuIE4Nk8VmZP0tc/u0vYoE2v9fYlMw6K2GUSExzKDITs3voy6WMIY7Q3qbQun8XUXVlmqkuFzTEy/pA==}
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
-  '@storybook/core-webpack@8.6.12':
-    resolution: {integrity: sha512-TiE+KOm0hxb/p0JxeGHKxqTNX+xnTOFsBh6uloCSuvodutJ5pR/XpxKVxwo1gtSc0Uq3qpgbMhW6qYlYQetnKA==}
+  '@storybook/core-webpack@8.6.14':
+    resolution: {integrity: sha512-iG7r8osNKabSGBbuJuSeMWKbU+ilt5PvzTYkClcYaagla/DliXkXvfywA6jOugVk/Cpx+c6tVKlPfjLcaQHwmw==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
   '@storybook/core@8.6.14':
     resolution: {integrity: sha512-1P/w4FSNRqP8j3JQBOi3yGt8PVOgSRbP66Ok520T78eJBeqx9ukCfl912PQZ7SPbW3TIunBwLXMZOjZwBB/JmA==}
@@ -6290,10 +6322,10 @@ packages:
       prettier:
         optional: true
 
-  '@storybook/csf-plugin@8.6.12':
-    resolution: {integrity: sha512-6s8CnP1aoKPb3XtC0jRLUp8M5vTA8RhGAwQDKUsFpCC7g89JR9CaKs9FY2ZSzsNbjR15uASi7b3K8BzeYumYQg==}
+  '@storybook/csf-plugin@8.6.14':
+    resolution: {integrity: sha512-dErtc9teAuN+eelN8FojzFE635xlq9cNGGGEu0WEmMUQ4iJ8pingvBO1N8X3scz4Ry7KnxX++NNf3J3gpxS8qQ==}
     peerDependencies:
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
   '@storybook/csf@0.1.12':
     resolution: {integrity: sha512-9/exVhabisyIVL0VxTCxo01Tdm8wefIXKXfltAPTSr8cbLn5JAxGQ6QV3mjdecLGEOucfoVhAKtJfVHxEK1iqw==}
@@ -6316,35 +6348,30 @@ packages:
     peerDependencies:
       storybook: ^8.5.3
 
-  '@storybook/instrumenter@8.6.12':
-    resolution: {integrity: sha512-VK5fYAF8jMwWP/u3YsmSwKGh+FeSY8WZn78flzRUwirp2Eg1WWjsqPRubAk7yTpcqcC/km9YMF3KbqfzRv2s/A==}
-    peerDependencies:
-      storybook: ^8.6.12
-
   '@storybook/instrumenter@8.6.14':
     resolution: {integrity: sha512-iG4MlWCcz1L7Yu8AwgsnfVAmMbvyRSk700Mfy2g4c8y5O+Cv1ejshE1LBBsCwHgkuqU0H4R0qu4g23+6UnUemQ==}
     peerDependencies:
       storybook: ^8.6.14
 
-  '@storybook/manager-api@8.6.12':
-    resolution: {integrity: sha512-O0SpISeJLNTQvhSBOsWzzkCgs8vCjOq1578rwqHlC6jWWm4QmtfdyXqnv7rR1Hk08kQ+Dzqh0uhwHx0nfwy4nQ==}
+  '@storybook/manager-api@8.6.14':
+    resolution: {integrity: sha512-ez0Zihuy17udLbfHZQXkGqwtep0mSGgHcNzGN7iZrMP1m+VmNo+7aGCJJdvXi7+iU3yq8weXSQFWg5DqWgLS7g==}
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
-  '@storybook/preset-react-webpack@8.6.12':
-    resolution: {integrity: sha512-aCCHjR/jsVPVThRH7nK70wS0Od44M6hqkkakg3xr7LETZZGj99heen6t4VHvz8gcQYT9l6R/oZwCl7f/PQ3ZBQ==}
+  '@storybook/preset-react-webpack@8.6.14':
+    resolution: {integrity: sha512-M7Q6ErNx7N2hQorTz0OLa3YV8nc8OcvkDlCxqqnkHPGQNEIWEpeDvq3wn2OvZlrHDpchyuiquGXZ8aztVtBP2g==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.6.12
+      storybook: ^8.6.14
       typescript: '*'
     peerDependenciesMeta:
       typescript:
         optional: true
 
-  '@storybook/preview-api@8.6.12':
-    resolution: {integrity: sha512-84FE3Hrs0AYKHqpDZOwx1S/ffOfxBdL65lhCoeI8GoWwCkzwa9zEP3kvXBo/BnEDO7nAfxvMhjASTZXbKRJh5Q==}
+  '@storybook/preview-api@8.6.14':
+    resolution: {integrity: sha512-2GhcCd4dNMrnD7eooEfvbfL4I83qAqEyO0CO7JQAmIO6Rxb9BsOLLI/GD5HkvQB73ArTJ+PT50rfaO820IExOQ==}
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
@@ -6354,33 +6381,33 @@ packages:
       typescript: ~5.8.0
       webpack: '>= 4'
 
-  '@storybook/react-dom-shim@8.6.12':
-    resolution: {integrity: sha512-51QvoimkBzYs8s3rCYnY5h0cFqLz/Mh0vRcughwYaXckWzDBV8l67WBO5Xf5nBsukCbWyqBVPpEQLww8s7mrLA==}
+  '@storybook/react-dom-shim@8.6.14':
+    resolution: {integrity: sha512-0hixr3dOy3f3M+HBofp3jtMQMS+sqzjKNgl7Arfuj3fvjmyXOks/yGjDImySR4imPtEllvPZfhiQNlejheaInw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.6.12
+      storybook: ^8.6.14
 
-  '@storybook/react-webpack5@8.6.12':
-    resolution: {integrity: sha512-wZOjPQ00gu85iQoKgwz5uvM3+bhXrQDVR0ppVAj7vVy6cvLEsJXmqNLHbXPCZuKPmvwzYr1QkslMLCIkF8OGdA==}
+  '@storybook/react-webpack5@8.6.14':
+    resolution: {integrity: sha512-ka0q9tQBLruhO38sybP/MkZzejqAltce7HJTJ2KKbUYUlbvuG7m56tBX7DVC5JaImbsO3b8fqOrKH7gRt4KYrQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.6.12
+      storybook: ^8.6.14
       typescript: ~5.8.0
     peerDependenciesMeta:
       typescript:
         optional: true
 
-  '@storybook/react@8.6.12':
-    resolution: {integrity: sha512-NzxlHLA5DkDgZM/dMwTYinuzRs6rsUPmlqP+NIv6YaciQ4NGnTYyOC7R/SqI6HHFm8ZZ5eMYvpfiFmhZ9rU+rQ==}
+  '@storybook/react@8.6.14':
+    resolution: {integrity: sha512-BOepx5bBFwl/CPI+F+LnmMmsG1wQYmrX/UQXgUbHQUU9Tj7E2ndTnNbpIuSLc8IrM03ru+DfwSg1Co3cxWtT+g==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@storybook/test': 8.6.12
+      '@storybook/test': 8.6.14
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.6.12
+      storybook: ^8.6.14
       typescript: ~5.8.0
     peerDependenciesMeta:
       '@storybook/test':
@@ -6393,20 +6420,10 @@ packages:
     peerDependencies:
       storybook: ^8.5.3
 
-  '@storybook/test@8.6.12':
-    resolution: {integrity: sha512-0BK1Eg+VD0lNMB1BtxqHE3tP9FdkUmohtvWG7cq6lWvMrbCmAmh3VWai3RMCCDOukPFpjabOr8BBRLVvhNpv2w==}
-    peerDependencies:
-      storybook: ^8.6.12
-
   '@storybook/test@8.6.14':
     resolution: {integrity: sha512-GkPNBbbZmz+XRdrhMtkxPotCLOQ1BaGNp/gFZYdGDk2KmUWBKmvc5JxxOhtoXM2703IzNFlQHSSNnhrDZYuLlw==}
     peerDependencies:
       storybook: ^8.6.14
-
-  '@storybook/theming@8.6.12':
-    resolution: {integrity: sha512-6VjZg8HJ2Op7+KV7ihJpYrDnFtd9D1jrQnUS8LckcpuBXrIEbaut5+34ObY8ssQnSqkk2GwIZBBBQYQBCVvkOw==}
-    peerDependencies:
-      storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
   '@storybook/theming@8.6.14':
     resolution: {integrity: sha512-r4y+LsiB37V5hzpQo+BM10PaCsp7YlZ0YcZzQP1OCkPlYXmUAFy2VvDKaFRpD8IeNPKug2u4iFm/laDEbs03dg==}
@@ -14083,6 +14100,93 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
+  '@leafygreen-ui/emotion@5.0.3(@babel/core@7.24.3)':
+    dependencies:
+      '@emotion/css': 11.9.0(@babel/core@7.24.3)
+      '@emotion/server': 11.11.0(@emotion/css@11.9.0(@babel/core@7.24.3))
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
+  '@leafygreen-ui/emotion@5.0.3(@babel/core@7.28.0)':
+    dependencies:
+      '@emotion/css': 11.9.0(@babel/core@7.28.0)
+      '@emotion/server': 11.11.0(@emotion/css@11.9.0(@babel/core@7.28.0))
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
+  '@leafygreen-ui/hooks@9.2.0(@babel/core@7.24.3)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.24.3)(react@18.3.1)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@leafygreen-ui/hooks@9.2.0(@babel/core@7.28.0)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.28.0)(react@18.3.1)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@leafygreen-ui/leafygreen-provider@5.0.4(@babel/core@7.24.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/hooks': 9.2.0(@babel/core@7.24.3)(react@18.3.1)
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+      - supports-color
+
+  '@leafygreen-ui/leafygreen-provider@5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/hooks': 9.2.0(@babel/core@7.28.0)(react@18.3.1)
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+      - supports-color
+
+  '@leafygreen-ui/lib@15.6.2(react@18.3.1)':
+    dependencies:
+      lodash: 4.17.21
+      react: 18.3.1
+
+  '@leafygreen-ui/palette@5.0.2': {}
+
+  '@leafygreen-ui/tokens@3.2.4(@babel/core@7.24.3)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.3(@babel/core@7.24.3)
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      '@leafygreen-ui/palette': 5.0.2
+      polished: 4.3.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
+  '@leafygreen-ui/tokens@3.2.4(@babel/core@7.28.0)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.3(@babel/core@7.28.0)
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      '@leafygreen-ui/palette': 5.0.2
+      polished: 4.3.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
   '@lezer/common@1.2.3': {}
 
   '@lezer/cpp@1.1.3':
@@ -14417,15 +14521,15 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@storybook/addon-a11y@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-a11y@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
-      '@storybook/addon-highlight': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-highlight': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/global': 5.0.0
-      '@storybook/test': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/test': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       axe-core: 4.10.3
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/addon-actions@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-actions@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/global': 5.0.0
       '@types/uuid': 9.0.8
@@ -14434,26 +14538,26 @@ snapshots:
       storybook: 8.6.14(prettier@2.8.8)
       uuid: 9.0.1
 
-  '@storybook/addon-backgrounds@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-backgrounds@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/global': 5.0.0
       memoizerific: 1.11.3
       storybook: 8.6.14(prettier@2.8.8)
       ts-dedent: 2.2.0
 
-  '@storybook/addon-controls@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-controls@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/global': 5.0.0
       dequal: 2.0.3
       storybook: 8.6.14(prettier@2.8.8)
       ts-dedent: 2.2.0
 
-  '@storybook/addon-docs@8.6.12(@types/react@18.2.23)(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-docs@8.6.14(@types/react@18.2.23)(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@mdx-js/react': 3.1.0(@types/react@18.2.23)(react@18.3.1)
-      '@storybook/blocks': 8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/csf-plugin': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/react-dom-shim': 8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/blocks': 8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/csf-plugin': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/react-dom-shim': 8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       storybook: 8.6.14(prettier@2.8.8)
@@ -14461,37 +14565,37 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@storybook/addon-essentials@8.6.12(@types/react@18.2.23)(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-essentials@8.6.14(@types/react@18.2.23)(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
-      '@storybook/addon-actions': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/addon-backgrounds': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/addon-controls': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/addon-docs': 8.6.12(@types/react@18.2.23)(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/addon-highlight': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/addon-measure': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/addon-outline': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/addon-toolbars': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/addon-viewport': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-actions': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-backgrounds': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-controls': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-docs': 8.6.14(@types/react@18.2.23)(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-highlight': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-measure': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-outline': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-toolbars': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/addon-viewport': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       storybook: 8.6.14(prettier@2.8.8)
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - '@types/react'
 
-  '@storybook/addon-highlight@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-highlight@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/global': 5.0.0
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/addon-interactions@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-interactions@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/global': 5.0.0
-      '@storybook/instrumenter': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/test': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/instrumenter': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/test': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       polished: 4.3.1
       storybook: 8.6.14(prettier@2.8.8)
       ts-dedent: 2.2.0
 
-  '@storybook/addon-links@8.6.12(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-links@8.6.14(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/global': 5.0.0
       storybook: 8.6.14(prettier@2.8.8)
@@ -14499,7 +14603,7 @@ snapshots:
     optionalDependencies:
       react: 18.3.1
 
-  '@storybook/addon-mdx-gfm@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-mdx-gfm@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       remark-gfm: 4.0.1
       storybook: 8.6.14(prettier@2.8.8)
@@ -14507,28 +14611,28 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/addon-measure@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-measure@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/global': 5.0.0
       storybook: 8.6.14(prettier@2.8.8)
       tiny-invariant: 1.3.3
 
-  '@storybook/addon-outline@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-outline@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/global': 5.0.0
       storybook: 8.6.14(prettier@2.8.8)
       ts-dedent: 2.2.0
 
-  '@storybook/addon-toolbars@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-toolbars@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/addon-viewport@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/addon-viewport@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       memoizerific: 1.11.3
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/blocks@8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/blocks@8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/icons': 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       storybook: 8.6.14(prettier@2.8.8)
@@ -14537,31 +14641,31 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@storybook/builder-webpack5@8.6.12(esbuild@0.25.8)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
+  '@storybook/builder-webpack5@8.6.14(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
     dependencies:
-      '@storybook/core-webpack': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/core-webpack': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@types/semver': 7.7.0
       browser-assert: 1.2.1
       case-sensitive-paths-webpack-plugin: 2.4.0
       cjs-module-lexer: 1.4.3
       constants-browserify: 1.0.0
-      css-loader: 6.11.0(webpack@5.88.0(esbuild@0.25.8))
+      css-loader: 6.11.0(webpack@5.88.0)
       es-module-lexer: 1.7.0
-      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.8.3)(webpack@5.88.0(esbuild@0.25.8))
-      html-webpack-plugin: 5.6.3(webpack@5.88.0(esbuild@0.25.8))
+      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.8.3)(webpack@5.88.0)
+      html-webpack-plugin: 5.6.3(webpack@5.88.0)
       magic-string: 0.30.17
       path-browserify: 1.0.1
       process: 0.11.10
       semver: 7.7.2
       storybook: 8.6.14(prettier@2.8.8)
-      style-loader: 3.3.4(webpack@5.88.0(esbuild@0.25.8))
-      terser-webpack-plugin: 5.3.14(esbuild@0.25.8)(webpack@5.88.0(esbuild@0.25.8))
+      style-loader: 3.3.4(webpack@5.88.0)
+      terser-webpack-plugin: 5.3.14(webpack@5.88.0)
       ts-dedent: 2.2.0
       url: 0.11.4
       util: 0.12.5
       util-deprecate: 1.0.2
-      webpack: 5.88.0(esbuild@0.25.8)
-      webpack-dev-middleware: 6.1.3(webpack@5.88.0(esbuild@0.25.8))
+      webpack: 5.88.0
+      webpack-dev-middleware: 6.1.3(webpack@5.88.0)
       webpack-hot-middleware: 2.26.1
       webpack-virtual-modules: 0.6.2
     optionalDependencies:
@@ -14573,15 +14677,15 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@storybook/components@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/components@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/core-events@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/core-events@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/core-webpack@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/core-webpack@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       storybook: 8.6.14(prettier@2.8.8)
       ts-dedent: 2.2.0
@@ -14607,7 +14711,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@storybook/csf-plugin@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/csf-plugin@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       storybook: 8.6.14(prettier@2.8.8)
       unplugin: 1.16.1
@@ -14633,27 +14737,21 @@ snapshots:
       '@vitest/utils': 2.1.9
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/instrumenter@8.6.12(storybook@8.6.14(prettier@2.8.8))':
-    dependencies:
-      '@storybook/global': 5.0.0
-      '@vitest/utils': 2.1.9
-      storybook: 8.6.14(prettier@2.8.8)
-
   '@storybook/instrumenter@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       '@storybook/global': 5.0.0
       '@vitest/utils': 2.1.9
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/manager-api@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/manager-api@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/preset-react-webpack@8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(esbuild@0.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
+  '@storybook/preset-react-webpack@8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
     dependencies:
-      '@storybook/core-webpack': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/react': 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
-      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(typescript@5.8.3)(webpack@5.88.0(esbuild@0.25.8))
+      '@storybook/core-webpack': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/react': 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(typescript@5.8.3)(webpack@5.88.0)
       '@types/semver': 7.7.0
       find-up: 5.0.0
       magic-string: 0.30.17
@@ -14664,7 +14762,7 @@ snapshots:
       semver: 7.7.2
       storybook: 8.6.14(prettier@2.8.8)
       tsconfig-paths: 4.2.0
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
     optionalDependencies:
       typescript: 5.8.3
     transitivePeerDependencies:
@@ -14675,11 +14773,11 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@storybook/preview-api@8.6.12(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/preview-api@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(typescript@5.8.3)(webpack@5.88.0(esbuild@0.25.8))':
+  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(typescript@5.8.3)(webpack@5.88.0)':
     dependencies:
       debug: 4.4.1
       endent: 2.1.0
@@ -14689,21 +14787,21 @@ snapshots:
       react-docgen-typescript: 2.2.2(typescript@5.8.3)
       tslib: 2.8.1
       typescript: 5.8.3
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/react-dom-shim@8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))':
+  '@storybook/react-dom-shim@8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       storybook: 8.6.14(prettier@2.8.8)
 
-  '@storybook/react-webpack5@8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(esbuild@0.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
+  '@storybook/react-webpack5@8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
     dependencies:
-      '@storybook/builder-webpack5': 8.6.12(esbuild@0.25.8)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
-      '@storybook/preset-react-webpack': 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(esbuild@0.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
-      '@storybook/react': 8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+      '@storybook/builder-webpack5': 8.6.14(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+      '@storybook/preset-react-webpack': 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+      '@storybook/react': 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       storybook: 8.6.14(prettier@2.8.8)
@@ -14718,19 +14816,19 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@storybook/react@8.6.12(@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
+  '@storybook/react@8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
     dependencies:
-      '@storybook/components': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/components': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/global': 5.0.0
-      '@storybook/manager-api': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/preview-api': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/react-dom-shim': 8.6.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/theming': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/manager-api': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/preview-api': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/react-dom-shim': 8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/theming': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       storybook: 8.6.14(prettier@2.8.8)
     optionalDependencies:
-      '@storybook/test': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/test': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       typescript: 5.8.3
 
   '@storybook/test@8.5.3(storybook@8.6.14(prettier@2.8.8))':
@@ -14738,17 +14836,6 @@ snapshots:
       '@storybook/csf': 0.1.12
       '@storybook/global': 5.0.0
       '@storybook/instrumenter': 8.5.3(storybook@8.6.14(prettier@2.8.8))
-      '@testing-library/dom': 9.3.4
-      '@testing-library/jest-dom': 6.5.0
-      '@testing-library/user-event': 13.5.0(@testing-library/dom@9.3.4)
-      '@vitest/expect': 2.0.5
-      '@vitest/spy': 2.0.5
-      storybook: 8.6.14(prettier@2.8.8)
-
-  '@storybook/test@8.6.12(storybook@8.6.14(prettier@2.8.8))':
-    dependencies:
-      '@storybook/global': 5.0.0
-      '@storybook/instrumenter': 8.6.12(storybook@8.6.14(prettier@2.8.8))
       '@testing-library/dom': 9.3.4
       '@testing-library/jest-dom': 6.5.0
       '@testing-library/user-event': 13.5.0(@testing-library/dom@9.3.4)
@@ -14765,10 +14852,6 @@ snapshots:
       '@testing-library/user-event': 13.5.0(@testing-library/dom@9.3.4)
       '@vitest/expect': 2.0.5
       '@vitest/spy': 2.0.5
-      storybook: 8.6.14(prettier@2.8.8)
-
-  '@storybook/theming@8.6.12(storybook@8.6.14(prettier@2.8.8))':
-    dependencies:
       storybook: 8.6.14(prettier@2.8.8)
 
   '@storybook/theming@8.6.14(storybook@8.6.14(prettier@2.8.8))':
@@ -15846,12 +15929,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-loader@9.2.1(@babel/core@7.24.3)(webpack@5.88.0(esbuild@0.25.8)):
+  babel-loader@9.2.1(@babel/core@7.24.3)(webpack@5.88.0):
     dependencies:
       '@babel/core': 7.24.3
       find-cache-dir: 4.0.0
       schema-utils: 4.3.2
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
 
   babel-plugin-istanbul@6.1.1:
     dependencies:
@@ -16379,7 +16462,7 @@ snapshots:
       randombytes: 2.1.0
       randomfill: 1.0.4
 
-  css-loader@6.11.0(webpack@5.88.0(esbuild@0.25.8)):
+  css-loader@6.11.0(webpack@5.88.0):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.6)
       postcss: 8.5.6
@@ -16390,7 +16473,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.2
     optionalDependencies:
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
 
   css-select@4.3.0:
     dependencies:
@@ -17241,11 +17324,11 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-loader@6.2.0(webpack@5.88.0(esbuild@0.25.8)):
+  file-loader@6.2.0(webpack@5.88.0):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
 
   file-uri-to-path@1.0.0: {}
 
@@ -17329,7 +17412,7 @@ snapshots:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
 
-  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.8.3)(webpack@5.88.0(esbuild@0.25.8)):
+  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.8.3)(webpack@5.88.0):
     dependencies:
       '@babel/code-frame': 7.27.1
       chalk: 4.1.2
@@ -17344,7 +17427,7 @@ snapshots:
       semver: 7.7.2
       tapable: 2.2.2
       typescript: 5.8.3
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
 
   form-data@2.5.5:
     dependencies:
@@ -17604,7 +17687,7 @@ snapshots:
       readable-stream: 1.0.34
       through2: 0.4.2
 
-  html-webpack-plugin@5.6.3(webpack@5.88.0(esbuild@0.25.8)):
+  html-webpack-plugin@5.6.3(webpack@5.88.0):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -17612,7 +17695,7 @@ snapshots:
       pretty-error: 4.0.0
       tapable: 2.2.2
     optionalDependencies:
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
 
   htmlparser2@6.1.0:
     dependencies:
@@ -19210,11 +19293,11 @@ snapshots:
 
   node-int64@0.4.0: {}
 
-  node-polyfill-webpack-plugin@4.1.0(webpack@5.88.0(esbuild@0.25.8)):
+  node-polyfill-webpack-plugin@4.1.0(webpack@5.88.0):
     dependencies:
       node-stdlib-browser: 1.3.1
       type-fest: 4.41.0
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
 
   node-releases@2.0.19: {}
 
@@ -20334,12 +20417,12 @@ snapshots:
 
   storybook-dark-mode@4.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8)):
     dependencies:
-      '@storybook/components': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/core-events': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/components': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/core-events': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@storybook/global': 5.0.0
       '@storybook/icons': 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@storybook/manager-api': 8.6.12(storybook@8.6.14(prettier@2.8.8))
-      '@storybook/theming': 8.6.12(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/manager-api': 8.6.14(storybook@8.6.14(prettier@2.8.8))
+      '@storybook/theming': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       fast-deep-equal: 3.1.3
       memoizerific: 1.11.3
     transitivePeerDependencies:
@@ -20386,10 +20469,10 @@ snapshots:
       char-regex: 1.0.2
       strip-ansi: 6.0.1
 
-  string-replace-loader@3.2.0(webpack@5.88.0(esbuild@0.25.8)):
+  string-replace-loader@3.2.0(webpack@5.88.0):
     dependencies:
       schema-utils: 4.3.2
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
 
   string-width@4.2.3:
     dependencies:
@@ -20486,9 +20569,9 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  style-loader@3.3.4(webpack@5.88.0(esbuild@0.25.8)):
+  style-loader@3.3.4(webpack@5.88.0):
     dependencies:
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
 
   style-mod@4.1.2: {}
 
@@ -20536,16 +20619,14 @@ snapshots:
 
   term-size@2.2.1: {}
 
-  terser-webpack-plugin@5.3.14(esbuild@0.25.8)(webpack@5.88.0(esbuild@0.25.8)):
+  terser-webpack-plugin@5.3.14(webpack@5.88.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.29
       jest-worker: 27.5.1
       schema-utils: 4.3.2
       serialize-javascript: 6.0.2
       terser: 5.43.1
-      webpack: 5.88.0(esbuild@0.25.8)
-    optionalDependencies:
-      esbuild: 0.25.8
+      webpack: 5.88.0
 
   terser@5.43.1:
     dependencies:
@@ -20863,14 +20944,14 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  url-loader@4.1.1(file-loader@6.2.0(webpack@5.88.0(esbuild@0.25.8)))(webpack@5.88.0(esbuild@0.25.8)):
+  url-loader@4.1.1(file-loader@6.2.0(webpack@5.88.0))(webpack@5.88.0):
     dependencies:
       loader-utils: 2.0.4
       mime-types: 2.1.35
       schema-utils: 3.3.0
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
     optionalDependencies:
-      file-loader: 6.2.0(webpack@5.88.0(esbuild@0.25.8))
+      file-loader: 6.2.0(webpack@5.88.0)
 
   url-parse@1.5.10:
     dependencies:
@@ -20988,7 +21069,7 @@ snapshots:
 
   webidl-conversions@7.0.0: {}
 
-  webpack-dev-middleware@6.1.3(webpack@5.88.0(esbuild@0.25.8)):
+  webpack-dev-middleware@6.1.3(webpack@5.88.0):
     dependencies:
       colorette: 2.0.20
       memfs: 3.5.3
@@ -20996,7 +21077,7 @@ snapshots:
       range-parser: 1.2.1
       schema-utils: 4.3.2
     optionalDependencies:
-      webpack: 5.88.0(esbuild@0.25.8)
+      webpack: 5.88.0
 
   webpack-hot-middleware@2.26.1:
     dependencies:
@@ -21008,7 +21089,7 @@ snapshots:
 
   webpack-virtual-modules@0.6.2: {}
 
-  webpack@5.88.0(esbuild@0.25.8):
+  webpack@5.88.0:
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.8
@@ -21031,7 +21112,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.2
-      terser-webpack-plugin: 5.3.14(esbuild@0.25.8)(webpack@5.88.0(esbuild@0.25.8))
+      terser-webpack-plugin: 5.3.14(webpack@5.88.0)
       watchpack: 2.4.4
       webpack-sources: 3.3.3
     transitivePeerDependencies:

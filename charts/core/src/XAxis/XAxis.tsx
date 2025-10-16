@@ -21,10 +21,14 @@ const getOptions = ({
   type,
   label,
   formatter,
+  min,
+  max,
 }: XAxisProps & { theme: Theme }): Partial<ChartOptions> => {
   const options: Partial<ChartOptions> = {
     xAxis: {
       type: type,
+      min,
+      max,
       axisLine: {
         show: true,
         lineStyle: {
@@ -97,7 +101,7 @@ const unsetAxisOptions = {
  *   />
  * </Chart>
  */
-export function XAxis({ type, label, formatter }: XAxisProps) {
+export function XAxis({ type, label, formatter, min, max }: XAxisProps) {
   const {
     chart: { ready, updateOptions },
   } = useChartContext();
@@ -106,7 +110,7 @@ export function XAxis({ type, label, formatter }: XAxisProps) {
   useEffect(() => {
     if (!ready) return;
 
-    updateOptions(getOptions({ type, label, formatter, theme }));
+    updateOptions(getOptions({ type, label, formatter, min, max, theme }));
 
     return () => {
       /**
@@ -116,7 +120,7 @@ export function XAxis({ type, label, formatter }: XAxisProps) {
         xAxis: { ...unsetAxisOptions },
       });
     };
-  }, [formatter, label, ready, theme, type, updateOptions]);
+  }, [formatter, label, max, min, ready, theme, type, updateOptions]);
 
   return null;
 }
