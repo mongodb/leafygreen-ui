@@ -280,10 +280,7 @@ export type PopoverProps = {
   active?: boolean;
 
   /**
-   * Enables automatic repositioning of the popover when the DOM changes. When `true`,
-   * the popover will use [floating-ui's flip middleware](https://floating-ui.com/docs/flip)
-   * to detect overflow and reposition itself to stay visible within its boundary. When
-   * `false`, the popover maintains its initial position even if it becomes clipped or hidden.
+   * Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
    *
    * default: false
    */

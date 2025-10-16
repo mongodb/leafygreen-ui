@@ -59,6 +59,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
   (
     {
       active = false,
+      // FIXME:
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       adjustOnMutation = false,
       align = Align.Bottom,
       children,
@@ -132,8 +134,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         ),
         flip({
           boundary: scrollContainer ?? 'clippingAncestors',
-          mainAxis: adjustOnMutation,
-          crossAxis: adjustOnMutation,
+          mainAxis: true,
+          crossAxis: true,
           fallbackAxisSideDirection: 'start',
         }),
       ],

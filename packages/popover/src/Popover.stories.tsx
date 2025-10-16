@@ -60,12 +60,6 @@ const scrollableInnerStyles = css`
   justify-content: center;
 `;
 
-const largePopoverStyles = css`
-  ${popoverStyles}
-  height: 200px;
-  width: 360px;
-`;
-
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,
   'active',
@@ -412,86 +406,4 @@ export const CenterVertical: StoryObj<PopoverStoryProps> = {
       exclude: generatedStoryExcludedControlParams,
     },
   },
-};
-
-const WITH_ADJUST_POPOVER_TEXT = `This popover was set to align="top" and justify="end" but detected it would overflow the viewport. With adjustOnMutation enabled, it flipped to align="bottom" and justify="start" to stay fully visible.`;
-const WITHOUT_ADJUST_POPOVER_TEXT = `This popover is set to align="bottom" and justify="start" but won't adjust its position. With adjustOnMutation disabled, it remains in its initial position and gets clipped.`;
-
-const AdjustOnMutationComponent = () => {
-  const buttonWithAdjustRef = useRef<HTMLButtonElement | null>(null);
-  const buttonWithoutAdjustRef = useRef<HTMLButtonElement | null>(null);
-  const [activeWithAdjust, setActiveWithAdjust] = useState<boolean>(true);
-  const [activeWithoutAdjust, setActiveWithoutAdjust] = useState<boolean>(true);
-
-  return (
-    <div
-      className={css`
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      `}
-    >
-      <div
-        className={css`
-          position: absolute;
-          top: 140px;
-          left: 160px;
-        `}
-      >
-        <Button
-          onClick={() => setActiveWithAdjust(a => !a)}
-          ref={buttonWithAdjustRef}
-        >
-          adjustOnMutation: true
-        </Button>
-        <Popover
-          active={activeWithAdjust}
-          adjustOnMutation={true}
-          align={Align.Top}
-          dismissMode={DismissMode.Manual}
-          justify={Justify.End}
-          refEl={buttonWithAdjustRef}
-          renderMode={RenderMode.TopLayer}
-        >
-          <div className={largePopoverStyles}>
-            <strong>✅ adjustOnMutation: true</strong>
-            <p>{WITH_ADJUST_POPOVER_TEXT}</p>
-          </div>
-        </Popover>
-      </div>
-      <div
-        className={css`
-          position: absolute;
-          bottom: 140px;
-          right: 160px;
-        `}
-      >
-        <Button
-          onClick={() => setActiveWithoutAdjust(a => !a)}
-          ref={buttonWithoutAdjustRef}
-        >
-          adjustOnMutation: false
-        </Button>
-        <Popover
-          active={activeWithoutAdjust}
-          adjustOnMutation={false}
-          align={Align.Bottom}
-          dismissMode={DismissMode.Manual}
-          justify={Justify.Start}
-          refEl={buttonWithoutAdjustRef}
-          renderMode={RenderMode.TopLayer}
-        >
-          <div className={largePopoverStyles}>
-            <strong>❌ adjustOnMutation: false</strong>
-            <p>{WITHOUT_ADJUST_POPOVER_TEXT}</p>
-          </div>
-        </Popover>
-      </div>
-    </div>
-  );
-};
-export const AdjustOnMutation: StoryObj<PopoverStoryProps> = {
-  render: AdjustOnMutationComponent,
 };
