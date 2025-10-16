@@ -10,7 +10,7 @@ import Popover, {
   RenderMode,
 } from '@leafygreen-ui/popover';
 
-import TooltipContent from '../TooltipContent';
+import GuideCueTooltip from '../GuideCueTooltip';
 
 import { beaconStyles, timeout1, timeout2 } from './GuideCue.styles';
 import { GuideCueProps, TooltipAlign, TooltipJustify } from './GuideCue.types';
@@ -140,7 +140,7 @@ function GuideCue({
       {isStandalone ? (
         // Standalone tooltip
         // this is using the reference from the `refEl` prop to position itself against
-        <TooltipContent {...tooltipContentProps}>{children}</TooltipContent>
+        <GuideCueTooltip {...tooltipContentProps}>{children}</GuideCueTooltip>
       ) : (
         // Multistep tooltip
         <>
@@ -162,13 +162,13 @@ function GuideCue({
           </Popover>
           {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
           {/* Instead of passing the beacon as the tooltip trigger prop we pass a reference to the beacon to the `refEl` prop. By passing only the reference we avoid default tooltip behaviors such as closing the tooltip on background click or showing and hiding the tooltip on hover. */}
-          <TooltipContent
+          <GuideCueTooltip
             {...tooltipContentProps}
             refEl={beaconRef}
             open={tooltipOpen}
           >
             {children}
-          </TooltipContent>
+          </GuideCueTooltip>
         </>
       )}
     </>

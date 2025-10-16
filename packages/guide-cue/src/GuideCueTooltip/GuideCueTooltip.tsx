@@ -24,7 +24,7 @@ import {
   stepStyles,
   tooltipMultistepStyles,
   tooltipStyles,
-} from './TooltipContent.styles';
+} from './GuideCueTooltip.styles';
 
 const ariaLabelledby = 'guide-cue-label';
 const ariaDescribedby = 'guide-cue-desc';
@@ -47,7 +47,7 @@ const focusTrapOptions: Options = {
   },
 };
 
-type TooltipContentProps = Partial<GuideCueProps> & {
+type GuideCueTooltipProps = Partial<GuideCueProps> & {
   theme: Theme;
   title: string;
   isStandalone: boolean;
@@ -57,7 +57,7 @@ type TooltipContentProps = Partial<GuideCueProps> & {
   handleCloseClick: () => void;
 };
 
-function TooltipContent({
+function GuideCueTooltip({
   darkMode,
   open,
   setOpen,
@@ -76,7 +76,7 @@ function TooltipContent({
   handleButtonClick,
   handleCloseClick,
   ...tooltipProps
-}: TooltipContentProps) {
+}: GuideCueTooltipProps) {
   const focusId = useIdAllocator({ prefix: 'guide-cue' });
 
   return (
@@ -151,5 +151,5 @@ function TooltipContent({
   );
 }
 
-TooltipContent.displayName = 'TooltipContent';
-export default TooltipContent;
+GuideCueTooltip.displayName = 'GuideCueTooltip';
+export default GuideCueTooltip;
