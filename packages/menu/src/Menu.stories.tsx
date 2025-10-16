@@ -7,7 +7,7 @@ import {
   type StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/test';
+import { fn, userEvent, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -100,6 +100,7 @@ const meta: StoryMetaType<typeof Menu> = {
     darkMode: false,
     renderDarkMenu: false,
     variant: MenuVariant.Default,
+    onOpen: fn(),
   },
   argTypes: {
     open: {
