@@ -8,7 +8,7 @@ export default function App() {
       <Spinner size="default" />
       <Spinner size="default" />
       <Spinner size="large" />
-      <Spinner size="xlarge" />
+      <Spinner size="large" />
     </div>
   );
 }

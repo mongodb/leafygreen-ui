@@ -25,7 +25,7 @@ const displayOptionToSizeMap: Record<string, string> = {
   'default-horizontal': 'default',
   'default-vertical': 'default',
   'large-vertical': 'large',
-  'xlarge-vertical': 'xlarge',
+  'xlarge-vertical': 'large', // xlarge has been deprecated (but new `large` is the same size)
 };
 
 /**
