@@ -5,8 +5,8 @@ import { Spinner } from '@leafygreen-ui/loading-indicator/spinner';
 export default function App() {
   return (
     <div>
-      <LGSpinner displayOption="default-vertical" description="Loading..." />
-      <LGSpinner displayOption="large-vertical" />
+      <Spinner displayOption="default-vertical" description="Loading..." />
+      <Spinner displayOption="large-vertical" />
     </div>
   );
 }

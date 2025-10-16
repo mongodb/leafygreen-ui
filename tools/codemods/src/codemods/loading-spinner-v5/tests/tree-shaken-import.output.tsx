@@ -7,8 +7,8 @@ export default function App() {
     <div>
       {/* Previous description: "Loading..." */}
       {/* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */}
-      <LGSpinner size="default" />
-      <LGSpinner size="large" />
+      <Spinner size="default" />
+      <Spinner size="large" />
     </div>
   );
 }
