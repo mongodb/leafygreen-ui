@@ -6,6 +6,12 @@
 
 ## Installation
 
+### PNPM
+
+```shell
+pnpm add @leafygreen-ui/vertical-stepper
+```
+
 ### Yarn
 
 ```shell
@@ -20,7 +26,7 @@ npm install @leafygreen-ui/vertical-stepper
 
 ## Example
 
-```js
+```tsx
 import Button, { Size, Variant } from `@leafygreen-ui/button`;
 import { VerticalStepper, VerticalStep } from `@leafygreen-ui/vertical-stepper`;
 

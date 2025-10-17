@@ -25,6 +25,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/emotion',
   '@leafygreen-ui/empty-state',
   '@leafygreen-ui/expandable-card',
+  '@leafygreen-ui/feature-walls',
   '@leafygreen-ui/form-field',
   '@leafygreen-ui/form-footer',
   '@leafygreen-ui/gallery-indicator',
