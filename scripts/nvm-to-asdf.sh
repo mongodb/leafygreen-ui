@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # 1. Disable and clear corepack,
 if command -v corepack >/dev/null 2>&1; then
   echo "Disabling corepack"
