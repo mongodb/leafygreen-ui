@@ -1,5 +1,22 @@
 # @lg-chat/input-bar
 
+## 10.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/input-option@4.1.1
+  - @leafygreen-ui/search-input@6.0.7
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/avatar@3.1.3
+  - @leafygreen-ui/banner@10.2.1
+  - @leafygreen-ui/button@25.1.1
+  - @leafygreen-ui/badge@10.2.1
+
 ## 10.1.0
 
 ### Minor Changes

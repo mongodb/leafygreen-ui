@@ -1,5 +1,15 @@
 # @leafygreen-ui/table
 
+## 15.1.6
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/checkbox@18.1.1
+
 ## 15.1.5
 
 ### Patch Changes

@@ -1,5 +1,20 @@
 # @leafygreen-ui/combobox
 
+## 12.0.8
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/input-option@4.1.1
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/form-field@4.0.5
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/checkbox@18.1.1
+  - @leafygreen-ui/chip@4.0.7
+
 ## 12.0.7
 
 ### Patch Changes

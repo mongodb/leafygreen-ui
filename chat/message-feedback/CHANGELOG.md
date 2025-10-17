@@ -1,5 +1,18 @@
 # @lg-chat/message-feedback
 
+## 7.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/text-area@12.1.1
+  - @leafygreen-ui/button@25.1.1
+
 ## 7.1.0
 
 ### Minor Changes

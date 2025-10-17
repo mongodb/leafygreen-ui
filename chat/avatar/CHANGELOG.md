@@ -1,5 +1,13 @@
 # @lg-chat/avatar
 
+## 7.0.3
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/avatar@3.1.3
+
 ## 7.0.2
 
 ### Patch Changes

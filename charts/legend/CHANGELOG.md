@@ -1,5 +1,14 @@
 # @lg-charts/legend
 
+## 1.0.7
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [c8559f3]
+  - @lg-charts/series-provider@1.0.5
+  - @leafygreen-ui/checkbox@18.1.1
+
 ## 1.0.6
 
 ### Patch Changes
