@@ -4385,6 +4385,9 @@ importers:
         specifier: 8.6.14
         version: 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
     devDependencies:
+      '@leafygreen-ui/button':
+        specifier: ^25.1.0
+        version: 25.1.0(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/typography':
         specifier: ^22.1.3
         version: 22.1.3(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -5870,6 +5873,11 @@ packages:
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
+  '@leafygreen-ui/button@25.1.0':
+    resolution: {integrity: sha512-kmgNOagBUP+BZ4Vpsv3TCVrfmMx3uNC5DhzxZB5TttVWQTP1Y1fxdlfDayWxW1M6xLfqUycACa9A2D2R4yAnBg==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^5.0.4
+
   '@leafygreen-ui/emotion@5.0.3':
     resolution: {integrity: sha512-elu8af9Qh8Oy/IwqXcNKitHAQBAO4+zmHuLi0fRzY46kTwXvLYqPpJFRcySqITWLPyBcMsF56ta8yQKXghEYOA==}
 
@@ -5892,6 +5900,9 @@ packages:
 
   '@leafygreen-ui/polymorphic@3.1.0':
     resolution: {integrity: sha512-5fbXD6ExTmMScvODuipfB1Ti/Dvoaxxg+daSftqXfNQlEkEnd5cPnezOOl1LMsu2xUoZT6NXsFgukZYsmXEVpQ==}
+
+  '@leafygreen-ui/ripple@2.0.6':
+    resolution: {integrity: sha512-8c9FRWsxn+Y1g8m/DB6DQ2Mpzrfe3EP7bmEZLcTYfM0t8tR+0bcUsReW38kqfTDBW2upqDMURgq/fDHPPEo/Bw==}
 
   '@leafygreen-ui/tokens@3.2.4':
     resolution: {integrity: sha512-Bd11x/ext/vVozd/HL+AD8LbL71Z6B6VbtQ/+qLqoX8qHMsJt7VWL0CmmGs5NVHh3v5sAlfT5DYbB9uhwVM8Qw==}
@@ -14390,6 +14401,22 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
+  '@leafygreen-ui/button@25.1.0(@babel/core@7.28.0)(@leafygreen-ui/leafygreen-provider@5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.3(@babel/core@7.28.0)
+      '@leafygreen-ui/leafygreen-provider': 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      '@leafygreen-ui/palette': 5.0.2
+      '@leafygreen-ui/polymorphic': 3.1.0(react@18.3.1)
+      '@leafygreen-ui/ripple': 2.0.6(@babel/core@7.28.0)(react@18.3.1)
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.28.0)(react@18.3.1)
+      '@lg-tools/test-harnesses': 0.3.4
+      polished: 4.3.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
+
   '@leafygreen-ui/emotion@5.0.3(@babel/core@7.24.3)':
     dependencies:
       '@emotion/css': 11.9.0(@babel/core@7.24.3)
@@ -14469,6 +14496,14 @@ snapshots:
       lodash: 4.17.21
     transitivePeerDependencies:
       - react
+
+  '@leafygreen-ui/ripple@2.0.6(@babel/core@7.28.0)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.28.0)(react@18.3.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
 
   '@leafygreen-ui/tokens@3.2.4(@babel/core@7.24.3)(react@18.3.1)':
     dependencies:

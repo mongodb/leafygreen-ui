@@ -1,5 +1,5 @@
 import React, { ComponentType } from 'react';
-import { UIResourceRenderer } from '@mcp-ui/client';
+import { UIActionResult, UIResourceRenderer } from '@mcp-ui/client';
 import { Decorator } from '@storybook/react';
 
 import { createUIResourceFromMicroUI } from './DemoUIRenderer';
@@ -20,6 +20,16 @@ export const LeafyGreenMCPUIDecorator: Decorator<MCPUIStoryArgs> = (
 
   const uiResource = createUIResourceFromMicroUI(µui, args);
 
+  const handleUIAction = async (result: UIActionResult) => {
+    // eslint-disable-next-line no-console
+    console.log(result);
+  };
+
   // return <div>TBD {µui.displayName}</div>;
-  return <UIResourceRenderer resource={uiResource.resource} />;
+  return (
+    <UIResourceRenderer
+      resource={uiResource.resource}
+      onUIAction={handleUIAction}
+    />
+  );
 };

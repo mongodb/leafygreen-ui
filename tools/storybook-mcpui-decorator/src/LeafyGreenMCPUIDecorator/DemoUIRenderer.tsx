@@ -2,6 +2,8 @@ import { type ComponentType, createElement, Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 import { createUIResource } from '@mcp-ui/server';
 
+import { renderStylesToString } from '@leafygreen-ui/emotion';
+
 export const DemoTwigUIRenderer = <P extends {} = {}>(
   microUI: ComponentType<P>,
   props?: P,
@@ -20,7 +22,7 @@ export const DemoTwigUIRenderer = <P extends {} = {}>(
     renderedStyles,
     renderedMicroUi,
   ]);
-  return renderToString(renderedFragment);
+  return renderStylesToString(renderToString(renderedFragment));
 };
 
 export const createUIResourceFromMicroUI = <P extends {} = {}>(
