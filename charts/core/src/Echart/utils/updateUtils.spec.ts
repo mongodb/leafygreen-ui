@@ -1,14 +1,18 @@
-import { EChartOptions } from '../Echart.types';
+import { EChartOptions, EChartSeriesOption } from '../Echart.types';
 
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
 
 describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
   test('addSeries should add a series to the chart options', () => {
     const currentOptions: Partial<EChartOptions> = {
-      series: [{ name: 'series1' }],
+      series: [{ type: 'line', name: 'series1', data: [] }],
     };
     const newSeriesName = 'series2';
-    const data = { name: newSeriesName };
+    const data: EChartSeriesOption = {
+      type: 'line',
+      name: newSeriesName,
+      data: [],
+    };
     const updatedOptions = addSeries(currentOptions, data);
     expect(updatedOptions.series).toHaveLength(2);
     expect(updatedOptions.series?.[1].name).toBe(newSeriesName);
@@ -16,10 +20,14 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
 
   test('addSeries should not add a series if a chart with the same name exists', () => {
     const currentOptions: Partial<EChartOptions> = {
-      series: [{ name: 'series1' }],
+      series: [{ type: 'line', name: 'series1', data: [] }],
     };
     const newSeriesName = 'series1';
-    const data = { name: newSeriesName };
+    const data: EChartSeriesOption = {
+      type: 'line',
+      name: newSeriesName,
+      data: [],
+    };
     const updatedOptions = addSeries(currentOptions, data);
     expect(updatedOptions.series).toHaveLength(1);
     expect(updatedOptions.series?.[0].name).toBe(newSeriesName);
@@ -27,7 +35,10 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
 
   test('removeSeries should remove a series from the chart options', () => {
     const currentOptions: Partial<EChartOptions> = {
-      series: [{ name: 'series1' }, { name: 'series2' }],
+      series: [
+        { type: 'line', name: 'series1', data: [] },
+        { type: 'line', name: 'series2', data: [] },
+      ],
     };
     const seriesName1 = 'series1';
     const seriesName2 = 'series2';
