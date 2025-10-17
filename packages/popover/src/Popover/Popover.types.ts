@@ -321,7 +321,7 @@ export type PopoverProps = {
    * If the `maxWidth` provided is _greater than_ the available space left or right of the referent element,
    * the width will be restricted to the available space (i.e. the popover will not overflow the viewport).
    *
-   * Note: Any `max-height` applied with additional CSS will take precedence, and will override the "available space" calculation
+   * Note: Any `max-width` applied with additional CSS will take precedence, and will override the "available space" calculation
    *
    * @default undefined
    */
