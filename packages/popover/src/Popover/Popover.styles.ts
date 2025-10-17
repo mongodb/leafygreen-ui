@@ -9,6 +9,16 @@ import { ExtendedPlacement, TransformAlign } from './Popover.types';
 const TRANSFORM_INITIAL_SCALE = 0.8;
 export const TRANSITION_DURATION = transitionDuration.default;
 
+/**
+ * CSS property names that we assign during the `size` callback of `useFloating`.
+ * This is done since the `size` middleware is run immediately and does not return values.
+ * @see https://floating-ui.com/docs/size#apply
+ */
+export const popoverCSSProperties = {
+  maxHeight: '--lg-popover-max_height',
+  maxWidth: '--lg-popover-max_width',
+} as const;
+
 export const contentClassName = createUniqueClassName('popover-content');
 
 export const hiddenPlaceholderStyle = css`
@@ -51,6 +61,8 @@ const getPositionStyles = ({
   left: ${left}px;
   position: ${position};
   top: ${top}px;
+  max-height: var(${popoverCSSProperties.maxHeight}, unset);
+  max-width: var(${popoverCSSProperties.maxWidth}, unset);
 `;
 
 const transformOriginStyles: Record<ExtendedPlacement, string> = {
