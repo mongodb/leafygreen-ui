@@ -134,11 +134,14 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         ),
         flip({
           boundary: scrollContainer ?? 'clippingAncestors',
+          mainAxis: true,
+          crossAxis: true,
+          fallbackAxisSideDirection: 'start',
         }),
       ],
       open: active,
       placement: getFloatingPlacement(align, justify),
-      strategy: renderMode === RenderMode.TopLayer ? 'fixed' : 'absolute',
+      strategy: 'absolute',
       transform: false,
       whileElementsMounted: autoUpdate,
     });
