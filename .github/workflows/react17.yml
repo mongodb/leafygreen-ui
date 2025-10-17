@@ -21,7 +21,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
           cache: false
 
       - uses: actions/cache/restore@v4
@@ -75,7 +75,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
           cache: false
 
       - uses: actions/cache/restore@v4
