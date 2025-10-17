@@ -14,11 +14,7 @@
   "eslint.runtime": "node",
   "eslint.workingDirectories": ["./"],
   "typescript.preferences.importModuleSpecifier": "project-relative",
-  "cSpell.words": [
-    "CODEARTIFACT",
-    "leafygreen",
-    "svgrrc"
-  ],
+  "cSpell.words": ["CODEARTIFACT", "leafygreen", "MCPUI", "svgrrc"],
   "workbench.editorAssociations": {
     "*.svg": "default"
   },
