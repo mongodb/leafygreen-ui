@@ -17,9 +17,15 @@ Size.Small: 24px;
 Size.Default: 48px;
 Size.Large: 64px;
 ```
+Run the codemod to auto-update this prop change 
+```bash
+lg codemod loading-spinner-v5
+```
 
 - Removes `baseFontSize` prop
 - Removes the explicit `description` prop. 
+These props will be _removed_ by the codemod, but the description will only be converted to a comment, and must be updated  manually.
+To add a description to the spinner, use the `Description` component from `@leafygreen-ui/typography` directly.
 ```tsx
 <div>
   <Spinner size="default" />
