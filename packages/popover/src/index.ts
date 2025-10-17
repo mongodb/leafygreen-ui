@@ -12,6 +12,7 @@ export {
   type ElementPosition,
   Justify,
   Popover,
+  popoverCSSProperties,
   type PopoverProps,
   type PopoverRenderModeProps,
   RenderMode,

@@ -34,7 +34,8 @@
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/text-input": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@storybook/test": "8.6.14"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
