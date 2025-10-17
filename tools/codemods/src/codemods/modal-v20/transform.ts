@@ -5,10 +5,7 @@ import { LGPackage } from '../../types';
 import { getImportSpecifiersForDeclaration } from '../../utils/imports';
 import { getJSXAttributes } from '../../utils/jsx';
 import { insertJSXComment } from '../../utils/jsx';
-import {
-  removeJSXAttributes,
-  replaceJSXAttributes,
-} from '../../utils/transformations';
+import { replaceJSXAttributes } from '../../utils/transformations';
 
 const lgPackageComponentMap: Partial<Record<LGPackage, string>> = {
   [LGPackage.Modal]: 'Modal',
@@ -35,10 +32,14 @@ const defaultPackages: Array<LGPackage> = [
  * - `@leafygreen-ui/confirmation-modal`
  * - `@leafygreen-ui/marketing-modal`
  *
- * 3. Removes `initialFocus` prop and adds guidance comment for Modal components in the following packages:
+ * 3. Adds guidance comment for `initialFocus` prop usage for Modal components in the following packages:
  * - `@leafygreen-ui/modal`
  * - `@leafygreen-ui/confirmation-modal`
  * - `@leafygreen-ui/marketing-modal`
+ *
+ * Note: The `initialFocus` prop was temporarily removed in @leafygreen-ui/modal@20.0.0 but has been
+ * restored in @leafygreen-ui/modal@20.2.0 with enhanced functionality. The codemod now preserves the prop
+ * and adds a recommendation to use React refs instead of selector strings for better type safety.
  *
  * @param file the file to transform
  * @param jscodeshiftOptions an object containing at least a reference to the jscodeshift library
@@ -148,7 +149,10 @@ export default function transformer(
   });
 
   /**
-   * Step 3: Remove initialFocus prop and add guidance comment
+   * Step 3: Add guidance comment for initialFocus prop (no longer removed in v20.2+)
+   *
+   * Note: As of v20.2, the initialFocus prop is available again with enhanced functionality.
+   * We now recommend using refs instead of selector strings, but both are supported.
    */
   packagesToCheck.forEach(packageName => {
     const componentsToTransform = packageComponentsMap.get(packageName)!;
@@ -159,7 +163,7 @@ export default function transformer(
       if (elements.length === 0) return;
 
       elements.forEach(element => {
-        // Check if initialFocus prop exists before trying to remove it
+        // Check if initialFocus prop exists before adding guidance comment
         const initialFocusAttributes = getJSXAttributes(
           j,
           element,
@@ -167,19 +171,12 @@ export default function transformer(
         );
 
         if (initialFocusAttributes.length > 0) {
-          // Add guidance comment before removing the prop
           insertJSXComment(
             j,
             element,
-            'TODO: Please specify autoFocus prop on the element that should receive initial focus. Alternatively, you may rely on the default focus behavior which will focus the first focusable element in the children.',
+            'Note: The initialFocus prop now supports React refs in addition to selector strings. Consider using a ref for better type safety.',
             'before',
           );
-
-          removeJSXAttributes({
-            j,
-            element,
-            propName: 'initialFocus',
-          });
         }
       });
     });

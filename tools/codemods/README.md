@@ -100,7 +100,9 @@ This codemod does the following:
 
 1. Renames `className` prop to `backdropClassName`
 2. Renames `contentClassName` prop to `className`
-3. Removes `initialFocus` prop and adds guidance comment
+3. Adds guidance comment for `initialFocus` prop usage
+
+   **Note**: The `initialFocus` prop was temporarily removed in Modal v20.0.0 but has been restored in v20.2+ with enhanced functionality. The codemod now preserves the prop and adds a recommendation to use refs instead of selector strings for better type safety.
 
 ```shell
 pnpm lg codemod modal-v20 <path>
@@ -134,32 +136,34 @@ import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
 </ConfirmationModal>
 ```
 
-**After**:
+**After** (as of Modal v20.2+):
 
 ```tsx
 import Modal from '@leafygreen-ui/modal';
 import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
 
 {
-  /* TODO: Please specify autoFocus prop on the element that should receive initial focus. Alternatively, you may rely on the default focus behavior which will focus the first focusable element in the children. */
+  /* Note: The initialFocus prop now supports React refs in addition to selector strings. Consider using a ref for better type safety. */
 }
 <Modal
   open={open}
   setOpen={setOpen}
   backdropClassName="backdrop-style"
   className="modal-content"
+  initialFocus="#primary-button"
 >
   <button id="primary-button">Primary Action</button>
 </Modal>;
 
 {
-  /* TODO: Please specify autoFocus prop on the element that should receive initial focus. Alternatively, you may rely on the default focus behavior which will focus the first focusable element in the children. */
+  /* Note: The initialFocus prop now supports React refs in addition to selector strings. Consider using a ref for better type safety. */
 }
 <ConfirmationModal
   open={open}
   setOpen={setOpen}
   backdropClassName="confirmation-backdrop"
   className="confirmation-content"
+  initialFocus="#confirm-button"
   title="Confirm"
 >
   <button id="confirm-button">Confirm</button>
@@ -320,6 +324,56 @@ import Copyable from '@leafygreen-ui/copyable';
 
 <Menu justify="middle" renderMode="top-layer" />
 <Tooltip justify="middle" renderMode="top-layer" />
+```
+
+### `loading-spinner-v5`
+
+This codemod can be used to upgrade Spinner components to v5 of `@leafygreen-ui/loading-indicator`.
+
+This codemod applies to the following package:
+
+- `@leafygreen-ui/loading-indicator`
+
+This codemod does the following:
+
+1. Converts `displayOption` prop to `size` prop with appropriate value mapping
+2. Removes `description` prop and adds guidance comment
+3. Removes `baseFontSize` prop if present
+
+```shell
+pnpm lg codemod loading-spinner-v5 <path>
+```
+
+**Before**:
+
+```tsx
+import { Spinner } from '@leafygreen-ui/loading-indicator';
+
+<Spinner
+  displayOption="default-vertical"
+  description="Loading data..."
+  darkMode={true}
+/>
+<Spinner
+  displayOption="large-vertical"
+  description="Processing..."
+  baseFontSize={16}
+/>
+```
+
+**After**:
+
+```tsx
+import { Spinner } from '@leafygreen-ui/loading-indicator';
+
+/* Previous description: "Loading data..." */
+/* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */
+
+<Spinner size="default" darkMode={true} />;
+
+/* Previous description: "Processing..." */
+/* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */
+<Spinner size="large" />;
 ```
 
 ### `tabs-v17`

@@ -14,14 +14,14 @@ import {
   waitForElementToBeRemoved,
 } from '@storybook/test';
 
-import Button, { Size } from '@leafygreen-ui/button';
+import { Button, Size } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { RenderMode, TestUtils } from '@leafygreen-ui/popover';
 import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
-import Tooltip, { Align, Justify, TooltipProps, TriggerEvent } from '.';
+import { Align, Justify, Tooltip, TooltipProps, TriggerEvent } from '.';
 
 const { getAlign, getJustify } = TestUtils;
 
@@ -84,7 +84,7 @@ const meta: StoryMetaType<typeof Tooltip> = {
           <Instance
             trigger={
               <Button darkMode={ctx?.args.darkMode} size="xsmall">
-                trigger
+                Trigger
               </Button>
             }
           />
@@ -239,10 +239,10 @@ export const AlignmentTest: StoryObj<TooltipProps> = {
       <div
         className={css`
           display: grid;
-          grid-template-columns: repeat(4, 64px);
-          grid-template-rows: repeat(4, 64px);
+          grid-template-columns: repeat(3, 72px);
+          grid-template-rows: repeat(4, 72px);
           width: 100%;
-          gap: 128px;
+          gap: 72px 128px;
           align-items: center;
           justify-items: center;
           justify-content: center;
@@ -259,10 +259,11 @@ export const AlignmentTest: StoryObj<TooltipProps> = {
               justify={j}
               triggerEvent="click"
               initialOpen
-              trigger={<Button size={Size.XSmall} />}
+              trigger={<Button size={Size.XSmall}>Trigger</Button>}
             >
-              <Body>{a}</Body>
-              <Body>{j}</Body>
+              <Body>align: {a}</Body>
+              <hr />
+              <Body>justify: {j}</Body>
             </Tooltip>
           )),
         )}
