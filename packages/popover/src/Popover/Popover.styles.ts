@@ -57,7 +57,6 @@ const getPositionStyles = ({
   left: number;
   position: 'absolute' | 'fixed';
   top: number;
-  /** The full CSS value string (incl. "px") */
 }) => css`
   left: ${left}px;
   position: ${position};
