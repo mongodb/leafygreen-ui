@@ -1,4 +1,4 @@
-import { HelloWorldMicroUI } from './HelloWorldMicroUI';
+import { ChartHelloWorldMicroUI, HelloWorldMicroUI } from './HelloWorldMicroUI';
 import { LeafyGreenMCPUIDecorator } from './LeafyGreenMCPUIDecorator';
 import {
   MCPStoryMetaType,
@@ -18,6 +18,14 @@ export const HelloWorld: MCPUIResourceStoryObj = {
   parameters: {
     mcpui: {
       component: HelloWorldMicroUI,
+    },
+  },
+};
+
+export const ChartHelloWorld: MCPUIResourceStoryObj = {
+  parameters: {
+    mcpui: {
+      component: ChartHelloWorldMicroUI,
     },
   },
 };
