@@ -30,7 +30,11 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
       <LeafyGreenProvider darkMode={darkMode}>
         <Wrapper
           {...(renderInCard
-            ? { className: cardStyles, 'data-testid': LGIDS_SECTION.card }
+            ? {
+                className: cardStyles,
+                darkMode,
+                'data-testid': LGIDS_SECTION.card,
+              }
             : {})}
         >
           <section
@@ -38,7 +42,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
             ref={fwdRef}
             {...rest}
           >
-            <H3>{title}</H3>
+            <H3 darkMode={darkMode}>{title}</H3>
             {children}
           </section>
         </Wrapper>

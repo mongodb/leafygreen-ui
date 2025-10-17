@@ -2,13 +2,16 @@ import React, { useRef } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
+  StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { spacing } from '@leafygreen-ui/tokens';
-import { Description, Subtitle } from '@leafygreen-ui/typography';
+import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { ExpandableGrid, ExpandableGridProps } from '.';
 
@@ -19,19 +22,26 @@ const childContainerStyles = css`
   gap: ${spacing[300]}px;
 `;
 
-const generateExpandableGridChildren = (numberToGenerate: number) => {
-  return [...new Array(numberToGenerate)].map((_, i) => (
-    <div key={i} className={childContainerStyles}>
-      <Subtitle>Lorem ipsum {i + 1}</Subtitle>
-      <Description>
+const ExpandableGridChild = ({ index }: { index: number }) => {
+  const { darkMode } = useDarkMode();
+
+  return (
+    <div className={childContainerStyles}>
+      <Subtitle darkMode={darkMode}>Lorem ipsum {index + 1}</Subtitle>
+      <Body darkMode={darkMode}>
         Lorem ipsum dolor sit amet, consectetur ipsum et adipiscing elit, sed do
         eiusmod.
-      </Description>
+      </Body>
     </div>
-  ));
+  );
 };
 
-export default {
+const generateChildren = (numberOfChildren: number) =>
+  [...new Array(numberOfChildren)].map((_, i) => (
+    <ExpandableGridChild key={i} index={i} />
+  ));
+
+const meta: StoryMetaType<typeof ExpandableGrid> = {
   title: 'Composition/FeatureWalls/ExpandableGrid',
   component: ExpandableGrid,
   parameters: {
@@ -72,6 +82,7 @@ export default {
     },
   },
 };
+export default meta;
 
 type TemplateProps = ExpandableGridProps & {
   numberOfChildren: number;
@@ -81,18 +92,21 @@ const Template: StoryFn<TemplateProps> = ({ numberOfChildren, ...rest }) => {
   const gridRef = useRef<HTMLDivElement>(null);
   return (
     <ExpandableGrid {...rest} ref={gridRef}>
-      {generateExpandableGridChildren(numberOfChildren)}
+      {generateChildren(numberOfChildren)}
     </ExpandableGrid>
   );
 };
 
-export const LiveExample = Template.bind({});
-LiveExample.args = {};
-LiveExample.parameters = {
-  chromatic: { disableSnapshot: true },
+export const LiveExample: StoryObj<TemplateProps> = {
+  render: Template,
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
-export const Generated = Template.bind({});
-Generated.args = {
-  children: generateExpandableGridChildren(6),
+export const Generated: StoryObj<TemplateProps> = {
+  render: Template,
+  args: {
+    children: generateChildren(6),
+  },
 };

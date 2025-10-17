@@ -6,8 +6,9 @@ import {
 } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { spacing } from '@leafygreen-ui/tokens';
-import { Description, Subtitle } from '@leafygreen-ui/typography';
+import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Section } from '.';
 
@@ -31,14 +32,16 @@ const sectionChildrenContainerStyles = css`
   gap: ${spacing[400]}px;
 `;
 
-const generateSectionChild = () => {
+const SectionChild = ({ index }: { index: number }) => {
+  const { darkMode } = useDarkMode();
+
   return (
-    <div className={sectionChildContainerStyles}>
-      <Subtitle>Lorem ipsum</Subtitle>
-      <Description>
+    <div key={index} className={sectionChildContainerStyles}>
+      <Subtitle darkMode={darkMode}>Lorem ipsum</Subtitle>
+      <Body darkMode={darkMode}>
         Lorem ipsum dolor sit amet, consectetur ipsum et adipiscing elit, sed do
         eiusmod.
-      </Description>
+      </Body>
     </div>
   );
 };
@@ -46,9 +49,9 @@ const generateSectionChild = () => {
 const generateSectionChildren = (numberToGenerate: number) => {
   return (
     <div className={sectionChildrenContainerStyles}>
-      {Array.from(Array(numberToGenerate).keys()).map(() =>
-        generateSectionChild(),
-      )}
+      {Array.from(Array(numberToGenerate).keys()).map((_, i) => (
+        <SectionChild key={i} index={i} />
+      ))}
     </div>
   );
 };
@@ -57,7 +60,7 @@ export default {
   title: 'Composition/FeatureWalls/Section',
   component: Section,
   decorators: [
-    StoryFn => (
+    (StoryFn: React.ComponentType) => (
       <div className={removeStorybookPadding}>
         <StoryFn />
       </div>
