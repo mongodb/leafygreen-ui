@@ -23,7 +23,7 @@
     "@lg-charts/series-provider": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
   },
   "devDependencies": {
     "@leafygreen-ui/icon": "workspace:^",

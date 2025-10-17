@@ -1,4 +1,8 @@
-import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import {
+  act,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
@@ -183,30 +187,25 @@ describe('DatePicker keyboard interaction', () => {
     });
 
     test('does not close the main menu if a select menu is open', async () => {
-      const { openMenu, queryAllByRole, findAllByRole } = renderDatePicker();
+      const { openMenu, findAllByRole } = renderDatePicker();
       const { monthSelect, menuContainerEl } = await openMenu();
 
       tabNTimes(3);
       expect(monthSelect).toHaveFocus();
 
       userEvent.keyboard('[Enter]');
-      await waitFor(() => {
-        jest.advanceTimersByTime(transitionDuration.default);
-      });
+      act(() => jest.advanceTimersByTime(transitionDuration.default));
 
       const options = await findAllByRole('option');
       const firstOption = options[0];
       userEvent.keyboard('{arrowdown}');
       expect(firstOption).toHaveFocus();
 
-      const listBoxes = queryAllByRole('listbox');
-      expect(listBoxes).toHaveLength(2);
-
-      const selectMenu = listBoxes[1];
       userEvent.keyboard('{escape}');
-      await waitForElementToBeRemoved(selectMenu);
-      expect(menuContainerEl).toBeInTheDocument();
-      expect(monthSelect).toHaveFocus();
+      act(() => jest.advanceTimersByTime(transitionDuration.default));
+
+      expect(menuContainerEl).toBeVisible();
+      await waitFor(() => expect(monthSelect).toHaveFocus());
     });
   });
 

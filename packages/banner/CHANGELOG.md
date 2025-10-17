@@ -1,5 +1,11 @@
 # @leafygreen-ui/banner
 
+## 10.2.0
+
+### Minor Changes
+
+- 8f4889e: Exports `{ Banner }` as named export
+
 ## 10.1.1
 
 ### Patch Changes

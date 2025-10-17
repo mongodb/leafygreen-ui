@@ -1,5 +1,11 @@
 # @lg-chat/message-feedback
 
+## 7.1.0
+
+### Minor Changes
+
+- 0042205: Adds `disabledSend` prop to disable submit button
+
 ## 7.0.3
 
 ### Patch Changes

@@ -1,5 +1,5 @@
 import React, { ComponentProps } from 'react';
-import { PlayFunction } from '@storybook/csf';
+import { PlayFunction } from '@storybook/core/csf';
 import { Meta, ReactRenderer, StoryFn } from '@storybook/react';
 
 import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';

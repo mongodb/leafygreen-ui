@@ -32,11 +32,18 @@ export type CodeProps = Omit<SyntaxProps, 'onCopy' | 'language' | 'onChange'> &
   LgIdProps &
   DarkModeProps & {
     /**
-     * Makes code blocks longer than 5 lines long expandable
+     * Makes code blocks longer than the specified `collapsedLines` expandable
      *
      * @default `false`
      */
     expandable?: boolean;
+
+    /**
+     * The number of lines to display when the code block is collapsed (when `expandable` is true)
+     *
+     * @default 5
+     */
+    collapsedLines?: number;
 
     /**
      * Callback fired when the copy button is clicked via the copy button. Note: When using the `panel` prop, the copy button is rendered within the panel itself, so this callback should be passed as a prop to the `<Panel>` component instead of the `<Code>` component.

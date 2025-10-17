@@ -23,7 +23,7 @@
     "react-markdown": "^8.0.7"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"

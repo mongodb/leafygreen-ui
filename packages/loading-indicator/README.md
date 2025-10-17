@@ -33,10 +33,9 @@ npm install @leafygreen-ui/loading-indicator
 />
 ```
 
-| Prop            | Type            | Description                                                            | Default            |
-| --------------- | --------------- | ---------------------------------------------------------------------- | ------------------ |
-| `displayOption` | `DisplayOption` | Determines the size or orientation of the spinner and description text | `default-vertical` |
-| `description`   | `string`        | Description text                                                       | `-`                |
+| Prop   | Type               | Description                        | Default   |
+| ------ | ------------------ | ---------------------------------- | --------- |
+| `size` | `Size` or `number` | Determines the size of the spinner | `default` |
 
 ## BlobLoader
 

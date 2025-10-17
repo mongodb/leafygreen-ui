@@ -28,7 +28,7 @@
     "@lg-charts/core": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",

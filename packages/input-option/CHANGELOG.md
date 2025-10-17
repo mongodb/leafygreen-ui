@@ -1,5 +1,11 @@
 # @leafygreen-ui/input-option
 
+## 4.1.0
+
+### Minor Changes
+
+- ab8a6ec: Changes wedge y-axsis padding from `8px` to `4px`
+
 ## 4.0.5
 
 ### Patch Changes

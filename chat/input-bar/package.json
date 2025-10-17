@@ -35,7 +35,7 @@
     "react-textarea-autosize": "^8.3.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0",
     "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
   "devDependencies": {

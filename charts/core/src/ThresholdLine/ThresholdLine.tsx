@@ -88,6 +88,7 @@ function getThresholdLineConfig({
       symbolSize: [7, 10],
       symbolRotate: 360,
     },
+    data: [],
   };
 }
 

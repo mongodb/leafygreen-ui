@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { LineProps } from '../Line/Line.types';
+import { LineProps } from '../Series';
 
 /**
  * Generates consistent but realistic-looking test data for storybook

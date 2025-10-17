@@ -3,7 +3,7 @@ import { SeriesName } from '@lg-charts/series-provider';
 type XValue = string | number | Date | null | undefined;
 type YValue = string | number | Date | null | undefined;
 
-export interface LineProps {
+export interface SeriesProps {
   /**
    * Series name used for displaying in tooltip and filtering with the legend.
    */

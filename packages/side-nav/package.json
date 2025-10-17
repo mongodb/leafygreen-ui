@@ -30,7 +30,7 @@
     "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
   },
   "devDependencies": {
     "@leafygreen-ui/select": "workspace:^",

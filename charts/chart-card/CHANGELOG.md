@@ -1,5 +1,11 @@
 # @lg-charts/chart-card
 
+## 1.1.0
+
+### Minor Changes
+
+- e0c767c: Supports `React.ReactNode` as type for `title` prop
+
 ## 1.0.6
 
 ### Patch Changes

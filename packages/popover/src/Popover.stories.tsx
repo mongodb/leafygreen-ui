@@ -8,7 +8,7 @@ import { StoryFn, StoryObj } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { color } from '@leafygreen-ui/tokens';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
 import { getPopoverRenderModeProps } from './utils/getPopoverRenderModeProps';
 import {
@@ -21,10 +21,10 @@ import {
   ToggleEvent,
 } from './Popover';
 
-const popoverStyle = css`
+const popoverStyles = css`
   border: 1px solid ${palette.gray.light1};
   text-align: center;
-  padding: 12px;
+  padding: ${spacing[300]}px;
   max-height: 100%;
   overflow: hidden;
   // Reset these properties since they'll be inherited
@@ -91,7 +91,7 @@ const meta: StoryMetaType<typeof Popover> = {
       },
       args: {
         active: true,
-        children: <div className={popoverStyle}>Popover content</div>,
+        children: <div className={popoverStyles}>Popover content</div>,
       },
 
       decorator: Instance => {
@@ -211,7 +211,7 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
         {buttonText}
       </Button>
       <Popover {...popoverProps}>
-        <div className={popoverStyle}>Popover content</div>
+        <div className={popoverStyles}>Popover content</div>
       </Popover>
     </div>
   );
@@ -244,7 +244,7 @@ const PortalPopoverInScrollableContainer = ({
             portalRef={portalRef}
             scrollContainer={scrollContainer.current}
           >
-            <div className={popoverStyle}>Popover content</div>
+            <div className={popoverStyles}>Popover content</div>
           </Popover>
         </Button>
       </div>
@@ -295,7 +295,7 @@ const InlinePopover = ({ buttonText, ...props }: PopoverStoryProps) => {
         refEl={buttonRef}
         renderMode={RenderMode.Inline}
       >
-        <div className={popoverStyle}>Popover content</div>
+        <div className={popoverStyles}>Popover content</div>
       </Popover>
     </div>
   );

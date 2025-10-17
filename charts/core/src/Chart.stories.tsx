@@ -5,7 +5,7 @@ import type { StoryObj } from '@storybook/react';
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
-import { LineProps } from './Line';
+import { LineProps } from './Series';
 import { makeLineData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
@@ -27,6 +27,16 @@ import {
 
 const numOfLineColors = 15;
 const lineData = makeLineData(numOfLineColors);
+
+// Dynamically calculate x-axis min/max from the generated data to avoid timezone issues
+const allXValues =
+  lineData[0]?.data
+    ?.filter(([date]) => date != null)
+    .map(([date]) => new Date(date!).getTime()) ?? [];
+const xAxisMin = Math.min(...allXValues);
+const xAxisMax = Math.max(...allXValues);
+const yAxisMin = 0;
+const yAxisMax = 2500;
 
 export default {
   title: 'Composition/Charts/Core',
@@ -78,10 +88,14 @@ export const LiveExample: StoryObj<{
   xAxisType: XAxisProps['type'];
   xAxisFormatter: XAxisProps['formatter'];
   xAxisLabel: XAxisProps['label'];
+  xAxisMin: XAxisProps['min'];
+  xAxisMax: XAxisProps['max'];
   renderYAxis: boolean;
   yAxisType: YAxisProps['type'];
   yAxisFormatter: YAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
+  yAxisMin: YAxisProps['min'];
+  yAxisMax: YAxisProps['max'];
   renderTooltip: boolean;
   tooltipSeriesValueFormatter: ChartTooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
@@ -89,7 +103,7 @@ export const LiveExample: StoryObj<{
   headerShowDivider: ChartHeaderProps['showDivider'];
   zoomSelectXAxis: boolean;
   zoomSelectYAxis: boolean;
-  zoomSelectCallback;
+  zoomSelectCallback: ChartProps['onZoomSelect'];
   renderEventMarkerLine: boolean;
   eventMarkerLineMessage: EventMarkerLineProps['message'];
   eventMarkerLineLabel: EventMarkerLineProps['label'];
@@ -115,9 +129,13 @@ export const LiveExample: StoryObj<{
     renderXAxis: true,
     xAxisType: 'time',
     xAxisLabel: 'X-Axis Label',
+    xAxisMin,
+    xAxisMax,
     renderYAxis: true,
     yAxisType: 'value',
     yAxisLabel: 'Y-Axis Label',
+    yAxisMin,
+    yAxisMax,
     renderTooltip: true,
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
@@ -158,7 +176,6 @@ export const LiveExample: StoryObj<{
         category: 'Chart',
       },
     },
-    category: 'Chart',
     verticalGridLines: {
       control: 'boolean',
       description: 'Show vertical grid lines',
@@ -191,7 +208,7 @@ export const LiveExample: StoryObj<{
     },
     xAxisType: {
       control: 'select',
-      options: ['time', 'value', 'category', 'log'],
+      options: ['time', 'value', 'log'],
       description: 'Type of x-axis',
       name: 'Type',
       table: {
@@ -213,6 +230,22 @@ export const LiveExample: StoryObj<{
         category: 'XAxis',
       },
     },
+    xAxisMin: {
+      control: 'number',
+      description: 'Minimum value of x-axis',
+      name: 'Min',
+      table: {
+        category: 'XAxis',
+      },
+    },
+    xAxisMax: {
+      control: 'number',
+      description: 'Maximum value of x-axis',
+      name: 'Max',
+      table: {
+        category: 'XAxis',
+      },
+    },
     renderYAxis: {
       control: 'boolean',
       description: 'Render Y-axis',
@@ -223,7 +256,7 @@ export const LiveExample: StoryObj<{
     },
     yAxisType: {
       control: 'select',
-      options: ['time', 'value', 'category', 'log'],
+      options: ['time', 'value', 'log'],
       description: 'Type of y-axis',
       name: 'Type',
       table: {
@@ -241,6 +274,22 @@ export const LiveExample: StoryObj<{
       control: 'text',
       description: 'Y-axis label',
       name: 'Label',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    yAxisMin: {
+      control: 'number',
+      description: 'Minimum value of y-axis',
+      name: 'Min',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    yAxisMax: {
+      control: 'number',
+      description: 'Maximum value of y-axis',
+      name: 'Max',
       table: {
         category: 'YAxis',
       },
@@ -450,8 +499,12 @@ export const LiveExample: StoryObj<{
     renderYAxis,
     xAxisType,
     xAxisFormatter,
+    xAxisMin,
+    xAxisMax,
     yAxisType,
     yAxisFormatter,
+    yAxisMin,
+    yAxisMax,
     xAxisLabel,
     yAxisLabel,
     renderTooltip,
@@ -519,6 +572,8 @@ export const LiveExample: StoryObj<{
             type={xAxisType}
             formatter={xAxisFormatter}
             label={xAxisLabel}
+            min={xAxisMin}
+            max={xAxisMax}
           />
         )}
         {renderYAxis && (
@@ -526,6 +581,8 @@ export const LiveExample: StoryObj<{
             type={yAxisType}
             formatter={yAxisFormatter}
             label={yAxisLabel}
+            min={yAxisMin}
+            max={yAxisMax}
           />
         )}
         {data.map(({ name, data }) => (

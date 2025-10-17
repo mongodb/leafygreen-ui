@@ -9,21 +9,23 @@ export const App = () => {
 
   return (
     <>
-      {/* TODO: Please specify autoFocus prop on the element that should receive initial focus. Alternatively, you may rely on the default focus behavior which will focus the first focusable element in the children. */}
-      <Modal 
+      {/* Note: The initialFocus prop now supports React refs in addition to selector strings. Consider using a ref for better type safety. */}
+      <Modal
         open={open}
         setOpen={setOpen}
         backdropClassName="modal-backdrop"
         className="modal-content"
+        initialFocus="#modal-button"
       >
         <button id="modal-button">Modal Button</button>
       </Modal>
-      {/* TODO: Please specify autoFocus prop on the element that should receive initial focus. Alternatively, you may rely on the default focus behavior which will focus the first focusable element in the children. */}
+      {/* Note: The initialFocus prop now supports React refs in addition to selector strings. Consider using a ref for better type safety. */}
       <ConfirmationModal
         open={open}
         setOpen={setOpen}
         backdropClassName="confirmation-backdrop"
         className="confirmation-content"
+        initialFocus="#confirmation-button"
         title="Confirm"
       >
         <button id="confirmation-button">Confirm</button>
