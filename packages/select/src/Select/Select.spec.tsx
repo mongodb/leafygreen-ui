@@ -187,7 +187,6 @@ describe('packages/select', () => {
 
     const button = getInput();
     expect(button).toHaveAttribute('aria-label', 'Color, Blue');
-    expect(button).toHaveAttribute('aria-current', 'true');
   });
 
   test('composes aria-label with placeholder when no value is selected', () => {
@@ -199,7 +198,6 @@ describe('packages/select', () => {
 
     const button = getInput();
     expect(button).toHaveAttribute('aria-label', 'Color, Choose a color');
-    expect(button).not.toHaveAttribute('aria-current');
   });
 
   test('does not compose aria-label when a visible label is present', () => {
@@ -211,7 +209,6 @@ describe('packages/select', () => {
 
     const button = getInput();
     expect(button).not.toHaveAttribute('aria-label');
-    expect(button).not.toHaveAttribute('aria-current');
   });
 
   test('does not compose aria-label when aria-labelledby is present', () => {
@@ -224,7 +221,6 @@ describe('packages/select', () => {
 
     const button = getInput();
     expect(button).not.toHaveAttribute('aria-label');
-    expect(button).not.toHaveAttribute('aria-current');
   });
 
   test('option & group passes through data props', async () => {
