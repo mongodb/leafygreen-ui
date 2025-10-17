@@ -550,8 +550,8 @@ export const MaxWidth: StoryObj<PopoverStoryProps> = {
               )}
             >
               <Body>
-                The height can be further restricted with the{' '}
-                <InlineCode>maxHeight</InlineCode> prop
+                The width can be further restricted with the{' '}
+                <InlineCode>maxWidth</InlineCode> prop
               </Body>
               {paragraphs.map((p, i) => (
                 <Body key={i}>{p}</Body>
