@@ -1,5 +1,11 @@
 # @lg-tools/codemods
 
+## 0.5.1
+
+### Patch Changes
+
+- 8f4889e: Adds `banner` to list of code-mod-able components for "named-exports" codemod
+
 ## 0.5.0
 
 ### Minor Changes

@@ -1,6 +1,5 @@
 import React, { type ComponentProps } from 'react';
-import { Args } from '@storybook/csf';
-import { StoryFn } from '@storybook/react';
+import { Args, StoryFn } from '@storybook/react';
 
 import { type LeafyGreenProviderProps, StoryMetaType } from './StoryMeta.types';
 
