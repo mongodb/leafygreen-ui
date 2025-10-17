@@ -33,10 +33,12 @@ export const Label = Polymorphic<BaseLabelProps>(
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
     const { Component } = usePolymorphic(as);
 
+    const lgIds = getLgIds(dataLgId ?? getLgIds().label);
+
     return (
       <Component
-        data-lgid={getLgIds(dataLgId).label}
-        data-testid={getLgIds(dataLgId).label}
+        data-lgid={lgIds.root}
+        data-testid={lgIds.root}
         className={cx(
           getLabelStyles(theme),
           labelTypeScaleStyles[baseFontSize],
