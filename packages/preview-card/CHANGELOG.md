@@ -1,5 +1,13 @@
 # @leafygreen-ui/preview-card
 
+## 0.2.4
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/button@25.1.1
+
 ## 0.2.3
 
 ### Patch Changes

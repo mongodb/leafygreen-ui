@@ -1,5 +1,11 @@
 # @leafygreen-ui/avatar
 
+## 3.1.3
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+
 ## 3.1.2
 
 ### Patch Changes

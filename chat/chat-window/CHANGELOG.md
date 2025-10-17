@@ -1,5 +1,13 @@
 # @lg-chat/chat-window
 
+## 4.1.7
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [c8559f3]
+  - @lg-chat/title-bar@4.0.9
+
 ## 4.1.6
 
 ### Patch Changes

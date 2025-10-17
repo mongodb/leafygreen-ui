@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 12.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+
 ## 12.1.0
 
 ### Minor Changes

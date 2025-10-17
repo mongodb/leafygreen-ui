@@ -1,5 +1,11 @@
 # @lg-tools/storybook-utils
 
+## 0.3.3
+
+### Patch Changes
+
+- e65be89: Updates Storybook react & core versions
+
 ## 0.3.2
 
 ### Patch Changes

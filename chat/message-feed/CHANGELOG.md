@@ -1,5 +1,16 @@
 # @lg-chat/message-feed
 
+## 7.0.4
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [c8559f3]
+  - @lg-chat/message-rating@5.0.4
+  - @leafygreen-ui/button@25.1.1
+  - @lg-chat/message@8.2.2
+  - @lg-chat/avatar@7.0.3
+
 ## 7.0.3
 
 ### Patch Changes

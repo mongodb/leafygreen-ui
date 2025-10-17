@@ -1,5 +1,15 @@
 # @lg-chat/lg-markdown
 
+## 4.2.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [37be24b]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/code@20.2.0
+  - @leafygreen-ui/typography@22.1.4
+
 ## 4.2.0
 
 ### Minor Changes

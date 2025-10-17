@@ -1,5 +1,15 @@
 # @leafygreen-ui/form-footer
 
+## 9.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/split-button@6.1.5
+  - @leafygreen-ui/banner@10.2.1
+  - @leafygreen-ui/button@25.1.1
+
 ## 9.1.0
 
 ### Minor Changes

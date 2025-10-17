@@ -1,5 +1,16 @@
 # @lg-chat/title-bar
 
+## 4.0.9
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/badge@10.2.1
+  - @lg-chat/avatar@7.0.3
+
 ## 4.0.8
 
 ### Patch Changes

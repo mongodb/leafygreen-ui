@@ -1,5 +1,16 @@
 # @leafygreen-ui/marketing-modal
 
+## 8.1.2
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [9778d7b]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/modal@20.2.0
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/button@25.1.1
+
 ## 8.1.1
 
 ### Patch Changes
