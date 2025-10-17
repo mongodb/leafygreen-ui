@@ -17,5 +17,4 @@ export interface MCPUIResourceStoryObj extends StoryObj {
       component: ComponentType;
     };
   } & StoryObj['parameters'];
-  // args: MCPUIStoryArgs;
 }
