@@ -530,6 +530,22 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       }),
     } as const;
 
+    /**
+     * When aria-label is provided, we compose it with the selected value for screen readers. This is the default
+     * behavior for native select elements. When not doing this, only aria-label was being announced even when a value
+     * was selected.
+     */
+    const composedAriaLabel = useMemo(() => {
+      if (!ariaLabel || label || ariaLabelledby) {
+        return undefined;
+      }
+
+      const selectedText =
+        selectedOption !== null ? selectedOption.props.children : placeholder;
+
+      return `${ariaLabel}, ${selectedText}`;
+    }, [ariaLabel, ariaLabelledby, label, placeholder, selectedOption]);
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div
@@ -618,7 +634,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               onOpen={onOpen}
               onClose={onClose}
               aria-labelledby={labelId}
-              aria-label={!label && !ariaLabelledby ? ariaLabel : undefined}
+              aria-label={composedAriaLabel}
               aria-controls={menuId}
               aria-expanded={open}
               aria-describedby={descriptionId}
