@@ -101,4 +101,10 @@ export type InlineMessageFeedbackProps = Required<
      * This is mainly for internal use as most instances of InlineMessageFeedback should be closed solely by onCancel.
      */
     onClose?: MouseEventHandler<HTMLButtonElement>;
+
+    /**
+     * Whether the submit button should be disabled
+     * @default false
+     */
+    disabledSend?: boolean;
   };

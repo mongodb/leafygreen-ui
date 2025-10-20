@@ -37,7 +37,7 @@
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0",
     "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/fixed-chat-window",
