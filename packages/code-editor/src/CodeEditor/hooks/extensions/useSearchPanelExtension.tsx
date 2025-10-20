@@ -29,7 +29,7 @@ export function useSearchPanelExtension({
       const baseStyles = {
         position: 'absolute',
         top: '0',
-        right: '0',
+        right: '-1px',
         left: '0',
         display: 'flex',
         justifyContent: 'flex-end',

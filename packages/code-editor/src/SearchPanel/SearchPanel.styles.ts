@@ -24,6 +24,8 @@ const getBaseContainerStyles = (
     InteractionState.Default
   ]};
   font-size: ${baseFontSize}px;
+  border-right: 1px solid
+    ${color[theme].border[Variant.Secondary][InteractionState.Default]};
   border-bottom-left-radius: ${borderRadius[150]}px;
   border-bottom-right-radius: ${borderRadius[150]}px;
   width: 100%;
