@@ -36,7 +36,6 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       text,
       name,
       deselected,
-      readOnly,
       onClose,
       onOpen,
       state,

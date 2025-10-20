@@ -85,7 +85,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       defaultValue,
       value,
       onChange,
-      readOnly,
       portalContainer,
       portalRef,
       scrollContainer,
@@ -142,15 +141,15 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     }, [size, open, disabled, lgIds]);
 
     useEffect(() => {
-      if (value !== undefined && onChange === undefined && readOnly !== true) {
+      if (value !== undefined && onChange === undefined) {
         console.warn(
           'You provided a `value` prop to a form field without an `onChange` handler. ' +
             'This will render a read-only field. ' +
             'If the field should be mutable use `defaultValue`. ' +
-            'Otherwise, set either `onChange` or `readOnly`.',
+            'Otherwise, set `onChange`.',
         );
       }
-    }, [onChange, readOnly, value]);
+    }, [onChange, value]);
 
     useEffect(() => {
       if (openProp !== undefined && setOpenProp === undefined) {
@@ -623,7 +622,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               id={menuButtonId}
               ref={menuButtonRef}
               name={name}
-              readOnly={readOnly}
               value={getOptionValue(selectedOption)}
               text={
                 selectedOption !== null
