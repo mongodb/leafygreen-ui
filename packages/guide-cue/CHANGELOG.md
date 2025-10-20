@@ -1,5 +1,27 @@
 # @leafygreen-ui/guide-cue
 
+## 8.1.0
+
+### Minor Changes
+
+- 4ea4f00: [LG-5008](https://jira.mongodb.org/browse/LG-5008)
+
+  - Improves positioning logic with enhanced positioning fallback to optimize popover element visibility
+  - Assigns `GuideCue` component's internal beacon ref for better positioning of tooltip instances relative to beacon
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/tooltip@14.2.1
+  - @leafygreen-ui/button@25.1.1
+
 ## 8.0.6
 
 ### Patch Changes
