@@ -365,6 +365,9 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1(react@18.3.1)
     devDependencies:
+      '@leafygreen-ui/drawer':
+        specifier: workspace:^
+        version: link:../../packages/drawer
       '@lg-chat/avatar':
         specifier: workspace:^
         version: link:../avatar
@@ -386,6 +389,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
+      '@storybook/test':
+        specifier: ^8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   chat/fixed-chat-window:
     dependencies:
@@ -1870,6 +1876,55 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  packages/feature-walls:
+    dependencies:
+      '@leafygreen-ui/badge':
+        specifier: workspace:^
+        version: link:../badge
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
+      '@leafygreen-ui/card':
+        specifier: workspace:^
+        version: link:../card
+      '@leafygreen-ui/descendants':
+        specifier: workspace:^
+        version: link:../descendants
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
+      '@leafygreen-ui/vertical-stepper':
+        specifier: workspace:^
+        version: link:../vertical-stepper
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
+      '@lg-tools/storybook-utils':
+        specifier: workspace:^
+        version: link:../../tools/storybook-utils
+
   packages/form-field:
     dependencies:
       '@leafygreen-ui/emotion':
@@ -3127,6 +3182,9 @@ importers:
 
   packages/skeleton-loader:
     dependencies:
+      '@leafygreen-ui/a11y':
+        specifier: workspace:^
+        version: link:../a11y
       '@leafygreen-ui/card':
         specifier: workspace:^
         version: link:../card
