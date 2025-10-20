@@ -298,7 +298,6 @@ export function SearchPanel({
               value={searchString}
               // CodeMirror looks for this attribute to refocus when CMD+F is pressed and the panel is already open
               main-field="true"
-              // @ts-expect-error - The TextInput component forwards refs, but the types do not explicitly include the `ref` prop.
               ref={inputRef}
             />
             <div className={findOptionsContainerStyles}>
