@@ -10,6 +10,8 @@ async function getBatchBuildOptions(
     '@lg-tools/build/config/utils/constructUMDGlobalName.mjs'
   );
 
+  const { nodeExternals } = await import('rollup-plugin-node-externals');
+
   const { esmConfig, umdConfig } = await import(
     '@lg-tools/build/config/rollup.config.mjs'
   );
@@ -33,6 +35,10 @@ async function getBatchBuildOptions(
             dir: `dist/umd`,
           },
         ],
+        plugins: [
+          nodeExternals({ deps: true, include: [/@emotion/] }),
+          ...umdConfig.plugins,
+        ],
       };
     }),
   ];
@@ -45,14 +51,28 @@ export async function buildBatch(
   batch: Array<string>,
   verbose = false,
 ): Promise<void> {
+  verbose && console.log('Building batch', batch);
   try {
     const rollupConfigs = await getBatchBuildOptions(batch);
 
     for (const config of rollupConfigs) {
       const bundle = await rollup(config);
 
-      if (verbose) {
-        console.log(bundle.watchFiles);
+      for (const opts of config.output) {
+        const out = await bundle.generate(opts);
+
+        for (const output of out.output) {
+          if (output.type === 'chunk') {
+            const { code, name } = output;
+            const emotionServerImport = code.includes('emotion/server');
+
+            if (emotionServerImport) {
+              throw new Error(
+                `Error building icon: ${name}. Incorrectly imports or requires @emotion/server package directly`,
+              );
+            }
+          }
+        }
       }
 
       await Promise.all(config.output.map(bundle.write));
