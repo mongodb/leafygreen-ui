@@ -22,6 +22,11 @@ async function getBatchBuildOptions(
       ...esmConfig,
       input: batch.map(icon => `${GENERATED_DIR}/${icon}.tsx`),
       output: [esmConfig.output],
+      plugins: [
+        // Ensure @emotion packages are externalized (not bundled into icons)
+        nodeExternals({ deps: true, include: [/@emotion/] }),
+        ...esmConfig.plugins,
+      ],
     },
     // UMD builds need a single input file
     ...batch.map(iconName => {
@@ -36,6 +41,7 @@ async function getBatchBuildOptions(
           },
         ],
         plugins: [
+          // Ensure @emotion packages are externalized (not bundled into icons)
           nodeExternals({ deps: true, include: [/@emotion/] }),
           ...umdConfig.plugins,
         ],
