@@ -47,6 +47,7 @@ export const ContextMenu = ({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [selectedText, setSelectedText] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   /**
    * Handle showing and positioning custom menu onContextMenu
@@ -160,6 +161,7 @@ export const ContextMenu = ({
             variant={MenuVariant.Compact}
             data-lgid={lgIds.contextMenu}
             data-testid={lgIds.contextMenu}
+            refEl={menuRef}
           >
             {menuItems.map((item, index) => {
               if (item.isSeparator) {
