@@ -1,18 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { render } from '@testing-library/react';
-
-import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 import Description from './Description';
 
-const renderDescription = ({
-  as,
-  children = 'Test description',
-}: {
-  as?: PolymorphicAs;
-  children?: ReactNode;
-}) => {
-  return render(<Description as={as}>{children}</Description>);
+const renderDescription = (props: React.ComponentProps<typeof Description>) => {
+  return render(<Description {...props} />);
 };
 
 describe('Description Component', () => {
@@ -36,5 +28,24 @@ describe('Description Component', () => {
       children: <span>Test Description</span>,
     });
     expect(container.querySelector('div')).toBeInTheDocument();
+  });
+
+  test('renders with a default data-lgid', () => {
+    const { container } = renderDescription({ children: 'Test description' });
+    expect(container.querySelector('p')).toHaveAttribute(
+      'data-lgid',
+      'lg-typography-description',
+    );
+  });
+
+  test('renders with a custom data-lgid', () => {
+    const { container } = renderDescription({
+      children: 'Test description',
+      'data-lgid': 'lg-custom-lgid',
+    });
+    expect(container.querySelector('p')).toHaveAttribute(
+      'data-lgid',
+      'lg-custom-lgid',
+    );
   });
 });
