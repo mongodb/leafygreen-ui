@@ -384,4 +384,123 @@ describe('packages/input-bar', () => {
       );
     });
   });
+
+  describe('onClickStopButton', () => {
+    test('renders stop button during loading state', () => {
+      renderInputBar({ state: State.Loading });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      expect(stopButton).toBeInTheDocument();
+      expect(stopButton).not.toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('does not render send button during loading state', () => {
+      renderInputBar({ state: State.Loading });
+
+      const sendButton = screen.queryByRole('button', { name: 'Send message' });
+      expect(sendButton).not.toBeInTheDocument();
+    });
+
+    test('calls onClickStopButton when button is clicked during loading state', () => {
+      const onClickStopButton = jest.fn();
+      renderInputBar({ state: State.Loading, onClickStopButton });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      userEvent.click(stopButton);
+
+      expect(onClickStopButton).toHaveBeenCalledTimes(1);
+    });
+
+    test('restores previous message when stop is clicked in uncontrolled mode', () => {
+      const onClickStopButton = jest.fn();
+      const onMessageSend = jest.fn();
+      const { rerender } = renderInputBar({ onClickStopButton, onMessageSend });
+
+      const textarea = screen.getByRole('textbox');
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+
+      userEvent.type(textarea, TEST_INPUT_TEXT);
+      expect(textarea).toHaveValue(TEST_INPUT_TEXT);
+
+      userEvent.click(sendButton);
+      expect(onMessageSend).toHaveBeenCalledTimes(1);
+      expect(textarea).toHaveValue('');
+
+      rerender(
+        <LeafyGreenChatProvider variant={Variant.Compact}>
+          <InputBar
+            state={State.Loading}
+            onClickStopButton={onClickStopButton}
+            onMessageSend={onMessageSend}
+          />
+        </LeafyGreenChatProvider>,
+      );
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+
+      userEvent.click(stopButton);
+
+      expect(onClickStopButton).toHaveBeenCalledTimes(1);
+      expect(textarea).toHaveValue(TEST_INPUT_TEXT);
+    });
+
+    test('does not call onMessageSend when stopping during loading state', () => {
+      const onMessageSend = jest.fn();
+      const onClickStopButton = jest.fn();
+
+      renderInputBar({
+        state: State.Loading,
+        onMessageSend,
+        onClickStopButton,
+        textareaProps: { value: TEST_INPUT_TEXT },
+      });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      userEvent.click(stopButton);
+
+      expect(onClickStopButton).toHaveBeenCalledTimes(1);
+      expect(onMessageSend).not.toHaveBeenCalled();
+    });
+
+    test('disabled prop takes precedence over loading state', () => {
+      const onClickStopButton = jest.fn();
+      renderInputBar({
+        state: State.Loading,
+        disabled: true,
+        onClickStopButton,
+      });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      expect(stopButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('disableSend prop takes precedence over loading state', () => {
+      const onClickStopButton = jest.fn();
+      renderInputBar({
+        state: State.Loading,
+        disableSend: true,
+        onClickStopButton,
+      });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      expect(stopButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('does not call onClickStopButton if not in loading state', () => {
+      const onClickStopButton = jest.fn();
+      const onMessageSend = jest.fn();
+
+      renderInputBar({
+        onClickStopButton,
+        onMessageSend,
+        textareaProps: { value: TEST_INPUT_TEXT },
+      });
+
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+      userEvent.click(sendButton);
+
+      expect(onClickStopButton).not.toHaveBeenCalled();
+      expect(onMessageSend).toHaveBeenCalledTimes(1);
+    });
+  });
 });
