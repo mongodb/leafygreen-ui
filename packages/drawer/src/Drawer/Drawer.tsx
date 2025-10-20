@@ -157,9 +157,18 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           return;
         }
 
-        // Find and focus the first focusable element in the drawer
-        const firstFocusableElement = queryFirstFocusableElement(ref.current);
-        firstFocusableElement?.focus();
+        const autoFocusElement = ref.current.querySelector(
+          '[autofocus]',
+        ) as HTMLElement;
+
+        if (autoFocusElement) {
+          // Auto focus element found, focus it
+          autoFocusElement.focus();
+        } else {
+          // Find and focus the first focusable element in the drawer
+          const firstFocusableElement = queryFirstFocusableElement(ref.current);
+          firstFocusableElement?.focus();
+        }
       } else if (!open && hasHandledFocusRef.current) {
         // Check if the current focus is not in the drawer
         // This means the user has navigated away from the drawer, like the toolbar, and we should not restore focus.
