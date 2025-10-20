@@ -37,7 +37,6 @@ interface DisciplinedSeriesOption<EChartType extends SeriesOption> {
 // all supported series options types disciplined and grouped into a single interface
 export interface EChartSeriesOptions {
   line: DisciplinedSeriesOption<LineSeriesOption>;
-  // TODO: to be leveraged in a follow-up PR to add Bar chart support
   bar: DisciplinedSeriesOption<BarSeriesOption>;
 }
 
