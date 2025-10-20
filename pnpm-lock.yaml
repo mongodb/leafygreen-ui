@@ -3133,6 +3133,9 @@ importers:
 
   packages/skeleton-loader:
     dependencies:
+      '@leafygreen-ui/a11y':
+        specifier: workspace:^
+        version: link:../a11y
       '@leafygreen-ui/card':
         specifier: workspace:^
         version: link:../card
