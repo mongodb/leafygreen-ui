@@ -1,1 +1,1 @@
-export { makeLineData } from './makeLineData.testUtils';
+export { makeSeriesData } from './makeSeriesData.testUtils';
