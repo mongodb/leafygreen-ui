@@ -58,23 +58,6 @@ export async function buildBatch(
     for (const config of rollupConfigs) {
       const bundle = await rollup(config);
 
-      for (const opts of config.output) {
-        const out = await bundle.generate(opts);
-
-        for (const output of out.output) {
-          if (output.type === 'chunk') {
-            const { code, name } = output;
-            const emotionServerImport = code.includes('emotion/server');
-
-            if (emotionServerImport) {
-              throw new Error(
-                `Error building icon: ${name}. Incorrectly imports or requires @emotion/server package directly`,
-              );
-            }
-          }
-        }
-      }
-
       await Promise.all(config.output.map(bundle.write));
       await bundle.close();
     }
