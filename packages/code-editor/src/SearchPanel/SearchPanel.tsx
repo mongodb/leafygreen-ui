@@ -84,25 +84,28 @@ export function SearchPanel({
   const isInitialRender = useRef(true);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const updateSelectedIndex = useCallback(() => {
-    const cursor = query.getCursor(view.state.doc);
-    const selection = view.state.selection.main;
-    let index = 1;
-    let result = cursor.next();
+  const updateSelectedIndex = useCallback(
+    (searchQuery: SearchQuery) => {
+      const cursor = searchQuery.getCursor(view.state.doc);
+      const selection = view.state.selection.main;
+      let index = 1;
+      let result = cursor.next();
 
-    while (!result.done) {
-      if (
-        result.value.from === selection.from &&
-        result.value.to === selection.to
-      ) {
-        setSelectedIndex(index);
-        return;
+      while (!result.done) {
+        if (
+          result.value.from === selection.from &&
+          result.value.to === selection.to
+        ) {
+          setSelectedIndex(index);
+          return;
+        }
+        index++;
+        result = cursor.next();
       }
-      index++;
-      result = cursor.next();
-    }
-    setSelectedIndex(null);
-  }, [query, view]);
+      setSelectedIndex(null);
+    },
+    [view],
+  );
 
   const updateFindCount = useCallback(
     (searchQuery: SearchQuery) => {
@@ -155,6 +158,7 @@ export function SearchPanel({
     }
 
     updateFindCount(newQuery);
+    updateSelectedIndex(newQuery);
   }, [
     replaceString,
     searchString,
@@ -163,6 +167,7 @@ export function SearchPanel({
     isWholeWord,
     view,
     updateFindCount,
+    updateSelectedIndex,
   ]);
 
   /**
@@ -212,23 +217,23 @@ export function SearchPanel({
 
   const handleFindNext = useCallback(() => {
     findNext(view);
-    updateSelectedIndex();
-  }, [view, updateSelectedIndex]);
+    updateSelectedIndex(query);
+  }, [view, updateSelectedIndex, query]);
 
   const handleFindPrevious = useCallback(() => {
     findPrevious(view);
-    updateSelectedIndex();
-  }, [view, updateSelectedIndex]);
+    updateSelectedIndex(query);
+  }, [view, updateSelectedIndex, query]);
 
   const handleReplace = useCallback(() => {
     replaceNext(view);
-    updateSelectedIndex();
+    updateSelectedIndex(query);
     updateFindCount(query);
   }, [view, updateSelectedIndex, updateFindCount, query]);
 
   const handleReplaceAll = useCallback(() => {
     replaceAll(view);
-    updateSelectedIndex();
+    updateSelectedIndex(query);
     updateFindCount(query);
   }, [view, updateSelectedIndex, updateFindCount, query]);
 
