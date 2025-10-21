@@ -1,18 +1,24 @@
 import React, { createContext, useContext } from 'react';
 
+import { DarkModeProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
 import { getLgIds, type GetLgIdsReturnType } from '../utils/getLgIds';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
 import { CodeEditorProps } from './CodeEditor.types';
 
+interface BaseFontSizeProps {
+  baseFontSize: BaseFontSize | 14 | undefined;
+}
+
 /**
  * Internal context values provided by CodeEditor to its children (like Panel).
  */
 export interface CodeEditorContextValue
-  extends Pick<
-    CodeEditorProps,
-    'maxWidth' | 'minWidth' | 'width' | 'readOnly'
-  > {
+  extends DarkModeProps,
+    BaseFontSizeProps,
+    Pick<CodeEditorProps, 'maxWidth' | 'minWidth' | 'width' | 'readOnly'> {
   /**
    * Function to retrieve the current editor contents.
    */
@@ -88,6 +94,8 @@ const defaultContextValue: CodeEditorContextValue = {
   readOnly: false,
   undoDepth: 0,
   redoDepth: 0,
+  baseFontSize: 13,
+  darkMode: false,
 };
 
 const CodeEditorContext =

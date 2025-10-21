@@ -47,7 +47,7 @@ import { PanelProps } from './Panel.types';
 export function Panel({
   baseFontSize: baseFontSizeProp,
   customSecondaryButtons,
-  darkMode,
+  darkMode: darkModeProp,
   downloadFileName,
   innerContent,
   onCopyClick,
@@ -63,10 +63,10 @@ export function Panel({
 }: PanelProps) {
   const [shortcutsModalOpen, setShortcutsModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { theme } = useDarkMode(darkMode);
-  const baseFontSize = useUpdatedBaseFontSize();
 
   const {
+    baseFontSize: contextBaseFontSize,
+    darkMode: contextDarkMode,
     downloadContent,
     formatCode,
     getContents,
@@ -80,6 +80,11 @@ export function Panel({
     undoDepth,
     width,
   } = useCodeEditorContext();
+
+  const { theme } = useDarkMode(darkModeProp || contextDarkMode);
+  const baseFontSize = useUpdatedBaseFontSize(
+    baseFontSizeProp || contextBaseFontSize,
+  );
 
   const handleFormatClick = async () => {
     if (formatCode) {
@@ -144,10 +149,13 @@ export function Panel({
         <div className={getPanelButtonsStyles()}>
           {showFormatButton && (
             <Tooltip
+              darkMode={theme === 'dark'}
+              baseFontSize={baseFontSize}
               align="top"
               justify="middle"
               trigger={
                 <IconButton
+                  darkMode={theme === 'dark'}
                   onClick={handleFormatClick}
                   aria-label="Format code"
                   data-lgid={lgIds.panelFormatButton}
@@ -171,6 +179,7 @@ export function Panel({
             <Menu
               trigger={
                 <IconButton
+                  darkMode={theme === 'dark'}
                   aria-label="Show more actions"
                   data-lgid={lgIds.panelSecondaryMenuButton}
                 >
@@ -182,6 +191,7 @@ export function Panel({
               open={menuOpen}
               setOpen={setMenuOpen}
               data-lgid={lgIds.panelSecondaryMenu}
+              darkMode={theme === 'dark'}
             >
               <MenuItem
                 glyph={<UndoIcon />}
@@ -242,6 +252,8 @@ export function Panel({
         open={shortcutsModalOpen}
         setOpen={setShortcutsModalOpen}
         className={ModalStyles}
+        initialFocus="auto"
+        darkMode={theme === 'dark'}
       >
         <ShortcutTable />
       </Modal>
