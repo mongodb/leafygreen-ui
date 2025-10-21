@@ -5,6 +5,20 @@
 // we still need to declare the path relative to `<rootDir>` (repository root)
 
 module.exports = {
+  // Collect coverage information
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'packages/**/src/**/*.{ts,tsx}',
+    'tools/**/src/**/*.{ts,tsx}',
+    'charts/**/src/**/*.{ts,tsx}',
+    'chat/**/src/**/*.{ts,tsx}',
+    '!**/*.spec.{ts,tsx}',
+    '!**/*.stories.{ts,tsx}',
+    '!**/*.types.{ts,tsx}',
+    '!**/index.{ts,tsx}',
+    '!**/*.d.ts',
+  ],
+
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [
@@ -14,6 +28,7 @@ module.exports = {
     '/index.tsx?',
     '.(d|json|md|spec|stories|styles|types).tsx?',
   ],
+  coverageReporters: ['text', 'lcov', 'html'],
 
   displayName: 'Client',
 

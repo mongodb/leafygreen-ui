@@ -6,9 +6,25 @@
 
 module.exports = {
   testTimeout: 60_000,
+
+  // Collect coverage information
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'packages/**/src/**/*.{ts,tsx}',
+    'tools/**/src/**/*.{ts,tsx}',
+    'charts/**/src/**/*.{ts,tsx}',
+    'chat/**/src/**/*.{ts,tsx}',
+    '!**/*.spec.{ts,tsx}',
+    '!**/*.stories.{ts,tsx}',
+    '!**/*.types.{ts,tsx}',
+    '!**/index.{ts,tsx}',
+    '!**/*.d.ts',
+  ],
+
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/index.ts', '.svg'],
+  coverageReporters: ['text', 'lcov', 'html'],
 
   // An array of file extensions your modules use
   moduleFileExtensions: [
