@@ -13,3 +13,11 @@ export function isDateSegment(str: any): str is DateSegment {
   if (typeof str !== 'string') return false;
   return ['day', 'month', 'year'].includes(str);
 }
+
+export function isInputSegment(
+  str: any,
+  segmentObj: Record<string, string>,
+): str is keyof typeof segmentObj {
+  if (typeof str !== 'string') return false;
+  return Object.values(segmentObj).includes(str);
+}

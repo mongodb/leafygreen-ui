@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import range from 'lodash/range';
 
 import { charsPerSegment, defaultMax, defaultMin } from '../../../../constants';

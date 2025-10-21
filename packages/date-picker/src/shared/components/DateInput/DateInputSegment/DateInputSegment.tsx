@@ -224,6 +224,8 @@ export const DateInputSegment = React.forwardRef<
         min={min}
         max={max}
         placeholder={defaultPlaceholder[segment]}
+        // TODO:
+        // @ts-expect-error
         size={size}
         charsPerSegment={charsPerSegment}
         autoComplete={autoComplete}

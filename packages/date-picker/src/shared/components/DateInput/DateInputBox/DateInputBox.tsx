@@ -80,6 +80,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
     const containerRef = useForwardedRef(fwdRef, null);
 
+    // TODO: MOVE to generic component
     /** Formats and sets the segment value */
     const getFormattedSegmentValue = (
       segmentName: DateSegment,
@@ -90,6 +91,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       return formattedValue;
     };
 
+    // TODO: MOVE to generic component
     /** if the value is a `Date` the component is dirty */
     useEffect(() => {
       if (isDateObject(value) && !isDirty) {
@@ -97,6 +99,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       }
     }, [isDirty, setIsDirty, value]);
 
+    // TODO: keep. This is specific to DatePicker
     /**
      * When a segment is updated,
      * trigger a `change` event for the segment, and
@@ -126,12 +129,14 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       }
     };
 
+    // TODO: keep. This is specific to DatePicker
     /** State Management for segments using a useReducer instead of useState */
     /** Keep track of each date segment */
     const { segments, setSegment } = useDateSegments(value, {
       onUpdate: handleSegmentUpdate,
     });
 
+    // TODO: MOVE to generic component
     /** Fired when an individual segment value changes */
     const handleSegmentInputChange: DateInputSegmentChangeEventHandler =
       segmentChangeEvent => {
@@ -143,6 +148,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         // Auto-format the segment if it is explicit and was not changed via arrow-keys
         if (
           !changedViaArrowKeys &&
+          // TODO: consider making this a factory function since this will be different depending on the component.
           isExplicitSegmentValue(segmentName, segmentValue)
         ) {
           segmentValue = getFormattedSegmentValue(segmentName, segmentValue);
@@ -165,6 +171,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         // TODO: onInputChange callback here
       };
 
+    // TODO: MOVE to generic component
     /** Triggered when a segment is blurred */
     const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
       const segmentName = e.target.getAttribute('id');
@@ -179,6 +186,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       }
     };
 
+    // TODO: MOVE to generic component
     /** Called on any keydown within the input element */
     const handleInputKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const { target: _target, key } = e;
@@ -260,6 +268,9 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       // call any handler that was passed in
       onKeyDown?.(e);
     };
+
+    // TODO: This will return the generic InputBox component
+    // We will pass in the formatParts, segmentRefs, onSegmentChange, onKeyDown, the segments and setSegment functions, and getMinSegmentValue and getMaxSegmentValue functions as props
 
     return (
       <div

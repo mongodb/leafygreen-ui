@@ -1,45 +1,15 @@
-// @ts-nocheck
+import React, { FocusEventHandler, KeyboardEventHandler } from 'react';
 
-import React, {
-  FocusEventHandler,
-  KeyboardEventHandler,
-  useEffect,
-} from 'react';
-import isEqual from 'lodash/isEqual';
-import isNull from 'lodash/isNull';
-
-import {
-  isDateObject,
-  isInvalidDateObject,
-  isValidDate,
-} from '@leafygreen-ui/date-utils';
 import { cx } from '@leafygreen-ui/emotion';
-import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { useSharedDatePickerContext } from '../../../context';
-import { useDateSegments } from '../../../hooks';
 import {
-  DateSegment,
-  DateSegmentsState,
-  DateSegmentValue,
-  isDateSegment,
-} from '../../../types';
-import {
-  getMaxSegmentValue,
-  getMinSegmentValue,
   getRelativeSegment,
   getValueFormatter,
-  isEverySegmentFilled,
-  isEverySegmentValueExplicit,
-  isExplicitSegmentValue,
-  newDateFromSegments,
   getRelativeSegmentRef,
-  isElementInputSegment,
-} from '../../../utils';
-import { DateInputSegment } from '../DateInputSegment';
-import { InputSegmentChangeEventHandler } from '../DateInputSegment/DateInputSegment.types';
+} from '../../utils';
+import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
 
 import {
   segmentPartsWrapperStyles,
@@ -47,19 +17,32 @@ import {
   separatorLiteralStyles,
 } from './InputBox.styles';
 import { InputBoxProps } from './InputBox.types';
-import { charsPerSegment } from '../../../constants';
+import { createExplicitSegmentValidator } from '../../utils/isExplicitSegmentValue';
+
+export function isInputSegment(
+  str: any,
+  segmentObj: Record<string, string>,
+): str is keyof typeof segmentObj {
+  if (typeof str !== 'string') return false;
+  return Object.values(segmentObj).includes(str);
+}
+
+export const isElementInputSegment = <
+  T extends Record<string, React.RefObject<HTMLInputElement>>,
+>(
+  element: HTMLElement,
+  segmentRefs: T,
+): element is HTMLInputElement => {
+  const segmentsArray = Object.values(segmentRefs).map(
+    ref => ref.current,
+  ) as Array<HTMLElement | null>;
+  const isSegment = segmentsArray.includes(element);
+  return isSegment;
+};
 
 /**
  * Renders a styled date input with appropriate segment order & separator characters.
  *
- * Depends on {@link DateInputSegment}
- *
- * Uses parameters `value` & `locale` along with {@link Intl.DateTimeFormat.prototype.formatToParts}
- * to determine the segment order and separator characters.
- *
- * Provided value is assumed to be UTC.
- *
- * Argument passed into `setValue` callback is also in UTC
  * @internal
  */
 export const InputBox = React.forwardRef<HTMLDivElement, InputBoxProps>(
@@ -72,39 +55,34 @@ export const InputBox = React.forwardRef<HTMLDivElement, InputBoxProps>(
       segmentRefs,
       onSegmentChange,
       onKeyDown,
-      handleSegmentUpdate,
+      segments,
+      setSegment,
+      disabled,
+      charsPerSegment,
+      formatParts,
+      children,
+      segmentObj,
+      segmentRules,
       ...rest
     }: InputBoxProps,
     fwdRef,
   ) => {
-    const { isDirty, formatParts, disabled, min, max, setIsDirty } =
-      useSharedDatePickerContext();
     const { theme } = useDarkMode();
 
-    const containerRef = useForwardedRef(fwdRef, null);
+    const isExplicitSegmentValue = createExplicitSegmentValidator(
+      segmentObj,
+      segmentRules,
+    );
 
     /** Formats and sets the segment value */
     const getFormattedSegmentValue = (
-      segmentName: DateSegment,
-      segmentValue: DateSegmentValue,
-    ): DateSegmentValue => {
+      segmentName: (typeof segmentObj)[keyof typeof segmentObj],
+      segmentValue: string,
+    ): string => {
       const formatter = getValueFormatter(segmentName, charsPerSegment);
       const formattedValue = formatter(segmentValue);
       return formattedValue;
     };
-
-    /** if the value is a `Date` the component is dirty */
-    useEffect(() => {
-      if (isDateObject(value) && !isDirty) {
-        setIsDirty(true);
-      }
-    }, [isDirty, setIsDirty, value]);
-
-    /** State Management for segments using a useReducer instead of useState */
-    /** Keep track of each date segment */
-    const { segments, setSegment } = useDateSegments(value, {
-      onUpdate: handleSegmentUpdate,
-    });
 
     /** Fired when an individual segment value changes */
     const handleSegmentInputChange: InputSegmentChangeEventHandler =
@@ -144,7 +122,7 @@ export const InputBox = React.forwardRef<HTMLDivElement, InputBoxProps>(
       const segmentName = e.target.getAttribute('id');
       const segmentValue = e.target.value;
 
-      if (isDateSegment(segmentName)) {
+      if (isInputSegment(segmentName, segmentObj)) {
         const formattedValue = getFormattedSegmentValue(
           segmentName,
           segmentValue,
@@ -235,11 +213,18 @@ export const InputBox = React.forwardRef<HTMLDivElement, InputBoxProps>(
       onKeyDown?.(e);
     };
 
+    // TODO: consider render prop
+    const renderedChildren = React.cloneElement(children, {
+      ...children.props,
+      onChange: handleSegmentInputChange,
+      onBlur: handleSegmentInputBlur,
+    });
+
     return (
       <div
         className={cx(segmentPartsWrapperStyles, className)}
         onKeyDown={handleInputKeyDown}
-        ref={containerRef}
+        ref={fwdRef}
         {...rest}
       >
         {formatParts?.map((part, i) => {
@@ -254,20 +239,8 @@ export const InputBox = React.forwardRef<HTMLDivElement, InputBoxProps>(
                 {part.value}
               </span>
             );
-          } else if (isDateSegment(part.type)) {
-            return (
-              <DateInputSegment
-                key={part.type}
-                ref={segmentRefs[part.type]}
-                aria-labelledby={labelledBy}
-                min={getMinSegmentValue(part.type, { date: value, min })}
-                max={getMaxSegmentValue(part.type, { date: value, max })}
-                segment={part.type}
-                value={segments[part.type]}
-                onChange={handleSegmentInputChange}
-                onBlur={handleSegmentInputBlur}
-              />
-            );
+          } else if (isInputSegment(part.type, segmentObj)) {
+            return renderedChildren;
           }
         })}
       </div>
