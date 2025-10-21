@@ -25,8 +25,6 @@ function validateBuiltIcons(): void {
     const files = fs.readdirSync(fullPath);
     const jsFiles = files.filter(file => file.endsWith('.js'));
 
-    console.log(`Checking ${jsFiles.length} files in ${distDir}...`);
-
     for (const file of jsFiles) {
       // Skip the main index file and glyphCommon as they may have different rules
       if (file === 'index.js' || file === 'glyphCommon.js') {
@@ -67,8 +65,7 @@ function validateBuiltIcons(): void {
     );
     process.exit(1);
   } else {
-    console.log('✅ All icon files validated successfully!');
-    console.log('   No direct @emotion imports found.\n');
+    process.exit(0);
   }
 }
 
