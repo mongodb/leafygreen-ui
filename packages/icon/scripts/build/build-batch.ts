@@ -6,11 +6,9 @@ import { GENERATED_DIR } from './constants';
 async function getBatchBuildOptions(
   batch: Array<string>,
 ): Promise<Array<MergedRollupOptions>> {
-  const { constructUMDGlobalName } = await import(
-    '@lg-tools/build/config/utils/constructUMDGlobalName.mjs'
+  const { constructUMDGlobalName, createConfigForFormat } = await import(
+    '@lg-tools/build/config/utils/index.mjs'
   );
-
-  const { nodeExternals } = await import('rollup-plugin-node-externals');
 
   const { esmConfig, umdConfig } = await import(
     '@lg-tools/build/config/rollup.config.mjs'
@@ -18,20 +16,13 @@ async function getBatchBuildOptions(
 
   return [
     // ESM build can take an array of input files
-    {
-      ...esmConfig,
+    createConfigForFormat('esm', {
       input: batch.map(icon => `${GENERATED_DIR}/${icon}.tsx`),
       output: [esmConfig.output],
-      plugins: [
-        // Ensure @emotion packages are externalized (not bundled into icons)
-        nodeExternals({ deps: true, include: [/@emotion/] }),
-        ...esmConfig.plugins,
-      ],
-    },
+    }),
     // UMD builds need a single input file
     ...batch.map(iconName => {
-      return {
-        ...umdConfig,
+      return createConfigForFormat('umd', {
         input: `${GENERATED_DIR}/${iconName}.tsx`,
         output: [
           {
@@ -40,12 +31,7 @@ async function getBatchBuildOptions(
             dir: `dist/umd`,
           },
         ],
-        plugins: [
-          // Ensure @emotion packages are externalized (not bundled into icons)
-          nodeExternals({ deps: true, include: [/@emotion/] }),
-          ...umdConfig.plugins,
-        ],
-      };
+      });
     }),
   ];
 }

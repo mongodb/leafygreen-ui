@@ -33,6 +33,7 @@ const umdTestingConfig = createConfigForFormat('umd', {
 const storiesConfig = createConfigForFormat('esm', {
   input: glob.sync(storyGlob)[0],
   output: {
+    dir: null,
     file: 'stories.js',
     sourcemap: false,
   },
