@@ -19,7 +19,7 @@ module.exports = {
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/index.ts', '.svg'],
-  coverageReporters: ['text', 'lcov', 'html'],
+  coverageReporters: ['text', 'lcov', 'html', 'json-summary'],
 
   // An array of file extensions your modules use
   moduleFileExtensions: [
