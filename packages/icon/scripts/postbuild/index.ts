@@ -45,8 +45,6 @@ function validateBuiltIcons(): void {
     }
   }
 
-  console.log(''); // Empty line for readability
-
   if (hasErrors) {
     console.error('❌ ERROR: Found @emotion imports in built icon files!\n');
     console.error(
