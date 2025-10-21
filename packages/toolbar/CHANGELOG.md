@@ -1,5 +1,17 @@
 # @leafygreen-ui/toolbar
 
+## 1.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/descendants@3.0.5
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/tooltip@14.2.1
+
 ## 1.1.0
 
 ### Minor Changes

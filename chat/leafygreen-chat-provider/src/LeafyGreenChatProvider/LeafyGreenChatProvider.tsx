@@ -37,7 +37,7 @@ export function LeafyGreenChatProvider({
         variant,
       }}
     >
-      <div style={{ width: '100%' }} ref={resizeRef}>
+      <div style={{ height: '100%', width: '100%' }} ref={resizeRef}>
         {children}
       </div>
     </LeafyGreenChatContext.Provider>

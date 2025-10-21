@@ -1,5 +1,13 @@
 # @leafygreen-ui/radio-box-group
 
+## 15.0.8
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
 ## 15.0.7
 
 ### Patch Changes

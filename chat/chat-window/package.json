@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/chat-window",
-  "version": "4.1.6",
+  "version": "5.0.0",
   "description": "lg-chat Chat Window",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -22,13 +22,15 @@
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {
+    "@leafygreen-ui/drawer": "workspace:^",
     "@lg-chat/avatar": "workspace:^",
     "@lg-chat/input-bar": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feed": "workspace:^",
     "@lg-chat/message-feedback": "workspace:^",
     "@lg-chat/message-prompts": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@storybook/test": "^8.6.14"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": ">=3.2.0",

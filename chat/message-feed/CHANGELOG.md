@@ -1,5 +1,29 @@
 # @lg-chat/message-feed
 
+## 8.0.0
+
+### Major Changes
+
+- bd83675: Removed fixed default height of 500px from `MessageFeed` component. Now, `MessageFeed` will grow to the bounds of its parent container.
+
+  Note: this should be upgraded with the following packages to avoid UI regressions:
+
+  - `@lg-chat/leafygreen-chat-provider@5.1.0`
+  - `@lg-chat/chat-window@5.0.0`
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [bd83675]
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @lg-chat/leafygreen-chat-provider@5.1.0
+  - @leafygreen-ui/emotion@5.0.4
+  - @lg-chat/message-rating@6.0.0
+  - @leafygreen-ui/button@25.1.1
+  - @lg-chat/message@9.0.0
+  - @lg-chat/avatar@8.0.0
+
 ## 7.0.3
 
 ### Patch Changes

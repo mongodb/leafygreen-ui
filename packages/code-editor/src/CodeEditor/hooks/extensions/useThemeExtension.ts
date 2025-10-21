@@ -2,6 +2,7 @@ import { type EditorView } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
   borderRadius,
   color,
@@ -77,14 +78,17 @@ export function useThemeExtension({
             borderTopLeftRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             borderTopRightRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             color: color[theme].text[Variant.Primary][InteractionState.Default],
-            paddingTop: `${spacing[200]}px`,
-            paddingBottom: `${spacing[200]}px`,
           },
 
           [`&${CodeEditorSelectors.Focused}`]: {
             outline: 'none',
             border: `1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
+          },
+
+          [CodeEditorSelectors.InnerEditor]: {
+            paddingTop: `${spacing[200]}px`,
+            paddingBottom: `${spacing[200]}px`,
           },
 
           [CodeEditorSelectors.Content]: {
@@ -140,6 +144,33 @@ export function useThemeExtension({
           [CodeEditorSelectors.DiagnosticInfo]: {
             border: 'none',
           },
+
+          [CodeEditorSelectors.SearchPanelContainer]: {
+            backgroundColor: 'transparent',
+          },
+
+          [CodeEditorSelectors.SearchPanelContainerTop]: {
+            border: 'none',
+          },
+
+          [`${CodeEditorSelectors.SearchMatch}:not(${CodeEditorSelectors.SearchMatchSelected}), 
+            ${CodeEditorSelectors.SearchMatch}:not(${CodeEditorSelectors.SearchMatchSelected}) > *`]:
+            {
+              backgroundColor: palette.yellow.light2,
+              color:
+                color[Theme.Light].text[Variant.Primary][
+                  InteractionState.Default
+                ],
+            },
+
+          [`${CodeEditorSelectors.SearchMatchSelected}, ${CodeEditorSelectors.SearchMatchSelected} > *`]:
+            {
+              backgroundColor: `${palette.yellow.base}`,
+              color:
+                color[Theme.Light].text[Variant.Primary][
+                  InteractionState.Default
+                ],
+            },
         },
         { dark: theme === Theme.Dark },
       );
