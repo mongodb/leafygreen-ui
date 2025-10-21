@@ -2,12 +2,12 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum e7007b00f395df4e001eb1cc4a0866bd
+* @checksum d17651dc4a8dd8f9832ac79c44978a29
 */
 import * as React from "react";
 import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { generateAccessibleProps, getGlyphLabel, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ArrowDownProps extends LGGlyph.ComponentProps {}
 const ArrowDown = ({
@@ -27,7 +27,6 @@ const ArrowDown = ({
   const noFlexShrink = css`
         flex-shrink: 0;
       `;
-  const safeTitle = title || getGlyphLabel('ArrowDown');
   const accessibleProps = generateAccessibleProps(role, 'ArrowDown', {
     title,
     titleId,
@@ -36,7 +35,7 @@ const ArrowDown = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><title id={titleId}>{safeTitle}</title><path d="M9.16788 3L9.16788 9.94442L10.7029 8.40941C11.0934 8.01888 11.7266 8.01889 12.1171 8.40941L12.356 8.64833C12.7465 9.03885 12.7465 9.67201 12.356 10.0625L8.97339 13.4452C8.96483 13.4544 8.95605 13.4635 8.94708 13.4725L8.70816 13.7114C8.31763 14.1019 7.68447 14.1019 7.29395 13.7114L3.64279 10.0602C3.25227 9.66972 3.25227 9.03656 3.64279 8.64603L3.88171 8.40712C4.27223 8.01659 4.9054 8.01659 5.29592 8.40712L6.83 9.9412L6.83 3C6.83 2.44771 7.27772 2 7.83001 2L8.16788 2C8.72017 2 9.16788 2.44772 9.16788 3Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path d="M9.16788 3L9.16788 9.94442L10.7029 8.40941C11.0934 8.01888 11.7266 8.01889 12.1171 8.40941L12.356 8.64833C12.7465 9.03885 12.7465 9.67201 12.356 10.0625L8.97339 13.4452C8.96483 13.4544 8.95605 13.4635 8.94708 13.4725L8.70816 13.7114C8.31763 14.1019 7.68447 14.1019 7.29395 13.7114L3.64279 10.0602C3.25227 9.66972 3.25227 9.03656 3.64279 8.64603L3.88171 8.40712C4.27223 8.01659 4.9054 8.01659 5.29592 8.40712L6.83 9.9412L6.83 3C6.83 2.44771 7.27772 2 7.83001 2L8.16788 2C8.72017 2 9.16788 2.44772 9.16788 3Z" fill={'currentColor'} /></svg>;
 };
 ArrowDown.displayName = 'ArrowDown';
 ArrowDown.isGlyph = true;

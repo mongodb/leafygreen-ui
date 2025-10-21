@@ -2,12 +2,12 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 3763a0dedb10fb59b95134abfc10f7c0
+* @checksum 798a5c7426079d4ad6eed895dacc3530
 */
 import * as React from "react";
 import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { generateAccessibleProps, getGlyphLabel, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface FolderProps extends LGGlyph.ComponentProps {}
 const Folder = ({
@@ -27,7 +27,6 @@ const Folder = ({
   const noFlexShrink = css`
         flex-shrink: 0;
       `;
-  const safeTitle = title || getGlyphLabel('Folder');
   const accessibleProps = generateAccessibleProps(role, 'Folder', {
     title,
     titleId,
@@ -36,7 +35,7 @@ const Folder = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><title id={titleId}>{safeTitle}</title><path d="M2 2C1.44772 2 1 2.44772 1 3V13C1 13.5523 1.44772 14 2 14H14C14.5523 14 15 13.5523 15 13V5C15 4.44772 14.5523 4 14 4H8C7.44772 4 7 3.55228 7 3C7 2.44772 6.55228 2 6 2H2Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path d="M2 2C1.44772 2 1 2.44772 1 3V13C1 13.5523 1.44772 14 2 14H14C14.5523 14 15 13.5523 15 13V5C15 4.44772 14.5523 4 14 4H8C7.44772 4 7 3.55228 7 3C7 2.44772 6.55228 2 6 2H2Z" fill={'currentColor'} /></svg>;
 };
 Folder.displayName = 'Folder';
 Folder.isGlyph = true;

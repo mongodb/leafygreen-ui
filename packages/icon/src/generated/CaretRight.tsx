@@ -2,12 +2,12 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum f8bfdaea83ab6449d5280f5138b5400c
+* @checksum fa4defe9380271115b97b1dd9043567d
 */
 import * as React from "react";
 import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { generateAccessibleProps, getGlyphLabel, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CaretRightProps extends LGGlyph.ComponentProps {}
 const CaretRight = ({
@@ -27,7 +27,6 @@ const CaretRight = ({
   const noFlexShrink = css`
         flex-shrink: 0;
       `;
-  const safeTitle = title || getGlyphLabel('CaretRight');
   const accessibleProps = generateAccessibleProps(role, 'CaretRight', {
     title,
     titleId,
@@ -36,7 +35,7 @@ const CaretRight = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><title id={titleId}>{safeTitle}</title><path d="M10.7962 7.32097C11.0679 7.54729 11.0679 7.95271 10.7962 8.17903L6.97649 11.3604C6.59428 11.6787 6 11.4176 6 10.9313L6 4.56866C6 4.0824 6.59428 3.82129 6.97649 4.13962L10.7962 7.32097Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path d="M10.7962 7.32097C11.0679 7.54729 11.0679 7.95271 10.7962 8.17903L6.97649 11.3604C6.59428 11.6787 6 11.4176 6 10.9313L6 4.56866C6 4.0824 6.59428 3.82129 6.97649 4.13962L10.7962 7.32097Z" fill={'currentColor'} /></svg>;
 };
 CaretRight.displayName = 'CaretRight';
 CaretRight.isGlyph = true;

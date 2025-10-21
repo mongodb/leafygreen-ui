@@ -2,12 +2,12 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum dba48425a609439357f99e7e2135a0ac
+* @checksum 6013d193bd662d6629d05b2ac8b6b3bb
 */
 import * as React from "react";
 import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { generateAccessibleProps, getGlyphLabel, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface StopProps extends LGGlyph.ComponentProps {}
 const Stop = ({
@@ -27,7 +27,6 @@ const Stop = ({
   const noFlexShrink = css`
         flex-shrink: 0;
       `;
-  const safeTitle = title || getGlyphLabel('Stop');
   const accessibleProps = generateAccessibleProps(role, 'Stop', {
     title,
     titleId,
@@ -36,7 +35,7 @@ const Stop = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><title id={titleId}>{safeTitle}</title><rect x={3} y={3} width={10} height={10} rx={1} fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<rect x={3} y={3} width={10} height={10} rx={1} fill={'currentColor'} /></svg>;
 };
 Stop.displayName = 'Stop';
 Stop.isGlyph = true;

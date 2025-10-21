@@ -59,7 +59,7 @@ export function svgrTemplate(
   );
 
   // Create the title element JSX manually using Babel types
-  // <title id={titleId}>{safeTitle}</title>
+  // {title && <title id={titleId}>{title}</title>}
   const titleJSXElement = t.jsxElement(
     t.jsxOpeningElement(t.jsxIdentifier('title'), [
       t.jsxAttribute(
@@ -68,18 +68,23 @@ export function svgrTemplate(
       ),
     ]),
     t.jsxClosingElement(t.jsxIdentifier('title')),
-    [t.jsxExpressionContainer(t.identifier('safeTitle'))],
+    [t.jsxExpressionContainer(t.identifier('title'))],
     false,
   );
 
-  // Add the title as a child, followed by the original children
-  jsx.children = [titleJSXElement, ...jsx.children];
+  // Wrap title in conditional expression: {title && <title>...</title>}
+  const conditionalTitleExpression = t.jsxExpressionContainer(
+    t.logicalExpression('&&', t.identifier('title'), titleJSXElement),
+  );
+
+  // Add the conditional title as a child, followed by the original children
+  jsx.children = [conditionalTitleExpression, ...jsx.children];
 
   return typeScriptTpl(`
     %%imports%%
     import { useId } from 'react';
     import { css, cx } from '@leafygreen-ui/emotion';
-    import { generateAccessibleProps, getGlyphLabel, sizeMap } from '../glyphCommon';
+    import { generateAccessibleProps, sizeMap } from '../glyphCommon';
     import { LGGlyph } from '../types';
   
     export interface ${componentName}Props extends LGGlyph.ComponentProps {}
@@ -102,8 +107,6 @@ export function svgrTemplate(
       const noFlexShrink = css\`
         flex-shrink: 0;
       \`;
-
-      const safeTitle = title || getGlyphLabel('${componentName}');
 
       const accessibleProps = generateAccessibleProps(role, '${componentName}', { title, titleId, ['aria-label']: ariaLabel, ['aria-labelledby']: ariaLabelledby })
 

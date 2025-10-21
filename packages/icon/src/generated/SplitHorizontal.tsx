@@ -2,12 +2,12 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum b1500c6c12ee9425e081f73f6d217176
+* @checksum 4a8dad0341be6f94a5bb4e56f359f76c
 */
 import * as React from "react";
 import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { generateAccessibleProps, getGlyphLabel, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SplitHorizontalProps extends LGGlyph.ComponentProps {}
 const SplitHorizontal = ({
@@ -27,7 +27,6 @@ const SplitHorizontal = ({
   const noFlexShrink = css`
         flex-shrink: 0;
       `;
-  const safeTitle = title || getGlyphLabel('SplitHorizontal');
   const accessibleProps = generateAccessibleProps(role, 'SplitHorizontal', {
     title,
     titleId,
@@ -36,7 +35,7 @@ const SplitHorizontal = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><title id={titleId}>{safeTitle}</title><path fillRule="evenodd" clipRule="evenodd" d="M15 11C15 12.1046 14.1046 13 13 13L3 13C1.89543 13 1 12.1046 1 11L1 3C1 1.89543 1.89543 1 3 1L13 1C14.1046 1 15 1.89543 15 3L15 11ZM13 6.5L13 3L3 3L3 6.5L13 6.5ZM3 7.5L3 11L13 11L13 7.5L3 7.5Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path fillRule="evenodd" clipRule="evenodd" d="M15 11C15 12.1046 14.1046 13 13 13L3 13C1.89543 13 1 12.1046 1 11L1 3C1 1.89543 1.89543 1 3 1L13 1C14.1046 1 15 1.89543 15 3L15 11ZM13 6.5L13 3L3 3L3 6.5L13 6.5ZM3 7.5L3 11L13 11L13 7.5L3 7.5Z" fill={'currentColor'} /></svg>;
 };
 SplitHorizontal.displayName = 'SplitHorizontal';
 SplitHorizontal.isGlyph = true;

@@ -2,12 +2,7 @@ import React, { useId } from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import {
-  generateAccessibleProps,
-  getGlyphLabel,
-  Size,
-  sizeMap,
-} from './glyphCommon';
+import { generateAccessibleProps, Size, sizeMap } from './glyphCommon';
 import { LGGlyph, SVGR } from './types';
 
 /**

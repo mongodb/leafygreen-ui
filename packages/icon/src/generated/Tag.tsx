@@ -2,12 +2,12 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 26c5b66505ba46b2505e292150cb5e13
+* @checksum 23202ad49d6cc602e63f490353017db4
 */
 import * as React from "react";
 import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { generateAccessibleProps, getGlyphLabel, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TagProps extends LGGlyph.ComponentProps {}
 const Tag = ({
@@ -27,7 +27,6 @@ const Tag = ({
   const noFlexShrink = css`
         flex-shrink: 0;
       `;
-  const safeTitle = title || getGlyphLabel('Tag');
   const accessibleProps = generateAccessibleProps(role, 'Tag', {
     title,
     titleId,
@@ -36,7 +35,7 @@ const Tag = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><title id={titleId}>{safeTitle}</title><path fillRule="evenodd" clipRule="evenodd" d="M9.70711 14.2929L14.2929 9.70711C14.6834 9.31658 14.6834 8.68342 14.2929 8.29289L8.29289 2.29289C8.10536 2.10536 7.851 2 7.58579 2H3C2.44772 2 2 2.44772 2 3V7.58579C2 7.851 2.10536 8.10536 2.29289 8.29289L8.29289 14.2929C8.68342 14.6834 9.31658 14.6834 9.70711 14.2929ZM5 6C5.55228 6 6 5.55228 6 5C6 4.44772 5.55228 4 5 4C4.44772 4 4 4.44772 4 5C4 5.55228 4.44772 6 5 6Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path fillRule="evenodd" clipRule="evenodd" d="M9.70711 14.2929L14.2929 9.70711C14.6834 9.31658 14.6834 8.68342 14.2929 8.29289L8.29289 2.29289C8.10536 2.10536 7.851 2 7.58579 2H3C2.44772 2 2 2.44772 2 3V7.58579C2 7.851 2.10536 8.10536 2.29289 8.29289L8.29289 14.2929C8.68342 14.6834 9.31658 14.6834 9.70711 14.2929ZM5 6C5.55228 6 6 5.55228 6 5C6 4.44772 5.55228 4 5 4C4.44772 4 4 4.44772 4 5C4 5.55228 4.44772 6 5 6Z" fill={'currentColor'} /></svg>;
 };
 Tag.displayName = 'Tag';
 Tag.isGlyph = true;
