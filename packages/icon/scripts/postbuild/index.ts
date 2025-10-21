@@ -12,7 +12,7 @@ function validateBuiltIcons(): void {
   let hasErrors = false;
   const errors: Array<{ file: string; matches: Array<string> }> = [];
 
-  console.log('Validating built icons for @emotion imports...\n');
+  console.log('Validating built icons...\n');
 
   for (const distDir of distDirs) {
     const fullPath = path.join(process.cwd(), distDir);
@@ -63,6 +63,7 @@ function validateBuiltIcons(): void {
     );
     process.exit(1);
   } else {
+    console.log('Icon builds OK \n');
     process.exit(0);
   }
 }
