@@ -1,3 +1,4 @@
+/* eslint-disable jest/expect-expect */
 import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 import { axe } from 'jest-axe';

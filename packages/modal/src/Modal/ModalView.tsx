@@ -39,6 +39,7 @@ const ModalView = React.forwardRef<HTMLDialogElement, ModalProps>(
       closeIconColor = CloseIconColor.Default,
       darkMode: darkModeProp,
       id: idProp,
+      initialFocus = 'auto',
       children,
       className,
       backdropClassName,
@@ -72,11 +73,11 @@ const ModalView = React.forwardRef<HTMLDialogElement, ModalProps>(
 
       if (open && !dialogEl.open) {
         dialogEl.showModal();
-        focusModalChildElement(dialogEl);
+        focusModalChildElement(dialogEl, initialFocus);
       } else {
         dialogEl.close();
       }
-    }, [dialogEl, open]);
+    }, [dialogEl, open, initialFocus]);
 
     const allowedSize = Object.values(ModalSize).includes(sizeProp);
     const size = allowedSize ? sizeProp : ModalSize.Default;

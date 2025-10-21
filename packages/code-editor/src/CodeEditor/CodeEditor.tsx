@@ -18,6 +18,7 @@ import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.
 import { Panel as CodeEditorPanel } from '../Panel';
 import { getLgIds } from '../utils';
 
+import { useSearchPanelExtension } from './hooks/extensions/useSearchPanelExtension';
 import { useModules } from './hooks/useModules';
 import {
   getCopyButtonStyles,
@@ -53,6 +54,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       enableCodeFolding,
       enableLineNumbers,
       enableLineWrapping,
+      enableSearchPanel = true,
       extensions: consumerExtensions = [],
       forceParsing: forceParsingProp = false,
       height,
@@ -244,19 +246,23 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       [getContents, language],
     );
 
+    const searchPanelExtension = useSearchPanelExtension({
+      props: {
+        ...props,
+        darkMode,
+        baseFontSize,
+      },
+      modules,
+      hasPanel: !!panel,
+    });
+
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
       const commands = modules?.['@codemirror/commands'];
       const searchModule = modules?.['@codemirror/search'];
       const Prec = modules?.['@codemirror/state']?.Prec;
 
-      if (
-        !editorContainerRef?.current ||
-        !EditorView ||
-        !Prec ||
-        !commands ||
-        !searchModule
-      ) {
+      if (!editorContainerRef?.current || !EditorView || !Prec || !commands) {
         return;
       }
 
@@ -271,7 +277,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           ),
 
           commands.history(),
-          searchModule.search(),
+
+          searchPanelExtension,
 
           EditorView.EditorView.updateListener.of((update: ViewUpdate) => {
             if (isControlled && update.docChanged) {
@@ -298,7 +305,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               key: 'Shift-Tab',
               run: commands.indentLess,
             },
-            ...searchModule.searchKeymap,
+            ...(enableSearchPanel && searchModule
+              ? searchModule.searchKeymap
+              : []),
             ...commands.defaultKeymap,
             ...commands.historyKeymap,
           ]),
@@ -332,6 +341,11 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       customExtensions,
       forceParsingProp,
       getContents,
+      enableSearchPanel,
+      props.darkMode,
+      props.baseFontSize,
+      panel,
+      searchPanelExtension,
     ]);
 
     useImperativeHandle(forwardedRef, () => ({

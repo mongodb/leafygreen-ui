@@ -4,11 +4,10 @@ import userEvent from '@testing-library/user-event';
 import ClipboardJS from 'clipboard';
 import { axe } from 'jest-axe';
 
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import { Icon } from '@leafygreen-ui/icon';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
-import { numOfCollapsedLinesOfCode } from '../constants';
 import { Panel } from '../Panel';
 import { getTestUtils } from '../testing';
 import {
@@ -616,20 +615,22 @@ describe('packages/Code', () => {
         (_, i) => `const greeting${i} = "Hello, world! ${i}";`,
       ).join('\n');
 
-    test(`returns null and shows no expand button when <= ${numOfCollapsedLinesOfCode} lines of code`, () => {
+    const defaultCollapsedLines = 5;
+
+    test(`returns null and shows no expand button when <= ${defaultCollapsedLines} lines of code (default)`, () => {
       render(
         <Code expandable={true} language="javascript">
-          {getCodeSnippet(numOfCollapsedLinesOfCode - 1)}
+          {getCodeSnippet(defaultCollapsedLines - 1)}
         </Code>,
       );
       const { getExpandButtonUtils } = getTestUtils();
       expect(getExpandButtonUtils().queryButton()).toBeNull();
     });
 
-    test(`shows expand button when > ${numOfCollapsedLinesOfCode} lines of code`, () => {
+    test(`shows expand button when > ${defaultCollapsedLines} lines of code (default)`, () => {
       render(
         <Code expandable={true} language="javascript">
-          {getCodeSnippet(numOfCollapsedLinesOfCode + 1)}
+          {getCodeSnippet(defaultCollapsedLines + 1)}
         </Code>,
       );
 
@@ -639,7 +640,7 @@ describe('packages/Code', () => {
     });
 
     test('shows correct number of lines of code on expand button', () => {
-      const lineCount = numOfCollapsedLinesOfCode + 1;
+      const lineCount = defaultCollapsedLines + 1;
 
       render(
         <Code expandable={true} language="javascript">
@@ -658,7 +659,7 @@ describe('packages/Code', () => {
     test('shows collapse button when expand button is clicked', () => {
       render(
         <Code expandable={true} language="javascript">
-          {getCodeSnippet(numOfCollapsedLinesOfCode + 1)}
+          {getCodeSnippet(defaultCollapsedLines + 1)}
         </Code>,
       );
 
@@ -671,7 +672,7 @@ describe('packages/Code', () => {
     });
 
     test('shows expand button again when collapse button is clicked', () => {
-      const lineCount = numOfCollapsedLinesOfCode + 1;
+      const lineCount = defaultCollapsedLines + 1;
 
       render(
         <Code expandable={true} language="javascript">
@@ -688,6 +689,99 @@ describe('packages/Code', () => {
       expect(actionButton).toHaveTextContent(
         `Click to expand (${lineCount} lines)`,
       );
+    });
+
+    describe('with custom collapsedLines prop', () => {
+      test('shows no expand button when lines <= collapsedLines', () => {
+        const customCollapsedLines = 10;
+        render(
+          <Code
+            expandable={true}
+            language="javascript"
+            collapsedLines={customCollapsedLines}
+          >
+            {getCodeSnippet(customCollapsedLines)}
+          </Code>,
+        );
+        const { getExpandButtonUtils } = getTestUtils();
+        expect(getExpandButtonUtils().queryButton()).toBeNull();
+      });
+
+      test('shows expand button when lines > collapsedLines', () => {
+        const customCollapsedLines = 3;
+        render(
+          <Code
+            expandable={true}
+            language="javascript"
+            collapsedLines={customCollapsedLines}
+          >
+            {getCodeSnippet(customCollapsedLines + 1)}
+          </Code>,
+        );
+
+        const { getExpandButtonUtils } = getTestUtils();
+
+        expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
+      });
+
+      test('shows correct number of lines when using custom collapsedLines', () => {
+        const customCollapsedLines = 8;
+        const lineCount = customCollapsedLines + 5;
+
+        render(
+          <Code
+            expandable={true}
+            language="javascript"
+            collapsedLines={customCollapsedLines}
+          >
+            {getCodeSnippet(lineCount)}
+          </Code>,
+        );
+
+        const { getExpandButtonUtils } = getTestUtils();
+
+        const actionButton = getExpandButtonUtils().getButton();
+        expect(actionButton).toHaveTextContent(
+          `Click to expand (${lineCount} lines)`,
+        );
+      });
+
+      test('expand/collapse functionality works with custom collapsedLines', () => {
+        const customCollapsedLines = 7;
+        const lineCount = customCollapsedLines + 2;
+
+        render(
+          <Code
+            expandable={true}
+            language="javascript"
+            collapsedLines={customCollapsedLines}
+          >
+            {getCodeSnippet(lineCount)}
+          </Code>,
+        );
+
+        const { getExpandButtonUtils, getIsExpanded } = getTestUtils();
+
+        const actionButton = getExpandButtonUtils().getButton();
+
+        // Initially collapsed
+        expect(getIsExpanded()).toBe(false);
+        expect(actionButton).toHaveTextContent(
+          `Click to expand (${lineCount} lines)`,
+        );
+
+        // Click to expand
+        userEvent.click(actionButton!);
+        expect(getIsExpanded()).toBe(true);
+        expect(actionButton).toHaveTextContent('Click to collapse');
+
+        // Click to collapse
+        userEvent.click(actionButton!);
+        expect(getIsExpanded()).toBe(false);
+        expect(actionButton).toHaveTextContent(
+          `Click to expand (${lineCount} lines)`,
+        );
+      });
     });
   });
 

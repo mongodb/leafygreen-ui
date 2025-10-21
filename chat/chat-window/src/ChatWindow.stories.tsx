@@ -7,15 +7,31 @@ import {
 } from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessageFeed } from '@lg-chat/message-feed';
-import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/stories';
 import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/test';
 
+import { DisplayMode, DrawerLayout } from '@leafygreen-ui/drawer';
+import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import baseMessages from './utils/baseMessages';
 import { ChatWindow, ChatWindowProps } from '.';
+
+const getActionsChild = () => (
+  <Message.Actions
+    // eslint-disable-next-line no-console
+    onClickCopy={() => console.log('Copy clicked')}
+    // eslint-disable-next-line no-console
+    onClickRetry={() => console.log('Retry clicked')}
+    // eslint-disable-next-line no-console
+    onRatingChange={() => console.log('Rating changed')}
+    // eslint-disable-next-line no-console
+    onSubmitFeedback={() => console.log('Feedback submitted')}
+  />
+);
 
 const meta: StoryMetaType<typeof ChatWindow> = {
   title: 'Composition/Chat/ChatWindow',
@@ -61,7 +77,7 @@ const MyMessage = ({
   isMongo,
   messageBody,
   userName,
-  hasMessageRating,
+  hasMessageActions,
 }: any) => {
   return (
     <Message
@@ -82,7 +98,7 @@ const MyMessage = ({
         </MessagePrompts>
       )}
       {/* @ts-ignore onChange is passed in the story itself */}
-      {hasMessageRating && <MessageFeedbackStory />}
+      {hasMessageActions && getActionsChild()}
     </Message>
   );
 };
@@ -142,16 +158,24 @@ const EmptyComponent = ({ variant, ...props }: ChatWindowStoryProps) => {
   };
 
   return (
-    <LeafyGreenChatProvider variant={variant}>
-      <ChatWindow {...props}>
-        <MessageFeed>
-          {messages.map(messageFields => (
-            <MyMessage key={messageFields.id} {...messageFields} />
-          ))}
-        </MessageFeed>
-        <InputBar onMessageSend={handleMessageSend} />
-      </ChatWindow>
-    </LeafyGreenChatProvider>
+    <div
+      className={css`
+        height: 100vh;
+        width: 100vw;
+        margin: -100px;
+      `}
+    >
+      <LeafyGreenChatProvider variant={variant}>
+        <ChatWindow {...props}>
+          <MessageFeed>
+            {messages.map(messageFields => (
+              <MyMessage key={messageFields.id} {...messageFields} />
+            ))}
+          </MessageFeed>
+          <InputBar onMessageSend={handleMessageSend} />
+        </ChatWindow>
+      </LeafyGreenChatProvider>
+    </div>
   );
 };
 export const Empty: StoryObj<ChatWindowStoryProps> = {
@@ -298,6 +322,128 @@ export const WithMessagePrompts: StoryObj<ChatWindowStoryProps> = {
   parameters: {
     chromatic: {
       disableSnapshot: true,
+    },
+  },
+};
+
+const ChatDrawerContent = ({
+  assistantName,
+  variant,
+}: {
+  assistantName?: string;
+  variant: Variant;
+}) => {
+  const [messages, setMessages] = useState<Array<any>>(baseMessages);
+
+  const handleMessageSend = (messageBody: string) => {
+    const newMessage = {
+      id: messages.length,
+      messageBody,
+      userName: 'User',
+    };
+    setMessages(prevMessages => [...prevMessages, newMessage]);
+  };
+
+  return (
+    <LeafyGreenChatProvider assistantName={assistantName} variant={variant}>
+      <ChatWindow>
+        <MessageFeed>
+          {messages.map(messageFields => (
+            <MyMessage key={messageFields.id} {...messageFields} />
+          ))}
+        </MessageFeed>
+        <InputBar onMessageSend={handleMessageSend} />
+      </ChatWindow>
+    </LeafyGreenChatProvider>
+  );
+};
+
+const MainContent = () => {
+  return (
+    <main
+      className={css`
+        padding: ${spacing[400]}px;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        gap: ${spacing[200]}px;
+      `}
+    >
+      <div>
+        <h2>Chat Demo with Drawer</h2>
+        <p>Sample chat interface in drawer layout</p>
+        <p>
+          This example demonstrates how to use the ChatWindow component within a
+          Drawer layout. The chat interface is displayed in the drawer panel,
+          which can be toggled open or closed by clicking the chat icon in the
+          toolbar.
+        </p>
+      </div>
+    </main>
+  );
+};
+
+const getToolbarData = ({
+  assistantName,
+  variant,
+}: {
+  assistantName?: string;
+  variant: Variant;
+}) => [
+  {
+    id: 'assistant',
+    label: 'MongoDB Assistant',
+    glyph: 'Sparkle' as const,
+    title: 'MongoDB Assistant',
+    content: (
+      <ChatDrawerContent assistantName={assistantName} variant={variant} />
+    ),
+    hasPadding: false,
+    resizable: true,
+    scrollable: false,
+  },
+];
+
+const InDrawerLayoutComponent: StoryFn<ChatWindowStoryProps> = ({
+  assistantName,
+  variant: _variant,
+  darkMode,
+}) => {
+  return (
+    <LeafyGreenProvider darkMode={darkMode}>
+      <div
+        className={css`
+          margin: -100px;
+          height: 100vh;
+        `}
+      >
+        <DrawerLayout
+          displayMode={DisplayMode.Embedded}
+          toolbarData={getToolbarData({
+            assistantName,
+            variant: Variant.Compact,
+          })}
+        >
+          <MainContent />
+        </DrawerLayout>
+      </div>
+    </LeafyGreenProvider>
+  );
+};
+
+export const InDrawerLayout: StoryObj<ChatWindowStoryProps> = {
+  render: InDrawerLayoutComponent,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const chatButton = canvas.getByRole('button', {
+      name: /MongoDB Assistant/i,
+    });
+    await userEvent.click(chatButton);
+  },
+  parameters: {
+    chromatic: {
+      delay: 400,
     },
   },
 };

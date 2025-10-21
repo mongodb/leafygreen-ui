@@ -13,10 +13,10 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
 import {
-  contentContainerStyles,
   getContainerStyles,
   getInputBarStyles,
   getInputBarWrapperStyles,
+  hiddenSpacerStyles,
 } from './ChatWindow.styles';
 import { ChatWindowProps } from './ChatWindow.types';
 
@@ -77,7 +77,9 @@ export const ChatWindow = forwardRef<HTMLDivElement, ChatWindowProps>(
               iconSlot={iconSlot}
             />
           )}
-          <div className={contentContainerStyles}>{renderedChildren}</div>
+          {/* Hidden spacer to push messages and input bar to bottom when content is shorter than container */}
+          <div aria-hidden="true" className={hiddenSpacerStyles} />
+          {renderedChildren}
         </div>
       </LeafyGreenProvider>
     );

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/split-button",
-  "version": "6.1.4",
+  "version": "6.1.5",
   "description": "leafyGreen UI Kit Split Button",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -35,7 +35,7 @@
     "@leafygreen-ui/tokens": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"

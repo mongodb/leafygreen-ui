@@ -122,7 +122,7 @@ Component for rendering a header in a chart.
 
 | Name                         | Description                                                                                                                                           | Type              | Default |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------- |
-| `title`                      | The title to display in the chart header.                                                                                                             | `string`          |         |
+| `title`                      | The title to display in the chart header.                                                                                                             | `React.ReactNode` |         |
 | `titleIcon` _(optional)_     | Content rendered immediately right of the title. Useful for quick contextual tooltips or other information concerning the title.                      | `React.ReactNode` |         |
 | `showDivider` _(optional)_   | When true, renders a dividing line on top of header. Useful when stacking charts, such as in a `ChartGroup`.                                          | `boolean`         |         |
 | `headerContent` _(optional)_ | Content that will be rendered to the right of the title. Useful for adding components such as `IconButton`'s that control functionality in the chart. | `React.ReactNode` |         |
@@ -149,6 +149,8 @@ Renders an x-axis.
 | `type`                   | Type of axis.                                 | `'log' \| 'time' \| 'value'`               |         |
 | `label` _(optional)_     | Label name to be rendered on the axis.        | `string`                                   |         |
 | `formatter` _(optional)_ | Callback function for formatting tick values. | `(value: string, index: number) => string` |         |
+| `min` _(optional)_       | Minimum value of the axis.                    | `number`                                   |         |
+| `max` _(optional)_       | Maximum value of the axis.                    | `number`                                   |         |
 
 ### `YAxis`
 
@@ -161,6 +163,8 @@ Renders a y-axis.
 | `type`                   | Type of axis.                                 | `'log' \| 'time' \| 'value'`               |         |
 | `label` _(optional)_     | Label name to be rendered on the axis.        | `string`                                   |         |
 | `formatter` _(optional)_ | Callback function for formatting tick values. | `(value: string, index: number) => string` |         |
+| `min` _(optional)_       | Minimum value of the axis.                    | `number`                                   |         |
+| `max` _(optional)_       | Maximum value of the axis.                    | `number`                                   |         |
 
 ### `ChartTooltip`
 

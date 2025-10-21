@@ -13,7 +13,7 @@ export interface ChartCardProps
   /**
    * The title of the card
    */
-  title: string;
+  title: React.ReactNode;
 
   /**
    * Defines the default state of the card

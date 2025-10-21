@@ -89,7 +89,7 @@ export const getInputOptionStyles = ({
 /** in px */
 const wedgeWidth = spacing[100];
 /** in px */
-const wedgePaddingY = spacing[200];
+const wedgePaddingY = spacing[100];
 
 export const getInputOptionWedge = ({
   disabled,

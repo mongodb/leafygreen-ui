@@ -1,3 +1,4 @@
-import Spinner from './Spinner';
+export { Spinner } from './Spinner';
 export { type SpinnerProps } from './Spinner.types';
-export default Spinner;
+/** Re-exported from tokens for convenience */
+export { Size } from '@leafygreen-ui/tokens';

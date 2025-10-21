@@ -108,6 +108,14 @@ const meta: StoryMetaType<any> = {
     buttonText: {
       control: 'text',
     },
+    tooltipAlign: {
+      control: { type: 'radio' },
+      options: Object.values(TooltipAlign),
+    },
+    tooltipJustify: {
+      control: { type: 'radio' },
+      options: Object.values(TooltipJustify),
+    },
   },
   args: {
     title: 'New feature',
@@ -115,6 +123,8 @@ const meta: StoryMetaType<any> = {
     buttonText: 'Next',
     numberOfSteps: 4,
     currentStep: 2,
+    tooltipAlign: TooltipAlign.Top,
+    tooltipJustify: TooltipJustify.Middle,
   },
 };
 

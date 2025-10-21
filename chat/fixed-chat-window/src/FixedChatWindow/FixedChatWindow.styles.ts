@@ -10,6 +10,7 @@ export const chatWindowContainerStyles = css`
   transform-origin: bottom right;
   min-width: 360px;
   width: 360px;
+  height: 640px;
 `;
 
 export const chatWindowStyles = css`

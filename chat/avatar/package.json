@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/avatar",
-  "version": "7.0.2",
+  "version": "8.0.0",
   "description": "lg-chat Avatar",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -21,7 +21,7 @@
     "@leafygreen-ui/tokens": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0",
     "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
   "devDependencies": {

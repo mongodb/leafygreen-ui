@@ -31,4 +31,14 @@ export interface YAxisProps {
    * ```
    */
   formatter?: AxisLabelValueFormatter | string;
+
+  /**
+   * Minimum value of the axis.
+   */
+  min?: number;
+
+  /**
+   * Maximum value of the axis.
+   */
+  max?: number;
 }

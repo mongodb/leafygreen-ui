@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
@@ -36,20 +37,29 @@ export function TableSkeleton({
       <table {...rest} className={cx(baseStyles, className)} aria-busy>
         <thead className={tableHeadStyles[theme]}>
           <tr>
-            {[...Array(numCols)].map((_, i) => (
-              <th key={i} className={cx(cellStyles, headerCellStyles)}>
-                {columnLabels && columnLabels[i] ? (
-                  <Body
-                    baseFontSize={baseFontSize}
-                    className={columnHeaderStyles}
-                  >
-                    {columnLabels[i]}
-                  </Body>
-                ) : (
-                  <Skeleton enableAnimations={enableAnimations} size="small" />
-                )}
-              </th>
-            ))}
+            {[...Array(numCols)].map((_, i) => {
+              const hasLabel = columnLabels && columnLabels[i];
+              return (
+                <th key={i} className={cx(cellStyles, headerCellStyles)}>
+                  {hasLabel ? (
+                    <Body
+                      baseFontSize={baseFontSize}
+                      className={columnHeaderStyles}
+                    >
+                      {columnLabels[i]}
+                    </Body>
+                  ) : (
+                    <>
+                      <VisuallyHidden>Loading</VisuallyHidden>
+                      <Skeleton
+                        enableAnimations={enableAnimations}
+                        size="small"
+                      />
+                    </>
+                  )}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>

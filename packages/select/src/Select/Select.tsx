@@ -85,7 +85,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       defaultValue,
       value,
       onChange,
-      readOnly,
       portalContainer,
       portalRef,
       scrollContainer,
@@ -142,15 +141,15 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     }, [size, open, disabled, lgIds]);
 
     useEffect(() => {
-      if (value !== undefined && onChange === undefined && readOnly !== true) {
+      if (value !== undefined && onChange === undefined) {
         console.warn(
           'You provided a `value` prop to a form field without an `onChange` handler. ' +
             'This will render a read-only field. ' +
             'If the field should be mutable use `defaultValue`. ' +
-            'Otherwise, set either `onChange` or `readOnly`.',
+            'Otherwise, set `onChange`.',
         );
       }
-    }, [onChange, readOnly, value]);
+    }, [onChange, value]);
 
     useEffect(() => {
       if (openProp !== undefined && setOpenProp === undefined) {
@@ -530,6 +529,22 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       }),
     } as const;
 
+    /**
+     * When aria-label is provided, we compose it with the selected value for screen readers. This is the default
+     * behavior for native select elements. When not doing this, only aria-label was being announced even when a value
+     * was selected.
+     */
+    const composedAriaLabel = useMemo(() => {
+      if (!ariaLabel || label || ariaLabelledby) {
+        return undefined;
+      }
+
+      const selectedText =
+        selectedOption !== null ? selectedOption.props.children : placeholder;
+
+      return `${ariaLabel}, ${selectedText}`;
+    }, [ariaLabel, ariaLabelledby, label, placeholder, selectedOption]);
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div
@@ -607,7 +622,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               id={menuButtonId}
               ref={menuButtonRef}
               name={name}
-              readOnly={readOnly}
               value={getOptionValue(selectedOption)}
               text={
                 selectedOption !== null
@@ -618,7 +632,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               onOpen={onOpen}
               onClose={onClose}
               aria-labelledby={labelId}
-              aria-label={!label && !ariaLabelledby ? ariaLabel : undefined}
+              aria-label={composedAriaLabel}
               aria-controls={menuId}
               aria-expanded={open}
               aria-describedby={descriptionId}

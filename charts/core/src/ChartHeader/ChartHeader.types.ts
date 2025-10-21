@@ -5,7 +5,7 @@ export interface ChartHeaderProps
   /**
    * The title of the chart
    */
-  title: string;
+  title: React.ReactNode;
 
   /**
    * Icon to be rendered directly to the right of the title.

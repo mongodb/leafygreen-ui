@@ -1,5 +1,5 @@
 import React, { createRef, PropsWithChildren, useState } from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
@@ -339,8 +339,9 @@ describe('packages/date-picker/menu/header', () => {
         exact: false,
       });
       userEvent.click(monthSelect);
+      act(() => jest.advanceTimersByTime(transitionDuration.default));
+
       await waitFor(() => {
-        jest.advanceTimersByTime(transitionDuration.default);
         expect(mockSetIsSelectOpen).toHaveBeenCalledWith(true);
       });
 
@@ -348,8 +349,9 @@ describe('packages/date-picker/menu/header', () => {
       await waitFor(() => expect(options[0]).toBeInTheDocument());
 
       userEvent.click(monthSelect);
+      act(() => jest.advanceTimersByTime(transitionDuration.default));
+
       await waitFor(() => {
-        jest.advanceTimersByTime(transitionDuration.default);
         expect(mockSetIsSelectOpen).toHaveBeenCalledWith(false);
       });
     });

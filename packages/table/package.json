@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "15.1.5",
+  "version": "15.1.6",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -58,7 +58,7 @@
     "@storybook/test": "^8.6.14"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/table",
   "repository": {

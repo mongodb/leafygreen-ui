@@ -191,8 +191,8 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          version: pnpm run version
-          publish: pnpm publish -r --no-git-checks
+          version: pnpm run version # Rebuild packages to ensure any uncommitted pre-build artifacts
+          publish: pnpm publish -r --no-git-checks # Use `pnpm publish` directly to resolve `workspace` dependencies
           createGithubReleases: true
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
@@ -220,7 +220,7 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
-      
+
       - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache

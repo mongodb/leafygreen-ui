@@ -1,5 +1,19 @@
 # @lg-charts/drag-provider
 
+## 1.0.9
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- 62ddea8: introduce `Series` abstraction as a superclass of `Line` this allows supporting more diverse series
+  types such as `Bar` in a follow up PR
+- Updated dependencies [91d5f35]
+- Updated dependencies [1d67179]
+- Updated dependencies [c8559f3]
+- Updated dependencies [62ddea8]
+  - @lg-charts/core@2.2.0
+  - @lg-charts/chart-card@1.1.1
+
 ## 1.0.8
 
 ### Patch Changes

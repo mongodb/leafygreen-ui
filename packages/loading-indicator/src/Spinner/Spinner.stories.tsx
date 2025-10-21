@@ -1,49 +1,52 @@
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 
-import Spinner from './Spinner';
-import { DisplayOption } from './Spinner.types';
+import { Size } from '@leafygreen-ui/tokens';
 
-const meta: StoryMetaType<typeof Spinner> = {
+import { Spinner } from '.';
+
+export default {
   title: 'Composition/Loading/LoadingIndicator/Spinner',
   component: Spinner,
-  argTypes: {
-    description: { control: 'text' },
-    sizeOverride: { control: 'number' },
-    displayOption: { control: 'select', options: Object.values(DisplayOption) },
-  },
   parameters: {
-    default: 'Default',
+    default: 'LiveExample',
+  },
+  argTypes: {
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+    },
+    colorOverride: {
+      control: 'color',
+    },
+  },
+  args: {
+    size: Size.Default,
+  },
+} satisfies StoryMetaType<typeof Spinner>;
+
+export const LiveExample: StoryObj<typeof Spinner> = {
+  render: args => <Spinner {...args} />,
+  parameters: {
     chromatic: {
       disableSnapshot: true,
     },
   },
 };
 
-export default meta;
-
-const Template: StoryFn<typeof Spinner> = props => <Spinner {...props} />;
-
-export const Default = Template.bind({});
-
-export const WithDescription = Template.bind({});
-WithDescription.args = {
-  description: 'Loading dot dot...',
-};
-
-export const Horizontal = Template.bind({});
-Horizontal.args = {
-  displayOption: 'default-horizontal',
-  description: 'Loading dot dot...',
-};
-
-export const SizeOverride = Template.bind({});
-SizeOverride.args = {
-  sizeOverride: 10,
-};
-
-export const ColorOverride = Template.bind({});
-ColorOverride.args = {
-  colorOverride: 'purple',
+export const Generated: StoryObj<typeof Spinner> = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      args: {
+        disableAnimation: true,
+      },
+      combineArgs: {
+        darkMode: [false, true],
+        size: [...Object.values(Size), 87],
+        colorOverride: [undefined, '#f00'],
+      },
+    },
+  },
 };

@@ -119,7 +119,6 @@ const meta: StoryMetaType<typeof Select> = {
     label: { control: 'text' },
     description: { control: 'text' },
     defaultValue: { control: 'text' },
-    readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
     open: {
@@ -153,6 +152,7 @@ export const LiveExample: StoryFn<SelectProps> = ({
     )}
     // eslint-disable-next-line no-console
     onChange={v => console.log(v)}
+    aria-label="hello world"
   />
 );
 LiveExample.parameters = {

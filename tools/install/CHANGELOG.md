@@ -1,5 +1,11 @@
 # @lg-tools/install
 
+## 0.4.1
+
+### Patch Changes
+
+- f3a8bdc: Updates CI to ensure pre-build artifacts are committed after changeset version bump
+
 ## 0.4.0
 
 ### Minor Changes

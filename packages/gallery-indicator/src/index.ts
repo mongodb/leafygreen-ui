@@ -1,5 +1,6 @@
+export { GalleryIndicator } from './GalleryIndicator';
 export {
-  GalleryIndicator,
   type GalleryIndicatorProps,
-} from './GalleryIndicator';
+  Variant,
+} from './GalleryIndicator/GalleryIndicator.types';
 export { DEFAULT_LGID_ROOT, getLgIds } from './utils';

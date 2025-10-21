@@ -104,7 +104,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { ref: interceptRef, inView: isInterceptInView } = useInView({
       initialInView: true,
       fallbackInView: true,
-      skip: !scrollable,
     });
 
     const showCloseButton = !!onClose;
@@ -282,7 +281,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               </div>
               <div
                 className={getChildrenContainerStyles({
-                  hasShadowTop: !isInterceptInView,
+                  hasShadowTop: scrollable && !isInterceptInView,
                   theme,
                 })}
               >
@@ -296,7 +295,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                     data-testid={lgIds.scrollContainer}
                   >
                     {/* Empty span element used to track if children container has scrolled down */}
-                    <span ref={interceptRef} />
+                    {scrollable && <span ref={interceptRef} />}
                     {children}
                   </div>
                 ) : (

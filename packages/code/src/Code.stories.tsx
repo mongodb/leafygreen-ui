@@ -8,12 +8,13 @@ import {
 } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import { Icon } from '@leafygreen-ui/icon';
+import { IconButton } from '@leafygreen-ui/icon-button';
 
 import { LanguageSwitcherWithPanelExample } from './LanguageSwitcher/LanguageSwitcherExample';
 import { languageOptions } from './testing/Code.testutils';
-import Code, {
+import {
+  Code,
   CodeProps,
   CopyButton,
   CopyButtonAppearance,
@@ -106,6 +107,7 @@ const meta: StoryMetaType<typeof Code> = {
     baseFontSize: 14,
     children: shortJsSnippet,
     copyButtonAppearance: CopyButtonAppearance.Hover,
+    collapsedLines: 5,
   },
   argTypes: {
     isLoading: { control: 'boolean' },
@@ -127,6 +129,7 @@ const meta: StoryMetaType<typeof Code> = {
         type: 'select',
       },
     },
+    collapsedLines: { control: 'number' },
   },
 };
 
@@ -156,6 +159,29 @@ LiveExample.parameters = {
     disableSnapshot: true,
   },
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Collapsed: StoryType<typeof Code, FontSizeProps> = ({
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <Code
+    {...(args as CodeProps)}
+    highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+    className={css`
+      width: 100%;
+    `}
+    showLineNumbers={true}
+    collapsedLines={3}
+    expandable={true}
+  >
+    {jsSnippet}
+  </Code>
+);
 
 export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,
