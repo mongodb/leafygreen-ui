@@ -44,13 +44,12 @@
     "@lg-tools/lint": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
     "@svgr/core": "^5.3.1",
-    "@types/xml2json": "^0.11.0",
     "commander": "^11.0.0",
-    "rollup": "4.16.1",
-    "ts-node": "^10.9.2",
-    "xml2json": "^0.12.0",
+    "fast-xml-parser": "^5.3.0",
+    "fs-extra": "11.1.1",
     "p-queue": "^8.1.0",
-    "fs-extra": "11.1.1"
+    "rollup": "4.16.1",
+    "ts-node": "^10.9.2"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon",
