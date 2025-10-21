@@ -1,5 +1,18 @@
 # @leafygreen-ui/split-button
 
+## 6.1.5
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/button@25.1.1
+  - @leafygreen-ui/menu@32.1.2
+
 ## 6.1.4
 
 ### Patch Changes

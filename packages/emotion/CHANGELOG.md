@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 5.0.4
+
+### Patch Changes
+
+- f3a8bdc: Updates CI to ensure pre-build artifacts are committed after changeset version bump
+
 ## 5.0.3
 
 ### Patch Changes

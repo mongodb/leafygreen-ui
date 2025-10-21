@@ -1,5 +1,15 @@
 # @leafygreen-ui/context-drawer
 
+## 0.2.5
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/button@25.1.1
+
 ## 0.2.4
 
 ### Patch Changes
