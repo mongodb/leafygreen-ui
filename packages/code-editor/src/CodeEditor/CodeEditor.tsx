@@ -261,7 +261,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
 
-      if (!editorContainerRef?.current || !EditorView || !Prec || !commands) {
+      if (!editorContainerRef?.current || !EditorView) {
         return;
       }
 
