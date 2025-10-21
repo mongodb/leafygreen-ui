@@ -91,12 +91,17 @@ export const CodeEditorSelectors = {
   GutterElement: '.cm-gutterElement',
   Gutters: '.cm-gutters',
   HyperLink: '.cm-hyper-link-icon',
+  InnerEditor: '.cm-scroller',
   Line: '.cm-line',
   LineNumbers: '.cm-lineNumbers',
   LineWrapping: '.cm-lineWrapping',
   SearchInput:
     'input[type="text"], .cm-textfield, input[placeholder*="search" i]',
-  SearchPanel: '.cm-search, .cm-panel',
+  SearchMatch: '.cm-searchMatch',
+  SearchMatchSelected: '.cm-searchMatch-selected',
+  SearchPanel: '.cm-panel',
+  SearchPanelContainer: '.cm-panels',
+  SearchPanelContainerTop: '.cm-panels-top',
   SelectionBackground: '.cm-selectionBackground',
   Tooltip: '.cm-tooltip',
 } as const;
@@ -195,6 +200,11 @@ type BaseCodeEditorProps = DarkModeProps &
      * Enables line wrapping when the text exceeds the editor's width.
      */
     enableLineWrapping?: boolean;
+
+    /**
+     * Enables the search panel in the editor.
+     */
+    enableSearchPanel?: boolean;
 
     /**
      * Additional CodeMirror extensions to apply to the editor. These will be applied
