@@ -178,13 +178,27 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
      */
     const handleUndo = useCallback((): boolean => {
       const commands = modules?.['@codemirror/commands'];
+      const EditorView = modules?.['@codemirror/view'];
 
-      if (!editorViewRef.current || !commands) {
+      if (!editorViewRef.current || !commands || !EditorView) {
         console.warn('Undo is not available - editor or commands not loaded');
         return false;
       }
 
-      return commands.undo(editorViewRef.current);
+      const result = commands.undo(editorViewRef.current);
+
+      // Focus the editor and scroll cursor into view after undo
+      if (result && editorViewRef.current) {
+        editorViewRef.current.focus();
+        editorViewRef.current.dispatch({
+          effects: EditorView.EditorView.scrollIntoView(
+            editorViewRef.current.state.selection.main,
+            { y: 'center' },
+          ),
+        });
+      }
+
+      return result;
     }, [modules]);
 
     /**
@@ -193,13 +207,27 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
      */
     const handleRedo = useCallback((): boolean => {
       const commands = modules?.['@codemirror/commands'];
+      const EditorView = modules?.['@codemirror/view'];
 
-      if (!editorViewRef.current || !commands) {
+      if (!editorViewRef.current || !commands || !EditorView) {
         console.warn('Redo is not available - editor or commands not loaded');
         return false;
       }
 
-      return commands.redo(editorViewRef.current);
+      const result = commands.redo(editorViewRef.current);
+
+      // Focus the editor and scroll cursor into view after redo
+      if (result && editorViewRef.current) {
+        editorViewRef.current.focus();
+        editorViewRef.current.dispatch({
+          effects: EditorView.EditorView.scrollIntoView(
+            editorViewRef.current.state.selection.main,
+            { y: 'center' },
+          ),
+        });
+      }
+
+      return result;
     }, [modules]);
 
     /**
