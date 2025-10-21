@@ -152,33 +152,35 @@ export const ContextMenu = ({
 
       {isOpen && (
         <div className={getMenuContainerStyles(position)}>
-          <Menu
-            /** Force re-mount when position changes so Menu recalculates its positioning */
-            key={`${position.x}-${position.y}`}
-            open={isOpen}
-            setOpen={setIsOpen}
-            renderDarkMenu={false}
-            variant={MenuVariant.Compact}
-            data-lgid={lgIds.contextMenu}
-            data-testid={lgIds.contextMenu}
-            refEl={menuRef}
-          >
-            {menuItems.map((item, index) => {
-              if (item.isSeparator) {
-                return <MenuSeparator key={index} />;
-              }
+          <div ref={menuRef}>
+            <Menu
+              /** Force re-mount when position changes so Menu recalculates its positioning */
+              key={`${position.x}-${position.y}`}
+              open={isOpen}
+              setOpen={setIsOpen}
+              renderDarkMenu={false}
+              variant={MenuVariant.Compact}
+              data-lgid={lgIds.contextMenu}
+              data-testid={lgIds.contextMenu}
+              refEl={menuRef}
+            >
+              {menuItems.map((item, index) => {
+                if (item.isSeparator) {
+                  return <MenuSeparator key={index} />;
+                }
 
-              return (
-                <MenuItem
-                  key={index}
-                  disabled={item.disabled}
-                  onClick={() => handledClickItem(item)}
-                >
-                  {item.label}
-                </MenuItem>
-              );
-            })}
-          </Menu>
+                return (
+                  <MenuItem
+                    key={index}
+                    disabled={item.disabled}
+                    onClick={() => handledClickItem(item)}
+                  >
+                    {item.label}
+                  </MenuItem>
+                );
+              })}
+            </Menu>
+          </div>
         </div>
       )}
     </div>

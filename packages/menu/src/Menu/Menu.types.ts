@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode } from 'react';
 
-import { Either, LgIdProps } from '@leafygreen-ui/lib';
+import type { Either, LgIdProps } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphicPropsWithRef,
   PolymorphicAs,
