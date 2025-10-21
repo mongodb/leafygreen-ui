@@ -2,11 +2,12 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum a10c975ffb48562637f9e402998205cb
+* @checksum ca4e0f0b5090cfaca9ceccd75345cfae
 */
 import * as React from "react";
+import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { generateAccessibleProps, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, getGlyphLabel, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface LightningBoltProps extends LGGlyph.ComponentProps {}
 const LightningBolt = ({
@@ -19,20 +20,23 @@ const LightningBolt = ({
   role = 'img',
   ...props
 }: LightningBoltProps) => {
+  const titleId = useId();
   const fillStyle = css`
         color: ${fill};
       `;
   const noFlexShrink = css`
         flex-shrink: 0;
       `;
+  const safeTitle = title || getGlyphLabel('LightningBolt');
   const accessibleProps = generateAccessibleProps(role, 'LightningBolt', {
     title,
+    titleId,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M9.22274 1.99296C9.22274 1.49561 8.56293 1.31233 8.30107 1.73667L4.07384 8.58696C3.87133 8.91513 4.10921 9.33717 4.49748 9.33717H6.77682L6.77682 14.0066C6.77682 14.504 7.43627 14.6879 7.69813 14.2635L11.9262 7.4118C12.1288 7.08363 11.8903 6.66244 11.5021 6.66244H9.22274V1.99296Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><title id={titleId}>{safeTitle}</title><path d="M9.22274 1.99296C9.22274 1.49561 8.56293 1.31233 8.30107 1.73667L4.07384 8.58696C3.87133 8.91513 4.10921 9.33717 4.49748 9.33717H6.77682L6.77682 14.0066C6.77682 14.504 7.43627 14.6879 7.69813 14.2635L11.9262 7.4118C12.1288 7.08363 11.8903 6.66244 11.5021 6.66244H9.22274V1.99296Z" fill={'currentColor'} /></svg>;
 };
 LightningBolt.displayName = 'LightningBolt';
 LightningBolt.isGlyph = true;

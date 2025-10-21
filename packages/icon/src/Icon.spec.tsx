@@ -295,11 +295,32 @@ describe('Generated glyphs', () => {
       expect(editIcon.getAttribute('aria-labelledby')).toBe('Test label');
     });
 
-    test('when title is supplied it overrides default label', () => {
+    test('when title is supplied it renders a title element and aria-labelledby', () => {
       render(<EditIcon title="Test title" />);
       const editIcon = screen.getByRole('img');
       expect(editIcon.getAttribute('aria-label')).toBe(null);
-      expect(editIcon.getAttribute('title')).toBe('Test title');
+      // Should have aria-labelledby instead of title attribute
+      const ariaLabelledBy = editIcon.getAttribute('aria-labelledby');
+      expect(ariaLabelledBy).not.toBe(null);
+      // Should find a title element with matching ID containing the text
+      const titleElement = editIcon.querySelector('title');
+      expect(titleElement).not.toBe(null);
+      expect(titleElement?.textContent).toBe('Test title');
+      expect(titleElement?.id).toBe(ariaLabelledBy);
+    });
+
+    test('when both title and aria-labelledby are supplied they are combined', () => {
+      render(<EditIcon title="Test title" aria-labelledby="external-label" />);
+      const editIcon = screen.getByRole('img');
+      expect(editIcon.getAttribute('aria-label')).toBe(null);
+      const ariaLabelledBy = editIcon.getAttribute('aria-labelledby');
+      // Should contain both the title ID and the external label
+      expect(ariaLabelledBy).toContain('external-label');
+      const titleElement = editIcon.querySelector('title');
+      expect(titleElement).not.toBe(null);
+      expect(titleElement?.textContent).toBe('Test title');
+      // The aria-labelledby should reference both
+      expect(ariaLabelledBy).toBe(`${titleElement?.id} external-label`);
     });
 
     test('when role="presentation", aria-hidden is true', () => {

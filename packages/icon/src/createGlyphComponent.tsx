@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { generateAccessibleProps, Size, sizeMap } from './glyphCommon';
+import {
+  generateAccessibleProps,
+  getGlyphLabel,
+  Size,
+  sizeMap,
+} from './glyphCommon';
 import { LGGlyph, SVGR } from './types';
 
 /**
@@ -26,6 +31,7 @@ export function createGlyphComponent(
     role = 'img',
     ...rest
   }: LGGlyph.ComponentProps) => {
+    const titleId = useId();
     const fillStyle = css`
       color: ${fill};
     `;
@@ -49,8 +55,10 @@ export function createGlyphComponent(
         height={renderedSize}
         width={renderedSize}
         role={role}
+        title={title}
         {...generateAccessibleProps(role, glyphName, {
           title,
+          titleId,
           ['aria-label']: ariaLabel,
           ['aria-labelledby']: ariaLabelledby,
         })}

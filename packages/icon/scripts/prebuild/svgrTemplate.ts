@@ -20,10 +20,12 @@ interface ASTParts extends Record<string, any> {
 }
 
 export function svgrTemplate(
-  { template }: BabelAPI,
-  { state: { componentName } }: SVGROptions,
+  api: BabelAPI,
+  opts: SVGROptions,
   { imports, jsx, exports }: ASTParts,
 ) {
+  const { template, types: t } = api;
+  const { componentName } = opts.state;
   const typeScriptTpl = template.smart({ plugins: ['jsx', 'typescript'] });
 
   const jsxAttributes = typeScriptTpl.ast`
@@ -48,10 +50,36 @@ export function svgrTemplate(
       jsx.openingElement.attributes[2],
     );
 
+  // Convert self-closing svg to have children
+  jsx.openingElement.selfClosing = false;
+
+  // Create closing element using Babel types
+  jsx.closingElement = t.jsxClosingElement(
+    t.jsxIdentifier(jsx.openingElement.name.name),
+  );
+
+  // Create the title element JSX manually using Babel types
+  // <title id={titleId}>{safeTitle}</title>
+  const titleJSXElement = t.jsxElement(
+    t.jsxOpeningElement(t.jsxIdentifier('title'), [
+      t.jsxAttribute(
+        t.jsxIdentifier('id'),
+        t.jsxExpressionContainer(t.identifier('titleId')),
+      ),
+    ]),
+    t.jsxClosingElement(t.jsxIdentifier('title')),
+    [t.jsxExpressionContainer(t.identifier('safeTitle'))],
+    false,
+  );
+
+  // Add the title as a child, followed by the original children
+  jsx.children = [titleJSXElement, ...jsx.children];
+
   return typeScriptTpl(`
     %%imports%%
+    import { useId } from 'react';
     import { css, cx } from '@leafygreen-ui/emotion';
-    import { generateAccessibleProps, sizeMap } from '../glyphCommon';
+    import { generateAccessibleProps, getGlyphLabel, sizeMap } from '../glyphCommon';
     import { LGGlyph } from '../types';
   
     export interface ${componentName}Props extends LGGlyph.ComponentProps {}
@@ -66,6 +94,7 @@ export function svgrTemplate(
       role = 'img',
       ...props
     }: ${componentName}Props) => {
+      const titleId = useId();
       const fillStyle = css\`
         color: \${fill};
       \`;
@@ -74,7 +103,9 @@ export function svgrTemplate(
         flex-shrink: 0;
       \`;
 
-      const accessibleProps = generateAccessibleProps(role, '${componentName}', { title, ['aria-label']: ariaLabel, ['aria-labelledby']: ariaLabelledby })
+      const safeTitle = title || getGlyphLabel('${componentName}');
+
+      const accessibleProps = generateAccessibleProps(role, '${componentName}', { title, titleId, ['aria-label']: ariaLabel, ['aria-labelledby']: ariaLabelledby })
 
       return %%jsx%%;
     }
