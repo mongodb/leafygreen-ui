@@ -1,5 +1,17 @@
 # @leafygreen-ui/skeleton-loader
 
+## 3.0.7
+
+### Patch Changes
+
+- 7f7c385: Fixes accessibility issue in TableSkeleton where table headers without column labels were empty and not accessible to screen readers. Adds VisuallyHidden "Loading" text to skeleton table headers to ensure proper screen reader support.
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/card@13.1.2
+
 ## 3.0.6
 
 ### Patch Changes

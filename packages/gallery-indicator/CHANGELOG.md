@@ -1,5 +1,17 @@
 # @leafygreen-ui/gallery-indicator
 
+## 3.1.0
+
+### Minor Changes
+
+- 772c55d: Add variant allowing user to pick between default and BaseGreen
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
 ## 3.0.4
 
 ### Patch Changes
