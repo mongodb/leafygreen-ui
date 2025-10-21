@@ -6,8 +6,8 @@ import { GENERATED_DIR } from './constants';
 async function getBatchBuildOptions(
   batch: Array<string>,
 ): Promise<Array<MergedRollupOptions>> {
-  const { constructUMDGlobalName } = await import(
-    '@lg-tools/build/config/utils/constructUMDGlobalName.mjs'
+  const { constructUMDGlobalName, createConfigForFormat } = await import(
+    '@lg-tools/build/config/utils/index.mjs'
   );
 
   const { esmConfig, umdConfig } = await import(
@@ -16,15 +16,13 @@ async function getBatchBuildOptions(
 
   return [
     // ESM build can take an array of input files
-    {
-      ...esmConfig,
+    createConfigForFormat('esm', {
       input: batch.map(icon => `${GENERATED_DIR}/${icon}.tsx`),
       output: [esmConfig.output],
-    },
+    }),
     // UMD builds need a single input file
     ...batch.map(iconName => {
-      return {
-        ...umdConfig,
+      return createConfigForFormat('umd', {
         input: `${GENERATED_DIR}/${iconName}.tsx`,
         output: [
           {
@@ -33,7 +31,7 @@ async function getBatchBuildOptions(
             dir: `dist/umd`,
           },
         ],
-      };
+      });
     }),
   ];
 }
@@ -45,15 +43,12 @@ export async function buildBatch(
   batch: Array<string>,
   verbose = false,
 ): Promise<void> {
+  verbose && console.log('Building batch', batch);
   try {
     const rollupConfigs = await getBatchBuildOptions(batch);
 
     for (const config of rollupConfigs) {
       const bundle = await rollup(config);
-
-      if (verbose) {
-        console.log(bundle.watchFiles);
-      }
 
       await Promise.all(config.output.map(bundle.write));
       await bundle.close();
