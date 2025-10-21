@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/colors",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "lg-charts colors",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

@@ -1,5 +1,13 @@
 # @leafygreen-ui/typography
 
+## 22.1.4
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
 ## 22.1.3
 
 ### Patch Changes

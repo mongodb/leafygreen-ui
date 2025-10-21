@@ -191,7 +191,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          version: pnpm build && pnpm run version # Rebuild packages to ensure any uncommitted pre-build artifacts
+          version: pnpm run version # Rebuild packages to ensure any uncommitted pre-build artifacts
           publish: pnpm publish -r --no-git-checks # Use `pnpm publish` directly to resolve `workspace` dependencies
           createGithubReleases: true
         env:
