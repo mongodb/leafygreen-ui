@@ -6,8 +6,9 @@
   "private": true,
   "engines": {
     "node": ">= 18.20.8",
-    "pnpm": ">= 9.15.0"
+    "pnpm": ">= 10.18.3"
   },
+  "packageManager": "pnpm@10.18.3",
   "scripts": {
     "init": "pnpm install && pnpm build",
     "init:react17": "pnpm clean; npx node ./scripts/react17/init.mjs; pnpm run init",
@@ -82,7 +83,11 @@
       "caniuse-lite": "^1.0.30001585",
       "jackspeak": "2.1.1",
       "typescript": "$typescript"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild"
+    ]
   },
   "lg": {
     "scopes": {
@@ -107,7 +112,5 @@
   },
   "bugs": {
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
-  },
-  "packageManager": "pnpm@9.15.0",
-  "typesVersions": {}
+  }
 }
