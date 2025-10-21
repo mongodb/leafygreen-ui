@@ -52,7 +52,7 @@ export function useExtensions({
   modules: Partial<CodeEditorModules>;
   hasPanel: boolean;
 }) {
-  const baseFontSize = useUpdatedBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize(props.baseFontSize);
 
   const autoCompleteExtension = useAutoCompleteExtension({
     editorViewInstance,

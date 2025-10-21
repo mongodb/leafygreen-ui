@@ -8,7 +8,9 @@ import React, {
 } from 'react';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { findChild } from '@leafygreen-ui/lib';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -372,8 +374,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       forceParsingProp,
       getContents,
       enableSearchPanel,
-      props.darkMode,
-      props.baseFontSize,
+      darkModeProp,
+      baseFontSizeProp,
       panel,
       searchPanelExtension,
       isControlled,
@@ -406,66 +408,73 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       minWidth,
       width,
       readOnly,
+      darkMode,
+      baseFontSize,
     };
 
     return (
-      <CodeEditorContextMenu
-        customMenuItems={customContextMenuItems}
-        data-lgid={dataLgId}
+      <LeafyGreenProvider
+        darkMode={darkMode}
+        baseFontSize={baseFontSize === 13 ? 14 : 16}
       >
-        <div
-          ref={editorContainerRef}
-          className={getEditorStyles({
-            width,
-            minWidth,
-            maxWidth,
-            height,
-            minHeight,
-            maxHeight,
-            className,
-            copyButtonAppearance,
-          })}
-          data-lgid={lgIds.root}
-          {...rest}
+        <CodeEditorContextMenu
+          customMenuItems={customContextMenuItems}
+          data-lgid={dataLgId}
         >
-          {panel && (
-            <div data-no-context-menu="true">
-              <CodeEditorProvider value={contextValue}>
-                {panel}
-              </CodeEditorProvider>
-            </div>
-          )}
-          {!panel &&
-            (copyButtonAppearance === CopyButtonAppearance.Hover ||
-              copyButtonAppearance === CopyButtonAppearance.Persist) && (
-              <CodeEditorCopyButton
-                getContentsToCopy={getContents}
-                className={getCopyButtonStyles(copyButtonAppearance)}
-                variant={CopyButtonVariant.Button}
-                disabled={isLoadingProp || isLoading}
-                data-lgid={lgIds.copyButton}
-              />
+          <div
+            ref={editorContainerRef}
+            className={getEditorStyles({
+              width,
+              minWidth,
+              maxWidth,
+              height,
+              minHeight,
+              maxHeight,
+              className,
+              copyButtonAppearance,
+            })}
+            data-lgid={lgIds.root}
+            {...rest}
+          >
+            {panel && (
+              <div data-no-context-menu="true">
+                <CodeEditorProvider value={contextValue}>
+                  {panel}
+                </CodeEditorProvider>
+              </div>
             )}
-          {(isLoadingProp || isLoading) && (
-            <div
-              className={getLoaderStyles({
-                theme,
-                width,
-                minWidth,
-                maxWidth,
-                height,
-                minHeight,
-                maxHeight,
-              })}
-              data-lgid={lgIds.loader}
-            >
-              <Body className={getLoadingTextStyles(theme)}>
-                Loading code editor...
-              </Body>
-            </div>
-          )}
-        </div>
-      </CodeEditorContextMenu>
+            {!panel &&
+              (copyButtonAppearance === CopyButtonAppearance.Hover ||
+                copyButtonAppearance === CopyButtonAppearance.Persist) && (
+                <CodeEditorCopyButton
+                  getContentsToCopy={getContents}
+                  className={getCopyButtonStyles(copyButtonAppearance)}
+                  variant={CopyButtonVariant.Button}
+                  disabled={isLoadingProp || isLoading}
+                  data-lgid={lgIds.copyButton}
+                />
+              )}
+            {(isLoadingProp || isLoading) && (
+              <div
+                className={getLoaderStyles({
+                  theme,
+                  width,
+                  minWidth,
+                  maxWidth,
+                  height,
+                  minHeight,
+                  maxHeight,
+                })}
+                data-lgid={lgIds.loader}
+              >
+                <Body className={getLoadingTextStyles(theme)}>
+                  Loading code editor...
+                </Body>
+              </div>
+            )}
+          </div>
+        </CodeEditorContextMenu>
+      </LeafyGreenProvider>
     );
   },
 );
