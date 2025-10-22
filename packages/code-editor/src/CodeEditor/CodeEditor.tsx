@@ -119,6 +119,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       hasPanel: !!panel,
     });
 
+    // Track whether extensions have been initialized
+    const [extensionsInitialized, setExtensionsInitialized] = useState(false);
+
     // Get the current contents of the editor
     const getContents = useCallback(() => {
       return editorViewRef.current?.state.sliceDoc() ?? '';
@@ -297,6 +300,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
       const domNode = editorContainerRef.current as HTMLElementWithCodeMirror;
 
+      // Reset extensions initialized state since we're creating a new editor
+      setExtensionsInitialized(false);
+
       // Create editor with minimal setup - extensions will be configured in separate effect
       editorViewRef.current = new EditorView.EditorView({
         doc: controlledValue || defaultValue,
@@ -388,6 +394,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         ]),
       });
 
+      // Mark extensions as initialized to hide loading overlay
+      setExtensionsInitialized(true);
+
       if (forceParsingProp) {
         const Language = modules?.['@codemirror/language'];
         const docLength = editorViewRef.current?.state.doc.length ?? 0;
@@ -478,11 +487,13 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                   getContentsToCopy={getContents}
                   className={getCopyButtonStyles(copyButtonAppearance)}
                   variant={CopyButtonVariant.Button}
-                  disabled={isLoadingProp || isLoading}
+                  disabled={
+                    isLoadingProp || isLoading || !extensionsInitialized
+                  }
                   data-lgid={lgIds.copyButton}
                 />
               )}
-            {(isLoadingProp || isLoading) && (
+            {(isLoadingProp || isLoading || !extensionsInitialized) && (
               <div
                 className={getLoaderStyles({
                   theme,
