@@ -3,6 +3,7 @@ export {
   useWizardContext,
   WizardContext,
   type WizardContextData,
+  WizardProvider,
 } from './WizardContext';
 export { type WizardFooterProps } from './WizardFooter';
 export { type WizardStepProps } from './WizardStep';
