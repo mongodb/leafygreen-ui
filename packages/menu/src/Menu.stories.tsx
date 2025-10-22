@@ -484,8 +484,6 @@ export const MovingMenuTrigger = () => {
     position: absolute;
     color: black;
     text-align: center;
-    /* width: 30px;
-    height: 20px; */
     outline: 1px solid black;
     cursor: default;
   `;
