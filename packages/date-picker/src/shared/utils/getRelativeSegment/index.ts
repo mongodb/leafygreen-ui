@@ -189,7 +189,7 @@ interface GetRelativeSegmentContext<
   T extends Record<string, React.RefObject<HTMLInputElement>>,
 > {
   segment: HTMLInputElement | React.RefObject<HTMLInputElement>;
-  formatParts: Array<Intl.DateTimeFormatPart>;
+  formatParts?: Array<Intl.DateTimeFormatPart>;
   segmentRefs: T;
 }
 

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { FocusEventHandler, ForwardedRef, ReactElement } from 'react';
 
 import { DateType } from '@leafygreen-ui/date-utils';
 
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { ExplicitSegmentRule } from '../../utils/isExplicitSegmentValue';
+
+export interface RenderSegmentProps<T extends string = string> {
+  onChange: InputSegmentChangeEventHandler<T, string>;
+  onBlur: FocusEventHandler<HTMLInputElement>;
+  partType: T;
+}
 
 export interface InputChangeEvent<T extends string = string> {
   value: DateType;
@@ -15,22 +21,12 @@ export type InputChangeEventHandler<T extends string = string> = (
   changeEvent: InputChangeEvent<T>,
 ) => void;
 
-export interface InputBoxProps<T extends string = string>
-  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'children'> {
-  /**
-   * Date value passed into the component
-   */
-  value?: DateType;
-
-  /**
-   * Value setter callback.
-   */
-  setValue?: InputChangeEventHandler<T>;
-
+export interface InputBoxProps<T extends Record<string, string>>
+  extends Omit<React.ComponentPropsWithRef<'div'>, 'onChange' | 'children'> {
   /**
    * Callback fired when any segment changes, but not necessarily a full value
    */
-  onSegmentChange?: InputSegmentChangeEventHandler;
+  onSegmentChange?: InputSegmentChangeEventHandler<T[keyof T], string>;
 
   /**
    * id of the labelling element
@@ -38,28 +34,36 @@ export interface InputBoxProps<T extends string = string>
   labelledBy?: string;
 
   /** Refs  */
-  segmentRefs: Record<T, ReturnType<DynamicRefGetter<HTMLInputElement>>>;
+  // instead of T, this should  be a key from the Record<string, string>
+  segmentRefs: Record<
+    T[keyof T],
+    ReturnType<DynamicRefGetter<HTMLInputElement>>
+  >;
 
   /** Segment object */
-  segmentObj: Readonly<Record<string, T>>;
+  // { Day: 'day', Month: 'month', Year: 'year' }
+  segmentObj: T;
 
-  /** Default minimum value */
-  defaultMin: Record<T, number>;
+  // This should be a Record where the key is the value of the segmentObj and the value is a string
+  segments: Record<T[keyof T], string>;
 
-  /** Default maximum value */
-  defaultMax: Record<T, number>;
+  setSegment: (segment: T[keyof T], value: string) => void;
 
-  segments: Record<T, string>;
+  formatParts?: Intl.DateTimeFormatPart[];
 
-  setSegment: (segment: T, value: string) => void;
-
-  formatParts: Intl.DateTimeFormatPart[];
-
-  charsPerSegment: Record<T, number>;
+  charsPerSegment: Record<T[keyof T], number>;
 
   disabled: boolean;
 
-  children: React.ReactElement;
+  segmentRules: Record<T[keyof T], ExplicitSegmentRule>;
 
-  segmentRules: Record<T, ExplicitSegmentRule>;
+  renderSegment: (props: RenderSegmentProps<T[keyof T]>) => React.ReactElement;
+}
+
+export interface InputBoxComponentType {
+  <T extends Record<string, string>>(
+    props: InputBoxProps<T>,
+    ref: ForwardedRef<HTMLDivElement>,
+  ): ReactElement | null;
+  displayName?: string;
 }

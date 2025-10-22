@@ -46,6 +46,7 @@ import {
 } from './DateInputBox.styles';
 import { DateInputBoxProps } from './DateInputBox.types';
 import { charsPerSegment } from '../../../constants';
+import { InputBox } from '../../InputBox/InputBox';
 
 /**
  * Renders a styled date input with appropriate segment order & separator characters.
@@ -82,14 +83,14 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
     // TODO: MOVE to generic component
     /** Formats and sets the segment value */
-    const getFormattedSegmentValue = (
-      segmentName: DateSegment,
-      segmentValue: DateSegmentValue,
-    ): DateSegmentValue => {
-      const formatter = getValueFormatter(segmentName, charsPerSegment);
-      const formattedValue = formatter(segmentValue);
-      return formattedValue;
-    };
+    // const getFormattedSegmentValue = (
+    //   segmentName: DateSegment,
+    //   segmentValue: DateSegmentValue,
+    // ): DateSegmentValue => {
+    //   const formatter = getValueFormatter(segmentName, charsPerSegment);
+    //   const formattedValue = formatter(segmentValue);
+    //   return formattedValue;
+    // };
 
     // TODO: MOVE to generic component
     /** if the value is a `Date` the component is dirty */
@@ -138,178 +139,223 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
     // TODO: MOVE to generic component
     /** Fired when an individual segment value changes */
-    const handleSegmentInputChange: DateInputSegmentChangeEventHandler =
-      segmentChangeEvent => {
-        let segmentValue = segmentChangeEvent.value;
-        const { segment: segmentName, meta } = segmentChangeEvent;
-        const changedViaArrowKeys =
-          meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
+    // const handleSegmentInputChange: DateInputSegmentChangeEventHandler =
+    //   segmentChangeEvent => {
+    //     let segmentValue = segmentChangeEvent.value;
+    //     const { segment: segmentName, meta } = segmentChangeEvent;
+    //     const changedViaArrowKeys =
+    //       meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
-        // Auto-format the segment if it is explicit and was not changed via arrow-keys
-        if (
-          !changedViaArrowKeys &&
-          // TODO: consider making this a factory function since this will be different depending on the component.
-          isExplicitSegmentValue(segmentName, segmentValue)
-        ) {
-          segmentValue = getFormattedSegmentValue(segmentName, segmentValue);
+    //     // Auto-format the segment if it is explicit and was not changed via arrow-keys
+    //     if (
+    //       !changedViaArrowKeys &&
+    //       // TODO: consider making this a factory function since this will be different depending on the component.
+    //       isExplicitSegmentValue(segmentName, segmentValue)
+    //     ) {
+    //       segmentValue = getFormattedSegmentValue(segmentName, segmentValue);
 
-          // Auto-advance focus (if possible)
-          const nextSegmentName = getRelativeSegment('next', {
-            segment: segmentName,
-            formatParts,
-          });
+    //       // Auto-advance focus (if possible)
+    //       const nextSegmentName = getRelativeSegment('next', {
+    //         segment: segmentName,
+    //         formatParts,
+    //       });
 
-          if (nextSegmentName) {
-            const nextSegmentRef = segmentRefs[nextSegmentName];
-            nextSegmentRef?.current?.focus();
-            nextSegmentRef?.current?.select();
-          }
-        }
+    //       if (nextSegmentName) {
+    //         const nextSegmentRef = segmentRefs[nextSegmentName];
+    //         nextSegmentRef?.current?.focus();
+    //         nextSegmentRef?.current?.select();
+    //       }
+    //     }
 
-        setSegment(segmentName, segmentValue);
-        onSegmentChange?.(segmentChangeEvent);
-        // TODO: onInputChange callback here
-      };
+    //     setSegment(segmentName, segmentValue);
+    //     onSegmentChange?.(segmentChangeEvent);
+    //     // TODO: onInputChange callback here
+    //   };
 
     // TODO: MOVE to generic component
     /** Triggered when a segment is blurred */
-    const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
-      const segmentName = e.target.getAttribute('id');
-      const segmentValue = e.target.value;
+    // const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
+    //   const segmentName = e.target.getAttribute('id');
+    //   const segmentValue = e.target.value;
 
-      if (isDateSegment(segmentName)) {
-        const formattedValue = getFormattedSegmentValue(
-          segmentName,
-          segmentValue,
-        );
-        setSegment(segmentName, formattedValue);
-      }
-    };
+    //   if (isDateSegment(segmentName)) {
+    //     const formattedValue = getFormattedSegmentValue(
+    //       segmentName,
+    //       segmentValue,
+    //     );
+    //     setSegment(segmentName, formattedValue);
+    //   }
+    // };
 
     // TODO: MOVE to generic component
     /** Called on any keydown within the input element */
-    const handleInputKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
-      const { target: _target, key } = e;
-      const target = _target as HTMLElement;
-      const isSegment = isElementInputSegment(target, segmentRefs);
+    // const handleInputKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
+    //   const { target: _target, key } = e;
+    //   const target = _target as HTMLElement;
+    //   const isSegment = isElementInputSegment(target, segmentRefs);
 
-      // if target is not a segment, do nothing
-      if (!isSegment) return;
+    //   // if target is not a segment, do nothing
+    //   if (!isSegment) return;
 
-      const isSegmentEmpty = !target.value;
+    //   const isSegmentEmpty = !target.value;
 
-      switch (key) {
-        case keyMap.ArrowLeft: {
-          // Without this, the input ignores `.select()`
-          e.preventDefault();
-          // if input is empty,
-          // set focus to prev input (if it exists)
-          const segmentToFocus = getRelativeSegmentRef('prev', {
-            segment: target,
-            formatParts,
-            segmentRefs,
-          });
+    //   switch (key) {
+    //     case keyMap.ArrowLeft: {
+    //       // Without this, the input ignores `.select()`
+    //       e.preventDefault();
+    //       // if input is empty,
+    //       // set focus to prev input (if it exists)
+    //       const segmentToFocus = getRelativeSegmentRef('prev', {
+    //         segment: target,
+    //         formatParts,
+    //         segmentRefs,
+    //       });
 
-          segmentToFocus?.current?.focus();
-          segmentToFocus?.current?.select();
-          // otherwise, use default behavior
+    //       segmentToFocus?.current?.focus();
+    //       segmentToFocus?.current?.select();
+    //       // otherwise, use default behavior
 
-          break;
-        }
+    //       break;
+    //     }
 
-        case keyMap.ArrowRight: {
-          // Without this, the input ignores `.select()`
-          e.preventDefault();
-          // if input is empty,
-          // set focus to next. input (if it exists)
-          const segmentToFocus = getRelativeSegmentRef('next', {
-            segment: target,
-            formatParts,
-            segmentRefs,
-          });
+    //     case keyMap.ArrowRight: {
+    //       // Without this, the input ignores `.select()`
+    //       e.preventDefault();
+    //       // if input is empty,
+    //       // set focus to next. input (if it exists)
+    //       const segmentToFocus = getRelativeSegmentRef('next', {
+    //         segment: target,
+    //         formatParts,
+    //         segmentRefs,
+    //       });
 
-          segmentToFocus?.current?.focus();
-          segmentToFocus?.current?.select();
-          // otherwise, use default behavior
+    //       segmentToFocus?.current?.focus();
+    //       segmentToFocus?.current?.select();
+    //       // otherwise, use default behavior
 
-          break;
-        }
+    //       break;
+    //     }
 
-        case keyMap.ArrowUp:
-        case keyMap.ArrowDown: {
-          // increment/decrement logic implemented by DateInputSegment
-          break;
-        }
+    //     case keyMap.ArrowUp:
+    //     case keyMap.ArrowDown: {
+    //       // increment/decrement logic implemented by DateInputSegment
+    //       break;
+    //     }
 
-        case keyMap.Backspace: {
-          if (isSegmentEmpty) {
-            // prevent the backspace in the previous segment
-            e.preventDefault();
+    //     case keyMap.Backspace: {
+    //       if (isSegmentEmpty) {
+    //         // prevent the backspace in the previous segment
+    //         e.preventDefault();
 
-            const segmentToFocus = getRelativeSegmentRef('prev', {
-              segment: target,
-              formatParts,
-              segmentRefs,
-            });
-            segmentToFocus?.current?.focus();
-            segmentToFocus?.current?.select();
-          }
-          break;
-        }
+    //         const segmentToFocus = getRelativeSegmentRef('prev', {
+    //           segment: target,
+    //           formatParts,
+    //           segmentRefs,
+    //         });
+    //         segmentToFocus?.current?.focus();
+    //         segmentToFocus?.current?.select();
+    //       }
+    //       break;
+    //     }
 
-        case keyMap.Space:
-        case keyMap.Enter:
-        case keyMap.Escape:
-        case keyMap.Tab:
-          // Behavior handled by parent or menu
-          break;
-      }
+    //     case keyMap.Space:
+    //     case keyMap.Enter:
+    //     case keyMap.Escape:
+    //     case keyMap.Tab:
+    //       // Behavior handled by parent or menu
+    //       break;
+    //   }
 
-      // call any handler that was passed in
-      onKeyDown?.(e);
+    //   // call any handler that was passed in
+    //   onKeyDown?.(e);
+    // };
+
+    // TODO: MOVE to constants
+    const segmentRules = {
+      [DateSegment.Day]: {
+        maxChars: charsPerSegment.day,
+        minExplicitValue: 4,
+      },
+      [DateSegment.Month]: {
+        maxChars: charsPerSegment.month,
+        minExplicitValue: 2,
+      },
+      [DateSegment.Year]: {
+        maxChars: charsPerSegment.year,
+      },
     };
 
-    // TODO: This will return the generic InputBox component
-    // We will pass in the formatParts, segmentRefs, onSegmentChange, onKeyDown, the segments and setSegment functions, and getMinSegmentValue and getMaxSegmentValue functions as props
-
     return (
-      <div
-        className={cx(segmentPartsWrapperStyles, className)}
-        onKeyDown={handleInputKeyDown}
-        ref={containerRef}
+      // <div
+      //   className={cx(segmentPartsWrapperStyles, className)}
+      //   onKeyDown={handleInputKeyDown}
+      //   ref={containerRef}
+      //   {...rest}
+      // >
+      //   {formatParts?.map((part, i) => {
+      //     if (part.type === 'literal') {
+      //       return (
+      //         <span
+      //           className={cx(separatorLiteralStyles, {
+      //             [separatorLiteralDisabledStyles[theme]]: disabled,
+      //           })}
+      //           key={'literal-' + i}
+      //         >
+      //           {part.value}
+      //         </span>
+      //       );
+      //     } else if (isDateSegment(part.type)) {
+      //       return (
+      //         <DateInputSegment
+      //           key={part.type}
+      //           ref={segmentRefs[part.type]}
+      //           aria-labelledby={labelledBy}
+      //           min={getMinSegmentValue(part.type, { date: value, min })}
+      //           max={getMaxSegmentValue(part.type, { date: value, max })}
+      //           segment={part.type}
+      //           value={segments[part.type]}
+      //           onChange={handleSegmentInputChange}
+      //           onBlur={handleSegmentInputBlur}
+      //         />
+      //       );
+      //     }
+      //   })}
+      // </div>
+
+      <InputBox
+        ref={fwdRef}
+        segmentRefs={segmentRefs}
+        segmentObj={DateSegment}
+        charsPerSegment={charsPerSegment}
+        formatParts={formatParts}
+        segments={segments}
+        setSegment={setSegment}
+        disabled={disabled}
+        segmentRules={segmentRules}
+        onSegmentChange={onSegmentChange}
+        renderSegment={({ onChange, onBlur, partType }) => (
+          <DateInputSegment
+            key={partType}
+            ref={segmentRefs[partType]}
+            aria-labelledby={labelledBy}
+            min={getMinSegmentValue(partType, { date: value, min })}
+            max={getMaxSegmentValue(partType, { date: value, max })}
+            segment={partType}
+            value={segments[partType]}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        )}
         {...rest}
-      >
-        {formatParts?.map((part, i) => {
-          if (part.type === 'literal') {
-            return (
-              <span
-                className={cx(separatorLiteralStyles, {
-                  [separatorLiteralDisabledStyles[theme]]: disabled,
-                })}
-                key={'literal-' + i}
-              >
-                {part.value}
-              </span>
-            );
-          } else if (isDateSegment(part.type)) {
-            return (
-              <DateInputSegment
-                key={part.type}
-                ref={segmentRefs[part.type]}
-                aria-labelledby={labelledBy}
-                min={getMinSegmentValue(part.type, { date: value, min })}
-                max={getMaxSegmentValue(part.type, { date: value, max })}
-                segment={part.type}
-                value={segments[part.type]}
-                onChange={handleSegmentInputChange}
-                onBlur={handleSegmentInputBlur}
-              />
-            );
-          }
-        })}
-      </div>
+      ></InputBox>
     );
   },
 );
 
 DateInputBox.displayName = 'DateInputBox';
+
+// return (
+//   <InputBox> // contains keyboard management and auto-formatting
+//     <DateInputSegment /> // contains the input and the label, will be cloned for each segment so it gets the correct props
+//   </InputBox>
+// )

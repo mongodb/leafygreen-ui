@@ -1,35 +1,87 @@
-// @ts-nocheck
-
 import range from 'lodash/range';
 
-import { charsPerSegment, defaultMax, defaultMin } from '../../../../constants';
-import { DateSegment } from '../../../../types';
 import { getValueFormatter } from '../../../../utils';
 
 import { getNewSegmentValueFromInputValue } from './getNewSegmentValueFromInputValue';
 
+const charsPerSegment = {
+  day: 2,
+  month: 2,
+  year: 4,
+};
+
+const defaultMin = {
+  day: 1,
+  month: 1,
+  year: 1970,
+};
+
+const defaultMax = {
+  day: 31,
+  month: 12,
+  year: new Date().getFullYear(),
+};
+
+const segmentObj = {
+  day: 'day',
+  month: 'month',
+  year: 'year',
+};
+
 describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromInputValue', () => {
   describe.each(['day', 'month', 'year'])('For segment %p', _segment => {
-    const segment: DateSegment = _segment as DateSegment;
+    const segment = _segment as 'day' | 'month' | 'year';
     describe('when current value is empty', () => {
       test.each(range(10))('accepts %i character as input', i => {
-        const newValue = getNewSegmentValueFromInputValue(segment, '', `${i}`);
+        const newValue = getNewSegmentValueFromInputValue(
+          segment,
+          '',
+          `${i}`,
+          charsPerSegment,
+          defaultMin,
+          defaultMax,
+          segmentObj,
+        );
         expect(newValue).toEqual(`${i}`);
       });
 
       const validValues = [defaultMin[segment], defaultMax[segment]];
       test.each(validValues)(`accepts value "%i" as input`, v => {
-        const newValue = getNewSegmentValueFromInputValue(segment, '', `${v}`);
+        const newValue = getNewSegmentValueFromInputValue(
+          segment,
+          '',
+          `${v}`,
+          charsPerSegment,
+          defaultMin,
+          defaultMax,
+          segmentObj,
+        );
         expect(newValue).toEqual(`${v}`);
       });
 
       test('does not accept non-numeric characters', () => {
-        const newValue = getNewSegmentValueFromInputValue(segment, '', `b`);
+        const newValue = getNewSegmentValueFromInputValue(
+          segment,
+          '',
+          `b`,
+          charsPerSegment,
+          defaultMin,
+          defaultMax,
+          segmentObj,
+        );
         expect(newValue).toEqual('');
       });
 
       test('does not accept input with a period/decimal', () => {
-        const newValue = getNewSegmentValueFromInputValue(segment, '', `2.`);
+        const newValue = getNewSegmentValueFromInputValue(
+          segment,
+          '',
+          `2.`,
+          charsPerSegment,
+          defaultMin,
+          defaultMax,
+          segmentObj,
+        );
         expect(newValue).toEqual('');
       });
     });
@@ -37,7 +89,15 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
     describe('when current value is 0', () => {
       if (segment !== 'year') {
         test('rejects additional 0 as input', () => {
-          const newValue = getNewSegmentValueFromInputValue(segment, '0', `00`);
+          const newValue = getNewSegmentValueFromInputValue(
+            segment,
+            '0',
+            `00`,
+            charsPerSegment,
+            defaultMin,
+            defaultMax,
+            segmentObj,
+          );
           expect(newValue).toEqual(`0`);
         });
       }
@@ -46,18 +106,38 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
           segment,
           '0',
           `0${i}`,
+          charsPerSegment,
+          defaultMin,
+          defaultMax,
+          segmentObj,
         );
         expect(newValue).toEqual(`0${i}`);
       });
       test('value can be deleted', () => {
-        const newValue = getNewSegmentValueFromInputValue(segment, '0', ``);
+        const newValue = getNewSegmentValueFromInputValue(
+          segment,
+          '0',
+          ``,
+          charsPerSegment,
+          defaultMin,
+          defaultMax,
+          segmentObj,
+        );
         expect(newValue).toEqual(``);
       });
     });
 
     describe('when current value is 1', () => {
       test('value can be deleted', () => {
-        const newValue = getNewSegmentValueFromInputValue(segment, '1', ``);
+        const newValue = getNewSegmentValueFromInputValue(
+          segment,
+          '1',
+          ``,
+          charsPerSegment,
+          defaultMin,
+          defaultMax,
+          segmentObj,
+        );
         expect(newValue).toEqual(``);
       });
 
@@ -67,6 +147,10 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
             segment,
             '1',
             `1${i}`,
+            charsPerSegment,
+            defaultMin,
+            defaultMax,
+            segmentObj,
           );
           expect(newValue).toEqual(`1${i}`);
         });
@@ -76,6 +160,10 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
               segment,
               '1',
               `1${i}`,
+              charsPerSegment,
+              defaultMin,
+              defaultMax,
+              segmentObj,
             );
             expect(newValue).toEqual(`${i}`);
           });
@@ -86,6 +174,10 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
             segment,
             '1',
             `1${i}`,
+            charsPerSegment,
+            defaultMin,
+            defaultMax,
+            segmentObj,
           );
           expect(newValue).toEqual(`1${i}`);
         });
@@ -94,7 +186,15 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
 
     describe('when current value is 3', () => {
       test('value can be deleted', () => {
-        const newValue = getNewSegmentValueFromInputValue(segment, '3', ``);
+        const newValue = getNewSegmentValueFromInputValue(
+          segment,
+          '3',
+          ``,
+          charsPerSegment,
+          defaultMin,
+          defaultMax,
+          segmentObj,
+        );
         expect(newValue).toEqual(``);
       });
 
@@ -105,6 +205,10 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
               segment,
               '3',
               `3${i}`,
+              charsPerSegment,
+              defaultMin,
+              defaultMax,
+              segmentObj,
             );
             expect(newValue).toEqual(`3${i}`);
           });
@@ -114,6 +218,10 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
                 segment,
                 '3',
                 `3${i}`,
+                charsPerSegment,
+                defaultMin,
+                defaultMax,
+                segmentObj,
               );
               expect(newValue).toEqual(`${i}`);
             });
@@ -128,6 +236,10 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
                 segment,
                 '3',
                 `3${i}`,
+                charsPerSegment,
+                defaultMin,
+                defaultMax,
+                segmentObj,
               );
               expect(newValue).toEqual(`${i}`);
             });
@@ -152,6 +264,10 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
             segment,
             val,
             `${val}1`,
+            charsPerSegment,
+            defaultMin,
+            defaultMax,
+            segmentObj,
           );
           expect(newValue).toEqual(val);
         },
