@@ -4,7 +4,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { Body, H3, Link } from '@leafygreen-ui/typography';
@@ -111,4 +111,11 @@ LiveExample.parameters = {
   },
 };
 
-export const Generated = () => {};
+export const Generated: StoryObj = {
+  render: () => <></>,
+  parameters: {
+    chromatic: {
+      delay: 200,
+    },
+  },
+};
