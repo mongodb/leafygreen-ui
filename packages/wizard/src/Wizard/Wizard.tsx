@@ -5,7 +5,6 @@ import {
   findChild,
   findChildren,
 } from '@leafygreen-ui/compound-component';
-import { Direction } from '@leafygreen-ui/descendants';
 import { useControlled } from '@leafygreen-ui/hooks';
 
 import { WizardSubComponentProperties } from '../constants';
@@ -48,21 +47,15 @@ export const Wizard = CompoundComponent(
     }
 
     const updateStep = useCallback(
-      (direction: Direction) => {
-        const getNextStep = (curr: number) => {
-          switch (direction) {
-            case Direction.Next:
-              return Math.min(curr + 1, stepChildren.length - 1);
-            case Direction.Prev:
-              return Math.max(curr - 1, 0);
-          }
-        };
-
-        // TODO pass getNextStep into setter as callback https://jira.mongodb.org/browse/LG-5607
-        const nextStep = getNextStep(activeStep);
-        setActiveStep(nextStep);
+      (step: number) => {
+        // Clamp the step value between 0 and stepChildren.length - 1
+        const clampedStep = Math.max(
+          0,
+          Math.min(step, stepChildren.length - 1),
+        );
+        setActiveStep(clampedStep);
       },
-      [activeStep, setActiveStep, stepChildren.length],
+      [setActiveStep, stepChildren.length],
     );
 
     // Get the current step to render
