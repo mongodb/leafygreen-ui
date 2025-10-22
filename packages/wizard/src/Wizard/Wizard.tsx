@@ -2,16 +2,18 @@ import React, { useCallback } from 'react';
 
 import {
   CompoundComponent,
+  findChild,
   findChildren,
 } from '@leafygreen-ui/compound-component';
+import { Direction } from '@leafygreen-ui/descendants';
 import { useControlled } from '@leafygreen-ui/hooks';
 
 import { WizardSubComponentProperties } from '../constants';
-import { getLgIds } from '../utils/getLgIds';
 import { WizardProvider } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
 
+import { wizardContainerStyles } from './Wizard.styles';
 import { WizardProps } from './Wizard.types';
 
 export const Wizard = CompoundComponent(
@@ -19,12 +21,15 @@ export const Wizard = CompoundComponent(
     activeStep: activeStepProp,
     onStepChange,
     children,
-    'data-lgid': dataLgId,
+    ...rest
   }: WizardProps) => {
-    const lgIds = getLgIds(dataLgId);
     const stepChildren = findChildren(
       children,
       WizardSubComponentProperties.Step,
+    );
+    const footerChild = findChild(
+      children,
+      WizardSubComponentProperties.Footer,
     );
 
     // Controlled/Uncontrolled activeStep value
@@ -43,46 +48,38 @@ export const Wizard = CompoundComponent(
     }
 
     const updateStep = useCallback(
-      (step: number) => {
-        // Clamp the step value between 0 and stepChildren.length - 1
-        const clampedStep = Math.max(
-          0,
-          Math.min(step, stepChildren.length - 1),
-        );
-        setActiveStep(clampedStep);
+      (direction: Direction) => {
+        const getNextStep = (curr: number) => {
+          switch (direction) {
+            case Direction.Next:
+              return Math.min(curr + 1, stepChildren.length - 1);
+            case Direction.Prev:
+              return Math.max(curr - 1, 0);
+          }
+        };
+
+        // TODO pass getNextStep into setter as callback https://jira.mongodb.org/browse/LG-5607
+        const nextStep = getNextStep(activeStep);
+        setActiveStep(nextStep);
       },
-      [setActiveStep, stepChildren.length],
+      [activeStep, setActiveStep, stepChildren.length],
     );
 
-    /**
-     * NB: We're intentionally do _not_ wrap the `Wizard` (or `WizardStep`) component in a container element.
-     * This is done to ensure the Wizard is flexible, and can be rendered in any containing layout.
-     */
+    // Get the current step to render
+    const currentStep = stepChildren[activeStep] || null;
+
     return (
-      <WizardProvider
-        activeStep={activeStep}
-        updateStep={updateStep}
-        totalSteps={stepChildren.length}
-        lgIds={lgIds}
-      >
-        {stepChildren.map((child, i) => (i === activeStep ? child : null))}
+      <WizardProvider activeStep={activeStep} updateStep={updateStep}>
+        <div className={wizardContainerStyles} {...rest}>
+          {currentStep}
+          {footerChild}
+        </div>
       </WizardProvider>
     );
   },
   {
     displayName: 'Wizard',
-    /**
-     * A single step in the wizard. A Wizard will only render Steps as children
-     */
     Step: WizardStep,
-
-    /**
-     * The footer of a Step component.
-     * Render this inside of each Step with the relevant button props for that Step.
-     *
-     * Back and Primary buttons trigger onStepChange.
-     * Automatically renders the "Back" button for all Steps except the first
-     */
     Footer: WizardFooter,
   },
 );
