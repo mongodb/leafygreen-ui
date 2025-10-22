@@ -213,8 +213,10 @@ jobs:
         uses: ArtiomTr/jest-coverage-report-action@v2
         if: github.event_name == 'pull_request'
         with:
+          coverage-file: coverage/coverage-summary.json
           package-manager: pnpm
-          skip-step: all
+          skip-step: install
+          test-script: pnpm run test --ci
 
   validate-builds:
     name: Validate builds & dependencies
