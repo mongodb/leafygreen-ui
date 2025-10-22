@@ -213,12 +213,10 @@ jobs:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
 
       - name: Coverage Report Comment
-        uses: ArtiomTr/jest-coverage-report-action@v2
+        uses: anuraag016/Jest-Coverage-Diff@master
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          coverage-file: coverage/coverage-summary.json
-          test-script: "bash -c 'pnpm run test --ci --json --coverage --testLocationInResults --outputFile=report.json && cp coverage/coverage-summary.json report.json'"
-          package-manager: pnpm
+          afterSwitchCommand: 'pnpm install'
+          runCommand: 'pnpm run test --coverage --coverageReporters="json-summary" --coverageDirectory="./"'
 
   validate-builds:
     name: Validate builds & dependencies
