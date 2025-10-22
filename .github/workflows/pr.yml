@@ -217,7 +217,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           coverage-file: coverage/coverage-summary.json
-          test-script: 'pnpm run test && cp coverage/coverage-summary.json report.json'
+          test-script: "bash -c 'pnpm run test --ci --json --coverage --testLocationInResults --outputFile=report.json && cp coverage/coverage-summary.json report.json'"
           package-manager: pnpm
 
   validate-builds:
