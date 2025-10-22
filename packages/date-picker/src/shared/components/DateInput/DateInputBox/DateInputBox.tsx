@@ -77,22 +77,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
   ) => {
     const { isDirty, formatParts, disabled, min, max, setIsDirty } =
       useSharedDatePickerContext();
-    const { theme } = useDarkMode();
 
-    const containerRef = useForwardedRef(fwdRef, null);
-
-    // TODO: MOVE to generic component
-    /** Formats and sets the segment value */
-    // const getFormattedSegmentValue = (
-    //   segmentName: DateSegment,
-    //   segmentValue: DateSegmentValue,
-    // ): DateSegmentValue => {
-    //   const formatter = getValueFormatter(segmentName, charsPerSegment);
-    //   const formattedValue = formatter(segmentValue);
-    //   return formattedValue;
-    // };
-
-    // TODO: MOVE to generic component
     /** if the value is a `Date` the component is dirty */
     useEffect(() => {
       if (isDateObject(value) && !isDirty) {
@@ -100,7 +85,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       }
     }, [isDirty, setIsDirty, value]);
 
-    // TODO: keep. This is specific to DatePicker
     /**
      * When a segment is updated,
      * trigger a `change` event for the segment, and
@@ -130,145 +114,11 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       }
     };
 
-    // TODO: keep. This is specific to DatePicker
     /** State Management for segments using a useReducer instead of useState */
     /** Keep track of each date segment */
     const { segments, setSegment } = useDateSegments(value, {
       onUpdate: handleSegmentUpdate,
     });
-
-    // TODO: MOVE to generic component
-    /** Fired when an individual segment value changes */
-    // const handleSegmentInputChange: DateInputSegmentChangeEventHandler =
-    //   segmentChangeEvent => {
-    //     let segmentValue = segmentChangeEvent.value;
-    //     const { segment: segmentName, meta } = segmentChangeEvent;
-    //     const changedViaArrowKeys =
-    //       meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
-
-    //     // Auto-format the segment if it is explicit and was not changed via arrow-keys
-    //     if (
-    //       !changedViaArrowKeys &&
-    //       // TODO: consider making this a factory function since this will be different depending on the component.
-    //       isExplicitSegmentValue(segmentName, segmentValue)
-    //     ) {
-    //       segmentValue = getFormattedSegmentValue(segmentName, segmentValue);
-
-    //       // Auto-advance focus (if possible)
-    //       const nextSegmentName = getRelativeSegment('next', {
-    //         segment: segmentName,
-    //         formatParts,
-    //       });
-
-    //       if (nextSegmentName) {
-    //         const nextSegmentRef = segmentRefs[nextSegmentName];
-    //         nextSegmentRef?.current?.focus();
-    //         nextSegmentRef?.current?.select();
-    //       }
-    //     }
-
-    //     setSegment(segmentName, segmentValue);
-    //     onSegmentChange?.(segmentChangeEvent);
-    //     // TODO: onInputChange callback here
-    //   };
-
-    // TODO: MOVE to generic component
-    /** Triggered when a segment is blurred */
-    // const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
-    //   const segmentName = e.target.getAttribute('id');
-    //   const segmentValue = e.target.value;
-
-    //   if (isDateSegment(segmentName)) {
-    //     const formattedValue = getFormattedSegmentValue(
-    //       segmentName,
-    //       segmentValue,
-    //     );
-    //     setSegment(segmentName, formattedValue);
-    //   }
-    // };
-
-    // TODO: MOVE to generic component
-    /** Called on any keydown within the input element */
-    // const handleInputKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
-    //   const { target: _target, key } = e;
-    //   const target = _target as HTMLElement;
-    //   const isSegment = isElementInputSegment(target, segmentRefs);
-
-    //   // if target is not a segment, do nothing
-    //   if (!isSegment) return;
-
-    //   const isSegmentEmpty = !target.value;
-
-    //   switch (key) {
-    //     case keyMap.ArrowLeft: {
-    //       // Without this, the input ignores `.select()`
-    //       e.preventDefault();
-    //       // if input is empty,
-    //       // set focus to prev input (if it exists)
-    //       const segmentToFocus = getRelativeSegmentRef('prev', {
-    //         segment: target,
-    //         formatParts,
-    //         segmentRefs,
-    //       });
-
-    //       segmentToFocus?.current?.focus();
-    //       segmentToFocus?.current?.select();
-    //       // otherwise, use default behavior
-
-    //       break;
-    //     }
-
-    //     case keyMap.ArrowRight: {
-    //       // Without this, the input ignores `.select()`
-    //       e.preventDefault();
-    //       // if input is empty,
-    //       // set focus to next. input (if it exists)
-    //       const segmentToFocus = getRelativeSegmentRef('next', {
-    //         segment: target,
-    //         formatParts,
-    //         segmentRefs,
-    //       });
-
-    //       segmentToFocus?.current?.focus();
-    //       segmentToFocus?.current?.select();
-    //       // otherwise, use default behavior
-
-    //       break;
-    //     }
-
-    //     case keyMap.ArrowUp:
-    //     case keyMap.ArrowDown: {
-    //       // increment/decrement logic implemented by DateInputSegment
-    //       break;
-    //     }
-
-    //     case keyMap.Backspace: {
-    //       if (isSegmentEmpty) {
-    //         // prevent the backspace in the previous segment
-    //         e.preventDefault();
-
-    //         const segmentToFocus = getRelativeSegmentRef('prev', {
-    //           segment: target,
-    //           formatParts,
-    //           segmentRefs,
-    //         });
-    //         segmentToFocus?.current?.focus();
-    //         segmentToFocus?.current?.select();
-    //       }
-    //       break;
-    //     }
-
-    //     case keyMap.Space:
-    //     case keyMap.Enter:
-    //     case keyMap.Escape:
-    //     case keyMap.Tab:
-    //       // Behavior handled by parent or menu
-    //       break;
-    //   }
-
-    //   // call any handler that was passed in
-    //   onKeyDown?.(e);
-    // };
 
     // TODO: MOVE to constants
     const segmentRules = {
@@ -353,9 +203,3 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 );
 
 DateInputBox.displayName = 'DateInputBox';
-
-// return (
-//   <InputBox> // contains keyboard management and auto-formatting
-//     <DateInputSegment /> // contains the input and the label, will be cloned for each segment so it gets the correct props
-//   </InputBox>
-// )

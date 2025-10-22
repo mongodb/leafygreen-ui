@@ -214,7 +214,7 @@ export const DateInputSegment = React.forwardRef<
     // );
 
     return (
-      <InputSegment<DateSegment, DateSegmentValue>
+      <InputSegment
         ref={fwdRef}
         segment={segment}
         value={value}

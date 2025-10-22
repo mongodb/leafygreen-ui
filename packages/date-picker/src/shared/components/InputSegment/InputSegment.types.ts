@@ -3,10 +3,7 @@ import React, { ForwardedRef, ReactElement } from 'react';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
-export interface InputSegmentChangeEvent<
-  T extends string = string,
-  V extends string = string,
-> {
+export interface InputSegmentChangeEvent<T extends string, V extends string> {
   segment: T;
   value: V;
   meta?: {
@@ -16,14 +13,12 @@ export interface InputSegmentChangeEvent<
 }
 
 export type InputSegmentChangeEventHandler<
-  T extends string = string,
-  V extends string = string,
+  T extends string,
+  V extends string,
 > = (inputSegmentChangeEvent: InputSegmentChangeEvent<T, V>) => void;
 
-export interface InputSegmentProps<
-  T extends string = string,
-  V extends string = string,
-> extends Omit<React.ComponentPropsWithRef<'input'>, 'onChange' | 'size'> {
+export interface InputSegmentProps<T extends string, V extends string>
+  extends Omit<React.ComponentPropsWithRef<'input'>, 'onChange' | 'size'> {
   /** Which segment this input represents */
   segment: T;
 
