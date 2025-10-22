@@ -13,7 +13,7 @@ import { WizardProvider } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
 
-import { stepContentStyles, wizardContainerStyles } from './Wizard.styles';
+import { wizardContainerStyles } from './Wizard.styles';
 import { WizardProps } from './Wizard.types';
 
 export const Wizard = CompoundComponent(
@@ -71,7 +71,7 @@ export const Wizard = CompoundComponent(
     return (
       <WizardProvider activeStep={activeStep} updateStep={updateStep}>
         <div className={wizardContainerStyles} {...rest}>
-          <div className={stepContentStyles}>{currentStep}</div>
+          {currentStep}
           {footerChild}
         </div>
       </WizardProvider>
