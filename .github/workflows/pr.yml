@@ -175,8 +175,11 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      checks: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: pnpm
         uses: pnpm/action-setup@v4
@@ -215,8 +218,9 @@ jobs:
         with:
           coverage-file: coverage/coverage-summary.json
           package-manager: pnpm
-          skip-step: install
-          test-script: pnpm run test --ci
+          working-directory: ./
+          skip-step: all
+          annotations: none
 
   validate-builds:
     name: Validate builds & dependencies
