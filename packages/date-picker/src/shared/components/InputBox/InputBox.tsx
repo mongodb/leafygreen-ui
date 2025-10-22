@@ -45,7 +45,8 @@ export const isElementInputSegment = <
 };
 
 /**
- * Renders a styled date input with appropriate segment order & separator characters.
+ * Generic controlled input box component
+ * Renders a styled input box with appropriate segment order & separator characters.
  *
  * @internal
  */
@@ -117,7 +118,6 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
 
     setSegment(segmentName, segmentValue);
     onSegmentChange?.(segmentChangeEvent);
-    // TODO: onInputChange callback here
   };
 
   /** Triggered when a segment is blurred */

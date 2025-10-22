@@ -21,7 +21,7 @@ export type InputChangeEventHandler<T extends string = string> = (
   changeEvent: InputChangeEvent<T>,
 ) => void;
 
-export interface InputBoxProps<T extends Record<string, string>>
+export interface InputBoxProps<T extends Record<string, any>>
   extends Omit<React.ComponentPropsWithRef<'div'>, 'onChange' | 'children'> {
   /**
    * Callback fired when any segment changes, but not necessarily a full value

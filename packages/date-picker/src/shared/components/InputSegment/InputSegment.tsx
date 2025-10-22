@@ -33,7 +33,7 @@ import {
  *
  * @internal
  */
-const InputSegmentWithRef = <T extends string, V extends string>(
+const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
   {
     segment,
     value,
