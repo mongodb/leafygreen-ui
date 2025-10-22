@@ -175,7 +175,6 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-      checks: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -212,15 +211,13 @@ jobs:
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
 
-      - name: Jest Coverage Report
-        uses: ArtiomTr/jest-coverage-report-action@v2
+      - name: Coverage Report Comment
+        uses: romeovs/lcov-reporter-action@v0.3.1
         if: github.event_name == 'pull_request'
         with:
-          coverage-file: coverage/coverage-summary.json
-          package-manager: pnpm
-          working-directory: ./
-          skip-step: all
-          annotations: none
+          lcov-file: coverage/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          delete-old-comments: true
 
   validate-builds:
     name: Validate builds & dependencies
