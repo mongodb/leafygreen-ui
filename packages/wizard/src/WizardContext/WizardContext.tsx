@@ -1,11 +1,9 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
-import { Direction } from '@leafygreen-ui/descendants';
-
 export interface WizardContextData {
   isWizardContext: boolean;
   activeStep: number;
-  updateStep: (direction: Direction) => void;
+  updateStep: (step: number) => void;
 }
 
 export const WizardContext = createContext<WizardContextData>({

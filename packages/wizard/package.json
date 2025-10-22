@@ -1,7 +1,6 @@
-  
 {
   "name": "@leafygreen-ui/wizard",
-  "version": "0.0.1",
+  "version": "0.1.0-local.1",
   "description": "LeafyGreen UI Kit Wizard",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -30,7 +29,6 @@
   "dependencies": {
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/compound-component": "workspace:^",
-    "@leafygreen-ui/descendants": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/form-footer": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
@@ -40,7 +38,7 @@
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
   },
-  "devDependencies" : {
+  "devDependencies": {
     "@leafygreen-ui/icon": "workspace:^",
     "@faker-js/faker": "^8.0.0"
   },

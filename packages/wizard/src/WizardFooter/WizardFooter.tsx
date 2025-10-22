@@ -1,7 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
-import { Direction } from '@leafygreen-ui/descendants';
 import { FormFooter } from '@leafygreen-ui/form-footer';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
@@ -21,14 +20,14 @@ export const WizardFooter = CompoundSubComponent(
     const { isWizardContext, activeStep, updateStep } = useWizardContext();
 
     const handleBackButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
-      updateStep(Direction.Prev);
+      updateStep(activeStep - 1);
       backButtonProps?.onClick?.(e);
     };
 
     const handlePrimaryButtonClick: MouseEventHandler<
       HTMLButtonElement
     > = e => {
-      updateStep(Direction.Next);
+      updateStep(activeStep + 1);
       primaryButtonProps.onClick?.(e);
     };
 
