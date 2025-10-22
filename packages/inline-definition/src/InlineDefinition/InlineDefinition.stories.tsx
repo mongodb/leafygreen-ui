@@ -19,27 +19,6 @@ const meta: StoryMetaType<typeof InlineDefinition> = {
     controls: {
       exclude: [...storybookExcludedControlParams, 'trigger', 'open'],
     },
-    generate: {
-      combineArgs: {
-        darkMode: [false, true],
-      },
-      args: { open: true },
-      decorator: Instance => {
-        return (
-          <div
-            className={css`
-              width: 50vw;
-              height: 200px;
-              display: flex;
-              justify-content: center;
-              align-items: flex-start;
-            `}
-          >
-            <Instance />
-          </div>
-        );
-      },
-    },
   },
   args: {
     darkMode: false,
@@ -56,14 +35,6 @@ const meta: StoryMetaType<typeof InlineDefinition> = {
 };
 
 export default meta;
-
-const Template: StoryFn<InlineDefinitionProps> = ({ darkMode, ...args }) => (
-  <Body darkMode={darkMode}>
-    <InlineDefinition darkMode={darkMode} {...args} />
-  </Body>
-);
-
-export const Basic = Template.bind({});
 
 export const LiveExample: StoryFn<InlineDefinitionProps> = ({
   darkMode,
@@ -111,11 +82,46 @@ LiveExample.parameters = {
   },
 };
 
-export const Generated: StoryObj = {
-  render: () => <></>,
+export const LightMode: StoryObj<typeof InlineDefinition> = {
+  args: {
+    open: true,
+    darkMode: false,
+    definition:
+      'Sharding is a method for horizontally scaling across multiple replica sets by breaking up large datasets (e.g. partitioning) into smaller parts. Sharding is native to MongoDB.',
+    children: 'Shard',
+  },
+  render: ({ darkMode, ...args }) => (
+    <Body darkMode={darkMode}>
+      <InlineDefinition darkMode={darkMode} {...args} />
+    </Body>
+  ),
   parameters: {
     chromatic: {
-      delay: 200,
+      delay: 100,
+    },
+  },
+};
+
+export const DarkMode: StoryObj<typeof InlineDefinition> = {
+  args: {
+    ...LightMode.args,
+    darkMode: true,
+  },
+  decorators: [
+    StoryFn => (
+      <div
+        className={css`
+          min-height: 100px;
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
+  render: LightMode.render,
+  parameters: {
+    chromatic: {
+      delay: 100,
     },
   },
 };
