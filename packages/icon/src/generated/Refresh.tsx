@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 1775c6ae0b10cd11ed70fab236b47ed9
+* @checksum cee399b69ad6fefbf739d728b85b8d45
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface RefreshProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Refresh = ({
   role = 'img',
   ...props
 }: RefreshProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

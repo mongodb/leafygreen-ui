@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum d5c5b14430974a86fae929f05c2bf58a
+* @checksum 5ee5f139457a5d516409f8c6d50ab1fb
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UndoProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Undo = ({
   role = 'img',
   ...props
 }: UndoProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

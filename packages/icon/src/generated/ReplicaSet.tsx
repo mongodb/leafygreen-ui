@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum b65f93fc5398b0596786031923e7ddf8
+* @checksum 51f177f3aa433fed34331ceb3aec44d6
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ReplicaSetProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const ReplicaSet = ({
   role = 'img',
   ...props
 }: ReplicaSetProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

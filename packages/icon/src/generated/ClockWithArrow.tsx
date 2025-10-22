@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum ea2f49d285787692ee22a46db8d77ca5
+* @checksum 49b38c4c10a526f8494a7a688a7d1d37
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ClockWithArrowProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const ClockWithArrow = ({
   role = 'img',
   ...props
 }: ClockWithArrowProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 5b9066316d0f72db386144577fcab00f
+* @checksum 06840075e461fa93fcba29bcfe9c7b24
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SplitVerticalProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const SplitVertical = ({
   role = 'img',
   ...props
 }: SplitVerticalProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

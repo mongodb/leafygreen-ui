@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum c36e5dc67ce4ccf28b50cc1a68bff8f7
+* @checksum c6676114f9dbe7f97bba60ff8d8f9939
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface FilterProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Filter = ({
   role = 'img',
   ...props
 }: FilterProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

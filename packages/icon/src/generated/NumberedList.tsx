@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 4739a9e037d8705e98bb97cd185c1430
+* @checksum 7f081f437bc25887deb4f36dd7bec968
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface NumberedListProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const NumberedList = ({
   role = 'img',
   ...props
 }: NumberedListProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

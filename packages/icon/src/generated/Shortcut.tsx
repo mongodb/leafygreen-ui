@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum e313fc5e5be52f4d4dcdc79dbd87d607
+* @checksum 149caa6cc34f1b4a0adbb56562edfdf7
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ShortcutProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Shortcut = ({
   role = 'img',
   ...props
 }: ShortcutProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

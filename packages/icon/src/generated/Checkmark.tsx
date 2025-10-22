@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 5d4a3b1be7a555f5bdad7f48e90f78ee
+* @checksum cc0c220a3c9643ed01199347b3414a0d
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CheckmarkProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Checkmark = ({
   role = 'img',
   ...props
 }: CheckmarkProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

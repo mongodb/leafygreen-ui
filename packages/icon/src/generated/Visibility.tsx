@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 258d679148ab1cd8d8001d41bee58f84
+* @checksum dc1bccbf854f7dccf79aabc1803bab03
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface VisibilityProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Visibility = ({
   role = 'img',
   ...props
 }: VisibilityProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

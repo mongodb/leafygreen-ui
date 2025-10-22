@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum b8160a0a46256a74baafee143a32b901
+* @checksum ae653bcc428e45fcda06900841f160cf
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ThumbsUpProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const ThumbsUp = ({
   role = 'img',
   ...props
 }: ThumbsUpProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

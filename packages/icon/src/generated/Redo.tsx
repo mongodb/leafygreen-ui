@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum b5e6b33e68cdc7c611767a12f92c9816
+* @checksum 14b4dad2839d1cc98db0fa11a5a0a008
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface RedoProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Redo = ({
   role = 'img',
   ...props
 }: RedoProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum b1a22b0a1308ff8feef90ea5dfacae60
+* @checksum 984435221d5835f03a22d6c1b02cd21b
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SearchIndexProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const SearchIndex = ({
   role = 'img',
   ...props
 }: SearchIndexProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

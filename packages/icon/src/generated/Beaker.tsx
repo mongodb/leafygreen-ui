@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 4ba48c30d4763d748a5273ee3c99f90e
+* @checksum 6538b33e3838dd26c8d834637f3d2c5a
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface BeakerProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Beaker = ({
   role = 'img',
   ...props
 }: BeakerProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

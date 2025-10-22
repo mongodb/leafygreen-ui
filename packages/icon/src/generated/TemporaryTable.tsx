@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum a10fd7b003269e678b42bd2d05982a3c
+* @checksum 280ff5219e6ea3073b1b7af432fbe09f
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TemporaryTableProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const TemporaryTable = ({
   role = 'img',
   ...props
 }: TemporaryTableProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

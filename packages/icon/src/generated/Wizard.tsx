@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 10fd62d423f1ae9dcf85b72c9378c0a0
+* @checksum 903aaa43c6159fa9699758223db33a2b
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface WizardProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Wizard = ({
   role = 'img',
   ...props
 }: WizardProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

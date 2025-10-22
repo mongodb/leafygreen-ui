@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 71e5dbba3cfc3a4e6d5123ad763e1e89
+* @checksum 51e73a6f03dea1d11b5d59d63dd30a5b
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SecondaryProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Secondary = ({
   role = 'img',
   ...props
 }: SecondaryProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

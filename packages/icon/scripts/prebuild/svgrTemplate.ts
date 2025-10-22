@@ -82,8 +82,8 @@ export function svgrTemplate(
 
   return typeScriptTpl(`
     %%imports%%
-    import { useId } from 'react';
     import { css, cx } from '@leafygreen-ui/emotion';
+    import { useIdAllocator } from '@leafygreen-ui/hooks';
     import { generateAccessibleProps, sizeMap } from '../glyphCommon';
     import { LGGlyph } from '../types';
   
@@ -99,7 +99,7 @@ export function svgrTemplate(
       role = 'img',
       ...props
     }: ${componentName}Props) => {
-      const titleId = useId();
+      const titleId = useIdAllocator({ prefix: 'icon-title' });
       const fillStyle = css\`
         color: \${fill};
       \`;

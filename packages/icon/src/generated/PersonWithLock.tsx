@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 0ca436b828c0b95360844533ac92cc16
+* @checksum eea7345ae88fea6dc7f6417f56884102
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface PersonWithLockProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const PersonWithLock = ({
   role = 'img',
   ...props
 }: PersonWithLockProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

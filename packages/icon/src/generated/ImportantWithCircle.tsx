@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum ef1c30fdce6da3d466f2e3d1d89eb519
+* @checksum 4d3ed8d8697ddefa276ff1142ae083a9
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ImportantWithCircleProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const ImportantWithCircle = ({
   role = 'img',
   ...props
 }: ImportantWithCircleProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 63f2c7db32af0bc75ce31e08c1af8384
+* @checksum aa915022b3540ba2d1f0903df36bec89
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface OutlineFavoriteProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const OutlineFavorite = ({
   role = 'img',
   ...props
 }: OutlineFavoriteProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

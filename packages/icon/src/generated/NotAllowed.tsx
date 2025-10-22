@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 1c7b77b15c27d8db5af29a87739ec6bc
+* @checksum 0f3d6ac215b5a3fadf27e823bdd7284d
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface NotAllowedProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const NotAllowed = ({
   role = 'img',
   ...props
 }: NotAllowedProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

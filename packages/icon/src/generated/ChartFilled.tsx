@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 77fe6b02a0e51f71aa4170f991383d21
+* @checksum a3ba3e1c35c839d51d7ba9d92bc67611
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ChartFilledProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const ChartFilled = ({
   role = 'img',
   ...props
 }: ChartFilledProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

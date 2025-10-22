@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum d2655596b8315f5bc9c1e91b3d84773e
+* @checksum 1f594e0df994d6aa3b1e1dfce07c4292
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface FullScreenExitProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const FullScreenExit = ({
   role = 'img',
   ...props
 }: FullScreenExitProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

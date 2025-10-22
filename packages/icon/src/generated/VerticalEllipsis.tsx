@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum e8b75c78e344455de1f9fec3cf645e85
+* @checksum 8b07d3b4554807d31461bad08451d6eb
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface VerticalEllipsisProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const VerticalEllipsis = ({
   role = 'img',
   ...props
 }: VerticalEllipsisProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

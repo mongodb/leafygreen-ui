@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 55895acbe2f73b8c52272bd7ae54551a
+* @checksum 3a1d422875380083c9e302afc2f01b5e
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ChevronLeftProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const ChevronLeft = ({
   role = 'img',
   ...props
 }: ChevronLeftProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum e1de8e2b98517b3b1fafdb42645d5811
+* @checksum efca0a83c5db1083f3b40a685c51b2ae
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CaretUpProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const CaretUp = ({
   role = 'img',
   ...props
 }: CaretUpProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

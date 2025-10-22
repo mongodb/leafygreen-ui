@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 11ed2c58d938e9a27e3a26cf9b5d7c28
+* @checksum 0c92c2bc140ee45e3fa03889587ef9c6
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CameraProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Camera = ({
   role = 'img',
   ...props
 }: CameraProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

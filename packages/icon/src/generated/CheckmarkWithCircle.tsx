@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 69947ab7787658b1b36bf71443a3c382
+* @checksum d1eb1ac372bd594f89daf8629a230d4b
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CheckmarkWithCircleProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const CheckmarkWithCircle = ({
   role = 'img',
   ...props
 }: CheckmarkWithCircleProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

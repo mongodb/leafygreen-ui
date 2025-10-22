@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum b88fb6da4ece437fcfc685b81758d900
+* @checksum a63893f7bd0cd7e457d2e8a3d66f41d9
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface HorizontalDragProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const HorizontalDrag = ({
   role = 'img',
   ...props
 }: HorizontalDragProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

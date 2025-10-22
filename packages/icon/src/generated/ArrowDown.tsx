@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum d17651dc4a8dd8f9832ac79c44978a29
+* @checksum ccdfb568b1cca6a90a9b9ba1377acc53
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ArrowDownProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const ArrowDown = ({
   role = 'img',
   ...props
 }: ArrowDownProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

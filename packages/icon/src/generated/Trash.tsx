@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 1f7ddb1fa565b68a3c62cab8fc8195a1
+* @checksum df2edf1b5033d74b9acd09bacd72dbc1
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TrashProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Trash = ({
   role = 'img',
   ...props
 }: TrashProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

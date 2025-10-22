@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum c5c0d5256b8fa615c0fe4f9698bcdb0e
+* @checksum f57d86442613c3239413ff9b8580f5a6
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface RecommendedProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Recommended = ({
   role = 'img',
   ...props
 }: RecommendedProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

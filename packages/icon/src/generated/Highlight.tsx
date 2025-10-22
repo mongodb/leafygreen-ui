@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 94ef973b161a7d9561c0a4ab5eb9a5ac
+* @checksum 5d9d92f10af04e6677a42ebd7a7d2a9f
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface HighlightProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Highlight = ({
   role = 'img',
   ...props
 }: HighlightProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

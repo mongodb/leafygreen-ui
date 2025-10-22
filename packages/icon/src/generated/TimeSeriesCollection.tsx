@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 3ffa48eb3ff62ec14c4d702d64934a26
+* @checksum 250e9795985ea16ca6366822bd5c5139
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TimeSeriesCollectionProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const TimeSeriesCollection = ({
   role = 'img',
   ...props
 }: TimeSeriesCollectionProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

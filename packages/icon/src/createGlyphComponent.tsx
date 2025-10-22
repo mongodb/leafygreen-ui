@@ -1,6 +1,7 @@
-import React, { useId } from 'react';
+import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 import { generateAccessibleProps, Size, sizeMap } from './glyphCommon';
 import { LGGlyph, SVGR } from './types';
@@ -26,7 +27,7 @@ export function createGlyphComponent(
     role = 'img',
     ...rest
   }: LGGlyph.ComponentProps) => {
-    const titleId = useId();
+    const titleId = useIdAllocator({ prefix: 'icon-title' });
     const fillStyle = css`
       color: ${fill};
     `;
@@ -50,7 +51,6 @@ export function createGlyphComponent(
         height={renderedSize}
         width={renderedSize}
         role={role}
-        title={title}
         {...generateAccessibleProps(role, glyphName, {
           title,
           titleId,

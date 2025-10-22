@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum bcdd180c43c4a9ea021bb9ec1f104fa1
+* @checksum dc8f75795eddf87a705bfd90d7818cf6
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface AwardProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Award = ({
   role = 'img',
   ...props
 }: AwardProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

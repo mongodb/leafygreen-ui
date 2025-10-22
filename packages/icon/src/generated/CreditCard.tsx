@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum cfcf74a0383657dbe0f02f93a9842e86
+* @checksum a50e2de4981063441f54f1bb44a30b94
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CreditCardProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const CreditCard = ({
   role = 'img',
   ...props
 }: CreditCardProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum ac19da7c099f7ddb2d62fa6e41393910
+* @checksum 79e2d19128309d61dfead043e53da043
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface MagnifyingGlassProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const MagnifyingGlass = ({
   role = 'img',
   ...props
 }: MagnifyingGlassProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

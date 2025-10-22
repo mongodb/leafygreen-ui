@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 36caa71f6d498b44d54f1efd4a8349e5
+* @checksum 5fa4db29d2e36316d1e299f70a0d7083
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ServerlessProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Serverless = ({
   role = 'img',
   ...props
 }: ServerlessProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

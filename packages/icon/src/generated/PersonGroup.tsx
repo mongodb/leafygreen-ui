@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum d9f0e1d925c8a593e38f248f4b53a414
+* @checksum 3e7a74045072b4923cbfc1cfb85cf1a5
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface PersonGroupProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const PersonGroup = ({
   role = 'img',
   ...props
 }: PersonGroupProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

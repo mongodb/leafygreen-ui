@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 4220a169c8ff8ffaa13dc405ec913c19
+* @checksum d0a9e650b44e6547af5a8d5ba5d6f912
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ShirtProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Shirt = ({
   role = 'img',
   ...props
 }: ShirtProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

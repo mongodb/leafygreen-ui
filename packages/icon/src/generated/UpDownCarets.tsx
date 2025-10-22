@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 34c36780461d740b3ca77b2e64147f7a
+* @checksum f4c129aa51a6a46ff316a4c7f7c6d040
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UpDownCaretsProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const UpDownCarets = ({
   role = 'img',
   ...props
 }: UpDownCaretsProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

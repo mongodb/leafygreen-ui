@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 1e3c41c2e83ff94796cc6794275b2e84
+* @checksum c8c9f035e2162c9d29a992925e38d555
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface NavCollapseProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const NavCollapse = ({
   role = 'img',
   ...props
 }: NavCollapseProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 126c6ed2cc8a2b551349dc2195dab963
+* @checksum fc71f564a9eefadb90cb5b54358071bb
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface PlusWithCircleProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const PlusWithCircle = ({
   role = 'img',
   ...props
 }: PlusWithCircleProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

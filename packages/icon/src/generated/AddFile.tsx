@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum bf46efe5bddee44478e4a489e2b5415d
+* @checksum c08aea7c4223f1f88aeb73b12341ce9e
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface AddFileProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const AddFile = ({
   role = 'img',
   ...props
 }: AddFileProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

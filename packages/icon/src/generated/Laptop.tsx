@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum a0db47849ed3ed2b12f02113ca9c2992
+* @checksum 95c8221258a7e40040f2c3c1abb8e6f0
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface LaptopProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Laptop = ({
   role = 'img',
   ...props
 }: LaptopProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

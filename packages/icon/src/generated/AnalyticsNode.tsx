@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 376e045d4cc6d9a6df535a41f3feb872
+* @checksum 43923ecf7b79183695f810e647dfe7ce
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface AnalyticsNodeProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const AnalyticsNode = ({
   role = 'img',
   ...props
 }: AnalyticsNodeProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

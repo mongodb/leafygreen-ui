@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 6e286297c19fa787769b7709fdd95104
+* @checksum 1f392c6c7f154ea1e8e67489eb8fb647
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SortAscendingProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const SortAscending = ({
   role = 'img',
   ...props
 }: SortAscendingProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

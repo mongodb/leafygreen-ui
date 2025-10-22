@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum bc3f9025a8f1d85f4c21b0e26f5e342f
+* @checksum 5b2cf5be0adfeb6eb9359013023497dd
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface LogOutProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const LogOut = ({
   role = 'img',
   ...props
 }: LogOutProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 00f8e277856c1db4fa16877b5d4d9c8a
+* @checksum 64e3bf4c6daa850ef835ffdf7c48f21b
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UnsortedProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Unsorted = ({
   role = 'img',
   ...props
 }: UnsortedProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

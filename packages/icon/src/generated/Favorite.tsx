@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 129fda7cf848b2ae14142c53b777a3a3
+* @checksum fda64a0e50d720059f618d1f98b3a98a
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface FavoriteProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Favorite = ({
   role = 'img',
   ...props
 }: FavoriteProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

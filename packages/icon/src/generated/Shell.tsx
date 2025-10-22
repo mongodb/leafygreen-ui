@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 84a5bb1c0f0d8cb90a2a32ca0b3db538
+* @checksum 0330842eecd26f19ecc46c90e539d1fe
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ShellProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const Shell = ({
   role = 'img',
   ...props
 }: ShellProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;

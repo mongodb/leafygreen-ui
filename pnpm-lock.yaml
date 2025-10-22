@@ -2118,6 +2118,9 @@ importers:
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
       lodash:
         specifier: ^4.17.21
         version: 4.17.21

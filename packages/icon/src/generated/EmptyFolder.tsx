@@ -2,11 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum b74543d9e94f014fd3a96e01311d0bdb
+* @checksum 263773f8cd326a0856c24afb396ba777
 */
 import * as React from "react";
-import { useId } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface EmptyFolderProps extends LGGlyph.ComponentProps {}
@@ -20,7 +20,9 @@ const EmptyFolder = ({
   role = 'img',
   ...props
 }: EmptyFolderProps) => {
-  const titleId = useId();
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;
