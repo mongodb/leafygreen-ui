@@ -218,7 +218,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           coverage-file: coverage/coverage-summary.json
           test-script: pnpm run test
-          install-script: pnpm install
+          package-manager: pnpm
 
   validate-builds:
     name: Validate builds & dependencies
