@@ -410,7 +410,7 @@ export const CenterVertical: StoryObj<PopoverStoryProps> = {
   },
 };
 
-const paragraphs = faker.lorem.paragraphs(12).split('\n');
+const paragraphs: Array<string> = faker.lorem.paragraphs(12).split('\n');
 
 export const MaxHeight: StoryObj<PopoverStoryProps> = {
   render: () => {
@@ -442,7 +442,7 @@ export const MaxHeight: StoryObj<PopoverStoryProps> = {
               renderMode={RenderMode.TopLayer}
               maxWidth={MAX_WIDTH}
               className={cx(
-                popoverStyle,
+                popoverStyles,
                 css`
                   text-align: left;
                 `,
@@ -467,7 +467,7 @@ export const MaxHeight: StoryObj<PopoverStoryProps> = {
               maxHeight={MAX_HEIGHT}
               maxWidth={MAX_WIDTH}
               className={cx(
-                popoverStyle,
+                popoverStyles,
                 css`
                   text-align: left;
                 `,
@@ -513,7 +513,7 @@ export const MaxWidth: StoryObj<PopoverStoryProps> = {
               renderMode={RenderMode.TopLayer}
               maxHeight={MAX_HEIGHT}
               className={cx(
-                popoverStyle,
+                popoverStyles,
                 css`
                   text-align: left;
                 `,
@@ -543,7 +543,7 @@ export const MaxWidth: StoryObj<PopoverStoryProps> = {
               maxHeight={MAX_HEIGHT}
               maxWidth={MAX_WIDTH}
               className={cx(
-                popoverStyle,
+                popoverStyles,
                 css`
                   text-align: left;
                 `,
@@ -597,7 +597,7 @@ export const MovingPopover: StoryObj<PopoverStoryProps> = {
           refEl={triggerRef}
           dismissMode={DismissMode.Manual}
           renderMode={RenderMode.TopLayer}
-          className={popoverStyle}
+          className={popoverStyles}
         >
           Popover with refEl position{' '}
           <code>{JSON.stringify(position, null, 2)}</code>
