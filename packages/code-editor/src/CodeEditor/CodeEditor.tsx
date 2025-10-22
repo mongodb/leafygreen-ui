@@ -291,6 +291,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       hasPanel: !!panel,
     });
 
+    // Create the editor when modules are loaded
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
 
@@ -300,7 +301,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
       const domNode = editorContainerRef.current as HTMLElementWithCodeMirror;
 
-      // Reset extensions initialized state since we're creating a new editor
+      // Reset extensions initialized state
       setExtensionsInitialized(false);
 
       // Create editor with minimal setup - extensions will be configured in separate effect
@@ -394,8 +395,10 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         ]),
       });
 
-      // Mark extensions as initialized to hide loading overlay
-      setExtensionsInitialized(true);
+      // Wait for next frame to ensure extensions are rendered before hiding loading overlay
+      const rafId = requestAnimationFrame(() => {
+        setExtensionsInitialized(true);
+      });
 
       if (forceParsingProp) {
         const Language = modules?.['@codemirror/language'];
@@ -405,6 +408,10 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
           Language.forceParsing(editorViewRef.current, docLength, 150);
         }
       }
+
+      return () => {
+        cancelAnimationFrame(rafId);
+      };
     }, [
       consumerExtensions,
       customExtensions,

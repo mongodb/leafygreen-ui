@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { type EditorView } from 'codemirror';
 
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
@@ -130,18 +131,34 @@ export function useExtensions({
     modules,
   });
 
-  return [
-    autoCompleteExtension,
-    highlightExtension,
-    hyperLinkExtension,
-    lineWrapExtension,
-    lineNumbersExtension,
-    codeFoldingExtension, // Order matters here, code folding must be after line numbers
-    indentExtension,
-    placeholderExtension,
-    tooltipExtension,
-    languageExtension,
-    themeExtension,
-    readOnlyExtension,
-  ];
+  return useMemo(
+    () => [
+      autoCompleteExtension,
+      highlightExtension,
+      hyperLinkExtension,
+      lineWrapExtension,
+      lineNumbersExtension,
+      codeFoldingExtension, // Order matters here, code folding must be after line numbers
+      indentExtension,
+      placeholderExtension,
+      tooltipExtension,
+      languageExtension,
+      themeExtension,
+      readOnlyExtension,
+    ],
+    [
+      autoCompleteExtension,
+      highlightExtension,
+      hyperLinkExtension,
+      lineWrapExtension,
+      lineNumbersExtension,
+      codeFoldingExtension,
+      indentExtension,
+      placeholderExtension,
+      tooltipExtension,
+      languageExtension,
+      themeExtension,
+      readOnlyExtension,
+    ],
+  );
 }
