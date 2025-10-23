@@ -20,6 +20,8 @@ import { TestUtils } from '@leafygreen-ui/popover';
 
 const { getAlign, getJustify } = TestUtils;
 
+import { useEventListener } from '@leafygreen-ui/hooks';
+
 import {
   Menu,
   MenuGroup,
@@ -29,7 +31,6 @@ import {
   MenuVariant,
   SubMenu,
 } from '.';
-import { useEventListener } from '@leafygreen-ui/hooks';
 
 const getDecoratorStyles = (args: Partial<MenuProps>) => {
   return css`
