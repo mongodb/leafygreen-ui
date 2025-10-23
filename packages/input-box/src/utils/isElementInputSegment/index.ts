@@ -1,16 +1,15 @@
-import { SegmentRefs } from '../../hooks';
-
 /**
  * Returns whether the given element is a segment
  */
-export const isElementInputSegment = (
+export const isElementInputSegment = <
+  T extends Record<string, React.RefObject<HTMLInputElement>>,
+>(
   element: HTMLElement,
-  segmentRefs: SegmentRefs,
+  segmentRefs: T,
 ): element is HTMLInputElement => {
   const segmentsArray = Object.values(segmentRefs).map(
     ref => ref.current,
   ) as Array<HTMLElement | null>;
   const isSegment = segmentsArray.includes(element);
-
   return isSegment;
 };

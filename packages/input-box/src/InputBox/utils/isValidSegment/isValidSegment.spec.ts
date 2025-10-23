@@ -1,65 +1,71 @@
 import { isValidSegmentName, isValidSegmentValue } from '.';
-import { DateSegment, DateSegmentValue } from '../../types';
+
+export const Segment = {
+  Day: 'day',
+  Month: 'month',
+  Year: 'year',
+} as const;
+type SegmentValue = string;
 
 describe('packages/date-picker/utils/isValidSegment', () => {
   describe('isValidSegment', () => {
     test('undefined returns false', () => {
-      expect(isValidSegmentValue<DateSegmentValue>()).toBeFalsy();
+      expect(isValidSegmentValue<SegmentValue>()).toBeFalsy();
     });
 
     test('a string returns false', () => {
-      expect(isValidSegmentValue<DateSegmentValue>('')).toBeFalsy();
+      expect(isValidSegmentValue<SegmentValue>('')).toBeFalsy();
     });
 
     test('NaN returns false', () => {
       /// @ts-expect-error
-      expect(isValidSegmentValue<DateSegmentValue>(NaN)).toBeFalsy();
+      expect(isValidSegmentValue<SegmentValue>(NaN)).toBeFalsy();
     });
 
     test('0 returns false', () => {
-      expect(isValidSegmentValue<DateSegmentValue>('0')).toBeFalsy();
+      expect(isValidSegmentValue<SegmentValue>('0')).toBeFalsy();
     });
 
     test('negative returns false', () => {
-      expect(isValidSegmentValue<DateSegmentValue>('-1')).toBeFalsy();
+      expect(isValidSegmentValue<SegmentValue>('-1')).toBeFalsy();
     });
 
     test('1970 returns true', () => {
-      expect(isValidSegmentValue<DateSegmentValue>('1970')).toBeTruthy();
+      expect(isValidSegmentValue<SegmentValue>('1970')).toBeTruthy();
     });
 
     test('1 returns true', () => {
-      expect(isValidSegmentValue<DateSegmentValue>('1')).toBeTruthy();
+      expect(isValidSegmentValue<SegmentValue>('1')).toBeTruthy();
     });
 
     test('2038 returns true', () => {
-      expect(isValidSegmentValue<DateSegmentValue>('2038')).toBeTruthy();
+      expect(isValidSegmentValue<SegmentValue>('2038')).toBeTruthy();
     });
   });
 
   describe('isValidSegmentName', () => {
     test('undefined returns false', () => {
-      expect(isValidSegmentName(DateSegment)).toBeFalsy();
+      expect(isValidSegmentName(Segment)).toBeFalsy();
     });
 
     test('random string returns false', () => {
-      expect(isValidSegmentName(DateSegment, '123')).toBeFalsy();
+      expect(isValidSegmentName(Segment, '123')).toBeFalsy();
     });
 
     test('empty string returns false', () => {
-      expect(isValidSegmentName(DateSegment, '')).toBeFalsy();
+      expect(isValidSegmentName(Segment, '')).toBeFalsy();
     });
 
     test('day string returns true', () => {
-      expect(isValidSegmentName(DateSegment, 'day')).toBeTruthy();
+      expect(isValidSegmentName(Segment, 'day')).toBeTruthy();
     });
 
     test('month string returns true', () => {
-      expect(isValidSegmentName(DateSegment, 'month')).toBeTruthy();
+      expect(isValidSegmentName(Segment, 'month')).toBeTruthy();
     });
 
     test('year string returns true', () => {
-      expect(isValidSegmentName(DateSegment, 'year')).toBeTruthy();
+      expect(isValidSegmentName(Segment, 'year')).toBeTruthy();
     });
   });
 });

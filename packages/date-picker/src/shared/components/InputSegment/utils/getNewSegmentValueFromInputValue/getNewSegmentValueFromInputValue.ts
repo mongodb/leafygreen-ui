@@ -1,7 +1,9 @@
 import last from 'lodash/last';
 
 import { truncateStart } from '@leafygreen-ui/lib';
-import { isValidValueForSegment } from '../../../utils';
+import { isValidValueForSegment } from '../../../../utils';
+
+// TODO: MOVE TO the new input box component
 
 /**
  * Calculates the new value for the segment given an incoming change.

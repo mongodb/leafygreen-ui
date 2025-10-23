@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { createRef } from 'react';
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { render } from '@testing-library/react';
 
-import { SegmentRefs } from '../../../shared/hooks';
-import { segmentRefsMock } from '../../../shared/testutils';
+type Segment = 'day' | 'month' | 'year';
+
+export type SegmentRefs = Record<
+  Segment,
+  ReturnType<DynamicRefGetter<HTMLInputElement>>
+>;
+
+export const segmentRefsMock: SegmentRefs = {
+  day: createRef<HTMLInputElement>(),
+  month: createRef<HTMLInputElement>(),
+  year: createRef<HTMLInputElement>(),
+};
 
 import { getRelativeSegmentRef } from '.';
 

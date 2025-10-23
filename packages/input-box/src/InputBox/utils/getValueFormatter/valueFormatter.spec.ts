@@ -1,10 +1,13 @@
-import { DateSegment } from '../../types';
-
 import { getValueFormatter } from '.';
-import { charsPerSegment } from '../../constants';
 
+type Segment = 'day' | 'month' | 'year';
+const charsPerSegment: Record<Segment, number> = {
+  day: 2,
+  month: 2,
+  year: 4,
+};
 describe('packages/date-picker/utils/valueFormatter', () => {
-  describe.each(['day', 'month'] as Array<DateSegment>)('', segment => {
+  describe.each(['day', 'month'] as Array<Segment>)('', segment => {
     const formatter = getValueFormatter(segment, charsPerSegment);
 
     test('formats 2 digit values', () => {

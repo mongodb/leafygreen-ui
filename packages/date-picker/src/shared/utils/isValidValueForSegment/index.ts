@@ -1,6 +1,8 @@
 import inRange from 'lodash/inRange';
 
-import { isValidSegmentName, isValidSegmentValue } from '../../InputBox/utils';
+import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
+
+// TODO: move to generic utils and export inside isEverySegmentValid
 
 /**
  * Returns whether a value is valid for a given segment type
