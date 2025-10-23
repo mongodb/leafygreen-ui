@@ -1,10 +1,6 @@
 import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
 
-import { SharedDatePickerContextProps } from '../../context';
-import { SegmentRefs } from '../../hooks';
-import { DateSegment } from '../../types';
-
 type RelativeDirection = 'next' | 'prev' | 'first' | 'last';
 // interface GetRelativeSegmentContext {
 //   segment: HTMLInputElement | React.RefObject<HTMLInputElement>;
@@ -12,8 +8,7 @@ type RelativeDirection = 'next' | 'prev' | 'first' | 'last';
 //   segmentRefs: SegmentRefs;
 // }
 
-// TODO: needs to be updated so it is generic.
-// needs:
+// TODO: MOVE TO the new input box component
 /**
  * Given a direction, starting segment name & format
  * returns the segment name in the given direction
@@ -195,7 +190,7 @@ interface GetRelativeSegmentContext<
 
 export const getRelativeSegmentRef = <
   T extends Record<string, React.RefObject<HTMLInputElement>>,
-  V extends string = string,
+  V extends string,
 >(
   direction: RelativeDirection,
   { segment, formatParts, segmentRefs }: GetRelativeSegmentContext<T>,

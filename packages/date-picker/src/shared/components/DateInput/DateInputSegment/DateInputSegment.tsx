@@ -75,6 +75,7 @@ export const DateInputSegment = React.forwardRef<
         defaultMin={defaultMin}
         defaultMax={defaultMax}
         segmentObj={DateSegment}
+        shouldNotRollover={DateSegment.Year}
         {...rest}
       />
     );

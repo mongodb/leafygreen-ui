@@ -23,7 +23,10 @@ export type InputSegmentChangeEventHandler<
 export interface InputSegmentProps<
   T extends Record<string, any>,
   V extends string,
-> extends Omit<React.ComponentPropsWithRef<'input'>, 'onChange' | 'size'> {
+> extends Omit<
+    React.ComponentPropsWithRef<'input'>,
+    'onChange' | 'size' | 'step'
+  > {
   /**
    * Which segment this input represents
    * e.g. 'day'
@@ -92,6 +95,24 @@ export interface InputSegmentProps<
    * e.g. Size.Large
    */
   size: Size;
+
+  /**
+   * The step value for the arrow keys
+   * e.g. 1
+   * e.g. { day: 1, month: 1, year: 1 }
+   *
+   * @default 1
+   */
+  step?: number | Partial<Record<T[keyof T], number>>;
+
+  /**
+   * The segments that should not rollover
+   * e.g. 'year'
+   * e.g. ['year', 'month']
+   *
+   * @default undefined
+   */
+  shouldNotRollover?: T[keyof T] | Array<T[keyof T]>;
 }
 
 /**

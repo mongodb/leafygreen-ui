@@ -49,6 +49,8 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
     segmentObj,
     defaultMin,
     defaultMax,
+    step = 1,
+    shouldNotRollover,
     ...rest
   }: InputSegmentProps<T, V>,
   fwdRef: ForwardedRef<HTMLInputElement>,
@@ -117,6 +119,8 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
           min,
           max,
           segment,
+          step,
+          shouldNotRollover,
         });
         const valueString = formatter(newValue);
 

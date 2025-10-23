@@ -1,7 +1,6 @@
 import isUndefined from 'lodash/isUndefined';
 
-import { DateSegment, DateSegmentValue } from '../../types';
-
+// TODO: MOVE TO the new input box component
 /**
  * Returns whether a given value is a valid segment value
  */
@@ -23,9 +22,6 @@ export const isValidSegmentValue = <T>(segment?: T): segment is T =>
 //   );
 // };
 
-// 1. Define a type helper for the segment object structure
-type SegmentObject = Readonly<Record<string, string>>;
-
 /**
  * A generic type predicate function that checks if a given string is one
  * of the values in the provided segment object.
@@ -34,7 +30,7 @@ type SegmentObject = Readonly<Record<string, string>>;
  * @param name The string to validate
  * @returns A boolean and a type predicate (name is T[keyof T])
  */
-export const isValidSegmentName = <T extends SegmentObject>(
+export const isValidSegmentName = <T extends Readonly<Record<string, string>>>(
   segmentObj: T,
   name?: string,
 ): name is T[keyof T] => {
