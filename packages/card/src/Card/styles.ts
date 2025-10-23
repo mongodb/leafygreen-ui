@@ -1,31 +1,27 @@
-import { transparentize } from 'polished';
-
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  boxShadows,
   focusRing,
   fontFamilies,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
 
+import { ContentStyle } from './types';
+
 interface ColorSet {
   containerStyle: string;
   clickableStyle: string;
 }
 
-const lightBaseBoxShadow = `0 4px 10px -4px ${transparentize(
-  0.7,
-  palette.black,
-)}`;
-const lightHoverBoxShadow = `0 4px 20px -4px ${transparentize(
-  0.8,
-  palette.black,
-)}`;
+const lightBaseBoxShadow = boxShadows[Theme.Light][1];
+const lightHoverBoxShadow = boxShadows[Theme.Light][2];
+const darkBaseBoxShadow = boxShadows[Theme.Dark][1];
+const darkHoverBoxShadow = boxShadows[Theme.Dark][2];
+
 const lightFocusBoxShadow = focusRing.light.default;
-const darkBaseBoxShadow = `0 4px 20px -4px #01121A`;
-const darkHoverBoxShadow = `0 4px 20px -4px ${transparentize(0.3, '#000000')}`;
 const darkFocusBoxShadow = focusRing.dark.default;
 
 export const colorSet: Record<Theme, ColorSet> = {
@@ -50,7 +46,7 @@ export const colorSet: Record<Theme, ColorSet> = {
         box-shadow: ${lightHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${lightFocusBoxShadow}, ${lightHoverBoxShadow};
+          box-shadow: ${lightFocusBoxShadow}, ${lightBaseBoxShadow};
         }
       }
     `,
@@ -74,7 +70,7 @@ export const colorSet: Record<Theme, ColorSet> = {
         box-shadow: ${darkHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${darkHoverBoxShadow}, ${darkFocusBoxShadow};
+          box-shadow: ${darkBaseBoxShadow}, ${darkFocusBoxShadow};
         }
       }
     `,
@@ -92,3 +88,21 @@ export const containerStyle = css`
   padding: 24px;
   min-height: 68px; // 48px + 20px (padding + line-height)
 `;
+
+export const getCardStyles = ({
+  theme,
+  contentStyle,
+  className,
+}: {
+  theme: Theme;
+  contentStyle: ContentStyle;
+  className?: string;
+}) =>
+  cx(
+    containerStyle,
+    {
+      [colorSet[theme].containerStyle]: true,
+      [colorSet[theme].clickableStyle]: contentStyle === ContentStyle.Clickable,
+    },
+    className,
+  );
