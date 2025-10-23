@@ -212,11 +212,40 @@ jobs:
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
 
+      - name: Get coverage on main
+        run: |
+          # Temporarily switch to the main branch
+          git fetch origin main
+          git checkout main
+
+          # Install dependencies for main
+          echo "Installing dependencies for main..."
+          pnpm install
+
+          # Run tests and generate coverage. 
+          # We use "|| true" to ensure the workflow continues
+          # even if main's flaky tests fail.
+          echo "Running tests on main to get base coverage..."
+          pnpm run test --coverage || true
+
+          # Copy the real coverage summary to a unique name
+          cp coverage/coverage-summary.json $GITHUB_WORKSPACE/base-coverage.json
+
+          # Switch back to the PR branch
+          git checkout -
+
+      - name: Run tests on PR
+        run: |
+          echo "Running tests on PR to get head coverage..."
+          pnpm run test --coverage
+
       - name: Coverage Report Comment
-        uses: anuraag016/Jest-Coverage-Diff@master
+        uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          afterSwitchCommand: 'pnpm install'
-          runCommand: 'pnpm run test --coverage --coverageReporters="json-summary" --coverageDirectory="./"'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          skip-step: all
+          coverage-file: coverage/coverage-summary.json
+          base-coverage-file: base-coverage.json
 
   validate-builds:
     name: Validate builds & dependencies
