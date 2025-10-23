@@ -1,5 +1,26 @@
 # @lg-charts/core
 
+## 2.2.0
+
+### Minor Changes
+
+- 91d5f35: Add optional `min` and `max` props to XAxis and YAxis components to allow consumers to set explicit value ranges for chart axes
+- 1d67179: Allow charts to use Bar series data in addition to Line series
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- 62ddea8: introduce `Series` abstraction as a superclass of `Line` this allows supporting more diverse series
+  types such as `Bar` in a follow up PR
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @lg-charts/series-provider@1.0.5
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @lg-charts/chart-card@1.1.1
+  - @lg-charts/colors@1.0.5
+
 ## 2.1.0
 
 ### Minor Changes

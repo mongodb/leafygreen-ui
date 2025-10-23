@@ -1,5 +1,15 @@
 # @leafygreen-ui/chip
 
+## 4.0.7
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/inline-definition@9.1.1
+
 ## 4.0.6
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/emotion",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "leafyGreen UI Kit's Custom Instance of Emotion",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

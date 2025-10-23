@@ -1,5 +1,20 @@
 # @leafygreen-ui/drawer
 
+## 5.1.1
+
+### Patch Changes
+
+- bd83675: Fix `scrollable` prop so overflow shadow does not ever render if `scrollable={false}`
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/toolbar@1.1.1
+  - @leafygreen-ui/button@25.1.1
+  - @leafygreen-ui/tabs@17.0.5
+
 ## 5.1.0
 
 ### Minor Changes

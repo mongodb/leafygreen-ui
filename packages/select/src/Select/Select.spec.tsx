@@ -313,7 +313,6 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'warn'), spy => {
       spy.mockImplementation();
 
-      // @ts-ignore React18-expect-error - expecting `readOnly` prop
       render(<Select {...defaultProps} value="" />);
 
       expect(spy).toHaveBeenCalledTimes(1);
@@ -321,13 +320,12 @@ describe('packages/select', () => {
         'You provided a `value` prop to a form field without an `onChange` handler. ' +
           'This will render a read-only field. ' +
           'If the field should be mutable use `defaultValue`. ' +
-          'Otherwise, set either `onChange` or `readOnly`.',
+          'Otherwise, set `onChange`.',
       );
 
       spy.mockClear();
 
       render(<Select {...defaultProps} defaultValue="" />);
-      render(<Select {...defaultProps} value="" readOnly />);
       render(<Select {...defaultProps} value="" onChange={() => {}} />);
 
       expect(spy).not.toHaveBeenCalled();

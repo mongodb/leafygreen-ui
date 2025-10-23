@@ -1,5 +1,27 @@
 # @leafygreen-ui/code
 
+## 20.2.0
+
+### Minor Changes
+
+- 37be24b: Add `collapsedLines` prop to allow customization of the number of visible lines when code block is collapsed
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [7f7c385]
+- Updated dependencies [7fc3077]
+- Updated dependencies [c8559f3]
+- Updated dependencies [51c453b]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/skeleton-loader@3.0.7
+  - @leafygreen-ui/select@16.2.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/tooltip@14.2.1
+  - @leafygreen-ui/button@25.1.1
+
 ## 20.1.1
 
 ### Patch Changes

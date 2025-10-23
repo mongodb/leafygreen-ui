@@ -119,7 +119,6 @@ const meta: StoryMetaType<typeof Select> = {
     label: { control: 'text' },
     description: { control: 'text' },
     defaultValue: { control: 'text' },
-    readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
     open: {

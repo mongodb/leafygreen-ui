@@ -1,5 +1,11 @@
 # @lg-chat/leafygreen-chat-provider
 
+## 5.1.0
+
+### Minor Changes
+
+- bd83675: Added `height: 100%;` to wrapper div in `LeafyGreenChatProvider`
+
 ## 5.0.2
 
 ### Patch Changes

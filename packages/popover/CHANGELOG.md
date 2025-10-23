@@ -1,5 +1,20 @@
 # @leafygreen-ui/popover
 
+## 14.2.0
+
+### Minor Changes
+
+- 4ea4f00: [LG-5008](https://jira.mongodb.org/browse/LG-5008)
+
+  - Improves positioning logic with enhanced positioning fallback to optimize popover element visibility
+  - Assigns `GuideCue` component's internal beacon ref for better positioning of tooltip instances relative to beacon
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
 ## 14.1.0
 
 ### Minor Changes

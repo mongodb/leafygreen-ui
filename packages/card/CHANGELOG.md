@@ -1,5 +1,13 @@
 # @leafygreen-ui/card
 
+## 13.1.2
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
 ## 13.1.1
 
 ### Patch Changes

@@ -306,6 +306,28 @@ export type PopoverProps = {
   justify?: Justify;
 
   /**
+   * Restricts the height of the popover.
+   * If the `maxHeight` provided is _greater than_ the available space above or below the reference element,
+   * the height will be restricted to the available space (i.e. the popover will not overflow the viewport).
+   *
+   * Note: Any `max-height` applied with additional CSS will take precedence, and will override the "available space" calculation
+   *
+   * @default undefined
+   */
+  maxHeight?: number;
+
+  /**
+   * Restricts the width of the popover.
+   * If the `maxWidth` provided is _greater than_ the available space left or right of the referent element,
+   * the width will be restricted to the available space (i.e. the popover will not overflow the viewport).
+   *
+   * Note: Any `max-width` applied with additional CSS will take precedence, and will override the "available space" calculation
+   *
+   * @default undefined
+   */
+  maxWidth?: number;
+
+  /**
    * Click event handler passed to the root div element within the portal container.
    */
   onClick?: React.MouseEventHandler;
@@ -342,11 +364,6 @@ export interface UseReferenceElementReturnObj {
    * Element against which the popover component will be positioned
    */
   referenceElement: HTMLElement | null;
-
-  /**
-   * Document position details of the reference element
-   */
-  referenceElDocumentPos: ElementPosition;
 
   /**
    * Callback ref attached to placeholder span element to access the parent element

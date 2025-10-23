@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { LineProps } from '../Series';
+import { SeriesProps } from '../Series/Series.types';
 
 /**
  * Generates consistent but realistic-looking test data for storybook
@@ -138,8 +138,8 @@ const generateSeriesParams = (count: number) => {
   return params;
 };
 
-export function makeLineData(numOfSets: number): Array<LineProps> {
-  const data: Array<LineProps> = [];
+export function makeSeriesData(numOfSets: number): Array<SeriesProps> {
+  const data: Array<SeriesProps> = [];
   const baseValue = 1000; // Base value for all series
 
   // Generate deterministic series parameters
@@ -149,7 +149,7 @@ export function makeLineData(numOfSets: number): Array<LineProps> {
   const startDate = new Date(2024, 0, 1); // January 1st, 2024
 
   for (let i = 0; i < numOfSets; i++) {
-    const line: LineProps = {
+    const series: SeriesProps = {
       name: getClusterUrl(i),
       data: [],
     };
@@ -197,10 +197,10 @@ export function makeLineData(numOfSets: number): Array<LineProps> {
         ),
       );
 
-      line.data?.push([new Date(currentDate), value]);
+      series.data?.push([new Date(currentDate), value]);
     }
 
-    data.push(line);
+    data.push(series);
   }
 
   return data;
