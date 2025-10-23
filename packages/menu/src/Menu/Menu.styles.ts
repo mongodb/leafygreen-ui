@@ -1,9 +1,6 @@
-import { transparentize } from 'polished';
-
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { color, spacing } from '@leafygreen-ui/tokens';
+import { boxShadows, color, spacing } from '@leafygreen-ui/tokens';
 
 import { menuColor } from '../styles';
 
@@ -33,7 +30,7 @@ export const getMenuStyles = ({ theme, variant }: MenuStyleArgs) => {
     /* // Light mode only */
     ${theme === 'light' &&
     css`
-      box-shadow: 0 2px 4px 1px ${transparentize(0.85, palette.black)};
+      box-shadow: ${boxShadows[Theme.Light][1]};
     `}
   `;
 };

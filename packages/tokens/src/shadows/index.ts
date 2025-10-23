@@ -1,2 +1,2 @@
 export { addOverflowShadow, Side } from './addOverflowShadow';
-export { shadow } from './shadow';
+export { boxShadows, shadows } from './shadow';

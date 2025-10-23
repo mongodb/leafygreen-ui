@@ -13,11 +13,12 @@ import {
   keyMap,
   Theme,
 } from '@leafygreen-ui/lib';
-import Popover, {
+import {
   Align,
   DismissMode,
   getPopoverRenderModeProps,
   Justify,
+  Popover,
   RenderMode,
 } from '@leafygreen-ui/popover';
 
