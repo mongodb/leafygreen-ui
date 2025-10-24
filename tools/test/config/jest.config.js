@@ -9,7 +9,6 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'packages/**/src/**/*.{ts,tsx}',
-    'tools/**/src/**/*.{ts,tsx}',
     'charts/**/src/**/*.{ts,tsx}',
     'chat/**/src/**/*.{ts,tsx}',
   ],
