@@ -456,6 +456,12 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       baseFontSize,
     };
 
+    const numOfLines = (
+      value ??
+      defaultValue ??
+      (typeof placeholder === 'string' ? placeholder : '')
+    ).split('\n').length;
+
     return (
       <LeafyGreenProvider
         darkMode={darkMode}
@@ -510,6 +516,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                   height,
                   minHeight,
                   maxHeight,
+                  baseFontSize,
+                  numOfLines,
+                  isLoading,
                 })}
                 data-lgid={lgIds.loader}
               >
