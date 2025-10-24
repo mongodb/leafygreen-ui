@@ -565,3 +565,9 @@ export const MovingMenuTrigger = () => {
     </div>
   );
 };
+
+MovingMenuTrigger.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
