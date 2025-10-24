@@ -24,6 +24,8 @@ import {
   ToggleEvent,
 } from './Popover';
 
+faker.seed(123);
+
 const popoverStyles = css`
   border: 1px solid ${palette.gray.light1};
   text-align: center;
