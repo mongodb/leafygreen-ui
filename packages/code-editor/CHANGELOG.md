@@ -1,5 +1,21 @@
 # @leafygreen-ui/code-editor
 
+## 0.2.0
+
+### Minor Changes
+
+- 392b350: Updated menu to require either refEl or trigger prop
+- 2d50b59: - Adds a custom search panel to the `CodeEditor` component. Contains all of the same functionality that was in the built in panel but matches the LG design language.
+  - Adds prop to allow consumers to enable/disable the search panel.
+
+### Patch Changes
+
+- Updated dependencies [392b350]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [3d64531]
+  - @leafygreen-ui/menu@33.0.0
+  - @leafygreen-ui/icon@14.6.1
+
 ## 0.1.1
 
 ### Patch Changes

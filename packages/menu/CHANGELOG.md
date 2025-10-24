@@ -1,5 +1,23 @@
 # @leafygreen-ui/menu
 
+## 33.0.0
+
+### Major Changes
+
+- 392b350: Updated menu to require either refEl or trigger prop
+
+### Minor Changes
+
+- 3d64531: Updates Popover dependency. Menu height calculation is now handled by the Popover package.
+
+### Patch Changes
+
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/popover@14.3.0
+
 ## 32.1.2
 
 ### Patch Changes
