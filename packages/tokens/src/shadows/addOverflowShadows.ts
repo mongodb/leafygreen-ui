@@ -123,7 +123,7 @@ const getPositionStyles = ({
   }
 };
 
-export const addOverflowShadow = ({
+export const addOverflowShadows = ({
   isInside,
   side,
   theme,
