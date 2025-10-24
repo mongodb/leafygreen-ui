@@ -4,3 +4,4 @@ export {
   type ChatLayoutProps,
   useChatLayoutContext,
 } from './ChatLayout';
+export { ChatMain, type ChatMainProps } from './ChatMain';

@@ -6,9 +6,8 @@ import { ChatLayoutContext } from './ChatLayoutContext';
 
 /**
  * ChatLayout is a context provider that manages the pinned state of the side nav
- * and provides it to all child components.
- *
- * Context is primarily used by ChatSideNav and ChatMain.
+ * and provides it to all child components. It uses CSS Grid to control the layout
+ * and positioning the side nav and main content.
  */
 export function ChatLayout({
   children,
