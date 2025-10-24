@@ -240,12 +240,11 @@ jobs:
           pnpm run test --coverage
 
       - name: Coverage Report Comment
-        uses: ArtiomTr/jest-coverage-report-action@v2
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        if: github.event_name == 'pull_request'
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          skip-step: all
-          coverage-file: coverage/coverage-summary.json
-          base-coverage-file: base-coverage.json
+          lcov-file: coverage/lcov.info
+          delete-old-comments: true
 
   validate-builds:
     name: Validate builds & dependencies
