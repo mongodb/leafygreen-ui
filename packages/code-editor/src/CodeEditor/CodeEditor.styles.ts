@@ -14,7 +14,16 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { CodeEditorSelectors, CopyButtonAppearance } from './CodeEditor.types';
+import {
+  LINE_HEIGHT,
+  PADDING_BOTTOM,
+  PADDING_TOP,
+} from './hooks/extensions/useThemeExtension';
+import {
+  CodeEditorProps,
+  CodeEditorSelectors,
+  CopyButtonAppearance,
+} from './CodeEditor.types';
 
 export const copyButtonClassName = createUniqueClassName(
   'lg-code_editor-code_editor_copy_button',
@@ -40,6 +49,7 @@ export const getEditorStyles = ({
   copyButtonAppearance?: CopyButtonAppearance;
 }) =>
   cx(
+    css``,
     {
       [css`
         ${CodeEditorSelectors.Editor} {
@@ -86,6 +96,22 @@ export const getEditorStyles = ({
     className,
   );
 
+function getHeight(
+  numOfLines: number,
+  baseFontSize: CodeEditorProps['baseFontSize'],
+) {
+  const borders = 2;
+  const fontSize = baseFontSize ? baseFontSize : 13;
+  const numOfLinesForCalculation = numOfLines === 0 ? 1 : numOfLines;
+
+  return (
+    numOfLinesForCalculation * (fontSize * LINE_HEIGHT) +
+    PADDING_TOP +
+    PADDING_BOTTOM +
+    borders
+  );
+}
+
 export const getLoaderStyles = ({
   theme,
   width,
@@ -94,15 +120,34 @@ export const getLoaderStyles = ({
   height,
   minHeight,
   maxHeight,
+  baseFontSize,
+  numOfLines,
+  isLoading,
 }: {
   theme: Theme;
+  baseFontSize: CodeEditorProps['baseFontSize'];
   width?: string;
   minWidth?: string;
   maxWidth?: string;
   height?: string;
   minHeight?: string;
   maxHeight?: string;
+  numOfLines: number;
+  isLoading: boolean;
 }) => {
+  const fontSize = baseFontSize ? baseFontSize : 13;
+  const defaultHeight = getHeight(numOfLines, fontSize);
+
+  let heightValue = height;
+
+  if (!heightValue) {
+    if (isLoading) {
+      heightValue = `${defaultHeight}px`;
+    } else {
+      heightValue = '100%';
+    }
+  }
+
   return css`
     background-color: ${color[theme].background[Variant.Primary][
       InteractionState.Default
@@ -118,15 +163,9 @@ export const getLoaderStyles = ({
     width: ${width || '100%'};
     max-width: ${maxWidth || 'none'};
     min-width: ${minWidth || 'none'};
-    height: ${height || '100%'};
+    height: ${heightValue};
     max-height: ${maxHeight || 'none'};
-    /**
-     * The editor being rendered depends on a lazy loaded module, so it has no 
-     * height until it loads. By default, its height expands to fit its 
-     * content, therefore we won't know its actual height until it loads.
-     * To ensure the loader is visible, we need to set an arbitrary min height.
-     */
-    min-height: ${minHeight || '234px'};
+    min-height: ${minHeight || 'none'};
     z-index: 1;
   `;
 };
