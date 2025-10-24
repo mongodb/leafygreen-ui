@@ -12,6 +12,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { findChild } from '@leafygreen-ui/lib';
+import { Size, Spinner } from '@leafygreen-ui/loading-indicator/spinner';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { CodeEditorContextMenu } from '../CodeEditorContextMenu';
@@ -523,7 +524,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                 data-lgid={lgIds.loader}
               >
                 <Body className={getLoadingTextStyles(theme)}>
-                  Loading code editor...
+                  <Spinner size={Size.Small} />
+                  Loading code editor
                 </Body>
               </div>
             )}
