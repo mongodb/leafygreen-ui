@@ -4,6 +4,10 @@ import useViewportSize from '../useViewportSize';
  * Returns the maximum space available above or below the source trigger
  * @param triggerRef The `ref` object attached to the source trigger
  * @param margin The space around the trigger
+ *
+ * Note: You may not need this hook.
+ * Popovers now adjust their size automatically based on the available space using Floating UI
+ * @see packages/popover/src/Popover/Popover.tsx
  */
 const useAvailableSpace = (
   triggerRef?: React.RefObject<HTMLElement>,

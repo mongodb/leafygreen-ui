@@ -9,3 +9,5 @@ If the provided value is _greater than_ the available space above/below (for hei
 the size will be restricted to the available space (i.e. the popover will not overflow the viewport).
 
 Note: Any `max-height` or `max-width` value applied with additional CSS will take precedence, and will override the "available space" calculation
+
+Exports `popoverCSSProperties` constant for use in components that extend popover

@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/test';
+import { fn, userEvent, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CaretDown from '@leafygreen-ui/icon/dist/CaretDown';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
@@ -19,6 +19,8 @@ import { Align, Justify, RenderMode } from '@leafygreen-ui/popover';
 import { TestUtils } from '@leafygreen-ui/popover';
 
 const { getAlign, getJustify } = TestUtils;
+
+import { useEventListener } from '@leafygreen-ui/hooks';
 
 import {
   Menu,
@@ -100,6 +102,7 @@ const meta: StoryMetaType<typeof Menu> = {
     darkMode: false,
     renderDarkMenu: false,
     variant: MenuVariant.Default,
+    onOpen: fn(),
   },
   argTypes: {
     open: {
@@ -475,4 +478,90 @@ export const InitialLongMenuOpen: InitialLongMenuOpenStory = {
       </div>
     ),
   ],
+};
+
+export const MovingMenuTrigger = () => {
+  const markerStyles = css`
+    position: absolute;
+    color: black;
+    text-align: center;
+    outline: 1px solid black;
+    cursor: default;
+  `;
+
+  const [open, setOpen] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const anchorRef = useRef<HTMLDivElement>(null);
+  useEventListener(
+    'contextmenu',
+    event => {
+      event.preventDefault();
+      const { clientX, clientY } = event;
+      setOpen(true);
+      setPosition({ top: clientY, left: clientX });
+    },
+    { dependencies: [setPosition, setOpen] },
+  );
+  useEventListener(
+    'click',
+    event => {
+      event.preventDefault();
+      if (event.buttons === 2) return;
+      setOpen(false);
+    },
+    { dependencies: [setOpen] },
+  );
+
+  return (
+    <div className="App">
+      <div
+        ref={anchorRef}
+        style={{ position: 'absolute', width: 1, height: 1, ...position }}
+      />
+      <div
+        className={cx(
+          markerStyles,
+          css`
+            top: 40vh;
+            left: 50vw;
+          `,
+        )}
+      >
+        Click here for a shorter menu
+      </div>
+      <div
+        className={cx(
+          markerStyles,
+          css`
+            top: 10vh;
+            left: 50vw;
+          `,
+        )}
+      >
+        Click here for a long menu
+      </div>
+      <Menu refEl={anchorRef} open={open} maxHeight={Number.MAX_SAFE_INTEGER}>
+        <MenuItem>Item #1</MenuItem>
+        <MenuItem>Item #2</MenuItem>
+        <MenuItem>Item #3</MenuItem>
+        <MenuItem>Item #4</MenuItem>
+        <MenuItem>Item #5</MenuItem>
+        <MenuItem>Item #6</MenuItem>
+        <MenuItem>Item #7</MenuItem>
+        <MenuItem>Item #8</MenuItem>
+        <MenuItem>Item #9</MenuItem>
+        <MenuItem>Item #10</MenuItem>
+        <MenuItem>Item #11</MenuItem>
+        <MenuItem>Item #12</MenuItem>
+        <MenuItem>Item #13</MenuItem>
+        <MenuItem>Item #14</MenuItem>
+        <MenuItem>Item #15</MenuItem>
+        <MenuItem>Item #16</MenuItem>
+        <MenuItem>Item #17</MenuItem>
+        <MenuItem>Item #18</MenuItem>
+        <MenuItem>Item #19</MenuItem>
+        <MenuItem>Item #20</MenuItem>
+      </Menu>
+    </div>
+  );
 };
