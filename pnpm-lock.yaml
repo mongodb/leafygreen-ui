@@ -349,9 +349,28 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
+    devDependencies:
+      '@lg-chat/chat-window':
+        specifier: workspace:^
+        version: link:../chat-window
+      '@lg-chat/input-bar':
+        specifier: workspace:^
+        version: link:../input-bar
+      '@lg-chat/message':
+        specifier: workspace:^
+        version: link:../message
+      '@lg-chat/message-feed':
+        specifier: workspace:^
+        version: link:../message-feed
+      '@lg-chat/title-bar':
+        specifier: workspace:^
+        version: link:../title-bar
 
   chat/chat-window:
     dependencies:
