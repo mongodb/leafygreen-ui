@@ -7,6 +7,7 @@ import { generateAccessibleProps, Size, sizeMap } from './glyphCommon';
 import { LGGlyph, SVGR } from './types';
 
 /**
+ * @deprecated - No longer needed for icon generation. Keeping it for backwards compatibility.
  * Returns a single glyph component.
  * Process custom glyphs to ensure consistent behavior between custom and built-in icons
  * @param glyphName: string - the display name of the icon

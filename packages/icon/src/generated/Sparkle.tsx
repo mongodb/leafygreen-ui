@@ -2,7 +2,7 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 773618e74afe5359c03bce0cb8a8edd7
+* @checksum 75b9f89083a70770e5a05835b62e9be9
 */
 import * as React from "react";
 import { css, cx } from '@leafygreen-ui/emotion';
