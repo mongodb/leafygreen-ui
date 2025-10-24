@@ -3,8 +3,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import {
   BaseFontSize,
   borderRadius,
+  boxShadows,
   InteractionState,
-  shadow,
   spacing,
   transitionDuration,
   Variant,
@@ -48,7 +48,7 @@ const getBaseContainerStyles = (
     height: 100%;
 
     /** Apply the shadow to the pseudo-element */
-    box-shadow: ${shadow[theme][100]};
+    box-shadow: ${boxShadows[theme][1]};
 
     /** Negative values expand the clipping area outward, revealing the shadow. */
     /** A zero value clips the shadow exactly at the element's edge. */
