@@ -19,7 +19,13 @@ export {
   ScrollbarProperty,
   type ScrollbarVariant,
 } from './scrollbars';
-export { addOverflowShadows, boxShadows, shadows, Side } from './shadows';
+export {
+  addOverflowShadows,
+  boxShadows,
+  type ShadowKey,
+  shadows,
+  Side,
+} from './shadows';
 export { Size } from './size';
 export { default as spacing } from './spacing';
 export { default as transitionDuration } from './transitions';

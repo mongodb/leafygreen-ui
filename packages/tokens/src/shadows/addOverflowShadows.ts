@@ -1,8 +1,7 @@
-import { transparentize } from 'polished';
-
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+
+import { shadows } from './shadows';
 
 export const Side = {
   Top: 'top',
@@ -14,11 +13,6 @@ export type Side = (typeof Side)[keyof typeof Side];
 
 const BLUR_RADIUS = 16;
 const SHORT_SIDE_SIZE = 36;
-
-const shadowThemeColor: Record<Theme, string> = {
-  [Theme.Light]: palette.gray.dark1,
-  [Theme.Dark]: palette.black,
-};
 
 const shadowOffset: Record<Theme, number> = {
   [Theme.Light]: 2,
@@ -134,7 +128,7 @@ export const addOverflowShadows = ({
 }) => {
   const pseudoElement =
     side === Side.Top || side === Side.Left ? '::before' : '::after';
-  const shadowColor = transparentize(0.7, shadowThemeColor[theme]);
+  const shadowColor = shadows[theme].overflow;
   const shadowOffsetVal = shadowOffset[theme];
 
   return css`

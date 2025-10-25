@@ -10,13 +10,14 @@ import { palette } from '@leafygreen-ui/palette';
 
 import { scrollbarColor } from './scrollbars';
 import {
-  addOverflowShadow,
+  addOverflowShadows,
   borderRadius,
   boxShadows,
   color,
   focusRing,
   fontFamilies,
   hoverRing,
+  type ShadowKey,
   Side,
   spacing,
   transitionDuration,
@@ -139,7 +140,7 @@ export const OverflowShadows = () => {
                     margin: ${spacing[400]}px;
                     padding: ${spacing[400]}px;
                     overflow: hidden;
-                    ${addOverflowShadow({ isInside: true, side, theme })}
+                    ${addOverflowShadows({ isInside: true, side, theme })}
                   `}
                 >
                   Inside {side} shadow
@@ -155,7 +156,7 @@ export const OverflowShadows = () => {
                     border: 1px solid ${color[theme].border.secondary.default};
                     margin: ${spacing[400]}px;
                     padding: ${spacing[400]}px;
-                    ${addOverflowShadow({ isInside: false, side, theme })}
+                    ${addOverflowShadows({ isInside: false, side, theme })}
                   `}
                 >
                   Outside {side} shadow
@@ -169,15 +170,14 @@ export const OverflowShadows = () => {
   );
 };
 
-const shadowMap: Record<
-  Theme,
-  typeof boxShadows.light | typeof boxShadows.dark
-> = {
+const shadowMap: Record<Theme, Record<ShadowKey, string>> = {
   [Theme.Light]: boxShadows.light,
   [Theme.Dark]: boxShadows.dark,
 };
 
-export const Shadow = () => (
+const excludeKeys: Array<ShadowKey> = ['overflow'];
+
+export const Shadows = () => (
   <div
     className={css`
       display: flex;
@@ -193,24 +193,27 @@ export const Shadow = () => (
         >
           {theme}
         </h3>
-        {Object.entries(shadows).map(([key, value]) => (
-          <div
-            key={key}
-            className={css`
-              box-shadow: ${value};
-              background-color: ${color[theme as Theme].background.primary
-                .default};
-              padding: ${spacing[1600]}px;
-              border-radius: ${borderRadius[200]}px;
-              border: 1px solid
-                ${color[theme as Theme].border.secondary.default};
-              color: ${color[theme as Theme].text.primary.default};
-              margin-bottom: ${spacing[800]}px;
-            `}
-          >
-            {key}
-          </div>
-        ))}
+        {Object.entries(shadows).map(
+          ([key, value]) =>
+            !excludeKeys.includes(key as keyof typeof boxShadows.light) && (
+              <div
+                key={key}
+                className={css`
+                  box-shadow: ${value};
+                  background-color: ${color[theme as Theme].background.primary
+                    .default};
+                  padding: ${spacing[1600]}px;
+                  border-radius: ${borderRadius[200]}px;
+                  border: 1px solid
+                    ${color[theme as Theme].border.secondary.default};
+                  color: ${color[theme as Theme].text.primary.default};
+                  margin-bottom: ${spacing[800]}px;
+                `}
+              >
+                {key}
+              </div>
+            ),
+        )}
       </div>
     ))}
   </div>
