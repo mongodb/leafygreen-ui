@@ -1,11 +1,13 @@
 import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 import { generateAccessibleProps, Size, sizeMap } from './glyphCommon';
 import { LGGlyph, SVGR } from './types';
 
 /**
+ * @deprecated - No longer needed for icon generation. Keeping it for backwards compatibility.
  * Returns a single glyph component.
  * Process custom glyphs to ensure consistent behavior between custom and built-in icons
  * @param glyphName: string - the display name of the icon
@@ -26,6 +28,7 @@ export function createGlyphComponent(
     role = 'img',
     ...rest
   }: LGGlyph.ComponentProps) => {
+    const titleId = useIdAllocator({ prefix: 'icon-title' });
     const fillStyle = css`
       color: ${fill};
     `;
@@ -51,6 +54,7 @@ export function createGlyphComponent(
         role={role}
         {...generateAccessibleProps(role, glyphName, {
           title,
+          titleId,
           ['aria-label']: ariaLabel,
           ['aria-labelledby']: ariaLabelledby,
         })}

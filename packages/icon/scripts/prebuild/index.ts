@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { getChecksum } from './checksum';
-import { indexTemplate } from './indexTemplate';
+import { generatedIndexTemplate, indexTemplate } from './indexTemplate';
 import { FileObject, PrebuildOptions } from './prebuild.types';
 import { svgrTemplate } from './svgrTemplate';
 
@@ -28,6 +28,7 @@ async function buildSvgFiles(options: PrebuildOptions): Promise<void> {
   options?.verbose && console.log('Processing SVG files...\n');
   await Promise.all(svgFiles.map(processFile));
   await createIndexFile(svgFiles, options);
+  await createGeneratedIndexFile(svgFiles, outputDir, options);
 }
 
 /**
@@ -87,6 +88,21 @@ async function createIndexFile(
   const indexPath = path.resolve(SRC_PATH, 'glyphs', 'index.ts');
   options?.verbose && console.log('Writing index file...', indexPath);
   const indexContent = await indexTemplate(svgFiles);
+  const formattedIndexContent = await formatLG(indexContent, indexPath);
+  fs.writeFileSync(indexPath, formattedIndexContent, { encoding: 'utf8' });
+}
+
+/**
+ * Create the index file for the generated component exports
+ */
+async function createGeneratedIndexFile(
+  svgFiles: Array<FileObject>,
+  outputDir: string,
+  options?: PrebuildOptions,
+) {
+  const indexPath = path.resolve(outputDir, 'index.ts');
+  options?.verbose && console.log('Writing generated index file...', indexPath);
+  const indexContent = await generatedIndexTemplate(svgFiles);
   const formattedIndexContent = await formatLG(indexContent, indexPath);
   fs.writeFileSync(indexPath, formattedIndexContent, { encoding: 'utf8' });
 }

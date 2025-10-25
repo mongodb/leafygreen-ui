@@ -2,10 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum b7cab0d99453146719f7da2929c44003
+* @checksum 7e5327d531eb7c4ab9f74f0f8d5168d0
 */
 import * as React from "react";
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface EditProps extends LGGlyph.ComponentProps {}
@@ -19,6 +20,9 @@ const Edit = ({
   role = 'img',
   ...props
 }: EditProps) => {
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;
@@ -27,12 +31,13 @@ const Edit = ({
       `;
   const accessibleProps = generateAccessibleProps(role, 'Edit', {
     title,
+    titleId,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M10.9219 0.681233C11.2981 0.304986 11.9082 0.304986 12.2844 0.681233L13.6469 2.04375C14.0232 2.41999 14.0232 3.03001 13.6469 3.40626L12.2844 4.76877L9.55939 2.04375L8.5375 3.06563L11.2625 5.79066L4.10934 12.9438L0.362427 13.9657L1.38431 10.2188L10.9219 0.681233Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path d="M10.9219 0.681233C11.2981 0.304986 11.9082 0.304986 12.2844 0.681233L13.6469 2.04375C14.0232 2.41999 14.0232 3.03001 13.6469 3.40626L12.2844 4.76877L9.55939 2.04375L8.5375 3.06563L11.2625 5.79066L4.10934 12.9438L0.362427 13.9657L1.38431 10.2188L10.9219 0.681233Z" fill={'currentColor'} /></svg>;
 };
 Edit.displayName = 'Edit';
 Edit.isGlyph = true;

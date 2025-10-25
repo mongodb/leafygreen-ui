@@ -4,7 +4,7 @@ import { axe } from 'jest-axe';
 
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 
-import IconButton from '..';
+import { IconButton } from '..';
 
 const onClick = jest.fn();
 const className = 'test-icon-button-class';
@@ -84,13 +84,19 @@ describe('packages/icon-button', () => {
     expect(iconButton.tagName.toLowerCase()).toBe('a');
   });
 
-  test(`when '${titleText}' is set directly as the title child icon, the rendered icon includes the title attribute, '${titleText}'`, () => {
-    const iconWithTitle = (
-      <EllipsisIcon data-testid="icon-test-id" title={titleText} />
+  test(`when '${titleText}' is set directly as the title child icon, the rendered icon includes a title element with '${titleText}'`, () => {
+    const { container } = render(
+      <IconButton aria-label="Ellipsis">
+        <EllipsisIcon title={titleText} />
+      </IconButton>,
     );
-    const { icon } = renderIconButton({ children: iconWithTitle });
 
-    expect(icon.getAttribute('title')).toBe(titleText);
+    const icon = container.querySelector('[role="img"]');
+    expect(icon).toBeTruthy();
+
+    const titleElement = icon?.querySelector('title');
+    expect(titleElement).toBeTruthy();
+    expect(titleElement?.textContent).toBe(titleText);
   });
 
   /* eslint-disable jest/no-disabled-tests*/

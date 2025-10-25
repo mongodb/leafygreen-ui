@@ -18,6 +18,9 @@
       "path": "../emotion"
     },
     {
+      "path": "../hooks"
+    },
+    {
       "path": "../lib"
     },
     {
