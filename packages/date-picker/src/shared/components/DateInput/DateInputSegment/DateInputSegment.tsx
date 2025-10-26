@@ -13,7 +13,7 @@ import { getAutoComplete } from '../../../utils';
 
 import { segmentWidthStyles } from './DateInputSegment.styles';
 import { DateInputSegmentProps } from './DateInputSegment.types';
-import { InputSegment } from '../../InputSegment/InputSegment';
+import { InputSegment } from '@leafygreen-ui/input-box';
 import { DateSegment } from '../../../types';
 
 /**
@@ -72,8 +72,8 @@ export const DateInputSegment = React.forwardRef<
         className={cx(segmentWidthStyles[segment])}
         disabled={disabled}
         data-testid="lg-date_picker_input-segment"
-        defaultMin={defaultMin}
-        defaultMax={defaultMax}
+        defaultMin={defaultMin} // TODO: remove this
+        defaultMax={defaultMax} // TODO: remove this
         segmentObj={DateSegment}
         shouldNotRollover={DateSegment.Year}
         {...rest}

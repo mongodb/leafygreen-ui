@@ -6,7 +6,8 @@ const charsPerSegment: Record<Segment, number> = {
   month: 2,
   year: 4,
 };
-describe('packages/date-picker/utils/valueFormatter', () => {
+
+describe('packages/input-box/utils/valueFormatter', () => {
   describe.each(['day', 'month'] as Array<Segment>)('', segment => {
     const formatter = getValueFormatter(segment, charsPerSegment);
 

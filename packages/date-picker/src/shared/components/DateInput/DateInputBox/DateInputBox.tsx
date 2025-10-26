@@ -22,7 +22,7 @@ import { DateInputSegment } from '../DateInputSegment';
 
 import { DateInputBoxProps } from './DateInputBox.types';
 import { charsPerSegment, dateSegmentRules } from '../../../constants';
-import { InputBox } from '../../InputBox/InputBox';
+import { InputBox } from '@leafygreen-ui/input-box';
 
 /**
  * Renders a styled date input with appropriate segment order & separator characters.

@@ -81,7 +81,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     const changedViaArrowKeys =
       meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
-    // Auto-format the segment if it is explicit and was not changed via arrow-keys
+    // Auto-format the segment if it is explicit and was not changed via arrow-keys e.g. up/down arrows
     if (
       !changedViaArrowKeys &&
       isExplicitSegmentValue(segmentName, segmentValue)
@@ -203,6 +203,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
 
   return (
     <div
+      // TODO: use getInputBoxStyles
       className={cx(segmentPartsWrapperStyles, className)}
       onKeyDown={handleInputKeyDown}
       ref={fwdRef}

@@ -102,7 +102,8 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
     const isNumber = Number(key) && key !== keyMap.Space;
 
     if (isNumber) {
-      // if the value length is equal to the maxLength, reset the input
+      // if the value length is equal to the maxLength, reset the input. This will clear the input and the number will be inserted into the input when onChange is called.
+
       if (target.value.length === charsPerSegment[segment]) {
         target.value = '';
       }
@@ -195,6 +196,7 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
       onBlur={onBlur}
       onKeyDown={handleKeyDown}
       data-segment={String(segment)}
+      // TODO: use getInputSegmentStyles
       className={cx(
         baseStyles,
         fontSizeStyles[baseFontSize],
