@@ -1,3 +1,13 @@
-# Global owners
+# project:chat
+chat/ @mongodb/lg-chat
 
-* @mongodb/leafygreen-ui-maintainers
+# project:deletion
+# add dir/files
+
+# project:mcp-ui
+# add dir/files
+
+# project:time-input
+packages/date-picker @mongodb/lg-time-input
+packages/date-utils @mongodb/lg-time-input
+packages/time-input @mongodb/lg-time-input
