@@ -29,9 +29,11 @@ const glyphPaths = fs
 const generatedFilesDirectory = path.resolve(__dirname, './generated');
 const baseNameToGeneratedFilePath: Record<string, string> = {};
 
-fs.readdirSync(generatedFilesDirectory).forEach(filePath => {
-  baseNameToGeneratedFilePath[getBaseName(filePath)] = filePath;
-});
+fs.readdirSync(generatedFilesDirectory)
+  .filter(filePath => /.*\.tsx$/.test(filePath))
+  .forEach(filePath => {
+    baseNameToGeneratedFilePath[getBaseName(filePath)] = filePath;
+  });
 
 const MyTestSVGRGlyph: SVGR.Component = props => (
   <svg data-testid="my-glyph" {...props}></svg>
@@ -276,7 +278,7 @@ describe('Generated glyphs', () => {
   });
 
   describe('accessible props handled correctly', () => {
-    test('when no prop is supplied, aria-label is genereated', () => {
+    test('when no prop is supplied, aria-label is generated', () => {
       render(<EditIcon />);
       const editIcon = screen.getByRole('img');
       expect(editIcon.getAttribute('aria-label')).toBe('Edit Icon');
