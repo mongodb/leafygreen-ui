@@ -1,23 +1,30 @@
-import {
-  isValidSegmentName,
-  isValidSegmentValue,
-} from '../../InputBox/utils/isValidSegment';
+import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
 
 /**
  * Configuration for determining if a segment value is explicit
  */
-export type ExplicitSegmentRule = {
+export interface ExplicitSegmentRule {
   /** Maximum characters for this segment */
   maxChars: number;
   /** Minimum numeric value that makes the input explicit (optional) */
   minExplicitValue?: number;
-};
+}
 
 /**
  * Factory function that creates a segment value validator
  * @param segmentEnum - The segment enum/object to validate against
  * @param rules - Rules for each segment type
  * @returns A function that checks if a segment value is explicit
+ *
+ * @example
+ * const segmentObj = {
+ *   Day: 'day',
+ *   Month: 'month',
+ *   Year: 'year',
+ * };
+ * const rules = {
+ *   day: { maxChars: 2, minExplicitValue: 1 },
+ *   month: { maxChars: 2, minExplicitValue: 1 },
  */
 export function createExplicitSegmentValidator<
   T extends Record<string, string>,

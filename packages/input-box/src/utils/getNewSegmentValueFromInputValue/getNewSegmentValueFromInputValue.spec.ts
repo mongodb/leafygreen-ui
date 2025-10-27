@@ -1,6 +1,6 @@
 import range from 'lodash/range';
 
-import { getValueFormatter } from '../../../InputBox/utils';
+import { getValueFormatter } from '../getValueFormatter';
 
 import { getNewSegmentValueFromInputValue } from './getNewSegmentValueFromInputValue';
 
@@ -28,7 +28,7 @@ const segmentObj = {
   year: 'year',
 };
 
-describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromInputValue', () => {
+describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
   describe.each(['day', 'month', 'year'])('For segment %p', _segment => {
     const segment = _segment as 'day' | 'month' | 'year';
     describe('when current value is empty', () => {
@@ -38,8 +38,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
           '',
           `${i}`,
           charsPerSegment,
-          defaultMin,
-          defaultMax,
+          defaultMin[segment],
+          defaultMax[segment],
           segmentObj,
         );
         expect(newValue).toEqual(`${i}`);
@@ -52,8 +52,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
           '',
           `${v}`,
           charsPerSegment,
-          defaultMin,
-          defaultMax,
+          defaultMin[segment],
+          defaultMax[segment],
           segmentObj,
         );
         expect(newValue).toEqual(`${v}`);
@@ -65,8 +65,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
           '',
           `b`,
           charsPerSegment,
-          defaultMin,
-          defaultMax,
+          defaultMin[segment],
+          defaultMax[segment],
           segmentObj,
         );
         expect(newValue).toEqual('');
@@ -78,8 +78,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
           '',
           `2.`,
           charsPerSegment,
-          defaultMin,
-          defaultMax,
+          defaultMin[segment],
+          defaultMax[segment],
           segmentObj,
         );
         expect(newValue).toEqual('');
@@ -94,8 +94,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
             '0',
             `00`,
             charsPerSegment,
-            defaultMin,
-            defaultMax,
+            defaultMin[segment],
+            defaultMax[segment],
             segmentObj,
           );
           expect(newValue).toEqual(`0`);
@@ -107,8 +107,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
           '0',
           `0${i}`,
           charsPerSegment,
-          defaultMin,
-          defaultMax,
+          defaultMin[segment],
+          defaultMax[segment],
           segmentObj,
         );
         expect(newValue).toEqual(`0${i}`);
@@ -119,8 +119,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
           '0',
           ``,
           charsPerSegment,
-          defaultMin,
-          defaultMax,
+          defaultMin[segment],
+          defaultMax[segment],
           segmentObj,
         );
         expect(newValue).toEqual(``);
@@ -134,8 +134,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
           '1',
           ``,
           charsPerSegment,
-          defaultMin,
-          defaultMax,
+          defaultMin[segment],
+          defaultMax[segment],
           segmentObj,
         );
         expect(newValue).toEqual(``);
@@ -148,8 +148,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
             '1',
             `1${i}`,
             charsPerSegment,
-            defaultMin,
-            defaultMax,
+            defaultMin[segment],
+            defaultMax[segment],
             segmentObj,
           );
           expect(newValue).toEqual(`1${i}`);
@@ -161,8 +161,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
               '1',
               `1${i}`,
               charsPerSegment,
-              defaultMin,
-              defaultMax,
+              defaultMin[segment],
+              defaultMax[segment],
               segmentObj,
             );
             expect(newValue).toEqual(`${i}`);
@@ -175,8 +175,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
             '1',
             `1${i}`,
             charsPerSegment,
-            defaultMin,
-            defaultMax,
+            defaultMin[segment],
+            defaultMax[segment],
             segmentObj,
           );
           expect(newValue).toEqual(`1${i}`);
@@ -191,8 +191,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
           '3',
           ``,
           charsPerSegment,
-          defaultMin,
-          defaultMax,
+          defaultMin[segment],
+          defaultMax[segment],
           segmentObj,
         );
         expect(newValue).toEqual(``);
@@ -206,8 +206,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
               '3',
               `3${i}`,
               charsPerSegment,
-              defaultMin,
-              defaultMax,
+              defaultMin[segment],
+              defaultMax[segment],
               segmentObj,
             );
             expect(newValue).toEqual(`3${i}`);
@@ -219,8 +219,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
                 '3',
                 `3${i}`,
                 charsPerSegment,
-                defaultMin,
-                defaultMax,
+                defaultMin[segment],
+                defaultMax[segment],
                 segmentObj,
               );
               expect(newValue).toEqual(`${i}`);
@@ -237,8 +237,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
                 '3',
                 `3${i}`,
                 charsPerSegment,
-                defaultMin,
-                defaultMax,
+                defaultMin[segment],
+                defaultMax[segment],
                 segmentObj,
               );
               expect(newValue).toEqual(`${i}`);
@@ -265,8 +265,8 @@ describe('packages/date-picker/shared/date-input-segment/getNewSegmentValueFromI
             val,
             `${val}1`,
             charsPerSegment,
-            defaultMin,
-            defaultMax,
+            defaultMin[segment],
+            defaultMax[segment],
             segmentObj,
           );
           expect(newValue).toEqual(val);

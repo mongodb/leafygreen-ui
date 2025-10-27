@@ -1,5 +1,6 @@
-import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { createRef } from 'react';
+
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 type Segment = 'day' | 'month' | 'year';
 

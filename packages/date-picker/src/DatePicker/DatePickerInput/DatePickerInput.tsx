@@ -8,6 +8,7 @@ import React, {
 import isNull from 'lodash/isNull';
 
 import { isInvalidDateObject, isSameUTCDay } from '@leafygreen-ui/date-utils';
+import { isElementInputSegment } from '@leafygreen-ui/input-box';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import {
@@ -17,10 +18,7 @@ import {
 } from '../../shared/components/DateInput';
 import { DateInputSegmentChangeEventHandler } from '../../shared/components/DateInput/DateInputSegment';
 import { useSharedDatePickerContext } from '../../shared/context';
-import {
-  getFormattedDateStringFromSegments,
-  isElementInputSegment,
-} from '../../shared/utils';
+import { getFormattedDateStringFromSegments } from '../../shared/utils';
 import { useDatePickerContext } from '../DatePickerContext';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
@@ -64,8 +62,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         handleValidation?.(newVal);
         setValue(newVal);
       }
-
-      console.log('😈handleInputValueChange', { newVal, segments });
 
       if (!isNull(newVal) && isInvalidDateObject(newVal)) {
         const dateString = getFormattedDateStringFromSegments(segments, locale);

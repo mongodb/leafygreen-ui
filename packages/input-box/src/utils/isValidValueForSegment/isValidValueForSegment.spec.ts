@@ -1,4 +1,3 @@
-import { MAX_DATE, MIN_DATE } from '@leafygreen-ui/date-utils';
 import { isValidValueForSegment } from '.';
 
 const SegmentObj = {
@@ -12,26 +11,26 @@ type SegmentObj = (typeof SegmentObj)[keyof typeof SegmentObj];
 const defaultMin = {
   day: 1,
   month: 1,
-  year: MIN_DATE.getUTCFullYear(),
+  year: 1970,
 } as const;
 
 const defaultMax = {
   day: 31,
   month: 12,
-  year: MAX_DATE.getUTCFullYear(),
+  year: 2038,
 } as const;
 
 const isValidValueForSegmentWrapper = (segment: SegmentObj, value: string) => {
   return isValidValueForSegment(
     segment,
     value,
-    defaultMin,
-    defaultMax,
+    defaultMin[segment],
+    defaultMax[segment],
     SegmentObj,
   );
 };
 
-describe('packages/date-picker/utils/isValidSegmentValue', () => {
+describe('packages/input-box/utils/isValidSegmentValue', () => {
   test('day', () => {
     expect(isValidValueForSegmentWrapper('day', '1')).toBe(true);
     expect(isValidValueForSegmentWrapper('day', '15')).toBe(true);

@@ -1,9 +1,9 @@
 import React, { FocusEventHandler, ForwardedRef, ReactElement } from 'react';
 
 import { DateType } from '@leafygreen-ui/date-utils';
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
-import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { ExplicitSegmentRule } from '../utils/createExplicitSegmentValidator';
 
 export interface RenderSegmentProps<T extends string = string> {
@@ -63,7 +63,7 @@ export interface InputBoxProps<T extends Record<string, any>>
   /**
    * The format parts of the date
    */
-  formatParts?: Intl.DateTimeFormatPart[];
+  formatParts?: Array<Intl.DateTimeFormatPart>;
 
   /**
    * The number of characters per segment
@@ -74,7 +74,7 @@ export interface InputBoxProps<T extends Record<string, any>>
   /**
    * Whether the input box is disabled
    */
-  disabled: boolean;
+  disabled?: boolean;
 
   /**
    * The rules for the segments

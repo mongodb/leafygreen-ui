@@ -1,13 +1,13 @@
 import { isValidSegmentName, isValidSegmentValue } from '.';
 
-export const Segment = {
+const Segment = {
   Day: 'day',
   Month: 'month',
   Year: 'year',
 } as const;
 type SegmentValue = string;
 
-describe('packages/date-picker/utils/isValidSegment', () => {
+describe('packages/input-box/utils/isValidSegment', () => {
   describe('isValidSegment', () => {
     test('undefined returns false', () => {
       expect(isValidSegmentValue<SegmentValue>()).toBeFalsy();

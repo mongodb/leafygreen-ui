@@ -1,8 +1,8 @@
 import { DateType } from '@leafygreen-ui/date-utils';
+import { getValueFormatter } from '@leafygreen-ui/input-box';
 
 import { charsPerSegment } from '../../constants';
 import { DateSegmentsState } from '../../types';
-import { getValueFormatter } from '../getValueFormatter';
 
 import { getSegmentsFromDate } from './getSegmentsFromDate';
 

@@ -6,6 +6,25 @@ type RelativeDirection = 'next' | 'prev' | 'first' | 'last';
 /**
  * Given a direction, starting segment name & format
  * returns the segment name in the given direction
+ *
+ * @param direction - The direction to get the relative segment from
+ * @param segment - The starting segment name
+ * @param formatParts - The format parts of the date
+ * @returns The segment name in the given direction
+ * @example
+ * const formatParts = [
+ *   { type: 'year', value: '2023' },
+ *   { type: 'literal', value: '-' },
+ *   { type: 'month', value: '10' },
+ *   { type: 'literal', value: '-' },
+ *   { type: 'day', value: '31' },
+ * ];
+ * getRelativeSegment('next', { segment: 'year', formatParts }); // 'month'
+ * getRelativeSegment('next', { segment: 'month', formatParts }); // 'day'
+ * getRelativeSegment('prev', { segment: 'day', formatParts }); // 'month'
+ * getRelativeSegment('prev', { segment: 'month', formatParts }); // 'year'
+ * getRelativeSegment('first', { segment: 'day', formatParts }); // 'year'
+ * getRelativeSegment('last', { segment: 'year', formatParts }); // 'day'
  */
 export const getRelativeSegment = <V extends string = string>(
   direction: RelativeDirection,
@@ -80,6 +99,29 @@ interface GetRelativeSegmentContext<
 /**
  * Given a direction, staring segment, and segment refs,
  * returns the segment ref in the given direction
+ *
+ * @param direction - The direction to get the relative segment from
+ * @param segment - The starting segment ref
+ * @param formatParts - The format parts of the date
+ * @param segmentRefs - The segment refs
+ * @returns The segment ref in the given direction
+ * @example
+ * const formatParts = [
+ *   { type: 'year', value: '2023' },
+ *   { type: 'literal', value: '-' },
+ *   { type: 'month', value: '10' },
+ *   { type: 'literal', value: '-' },
+ *   { type: 'day', value: '31' },
+ * ];
+ * const segmentRefs = {
+ *   year: yearRef,
+ *   month: monthRef,
+ *   day: dayRef,
+ * };
+ * getRelativeSegmentRef('next', { segment: yearRef, formatParts, segmentRefs }); // monthRef
+ * getRelativeSegmentRef('prev', { segment: dayRef, formatParts, segmentRefs }); // monthRef
+ * getRelativeSegmentRef('first', { segment: monthRef, formatParts, segmentRefs }); // yearRef
+ * getRelativeSegmentRef('last', { segment: monthRef, formatParts, segmentRefs }); // dayRef
  */
 export const getRelativeSegmentRef = <
   T extends Record<string, React.RefObject<HTMLInputElement>>,

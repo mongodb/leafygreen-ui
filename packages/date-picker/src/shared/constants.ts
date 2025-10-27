@@ -1,6 +1,7 @@
 import { MAX_DATE, MIN_DATE } from '@leafygreen-ui/date-utils';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
+
 import { DateSegment } from './types';
 
 // TODO: Update how defaultMin & defaultMax are defined,

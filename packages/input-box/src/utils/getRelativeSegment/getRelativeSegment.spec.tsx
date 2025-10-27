@@ -1,15 +1,16 @@
 import React, { createRef } from 'react';
-import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { render } from '@testing-library/react';
+
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 type Segment = 'day' | 'month' | 'year';
 
-export type SegmentRefs = Record<
+type SegmentRefs = Record<
   Segment,
   ReturnType<DynamicRefGetter<HTMLInputElement>>
 >;
 
-export const segmentRefsMock: SegmentRefs = {
+const segmentRefsMock: SegmentRefs = {
   day: createRef<HTMLInputElement>(),
   month: createRef<HTMLInputElement>(),
   year: createRef<HTMLInputElement>(),
@@ -43,7 +44,7 @@ const renderTestComponent = () => {
   };
 };
 
-describe('packages/date-picker/utils/getRelativeSegment', () => {
+describe('packages/input-box/utils/getRelativeSegment', () => {
   const formatParts: Array<Intl.DateTimeFormatPart> = [
     { type: 'year', value: '2023' },
     { type: 'literal', value: '-' },

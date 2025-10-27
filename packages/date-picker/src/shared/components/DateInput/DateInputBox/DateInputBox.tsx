@@ -7,7 +7,9 @@ import {
   isInvalidDateObject,
   isValidDate,
 } from '@leafygreen-ui/date-utils';
+import { InputBox } from '@leafygreen-ui/input-box';
 
+import { charsPerSegment, dateSegmentRules } from '../../../constants';
 import { useSharedDatePickerContext } from '../../../context';
 import { useDateSegments } from '../../../hooks';
 import { DateSegment, DateSegmentsState } from '../../../types';
@@ -21,8 +23,6 @@ import {
 import { DateInputSegment } from '../DateInputSegment';
 
 import { DateInputBoxProps } from './DateInputBox.types';
-import { charsPerSegment, dateSegmentRules } from '../../../constants';
-import { InputBox } from '@leafygreen-ui/input-box';
 
 /**
  * Renders a styled date input with appropriate segment order & separator characters.

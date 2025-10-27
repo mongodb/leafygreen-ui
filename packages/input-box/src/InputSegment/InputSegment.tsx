@@ -10,6 +10,12 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
+  getNewSegmentValueFromArrowKeyPress,
+  getNewSegmentValueFromInputValue,
+  getValueFormatter,
+} from '../utils';
+
+import {
   baseStyles,
   fontSizeStyles,
   segmentSizeStyles,
@@ -19,11 +25,6 @@ import {
   InputSegmentComponentType,
   InputSegmentProps,
 } from './InputSegment.types';
-import { getValueFormatter } from '../InputBox/utils'; // TODO: moved to shared utils
-import {
-  getNewSegmentValueFromInputValue,
-  getNewSegmentValueFromArrowKeyPress,
-} from './utils';
 
 /**
  * Generic controlled input segment component
@@ -47,10 +48,8 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
     size,
     className,
     segmentObj,
-    defaultMin,
-    defaultMax,
     step = 1,
-    shouldNotRollover,
+    shouldNotRollover = false,
     ...rest
   }: InputSegmentProps<T, V>,
   fwdRef: ForwardedRef<HTMLInputElement>,
@@ -73,8 +72,8 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
       value,
       target.value,
       charsPerSegment,
-      defaultMin,
-      defaultMax,
+      min,
+      max,
       segmentObj,
     );
 
@@ -119,7 +118,6 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
           value,
           min,
           max,
-          segment,
           step,
           shouldNotRollover,
         });

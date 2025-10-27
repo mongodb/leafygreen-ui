@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { InputSegment } from '@leafygreen-ui/input-box';
 
 import {
   charsPerSegment,
@@ -9,12 +10,11 @@ import {
   defaultPlaceholder,
 } from '../../../constants';
 import { useSharedDatePickerContext } from '../../../context';
+import { DateSegment } from '../../../types';
 import { getAutoComplete } from '../../../utils';
 
 import { segmentWidthStyles } from './DateInputSegment.styles';
 import { DateInputSegmentProps } from './DateInputSegment.types';
-import { InputSegment } from '@leafygreen-ui/input-box';
-import { DateSegment } from '../../../types';
 
 /**
  * Controlled component
@@ -53,6 +53,8 @@ export const DateInputSegment = React.forwardRef<
 
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
 
+    const shouldNotRollover = [DateSegment.Year].includes(segment);
+
     return (
       <InputSegment
         ref={fwdRef}
@@ -72,10 +74,8 @@ export const DateInputSegment = React.forwardRef<
         className={cx(segmentWidthStyles[segment])}
         disabled={disabled}
         data-testid="lg-date_picker_input-segment"
-        defaultMin={defaultMin} // TODO: remove this
-        defaultMax={defaultMax} // TODO: remove this
         segmentObj={DateSegment}
-        shouldNotRollover={DateSegment.Year}
+        shouldNotRollover={shouldNotRollover}
         {...rest}
       />
     );

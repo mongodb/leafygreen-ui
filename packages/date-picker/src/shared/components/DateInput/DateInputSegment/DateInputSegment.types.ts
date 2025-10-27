@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { InputSegmentChangeEventHandler } from '@leafygreen-ui/input-box';
 import { DarkModeProps, keyMap } from '@leafygreen-ui/lib';
 
 import { DateSegment, DateSegmentValue } from '../../../types';
-import { InputSegmentChangeEventHandler } from '../../InputSegment/InputSegment.types';
 
 export interface DateInputSegmentChangeEvent {
   segment: DateSegment;
@@ -13,10 +13,6 @@ export interface DateInputSegmentChangeEvent {
     [key: string]: any;
   };
 }
-
-// export type DateInputSegmentChangeEventHandler = (
-//   dateSegmentChangeEvent: DateInputSegmentChangeEvent,
-// ) => void;
 
 export type DateInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
   DateSegment,

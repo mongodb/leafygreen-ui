@@ -9,14 +9,16 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import {
-  getRelativeSegment,
-  getValueFormatter,
-  getRelativeSegmentRef,
-} from './utils';
-import {
   InputSegmentChangeEventHandler,
   isInputSegment,
 } from '../InputSegment/InputSegment.types';
+import {
+  createExplicitSegmentValidator,
+  getRelativeSegment,
+  getRelativeSegmentRef,
+  getValueFormatter,
+  isElementInputSegment,
+} from '../utils';
 
 import {
   segmentPartsWrapperStyles,
@@ -24,10 +26,6 @@ import {
   separatorLiteralStyles,
 } from './InputBox.styles';
 import { InputBoxComponentType, InputBoxProps } from './InputBox.types';
-import {
-  createExplicitSegmentValidator,
-  isElementInputSegment,
-} from '../utils';
 
 /**
  * Generic controlled input box component
@@ -61,7 +59,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     segmentRules,
   );
 
-  /** Formats and sets the segment value */
+  /** Formats and sets the segment value. */
   const getFormattedSegmentValue = (
     segmentName: (typeof segmentObj)[keyof typeof segmentObj],
     segmentValue: string,
@@ -81,7 +79,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     const changedViaArrowKeys =
       meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
-    // Auto-format the segment if it is explicit and was not changed via arrow-keys e.g. up/down arrows
+    // Auto-format the segment if it is explicit and was not changed via arrow-keys e.g. up/down arrows.
     if (
       !changedViaArrowKeys &&
       isExplicitSegmentValue(segmentName, segmentValue)
@@ -105,7 +103,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     onSegmentChange?.(segmentChangeEvent);
   };
 
-  /** Triggered when a segment is blurred */
+  /** Triggered when a segment is blurred. Formats the segment value and sets it. */
   const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
     const segmentName = e.target.getAttribute('id');
     const segmentValue = e.target.value;
@@ -119,7 +117,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     }
   };
 
-  /** Called on any keydown within the input element */
+  /** Called on any keydown within the input element. Manages arrow key navigation. */
   const handleInputKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
     const { target: _target, key } = e;
     const target = _target as HTMLElement;
@@ -202,6 +200,8 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
   };
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    // We want to allow keydown events to be captured by the parent so that the parent can handle the event.
     <div
       // TODO: use getInputBoxStyles
       className={cx(segmentPartsWrapperStyles, className)}

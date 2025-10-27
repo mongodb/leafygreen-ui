@@ -3,13 +3,14 @@ import { jest } from '@jest/globals';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { getValueFormatter } from '@leafygreen-ui/input-box';
+
 import { charsPerSegment, defaultMax, defaultMin } from '../../../constants';
 import {
   SharedDatePickerProvider,
   SharedDatePickerProviderProps,
 } from '../../../context';
 import { DateSegment } from '../../../types';
-import { getValueFormatter } from '../../../utils';
 
 import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';

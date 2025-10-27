@@ -98,21 +98,17 @@ export interface InputSegmentProps<
 
   /**
    * The step value for the arrow keys
-   * e.g. 1
-   * e.g. { day: 1, month: 1, year: 1 }
    *
    * @default 1
    */
-  step?: number | Partial<Record<T[keyof T], number>>;
+  step?: number;
 
   /**
-   * The segments that should not rollover
-   * e.g. 'year'
-   * e.g. ['year', 'month']
+   * Whether the segment should not rollover
    *
-   * @default undefined
+   * @default false
    */
-  shouldNotRollover?: T[keyof T] | Array<T[keyof T]>;
+  shouldNotRollover?: boolean;
 }
 
 /**

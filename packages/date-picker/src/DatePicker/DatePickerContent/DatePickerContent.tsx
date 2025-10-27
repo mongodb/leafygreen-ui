@@ -67,7 +67,6 @@ export const DatePickerContent = forwardRef<
    */
   const handleDatePickerKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
     const { key } = e;
-    console.log('😈handleDatePickerKeyDown', { key });
 
     switch (key) {
       case keyMap.Escape:

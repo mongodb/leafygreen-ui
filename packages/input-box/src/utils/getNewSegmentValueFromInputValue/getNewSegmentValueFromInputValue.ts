@@ -1,7 +1,10 @@
 import last from 'lodash/last';
 
 import { truncateStart } from '@leafygreen-ui/lib';
-import { isValidValueForSegment } from '../../../utils';
+
+import { isValidValueForSegment } from '..';
+
+// TODO: make props an object with all the necessary properties
 
 /**
  * Calculates the new value for the segment given an incoming change.
@@ -10,6 +13,26 @@ import { isValidValueForSegment } from '../../../utils';
  * - are not valid numbers
  * - include a period
  * - would cause the segment to overflow
+ *
+ * @param segmentName - The name of the segment
+ * @param currentValue - The current value of the segment
+ * @param incomingValue - The incoming value to set
+ * @param charsPerSegment - The number of characters per segment
+ * @param defaultMin - The default minimum value for the segment
+ * @param defaultMax - The default maximum value for the segment
+ * @param segmentObj - The segment object
+ * @returns The new value for the segment
+ * @example
+ * // The segmentObj is the object that contains the segment names and their corresponding values
+ * const segmentObj = {
+ *   Day: 'day',
+ *   Month: 'month',
+ *   Year: 'year',
+ * };
+ * getNewSegmentValueFromInputValue('day', '1', '2', { day: 2, month: 2, year: 4 }, 1, 31, segmentObj); // '2'
+ * getNewSegmentValueFromInputValue('month', '1', '2', { day: 2, month: 2, year: 4 }, 1, 12, segmentObj); // '2'
+ * getNewSegmentValueFromInputValue('year', '1', '2', { day: 2, month: 2, year: 4 }, 1970, 2038, segmentObj); // '2'
+ * getNewSegmentValueFromInputValue('day', '1', '.', { day: 2, month: 2, year: 4 }, 1, 31, segmentObj); // '1'
  */
 export const getNewSegmentValueFromInputValue = <
   T extends string,
@@ -19,8 +42,8 @@ export const getNewSegmentValueFromInputValue = <
   currentValue: V,
   incomingValue: V,
   charsPerSegment: Record<T, number>,
-  defaultMin: Record<T, number>,
-  defaultMax: Record<T, number>,
+  defaultMin: number,
+  defaultMax: number,
   segmentObj: Readonly<Record<string, T>>,
 ): V => {
   // If the incoming value is not a valid number
