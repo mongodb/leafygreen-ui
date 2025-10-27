@@ -172,6 +172,10 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     needs: [build]
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
@@ -205,6 +209,13 @@ jobs:
         run: pnpm run test --ci
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+
+      - name: Coverage Report Comment
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        if: github.event_name == 'pull_request'
+        with:
+          lcov-file: coverage/lcov.info
+          delete-old-comments: true
 
   validate-builds:
     name: Validate builds & dependencies
