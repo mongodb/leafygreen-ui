@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Body,
   Description,
@@ -12,8 +13,8 @@ import {
   Label,
   Link,
   Overline,
-  Subtitle,
   StaticWidthText,
+  Subtitle,
 } from '.';
 
 describe('packages/typography', () => {
