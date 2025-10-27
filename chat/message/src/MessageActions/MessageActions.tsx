@@ -234,6 +234,7 @@ export function MessageActions({
             submitButtonText={submitButtonText}
             submittedMessage={submittedMessage}
             textareaProps={textareaProps}
+            enableFadeAfterSubmit
           />
         )}
       </div>
