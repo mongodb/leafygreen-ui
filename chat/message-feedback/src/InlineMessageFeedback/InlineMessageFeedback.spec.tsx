@@ -3,13 +3,7 @@ import {
   LeafyGreenChatProvider,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
-import {
-  act,
-  render,
-  RenderResult,
-  screen,
-  waitFor,
-} from '@testing-library/react';
+import { act, render, RenderResult, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import {
@@ -88,7 +82,7 @@ describe('packages/inline-message-feedback', () => {
         const fadeOutDelay = 3000;
         const transitionDuration = 300;
 
-        test('does not fade when enableFadeAfterSubmit is false', async () => {
+        test('does not fade when enableFadeAfterSubmit is false', () => {
           renderInlineMessageFeedback({
             state: FormState.Submitted,
             enableFadeAfterSubmit: false,
@@ -109,7 +103,7 @@ describe('packages/inline-message-feedback', () => {
           expect(maybeSubmittedStateElement).toBeVisible();
         });
 
-        test('fades out when enableFadeAfterSubmit is true', async () => {
+        test('fades out when enableFadeAfterSubmit is true', () => {
           renderInlineMessageFeedback({
             state: FormState.Submitted,
             enableFadeAfterSubmit: true,
@@ -124,7 +118,7 @@ describe('packages/inline-message-feedback', () => {
             jest.advanceTimersByTime(fadeOutDelay + transitionDuration),
           );
 
-          waitFor(() => expect(submittedStateElement).not.toBeInTheDocument());
+          expect(submittedStateElement).not.toBeVisible();
         });
       });
     });
