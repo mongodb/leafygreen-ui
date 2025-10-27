@@ -5,10 +5,12 @@ import {
   Theme,
 } from '@leafygreen-ui/lib';
 import {
+  addOverflowShadow,
   borderRadius,
   breakpoints,
   color,
   InteractionState,
+  Side,
   spacing,
   transitionDuration,
   Variant,
@@ -38,6 +40,7 @@ export const getEditorStyles = ({
   maxHeight,
   className,
   copyButtonAppearance,
+  theme,
 }: {
   width?: string;
   minWidth?: string;
@@ -47,37 +50,43 @@ export const getEditorStyles = ({
   maxHeight?: string;
   className?: string;
   copyButtonAppearance?: CopyButtonAppearance;
-}) =>
-  cx(
-    css``,
+  theme: Theme;
+}) => {
+  return cx(
     {
       [css`
-        ${CodeEditorSelectors.Editor} {
+        height: ${height};
+        ${CodeEditorSelectors.Editor}, ${CodeEditorSelectors.Content}, ${CodeEditorSelectors.Gutters} {
           height: ${height};
         }
       `]: !!height,
       [css`
+        max-height: ${maxHeight};
         ${CodeEditorSelectors.Editor} {
           max-height: ${maxHeight};
         }
       `]: !!maxHeight,
       [css`
+        min-height: ${minHeight};
         ${CodeEditorSelectors.Editor} {
           min-height: ${minHeight};
         }
       `]: !!minHeight,
       [css`
+        width: ${width};
         ${CodeEditorSelectors.Editor} {
           width: ${width};
         }
       `]: !!width,
       [css`
+        max-width: ${maxWidth};
         ${CodeEditorSelectors.Editor} {
           max-width: ${maxWidth};
         }
       `]: !!maxWidth,
 
       [css`
+        min-width: ${minWidth};
         ${CodeEditorSelectors.Editor} {
           min-width: ${minWidth};
         }
@@ -95,6 +104,7 @@ export const getEditorStyles = ({
     `,
     className,
   );
+};
 
 function getHeight(
   numOfLines: number,
