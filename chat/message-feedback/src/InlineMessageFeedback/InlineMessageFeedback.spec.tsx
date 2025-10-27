@@ -3,7 +3,13 @@ import {
   LeafyGreenChatProvider,
   Variant,
 } from '@lg-chat/leafygreen-chat-provider';
-import { render, RenderResult } from '@testing-library/react';
+import {
+  act,
+  render,
+  RenderResult,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import {
@@ -68,6 +74,58 @@ describe('packages/inline-message-feedback', () => {
         expect(
           queryByText(defaultProps.submittedMessage),
         ).not.toBeInTheDocument();
+      });
+
+      describe('enableFadeAfterSubmit prop', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(() => {
+          jest.useRealTimers();
+        });
+
+        const fadeOutDelay = 3000;
+        const transitionDuration = 300;
+
+        test('does not fade when enableFadeAfterSubmit is false', async () => {
+          renderInlineMessageFeedback({
+            state: FormState.Submitted,
+            enableFadeAfterSubmit: false,
+          });
+
+          const submittedStateElement = screen.getByText(
+            defaultProps.submittedMessage,
+          );
+          expect(submittedStateElement).toBeVisible();
+
+          act(() =>
+            jest.advanceTimersByTime(fadeOutDelay + transitionDuration),
+          );
+
+          const maybeSubmittedStateElement = screen.getByText(
+            defaultProps.submittedMessage,
+          );
+          expect(maybeSubmittedStateElement).toBeVisible();
+        });
+
+        test('fades out when enableFadeAfterSubmit is true', async () => {
+          renderInlineMessageFeedback({
+            state: FormState.Submitted,
+            enableFadeAfterSubmit: true,
+          });
+
+          const submittedStateElement = screen.getByText(
+            defaultProps.submittedMessage,
+          );
+          expect(submittedStateElement).toBeVisible();
+
+          act(() =>
+            jest.advanceTimersByTime(fadeOutDelay + transitionDuration),
+          );
+
+          waitFor(() => expect(submittedStateElement).not.toBeInTheDocument());
+        });
       });
     });
 
