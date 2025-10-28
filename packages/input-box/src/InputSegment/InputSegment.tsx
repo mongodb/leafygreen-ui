@@ -51,8 +51,8 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
 ) => {
   const { theme } = useDarkMode();
   const baseFontSize = useUpdatedBaseFontSize();
-  const formatter = getValueFormatter(segment, charsPerSegment);
-  const pattern = `[0-9]{${charsPerSegment[segment]}}`;
+  const formatter = getValueFormatter(charsPerSegment);
+  const pattern = `[0-9]{${charsPerSegment}}`;
 
   /**
    * Receives native input events,
@@ -98,7 +98,7 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
     if (isNumber) {
       // if the value length is equal to the maxLength, reset the input. This will clear the input and the number will be inserted into the input when onChange is called.
 
-      if (target.value.length === charsPerSegment[segment]) {
+      if (target.value.length === charsPerSegment) {
         target.value = '';
       }
     }

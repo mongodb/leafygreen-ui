@@ -56,9 +56,9 @@ export interface InputSegmentProps<
    * The number of characters per segment
    *
    * @example
-   * { day: 2, month: 2, year: 4 }
+   * 4
    */
-  charsPerSegment: Record<T[keyof T], number>; // TODO: make this a number?
+  charsPerSegment: number;
 
   /**
    * Minimum value.

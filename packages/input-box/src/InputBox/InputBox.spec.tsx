@@ -112,17 +112,27 @@ describe('packages/input-box', () => {
 
   describe('renderSegment', () => {
     test('calls renderSegment for each segment with correct props', () => {
-      const mockRenderSegment = jest.fn(({ partType, onChange, onBlur }) => (
-        // @ts-expect-error - we are not passing all the props to the InputSegment component
-        <InputSegment
-          key={partType}
-          segment={partType}
-          onChange={onChange}
-          onBlur={onBlur}
-          charsPerSegment={charsPerSegmentMock}
-          data-testid={`input-segment-${partType}`}
-        />
-      ));
+      const mockRenderSegment = jest.fn(
+        ({
+          partType,
+          onChange,
+          onBlur,
+        }: {
+          partType: SegmentObjMock;
+          onChange: any;
+          onBlur: any;
+        }) => (
+          // @ts-expect-error - we are not passing all the props to the InputSegment component
+          <InputSegment
+            key={partType}
+            segment={partType}
+            onChange={onChange}
+            onBlur={onBlur}
+            charsPerSegment={charsPerSegmentMock[partType]}
+            data-testid={`input-segment-${partType}`}
+          />
+        ),
+      );
       renderInputBox({
         renderSegment: mockRenderSegment,
         formatParts: [

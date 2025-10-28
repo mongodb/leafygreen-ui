@@ -64,7 +64,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     segmentName: (typeof segmentObj)[keyof typeof segmentObj],
     segmentValue: string,
   ): string => {
-    const formatter = getValueFormatter(segmentName, charsPerSegment);
+    const formatter = getValueFormatter(charsPerSegment[segmentName]);
     const formattedValue = formatter(segmentValue);
     return formattedValue;
   };

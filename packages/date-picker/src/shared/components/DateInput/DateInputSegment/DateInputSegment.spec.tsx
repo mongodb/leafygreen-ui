@@ -245,7 +245,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
     describe('Arrow Keys', () => {
       describe('day input', () => {
-        const formatter = getValueFormatter('day', charsPerSegment);
+        const formatter = getValueFormatter(charsPerSegment['day']);
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {
@@ -391,7 +391,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       describe('month input', () => {
-        const formatter = getValueFormatter('month', charsPerSegment);
+        const formatter = getValueFormatter(charsPerSegment['month']);
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {
@@ -553,7 +553,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       describe('year input', () => {
-        const formatter = getValueFormatter('year', charsPerSegment);
+        const formatter = getValueFormatter(charsPerSegment['year']);
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {

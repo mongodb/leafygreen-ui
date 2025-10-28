@@ -71,7 +71,7 @@ export const DateInputSegment = React.forwardRef<
         // TODO:
         // @ts-expect-error
         size={size}
-        charsPerSegment={charsPerSegment}
+        charsPerSegment={charsPerSegment[segment]}
         autoComplete={autoComplete}
         className={cx(segmentWidthStyles[segment])}
         disabled={disabled}

@@ -32,7 +32,7 @@ const renderSegment = (
     value: '',
     onChange: () => {},
     segment: 'day',
-    charsPerSegment: charsPerSegmentMock,
+    charsPerSegment: charsPerSegmentMock['day'],
     min: defaultMinMock['day'],
     max: defaultMaxMock['day'],
     segmentObj: SegmentObjMock,
@@ -219,7 +219,7 @@ describe('packages/input-segment', () => {
 
     describe('keyboard events', () => {
       describe('Arrow keys', () => {
-        const formatter = getValueFormatter('day', charsPerSegmentMock);
+        const formatter = getValueFormatter(charsPerSegmentMock['day']);
 
         describe('Up arrow', () => {
           test('calls handler with value default +1 step', () => {

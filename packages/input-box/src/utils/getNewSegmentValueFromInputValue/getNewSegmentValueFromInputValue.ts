@@ -29,10 +29,10 @@ import { isValidValueForSegment } from '..';
  *   Month: 'month',
  *   Year: 'year',
  * };
- * getNewSegmentValueFromInputValue('day', '1', '2', { day: 2, month: 2, year: 4 }, 1, 31, segmentObj); // '2'
- * getNewSegmentValueFromInputValue('month', '1', '2', { day: 2, month: 2, year: 4 }, 1, 12, segmentObj); // '2'
- * getNewSegmentValueFromInputValue('year', '1', '2', { day: 2, month: 2, year: 4 }, 1970, 2038, segmentObj); // '2'
- * getNewSegmentValueFromInputValue('day', '1', '.', { day: 2, month: 2, year: 4 }, 1, 31, segmentObj); // '1'
+ * getNewSegmentValueFromInputValue('day', '1', '2', segmentObj['day'], 1, 31, segmentObj); // '2'
+ * getNewSegmentValueFromInputValue('month', '1', '2', segmentObj['month'], 1, 12, segmentObj); // '2'
+ * getNewSegmentValueFromInputValue('year', '1', '2', segmentObj['year'], 1970, 2038, segmentObj); // '2'
+ * getNewSegmentValueFromInputValue('day', '1', '.', segmentObj['day'], 1, 31, segmentObj); // '1'
  */
 export const getNewSegmentValueFromInputValue = <
   T extends string,
@@ -41,7 +41,7 @@ export const getNewSegmentValueFromInputValue = <
   segmentName: T,
   currentValue: V,
   incomingValue: V,
-  charsPerSegment: Record<T, number>,
+  charsPerSegment: number,
   defaultMin: number,
   defaultMax: number,
   segmentObj: Readonly<Record<string, T>>,
@@ -53,8 +53,8 @@ export const getNewSegmentValueFromInputValue = <
 
   // if the current value is "full", do not allow any additional characters to be entered
   const wouldCauseOverflow =
-    currentValue.length === charsPerSegment[segmentName] &&
-    incomingValue.length > charsPerSegment[segmentName];
+    currentValue.length === charsPerSegment &&
+    incomingValue.length > charsPerSegment;
 
   if (
     !isIncomingValueNumber ||
@@ -74,7 +74,7 @@ export const getNewSegmentValueFromInputValue = <
 
   if (isIncomingValueValid || segmentName === 'year') {
     const newValue = truncateStart(incomingValue, {
-      length: charsPerSegment[segmentName],
+      length: charsPerSegment,
     });
 
     return newValue as V;

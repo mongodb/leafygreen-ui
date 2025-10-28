@@ -9,7 +9,7 @@ const charsPerSegment: Record<Segment, number> = {
 
 describe('packages/input-box/utils/valueFormatter', () => {
   describe.each(['day', 'month'] as Array<Segment>)('', segment => {
-    const formatter = getValueFormatter(segment, charsPerSegment);
+    const formatter = getValueFormatter(charsPerSegment[segment]);
 
     test('formats 2 digit values', () => {
       expect(formatter('12')).toEqual('12');
@@ -37,7 +37,7 @@ describe('packages/input-box/utils/valueFormatter', () => {
   });
 
   describe('year', () => {
-    const formatter = getValueFormatter('year', charsPerSegment);
+    const formatter = getValueFormatter(charsPerSegment['year']);
 
     test('formats 4 digit values', () => {
       expect(formatter('2023')).toEqual('2023');
