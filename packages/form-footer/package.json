@@ -22,6 +22,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/split-button": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
