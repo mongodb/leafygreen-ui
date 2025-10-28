@@ -1609,7 +1609,7 @@ importers:
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
         specifier: '>=3.2.0'
-        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 5.0.4(@babel/core@7.24.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1994,6 +1994,9 @@ importers:
       '@leafygreen-ui/split-button':
         specifier: workspace:^
         version: link:../split-button
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
       polished:
         specifier: ^4.2.2
         version: 4.3.1
@@ -14182,12 +14185,30 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
+  '@leafygreen-ui/emotion@5.0.3(@babel/core@7.24.3)':
+    dependencies:
+      '@emotion/css': 11.9.0(@babel/core@7.24.3)
+      '@emotion/server': 11.11.0(@emotion/css@11.9.0(@babel/core@7.24.3))
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
   '@leafygreen-ui/emotion@5.0.3(@babel/core@7.28.0)':
     dependencies:
       '@emotion/css': 11.9.0(@babel/core@7.28.0)
       '@emotion/server': 11.11.0(@emotion/css@11.9.0(@babel/core@7.28.0))
     transitivePeerDependencies:
       - '@babel/core'
+      - supports-color
+
+  '@leafygreen-ui/hooks@9.2.0(@babel/core@7.24.3)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      '@leafygreen-ui/tokens': 3.2.4(@babel/core@7.24.3)(react@18.3.1)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
       - supports-color
 
   '@leafygreen-ui/hooks@9.2.0(@babel/core@7.28.0)(react@18.3.1)':
@@ -14198,6 +14219,17 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
       - react
+      - supports-color
+
+  '@leafygreen-ui/leafygreen-provider@5.0.4(@babel/core@7.24.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/hooks': 9.2.0(@babel/core@7.24.3)(react@18.3.1)
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
       - supports-color
 
   '@leafygreen-ui/leafygreen-provider@5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
@@ -14217,6 +14249,17 @@ snapshots:
       react: 18.3.1
 
   '@leafygreen-ui/palette@5.0.2': {}
+
+  '@leafygreen-ui/tokens@3.2.4(@babel/core@7.24.3)(react@18.3.1)':
+    dependencies:
+      '@leafygreen-ui/emotion': 5.0.3(@babel/core@7.24.3)
+      '@leafygreen-ui/lib': 15.6.2(react@18.3.1)
+      '@leafygreen-ui/palette': 5.0.2
+      polished: 4.3.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - supports-color
 
   '@leafygreen-ui/tokens@3.2.4(@babel/core@7.28.0)(react@18.3.1)':
     dependencies:

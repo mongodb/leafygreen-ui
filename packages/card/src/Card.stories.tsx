@@ -2,7 +2,7 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Card, { CardProps, ContentStyle } from '.';
+import { Card, CardProps, ContentStyle } from '.';
 
 const loremIpsum = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy children ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
 
@@ -36,7 +36,10 @@ const meta: StoryMetaType<typeof Card> = {
 };
 export default meta;
 
-export const LiveExample: StoryFn<CardProps> = ({ as, ...args }: CardProps) => (
+export const LiveExample: StoryFn<CardProps & BoxProps> = ({
+  as,
+  ...args
+}: CardProps & BoxProps) => (
   <Card as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args} />
 );
 LiveExample.parameters = {

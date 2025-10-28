@@ -17,7 +17,7 @@ export const shadows: Record<Theme, Value> = {
   },
   [Theme.Dark]: {
     100: `unset`, // no shadow in dark mode
-    1: `color-mix(in srgb, ${palette.white} 0%, transparent)`,
+    1: 'transparent',
     2: `color-mix(in srgb, #000000 45%, transparent)`,
     3: `color-mix(in srgb, #000000 60%, transparent)`,
     overflow: `color-mix(in srgb, #000000 30%, transparent)`,
@@ -36,9 +36,9 @@ export const boxShadows: Record<Theme, Value> = {
   [Theme.Dark]: {
     /* deprecated use 1, 2, 3 instead */
     100: `unset`, // no shadow in dark mode
-    1: `0px 0px 0px 0px color-mix(in srgb, ${palette.white} 0%, transparent)`,
-    2: `0 18px 18px -15px color-mix(in srgb, #000000 45%, transparent)`,
-    3: `0 8px 20px -8px color-mix(in srgb, #000000 60%, transparent)`,
+    1: `unset`,
+    2: `0 18px 18px -15px ${shadows[Theme.Dark][2]}`,
+    3: `0 8px 20px -8px ${shadows[Theme.Dark][3]}`,
     overflow: `0px 2px 4px 1px ${shadows[Theme.Dark]['overflow']}`,
   },
 } as const;
