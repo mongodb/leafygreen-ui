@@ -35,7 +35,9 @@ export interface InputBoxProps<T extends Record<string, any>>
 
   /**
    * Segment Refs
-   * e.g. { day: ref, month: ref, year: ref }
+   *
+   * @example
+   * { day: ref, month: ref, year: ref }
    */
   segmentRefs: Record<
     T[keyof T],
@@ -44,54 +46,89 @@ export interface InputBoxProps<T extends Record<string, any>>
 
   /**
    * Segment object
-   * e.g. { Day: 'day', Month: 'month', Year: 'year' }
+   *
+   * @example
+   * { Day: 'day', Month: 'month', Year: 'year' }
    */
   segmentObj: T;
 
   /**
    * An object containing the values of the segments
-   * e.g. { day: '1', month: '2', year: '2025' }
+   *
+   * @example
+   * { day: '1', month: '2', year: '2025' }
    */
   segments: Record<T[keyof T], string>;
 
   /**
    * A function that sets the value of a segment
-   * e.g. (segment: 'day', value: '1') => void;
+   *
+   * @example
+   * (segment: 'day', value: '1') => void;
    */
   setSegment: (segment: T[keyof T], value: string) => void;
 
   /**
    * The format parts of the date
+   *
+   * @example
+   * [
+   *   { type: 'month', value: '02' },
+   *   { type: 'literal', value: '-' },
+   *   { type: 'day', value: '02' },
+   *   { type: 'literal', value: '-' },
+   *   { type: 'year', value: '2025' },
+   * ]
    */
   formatParts?: Array<Intl.DateTimeFormatPart>;
 
   /**
    * The number of characters per segment
-   * e.g. { day: 2, month: 2, year: 4 }
+   *
+   * @example
+   * { day: 2, month: 2, year: 4 }
    */
   charsPerSegment: Record<T[keyof T], number>;
 
   /**
    * Whether the input box is disabled
+   *
+   * @default false
    */
   disabled?: boolean;
 
   /**
    * The rules for the segments
-   * e.g. { day: { maxChars: 2, minExplicitValue: 1 }, month: { maxChars: 2, minExplicitValue: 1 }, year: { maxChars: 4, minExplicitValue: 1970 } }
+   *
+   * @example
+   * {
+   *   day: { maxChars: 2, minExplicitValue: 1 },
+   *   month: { maxChars: 2, minExplicitValue: 1 },
+   *   year: { maxChars: 4, minExplicitValue: 1970 },
+   * }
    */
   segmentRules: Record<T[keyof T], ExplicitSegmentRule>;
 
   /**
    * A function that renders a segment
-   * e.g. (props: { onChange: (event: React.ChangeEvent<HTMLInputElement>) => void, onBlur: (event: React.FocusEvent<HTMLInputElement>) => void, partType: 'day' | 'month' | 'year' }) => React.ReactElement;
+   *
+   * @example
+   * (props: {
+   *   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+   *   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void,
+   *   partType: 'day' | 'month' | 'year',
+   * }) => React.ReactElement;
    */
   renderSegment: (props: RenderSegmentProps<T[keyof T]>) => React.ReactElement;
 }
 
 /**
- * The component type for the InputBox
- * TODO: add why we need this
+ * Type definition for the InputBox component that maintains generic type safety with forwardRef.
+ *
+ * Interface with a generic call signature that preserves type parameters(<T>) when using forwardRef.
+ * React.forwardRef loses type parameters, so this interface is used to restore them.
+ *
+ * @see https://stackoverflow.com/a/58473012
  */
 export interface InputBoxComponentType {
   <T extends Record<string, string>>(

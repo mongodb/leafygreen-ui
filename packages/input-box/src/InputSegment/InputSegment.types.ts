@@ -100,8 +100,12 @@ export interface InputSegmentProps<
 }
 
 /**
- * The component type for the InputSegment
- * TODO: add why we need this
+ * Type definition for the InputSegment component that maintains generic type safety with forwardRef.
+ *
+ * Interface with a generic call signature that preserves type parameters(<T>) when using forwardRef.
+ * React.forwardRef loses type parameters, so this interface is used to restore them.
+ *
+ * @see https://stackoverflow.com/a/58473012
  */
 export interface InputSegmentComponentType {
   <T extends Record<string, any>, V extends string>(
@@ -110,6 +114,7 @@ export interface InputSegmentComponentType {
   ): ReactElement | null;
   displayName?: string;
 }
+
 /**
  * Returns whether the given string is a valid segment
  */
