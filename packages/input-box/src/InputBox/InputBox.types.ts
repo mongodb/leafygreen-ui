@@ -34,7 +34,7 @@ export interface InputBoxProps<T extends Record<string, any>>
   labelledBy?: string;
 
   /**
-   * Segment Refs
+   * An object that maps the segment names to their refs
    *
    * @example
    * { day: ref, month: ref, year: ref }
@@ -98,14 +98,21 @@ export interface InputBoxProps<T extends Record<string, any>>
   disabled?: boolean;
 
   /**
-   * The rules for the segments
+   * An object that maps the segment names to their rules.
+   *
+   * maxChars: the maximum number of characters for the segment
+   * minExplicitValue: the minimum explicit value for the segment
    *
    * @example
    * {
    *   day: { maxChars: 2, minExplicitValue: 1 },
-   *   month: { maxChars: 2, minExplicitValue: 1 },
+   *   month: { maxChars: 2, minExplicitValue: 4 },
    *   year: { maxChars: 4, minExplicitValue: 1970 },
    * }
+   *
+   * Explicit: Day = 5, 02
+   * Ambiguous: Day = 2 (could be 20-29)
+   *
    */
   segmentRules: Record<T[keyof T], ExplicitSegmentRule>;
 
