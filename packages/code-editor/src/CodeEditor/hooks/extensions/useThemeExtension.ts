@@ -93,10 +93,11 @@ export function useThemeExtension({
           [CodeEditorSelectors.InnerEditor]: {
             paddingTop: `${PADDING_TOP}px`,
             paddingBottom: `${PADDING_BOTTOM}px`,
+            zIndex: 2, // this is set so that the bottom shadow render below the scrollbar
           },
 
           [CodeEditorSelectors.FoldPlaceholder]: {
-            backgroundColor: 'transparent',
+            background: 'transparent',
           },
 
           [CodeEditorSelectors.Content]: {
@@ -106,10 +107,6 @@ export function useThemeExtension({
           },
 
           [CodeEditorSelectors.Gutters]: {
-            backgroundColor:
-              color[theme].background[Variant.Primary][
-                InteractionState.Default
-              ],
             color:
               color[theme].text[Variant.Secondary][InteractionState.Default],
             border: 'none',
@@ -117,8 +114,9 @@ export function useThemeExtension({
             borderBottomLeftRadius: `${borderRadius[300]}px`,
             fontFamily: fontFamilies.code,
             fontSize: `${fontSize}px`,
-            // Forces the gutters to scroll with content to make shadows easier to work with
+            // Forces the gutters to scroll with content to make shadows work
             position: 'static !important',
+            background: 'transparent',
           },
 
           [`${CodeEditorSelectors.LineNumbers} ${CodeEditorSelectors.GutterElement}`]:
