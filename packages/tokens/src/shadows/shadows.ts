@@ -26,7 +26,7 @@ export const shadows: Record<Theme, Value> = {
 
 export const boxShadows: Record<Theme, Value> = {
   [Theme.Light]: {
-    /* deprecated use 1, 2, 3 instead */
+    /* @deprecated use shadows[Theme.Light][1], shadows[Theme.Light][2], shadows[Theme.Light][3] instead */
     100: `0px 2px 4px 1px ${shadows[Theme.Light][100]}`,
     1: `0px 2px 4px 1px ${shadows[Theme.Light][1]}`,
     2: `0px 18px 18px -15px ${shadows[Theme.Light][2]}`,
@@ -34,7 +34,7 @@ export const boxShadows: Record<Theme, Value> = {
     overflow: `0px 2px 4px 1px ${shadows[Theme.Light]['overflow']}`,
   },
   [Theme.Dark]: {
-    /* deprecated use 1, 2, 3 instead */
+    /* @deprecated use shadows[Theme.Dark][1], shadows[Theme.Dark][2], shadows[Theme.Dark][3] instead */
     100: `unset`, // no shadow in dark mode
     1: `unset`,
     2: `0 18px 18px -15px ${shadows[Theme.Dark][2]}`,
