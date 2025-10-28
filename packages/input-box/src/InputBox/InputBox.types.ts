@@ -45,7 +45,7 @@ export interface InputBoxProps<T extends Record<string, any>>
   >;
 
   /**
-   * Segment object
+   * An enumerable object that maps the segment names to their values
    *
    * @example
    * { Day: 'day', Month: 'month', Year: 'year' }

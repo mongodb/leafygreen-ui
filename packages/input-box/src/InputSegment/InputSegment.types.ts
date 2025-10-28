@@ -29,17 +29,21 @@ export interface InputSegmentProps<
   > {
   /**
    * Which segment this input represents
-   * e.g. 'day'
-   * e.g. 'month'
-   * e.g. 'year'
+   *
+   * @example
+   * 'day'
+   * 'month'
+   * 'year'
    */
   segment: T[keyof T];
 
   /**
    * The value of the segment
-   * e.g. '1'
-   * e.g. '2'
-   * e.g. '2025'
+   *
+   * @example
+   * '1'
+   * '2'
+   * '2025'
    */
   value: V;
 
@@ -50,37 +54,47 @@ export interface InputSegmentProps<
 
   /**
    * The number of characters per segment
-   * e.g. { day: 2, month: 2, year: 4 }
+   *
+   * @example
+   * { day: 2, month: 2, year: 4 }
    */
   charsPerSegment: Record<T[keyof T], number>; // TODO: make this a number?
 
   /**
    * Minimum value.
-   * e.g. 1
-   * e.g. 1
-   * e.g. 1970
+   *
+   * @example
+   * 1
+   * 1
+   * 1970
    */
   min: number;
 
   /**
    * Maximum value.
-   * e.g. 31
-   * e.g. 12
-   * e.g. 2038
+   *
+   * @example
+   * 31
+   * 12
+   * 2038
    */
   max: number;
 
   /**
-   * Segment object
-   * e.g. { Day: 'day', Month: 'month', Year: 'year' }
+   * An enumerable object that maps the segment names to their values
+   *
+   * @example
+   * { Day: 'day', Month: 'month', Year: 'year' }
    */
   segmentObj: T;
 
   /**
    * Size of the segment
-   * e.g. Size.Default
-   * e.g. Size.Small
-   * e.g. Size.Large
+   *
+   * @example
+   * Size.Default
+   * Size.Small
+   * Size.Large
    */
   size: Size;
 
