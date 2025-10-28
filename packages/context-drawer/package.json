@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "@storybook/test": "8.5.3",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
