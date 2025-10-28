@@ -2282,6 +2282,10 @@ importers:
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
+    devDependencies:
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
 
   packages/input-option:
     dependencies:

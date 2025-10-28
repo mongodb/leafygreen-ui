@@ -200,8 +200,8 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     // We want to allow keydown events to be captured by the parent so that the parent can handle the event.
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className={cx(segmentPartsWrapperStyles, className)}
       onKeyDown={handleInputKeyDown}

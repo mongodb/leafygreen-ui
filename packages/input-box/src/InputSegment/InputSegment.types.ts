@@ -52,7 +52,7 @@ export interface InputSegmentProps<
    * The number of characters per segment
    * e.g. { day: 2, month: 2, year: 4 }
    */
-  charsPerSegment: Record<T[keyof T], number>;
+  charsPerSegment: Record<T[keyof T], number>; // TODO: make this a number?
 
   /**
    * Minimum value.
@@ -75,18 +75,6 @@ export interface InputSegmentProps<
    * e.g. { Day: 'day', Month: 'month', Year: 'year' }
    */
   segmentObj: T;
-
-  /**
-   * Default minimum value
-   * e.g. { day: 1, month: 1, year: 1970 }
-   */
-  defaultMin: Record<T[keyof T], number>;
-
-  /**
-   * Default maximum value
-   * e.g. { day: 31, month: 12, year: 2038 }
-   */
-  defaultMax: Record<T[keyof T], number>;
 
   /**
    * Size of the segment

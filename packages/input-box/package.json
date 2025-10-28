@@ -36,6 +36,9 @@
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
   },
+  "devDependencies": {
+    "@leafygreen-ui/palette": "workspace:^"
+  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },

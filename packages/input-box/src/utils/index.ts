@@ -1,15 +1,14 @@
-export { isValidValueForSegment } from './isValidValueForSegment';
 export {
   createExplicitSegmentValidator,
   ExplicitSegmentRule,
 } from './createExplicitSegmentValidator';
-
-export { isElementInputSegment } from './isElementInputSegment';
-export { getNewSegmentValueFromInputValue } from './getNewSegmentValueFromInputValue/getNewSegmentValueFromInputValue';
 export { getNewSegmentValueFromArrowKeyPress } from './getNewSegmentValueFromArrowKeyPress/getNewSegmentValueFromArrowKeyPress';
+export { getNewSegmentValueFromInputValue } from './getNewSegmentValueFromInputValue/getNewSegmentValueFromInputValue';
 export {
   getRelativeSegment,
   getRelativeSegmentRef,
 } from './getRelativeSegment';
 export { getValueFormatter } from './getValueFormatter';
-export { isValidSegmentValue, isValidSegmentName } from './isValidSegment';
+export { isElementInputSegment } from './isElementInputSegment';
+export { isValidSegmentName, isValidSegmentValue } from './isValidSegment';
+export { isValidValueForSegment } from './isValidValueForSegment';
