@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import IconButton, { BaseIconButtonProps } from '@leafygreen-ui/icon-button';
+import { Icon } from '@leafygreen-ui/icon';
+import { BaseIconButtonProps, IconButton } from '@leafygreen-ui/icon-button';
 
 import { iconButtonStyles } from './CalendarButton.styles';
 

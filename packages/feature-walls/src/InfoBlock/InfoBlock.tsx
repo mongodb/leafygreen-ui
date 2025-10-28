@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 
-import Badge, { Variant as BadgeVariant } from '@leafygreen-ui/badge';
-import Button, { Size, Variant as ButtonVariant } from '@leafygreen-ui/button';
-import Card from '@leafygreen-ui/card';
+import { Badge, Variant as BadgeVariant } from '@leafygreen-ui/badge';
+import { Button, Size, Variant as ButtonVariant } from '@leafygreen-ui/button';
+import { Card } from '@leafygreen-ui/card';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';

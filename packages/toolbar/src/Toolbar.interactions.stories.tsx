@@ -2,7 +2,7 @@ import React from 'react';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 
 import { getTestUtils } from './testing';
 import { Toolbar, ToolbarIconButton, ToolbarProps } from '.';

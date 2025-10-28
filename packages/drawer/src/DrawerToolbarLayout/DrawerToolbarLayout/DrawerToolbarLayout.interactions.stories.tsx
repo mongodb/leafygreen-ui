@@ -3,7 +3,7 @@ import { storybookExcludedControlParams } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { GuideCue } from '@leafygreen-ui/guide-cue';
 import { usePrevious } from '@leafygreen-ui/hooks';

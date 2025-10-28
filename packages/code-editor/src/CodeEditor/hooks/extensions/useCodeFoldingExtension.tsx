@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { type EditorView } from '@codemirror/view';
 
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';

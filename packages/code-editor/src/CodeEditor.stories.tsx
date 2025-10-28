@@ -22,7 +22,7 @@ import { css } from '@leafygreen-ui/emotion';
 // @ts-ignore LG icons don't currently support TS
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import Modal from '@leafygreen-ui/modal';
+import { Modal } from '@leafygreen-ui/modal';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';

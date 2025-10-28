@@ -2,7 +2,7 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
-import Button, { Size, Variant } from '@leafygreen-ui/button';
+import { Button, Size, Variant } from '@leafygreen-ui/button';
 import { Link } from '@leafygreen-ui/typography';
 
 import { VerticalStep, VerticalStepper } from '.';

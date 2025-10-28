@@ -12,7 +12,7 @@ import {
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
-import Portal from '@leafygreen-ui/portal';
+import { Portal } from '@leafygreen-ui/portal';
 import { spacing as spacingToken } from '@leafygreen-ui/tokens';
 
 import {

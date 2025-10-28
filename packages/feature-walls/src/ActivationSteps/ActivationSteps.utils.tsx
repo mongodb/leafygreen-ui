@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 
-import Button, { Size, Variant } from '@leafygreen-ui/button';
+import { Button, Size, Variant } from '@leafygreen-ui/button';
 import { VerticalStepProps } from '@leafygreen-ui/vertical-stepper';
 
 export const MOCK_SECTION_TITLE = 'Getting started with [feature name]';

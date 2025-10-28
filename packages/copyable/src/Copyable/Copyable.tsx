@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
@@ -10,10 +10,11 @@ import {
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import Tooltip, {
+import {
   Align,
   Justify,
   RenderMode,
+  Tooltip,
   TriggerEvent,
 } from '@leafygreen-ui/tooltip';
 import {

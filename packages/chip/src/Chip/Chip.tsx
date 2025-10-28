@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import InlineDefinition from '@leafygreen-ui/inline-definition';
+import { InlineDefinition } from '@leafygreen-ui/inline-definition';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
