@@ -53,7 +53,9 @@ export const DateInputSegment = React.forwardRef<
 
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
 
-    const shouldNotRollover = [DateSegment.Year].includes(segment);
+    const shouldNotRollover = ([DateSegment.Year] as DateSegment[]).includes(
+      segment,
+    );
 
     return (
       <InputSegment
