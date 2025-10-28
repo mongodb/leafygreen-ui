@@ -3,7 +3,9 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { addOverflowShadow, Side, spacing } from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
+import { Align } from './TitleBar.types';
+
+const baseStyles = css`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -12,7 +14,7 @@ export const baseStyles = css`
   border-bottom: 1px solid;
 `;
 
-export const themeStyles: Record<Theme, string> = {
+const themeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.black};
     border-color: ${palette.gray.dark2};
@@ -22,17 +24,6 @@ export const themeStyles: Record<Theme, string> = {
     border-color: ${palette.gray.light2};
   `,
 };
-
-export const contentContainerStyles = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: ${spacing[2]}px;
-`;
-
-export const contentAlignmentStyles = css`
-  margin: auto;
-`;
 
 export const getTitleBarStyles = ({
   className,
@@ -48,3 +39,19 @@ export const getTitleBarStyles = ({
     className,
   );
 };
+
+const contentContainerStyles = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${spacing[200]}px;
+`;
+
+const contentAlignmentStyles = css`
+  margin: auto;
+`;
+
+export const getContentContainerStyles = ({ align }: { align: Align }) =>
+  cx(contentContainerStyles, {
+    [contentAlignmentStyles]: align === Align.Center,
+  });

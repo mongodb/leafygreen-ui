@@ -17,8 +17,7 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/palette": "workspace:^",
-    "polished": "^4.2.2"
+    "@leafygreen-ui/palette": "workspace:^"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
