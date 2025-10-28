@@ -117,6 +117,8 @@ export function useThemeExtension({
             borderBottomLeftRadius: `${borderRadius[300]}px`,
             fontFamily: fontFamilies.code,
             fontSize: `${fontSize}px`,
+            // Forces the gutters to scroll with content to make shadows easier to work with
+            position: 'static !important',
           },
 
           [`${CodeEditorSelectors.LineNumbers} ${CodeEditorSelectors.GutterElement}`]:
