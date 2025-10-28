@@ -20,7 +20,7 @@ export {
   type ScrollbarVariant,
 } from './scrollbars';
 export {
-  addOverflowShadows,
+  addOverflowShadow,
   boxShadows,
   type ShadowKey,
   shadows,

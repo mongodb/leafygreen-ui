@@ -10,7 +10,7 @@ import { palette } from '@leafygreen-ui/palette';
 
 import { scrollbarColor } from './scrollbars';
 import {
-  addOverflowShadows,
+  addOverflowShadow,
   borderRadius,
   boxShadows,
   color,
@@ -140,7 +140,7 @@ export const OverflowShadows = () => {
                     margin: ${spacing[400]}px;
                     padding: ${spacing[400]}px;
                     overflow: hidden;
-                    ${addOverflowShadows({ isInside: true, side, theme })}
+                    ${addOverflowShadow({ isInside: true, side, theme })}
                   `}
                 >
                   Inside {side} shadow
@@ -156,7 +156,7 @@ export const OverflowShadows = () => {
                     border: 1px solid ${color[theme].border.secondary.default};
                     margin: ${spacing[400]}px;
                     padding: ${spacing[400]}px;
-                    ${addOverflowShadows({ isInside: false, side, theme })}
+                    ${addOverflowShadow({ isInside: false, side, theme })}
                   `}
                 >
                   Outside {side} shadow

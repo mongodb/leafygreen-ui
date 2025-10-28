@@ -1,9 +1,11 @@
-import { transparentize } from 'polished';
-
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  addOverflowShadow,
+  Side,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
 import { tableClassName } from '../Table/Table.styles';
 
@@ -23,7 +25,11 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
         position: sticky;
         z-index: 1;
         top: 0;
-
+        box-shadow: ${addOverflowShadow({
+          side: Side.Bottom,
+          theme,
+          isInside: false,
+        })};
         .${tableClassName} & {
           ::after {
             content: '';
@@ -35,9 +41,7 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
             margin: auto;
             width: 96%;
             height: 50%;
-            box-shadow: ${theme === Theme.Light
-              ? `0px 9px 20px 9px ${transparentize(0.8, palette.black)}`
-              : '0px 6px 30px 17px rgba(0, 0, 0, 0.5)'};
+
             border-radius: 40%;
             opacity: 0;
             transition: opacity ${transitionDuration.default}ms ease-in-out;

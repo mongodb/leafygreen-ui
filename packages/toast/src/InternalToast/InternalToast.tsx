@@ -3,7 +3,7 @@ import defaults from 'lodash/defaults';
 
 import { cx } from '@leafygreen-ui/emotion';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -13,19 +13,16 @@ import { Variant } from '../Toast.types';
 
 import { defaultToastProps } from './defaultProps';
 import {
-  baseIconStyle,
   baseToastStyle,
-  contentVisibleStyles,
-  contentWrapperStyle,
   descriptionStyle,
   descriptionThemeStyle,
-  dismissButtonStyle,
-  dismissButtonThemeStyle,
+  getContentWrapperStyles,
+  getDismissButtonStyle,
+  getIconStyle,
   textContentStyle,
   titleStyle,
   titleThemeStyle,
   toastThemeStyles,
-  variantIconStyle,
 } from './InternalToast.styles';
 import { InternalToastProps } from './InternalToast.types';
 import { ProgressBar } from './ProgressBar';
@@ -80,7 +77,6 @@ export const InternalToast = React.forwardRef<
     const { theme, darkMode } = useDarkMode(darkModeProp);
     const showContent = index === 0 || isHovered;
     const VariantIcon = variantIcons[variant];
-    const iconThemeStyle = variantIconStyle[variant];
 
     return (
       <LeafyGreenProvider darkMode={!darkMode}>
@@ -95,14 +91,12 @@ export const InternalToast = React.forwardRef<
           <div
             data-testid="lg-toast-content"
             aria-hidden={!showContent}
-            className={cx(contentWrapperStyle, {
-              [contentVisibleStyles]: showContent,
-            })}
+            className={getContentWrapperStyles({ showContent })}
           >
             <VariantIcon
               role="img"
               aria-label={`${variant} notification`}
-              className={cx(baseIconStyle, iconThemeStyle[theme])}
+              className={getIconStyle({ variant, theme })}
               size={32}
             />
 
@@ -128,7 +122,7 @@ export const InternalToast = React.forwardRef<
 
           {dismissible && (
             <IconButton
-              className={cx(dismissButtonStyle, dismissButtonThemeStyle[theme])}
+              className={getDismissButtonStyle({ theme })}
               aria-label="Close Message"
               onClick={onClose}
               darkMode={!darkMode}

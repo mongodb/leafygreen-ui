@@ -1,3 +1,3 @@
-export { addOverflowShadows, Side } from './addOverflowShadows';
+export { addOverflowShadow, Side } from './addOverflowShadow';
 export type { ShadowKey } from './shadows';
 export { boxShadows, shadows } from './shadows';

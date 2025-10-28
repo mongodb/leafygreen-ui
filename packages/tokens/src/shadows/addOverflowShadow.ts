@@ -117,7 +117,7 @@ const getPositionStyles = ({
   }
 };
 
-export const addOverflowShadows = ({
+export const addOverflowShadow = ({
   isInside,
   side,
   theme,

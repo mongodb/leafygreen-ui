@@ -1,9 +1,8 @@
-import { transparentize } from 'polished';
-
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  boxShadows,
   fontFamilies,
   fontWeights,
   spacing,
@@ -40,7 +39,6 @@ export const baseToastStyle = css`
   line-height: ${typeScales.body1.lineHeight}px;
   border-radius: 12px;
   border: 1px solid;
-  box-shadow: 0px 18px 18px -15px ${transparentize(0.8, '#06161E')};
 
   overflow: hidden;
   transform-origin: bottom center;
@@ -75,6 +73,7 @@ export const toastThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${toastBGColor[Theme.Light]};
     border-color: ${palette.gray.dark2};
+    box-shadow: ${boxShadows[Theme.Light][2]};
 
     .${anchorClassName}, a {
       color: ${palette.gray.light3};
@@ -88,6 +87,7 @@ export const toastThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${toastBGColor[Theme.Dark]};
     border-color: ${palette.gray.light1};
+    box-shadow: ${boxShadows[Theme.Dark][2]};
 
     .${anchorClassName}, a {
       color: ${palette.gray.dark3};
@@ -100,7 +100,7 @@ export const toastThemeStyles: Record<Theme, string> = {
   `,
 };
 
-export const contentWrapperStyle = css`
+const contentWrapperStyle = css`
   display: flex;
   align-items: center;
   gap: ${spacing[3]}px;
@@ -109,9 +109,18 @@ export const contentWrapperStyle = css`
   transition: opacity ease-out ${transitionDuration.default}ms;
 `;
 
-export const contentVisibleStyles = css`
+const contentVisibleStyles = css`
   opacity: 1;
 `;
+
+export const getContentWrapperStyles = ({
+  showContent,
+}: {
+  showContent?: boolean;
+}) =>
+  cx(contentWrapperStyle, {
+    [contentVisibleStyles]: showContent,
+  });
 
 export const baseIconStyle = css`
   height: 24px;
@@ -152,7 +161,7 @@ export const descriptionThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const dismissButtonStyle = css`
+const dismissButtonStyle = css`
   width: ${spacing[3] + spacing[2]}px;
   height: ${spacing[3] + spacing[2]}px;
   // Counteract the margin added by hover state
@@ -181,7 +190,7 @@ export const dismissButtonThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const variantIconStyle: Record<Variant, Record<Theme, string>> = {
+const variantIconStyle: Record<Variant, Record<Theme, string>> = {
   [Variant.Success]: {
     [Theme.Light]: css`
       color: ${palette.green.base};
@@ -222,4 +231,18 @@ export const variantIconStyle: Record<Variant, Record<Theme, string>> = {
       color: ${palette.gray.dark2};
     `,
   },
+};
+
+export const getIconStyle = ({
+  variant,
+  theme,
+}: {
+  variant: Variant;
+  theme: Theme;
+}) => {
+  return cx(baseIconStyle, variantIconStyle[variant][theme]);
+};
+
+export const getDismissButtonStyle = ({ theme }: { theme: Theme }) => {
+  return cx(dismissButtonStyle, dismissButtonThemeStyle[theme]);
 };
