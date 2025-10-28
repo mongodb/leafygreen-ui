@@ -4,7 +4,7 @@ import { Avatar, Variant as ChatAvatarVariant } from '@lg-chat/avatar';
 import Badge from '@leafygreen-ui/badge';
 import { cx } from '@leafygreen-ui/emotion';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
