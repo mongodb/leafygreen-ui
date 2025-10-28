@@ -21,9 +21,9 @@ import {
 } from '../utils';
 
 import {
+  getSegmentPartsWrapperStyles,
+  getSeparatorLiteralStyles,
   segmentPartsWrapperStyles,
-  separatorLiteralDisabledStyles,
-  separatorLiteralStyles,
 } from './InputBox.styles';
 import { InputBoxComponentType, InputBoxProps } from './InputBox.types';
 
@@ -203,7 +203,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     // We want to allow keydown events to be captured by the parent so that the parent can handle the event.
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
-      className={cx(segmentPartsWrapperStyles, className)}
+      className={getSegmentPartsWrapperStyles({ className })}
       onKeyDown={handleInputKeyDown}
       ref={fwdRef}
       {...rest}
@@ -212,9 +212,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
         if (part.type === 'literal') {
           return (
             <span
-              className={cx(separatorLiteralStyles, {
-                [separatorLiteralDisabledStyles[theme]]: disabled,
-              })}
+              className={getSeparatorLiteralStyles({ theme, disabled })}
               key={'literal-' + i}
             >
               {part.value}

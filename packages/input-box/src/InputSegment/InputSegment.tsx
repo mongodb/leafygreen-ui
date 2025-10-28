@@ -15,12 +15,7 @@ import {
   getValueFormatter,
 } from '../utils';
 
-import {
-  baseStyles,
-  fontSizeStyles,
-  segmentSizeStyles,
-  segmentThemeStyles,
-} from './InputSegment.styles';
+import { getInputSegmentStyles } from './InputSegment.styles';
 import {
   InputSegmentComponentType,
   InputSegmentProps,
@@ -194,14 +189,12 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
       onBlur={onBlur}
       onKeyDown={handleKeyDown}
       data-segment={String(segment)}
-      // TODO: use getInputSegmentStyles
-      className={cx(
-        baseStyles,
-        fontSizeStyles[baseFontSize],
-        segmentThemeStyles[theme],
-        segmentSizeStyles[size],
+      className={getInputSegmentStyles({
         className,
-      )}
+        baseFontSize,
+        theme,
+        size,
+      })}
     />
   );
 };

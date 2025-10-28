@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -19,4 +19,24 @@ export const separatorLiteralDisabledStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.base};
   `,
+};
+
+export const getSeparatorLiteralStyles = ({
+  theme,
+  disabled = false,
+}: {
+  theme: Theme;
+  disabled?: boolean;
+}) => {
+  return cx(separatorLiteralStyles, {
+    [separatorLiteralDisabledStyles[theme]]: disabled,
+  });
+};
+
+export const getSegmentPartsWrapperStyles = ({
+  className,
+}: {
+  className?: string;
+}) => {
+  return cx(segmentPartsWrapperStyles, className);
 };

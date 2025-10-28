@@ -81,3 +81,23 @@ export const segmentSizeStyles: Record<Size, string> = {
     font-size: ${18}px; // Intentionally off-token
   `,
 };
+
+export const getInputSegmentStyles = ({
+  className,
+  baseFontSize,
+  theme,
+  size,
+}: {
+  className?: string;
+  baseFontSize: BaseFontSize;
+  theme: Theme;
+  size: Size;
+}) => {
+  return css`
+    ${baseStyles}
+    ${fontSizeStyles[baseFontSize]}
+    ${segmentThemeStyles[theme]}
+    ${segmentSizeStyles[size]}
+    ${className}
+  `;
+};
