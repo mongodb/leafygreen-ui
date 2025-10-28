@@ -1,7 +1,7 @@
 import React, { Children, ComponentPropsWithoutRef, ReactElement } from 'react';
 import { Components as ReactMarkdownComponents } from 'react-markdown';
 
-import Code, { Language } from '@leafygreen-ui/code';
+import { Code, Language } from '@leafygreen-ui/code';
 import { BaseFontSize, FontWeight } from '@leafygreen-ui/tokens';
 import {
   Body,

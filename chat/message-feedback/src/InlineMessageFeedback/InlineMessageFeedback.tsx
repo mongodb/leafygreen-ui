@@ -20,12 +20,12 @@ import {
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 // @ts-ignore LG icons don't currently support TS
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
-import TextArea, { State as TextAreaState } from '@leafygreen-ui/text-area';
+import { State as TextAreaState, TextArea } from '@leafygreen-ui/text-area';
 import { Label } from '@leafygreen-ui/typography';
 
 import { SubmittedState } from './SubmittedState/SubmittedState';

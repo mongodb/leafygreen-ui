@@ -16,7 +16,7 @@ import { MessageRating, MessageRatingValue } from '@lg-chat/message-rating';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
