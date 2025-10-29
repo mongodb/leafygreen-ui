@@ -262,6 +262,12 @@ describe('packages/input-box', () => {
         userEvent.type(dayInput, '02');
         expect(dayInput.value).toBe('02');
       });
+
+      test('allows 00 as minimum value', () => {
+        const { dayInput } = renderInputBoxWithState({});
+        userEvent.type(dayInput, '00');
+        expect(dayInput.value).toBe('00');
+      });
     });
 
     describe('ambiguous value', () => {
@@ -292,11 +298,20 @@ describe('packages/input-box', () => {
       });
     });
 
-    test('returns no value with leading zero on blur', () => {
-      const { dayInput } = renderInputBoxWithState({});
-      userEvent.type(dayInput, '0');
-      userEvent.tab();
-      expect(dayInput.value).toBe('');
+    describe('onBlur', () => {
+      test('returns no value with leading zero on blur', () => {
+        const { monthInput } = renderInputBoxWithState({});
+        userEvent.type(monthInput, '0');
+        userEvent.tab();
+        expect(monthInput.value).toBe('');
+      });
+
+      test('returns value with leading zero on blur', () => {
+        const { dayInput } = renderInputBoxWithState({});
+        userEvent.type(dayInput, '0');
+        userEvent.tab();
+        expect(dayInput.value).toBe('00');
+      });
     });
 
     test('does not allow non-number characters', () => {

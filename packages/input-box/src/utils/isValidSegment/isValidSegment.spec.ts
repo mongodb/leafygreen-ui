@@ -26,6 +26,10 @@ describe('packages/input-box/utils/isValidSegment', () => {
       expect(isValidSegmentValue<SegmentValue>('0')).toBeFalsy();
     });
 
+    test('0 with allowZero returns true', () => {
+      expect(isValidSegmentValue<SegmentValue>('0', true)).toBeTruthy();
+    });
+
     test('negative returns false', () => {
       expect(isValidSegmentValue<SegmentValue>('-1')).toBeFalsy();
     });

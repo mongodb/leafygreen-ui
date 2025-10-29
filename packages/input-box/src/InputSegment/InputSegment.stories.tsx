@@ -32,7 +32,7 @@ const meta: StoryMetaType<typeof InputSegment> = {
   args: {
     segment: SegmentObjMock.Day,
     value: '',
-    charsPerSegment: charsPerSegmentMock,
+    charsPerSegment: charsPerSegmentMock[SegmentObjMock.Day],
     segmentObj: SegmentObjMock,
     min: defaultMinMock[SegmentObjMock.Day],
     max: defaultMaxMock[SegmentObjMock.Day],

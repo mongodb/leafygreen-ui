@@ -1,65 +1,16 @@
-import React from 'react';
-import { render, RenderResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-import { Size } from '@leafygreen-ui/tokens';
 
 import {
   charsPerSegmentMock,
   defaultMaxMock,
   defaultMinMock,
-  defaultPlaceholderMock,
+  renderSegment,
   SegmentObjMock,
+  setSegmentProps,
 } from '../testutils';
 import { getValueFormatter } from '../utils';
 
-import {
-  InputSegment,
-  InputSegmentChangeEventHandler,
-  InputSegmentProps,
-} from '.';
-
-const renderSegment = (
-  props?: Partial<InputSegmentProps<typeof SegmentObjMock, string>>,
-): RenderResult & {
-  getInput: () => HTMLInputElement;
-  input: HTMLInputElement;
-  rerenderSegment: (
-    newProps: Partial<InputSegmentProps<typeof SegmentObjMock, string>>,
-  ) => void;
-} => {
-  const defaultProps: InputSegmentProps<typeof SegmentObjMock, string> = {
-    value: '',
-    onChange: () => {},
-    segment: 'day',
-    charsPerSegment: charsPerSegmentMock['day'],
-    min: defaultMinMock['day'],
-    max: defaultMaxMock['day'],
-    segmentObj: SegmentObjMock,
-    size: Size.Default,
-    shouldNotRollover: false,
-    placeholder: defaultPlaceholderMock['day'],
-    // @ts-expect-error - data-testid
-    ['data-testid']: 'lg-input-segment',
-  };
-
-  const mergedProps = {
-    ...defaultProps,
-    ...props,
-  };
-
-  const utils = render(<InputSegment {...mergedProps} />);
-
-  const rerenderSegment = (
-    newProps: Partial<InputSegmentProps<typeof SegmentObjMock, string>>,
-  ) => {
-    utils.rerender(<InputSegment {...mergedProps} {...newProps} />);
-  };
-
-  const getInput = () =>
-    utils.getByTestId('lg-input-segment') as HTMLInputElement;
-  return { ...utils, getInput, input: getInput(), rerenderSegment };
-};
+import { InputSegmentChangeEventHandler } from '.';
 
 describe('packages/input-segment', () => {
   describe('aria attributes', () => {
@@ -74,18 +25,17 @@ describe('packages/input-segment', () => {
   describe('rendering', () => {
     describe('day segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ segment: 'day' });
+        const { input } = renderSegment({});
         expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
-        const { input } = renderSegment({ segment: 'day', value: '12' });
+        const { input } = renderSegment({ value: '12' });
         expect(input.value).toBe('12');
       });
 
       test('rerendering updates the value', () => {
         const { getInput, rerenderSegment } = renderSegment({
-          segment: 'day',
           value: '12',
         });
 
@@ -96,18 +46,21 @@ describe('packages/input-segment', () => {
 
     describe('month segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ segment: 'month' });
+        const { input } = renderSegment({ ...setSegmentProps('month') });
         expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
-        const { input } = renderSegment({ segment: 'month', value: '26' });
+        const { input } = renderSegment({
+          ...setSegmentProps('month'),
+          value: '26',
+        });
         expect(input.value).toBe('26');
       });
 
       test('rerendering updates the value', () => {
         const { getInput, rerenderSegment } = renderSegment({
-          segment: 'month',
+          ...setSegmentProps('month'),
           value: '26',
         });
 
@@ -118,18 +71,21 @@ describe('packages/input-segment', () => {
 
     describe('year segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ segment: 'year' });
+        const { input } = renderSegment({ ...setSegmentProps('year') });
         expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
-        const { input } = renderSegment({ segment: 'year', value: '2023' });
+        const { input } = renderSegment({
+          ...setSegmentProps('year'),
+          value: '2023',
+        });
         expect(input.value).toBe('2023');
       });
 
       test('rerendering updates the value', () => {
         const { getInput, rerenderSegment } = renderSegment({
-          segment: 'year',
+          ...setSegmentProps('year'),
           value: '2023',
         });
         rerenderSegment({ value: '1993' });
@@ -219,7 +175,10 @@ describe('packages/input-segment', () => {
 
     describe('keyboard events', () => {
       describe('Arrow keys', () => {
-        const formatter = getValueFormatter(charsPerSegmentMock['day']);
+        const formatter = getValueFormatter(
+          charsPerSegmentMock['day'],
+          defaultMinMock['day'] === 0,
+        );
 
         describe('Up arrow', () => {
           test('calls handler with value default +1 step', () => {

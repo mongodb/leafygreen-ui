@@ -115,6 +115,13 @@ export interface InputBoxProps<T extends Record<string, any>>
    *
    */
   segmentRules: Record<T[keyof T], ExplicitSegmentRule>;
+  /**
+   * An object that maps the segment names to their minimum values
+   *
+   * @example
+   * { day: 0, month: 1, year: 1970 }
+   */
+  minValues: Record<T[keyof T], number>;
 
   /**
    * A function that renders a segment

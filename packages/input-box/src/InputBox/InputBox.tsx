@@ -4,7 +4,6 @@ import React, {
   KeyboardEventHandler,
 } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
@@ -48,6 +47,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     segmentObj,
     segmentRules,
     renderSegment,
+    minValues,
     ...rest
   }: InputBoxProps<T>,
   fwdRef: ForwardedRef<HTMLDivElement>,
@@ -64,7 +64,10 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     segmentName: (typeof segmentObj)[keyof typeof segmentObj],
     segmentValue: string,
   ): string => {
-    const formatter = getValueFormatter(charsPerSegment[segmentName]);
+    const formatter = getValueFormatter(
+      charsPerSegment[segmentName],
+      minValues[segmentName] === 0,
+    );
     const formattedValue = formatter(segmentValue);
     return formattedValue;
   };
@@ -107,6 +110,8 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
   const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
     const segmentName = e.target.getAttribute('id');
     const segmentValue = e.target.value;
+
+    console.log('🪼🪼🪼', { segmentName, segmentValue });
 
     if (isInputSegment(segmentName, segmentObj)) {
       const formattedValue = getFormattedSegmentValue(

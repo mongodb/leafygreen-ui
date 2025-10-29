@@ -9,7 +9,10 @@ import { Size } from '@leafygreen-ui/tokens';
 import { InputBox, InputBoxProps } from '../InputBox';
 import { RenderSegmentProps } from '../InputBox/InputBox.types';
 import { InputSegment } from '../InputSegment';
-import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
+import {
+  InputSegmentChangeEventHandler,
+  InputSegmentProps,
+} from '../InputSegment/InputSegment.types';
 import { ExplicitSegmentRule } from '../utils';
 
 export const SegmentObjMock = {
@@ -48,7 +51,7 @@ export const segmentRulesMock: Record<SegmentObjMock, ExplicitSegmentRule> = {
 };
 export const defaultMinMock: Record<SegmentObjMock, number> = {
   month: 1,
-  day: 1,
+  day: 0,
   year: 1970,
 };
 export const defaultMaxMock: Record<SegmentObjMock, number> = {
@@ -145,6 +148,7 @@ export const InputBoxWithState = ({
       formatParts={defaultFormatPartsMock}
       segmentRules={segmentRulesMock}
       onSegmentChange={onSegmentChange}
+      minValues={defaultMinMock}
       renderSegment={({ onChange, onBlur, partType }) => (
         <InputSegment
           key={partType}
@@ -273,3 +277,54 @@ export const renderInputBox = ({
 };
 
 // InputSegment Utils
+export const setSegmentProps = (segment: SegmentObjMock) => {
+  return {
+    segment: segment,
+    charsPerSegment: charsPerSegmentMock[segment],
+    min: defaultMinMock[segment],
+    max: defaultMaxMock[segment],
+    placeholder: defaultPlaceholderMock[segment],
+  };
+};
+
+export const renderSegment = (
+  props?: Partial<InputSegmentProps<typeof SegmentObjMock, string>>,
+): RenderResult & {
+  getInput: () => HTMLInputElement;
+  input: HTMLInputElement;
+  rerenderSegment: (
+    newProps: Partial<InputSegmentProps<typeof SegmentObjMock, string>>,
+  ) => void;
+} => {
+  const defaultProps: InputSegmentProps<typeof SegmentObjMock, string> = {
+    value: '',
+    onChange: () => {},
+    segment: 'day',
+    charsPerSegment: charsPerSegmentMock['day'],
+    min: defaultMinMock['day'],
+    max: defaultMaxMock['day'],
+    segmentObj: SegmentObjMock,
+    size: Size.Default,
+    shouldNotRollover: false,
+    placeholder: defaultPlaceholderMock['day'],
+    // @ts-expect-error - data-testid
+    ['data-testid']: 'lg-input-segment',
+  };
+
+  const mergedProps = {
+    ...defaultProps,
+    ...props,
+  };
+
+  const utils = render(<InputSegment {...mergedProps} />);
+
+  const rerenderSegment = (
+    newProps: Partial<InputSegmentProps<typeof SegmentObjMock, string>>,
+  ) => {
+    utils.rerender(<InputSegment {...mergedProps} {...newProps} />);
+  };
+
+  const getInput = () =>
+    utils.getByTestId('lg-input-segment') as HTMLInputElement;
+  return { ...utils, getInput, input: getInput(), rerenderSegment };
+};

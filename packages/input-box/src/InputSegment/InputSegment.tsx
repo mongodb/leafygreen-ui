@@ -51,7 +51,7 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
 ) => {
   const { theme } = useDarkMode();
   const baseFontSize = useUpdatedBaseFontSize();
-  const formatter = getValueFormatter(charsPerSegment);
+  const formatter = getValueFormatter(charsPerSegment, min === 0);
   const pattern = `[0-9]{${charsPerSegment}}`;
 
   /**

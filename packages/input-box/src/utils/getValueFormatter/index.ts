@@ -7,6 +7,7 @@ import { isZeroLike } from '@leafygreen-ui/lib';
  * otherwise, pad the string with 0s, or trim it to n chars
  *
  * @param charsPerSegment - the number of characters per segment
+ * @param allowsZero -
  * @param val - the value to format
  * @returns a value formatter function for the provided segment
  *
@@ -23,9 +24,13 @@ import { isZeroLike } from '@leafygreen-ui/lib';
  * formatter('123'); // '23'
  */
 export const getValueFormatter =
-  (charsPerSegment: number) => (val: string | number | undefined) => {
-    // If the value is any form of zero, we set it to an empty string
-    if (isZeroLike(val)) return '';
+  (charsPerSegment: number, allowZero = false) =>
+  (val: string | number | undefined) => {
+    // If the value is empty, do not format it
+    if (val === '') return '';
+
+    // If we don't allow zero and the value is any form of zero, we set it to an empty string
+    if (!allowZero && isZeroLike(val)) return '';
 
     // otherwise, pad the string with 0s, or trim it to n chars
 

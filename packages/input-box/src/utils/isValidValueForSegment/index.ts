@@ -32,7 +32,16 @@ export const isValidValueForSegment = <T extends string, V extends string>(
   segmentObj: Readonly<Record<string, T>>,
 ): boolean => {
   const isValidSegmentAndValue =
-    isValidSegmentValue(value) && isValidSegmentName(segmentObj, segment);
+    isValidSegmentValue(value, defaultMin === 0) &&
+    isValidSegmentName(segmentObj, segment);
+
+  console.log('✅', {
+    isValidSegmentAndValue,
+    segment,
+    value,
+    defaultMin,
+    defaultMax,
+  });
 
   // TODO: should this be custom?
   if (segment === 'year') {
