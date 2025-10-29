@@ -56,7 +56,6 @@
     "@leafygreen-ui/input-option": "workspace:^",
     "@leafygreen-ui/leafygreen-provider": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/loading-indicator": "workspace:^",
     "@leafygreen-ui/menu": "workspace:^",
     "@leafygreen-ui/modal": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
