@@ -92,7 +92,7 @@ export function useThemeExtension({
     ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
           },
 
-          [CodeEditorSelectors.InnerEditor]: {
+          [CodeEditorSelectors.Scroller]: {
             paddingTop: `${PADDING_TOP}px`,
             paddingBottom: `${PADDING_BOTTOM}px`,
             zIndex: 2, // this is set so that the bottom shadow render below the scrollbar
