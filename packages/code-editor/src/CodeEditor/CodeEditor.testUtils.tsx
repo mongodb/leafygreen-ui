@@ -1,8 +1,42 @@
 import React from 'react';
+import * as codemirrorAutocomplete from '@codemirror/autocomplete';
+import * as codemirrorCommands from '@codemirror/commands';
+// Language-specific imports
+import * as langCpp from '@codemirror/lang-cpp';
+import * as langGo from '@codemirror/lang-go';
+import * as langHtml from '@codemirror/lang-html';
+import * as langJava from '@codemirror/lang-java';
+import * as langJavaScript from '@codemirror/lang-javascript';
+import * as langJson from '@codemirror/lang-json';
+import * as langPhp from '@codemirror/lang-php';
+import * as langPython from '@codemirror/lang-python';
+import * as langRust from '@codemirror/lang-rust';
 import { indentUnit } from '@codemirror/language';
+import * as codemirrorLanguage from '@codemirror/language';
+import * as legacyModeClike from '@codemirror/legacy-modes/mode/clike';
+import * as legacyModeRuby from '@codemirror/legacy-modes/mode/ruby';
+import * as codemirrorLint from '@codemirror/lint';
+import * as codemirrorSearch from '@codemirror/search';
 import { type ChangeSpec } from '@codemirror/state';
-import { render, waitFor } from '@testing-library/react';
+import * as codemirrorState from '@codemirror/state';
+import * as codemirrorView from '@codemirror/view';
+import * as lezerHighlight from '@lezer/highlight';
+import * as langCSharp from '@replit/codemirror-lang-csharp';
+import { render } from '@testing-library/react';
+import * as hyperLink from '@uiw/codemirror-extensions-hyper-link';
+// WASM formatting modules
+import * as wasmClangFormat from '@wasm-fmt/clang-format';
+import * as wasmGofmt from '@wasm-fmt/gofmt';
+import * as wasmRuffFmt from '@wasm-fmt/ruff_fmt';
+// Import all CodeMirror modules for synchronous testing
+import * as codemirror from 'codemirror';
+import * as prettierParserBabel from 'prettier/parser-babel';
+import * as prettierParserHtml from 'prettier/parser-html';
+import * as prettierParserTypescript from 'prettier/parser-typescript';
+// Prettier formatting modules
+import * as prettierStandalone from 'prettier/standalone';
 
+import { type CodeEditorModules } from './hooks';
 import {
   CodeEditor,
   CodeEditorProps,
@@ -10,29 +44,55 @@ import {
   CodeMirrorView,
 } from '.';
 
+import * as langCss from '@codemirror/lang-css';
+import * as prettierParserPostcss from 'prettier/parser-postcss';
+
+/**
+ * Pre-loaded modules for synchronous testing.
+ * Contains all possible CodeMirror modules to avoid async loading in tests.
+ */
+const preLoadedModules: CodeEditorModules = {
+  codemirror,
+  '@codemirror/view': codemirrorView,
+  '@codemirror/state': codemirrorState,
+  '@codemirror/commands': codemirrorCommands,
+  '@codemirror/language': codemirrorLanguage,
+  '@codemirror/lint': codemirrorLint,
+  '@codemirror/autocomplete': codemirrorAutocomplete,
+  '@codemirror/search': codemirrorSearch,
+  '@lezer/highlight': lezerHighlight,
+  '@uiw/codemirror-extensions-hyper-link': hyperLink,
+  '@codemirror/lang-cpp': langCpp,
+  '@replit/codemirror-lang-csharp': langCSharp,
+  '@codemirror/lang-css': langCss,
+  '@codemirror/lang-go': langGo,
+  '@codemirror/lang-html': langHtml,
+  '@codemirror/lang-java': langJava,
+  '@codemirror/lang-javascript': langJavaScript,
+  '@codemirror/lang-json': langJson,
+  '@codemirror/lang-php': langPhp,
+  '@codemirror/lang-python': langPython,
+  '@codemirror/lang-rust': langRust,
+  '@codemirror/legacy-modes/mode/clike': legacyModeClike,
+  '@codemirror/legacy-modes/mode/ruby': legacyModeRuby,
+  'prettier/standalone': prettierStandalone,
+  'prettier/parser-babel': prettierParserBabel,
+  'prettier/parser-typescript': prettierParserTypescript,
+  'prettier/parser-postcss': prettierParserPostcss,
+  'prettier/parser-html': prettierParserHtml,
+};
+
 let editorViewInstance: CodeMirrorView | null = null;
-let getEditorViewFn: (() => CodeMirrorView | null) | null = null;
 let editorHandleInstance: any = null;
 
 /**
- * Waits for the editor view to be available
- * @param timeout - Maximum time to wait in milliseconds (default: 5000)
- * @returns Promise that resolves when the editor view is available
- * @throws Error if timeout is reached
+ * Gets the editor view instance. With preloaded modules, the editor view is available
+ * immediately after render, so this resolves synchronously.
+ * Kept as async for backward compatibility with existing tests.
+ * @returns Promise that resolves to the CodeMirror view instance
+ * @throws Error if editor view is not available
  */
-async function waitForEditorView(timeout = 5000): Promise<CodeMirrorView> {
-  await waitFor(
-    () => {
-      const view = getEditorViewFn?.();
-
-      if (!view) {
-        throw new Error('Editor view not available yet');
-      }
-      editorViewInstance = view;
-    },
-    { timeout },
-  );
-
+async function waitForEditorView(): Promise<CodeMirrorView> {
   return ensureEditorView();
 }
 
@@ -261,7 +321,8 @@ export const editor = {
 };
 
 /**
- * Renders a CodeEditor component with the specified props for testing
+ * Renders a CodeEditor component with the specified props for testing.
+ * Automatically provides preloaded modules for synchronous rendering.
  * @param props - Props to pass to the CodeEditor component
  * @param options - Optional rendering options
  * @param options.children - Children to render inside the CodeEditor (e.g., Panel components)
@@ -269,14 +330,15 @@ export const editor = {
  */
 export function renderCodeEditor(
   props: Partial<CodeEditorProps> = {},
+  moduleOverrides?: Partial<CodeEditorModules>,
   options?: { children?: React.ReactNode },
 ) {
   const { children } = options || {};
   const { container } = render(
     <CodeEditor
       {...props}
+      preLoadedModules={{ ...preLoadedModules, ...moduleOverrides }}
       ref={ref => {
-        getEditorViewFn = ref?.getEditorViewInstance ?? null;
         editorViewInstance = ref?.getEditorViewInstance() ?? null;
         editorHandleInstance = ref;
       }}
