@@ -82,7 +82,6 @@ export function useThemeExtension({
             borderTopLeftRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             borderTopRightRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             color: color[theme].text[Variant.Primary][InteractionState.Default],
-            position: 'relative',
             overflow: 'hidden',
           },
 
@@ -95,7 +94,6 @@ export function useThemeExtension({
           [CodeEditorSelectors.Scroller]: {
             paddingTop: `${PADDING_TOP}px`,
             paddingBottom: `${PADDING_BOTTOM}px`,
-            zIndex: 2, // this is set so that the bottom shadow render below the scrollbar
           },
 
           [CodeEditorSelectors.FoldPlaceholder]: {
