@@ -82,6 +82,8 @@ export function useThemeExtension({
             borderTopLeftRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             borderTopRightRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             color: color[theme].text[Variant.Primary][InteractionState.Default],
+            position: 'relative',
+            overflow: 'hidden',
           },
 
           [`&${CodeEditorSelectors.Focused}`]: {

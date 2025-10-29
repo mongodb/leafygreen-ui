@@ -44,6 +44,8 @@ export const getEditorStyles = ({
   className,
   copyButtonAppearance,
   theme,
+  hasTopShadow = false,
+  hasBottomShadow = false,
 }: {
   width?: string;
   minWidth?: string;
@@ -54,25 +56,12 @@ export const getEditorStyles = ({
   className?: string;
   copyButtonAppearance?: CopyButtonAppearance;
   theme: Theme;
+  hasTopShadow?: boolean;
+  hasBottomShadow?: boolean;
 }) => {
-  /**
-   * TODO: This should be removed once addOverflowShadow is updated to accept an override.
-   */
-  const BLUR_RADIUS = 16;
-  const SHORT_SIDE_SIZE = 36;
-  const shadowThemeColor: Record<Theme, string> = {
-    [Theme.Light]: palette.gray.dark1,
-    [Theme.Dark]: palette.black,
-  };
-  const shadowOffset: Record<Theme, number> = {
-    [Theme.Light]: 2,
-    [Theme.Dark]: 16,
-  };
-  const shadowColor = transparentize(0.7, shadowThemeColor[theme]);
-  const shadowOffsetVal = shadowOffset[theme];
-
   return cx(
     {
+      // Dimensions
       [css`
         height: ${height};
         ${CodeEditorSelectors.Editor}, ${CodeEditorSelectors.Content}, ${CodeEditorSelectors.Gutters} {
@@ -117,38 +106,27 @@ export const getEditorStyles = ({
           }
         }
       `]: copyButtonAppearance === CopyButtonAppearance.Hover,
-    },
-    css`
-      ${CodeEditorSelectors.Editor} {
-        position: relative;
-        overflow: hidden;
 
-        ${addOverflowShadow({
-          side: Side.Top,
-          theme,
-          isInside: true,
-        })}
-
-        /**
-         * TODO: This is a temporary solution to render the bottom shadow. We should update addOverflowShadow.
-         * to accept an override. The bottom value needs to be different for this to work. 
-         * At the time of development that util was undergoing a big refactor,
-         * so we didn't want to make any changes to it.
-         */
-        &::after {
-          content: '';
-          position: absolute;
-          border-radius: 40%;
-          bottom: -22px; // accounts for scrollbar height
-          left: 0;
-          right: 0;
-          width: 96%;
-          height: ${SHORT_SIDE_SIZE}px;
-          margin: 0 auto;
-          box-shadow: 0 -${shadowOffsetVal}px ${BLUR_RADIUS}px ${shadowColor};
+      // Overflow Shadows
+      [css`
+        ${CodeEditorSelectors.Editor} {
+          ${addOverflowShadow({
+            side: Side.Top,
+            theme,
+            isInside: true,
+          })}
         }
-      }
-    `,
+      `]: hasTopShadow,
+      [css`
+        ${CodeEditorSelectors.Editor} {
+          ${addOverflowShadow({
+            side: Side.Bottom,
+            theme,
+            isInside: true,
+          })}
+        }
+      `]: hasBottomShadow,
+    },
     className,
   );
 };
