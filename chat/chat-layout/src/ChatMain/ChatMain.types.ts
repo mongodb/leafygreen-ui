@@ -1,7 +1,7 @@
-import { ComponentPropsWithRef, PropsWithChildren } from 'react';
+import { ComponentPropsWithRef } from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-export type ChatMainProps = ComponentPropsWithRef<'div'> &
-  DarkModeProps &
-  PropsWithChildren<{}>;
+export interface ChatMainProps
+  extends ComponentPropsWithRef<'div'>,
+    DarkModeProps {}
