@@ -16,8 +16,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^",
-    "@lg-tools/build": "workspace:^",
-    "@storybook/test": "^8.6.14"
+    "@lg-tools/build": "workspace:^"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",

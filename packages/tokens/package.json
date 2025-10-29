@@ -22,7 +22,6 @@
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
-    "@storybook/test": "^8.6.14",
     "lodash": "^4.17.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tokens",
