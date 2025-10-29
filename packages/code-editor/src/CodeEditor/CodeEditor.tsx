@@ -32,6 +32,7 @@ import {
 import {
   CodeEditorHandle,
   type CodeEditorProps,
+  CodeEditorSelectors,
   CodeEditorSubcomponentProperty,
   type CodeMirrorExtension,
   CopyButtonAppearance,
@@ -90,6 +91,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const editorViewRef = useRef<EditorView | null>(null);
     const [undoDepth, setUndoDepth] = useState(0);
     const [redoDepth, setRedoDepth] = useState(0);
+    const [hasTopShadow, setHasTopShadow] = useState(false);
+    const [hasBottomShadow, setHasBottomShadow] = useState(false);
 
     const { modules, isLoading } = useModules(props);
 
@@ -428,6 +431,49 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       onChangeProp,
     ]);
 
+    // Handle scroll shadows for overflow indication
+    useLayoutEffect(() => {
+      if (!editorContainerRef.current || !editorViewRef.current) {
+        return;
+      }
+
+      const scrollerElement = editorContainerRef.current.querySelector(
+        CodeEditorSelectors.Scroller, // CM Element that handles scrolling
+      ) as HTMLElement | null;
+
+      if (!scrollerElement) {
+        return;
+      }
+
+      const updateScrollShadows = () => {
+        const hasTop = scrollerElement.scrollTop > 0;
+        const hasBottom =
+          Math.abs(
+            scrollerElement.scrollHeight -
+              scrollerElement.clientHeight -
+              scrollerElement.scrollTop,
+          ) >= 1;
+
+        setHasTopShadow(hasTop);
+        setHasBottomShadow(hasBottom);
+      };
+
+      // Initial check
+      updateScrollShadows();
+
+      // Listen for scroll events
+      scrollerElement.addEventListener('scroll', updateScrollShadows);
+
+      // Also check on resize in case content changes
+      const resizeObserver = new ResizeObserver(updateScrollShadows);
+      resizeObserver.observe(scrollerElement);
+
+      return () => {
+        scrollerElement.removeEventListener('scroll', updateScrollShadows);
+        resizeObserver.disconnect();
+      };
+    }, [modules]);
+
     useImperativeHandle(forwardedRef, () => ({
       getEditorViewInstance: () => editorViewRef.current,
       getContents,
@@ -484,6 +530,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               className,
               copyButtonAppearance,
               theme,
+              hasTopShadow,
+              hasBottomShadow,
             })}
             data-lgid={lgIds.root}
             {...rest}
