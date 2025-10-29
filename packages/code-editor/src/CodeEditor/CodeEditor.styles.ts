@@ -41,8 +41,6 @@ export const getEditorStyles = ({
   className,
   copyButtonAppearance,
   theme,
-  hasTopShadow = false,
-  hasBottomShadow = false,
 }: {
   width?: string;
   minWidth?: string;
@@ -53,8 +51,6 @@ export const getEditorStyles = ({
   className?: string;
   copyButtonAppearance?: CopyButtonAppearance;
   theme: Theme;
-  hasTopShadow?: boolean;
-  hasBottomShadow?: boolean;
 }) => {
   return cx(
     {
@@ -104,25 +100,25 @@ export const getEditorStyles = ({
         }
       `]: copyButtonAppearance === CopyButtonAppearance.Hover,
 
-      // Overflow Shadows
+      // Overflow Shadows (applied via classes for performance)
       [css`
-        ${CodeEditorSelectors.Editor} {
+        &.lg-code-editor-has-top-shadow ${CodeEditorSelectors.Editor} {
           ${addOverflowShadow({
             side: Side.Top,
             theme,
             isInside: true,
           })}
         }
-      `]: hasTopShadow,
+      `]: true,
       [css`
-        ${CodeEditorSelectors.Editor} {
+        &.lg-code-editor-has-bottom-shadow ${CodeEditorSelectors.Editor} {
           ${addOverflowShadow({
             side: Side.Bottom,
             theme,
             isInside: true,
           })}
         }
-      `]: hasBottomShadow,
+      `]: true,
     },
     className,
   );
