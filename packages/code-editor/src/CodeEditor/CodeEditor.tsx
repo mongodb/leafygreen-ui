@@ -3,10 +3,12 @@ import React, {
   useCallback,
   useImperativeHandle,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
+import debounce from 'lodash/debounce';
 
 import LeafyGreenProvider, {
   useDarkMode,
@@ -431,6 +433,29 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       onChangeProp,
     ]);
 
+    // Debounced scroll shadow update function
+    const debouncedUpdateScrollShadows = useMemo(
+      () =>
+        debounce(
+          (scrollerElement: HTMLElement) => {
+            const hasTop = scrollerElement.scrollTop > 0;
+            const hasBottom =
+              Math.abs(
+                scrollerElement.scrollHeight -
+                  scrollerElement.clientHeight -
+                  scrollerElement.scrollTop,
+              ) >= 1;
+
+            // Only update state if values have actually changed
+            setHasTopShadow(prev => (prev !== hasTop ? hasTop : prev));
+            setHasBottomShadow(prev => (prev !== hasBottom ? hasBottom : prev));
+          },
+          50,
+          { leading: true },
+        ),
+      [],
+    );
+
     // Handle scroll shadows for overflow indication
     useLayoutEffect(() => {
       if (!editorContainerRef.current || !editorViewRef.current) {
@@ -445,34 +470,27 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         return;
       }
 
-      const updateScrollShadows = () => {
-        const hasTop = scrollerElement.scrollTop > 0;
-        const hasBottom =
-          Math.abs(
-            scrollerElement.scrollHeight -
-              scrollerElement.clientHeight -
-              scrollerElement.scrollTop,
-          ) >= 1;
-
-        setHasTopShadow(hasTop);
-        setHasBottomShadow(hasBottom);
+      const handleScroll = () => {
+        debouncedUpdateScrollShadows(scrollerElement);
       };
 
-      // Initial check
-      updateScrollShadows();
+      // Initial check (immediate, no debounce)
+      debouncedUpdateScrollShadows(scrollerElement);
+      debouncedUpdateScrollShadows.flush(); // Execute immediately for initial state
 
       // Listen for scroll events
-      scrollerElement.addEventListener('scroll', updateScrollShadows);
+      scrollerElement.addEventListener('scroll', handleScroll);
 
       // Also check on resize in case content changes
-      const resizeObserver = new ResizeObserver(updateScrollShadows);
+      const resizeObserver = new ResizeObserver(handleScroll);
       resizeObserver.observe(scrollerElement);
 
       return () => {
-        scrollerElement.removeEventListener('scroll', updateScrollShadows);
+        scrollerElement.removeEventListener('scroll', handleScroll);
         resizeObserver.disconnect();
+        debouncedUpdateScrollShadows.cancel(); // Cancel any pending debounced calls
       };
-    }, [modules]);
+    }, [modules, debouncedUpdateScrollShadows]);
 
     useImperativeHandle(forwardedRef, () => ({
       getEditorViewInstance: () => editorViewRef.current,
