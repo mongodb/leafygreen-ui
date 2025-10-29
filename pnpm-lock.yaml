@@ -338,6 +338,21 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  chat/chat-layout:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../../packages/emotion
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../../packages/lib
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../../packages/tokens
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+
   chat/chat-window:
     dependencies:
       '@leafygreen-ui/emotion':
