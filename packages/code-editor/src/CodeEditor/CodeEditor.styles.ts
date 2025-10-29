@@ -119,7 +119,7 @@ export const getEditorStyles = ({
       `]: copyButtonAppearance === CopyButtonAppearance.Hover,
     },
     css`
-      .cm-editor {
+      ${CodeEditorSelectors.Editor} {
         position: relative;
         overflow: hidden;
 
