@@ -1,4 +1,7 @@
+import React from 'react';
 import userEvent from '@testing-library/user-event';
+
+import { Size } from '@leafygreen-ui/tokens';
 
 import {
   charsPerSegmentMock,
@@ -11,8 +14,6 @@ import {
 import { getValueFormatter } from '../utils';
 
 import { InputSegment, InputSegmentChangeEventHandler } from '.';
-import { Size } from '@leafygreen-ui/tokens';
-import React from 'react';
 
 describe('packages/input-segment', () => {
   describe('aria attributes', () => {

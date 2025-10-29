@@ -27,7 +27,7 @@ import { InputBoxComponentType, InputBoxProps } from './InputBox.types';
 
 /**
  * Generic controlled input box component
- * Renders a styled input box with appropriate segment order & separator characters.
+ * Renders an input box with appropriate segment order & separator characters.
  *
  * @internal
  */

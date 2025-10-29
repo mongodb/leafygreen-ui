@@ -2,6 +2,8 @@ import React from 'react';
 import { jest } from '@jest/globals';
 import userEvent from '@testing-library/user-event';
 
+import { Size } from '@leafygreen-ui/tokens';
+
 import { InputSegment } from '../InputSegment';
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
 import {
@@ -15,8 +17,8 @@ import {
   segmentRulesMock,
   segmentsMock,
 } from '../testutils';
+
 import { InputBox } from './InputBox';
-import { Size } from '@leafygreen-ui/tokens';
 
 describe('packages/input-box', () => {
   describe('Rendering', () => {
