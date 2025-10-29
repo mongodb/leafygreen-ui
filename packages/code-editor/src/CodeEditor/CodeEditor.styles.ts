@@ -1,12 +1,9 @@
-import { transparentize } from 'polished';
-
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
   createUniqueClassName,
   getMobileMediaQuery,
   Theme,
 } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import {
   addOverflowShadow,
   borderRadius,
