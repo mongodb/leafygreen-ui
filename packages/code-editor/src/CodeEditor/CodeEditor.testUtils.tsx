@@ -24,10 +24,6 @@ import * as lezerHighlight from '@lezer/highlight';
 import * as langCSharp from '@replit/codemirror-lang-csharp';
 import { render } from '@testing-library/react';
 import * as hyperLink from '@uiw/codemirror-extensions-hyper-link';
-// WASM formatting modules
-import * as wasmClangFormat from '@wasm-fmt/clang-format';
-import * as wasmGofmt from '@wasm-fmt/gofmt';
-import * as wasmRuffFmt from '@wasm-fmt/ruff_fmt';
 // Import all CodeMirror modules for synchronous testing
 import * as codemirror from 'codemirror';
 import * as prettierParserBabel from 'prettier/parser-babel';
@@ -51,7 +47,7 @@ import * as prettierParserPostcss from 'prettier/parser-postcss';
  * Pre-loaded modules for synchronous testing.
  * Contains all possible CodeMirror modules to avoid async loading in tests.
  */
-const preLoadedModules: CodeEditorModules = {
+const preLoadedModules: Partial<CodeEditorModules> = {
   codemirror,
   '@codemirror/view': codemirrorView,
   '@codemirror/state': codemirrorState,
@@ -86,21 +82,10 @@ let editorViewInstance: CodeMirrorView | null = null;
 let editorHandleInstance: any = null;
 
 /**
- * Gets the editor view instance. With preloaded modules, the editor view is available
- * immediately after render, so this resolves synchronously.
- * Kept as async for backward compatibility with existing tests.
- * @returns Promise that resolves to the CodeMirror view instance
- * @throws Error if editor view is not available
- */
-async function waitForEditorView(): Promise<CodeMirrorView> {
-  return ensureEditorView();
-}
-
-/**
  * Ensures the editor view is available, throwing an error if not
  * @throws Error if editor view is not available
  */
-function ensureEditorView(): CodeMirrorView {
+function getEditorView(): CodeMirrorView {
   if (!editorViewInstance) {
     throw new Error(
       'Editor view is not available. Make sure to call renderCodeEditor first and wait for the editor to initialize.',
@@ -122,7 +107,7 @@ function getBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
 ) {
-  const view = ensureEditorView();
+  const view = getEditorView();
   const elements = view.dom.querySelectorAll(selector);
 
   if (!elements || elements.length === 0) {
@@ -167,7 +152,7 @@ function queryBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
 ) {
-  const view = ensureEditorView();
+  const view = getEditorView();
   const elements = view.dom.querySelectorAll(selector);
 
   if (!elements || elements.length === 0) {
@@ -202,7 +187,7 @@ function queryBySelector(
  * @returns Boolean indicating whether the editor is in read-only mode
  */
 function isReadOnly() {
-  const view = ensureEditorView();
+  const view = getEditorView();
   return view.state.readOnly;
 }
 
@@ -211,7 +196,7 @@ function isReadOnly() {
  * @returns The string used for indentation (spaces or tab)
  */
 function getIndentUnit() {
-  const view = ensureEditorView();
+  const view = getEditorView();
   return view.state.facet(indentUnit);
 }
 
@@ -229,7 +214,7 @@ function isLineWrappingEnabled() {
  * @throws Error if editor view is not initialized
  */
 function getContent(): string {
-  const view = ensureEditorView();
+  const view = getEditorView();
   return view.state.doc.toString();
 }
 
@@ -257,7 +242,7 @@ function getHandle(): any {
  * @throws Error if editor view is not initialized
  */
 function insertText(text: string, options?: { from?: number; to?: number }) {
-  const view = ensureEditorView();
+  const view = getEditorView();
 
   // Default to inserting at the end of the document
   const defaultFrom = options?.from ?? view.state.doc.length;
@@ -317,7 +302,6 @@ export const editor = {
     undo,
     redo,
   },
-  waitForEditorView,
 };
 
 /**
@@ -331,9 +315,7 @@ export const editor = {
 export function renderCodeEditor(
   props: Partial<CodeEditorProps> = {},
   moduleOverrides?: Partial<CodeEditorModules>,
-  options?: { children?: React.ReactNode },
 ) {
-  const { children } = options || {};
   const { container } = render(
     <CodeEditor
       {...props}
@@ -342,9 +324,7 @@ export function renderCodeEditor(
         editorViewInstance = ref?.getEditorViewInstance() ?? null;
         editorHandleInstance = ref;
       }}
-    >
-      {children}
-    </CodeEditor>,
+    />,
   );
 
   return { container, editor };
