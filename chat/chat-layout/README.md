@@ -26,21 +26,49 @@ npm install @lg-chat/chat-layout
 
 ## Overview
 
-`@lg-chat/chat-layout` provides a CSS Grid-based layout system for building full-screen chat interfaces with a collapsible side nav.
+`@lg-chat/chat-layout` provides a CSS Grid-based layout system for building full-screen chat interfaces with a side nav that can be collapsed or pinned.
+
+This package exports:
+
+- `ChatLayout`: The grid container and context provider
+- `ChatMain`: Content area component that positions itself in the grid
+- `useChatLayoutContext`: Hook for accessing layout state
 
 ## Examples
 
+### Basic
+
 ```tsx
-import { ChatLayout } from '@lg-chat/chat-layout';
+import { ChatLayout, ChatMain } from '@lg-chat/chat-layout';
 
 function MyChatApp() {
-  const handleToggle = (isPinned: boolean) => {
+  return (
+    <ChatLayout>
+      {/* ChatSideNav will go here */}
+      <ChatMain>
+        <div>Your chat content</div>
+      </ChatMain>
+    </ChatLayout>
+  );
+}
+```
+
+### With Initial State and Toggle Pinned Callback
+
+```tsx
+import { ChatLayout, ChatMain } from '@lg-chat/chat-layout';
+
+function MyChatApp() {
+  const handleTogglePinned = (isPinned: boolean) => {
     console.log('Side nav is now:', isPinned ? 'pinned' : 'collapsed');
   };
 
   return (
-    <ChatLayout initialIsPinned={true} onTogglePinned={handleToggle}>
-      {/* ChatSideNav and ChatMain components will go here */}
+    <ChatLayout initialIsPinned={false} onTogglePinned={handleTogglePinned}>
+      {/* ChatSideNav will go here */}
+      <ChatMain>
+        <div>Your chat content</div>
+      </ChatMain>
     </ChatLayout>
   );
 }
@@ -58,6 +86,16 @@ function MyChatApp() {
 | `onTogglePinned` _(optional)_  | `(isPinned: boolean) => void` | Callback fired when the side nav is toggled. Receives the new `isPinned` state as an argument | -       |
 
 All other props are passed through to the underlying `<div>` element.
+
+### ChatMain
+
+| Prop       | Type        | Description                | Default |
+| ---------- | ----------- | -------------------------- | ------- |
+| `children` | `ReactNode` | The main content to render | -       |
+
+All other props are passed through to the underlying `<div>` element.
+
+**Note:** `ChatMain` must be used as a direct child of `ChatLayout` to work correctly within the grid system.
 
 ## Context API
 
