@@ -1,8 +1,6 @@
-import { getValueFormatter } from '@leafygreen-ui/input-box';
-
-import { charsPerSegment } from '../../../shared/constants';
 import { DateSegment, DateSegmentsState } from '../../../shared/types';
 import { getFormatParts } from '../getFormatParts';
+import { getValueFormatter } from '../getValueFormatter';
 
 export const getFormattedDateStringFromSegments = (
   segments: DateSegmentsState,
@@ -18,7 +16,7 @@ export const getFormattedDateStringFromSegments = (
     }
 
     const segment = part.type as DateSegment;
-    const formatter = getValueFormatter(charsPerSegment[segment]);
+    const formatter = getValueFormatter(segment);
     const formattedSegment = formatter(segments[segment]);
     return dateString + formattedSegment;
   }, '');

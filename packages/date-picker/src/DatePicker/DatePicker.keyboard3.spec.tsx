@@ -3,14 +3,14 @@ import userEvent from '@testing-library/user-event';
 
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
 import { getLgIds as getLgFormFieldIds } from '@leafygreen-ui/form-field';
-import { getValueFormatter } from '@leafygreen-ui/input-box';
 import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
 import { DateSegment } from '../shared';
-import { charsPerSegment, defaultMax, defaultMin } from '../shared/constants';
+import { defaultMax, defaultMin } from '../shared/constants';
 import {
   getFormattedDateString,
   getFormattedSegmentsFromDate,
+  getValueFormatter,
 } from '../shared/utils';
 
 import {
@@ -79,7 +79,7 @@ describe('DatePicker keyboard interaction', () => {
 
     const segmentCases = ['year', 'month', 'day'] as Array<DateSegment>;
     describe.each(segmentCases)('%p segment', segment => {
-      const formatter = getValueFormatter(charsPerSegment[segment]);
+      const formatter = getValueFormatter(segment);
       /** Utility only for this suite. Returns the day|month|year element from the render result */
       const getRelevantInput = (renderResult: RenderDatePickerResult) =>
         segment === 'year'

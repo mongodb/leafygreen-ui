@@ -1660,9 +1660,6 @@ importers:
       '@leafygreen-ui/icon-button':
         specifier: workspace:^
         version: link:../icon-button
-      '@leafygreen-ui/input-box':
-        specifier: workspace:^
-        version: link:../input-box
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../leafygreen-provider

@@ -8,7 +8,6 @@ import React, {
 import isNull from 'lodash/isNull';
 
 import { isInvalidDateObject, isSameUTCDay } from '@leafygreen-ui/date-utils';
-import { isElementInputSegment } from '@leafygreen-ui/input-box';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import {
@@ -18,7 +17,11 @@ import {
 } from '../../shared/components/DateInput';
 import { DateInputSegmentChangeEventHandler } from '../../shared/components/DateInput/DateInputSegment';
 import { useSharedDatePickerContext } from '../../shared/context';
-import { getFormattedDateStringFromSegments } from '../../shared/utils';
+import {
+  getFormattedDateStringFromSegments,
+  getRelativeSegmentRef,
+  isElementInputSegment,
+} from '../../shared/utils';
 import { useDatePickerContext } from '../DatePickerContext';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
@@ -107,11 +110,77 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       // if target is not a segment, do nothing
       if (!isSegment) return;
 
+      const isSegmentEmpty = !target.value;
+
       switch (key) {
+        case keyMap.ArrowLeft: {
+          // Without this, the input ignores `.select()`
+          e.preventDefault();
+          // if input is empty,
+          // set focus to prev input (if it exists)
+          const segmentToFocus = getRelativeSegmentRef('prev', {
+            segment: target,
+            formatParts,
+            segmentRefs,
+          });
+
+          segmentToFocus?.current?.focus();
+          segmentToFocus?.current?.select();
+          // otherwise, use default behavior
+
+          break;
+        }
+
+        case keyMap.ArrowRight: {
+          // Without this, the input ignores `.select()`
+          e.preventDefault();
+          // if input is empty,
+          // set focus to next. input (if it exists)
+          const segmentToFocus = getRelativeSegmentRef('next', {
+            segment: target,
+            formatParts,
+            segmentRefs,
+          });
+
+          segmentToFocus?.current?.focus();
+          segmentToFocus?.current?.select();
+          // otherwise, use default behavior
+
+          break;
+        }
+
+        case keyMap.ArrowUp:
+        case keyMap.ArrowDown: {
+          // increment/decrement logic implemented by DateInputSegment
+          break;
+        }
+
+        case keyMap.Backspace: {
+          if (isSegmentEmpty) {
+            // prevent the backspace in the previous segment
+            e.preventDefault();
+
+            const segmentToFocus = getRelativeSegmentRef('prev', {
+              segment: target,
+              formatParts,
+              segmentRefs,
+            });
+            segmentToFocus?.current?.focus();
+            segmentToFocus?.current?.select();
+          }
+          break;
+        }
+
         case keyMap.Space: {
           openMenu();
           break;
         }
+
+        case keyMap.Enter:
+        case keyMap.Escape:
+        case keyMap.Tab:
+          // Behavior handled by parent or menu
+          break;
       }
 
       // call any handler that was passed in
@@ -163,9 +232,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       <DateFormField
         ref={fwdRef}
         buttonRef={calendarButtonRef}
+        onKeyDown={handleInputKeyDown}
         onInputClick={handleInputClick}
-        onIconButtonClick={handleIconButtonClick}
         onBlur={handleInputBlur}
+        onIconButtonClick={handleIconButtonClick}
         {...rest}
       >
         <DateInputBox
@@ -173,7 +243,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           setValue={handleInputValueChange}
           segmentRefs={segmentRefs}
           onSegmentChange={handleSegmentChange}
-          onKeyDown={handleInputKeyDown}
         />
       </DateFormField>
     );
