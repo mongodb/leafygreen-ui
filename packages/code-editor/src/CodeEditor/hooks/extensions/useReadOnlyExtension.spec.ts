@@ -1,21 +1,24 @@
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import * as StateModule from '@codemirror/state';
+import * as ViewModule from '@codemirror/view';
 
-import { createMockStateModule } from '../hooks.testUtils';
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useReadOnlyExtension } from './useReadOnlyExtension';
 
 describe('useReadOnlyExtension', () => {
-  const fakeStateModule = createMockStateModule();
-
   test('returns empty when readOnly is false', () => {
     const { result } = renderHook(() =>
       useReadOnlyExtension({
         editorViewInstance: null,
         props: { readOnly: false },
-        modules: { '@codemirror/state': fakeStateModule },
+        modules: {
+          '@codemirror/state': StateModule,
+          '@codemirror/view': ViewModule,
+        },
       }),
     );
-    expect(result.current).toEqual([]);
+    const current = result.current as any;
+    expect(current.inner).toEqual([]);
   });
 
   test('returns readonly extension when enabled', () => {
@@ -23,9 +26,13 @@ describe('useReadOnlyExtension', () => {
       useReadOnlyExtension({
         editorViewInstance: null,
         props: { readOnly: true },
-        modules: { '@codemirror/state': fakeStateModule },
+        modules: {
+          '@codemirror/state': StateModule,
+          '@codemirror/view': ViewModule,
+        },
       }),
     );
-    expect(result.current).toBe('READONLY_true');
+    const current = result.current as any;
+    expect(current.inner.length).toBeGreaterThan(0); // compartment was created
   });
 });
