@@ -1,7 +1,7 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 import { Avatar, Variant as ChatAvatarVariant } from '@lg-chat/avatar';
 
-import Badge from '@leafygreen-ui/badge';
+import { Badge } from '@leafygreen-ui/badge';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {

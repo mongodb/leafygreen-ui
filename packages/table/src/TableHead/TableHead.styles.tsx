@@ -22,14 +22,14 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
   cx(
     {
       [css`
-        position: sticky;
         z-index: 1;
         top: 0;
-        box-shadow: ${addOverflowShadow({
+        ${addOverflowShadow({
           side: Side.Bottom,
           theme,
           isInside: false,
-        })};
+        })}
+        position: sticky;
         .${tableClassName} & {
           ::after {
             content: '';

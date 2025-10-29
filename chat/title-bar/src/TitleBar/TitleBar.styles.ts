@@ -35,7 +35,7 @@ export const getTitleBarStyles = ({
   return cx(
     baseStyles,
     themeStyles[theme],
-    addOverflowShadow({ theme, isInside: true, side: Side.Bottom }),
+    addOverflowShadow({ theme, isInside: false, side: Side.Bottom }),
     className,
   );
 };
