@@ -261,6 +261,27 @@ Loading.args = {
   isLoading: true,
 };
 
+export const LoadingWithPanel = Template.bind({});
+LoadingWithPanel.args = {
+  isLoading: true,
+  children: (
+    <CodeEditor.Panel
+      showCopyButton
+      showFormatButton
+      showSecondaryMenuButton
+      customSecondaryButtons={[
+        {
+          label: 'Custom Button',
+          onClick: () => {},
+          'aria-label': 'Custom Button',
+          glyph: <CloudIcon />,
+        },
+      ]}
+      title={`index.${language}`}
+    />
+  ),
+};
+
 /**
  * Syntax Highlighting Examples / Regressions
  * These have been hardcoded for now, but we could potentially determine a good

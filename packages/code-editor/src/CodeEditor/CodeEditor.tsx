@@ -594,6 +594,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                   baseFontSize,
                   numOfLines,
                   isLoading,
+                  hasPanel: !!panel,
                 })}
                 data-lgid={lgIds.loader}
               >

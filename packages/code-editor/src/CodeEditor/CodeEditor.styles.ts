@@ -16,6 +16,8 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+import { PANEL_HEIGHT } from '../Panel';
+
 import {
   LINE_HEIGHT,
   PADDING_BOTTOM,
@@ -53,6 +55,9 @@ export const getEditorStyles = ({
   theme: Theme;
 }) => {
   return cx(
+    css`
+      position: relative;
+    `,
     {
       // Dimensions
       [css`
@@ -151,6 +156,7 @@ export const getLoaderStyles = ({
   baseFontSize,
   numOfLines,
   isLoading,
+  hasPanel,
 }: {
   theme: Theme;
   baseFontSize: CodeEditorProps['baseFontSize'];
@@ -162,6 +168,7 @@ export const getLoaderStyles = ({
   maxHeight?: string;
   numOfLines: number;
   isLoading: boolean;
+  hasPanel: boolean;
 }) => {
   const fontSize = baseFontSize ? baseFontSize : 13;
   const defaultHeight = getHeight(numOfLines, fontSize);
@@ -182,12 +189,15 @@ export const getLoaderStyles = ({
     ]};
     border: 1px solid
       ${color[theme].border[Variant.Secondary][InteractionState.Default]};
-    border-radius: ${borderRadius[300]}px;
+    border-top-left-radius: ${hasPanel ? 0 : borderRadius[300]}px;
+    border-top-right-radius: ${hasPanel ? 0 : borderRadius[300]}px;
+    border-bottom-left-radius: ${borderRadius[300]}px;
+    border-bottom-right-radius: ${borderRadius[300]}px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 0;
+    top: ${hasPanel ? PANEL_HEIGHT : 0}px;
     width: ${width || '100%'};
     max-width: ${maxWidth || 'none'};
     min-width: ${minWidth || 'none'};
