@@ -4,7 +4,6 @@ import React, {
   KeyboardEventHandler,
 } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
@@ -45,6 +44,7 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
     segmentObj,
     step = 1,
     shouldNotRollover = false,
+    shouldSkipValidation = false,
     ...rest
   }: InputSegmentProps<T, V>,
   fwdRef: ForwardedRef<HTMLInputElement>,
@@ -70,6 +70,7 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
       min,
       max,
       segmentObj,
+      shouldSkipValidation,
     );
 
     const hasValueChanged = newValue !== value;

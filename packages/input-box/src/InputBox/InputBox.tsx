@@ -22,7 +22,6 @@ import {
 import {
   getSegmentPartsWrapperStyles,
   getSeparatorLiteralStyles,
-  segmentPartsWrapperStyles,
 } from './InputBox.styles';
 import { InputBoxComponentType, InputBoxProps } from './InputBox.types';
 
@@ -110,8 +109,6 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
   const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
     const segmentName = e.target.getAttribute('id');
     const segmentValue = e.target.value;
-
-    console.log('🪼🪼🪼', { segmentName, segmentValue });
 
     if (isInputSegment(segmentName, segmentObj)) {
       const formattedValue = getFormattedSegmentValue(

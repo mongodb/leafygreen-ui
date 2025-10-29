@@ -29,11 +29,10 @@ export const getValueFormatter =
     // If the value is empty, do not format it
     if (val === '') return '';
 
-    // If we don't allow zero and the value is any form of zero, we set it to an empty string
+    // Return empty string for zero-like values when disallowed (e.g., '00')
     if (!allowZero && isZeroLike(val)) return '';
 
     // otherwise, pad the string with 0s, or trim it to n chars
-
     const padded = padStart(Number(val).toString(), charsPerSegment, '0');
     const trimmed = padded.slice(
       padded.length - charsPerSegment,

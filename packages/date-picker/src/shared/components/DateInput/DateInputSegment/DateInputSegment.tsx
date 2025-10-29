@@ -57,6 +57,10 @@ export const DateInputSegment = React.forwardRef<
       [DateSegment.Year] as Array<DateSegment>
     ).includes(segment);
 
+    const shouldSkipValidation = (
+      [DateSegment.Year] as Array<DateSegment>
+    ).includes(segment);
+
     return (
       <InputSegment
         ref={fwdRef}
@@ -78,6 +82,7 @@ export const DateInputSegment = React.forwardRef<
         data-testid="lg-date_picker_input-segment"
         segmentObj={DateSegment}
         shouldNotRollover={shouldNotRollover}
+        shouldSkipValidation={shouldSkipValidation}
         {...rest}
       />
     );

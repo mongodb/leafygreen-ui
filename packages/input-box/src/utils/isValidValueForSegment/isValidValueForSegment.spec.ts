@@ -1,3 +1,5 @@
+import inRange from 'lodash/inRange';
+
 import { isValidValueForSegment } from '.';
 
 const SegmentObj = {
@@ -27,6 +29,9 @@ const isValidValueForSegmentWrapper = (segment: SegmentObj, value: string) => {
     defaultMin[segment],
     defaultMax[segment],
     SegmentObj,
+    segment === 'year'
+      ? (value: string) => inRange(Number(value), 1000, 9999 + 1)
+      : undefined,
   );
 };
 
@@ -49,7 +54,7 @@ describe('packages/input-box/utils/isValidSegmentValue', () => {
     expect(isValidValueForSegmentWrapper('month', '28')).toBe(false);
   });
 
-  test('year', () => {
+  test('year with custom validation', () => {
     expect(isValidValueForSegmentWrapper('year', '1970')).toBe(true);
     expect(isValidValueForSegmentWrapper('year', '2000')).toBe(true);
     expect(isValidValueForSegmentWrapper('year', '2038')).toBe(true);

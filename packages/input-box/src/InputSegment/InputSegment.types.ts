@@ -111,6 +111,13 @@ export interface InputSegmentProps<
    * @default false
    */
   shouldNotRollover?: boolean;
+
+  /**
+   * Whether the segment should skip validation. This is useful for segments that allow values outside of the default range.
+   *
+   * @default false
+   */
+  shouldSkipValidation?: boolean;
 }
 
 /**

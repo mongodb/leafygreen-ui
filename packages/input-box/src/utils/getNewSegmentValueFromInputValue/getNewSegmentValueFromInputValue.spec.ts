@@ -41,6 +41,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
           defaultMin[segment],
           defaultMax[segment],
           segmentObj,
+          segment === 'year',
         );
         expect(newValue).toEqual(`${i}`);
       });
@@ -55,6 +56,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
           defaultMin[segment],
           defaultMax[segment],
           segmentObj,
+          segment === 'year',
         );
         expect(newValue).toEqual(`${v}`);
       });
@@ -68,6 +70,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
           defaultMin[segment],
           defaultMax[segment],
           segmentObj,
+          segment === 'year',
         );
         expect(newValue).toEqual('');
       });
@@ -81,6 +84,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
           defaultMin[segment],
           defaultMax[segment],
           segmentObj,
+          segment === 'year',
         );
         expect(newValue).toEqual('');
       });
@@ -101,6 +105,22 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
           expect(newValue).toEqual(`0`);
         });
       }
+
+      if (segment === 'year') {
+        test('accepts 0000 as input', () => {
+          const newValue = getNewSegmentValueFromInputValue(
+            segment,
+            '0',
+            `0000`,
+            charsPerSegment[segment],
+            defaultMin[segment],
+            defaultMax[segment],
+            segmentObj,
+            true,
+          );
+          expect(newValue).toEqual(`0000`);
+        });
+      }
       test.each(range(1, 10))('accepts 0%i as input', i => {
         const newValue = getNewSegmentValueFromInputValue(
           segment,
@@ -110,6 +130,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
           defaultMin[segment],
           defaultMax[segment],
           segmentObj,
+          segment === 'year',
         );
         expect(newValue).toEqual(`0${i}`);
       });
@@ -122,6 +143,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
           defaultMin[segment],
           defaultMax[segment],
           segmentObj,
+          segment === 'year',
         );
         expect(newValue).toEqual(``);
       });
@@ -178,6 +200,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
             defaultMin[segment],
             defaultMax[segment],
             segmentObj,
+            segment === 'year',
           );
           expect(newValue).toEqual(`1${i}`);
         });

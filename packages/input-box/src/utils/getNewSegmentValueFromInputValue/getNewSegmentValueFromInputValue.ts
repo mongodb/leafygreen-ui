@@ -4,8 +4,6 @@ import { truncateStart } from '@leafygreen-ui/lib';
 
 import { isValidValueForSegment } from '..';
 
-// TODO: make props an object with all the necessary properties
-
 /**
  * Calculates the new value for the segment given an incoming change.
  *
@@ -21,6 +19,7 @@ import { isValidValueForSegment } from '..';
  * @param defaultMin - The default minimum value for the segment
  * @param defaultMax - The default maximum value for the segment
  * @param segmentObj - The segment object
+ * @param shouldSkipValidation - Whether the segment should skip validation. This is useful for segments that allow values outside of the default range.
  * @returns The new value for the segment
  * @example
  * // The segmentObj is the object that contains the segment names and their corresponding values
@@ -45,6 +44,7 @@ export const getNewSegmentValueFromInputValue = <
   defaultMin: number,
   defaultMax: number,
   segmentObj: Readonly<Record<string, T>>,
+  shouldSkipValidation = false,
 ): V => {
   // If the incoming value is not a valid number
   const isIncomingValueNumber = !isNaN(Number(incomingValue));
@@ -72,7 +72,7 @@ export const getNewSegmentValueFromInputValue = <
     segmentObj,
   );
 
-  if (isIncomingValueValid || segmentName === 'year') {
+  if (isIncomingValueValid || shouldSkipValidation) {
     const newValue = truncateStart(incomingValue, {
       length: charsPerSegment,
     });
