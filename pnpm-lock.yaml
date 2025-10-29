@@ -2253,6 +2253,33 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  packages/input-box:
+    dependencies:
+      '@leafygreen-ui/date-utils':
+        specifier: workspace:^
+        version: link:../date-utils
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
+
   packages/input-option:
     dependencies:
       '@leafygreen-ui/a11y':
