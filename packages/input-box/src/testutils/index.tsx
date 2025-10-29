@@ -287,15 +287,17 @@ export const setSegmentProps = (segment: SegmentObjMock) => {
   };
 };
 
-export const renderSegment = (
-  props?: Partial<InputSegmentProps<typeof SegmentObjMock, string>>,
-): RenderResult & {
+interface RenderSegmentReturnType {
   getInput: () => HTMLInputElement;
   input: HTMLInputElement;
   rerenderSegment: (
     newProps: Partial<InputSegmentProps<typeof SegmentObjMock, string>>,
   ) => void;
-} => {
+}
+
+export const renderSegment = (
+  props?: Partial<InputSegmentProps<typeof SegmentObjMock, string>>,
+): RenderResult & RenderSegmentReturnType => {
   const defaultProps: InputSegmentProps<typeof SegmentObjMock, string> = {
     value: '',
     onChange: () => {},
