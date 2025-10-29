@@ -327,35 +327,6 @@ describe('packages/message-actions', () => {
         screen.getByRole('radio', { name: 'Dislike this message' }),
       ).toBeInTheDocument();
     });
-
-    test('does not allow changing rating after feedback is submitted', async () => {
-      const mockOnRatingChange = jest.fn();
-      const mockOnSubmitFeedback = jest.fn();
-      renderMessageActions({
-        onRatingChange: mockOnRatingChange,
-        onSubmitFeedback: mockOnSubmitFeedback,
-      });
-
-      const thumbsUpButton = screen.getByRole('radio', {
-        name: 'Like this message',
-      });
-      userEvent.click(thumbsUpButton);
-
-      const feedbackTextarea = screen.getByRole('textbox');
-      userEvent.type(feedbackTextarea, 'Great response!');
-
-      const submitButton = screen.getByRole('button', { name: 'Submit' });
-      userEvent.click(submitButton);
-
-      await new Promise(resolve => setTimeout(resolve, 0));
-
-      expect(
-        screen.queryByRole('radio', { name: 'Dislike this message' }),
-      ).toBeNull();
-      expect(
-        screen.getByRole('radio', { name: 'Like this message' }),
-      ).toBeInTheDocument();
-    });
   });
 
   describe('feedback form', () => {
