@@ -1,4 +1,4 @@
-import { isValidSegmentName, isValidSegmentValue } from '.';
+import { isValidSegmentName, isValidSegmentValue } from './isValidSegment';
 
 const Segment = {
   Day: 'day',

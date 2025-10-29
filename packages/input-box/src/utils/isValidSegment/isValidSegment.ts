@@ -25,26 +25,27 @@ export const isValidSegmentValue = <T extends string>(
  * A generic type predicate function that checks if a given string is one
  * of the values in the provided segment object.
  *
- * @param segmentObj The runtime object containing the valid string segments
+ * @param segmentEnum The runtime object containing the valid string segments
  * @param name The string to validate
  * @returns A boolean and a type predicate (name is T[keyof T])
  *
  * @example
- * const segmentObj = {
+ * const segmentEnum = {
  *   Day: 'day',
  *   Month: 'month',
  *   Year: 'year',
  * };
- * isValidSegmentName(segmentObj, 'day'); // true
- * isValidSegmentName(segmentObj, 'month'); // true
- * isValidSegmentName(segmentObj, 'year'); // true
- * isValidSegmentName(segmentObj, 'seconds'); // false
+ * isValidSegmentName(segmentEnum, 'day'); // true
+ * isValidSegmentName(segmentEnum, 'month'); // true
+ * isValidSegmentName(segmentEnum, 'year'); // true
+ * isValidSegmentName(segmentEnum, 'seconds'); // false
  */
 export const isValidSegmentName = <T extends Readonly<Record<string, string>>>(
-  segmentObj: T,
+  segmentEnum: T,
   name?: string,
 ): name is T[keyof T] => {
   return (
-    !isUndefined(name) && Object.values(segmentObj).includes(name as T[keyof T])
+    !isUndefined(name) &&
+    Object.values(segmentEnum).includes(name as T[keyof T])
   );
 };

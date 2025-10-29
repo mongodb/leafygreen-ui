@@ -1,4 +1,4 @@
-import { createExplicitSegmentValidator } from '.';
+import { createExplicitSegmentValidator } from './createExplicitSegmentValidator';
 
 const segmentObj = {
   Day: 'day',

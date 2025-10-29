@@ -1,4 +1,4 @@
-import { getValueFormatter } from '.';
+import { getValueFormatter } from './getValueFormatter';
 
 type Segment = 'day' | 'month' | 'year';
 const charsPerSegment: Record<Segment, number> = {

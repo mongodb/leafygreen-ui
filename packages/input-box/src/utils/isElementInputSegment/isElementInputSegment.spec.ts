@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { isElementInputSegment } from '.';
+import { isElementInputSegment } from './isElementInputSegment';
 
 describe('packages/input-box/utils/isElementInputSegment', () => {
   describe('isElementInputSegment', () => {

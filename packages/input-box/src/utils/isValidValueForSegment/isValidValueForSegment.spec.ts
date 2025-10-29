@@ -1,6 +1,6 @@
 import inRange from 'lodash/inRange';
 
-import { isValidValueForSegment } from '.';
+import { isValidValueForSegment } from './isValidValueForSegment';
 
 const SegmentObj = {
   Day: 'day',

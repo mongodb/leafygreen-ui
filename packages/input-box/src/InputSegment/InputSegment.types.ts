@@ -86,7 +86,7 @@ export interface InputSegmentProps<
    * @example
    * { Day: 'day', Month: 'month', Year: 'year' }
    */
-  segmentObj: T;
+  segmentEnum: T;
 
   /**
    * Size of the segment

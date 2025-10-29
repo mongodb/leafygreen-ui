@@ -66,7 +66,7 @@ const meta: StoryMetaType<typeof InputSegment> = {
         'value',
         'onChange',
         'charsPerSegment',
-        'segmentObj',
+        'segmentEnum',
       ],
     },
     generate: {

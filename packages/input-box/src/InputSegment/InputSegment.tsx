@@ -40,7 +40,7 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
     min,
     max,
     className,
-    segmentObj,
+    segmentEnum,
     step = 1,
     shouldNotRollover = false,
     shouldSkipValidation = false,
@@ -68,7 +68,7 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
       charsPerSegment,
       min,
       max,
-      segmentObj,
+      segmentEnum,
       shouldSkipValidation,
     );
 

@@ -10,8 +10,8 @@ export {
   isElementInputSegment,
   isValidValueForSegment,
 } from './utils';
-export { getValueFormatter } from './utils/getValueFormatter';
+export { getValueFormatter } from './utils/getValueFormatter/getValueFormatter';
 export {
   isValidSegmentName,
   isValidSegmentValue,
-} from './utils/isValidSegment';
+} from './utils/isValidSegment/isValidSegment';

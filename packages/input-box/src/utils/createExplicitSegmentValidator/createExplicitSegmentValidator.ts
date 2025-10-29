@@ -1,4 +1,7 @@
-import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
+import {
+  isValidSegmentName,
+  isValidSegmentValue,
+} from '../isValidSegment/isValidSegment';
 
 /**
  * Configuration for determining if a segment value is explicit

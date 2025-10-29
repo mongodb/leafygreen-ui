@@ -1,6 +1,6 @@
 import range from 'lodash/range';
 
-import { getValueFormatter } from '../getValueFormatter';
+import { getValueFormatter } from '../getValueFormatter/getValueFormatter';
 
 import { getNewSegmentValueFromInputValue } from './getNewSegmentValueFromInputValue';
 

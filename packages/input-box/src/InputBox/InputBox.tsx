@@ -43,7 +43,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     disabled,
     charsPerSegment,
     formatParts,
-    segmentObj,
+    segmentEnum,
     segmentRules,
     renderSegment,
     minValues,
@@ -54,13 +54,13 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
   const { theme } = useDarkMode();
 
   const isExplicitSegmentValue = createExplicitSegmentValidator(
-    segmentObj,
+    segmentEnum,
     segmentRules,
   );
 
   /** Formats and sets the segment value. */
   const getFormattedSegmentValue = (
-    segmentName: (typeof segmentObj)[keyof typeof segmentObj],
+    segmentName: (typeof segmentEnum)[keyof typeof segmentEnum],
     segmentValue: string,
   ): string => {
     const formatter = getValueFormatter(
@@ -110,7 +110,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
     const segmentName = e.target.getAttribute('id');
     const segmentValue = e.target.value;
 
-    if (isInputSegment(segmentName, segmentObj)) {
+    if (isInputSegment(segmentName, segmentEnum)) {
       const formattedValue = getFormattedSegmentValue(
         segmentName,
         segmentValue,
@@ -220,7 +220,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
               {part.value}
             </span>
           );
-        } else if (isInputSegment(part.type, segmentObj)) {
+        } else if (isInputSegment(part.type, segmentEnum)) {
           const segmentProps = {
             onChange: handleSegmentInputChange,
             onBlur: handleSegmentInputBlur,

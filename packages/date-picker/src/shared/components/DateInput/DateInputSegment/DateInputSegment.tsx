@@ -80,7 +80,7 @@ export const DateInputSegment = React.forwardRef<
         className={cx(segmentWidthStyles[segment])}
         disabled={disabled}
         data-testid="lg-date_picker_input-segment"
-        segmentObj={DateSegment}
+        segmentEnum={DateSegment}
         shouldNotRollover={shouldNotRollover}
         shouldSkipValidation={shouldSkipValidation}
         {...rest}

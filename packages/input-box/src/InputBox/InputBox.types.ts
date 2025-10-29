@@ -4,7 +4,7 @@ import { DateType } from '@leafygreen-ui/date-utils';
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
-import { ExplicitSegmentRule } from '../utils/createExplicitSegmentValidator';
+import { ExplicitSegmentRule } from '../utils';
 
 export interface RenderSegmentProps<T extends string = string> {
   onChange: InputSegmentChangeEventHandler<T, string>;
@@ -50,7 +50,7 @@ export interface InputBoxProps<T extends Record<string, any>>
    * @example
    * { Day: 'day', Month: 'month', Year: 'year' }
    */
-  segmentObj: T;
+  segmentEnum: T;
 
   /**
    * An object containing the values of the segments

@@ -16,7 +16,7 @@ const segmentRefsMock: SegmentRefs = {
   year: createRef<HTMLInputElement>(),
 };
 
-import { getRelativeSegmentRef } from '.';
+import { getRelativeSegmentRef } from './getRelativeSegment';
 
 const renderTestComponent = () => {
   const result = render(

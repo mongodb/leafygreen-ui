@@ -96,7 +96,7 @@ export const segmentWidthStyles: Record<SegmentObjMock, string> = {
 
 export const defaultProps: Partial<InputBoxProps<typeof SegmentObjMock>> = {
   segments: segmentsMock,
-  segmentObj: SegmentObjMock,
+  segmentEnum: SegmentObjMock,
   segmentRefs: segmentRefsMock,
   setSegment: () => {},
   charsPerSegment: charsPerSegmentMock,
@@ -140,7 +140,7 @@ export const InputBoxWithState = ({
   return (
     <InputBox
       disabled={disabled}
-      segmentObj={SegmentObjMock}
+      segmentEnum={SegmentObjMock}
       segmentRefs={segmentRefs}
       segments={segments}
       setSegment={setSegment}
@@ -161,7 +161,7 @@ export const InputBoxWithState = ({
           charsPerSegment={charsPerSegmentMock[partType]}
           min={defaultMinMock[partType]}
           max={defaultMaxMock[partType]}
-          segmentObj={SegmentObjMock}
+          segmentEnum={SegmentObjMock}
           size={Size.Default}
           data-testid={`input-segment-${partType}`}
           className={segmentWidthStyles[partType]}
@@ -213,7 +213,7 @@ const createRenderSegment = (
       charsPerSegment={charsPerSegmentMock[partType]}
       min={defaultMinMock[partType]}
       max={defaultMaxMock[partType]}
-      segmentObj={SegmentObjMock}
+      segmentEnum={SegmentObjMock}
       size={Size.Default}
       data-testid={`input-segment-${partType}`}
     />
@@ -305,7 +305,7 @@ export const renderSegment = (
     charsPerSegment: charsPerSegmentMock['day'],
     min: defaultMinMock['day'],
     max: defaultMaxMock['day'],
-    segmentObj: SegmentObjMock,
+    segmentEnum: SegmentObjMock,
     size: Size.Default,
     shouldNotRollover: false,
     placeholder: defaultPlaceholderMock['day'],
