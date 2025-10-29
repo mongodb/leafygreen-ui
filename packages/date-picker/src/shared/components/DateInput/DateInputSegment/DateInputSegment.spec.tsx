@@ -3,13 +3,14 @@ import { jest } from '@jest/globals';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { defaultMax, defaultMin } from '../../../constants';
+import { getValueFormatter } from '@leafygreen-ui/input-box';
+
+import { charsPerSegment, defaultMax, defaultMin } from '../../../constants';
 import {
   SharedDatePickerProvider,
   SharedDatePickerProviderProps,
 } from '../../../context';
 import { DateSegment } from '../../../types';
-import { getValueFormatter } from '../../../utils';
 
 import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';
@@ -244,7 +245,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
     describe('Arrow Keys', () => {
       describe('day input', () => {
-        const formatter = getValueFormatter('day');
+        const formatter = getValueFormatter(charsPerSegment['day']);
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {
@@ -390,7 +391,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       describe('month input', () => {
-        const formatter = getValueFormatter('month');
+        const formatter = getValueFormatter(charsPerSegment['month']);
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {
@@ -552,7 +553,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       describe('year input', () => {
-        const formatter = getValueFormatter('year');
+        const formatter = getValueFormatter(charsPerSegment['year']);
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { InputSegmentChangeEventHandler } from '@leafygreen-ui/input-box';
 import { DarkModeProps, keyMap } from '@leafygreen-ui/lib';
 
 import { DateSegment, DateSegmentValue } from '../../../types';
@@ -13,9 +14,10 @@ export interface DateInputSegmentChangeEvent {
   };
 }
 
-export type DateInputSegmentChangeEventHandler = (
-  dateSegmentChangeEvent: DateInputSegmentChangeEvent,
-) => void;
+export type DateInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
+  DateSegment,
+  DateSegmentValue
+>;
 
 export interface DateInputSegmentProps
   extends DarkModeProps,
