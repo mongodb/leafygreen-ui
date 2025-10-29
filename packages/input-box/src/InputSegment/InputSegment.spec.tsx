@@ -10,7 +10,9 @@ import {
 } from '../testutils';
 import { getValueFormatter } from '../utils';
 
-import { InputSegmentChangeEventHandler } from '.';
+import { InputSegment, InputSegmentChangeEventHandler } from '.';
+import { Size } from '@leafygreen-ui/tokens';
+import React from 'react';
 
 describe('packages/input-segment', () => {
   describe('aria attributes', () => {
@@ -484,6 +486,51 @@ describe('packages/input-segment', () => {
           });
         });
       });
+    });
+  });
+
+  /* eslint-disable jest/no-disabled-tests */
+  describe.skip('types behave as expected', () => {
+    test('InputSegment throws error when no required props are provided', () => {
+      // @ts-expect-error - missing required props
+      <InputSegment />;
+    });
+
+    test('With required props', () => {
+      <InputSegment
+        segment="day"
+        onChange={() => {}}
+        value="12"
+        charsPerSegment={2}
+        min={1}
+        max={31}
+        segmentEnum={SegmentObjMock}
+        size={Size.Default}
+      />;
+    });
+
+    test('With all props', () => {
+      <InputSegment
+        segment="day"
+        onChange={() => {}}
+        value="12"
+        charsPerSegment={2}
+        min={1}
+        max={31}
+        segmentEnum={SegmentObjMock}
+        size={Size.Default}
+        step={1}
+        shouldNotRollover={false}
+        shouldSkipValidation={false}
+        placeholder="12"
+        className="test"
+        onBlur={() => {}}
+        onKeyDown={() => {}}
+        disabled={false}
+        data-testid="test-id"
+        id="day"
+        ref={React.createRef<HTMLInputElement>()}
+      />;
     });
   });
 });

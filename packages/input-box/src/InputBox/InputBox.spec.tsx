@@ -6,10 +6,17 @@ import { InputSegment } from '../InputSegment';
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
 import {
   charsPerSegmentMock,
+  defaultMaxMock,
+  defaultMinMock,
   renderInputBox,
   renderInputBoxWithState,
   SegmentObjMock,
+  segmentRefsMock,
+  segmentRulesMock,
+  segmentsMock,
 } from '../testutils';
+import { InputBox } from './InputBox';
+import { Size } from '@leafygreen-ui/tokens';
 
 describe('packages/input-box', () => {
   describe('Rendering', () => {
@@ -143,18 +150,22 @@ describe('packages/input-box', () => {
           { type: 'day', value: '' },
         ],
       });
-      // Verify renderSegment was called (may be called multiple times in dev mode)
+      // Verify renderSegment was called (may be called multiple times in dev mode in R17)
       expect(mockRenderSegment).toHaveBeenCalled();
 
       // Collect all unique partTypes that were called
       const calledPartTypes = mockRenderSegment.mock.calls.map(
         call => call[0].partType,
       );
+
+      // Remove duplicate partTypes
+      const uniqueCalledPartTypes = [...new Set(calledPartTypes)];
+
       // Verify all three segment types were rendered
-      expect(calledPartTypes).toHaveLength(3);
-      expect(calledPartTypes).toContain('year');
-      expect(calledPartTypes).toContain('month');
-      expect(calledPartTypes).toContain('day');
+      expect(uniqueCalledPartTypes).toHaveLength(3);
+      expect(uniqueCalledPartTypes).toContain('year');
+      expect(uniqueCalledPartTypes).toContain('month');
+      expect(uniqueCalledPartTypes).toContain('day');
 
       // Verify each segment type was called with correct props
       expect(mockRenderSegment).toHaveBeenCalledWith(
@@ -336,5 +347,39 @@ describe('packages/input-box', () => {
       userEvent.type(yearInput, '{backspace}');
       expect(yearInput.value).toBe('');
     });
+  });
+
+  /* eslint-disable jest/no-disabled-tests */
+  describe.skip('types behave as expected', () => {
+    test('InputBox throws error when no required props are provided', () => {
+      // @ts-expect-error - missing required props
+      <InputBox />;
+    });
+  });
+
+  test('With required props', () => {
+    <InputBox
+      segmentEnum={SegmentObjMock}
+      segmentRefs={segmentRefsMock}
+      segments={segmentsMock}
+      setSegment={() => {}}
+      charsPerSegment={charsPerSegmentMock}
+      segmentRules={segmentRulesMock}
+      minValues={defaultMinMock}
+      renderSegment={({ onChange, onBlur, partType }) => (
+        <InputSegment
+          key={partType}
+          segment={partType}
+          value={segmentsMock[partType]}
+          onChange={onChange}
+          onBlur={onBlur}
+          charsPerSegment={charsPerSegmentMock[partType]}
+          min={defaultMinMock[partType]}
+          max={defaultMaxMock[partType]}
+          segmentEnum={SegmentObjMock}
+          size={Size.Default}
+        />
+      )}
+    />;
   });
 });

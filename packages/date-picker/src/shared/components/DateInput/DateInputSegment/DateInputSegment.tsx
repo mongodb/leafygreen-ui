@@ -72,7 +72,7 @@ export const DateInputSegment = React.forwardRef<
         min={min}
         max={max}
         placeholder={defaultPlaceholder[segment]}
-        // TODO:
+        // TODO: Type 'number | Size' is not assignable to type 'Size'. Unsure why the size is a number.
         // @ts-expect-error
         size={size}
         charsPerSegment={charsPerSegment[segment]}
