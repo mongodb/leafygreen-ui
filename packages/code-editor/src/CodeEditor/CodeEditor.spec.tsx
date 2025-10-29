@@ -60,7 +60,7 @@ if (typeof Range !== 'undefined' && !Range.prototype.getClientRects) {
 
 // Mock elementFromPoint which is used by CodeMirror for mouse position handling
 if (!document.elementFromPoint) {
-  document.elementFromPoint = jest.fn((x: number, y: number) => {
+  document.elementFromPoint = jest.fn(() => {
     return document.body;
   });
 }
