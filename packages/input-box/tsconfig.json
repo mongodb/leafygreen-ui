@@ -1,0 +1,46 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": [
+        "../icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../*/src"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
+  "references": [
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../date-utils"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../leafygreen-provider"
+    }
+  ]
+}
