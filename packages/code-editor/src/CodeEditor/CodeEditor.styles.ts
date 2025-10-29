@@ -57,7 +57,7 @@ export const getEditorStyles = ({
       // Dimensions
       [css`
         height: ${height};
-        ${CodeEditorSelectors.Editor}, ${CodeEditorSelectors.Content}, ${CodeEditorSelectors.Gutters} {
+        ${CodeEditorSelectors.Editor} {
           height: ${height};
         }
       `]: !!height,
