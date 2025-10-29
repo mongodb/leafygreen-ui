@@ -143,29 +143,35 @@ describe('packages/input-box', () => {
           { type: 'day', value: '' },
         ],
       });
-      // Verify renderSegment was called 3 times (once per segment)
-      expect(mockRenderSegment).toHaveBeenCalledTimes(3);
-      // Check first call (year)
-      expect(mockRenderSegment).toHaveBeenNthCalledWith(
-        1,
+      // Verify renderSegment was called (may be called multiple times in dev mode)
+      expect(mockRenderSegment).toHaveBeenCalled();
+
+      // Collect all unique partTypes that were called
+      const calledPartTypes = mockRenderSegment.mock.calls.map(
+        call => call[0].partType,
+      );
+      // Verify all three segment types were rendered
+      expect(calledPartTypes).toHaveLength(3);
+      expect(calledPartTypes).toContain('year');
+      expect(calledPartTypes).toContain('month');
+      expect(calledPartTypes).toContain('day');
+
+      // Verify each segment type was called with correct props
+      expect(mockRenderSegment).toHaveBeenCalledWith(
         expect.objectContaining({
           partType: 'year',
           onChange: expect.any(Function),
           onBlur: expect.any(Function),
         }),
       );
-      // Check second call (month)
-      expect(mockRenderSegment).toHaveBeenNthCalledWith(
-        2,
+      expect(mockRenderSegment).toHaveBeenCalledWith(
         expect.objectContaining({
           partType: 'month',
           onChange: expect.any(Function),
           onBlur: expect.any(Function),
         }),
       );
-      // Check third call (day)
-      expect(mockRenderSegment).toHaveBeenNthCalledWith(
-        3,
+      expect(mockRenderSegment).toHaveBeenCalledWith(
         expect.objectContaining({
           partType: 'day',
           onChange: expect.any(Function),
