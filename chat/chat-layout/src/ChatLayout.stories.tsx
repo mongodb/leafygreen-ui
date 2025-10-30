@@ -11,9 +11,25 @@ import { TitleBar } from '@lg-chat/title-bar';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
-import { css } from '@leafygreen-ui/emotion';
+import { ChatLayout, type ChatLayoutProps, ChatMain, ChatSideNav } from '.';
 
-import { ChatLayout, type ChatLayoutProps, ChatMain } from '.';
+const testMessages = [
+  {
+    id: '1',
+    messageBody: 'Hello! How can I help you today?',
+    isSender: false,
+  },
+  {
+    id: '2',
+    messageBody: 'I need help with my database query.',
+  },
+  {
+    id: '3',
+    messageBody:
+      'Sure! I can help with that. What specific issue are you encountering?',
+    isSender: false,
+  },
+];
 
 const meta: StoryMetaType<typeof ChatLayout> = {
   title: 'Composition/Chat/ChatLayout',
@@ -37,34 +53,16 @@ const meta: StoryMetaType<typeof ChatLayout> = {
 };
 export default meta;
 
-const sideNavPlaceholderStyles = css`
-  background-color: rgba(0, 0, 0, 0.05);
-  padding: 16px;
-  min-width: 200px;
-`;
-
-const testMessages = [
-  {
-    id: '1',
-    messageBody: 'Hello! How can I help you today?',
-    isSender: false,
-  },
-  {
-    id: '2',
-    messageBody: 'I need help with my database query.',
-  },
-  {
-    id: '3',
-    messageBody:
-      'Sure! I can help with that. What specific issue are you encountering?',
-    isSender: false,
-  },
-];
-
 const Template: StoryFn<ChatLayoutProps> = props => (
   <LeafyGreenChatProvider variant={Variant.Compact}>
     <ChatLayout {...props}>
-      <div className={sideNavPlaceholderStyles}>ChatSideNav Placeholder</div>
+      <ChatSideNav>
+        <ChatSideNav.Header
+          // eslint-disable-next-line no-console
+          onClickNewChat={() => console.log('Clicked new chat')}
+        />
+        <ChatSideNav.Content>Content</ChatSideNav.Content>
+      </ChatSideNav>
       <ChatMain>
         <TitleBar title="Chat Assistant" />
         <ChatWindow>
