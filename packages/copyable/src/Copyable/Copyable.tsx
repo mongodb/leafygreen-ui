@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 
 import { Button } from '@leafygreen-ui/button';
-import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import {
@@ -25,21 +24,12 @@ import {
 
 import { TOOLTIP_VISIBLE_DURATION } from './constants';
 import {
-  buttonContainerStyle,
   buttonStyle,
-  buttonWrapperStyle,
-  buttonWrapperStyleShadow,
-  buttonWrapperStyleShadowTheme,
-  codeFontStyle,
-  codeStyle,
-  codeStyleColor,
-  codeStyleNoButton,
-  containerStyle,
+  getButtonWrapperStyle,
+  getCodeStyle,
+  getContainerStyle,
+  getFontStyle,
   iconStyle,
-  labelFontStyle,
-  labelNoButtonStyle,
-  noButtonContainerStyle,
-  noButtonContainerStyleMode,
 } from './Copyable.styles';
 import { CopyableProps, Size } from './Copyable.types';
 
@@ -55,6 +45,7 @@ export default function Copyable({
   label,
   onCopy,
   size: SizeProp,
+  wrapperClassName,
 }: CopyableProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const [copied, setCopied] = useState(false);
@@ -67,11 +58,15 @@ export default function Copyable({
   const baseFontSize = useUpdatedBaseFontSize();
 
   // If there is a size use that Size, if not then use the baseFontSize to set the size
-  const size = SizeProp
-    ? SizeProp
-    : baseFontSize === BaseFontSize.Body1
-    ? Size.Default
-    : Size.Large;
+  const size = useMemo(() => {
+    if (SizeProp) return SizeProp;
+
+    if (baseFontSize === BaseFontSize.Body1) {
+      return Size.Default;
+    } else {
+      return Size.Large;
+    }
+  }, [SizeProp, baseFontSize]);
 
   useEffect(() => {
     setShowCopyButton(copyable && ClipboardJS.isSupported());
@@ -114,13 +109,14 @@ export default function Copyable({
   }, [buttonRef, children, copied, onCopy, portalContainer]);
 
   return (
-    <>
+    <div className={wrapperClassName}>
       {label && (
         <Label
           darkMode={darkMode}
           htmlFor={codeId}
-          className={cx(labelFontStyle[size], {
-            [labelNoButtonStyle]: !showCopyButton,
+          className={getFontStyle({
+            size,
+            showCopyButton,
           })}
         >
           {label}
@@ -129,8 +125,9 @@ export default function Copyable({
       {description && (
         <Description
           darkMode={darkMode}
-          className={cx(labelFontStyle[size], {
-            [labelNoButtonStyle]: !showCopyButton,
+          className={getFontStyle({
+            size,
+            showCopyButton,
           })}
         >
           {description}
@@ -138,36 +135,28 @@ export default function Copyable({
       )}
 
       <div
-        className={cx(
-          containerStyle,
-          {
-            [buttonContainerStyle]: showCopyButton,
-            [noButtonContainerStyleMode[theme]]: !showCopyButton,
-            [noButtonContainerStyle]: !showCopyButton,
-          },
+        className={getContainerStyle({
+          showCopyButton,
+          theme,
           className,
-        )}
+        })}
       >
         <code
           id={codeId}
           ref={codeRef}
-          className={cx(
-            codeStyle,
-            codeStyleColor[theme],
-            [codeFontStyle[size]],
-            {
-              [codeStyleNoButton]: !showCopyButton,
-            },
-          )}
+          className={getCodeStyle({
+            theme,
+            size,
+            showCopyButton,
+          })}
         >
           {children}
         </code>
         {/* Using span because adding shadows directly to the button blends together with the hover box-shadow */}
         <span
-          className={cx(buttonWrapperStyle, {
-            // Toggle these styles on only when the content extends beyond the edge of the container
-            [buttonWrapperStyleShadow]: isOverflowed,
-            [buttonWrapperStyleShadowTheme[theme]]: isOverflowed,
+          className={getButtonWrapperStyle({
+            theme,
+            isOverflowed,
           })}
         >
           {showCopyButton && (
@@ -198,7 +187,7 @@ export default function Copyable({
           )}
         </span>
       </div>
-    </>
+    </div>
   );
 }
 
