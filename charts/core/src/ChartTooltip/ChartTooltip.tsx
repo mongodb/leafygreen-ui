@@ -18,6 +18,7 @@ export function ChartTooltip({
   seriesValueFormatter,
   seriesNameFormatter,
   sort,
+  axisPointer,
 }: ChartTooltipProps) {
   const {
     chart: {
@@ -117,14 +118,21 @@ export function ChartTooltip({
         /**
          * using `extraCssText` instead of `className` because emotion-defined class
          * didn't have high-enough specificity
+         *
+         * darkreader-ignore-inline-style class helps avoid the darkreader tampering
+         * with the tooltip styles.
          */
-        className: CHART_TOOLTIP_CLASSNAME,
+        className: `${CHART_TOOLTIP_CLASSNAME} darkreader-ignore-inline-style`,
         extraCssText: getRootStylesText(theme),
         borderWidth: 0,
         padding: 0,
         showDelay: 0,
         hideDelay: 0,
         transitionDuration: 0,
+        axisPointer: {
+          type: axisPointer,
+        },
+
         /**
          * Since the formatter trigger is set to 'axis', the seriesData will be
          * an array of objects. Additionally, it should contain axis related
@@ -148,6 +156,7 @@ export function ChartTooltip({
     theme,
     tooltipPinned,
     updateOptions,
+    axisPointer,
   ]);
 
   return null;

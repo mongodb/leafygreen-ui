@@ -5,7 +5,7 @@ import type { StoryObj } from '@storybook/react';
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
-import { Bar, LineProps } from './Series';
+import { Bar, BarProps, LineProps } from './Series';
 import { makeSeriesData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
@@ -894,10 +894,10 @@ export const _Line: StoryObj<{}> = {
 };
 
 export const _Bar: StoryObj<{}> = {
-  name: 'Bar',
   render: () => {
     return (
       <Chart>
+        <ChartTooltip />
         {lowDensitySeriesData.map(({ name, data }) => (
           <Bar name={name} data={data} key={name} />
         ))}
@@ -910,12 +910,93 @@ export const BarStacked: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
+        <ChartTooltip />
         {lowDensitySeriesData.map(({ name, data }, index) => (
           <Bar
             name={name}
             data={data}
             key={name}
             stack={index < 2 ? 'same' : undefined}
+          />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const BarWithSelfEmphasis: StoryObj<{
+  emphasis: BarProps['emphasis'];
+}> = {
+  args: {
+    emphasis: 'self',
+  },
+  argTypes: {
+    emphasis: {
+      control: 'select',
+      options: ['self', 'none'],
+      defaultValue: 'self',
+    },
+  },
+  render: ({ emphasis }) => {
+    return (
+      <Chart>
+        <ChartTooltip />
+        {lowDensitySeriesData.map(({ name, data }) => (
+          <Bar name={name} data={data} key={name} emphasis={emphasis} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const BarWithNoAxisPointer: StoryObj<{
+  axisPointer: ChartTooltipProps['axisPointer'];
+}> = {
+  args: {
+    axisPointer: 'none',
+  },
+  argTypes: {
+    axisPointer: {
+      control: 'select',
+      options: ['line', 'none'],
+      defaultValue: 'none',
+    },
+  },
+  render: ({ axisPointer }) => {
+    return (
+      <Chart>
+        <ChartTooltip axisPointer={axisPointer} />
+        {lowDensitySeriesData.map(({ name, data }) => (
+          <Bar name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const BarWithCategoryAxisLabel: StoryObj<{
+  xAxisType: XAxisProps['type'];
+}> = {
+  args: {
+    xAxisType: 'category',
+  },
+  argTypes: {
+    xAxisType: {
+      control: 'select',
+      options: ['value', 'category'],
+      defaultValue: 'category',
+    },
+  },
+  render: ({ xAxisType }) => {
+    return (
+      <Chart>
+        <XAxis type={xAxisType} />
+        <ChartTooltip />
+        {lowDensitySeriesData.map(({ name, data }) => (
+          <Bar
+            name={name}
+            data={data.map(([_, value], index) => [index, value])}
+            key={name}
           />
         ))}
       </Chart>

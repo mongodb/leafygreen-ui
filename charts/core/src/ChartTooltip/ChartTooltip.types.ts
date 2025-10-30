@@ -18,6 +18,12 @@ export interface ChartTooltipProps {
   seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
   seriesNameFormatter?: (name: SeriesName) => ReactNode;
   headerFormatter?: (value: number | string) => ReactNode;
+  /**
+   * Controls the type of axis pointer shown with the tooltip. Default is 'line'
+   * which shows a vertical dashed line on hover. Set to 'none' for bar charts to
+   * avoid the dashed line from being rendered on top of the bars.
+   */
+  axisPointer?: 'none' | 'line';
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {
