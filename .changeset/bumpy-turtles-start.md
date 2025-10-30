@@ -1,8 +1,10 @@
 ---
-'@leafygreen-ui/code-editor': minor
+'@leafygreen-ui/code-editor': major
 ---
 
-Fixes a number of bugs. These include:
+This release marks the V1.0.0 release of `@leafygreen-ui/code-editor`.
+
+Fixes remaining known of bugs. These include:
 
 - Adds gutter padding between the border and the caret when line numbers are turned off
 - Fixes icon button vertical alignment in the panel
