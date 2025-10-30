@@ -110,7 +110,7 @@ function getHeight(
   baseFontSize: CodeEditorProps['baseFontSize'],
 ) {
   const borders = 2;
-  const fontSize = baseFontSize ? baseFontSize : 13;
+  const fontSize = baseFontSize ?? 13;
   const numOfLinesForCalculation = numOfLines === 0 ? 1 : numOfLines;
 
   return (

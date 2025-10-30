@@ -66,7 +66,9 @@ export function useCodeFoldingExtension({
                 glyph="ChevronRight"
                 size={CUSTOM_ICON_SIZE}
                 className={css`
-                  /** Design indicated that the close icon seemed a bit unaligned at 4px, so */
+                  /**
+                   * Design indicated that the close icon seemed a bit unaligned at 4px, so we added 1px to better align
+                   */
                   margin-top: ${spacing[100] + 1}px;
                 `}
               />
