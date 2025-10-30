@@ -364,6 +364,9 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../../packages/palette
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens

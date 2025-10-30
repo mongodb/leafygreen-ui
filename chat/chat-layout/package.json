@@ -35,6 +35,7 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
