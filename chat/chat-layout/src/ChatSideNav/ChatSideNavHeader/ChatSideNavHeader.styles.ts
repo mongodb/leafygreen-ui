@@ -53,7 +53,7 @@ export const getButtonStyles = (theme: Theme) => css`
     ]};
   }
 
-  &:focus {
+  &:focus-visible {
     box-shadow: none;
     background-color: ${color[theme].background[Variant.Secondary][
       InteractionState.Focus
