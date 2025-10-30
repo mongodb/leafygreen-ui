@@ -8,7 +8,9 @@ import {
   PolymorphicPropsWithRef,
 } from '@leafygreen-ui/polymorphic';
 
-interface LocalProps {
+import { CommonTypographyProps } from '../types';
+
+interface LocalProps extends CommonTypographyProps {
   /**
    * The maximum future weight of the text. Determines the width of the component.
    * @default 700

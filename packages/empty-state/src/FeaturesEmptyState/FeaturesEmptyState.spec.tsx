@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 

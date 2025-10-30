@@ -16,7 +16,7 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { getPopoverRenderModeProps } from '@leafygreen-ui/popover';
+import { getPopoverRenderModeProps, Popover } from '@leafygreen-ui/popover';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,

@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryFn } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { color, spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';

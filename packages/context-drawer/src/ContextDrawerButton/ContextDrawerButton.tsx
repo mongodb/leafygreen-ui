@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import Button, { Size } from '@leafygreen-ui/button';
+import { Button, Size } from '@leafygreen-ui/button';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import LeafyGreenProvider, {
   useDarkMode,

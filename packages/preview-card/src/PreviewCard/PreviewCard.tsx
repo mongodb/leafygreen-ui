@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useMemo, useRef } from 'react';
 
-import Button, { Size } from '@leafygreen-ui/button';
+import { Button, Size } from '@leafygreen-ui/button';
 import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import LeafyGreenProvider, {

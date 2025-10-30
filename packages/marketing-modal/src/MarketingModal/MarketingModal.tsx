@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Modal from '@leafygreen-ui/modal';
+import { Modal } from '@leafygreen-ui/modal';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import { Body, Disclaimer, H3, Link } from '@leafygreen-ui/typography';
 

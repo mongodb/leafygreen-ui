@@ -7,7 +7,7 @@ import {
 import { StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { LegendCheckbox } from './LegendCheckbox';

@@ -9,7 +9,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { Optional } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
