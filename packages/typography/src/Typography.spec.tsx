@@ -19,7 +19,7 @@ import {
 
 describe('packages/typography', () => {
   // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('types behave as expected', () => {
+  test.skip('types behave as expected', () => {
     <Body elementtiming="test">children</Body>;
     <Description elementtiming="test">children</Description>;
     <Disclaimer elementtiming="test">children</Disclaimer>;
@@ -36,5 +36,9 @@ describe('packages/typography', () => {
     <Overline elementtiming="test">children</Overline>;
     <Subtitle elementtiming="test">children</Subtitle>;
     <StaticWidthText elementtiming="test">children</StaticWidthText>;
+  });
+
+  test('must contain one test', () => {
+    expect(true).toBe(true);
   });
 });
