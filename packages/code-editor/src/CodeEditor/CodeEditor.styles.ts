@@ -5,12 +5,10 @@ import {
   Theme,
 } from '@leafygreen-ui/lib';
 import {
-  addOverflowShadow,
   borderRadius,
   breakpoints,
   color,
   InteractionState,
-  Side,
   spacing,
   transitionDuration,
   Variant,
@@ -104,26 +102,6 @@ export const getEditorStyles = ({
           }
         }
       `]: copyButtonAppearance === CopyButtonAppearance.Hover,
-
-      // Overflow Shadows (applied via classes for performance)
-      [css`
-        &.lg-code-editor-has-top-shadow ${CodeEditorSelectors.Editor} {
-          ${addOverflowShadow({
-            side: Side.Top,
-            theme,
-            isInside: true,
-          })}
-        }
-      `]: true,
-      [css`
-        &.lg-code-editor-has-bottom-shadow ${CodeEditorSelectors.Editor} {
-          ${addOverflowShadow({
-            side: Side.Bottom,
-            theme,
-            isInside: true,
-          })}
-        }
-      `]: true,
     },
     className,
   );
