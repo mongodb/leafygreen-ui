@@ -19,8 +19,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
-    "@leafygreen-ui/tokens": "workspace:^",
-    "polished": "^4.2.2"
+    "@leafygreen-ui/tokens": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
