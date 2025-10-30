@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { addOverflowShadow, Side, spacing } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { Align } from './TitleBar.types';
 
@@ -32,12 +32,7 @@ export const getTitleBarStyles = ({
   theme: Theme;
   className?: string;
 }) => {
-  return cx(
-    baseStyles,
-    themeStyles[theme],
-    addOverflowShadow({ theme, isInside: false, side: Side.Bottom }),
-    className,
-  );
+  return cx(baseStyles, themeStyles[theme], className);
 };
 
 const contentContainerStyles = css`

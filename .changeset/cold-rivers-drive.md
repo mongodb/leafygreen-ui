@@ -4,7 +4,6 @@
 '@leafygreen-ui/expandable-card': minor
 '@leafygreen-ui/search-input': minor
 '@leafygreen-ui/code-editor': minor
-'@leafygreen-ui/date-picker': minor
 '@leafygreen-ui/form-footer': minor
 '@leafygreen-ui/combobox': minor
 '@lg-chat/chat-window': minor
