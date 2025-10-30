@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { borderRadius, spacing } from '@leafygreen-ui/tokens';
+import { borderRadius, boxShadows, spacing } from '@leafygreen-ui/tokens';
 
 import { Variant } from './MessageContainer.types';
 
@@ -32,10 +32,10 @@ const getCompactStyles = ({
     [getCompactPrimaryVariantStyles(theme)]: variant === Variant.Primary,
   });
 
-const baseSpaciousContainerStyles = css`
+const getBaseSpaciousContainerStyles = (theme: Theme) => css`
   border-radius: ${borderRadius[300]}px;
   /* Card Shadow */
-  box-shadow: 0px 4px 10px -4px ${palette.black}4D; // 4D is 30% opacity
+  box-shadow: ${boxShadows[theme][1]};
   padding: ${spacing[600]}px;
 `;
 
@@ -65,7 +65,10 @@ const getSpaciousContainerStyles = ({
   theme: Theme;
   variant: Variant;
 }) =>
-  cx(baseSpaciousContainerStyles, spaciousVariantThemeStyles[variant][theme]);
+  cx(
+    getBaseSpaciousContainerStyles(theme),
+    spaciousVariantThemeStyles[variant][theme],
+  );
 
 export const getMessageContainerStyles = ({
   className,

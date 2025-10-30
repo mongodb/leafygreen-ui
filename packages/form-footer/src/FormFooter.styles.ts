@@ -1,10 +1,9 @@
-import { transparentize } from 'polished';
-
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { addOverflowShadow, Side } from '@leafygreen-ui/tokens';
 
-export const footerBaseStyle = css`
+const footerBaseStyle = css`
   min-height: 92px;
   width: 100%;
   padding: 26px 24px;
@@ -16,15 +15,13 @@ export const footerBaseStyle = css`
   }
 `;
 
-export const footerThemeStyle: Record<Theme, string> = {
+const footerThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${palette.white};
-    box-shadow: 0px -1px 4px 0px ${transparentize(0.75, '#000000')};
   `,
   [Theme.Dark]: css`
     background-color: ${palette.black};
     border-top: 1px solid ${palette.gray.dark2};
-    box-shadow: 0px -1px 4px 0px ${transparentize(0.75, '#000000')};
   `,
 };
 
@@ -47,3 +44,17 @@ export const bannerStyle = css`
   padding-block: 7px;
   max-width: 700px;
 `;
+
+export const getFormFooterStyles = ({
+  theme,
+  className,
+}: {
+  theme: Theme;
+  className?: string;
+}) =>
+  cx(
+    footerBaseStyle,
+    footerThemeStyle[theme],
+    addOverflowShadow({ side: Side.Top, theme, isInside: false }),
+    className,
+  );
