@@ -84,7 +84,7 @@ describe('packages/icon-button', () => {
     expect(iconButton.tagName.toLowerCase()).toBe('a');
   });
 
-  test(`when '${titleText}' is set directly as the title child icon, the rendered icon includes a title element with '${titleText}'`, () => {
+  test(`shows a title element with '${titleText}' when the title prop is set`, () => {
     const { container } = render(
       <IconButton aria-label="Ellipsis">
         <EllipsisIcon title={titleText} />
