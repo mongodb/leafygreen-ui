@@ -74,6 +74,11 @@ export interface CodeEditorContextValue
    * Depth of the redo stack.
    */
   redoDepth: number;
+
+  /**
+   * Stateful boolean indicating if the editor is loading.
+   */
+  isLoading: boolean;
 }
 
 // Default context value for when Panel is used standalone
@@ -96,6 +101,7 @@ const defaultContextValue: CodeEditorContextValue = {
   redoDepth: 0,
   baseFontSize: 13,
   darkMode: false,
+  isLoading: false,
 };
 
 const CodeEditorContext =

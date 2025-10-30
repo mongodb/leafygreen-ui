@@ -461,6 +461,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       readOnly,
       darkMode,
       baseFontSize,
+      isLoading: isLoadingProp || isLoading || !extensionsInitialized,
     };
 
     const numOfLines = (

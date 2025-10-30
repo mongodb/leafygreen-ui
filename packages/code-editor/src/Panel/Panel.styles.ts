@@ -8,7 +8,13 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-export const PANEL_HEIGHT = 36; // exported to style absolutely positioned loading element
+/**
+ * The Loading div is absolutely positioned inside the code editor. When the panel isn't rendered,
+ * it renders at a `top: 0` position. When the panel is rendered, it needs to render at a
+ * `top: ${PANEL_HEIGHT}px` position so it doesn't overlap with the panel. So this is exported.
+ */
+export const PANEL_HEIGHT = 36;
+
 const MODAL_HEIGHT = 354;
 
 const getBasePanelStyles = (theme: Theme) => css`

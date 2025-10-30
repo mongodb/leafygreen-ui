@@ -70,6 +70,7 @@ export function Panel({
     downloadContent,
     formatCode,
     getContents,
+    isLoading,
     lgIds,
     maxWidth,
     minWidth,
@@ -155,10 +156,11 @@ export function Panel({
               justify="middle"
               trigger={
                 <IconButton
-                  darkMode={theme === 'dark'}
+                  // darkMode={theme === 'dark'}
                   onClick={handleFormatClick}
                   aria-label="Format code"
                   data-lgid={lgIds.panelFormatButton}
+                  disabled={isLoading}
                 >
                   <FormatIcon />
                 </IconButton>
@@ -173,6 +175,7 @@ export function Panel({
               getContentsToCopy={getContents ?? (() => '')}
               onCopy={onCopyClick}
               data-lgid={lgIds.panelCopyButton}
+              disabled={isLoading}
             />
           )}
           {showSecondaryMenuButton && (
@@ -182,6 +185,7 @@ export function Panel({
                   darkMode={theme === 'dark'}
                   aria-label="Show more actions"
                   data-lgid={lgIds.panelSecondaryMenuButton}
+                  disabled={isLoading}
                 >
                   <EllipsisIcon />
                 </IconButton>
