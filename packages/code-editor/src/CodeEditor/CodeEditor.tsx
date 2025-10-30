@@ -555,7 +555,6 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               maxHeight,
               className,
               copyButtonAppearance,
-              theme,
             })}
             data-lgid={lgIds.root}
             {...rest}

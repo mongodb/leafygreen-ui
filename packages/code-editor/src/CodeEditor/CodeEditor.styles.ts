@@ -40,7 +40,6 @@ export const getEditorStyles = ({
   maxHeight,
   className,
   copyButtonAppearance,
-  theme,
 }: {
   width?: string;
   minWidth?: string;
@@ -50,7 +49,6 @@ export const getEditorStyles = ({
   maxHeight?: string;
   className?: string;
   copyButtonAppearance?: CopyButtonAppearance;
-  theme: Theme;
 }) => {
   return cx(
     css`
