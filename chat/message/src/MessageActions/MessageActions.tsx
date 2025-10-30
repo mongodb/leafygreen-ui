@@ -61,9 +61,9 @@ export function MessageActions({
   );
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
 
-  const isSubmitState =
-    feedbackFormState === FormState.Submitted ||
-    feedbackFormState === FormState.Submitting;
+  const isSubmitted = feedbackFormState === FormState.Submitted;
+  const isSubmitting = feedbackFormState === FormState.Submitting;
+  const isSubmitState = isSubmitted || isSubmitting;
 
   const resetFeedback = useCallback(() => {
     setFeedback('');
@@ -156,8 +156,9 @@ export function MessageActions({
 
   const showMessageRating = !!onRatingChange;
   const showMessageFeedbackComponent =
-    (showFeedbackForm && !!onSubmitFeedback) ||
-    feedbackFormState === FormState.Submitted;
+    (showFeedbackForm && !!onSubmitFeedback) || isSubmitted;
+  const hideThumbsDown = isSubmitted && rating === MessageRatingValue.Liked;
+  const hideThumbsUp = isSubmitted && rating === MessageRatingValue.Disliked;
 
   const textareaProps = useMemo(
     () => ({
@@ -170,10 +171,10 @@ export function MessageActions({
 
   const submitButtonProps = useMemo(
     () => ({
-      isLoading: feedbackFormState === FormState.Submitting,
+      isLoading: isSubmitting,
       loadingText: 'Submitting...',
     }),
-    [feedbackFormState],
+    [isSubmitting],
   );
 
   if (!isCompact) {
@@ -185,7 +186,7 @@ export function MessageActions({
       <div
         className={getContainerStyles({
           className,
-          isSubmitted: feedbackFormState === FormState.Submitted,
+          isSubmitted,
         })}
         {...rest}
       >
@@ -216,6 +217,8 @@ export function MessageActions({
                 inert={isSubmitState ? 'inert' : undefined}
                 onChange={handleRatingChange}
                 value={rating}
+                hideThumbsDown={hideThumbsDown}
+                hideThumbsUp={hideThumbsUp}
               />
             </>
           )}
@@ -231,6 +234,7 @@ export function MessageActions({
             submitButtonText={submitButtonText}
             submittedMessage={submittedMessage}
             textareaProps={textareaProps}
+            enableFadeAfterSubmit
           />
         )}
       </div>
