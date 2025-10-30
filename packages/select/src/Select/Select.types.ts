@@ -29,7 +29,10 @@ export type DropdownWidthBasis =
 
 export interface BaseSelectProps
   extends Omit<React.ComponentProps<'button'>, 'onChange' | 'onClick'>,
-    Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle' | 'spacing'>,
+    Omit<
+      PopoverProps,
+      'active' | 'dismissMode' | 'onToggle' | 'spacing' | 'refEl'
+    >,
     DarkModeProps,
     LgIdProps {
   /**
