@@ -213,6 +213,7 @@ describe('packages/code-editor/CodeEditor', () => {
 
   test('the forceParsing() method is not called when disabled', async () => {
     const { container } = renderCodeEditor({
+      forceParsing: false,
       defaultValue: 'content',
     });
     // Wait for the editor to be fully rendered
@@ -321,48 +322,27 @@ describe('packages/code-editor/CodeEditor', () => {
   });
 
   test('renders panel when panel is passed as a child', () => {
-    const PANEL_TEST_ID = 'test-panel';
-    const { container } = renderCodeEditor({
-      'data-lgid': 'lg-test-editor',
-      children: (
-        <CodeEditor.Panel
-          title="Test Panel"
-          innerContent={
-            <div data-testid={PANEL_TEST_ID}>Test Panel Content</div>
-          }
-        />
-      ),
+    const lgId = 'lg-test-editor';
+    renderCodeEditor({
+      'data-lgid': lgId,
+      children: <CodeEditor.Panel title="Test Panel" />,
     });
-    const panelElement = container.querySelector(
-      `[data-testid="${PANEL_TEST_ID}"]`,
-    );
+    const utils = getTestUtils(lgId).getPanelUtils();
+    const panelElement = utils.getPanelElement();
     expect(panelElement).toBeInTheDocument();
   });
 
   test('does not render context menu when right-clicking on panel', () => {
-    const PANEL_TEST_ID = 'test-panel';
-    const { container } = renderCodeEditor({
-      'data-lgid': 'lg-test-editor',
-      children: (
-        <CodeEditor.Panel
-          title="Test Panel"
-          innerContent={
-            <div data-testid={PANEL_TEST_ID}>Test Panel Content</div>
-          }
-        />
-      ),
+    const lgId = 'lg-test-editor';
+    renderCodeEditor({
+      'data-lgid': lgId,
+      children: <CodeEditor.Panel title="Test Panel" />,
     });
-    const panelElement = container.querySelector(
-      `[data-testid="${PANEL_TEST_ID}"]`,
-    );
+    const utils = getTestUtils(lgId).getPanelUtils();
+    const panelElement = utils.getPanelElement();
     expect(panelElement).toBeInTheDocument();
-
-    // Right-click on the panel to trigger context menu
     userEvent.click(panelElement!, { button: 2 });
-
-    expect(
-      container.querySelector('[data-lgid="lg-test-editor-context_menu"]'),
-    ).not.toBeInTheDocument();
+    expect(utils.querySecondaryMenu()).not.toBeInTheDocument();
   });
 
   test('Pressing ESC key unfocuses the editor', async () => {
