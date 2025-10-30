@@ -57,6 +57,7 @@ export const InlineMessageFeedback = forwardRef(
       onClose,
       textareaProps,
       errorMessage = 'Oops, please try again.',
+      enableFadeAfterSubmit = false,
       ...rest
     }: InlineMessageFeedbackProps,
     forwardedRef: ForwardedRef<HTMLDivElement>,
@@ -110,7 +111,10 @@ export const InlineMessageFeedback = forwardRef(
       <LeafyGreenProvider darkMode={darkMode}>
         <div className={className} ref={forwardedRef} {...rest}>
           {isSubmitted ? (
-            <SubmittedState submittedMessage={submittedMessage} />
+            <SubmittedState
+              enableFadeAfterSubmit={enableFadeAfterSubmit}
+              submittedMessage={submittedMessage}
+            />
           ) : (
             <form
               className={getFormContainerStyles({ isCompact, theme })}
