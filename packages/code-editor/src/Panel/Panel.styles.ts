@@ -8,7 +8,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-export const PANEL_HEIGHT = 36;
+export const PANEL_HEIGHT = 36; // exported to style absolutely positioned loading element
 const MODAL_HEIGHT = 354;
 
 const getBasePanelStyles = (theme: Theme) => css`

@@ -38,7 +38,9 @@ export function useReadOnlyExtension({
     factory: ({ enable, module, EditorViewModule }) =>
       enable && module && EditorViewModule
         ? [
+            // Prevents editing
             module.EditorState.readOnly.of(true),
+            // Prevents cursor from blinking
             EditorViewModule.EditorView.editable.of(false),
           ]
         : [],

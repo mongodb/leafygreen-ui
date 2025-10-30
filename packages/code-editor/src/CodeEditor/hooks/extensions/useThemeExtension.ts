@@ -20,6 +20,7 @@ import { type CodeEditorModules } from '../moduleLoaders.types';
 
 import { useExtension } from './useExtension';
 
+// Exported so the an estimate height can be calculated for the editor while it's loading
 export const LINE_HEIGHT = 1.5;
 export const PADDING_TOP = spacing[200];
 export const PADDING_BOTTOM = spacing[200];
@@ -82,7 +83,6 @@ export function useThemeExtension({
             borderTopLeftRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             borderTopRightRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             color: color[theme].text[Variant.Primary][InteractionState.Default],
-            overflow: 'hidden',
           },
 
           [`&${CodeEditorSelectors.Focused}`]: {

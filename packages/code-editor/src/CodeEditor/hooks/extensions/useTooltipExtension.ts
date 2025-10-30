@@ -89,7 +89,7 @@ export function useTooltipExtension({
         {
           /**
            * Decreasing but if consumers decide to use this for live linting, we might want to revert this so it
-           * show errors too fast.
+           * doesn't show errors too fast.
            */
           delay: 100,
         },

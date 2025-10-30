@@ -51,9 +51,6 @@ export const getEditorStyles = ({
   copyButtonAppearance?: CopyButtonAppearance;
 }) => {
   return cx(
-    css`
-      position: relative;
-    `,
     {
       // Dimensions
       [css`
@@ -101,6 +98,9 @@ export const getEditorStyles = ({
         }
       `]: copyButtonAppearance === CopyButtonAppearance.Hover,
     },
+    css`
+      position: relative;
+    `,
     className,
   );
 };
@@ -187,9 +187,6 @@ export const getLoaderStyles = ({
 export const getLoadingTextStyles = (theme: Theme) => {
   return css`
     color: ${color[theme].text[Variant.Secondary][InteractionState.Default]};
-    display: flex;
-    align-items: center;
-    gap: ${spacing[50]}px;
   `;
 };
 

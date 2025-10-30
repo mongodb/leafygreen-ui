@@ -1,7 +1,6 @@
 import React, {
   forwardRef,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
@@ -32,7 +31,6 @@ import {
 import {
   CodeEditorHandle,
   type CodeEditorProps,
-  CodeEditorSelectors,
   CodeEditorSubcomponentProperty,
   type CodeMirrorExtension,
   CopyButtonAppearance,
@@ -91,9 +89,6 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const editorViewRef = useRef<EditorView | null>(null);
     const [undoDepth, setUndoDepth] = useState(0);
     const [redoDepth, setRedoDepth] = useState(0);
-    // Use refs to track shadow state without causing re-renders during scroll
-    const hasTopShadowRef = useRef(false);
-    const hasBottomShadowRef = useRef(false);
 
     const { modules, isLoading } = useModules(props);
 
@@ -324,7 +319,10 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [modules]);
 
-    // Configure/update extensions whenever relevant props change
+    /**
+     * Configure/update extensions whenever relevant props change.
+     * Extensions are configured in a separate effect so that the editor is not recreated every time a prop changes.
+     */
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
       const commands = modules?.['@codemirror/commands'];
@@ -400,7 +398,11 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         ]),
       });
 
-      // Wait for next frame to ensure extensions are rendered before hiding loading overlay
+      /**
+       * Wait for next frame to ensure extensions are rendered before hiding loading overlay.
+       * Since the editor is created in a separate effect without extensions, it is created before the extensions
+       * are applied. This prevents a blink of an unstyled editor.
+       */
       const rafId = requestAnimationFrame(() => {
         setExtensionsInitialized(true);
       });
@@ -431,74 +433,6 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       modules,
       onChangeProp,
     ]);
-
-    // Update shadow state and apply to DOM immediately without re-render
-    const updateScrollShadows = useCallback(
-      (scrollerElement: HTMLElement, containerElement: HTMLElement) => {
-        const hasTop = scrollerElement.scrollTop > 0;
-        const hasBottom =
-          Math.abs(
-            scrollerElement.scrollHeight -
-              scrollerElement.clientHeight -
-              scrollerElement.scrollTop,
-          ) >= 1;
-
-        // Update refs (no re-render)
-        hasTopShadowRef.current = hasTop;
-        hasBottomShadowRef.current = hasBottom;
-
-        // Apply classes directly to DOM (no re-render)
-        if (hasTop) {
-          containerElement.classList.add('lg-code-editor-has-top-shadow');
-        } else {
-          containerElement.classList.remove('lg-code-editor-has-top-shadow');
-        }
-
-        if (hasBottom) {
-          containerElement.classList.add('lg-code-editor-has-bottom-shadow');
-        } else {
-          containerElement.classList.remove('lg-code-editor-has-bottom-shadow');
-        }
-      },
-      [],
-    );
-
-    // Handle scroll shadows for overflow indication
-    useEffect(() => {
-      if (!editorContainerRef.current || !editorViewRef.current) {
-        return;
-      }
-
-      const containerElement = editorContainerRef.current;
-      const scrollerElement = containerElement.querySelector(
-        CodeEditorSelectors.Scroller, // CM Element that handles scrolling
-      ) as HTMLElement | null;
-
-      if (!scrollerElement) {
-        return;
-      }
-
-      const handleScroll = () => {
-        updateScrollShadows(scrollerElement, containerElement);
-      };
-
-      // Initial check
-      updateScrollShadows(scrollerElement, containerElement);
-
-      // Listen for scroll events
-      scrollerElement.addEventListener('scroll', handleScroll, {
-        passive: true,
-      });
-
-      // Also check on resize in case content changes
-      const resizeObserver = new ResizeObserver(handleScroll);
-      resizeObserver.observe(scrollerElement);
-
-      return () => {
-        scrollerElement.removeEventListener('scroll', handleScroll);
-        resizeObserver.disconnect();
-      };
-    }, [modules, updateScrollShadows]);
 
     useImperativeHandle(forwardedRef, () => ({
       getEditorViewInstance: () => editorViewRef.current,
