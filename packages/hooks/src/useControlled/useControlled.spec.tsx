@@ -120,6 +120,21 @@ describe('packages/hooks/useControlled', () => {
       });
       expect(result.current.value).toBe('apple');
     });
+
+    test('updateValue accepts a function for functional updates', () => {
+      const handler = jest.fn();
+      const { result } = renderUseControlledHook<number>(5, handler);
+      result.current.updateValue(prev => prev + 1);
+      expect(handler).toHaveBeenCalledWith(6);
+    });
+
+    test('functional update uses current controlled value', () => {
+      const handler = jest.fn();
+      const { result, rerender } = renderUseControlledHook<number>(10, handler);
+      rerender(20);
+      result.current.updateValue(prev => prev * 2);
+      expect(handler).toHaveBeenCalledWith(40);
+    });
   });
 
   describe('Uncontrolled', () => {
@@ -169,6 +184,49 @@ describe('packages/hooks/useControlled', () => {
       });
       expect(result.current.value).toBe('apple');
       expect(handler).not.toHaveBeenCalled();
+    });
+
+    test('updateValue accepts a function for functional updates', () => {
+      const handler = jest.fn();
+      const { result } = renderUseControlledHook<number>(undefined, handler, 5);
+      act(() => {
+        result.current.updateValue(prev => prev + 1);
+      });
+      expect(handler).toHaveBeenCalledWith(6);
+      expect(result.current.value).toBe(6);
+    });
+
+    test('functional update uses current uncontrolled value', () => {
+      const handler = jest.fn();
+      const { result } = renderUseControlledHook<number>(
+        undefined,
+        handler,
+        10,
+      );
+      act(() => {
+        result.current.updateValue(prev => prev * 2);
+      });
+      expect(handler).toHaveBeenCalledWith(20);
+      expect(result.current.value).toBe(20);
+    });
+
+    test('functional update avoids stale closures', () => {
+      const handler = jest.fn();
+      const { result } = renderUseControlledHook<number>(undefined, handler, 0);
+
+      // Simulate multiple updates that might capture stale values
+      act(() => {
+        result.current.updateValue(prev => prev + 1);
+        result.current.updateValue(prev => prev + 1);
+        result.current.updateValue(prev => prev + 1);
+      });
+
+      // With functional updates, each update should use the latest value
+      expect(handler).toHaveBeenCalledTimes(3);
+      expect(handler).toHaveBeenNthCalledWith(1, 1);
+      expect(handler).toHaveBeenNthCalledWith(2, 2);
+      expect(handler).toHaveBeenNthCalledWith(3, 3);
+      expect(result.current.value).toBe(3);
     });
   });
 
