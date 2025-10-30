@@ -178,6 +178,7 @@ export function CodeEditorCopyButton({
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
+      darkMode={theme === 'dark'}
       trigger={
         <CopyButtonTrigger
           variant={variant}
