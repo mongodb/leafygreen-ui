@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Banner, { Variant as BannerVariant } from '@leafygreen-ui/banner';
+import { Banner, Variant as BannerVariant } from '@leafygreen-ui/banner';
 
 import {
   ErrorConfigurationParameter,

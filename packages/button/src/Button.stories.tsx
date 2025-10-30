@@ -7,7 +7,7 @@ import {
   type StoryType,
 } from '@lg-tools/storybook-utils';
 
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import { glyphs, Icon } from '@leafygreen-ui/icon';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 

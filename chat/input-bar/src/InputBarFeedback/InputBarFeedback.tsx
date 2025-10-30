@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
-import Banner from '@leafygreen-ui/banner';
-import Button from '@leafygreen-ui/button';
+import { Banner } from '@leafygreen-ui/banner';
+import { Button } from '@leafygreen-ui/button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body, Error } from '@leafygreen-ui/typography';
 

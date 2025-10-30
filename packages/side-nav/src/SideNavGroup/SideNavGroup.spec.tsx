@@ -7,7 +7,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 
 import { SideNavItem } from '../SideNavItem';
 

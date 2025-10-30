@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Badge, { Variant } from '@leafygreen-ui/badge';
+import { Badge, Variant } from '@leafygreen-ui/badge';
 import { cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';

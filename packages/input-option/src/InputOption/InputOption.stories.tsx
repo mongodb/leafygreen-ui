@@ -6,7 +6,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import { glyphs, Icon } from '@leafygreen-ui/icon';
 
 import {
   InputOptionContent,

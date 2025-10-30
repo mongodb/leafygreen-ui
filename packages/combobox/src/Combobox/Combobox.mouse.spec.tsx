@@ -10,7 +10,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import isUndefined from 'lodash/isUndefined';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 
 import {
   defaultOptions,

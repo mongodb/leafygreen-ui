@@ -2,7 +2,7 @@ import React from 'react';
 import { faker } from '@faker-js/faker';
 import range from 'lodash/range';
 
-import Code from '@leafygreen-ui/code';
+import { Code } from '@leafygreen-ui/code';
 
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 

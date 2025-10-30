@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { CloseIconColor } from '../shared.types';

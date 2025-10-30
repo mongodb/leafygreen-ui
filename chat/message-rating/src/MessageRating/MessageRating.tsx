@@ -7,7 +7,7 @@ import {
 import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import ThumbsDown from '@leafygreen-ui/icon/dist/ThumbsDown';
 import ThumbsUp from '@leafygreen-ui/icon/dist/ThumbsUp';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
