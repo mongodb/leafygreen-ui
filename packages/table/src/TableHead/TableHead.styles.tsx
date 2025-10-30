@@ -32,17 +32,6 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
         position: sticky;
         .${tableClassName} & {
           ::after {
-            content: '';
-            position: absolute;
-            z-index: -1;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            width: 96%;
-            height: 50%;
-
-            border-radius: 40%;
             opacity: 0;
             transition: opacity ${transitionDuration.default}ms ease-in-out;
           }
