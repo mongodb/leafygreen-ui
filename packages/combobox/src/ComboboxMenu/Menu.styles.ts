@@ -42,6 +42,10 @@ export const popoverThemeStyle: Record<Theme, string> = {
   `,
 };
 
+export const autoWidthStyles = css`
+  width: max-content;
+`;
+
 export const menuBaseStyle = css`
   position: relative;
   width: 100%;

@@ -52,6 +52,7 @@ import {
   ComboboxElement,
   ComboboxSize,
   DiffObject,
+  DropdownWidthBasis,
   getNullSelection,
   onChangeType,
   Overflow,
@@ -136,6 +137,7 @@ export function Combobox<M extends boolean>({
   portalRef,
   scrollContainer,
   popoverZIndex,
+  dropdownWidthBasis = DropdownWidthBasis.Trigger,
   ...rest
 }: ComboboxProps<M>) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
@@ -1331,6 +1333,7 @@ export function Combobox<M extends boolean>({
               searchLoadingMessage={searchLoadingMessage}
               searchErrorMessage={searchErrorMessage}
               searchEmptyMessage={searchEmptyMessage}
+              dropdownWidthBasis={dropdownWidthBasis}
             >
               {renderedOptionsJSX}
             </ComboboxMenu>
