@@ -33,6 +33,6 @@ describe('useReadOnlyExtension', () => {
       }),
     );
     const current = result.current as any;
-    expect(current.inner.length).toBeGreaterThan(0); // compartment was created
+    expect(current.inner.length).toBeGreaterThan(0); // CodeMirrorcompartment was created
   });
 });
