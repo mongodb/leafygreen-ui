@@ -63,9 +63,9 @@ export default function Copyable({
 
     if (baseFontSize === BaseFontSize.Body1) {
       return Size.Default;
-    } else {
-      return Size.Large;
     }
+
+    return Size.Large;
   }, [SizeProp, baseFontSize]);
 
   useEffect(() => {

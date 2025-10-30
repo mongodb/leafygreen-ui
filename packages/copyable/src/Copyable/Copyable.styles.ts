@@ -158,7 +158,7 @@ export const getCodeStyle = ({
   size: Size;
   showCopyButton: boolean;
 }) =>
-  cx(codeStyle, codeStyleColor[theme], [codeFontStyle[size]], {
+  cx(codeStyle, codeStyleColor[theme], codeFontStyle[size], {
     [codeStyleNoButton]: !showCopyButton,
   });
 
