@@ -85,18 +85,15 @@ describe('packages/icon-button', () => {
   });
 
   test(`shows a title element with '${titleText}' when the title prop is set`, () => {
-    const { container } = render(
-      <IconButton aria-label="Ellipsis">
-        <EllipsisIcon title={titleText} />
-      </IconButton>,
+    const iconWithTitle = (
+      <EllipsisIcon data-testid="icon-test-id" title={titleText} />
     );
+    const { icon } = renderIconButton({ children: iconWithTitle });
+    expect(icon).toBeInTheDocument();
+    const title = icon.querySelector('title');
+    expect(title?.textContent).toBe(titleText);
 
-    const icon = container.querySelector('[role="img"]');
-    expect(icon).toBeTruthy();
-
-    const titleElement = icon?.querySelector('title');
-    expect(titleElement).toBeTruthy();
-    expect(titleElement?.textContent).toBe(titleText);
+    // expect(icon.getAttribute('title')).toBe(titleText);
   });
 
   /* eslint-disable jest/no-disabled-tests*/
