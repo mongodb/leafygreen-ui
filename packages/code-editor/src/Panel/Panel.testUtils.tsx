@@ -76,6 +76,7 @@ export function renderPanel(config: RenderPanelConfig = {}) {
     redoDepth: 1,
     baseFontSize: 13 as const,
     darkMode: false,
+    isLoading: false,
     ...contextConfig,
   };
 
