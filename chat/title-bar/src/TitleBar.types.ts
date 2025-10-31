@@ -15,6 +15,8 @@ export interface TitleBarProps
   /**
    * Alignment of the title text and badge
    * @default Align.Left
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   align?: Align;
 
@@ -25,11 +27,15 @@ export interface TitleBarProps
 
   /**
    * Slot for custom close icon
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   iconSlot?: React.ReactNode;
 
   /**
    * Event handler called when the close button is clicked
+   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
+   * @deprecated The spacious variant will be removed by EOY 2025. Instead, use the compact variant.
    */
   onClose?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 
