@@ -28,6 +28,7 @@ export interface ChatSideNavFooterProps extends ComponentPropsWithRef<'div'> {}
 export const ChatSideNavSubcomponentProperty = {
   Header: 'isChatSideNavHeader',
   Content: 'isChatSideNavContent',
+  SideNavItem: 'isChatSideNavItem',
 } as const;
 
 /**
