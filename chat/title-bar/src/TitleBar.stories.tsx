@@ -19,10 +19,6 @@ const meta: StoryMetaType<typeof TitleBar> = {
     iconSlot: { control: 'none' },
     badgeText: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
-    variant: {
-      control: 'radio',
-      options: Object.values(Variant),
-    },
   },
   parameters: {
     default: null,
