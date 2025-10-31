@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentType } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -11,15 +11,18 @@ import {
 import { ChatSideNavSubcomponentProperty } from '../ChatSideNav.types';
 
 import { getItemStyles } from './ChatSideNavItem.styles';
-import { BaseChatSideNavItemProps } from './ChatSideNavItem.types';
+import type {
+  BaseChatSideNavItemProps,
+  ChatSideNavItemProps,
+} from './ChatSideNavItem.types';
 
 export const ChatSideNavItem = CompoundSubComponent(
-  InferredPolymorphic<BaseChatSideNavItemProps, 'a'>(
+  InferredPolymorphic<BaseChatSideNavItemProps, 'div'>(
     (
       { as, active = false, className, children, onClick, ...restProps },
       ref,
     ) => {
-      const { Component, rest } = useInferredPolymorphic(as, restProps, 'a');
+      const { Component, rest } = useInferredPolymorphic(as, restProps, 'div');
       const { theme } = useDarkMode();
 
       return (
@@ -38,7 +41,7 @@ export const ChatSideNavItem = CompoundSubComponent(
         </Component>
       );
     },
-  ),
+  ) as ComponentType<ChatSideNavItemProps>,
   {
     displayName: 'ChatSideNavItem',
     key: ChatSideNavSubcomponentProperty.SideNavItem,

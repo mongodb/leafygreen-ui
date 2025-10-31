@@ -1,5 +1,5 @@
 import {
-  InferredPolymorphicProps,
+  InferredPolymorphicPropsWithRef,
   PolymorphicAs,
 } from '@leafygreen-ui/polymorphic';
 
@@ -13,5 +13,5 @@ export interface BaseChatSideNavItemProps {
 }
 
 // External only
-export type ChatSideNavItemProps<TAsProp extends PolymorphicAs = 'a'> =
-  InferredPolymorphicProps<TAsProp, BaseChatSideNavItemProps>;
+export type ChatSideNavItemProps<TAsProp extends PolymorphicAs = 'div'> =
+  InferredPolymorphicPropsWithRef<TAsProp, BaseChatSideNavItemProps>;
