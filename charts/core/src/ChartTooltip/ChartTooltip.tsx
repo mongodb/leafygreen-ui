@@ -18,7 +18,8 @@ export function ChartTooltip({
   seriesValueFormatter,
   seriesNameFormatter,
   sort,
-  axisPointer,
+  axisPointer = 'line',
+  className,
 }: ChartTooltipProps) {
   const {
     chart: {
@@ -119,10 +120,10 @@ export function ChartTooltip({
          * using `extraCssText` instead of `className` because emotion-defined class
          * didn't have high-enough specificity
          *
-         * darkreader-ignore-inline-style class helps avoid the darkreader tampering
-         * with the tooltip styles.
          */
-        className: `${CHART_TOOLTIP_CLASSNAME} darkreader-ignore-inline-style`,
+        className: className
+          ? `${CHART_TOOLTIP_CLASSNAME} ${className}`
+          : CHART_TOOLTIP_CLASSNAME,
         extraCssText: getRootStylesText(theme),
         borderWidth: 0,
         padding: 0,
@@ -157,6 +158,7 @@ export function ChartTooltip({
     tooltipPinned,
     updateOptions,
     axisPointer,
+    className,
   ]);
 
   return null;

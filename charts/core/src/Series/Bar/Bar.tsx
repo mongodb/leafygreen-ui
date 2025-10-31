@@ -15,7 +15,7 @@ export type BarProps = SeriesProps & {
    * - `self`: Upon hovering over a bar, all other bars will be dimmed.
    * - `none`: Other bars will not be affected by the hover.
    */
-  emphasis?: 'self';
+  emphasis?: 'self' | 'none';
 };
 
 export const Bar = ({ name, data, stack, emphasis }: BarProps) => {
