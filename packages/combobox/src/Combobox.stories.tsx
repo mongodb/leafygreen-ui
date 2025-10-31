@@ -89,6 +89,7 @@ const meta: StoryMetaType<typeof Combobox> = {
     darkMode: false,
     disabled: false,
     clearable: true,
+    dropdownWidthBasis: DropdownWidthBasis.Trigger,
     errorMessage: 'No Pomegranates!',
     children: getComboboxOptions(),
   },
