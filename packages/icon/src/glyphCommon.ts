@@ -18,10 +18,11 @@ interface AccessibleFunctionParams {
   'aria-labelledby'?: string;
   'aria-label'?: string;
   title?: string | null;
+  titleId?: string;
 }
 
 type AccessibleFunctionReturnType =
-  | AccessibleFunctionParams
+  | { 'aria-labelledby'?: string; 'aria-label'?: string }
   | { 'aria-hidden': true; alt: '' };
 
 export function generateAccessibleProps(
@@ -31,19 +32,34 @@ export function generateAccessibleProps(
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
     title,
+    titleId,
   }: AccessibleFunctionParams,
 ): AccessibleFunctionReturnType {
   switch (role) {
-    case 'img':
+    case 'img': {
       if (!ariaLabel && !ariaLabelledby && !title) {
         return { 'aria-label': getGlyphLabel(glyphName) };
       }
 
+      // If there's a title, use the titleId for aria-labelledby
+      // If there's already an aria-labelledby, combine them
+      let labelledBy: string | undefined;
+
+      if (title) {
+        if (ariaLabelledby) {
+          labelledBy = `${titleId} ${ariaLabelledby}`;
+        } else {
+          labelledBy = titleId;
+        }
+      } else {
+        labelledBy = ariaLabelledby;
+      }
+
       return {
-        ['aria-labelledby']: ariaLabelledby,
+        ['aria-labelledby']: labelledBy,
         ['aria-label']: ariaLabel,
-        title,
       };
+    }
 
     case 'presentation':
       return { 'aria-hidden': true, alt: '' };

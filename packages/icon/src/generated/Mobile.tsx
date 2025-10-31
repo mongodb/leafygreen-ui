@@ -2,10 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 1d9da6a1ce4eeeb3e0c6cac6a588ea9a
+* @checksum 590cde11eb372ef3e1626758d8edd3be
 */
 import * as React from "react";
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface MobileProps extends LGGlyph.ComponentProps {}
@@ -19,6 +20,9 @@ const Mobile = ({
   role = 'img',
   ...props
 }: MobileProps) => {
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;
@@ -27,12 +31,13 @@ const Mobile = ({
       `;
   const accessibleProps = generateAccessibleProps(role, 'Mobile', {
     title,
+    titleId,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path fillRule="evenodd" clipRule="evenodd" d="M11 3H5V13H11V3ZM5 1C4.44772 1 4 1.44772 4 2V14C4 14.5523 4.44772 15 5 15H11C11.5523 15 12 14.5523 12 14V2C12 1.44772 11.5523 1 11 1H5Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path fillRule="evenodd" clipRule="evenodd" d="M11 3H5V13H11V3ZM5 1C4.44772 1 4 1.44772 4 2V14C4 14.5523 4.44772 15 5 15H11C11.5523 15 12 14.5523 12 14V2C12 1.44772 11.5523 1 11 1H5Z" fill={'currentColor'} /></svg>;
 };
 Mobile.displayName = 'Mobile';
 Mobile.isGlyph = true;

@@ -2,10 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 2cb3bf9191d63dec9f01a2c35a440bb2
+* @checksum cc58f19c520502262c789fb80932b8e7
 */
 import * as React from "react";
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface EscalationProps extends LGGlyph.ComponentProps {}
@@ -19,6 +20,9 @@ const Escalation = ({
   role = 'img',
   ...props
 }: EscalationProps) => {
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;
@@ -27,12 +31,13 @@ const Escalation = ({
       `;
   const accessibleProps = generateAccessibleProps(role, 'Escalation', {
     title,
+    titleId,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path fillRule="evenodd" clipRule="evenodd" d="M13.361 4.42325C13.719 4.11978 13.5628 3.53659 13.101 3.4528L5.14569 2.00923C4.74464 1.93645 4.40436 2.30596 4.50985 2.69966L6.29744 9.37104C6.40294 9.76474 6.88238 9.9146 7.19331 9.65105L13.361 4.42325ZM2.91191 2.10161C2.61554 2.18103 2.43965 2.48567 2.51907 2.78204L5.68249 14.5881C5.7619 14.8845 6.06654 15.0603 6.36292 14.9809C6.6593 14.9015 6.83518 14.5969 6.75576 14.3005L3.59234 2.49446C3.51293 2.19808 3.20829 2.0222 2.91191 2.10161Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path fillRule="evenodd" clipRule="evenodd" d="M13.361 4.42325C13.719 4.11978 13.5628 3.53659 13.101 3.4528L5.14569 2.00923C4.74464 1.93645 4.40436 2.30596 4.50985 2.69966L6.29744 9.37104C6.40294 9.76474 6.88238 9.9146 7.19331 9.65105L13.361 4.42325ZM2.91191 2.10161C2.61554 2.18103 2.43965 2.48567 2.51907 2.78204L5.68249 14.5881C5.7619 14.8845 6.06654 15.0603 6.36292 14.9809C6.6593 14.9015 6.83518 14.5969 6.75576 14.3005L3.59234 2.49446C3.51293 2.19808 3.20829 2.0222 2.91191 2.10161Z" fill={'currentColor'} /></svg>;
 };
 Escalation.displayName = 'Escalation';
 Escalation.isGlyph = true;

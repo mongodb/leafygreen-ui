@@ -2,10 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 56c2bfa5ef7bbe055848858525fc9511
+* @checksum 83819ade6db7efb018768b25da779ccc
 */
 import * as React from "react";
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface FolderProps extends LGGlyph.ComponentProps {}
@@ -19,6 +20,9 @@ const Folder = ({
   role = 'img',
   ...props
 }: FolderProps) => {
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;
@@ -27,12 +31,13 @@ const Folder = ({
       `;
   const accessibleProps = generateAccessibleProps(role, 'Folder', {
     title,
+    titleId,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M2 2C1.44772 2 1 2.44772 1 3V13C1 13.5523 1.44772 14 2 14H14C14.5523 14 15 13.5523 15 13V5C15 4.44772 14.5523 4 14 4H8C7.44772 4 7 3.55228 7 3C7 2.44772 6.55228 2 6 2H2Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path d="M2 2C1.44772 2 1 2.44772 1 3V13C1 13.5523 1.44772 14 2 14H14C14.5523 14 15 13.5523 15 13V5C15 4.44772 14.5523 4 14 4H8C7.44772 4 7 3.55228 7 3C7 2.44772 6.55228 2 6 2H2Z" fill={'currentColor'} /></svg>;
 };
 Folder.displayName = 'Folder';
 Folder.isGlyph = true;

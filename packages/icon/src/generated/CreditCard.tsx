@@ -2,10 +2,11 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script packages/icon/scripts/prebuild/index.ts
-* @checksum 50cfcb04ce79f8c7f4b7ab5c8594ccfc
+* @checksum bc2752783815d54113564fcb4b09858d
 */
 import * as React from "react";
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CreditCardProps extends LGGlyph.ComponentProps {}
@@ -19,6 +20,9 @@ const CreditCard = ({
   role = 'img',
   ...props
 }: CreditCardProps) => {
+  const titleId = useIdAllocator({
+    prefix: 'icon-title'
+  });
   const fillStyle = css`
         color: ${fill};
       `;
@@ -27,12 +31,13 @@ const CreditCard = ({
       `;
   const accessibleProps = generateAccessibleProps(role, 'CreditCard', {
     title,
+    titleId,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M3 3C1.89543 3 1 3.89543 1 5L15 5C15 3.89543 14.1046 3 13 3H3Z" fill={'currentColor'} /><path d="M15 7L1 7V11C1 12.1046 1.89543 13 3 13H13C14.1046 13 15 12.1046 15 11V7Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16">{title && <title id={titleId}>{title}</title>}<path d="M3 3C1.89543 3 1 3.89543 1 5L15 5C15 3.89543 14.1046 3 13 3H3Z" fill={'currentColor'} /><path d="M15 7L1 7V11C1 12.1046 1.89543 13 3 13H13C14.1046 13 15 12.1046 15 11V7Z" fill={'currentColor'} /></svg>;
 };
 CreditCard.displayName = 'CreditCard';
 CreditCard.isGlyph = true;

@@ -13,7 +13,8 @@ export function getAllIcons(): Array<string> {
   const iconNames = fsx
     .readdirSync(ICON_DIR)
     .filter(f => /\.tsx?$/.test(f))
-    .map(f => path.basename(f, path.extname(f)));
+    .map(f => path.basename(f, path.extname(f)))
+    .filter(name => name !== 'index'); // Exclude the index file
   return iconNames;
 }
 
