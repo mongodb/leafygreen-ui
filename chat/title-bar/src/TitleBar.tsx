@@ -38,7 +38,7 @@ export const TitleBar = forwardRef(
     const { variant } = useLeafyGreenChatContext();
     const isCompact = variant === Variant.Compact;
 
-    if (isCompact && (alignProp === Align.Left || iconSlot || onClose)) {
+    if (isCompact && (alignProp !== Align.Center || iconSlot || onClose)) {
       consoleOnce.warn(
         `@lg-chat/title-bar: The TitleBar component's props 'align', 'iconSlot', and 'onClose' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
       );
