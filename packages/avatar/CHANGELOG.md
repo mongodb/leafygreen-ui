@@ -1,5 +1,15 @@
 # @leafygreen-ui/avatar
 
+## 3.1.4
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+
 ## 3.1.3
 
 ### Patch Changes

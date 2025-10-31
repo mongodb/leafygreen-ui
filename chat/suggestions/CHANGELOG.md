@@ -1,5 +1,19 @@
 # @lg-chat/suggestions
 
+## 0.2.6
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/banner@10.2.2
+  - @leafygreen-ui/button@25.1.2
+
 ## 0.2.5
 
 ### Patch Changes
