@@ -13,32 +13,49 @@ import {
  */
 const HEADER_SUB_CONTAINER_HEIGHT = 48 + 1;
 
-const baseHeaderStyles = css`
-  width: 100%;
-`;
-
-export const getHeaderStyles = ({ className }: { className?: string }) =>
-  cx(baseHeaderStyles, className);
-
 const getBorderBottomStyle = (theme: Theme) => css`
   border-bottom: 1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]};
 `;
 
-export const getAvatarContainerStyles = (theme: Theme) => css`
+const getBaseHeaderStyles = (theme: Theme) => css`
+  width: 100%;
+
+  ${getBorderBottomStyle(theme)};
+`;
+
+export const getHeaderStyles = ({
+  className,
+  theme,
+}: {
+  className?: string;
+  theme: Theme;
+}) => cx(getBaseHeaderStyles(theme), className);
+
+const baseAvatarContainerStyles = css`
   height: ${HEADER_SUB_CONTAINER_HEIGHT}px;
   display: flex;
   align-items: center;
   gap: ${spacing[150]}px;
   padding: 0 ${spacing[400]}px;
-
-  ${getBorderBottomStyle(theme)};
 `;
+
+export const getAvatarContainerStyles = ({
+  addBorderBottom,
+  theme,
+}: {
+  addBorderBottom: boolean;
+  theme: Theme;
+}) =>
+  cx(baseAvatarContainerStyles, {
+    [getBorderBottomStyle(theme)]: addBorderBottom,
+  });
 
 export const getButtonStyles = (theme: Theme) => css`
   border-radius: 0;
   border: none;
   height: ${HEADER_SUB_CONTAINER_HEIGHT}px;
+  // Non-token value used because ButtonContent padding is not customizable
   padding: ${spacing[300]}px 9px;
   width: 100%;
   background-color: ${color[theme].background[Variant.Secondary][
@@ -65,9 +82,8 @@ export const getButtonStyles = (theme: Theme) => css`
     }
   }
 
+  // Override the justify-content property in ButtonContent
   div:nth-child(2) {
     justify-content: flex-start;
   }
-
-  ${getBorderBottomStyle(theme)};
 `;

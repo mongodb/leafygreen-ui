@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 /**
- * Does not use tokens in order to have alignment with `ChatSideNavHeader` children
+ * Non-token value used in order to align `ChatSideNavFooter` children padding with `ChatSideNavHeader` children padding
  */
 const FOOTER_PADDING = 10;
 

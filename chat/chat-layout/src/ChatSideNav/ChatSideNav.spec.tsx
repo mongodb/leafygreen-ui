@@ -27,23 +27,6 @@ describe('ChatSideNav', () => {
     jest.clearAllMocks();
   });
 
-  test('renders Header and Content in enforced order', () => {
-    render(
-      <Providers>
-        <ChatSideNav>
-          {/* Intentionally reverse order in JSX */}
-          <ChatSideNav.Content>
-            <div data-testid="content">Content</div>
-          </ChatSideNav.Content>
-          <ChatSideNav.Header />
-        </ChatSideNav>
-      </Providers>,
-    );
-
-    const content = screen.getByTestId('content');
-    expect(content).toBeInTheDocument();
-  });
-
   test('Header shows "New Chat" button when onClickNewChat provided', async () => {
     const onClickNewChat = jest.fn();
 

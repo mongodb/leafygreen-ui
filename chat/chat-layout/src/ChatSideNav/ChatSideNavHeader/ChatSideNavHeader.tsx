@@ -31,13 +31,24 @@ export const ChatSideNavHeader = CompoundSubComponent(
       const { darkMode, theme } = useDarkMode();
       const { assistantName } = useLeafyGreenChatContext();
 
+      const showNewChatButton = !!onClickNewChat;
+
       return (
-        <div ref={ref} className={getHeaderStyles({ className })} {...rest}>
-          <div className={getAvatarContainerStyles(theme)}>
+        <div
+          ref={ref}
+          className={getHeaderStyles({ className, theme })}
+          {...rest}
+        >
+          <div
+            className={getAvatarContainerStyles({
+              addBorderBottom: showNewChatButton,
+              theme,
+            })}
+          >
             <AssistantAvatar darkMode={darkMode} size={20} />
             <Body weight={FontWeight.SemiBold}>{assistantName}</Body>
           </div>
-          {onClickNewChat && (
+          {showNewChatButton && (
             <Button
               className={getButtonStyles(theme)}
               leftGlyph={<PlusIcon />}

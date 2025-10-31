@@ -11,6 +11,8 @@ import { TitleBar } from '@lg-chat/title-bar';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+
 import { ChatLayout, type ChatLayoutProps, ChatMain, ChatSideNav } from '.';
 
 const testMessages = [
@@ -38,7 +40,7 @@ const meta: StoryMetaType<typeof ChatLayout> = {
     default: 'LiveExample',
   },
   decorators: [
-    Story => (
+    (Story, context) => (
       <div
         style={{
           margin: '-100px',
@@ -46,7 +48,9 @@ const meta: StoryMetaType<typeof ChatLayout> = {
           width: '100vw',
         }}
       >
-        <Story />
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Story />
+        </LeafyGreenProvider>
       </div>
     ),
   ],
