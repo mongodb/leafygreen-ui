@@ -28,12 +28,19 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/avatar": "workspace:^",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
   },
   "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": ">=3.2.0",
     "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
   "devDependencies": {

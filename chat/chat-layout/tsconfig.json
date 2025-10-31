@@ -10,13 +10,37 @@
   "exclude": ["**/*.stories.*"],
   "references": [
     {
+      "path": "../leafygreen-chat-provider"
+    },
+    {
+      "path": "../../packages/avatar"
+    },
+    {
+      "path": "../../packages/button"
+    },
+    {
+      "path": "../../packages/compound-component"
+    },
+    {
       "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/icon"
+    },
+    {
+      "path": "../../packages/icon-button"
+    },
+    {
+      "path": "../../packages/leafygreen-provider"
     },
     {
       "path": "../../packages/lib"
     },
     {
       "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
     },
     {
       "path": "../../tools/test-harnesses"

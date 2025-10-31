@@ -11,37 +11,9 @@ import { TitleBar } from '@lg-chat/title-bar';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
-import { css } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { ChatLayout, type ChatLayoutProps, ChatMain } from '.';
-
-const meta: StoryMetaType<typeof ChatLayout> = {
-  title: 'Composition/Chat/ChatLayout',
-  component: ChatLayout,
-  parameters: {
-    default: 'LiveExample',
-  },
-  decorators: [
-    Story => (
-      <div
-        style={{
-          margin: '-100px',
-          height: '100vh',
-          width: '100vw',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
-};
-export default meta;
-
-const sideNavPlaceholderStyles = css`
-  background-color: rgba(0, 0, 0, 0.05);
-  padding: 16px;
-  min-width: 200px;
-`;
+import { ChatLayout, type ChatLayoutProps, ChatMain, ChatSideNav } from '.';
 
 const testMessages = [
   {
@@ -61,10 +33,40 @@ const testMessages = [
   },
 ];
 
+const meta: StoryMetaType<typeof ChatLayout> = {
+  title: 'Composition/Chat/ChatLayout',
+  component: ChatLayout,
+  parameters: {
+    default: 'LiveExample',
+  },
+  decorators: [
+    (Story, context) => (
+      <div
+        style={{
+          margin: '-100px',
+          height: '100vh',
+          width: '100vw',
+        }}
+      >
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Story />
+        </LeafyGreenProvider>
+      </div>
+    ),
+  ],
+};
+export default meta;
+
 const Template: StoryFn<ChatLayoutProps> = props => (
   <LeafyGreenChatProvider variant={Variant.Compact}>
     <ChatLayout {...props}>
-      <div className={sideNavPlaceholderStyles}>ChatSideNav Placeholder</div>
+      <ChatSideNav>
+        <ChatSideNav.Header
+          // eslint-disable-next-line no-console
+          onClickNewChat={() => console.log('Clicked new chat')}
+        />
+        <ChatSideNav.Content>Content</ChatSideNav.Content>
+      </ChatSideNav>
       <ChatMain>
         <TitleBar title="Chat Assistant" />
         <ChatWindow>
