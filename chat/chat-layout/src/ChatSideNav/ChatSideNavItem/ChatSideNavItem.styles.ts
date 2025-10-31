@@ -13,6 +13,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+const CHAT_SIDE_NAV_ITEM_HEIGHT = 32;
 const WEDGE_HEIGHT_BOUND = 6;
 const WEDGE_WIDTH = 4;
 
@@ -22,7 +23,7 @@ const getBaseStyles = (theme: Theme) => css`
   // Layout
   position: relative;
   width: 100%;
-  min-height: 32px;
+  min-height: ${CHAT_SIDE_NAV_ITEM_HEIGHT}px;
   padding: ${spacing[150]}px ${spacing[400]}px;
   display: flex;
   align-items: center;
