@@ -14,6 +14,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { getComboboxOptions } from './test-utils/getTestOptions.testutils';
 import {
   ComboboxSize,
+  DropdownWidthBasis,
   Overflow,
   SearchState,
   State,
@@ -88,6 +89,7 @@ const meta: StoryMetaType<typeof Combobox> = {
     darkMode: false,
     disabled: false,
     clearable: true,
+    dropdownWidthBasis: DropdownWidthBasis.Trigger,
     errorMessage: 'No Pomegranates!',
     children: getComboboxOptions(),
   },
@@ -138,6 +140,10 @@ const meta: StoryMetaType<typeof Combobox> = {
       options: Object.values(Overflow),
       control: 'select',
       if: { arg: 'multiselect' },
+    },
+    dropdownWidthBasis: {
+      options: Object.values(DropdownWidthBasis),
+      control: 'select',
     },
   },
 };
