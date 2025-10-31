@@ -115,7 +115,7 @@ export const PasswordInput = React.forwardRef<
           className={className}
           ref={forwardedRef}
           data-lgid={lgIds.root}
-          data-test={lgIds.root}
+          data-testid={lgIds.root}
         >
           {label && (
             <Label
@@ -124,8 +124,8 @@ export const PasswordInput = React.forwardRef<
               })}
               htmlFor={inputId}
               disabled={disabled}
-              data-lgid={lgIds.root}
-              data-testid={lgIds.root}
+              data-lgid={lgIds.label}
+              data-testid={lgIds.label}
             >
               {label}
             </Label>

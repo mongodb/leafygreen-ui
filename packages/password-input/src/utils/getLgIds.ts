@@ -6,6 +6,7 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
     stateNotifications: `${root}-state_notifications`,
+    label: `${root}-label`,
   } as const;
   return ids;
 };

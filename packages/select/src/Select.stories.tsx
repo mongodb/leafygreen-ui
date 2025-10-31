@@ -142,7 +142,7 @@ export const LiveExample: StoryFn<SelectProps> = ({
 }: SelectProps) => (
   <Select
     {...args}
-    data-test="hello-world"
+    data-testid="hello-world"
     className={cx(
       css`
         min-width: 200px;
