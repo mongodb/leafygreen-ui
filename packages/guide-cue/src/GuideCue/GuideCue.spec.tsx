@@ -185,6 +185,20 @@ describe('packages/guide-cue', () => {
       const body = getByText(guideCueChildren);
       expect(body).toBeInTheDocument();
     });
+
+    test('primary button is focusable for focus trap targeting', async () => {
+      const { getByRole } = renderGuideCue({
+        open: true,
+      });
+
+      await waitFor(() => {
+        const primaryButton = getByRole('button', { name: buttonTextDefault });
+        // Verify the button exists and is in the document
+        expect(primaryButton).toBeInTheDocument();
+        // Verify button can receive focus (tabindex is not -1)
+        expect(primaryButton).not.toHaveAttribute('tabindex', '-1');
+      });
+    });
   });
 
   describe('Multi-step tooltip', () => {
@@ -351,6 +365,25 @@ describe('packages/guide-cue', () => {
       });
       const numOfButtons = getAllByRole('button').length;
       await waitFor(() => expect(numOfButtons).toEqual(2));
+    });
+
+    test('primary button is focusable for focus trap targeting', async () => {
+      const { getByRole } = renderGuideCue({
+        open: true,
+        numberOfSteps: 2,
+        currentStep: 1,
+      });
+      await act(async () => {
+        await waitForTimeout(timeout1);
+      });
+
+      await waitFor(() => {
+        const primaryButton = getByRole('button', { name: buttonTextDefault });
+        // Verify the button exists and is in the document
+        expect(primaryButton).toBeInTheDocument();
+        // Verify button can receive focus (tabindex is not -1)
+        expect(primaryButton).not.toHaveAttribute('tabindex', '-1');
+      });
     });
   });
 });
