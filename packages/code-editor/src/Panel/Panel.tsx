@@ -156,7 +156,7 @@ export function Panel({
               justify="middle"
               trigger={
                 <IconButton
-                  // darkMode={theme === 'dark'}
+                  darkMode={theme === 'dark'}
                   onClick={handleFormatClick}
                   aria-label="Format code"
                   data-lgid={lgIds.panelFormatButton}
