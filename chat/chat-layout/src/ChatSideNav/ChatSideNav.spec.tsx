@@ -80,4 +80,44 @@ describe('ChatSideNav', () => {
       screen.queryByTestId('another-arbitrary-child'),
     ).not.toBeInTheDocument();
   });
+
+  test('Content renders children that are SideNavItems', () => {
+    render(
+      <Providers>
+        <ChatSideNav>
+          <ChatSideNav.Header />
+          <ChatSideNav.Content>
+            <ChatSideNav.SideNavItem>Chat 1</ChatSideNav.SideNavItem>
+            <ChatSideNav.SideNavItem>Chat 2</ChatSideNav.SideNavItem>
+          </ChatSideNav.Content>
+        </ChatSideNav>
+      </Providers>,
+    );
+
+    expect(screen.getByText('Chat 1')).toBeInTheDocument();
+    expect(screen.getByText('Chat 2')).toBeInTheDocument();
+  });
+
+  test('Content does not render children that are not SideNavItems', () => {
+    render(
+      <Providers>
+        <ChatSideNav>
+          <ChatSideNav.Header />
+          <ChatSideNav.Content>
+            <ChatSideNav.SideNavItem>Chat 1</ChatSideNav.SideNavItem>
+            <div data-testid="arbitrary-child">Should not render</div>
+            <span data-testid="another-arbitrary-child">
+              Also should not render
+            </span>
+          </ChatSideNav.Content>
+        </ChatSideNav>
+      </Providers>,
+    );
+
+    expect(screen.getByText('Chat 1')).toBeInTheDocument();
+    expect(screen.queryByTestId('arbitrary-child')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('another-arbitrary-child'),
+    ).not.toBeInTheDocument();
+  });
 });
