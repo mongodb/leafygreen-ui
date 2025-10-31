@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 
 import {
   CompoundComponent,
-  filterChildren,
   findChild,
 } from '@leafygreen-ui/compound-component';
 import LeafyGreenProvider, {
@@ -33,12 +32,6 @@ export const ChatSideNav = CompoundComponent(
         ChatSideNavSubcomponentProperty.Content,
       );
 
-      // Filter out subcomponents from remaining children
-      const remainingChildren = filterChildren(
-        children,
-        Object.values(ChatSideNavSubcomponentProperty),
-      );
-
       return (
         <LeafyGreenProvider darkMode={darkMode}>
           <nav
@@ -49,7 +42,6 @@ export const ChatSideNav = CompoundComponent(
           >
             {header}
             {content}
-            {remainingChildren}
             <ChatSideNavFooter />
           </nav>
         </LeafyGreenProvider>

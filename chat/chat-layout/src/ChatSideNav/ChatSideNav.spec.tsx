@@ -60,4 +60,24 @@ describe('ChatSideNav', () => {
       screen.queryByRole('button', { name: /new chat/i }),
     ).not.toBeInTheDocument();
   });
+
+  test('does not render children that are not ChatSideNavHeader or ChatSideNavContent', () => {
+    render(
+      <Providers>
+        <ChatSideNav>
+          <ChatSideNav.Header />
+          <ChatSideNav.Content />
+          <div data-testid="arbitrary-child">Should not render</div>
+          <span data-testid="another-arbitrary-child">
+            Also should not render
+          </span>
+        </ChatSideNav>
+      </Providers>,
+    );
+
+    expect(screen.queryByTestId('arbitrary-child')).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId('another-arbitrary-child'),
+    ).not.toBeInTheDocument();
+  });
 });
