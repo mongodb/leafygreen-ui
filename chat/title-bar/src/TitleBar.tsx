@@ -18,13 +18,13 @@ import { Align, type TitleBarProps } from './TitleBar.types';
 export const TitleBar = forwardRef(
   (
     {
-      title,
-      className,
       align = Align.Center,
-      onClose,
       badgeText,
+      className,
       darkMode: darkModeProp,
       iconSlot,
+      onClose,
+      title,
       ...rest
     }: TitleBarProps,
     ref: ForwardedRef<HTMLDivElement>,
