@@ -31,7 +31,8 @@ npm install @lg-chat/chat-layout
 This package exports:
 
 - `ChatLayout`: The grid container and context provider
-- `ChatMain`: Content area component that positions itself in the grid
+- `ChatMain`: The primary content area of the chat interface, automatically positioned within the grid layout.
+- `ChatSideNav`: A compound component representing the side navigation, exposing subcomponents such as `ChatSideNav.Header` and `ChatSideNav.Content` for flexible composition.
 - `useChatLayoutContext`: Hook for accessing layout state
 
 ## Examples
@@ -39,15 +40,20 @@ This package exports:
 ### Basic
 
 ```tsx
-import { ChatLayout, ChatMain } from '@lg-chat/chat-layout';
+import { ChatLayout, ChatMain, ChatSideNav } from '@lg-chat/chat-layout';
 
 function MyChatApp() {
+  const handleNewChat = () => {
+    console.log('Start new chat');
+  };
+
   return (
     <ChatLayout>
-      {/* ChatSideNav will go here */}
-      <ChatMain>
-        <div>Your chat content</div>
-      </ChatMain>
+      <ChatSideNav>
+        <ChatSideNav.Header onClickNewChat={handleNewChat} />
+        <ChatSideNav.Content>{/* Your side nav content */}</ChatSideNav.Content>
+      </ChatSideNav>
+      <ChatMain>{/* Main chat content here */}</ChatMain>
     </ChatLayout>
   );
 }
@@ -56,19 +62,24 @@ function MyChatApp() {
 ### With Initial State and Toggle Pinned Callback
 
 ```tsx
-import { ChatLayout, ChatMain } from '@lg-chat/chat-layout';
+import { ChatLayout, ChatMain, ChatSideNav } from '@lg-chat/chat-layout';
 
 function MyChatApp() {
+  const handleNewChat = () => {
+    console.log('Start new chat');
+  };
+
   const handleTogglePinned = (isPinned: boolean) => {
     console.log('Side nav is now:', isPinned ? 'pinned' : 'collapsed');
   };
 
   return (
     <ChatLayout initialIsPinned={false} onTogglePinned={handleTogglePinned}>
-      {/* ChatSideNav will go here */}
-      <ChatMain>
-        <div>Your chat content</div>
-      </ChatMain>
+      <ChatSideNav>
+        <ChatSideNav.Header onClickNewChat={handleNewChat} />
+        <ChatSideNav.Content>{/* Your side nav content */}</ChatSideNav.Content>
+      </ChatSideNav>
+      <ChatMain>{/* Main chat content here */}</ChatMain>
     </ChatLayout>
   );
 }
@@ -96,6 +107,29 @@ All other props are passed through to the underlying `<div>` element.
 All other props are passed through to the underlying `<div>` element.
 
 **Note:** `ChatMain` must be used as a direct child of `ChatLayout` to work correctly within the grid system.
+
+### ChatSideNav
+
+| Prop                     | Type                      | Description                                                    | Default |
+| ------------------------ | ------------------------- | -------------------------------------------------------------- | ------- |
+| `children`               | `ReactNode`               | Should include `ChatSideNav.Header` and `ChatSideNav.Content`. | -       |
+| `className` _(optional)_ | `string`                  | Root class name                                                | -       |
+| `...`                    | `HTMLElementProps<'nav'>` | Props spread on the root `<nav>` element                       | -       |
+
+### ChatSideNav.Header
+
+| Prop                          | Type                                   | Description                                 | Default |
+| ----------------------------- | -------------------------------------- | ------------------------------------------- | ------- |
+| `onClickNewChat` _(optional)_ | `MouseEventHandler<HTMLButtonElement>` | Fired when the "New Chat" button is clicked | -       |
+| `className` _(optional)_      | `string`                               | Header class name                           | -       |
+| `...`                         | `HTMLElementProps<'div'>`              | Props spread on the header container        | -       |
+
+### ChatSideNav.Content
+
+| Prop                     | Type                      | Description                           | Default |
+| ------------------------ | ------------------------- | ------------------------------------- | ------- |
+| `className` _(optional)_ | `string`                  | Content class name                    | -       |
+| `...`                    | `HTMLElementProps<'div'>` | Props spread on the content container | -       |
 
 ## Context API
 

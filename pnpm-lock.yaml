@@ -340,15 +340,36 @@ importers:
 
   chat/chat-layout:
     dependencies:
+      '@leafygreen-ui/avatar':
+        specifier: workspace:^
+        version: link:../../packages/avatar
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../../packages/button
+      '@leafygreen-ui/compound-component':
+        specifier: workspace:^
+        version: link:../../packages/compound-component
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../../packages/emotion
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../../packages/icon-button
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: '>=3.2.0'
+        version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
         specifier: workspace:^
         version: link:../leafygreen-chat-provider
