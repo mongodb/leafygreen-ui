@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Options } from 'focus-trap';
 import FocusTrap from 'focus-trap-react';
 
 import { Button } from '@leafygreen-ui/button';
-import { cx } from '@leafygreen-ui/emotion';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
@@ -17,20 +15,21 @@ import {
   bodyThemeStyles,
   bodyTitleStyles,
   buttonStyles,
-  closeHoverStyles,
-  closeStyles,
   contentStyles,
   footerStyles,
+  getCloseButtonStyle,
+  getTooltipStyles,
   stepStyles,
-  tooltipMultistepStyles,
-  tooltipStyles,
 } from './GuideCueTooltip.styles';
 
 const ariaLabelledby = 'guide-cue-label';
 const ariaDescribedby = 'guide-cue-desc';
 
-const focusTrapOptions: Options = {
+const getFocusTrapOptions = (
+  buttonRef: React.RefObject<HTMLButtonElement>,
+): Options => ({
   clickOutsideDeactivates: true,
+  initialFocus: () => buttonRef.current || false,
   checkCanFocusTrap: async trapContainers => {
     const results = trapContainers.map(trapContainer => {
       return new Promise<void>(resolve => {
@@ -45,7 +44,7 @@ const focusTrapOptions: Options = {
     // Return a promise that resolves when all the trap containers are able to receive focus
     return Promise.all(results).then(() => undefined);
   },
-};
+});
 
 type GuideCueTooltipProps = Partial<GuideCueProps> & {
   theme: Theme;
@@ -77,7 +76,7 @@ function GuideCueTooltip({
   handleCloseClick,
   ...tooltipProps
 }: GuideCueTooltipProps) {
-  const focusId = useIdAllocator({ prefix: 'guide-cue' });
+  const primaryButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>
@@ -88,22 +87,21 @@ function GuideCueTooltip({
         justify={tooltipJustify}
         align={tooltipAlign}
         refEl={refEl}
-        className={cx(
-          { [tooltipMultistepStyles]: !isStandalone },
-          tooltipStyles,
+        className={getTooltipStyles({
+          isStandalone,
           tooltipClassName,
-        )}
+        })}
         onClose={onEscClose}
         role="dialog"
         aria-labelledby={ariaLabelledby}
         renderMode={RenderMode.TopLayer}
         {...tooltipProps}
       >
-        <FocusTrap focusTrapOptions={focusTrapOptions}>
+        <FocusTrap focusTrapOptions={getFocusTrapOptions(primaryButtonRef)}>
           <div>
             {!isStandalone && (
               <IconButton
-                className={cx(closeStyles, { [closeHoverStyles]: darkMode })}
+                className={getCloseButtonStyle(darkMode)}
                 aria-label="Close Tooltip"
                 onClick={handleCloseClick}
                 darkMode={!darkMode}
@@ -135,11 +133,11 @@ function GuideCueTooltip({
                 </Disclaimer>
               )}
               <Button
+                ref={primaryButtonRef}
                 variant="primary"
                 onClick={() => handleButtonClick()}
                 darkMode={!darkMode}
                 className={buttonStyles}
-                id={focusId}
               >
                 {buttonText}
               </Button>

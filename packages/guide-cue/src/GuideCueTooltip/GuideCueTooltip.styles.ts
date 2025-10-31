@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -19,13 +19,13 @@ export const buttonStyles = css`
   height: 28px;
 `;
 
-export const closeStyles = css`
+const closeStyles = css`
   position: absolute;
   top: 10px;
   right: 10px;
 `;
 
-export const closeHoverStyles = css`
+const closeHoverStyles = css`
   color: ${palette.gray.dark2};
   &:hover,
   &:active {
@@ -34,6 +34,11 @@ export const closeHoverStyles = css`
     }
   }
 `;
+
+export const getCloseButtonStyle = (isDarkMode?: boolean) =>
+  cx(closeStyles, {
+    [closeHoverStyles]: isDarkMode,
+  });
 
 export const contentStyles = css`
   margin-bottom: 16px;
@@ -55,10 +60,23 @@ export const stepStyles: Record<Theme, string> = {
   `,
 };
 
-export const tooltipMultistepStyles = css`
+const tooltipMultiStepStyles = css`
   padding: 32px 16px 16px;
 `;
 
-export const tooltipStyles = css`
+const tooltipStyles = css`
   cursor: auto;
 `;
+
+export const getTooltipStyles = ({
+  isStandalone,
+  tooltipClassName,
+}: {
+  isStandalone?: boolean;
+  tooltipClassName?: string;
+}) =>
+  cx(
+    { [tooltipMultiStepStyles]: !isStandalone },
+    tooltipStyles,
+    tooltipClassName,
+  );

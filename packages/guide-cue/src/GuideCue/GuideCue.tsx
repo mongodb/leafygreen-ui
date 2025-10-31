@@ -53,7 +53,7 @@ function GuideCue({
     : 'Next';
 
   /**
-   * Determines if the stand-alone tooltip should be shown. If there are multiple steps the multip-step tooltip will be shown.
+   * Determines if the stand-alone tooltip should be shown. If there are multiple steps the multi-step tooltip will be shown.
    */
   const isStandalone = numberOfSteps <= 1;
 
@@ -66,7 +66,7 @@ function GuideCue({
       setPopoverOpen(true);
       openTimeout = setTimeout(
         () =>
-          // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
+          // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
           flushSync(() => {
             // tooltip opens a little after the beacon opens
             setTooltipOpen(true);
@@ -77,7 +77,7 @@ function GuideCue({
       // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to multi-step tooltip.
       // tooltip closes first
       setTooltipOpen(false);
-      // beacon closes a little after the tooltip cloese
+      // beacon closes a little after the tooltip close
       closeTimeout = setTimeout(() => setPopoverOpen(false), timeout2);
     }
 
@@ -143,7 +143,7 @@ function GuideCue({
         // this is using the reference from the `refEl` prop to position itself against
         <GuideCueTooltip {...tooltipContentProps}>{children}</GuideCueTooltip>
       ) : (
-        // Multistep tooltip
+        // Multi-step tooltip
         <>
           <Popover
             active={popoverOpen}
