@@ -13,11 +13,6 @@ export interface TitleBarProps
   extends Omit<React.ComponentPropsWithoutRef<'div'>, 'children'>,
     DarkModeProps {
   /**
-   * Title text
-   */
-  title: string;
-
-  /**
    * Alignment of the title text and badge
    * @default Align.Left
    */
@@ -29,12 +24,17 @@ export interface TitleBarProps
   badgeText?: string;
 
   /**
+   * Slot for custom close icon
+   */
+  iconSlot?: React.ReactNode;
+
+  /**
    * Event handler called when the close button is clicked
    */
   onClose?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 
   /**
-   * Slot for custom close icon
+   * Title text
    */
-  iconSlot?: React.ReactNode;
+  title: string;
 }

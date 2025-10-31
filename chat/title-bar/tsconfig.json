@@ -21,6 +21,9 @@
       "path": "../avatar"
     },
     {
+      "path": "../leafygreen-chat-provider"
+    },
+    {
       "path": "../../packages/badge"
     },
     {
@@ -34,9 +37,6 @@
     },
     {
       "path": "../../packages/lib"
-    },
-    {
-      "path": "../../packages/palette"
     },
     {
       "path": "../../packages/tokens"
