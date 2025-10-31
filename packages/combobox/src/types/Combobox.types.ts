@@ -57,6 +57,14 @@ export const SearchState = {
 } as const;
 export type SearchState = (typeof SearchState)[keyof typeof SearchState];
 
+/** Determines the width of the dropdown menu */
+export const DropdownWidthBasis = {
+  Trigger: 'trigger',
+  Option: 'option',
+} as const;
+export type DropdownWidthBasis =
+  (typeof DropdownWidthBasis)[keyof typeof DropdownWidthBasis];
+
 /**
  * The type expected in the `value` or `initialValue` prop.
  * Also the type passed as an argument to `onChange`.

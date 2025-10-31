@@ -7,9 +7,10 @@ export interface ControlledReturnObject<T extends any> {
 
   /**
    * Either updates the uncontrolled value,
-   * or calls the provided `onChange` callback
+   * or calls the provided `onChange` callback.
+   * Accepts either a direct value or a function that receives the previous value.
    */
-  updateValue: (newVal: T) => void;
+  updateValue: (newVal: React.SetStateAction<T>) => void;
 
   /**
    * A setter for the internal value.
