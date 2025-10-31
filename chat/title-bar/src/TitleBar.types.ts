@@ -16,15 +16,18 @@ export interface TitleBarProps
    * Title text
    */
   title: string;
+
   /**
    * Alignment of the title text and badge
    * @default Align.Left
    */
   align?: Align;
+
   /**
    * Badge text rendered to indicate 'Beta' or 'Experimental' flags
    */
   badgeText?: string;
+
   /**
    * Event handler called when the close button is clicked
    */
