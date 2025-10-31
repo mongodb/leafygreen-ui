@@ -92,8 +92,6 @@ describe('packages/icon-button', () => {
     expect(icon).toBeInTheDocument();
     const title = icon.querySelector('title');
     expect(title?.textContent).toBe(titleText);
-
-    // expect(icon.getAttribute('title')).toBe(titleText);
   });
 
   /* eslint-disable jest/no-disabled-tests*/
