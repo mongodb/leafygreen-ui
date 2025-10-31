@@ -37,6 +37,12 @@
       "path": "../../packages/lib"
     },
     {
+      "path": "../../packages/palette"
+    },
+    {
+      "path": "../../packages/polymorphic"
+    },
+    {
       "path": "../../packages/tokens"
     },
     {
