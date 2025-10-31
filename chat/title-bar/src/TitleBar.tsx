@@ -13,7 +13,7 @@ import {
   getContentContainerStyles,
   getTitleBarStyles,
 } from './TitleBar.styles';
-import { Align, TitleBarProps } from '.';
+import { Align, type TitleBarProps } from './TitleBar.types';
 
 export const TitleBar = forwardRef(
   (
