@@ -1,5 +1,17 @@
 # @leafygreen-ui/pipeline
 
+## 8.0.7
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/tooltip@14.2.2
+
 ## 8.0.6
 
 ### Patch Changes

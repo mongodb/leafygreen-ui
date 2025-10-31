@@ -1,5 +1,23 @@
 # @lg-chat/fixed-chat-window
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @lg-chat/chat-window@5.1.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @lg-chat/title-bar@4.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/avatar@3.1.4
+
 ## 5.0.0
 
 ### Minor Changes

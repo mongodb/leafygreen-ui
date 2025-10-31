@@ -1,5 +1,13 @@
 # @leafygreen-ui/badge
 
+## 10.2.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+
 ## 10.2.1
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @leafygreen-ui/inline-definition
 
+## 9.1.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/tooltip@14.2.2
+
 ## 9.1.1
 
 ### Patch Changes

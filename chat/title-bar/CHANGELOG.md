@@ -1,5 +1,24 @@
 # @lg-chat/title-bar
 
+## 4.1.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @lg-chat/avatar@8.0.1
+  - @leafygreen-ui/badge@10.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+
 ## 4.0.9
 
 ### Patch Changes
