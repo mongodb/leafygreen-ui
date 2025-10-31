@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
+import { Align, Justify, RenderMode, Tooltip } from '@leafygreen-ui/tooltip';
 
 import { InternalStep } from '../InternalStep';
 

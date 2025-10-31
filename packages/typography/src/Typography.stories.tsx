@@ -2,7 +2,7 @@ import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 import { FontWeight } from '@leafygreen-ui/tokens';

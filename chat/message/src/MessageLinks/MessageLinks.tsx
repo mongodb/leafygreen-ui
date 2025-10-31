@@ -3,7 +3,7 @@ import { RichLinksArea } from '@lg-chat/rich-links';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';

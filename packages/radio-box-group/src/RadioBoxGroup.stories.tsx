@@ -6,7 +6,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Tooltip from '@leafygreen-ui/tooltip';
+import { Tooltip } from '@leafygreen-ui/tooltip';
 
 import { RadioBox } from './RadioBox';
 import { RadioBoxGroup } from './RadioBoxGroup';

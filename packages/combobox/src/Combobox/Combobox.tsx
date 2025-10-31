@@ -28,8 +28,8 @@ import {
   useIdAllocator,
   usePrevious,
 } from '@leafygreen-ui/hooks';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import { Icon } from '@leafygreen-ui/icon';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   PopoverPropsProvider,
   useDarkMode,

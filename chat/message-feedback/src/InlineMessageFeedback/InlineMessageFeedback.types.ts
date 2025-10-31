@@ -107,4 +107,11 @@ export type InlineMessageFeedbackProps = Required<
      * @default false
      */
     disabledSend?: boolean;
+
+    /**
+     * Whether to fade out the submitted message after submission
+     * @default false
+     * @remarks When true, after submitting, the SubmittedState will fade out after 3000ms and be removed from the DOM
+     */
+    enableFadeAfterSubmit?: boolean;
   };

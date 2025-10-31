@@ -23,7 +23,7 @@ import {
 import isUndefined from 'lodash/isUndefined';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
-import Badge from '@leafygreen-ui/badge';
+import { Badge } from '@leafygreen-ui/badge';
 import {
   useAutoScroll,
   useBackdropClick,

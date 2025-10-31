@@ -20,6 +20,11 @@ import { type CodeEditorModules } from '../moduleLoaders.types';
 
 import { useExtension } from './useExtension';
 
+// Exported so that an estimated height can be calculated for the editor while it's loading
+export const LINE_HEIGHT = 1.5;
+export const PADDING_TOP = spacing[200];
+export const PADDING_BOTTOM = spacing[200];
+
 /**
  * Hook for applying LeafyGreen UI theme styling to the CodeMirror editor.
  *
@@ -86,14 +91,19 @@ export function useThemeExtension({
     ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
           },
 
-          [CodeEditorSelectors.InnerEditor]: {
-            paddingTop: `${spacing[200]}px`,
-            paddingBottom: `${spacing[200]}px`,
+          [CodeEditorSelectors.Scroller]: {
+            paddingTop: `${PADDING_TOP}px`,
+            paddingBottom: `${PADDING_BOTTOM}px`,
+          },
+
+          [CodeEditorSelectors.FoldPlaceholder]: {
+            background: 'transparent',
           },
 
           [CodeEditorSelectors.Content]: {
             fontFamily: fontFamilies.code,
             fontSize: `${fontSize}px`,
+            padding: '0px',
           },
 
           [CodeEditorSelectors.Gutters]: {
@@ -114,9 +124,17 @@ export function useThemeExtension({
             {
               width: '48px',
               userSelect: 'none',
+              // Set on the fold gutter element instead so there's still padding when line numbers are disabled
+              paddingRight: 0,
+            },
+
+          [`${CodeEditorSelectors.FoldGutter} ${CodeEditorSelectors.GutterElement}`]:
+            {
+              paddingLeft: `${spacing[100]}px`,
             },
 
           [CodeEditorSelectors.Line]: {
+            lineHeight: LINE_HEIGHT,
             paddingLeft: `${spacing[300]}px`,
           },
 

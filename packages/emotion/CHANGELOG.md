@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 5.1.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
 ## 5.0.4
 
 ### Patch Changes

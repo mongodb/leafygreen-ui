@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { type EditorView } from '@codemirror/view';
 
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { type CodeEditorProps } from '../../CodeEditor.types';
@@ -66,7 +66,10 @@ export function useCodeFoldingExtension({
                 glyph="ChevronRight"
                 size={CUSTOM_ICON_SIZE}
                 className={css`
-                  margin-top: ${spacing[100]}px;
+                  /**
+                   * Design indicated that the close icon seemed a bit unaligned at 4px, so we added 1px to better align
+                   */
+                  margin-top: ${spacing[100] + 1}px;
                 `}
               />
             ),

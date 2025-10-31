@@ -4,9 +4,10 @@ import { flushSync } from 'react-dom';
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Popover, {
+import {
   Align,
   DismissMode,
+  Popover,
   RenderMode,
 } from '@leafygreen-ui/popover';
 

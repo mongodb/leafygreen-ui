@@ -1,5 +1,13 @@
 # @leafygreen-ui/gallery-indicator
 
+## 3.1.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+
 ## 3.1.0
 
 ### Minor Changes

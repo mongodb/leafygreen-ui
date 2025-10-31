@@ -10,7 +10,7 @@ import { StoryContext, StoryFn } from '@storybook/react';
 import range from 'lodash/range';
 import startCase from 'lodash/startCase';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { InlineCode, Label, Link } from '@leafygreen-ui/typography';

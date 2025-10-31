@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tokens",
-  "version": "3.2.4",
+  "version": "4.0.0",
   "description": "leafyGreen UI Kit Tokens",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -17,8 +17,7 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/palette": "workspace:^",
-    "polished": "^4.2.2"
+    "@leafygreen-ui/palette": "workspace:^"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",

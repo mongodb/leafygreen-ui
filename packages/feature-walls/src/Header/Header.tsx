@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import Button, { Variant } from '@leafygreen-ui/button';
+import { Button, Variant } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,

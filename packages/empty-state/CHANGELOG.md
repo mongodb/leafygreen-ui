@@ -1,5 +1,17 @@
 # @leafygreen-ui/empty-state
 
+## 3.0.8
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/badge@10.2.2
+  - @leafygreen-ui/button@25.1.2
+
 ## 3.0.7
 
 ### Patch Changes

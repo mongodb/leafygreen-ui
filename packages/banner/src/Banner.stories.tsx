@@ -8,7 +8,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import { glyphs, Icon } from '@leafygreen-ui/icon';
 import { Link } from '@leafygreen-ui/typography';
 
 import Banner, { BannerProps, Variant } from '.';

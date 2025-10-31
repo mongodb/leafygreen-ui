@@ -12,11 +12,12 @@ import { scrollbarColor } from './scrollbars';
 import {
   addOverflowShadow,
   borderRadius,
+  boxShadows,
   color,
   focusRing,
   fontFamilies,
   hoverRing,
-  shadow,
+  type ShadowKey,
   Side,
   spacing,
   transitionDuration,
@@ -47,7 +48,7 @@ const DemoCard = ({
           color: ${color[theme].text.primary.default};
           background-color: ${color[theme].background.primary.default};
           border: 1px solid ${color[theme].border.secondary.default};
-          box-shadow: ${darkMode ? shadow.dark[100] : shadow.light[100]};
+          box-shadow: ${boxShadows[theme][1]};
         `,
         className,
       )}
@@ -169,45 +170,52 @@ export const OverflowShadows = () => {
   );
 };
 
-export const Shadow = () => (
+const shadowMap: Record<Theme, Record<ShadowKey, string>> = {
+  [Theme.Light]: boxShadows.light,
+  [Theme.Dark]: boxShadows.dark,
+};
+
+const excludeKeys: Array<ShadowKey> = ['overflow'];
+
+export const Shadows = () => (
   <div
     className={css`
       display: flex;
-      gap: ${spacing[400]}px;
+      gap: ${spacing[800]}px;
     `}
   >
-    <div
-      className={css`
-        box-shadow: ${shadow.light[100]};
-        background-color: ${color.light.background.primary.default};
-        padding: ${spacing[1600]}px;
-        border-radius: ${borderRadius[200]}px;
-        border: 1px solid ${color.light.border.secondary.default};
-        color: ${color.light.text.primary.default};
-      `}
-    >
-      shadow.light[100]
-    </div>
-
-    <div
-      className={css`
-        padding: ${spacing[600]}px;
-        background-color: ${color.dark.background.primary.default};
-      `}
-    >
-      <div
-        className={css`
-          box-shadow: ${shadow.dark[100]};
-          background-color: ${color.dark.background.primary.default};
-          padding: ${spacing[1600]}px;
-          border-radius: ${borderRadius[200]}px;
-          border: 1px solid ${color.dark.border.secondary.default};
-          color: ${color.dark.text.primary.default};
-        `}
-      >
-        shadow.dark[100]
+    {Object.entries(shadowMap).map(([theme, shadows]) => (
+      <div key={theme}>
+        <h3
+          className={css`
+            text-transform: capitalize;
+          `}
+        >
+          {theme}
+        </h3>
+        {Object.entries(shadows).map(
+          ([key, value]) =>
+            !excludeKeys.includes(key as keyof typeof boxShadows.light) && (
+              <div
+                key={key}
+                className={css`
+                  box-shadow: ${value};
+                  background-color: ${color[theme as Theme].background.primary
+                    .default};
+                  padding: ${spacing[1600]}px;
+                  border-radius: ${borderRadius[200]}px;
+                  border: 1px solid
+                    ${color[theme as Theme].border.secondary.default};
+                  color: ${color[theme as Theme].text.primary.default};
+                  margin-bottom: ${spacing[800]}px;
+                `}
+              >
+                {key}
+              </div>
+            ),
+        )}
       </div>
-    </div>
+    ))}
   </div>
 );
 

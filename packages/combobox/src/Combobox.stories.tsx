@@ -8,7 +8,7 @@ import {
 import { StoryFn } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 
 import { getComboboxOptions } from './test-utils/getTestOptions.testutils';

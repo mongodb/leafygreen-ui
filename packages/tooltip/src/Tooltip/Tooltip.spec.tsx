@@ -10,7 +10,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';

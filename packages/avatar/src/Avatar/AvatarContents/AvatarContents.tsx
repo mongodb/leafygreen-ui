@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { MongoDBLogoMark, SupportedColors } from '@leafygreen-ui/logo';
 

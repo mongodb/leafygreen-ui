@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import Card from '@leafygreen-ui/card';
+import { Card } from '@leafygreen-ui/card';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { PolymorphicAs } from '@leafygreen-ui/polymorphic';

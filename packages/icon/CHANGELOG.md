@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 14.6.1
+
+### Patch Changes
+
+- c6b4d3f: Updates build process to avoid race conditions in `rollup` plugins that intermittently caused `@emotion/server/create-instance` to be marked as a direct dependency of icon
+- Updated dependencies [92693df]
+  - @leafygreen-ui/emotion@5.1.0
+
 ## 14.6.0
 
 ### Minor Changes

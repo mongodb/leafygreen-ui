@@ -1,5 +1,30 @@
 # @lg-chat/message-feedback
 
+## 8.1.0
+
+### Minor Changes
+
+- 6bb6c00: [LG-5643](https://jira.mongodb.org/browse/LG-5643)
+
+  Add `enableFadeAfterSubmit` prop to `InlineMessageFeedback` component to enable optional fade-out animation after feedback is submitted.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+  - @leafygreen-ui/text-area@12.1.2
+
 ## 8.0.0
 
 ### Patch Changes

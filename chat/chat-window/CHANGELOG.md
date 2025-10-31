@@ -1,5 +1,18 @@
 # @lg-chat/chat-window
 
+## 5.1.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @lg-chat/title-bar@4.1.0
+
 ## 5.0.0
 
 ### Major Changes
