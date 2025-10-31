@@ -16,6 +16,7 @@ import {
 import { ChatSideNavContent } from './ChatSideNavContent';
 import { ChatSideNavFooter } from './ChatSideNavFooter';
 import { ChatSideNavHeader } from './ChatSideNavHeader';
+import { ChatSideNavItem } from './ChatSideNavItem';
 
 export const ChatSideNav = CompoundComponent(
   // eslint-disable-next-line react/display-name
@@ -52,5 +53,6 @@ export const ChatSideNav = CompoundComponent(
     displayName: 'ChatSideNav',
     Header: ChatSideNavHeader,
     Content: ChatSideNavContent,
+    SideNavItem: ChatSideNavItem,
   },
 );

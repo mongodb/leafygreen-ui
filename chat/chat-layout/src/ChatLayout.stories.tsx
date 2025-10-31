@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ChatWindow } from '@lg-chat/chat-window';
 import { InputBar } from '@lg-chat/input-bar';
 import {
@@ -23,7 +23,7 @@ const testMessages = [
   },
   {
     id: '2',
-    messageBody: 'I need help with my database query.',
+    messageBody: 'I need help with ',
   },
   {
     id: '3',
@@ -57,34 +57,73 @@ const meta: StoryMetaType<typeof ChatLayout> = {
 };
 export default meta;
 
-const Template: StoryFn<ChatLayoutProps> = props => (
-  <LeafyGreenChatProvider variant={Variant.Compact}>
-    <ChatLayout {...props}>
-      <ChatSideNav>
-        <ChatSideNav.Header
-          // eslint-disable-next-line no-console
-          onClickNewChat={() => console.log('Clicked new chat')}
-        />
-        <ChatSideNav.Content>Content</ChatSideNav.Content>
-      </ChatSideNav>
-      <ChatMain>
-        <TitleBar title="Chat Assistant" />
-        <ChatWindow>
-          <MessageFeed>
-            {testMessages.map(msg => (
-              <Message
-                key={msg.id}
-                messageBody={msg.messageBody}
-                isSender={msg.isSender}
-              />
+const chatItems = [
+  { id: '1', name: 'MongoDB Atlas Setup', href: '/chat/1' },
+  { id: '2', name: 'Writing a Database Query', href: '/chat/2' },
+  { id: '3', name: 'Schema Design Discussion', href: '/chat/3' },
+  { id: '4', name: 'Performance Optimization', href: '/chat/4' },
+  { id: '5', name: 'Migration Planning', href: '/chat/5' },
+];
+
+const Template: StoryFn<ChatLayoutProps> = props => {
+  const [activeId, setActiveId] = useState<string | null>('1');
+
+  const handleClick = (id: string) => {
+    // eslint-disable-next-line no-console
+    console.log('Clicked', id);
+    setActiveId(id);
+  };
+
+  return (
+    <LeafyGreenChatProvider variant={Variant.Compact}>
+      <ChatLayout {...props}>
+        <ChatSideNav>
+          <ChatSideNav.Header
+            // eslint-disable-next-line no-console
+            onClickNewChat={() => console.log('Clicked new chat')}
+          />
+          <ChatSideNav.Content>
+            {chatItems.map(item => (
+              <ChatSideNav.SideNavItem
+                key={item.id}
+                href={item.href}
+                active={item.id === activeId}
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  e.preventDefault();
+
+                  handleClick(item.id);
+                }}
+              >
+                {item.name}
+              </ChatSideNav.SideNavItem>
             ))}
-          </MessageFeed>
-          <InputBar onMessageSend={() => {}} />
-        </ChatWindow>
-      </ChatMain>
-    </ChatLayout>
-  </LeafyGreenChatProvider>
-);
+          </ChatSideNav.Content>
+        </ChatSideNav>
+        <ChatMain>
+          <TitleBar title="Chat Assistant" />
+          <ChatWindow>
+            <MessageFeed>
+              {testMessages.map(msg => (
+                <Message
+                  key={msg.id}
+                  messageBody={
+                    msg.id === '2'
+                      ? `${msg.messageBody} ${chatItems
+                          .find(item => item.id === activeId)
+                          ?.name.toLowerCase()}`
+                      : msg.messageBody
+                  }
+                  isSender={msg.isSender}
+                />
+              ))}
+            </MessageFeed>
+            <InputBar onMessageSend={() => {}} />
+          </ChatWindow>
+        </ChatMain>
+      </ChatLayout>
+    </LeafyGreenChatProvider>
+  );
+};
 
 export const LiveExample: StoryObj<ChatLayoutProps> = {
   render: Template,

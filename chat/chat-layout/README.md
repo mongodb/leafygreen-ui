@@ -32,7 +32,7 @@ This package exports:
 
 - `ChatLayout`: The grid container and context provider
 - `ChatMain`: The primary content area of the chat interface, automatically positioned within the grid layout.
-- `ChatSideNav`: A compound component representing the side navigation, exposing subcomponents such as `ChatSideNav.Header` and `ChatSideNav.Content` for flexible composition.
+- `ChatSideNav`: A compound component representing the side navigation, exposing subcomponents such as `ChatSideNav.Header`, `ChatSideNav.Content`, and `ChatSideNav.SideNavItem` for flexible composition.
 - `useChatLayoutContext`: Hook for accessing layout state
 
 ## Examples
@@ -40,9 +40,18 @@ This package exports:
 ### Basic
 
 ```tsx
+import { useState } from 'react';
 import { ChatLayout, ChatMain, ChatSideNav } from '@lg-chat/chat-layout';
 
 function MyChatApp() {
+  const [activeChatId, setActiveChatId] = useState('1');
+
+  const chatItems = [
+    { id: '1', name: 'MongoDB Atlas Setup', href: '/chat/1' },
+    { id: '2', name: 'Database Query Help', href: '/chat/2' },
+    { id: '3', name: 'Schema Design Discussion', href: '/chat/3' },
+  ];
+
   const handleNewChat = () => {
     console.log('Start new chat');
   };
@@ -51,7 +60,21 @@ function MyChatApp() {
     <ChatLayout>
       <ChatSideNav>
         <ChatSideNav.Header onClickNewChat={handleNewChat} />
-        <ChatSideNav.Content>{/* Your side nav content */}</ChatSideNav.Content>
+        <ChatSideNav.Content>
+          {chatItems.map(({ href, id, item, name }) => (
+            <ChatSideNav.SideNavItem
+              key={id}
+              href={href}
+              active={id === activeChatId}
+              onClick={e => {
+                e.preventDefault();
+                setActiveChatId(id);
+              }}
+            >
+              {name}
+            </ChatSideNav.SideNavItem>
+          ))}
+        </ChatSideNav.Content>
       </ChatSideNav>
       <ChatMain>{/* Main chat content here */}</ChatMain>
     </ChatLayout>
@@ -65,21 +88,14 @@ function MyChatApp() {
 import { ChatLayout, ChatMain, ChatSideNav } from '@lg-chat/chat-layout';
 
 function MyChatApp() {
-  const handleNewChat = () => {
-    console.log('Start new chat');
-  };
-
   const handleTogglePinned = (isPinned: boolean) => {
     console.log('Side nav is now:', isPinned ? 'pinned' : 'collapsed');
   };
 
   return (
     <ChatLayout initialIsPinned={false} onTogglePinned={handleTogglePinned}>
-      <ChatSideNav>
-        <ChatSideNav.Header onClickNewChat={handleNewChat} />
-        <ChatSideNav.Content>{/* Your side nav content */}</ChatSideNav.Content>
-      </ChatSideNav>
-      <ChatMain>{/* Main chat content here */}</ChatMain>
+      <ChatSideNav>{/* Side nav subcomponents */}</ChatSideNav>
+      <ChatMain>{/* Main chat content */}</ChatMain>
     </ChatLayout>
   );
 }
@@ -130,6 +146,17 @@ All other props are passed through to the underlying `<div>` element.
 | ------------------------ | ------------------------- | ------------------------------------- | ------- |
 | `className` _(optional)_ | `string`                  | Content class name                    | -       |
 | `...`                    | `HTMLElementProps<'div'>` | Props spread on the content container | -       |
+
+### ChatSideNav.SideNavItem
+
+| Prop                     | Type                | Description                                                                                                                                                                                                                 | Default |
+| ------------------------ | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `active` _(optional)_    | `boolean`           | Whether or not the component should be rendered in an active state. When active, applies active styling and sets `aria-current="page"`                                                                                      | `false` |
+| `as` _(optional)_        | `React.ElementType` | When provided, the component will be rendered as the component or html tag indicated by this prop. Other additional props will be spread on the element. For example, `Link` or `a` tags can be supplied. Defaults to `'a'` | -       |
+| `children`               | `ReactNode`         | Content that will be rendered inside the root-level element (typically the chat name)                                                                                                                                       | -       |
+| `className` _(optional)_ | `string`            | Class name that will be applied to the root-level element                                                                                                                                                                   | -       |
+| `href` _(optional)_      | `string`            | The URL that the hyperlink points to. When provided, the component will be rendered as an anchor element                                                                                                                    | -       |
+| `onClick` _(optional)_   | `MouseEventHandler` | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument                                                                                                            | -       |
 
 ## Context API
 
