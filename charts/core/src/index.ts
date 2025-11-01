@@ -19,5 +19,4 @@ export {
 } from './EventMarkers';
 export { Bar, type BarProps, Line, type LineProps } from './Series';
 export { ThresholdLine, type ThresholdLineProps } from './ThresholdLine';
-export { XAxis, type XAxisProps, type XAxisType } from './XAxis';
-export { YAxis, type YAxisProps, type YAxisType } from './YAxis';
+export { XAxis, type XAxisProps, YAxis, type YAxisProps } from './Axis';
