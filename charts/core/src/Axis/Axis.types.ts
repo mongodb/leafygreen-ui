@@ -22,7 +22,7 @@ export type AxisProps = {
 } & (
   | {
       /**
-       * All continuous value- axis types.
+       * All continuous axis types (value, log, time).
        */
       type: Exclude<AxisType, 'category'>;
 
@@ -48,7 +48,7 @@ export type AxisProps = {
     }
   | {
       /**
-       * The 'category' axis type is suitable for discrete types of data
+       * A 'category' axis type is suitable for discrete types of data
        * where ideally all category names should be used as axis labels. Without
        * using 'category', the charting library may automatically determine axis
        * label values and positions, which might not correspond to each data point.
@@ -61,3 +61,8 @@ export type AxisProps = {
       data?: Array<string>;
     }
 );
+
+export type ContinuousAxisProps = Extract<
+  AxisProps,
+  { type: Extract<AxisType, 'value' | 'log' | 'time'> }
+>;

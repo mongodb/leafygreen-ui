@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
+import { ContinuousAxisProps } from './Axis/Axis.types';
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
@@ -92,16 +93,16 @@ export const LiveExample: StoryObj<{
   renderGrid: boolean;
   renderXAxis: boolean;
   xAxisType: XAxisProps['type'];
-  xAxisFormatter: XAxisProps['formatter'];
+  xAxisFormatter: ContinuousAxisProps['formatter'];
   xAxisLabel: XAxisProps['label'];
-  xAxisMin: XAxisProps['min'];
-  xAxisMax: XAxisProps['max'];
+  xAxisMin?: ContinuousAxisProps['min'];
+  xAxisMax?: ContinuousAxisProps['max'];
   renderYAxis: boolean;
   yAxisType: YAxisProps['type'];
-  yAxisFormatter: YAxisProps['formatter'];
+  yAxisFormatter: ContinuousAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
-  yAxisMin: YAxisProps['min'];
-  yAxisMax: YAxisProps['max'];
+  yAxisMin?: ContinuousAxisProps['min'];
+  yAxisMax?: ContinuousAxisProps['max'];
   renderTooltip: boolean;
   tooltipSeriesValueFormatter: ChartTooltipProps['seriesValueFormatter'];
   renderHeader: boolean;

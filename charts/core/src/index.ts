@@ -1,3 +1,4 @@
+export { XAxis, type XAxisProps, YAxis, type YAxisProps } from './Axis';
 export {
   Chart,
   type ChartProps,
@@ -19,4 +20,3 @@ export {
 } from './EventMarkers';
 export { Bar, type BarProps, Line, type LineProps } from './Series';
 export { ThresholdLine, type ThresholdLineProps } from './ThresholdLine';
-export { XAxis, type XAxisProps, YAxis, type YAxisProps } from './Axis';
