@@ -1,5 +1,20 @@
 # @lg-chat/message-feed
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [6bb6c00]
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+  - @lg-chat/message@9.1.0
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @lg-chat/avatar@8.0.1
+  - @lg-chat/message-rating@6.0.1
+  - @leafygreen-ui/button@25.1.2
+
 ## 8.0.0
 
 ### Major Changes

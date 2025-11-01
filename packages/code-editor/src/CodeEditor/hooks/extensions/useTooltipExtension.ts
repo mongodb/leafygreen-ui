@@ -47,44 +47,53 @@ export function useTooltipExtension({
         return [];
       }
 
-      return module.linter(linterView => {
-        const diagnostics: Array<Diagnostic> = tooltips.map(
-          ({
-            line,
-            column = 1,
-            severity = 'info',
-            length,
-            messages,
-            links,
-          }: CodeEditorTooltipType) => {
-            const lineInfo = linterView.state.doc.line(line);
-            const from = lineInfo.from + column - 1;
-            const to = from + length;
+      return module.linter(
+        linterView => {
+          const diagnostics: Array<Diagnostic> = tooltips.map(
+            ({
+              line,
+              column = 1,
+              severity = 'info',
+              length,
+              messages,
+              links,
+            }: CodeEditorTooltipType) => {
+              const lineInfo = linterView.state.doc.line(line);
+              const from = lineInfo.from + column - 1;
+              const to = from + length;
 
-            const renderMessage = () => {
-              const dom = document.createElement('div');
-              dom.innerHTML = renderToString(
-                React.createElement(CodeEditorTooltip, {
-                  messages,
-                  links,
-                  darkMode: props.darkMode,
-                  baseFontSize: props.baseFontSize,
-                }),
-              );
-              return dom;
-            };
+              const renderMessage = () => {
+                const dom = document.createElement('div');
+                dom.innerHTML = renderToString(
+                  React.createElement(CodeEditorTooltip, {
+                    messages,
+                    links,
+                    darkMode: props.darkMode,
+                    baseFontSize: props.baseFontSize,
+                  }),
+                );
+                return dom;
+              };
 
-            return {
-              from,
-              to,
-              severity,
-              message: ' ', // Provide a non-empty string to satisfy Diagnostic type
-              renderMessage,
-            };
-          },
-        );
-        return diagnostics;
-      });
+              return {
+                from,
+                to,
+                severity,
+                message: ' ', // Provide a non-empty string to satisfy Diagnostic type
+                renderMessage,
+              };
+            },
+          );
+          return diagnostics;
+        },
+        {
+          /**
+           * Decreasing but if consumers decide to use this for live linting, we might want to revert this so it
+           * doesn't show errors too fast.
+           */
+          delay: 100,
+        },
+      );
     },
   });
 }

@@ -1,8 +1,11 @@
 import React from 'react';
 import { indentUnit } from '@codemirror/language';
 import { type ChangeSpec } from '@codemirror/state';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
+import { preLoadedModules } from '../testing/preLoadedModules';
+
+import { type CodeEditorModules } from './hooks';
 import {
   CodeEditor,
   CodeEditorProps,
@@ -11,36 +14,13 @@ import {
 } from '.';
 
 let editorViewInstance: CodeMirrorView | null = null;
-let getEditorViewFn: (() => CodeMirrorView | null) | null = null;
 let editorHandleInstance: any = null;
-
-/**
- * Waits for the editor view to be available
- * @param timeout - Maximum time to wait in milliseconds (default: 5000)
- * @returns Promise that resolves when the editor view is available
- * @throws Error if timeout is reached
- */
-async function waitForEditorView(timeout = 5000): Promise<CodeMirrorView> {
-  await waitFor(
-    () => {
-      const view = getEditorViewFn?.();
-
-      if (!view) {
-        throw new Error('Editor view not available yet');
-      }
-      editorViewInstance = view;
-    },
-    { timeout },
-  );
-
-  return ensureEditorView();
-}
 
 /**
  * Ensures the editor view is available, throwing an error if not
  * @throws Error if editor view is not available
  */
-function ensureEditorView(): CodeMirrorView {
+function getEditorView(): CodeMirrorView {
   if (!editorViewInstance) {
     throw new Error(
       'Editor view is not available. Make sure to call renderCodeEditor first and wait for the editor to initialize.',
@@ -62,7 +42,7 @@ function getBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
 ) {
-  const view = ensureEditorView();
+  const view = getEditorView();
   const elements = view.dom.querySelectorAll(selector);
 
   if (!elements || elements.length === 0) {
@@ -107,7 +87,7 @@ function queryBySelector(
   selector: CodeEditorSelectors,
   options?: { text?: string },
 ) {
-  const view = ensureEditorView();
+  const view = getEditorView();
   const elements = view.dom.querySelectorAll(selector);
 
   if (!elements || elements.length === 0) {
@@ -142,7 +122,7 @@ function queryBySelector(
  * @returns Boolean indicating whether the editor is in read-only mode
  */
 function isReadOnly() {
-  const view = ensureEditorView();
+  const view = getEditorView();
   return view.state.readOnly;
 }
 
@@ -151,7 +131,7 @@ function isReadOnly() {
  * @returns The string used for indentation (spaces or tab)
  */
 function getIndentUnit() {
-  const view = ensureEditorView();
+  const view = getEditorView();
   return view.state.facet(indentUnit);
 }
 
@@ -169,7 +149,7 @@ function isLineWrappingEnabled() {
  * @throws Error if editor view is not initialized
  */
 function getContent(): string {
-  const view = ensureEditorView();
+  const view = getEditorView();
   return view.state.doc.toString();
 }
 
@@ -197,7 +177,7 @@ function getHandle(): any {
  * @throws Error if editor view is not initialized
  */
 function insertText(text: string, options?: { from?: number; to?: number }) {
-  const view = ensureEditorView();
+  const view = getEditorView();
 
   // Default to inserting at the end of the document
   const defaultFrom = options?.from ?? view.state.doc.length;
@@ -257,11 +237,11 @@ export const editor = {
     undo,
     redo,
   },
-  waitForEditorView,
 };
 
 /**
- * Renders a CodeEditor component with the specified props for testing
+ * Renders a CodeEditor component with the specified props for testing.
+ * Automatically provides preloaded modules for synchronous rendering.
  * @param props - Props to pass to the CodeEditor component
  * @param options - Optional rendering options
  * @param options.children - Children to render inside the CodeEditor (e.g., Panel components)
@@ -269,20 +249,17 @@ export const editor = {
  */
 export function renderCodeEditor(
   props: Partial<CodeEditorProps> = {},
-  options?: { children?: React.ReactNode },
+  moduleOverrides?: Partial<CodeEditorModules>,
 ) {
-  const { children } = options || {};
   const { container } = render(
     <CodeEditor
       {...props}
+      preLoadedModules={{ ...preLoadedModules, ...moduleOverrides }}
       ref={ref => {
-        getEditorViewFn = ref?.getEditorViewInstance ?? null;
         editorViewInstance = ref?.getEditorViewInstance() ?? null;
         editorHandleInstance = ref;
       }}
-    >
-      {children}
-    </CodeEditor>,
+    />,
   );
 
   return { container, editor };
