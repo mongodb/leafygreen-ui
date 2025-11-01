@@ -19,12 +19,13 @@ export interface ChartTooltipProps {
   seriesNameFormatter?: (name: SeriesName) => ReactNode;
   headerFormatter?: (value: number | string) => ReactNode;
   /**
-   * Controls the type of axis pointer shown with the tooltip.
-   * If not provided, the default is 'line', which shows a vertical dashed line on
-   * hover. Set to 'none' for bar charts to avoid the dashed line from being
-   * rendered on top of the bars.
+   * Specifies the visual indicator (axis pointer) used with the tooltip:
+   * - 'line' (default): Shows a vertical dashed line on hover.
+   * - 'shadow': Displays a shadow under data points sharing the same x-axis value.
+   *   note: this is best suited for category axes; for continuous axes, it will appear as a thin, dim line.
+   * - 'none': No line/shadow is shown.
    */
-  axisPointer?: 'none' | 'line';
+  axisPointer?: 'none' | 'line' | 'shadow';
   /**
    * Additional CSS class names to apply to the tooltip element.
    * Useful for applying environment-specific styles like dark mode overrides.

@@ -42,7 +42,7 @@ export function CustomTooltip({
 }: CustomTooltipProps) {
   const { theme } = useDarkMode(darkMode);
 
-  if (seriesData.length === 0 || !seriesData[0].data[0]) {
+  if (seriesData.length === 0 || seriesData[0].data[0] == undefined) {
     return null;
   }
 
