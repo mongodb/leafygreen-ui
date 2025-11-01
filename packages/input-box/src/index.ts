@@ -15,3 +15,8 @@ export {
   isValidSegmentName,
   isValidSegmentValue,
 } from './utils/isValidSegment/isValidSegment';
+export {
+  useInputBoxContext,
+  InputBoxProvider,
+  type InputBoxProviderProps,
+} from './InputBoxContext/InputBoxContext';

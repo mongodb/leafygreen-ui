@@ -20,6 +20,8 @@ import {
   InputSegmentProps,
 } from './InputSegment.types';
 
+import { useInputBoxContext } from '../InputBoxContext';
+
 /**
  * Generic controlled input segment component
  *
@@ -28,19 +30,19 @@ import {
  *
  * @internal
  */
-const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
+const InputSegmentWithRef = <T extends string, V extends string>(
   {
     segment,
     value,
-    onChange,
-    onBlur,
+    // onChange, // TODO: will be read from context
+    // onBlur, // TODO: will be read from context
     onKeyDown,
     size,
-    charsPerSegment,
-    min,
-    max,
+    // charsPerSegment, // TODO: will be read from context
+    min, // minSegmentValue
+    max, // maxSegmentValue
     className,
-    segmentEnum,
+    // segmentEnum, // TODO: will be read from context
     step = 1,
     shouldNotRollover = false,
     shouldSkipValidation = false,
@@ -49,9 +51,19 @@ const InputSegmentWithRef = <T extends Record<string, any>, V extends string>(
   fwdRef: ForwardedRef<HTMLInputElement>,
 ) => {
   const { theme } = useDarkMode();
+  const {
+    onChange,
+    onBlur,
+    charsPerSegment: charsPerSegmentContext,
+    segmentEnum,
+  } = useInputBoxContext<T>(); // TODO: since we're no longer passing the enum object to inputSegment, t should extend a string not an object
   const baseFontSize = useUpdatedBaseFontSize();
+  const charsPerSegment = charsPerSegmentContext[segment];
   const formatter = getValueFormatter(charsPerSegment, min === 0);
   const pattern = `[0-9]{${charsPerSegment}}`;
+
+  // TODO: read onChange, onBlur from context
+  // const { onChange, onBlur, charsPerSegment, segmentEnum } = useInputBoxContext(Context);
 
   /**
    * Receives native input events,

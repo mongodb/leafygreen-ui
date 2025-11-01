@@ -25,20 +25,21 @@ import {
 } from './InputBox.styles';
 import { InputBoxComponentType, InputBoxProps } from './InputBox.types';
 
+import { InputBoxProvider } from '../InputBoxContext';
+
 /**
  * Generic controlled input box component
  * Renders an input box with appropriate segment order & separator characters.
  *
  * @internal
  */
-export const InputBoxWithRef = <T extends Record<string, string>>(
+export const InputBoxWithRef = <T extends string>(
   {
     className,
     labelledBy,
     segmentRefs,
     onSegmentChange,
     onKeyDown,
-    segments,
     setSegment,
     disabled,
     charsPerSegment,
@@ -73,7 +74,7 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
 
   /** Fired when an individual segment value changes */
   const handleSegmentInputChange: InputSegmentChangeEventHandler<
-    T[keyof T],
+    T,
     string
   > = segmentChangeEvent => {
     let segmentValue = segmentChangeEvent.value;
@@ -202,34 +203,45 @@ export const InputBoxWithRef = <T extends Record<string, string>>(
   };
 
   return (
-    // We want to allow keydown events to be captured by the parent so that the parent can handle the event.
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
-      className={getSegmentPartsWrapperStyles({ className })}
-      onKeyDown={handleInputKeyDown}
-      ref={fwdRef}
-      {...rest}
+    <InputBoxProvider
+      charsPerSegment={charsPerSegment}
+      onChange={handleSegmentInputChange}
+      onBlur={handleSegmentInputBlur}
+      segmentEnum={segmentEnum}
     >
-      {formatParts?.map((part, i) => {
-        if (part.type === 'literal') {
-          return (
-            <span
-              className={getSeparatorLiteralStyles({ theme, disabled })}
-              key={'literal-' + i}
-            >
-              {part.value}
-            </span>
-          );
-        } else if (isInputSegment(part.type, segmentEnum)) {
-          const segmentProps = {
-            onChange: handleSegmentInputChange,
-            onBlur: handleSegmentInputBlur,
-            partType: part.type,
-          };
-          return renderSegment(segmentProps);
-        }
-      })}
-    </div>
+      {/* //<Context.Provider onChange={onChange} onBlur={onBlur}> */}
+      {/* // We want to allow keydown events to be captured by the parent so that the parent can handle the event. */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+      <div
+        className={getSegmentPartsWrapperStyles({ className })}
+        onKeyDown={handleInputKeyDown}
+        ref={fwdRef}
+        {...rest}
+      >
+        {formatParts?.map((part, i) => {
+          if (part.type === 'literal') {
+            return (
+              <span
+                className={getSeparatorLiteralStyles({ theme, disabled })}
+                key={'literal-' + i}
+              >
+                {part.value}
+              </span>
+            );
+          } else if (isInputSegment(part.type, segmentEnum)) {
+            const segmentProps = {
+              onChange: handleSegmentInputChange,
+              onBlur: handleSegmentInputBlur,
+              partType: part.type,
+            };
+            return renderSegment(segmentProps);
+
+            // TODO: return <Segment segment={part.type}  />;
+          }
+        })}
+      </div>
+      {/* // </Context.Provider> */}
+    </InputBoxProvider>
   );
 };
 

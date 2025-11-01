@@ -58,6 +58,10 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     const { isDirty, formatParts, disabled, min, max, setIsDirty } =
       useSharedDatePickerContext();
 
+    // TODO: add context to store the value and segmentsRef so that the DateInputSegment can access it
+    // const { value, segmentsRef, labelledby, segments }
+    // <context.Provider value={{ value, segmentsRef, labelledby, segments }}></context.Provider>
+
     /** if the value is a `Date` the component is dirty */
     useEffect(() => {
       if (isDateObject(value) && !isDirty) {
@@ -104,16 +108,17 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       <InputBox
         ref={fwdRef}
         onKeyDown={onKeyDown}
-        segmentRefs={segmentRefs}
-        segmentEnum={DateSegment}
-        charsPerSegment={charsPerSegment}
+        segmentRefs={segmentRefs} // TODO: move this to context within InputBox
+        segmentEnum={DateSegment} // TODO: move this to context within InputBox
+        charsPerSegment={charsPerSegment} // TODO: move this to context within InputBox
         formatParts={formatParts}
-        segments={segments}
+        segments={segments} // TODO: move this to context within InputBox
         setSegment={setSegment}
         disabled={disabled}
         segmentRules={dateSegmentRules}
         onSegmentChange={onSegmentChange}
         minValues={defaultMin}
+        labelledBy={labelledBy} // new addition
         renderSegment={({ onChange, onBlur, partType }) => (
           <DateInputSegment
             key={partType}
@@ -123,14 +128,42 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
             max={getMaxSegmentValue(partType, { date: value, max })}
             segment={partType}
             value={segments[partType]}
-            onChange={onChange}
-            onBlur={onBlur}
+            // onChange={onChange}
+            // onBlur={onBlur}
           />
         )}
+        // TODO:Segment={DateInputSegment}
         {...rest}
-      ></InputBox>
+      >
+        {/* {renderFormat(formatParts, DateInputSegment, value, labelledBy)} */}
+      </InputBox>
     );
   },
 );
 
 DateInputBox.displayName = 'DateInputBox';
+
+// // renderSegment as a function
+// const RenderFormat = (formatParts: Intl.DateTimeFormatPart[], Segment: ReactComponent, value) => {
+//   return (
+//     <div>
+//       {formatParts?.map((part, i) => {
+//         if (part.type === 'literal') {
+//           return (
+//             <span
+//               className={getSeparatorLiteralStyles({ theme, disabled })}
+//               key={'literal-' + i}
+//             >
+//               {part.value}
+//             </span>
+//           );
+//         } else if (isInputSegment(part.type, segmentEnum)) {
+//           // render segement
+//           return <Segment segment={part.type} value={value} />;
+//         }
+//       })}
+//     </div>
+//   );
+// };
+
+// TODO: consider renaming min/max names to minSegment/maxSegment

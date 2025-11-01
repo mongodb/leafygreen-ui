@@ -135,9 +135,9 @@ describe('packages/input-box', () => {
           <InputSegment
             key={partType}
             segment={partType}
-            onChange={onChange}
+            // onChange={onChange}
             onBlur={onBlur}
-            charsPerSegment={charsPerSegmentMock[partType]}
+            // charsPerSegment={charsPerSegmentMock[partType]}
             data-testid={`input-segment-${partType}`}
           />
         ),
@@ -373,12 +373,12 @@ describe('packages/input-box', () => {
           key={partType}
           segment={partType}
           value={segmentsMock[partType]}
-          onChange={onChange}
+          // onChange={onChange}
           onBlur={onBlur}
-          charsPerSegment={charsPerSegmentMock[partType]}
+          // charsPerSegment={charsPerSegmentMock[partType]}
           min={defaultMinMock[partType]}
           max={defaultMaxMock[partType]}
-          segmentEnum={SegmentObjMock}
+          // segmentEnum={SegmentObjMock}
           size={Size.Default}
         />
       )}

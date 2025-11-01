@@ -33,6 +33,4 @@ export interface DateInputSegmentProps
 
   /** Optional maximum value. Defaults to 31 for day, 12 for month, 2038 for year */
   max?: number;
-
-  onChange: DateInputSegmentChangeEventHandler;
 }

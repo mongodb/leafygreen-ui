@@ -20,10 +20,8 @@ export type InputSegmentChangeEventHandler<
   V extends string,
 > = (inputSegmentChangeEvent: InputSegmentChangeEvent<T, V>) => void;
 
-export interface InputSegmentProps<
-  T extends Record<string, any>,
-  V extends string,
-> extends Omit<
+export interface InputSegmentProps<T extends string, V extends string>
+  extends Omit<
     React.ComponentPropsWithRef<'input'>,
     'onChange' | 'size' | 'step'
   > {
@@ -35,7 +33,7 @@ export interface InputSegmentProps<
    * 'month'
    * 'year'
    */
-  segment: T[keyof T];
+  segment: T;
 
   /**
    * The value of the segment
@@ -50,7 +48,7 @@ export interface InputSegmentProps<
   /**
    * Custom onChange handler
    */
-  onChange: InputSegmentChangeEventHandler<T[keyof T], V>;
+  // onChange: InputSegmentChangeEventHandler<T, V>;
 
   /**
    * The number of characters per segment
@@ -58,7 +56,7 @@ export interface InputSegmentProps<
    * @example
    * 4
    */
-  charsPerSegment: number;
+  // charsPerSegment: number;
 
   /**
    * Minimum value.
@@ -86,7 +84,7 @@ export interface InputSegmentProps<
    * @example
    * { Day: 'day', Month: 'month', Year: 'year' }
    */
-  segmentEnum: T;
+  // segmentEnum: T;
 
   /**
    * Size of the segment
@@ -129,7 +127,7 @@ export interface InputSegmentProps<
  * @see https://stackoverflow.com/a/58473012
  */
 export interface InputSegmentComponentType {
-  <T extends Record<string, any>, V extends string>(
+  <T extends string, V extends string>(
     props: InputSegmentProps<T, V>,
     ref: ForwardedRef<HTMLInputElement>,
   ): ReactElement | null;

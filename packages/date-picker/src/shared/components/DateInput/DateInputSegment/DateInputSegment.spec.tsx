@@ -15,26 +15,55 @@ import { DateSegment } from '../../../types';
 import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';
 
+import {
+  InputBoxProvider,
+  type InputBoxProviderProps,
+} from '@leafygreen-ui/input-box';
+
 const renderSegment = (
   props?: Partial<DateInputSegmentProps>,
   ctx?: Partial<SharedDatePickerProviderProps>,
+  providerProps?: Partial<InputBoxProviderProps<DateSegment>>,
 ) => {
   const defaultProps = {
     value: '',
-    onChange: () => {},
+    onChange: () => {}, //TODO: remove this
     segment: 'day' as DateSegment,
+  };
+
+  const defaultProviderProps = {
+    onChange: () => {},
+    onBlur: () => {},
   };
 
   const result = render(
     <SharedDatePickerProvider label="label" {...ctx}>
-      <DateInputSegment {...defaultProps} {...props} />
+      <InputBoxProvider
+        charsPerSegment={charsPerSegment}
+        segmentEnum={DateSegment}
+        {...defaultProviderProps}
+        {...providerProps}
+      >
+        <DateInputSegment {...defaultProps} {...props} />
+      </InputBoxProvider>
     </SharedDatePickerProvider>,
   );
 
-  const rerenderSegment = (newProps: Partial<DateInputSegmentProps>) =>
+  const rerenderSegment = (
+    newProps: Partial<DateInputSegmentProps>,
+    newProviderProps?: Partial<InputBoxProviderProps<DateSegment>>,
+  ) =>
     result.rerender(
       <SharedDatePickerProvider label="label" {...ctx}>
-        <DateInputSegment {...defaultProps} {...props} {...newProps} />,
+        <InputBoxProvider
+          charsPerSegment={charsPerSegment}
+          segmentEnum={DateSegment}
+          {...defaultProviderProps}
+          {...newProviderProps}
+        >
+          <DateInputSegment {...defaultProps} {...props} {...newProps} />
+        </InputBoxProvider>
+        ,
       </SharedDatePickerProvider>,
     );
 
@@ -145,7 +174,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   describe('Typing', () => {
     describe('into an empty segment', () => {
       test('calls the change handler', () => {
-        const { input } = renderSegment({
+        const { input } = renderSegment({}, undefined, {
           onChange: onChangeHandler,
         });
 
@@ -156,7 +185,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       test('allows zero character', () => {
-        const { input } = renderSegment({
+        const { input } = renderSegment({}, undefined, {
           onChange: onChangeHandler,
         });
 
@@ -167,12 +196,12 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       test('allows typing leading zeroes', async () => {
-        const { input, rerenderSegment } = renderSegment({
+        const { input, rerenderSegment } = renderSegment({}, undefined, {
           onChange: onChangeHandler,
         });
 
         userEvent.type(input, '0');
-        rerenderSegment({ value: '0' });
+        rerenderSegment({ value: '0' }, { onChange: onChangeHandler });
 
         userEvent.type(input, '2');
         await waitFor(() => {
@@ -183,7 +212,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       test('does not allow non-number characters', () => {
-        const { input } = renderSegment({
+        const { input } = renderSegment({}, undefined, {
           onChange: onChangeHandler,
         });
 
@@ -194,10 +223,16 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
     describe('into a segment with a value', () => {
       test('allows typing additional characters if the current value is incomplete', () => {
-        const { input } = renderSegment({
-          value: '2',
-          onChange: onChangeHandler,
-        });
+        const { input } = renderSegment(
+          {
+            value: '2',
+            // onChange: onChangeHandler,
+          },
+          undefined,
+          {
+            onChange: onChangeHandler,
+          },
+        );
 
         userEvent.type(input, '6');
         expect(onChangeHandler).toHaveBeenCalledWith(
@@ -206,10 +241,16 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       test('resets the value when the value is complete', () => {
-        const { input } = renderSegment({
-          value: '26',
-          onChange: onChangeHandler,
-        });
+        const { input } = renderSegment(
+          {
+            value: '26',
+            // onChange: onChangeHandler,
+          },
+          undefined,
+          {
+            onChange: onChangeHandler,
+          },
+        );
 
         userEvent.type(input, '4');
         expect(onChangeHandler).toHaveBeenCalledWith(
@@ -222,7 +263,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   describe('Keyboard', () => {
     describe('Backspace', () => {
       test('does not call the onChangeHandler when the value is initially empty', () => {
-        const { input } = renderSegment({
+        const { input } = renderSegment({}, undefined, {
           onChange: onChangeHandler,
         });
 
@@ -231,10 +272,16 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       test('clears the input when there is a value', () => {
-        const { input } = renderSegment({
-          value: '26',
-          onChange: onChangeHandler,
-        });
+        const { input } = renderSegment(
+          {
+            value: '26',
+            // onChange: onChangeHandler,
+          },
+          undefined,
+          {
+            onChange: onChangeHandler,
+          },
+        );
 
         userEvent.type(input, '{backspace}');
         expect(onChangeHandler).toHaveBeenCalledWith(
@@ -249,11 +296,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: formatter(15),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                // onChange: onChangeHandler,
+                value: formatter(15),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -264,11 +317,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with default `min` if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: '',
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                // onChange: onChangeHandler,
+                value: '',
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -277,11 +336,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('rolls value over to default `min` value if value exceeds `max`', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: formatter(defaultMax['day']),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                // onChange: onChangeHandler,
+                value: formatter(defaultMax['day']),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -290,12 +355,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with provided `min` prop if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: '',
-              min: 5,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                // onChange: onChangeHandler,
+                value: '',
+                min: 5,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -304,12 +375,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('rolls value over to provided `min` value if value exceeds `max`', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: formatter(defaultMax['day']),
-              min: 5,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                // onChange: onChangeHandler,
+                value: formatter(defaultMax['day']),
+                min: 5,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -320,11 +397,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
         describe('Down arrow', () => {
           test('calls handler with value -1', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: formatter(15),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                // onChange: onChangeHandler,
+                value: formatter(15),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -335,11 +418,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with default `max` if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: '',
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                // onChange: onChangeHandler,
+                value: '',
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -348,11 +437,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('rolls value over to default `max` value if value exceeds `min`', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: formatter(defaultMin['day']),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                //  onChange: onChangeHandler,
+                value: formatter(defaultMin['day']),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -361,12 +456,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with provided `max` prop if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: '',
-              max: 25,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                // onChange: onChangeHandler,
+                value: '',
+                max: 25,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -375,12 +476,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('rolls value over to provided `max` value if value exceeds `min`', () => {
-            const { input } = renderSegment({
-              segment: 'day',
-              onChange: onChangeHandler,
-              value: formatter(defaultMin['day']),
-              max: 25,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'day',
+                // onChange: onChangeHandler,
+                value: formatter(defaultMin['day']),
+                max: 25,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -395,11 +502,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: formatter(6),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                // onChange: onChangeHandler,
+                value: formatter(6),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -410,11 +523,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with default `min` if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: '',
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                // onChange: onChangeHandler,
+                value: '',
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -425,11 +544,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('rolls value over to default `min` value if value exceeds `max`', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: formatter(defaultMax['month']),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                // onChange: onChangeHandler,
+                value: formatter(defaultMax['month']),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -440,12 +565,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with provided `min` prop if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: '',
-              min: 5,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                //  onChange: onChangeHandler,
+                value: '',
+                min: 5,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -456,12 +587,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('rolls value over to provided `min` value if value exceeds `max`', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: formatter(defaultMax['month']),
-              min: 5,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                //  onChange: onChangeHandler,
+                value: formatter(defaultMax['month']),
+                min: 5,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -474,11 +611,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
         describe('Down arrow', () => {
           test('calls handler with value -1', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: formatter(6),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                //  onChange: onChangeHandler,
+                value: formatter(6),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -489,11 +632,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with default `max` if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: '',
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                //  onChange: onChangeHandler,
+                value: '',
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -504,11 +653,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('rolls value over to default `max` value if value exceeds `min`', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: formatter(defaultMin['month']),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                //  onChange: onChangeHandler,
+                value: formatter(defaultMin['month']),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -519,12 +674,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with provided `max` prop if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: '',
-              max: 10,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                //  onChange: onChangeHandler,
+                value: '',
+                max: 10,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -535,12 +696,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('rolls value over to provided `max` value if value exceeds `min`', () => {
-            const { input } = renderSegment({
-              segment: 'month',
-              onChange: onChangeHandler,
-              value: formatter(defaultMin['month']),
-              max: 10,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'month',
+                //    onChange: onChangeHandler,
+                value: formatter(defaultMin['month']),
+                max: 10,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -557,11 +724,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
         describe('Up arrow', () => {
           test('calls handler with value +1', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: formatter(1993),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'year',
+                //  onChange: onChangeHandler,
+                value: formatter(1993),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
@@ -571,11 +744,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with default `min` if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: '',
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'year',
+                //  onChange: onChangeHandler,
+                value: '',
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -586,11 +765,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('does _not_ rollover if value exceeds max', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: formatter(defaultMax['year']),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'year',
+                //  onChange: onChangeHandler,
+                value: formatter(defaultMax['year']),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -601,12 +786,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with provided `min` prop if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: '',
-              min: 1969,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'year',
+                //  onChange: onChangeHandler,
+                value: '',
+                min: 1969,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -619,11 +810,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
         describe('Down arrow', () => {
           test('calls handler with value -1', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: formatter(1993),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'year',
+                //  onChange: onChangeHandler,
+                value: formatter(1993),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
@@ -633,11 +830,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with default `max` if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: '',
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'year',
+                //    onChange: onChangeHandler,
+                value: '',
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -648,11 +851,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('does _not_ rollover if value exceeds min', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: formatter(defaultMin['year']),
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'year',
+                //      onChange: onChangeHandler,
+                value: formatter(defaultMin['year']),
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -663,12 +872,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           });
 
           test('calls handler with provided `max` prop if initially undefined', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: '',
-              max: 2000,
-            });
+            const { input } = renderSegment(
+              {
+                segment: 'year',
+                //      onChange: onChangeHandler,
+                value: '',
+                max: 2000,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -684,9 +899,15 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       describe('on a single SPACE', () => {
         describe('does not call the onChangeHandler ', () => {
           test('when the input is initially empty', () => {
-            const { input } = renderSegment({
-              onChange: onChangeHandler,
-            });
+            const { input } = renderSegment(
+              {
+                //      onChange: onChangeHandler,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{space}');
             expect(onChangeHandler).not.toHaveBeenCalled();
@@ -694,10 +915,16 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         });
         describe('calls the onChangeHandler', () => {
           test('when the input has a value', () => {
-            const { input } = renderSegment({
-              onChange: onChangeHandler,
-              value: '12',
-            });
+            const { input } = renderSegment(
+              {
+                // onChange: onChangeHandler,
+                value: '12',
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{space}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -712,9 +939,15 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       describe('on a double SPACE', () => {
         describe('does not call the onChangeHandler ', () => {
           test('when the input is initially empty', () => {
-            const { input } = renderSegment({
-              onChange: onChangeHandler,
-            });
+            const { input } = renderSegment(
+              {
+                // onChange: onChangeHandler,
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{space}{space}');
             expect(onChangeHandler).not.toHaveBeenCalled();
@@ -723,10 +956,16 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
         describe('calls the onChangeHandler', () => {
           test('when the input has a value', () => {
-            const { input } = renderSegment({
-              onChange: onChangeHandler,
-              value: '12',
-            });
+            const { input } = renderSegment(
+              {
+                // onChange: onChangeHandler,
+                value: '12',
+              },
+              undefined,
+              {
+                onChange: onChangeHandler,
+              },
+            );
 
             userEvent.type(input, '{space}{space}');
             expect(onChangeHandler).toHaveBeenCalledWith(

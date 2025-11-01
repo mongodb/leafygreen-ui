@@ -32,12 +32,11 @@ export const DateInputSegment = React.forwardRef<
   (
     {
       segment,
-      value,
-      min: minProp,
-      max: maxProp,
-      onChange,
-      onBlur,
-      onKeyDown,
+      value, // TODO: will be read from date input boxcontext
+      min: minProp, // TODO: will be generated from context
+      max: maxProp, // TODO: will be generated from context
+      // onChange, // TODO: will be read from context
+      // onBlur, // TODO: will be read from context
       ...rest
     }: DateInputSegmentProps,
     fwdRef,
@@ -45,11 +44,22 @@ export const DateInputSegment = React.forwardRef<
     const min = minProp ?? defaultMin[segment];
     const max = maxProp ?? defaultMax[segment];
 
+    // min = getMinSegmentValue(segment, { date: value, min });
+    // max = getMaxSegmentValue(segment, { date: value, max });
+
     const {
       size,
       disabled,
       autoComplete: autoCompleteProp,
+      // min,
+      // max,
     } = useSharedDatePickerContext();
+
+    // TODO: read the value, segmentsRef, labelledby, segments from context
+    // const { value, segmentsRef, labelledby, segments } = useContext();
+
+    // const min = getMinSegmentValue(segment, { date: value, min });
+    // const max = getMaxSegmentValue(segment, { date: value, max });
 
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
 
@@ -65,22 +75,21 @@ export const DateInputSegment = React.forwardRef<
       <InputSegment
         ref={fwdRef}
         segment={segment}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        onKeyDown={onKeyDown}
+        value={value} // TODO: will be read from context
+        // onChange={onChange} // TODO: will be read from context
+        // onBlur={onBlur} // TODO: will be read from context
         min={min}
         max={max}
         placeholder={defaultPlaceholder[segment]}
         // TODO: Type 'number | Size' is not assignable to type 'Size'. Unsure why the size is a number.
         // @ts-expect-error
         size={size}
-        charsPerSegment={charsPerSegment[segment]}
+        charsPerSegment={charsPerSegment[segment]} // TODO: will be read from context
         autoComplete={autoComplete}
         className={cx(segmentWidthStyles[segment])}
         disabled={disabled}
         data-testid="lg-date_picker_input-segment"
-        segmentEnum={DateSegment}
+        segmentEnum={DateSegment} // TODO: will be read from context
         shouldNotRollover={shouldNotRollover}
         shouldSkipValidation={shouldSkipValidation}
         {...rest}
