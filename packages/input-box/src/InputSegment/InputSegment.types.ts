@@ -3,9 +3,12 @@ import React, { ForwardedRef, ReactElement } from 'react';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
-export interface InputSegmentChangeEvent<T extends string, V extends string> {
-  segment: T;
-  value: V;
+export interface InputSegmentChangeEvent<
+  Segment extends string,
+  Value extends string,
+> {
+  segment: Segment;
+  value: Value;
   meta?: {
     key?: (typeof keyMap)[keyof typeof keyMap];
     [key: string]: any;
@@ -16,11 +19,11 @@ export interface InputSegmentChangeEvent<T extends string, V extends string> {
  * The type for the onChange handler
  */
 export type InputSegmentChangeEventHandler<
-  T extends string,
-  V extends string,
-> = (inputSegmentChangeEvent: InputSegmentChangeEvent<T, V>) => void;
+  Segment extends string,
+  Value extends string,
+> = (inputSegmentChangeEvent: InputSegmentChangeEvent<Segment, Value>) => void;
 
-export interface InputSegmentProps<T extends string, V extends string>
+export interface InputSegmentProps<Segment extends string, Value extends string>
   extends Omit<React.ComponentPropsWithRef<'input'>, 'size' | 'step'> {
   /**
    * Which segment this input represents
@@ -30,7 +33,7 @@ export interface InputSegmentProps<T extends string, V extends string>
    * 'month'
    * 'year'
    */
-  segment: T;
+  segment: Segment;
 
   /**
    * The value of the segment
@@ -40,7 +43,7 @@ export interface InputSegmentProps<T extends string, V extends string>
    * '2'
    * '2025'
    */
-  value: V;
+  value: Value;
 
   /**
    * Minimum value.
@@ -103,8 +106,8 @@ export interface InputSegmentProps<T extends string, V extends string>
  * @see https://stackoverflow.com/a/58473012
  */
 export interface InputSegmentComponentType {
-  <T extends string, V extends string>(
-    props: InputSegmentProps<T, V>,
+  <Segment extends string, Value extends string>(
+    props: InputSegmentProps<Segment, Value>,
     ref: ForwardedRef<HTMLInputElement>,
   ): ReactElement | null;
   displayName?: string;

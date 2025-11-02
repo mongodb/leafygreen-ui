@@ -2,36 +2,36 @@ import React, { createContext, useContext, useMemo } from 'react';
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
 
 // Helper type to represent the constrained Enum Object structure
-type SegmentEnumObject<T extends string> = Record<string, T>;
+type SegmentEnumObject<Segment extends string> = Record<string, Segment>;
 
 // T is the string union of segment names (e.g., 'areaCode' | 'prefix')
-export interface InputBoxContextType<T extends string = string> {
-  charsPerSegment: Record<T, number>; // Keyed by T
-  segmentEnum: SegmentEnumObject<T>; // Values are T
-  onChange: InputSegmentChangeEventHandler<T, string>;
+export interface InputBoxContextType<Segment extends string = string> {
+  charsPerSegment: Record<Segment, number>; // Keyed by Segment
+  segmentEnum: SegmentEnumObject<Segment>; // Values are Segment
+  onChange: InputSegmentChangeEventHandler<Segment, string>;
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 // Props are generic over T and use SegmentEnumObject<T> for segmentEnum
-export interface InputBoxProviderProps<T extends string> {
+export interface InputBoxProviderProps<Segment extends string> {
   children: React.ReactNode;
-  charsPerSegment: Record<T, number>;
-  segmentEnum: SegmentEnumObject<T>;
-  onChange: InputSegmentChangeEventHandler<T, string>;
+  charsPerSegment: Record<Segment, number>;
+  segmentEnum: SegmentEnumObject<Segment>;
+  onChange: InputSegmentChangeEventHandler<Segment, string>;
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-// The Context constant is defined with the default/fixed type, which is string. This is the loose type because we don't know the type of the segments yet.
+// The Context constant is defined with the default/fixed type, which is string. This is the loose type because we don't know the type of the string yet.
 export const InputBoxContext = createContext<InputBoxContextType | null>(null);
 
 // Provider is generic over T, the string union
-export const InputBoxProvider = <T extends string>({
+export const InputBoxProvider = <Segment extends string>({
   children,
   charsPerSegment,
   segmentEnum,
   onChange,
   onBlur,
-}: InputBoxProviderProps<T>) => {
+}: InputBoxProviderProps<Segment>) => {
   const value = useMemo(
     () => ({
       charsPerSegment,
@@ -51,9 +51,11 @@ export const InputBoxProvider = <T extends string>({
 };
 
 // The hook is generic over T, the string union
-export const useInputBoxContext = <T extends string>() => {
+export const useInputBoxContext = <Segment extends string>() => {
   // Assert the context type to the specific generic T
-  const context = useContext(InputBoxContext) as InputBoxContextType<T> | null;
+  const context = useContext(
+    InputBoxContext,
+  ) as InputBoxContextType<Segment> | null;
 
   if (!context) {
     throw new Error(

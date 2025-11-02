@@ -1,4 +1,3 @@
-// TODO: fix this
 import { createContext, useContext } from 'react';
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
@@ -24,6 +23,7 @@ import {
   defaultPlaceholderMock,
   segmentsMock,
   segmentRefsMock,
+  segmentWidthStyles,
 } from './testutils.mocks';
 
 export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
@@ -85,6 +85,9 @@ export const InputSegmentWrapper = ({
       max={defaultMaxMock[segment]}
       size={Size.Default}
       data-testid={`input-segment-${segment}`}
+      className={segmentWidthStyles[segment]}
+      shouldSkipValidation={segment === SegmentObjMock.Year}
+      shouldNotRollover={segment === SegmentObjMock.Year}
     />
   );
 };

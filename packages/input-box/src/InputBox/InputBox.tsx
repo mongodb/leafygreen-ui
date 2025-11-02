@@ -33,7 +33,7 @@ import { InputBoxProvider } from '../InputBoxContext';
  *
  * @internal
  */
-export const InputBoxWithRef = <T extends string>(
+export const InputBoxWithRef = <Segment extends string>(
   {
     className,
     labelledBy,
@@ -46,14 +46,27 @@ export const InputBoxWithRef = <T extends string>(
     formatParts,
     segmentEnum,
     segmentRules,
-    // renderSegment,
     segment,
     minValues,
     ...rest
-  }: InputBoxProps<T>,
+  }: InputBoxProps<Segment>,
   fwdRef: ForwardedRef<HTMLDivElement>,
 ) => {
   const { theme } = useDarkMode();
+
+  console.log('🌻Storybook: InputBox', {
+    segmentEnum,
+    segmentRules,
+    charsPerSegment,
+    minValues,
+    formatParts,
+    segmentRefs,
+    onSegmentChange,
+    onKeyDown,
+    setSegment,
+    disabled,
+    ...rest,
+  });
 
   const isExplicitSegmentValue = createExplicitSegmentValidator(
     segmentEnum,
@@ -75,7 +88,7 @@ export const InputBoxWithRef = <T extends string>(
 
   /** Fired when an individual segment value changes */
   const handleSegmentInputChange: InputSegmentChangeEventHandler<
-    T,
+    Segment,
     string
   > = segmentChangeEvent => {
     let segmentValue = segmentChangeEvent.value;

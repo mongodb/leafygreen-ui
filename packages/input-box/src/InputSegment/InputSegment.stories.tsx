@@ -15,9 +15,10 @@ import {
   defaultMinMock,
   defaultPlaceholderMock,
   SegmentObjMock,
-} from '../testutils';
+} from '../testutils/testutils.mocks';
 
 import { InputSegment } from '.';
+import { InputBoxProvider } from '../InputBoxContext';
 
 const meta: StoryMetaType<typeof InputSegment> = {
   title: 'Components/Inputs/InputBox/InputSegment',
@@ -25,7 +26,14 @@ const meta: StoryMetaType<typeof InputSegment> = {
   decorators: [
     (StoryFn, context) => (
       <LeafyGreenProvider darkMode={context?.args?.darkMode}>
-        <StoryFn />
+        <InputBoxProvider
+          charsPerSegment={charsPerSegmentMock}
+          segmentEnum={SegmentObjMock}
+          onChange={() => {}}
+          onBlur={() => {}}
+        >
+          <StoryFn />
+        </InputBoxProvider>
       </LeafyGreenProvider>
     ),
   ],
@@ -78,7 +86,14 @@ const meta: StoryMetaType<typeof InputSegment> = {
       },
       decorator: (StoryFn, context) => (
         <LeafyGreenProvider darkMode={context?.args.darkMode}>
-          <StoryFn />
+          <InputBoxProvider
+            charsPerSegment={charsPerSegmentMock}
+            segmentEnum={SegmentObjMock}
+            onChange={() => {}}
+            onBlur={() => {}}
+          >
+            <StoryFn />
+          </InputBoxProvider>
         </LeafyGreenProvider>
       ),
     },
@@ -89,14 +104,17 @@ export default meta;
 export const LiveExample: StoryFn<typeof InputSegment> = props => {
   const [value, setValue] = useState<string>('');
   return (
-    <InputSegment
-      {...props}
-      value={value}
+    <InputBoxProvider
+      charsPerSegment={charsPerSegmentMock}
+      segmentEnum={SegmentObjMock}
       onChange={({ value }) => {
         setValue(value);
         console.log('🌻Storybook: onChange', { value });
       }}
-    />
+      onBlur={() => {}}
+    >
+      <InputSegment {...props} value={value} />
+    </InputBoxProvider>
   );
 };
 

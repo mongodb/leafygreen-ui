@@ -31,7 +31,7 @@ import { useInputBoxContext } from '../InputBoxContext';
  *
  * @internal
  */
-const InputSegmentWithRef = <T extends string, V extends string>(
+const InputSegmentWithRef = <Segment extends string, Value extends string>(
   {
     segment,
     value,
@@ -46,7 +46,7 @@ const InputSegmentWithRef = <T extends string, V extends string>(
     shouldNotRollover = false,
     shouldSkipValidation = false,
     ...rest
-  }: InputSegmentProps<T, V>,
+  }: InputSegmentProps<Segment, Value>,
   fwdRef: ForwardedRef<HTMLInputElement>,
 ) => {
   const { theme } = useDarkMode();
@@ -55,7 +55,7 @@ const InputSegmentWithRef = <T extends string, V extends string>(
     onBlur,
     charsPerSegment: charsPerSegmentContext,
     segmentEnum,
-  } = useInputBoxContext<T>();
+  } = useInputBoxContext<Segment>();
   const baseFontSize = useUpdatedBaseFontSize();
   const charsPerSegment = charsPerSegmentContext[segment];
   const formatter = getValueFormatter(charsPerSegment, min === 0);
@@ -85,7 +85,7 @@ const InputSegmentWithRef = <T extends string, V extends string>(
     if (hasValueChanged) {
       onChange({
         segment,
-        value: newValue as V,
+        value: newValue as Value,
       });
     } else {
       // If the value has not changed, ensure the input value is reset
@@ -131,7 +131,7 @@ const InputSegmentWithRef = <T extends string, V extends string>(
         /** Fire a custom change event when the up/down arrow keys are pressed */
         onChange({
           segment,
-          value: valueString as V,
+          value: valueString as Value,
           meta: { key },
         });
         break;
@@ -147,7 +147,7 @@ const InputSegmentWithRef = <T extends string, V extends string>(
           /** Fire a custom change event when the backspace key is pressed */
           onChange({
             segment,
-            value: '' as V,
+            value: '' as Value,
             meta: { key },
           });
         }
@@ -164,7 +164,7 @@ const InputSegmentWithRef = <T extends string, V extends string>(
           /** Fire a custom change event when the space key is pressed */
           onChange({
             segment,
-            value: '' as V,
+            value: '' as Value,
             meta: { key },
           });
         }

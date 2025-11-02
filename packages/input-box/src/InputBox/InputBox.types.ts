@@ -6,142 +6,21 @@ import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
 import { ExplicitSegmentRule } from '../utils';
 
-export interface RenderSegmentProps<T extends string = string> {
-  onChange: InputSegmentChangeEventHandler<T, string>;
-  onBlur: FocusEventHandler<HTMLInputElement>;
-  partType: T;
-}
-
-export interface InputChangeEvent<T extends string = string> {
+export interface InputChangeEvent<Segment extends string = string> {
   value: DateType;
-  segments: Record<T, string>;
+  segments: Record<Segment, string>;
 }
 
-export type InputChangeEventHandler<T extends string = string> = (
-  changeEvent: InputChangeEvent<T>,
+export type InputChangeEventHandler<Segment extends string = string> = (
+  changeEvent: InputChangeEvent<Segment>,
 ) => void;
 
-// export interface InputBoxProps<T extends Record<keyof T, string>>
-//   extends Omit<React.ComponentPropsWithRef<'div'>, 'onChange' | 'children'> {
-//   /**
-//    * Callback fired when any segment changes, but not necessarily a full value
-//    */
-//   onSegmentChange?: InputSegmentChangeEventHandler<T[keyof T], string>;
-
-//   /**
-//    * id of the labelling element
-//    */
-//   labelledBy?: string;
-
-//   /**
-//    * An object that maps the segment names to their refs
-//    *
-//    * @example
-//    * { day: ref, month: ref, year: ref }
-//    */
-//   segmentRefs: Record<
-//     T[keyof T],
-//     ReturnType<DynamicRefGetter<HTMLInputElement>>
-//   >;
-
-//   /**
-//    * An enumerable object that maps the segment names to their values
-//    *
-//    * @example
-//    * { Day: 'day', Month: 'month', Year: 'year' }
-//    */
-//   segmentEnum: T;
-
-//   /**
-//    * An object containing the values of the segments
-//    *
-//    * @example
-//    * { day: '1', month: '2', year: '2025' }
-//    */
-//   segments: Record<T[keyof T], string>;
-
-//   /**
-//    * A function that sets the value of a segment
-//    *
-//    * @example
-//    * (segment: 'day', value: '1') => void;
-//    */
-//   setSegment: (segment: T[keyof T], value: string) => void;
-
-//   /**
-//    * The format parts of the date
-//    *
-//    * @example
-//    * [
-//    *   { type: 'month', value: '02' },
-//    *   { type: 'literal', value: '-' },
-//    *   { type: 'day', value: '02' },
-//    *   { type: 'literal', value: '-' },
-//    *   { type: 'year', value: '2025' },
-//    * ]
-//    */
-//   formatParts?: Array<Intl.DateTimeFormatPart>;
-
-//   /**
-//    * The number of characters per segment
-//    *
-//    * @example
-//    * { day: 2, month: 2, year: 4 }
-//    */
-//   charsPerSegment: Record<T[keyof T], number>;
-
-//   /**
-//    * Whether the input box is disabled
-//    *
-//    * @default false
-//    */
-//   disabled?: boolean;
-
-//   /**
-//    * An object that maps the segment names to their rules.
-//    *
-//    * maxChars: the maximum number of characters for the segment
-//    * minExplicitValue: the minimum explicit value for the segment
-//    *
-//    * @example
-//    * {
-//    *   day: { maxChars: 2, minExplicitValue: 1 },
-//    *   month: { maxChars: 2, minExplicitValue: 4 },
-//    *   year: { maxChars: 4, minExplicitValue: 1970 },
-//    * }
-//    *
-//    * Explicit: Day = 5, 02
-//    * Ambiguous: Day = 2 (could be 20-29)
-//    *
-//    */
-//   segmentRules: Record<T[keyof T], ExplicitSegmentRule>;
-//   /**
-//    * An object that maps the segment names to their minimum values
-//    *
-//    * @example
-//    * { day: 0, month: 1, year: 1970 }
-//    */
-//   minValues: Record<T[keyof T], number>;
-
-//   /**
-//    * A function that renders a segment
-//    *
-//    * @example
-//    * (props: {
-//    *   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-//    *   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void,
-//    *   partType: 'day' | 'month' | 'year',
-//    * }) => React.ReactElement;
-//    */
-//   renderSegment: (props: RenderSegmentProps<T[keyof T]>) => React.ReactElement;
-// }
-
-export interface InputBoxProps<T extends string>
+export interface InputBoxProps<Segment extends string>
   extends Omit<React.ComponentPropsWithRef<'div'>, 'onChange' | 'children'> {
   /**
    * Callback fired when any segment changes, but not necessarily a full value
    */
-  onSegmentChange?: InputSegmentChangeEventHandler<T, string>;
+  onSegmentChange?: InputSegmentChangeEventHandler<Segment, string>;
 
   /**
    * id of the labelling element
@@ -154,7 +33,7 @@ export interface InputBoxProps<T extends string>
    * @example
    * { day: ref, month: ref, year: ref }
    */
-  segmentRefs: Record<T, ReturnType<DynamicRefGetter<HTMLInputElement>>>;
+  segmentRefs: Record<Segment, ReturnType<DynamicRefGetter<HTMLInputElement>>>;
 
   /**
    * An enumerable object that maps the segment names to their values
@@ -162,7 +41,7 @@ export interface InputBoxProps<T extends string>
    * @example
    * { Day: 'day', Month: 'month', Year: 'year' }
    */
-  segmentEnum: Record<string, T>;
+  segmentEnum: Record<string, Segment>;
 
   /**
    * An object containing the values of the segments
@@ -170,7 +49,7 @@ export interface InputBoxProps<T extends string>
    * @example
    * { day: '1', month: '2', year: '2025' }
    */
-  segments: Record<T, string>;
+  segments: Record<Segment, string>;
 
   /**
    * A function that sets the value of a segment
@@ -178,7 +57,7 @@ export interface InputBoxProps<T extends string>
    * @example
    * (segment: 'day', value: '1') => void;
    */
-  setSegment: (segment: T, value: string) => void;
+  setSegment: (segment: Segment, value: string) => void;
 
   /**
    * The format parts of the date
@@ -200,7 +79,7 @@ export interface InputBoxProps<T extends string>
    * @example
    * { day: 2, month: 2, year: 4 }
    */
-  charsPerSegment: Record<T, number>;
+  charsPerSegment: Record<Segment, number>;
 
   /**
    * Whether the input box is disabled
@@ -226,14 +105,14 @@ export interface InputBoxProps<T extends string>
    * Ambiguous: Day = 2 (could be 20-29)
    *
    */
-  segmentRules: Record<T, ExplicitSegmentRule>;
+  segmentRules: Record<Segment, ExplicitSegmentRule>;
   /**
    * An object that maps the segment names to their minimum values
    *
    * @example
    * { day: 0, month: 1, year: 1970 }
    */
-  minValues: Record<T, number>;
+  minValues: Record<Segment, number>;
 
   /**
    * A component that renders a segment
@@ -241,7 +120,7 @@ export interface InputBoxProps<T extends string>
    * @example
    * segment={DateInputSegment}
    */
-  segment: React.ComponentType<{ segment: T }>;
+  segment: React.ComponentType<{ segment: Segment }>;
 }
 
 /**
@@ -253,8 +132,8 @@ export interface InputBoxProps<T extends string>
  * @see https://stackoverflow.com/a/58473012
  */
 export interface InputBoxComponentType {
-  <T extends string>(
-    props: InputBoxProps<T>,
+  <Segment extends string>(
+    props: InputBoxProps<Segment>,
     ref: ForwardedRef<HTMLDivElement>,
   ): ReactElement | null;
   displayName?: string;
