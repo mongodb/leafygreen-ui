@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import merge from 'lodash/merge';
 
+import { useObjectDependency } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -56,11 +57,12 @@ export function XAxis(props: XAxisProps) {
     chart: { ready, updateOptions },
   } = useChartContext();
   const { theme } = useDarkMode();
+  const propsDep = useObjectDependency(props);
 
   useEffect(() => {
     if (!ready) return;
 
-    updateOptions(getXAxisOptions(theme, props));
+    updateOptions(getXAxisOptions(theme, propsDep));
 
     return () => {
       /**
@@ -71,7 +73,7 @@ export function XAxis(props: XAxisProps) {
         grid: { bottom: spacing[400] }, // Reset the grid bottom spacing
       });
     };
-  }, [ready, theme, updateOptions, props]);
+  }, [ready, theme, updateOptions, propsDep]);
 
   return null;
 }

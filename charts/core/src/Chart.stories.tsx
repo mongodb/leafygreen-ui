@@ -977,8 +977,20 @@ export const BarWithCustomAxisPointer: StoryObj<{
   },
 };
 
-export const BarWithCategoryAxisLabel: StoryObj<{}> = {
-  render: () => {
+export const BarWithCategoryAxisLabel: StoryObj<{
+  axisPointer: ChartTooltipProps['axisPointer'];
+}> = {
+  args: {
+    axisPointer: 'shadow',
+  },
+  argTypes: {
+    axisPointer: {
+      control: 'select',
+      options: ['line', 'shadow', 'none'],
+      defaultValue: 'shadow',
+    },
+  },
+  render: ({ axisPointer }) => {
     const xAxisData = lowDensitySeriesData[0].data.map(([x, _]) =>
       // Format as "mm:ss" instead of slicing the ISO string
       (() => {
@@ -1003,7 +1015,7 @@ export const BarWithCategoryAxisLabel: StoryObj<{}> = {
       <Chart>
         <XAxis type="category" data={xAxisData} />
         <YAxis type="category" data={yAxisData} />
-        <ChartTooltip axisPointer="shadow" />
+        <ChartTooltip axisPointer={axisPointer} />
         {lowDensitySeriesData.map(({ name, data }) => (
           <Bar
             key={name}
