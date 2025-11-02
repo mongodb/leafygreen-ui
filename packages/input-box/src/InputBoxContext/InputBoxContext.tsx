@@ -21,7 +21,7 @@ export interface InputBoxProviderProps<T extends string> {
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-// The Context constant is defined with the default/fixed type
+// The Context constant is defined with the default/fixed type, which is string. This is the loose type because we don't know the type of the segments yet.
 export const InputBoxContext = createContext<InputBoxContextType | null>(null);
 
 // Provider is generic over T, the string union
@@ -42,8 +42,7 @@ export const InputBoxProvider = <T extends string>({
     [charsPerSegment, segmentEnum, onChange, onBlur],
   );
 
-  // Single assertion to the fixed context type
-  // TODO: why is this necessary?
+  // The provider passes a strict type of T but the context is defined as a loose type of string so TS sees a potential type mismatch. This assertion says that we know that the types do not overlap but we guarantee that the strict provider value satisfies the fixed context requirement.
   return (
     <InputBoxContext.Provider value={value as unknown as InputBoxContextType}>
       {children}
