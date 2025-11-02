@@ -3,15 +3,15 @@ import userEvent from '@testing-library/user-event';
 
 import { Size } from '@leafygreen-ui/tokens';
 
+import { renderSegment, setSegmentProps } from '../testutils';
+import { getValueFormatter } from '../utils';
+
 import {
+  SegmentObjMock,
   charsPerSegmentMock,
   defaultMaxMock,
   defaultMinMock,
-  renderSegment,
-  SegmentObjMock,
-  setSegmentProps,
-} from '../testutils';
-import { getValueFormatter } from '../utils';
+} from '../testutils/testutils.mocks';
 
 import { InputSegment, InputSegmentChangeEventHandler } from '.';
 
@@ -172,6 +172,8 @@ describe('packages/input-segment', () => {
           expect.objectContaining({ value: '4' }),
         );
       });
+
+      // TODO: test min/max
     });
 
     describe('keyboard events', () => {

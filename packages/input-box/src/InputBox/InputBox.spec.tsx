@@ -7,18 +7,20 @@ import { Size } from '@leafygreen-ui/tokens';
 import { InputSegment } from '../InputSegment';
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
 import {
-  charsPerSegmentMock,
-  defaultMaxMock,
-  defaultMinMock,
+  InputSegmentWrapper,
   renderInputBox,
   renderInputBoxWithState,
-  SegmentObjMock,
-  segmentRefsMock,
-  segmentRulesMock,
-  segmentsMock,
 } from '../testutils';
 
 import { InputBox } from './InputBox';
+import {
+  SegmentObjMock,
+  segmentsMock,
+  charsPerSegmentMock,
+  segmentRulesMock,
+  defaultMinMock,
+  segmentRefsMock,
+} from '../testutils/testutils.mocks';
 
 describe('packages/input-box', () => {
   describe('Rendering', () => {
@@ -53,16 +55,16 @@ describe('packages/input-box', () => {
 
   describe('rerendering', () => {
     test('with new value updates the segments', () => {
-      const { rerenderInputBox, dayInput, monthInput, yearInput } =
+      const { rerenderInputBox, getDayInput, getMonthInput, getYearInput } =
         renderInputBox({});
-      expect(dayInput.value).toBe('02');
-      expect(monthInput.value).toBe('02');
-      expect(yearInput.value).toBe('2025');
+      expect(getDayInput().value).toBe('02');
+      expect(getMonthInput().value).toBe('02');
+      expect(getYearInput().value).toBe('2025');
 
       rerenderInputBox({ segments: { day: '26', month: '09', year: '1993' } });
-      expect(dayInput.value).toBe('26');
-      expect(monthInput.value).toBe('09');
-      expect(yearInput.value).toBe('1993');
+      expect(getDayInput().value).toBe('26');
+      expect(getMonthInput().value).toBe('09');
+      expect(getYearInput().value).toBe('1993');
     });
   });
 
@@ -119,87 +121,13 @@ describe('packages/input-box', () => {
     });
   });
 
-  describe('renderSegment', () => {
-    test('calls renderSegment for each segment with correct props', () => {
-      const mockRenderSegment = jest.fn(
-        ({
-          partType,
-          onChange,
-          onBlur,
-        }: {
-          partType: SegmentObjMock;
-          onChange: any;
-          onBlur: any;
-        }) => (
-          // @ts-expect-error - we are not passing all the props to the InputSegment component
-          <InputSegment
-            key={partType}
-            segment={partType}
-            // onChange={onChange}
-            onBlur={onBlur}
-            // charsPerSegment={charsPerSegmentMock[partType]}
-            data-testid={`input-segment-${partType}`}
-          />
-        ),
-      );
-      renderInputBox({
-        renderSegment: mockRenderSegment,
-        formatParts: [
-          { type: 'year', value: '' },
-          { type: 'literal', value: '-' },
-          { type: 'month', value: '' },
-          { type: 'literal', value: '-' },
-          { type: 'day', value: '' },
-        ],
-      });
-      // Verify renderSegment was called (may be called multiple times in dev mode in R17)
-      expect(mockRenderSegment).toHaveBeenCalled();
-
-      // Collect all unique partTypes that were called
-      const calledPartTypes = mockRenderSegment.mock.calls.map(
-        call => call[0].partType,
-      );
-
-      // Remove duplicate partTypes
-      const uniqueCalledPartTypes = [...new Set(calledPartTypes)];
-
-      // Verify all three segment types were rendered
-      expect(uniqueCalledPartTypes).toHaveLength(3);
-      expect(uniqueCalledPartTypes).toContain('year');
-      expect(uniqueCalledPartTypes).toContain('month');
-      expect(uniqueCalledPartTypes).toContain('day');
-
-      // Verify each segment type was called with correct props
-      expect(mockRenderSegment).toHaveBeenCalledWith(
-        expect.objectContaining({
-          partType: 'year',
-          onChange: expect.any(Function),
-          onBlur: expect.any(Function),
-        }),
-      );
-      expect(mockRenderSegment).toHaveBeenCalledWith(
-        expect.objectContaining({
-          partType: 'month',
-          onChange: expect.any(Function),
-          onBlur: expect.any(Function),
-        }),
-      );
-      expect(mockRenderSegment).toHaveBeenCalledWith(
-        expect.objectContaining({
-          partType: 'day',
-          onChange: expect.any(Function),
-          onBlur: expect.any(Function),
-        }),
-      );
-    });
-  });
-
   describe('auto-focus', () => {
     test('focuses the next segment when an explicit value is entered', () => {
       const { dayInput, monthInput } = renderInputBoxWithState({});
 
       userEvent.type(monthInput, '02');
       expect(dayInput).toHaveFocus();
+      expect(monthInput.value).toBe('02');
     });
 
     test('focus remains in the current segment when an ambiguous value is entered', () => {
@@ -368,20 +296,7 @@ describe('packages/input-box', () => {
       charsPerSegment={charsPerSegmentMock}
       segmentRules={segmentRulesMock}
       minValues={defaultMinMock}
-      renderSegment={({ onChange, onBlur, partType }) => (
-        <InputSegment
-          key={partType}
-          segment={partType}
-          value={segmentsMock[partType]}
-          // onChange={onChange}
-          onBlur={onBlur}
-          // charsPerSegment={charsPerSegmentMock[partType]}
-          min={defaultMinMock[partType]}
-          max={defaultMaxMock[partType]}
-          // segmentEnum={SegmentObjMock}
-          size={Size.Default}
-        />
-      )}
+      segment={InputSegmentWrapper}
     />;
   });
 });

@@ -236,16 +236,12 @@ export interface InputBoxProps<T extends string>
   minValues: Record<T, number>;
 
   /**
-   * A function that renders a segment
+   * A component that renders a segment
    *
    * @example
-   * (props: {
-   *   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-   *   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void,
-   *   partType: 'day' | 'month' | 'year',
-   * }) => React.ReactElement;
+   * segment={DateInputSegment}
    */
-  renderSegment: (props: RenderSegmentProps<T>) => React.ReactElement;
+  segment: React.ComponentType<{ segment: T }>;
 }
 
 /**

@@ -1,101 +1,30 @@
 // TODO: fix this
-import { createRef } from 'react';
+import { createContext, useContext } from 'react';
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 
-import { css } from '@leafygreen-ui/emotion';
-import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { InputBox, InputBoxProps } from '../InputBox';
-import { RenderSegmentProps } from '../InputBox/InputBox.types';
 import { InputSegment } from '../InputSegment';
 import {
   InputSegmentChangeEventHandler,
   InputSegmentProps,
 } from '../InputSegment/InputSegment.types';
-import { ExplicitSegmentRule } from '../utils';
 import { InputBoxProvider } from '../InputBoxContext';
 import { InputBoxProviderProps } from '../InputBoxContext/InputBoxContext';
-
-export const SegmentObjMock = {
-  Month: 'month',
-  Day: 'day',
-  Year: 'year',
-} as const;
-export type SegmentObjMock =
-  (typeof SegmentObjMock)[keyof typeof SegmentObjMock];
-
-export type SegmentRefsMock = Record<
+import {
   SegmentObjMock,
-  ReturnType<DynamicRefGetter<HTMLInputElement>>
->;
-
-export const segmentRefsMock: SegmentRefsMock = {
-  month: createRef<HTMLInputElement>(),
-  day: createRef<HTMLInputElement>(),
-  year: createRef<HTMLInputElement>(),
-};
-
-export const segmentsMock: Record<SegmentObjMock, string> = {
-  month: '02',
-  day: '02',
-  year: '2025',
-};
-export const charsPerSegmentMock: Record<SegmentObjMock, number> = {
-  month: 2,
-  day: 2,
-  year: 4,
-};
-export const segmentRulesMock: Record<SegmentObjMock, ExplicitSegmentRule> = {
-  month: { maxChars: 2, minExplicitValue: 2 },
-  day: { maxChars: 2, minExplicitValue: 4 },
-  year: { maxChars: 4, minExplicitValue: 1970 },
-};
-export const defaultMinMock: Record<SegmentObjMock, number> = {
-  month: 1,
-  day: 0,
-  year: 1970,
-};
-export const defaultMaxMock: Record<SegmentObjMock, number> = {
-  month: 12,
-  day: 31,
-  year: 2038,
-};
-
-export const defaultPlaceholderMock: Record<SegmentObjMock, string> = {
-  day: 'DD',
-  month: 'MM',
-  year: 'YYYY',
-} as const;
-
-export const defaultFormatPartsMock: Array<Intl.DateTimeFormatPart> = [
-  { type: 'month', value: '' },
-  { type: 'literal', value: '-' },
-  { type: 'day', value: '' },
-  { type: 'literal', value: '-' },
-  { type: 'year', value: '' },
-];
-
-/** The percentage of 1ch these specific characters take up */
-export const characterWidth = {
-  // // Standard font
-  D: 46 / 40,
-  M: 55 / 40,
-  Y: 50 / 40,
-} as const;
-
-export const segmentWidthStyles: Record<SegmentObjMock, string> = {
-  day: css`
-    width: ${charsPerSegmentMock.day * characterWidth.D}ch;
-  `,
-  month: css`
-    width: ${charsPerSegmentMock.month * characterWidth.M}ch;
-  `,
-  year: css`
-    width: ${charsPerSegmentMock.year * characterWidth.Y}ch;
-  `,
-};
+  SegmentRefsMock,
+  defaultMinMock,
+  defaultMaxMock,
+  charsPerSegmentMock,
+  defaultFormatPartsMock,
+  segmentRulesMock,
+  defaultPlaceholderMock,
+  segmentsMock,
+  segmentRefsMock,
+} from './testutils.mocks';
 
 export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
   segments: segmentsMock,
@@ -105,6 +34,59 @@ export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
   charsPerSegment: charsPerSegmentMock,
   formatParts: defaultFormatPartsMock,
   segmentRules: segmentRulesMock,
+};
+
+/*
+ * InputBoxWrapper Context and Provider
+ */
+const InputBoxWrapperContext = createContext<{
+  segments: Record<SegmentObjMock, string>;
+  segmentRefs: SegmentRefsMock;
+} | null>(null);
+
+const InputBoxWrapperProvider = ({
+  children,
+  segments,
+  segmentRefs,
+}: {
+  children: React.ReactNode;
+  segments: Record<SegmentObjMock, string>;
+  segmentRefs: SegmentRefsMock;
+}) => {
+  return (
+    <InputBoxWrapperContext.Provider value={{ segments, segmentRefs }}>
+      {children}
+    </InputBoxWrapperContext.Provider>
+  );
+};
+
+const useInputBoxWrapperContext = () => {
+  const context = useContext(InputBoxWrapperContext);
+  if (!context) {
+    throw new Error(
+      'useInputBoxWrapperContext must be used within InputBoxWrapperProvider',
+    );
+  }
+  return context;
+};
+
+export const InputSegmentWrapper = ({
+  segment,
+}: {
+  segment: SegmentObjMock;
+}) => {
+  const { segments, segmentRefs } = useInputBoxWrapperContext();
+  return (
+    <InputSegment
+      segment={segment}
+      value={segments[segment]}
+      ref={segmentRefs[segment]}
+      min={defaultMinMock[segment]}
+      max={defaultMaxMock[segment]}
+      size={Size.Default}
+      data-testid={`input-segment-${segment}`}
+    />
+  );
 };
 
 /**
@@ -141,38 +123,21 @@ export const InputBoxWithState = ({
   };
 
   return (
-    <InputBox
-      disabled={disabled}
-      segmentEnum={SegmentObjMock}
-      segmentRefs={segmentRefs}
-      segments={segments}
-      setSegment={setSegment}
-      charsPerSegment={charsPerSegmentMock}
-      formatParts={defaultFormatPartsMock}
-      segmentRules={segmentRulesMock}
-      onSegmentChange={onSegmentChange}
-      minValues={defaultMinMock}
-      renderSegment={({ onChange, onBlur, partType }) => (
-        <InputSegment
-          key={partType}
-          ref={segmentRefs[partType]}
-          disabled={disabled}
-          segment={partType}
-          value={segments[partType]}
-          // onChange={onChange}
-          onBlur={onBlur}
-          // charsPerSegment={charsPerSegmentMock[partType]}
-          min={defaultMinMock[partType]}
-          max={defaultMaxMock[partType]}
-          // segmentEnum={SegmentObjMock}
-          size={Size.Default}
-          data-testid={`input-segment-${partType}`}
-          className={segmentWidthStyles[partType]}
-          shouldNotRollover={partType === 'year'}
-          placeholder={defaultPlaceholderMock[partType]}
-        />
-      )}
-    />
+    <InputBoxWrapperProvider segments={segments} segmentRefs={segmentRefs}>
+      <InputBox
+        disabled={disabled}
+        segmentEnum={SegmentObjMock}
+        segmentRefs={segmentRefs}
+        segments={segments}
+        setSegment={setSegment}
+        charsPerSegment={charsPerSegmentMock}
+        formatParts={defaultFormatPartsMock}
+        segmentRules={segmentRulesMock}
+        onSegmentChange={onSegmentChange}
+        minValues={defaultMinMock}
+        segment={InputSegmentWrapper}
+      />
+    </InputBoxWrapperProvider>
   );
 };
 
@@ -198,43 +163,14 @@ export const renderInputBoxWithState = ({
   return { ...utils, dayInput, monthInput, yearInput };
 };
 
-const createRenderSegment = (mergedProps: InputBoxProps<SegmentObjMock>) => {
-  const RenderSegment = ({
-    onChange,
-    onBlur,
-    partType,
-  }: RenderSegmentProps<SegmentObjMock>) => (
-    <InputBoxProvider
-      charsPerSegment={charsPerSegmentMock}
-      segmentEnum={SegmentObjMock}
-      onChange={onChange}
-      onBlur={onBlur}
-    >
-      <InputSegment
-        ref={segmentRefsMock[partType]}
-        key={partType}
-        segment={partType}
-        value={mergedProps.segments[partType]}
-        // onChange={onChange}
-        onBlur={onBlur}
-        // charsPerSegment={charsPerSegmentMock[partType]}
-        min={defaultMinMock[partType]}
-        max={defaultMaxMock[partType]}
-        // segmentEnum={SegmentObjMock}
-        size={Size.Default}
-        data-testid={`input-segment-${partType}`}
-      />
-    </InputBoxProvider>
-  );
-
-  return RenderSegment;
-};
-
 interface RenderInputBoxReturnType {
   dayInput: HTMLInputElement;
   monthInput: HTMLInputElement;
   yearInput: HTMLInputElement;
   rerenderInputBox: (props: Partial<InputBoxProps<SegmentObjMock>>) => void;
+  getDayInput: () => HTMLInputElement;
+  getMonthInput: () => HTMLInputElement;
+  getYearInput: () => HTMLInputElement;
 }
 
 export const renderInputBox = ({
@@ -248,11 +184,17 @@ export const renderInputBox = ({
 
   const finalMergedProps = {
     ...mergedProps,
-    renderSegment:
-      mergedProps.renderSegment ?? createRenderSegment(mergedProps),
+    segment: mergedProps.segment ?? InputSegmentWrapper,
   } as InputBoxProps<SegmentObjMock>;
 
-  const result = render(<InputBox {...finalMergedProps} />);
+  const result = render(
+    <InputBoxWrapperProvider
+      segments={mergedProps.segments}
+      segmentRefs={mergedProps.segmentRefs}
+    >
+      <InputBox {...finalMergedProps} />
+    </InputBoxWrapperProvider>,
+  );
 
   const rerenderInputBox = ({
     ...props
@@ -264,25 +206,41 @@ export const renderInputBox = ({
 
     const finalMergedProps = {
       ...mergedProps,
-      renderSegment:
-        mergedProps.renderSegment ?? createRenderSegment(mergedProps),
+      segment: mergedProps.segment ?? InputSegmentWrapper,
     } as InputBoxProps<SegmentObjMock>;
 
-    result.rerender(<InputBox {...finalMergedProps} />);
+    result.rerender(
+      <InputBoxWrapperProvider
+        segments={mergedProps.segments}
+        segmentRefs={mergedProps.segmentRefs}
+      >
+        <InputBox {...finalMergedProps} />
+      </InputBoxWrapperProvider>,
+    );
   };
 
-  const dayInput = result.getByTestId('input-segment-day') as HTMLInputElement;
-  const monthInput = result.getByTestId(
-    'input-segment-month',
-  ) as HTMLInputElement;
-  const yearInput = result.getByTestId(
-    'input-segment-year',
-  ) as HTMLInputElement;
+  const getDayInput = () =>
+    result.getByTestId('input-segment-day') as HTMLInputElement;
+  const getMonthInput = () =>
+    result.getByTestId('input-segment-month') as HTMLInputElement;
+  const getYearInput = () =>
+    result.getByTestId('input-segment-year') as HTMLInputElement;
 
-  return { ...result, rerenderInputBox, dayInput, monthInput, yearInput };
+  return {
+    ...result,
+    rerenderInputBox,
+    dayInput: getDayInput(),
+    monthInput: getMonthInput(),
+    yearInput: getYearInput(),
+    getDayInput,
+    getMonthInput,
+    getYearInput,
+  };
 };
 
-// InputSegment Utils
+/*
+ * InputSegment Utils
+ */
 export const setSegmentProps = (segment: SegmentObjMock) => {
   return {
     segment: segment,
@@ -314,12 +272,9 @@ export const renderSegment = (
 
   const defaultProps: InputSegmentProps<SegmentObjMock, string> = {
     value: '',
-    // onChange: () => {},
     segment: 'day',
-    // charsPerSegment: charsPerSegmentMock['day'],
     min: defaultMinMock['day'],
     max: defaultMaxMock['day'],
-    // segmentEnum: SegmentObjMock,
     size: Size.Default,
     shouldNotRollover: false,
     placeholder: defaultPlaceholderMock['day'],

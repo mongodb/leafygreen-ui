@@ -2,6 +2,7 @@ import React, {
   ChangeEventHandler,
   ForwardedRef,
   KeyboardEventHandler,
+  FocusEvent,
 } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -34,15 +35,13 @@ const InputSegmentWithRef = <T extends string, V extends string>(
   {
     segment,
     value,
-    // onChange, // TODO: will be read from context
-    // onBlur, // TODO: will be read from context
     onKeyDown,
     size,
-    // charsPerSegment, // TODO: will be read from context
     min, // minSegmentValue
     max, // maxSegmentValue
     className,
-    // segmentEnum, // TODO: will be read from context
+    onChange: onChangeProp,
+    onBlur: onBlurProp,
     step = 1,
     shouldNotRollover = false,
     shouldSkipValidation = false,
@@ -56,14 +55,11 @@ const InputSegmentWithRef = <T extends string, V extends string>(
     onBlur,
     charsPerSegment: charsPerSegmentContext,
     segmentEnum,
-  } = useInputBoxContext<T>(); // TODO: since we're no longer passing the enum object to inputSegment, t should extend a string not an object
+  } = useInputBoxContext<T>();
   const baseFontSize = useUpdatedBaseFontSize();
   const charsPerSegment = charsPerSegmentContext[segment];
   const formatter = getValueFormatter(charsPerSegment, min === 0);
   const pattern = `[0-9]{${charsPerSegment}}`;
-
-  // TODO: read onChange, onBlur from context
-  // const { onChange, onBlur, charsPerSegment, segmentEnum } = useInputBoxContext(Context);
 
   /**
    * Receives native input events,
@@ -95,6 +91,8 @@ const InputSegmentWithRef = <T extends string, V extends string>(
       // If the value has not changed, ensure the input value is reset
       target.value = value;
     }
+
+    onChangeProp?.(e);
   };
 
   /** Handle keydown presses that don't natively fire a change event */
@@ -182,6 +180,11 @@ const InputSegmentWithRef = <T extends string, V extends string>(
     onKeyDown?.(e);
   };
 
+  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+    onBlur?.(e);
+    onBlurProp?.(e);
+  };
+
   // Note: Using a text input with pattern attribute due to Firefox
   // stripping leading zeros on number inputs - Thanks @matt-d-rat
   // Number inputs also don't support the `selectionStart`/`End` API
@@ -198,7 +201,7 @@ const InputSegmentWithRef = <T extends string, V extends string>(
       min={min}
       max={max}
       onChange={handleChange}
-      onBlur={onBlur}
+      onBlur={handleBlur}
       onKeyDown={handleKeyDown}
       data-segment={String(segment)}
       className={getInputSegmentStyles({

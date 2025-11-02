@@ -21,10 +21,7 @@ export type InputSegmentChangeEventHandler<
 > = (inputSegmentChangeEvent: InputSegmentChangeEvent<T, V>) => void;
 
 export interface InputSegmentProps<T extends string, V extends string>
-  extends Omit<
-    React.ComponentPropsWithRef<'input'>,
-    'onChange' | 'size' | 'step'
-  > {
+  extends Omit<React.ComponentPropsWithRef<'input'>, 'size' | 'step'> {
   /**
    * Which segment this input represents
    *
@@ -46,19 +43,6 @@ export interface InputSegmentProps<T extends string, V extends string>
   value: V;
 
   /**
-   * Custom onChange handler
-   */
-  // onChange: InputSegmentChangeEventHandler<T, V>;
-
-  /**
-   * The number of characters per segment
-   *
-   * @example
-   * 4
-   */
-  // charsPerSegment: number;
-
-  /**
    * Minimum value.
    *
    * @example
@@ -77,14 +61,6 @@ export interface InputSegmentProps<T extends string, V extends string>
    * 2038
    */
   max: number;
-
-  /**
-   * An enumerable object that maps the segment names to their values
-   *
-   * @example
-   * { Day: 'day', Month: 'month', Year: 'year' }
-   */
-  // segmentEnum: T;
 
   /**
    * Size of the segment

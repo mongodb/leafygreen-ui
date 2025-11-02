@@ -46,7 +46,8 @@ export const InputBoxWithRef = <T extends string>(
     formatParts,
     segmentEnum,
     segmentRules,
-    renderSegment,
+    // renderSegment,
+    segment,
     minValues,
     ...rest
   }: InputBoxProps<T>,
@@ -209,8 +210,7 @@ export const InputBoxWithRef = <T extends string>(
       onBlur={handleSegmentInputBlur}
       segmentEnum={segmentEnum}
     >
-      {/* //<Context.Provider onChange={onChange} onBlur={onBlur}> */}
-      {/* // We want to allow keydown events to be captured by the parent so that the parent can handle the event. */}
+      {/* We want to allow keydown events to be captured by the parent so that the parent can handle the event. */}
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={getSegmentPartsWrapperStyles({ className })}
@@ -229,18 +229,11 @@ export const InputBoxWithRef = <T extends string>(
               </span>
             );
           } else if (isInputSegment(part.type, segmentEnum)) {
-            const segmentProps = {
-              onChange: handleSegmentInputChange,
-              onBlur: handleSegmentInputBlur,
-              partType: part.type,
-            };
-            return renderSegment(segmentProps);
-
-            // TODO: return <Segment segment={part.type}  />;
+            const Segment = segment;
+            return <Segment key={part.type} segment={part.type} />;
           }
         })}
       </div>
-      {/* // </Context.Provider> */}
     </InputBoxProvider>
   );
 };
