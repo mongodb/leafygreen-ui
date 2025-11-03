@@ -1,5 +1,37 @@
 # @leafygreen-ui/modal
 
+## 20.3.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 20.2.0
+
+### Minor Changes
+
+- 9778d7b: [LG-5608](https://jira.mongodb.org/browse/LG-5608)
+
+  In v20, the `initialFocus` prop was prematurely removed without proper migration paths. This change restores the prop with enhanced functionality and control. See more on [initial focus behavior](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal#initial-focus-behavior).
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/icon-button@17.1.1
+
 ## 20.1.1
 
 ### Patch Changes

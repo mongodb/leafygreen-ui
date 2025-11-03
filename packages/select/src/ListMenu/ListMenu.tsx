@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import { Align, Justify, Popover } from '@leafygreen-ui/popover';
 
 import { DropdownWidthBasis } from '../Select/Select.types';
 import SelectContext from '../SelectContext';

@@ -9,9 +9,9 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 
-import Button from '@leafygreen-ui/button';
-import Code, { Panel } from '@leafygreen-ui/code';
-import Copyable from '@leafygreen-ui/copyable';
+import { Button } from '@leafygreen-ui/button';
+import { Code, Panel } from '@leafygreen-ui/code';
+import { Copyable } from '@leafygreen-ui/copyable';
 import { css } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, RenderMode, Select } from '@leafygreen-ui/select';
 import { ToastProvider, useToast } from '@leafygreen-ui/toast';

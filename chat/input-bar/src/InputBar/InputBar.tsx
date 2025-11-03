@@ -23,7 +23,7 @@ import {
 import isUndefined from 'lodash/isUndefined';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
-import Badge from '@leafygreen-ui/badge';
+import { Badge } from '@leafygreen-ui/badge';
 import {
   useAutoScroll,
   useBackdropClick,
@@ -48,6 +48,7 @@ import { breakpoints } from '@leafygreen-ui/tokens';
 import { DisclaimerText } from '../DisclaimerText';
 import { InputBarFeedback } from '../InputBarFeedback';
 import { InputBarSendButton } from '../InputBarSendButton';
+import { InputBarStopButton } from '../InputBarStopButton';
 import { State } from '../shared.types';
 import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 
@@ -76,6 +77,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       dropdownFooterSlot,
       dropdownProps,
       errorMessage,
+      onClickStopButton,
       onMessageSend,
       onSubmit,
       shouldRenderGradient: shouldRenderGradientProp = true,
@@ -91,10 +93,10 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const { containerWidth, variant } = useLeafyGreenChatContext();
     const isCompact = variant === Variant.Compact;
 
-    if (
-      isCompact &&
-      (shouldRenderHotkeyIndicator || shouldRenderGradientProp || badgeText)
-    ) {
+    // Note: `shouldRenderGradient` is intentionally excluded from this warning check
+    // as the prop is scheduled for removal in a future update.
+    // See: https://jira.mongodb.org/browse/LG-5575
+    if (isCompact && (shouldRenderHotkeyIndicator || badgeText)) {
       consoleOnce.warn(
         `@lg-chat/input-bar: The InputBar component's props 'shouldRenderHotkeyIndicator', 'shouldRenderGradient', and 'badgeText' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
       );
@@ -142,8 +144,10 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const [shouldRenderButtonText, setShouldRenderButtonText] =
       useState<boolean>(false);
 
+    const isLoading = state === State.Loading;
     const isSendButtonDisabled =
-      disableSend || disabled || messageBody?.trim() === '';
+      disabled || disableSend || messageBody?.trim() === '';
+    const isStopButtonDisabled = disabled || !!disableSend;
     const shouldRenderGradient =
       !isCompact && shouldRenderGradientProp && isFocused && !disabled;
     const showHotkeyIndicator =
@@ -377,6 +381,13 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       onSubmit?.(e);
     };
 
+    const handleStop = () => {
+      if (onClickStopButton) {
+        onClickStopButton();
+      }
+      restorePreviousMessage();
+    };
+
     const handleFocus: FocusEventHandler<HTMLTextAreaElement> = _ => {
       setIsFocused(true);
       openMenu();
@@ -389,6 +400,18 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     const handleBackdropClick = () => {
       closeMenu();
     };
+
+    /**
+     * Helper function to restore the previous message body.
+     * Used when stopping during loading or when an error occurs.
+     */
+    const restorePreviousMessage = useCallback(() => {
+      if (!isControlled) {
+        updateValue(prevMessageBody, internalTextareaRef);
+        setPrevMessageBody('');
+      }
+      internalTextareaRef.current?.focus();
+    }, [isControlled, prevMessageBody, updateValue]);
 
     useAutoScroll(highlightedElementRef, menuRef, 12);
     useBackdropClick(handleBackdropClick, [focusContainerRef, menuRef], {
@@ -418,13 +441,8 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
         return;
       }
 
-      if (!isControlled) {
-        updateValue(prevMessageBody, internalTextareaRef);
-        setPrevMessageBody('');
-      }
-
-      internalTextareaRef.current?.focus();
-    }, [state, prevState, isControlled, prevMessageBody, updateValue]);
+      restorePreviousMessage();
+    }, [state, prevState, restorePreviousMessage]);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -490,12 +508,18 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                       /
                     </div>
                   )}
-                  <InputBarSendButton
-                    disabled={isSendButtonDisabled}
-                    isCompact={isCompact}
-                    shouldRenderButtonText={shouldRenderButtonText}
-                    state={state}
-                  />
+                  {isLoading && isCompact ? (
+                    <InputBarStopButton
+                      disabled={isStopButtonDisabled}
+                      onClick={handleStop}
+                    />
+                  ) : (
+                    <InputBarSendButton
+                      disabled={isSendButtonDisabled}
+                      isCompact={isCompact}
+                      shouldRenderButtonText={shouldRenderButtonText}
+                    />
+                  )}
                 </div>
               </div>
             </div>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 
 import { Size } from '../SegmentedControl/SegmentedControl.types';
 import { SegmentedControlContext } from '../SegmentedControlContext';

@@ -47,6 +47,42 @@ export const ContextMenu = ({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [selectedText, setSelectedText] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Prevent mousedown from changing selection when opening context menu.
+   * Uses capture phase to intercept before CodeMirror handles it.
+   */
+  useEffect(() => {
+    const handleMouseDown = (event: MouseEvent) => {
+      // Check if this will trigger a context menu
+      const isRightClick = event.button === 2;
+      const isCtrlClick = event.ctrlKey && event.button === 0;
+
+      if (isRightClick || isCtrlClick) {
+        const target = event.target as Element;
+
+        // Only prevent if within our container and not in a no-context-menu zone
+        if (
+          containerRef.current &&
+          containerRef.current.contains(target) &&
+          !target.closest('[data-no-context-menu="true"]')
+        ) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      }
+    };
+
+    // Use capture phase to intercept before CodeMirror
+    document.addEventListener('mousedown', handleMouseDown, { capture: true });
+
+    return () => {
+      document.removeEventListener('mousedown', handleMouseDown, {
+        capture: true,
+      });
+    };
+  }, []);
 
   /**
    * Handle showing and positioning custom menu onContextMenu
@@ -94,7 +130,7 @@ export const ContextMenu = ({
    * before the refocus occurs by setting the open state to false and only
    * rendering the Menu when the open state is true.
    */
-  const handleClick = useCallback(
+  const handleGlobalClick = useCallback(
     (e: MouseEvent) => {
       /**
        * Don't close if clicking inside the menu.
@@ -131,15 +167,17 @@ export const ContextMenu = ({
       document.addEventListener('contextmenu', handleGlobalContextMenu);
       /**
        * Must capture click to prevent default Menu handling of clicks.
-       * See {@link handleClick} comment for more details.
+       * See {@link handleGlobalClick} comment for more details.
        */
-      document.addEventListener('click', handleClick, { capture: true });
+      document.addEventListener('click', handleGlobalClick, { capture: true });
       return () => {
         document.removeEventListener('contextmenu', handleGlobalContextMenu);
-        document.removeEventListener('click', handleClick, { capture: true });
+        document.removeEventListener('click', handleGlobalClick, {
+          capture: true,
+        });
       };
     }
-  }, [isOpen, handleGlobalContextMenu, handleClick]);
+  }, [isOpen, handleGlobalContextMenu, handleGlobalClick]);
 
   return (
     <div
@@ -151,6 +189,8 @@ export const ContextMenu = ({
 
       {isOpen && (
         <div className={getMenuContainerStyles(position)}>
+          {/* This is a workaround to prevent the Menu from being rendered in the DOM when it's not open */}
+          <div ref={menuRef} />
           <Menu
             /** Force re-mount when position changes so Menu recalculates its positioning */
             key={`${position.x}-${position.y}`}
@@ -160,6 +200,7 @@ export const ContextMenu = ({
             variant={MenuVariant.Compact}
             data-lgid={lgIds.contextMenu}
             data-testid={lgIds.contextMenu}
+            refEl={menuRef}
           >
             {menuItems.map((item, index) => {
               if (item.isSeparator) {

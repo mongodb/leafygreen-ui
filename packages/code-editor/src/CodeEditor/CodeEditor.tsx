@@ -8,7 +8,9 @@ import React, {
 } from 'react';
 import { type EditorView, type ViewUpdate } from '@codemirror/view';
 
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { findChild } from '@leafygreen-ui/lib';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -18,6 +20,7 @@ import { CopyButtonVariant } from '../CodeEditorCopyButton/CodeEditorCopyButton.
 import { Panel as CodeEditorPanel } from '../Panel';
 import { getLgIds } from '../utils';
 
+import { useSearchPanelExtension } from './hooks/extensions/useSearchPanelExtension';
 import { useModules } from './hooks/useModules';
 import {
   getCopyButtonStyles,
@@ -53,6 +56,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       enableCodeFolding,
       enableLineNumbers,
       enableLineWrapping,
+      enableSearchPanel = true,
       extensions: consumerExtensions = [],
       forceParsing: forceParsingProp = false,
       height,
@@ -83,6 +87,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const isControlled = value !== undefined;
     const editorContainerRef = useRef<HTMLDivElement | null>(null);
     const editorViewRef = useRef<EditorView | null>(null);
+    const [undoDepth, setUndoDepth] = useState(0);
+    const [redoDepth, setRedoDepth] = useState(0);
 
     const { modules, isLoading } = useModules(props);
 
@@ -112,6 +118,9 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       modules: modules,
       hasPanel: !!panel,
     });
+
+    // Track whether extensions have been initialized
+    const [extensionsInitialized, setExtensionsInitialized] = useState(false);
 
     // Get the current contents of the editor
     const getContents = useCallback(() => {
@@ -172,13 +181,27 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
      */
     const handleUndo = useCallback((): boolean => {
       const commands = modules?.['@codemirror/commands'];
+      const EditorView = modules?.['@codemirror/view'];
 
-      if (!editorViewRef.current || !commands) {
+      if (!editorViewRef.current || !commands || !EditorView) {
         console.warn('Undo is not available - editor or commands not loaded');
         return false;
       }
 
-      return commands.undo(editorViewRef.current);
+      const result = commands.undo(editorViewRef.current);
+
+      // Focus the editor and scroll cursor into view after undo
+      if (result && editorViewRef.current) {
+        editorViewRef.current.focus();
+        editorViewRef.current.dispatch({
+          effects: EditorView.EditorView.scrollIntoView(
+            editorViewRef.current.state.selection.main,
+            { y: 'center' },
+          ),
+        });
+      }
+
+      return result;
     }, [modules]);
 
     /**
@@ -187,13 +210,27 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
      */
     const handleRedo = useCallback((): boolean => {
       const commands = modules?.['@codemirror/commands'];
+      const EditorView = modules?.['@codemirror/view'];
 
-      if (!editorViewRef.current || !commands) {
+      if (!editorViewRef.current || !commands || !EditorView) {
         console.warn('Redo is not available - editor or commands not loaded');
         return false;
       }
 
-      return commands.redo(editorViewRef.current);
+      const result = commands.redo(editorViewRef.current);
+
+      // Focus the editor and scroll cursor into view after redo
+      if (result && editorViewRef.current) {
+        editorViewRef.current.focus();
+        editorViewRef.current.dispatch({
+          effects: EditorView.EditorView.scrollIntoView(
+            editorViewRef.current.state.selection.main,
+            { y: 'center' },
+          ),
+        });
+      }
+
+      return result;
     }, [modules]);
 
     /**
@@ -244,40 +281,92 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       [getContents, language],
     );
 
+    const searchPanelExtension = useSearchPanelExtension({
+      props: {
+        ...props,
+        darkMode,
+        baseFontSize,
+      },
+      modules,
+      hasPanel: !!panel,
+    });
+
+    // Create the editor when modules are loaded
     useLayoutEffect(() => {
       const EditorView = modules?.['@codemirror/view'];
-      const commands = modules?.['@codemirror/commands'];
-      const searchModule = modules?.['@codemirror/search'];
-      const Prec = modules?.['@codemirror/state']?.Prec;
 
-      if (
-        !editorContainerRef?.current ||
-        !EditorView ||
-        !Prec ||
-        !commands ||
-        !searchModule
-      ) {
+      if (!editorContainerRef?.current || !EditorView) {
         return;
       }
 
       const domNode = editorContainerRef.current as HTMLElementWithCodeMirror;
 
+      // Reset extensions initialized state
+      setExtensionsInitialized(false);
+
+      // Create editor with minimal setup - extensions will be configured in separate effect
       editorViewRef.current = new EditorView.EditorView({
         doc: controlledValue || defaultValue,
         parent: domNode,
-        extensions: [
+      });
+
+      return () => {
+        /** Delete the CodeMirror instance from the DOM node */
+        delete domNode._cm;
+        editorViewRef.current?.destroy();
+      };
+      // Only recreate editor when modules are loaded
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modules]);
+
+    /**
+     * Configure/update extensions whenever relevant props change.
+     * Extensions are configured in a separate effect so that the editor is not recreated every time a prop changes.
+     */
+    useLayoutEffect(() => {
+      const EditorView = modules?.['@codemirror/view'];
+      const commands = modules?.['@codemirror/commands'];
+      const searchModule = modules?.['@codemirror/search'];
+      const Prec = modules?.['@codemirror/state']?.Prec;
+      const StateEffect = modules?.['@codemirror/state']?.StateEffect;
+
+      if (
+        !editorViewRef.current ||
+        !EditorView ||
+        !Prec ||
+        !commands ||
+        !searchModule ||
+        !StateEffect
+      ) {
+        return;
+      }
+
+      // Configure the editor with necessary extensions
+      editorViewRef.current.dispatch({
+        effects: StateEffect.reconfigure.of([
           ...consumerExtensions.map((extension: CodeMirrorExtension) =>
             Prec.highest(extension),
           ),
 
           commands.history(),
-          searchModule.search(),
+
+          searchPanelExtension,
 
           EditorView.EditorView.updateListener.of((update: ViewUpdate) => {
-            if (isControlled && update.docChanged) {
-              const editorText = getContents();
-              onChangeProp?.(editorText);
-              setControlledValue(editorText);
+            if (update.docChanged) {
+              const commands = modules?.['@codemirror/commands'];
+              const state = editorViewRef.current?.state;
+
+              if (isControlled) {
+                const editorText = getContents();
+                onChangeProp?.(editorText);
+                setControlledValue(editorText);
+              }
+
+              if (commands && state) {
+                setUndoDepth(commands.undoDepth(state));
+                setRedoDepth(commands.redoDepth(state));
+              }
             }
           }),
 
@@ -298,13 +387,24 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
               key: 'Shift-Tab',
               run: commands.indentLess,
             },
-            ...searchModule.searchKeymap,
+            ...(enableSearchPanel && searchModule
+              ? searchModule.searchKeymap
+              : []),
             ...commands.defaultKeymap,
             ...commands.historyKeymap,
           ]),
 
           ...customExtensions,
-        ],
+        ]),
+      });
+
+      /**
+       * Wait for next frame to ensure extensions are rendered before hiding loading overlay.
+       * Since the editor is created in a separate effect without extensions, it is created before the extensions
+       * are applied. This prevents a blink of an unstyled editor.
+       */
+      const rafId = requestAnimationFrame(() => {
+        setExtensionsInitialized(true);
       });
 
       if (forceParsingProp) {
@@ -317,21 +417,21 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       }
 
       return () => {
-        /** Delete the CodeMirror instance from the DOM node */
-        delete domNode._cm;
-        editorViewRef.current?.destroy();
+        cancelAnimationFrame(rafId);
       };
     }, [
-      value,
-      modules,
-      controlledValue,
-      defaultValue,
-      isControlled,
-      onChangeProp,
       consumerExtensions,
       customExtensions,
       forceParsingProp,
       getContents,
+      enableSearchPanel,
+      darkModeProp,
+      baseFontSizeProp,
+      panel,
+      searchPanelExtension,
+      isControlled,
+      modules,
+      onChangeProp,
     ]);
 
     useImperativeHandle(forwardedRef, () => ({
@@ -350,69 +450,95 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
       isFormattingAvailable,
       language,
       undo: handleUndo,
+      undoDepth,
       redo: handleRedo,
+      redoDepth,
       downloadContent: handleDownloadContent,
       lgIds,
+      maxWidth,
+      minWidth,
+      width,
+      readOnly,
+      darkMode,
+      baseFontSize,
+      isLoading: isLoadingProp || isLoading || !extensionsInitialized,
     };
 
+    const numOfLines = (
+      value ??
+      defaultValue ??
+      (typeof placeholder === 'string' ? placeholder : '')
+    ).split('\n').length;
+
     return (
-      <CodeEditorContextMenu
-        customMenuItems={customContextMenuItems}
-        data-lgid={dataLgId}
+      <LeafyGreenProvider
+        darkMode={darkMode}
+        baseFontSize={baseFontSize === 13 ? 14 : 16}
       >
-        <div
-          ref={editorContainerRef}
-          className={getEditorStyles({
-            width,
-            minWidth,
-            maxWidth,
-            height,
-            minHeight,
-            maxHeight,
-            className,
-            copyButtonAppearance,
-          })}
-          data-lgid={lgIds.root}
-          {...rest}
+        <CodeEditorContextMenu
+          customMenuItems={customContextMenuItems}
+          data-lgid={dataLgId}
         >
-          {panel && (
-            <div data-no-context-menu="true">
-              <CodeEditorProvider value={contextValue}>
-                {panel}
-              </CodeEditorProvider>
-            </div>
-          )}
-          {!panel &&
-            (copyButtonAppearance === CopyButtonAppearance.Hover ||
-              copyButtonAppearance === CopyButtonAppearance.Persist) && (
-              <CodeEditorCopyButton
-                getContentsToCopy={getContents}
-                className={getCopyButtonStyles(copyButtonAppearance)}
-                variant={CopyButtonVariant.Button}
-                disabled={isLoadingProp || isLoading}
-                data-lgid={lgIds.copyButton}
-              />
+          <div
+            ref={editorContainerRef}
+            className={getEditorStyles({
+              width,
+              minWidth,
+              maxWidth,
+              height,
+              minHeight,
+              maxHeight,
+              className,
+              copyButtonAppearance,
+            })}
+            data-lgid={lgIds.root}
+            {...rest}
+          >
+            {panel && (
+              <div data-no-context-menu="true">
+                <CodeEditorProvider value={contextValue}>
+                  {panel}
+                </CodeEditorProvider>
+              </div>
             )}
-          {(isLoadingProp || isLoading) && (
-            <div
-              className={getLoaderStyles({
-                theme,
-                width,
-                minWidth,
-                maxWidth,
-                height,
-                minHeight,
-                maxHeight,
-              })}
-              data-lgid={lgIds.loader}
-            >
-              <Body className={getLoadingTextStyles(theme)}>
-                Loading code editor...
-              </Body>
-            </div>
-          )}
-        </div>
-      </CodeEditorContextMenu>
+            {!panel &&
+              (copyButtonAppearance === CopyButtonAppearance.Hover ||
+                copyButtonAppearance === CopyButtonAppearance.Persist) && (
+                <CodeEditorCopyButton
+                  getContentsToCopy={getContents}
+                  className={getCopyButtonStyles(copyButtonAppearance)}
+                  variant={CopyButtonVariant.Button}
+                  disabled={
+                    isLoadingProp || isLoading || !extensionsInitialized
+                  }
+                  data-lgid={lgIds.copyButton}
+                />
+              )}
+            {(isLoadingProp || isLoading || !extensionsInitialized) && (
+              <div
+                className={getLoaderStyles({
+                  theme,
+                  width,
+                  minWidth,
+                  maxWidth,
+                  height,
+                  minHeight,
+                  maxHeight,
+                  baseFontSize,
+                  numOfLines,
+                  isLoading,
+                  hasPanel: !!panel,
+                })}
+                data-lgid={lgIds.loader}
+              >
+                <Body className={getLoadingTextStyles(theme)}>
+                  Loading code editor...
+                </Body>
+              </div>
+            )}
+          </div>
+        </CodeEditorContextMenu>
+      </LeafyGreenProvider>
     );
   },
 );

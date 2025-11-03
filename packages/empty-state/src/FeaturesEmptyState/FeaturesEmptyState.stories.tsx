@@ -6,7 +6,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 

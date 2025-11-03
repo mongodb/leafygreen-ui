@@ -1,5 +1,24 @@
 # @leafygreen-ui/inline-definition
 
+## 9.1.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/tooltip@14.2.2
+
+## 9.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/tooltip@14.2.1
+
 ## 9.1.0
 
 ### Minor Changes

@@ -1,7 +1,7 @@
 import React, { ComponentProps, StrictMode } from 'react';
 import { render, waitFor } from '@testing-library/react';
 
-import Popover from '@leafygreen-ui/popover';
+import { Popover } from '@leafygreen-ui/popover';
 
 import {
   TestDescendant,

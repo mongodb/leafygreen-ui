@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "14.6.0",
+  "version": "14.6.1",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -26,6 +26,7 @@
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild/index.ts",
     "build": "ts-node ./scripts/build/build.ts",
+    "postbuild": "ts-node ./scripts/postbuild/index.ts",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
   },
@@ -43,13 +44,16 @@
     "@lg-tools/build": "workspace:^",
     "@lg-tools/lint": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
+    "@rollup/plugin-node-resolve": "15.1.0",
     "@svgr/core": "^5.3.1",
     "commander": "^11.0.0",
     "fast-xml-parser": "^5.3.0",
     "fs-extra": "11.1.1",
     "p-queue": "^8.1.0",
     "rollup": "4.16.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "rollup-plugin-node-externals": "7.1.1",
+    "xml2json": "^0.12.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon",

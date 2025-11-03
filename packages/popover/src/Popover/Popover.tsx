@@ -1,11 +1,18 @@
-import React, { forwardRef, Fragment } from 'react';
+import React, { forwardRef, Fragment, useCallback } from 'react';
 import { Transition } from 'react-transition-group';
-import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
+import {
+  autoUpdate,
+  flip,
+  offset,
+  size,
+  SizeOptions,
+  useFloating,
+} from '@floating-ui/react';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
-import Portal from '@leafygreen-ui/portal';
+import { Portal } from '@leafygreen-ui/portal';
 import { spacing as spacingToken } from '@leafygreen-ui/tokens';
 
 import {
@@ -15,11 +22,17 @@ import {
   getWindowSafePlacementValues,
 } from '../utils/positionUtils';
 
-import { useContentNode, usePopoverProps, useReferenceElement } from './hooks';
+import {
+  useContentNode,
+  usePopoverProps,
+  useReferenceElement,
+  useReferenceElementPosition,
+} from './hooks';
 import {
   contentClassName,
   getPopoverStyles,
   hiddenPlaceholderStyle,
+  popoverCSSProperties,
   TRANSITION_DURATION,
 } from './Popover.styles';
 import {
@@ -66,6 +79,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       children,
       className,
       justify = Justify.Start,
+      maxHeight,
+      maxWidth,
       refEl,
       ...rest
     }: PopoverProps,
@@ -119,9 +134,52 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     };
     const rootProps = usePortal ? portalProps : {};
 
-    const { referenceElement, referenceElDocumentPos, setPlaceholderElement } =
-      useReferenceElement(refEl, scrollContainer);
+    const { referenceElement, setPlaceholderElement } =
+      useReferenceElement(refEl);
+
+    const referenceElDocumentPos = useReferenceElementPosition(
+      referenceElement,
+      scrollContainer,
+    );
+
     const { contentNodeRef, setContentNode } = useContentNode();
+
+    /**
+     * The `size` middleware does not return any values,
+     * Instead we need to set the values to a CSS property
+     * that we then read directly with `var()`
+     * @see https://floating-ui.com/docs/size#apply
+     */
+    const calculateSize = useCallback<Required<SizeOptions>['apply']>(
+      ({ elements, availableHeight, availableWidth }) => {
+        // `availableHeight` & availableWidth can be negative so we need to clamp above 0
+        // If no maxHeight/maxWidth are provided, we default to the availableHeight/availableWidth
+        const clampedMaxHeight = Math.max(
+          Math.min(maxHeight ?? Number.MAX_SAFE_INTEGER, availableHeight),
+          0,
+        );
+        const clampedMaxWidth = Math.max(
+          Math.min(maxWidth ?? Number.MAX_SAFE_INTEGER, availableWidth),
+          0,
+        );
+
+        // Transform to a CSS string
+        const maxHeightCSSValue = clampedMaxHeight.toFixed(0) + 'px';
+        const maxWidthCSSValue = clampedMaxWidth.toFixed(0) + 'px';
+
+        // Set a known CSS property that is read in the stylesheet
+        elements.floating.style.setProperty(
+          popoverCSSProperties.maxHeight,
+          maxHeightCSSValue,
+        );
+
+        elements.floating.style.setProperty(
+          popoverCSSProperties.maxWidth,
+          maxWidthCSSValue,
+        );
+      },
+      [maxHeight, maxWidth],
+    );
 
     const { context, elements, placement, refs, strategy, x, y } = useFloating({
       elements: {
@@ -137,6 +195,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
           mainAxis: true,
           crossAxis: true,
           fallbackAxisSideDirection: 'start',
+        }),
+        size({
+          apply: calculateSize,
         }),
       ],
       open: active,

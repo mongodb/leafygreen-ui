@@ -19,13 +19,22 @@
       "path": "../button"
     },
     {
+      "path": "../checkbox"
+    },
+    {
       "path": "../emotion"
     },
     {
       "path": "../hooks"
     },
     {
+      "path": "../input-option"
+    },
+    {
       "path": "../lib"
+    },
+    {
+      "path": "../loading-indicator"
     },
     {
       "path": "../menu"
@@ -38,6 +47,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../text-input"
     },
     {
       "path": "../leafygreen-provider"

@@ -1,5 +1,63 @@
 # @leafygreen-ui/loading-indicator
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/typography@22.2.0
+
+## 5.0.0
+
+### Major Changes
+
+- 93ae067: [LG-4735](https://jira.mongodb.org/browse/LG-4735)
+
+  The `Spinner` component has been re-written as a lightweight SVG-based spinning loading indicator component, to eliminate the use of Lottie player (a heavy run-time animation library).
+  Importing `Spinner` component from the package root is not recommended, since this will also bundle the heavy `PageLoader` component, which still uses Lottie player.
+
+  For simple loading spinners, prefer importing the spinner directly from `@leafygreen-ui/loading-indicator/spinner`
+
+  Prop changes:
+
+  - Replaces `displayOption` (and `sizeOverride`) prop with a single `size` prop. The size mapping has also been updated to reflect the Figma spec.
+
+  ```
+  Size.XSmall: 16px;
+  Size.Small: 24px;
+  Size.Default: 48px;
+  Size.Large: 64px;
+  ```
+
+  Run the codemod to auto-update this prop change
+
+  ```bash
+  lg codemod loading-spinner-v5
+  ```
+
+  - Removes `baseFontSize` prop
+  - Removes the explicit `description` prop.
+    These props will be _removed_ by the codemod, but the description will only be converted to a comment, and must be updated manually.
+    To add a description to the spinner, use the `Description` component from `@leafygreen-ui/typography` directly.
+
+  ```tsx
+  <div>
+    <Spinner size="default" />
+    <Description>Loading...</Description>
+  </div>
+  ```
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/typography@22.1.4
+
 ## 4.0.6
 
 ### Patch Changes

@@ -1,5 +1,25 @@
 # @lg-tools/storybook-addon
 
+## 0.6.5
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/typography@22.2.0
+  - @lg-tools/storybook-decorators@1.0.5
+
+## 0.6.4
+
+### Patch Changes
+
+- e65be89: Updates Storybook dependency versions. Removes redundant "node" export definition
+- Updated dependencies [e65be89]
+- Updated dependencies [c8559f3]
+  - @lg-tools/storybook-utils@0.3.3
+  - @leafygreen-ui/typography@22.1.4
+
 ## 0.6.3
 
 ### Patch Changes

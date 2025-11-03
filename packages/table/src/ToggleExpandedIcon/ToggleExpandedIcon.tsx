@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import { Icon } from '@leafygreen-ui/icon';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useTableContext } from '../TableContext';

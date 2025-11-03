@@ -1,5 +1,58 @@
 # @lg-chat/input-bar
 
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/search-input@6.1.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/avatar@3.1.4
+  - @leafygreen-ui/badge@10.2.2
+  - @leafygreen-ui/banner@10.2.2
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+  - @leafygreen-ui/input-option@4.1.2
+
+## 11.0.0
+
+### Minor Changes
+
+- 71ff953: [LG-5600](https://jira.mongodb.org/browse/LG-5600)
+  Fix send button disabled logic: the send button now remains enabled during loading state (even with empty message body) to allow users to stop the request. The `disabled` and `disableSend` props still take precedence.
+
+  Add `onClickStopButton` prop to handle stop actions during loading state. When triggered, the previous message body is restored to the input field (similar to error state behavior).
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- 71ff953: Remove console warning when `shouldRenderGradient` prop is true to avoid it requiring an explicit false value.
+- bd83675: Fix disclaimer text alignment to be centered below input
+- Updated dependencies [bd83675]
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @lg-chat/leafygreen-chat-provider@5.1.0
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/input-option@4.1.1
+  - @leafygreen-ui/search-input@6.0.7
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/avatar@3.1.3
+  - @leafygreen-ui/banner@10.2.1
+  - @leafygreen-ui/button@25.1.1
+  - @leafygreen-ui/badge@10.2.1
+
 ## 10.1.0
 
 ### Minor Changes

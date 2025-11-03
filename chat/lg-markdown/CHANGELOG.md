@@ -1,5 +1,28 @@
 # @lg-chat/lg-markdown
 
+## 4.2.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/code@20.2.1
+
+## 4.2.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [37be24b]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/code@20.2.0
+  - @leafygreen-ui/typography@22.1.4
+
 ## 4.2.0
 
 ### Minor Changes

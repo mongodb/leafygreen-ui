@@ -7,7 +7,7 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import { Variant } from '@leafygreen-ui/badge';
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 

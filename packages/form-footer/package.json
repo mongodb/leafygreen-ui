@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/form-footer",
-  "version": "9.1.0",
+  "version": "9.2.0",
   "description": "leafyGreen UI Kit Form Footer",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -22,6 +22,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/split-button": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
     "polished": "^4.2.2"
   },
   "peerDependencies": {

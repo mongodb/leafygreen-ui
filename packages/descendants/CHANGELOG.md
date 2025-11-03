@@ -1,5 +1,11 @@
 # @leafygreen-ui/descendants
 
+## 3.0.5
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+
 ## 3.0.4
 
 ### Patch Changes

@@ -1,5 +1,27 @@
 # @leafygreen-ui/typography
 
+## 22.2.0
+
+### Minor Changes
+
+- 888a37d: Typography elements now support `elementtiming` HTML attribute
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+
+## 22.1.4
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
 ## 22.1.3
 
 ### Patch Changes

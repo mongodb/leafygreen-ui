@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import CursorIcon from '@leafygreen-ui/icon/dist/Cursor';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import {

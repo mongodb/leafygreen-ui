@@ -7,7 +7,7 @@ import {
 import { StoryFn } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -119,7 +119,6 @@ const meta: StoryMetaType<typeof Select> = {
     label: { control: 'text' },
     description: { control: 'text' },
     defaultValue: { control: 'text' },
-    readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
     open: {

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/date-picker",
-  "version": "4.0.8",
+  "version": "4.0.10",
   "description": "LeafyGreen UI Kit Date Picker",
   "license": "Apache-2.0",
   "main": "./dist/umd/index.js",
@@ -41,7 +41,6 @@
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/modal": "workspace:^",
     "@lg-tools/build": "workspace:^",
-    "@storybook/test": "^8.6.12",
     "mockdate": "^3.0.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/date-picker",

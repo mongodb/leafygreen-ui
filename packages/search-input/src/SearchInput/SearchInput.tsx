@@ -23,7 +23,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
 import XIcon from '@leafygreen-ui/icon/dist/XWithCircle';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';

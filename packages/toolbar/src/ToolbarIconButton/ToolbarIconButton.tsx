@@ -1,11 +1,11 @@
 import React, { ComponentPropsWithoutRef, useEffect } from 'react';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import { Icon } from '@leafygreen-ui/icon';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
-import Tooltip, { Align } from '@leafygreen-ui/tooltip';
+import { Align, Tooltip } from '@leafygreen-ui/tooltip';
 
 import { ToolbarDescendantsContext, useToolbarContext } from '../Context';
 

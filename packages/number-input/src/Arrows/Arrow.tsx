@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { Direction } from '../NumberInput/NumberInput.types';

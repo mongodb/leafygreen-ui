@@ -1,9 +1,12 @@
-import { transparentize } from 'polished';
-
 import { css, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color, fontFamilies, spacing } from '@leafygreen-ui/tokens';
+import {
+  boxShadows,
+  color,
+  fontFamilies,
+  spacing,
+} from '@leafygreen-ui/tokens';
 
 import { fontSize, lineHeight } from '../ComboboxChip/ComboboxChip.styles';
 import { ComboboxSize as Size } from '../types';
@@ -33,14 +36,18 @@ export const popoverStyle = (width = 384) => css`
 
 export const popoverThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
+    box-shadow: ${boxShadows[Theme.Light][1]};
     border-color: ${palette.gray.light2};
   `,
   [Theme.Dark]: css`
-    box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
+    box-shadow: ${boxShadows[Theme.Dark][1]};
     border-color: ${palette.gray.dark2};
   `,
 };
+
+export const autoWidthStyles = css`
+  width: max-content;
+`;
 
 export const menuBaseStyle = css`
   position: relative;

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import Card from '@leafygreen-ui/card';
+import { Card } from '@leafygreen-ui/card';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';

@@ -139,7 +139,7 @@ export type SelectProps = BaseSelectProps &
   Either<LabelProp, 'label' | 'aria-labelledby' | 'aria-label'> &
   (
     | // Uncontrolled
-    ({
+    {
         /**
          * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
          */
@@ -148,7 +148,6 @@ export type SelectProps = BaseSelectProps &
          * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
          */
         value?: undefined;
-      } & {
         /**
          * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
          *
@@ -158,25 +157,19 @@ export type SelectProps = BaseSelectProps &
           value: string,
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void;
-        /**
-         * Indicates that the component's value cannot be changed.
-         */
-        readOnly?: false;
-      })
+      }
     // Controlled
-    | ({ value: string; defaultValue?: undefined } & (
-        | {
-            /**
-             * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
-             *
-             * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
-             */
-            onChange: (
-              value: string,
-              event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
-            ) => void;
-            readOnly?: false;
-          }
-        | { readOnly: true; onChange?: undefined }
-      ))
+    | {
+        value: string;
+        defaultValue?: undefined;
+        /**
+         * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
+         *
+         * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
+         */
+        onChange?: (
+          value: string,
+          event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
+        ) => void;
+      }
   );

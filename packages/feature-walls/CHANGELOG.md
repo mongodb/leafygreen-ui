@@ -1,5 +1,45 @@
 # @lg-private/feature-walls
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/card@13.2.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/badge@10.2.2
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/vertical-stepper@3.0.2
+
+## 5.0.0
+
+### Major Changes
+
+- 1a9926f: [LG-5579](https://jira.mongodb.org/browse/LG-5579)
+
+  **Package has been renamed and moved!** This package is now published under the `@leafygreen-ui` scope. All dependencies and import paths must be updated from `@lg-private/feature-walls` to `@leafygreen-ui/feature-walls`.
+
+  - Removes exports for `Accordion` and `ExpandableGrid`
+  - Removes `react-transition-group` dependency in favor of raw CSS transition
+
+### Patch Changes
+
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/vertical-stepper@3.0.1
+  - @leafygreen-ui/descendants@3.0.5
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/button@25.1.1
+  - @leafygreen-ui/badge@10.2.1
+  - @leafygreen-ui/card@13.1.2
+
 ## 4.1.1
 
 ### Patch Changes

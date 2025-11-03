@@ -1,14 +1,17 @@
 import React, { useRef, useState } from 'react';
+import { faker } from '@faker-js/faker';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
+import { Button } from '@leafygreen-ui/button';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useEventListener } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing } from '@leafygreen-ui/tokens';
+import { Body, InlineCode } from '@leafygreen-ui/typography';
 
 import { getPopoverRenderModeProps } from './utils/getPopoverRenderModeProps';
 import {
@@ -21,11 +24,13 @@ import {
   ToggleEvent,
 } from './Popover';
 
+const SEED = 0;
+faker.seed(SEED);
+
 const popoverStyles = css`
   border: 1px solid ${palette.gray.light1};
   text-align: center;
   padding: ${spacing[300]}px;
-  max-height: 100%;
   overflow: hidden;
   // Reset these properties since they'll be inherited
   // from the container element when not using a portal.
@@ -337,7 +342,7 @@ const generatedStoryExcludedControlParams = [
 ];
 
 export const Top = {
-  render: LiveExample.bind({}),
+  render: () => <></>,
   args: {
     align: Align.Top,
   },
@@ -349,7 +354,7 @@ export const Top = {
 };
 
 export const Bottom = {
-  render: LiveExample.bind({}),
+  render: () => <></>,
   args: {
     align: Align.Bottom,
   },
@@ -361,7 +366,7 @@ export const Bottom = {
 };
 
 export const Left = {
-  render: LiveExample.bind({}),
+  render: () => <></>,
   args: {
     align: Align.Left,
   },
@@ -373,7 +378,7 @@ export const Left = {
 };
 
 export const Right = {
-  render: LiveExample.bind({}),
+  render: () => <></>,
   args: {
     align: Align.Right,
   },
@@ -385,7 +390,7 @@ export const Right = {
 };
 
 export const CenterHorizontal = {
-  render: LiveExample.bind({}),
+  render: () => <></>,
   args: {
     align: Align.CenterHorizontal,
   },
@@ -397,7 +402,7 @@ export const CenterHorizontal = {
 };
 
 export const CenterVertical: StoryObj<PopoverStoryProps> = {
-  render: LiveExample.bind({}),
+  render: () => <></>,
   args: {
     align: Align.CenterVertical,
   },
@@ -405,5 +410,220 @@ export const CenterVertical: StoryObj<PopoverStoryProps> = {
     controls: {
       exclude: generatedStoryExcludedControlParams,
     },
+  },
+};
+
+const paragraphs: Array<string> = faker.lorem.paragraphs(12).split('\n');
+
+export const MaxHeight: StoryObj<PopoverStoryProps> = {
+  render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const trigger1Ref = useRef<HTMLButtonElement>(null);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const trigger2Ref = useRef<HTMLButtonElement>(null);
+
+    const MAX_HEIGHT = 512;
+    const MAX_WIDTH = 350;
+
+    return (
+      <table style={{ width: '100%', height: '100%' }}>
+        <tr>
+          <th>
+            <code>maxHeight: undefined</code> (default)
+          </th>
+          <th>
+            <code>maxHeight: {MAX_HEIGHT}px</code>
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <Button ref={trigger1Ref}>Trigger</Button>
+            <Popover
+              active
+              refEl={trigger1Ref}
+              dismissMode={DismissMode.Manual}
+              renderMode={RenderMode.TopLayer}
+              maxWidth={MAX_WIDTH}
+              className={cx(
+                popoverStyles,
+                css`
+                  text-align: left;
+                `,
+              )}
+            >
+              <Body>
+                By default, a popover takes up the maximum amount of vertical
+                space
+              </Body>
+              {paragraphs.map((p, i) => (
+                <Body key={i}>{p}</Body>
+              ))}
+            </Popover>
+          </td>
+          <td>
+            <Button ref={trigger2Ref}>Trigger</Button>
+            <Popover
+              active
+              refEl={trigger2Ref}
+              dismissMode={DismissMode.Manual}
+              renderMode={RenderMode.TopLayer}
+              maxHeight={MAX_HEIGHT}
+              maxWidth={MAX_WIDTH}
+              className={cx(
+                popoverStyles,
+                css`
+                  text-align: left;
+                `,
+              )}
+            >
+              <Body>
+                The height can be further restricted with the{' '}
+                <InlineCode>maxHeight</InlineCode> prop
+              </Body>
+              {paragraphs.map((p, i) => (
+                <Body key={i}>{p}</Body>
+              ))}
+            </Popover>
+          </td>
+        </tr>
+      </table>
+    );
+  },
+};
+
+export const MaxWidth: StoryObj<PopoverStoryProps> = {
+  render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const trigger1Ref = useRef<HTMLButtonElement>(null);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const trigger2Ref = useRef<HTMLButtonElement>(null);
+
+    const MAX_HEIGHT = 128;
+    const MAX_WIDTH = 350;
+
+    return (
+      <table style={{ width: '100%', height: '100%' }}>
+        <tr style={{ height: 2 * MAX_HEIGHT }}>
+          <th style={{ width: '25%' }}>
+            <code>maxWidth: undefined</code> (default)
+          </th>
+          <td>
+            <Button ref={trigger1Ref}>Trigger</Button>
+            <Popover
+              active
+              refEl={trigger1Ref}
+              dismissMode={DismissMode.Manual}
+              renderMode={RenderMode.TopLayer}
+              maxHeight={MAX_HEIGHT}
+              className={cx(
+                popoverStyles,
+                css`
+                  text-align: left;
+                `,
+              )}
+            >
+              <Body>
+                By default, a popover takes up the maximum amount of horizontal
+                space
+              </Body>
+              {paragraphs.map((p, i) => (
+                <Body key={i}>{p}</Body>
+              ))}
+            </Popover>
+          </td>
+        </tr>
+        <tr style={{ height: 2 * MAX_HEIGHT }}>
+          <th style={{ width: '25%' }}>
+            <code>maxWidth: {MAX_WIDTH}px</code>
+          </th>
+          <td>
+            <Button ref={trigger2Ref}>Trigger</Button>
+            <Popover
+              active
+              refEl={trigger2Ref}
+              dismissMode={DismissMode.Manual}
+              renderMode={RenderMode.TopLayer}
+              maxHeight={MAX_HEIGHT}
+              maxWidth={MAX_WIDTH}
+              className={cx(
+                popoverStyles,
+                css`
+                  text-align: left;
+                `,
+              )}
+            >
+              <Body>
+                The width can be further restricted with the{' '}
+                <InlineCode>maxWidth</InlineCode> prop
+              </Body>
+              {paragraphs.map((p, i) => (
+                <Body key={i}>{p}</Body>
+              ))}
+            </Popover>
+          </td>
+        </tr>
+      </table>
+    );
+  },
+};
+
+export const MovingPopover: StoryObj<PopoverStoryProps> = {
+  render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const triggerRef = useRef<HTMLDivElement>(null);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [position, setPosition] = useState({ top: 0, left: 0 });
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEventListener(
+      'click',
+      event => {
+        const { clientX, clientY } = event;
+        const position = { top: clientY, left: clientX };
+        // @ts-ignore
+        setPosition(position);
+      },
+      {
+        dependencies: [setPosition],
+      },
+    );
+
+    return (
+      <>
+        <div
+          style={{ position: 'absolute', width: 1, height: 1, ...position }}
+          ref={triggerRef}
+        ></div>
+        <Popover
+          active
+          refEl={triggerRef}
+          dismissMode={DismissMode.Manual}
+          renderMode={RenderMode.TopLayer}
+          className={popoverStyles}
+        >
+          Popover with refEl position{' '}
+          <code>{JSON.stringify(position, null, 2)}</code>
+        </Popover>
+      </>
+    );
+  },
+  play: async () => {
+    // We'll simulate a click at coordinates {left: 200, top: 180}
+    await new Promise(r => setTimeout(r, 200)); // Let the story render
+
+    const clickX = 200;
+    const clickY = 180;
+
+    // Simulate click event on the document at (clickX, clickY)
+    // Use the 'pointerEvents' API if available, otherwise dispatch manually
+    const event = new MouseEvent('click', {
+      clientX: clickX,
+      clientY: clickY,
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+    document.dispatchEvent(event);
   },
 };

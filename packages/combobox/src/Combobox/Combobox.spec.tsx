@@ -16,6 +16,7 @@ import { RenderMode } from '@leafygreen-ui/popover';
 import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
 import { OptionObject } from '../ComboboxOption/ComboboxOption.types';
+import { DropdownWidthBasis } from '../types';
 import {
   defaultOptions,
   groupedOptions,
@@ -54,6 +55,38 @@ describe('packages/combobox', () => {
    */
   test.todo('expand-y');
   test.todo('scroll-x');
+
+  /**
+   * dropdownWidthBasis prop
+   */
+  describe('dropdownWidthBasis', () => {
+    test('applies max-content width when set to "option"', () => {
+      const { openMenu } = renderCombobox('single', {
+        dropdownWidthBasis: DropdownWidthBasis.Option,
+      });
+      const { menuContainerEl } = openMenu();
+
+      expect(menuContainerEl).toBeInTheDocument();
+      // The Popover wrapper should have the autoWidthStyles applied
+      const popoverWrapper = menuContainerEl?.parentElement?.parentElement;
+      expect(popoverWrapper).toHaveStyle({
+        width: 'max-content',
+      });
+    });
+
+    test('renders without max-content width when set to "trigger"', () => {
+      const { openMenu } = renderCombobox('single', {
+        dropdownWidthBasis: DropdownWidthBasis.Trigger,
+      });
+      const { menuContainerEl } = openMenu();
+
+      expect(menuContainerEl).toBeInTheDocument();
+      // The Popover wrapper should not have max-content width
+      const popoverWrapper = menuContainerEl?.parentElement?.parentElement;
+      const computedStyle = window.getComputedStyle(popoverWrapper!);
+      expect(computedStyle.width).not.toBe('max-content');
+    });
+  });
 
   const tests = [['single'], ['multiple']] as Array<Array<Select>>;
 

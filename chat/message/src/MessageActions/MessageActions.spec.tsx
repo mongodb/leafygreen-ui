@@ -260,13 +260,18 @@ describe('packages/message-actions', () => {
       expect(messageRatingContainer).toHaveAttribute('inert', 'inert');
     });
 
-    test('does not call onRatingChange when isSubmitted is true', () => {
-      const mockOnRatingChange = jest.fn();
-      const mockOnSubmitFeedback = jest.fn();
+    test('hides thumbs down button after selecting thumbs up and submitting feedback', async () => {
       renderMessageActions({
-        onRatingChange: mockOnRatingChange,
-        onSubmitFeedback: mockOnSubmitFeedback,
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
       });
+
+      expect(
+        screen.getByRole('radio', { name: 'Like this message' }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('radio', { name: 'Dislike this message' }),
+      ).toBeInTheDocument();
 
       const thumbsUpButton = screen.getByRole('radio', {
         name: 'Like this message',
@@ -279,15 +284,48 @@ describe('packages/message-actions', () => {
       const submitButton = screen.getByRole('button', { name: 'Submit' });
       userEvent.click(submitButton);
 
-      // Clear the mock to check only new calls
-      mockOnRatingChange.mockClear();
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(
+        screen.queryByRole('radio', { name: 'Dislike this message' }),
+      ).toBeNull();
+      expect(
+        screen.getByRole('radio', { name: 'Like this message' }),
+      ).toBeInTheDocument();
+    });
+
+    test('hides thumbs up button after selecting thumbs down and submitting feedback', async () => {
+      renderMessageActions({
+        onRatingChange: jest.fn(),
+        onSubmitFeedback: jest.fn(),
+      });
+
+      expect(
+        screen.getByRole('radio', { name: 'Like this message' }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('radio', { name: 'Dislike this message' }),
+      ).toBeInTheDocument();
 
       const thumbsDownButton = screen.getByRole('radio', {
         name: 'Dislike this message',
       });
       userEvent.click(thumbsDownButton);
 
-      expect(mockOnRatingChange).not.toHaveBeenCalled();
+      const feedbackTextarea = screen.getByRole('textbox');
+      userEvent.type(feedbackTextarea, 'Not helpful');
+
+      const submitButton = screen.getByRole('button', { name: 'Submit' });
+      userEvent.click(submitButton);
+
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(
+        screen.queryByRole('radio', { name: 'Like this message' }),
+      ).toBeNull();
+      expect(
+        screen.getByRole('radio', { name: 'Dislike this message' }),
+      ).toBeInTheDocument();
     });
   });
 

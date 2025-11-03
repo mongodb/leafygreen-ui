@@ -8,14 +8,14 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { makeLineData } from '../../core/src/testUtils';
+import { makeSeriesData } from '../../core/src/testUtils';
 
 import { Legend, LegendProps } from '.';
 
-const lineData = makeLineData(15);
+const lineData = makeSeriesData(15);
 
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,

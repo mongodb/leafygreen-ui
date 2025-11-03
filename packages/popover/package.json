@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "14.1.0",
+  "version": "14.3.0",
   "description": "LeafyGreen UI Kit Popover",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -26,6 +26,7 @@
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@lg-tools/build": "workspace:^",

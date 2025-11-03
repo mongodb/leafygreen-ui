@@ -55,8 +55,11 @@ importers:
         specifier: workspace:^
         version: link:tools/test
       '@storybook/react':
-        specifier: 8.6.14
+        specifier: ^8.6.14
         version: 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+      '@storybook/test':
+        specifier: ^8.6.14
+        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       '@testing-library/react':
         specifier: ^14.0.0
         version: 14.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -256,9 +259,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: 8.5.3
-        version: 8.5.3(storybook@8.6.14(prettier@2.8.8))
 
   charts/legend:
     dependencies:
@@ -389,9 +389,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: ^8.6.14
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   chat/fixed-chat-window:
     dependencies:
@@ -631,9 +628,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: ^8.6.14
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   chat/message-feed:
     dependencies:
@@ -763,9 +757,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: ^8.6.14
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   chat/message-rating:
     dependencies:
@@ -1097,9 +1088,6 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
-      polished:
-        specifier: ^4.2.2
-        version: 4.3.1
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
@@ -1311,6 +1299,9 @@ importers:
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
+      '@leafygreen-ui/checkbox':
+        specifier: workspace:^
+        version: link:../checkbox
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -1323,6 +1314,9 @@ importers:
       '@leafygreen-ui/icon-button':
         specifier: workspace:^
         version: link:../icon-button
+      '@leafygreen-ui/input-option':
+        specifier: workspace:^
+        version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../leafygreen-provider
@@ -1338,6 +1332,9 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
+      '@leafygreen-ui/text-input':
+        specifier: workspace:^
+        version: link:../text-input
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
@@ -1378,9 +1375,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: ^8.6.14
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   packages/combobox:
     dependencies:
@@ -1531,9 +1525,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: 8.5.3
-        version: 8.5.3(storybook@8.6.14(prettier@2.8.8))
 
   packages/copyable:
     dependencies:
@@ -1647,9 +1638,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: ^8.6.12
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       mockdate:
         specifier: ^3.0.5
         version: 3.0.5
@@ -1779,9 +1767,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: 8.5.3
-        version: 8.5.3(storybook@8.6.14(prettier@2.8.8))
 
   packages/emotion:
     dependencies:
@@ -1988,6 +1973,9 @@ importers:
       '@leafygreen-ui/split-button':
         specifier: workspace:^
         version: link:../split-button
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
       polished:
         specifier: ^4.2.2
         version: 4.3.1
@@ -2128,6 +2116,9 @@ importers:
       '@lg-tools/storybook-utils':
         specifier: workspace:^
         version: link:../../tools/storybook-utils
+      '@rollup/plugin-node-resolve':
+        specifier: 15.1.0
+        version: 15.1.0(rollup@4.16.1)
       '@svgr/core':
         specifier: ^5.3.1
         version: 5.5.0
@@ -2146,6 +2137,9 @@ importers:
       rollup:
         specifier: 4.16.1
         version: 4.16.1
+      rollup-plugin-node-externals:
+        specifier: 7.1.1
+        version: 7.1.1(rollup@4.16.1)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.19.9)(typescript@5.8.3)
@@ -2755,6 +2749,9 @@ importers:
         specifier: ^4.4.5
         version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
+      '@faker-js/faker':
+        specifier: ^10.1.0
+        version: 10.1.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -2865,10 +2862,6 @@ importers:
       polished:
         specifier: ^4.2.2
         version: 4.3.1
-    devDependencies:
-      '@storybook/test':
-        specifier: ^8.6.14
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   packages/radio-box-group:
     dependencies:
@@ -3366,9 +3359,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: ^8.6.14
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   packages/tabs:
     dependencies:
@@ -3612,16 +3602,10 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
-      polished:
-        specifier: ^4.2.2
-        version: 4.3.1
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: ^8.6.14
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3714,9 +3698,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@storybook/test':
-        specifier: ^8.6.14
-        version: 8.6.14(storybook@8.6.14(prettier@2.8.8))
 
   packages/typography:
     dependencies:
@@ -5742,6 +5723,10 @@ packages:
     resolution: {integrity: sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@faker-js/faker@10.1.0':
+    resolution: {integrity: sha512-C3mrr3b5dRVlKPJdfrAXS8+dq+rq8Qm5SNRazca0JKgw1HQERFmrVb0towvMmw5uu8hHKNiQasMaR/tydf3Zsg==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
+
   '@faker-js/faker@8.0.2':
     resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
@@ -6382,9 +6367,6 @@ packages:
     peerDependencies:
       storybook: ^8.6.14
 
-  '@storybook/csf@0.1.12':
-    resolution: {integrity: sha512-9/exVhabisyIVL0VxTCxo01Tdm8wefIXKXfltAPTSr8cbLn5JAxGQ6QV3mjdecLGEOucfoVhAKtJfVHxEK1iqw==}
-
   '@storybook/csf@0.1.13':
     resolution: {integrity: sha512-7xOOwCLGB3ebM87eemep89MYRFTko+D8qE7EdAAq74lgdqRR5cOUtYWJLjO2dLtP94nqoOdHJo6MdLLKzg412Q==}
 
@@ -6397,11 +6379,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-
-  '@storybook/instrumenter@8.5.3':
-    resolution: {integrity: sha512-pxaTbGeju8MkwouIiaWX5DMWtpRruxqig8W3nZPOvzoSCCbQY+sLMQoyXxFlpGxLBjcvXivkL7AMVBKps5sFEQ==}
-    peerDependencies:
-      storybook: ^8.5.3
 
   '@storybook/instrumenter@8.6.14':
     resolution: {integrity: sha512-iG4MlWCcz1L7Yu8AwgsnfVAmMbvyRSk700Mfy2g4c8y5O+Cv1ejshE1LBBsCwHgkuqU0H4R0qu4g23+6UnUemQ==}
@@ -6469,11 +6446,6 @@ packages:
         optional: true
       typescript:
         optional: true
-
-  '@storybook/test@8.5.3':
-    resolution: {integrity: sha512-2smoDbtU6Qh4yk0uD18qGfW6ll7lZBzKlF58Ha1CgWR4o+jpeeTQcfDLH9gG6sNrpojF7AVzMh/aN9BDHD+Chg==}
-    peerDependencies:
-      storybook: ^8.5.3
 
   '@storybook/test@8.6.14':
     resolution: {integrity: sha512-GkPNBbbZmz+XRdrhMtkxPotCLOQ1BaGNp/gFZYdGDk2KmUWBKmvc5JxxOhtoXM2703IzNFlQHSSNnhrDZYuLlw==}
@@ -13258,6 +13230,8 @@ snapshots:
       '@eslint/core': 0.13.0
       levn: 0.4.1
 
+  '@faker-js/faker@10.1.0': {}
+
   '@faker-js/faker@8.0.2': {}
 
   '@fastify/busboy@2.1.1': {}
@@ -14109,10 +14083,6 @@ snapshots:
       storybook: 8.6.14(prettier@2.8.8)
       unplugin: 1.16.1
 
-  '@storybook/csf@0.1.12':
-    dependencies:
-      type-fest: 2.19.0
-
   '@storybook/csf@0.1.13':
     dependencies:
       type-fest: 2.19.0
@@ -14123,12 +14093,6 @@ snapshots:
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-
-  '@storybook/instrumenter@8.5.3(storybook@8.6.14(prettier@2.8.8))':
-    dependencies:
-      '@storybook/global': 5.0.0
-      '@vitest/utils': 2.1.9
-      storybook: 8.6.14(prettier@2.8.8)
 
   '@storybook/instrumenter@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
@@ -14223,18 +14187,6 @@ snapshots:
     optionalDependencies:
       '@storybook/test': 8.6.14(storybook@8.6.14(prettier@2.8.8))
       typescript: 5.8.3
-
-  '@storybook/test@8.5.3(storybook@8.6.14(prettier@2.8.8))':
-    dependencies:
-      '@storybook/csf': 0.1.12
-      '@storybook/global': 5.0.0
-      '@storybook/instrumenter': 8.5.3(storybook@8.6.14(prettier@2.8.8))
-      '@testing-library/dom': 9.3.4
-      '@testing-library/jest-dom': 6.5.0
-      '@testing-library/user-event': 13.5.0(@testing-library/dom@9.3.4)
-      '@vitest/expect': 2.0.5
-      '@vitest/spy': 2.0.5
-      storybook: 8.6.14(prettier@2.8.8)
 
   '@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8))':
     dependencies:

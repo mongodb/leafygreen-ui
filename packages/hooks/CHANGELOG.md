@@ -1,5 +1,12 @@
 # @leafygreen-ui/hooks
 
+## 9.2.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+
 ## 9.2.1
 
 ### Patch Changes

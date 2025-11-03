@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
-import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { DismissMode, RenderMode } from '@leafygreen-ui/popover';
+import { DismissMode, Popover, RenderMode } from '@leafygreen-ui/popover';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { useSearchInputContext } from '../SearchInputContext';
@@ -12,9 +11,8 @@ import { useSearchInputContext } from '../SearchInputContext';
 import { EmptyOption } from './EmptyOption';
 import { LoadingOption } from './LoadingOption';
 import {
-  getSearchResultsMenuThemeStyles,
-  searchResultsListStyles,
-  searchResultsMenuStyles,
+  getSearchResultsListStyles,
+  getSearchResultsMenuStyles,
 } from './SearchResultsMenu.style';
 import { SearchResultsMenuProps } from './SearchResultsMenu.types';
 
@@ -59,14 +57,7 @@ export const SearchResultsMenu = React.forwardRef<
         active={open}
         align="bottom"
         justify="start"
-        className={cx(
-          searchResultsMenuStyles,
-          getSearchResultsMenuThemeStyles(theme),
-          css`
-            width: ${menuWidth}px;
-            min-width: ${menuWidth}px;
-          `,
-        )}
+        className={getSearchResultsMenuStyles({ theme, menuWidth })}
         refEl={refEl}
         dismissMode={DismissMode.Manual}
         renderMode={RenderMode.TopLayer}
@@ -81,12 +72,7 @@ export const SearchResultsMenu = React.forwardRef<
               aria-relevant="additions removals"
               aria-expanded={open}
               ref={ref}
-              className={cx(
-                searchResultsListStyles,
-                css`
-                  max-height: ${maxHeightValue};
-                `,
-              )}
+              className={getSearchResultsListStyles({ maxHeightValue })}
               {...rest}
             >
               {React.Children.count(children) ? children : <EmptyOption />}

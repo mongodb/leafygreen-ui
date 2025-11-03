@@ -1,7 +1,4 @@
-import { type SharedInputBarProps } from '../shared.types';
-
-export interface InputBarSendButtonProps
-  extends Pick<SharedInputBarProps, 'state'> {
+export interface InputBarSendButtonProps {
   /**
    * Whether the button is disabled
    */

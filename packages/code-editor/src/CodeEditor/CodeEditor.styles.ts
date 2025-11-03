@@ -14,7 +14,18 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { CodeEditorSelectors, CopyButtonAppearance } from './CodeEditor.types';
+import { PANEL_HEIGHT } from '../Panel';
+
+import {
+  LINE_HEIGHT,
+  PADDING_BOTTOM,
+  PADDING_TOP,
+} from './hooks/extensions/useThemeExtension';
+import {
+  CodeEditorProps,
+  CodeEditorSelectors,
+  CopyButtonAppearance,
+} from './CodeEditor.types';
 
 export const copyButtonClassName = createUniqueClassName(
   'lg-code_editor-code_editor_copy_button',
@@ -38,36 +49,43 @@ export const getEditorStyles = ({
   maxHeight?: string;
   className?: string;
   copyButtonAppearance?: CopyButtonAppearance;
-}) =>
-  cx(
+}) => {
+  return cx(
     {
+      // Dimensions
       [css`
+        height: ${height};
         ${CodeEditorSelectors.Editor} {
           height: ${height};
         }
       `]: !!height,
       [css`
+        max-height: ${maxHeight};
         ${CodeEditorSelectors.Editor} {
           max-height: ${maxHeight};
         }
       `]: !!maxHeight,
       [css`
+        min-height: ${minHeight};
         ${CodeEditorSelectors.Editor} {
           min-height: ${minHeight};
         }
       `]: !!minHeight,
       [css`
+        width: ${width};
         ${CodeEditorSelectors.Editor} {
           width: ${width};
         }
       `]: !!width,
       [css`
+        max-width: ${maxWidth};
         ${CodeEditorSelectors.Editor} {
           max-width: ${maxWidth};
         }
       `]: !!maxWidth,
 
       [css`
+        min-width: ${minWidth};
         ${CodeEditorSelectors.Editor} {
           min-width: ${minWidth};
         }
@@ -85,6 +103,23 @@ export const getEditorStyles = ({
     `,
     className,
   );
+};
+
+function getHeight(
+  numOfLines: number,
+  baseFontSize: CodeEditorProps['baseFontSize'],
+) {
+  const borders = 2;
+  const fontSize = baseFontSize ?? 13;
+  const numOfLinesForCalculation = numOfLines === 0 ? 1 : numOfLines;
+
+  return (
+    numOfLinesForCalculation * (fontSize * LINE_HEIGHT) +
+    PADDING_TOP +
+    PADDING_BOTTOM +
+    borders
+  );
+}
 
 export const getLoaderStyles = ({
   theme,
@@ -94,39 +129,57 @@ export const getLoaderStyles = ({
   height,
   minHeight,
   maxHeight,
+  baseFontSize,
+  numOfLines,
+  isLoading,
+  hasPanel,
 }: {
   theme: Theme;
+  baseFontSize: CodeEditorProps['baseFontSize'];
   width?: string;
   minWidth?: string;
   maxWidth?: string;
   height?: string;
   minHeight?: string;
   maxHeight?: string;
+  numOfLines: number;
+  isLoading: boolean;
+  hasPanel: boolean;
 }) => {
+  const fontSize = baseFontSize ? baseFontSize : 13;
+  const defaultHeight = getHeight(numOfLines, fontSize);
+
+  let heightValue = height;
+
+  if (!heightValue) {
+    if (isLoading) {
+      heightValue = `${defaultHeight}px`;
+    } else {
+      heightValue = '100%';
+    }
+  }
+
   return css`
     background-color: ${color[theme].background[Variant.Primary][
       InteractionState.Default
     ]};
     border: 1px solid
       ${color[theme].border[Variant.Secondary][InteractionState.Default]};
-    border-radius: ${borderRadius[300]}px;
+    border-top-left-radius: ${hasPanel ? 0 : borderRadius[300]}px;
+    border-top-right-radius: ${hasPanel ? 0 : borderRadius[300]}px;
+    border-bottom-left-radius: ${borderRadius[300]}px;
+    border-bottom-right-radius: ${borderRadius[300]}px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 0;
+    top: ${hasPanel ? PANEL_HEIGHT : 0}px;
     width: ${width || '100%'};
     max-width: ${maxWidth || 'none'};
     min-width: ${minWidth || 'none'};
-    height: ${height || '100%'};
+    height: ${heightValue};
     max-height: ${maxHeight || 'none'};
-    /**
-     * The editor being rendered depends on a lazy loaded module, so it has no 
-     * height until it loads. By default, its height expands to fit its 
-     * content, therefore we won't know its actual height until it loads.
-     * To ensure the loader is visible, we need to set an arbitrary min height.
-     */
-    min-height: ${minHeight || '234px'};
+    min-height: ${minHeight || 'none'};
     z-index: 1;
   `;
 };

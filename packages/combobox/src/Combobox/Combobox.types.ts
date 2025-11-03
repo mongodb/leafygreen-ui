@@ -6,6 +6,7 @@ import { PopoverProps } from '@leafygreen-ui/popover';
 
 import {
   ComboboxSize,
+  DropdownWidthBasis,
   onChangeType,
   Overflow,
   SearchState,
@@ -178,6 +179,13 @@ export type BaseComboboxProps = Omit<React.ComponentProps<'div'>, 'onChange'> &
      * Allows for a controlled text-input value
      */
     inputValue?: string;
+
+    /**
+     * Determines the width of the dropdown. `trigger` will make the dropdown width the width of the combobox. `option` will make the dropdown width as wide as the widest option.
+     *
+     * @default 'trigger'
+     */
+    dropdownWidthBasis?: DropdownWidthBasis;
   };
 
 export type ComboboxProps<M extends boolean> = Either<

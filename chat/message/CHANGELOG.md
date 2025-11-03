@@ -1,5 +1,56 @@
 # @lg-chat/message
 
+## 9.1.0
+
+### Minor Changes
+
+- 6bb6c00: [LG-5643](https://jira.mongodb.org/browse/LG-5643)
+
+  - Hide unselected rating button after feedback is submitted to more clearly indicate which rating was selected.
+  - Fade out submitted message 3000ms after feedback reaches submit state.
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [6bb6c00]
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @lg-chat/message-feedback@8.1.0
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @lg-chat/lg-markdown@4.2.2
+  - @lg-chat/message-rating@6.0.1
+  - @lg-chat/rich-links@4.0.3
+  - @leafygreen-ui/avatar@3.1.4
+  - @leafygreen-ui/badge@10.2.2
+  - @leafygreen-ui/banner@10.2.2
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 9.0.0
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [bd83675]
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @lg-chat/leafygreen-chat-provider@5.1.0
+  - @leafygreen-ui/emotion@5.0.4
+  - @lg-chat/message-feedback@8.0.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @lg-chat/message-rating@6.0.0
+  - @leafygreen-ui/typography@22.1.4
+  - @lg-chat/lg-markdown@4.2.1
+  - @lg-chat/rich-links@4.0.2
+  - @leafygreen-ui/avatar@3.1.3
+  - @leafygreen-ui/banner@10.2.1
+  - @leafygreen-ui/badge@10.2.1
+
 ## 8.2.1
 
 ### Patch Changes

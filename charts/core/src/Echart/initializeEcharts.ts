@@ -54,6 +54,7 @@ export async function initializeEcharts(): Promise<
       // Registers any component we need to use. This is necessary to facilitate tree shaking.
       echartsCore.use([
         echartsCharts.LineChart,
+        echartsCharts.BarChart,
         echartsRenders.CanvasRenderer,
         echartsComponents.TitleComponent,
         echartsComponents.TooltipComponent,

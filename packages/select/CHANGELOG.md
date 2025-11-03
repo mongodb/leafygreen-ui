@@ -1,5 +1,48 @@
 # @leafygreen-ui/select
 
+## 16.3.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/form-field@4.0.6
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/input-option@4.1.2
+
+## 16.2.0
+
+### Minor Changes
+
+- 7fc3077: Removed readOnly prop
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- 51c453b: Fixes `Select` so that when an `aria-label` is added, VO announces both the value and the label when there is a value. Also adds `aria-current` attribute to help screen readers announce the current selection state.
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/input-option@4.1.1
+  - @leafygreen-ui/form-field@4.0.5
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/button@25.1.1
+
 ## 16.1.4
 
 ### Patch Changes
