@@ -6,16 +6,16 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
-import Card from '@leafygreen-ui/card';
+import { Button } from '@leafygreen-ui/button';
+import { Card } from '@leafygreen-ui/card';
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import Tooltip from '@leafygreen-ui/tooltip';
+import { Tooltip } from '@leafygreen-ui/tooltip';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Size, Tab, Tabs, TabsProps } from './';

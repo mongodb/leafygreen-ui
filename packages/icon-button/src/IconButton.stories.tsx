@@ -6,7 +6,7 @@ import {
   StoryType,
 } from '@lg-tools/storybook-utils';
 
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import IconButton, { AccessibleIconButtonProps, Size } from './IconButton';

@@ -22,10 +22,13 @@ import { css } from '@leafygreen-ui/emotion';
 // @ts-ignore LG icons don't currently support TS
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import Modal from '@leafygreen-ui/modal';
+import { Modal } from '@leafygreen-ui/modal';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { CopyButtonAppearance } from './CodeEditor/CodeEditor.types';
+import {
+  CodeEditorTooltipSeverity,
+  CopyButtonAppearance,
+} from './CodeEditor/CodeEditor.types';
 import { LanguageName } from './CodeEditor/hooks/extensions/useLanguageExtension';
 import { IndentUnits } from './CodeEditor';
 import { ShortcutTable } from './ShortcutTable';
@@ -172,12 +175,64 @@ export default meta;
 const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 
 export const LiveExample = Template.bind({});
-
-export const WithPanel = Template.bind({});
 const language = LanguageName.tsx;
-WithPanel.args = {
+LiveExample.args = {
   language,
   defaultValue: codeSnippets[language],
+  tooltips: [
+    {
+      line: 4,
+      column: 11,
+      length: 11,
+      messages: ['This is an error tooltip'],
+      links: [
+        {
+          label: 'External Link',
+          href: 'https://mongodb.com',
+        },
+      ],
+      severity: CodeEditorTooltipSeverity.Error,
+    },
+    {
+      line: 10,
+      column: 25,
+      length: 8,
+      messages: ['This is an info tooltip'],
+      links: [
+        {
+          label: 'External Link',
+          href: 'https://mongodb.com',
+        },
+      ],
+      severity: CodeEditorTooltipSeverity.Info,
+    },
+    {
+      line: 12,
+      column: 14,
+      length: 7,
+      messages: ['This is an hint tooltip'],
+      links: [
+        {
+          label: 'External Link',
+          href: 'https://mongodb.com',
+        },
+      ],
+      severity: CodeEditorTooltipSeverity.Hint,
+    },
+    {
+      line: 28,
+      column: 11,
+      length: 11,
+      messages: ['This is an warning tooltip'],
+      links: [
+        {
+          label: 'External Link',
+          href: 'https://mongodb.com',
+        },
+      ],
+      severity: CodeEditorTooltipSeverity.Warning,
+    },
+  ],
   children: (
     <CodeEditor.Panel
       showCopyButton
@@ -196,9 +251,35 @@ WithPanel.args = {
   ),
 };
 
+export const Minimal = Template.bind({});
+Minimal.args = {
+  enableLineNumbers: false,
+};
+
 export const Loading = Template.bind({});
 Loading.args = {
   isLoading: true,
+};
+
+export const LoadingWithPanel = Template.bind({});
+LoadingWithPanel.args = {
+  isLoading: true,
+  children: (
+    <CodeEditor.Panel
+      showCopyButton
+      showFormatButton
+      showSecondaryMenuButton
+      customSecondaryButtons={[
+        {
+          label: 'Custom Button',
+          onClick: () => {},
+          'aria-label': 'Custom Button',
+          glyph: <CloudIcon />,
+        },
+      ]}
+      title={`index.${language}`}
+    />
+  ),
 };
 
 /**

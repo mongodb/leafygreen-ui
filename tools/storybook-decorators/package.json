@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook-decorators",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Storybook decorators used in LeafyGreen repos",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

@@ -3,6 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   borderRadius,
+  boxShadows,
   breakpoints,
   color,
   InteractionState,
@@ -27,7 +28,7 @@ const getSpaciousContainerStyles = (theme: Theme) => css`
   overflow: hidden;
   border: 1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]};
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: ${boxShadows[theme][3]};
   background-color: ${theme === Theme.Dark
     ? palette.black
     : palette.gray.light3};

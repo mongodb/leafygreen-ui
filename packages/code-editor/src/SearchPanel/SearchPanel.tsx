@@ -368,7 +368,7 @@ export function SearchPanel({
         <div
           className={replaceSectionStyles}
           // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
-          inert={!isOpen}
+          inert={!isOpen ? '' : undefined}
           aria-hidden={!isOpen}
         >
           <div className={getReplaceInnerSectionStyles(theme)}>

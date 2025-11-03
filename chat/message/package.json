@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "description": "lg-chat Message",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -33,8 +33,7 @@
   },
   "devDependencies": {
     "@emotion/styled": "^11.10.5",
-    "@lg-tools/build": "workspace:^",
-    "@storybook/test": "^8.6.14"
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": ">=3.2.0",

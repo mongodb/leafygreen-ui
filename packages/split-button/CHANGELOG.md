@@ -1,5 +1,23 @@
 # @leafygreen-ui/split-button
 
+## 6.1.6
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [392b350]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [3d64531]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/menu@33.0.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/hooks@9.2.2
+
 ## 6.1.5
 
 ### Patch Changes

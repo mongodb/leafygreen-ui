@@ -8,7 +8,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import Popover from '@leafygreen-ui/popover';
+import { Popover } from '@leafygreen-ui/popover';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { InlineMessageFeedback } from '../InlineMessageFeedback';

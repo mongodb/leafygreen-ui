@@ -22,7 +22,7 @@ module.exports = {
     '/index.tsx?',
     '.(d|json|md|spec|stories|styles|types).tsx?',
   ],
-  coverageReporters: ['text', 'lcov', 'html', 'json-summary'],
+  coverageReporters: ['lcov', 'html'],
 
   displayName: 'Client',
 

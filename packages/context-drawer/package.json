@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/context-drawer",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "LeafyGreen UI Kit Context Drawer",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "@storybook/test": "8.5.3",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },

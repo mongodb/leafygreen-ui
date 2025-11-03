@@ -1,5 +1,14 @@
 # @lg-chat/avatar
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/avatar@3.1.4
+
 ## 8.0.0
 
 ### Patch Changes

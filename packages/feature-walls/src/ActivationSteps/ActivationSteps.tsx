@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef } from 'react';
 
-import Card from '@leafygreen-ui/card';
+import { Card } from '@leafygreen-ui/card';
 import CheckmarkWithCircle from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import LeafyGreenProvider, {
   useDarkMode,
