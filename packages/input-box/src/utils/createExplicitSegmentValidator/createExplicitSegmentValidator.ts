@@ -23,7 +23,7 @@ export interface ExplicitSegmentRule {
  * 2.  **Minimum Value Threshold:** The value, while shorter than `maxChars`, is numerically equal to or greater than the segment's defined `minExplicitValue`. This ensures single-digit inputs are treated as final values rather than the start of a multi-digit entry.
  * *(Example: For `minExplicitValue: 4`, '4' is explicit, but '1' is potentially ambiguous).*
  *
- * @param segmentEnum - The segment enum/object to validate against
+ * @param segmentEnum - The segment enum/object containing the segment names and their corresponding values to validate against
  * @param rules - Rules for each segment type
  * @returns A function that checks if a segment value is explicit
  *
