@@ -186,7 +186,8 @@ import Button from '@leafygreen-ui/button';
 1. Install [`asdf`](https://asdf-vm.com/guide/getting-started.html)
 
 ```zsh
-brew install asdf
+brew install asdf;
+echo 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"' >> ~/.zshrc
 ```
 
 2. Install Node & pnpm
