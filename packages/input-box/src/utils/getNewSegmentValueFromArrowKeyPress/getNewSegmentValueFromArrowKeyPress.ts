@@ -6,7 +6,7 @@ interface GetNewSegmentValueFromArrowKeyPress<Value extends string> {
   min: number;
   max: number;
   step?: number;
-  shouldRollover?: boolean;
+  shouldWrap?: boolean;
 }
 
 /**
@@ -17,7 +17,7 @@ interface GetNewSegmentValueFromArrowKeyPress<Value extends string> {
  * @param min - The minimum value for the segment
  * @param max - The maximum value for the segment
  * @param step - The step value for the arrow keys
- * @param shouldRollover - If the segment should rollover when the value is at the min or max boundary
+ * @param shouldWrap - If the segment value should wrap around when the value is at the min or max boundary
  * @returns The new value for the segment
  * @example
  * getNewSegmentValueFromArrowKeyPress({ value: '1', key: 'ArrowUp', min: 1, max: 31, step: 1}); // 2
@@ -25,14 +25,14 @@ interface GetNewSegmentValueFromArrowKeyPress<Value extends string> {
  * getNewSegmentValueFromArrowKeyPress({ value: '1', key: 'ArrowUp', min: 1, max: 12, step: 1}); // 2
  * getNewSegmentValueFromArrowKeyPress({ value: '1', key: 'ArrowDown', min: 1, max: 12, step: 1}); // 12
  * getNewSegmentValueFromArrowKeyPress({ value: '1970', key: 'ArrowUp', min: 1970, max: 2038, step: 1 }); // 1971
- * getNewSegmentValueFromArrowKeyPress({ value: '2038', key: 'ArrowUp', min: 1970, max: 2038, step: 1, shouldRollover: false }); // 2039
+ * getNewSegmentValueFromArrowKeyPress({ value: '2038', key: 'ArrowUp', min: 1970, max: 2038, step: 1, shouldWrap: false }); // 2039
  */
 export const getNewSegmentValueFromArrowKeyPress = <Value extends string>({
   value,
   key,
   min,
   max,
-  shouldRollover = true,
+  shouldWrap = true,
   step = 1,
 }: GetNewSegmentValueFromArrowKeyPress<Value>): number => {
   const valueDiff = key === keyMap.ArrowUp ? step : -step;
@@ -42,7 +42,7 @@ export const getNewSegmentValueFromArrowKeyPress = <Value extends string>({
     ? Number(value) + valueDiff
     : defaultVal;
 
-  const newValue = shouldRollover
+  const newValue = shouldWrap
     ? rollover(incrementedValue, min, max)
     : incrementedValue;
 

@@ -35,24 +35,24 @@ describe('packages/input-box/utils/getNewSegmentValueFromArrowKeyPress', () => {
       expect(result).toBe(1);
     });
 
-    test('does not rollover when shouldRollover is false', () => {
+    test('does not rollover when shouldWrap is false', () => {
       const result = getNewSegmentValueFromArrowKeyPress({
         value: '2038',
         key: keyMap.ArrowUp,
         min: 1970,
         max: 2038,
-        shouldRollover: false,
+        shouldWrap: false,
       });
       expect(result).toBe(2039);
     });
 
-    test('rolls over when shouldRollover is true', () => {
+    test('rolls over when shouldWrap is true', () => {
       const result = getNewSegmentValueFromArrowKeyPress({
         value: '12',
         key: keyMap.ArrowUp,
         min: 1,
         max: 12,
-        shouldRollover: true,
+        shouldWrap: true,
       });
       expect(result).toBe(1);
     });
@@ -151,24 +151,24 @@ describe('packages/input-box/utils/getNewSegmentValueFromArrowKeyPress', () => {
       expect(result).toBe(12);
     });
 
-    test('does not rollover when shouldRollover is false', () => {
+    test('does not rollover when shouldWrap is false', () => {
       const result = getNewSegmentValueFromArrowKeyPress({
         value: '1970',
         key: keyMap.ArrowDown,
         min: 1970,
         max: 2038,
-        shouldRollover: false,
+        shouldWrap: false,
       });
       expect(result).toBe(1969);
     });
 
-    test('rolls over when shouldRollover is true', () => {
+    test('rolls over when shouldWrap is true', () => {
       const result = getNewSegmentValueFromArrowKeyPress({
         value: '1',
         key: keyMap.ArrowDown,
         min: 1,
         max: 31,
-        shouldRollover: true,
+        shouldWrap: true,
       });
       expect(result).toBe(31);
     });
@@ -234,7 +234,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromArrowKeyPress', () => {
         min: 1,
         max: 12,
         step: 20,
-        shouldRollover: false,
+        shouldWrap: false,
       });
       expect(result).toBe(25);
     });
@@ -292,25 +292,25 @@ describe('packages/input-box/utils/getNewSegmentValueFromArrowKeyPress', () => {
     });
   });
 
-  describe('shouldRollover behavior', () => {
-    test('allows exceeding max when shouldRollover is false', () => {
+  describe('shouldWrap behavior', () => {
+    test('allows exceeding max when shouldWrap is false', () => {
       const result = getNewSegmentValueFromArrowKeyPress({
         value: '2038',
         key: keyMap.ArrowUp,
         min: 1970,
         max: 2038,
-        shouldRollover: false,
+        shouldWrap: false,
       });
       expect(result).toBe(2039);
     });
 
-    test('allows going below min when shouldRollover is false', () => {
+    test('allows going below min when shouldWrap is false', () => {
       const result = getNewSegmentValueFromArrowKeyPress({
         value: '1970',
         key: keyMap.ArrowDown,
         min: 1970,
         max: 2038,
-        shouldRollover: false,
+        shouldWrap: false,
       });
       expect(result).toBe(1969);
     });
