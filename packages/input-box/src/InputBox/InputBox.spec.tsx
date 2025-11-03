@@ -4,23 +4,22 @@ import userEvent from '@testing-library/user-event';
 
 import { Size } from '@leafygreen-ui/tokens';
 
-import { InputSegment } from '../InputSegment';
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
 import {
   InputSegmentWrapper,
   renderInputBox,
   renderInputBoxWithState,
 } from '../testutils';
+import {
+  charsPerSegmentMock,
+  defaultMinMock,
+  SegmentObjMock,
+  segmentRefsMock,
+  segmentRulesMock,
+  segmentsMock,
+} from '../testutils/testutils.mocks';
 
 import { InputBox } from './InputBox';
-import {
-  SegmentObjMock,
-  segmentsMock,
-  charsPerSegmentMock,
-  segmentRulesMock,
-  defaultMinMock,
-  segmentRefsMock,
-} from '../testutils/testutils.mocks';
 
 describe('packages/input-box', () => {
   describe('Rendering', () => {
@@ -296,7 +295,9 @@ describe('packages/input-box', () => {
       charsPerSegment={charsPerSegmentMock}
       segmentRules={segmentRulesMock}
       minValues={defaultMinMock}
-      segment={InputSegmentWrapper}
+      segmentComponent={InputSegmentWrapper}
+      size={Size.Default}
+      disabled={false}
     />;
   });
 });

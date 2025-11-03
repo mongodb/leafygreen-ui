@@ -1,9 +1,13 @@
-import React, { FocusEventHandler, ForwardedRef, ReactElement } from 'react';
+import React, { ForwardedRef, ReactElement } from 'react';
 
 import { DateType } from '@leafygreen-ui/date-utils';
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
+import { Size } from '@leafygreen-ui/tokens';
 
-import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
+import {
+  InputSegmentChangeEventHandler,
+  InputSegmentComponentProps,
+} from '../InputSegment/InputSegment.types';
 import { ExplicitSegmentRule } from '../utils';
 
 export interface InputChangeEvent<Segment extends string = string> {
@@ -83,10 +87,8 @@ export interface InputBoxProps<Segment extends string>
 
   /**
    * Whether the input box is disabled
-   *
-   * @default false
    */
-  disabled?: boolean;
+  disabled: boolean;
 
   /**
    * An object that maps the segment names to their rules.
@@ -115,12 +117,23 @@ export interface InputBoxProps<Segment extends string>
   minValues: Record<Segment, number>;
 
   /**
-   * A component that renders a segment
+   * The component that renders a segment. When mapping over the formatParts, we will render the segment component for each part using this component.
+   * This should be a React component that accepts the InputSegmentComponentProps<Segment> type.
    *
    * @example
-   * segment={DateInputSegment}
+   * segmentComponent={DateInputSegment}
    */
-  segment: React.ComponentType<{ segment: Segment }>;
+  segmentComponent: React.ComponentType<InputSegmentComponentProps<Segment>>;
+
+  /**
+   * The size of the input box
+   *
+   * @example
+   * Size.Default
+   * Size.Small
+   * Size.Large
+   */
+  size: Size;
 }
 
 /**

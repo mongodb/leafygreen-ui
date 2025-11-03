@@ -1,5 +1,6 @@
-import { DateType } from '@leafygreen-ui/date-utils';
 import React, { createContext, PropsWithChildren, useContext } from 'react';
+
+import { DateType } from '@leafygreen-ui/date-utils';
 
 export interface DateInputBoxContextType {
   value?: DateType;
@@ -25,10 +26,12 @@ export const DateInputBoxProvider = ({
 
 export const useDateInputBoxContext = () => {
   const context = useContext(DateInputBoxContext);
+
   if (!context) {
     throw new Error(
       'useDateInputBoxContext must be used within a DateInputBoxProvider',
     );
   }
+
   return context;
 };

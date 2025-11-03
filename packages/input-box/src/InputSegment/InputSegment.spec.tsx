@@ -1,17 +1,14 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 
-import { Size } from '@leafygreen-ui/tokens';
-
 import { renderSegment, setSegmentProps } from '../testutils';
-import { getValueFormatter } from '../utils';
-
 import {
-  SegmentObjMock,
   charsPerSegmentMock,
   defaultMaxMock,
   defaultMinMock,
+  SegmentObjMock,
 } from '../testutils/testutils.mocks';
+import { getValueFormatter } from '../utils';
 
 import { InputSegment, InputSegmentChangeEventHandler } from '.';
 
@@ -541,7 +538,7 @@ describe('packages/input-segment', () => {
     });
 
     test('With required props', () => {
-      <InputSegment segment="day" min={1} max={31} size={Size.Default} />;
+      <InputSegment segment="day" min={1} max={31} />;
     });
 
     test('With all props', () => {
@@ -549,7 +546,6 @@ describe('packages/input-segment', () => {
         segment="day"
         min={1}
         max={31}
-        size={Size.Default}
         step={1}
         shouldRollover={true}
         shouldSkipValidation={false}

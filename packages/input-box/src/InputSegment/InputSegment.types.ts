@@ -1,7 +1,6 @@
 import React, { ForwardedRef, ReactElement } from 'react';
 
 import { keyMap } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
 
 export interface InputSegmentChangeEvent<
   Segment extends string,
@@ -15,6 +14,7 @@ export interface InputSegmentChangeEvent<
   };
 }
 
+// TODO: consider renaming min/max names to minSegment/maxSegment
 /**
  * The type for the onChange handler
  */
@@ -39,7 +39,7 @@ export interface InputSegmentProps<Segment extends string>
   segment: Segment;
 
   /**
-   * Minimum value.
+   * Minimum value for the segment
    *
    * @example
    * 1
@@ -49,7 +49,7 @@ export interface InputSegmentProps<Segment extends string>
   min: number;
 
   /**
-   * Maximum value.
+   * Maximum value for the segment
    *
    * @example
    * 31
@@ -57,16 +57,6 @@ export interface InputSegmentProps<Segment extends string>
    * 2038
    */
   max: number;
-
-  /**
-   * Size of the segment
-   *
-   * @example
-   * Size.Default
-   * Size.Small
-   * Size.Large
-   */
-  size: Size;
 
   /**
    * The step value for the arrow keys
@@ -115,4 +105,18 @@ export function isInputSegment<T extends Record<string, string>>(
 ): str is T[keyof T] {
   if (typeof str !== 'string') return false;
   return Object.values(segmentObj).includes(str);
+}
+
+/**
+ * Base props for custom segment components passed to InputBox.
+ *
+ * Extend this interface to define props for custom segment implementations.
+ * InputBox will provide additional props internally (e.g., onChange, value, min, max).
+ */
+export interface InputSegmentComponentProps<Segment extends string>
+  extends Omit<
+    React.ComponentPropsWithoutRef<'input'>,
+    'onChange' | 'value' | 'min' | 'max'
+  > {
+  segment: Segment;
 }

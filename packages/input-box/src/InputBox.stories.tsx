@@ -8,9 +8,8 @@ import { StoryFn } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
-import { InputBoxWithState } from './testutils';
-
 import { InputBox } from './InputBox';
+import { InputBoxWithState } from './testutils';
 
 const meta: StoryMetaType<typeof InputBox> = {
   title: 'Components/Inputs/InputBox',

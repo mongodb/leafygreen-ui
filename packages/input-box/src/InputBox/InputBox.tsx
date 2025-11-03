@@ -7,6 +7,7 @@ import React, {
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
+import { InputBoxProvider } from '../InputBoxContext';
 import {
   InputSegmentChangeEventHandler,
   isInputSegment,
@@ -24,8 +25,6 @@ import {
   getSeparatorLiteralStyles,
 } from './InputBox.styles';
 import { InputBoxComponentType, InputBoxProps } from './InputBox.types';
-
-import { InputBoxProvider } from '../InputBoxContext';
 
 /**
  * Generic controlled input box component
@@ -46,9 +45,10 @@ export const InputBoxWithRef = <Segment extends string>(
     formatParts,
     segmentEnum,
     segmentRules,
-    segment,
+    segmentComponent,
     minValues,
     segments,
+    size,
     ...rest
   }: InputBoxProps<Segment>,
   fwdRef: ForwardedRef<HTMLDivElement>,
@@ -211,6 +211,9 @@ export const InputBoxWithRef = <Segment extends string>(
       segmentEnum={segmentEnum}
       segmentRefs={segmentRefs}
       segments={segments}
+      labelledBy={labelledBy}
+      size={size}
+      disabled={disabled}
     >
       {/* We want to allow keydown events to be captured by the parent so that the parent can handle the event. */}
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
@@ -231,7 +234,7 @@ export const InputBoxWithRef = <Segment extends string>(
               </span>
             );
           } else if (isInputSegment(part.type, segmentEnum)) {
-            const Segment = segment;
+            const Segment = segmentComponent;
             return <Segment key={part.type} segment={part.type} />;
           }
         })}

@@ -6,6 +6,10 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { getValueFormatter } from '@leafygreen-ui/input-box';
+import {
+  InputBoxProvider,
+  type InputBoxProviderProps,
+} from '@leafygreen-ui/input-box';
 
 import { charsPerSegment, defaultMax, defaultMin } from '../../../constants';
 import {
@@ -16,11 +20,6 @@ import { DateSegment } from '../../../types';
 
 import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';
-
-import {
-  InputBoxProvider,
-  type InputBoxProviderProps,
-} from '@leafygreen-ui/input-box';
 
 const renderSegment = (
   props?: Partial<DateInputSegmentProps>,

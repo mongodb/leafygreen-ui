@@ -1,14 +1,16 @@
 import React from 'react';
 
 import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
+import { Size } from '@leafygreen-ui/tokens';
 
-import { InputBoxProvider, useInputBoxContext } from './InputBoxContext';
 import {
   charsPerSegmentMock,
   SegmentObjMock,
   segmentRefsMock,
   segmentsMock,
 } from '../testutils/testutils.mocks';
+
+import { InputBoxProvider, useInputBoxContext } from './InputBoxContext';
 
 describe('InputBoxContext', () => {
   const mockOnChange = jest.fn();
@@ -46,6 +48,8 @@ describe('InputBoxContext', () => {
           onBlur={mockOnBlur}
           segmentRefs={segmentRefsMock}
           segments={segmentsMock}
+          size={Size.Default}
+          disabled={false}
         >
           {children}
         </InputBoxProvider>
@@ -58,5 +62,7 @@ describe('InputBoxContext', () => {
     expect(result.current.onBlur).toBe(mockOnBlur);
     expect(result.current.segmentRefs).toBe(segmentRefsMock);
     expect(result.current.segments).toBe(segmentsMock);
+    expect(result.current.size).toBe(Size.Default);
+    expect(result.current.disabled).toBe(false);
   });
 });

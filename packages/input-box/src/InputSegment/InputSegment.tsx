@@ -1,14 +1,17 @@
 import React, {
   ChangeEventHandler,
+  FocusEvent,
   ForwardedRef,
   KeyboardEventHandler,
-  FocusEvent,
 } from 'react';
 
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
+import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { useInputBoxContext } from '../InputBoxContext';
 import {
   getNewSegmentValueFromArrowKeyPress,
   getNewSegmentValueFromInputValue,
@@ -20,9 +23,6 @@ import {
   InputSegmentComponentType,
   InputSegmentProps,
 } from './InputSegment.types';
-
-import { useInputBoxContext } from '../InputBoxContext';
-import { useMergeRefs } from '@leafygreen-ui/hooks';
 
 /**
  * Generic controlled input segment component
@@ -36,7 +36,6 @@ const InputSegmentWithRef = <Segment extends string>(
   {
     segment,
     onKeyDown,
-    size,
     min, // minSegmentValue
     max, // maxSegmentValue
     className,
@@ -57,6 +56,9 @@ const InputSegmentWithRef = <Segment extends string>(
     segmentEnum,
     segmentRefs,
     segments,
+    labelledBy,
+    size,
+    disabled,
   } = useInputBoxContext<Segment>();
   const baseFontSize = useUpdatedBaseFontSize();
   const charsPerSegment = charsPerSegmentContext[segment];
@@ -194,29 +196,38 @@ const InputSegmentWithRef = <Segment extends string>(
   // Note: Using a text input with pattern attribute due to Firefox
   // stripping leading zeros on number inputs - Thanks @matt-d-rat
   // Number inputs also don't support the `selectionStart`/`End` API
+
+  // These attributes are returned from the hook as input props and we pass that to an input element
   return (
-    <input
-      {...rest}
-      aria-label={String(segment)}
-      id={String(segment)}
-      ref={mergedRef}
-      type="text"
-      pattern={pattern}
-      role="spinbutton"
-      value={value}
-      min={min}
-      max={max}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      onKeyDown={handleKeyDown}
-      data-segment={String(segment)}
-      className={getInputSegmentStyles({
-        className,
-        baseFontSize,
-        theme,
-        size,
-      })}
-    />
+    <>
+      <input
+        {...rest}
+        aria-labelledby={labelledBy}
+        aria-label={String(segment)}
+        id={String(segment)}
+        ref={mergedRef}
+        type="text"
+        pattern={pattern}
+        role="spinbutton"
+        value={value}
+        min={min}
+        max={max}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
+        data-segment={String(segment)}
+        disabled={disabled}
+        className={getInputSegmentStyles({
+          className,
+          baseFontSize,
+          theme,
+          size,
+        })}
+      />
+      <VisuallyHidden aria-live="polite" aria-atomic="true">
+        {value && `${segment} ${value}`}
+      </VisuallyHidden>
+    </>
   );
 };
 

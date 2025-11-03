@@ -4,23 +4,24 @@ import { render, RenderResult } from '@testing-library/react';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { InputBox, InputBoxProps } from '../InputBox';
+import { InputBoxProvider } from '../InputBoxContext';
+import { InputBoxProviderProps } from '../InputBoxContext/InputBoxContext';
 import { InputSegment } from '../InputSegment';
 import {
   InputSegmentChangeEventHandler,
   InputSegmentProps,
 } from '../InputSegment/InputSegment.types';
-import { InputBoxProvider } from '../InputBoxContext';
-import { InputBoxProviderProps } from '../InputBoxContext/InputBoxContext';
+
 import {
-  SegmentObjMock,
-  defaultMinMock,
-  defaultMaxMock,
   charsPerSegmentMock,
   defaultFormatPartsMock,
-  segmentRulesMock,
+  defaultMaxMock,
+  defaultMinMock,
   defaultPlaceholderMock,
-  segmentsMock,
+  SegmentObjMock,
   segmentRefsMock,
+  segmentRulesMock,
+  segmentsMock,
   segmentWidthStyles,
 } from './testutils.mocks';
 
@@ -44,11 +45,11 @@ export const InputSegmentWrapper = ({
       segment={segment}
       min={defaultMinMock[segment]}
       max={defaultMaxMock[segment]}
-      size={Size.Default}
       data-testid={`input-segment-${segment}`}
       className={segmentWidthStyles[segment]}
       shouldSkipValidation={segment === SegmentObjMock.Year}
       shouldRollover={segment !== SegmentObjMock.Year}
+      placeholder={defaultPlaceholderMock[segment]}
     />
   );
 };
@@ -98,7 +99,8 @@ export const InputBoxWithState = ({
       segmentRules={segmentRulesMock}
       onSegmentChange={onSegmentChange}
       minValues={defaultMinMock}
-      segment={InputSegmentWrapper}
+      segmentComponent={InputSegmentWrapper}
+      size={Size.Default}
     />
   );
 };
@@ -146,7 +148,7 @@ export const renderInputBox = ({
 
   const finalMergedProps = {
     ...mergedProps,
-    segment: mergedProps.segment ?? InputSegmentWrapper,
+    segmentComponent: mergedProps.segmentComponent ?? InputSegmentWrapper,
   } as InputBoxProps<SegmentObjMock>;
 
   const result = render(<InputBox {...finalMergedProps} />);
@@ -161,7 +163,7 @@ export const renderInputBox = ({
 
     const finalMergedProps = {
       ...mergedProps,
-      segment: mergedProps.segment ?? InputSegmentWrapper,
+      segmentComponent: mergedProps.segmentComponent ?? InputSegmentWrapper,
     } as InputBoxProps<SegmentObjMock>;
 
     result.rerender(<InputBox {...finalMergedProps} />);
@@ -227,7 +229,6 @@ const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
   segment: 'day',
   min: defaultMinMock['day'],
   max: defaultMaxMock['day'],
-  size: Size.Default,
   shouldRollover: true,
   placeholder: defaultPlaceholderMock['day'],
   // @ts-expect-error - data-testid
@@ -256,6 +257,7 @@ export const renderSegment = ({
       <InputSegment {...mergedProps} />
     </InputBoxProvider>,
   );
+
   const rerenderSegment = ({
     newProps = {},
     newProviderProps = {},

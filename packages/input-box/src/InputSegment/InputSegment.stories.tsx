@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -9,6 +8,7 @@ import { StoryFn } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
+import { InputBoxProvider } from '../InputBoxContext';
 import {
   charsPerSegmentMock,
   defaultMaxMock,
@@ -20,13 +20,17 @@ import {
 } from '../testutils/testutils.mocks';
 
 import { InputSegment } from '.';
-import { InputBoxProvider } from '../InputBoxContext';
 
-const meta: StoryMetaType<typeof InputSegment> = {
+interface InputSegmentStoryProps {
+  size: Size;
+  segments: Record<SegmentObjMock, string>;
+}
+
+const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
   title: 'Components/Inputs/InputBox/InputSegment',
   component: InputSegment,
   decorators: [
-    (StoryFn, context) => (
+    (StoryFn, context: any) => (
       <LeafyGreenProvider darkMode={context?.args?.darkMode}>
         <StoryFn />
       </LeafyGreenProvider>
@@ -34,7 +38,6 @@ const meta: StoryMetaType<typeof InputSegment> = {
   ],
   args: {
     segment: SegmentObjMock.Day,
-
     min: defaultMinMock[SegmentObjMock.Day],
     max: defaultMaxMock[SegmentObjMock.Day],
     size: Size.Default,
@@ -67,6 +70,7 @@ const meta: StoryMetaType<typeof InputSegment> = {
         'shouldRollover',
         'shouldSkipValidation',
         'step',
+        'placeholder',
       ],
     },
     generate: {
@@ -74,6 +78,18 @@ const meta: StoryMetaType<typeof InputSegment> = {
         darkMode: [false, true],
         segment: ['day', 'month', 'year'],
         size: Object.values(Size),
+        segments: [
+          {
+            day: '2',
+            month: '8',
+            year: '2025',
+          },
+          {
+            day: '',
+            month: '',
+            year: '',
+          },
+        ],
       },
       decorator: (StoryFn, context) => (
         <LeafyGreenProvider darkMode={context?.args.darkMode}>
@@ -83,13 +99,19 @@ const meta: StoryMetaType<typeof InputSegment> = {
             onChange={() => {}}
             onBlur={() => {}}
             segmentRefs={segmentRefsMock}
-            segments={{
-              day: '02',
-              month: '8',
-              year: '2025',
-            }}
+            segments={context?.args.segments}
+            size={context?.args.size}
+            disabled={false}
           >
-            <StoryFn />
+            <StoryFn
+              placeholder={
+                context?.args.segment === 'day'
+                  ? 'DD'
+                  : context?.args.segment === 'month'
+                  ? 'MM'
+                  : 'YYYY'
+              }
+            />
           </InputBoxProvider>
         </LeafyGreenProvider>
       ),
@@ -98,7 +120,10 @@ const meta: StoryMetaType<typeof InputSegment> = {
 };
 export default meta;
 
-export const LiveExample: StoryFn<typeof InputSegment> = props => {
+export const LiveExample: StoryFn<typeof InputSegment> = (
+  props,
+  context: any,
+) => {
   return (
     <InputBoxProvider
       charsPerSegment={charsPerSegmentMock}
@@ -107,6 +132,8 @@ export const LiveExample: StoryFn<typeof InputSegment> = props => {
       onBlur={() => {}}
       segmentRefs={segmentRefsMock}
       segments={segmentsMock}
+      disabled={false}
+      size={context?.args?.size || Size.Default}
     >
       <InputSegment {...props} />
     </InputBoxProvider>

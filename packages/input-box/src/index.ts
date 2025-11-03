@@ -1,7 +1,13 @@
 export { InputBox, type InputBoxProps } from './InputBox';
 export {
+  InputBoxProvider,
+  type InputBoxProviderProps,
+  useInputBoxContext,
+} from './InputBoxContext/InputBoxContext';
+export {
   InputSegment,
   type InputSegmentChangeEventHandler,
+  type InputSegmentComponentProps,
   type InputSegmentProps,
 } from './InputSegment';
 export {
@@ -15,8 +21,3 @@ export {
   isValidSegmentName,
   isValidSegmentValue,
 } from './utils/isValidSegment/isValidSegment';
-export {
-  useInputBoxContext,
-  InputBoxProvider,
-  type InputBoxProviderProps,
-} from './InputBoxContext/InputBoxContext';

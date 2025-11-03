@@ -1,7 +1,9 @@
-import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { createRef } from 'react';
-import { ExplicitSegmentRule } from '../utils';
+
 import { css } from '@leafygreen-ui/emotion';
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
+
+import { ExplicitSegmentRule } from '../utils';
 
 export const SegmentObjMock = {
   Month: 'month',
