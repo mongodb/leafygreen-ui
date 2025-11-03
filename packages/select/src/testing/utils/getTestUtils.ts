@@ -87,12 +87,20 @@ export const getTestUtils = (
    * Queries the `element` for the warning Icon.
    */
   const isError = () => {
-    const warningIcon = queryBySelector<SVGElement>(
+    // Query for the feedback container first, then find the SVG within it
+    const feedbackContainer = queryBySelector<HTMLDivElement>(
       element,
-      'svg[title="Error"]',
+      `[data-lgid=${lgFormFieldIds.feedback}]`,
     );
 
-    return !!warningIcon;
+    if (!feedbackContainer) return false;
+
+    const warningIcon = queryBySelector<SVGElement>(feedbackContainer, 'svg');
+
+    if (!warningIcon) return false;
+
+    const titleElement = warningIcon.querySelector('title');
+    return titleElement?.textContent === 'Error';
   };
 
   // We cannot query within the select element because if the popover is using a portal, the element will render outside the select element
