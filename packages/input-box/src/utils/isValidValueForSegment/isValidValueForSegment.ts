@@ -64,9 +64,17 @@ interface IsValidValueForSegmentProps<
  * isValidValueForSegment({
  *   segment: 'year',
  *   value: '1970',
- *   defaultMin: 1000,
- *   defaultMax: 9999,
+ *   defaultMin: 1970,
+ *   defaultMax: 2038,
  *   segmentEnum
+ * }); // true
+ * isValidValueForSegment({
+ *   segment: 'year',
+ *   value: '1000',
+ *   defaultMin: 1970,
+ *   defaultMax: 2038,
+ *   segmentEnum,
+ *   customValidation: (value: string) => inRange(Number(value), 1000, 9999 + 1),
  * }); // true
  */
 export const isValidValueForSegment = <
