@@ -27,6 +27,7 @@ import {
 import { DateInputSegment } from '../DateInputSegment';
 
 import { DateInputBoxProps } from './DateInputBox.types';
+import { DateInputBoxProvider } from './DateInputBoxContext';
 
 /**
  * Renders a styled date input with appropriate segment order & separator characters.
@@ -55,7 +56,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { isDirty, formatParts, disabled, min, max, setIsDirty } =
+    const { isDirty, formatParts, disabled, setIsDirty } =
       useSharedDatePickerContext();
 
     // TODO: add context to store the value and segmentsRef so that the DateInputSegment can access it
@@ -105,38 +106,41 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     });
 
     return (
-      <InputBox
-        ref={fwdRef}
-        onKeyDown={onKeyDown}
-        segmentRefs={segmentRefs} // TODO: move this to context within InputBox
-        segmentEnum={DateSegment} // TODO: move this to context within InputBox
-        charsPerSegment={charsPerSegment} // TODO: move this to context within InputBox
-        formatParts={formatParts}
-        segments={segments} // TODO: move this to context within InputBox
-        setSegment={setSegment}
-        disabled={disabled}
-        segmentRules={dateSegmentRules}
-        onSegmentChange={onSegmentChange}
-        minValues={defaultMin}
-        labelledBy={labelledBy} // new addition
-        renderSegment={({ onChange, onBlur, partType }) => (
-          <DateInputSegment
-            key={partType}
-            ref={segmentRefs[partType]}
-            aria-labelledby={labelledBy}
-            min={getMinSegmentValue(partType, { date: value, min })}
-            max={getMaxSegmentValue(partType, { date: value, max })}
-            segment={partType}
-            value={segments[partType]}
-            // onChange={onChange}
-            // onBlur={onBlur}
-          />
-        )}
-        // TODO:Segment={DateInputSegment}
-        {...rest}
-      >
-        {/* {renderFormat(formatParts, DateInputSegment, value, labelledBy)} */}
-      </InputBox>
+      <DateInputBoxProvider value={value}>
+        <InputBox
+          ref={fwdRef}
+          onKeyDown={onKeyDown}
+          segmentRefs={segmentRefs} // TODO: move this to context within InputBox
+          segmentEnum={DateSegment} // TODO: move this to context within InputBox
+          charsPerSegment={charsPerSegment} // TODO: move this to context within InputBox
+          formatParts={formatParts}
+          segments={segments} // TODO: move this to context within InputBox
+          setSegment={setSegment}
+          disabled={disabled}
+          segmentRules={dateSegmentRules}
+          onSegmentChange={onSegmentChange}
+          minValues={defaultMin}
+          labelledBy={labelledBy} // new addition // TODO: add this to input box context?
+          segment={DateInputSegment}
+          // renderSegment={({ onChange, onBlur, partType }) => (
+          //   <DateInputSegment
+          //     key={partType}
+          //     ref={segmentRefs[partType]}
+          //     aria-labelledby={labelledBy}
+          //     min={getMinSegmentValue(partType, { date: value, min })}
+          //     max={getMaxSegmentValue(partType, { date: value, max })}
+          //     segment={partType}
+          //     value={segments[partType]}
+          //     // onChange={onChange}
+          //     // onBlur={onBlur}
+          //   />
+          // )}
+          // TODO:Segment={DateInputSegment}
+          {...rest}
+        >
+          {/* {renderFormat(formatParts, DateInputSegment, value, labelledBy)} */}
+        </InputBox>
+      </DateInputBoxProvider>
     );
   },
 );

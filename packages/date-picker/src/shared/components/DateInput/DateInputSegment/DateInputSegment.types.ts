@@ -21,7 +21,10 @@ export type DateInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
 
 export interface DateInputSegmentProps
   extends DarkModeProps,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange'> {
+    Omit<
+      React.ComponentPropsWithoutRef<'input'>,
+      'onChange' | 'value' | 'min' | 'max'
+    > {
   /** Which date segment this input represents. Determines the aria-label, and min/max values where relevant */
   segment: DateSegment;
 
