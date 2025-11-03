@@ -26,8 +26,28 @@ export interface ExplicitSegmentRule {
  *   Year: 'year',
  * };
  * const rules = {
- *   day: { maxChars: 2, minExplicitValue: 1 },
- *   month: { maxChars: 2, minExplicitValue: 1 },
+ *   day: { maxChars: 2, minExplicitValue: 4 },
+ *   month: { maxChars: 2, minExplicitValue: 2 },
+ *   year: { maxChars: 4 },
+ * };
+ *
+ * const isExplicitSegmentValue = createExplicitSegmentValidator({
+ *   segmentEnum,
+ *   rules,
+ * });
+ *
+ * isExplicitSegmentValue('day', '1'); // false
+ * isExplicitSegmentValue('day', '01'); // true
+ * isExplicitSegmentValue('day', '4'); // true
+ * isExplicitSegmentValue('day', '10'); // true
+ * isExplicitSegmentValue('month', '1'); // false
+ * isExplicitSegmentValue('month', '01'); // true
+ * isExplicitSegmentValue('month', '2'); // true
+ * isExplicitSegmentValue('month', '12'); // true
+ * isExplicitSegmentValue('year', '2000'); // true
+ * isExplicitSegmentValue('year', '0001'); // true
+ * isExplicitSegmentValue('year', '1'); // false
+ * isExplicitSegmentValue('year', '200'); // false
  */
 export function createExplicitSegmentValidator<
   SegmentEnum extends Record<string, string>,
