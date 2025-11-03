@@ -18,26 +18,11 @@ export const getAxisOptions = (
 ): CartesianAxisOption => {
   const { label, type } = props;
 
-  const { data, min, max, formatter } =
-    type === 'category'
-      ? {
-          data: props.data,
-          min: undefined,
-          max: undefined,
-          formatter: undefined,
-        }
-      : {
-          data: undefined,
-          min: props.min,
-          max: props.max,
-          formatter: props.formatter,
-        };
-
   return {
     type,
-    min,
-    max,
-    data,
+    ...(type !== 'category' && { min: props.min }),
+    ...(type !== 'category' && { max: props.max }),
+    ...(type === 'category' && { data: props.data }),
     axisLine: {
       show: true,
       lineStyle: {
@@ -52,7 +37,7 @@ export const getAxisOptions = (
       fontSize: 11,
       lineHeight: spacing[400],
       color: color[theme].text[Variant.Secondary][InteractionState.Default],
-      formatter,
+      ...(type !== 'category' && { formatter: props.formatter }),
     },
     axisTick: {
       show: false,
