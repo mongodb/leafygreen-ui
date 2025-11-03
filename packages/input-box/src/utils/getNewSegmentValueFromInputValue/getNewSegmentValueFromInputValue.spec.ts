@@ -1,302 +1,256 @@
 import range from 'lodash/range';
 
-import { getValueFormatter } from '../getValueFormatter/getValueFormatter';
-
 import { getNewSegmentValueFromInputValue } from './getNewSegmentValueFromInputValue';
-
-const charsPerSegment = {
-  day: 2,
-  month: 2,
-  year: 4,
-};
-
-const defaultMin = {
-  day: 1,
-  month: 1,
-  year: 1970,
-};
-
-const defaultMax = {
-  day: 31,
-  month: 12,
-  year: new Date().getFullYear(),
-};
 
 const segmentObj = {
   day: 'day',
-  month: 'month',
   year: 'year',
+  minute: 'minute',
 };
 
 describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
-  describe.each(['day', 'month', 'year'])('For segment %p', _segment => {
-    const segment = _segment as 'day' | 'month' | 'year';
-    describe('when current value is empty', () => {
-      test.each(range(10))('accepts %i character as input', i => {
-        const newValue = getNewSegmentValueFromInputValue({
-          segmentName: segment,
-          currentValue: '',
-          incomingValue: `${i}`,
-          charsPerSegment: charsPerSegment[segment],
-          defaultMin: defaultMin[segment],
-          defaultMax: defaultMax[segment],
-          segmentEnum: segmentObj,
-          shouldSkipValidation: segment === 'year',
-        });
-        expect(newValue).toEqual(`${i}`);
+  describe('when segment is empty', () => {
+    // accepts 0-9 characters as input
+    test.each(range(10))('accepts %i character as input', i => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '',
+        incomingValue: `${i}`,
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 15,
+        segmentEnum: segmentObj,
       });
+      expect(newValue).toEqual(`${i}`);
+    });
 
-      const validValues = [defaultMin[segment], defaultMax[segment]];
-      test.each(validValues)(`accepts value "%i" as input`, v => {
-        const newValue = getNewSegmentValueFromInputValue({
-          segmentName: segment,
-          currentValue: '',
-          incomingValue: `${v}`,
-          charsPerSegment: charsPerSegment[segment],
-          defaultMin: defaultMin[segment],
-          defaultMax: defaultMax[segment],
-          segmentEnum: segmentObj,
-          shouldSkipValidation: segment === 'year',
-        });
-        expect(newValue).toEqual(`${v}`);
+    test.each(range(9))('accepts 1%i character as input', i => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '1',
+        incomingValue: `1${i}`,
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 19,
+        segmentEnum: segmentObj,
       });
+      expect(newValue).toEqual(`1${i}`);
+    });
 
-      test('does not accept non-numeric characters', () => {
-        const newValue = getNewSegmentValueFromInputValue({
-          segmentName: segment,
-          currentValue: '',
-          incomingValue: `b`,
-          charsPerSegment: charsPerSegment[segment],
-          defaultMin: defaultMin[segment],
-          defaultMax: defaultMax[segment],
-          segmentEnum: segmentObj,
-          shouldSkipValidation: segment === 'year',
-        });
-        expect(newValue).toEqual('');
+    test('does not accept non-numeric characters', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '',
+        incomingValue: `b`,
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 15,
+        segmentEnum: segmentObj,
       });
+      expect(newValue).toEqual('');
+    });
 
-      test('does not accept input with a period/decimal', () => {
-        const newValue = getNewSegmentValueFromInputValue({
-          segmentName: segment,
-          currentValue: '',
-          incomingValue: `2.`,
-          charsPerSegment: charsPerSegment[segment],
-          defaultMin: defaultMin[segment],
-          defaultMax: defaultMax[segment],
-          segmentEnum: segmentObj,
-          shouldSkipValidation: segment === 'year',
-        });
-        expect(newValue).toEqual('');
+    test('does not accept input with a period/decimal', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '',
+        incomingValue: `2.`,
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 15,
+        segmentEnum: segmentObj,
       });
+      expect(newValue).toEqual('');
+    });
+
+    test('returns the current value when the incoming value is not a number', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '1',
+        incomingValue: 'a',
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 15,
+        segmentEnum: segmentObj,
+      });
+      expect(newValue).toEqual('1');
+    });
+  });
+
+  describe('when segment is not empty', () => {
+    test('value can be deleted', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '1',
+        incomingValue: '',
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 15,
+        segmentEnum: segmentObj,
+      });
+      expect(newValue).toEqual('');
+    });
+
+    test('does not accept value that would cause overflow', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '15',
+        incomingValue: '150',
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 15,
+        segmentEnum: segmentObj,
+      });
+      expect(newValue).toEqual('15');
+    });
+
+    test('does not accept value that would cause overflow with leading 0', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '05',
+        incomingValue: '050',
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 15,
+        segmentEnum: segmentObj,
+      });
+      expect(newValue).toEqual('05');
+    });
+
+    test('accepts a value between defaultMin and defaultMax', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '1',
+        incomingValue: '34',
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 35,
+        segmentEnum: segmentObj,
+      });
+      expect(newValue).toEqual('34');
+    });
+
+    test('accepts defaultMax', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '1',
+        incomingValue: '35',
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 35,
+        segmentEnum: segmentObj,
+      });
+      expect(newValue).toEqual('35');
+    });
+
+    test('accepts defaultMin', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '2',
+        incomingValue: '1',
+        charsPerSegment: 2,
+        defaultMin: 1,
+        defaultMax: 35,
+        segmentEnum: segmentObj,
+      });
+      expect(newValue).toEqual('1');
+    });
+
+    test('does not accept a value greater than defaultMax', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'day',
+        currentValue: '1',
+        incomingValue: '36',
+        charsPerSegment: 2,
+        defaultMin: 0,
+        defaultMax: 35,
+        segmentEnum: segmentObj,
+      });
+      expect(newValue).toEqual('6');
     });
 
     describe('when current value is 0', () => {
-      if (segment !== 'year') {
-        test('rejects additional 0 as input', () => {
-          const newValue = getNewSegmentValueFromInputValue({
-            segmentName: segment,
-            currentValue: '0',
-            incomingValue: `00`,
-            charsPerSegment: charsPerSegment[segment],
-            defaultMin: defaultMin[segment],
-            defaultMax: defaultMax[segment],
-            segmentEnum: segmentObj,
-          });
-          expect(newValue).toEqual(`0`);
-        });
-      }
-
-      if (segment === 'year') {
-        test('accepts 0000 as input', () => {
-          const newValue = getNewSegmentValueFromInputValue({
-            segmentName: segment,
-            currentValue: '0',
-            incomingValue: `0000`,
-            charsPerSegment: charsPerSegment[segment],
-            defaultMin: defaultMin[segment],
-            defaultMax: defaultMax[segment],
-            segmentEnum: segmentObj,
-            shouldSkipValidation: true,
-          });
-          expect(newValue).toEqual(`0000`);
-        });
-      }
-      test.each(range(1, 10))('accepts 0%i as input', i => {
+      test('rejects additional 0 as input when min value is not 0', () => {
         const newValue = getNewSegmentValueFromInputValue({
-          segmentName: segment,
+          segmentName: 'day',
           currentValue: '0',
-          incomingValue: `0${i}`,
-          charsPerSegment: charsPerSegment[segment],
-          defaultMin: defaultMin[segment],
-          defaultMax: defaultMax[segment],
+          incomingValue: `00`,
+          charsPerSegment: 2,
+          defaultMin: 1,
+          defaultMax: 15,
           segmentEnum: segmentObj,
-          shouldSkipValidation: segment === 'year',
         });
-        expect(newValue).toEqual(`0${i}`);
+        expect(newValue).toEqual(`0`);
       });
-      test('value can be deleted', () => {
+
+      test('accepts 00 as input when min value is 0', () => {
         const newValue = getNewSegmentValueFromInputValue({
-          segmentName: segment,
+          segmentName: 'day',
           currentValue: '0',
-          incomingValue: ``,
-          charsPerSegment: charsPerSegment[segment],
-          defaultMin: defaultMin[segment],
-          defaultMax: defaultMax[segment],
+          incomingValue: `00`,
+          charsPerSegment: 2,
+          defaultMin: 0,
+          defaultMax: 15,
           segmentEnum: segmentObj,
-          shouldSkipValidation: segment === 'year',
         });
-        expect(newValue).toEqual(``);
+        expect(newValue).toEqual(`00`);
       });
-    });
 
-    describe('when current value is 1', () => {
-      test('value can be deleted', () => {
+      test('accepts 00 as input when shouldSkipValidation is true and value is less than defaultMin', () => {
         const newValue = getNewSegmentValueFromInputValue({
-          segmentName: segment,
-          currentValue: '1',
-          incomingValue: ``,
-          charsPerSegment: charsPerSegment[segment],
-          defaultMin: defaultMin[segment],
-          defaultMax: defaultMax[segment],
+          segmentName: 'day',
+          currentValue: '0',
+          incomingValue: `00`,
+          charsPerSegment: 2,
+          defaultMin: 1,
+          defaultMax: 15,
           segmentEnum: segmentObj,
+          shouldSkipValidation: true,
         });
-        expect(newValue).toEqual(``);
+        expect(newValue).toEqual(`00`);
       });
+    });
+  });
 
-      if (segment === 'month') {
-        test.each(range(0, 3))('accepts 1%i as input', i => {
-          const newValue = getNewSegmentValueFromInputValue({
-            segmentName: segment,
-            currentValue: '1',
-            incomingValue: `1${i}`,
-            charsPerSegment: charsPerSegment[segment],
-            defaultMin: defaultMin[segment],
-            defaultMax: defaultMax[segment],
-            segmentEnum: segmentObj,
-          });
-          expect(newValue).toEqual(`1${i}`);
-        });
-        describe.each(range(3, 10))('rejects 1%i', i => {
-          test(`and sets input "${i}"`, () => {
-            const newValue = getNewSegmentValueFromInputValue({
-              segmentName: segment,
-              currentValue: '1',
-              incomingValue: `1${i}`,
-              charsPerSegment: charsPerSegment[segment],
-              defaultMin: defaultMin[segment],
-              defaultMax: defaultMax[segment],
-              segmentEnum: segmentObj,
-            });
-            expect(newValue).toEqual(`${i}`);
-          });
-        });
-      } else {
-        test.each(range(10))('accepts 1%i as input', i => {
-          const newValue = getNewSegmentValueFromInputValue({
-            segmentName: segment,
-            currentValue: '1',
-            incomingValue: `1${i}`,
-            charsPerSegment: charsPerSegment[segment],
-            defaultMin: defaultMin[segment],
-            defaultMax: defaultMax[segment],
-            segmentEnum: segmentObj,
-            shouldSkipValidation: segment === 'year',
-          });
-          expect(newValue).toEqual(`1${i}`);
-        });
-      }
+  describe('multi-character segments (4 digits)', () => {
+    test('accepts valid 4-digit value', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'year',
+        currentValue: '202',
+        incomingValue: '2024',
+        charsPerSegment: 4,
+        defaultMin: 1970,
+        defaultMax: 2099,
+        segmentEnum: segmentObj,
+      });
+      expect(newValue).toEqual('2024');
     });
 
-    describe('when current value is 3', () => {
-      test('value can be deleted', () => {
-        const newValue = getNewSegmentValueFromInputValue({
-          segmentName: segment,
-          currentValue: '3',
-          incomingValue: ``,
-          charsPerSegment: charsPerSegment[segment],
-          defaultMin: defaultMin[segment],
-          defaultMax: defaultMax[segment],
-          segmentEnum: segmentObj,
-        });
-        expect(newValue).toEqual(``);
+    test('prevents overflow on 4-digit segment', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'year',
+        currentValue: '2024',
+        incomingValue: '20245',
+        charsPerSegment: 4,
+        defaultMin: 1970,
+        defaultMax: 2099,
+        segmentEnum: segmentObj,
       });
-
-      switch (segment) {
-        case 'day': {
-          test.each(range(0, 2))('accepts 3%i as input', i => {
-            const newValue = getNewSegmentValueFromInputValue({
-              segmentName: segment,
-              currentValue: '3',
-              incomingValue: `3${i}`,
-              charsPerSegment: charsPerSegment[segment],
-              defaultMin: defaultMin[segment],
-              defaultMax: defaultMax[segment],
-              segmentEnum: segmentObj,
-            });
-            expect(newValue).toEqual(`3${i}`);
-          });
-          describe.each(range(3, 10))('rejects 3%i', i => {
-            test(`and sets input to ${i}`, () => {
-              const newValue = getNewSegmentValueFromInputValue({
-                segmentName: segment,
-                currentValue: '3',
-                incomingValue: `3${i}`,
-                charsPerSegment: charsPerSegment[segment],
-                defaultMin: defaultMin[segment],
-                defaultMax: defaultMax[segment],
-                segmentEnum: segmentObj,
-              });
-              expect(newValue).toEqual(`${i}`);
-            });
-          });
-          break;
-        }
-
-        case 'month': {
-          describe.each(range(10))('rejects 3%i', i => {
-            test(`and sets input "${i}"`, () => {
-              const newValue = getNewSegmentValueFromInputValue({
-                segmentName: segment,
-                currentValue: '3',
-                incomingValue: `3${i}`,
-                charsPerSegment: charsPerSegment[segment],
-                defaultMin: defaultMin[segment],
-                defaultMax: defaultMax[segment],
-                segmentEnum: segmentObj,
-              });
-              expect(newValue).toEqual(`${i}`);
-            });
-          });
-          break;
-        }
-
-        default:
-          break;
-      }
+      expect(newValue).toEqual('2024');
     });
 
-    describe('when current value is a full formatted value', () => {
-      const formatter = getValueFormatter({
-        charsPerSegment: charsPerSegment[segment],
+    test('truncates from start when shouldSkipValidation is true and value exceeds charsPerSegment', () => {
+      const newValue = getNewSegmentValueFromInputValue({
+        segmentName: 'year',
+        currentValue: '000',
+        incomingValue: '00001',
+        charsPerSegment: 4,
+        defaultMin: 1970,
+        defaultMax: 2099,
+        segmentEnum: segmentObj,
+        shouldSkipValidation: true,
       });
-      const testValues = [defaultMin[segment], defaultMax[segment]].map(
-        formatter,
-      );
-      test.each(testValues)(
-        'when current value is %p, rejects additional input',
-        val => {
-          const newValue = getNewSegmentValueFromInputValue({
-            segmentName: segment,
-            currentValue: val,
-            incomingValue: `${val}1`,
-            charsPerSegment: charsPerSegment[segment],
-            defaultMin: defaultMin[segment],
-            defaultMax: defaultMax[segment],
-            segmentEnum: segmentObj,
-          });
-          expect(newValue).toEqual(val);
-        },
-      );
+      expect(newValue).toEqual('0001');
     });
   });
 });

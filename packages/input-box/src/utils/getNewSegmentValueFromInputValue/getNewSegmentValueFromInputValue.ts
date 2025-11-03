@@ -32,15 +32,15 @@ interface GetNewSegmentValueFromInputValue<
  * @param charsPerSegment - The number of characters per segment
  * @param defaultMin - The default minimum value for the segment
  * @param defaultMax - The default maximum value for the segment
- * @param segmentEnum - The segment object
+ * @param segmentEnum - The segment enum/object containing the segment names and their corresponding values to validate against
  * @param shouldSkipValidation - Whether the segment should skip validation. This is useful for segments that allow values outside of the default range.
  * @returns The new value for the segment
  * @example
  * // The segmentEnum is the object that contains the segment names and their corresponding values
  * const segmentEnum = {
  *   Day: 'day',
- *   Month: 'month',
  *   Year: 'year',
+ *   Minute: 'minute',
  * };
  *
  *  getNewSegmentValueFromInputValue({
@@ -80,6 +80,15 @@ interface GetNewSegmentValueFromInputValue<
  *   segmentEnum,
  *   shouldSkipValidation: true,
  * }); // '000'
+ *  *  * getNewSegmentValueFromInputValue({
+ *   segmentName: 'minute',
+ *   currentValue: '0',
+ *   incomingValue: '00',
+ *   charsPerSegment: 2,
+ *   defaultMin: 0,
+ *   defaultMax: 59,
+ *   segmentEnum,
+ * }); // '00'
  */
 export const getNewSegmentValueFromInputValue = <
   SegmentName extends string,
@@ -130,5 +139,6 @@ export const getNewSegmentValueFromInputValue = <
 
   const typedChar = last(incomingValue.split(''));
   const newValue = typedChar === '0' ? '0' : typedChar ?? '';
+
   return newValue as Value;
 };
