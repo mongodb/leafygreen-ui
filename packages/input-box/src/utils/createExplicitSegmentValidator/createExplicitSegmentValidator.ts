@@ -32,11 +32,15 @@ export interface ExplicitSegmentRule {
  *   Day: 'day',
  *   Month: 'month',
  *   Year: 'year',
+ *   Hour: 'hour',
+ *   Minute: 'minute',
  * };
  * const rules = {
  *   day: { maxChars: 2, minExplicitValue: 4 },
  *   month: { maxChars: 2, minExplicitValue: 2 },
  *   year: { maxChars: 4 },
+ *   hour: { maxChars: 2, minExplicitValue: 3 },
+ *   minute: { maxChars: 2, minExplicitValue: 6 },
  * };
  *
  * // Contrast this with an ambiguous segment value:
@@ -53,6 +57,12 @@ export interface ExplicitSegmentRule {
  * isExplicitSegmentValue('day', '4'); // true (Explicit - meets min value)
  * isExplicitSegmentValue('year', '2000'); // true (Explicit - meets max length)
  * isExplicitSegmentValue('year', '1'); // false (Ambiguous - below max length)
+ * isExplicitSegmentValue('hour', '05'); // true (Explicit - meets min value)
+ * isExplicitSegmentValue('hour', '23'); // true (Explicit - meets max length)
+ * isExplicitSegmentValue('hour', '2'); // false (Ambiguous - below min value)
+ * isExplicitSegmentValue('minute', '07'); // true (Explicit - meets min value)
+ * isExplicitSegmentValue('minute', '59'); // true (Explicit - meets max length)
+ * isExplicitSegmentValue('minute', '5'); // false (Ambiguous - below min value)
  */
 export function createExplicitSegmentValidator<
   SegmentEnum extends Record<string, string>,
