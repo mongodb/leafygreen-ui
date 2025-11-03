@@ -6,6 +6,8 @@ import { InputBoxProvider, useInputBoxContext } from './InputBoxContext';
 import {
   charsPerSegmentMock,
   SegmentObjMock,
+  segmentRefsMock,
+  segmentsMock,
 } from '../testutils/testutils.mocks';
 
 describe('InputBoxContext', () => {
@@ -42,6 +44,8 @@ describe('InputBoxContext', () => {
           segmentEnum={SegmentObjMock}
           onChange={mockOnChange}
           onBlur={mockOnBlur}
+          segmentRefs={segmentRefsMock}
+          segments={segmentsMock}
         >
           {children}
         </InputBoxProvider>
@@ -52,5 +56,7 @@ describe('InputBoxContext', () => {
     expect(result.current.segmentEnum).toBe(SegmentObjMock);
     expect(result.current.onChange).toBe(mockOnChange);
     expect(result.current.onBlur).toBe(mockOnBlur);
+    expect(result.current.segmentRefs).toBe(segmentRefsMock);
+    expect(result.current.segments).toBe(segmentsMock);
   });
 });

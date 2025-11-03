@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 // Helper type to represent the constrained Enum Object structure
 type SegmentEnumObject<Segment extends string> = Record<string, Segment>;
@@ -10,6 +11,8 @@ export interface InputBoxContextType<Segment extends string = string> {
   segmentEnum: SegmentEnumObject<Segment>; // Values are Segment
   onChange: InputSegmentChangeEventHandler<Segment, string>;
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+  segmentRefs: Record<Segment, ReturnType<DynamicRefGetter<HTMLInputElement>>>;
+  segments: Record<Segment, string>;
 }
 
 // Props are generic over T and use SegmentEnumObject<T> for segmentEnum
@@ -19,6 +22,8 @@ export interface InputBoxProviderProps<Segment extends string> {
   segmentEnum: SegmentEnumObject<Segment>;
   onChange: InputSegmentChangeEventHandler<Segment, string>;
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+  segmentRefs: Record<Segment, ReturnType<DynamicRefGetter<HTMLInputElement>>>;
+  segments: Record<Segment, string>;
 }
 
 // The Context constant is defined with the default/fixed type, which is string. This is the loose type because we don't know the type of the string yet.
@@ -31,6 +36,8 @@ export const InputBoxProvider = <Segment extends string>({
   segmentEnum,
   onChange,
   onBlur,
+  segmentRefs,
+  segments,
 }: InputBoxProviderProps<Segment>) => {
   const value = useMemo(
     () => ({
@@ -38,8 +45,10 @@ export const InputBoxProvider = <Segment extends string>({
       segmentEnum,
       onChange,
       onBlur,
+      segmentRefs,
+      segments,
     }),
-    [charsPerSegment, segmentEnum, onChange, onBlur],
+    [charsPerSegment, segmentEnum, onChange, onBlur, segmentRefs, segments],
   );
 
   // The provider passes a strict type of T but the context is defined as a loose type of string so TS sees a potential type mismatch. This assertion says that we know that the types do not overlap but we guarantee that the strict provider value satisfies the fixed context requirement.

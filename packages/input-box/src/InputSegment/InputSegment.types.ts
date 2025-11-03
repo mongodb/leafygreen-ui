@@ -23,8 +23,11 @@ export type InputSegmentChangeEventHandler<
   Value extends string,
 > = (inputSegmentChangeEvent: InputSegmentChangeEvent<Segment, Value>) => void;
 
-export interface InputSegmentProps<Segment extends string, Value extends string>
-  extends Omit<React.ComponentPropsWithRef<'input'>, 'size' | 'step'> {
+export interface InputSegmentProps<Segment extends string>
+  extends Omit<
+    React.ComponentPropsWithRef<'input'>,
+    'size' | 'step' | 'value'
+  > {
   /**
    * Which segment this input represents
    *
@@ -34,16 +37,6 @@ export interface InputSegmentProps<Segment extends string, Value extends string>
    * 'year'
    */
   segment: Segment;
-
-  /**
-   * The value of the segment
-   *
-   * @example
-   * '1'
-   * '2'
-   * '2025'
-   */
-  value: Value;
 
   /**
    * Minimum value.
@@ -83,11 +76,11 @@ export interface InputSegmentProps<Segment extends string, Value extends string>
   step?: number;
 
   /**
-   * Whether the segment should not rollover
+   * Whether the segment should rollover
    *
-   * @default false
+   * @default true
    */
-  shouldNotRollover?: boolean;
+  shouldRollover?: boolean;
 
   /**
    * Whether the segment should skip validation. This is useful for segments that allow values outside of the default range.
@@ -106,8 +99,8 @@ export interface InputSegmentProps<Segment extends string, Value extends string>
  * @see https://stackoverflow.com/a/58473012
  */
 export interface InputSegmentComponentType {
-  <Segment extends string, Value extends string>(
-    props: InputSegmentProps<Segment, Value>,
+  <Segment extends string>(
+    props: InputSegmentProps<Segment>,
     ref: ForwardedRef<HTMLInputElement>,
   ): ReactElement | null;
   displayName?: string;

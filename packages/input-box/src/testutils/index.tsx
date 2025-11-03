@@ -1,4 +1,3 @@
-import { createContext, useContext } from 'react';
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 
@@ -14,7 +13,6 @@ import { InputBoxProvider } from '../InputBoxContext';
 import { InputBoxProviderProps } from '../InputBoxContext/InputBoxContext';
 import {
   SegmentObjMock,
-  SegmentRefsMock,
   defaultMinMock,
   defaultMaxMock,
   charsPerSegmentMock,
@@ -36,58 +34,21 @@ export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
   segmentRules: segmentRulesMock,
 };
 
-/*
- * InputBoxWrapper Context and Provider
- */
-const InputBoxWrapperContext = createContext<{
-  segments: Record<SegmentObjMock, string>;
-  segmentRefs: SegmentRefsMock;
-} | null>(null);
-
-const InputBoxWrapperProvider = ({
-  children,
-  segments,
-  segmentRefs,
-}: {
-  children: React.ReactNode;
-  segments: Record<SegmentObjMock, string>;
-  segmentRefs: SegmentRefsMock;
-}) => {
-  return (
-    <InputBoxWrapperContext.Provider value={{ segments, segmentRefs }}>
-      {children}
-    </InputBoxWrapperContext.Provider>
-  );
-};
-
-const useInputBoxWrapperContext = () => {
-  const context = useContext(InputBoxWrapperContext);
-  if (!context) {
-    throw new Error(
-      'useInputBoxWrapperContext must be used within InputBoxWrapperProvider',
-    );
-  }
-  return context;
-};
-
 export const InputSegmentWrapper = ({
   segment,
 }: {
   segment: SegmentObjMock;
 }) => {
-  const { segments, segmentRefs } = useInputBoxWrapperContext();
   return (
     <InputSegment
       segment={segment}
-      value={segments[segment]}
-      ref={segmentRefs[segment]}
       min={defaultMinMock[segment]}
       max={defaultMaxMock[segment]}
       size={Size.Default}
       data-testid={`input-segment-${segment}`}
       className={segmentWidthStyles[segment]}
       shouldSkipValidation={segment === SegmentObjMock.Year}
-      shouldNotRollover={segment === SegmentObjMock.Year}
+      shouldRollover={segment !== SegmentObjMock.Year}
     />
   );
 };
@@ -126,21 +87,19 @@ export const InputBoxWithState = ({
   };
 
   return (
-    <InputBoxWrapperProvider segments={segments} segmentRefs={segmentRefs}>
-      <InputBox
-        disabled={disabled}
-        segmentEnum={SegmentObjMock}
-        segmentRefs={segmentRefs}
-        segments={segments}
-        setSegment={setSegment}
-        charsPerSegment={charsPerSegmentMock}
-        formatParts={defaultFormatPartsMock}
-        segmentRules={segmentRulesMock}
-        onSegmentChange={onSegmentChange}
-        minValues={defaultMinMock}
-        segment={InputSegmentWrapper}
-      />
-    </InputBoxWrapperProvider>
+    <InputBox
+      disabled={disabled}
+      segmentEnum={SegmentObjMock}
+      segmentRefs={segmentRefs}
+      segments={segments}
+      setSegment={setSegment}
+      charsPerSegment={charsPerSegmentMock}
+      formatParts={defaultFormatPartsMock}
+      segmentRules={segmentRulesMock}
+      onSegmentChange={onSegmentChange}
+      minValues={defaultMinMock}
+      segment={InputSegmentWrapper}
+    />
   );
 };
 
@@ -190,14 +149,7 @@ export const renderInputBox = ({
     segment: mergedProps.segment ?? InputSegmentWrapper,
   } as InputBoxProps<SegmentObjMock>;
 
-  const result = render(
-    <InputBoxWrapperProvider
-      segments={mergedProps.segments}
-      segmentRefs={mergedProps.segmentRefs}
-    >
-      <InputBox {...finalMergedProps} />
-    </InputBoxWrapperProvider>,
-  );
+  const result = render(<InputBox {...finalMergedProps} />);
 
   const rerenderInputBox = ({
     ...props
@@ -212,14 +164,7 @@ export const renderInputBox = ({
       segment: mergedProps.segment ?? InputSegmentWrapper,
     } as InputBoxProps<SegmentObjMock>;
 
-    result.rerender(
-      <InputBoxWrapperProvider
-        segments={mergedProps.segments}
-        segmentRefs={mergedProps.segmentRefs}
-      >
-        <InputBox {...finalMergedProps} />
-      </InputBoxWrapperProvider>,
-    );
+    result.rerender(<InputBox {...finalMergedProps} />);
   };
 
   const getDayInput = () =>
@@ -257,41 +202,52 @@ export const setSegmentProps = (segment: SegmentObjMock) => {
 interface RenderSegmentReturnType {
   getInput: () => HTMLInputElement;
   input: HTMLInputElement;
-  rerenderSegment: (
-    newProps: Partial<InputSegmentProps<SegmentObjMock, string>>,
-  ) => void;
+  rerenderSegment: (params: {
+    newProps?: Partial<InputSegmentProps<SegmentObjMock>>;
+    newProviderProps?: Partial<InputBoxProviderProps<SegmentObjMock>>;
+  }) => void;
 }
 
-export const renderSegment = (
-  props?: Partial<InputSegmentProps<SegmentObjMock, string>>,
-  providerProps?: Partial<InputBoxProviderProps<SegmentObjMock>>,
-): RenderResult & RenderSegmentReturnType => {
-  const defaultProviderProps: Partial<InputBoxProviderProps<SegmentObjMock>> = {
-    charsPerSegment: charsPerSegmentMock,
-    segmentEnum: SegmentObjMock,
-    onChange: () => {},
-    onBlur: () => {},
-  };
+const defaultSegmentProviderProps: Partial<
+  InputBoxProviderProps<SegmentObjMock>
+> = {
+  charsPerSegment: charsPerSegmentMock,
+  segmentEnum: SegmentObjMock,
+  onChange: () => {},
+  onBlur: () => {},
+  segments: {
+    day: '',
+    month: '',
+    year: '',
+  },
+  segmentRefs: segmentRefsMock,
+};
 
-  const defaultProps: InputSegmentProps<SegmentObjMock, string> = {
-    value: '',
-    segment: 'day',
-    min: defaultMinMock['day'],
-    max: defaultMaxMock['day'],
-    size: Size.Default,
-    shouldNotRollover: false,
-    placeholder: defaultPlaceholderMock['day'],
-    // @ts-expect-error - data-testid
-    ['data-testid']: 'lg-input-segment',
-  };
+const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
+  segment: 'day',
+  min: defaultMinMock['day'],
+  max: defaultMaxMock['day'],
+  size: Size.Default,
+  shouldRollover: true,
+  placeholder: defaultPlaceholderMock['day'],
+  // @ts-expect-error - data-testid
+  ['data-testid']: 'lg-input-segment',
+};
 
+export const renderSegment = ({
+  props = {},
+  providerProps = {},
+}: {
+  props?: Partial<InputSegmentProps<SegmentObjMock>>;
+  providerProps?: Partial<InputBoxProviderProps<SegmentObjMock>>;
+}): RenderResult & RenderSegmentReturnType => {
   const mergedProps = {
-    ...defaultProps,
+    ...defaultSegmentProps,
     ...props,
-  };
+  } as InputSegmentProps<SegmentObjMock>;
 
   const mergedProviderProps = {
-    ...defaultProviderProps,
+    ...defaultSegmentProviderProps,
     ...providerProps,
   } as InputBoxProviderProps<SegmentObjMock>;
 
@@ -300,11 +256,13 @@ export const renderSegment = (
       <InputSegment {...mergedProps} />
     </InputBoxProvider>,
   );
-
-  const rerenderSegment = (
-    newProps: Partial<InputSegmentProps<SegmentObjMock, string>>,
-    newProviderProps?: Partial<InputBoxProviderProps<SegmentObjMock>>,
-  ) => {
+  const rerenderSegment = ({
+    newProps = {},
+    newProviderProps = {},
+  }: {
+    newProps?: Partial<InputSegmentProps<SegmentObjMock>>;
+    newProviderProps?: Partial<InputBoxProviderProps<SegmentObjMock>>;
+  }) => {
     utils.rerender(
       <InputBoxProvider {...mergedProviderProps} {...newProviderProps}>
         <InputSegment {...mergedProps} {...newProps} />

@@ -48,25 +48,12 @@ export const InputBoxWithRef = <Segment extends string>(
     segmentRules,
     segment,
     minValues,
+    segments,
     ...rest
   }: InputBoxProps<Segment>,
   fwdRef: ForwardedRef<HTMLDivElement>,
 ) => {
   const { theme } = useDarkMode();
-
-  console.log('🌻Storybook: InputBox', {
-    segmentEnum,
-    segmentRules,
-    charsPerSegment,
-    minValues,
-    formatParts,
-    segmentRefs,
-    onSegmentChange,
-    onKeyDown,
-    setSegment,
-    disabled,
-    ...rest,
-  });
 
   const isExplicitSegmentValue = createExplicitSegmentValidator(
     segmentEnum,
@@ -222,6 +209,8 @@ export const InputBoxWithRef = <Segment extends string>(
       onChange={handleSegmentInputChange}
       onBlur={handleSegmentInputBlur}
       segmentEnum={segmentEnum}
+      segmentRefs={segmentRefs}
+      segments={segments}
     >
       {/* We want to allow keydown events to be captured by the parent so that the parent can handle the event. */}
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}

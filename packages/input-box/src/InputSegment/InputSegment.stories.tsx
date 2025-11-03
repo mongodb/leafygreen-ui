@@ -15,6 +15,8 @@ import {
   defaultMinMock,
   defaultPlaceholderMock,
   SegmentObjMock,
+  segmentRefsMock,
+  segmentsMock,
 } from '../testutils/testutils.mocks';
 
 import { InputSegment } from '.';
@@ -26,27 +28,18 @@ const meta: StoryMetaType<typeof InputSegment> = {
   decorators: [
     (StoryFn, context) => (
       <LeafyGreenProvider darkMode={context?.args?.darkMode}>
-        <InputBoxProvider
-          charsPerSegment={charsPerSegmentMock}
-          segmentEnum={SegmentObjMock}
-          onChange={() => {}}
-          onBlur={() => {}}
-        >
-          <StoryFn />
-        </InputBoxProvider>
+        <StoryFn />
       </LeafyGreenProvider>
     ),
   ],
   args: {
     segment: SegmentObjMock.Day,
-    value: '',
-    charsPerSegment: charsPerSegmentMock[SegmentObjMock.Day],
-    segmentObj: SegmentObjMock,
+
     min: defaultMinMock[SegmentObjMock.Day],
     max: defaultMaxMock[SegmentObjMock.Day],
     size: Size.Default,
     placeholder: defaultPlaceholderMock[SegmentObjMock.Day],
-    shouldNotRollover: false,
+    shouldRollover: true,
     step: 1,
     darkMode: false,
   },
@@ -54,12 +47,6 @@ const meta: StoryMetaType<typeof InputSegment> = {
     size: {
       control: 'select',
       options: Object.values(Size),
-    },
-    shouldNotRollover: {
-      control: 'boolean',
-    },
-    step: {
-      control: 'number',
     },
     darkMode: {
       control: 'boolean',
@@ -75,13 +62,17 @@ const meta: StoryMetaType<typeof InputSegment> = {
         'onChange',
         'charsPerSegment',
         'segmentEnum',
+        'min',
+        'max',
+        'shouldRollover',
+        'shouldSkipValidation',
+        'step',
       ],
     },
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        value: ['', '6', '06'],
-        segment: ['day'],
+        segment: ['day', 'month', 'year'],
         size: Object.values(Size),
       },
       decorator: (StoryFn, context) => (
@@ -91,6 +82,12 @@ const meta: StoryMetaType<typeof InputSegment> = {
             segmentEnum={SegmentObjMock}
             onChange={() => {}}
             onBlur={() => {}}
+            segmentRefs={segmentRefsMock}
+            segments={{
+              day: '02',
+              month: '8',
+              year: '2025',
+            }}
           >
             <StoryFn />
           </InputBoxProvider>
@@ -102,20 +99,23 @@ const meta: StoryMetaType<typeof InputSegment> = {
 export default meta;
 
 export const LiveExample: StoryFn<typeof InputSegment> = props => {
-  const [value, setValue] = useState<string>('');
   return (
     <InputBoxProvider
       charsPerSegment={charsPerSegmentMock}
       segmentEnum={SegmentObjMock}
-      onChange={({ value }) => {
-        setValue(value);
-        console.log('🌻Storybook: onChange', { value });
-      }}
+      onChange={() => {}}
       onBlur={() => {}}
+      segmentRefs={segmentRefsMock}
+      segments={segmentsMock}
     >
-      <InputSegment {...props} value={value} />
+      <InputSegment {...props} />
     </InputBoxProvider>
   );
 };
 
 export const Generated = () => {};
+
+// TODO: save this and then update DatePicker. Ask team about tests for date picker.
+// TODO: add min/max tests
+// TODO: documentation
+// TODO: PR comments

@@ -19,7 +19,9 @@ describe('packages/input-segment', () => {
   describe('aria attributes', () => {
     describe.each(['day', 'month', 'year'])('%p', segment => {
       test(`${segment} segment has aria-label`, () => {
-        const { input } = renderSegment({ segment: segment as SegmentObjMock });
+        const { input } = renderSegment({
+          props: { segment: segment as SegmentObjMock },
+        });
         expect(input).toHaveAttribute('aria-label', segment);
       });
     });
@@ -33,65 +35,73 @@ describe('packages/input-segment', () => {
       });
 
       test('Rendering with a value sets the input value', () => {
-        const { input } = renderSegment({ value: '12' });
+        const { input } = renderSegment({
+          providerProps: { segments: { day: '12', month: '', year: '' } },
+        });
         expect(input.value).toBe('12');
       });
 
       test('rerendering updates the value', () => {
         const { getInput, rerenderSegment } = renderSegment({
-          value: '12',
+          providerProps: { segments: { day: '12', month: '', year: '' } },
         });
 
-        rerenderSegment({ value: '08' });
+        rerenderSegment({
+          newProviderProps: { segments: { day: '08', month: '', year: '' } },
+        });
         expect(getInput().value).toBe('08');
       });
     });
 
     describe('month segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ ...setSegmentProps('month') });
+        const { input } = renderSegment({ props: setSegmentProps('month') });
         expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
         const { input } = renderSegment({
-          ...setSegmentProps('month'),
-          value: '26',
+          props: setSegmentProps('month'),
+          providerProps: { segments: { day: '', month: '26', year: '' } },
         });
         expect(input.value).toBe('26');
       });
 
       test('rerendering updates the value', () => {
         const { getInput, rerenderSegment } = renderSegment({
-          ...setSegmentProps('month'),
-          value: '26',
+          props: setSegmentProps('month'),
+          providerProps: { segments: { day: '', month: '26', year: '' } },
         });
 
-        rerenderSegment({ value: '08' });
+        rerenderSegment({
+          newProviderProps: { segments: { day: '', month: '08', year: '' } },
+        });
         expect(getInput().value).toBe('08');
       });
     });
 
     describe('year segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ ...setSegmentProps('year') });
+        const { input } = renderSegment({ props: setSegmentProps('year') });
         expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
         const { input } = renderSegment({
-          ...setSegmentProps('year'),
-          value: '2023',
+          props: setSegmentProps('year'),
+          providerProps: { segments: { day: '', month: '', year: '2023' } },
         });
         expect(input.value).toBe('2023');
       });
 
       test('rerendering updates the value', () => {
         const { getInput, rerenderSegment } = renderSegment({
-          ...setSegmentProps('year'),
-          value: '2023',
+          props: setSegmentProps('year'),
+          providerProps: { segments: { day: '', month: '', year: '2023' } },
         });
-        rerenderSegment({ value: '1993' });
+        rerenderSegment({
+          newProviderProps: { segments: { day: '', month: '', year: '1993' } },
+        });
         expect(getInput().value).toBe('1993');
       });
     });
@@ -104,7 +114,9 @@ describe('packages/input-segment', () => {
           SegmentObjMock,
           string
         >;
-        const { input } = renderSegment({}, { onChange: onChangeHandler });
+        const { input } = renderSegment({
+          providerProps: { onChange: onChangeHandler },
+        });
 
         userEvent.type(input, '8');
         expect(onChangeHandler).toHaveBeenCalledWith(
@@ -117,7 +129,9 @@ describe('packages/input-segment', () => {
           SegmentObjMock,
           string
         >;
-        const { input } = renderSegment({}, { onChange: onChangeHandler });
+        const { input } = renderSegment({
+          providerProps: { onChange: onChangeHandler },
+        });
 
         userEvent.type(input, '0');
         expect(onChangeHandler).toHaveBeenCalledWith(
@@ -130,7 +144,9 @@ describe('packages/input-segment', () => {
           SegmentObjMock,
           string
         >;
-        const { input } = renderSegment({}, { onChange: onChangeHandler });
+        const { input } = renderSegment({
+          providerProps: { onChange: onChangeHandler },
+        });
         userEvent.type(input, 'aB$/');
         expect(onChangeHandler).not.toHaveBeenCalled();
       });
@@ -142,12 +158,12 @@ describe('packages/input-segment', () => {
           SegmentObjMock,
           string
         >;
-        const { input } = renderSegment(
-          {
-            value: '2',
+        const { input } = renderSegment({
+          providerProps: {
+            segments: { day: '2', month: '', year: '' },
+            onChange: onChangeHandler,
           },
-          { onChange: onChangeHandler },
-        );
+        });
 
         userEvent.type(input, '6');
         expect(onChangeHandler).toHaveBeenCalledWith(
@@ -160,12 +176,12 @@ describe('packages/input-segment', () => {
           SegmentObjMock,
           string
         >;
-        const { input } = renderSegment(
-          {
-            value: '26',
+        const { input } = renderSegment({
+          providerProps: {
+            segments: { day: '26', month: '', year: '' },
+            onChange: onChangeHandler,
           },
-          { onChange: onChangeHandler },
-        );
+        });
 
         userEvent.type(input, '4');
         expect(onChangeHandler).toHaveBeenCalledWith(
@@ -189,13 +205,13 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: formatter(15),
+            const { input } = renderSegment({
+              props: { segment: 'day' },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: formatter(15), month: '', year: '' },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -210,14 +226,13 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: formatter(15),
-                step: 2,
+            const { input } = renderSegment({
+              props: { segment: 'day', step: 2 },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: formatter(15), month: '', year: '' },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -232,13 +247,13 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: '',
+            const { input } = renderSegment({
+              props: { segment: 'day' },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: '', month: '', year: '' },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -253,13 +268,17 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: formatter(defaultMaxMock['day']),
+            const { input } = renderSegment({
+              props: { segment: 'day' },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: {
+                  day: formatter(defaultMaxMock['day']),
+                  month: '',
+                  year: '',
+                },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -274,14 +293,17 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: formatter(defaultMaxMock['day']),
-                shouldNotRollover: true,
+            const { input } = renderSegment({
+              props: { shouldRollover: false },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: {
+                  day: formatter(defaultMaxMock['day']),
+                  month: '',
+                  year: '',
+                },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -298,13 +320,12 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: formatter(15),
+            const { input } = renderSegment({
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: formatter(15), month: '', year: '' },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -319,14 +340,13 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: formatter(15),
-                step: 2,
+            const { input } = renderSegment({
+              props: { step: 2 },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: formatter(15), month: '', year: '' },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -341,13 +361,10 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: '',
-              },
-              { onChange: onChangeHandler },
-            );
+            const { input } = renderSegment({
+              props: { segment: 'day' },
+              providerProps: { onChange: onChangeHandler },
+            });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -362,13 +379,16 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: formatter(defaultMinMock['day']),
+            const { input } = renderSegment({
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: {
+                  day: formatter(defaultMinMock['day']),
+                  month: '',
+                  year: '',
+                },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -383,14 +403,17 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: formatter(defaultMinMock['day']),
-                shouldNotRollover: true,
+            const { input } = renderSegment({
+              props: { shouldRollover: false },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: {
+                  day: formatter(defaultMinMock['day']),
+                  month: '',
+                  year: '',
+                },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -407,13 +430,12 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-                value: '12',
+            const { input } = renderSegment({
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: '12', month: '', year: '' },
               },
-              { onChange: onChangeHandler },
-            );
+            });
 
             userEvent.type(input, '{backspace}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -426,12 +448,9 @@ describe('packages/input-segment', () => {
               SegmentObjMock,
               string
             >;
-            const { input } = renderSegment(
-              {
-                segment: 'day',
-              },
-              { onChange: onChangeHandler },
-            );
+            const { input } = renderSegment({
+              providerProps: { onChange: onChangeHandler },
+            });
 
             userEvent.type(input, '{backspace}');
             expect(onChangeHandler).not.toHaveBeenCalled();
@@ -447,12 +466,9 @@ describe('packages/input-segment', () => {
                   string
                 >;
 
-              const { input } = renderSegment(
-                {
-                  segment: 'day',
-                },
-                { onChange: onChangeHandler },
-              );
+              const { input } = renderSegment({
+                providerProps: { onChange: onChangeHandler },
+              });
 
               userEvent.type(input, '{space}');
               expect(onChangeHandler).not.toHaveBeenCalled();
@@ -464,13 +480,12 @@ describe('packages/input-segment', () => {
                   SegmentObjMock,
                   string
                 >;
-              const { input } = renderSegment(
-                {
-                  segment: 'day',
-                  value: '12',
+              const { input } = renderSegment({
+                providerProps: {
+                  onChange: onChangeHandler,
+                  segments: { day: '12', month: '', year: '' },
                 },
-                { onChange: onChangeHandler },
-              );
+              });
 
               userEvent.type(input, '{space}');
               expect(onChangeHandler).toHaveBeenCalledWith(
@@ -486,12 +501,9 @@ describe('packages/input-segment', () => {
                   SegmentObjMock,
                   string
                 >;
-              const { input } = renderSegment(
-                {
-                  segment: 'day',
-                },
-                { onChange: onChangeHandler },
-              );
+              const { input } = renderSegment({
+                providerProps: { onChange: onChangeHandler },
+              });
 
               userEvent.type(input, '{space}{space}');
               expect(onChangeHandler).not.toHaveBeenCalled();
@@ -503,13 +515,12 @@ describe('packages/input-segment', () => {
                   SegmentObjMock,
                   string
                 >;
-              const { input } = renderSegment(
-                {
-                  segment: 'day',
-                  value: '12',
+              const { input } = renderSegment({
+                providerProps: {
+                  onChange: onChangeHandler,
+                  segments: { day: '12', month: '', year: '' },
                 },
-                { onChange: onChangeHandler },
-              );
+              });
 
               userEvent.type(input, '{space}{space}');
               expect(onChangeHandler).toHaveBeenCalledWith(
@@ -530,30 +541,17 @@ describe('packages/input-segment', () => {
     });
 
     test('With required props', () => {
-      <InputSegment
-        segment="day"
-        // onChange={() => {}}
-        value="12"
-        // charsPerSegment={2}
-        min={1}
-        max={31}
-        // segmentEnum={SegmentObjMock}
-        size={Size.Default}
-      />;
+      <InputSegment segment="day" min={1} max={31} size={Size.Default} />;
     });
 
     test('With all props', () => {
       <InputSegment
         segment="day"
-        // onChange={() => {}}
-        value="12"
-        // charsPerSegment={2}
         min={1}
         max={31}
-        // segmentEnum={SegmentObjMock}
         size={Size.Default}
         step={1}
-        shouldNotRollover={false}
+        shouldRollover={true}
         shouldSkipValidation={false}
         placeholder="12"
         className="test"

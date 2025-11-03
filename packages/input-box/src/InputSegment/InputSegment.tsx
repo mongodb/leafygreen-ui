@@ -22,6 +22,7 @@ import {
 } from './InputSegment.types';
 
 import { useInputBoxContext } from '../InputBoxContext';
+import { useMergeRefs } from '@leafygreen-ui/hooks';
 
 /**
  * Generic controlled input segment component
@@ -31,10 +32,9 @@ import { useInputBoxContext } from '../InputBoxContext';
  *
  * @internal
  */
-const InputSegmentWithRef = <Segment extends string, Value extends string>(
+const InputSegmentWithRef = <Segment extends string>(
   {
     segment,
-    value,
     onKeyDown,
     size,
     min, // minSegmentValue
@@ -43,10 +43,10 @@ const InputSegmentWithRef = <Segment extends string, Value extends string>(
     onChange: onChangeProp,
     onBlur: onBlurProp,
     step = 1,
-    shouldNotRollover = false,
-    shouldSkipValidation = false,
+    shouldRollover = true, // TODO: shouldRollover
+    shouldSkipValidation = false, // TODO: shouldSkipValidation
     ...rest
-  }: InputSegmentProps<Segment, Value>,
+  }: InputSegmentProps<Segment>,
   fwdRef: ForwardedRef<HTMLInputElement>,
 ) => {
   const { theme } = useDarkMode();
@@ -55,11 +55,17 @@ const InputSegmentWithRef = <Segment extends string, Value extends string>(
     onBlur,
     charsPerSegment: charsPerSegmentContext,
     segmentEnum,
+    segmentRefs,
+    segments,
   } = useInputBoxContext<Segment>();
   const baseFontSize = useUpdatedBaseFontSize();
   const charsPerSegment = charsPerSegmentContext[segment];
   const formatter = getValueFormatter(charsPerSegment, min === 0);
   const pattern = `[0-9]{${charsPerSegment}}`;
+
+  const segmentRef = segmentRefs[segment];
+  const mergedRef = useMergeRefs([fwdRef, segmentRef]);
+  const value = segments[segment];
 
   /**
    * Receives native input events,
@@ -85,7 +91,7 @@ const InputSegmentWithRef = <Segment extends string, Value extends string>(
     if (hasValueChanged) {
       onChange({
         segment,
-        value: newValue as Value,
+        value: newValue,
       });
     } else {
       // If the value has not changed, ensure the input value is reset
@@ -124,14 +130,14 @@ const InputSegmentWithRef = <Segment extends string, Value extends string>(
           min,
           max,
           step,
-          shouldNotRollover,
+          shouldNotRollover: !shouldRollover,
         });
         const valueString = formatter(newValue);
 
         /** Fire a custom change event when the up/down arrow keys are pressed */
         onChange({
           segment,
-          value: valueString as Value,
+          value: valueString,
           meta: { key },
         });
         break;
@@ -147,7 +153,7 @@ const InputSegmentWithRef = <Segment extends string, Value extends string>(
           /** Fire a custom change event when the backspace key is pressed */
           onChange({
             segment,
-            value: '' as Value,
+            value: '',
             meta: { key },
           });
         }
@@ -164,7 +170,7 @@ const InputSegmentWithRef = <Segment extends string, Value extends string>(
           /** Fire a custom change event when the space key is pressed */
           onChange({
             segment,
-            value: '' as Value,
+            value: '',
             meta: { key },
           });
         }
@@ -193,7 +199,7 @@ const InputSegmentWithRef = <Segment extends string, Value extends string>(
       {...rest}
       aria-label={String(segment)}
       id={String(segment)}
-      ref={fwdRef}
+      ref={mergedRef}
       type="text"
       pattern={pattern}
       role="spinbutton"
