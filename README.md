@@ -183,15 +183,18 @@ import Button from '@leafygreen-ui/button';
 
 ### Setup
 
-1. Node >= 18.0.0 required.
+1. Install [`asdf`](https://asdf-vm.com/guide/getting-started.html)
 
-   via [homebrew](https://brew.sh/) with `brew install node`
+```zsh
+brew install asdf;
+echo 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"' >> ~/.zshrc
+```
 
-   via [nodejs installer](https://nodejs.org/en/)
+2. Install Node & pnpm
 
-2. Install PNPM >= 9.15.0.
-
-   [PNPM Installation documentation](https://pnpm.io/installation)
+```zsh
+asdf install
+```
 
 3. Clone the repository.
 
@@ -359,19 +362,6 @@ Any new work you do should be done in the _original_ (`new-feature`) branch.
 To publish a new pre-release version, pull the changes from `new-feature` into branch `pre-release`, and follow steps 3-5.
 
 When `new-feature` is merged into `main`, you can safely delete the `pre-release` branch
-
-## Deploy gh-pages
-
-You can deploy a static build of our Storybook site to gh-pages from the `main` branch.
-
-1. First be sure you've built a static version of Storybook with the script: `build-storybook`
-2. Then deploy to gh-pages: `pnpm release:site`
-
-### To deploy to your own mirror of leafygreen-ui
-
-1. Run `pnpm demo:site [your_github_username]`.
-2. If you haven't built a static version of Storybook yet, you will be prompted to do so.
-3. You will be asked for confirmation before Storybook is published.
 
 ## License
 

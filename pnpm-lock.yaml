@@ -2125,12 +2125,12 @@ importers:
       '@svgr/core':
         specifier: ^5.3.1
         version: 5.5.0
-      '@types/xml2json':
-        specifier: ^0.11.0
-        version: 0.11.6
       commander:
         specifier: ^11.0.0
         version: 11.1.0
+      fast-xml-parser:
+        specifier: ^5.3.0
+        version: 5.3.0
       fs-extra:
         specifier: 11.1.1
         version: 11.1.1
@@ -4305,7 +4305,7 @@ importers:
         version: 2.1.0
       babel-loader:
         specifier: 9.2.1
-        version: 9.2.1(@babel/core@7.24.3)(webpack@5.88.0)
+        version: 9.2.1(@babel/core@7.28.0)(webpack@5.88.0)
       buffer:
         specifier: 6.0.3
         version: 6.0.3
@@ -6907,9 +6907,6 @@ packages:
   '@types/uuid@9.0.8':
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
 
-  '@types/xml2json@0.11.6':
-    resolution: {integrity: sha512-OYZ5cB4zctk4JdK1MGdLmeBMdmg+/AClCUspQ6KtQ2vZLJkSpm0XWE9H0vCfCGlXvbqn9CBqIda2dXX2KAE/5w==}
-
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
 
@@ -8408,6 +8405,10 @@ packages:
 
   fast-uri@3.0.6:
     resolution: {integrity: sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw==}
+
+  fast-xml-parser@5.3.0:
+    resolution: {integrity: sha512-gkWGshjYcQCF+6qtlrqBqELqNqnt4CxruY6UVAWWnqb3DQ6qaNFEIKqzYep1XzHLM/QtrHVCxyPOtTk4LTQ7Aw==}
+    hasBin: true
 
   fastq@1.19.1:
     resolution: {integrity: sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==}
@@ -10949,6 +10950,9 @@ packages:
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
+
+  strnum@2.1.1:
+    resolution: {integrity: sha512-7ZvoFTiCnGxBtDqJ//Cu6fWtZtc7Y3x+QOirG15wztbdngGSkht27o2pyGWrVy0b4WAy3jbKmnoK6g5VlVNUUw==}
 
   style-loader@3.3.4:
     resolution: {integrity: sha512-0WqXzrsMTyb8yjZJHDqwmnwRJvhALK9LfRtRc6B4UTWe8AijYLZYZ9thuJTZc2VfQWINADW/j+LiJnfy2RoC1w==}
@@ -15388,10 +15392,6 @@ snapshots:
 
   '@types/uuid@9.0.8': {}
 
-  '@types/xml2json@0.11.6':
-    dependencies:
-      '@types/node': 20.19.9
-
   '@types/yargs-parser@21.0.3': {}
 
   '@types/yargs@17.0.33':
@@ -15942,9 +15942,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-loader@9.2.1(@babel/core@7.24.3)(webpack@5.88.0):
+  babel-loader@9.2.1(@babel/core@7.28.0)(webpack@5.88.0):
     dependencies:
-      '@babel/core': 7.24.3
+      '@babel/core': 7.28.0
       find-cache-dir: 4.0.0
       schema-utils: 4.3.2
       webpack: 5.88.0
@@ -17324,6 +17324,10 @@ snapshots:
   fast-levenshtein@2.0.6: {}
 
   fast-uri@3.0.6: {}
+
+  fast-xml-parser@5.3.0:
+    dependencies:
+      strnum: 2.1.1
 
   fastq@1.19.1:
     dependencies:
@@ -20581,6 +20585,8 @@ snapshots:
       min-indent: 1.0.1
 
   strip-json-comments@3.1.1: {}
+
+  strnum@2.1.1: {}
 
   style-loader@3.3.4(webpack@5.88.0):
     dependencies:

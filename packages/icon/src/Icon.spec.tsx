@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { XMLParser } from 'fast-xml-parser';
 import fs from 'fs';
 import { axe } from 'jest-axe';
 import path from 'path';
-import { toJson } from 'xml2json';
 
 import { typeIs } from '@leafygreen-ui/lib';
 
@@ -108,8 +108,8 @@ describe('packages/Icon/glyphs/', () => {
         readonly [K in string]: string | SVGNodeObject;
       };
 
-      //@ts-expect-error
-      const rootGlyphObject: SVGNodeObject = toJson(svg, { object: true });
+      const parser = new XMLParser({ ignoreAttributes: false });
+      const rootGlyphObject: SVGNodeObject = parser.parse(svg);
 
       function validateGlyphObject(obj: SVGNodeObject) {
         Object.keys(obj).forEach(key => {
