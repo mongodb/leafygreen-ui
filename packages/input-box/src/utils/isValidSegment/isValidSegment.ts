@@ -13,10 +13,10 @@ import isUndefined from 'lodash/isUndefined';
  * isValidSegmentValue('0', true); // true
  * isValidSegmentValue('00', true); // true
  */
-export const isValidSegmentValue = <T extends string>(
-  segment?: T,
+export const isValidSegmentValue = <SegmentValue extends string>(
+  segment?: SegmentValue,
   allowZero = false,
-): segment is T =>
+): segment is SegmentValue =>
   !isUndefined(segment) &&
   !isNaN(Number(segment)) &&
   (Number(segment) > 0 || allowZero);
@@ -40,12 +40,14 @@ export const isValidSegmentValue = <T extends string>(
  * isValidSegmentName(segmentEnum, 'year'); // true
  * isValidSegmentName(segmentEnum, 'seconds'); // false
  */
-export const isValidSegmentName = <T extends Readonly<Record<string, string>>>(
-  segmentEnum: T,
+export const isValidSegmentName = <
+  SegmentEnum extends Readonly<Record<string, string>>,
+>(
+  segmentEnum: SegmentEnum,
   name?: string,
-): name is T[keyof T] => {
+): name is SegmentEnum[keyof SegmentEnum] => {
   return (
     !isUndefined(name) &&
-    Object.values(segmentEnum).includes(name as T[keyof T])
+    Object.values(segmentEnum).includes(name as SegmentEnum[keyof SegmentEnum])
   );
 };

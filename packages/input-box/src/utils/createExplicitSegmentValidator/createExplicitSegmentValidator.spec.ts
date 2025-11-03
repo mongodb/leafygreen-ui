@@ -12,10 +12,10 @@ const rules = {
   year: { maxChars: 4 },
 };
 
-const isExplicitSegmentValue = createExplicitSegmentValidator(
-  segmentObj,
+const isExplicitSegmentValue = createExplicitSegmentValidator({
+  segmentEnum: segmentObj,
   rules,
-);
+});
 
 describe('packages/input-box/utils/createExplicitSegmentValidator', () => {
   describe('day segment', () => {

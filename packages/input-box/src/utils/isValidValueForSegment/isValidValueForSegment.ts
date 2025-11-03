@@ -5,9 +5,21 @@ import {
   isValidSegmentValue,
 } from '../isValidSegment/isValidSegment';
 
+interface IsValidValueForSegmentProps<
+  SegmentName extends string,
+  Value extends string,
+> {
+  segment: SegmentName;
+  value: Value;
+  defaultMin: number;
+  defaultMax: number;
+  segmentEnum: Readonly<Record<string, SegmentName>>;
+  customValidation?: (value: Value) => boolean;
+}
+
 /**
  * Returns whether a value is valid for a given segment type
- * @param segment - The segment type
+ * @param segment - The segment name
  * @param value - The value to check
  * @param defaultMin - The default minimum value for the segment
  * @param defaultMax - The default maximum value for the segment
@@ -21,20 +33,53 @@ import {
  *   Month: 'month',
  *   Year: 'year',
  * };
- * isValidValueForSegment('day', '1', 1, 31, segmentEnum); // true
- * isValidValueForSegment('day', '32', 1, 31, segmentEnum); // false
- * isValidValueForSegment('month', '1', 1, 12, segmentEnum); // true
- * isValidValueForSegment('month', '13', 1, 12, segmentEnum); // false
- * isValidValueForSegment('year', '1970', 1000, 9999, segmentEnum); // true
+ * isValidValueForSegment({
+ *   segment: 'day',
+ *   value: '1',
+ *   defaultMin: 1,
+ *   defaultMax: 31,
+ *   segmentEnum
+ * }); // true
+ * isValidValueForSegment({
+ *   segment: 'day',
+ *   value: '32',
+ *   defaultMin: 1,
+ *   defaultMax: 31,
+ *   segmentEnum
+ * }); // false
+ * isValidValueForSegment({
+ *   segment: 'month',
+ *   value: '1',
+ *   defaultMin: 1,
+ *   defaultMax: 12,
+ *   segmentEnum
+ * }); // true
+ * isValidValueForSegment({
+ *   segment: 'month',
+ *   value: '13',
+ *   defaultMin: 1,
+ *   defaultMax: 12,
+ *   segmentEnum
+ * }); // false
+ * isValidValueForSegment({
+ *   segment: 'year',
+ *   value: '1970',
+ *   defaultMin: 1000,
+ *   defaultMax: 9999,
+ *   segmentEnum
+ * }); // true
  */
-export const isValidValueForSegment = <T extends string, V extends string>(
-  segment: T,
-  value: V,
-  defaultMin: number,
-  defaultMax: number,
-  segmentEnum: Readonly<Record<string, T>>,
-  customValidation?: (value: V) => boolean,
-): boolean => {
+export const isValidValueForSegment = <
+  SegmentName extends string,
+  Value extends string,
+>({
+  segment,
+  value,
+  defaultMin,
+  defaultMax,
+  segmentEnum,
+  customValidation,
+}: IsValidValueForSegmentProps<SegmentName, Value>): boolean => {
   const isValidSegmentAndValue =
     isValidSegmentValue(value, defaultMin === 0) &&
     isValidSegmentName(segmentEnum, segment);

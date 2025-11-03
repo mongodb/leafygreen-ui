@@ -1,7 +1,7 @@
 import { keyMap, rollover } from '@leafygreen-ui/lib';
 
-interface GetNewSegmentValueFromArrowKeyPress<V extends string> {
-  value: V;
+interface GetNewSegmentValueFromArrowKeyPress<Value extends string> {
+  value: Value;
   key: typeof keyMap.ArrowUp | typeof keyMap.ArrowDown;
   min: number;
   max: number;
@@ -27,14 +27,14 @@ interface GetNewSegmentValueFromArrowKeyPress<V extends string> {
  * getNewSegmentValueFromArrowKeyPress({ value: '1970', key: 'ArrowUp', min: 1970, max: 2038, step: 1 }); // 1971
  * getNewSegmentValueFromArrowKeyPress({ value: '2038', key: 'ArrowUp', min: 1970, max: 2038, step: 1, shouldNotRollover: true }); // 2039
  */
-export const getNewSegmentValueFromArrowKeyPress = <V extends string>({
+export const getNewSegmentValueFromArrowKeyPress = <Value extends string>({
   value,
   key,
   min,
   max,
   shouldNotRollover,
   step = 1,
-}: GetNewSegmentValueFromArrowKeyPress<V>): number => {
+}: GetNewSegmentValueFromArrowKeyPress<Value>): number => {
   const valueDiff = key === keyMap.ArrowUp ? step : -step;
   const defaultVal = key === keyMap.ArrowUp ? min : max;
 

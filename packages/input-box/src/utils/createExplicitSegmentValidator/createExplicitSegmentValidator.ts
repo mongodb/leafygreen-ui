@@ -30,9 +30,15 @@ export interface ExplicitSegmentRule {
  *   month: { maxChars: 2, minExplicitValue: 1 },
  */
 export function createExplicitSegmentValidator<
-  T extends Record<string, string>,
->(segmentEnum: T, rules: Record<T[keyof T], ExplicitSegmentRule>) {
-  return (segment: T[keyof T], value: string): boolean => {
+  SegmentEnum extends Record<string, string>,
+>({
+  segmentEnum,
+  rules,
+}: {
+  segmentEnum: SegmentEnum;
+  rules: Record<SegmentEnum[keyof SegmentEnum], ExplicitSegmentRule>;
+}) {
+  return (segment: SegmentEnum[keyof SegmentEnum], value: string): boolean => {
     if (
       !(isValidSegmentValue(value) && isValidSegmentName(segmentEnum, segment))
     )

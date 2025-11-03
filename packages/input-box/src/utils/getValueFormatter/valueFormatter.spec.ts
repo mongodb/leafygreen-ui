@@ -1,15 +1,35 @@
 import { getValueFormatter } from './getValueFormatter';
 
-type Segment = 'day' | 'month' | 'year';
+type Segment = 'one' | 'two' | 'three';
 const charsPerSegment: Record<Segment, number> = {
-  day: 2,
-  month: 2,
-  year: 4,
+  one: 1,
+  two: 2,
+  three: 3,
 };
 
 describe('packages/input-box/utils/valueFormatter', () => {
-  describe.each(['day', 'month'] as Array<Segment>)('', segment => {
-    const formatter = getValueFormatter(charsPerSegment[segment]);
+  describe('one segment', () => {
+    const formatter = getValueFormatter({
+      charsPerSegment: charsPerSegment['one'],
+    });
+
+    test('returns the value as is', () => {
+      expect(formatter('1')).toEqual('1');
+    });
+
+    test('sets 0 to empty string', () => {
+      expect(formatter('0')).toEqual('');
+    });
+
+    test('sets undefined to empty string', () => {
+      expect(formatter(undefined)).toEqual('');
+    });
+  });
+
+  describe('two segments', () => {
+    const formatter = getValueFormatter({
+      charsPerSegment: charsPerSegment['two'],
+    });
 
     test('formats 2 digit values', () => {
       expect(formatter('12')).toEqual('12');
@@ -36,23 +56,25 @@ describe('packages/input-box/utils/valueFormatter', () => {
     });
   });
 
-  describe('year', () => {
-    const formatter = getValueFormatter(charsPerSegment['year']);
+  describe('three segments', () => {
+    const formatter = getValueFormatter({
+      charsPerSegment: charsPerSegment['three'],
+    });
 
     test('formats 4 digit values', () => {
-      expect(formatter('2023')).toEqual('2023');
+      expect(formatter('202')).toEqual('202');
     });
 
-    test('pads < 4 digit value', () => {
-      expect(formatter('123')).toEqual('0123');
+    test('pads < 3 digit value', () => {
+      expect(formatter('12')).toEqual('012');
     });
 
-    test('truncates 5+ digit values', () => {
-      expect(formatter('12345')).toEqual('2345');
+    test('truncates 4+ digit values', () => {
+      expect(formatter('1234')).toEqual('234');
     });
 
-    test('truncates 5+ digit padded values', () => {
-      expect(formatter('02345')).toEqual('2345');
+    test('truncates 4+ digit padded values', () => {
+      expect(formatter('02345')).toEqual('345');
     });
 
     test('sets 0 to empty string', () => {
@@ -61,6 +83,32 @@ describe('packages/input-box/utils/valueFormatter', () => {
 
     test('sets undefined to empty string', () => {
       expect(formatter(undefined)).toEqual('');
+    });
+  });
+
+  describe('with allowZero allows leading zeros', () => {
+    test('with one segment', () => {
+      const formatter = getValueFormatter({
+        charsPerSegment: charsPerSegment['one'],
+        allowZero: true,
+      });
+      expect(formatter('0')).toEqual('0');
+    });
+
+    test('with two segments', () => {
+      const formatter = getValueFormatter({
+        charsPerSegment: charsPerSegment['two'],
+        allowZero: true,
+      });
+      expect(formatter('0')).toEqual('00');
+    });
+
+    test('with three segments', () => {
+      const formatter = getValueFormatter({
+        charsPerSegment: charsPerSegment['three'],
+        allowZero: true,
+      });
+      expect(formatter('0')).toEqual('000');
     });
   });
 });

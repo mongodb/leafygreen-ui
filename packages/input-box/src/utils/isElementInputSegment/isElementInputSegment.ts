@@ -15,10 +15,10 @@
  * isElementInputSegment(document.querySelector('input[data-segment="year"]'), segmentRefs); // true
  */
 export const isElementInputSegment = <
-  T extends Record<string, React.RefObject<HTMLInputElement>>,
+  SegmentRefs extends Record<string, React.RefObject<HTMLInputElement>>,
 >(
   element: HTMLElement,
-  segmentRefs: T,
+  segmentRefs: SegmentRefs,
 ): element is HTMLInputElement => {
   const segmentsArray = Object.values(segmentRefs).map(
     ref => ref.current,

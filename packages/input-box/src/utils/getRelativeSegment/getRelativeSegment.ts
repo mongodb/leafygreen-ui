@@ -26,16 +26,16 @@ type RelativeDirection = 'next' | 'prev' | 'first' | 'last';
  * getRelativeSegment('first', { segment: 'day', formatParts }); // 'year'
  * getRelativeSegment('last', { segment: 'year', formatParts }); // 'day'
  */
-export const getRelativeSegment = <V extends string = string>(
+export const getRelativeSegment = <Segment extends string = string>(
   direction: RelativeDirection,
   {
     segment,
     formatParts,
   }: {
-    segment: V;
+    segment: Segment;
     formatParts?: Array<Intl.DateTimeFormatPart>;
   },
-): V | undefined => {
+): Segment | undefined => {
   if (
     isUndefined(direction) ||
     isUndefined(segment) ||
@@ -45,9 +45,9 @@ export const getRelativeSegment = <V extends string = string>(
   }
 
   // only the relevant segments, not separators
-  const formatSegments: Array<V> = formatParts
+  const formatSegments: Array<Segment> = formatParts
     .filter(part => part.type !== 'literal')
-    .map(part => part.type as V);
+    .map(part => part.type as Segment);
 
   /** The index of the reference segment relative to formatParts */
   const currentSegmentIndex: number | undefined =
@@ -89,11 +89,11 @@ export const getRelativeSegment = <V extends string = string>(
 };
 
 interface GetRelativeSegmentContext<
-  T extends Record<string, React.RefObject<HTMLInputElement>>,
+  SegmentRefs extends Record<string, React.RefObject<HTMLInputElement>>,
 > {
   segment: HTMLInputElement | React.RefObject<HTMLInputElement>;
   formatParts?: Array<Intl.DateTimeFormatPart>;
-  segmentRefs: T;
+  segmentRefs: SegmentRefs;
 }
 
 /**
@@ -124,11 +124,10 @@ interface GetRelativeSegmentContext<
  * getRelativeSegmentRef('last', { segment: monthRef, formatParts, segmentRefs }); // dayRef
  */
 export const getRelativeSegmentRef = <
-  T extends Record<string, React.RefObject<HTMLInputElement>>,
-  V extends string,
+  SegmentRefs extends Record<string, React.RefObject<HTMLInputElement>>,
 >(
   direction: RelativeDirection,
-  { segment, formatParts, segmentRefs }: GetRelativeSegmentContext<T>,
+  { segment, formatParts, segmentRefs }: GetRelativeSegmentContext<SegmentRefs>,
 ): React.RefObject<HTMLInputElement> | undefined => {
   if (
     isUndefined(direction) ||
@@ -139,17 +138,21 @@ export const getRelativeSegmentRef = <
     return;
   }
 
-  // only the relevant segments, not separators
-  const formatSegments: Array<V> = formatParts
-    .filter(part => part.type !== 'literal')
-    .map(part => part.type as V);
+  type SegmentName = keyof SegmentRefs & string;
 
-  const currentSegmentName: V | undefined = formatSegments.find(segmentName => {
-    return (
-      segmentRefs[segmentName] === segment ||
-      segmentRefs[segmentName].current === segment
-    );
-  });
+  // only the relevant segments, not separators
+  const formatSegments: Array<SegmentName> = formatParts
+    .filter(part => part.type !== 'literal')
+    .map(part => part.type as SegmentName);
+
+  const currentSegmentName: SegmentName | undefined = formatSegments.find(
+    segmentName => {
+      return (
+        segmentRefs[segmentName] === segment ||
+        segmentRefs[segmentName].current === segment
+      );
+    },
+  );
 
   if (currentSegmentName) {
     const relativeSegmentName = getRelativeSegment(direction, {
