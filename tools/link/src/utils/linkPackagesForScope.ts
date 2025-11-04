@@ -19,6 +19,8 @@ export async function linkPackagesForScope(
   destination: string,
   packages?: Array<string>,
   verbose?: boolean,
+  parallel?: boolean,
+  launchEnv?: NodeJS.ProcessEnv,
 ): Promise<void> {
   const node_modulesDir = path.join(destination, 'node_modules');
 
@@ -39,7 +41,11 @@ export async function linkPackagesForScope(
         installedPkg =>
           !ignorePackages.includes(installedPkg) &&
           (!packages ||
-            packages.some(pkgFlag => pkgFlag.includes(installedPkg))),
+            packages.some(
+              pkgFlag =>
+                pkgFlag === `${scopeName}/${installedPkg}` ||
+                pkgFlag === installedPkg,
+            )),
       );
 
       /** Create links */
@@ -48,17 +54,31 @@ export async function linkPackagesForScope(
           ` Creating links to ${formatLog.scope(scopeName)} packages...`,
         ),
       );
-      await Promise.all(
-        packagesToLink.map(pkg => {
-          createLinkFrom(source, {
+      if (parallel) {
+        await Promise.all(
+          packagesToLink.map(pkg => {
+            createLinkFrom(source, {
+              scopeName,
+              scopePath,
+              packageName: pkg,
+              verbose,
+              packageManager: destinationPackageManager,
+              env: launchEnv,
+            });
+          }),
+        );
+      } else {
+        for (const pkg of packagesToLink) {
+          await createLinkFrom(source, {
             scopeName,
             scopePath,
             packageName: pkg,
             verbose,
             packageManager: destinationPackageManager,
+            env: launchEnv,
           });
-        }),
-      );
+        }
+      }
 
       /** Connect link */
       console.log(
@@ -68,16 +88,29 @@ export async function linkPackagesForScope(
           )} packages to ${chalk.blue(formatLog.path(destination))}...`,
         ),
       );
-      await Promise.all(
-        packagesToLink.map((pkg: string) =>
-          linkPackageTo(destination, {
+      if (parallel) {
+        await Promise.all(
+          packagesToLink.map((pkg: string) =>
+            linkPackageTo(destination, {
+              scopeName,
+              packageName: pkg,
+              packageManager: destinationPackageManager,
+              verbose,
+              env: launchEnv,
+            }),
+          ),
+        );
+      } else {
+        for (const pkg of packagesToLink) {
+          await linkPackageTo(destination, {
             scopeName,
             packageName: pkg,
             packageManager: destinationPackageManager,
             verbose,
-          }),
-        ),
-      );
+            env: launchEnv,
+          });
+        }
+      }
     } else {
       console.error(
         chalk.gray(
@@ -93,7 +126,10 @@ export async function linkPackagesForScope(
     console.error(chalk.yellow(`${formatLog.path('node_modules')} not found.`));
     // TODO: Prompt user to install instead of just running it
 
-    await installPackages(destination);
+    await installPackages(destination, {
+      verbose,
+      env: launchEnv,
+    });
 
     await linkPackagesForScope(
       { scopeName, scopePath },
@@ -101,6 +137,8 @@ export async function linkPackagesForScope(
       source,
       packages,
       verbose,
+      parallel,
+      launchEnv,
     );
   }
 }
