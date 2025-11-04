@@ -52,11 +52,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         darkMode={darkMode}
         baseFontSize={baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize}
       >
-        <SharedDatePickerProvider
-          // darkMode={darkMode}
-          baseFontSize={baseFontSize}
-          {...contextProps}
-        >
+        <SharedDatePickerProvider baseFontSize={baseFontSize} {...contextProps}>
           <DatePickerProvider
             value={value}
             setValue={setValue}
