@@ -19,6 +19,8 @@ export async function linkPackagesForScope(
   destination: string,
   packages?: Array<string>,
   verbose?: boolean,
+  parallel?: boolean,
+  toolPath?: string,
 ): Promise<void> {
   const node_modulesDir = path.join(destination, 'node_modules');
 
@@ -48,17 +50,31 @@ export async function linkPackagesForScope(
           ` Creating links to ${formatLog.scope(scopeName)} packages...`,
         ),
       );
-      await Promise.all(
-        packagesToLink.map(pkg => {
-          createLinkFrom(source, {
+      if (parallel) {
+        await Promise.all(
+          packagesToLink.map(pkg => {
+            createLinkFrom(source, {
+              scopeName,
+              scopePath,
+              packageName: pkg,
+              verbose,
+              packageManager: destinationPackageManager,
+              toolPath,
+            });
+          }),
+        );
+      } else {
+        for (const pkg of packagesToLink) {
+          await createLinkFrom(source, {
             scopeName,
             scopePath,
             packageName: pkg,
             verbose,
             packageManager: destinationPackageManager,
+            toolPath,
           });
-        }),
-      );
+        }
+      }
 
       /** Connect link */
       console.log(
@@ -68,16 +84,29 @@ export async function linkPackagesForScope(
           )} packages to ${chalk.blue(formatLog.path(destination))}...`,
         ),
       );
-      await Promise.all(
-        packagesToLink.map((pkg: string) =>
-          linkPackageTo(destination, {
+      if (parallel) {
+        await Promise.all(
+          packagesToLink.map((pkg: string) =>
+            linkPackageTo(destination, {
+              scopeName,
+              packageName: pkg,
+              packageManager: destinationPackageManager,
+              verbose,
+              toolPath,
+            }),
+          ),
+        );
+      } else {
+        for (const pkg of packagesToLink) {
+          await linkPackageTo(destination, {
             scopeName,
             packageName: pkg,
             packageManager: destinationPackageManager,
             verbose,
-          }),
-        ),
-      );
+            toolPath,
+          });
+        }
+      }
     } else {
       console.error(
         chalk.gray(

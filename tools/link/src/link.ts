@@ -13,13 +13,23 @@ interface LinkOptions {
   verbose: boolean;
   to?: string;
   from?: string;
+  parallel?: boolean;
+  toolPath?: string;
 }
 
 export async function linkPackages(
   dest: string | undefined,
   opts: LinkOptions,
 ) {
-  const { verbose, scope: scopeFlag, packages, to, from } = opts;
+  const {
+    verbose,
+    scope: scopeFlag,
+    packages,
+    to,
+    from,
+    parallel,
+    toolPath,
+  } = opts;
 
   const rootDir = process.cwd();
 
@@ -81,6 +91,8 @@ export async function linkPackages(
           destination,
           packages,
           verbose,
+          parallel,
+          toolPath,
         ),
       );
     }

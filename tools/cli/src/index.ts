@@ -83,10 +83,20 @@ cli
     'When running from a consuming application, defines the source of linked packages',
   )
   .option('-v --verbose', 'Prints additional information to the console', false)
-  .option('--scope <name>', 'The NPM organization')
+  .option(
+    '--no-parallel',
+    'Run the link command sequentially for each package. Useful for debugging or when the parallel approach fails',
+    true,
+  )
+  .option(
+    '--tool-path <toolPath>',
+    'Path(s) to prepend to PATH for finding package manager and Node.js tool binaries, useful to pass asdf or mise shims directory (e.g. ~/.asdf/shims) so that the correct version of the tool is used both in the source and destination directories',
+    '',
+  )
+  .option('--scope <name>', 'The NPM organization, e.g. @lg-charts')
   .option(
     '--packages <names...>',
-    'Specific package names (requires `scope` option, or full package name)',
+    'Specific package names (requires `scope` option, or full package name) e.g. `@lg-charts/core` or `core` if @lg-charts is the scope',
   )
   .action(linkPackages);
 
