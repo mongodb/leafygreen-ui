@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -19,7 +19,7 @@ import {
   segmentsMock,
 } from '../testutils/testutils.mocks';
 
-import { InputSegment } from '.';
+import { InputSegment, InputSegmentChangeEventHandler } from '.';
 
 interface InputSegmentStoryProps {
   size: Size;
@@ -124,14 +124,23 @@ export const LiveExample: StoryFn<typeof InputSegment> = (
   props,
   context: any,
 ) => {
+  const [segments, setSegments] = useState(segmentsMock);
+
+  const handleChange: InputSegmentChangeEventHandler<
+    SegmentObjMock,
+    string
+  > = ({ segment, value }) => {
+    setSegments(prev => ({ ...prev, [segment]: value }));
+  };
+
   return (
     <InputBoxProvider
       charsPerSegment={charsPerSegmentMock}
       segmentEnum={SegmentObjMock}
-      onChange={() => {}}
+      onChange={handleChange}
       onBlur={() => {}}
       segmentRefs={segmentRefsMock}
-      segments={segmentsMock}
+      segments={segments}
       disabled={false}
       size={context?.args?.size || Size.Default}
     >
@@ -142,7 +151,5 @@ export const LiveExample: StoryFn<typeof InputSegment> = (
 
 export const Generated = () => {};
 
-// TODO: save this and then update DatePicker. Ask team about tests for date picker.
 // TODO: add min/max tests
 // TODO: documentation
-// TODO: PR comments

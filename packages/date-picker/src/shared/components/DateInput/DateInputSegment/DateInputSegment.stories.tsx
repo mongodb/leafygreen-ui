@@ -1,25 +1,50 @@
-// @ts-nocheck
-// TODO: fix this
-
 import React, { useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import {
+  InputBoxProvider,
+  InputSegmentChangeEventHandler,
+} from '@leafygreen-ui/input-box';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
+import { charsPerSegment } from '../../../constants';
 import {
   SharedDatePickerContextProps,
   SharedDatePickerProvider,
 } from '../../../context';
-import { DateSegmentValue } from '../../../types';
+import { useSegmentRefs } from '../../../hooks';
+import { DateSegment } from '../../../types';
+import { DateInputBoxProvider } from '../DateInputBox/DateInputBoxContext';
 
 import { DateInputSegment } from './DateInputSegment';
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
     <SharedDatePickerProvider {...ctx?.args}>
-      <Story />
+      <DateInputBoxProvider>
+        <InputBoxProvider
+          charsPerSegment={charsPerSegment}
+          segmentEnum={DateSegment}
+          onChange={() => {}}
+          onBlur={() => {}}
+          segmentRefs={useSegmentRefs()}
+          segments={ctx?.args.segments}
+          size={Size.Default}
+          disabled={false}
+        >
+          <Story
+            placeholder={
+              ctx?.args.segment === 'day'
+                ? 'DD'
+                : ctx?.args.segment === 'month'
+                ? 'MM'
+                : 'YYYY'
+            }
+          />
+        </InputBoxProvider>
+      </DateInputBoxProvider>
     </SharedDatePickerProvider>
   </LeafyGreenProvider>
 );
@@ -66,17 +91,35 @@ const meta: StoryMetaType<
 export default meta;
 
 const Template: StoryFn<typeof DateInputSegment> = props => {
-  const [value, setValue] = useState<DateSegmentValue>('');
+  const [segments, setSegments] = useState({
+    day: '',
+    month: '',
+    year: '',
+  });
+
+  const handleChange: InputSegmentChangeEventHandler<DateSegment, string> = ({
+    segment,
+    value,
+  }) => {
+    setSegments(prev => ({ ...prev, [segment]: value }));
+  };
 
   return (
     <LeafyGreenProvider>
-      <DateInputSegment
-        {...props}
-        value={value}
-        onChange={({ value }) => {
-          setValue(value);
-        }}
-      />
+      <DateInputBoxProvider>
+        <InputBoxProvider
+          charsPerSegment={charsPerSegment}
+          segmentEnum={DateSegment}
+          onChange={handleChange}
+          onBlur={() => {}}
+          segmentRefs={useSegmentRefs()}
+          segments={segments}
+          size={Size.Default}
+          disabled={false}
+        >
+          <DateInputSegment {...props} />
+        </InputBoxProvider>
+      </DateInputBoxProvider>
     </LeafyGreenProvider>
   );
 };
