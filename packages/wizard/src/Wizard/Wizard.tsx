@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 
 import {
   CompoundComponent,
-  findChild,
   findChildren,
 } from '@leafygreen-ui/compound-component';
 import { useControlled } from '@leafygreen-ui/hooks';
@@ -12,23 +11,13 @@ import { WizardProvider } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
 
-import { wizardContainerStyles } from './Wizard.styles';
 import { WizardProps } from './Wizard.types';
 
 export const Wizard = CompoundComponent(
-  ({
-    activeStep: activeStepProp,
-    onStepChange,
-    children,
-    ...rest
-  }: WizardProps) => {
+  ({ activeStep: activeStepProp, onStepChange, children }: WizardProps) => {
     const stepChildren = findChildren(
       children,
       WizardSubComponentProperties.Step,
-    );
-    const footerChild = findChild(
-      children,
-      WizardSubComponentProperties.Footer,
     );
 
     // Controlled/Uncontrolled activeStep value
@@ -58,15 +47,9 @@ export const Wizard = CompoundComponent(
       [setActiveStep, stepChildren.length],
     );
 
-    // Get the current step to render
-    const currentStep = stepChildren[activeStep] || null;
-
     return (
       <WizardProvider activeStep={activeStep} updateStep={updateStep}>
-        <div className={wizardContainerStyles} {...rest}>
-          {currentStep}
-          {footerChild}
-        </div>
+        {stepChildren.map((child, i) => (i === activeStep ? child : null))}
       </WizardProvider>
     );
   },
