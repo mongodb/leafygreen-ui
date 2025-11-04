@@ -2,7 +2,7 @@
 
 An internal component intended to be used by any date or time component, such as `DatePicker`, `TimeInput`, etc.
 
-This package provides three main components that work together to create segmented input experiences:
+This package provides two main components that work together to create segmented input experiences:
 
 ## Components
 
@@ -17,25 +17,24 @@ A generic controlled input box component that renders an input with multiple seg
 - **Keyboard navigation**: Handles left/right arrow key navigation between segments
 - **Segment management**: Renders segments and separators based on `formatParts` (from `Intl.DateTimeFormat`)
 
-The component handles high-level interactions like moving between segments, while delegating segment-specific logic to the `InputSegment` component.
+The component handles high-level interactions like moving between segments, while delegating segment-specific logic to the `InputSegment` component. Internally, it uses `InputBoxContext` to share state and handlers across all segments.
 
-### InputBoxContext
+**Props:**
 
-A React context provider that shares common state and handlers across all input segments.
-
-**Provides:**
-
-- `charsPerSegment`: Maximum character length for each segment
-- `segments`: Current values for all segments
-- `segmentRefs`: References to each segment's input element
-- `segmentEnum`: Enumeration mapping segment names to their values
-- `onChange`: Handler for segment value changes
-- `onBlur`: Handler for segment blur events
+- `segments`: Record of current segment values (e.g., `{ day: '01', month: '02', year: '2025' }`)
+- `setSegment`: Function to update a segment value `(segment, value) => void`
+- `segmentEnum`: Enumerable object mapping segment names to values (e.g., `{ Day: 'day', Month: 'month', Year: 'year' }`)
+- `segmentComponent`: React component to render each segment (must accept `InputSegmentComponentProps`)
+- `formatParts`: Array of `Intl.DateTimeFormatPart` defining segment order and separators
+- `charsPerSegment`: Record of maximum characters per segment (e.g., `{ day: 2, month: 2, year: 4 }`)
+- `segmentRefs`: Record mapping segment names to their input refs
+- `segmentRules`: Record of validation rules per segment with `maxChars` and `minExplicitValue`
+- `minValues`: Record of minimum values per segment (e.g., `{ day: 1, month: 1, year: 1970 }`)
+- `disabled`: Whether the input is disabled
+- `size`: Size of the input (`Size.Default`, `Size.Small`, or `Size.XSmall`)
+- `onSegmentChange`: Optional callback fired when any segment changes
 - `labelledBy`: ID of the labelling element for accessibility
-- `size`: Size of the input components
-- `disabled`: Disabled state of the input
-
-This context allows `InputSegment` components to access shared configuration and state without prop drilling, while maintaining type safety through generics.
+- Standard div props are also supported (className, onKeyDown, etc.)
 
 ### InputSegment
 
@@ -57,10 +56,9 @@ A controlled input segment component that renders a single input field within an
 - `step`: Increment/decrement step for arrow keys (default: 1)
 - `shouldRollover`: Whether values should wrap around at boundaries
 - `shouldSkipValidation`: Skips validation for segments that allow extended ranges
+- native input props are passed through to the input element
 
 ## Usage
-
-Refer to `DateInputBox` in the `@leafygreen-ui/date-picker` package for a complete implementation example.
 
 **Basic pattern:**
 
@@ -93,9 +91,9 @@ const MySegment = ({ segment, ...props }) => (
 />;
 ```
 
-## Installation
+Refer to `DateInputBox` in the `@leafygreen-ui/date-picker` package for a implementation example.
 
-This is an internal package and should only be used by other LeafyGreen UI components.
+## Installation
 
 ```bash
 pnpm add @leafygreen-ui/input-box
