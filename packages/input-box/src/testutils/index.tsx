@@ -7,10 +7,7 @@ import { InputBox, InputBoxProps } from '../InputBox';
 import { InputBoxProvider } from '../InputBoxContext';
 import { InputBoxProviderProps } from '../InputBoxContext/InputBoxContext';
 import { InputSegment } from '../InputSegment';
-import {
-  InputSegmentChangeEventHandler,
-  InputSegmentProps,
-} from '../InputSegment/InputSegment.types';
+import { InputSegmentProps } from '../InputSegment/InputSegment.types';
 
 import {
   charsPerSegmentMock,
@@ -35,6 +32,11 @@ export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
   segmentRules: segmentRulesMock,
 };
 
+/**
+ * This component is used to render the InputSegment component for testing purposes.
+ * @param segment - The segment to render
+ * @returns
+ */
 export const InputSegmentWrapper = ({
   segment,
 }: {
@@ -57,18 +59,18 @@ export const InputSegmentWrapper = ({
 /**
  * This component is used to render the InputBox component for testing purposes.
  * Includes segment state management and a default renderSegment function.
+ * Props can override the internal state management.
  */
 export const InputBoxWithState = ({
-  onSegmentChange,
-  disabled = false,
   segments: segmentsProp = {
     day: '',
     month: '',
     year: '',
   },
-}: {
-  onSegmentChange?: InputSegmentChangeEventHandler<SegmentObjMock, string>;
-  disabled?: boolean;
+  setSegment: setSegmentProp,
+  disabled = false,
+  ...props
+}: Partial<InputBoxProps<SegmentObjMock>> & {
   segments?: Record<SegmentObjMock, string>;
 }) => {
   const dayRef = React.useRef<HTMLInputElement>(null);
@@ -83,48 +85,31 @@ export const InputBoxWithState = ({
 
   const [segments, setSegments] = React.useState(segmentsProp);
 
-  const setSegment = (segment: SegmentObjMock, value: string) => {
+  const defaultSetSegment = (segment: SegmentObjMock, value: string) => {
     setSegments(prev => ({ ...prev, [segment]: value }));
   };
 
+  // If setSegment is provided, use controlled mode with the provided segments
+  // Otherwise, use internal state management
+  const effectiveSegments = setSegmentProp ? segmentsProp : segments;
+  const effectiveSetSegment = setSegmentProp ?? defaultSetSegment;
+
   return (
     <InputBox
-      disabled={disabled}
       segmentEnum={SegmentObjMock}
       segmentRefs={segmentRefs}
-      segments={segments}
-      setSegment={setSegment}
+      segments={effectiveSegments}
+      setSegment={effectiveSetSegment}
       charsPerSegment={charsPerSegmentMock}
       formatParts={defaultFormatPartsMock}
       segmentRules={segmentRulesMock}
-      onSegmentChange={onSegmentChange}
       minValues={defaultMinMock}
       segmentComponent={InputSegmentWrapper}
       size={Size.Default}
+      disabled={disabled}
+      {...props}
     />
   );
-};
-
-interface RenderInputBoxWithStateReturnType {
-  dayInput: HTMLInputElement;
-  monthInput: HTMLInputElement;
-  yearInput: HTMLInputElement;
-}
-
-export const renderInputBoxWithState = ({
-  onSegmentChange,
-}: {
-  onSegmentChange?: InputSegmentChangeEventHandler<SegmentObjMock, string>;
-}): RenderResult & RenderInputBoxWithStateReturnType => {
-  const utils = render(<InputBoxWithState onSegmentChange={onSegmentChange} />);
-
-  const dayInput = utils.getByTestId('input-segment-day') as HTMLInputElement;
-  const monthInput = utils.getByTestId(
-    'input-segment-month',
-  ) as HTMLInputElement;
-  const yearInput = utils.getByTestId('input-segment-year') as HTMLInputElement;
-
-  return { ...utils, dayInput, monthInput, yearInput };
 };
 
 interface RenderInputBoxReturnType {
@@ -137,37 +122,15 @@ interface RenderInputBoxReturnType {
   getYearInput: () => HTMLInputElement;
 }
 
+/**
+ * Renders InputBox with internal state management for testing purposes.
+ * Props can be passed to override the default state behavior.
+ */
 export const renderInputBox = ({
   ...props
-}: Partial<InputBoxProps<SegmentObjMock>>): RenderResult &
+}: Partial<InputBoxProps<SegmentObjMock>> = {}): RenderResult &
   RenderInputBoxReturnType => {
-  const mergedProps = {
-    ...defaultProps,
-    ...props,
-  } as InputBoxProps<SegmentObjMock>;
-
-  const finalMergedProps = {
-    ...mergedProps,
-    segmentComponent: mergedProps.segmentComponent ?? InputSegmentWrapper,
-  } as InputBoxProps<SegmentObjMock>;
-
-  const result = render(<InputBox {...finalMergedProps} />);
-
-  const rerenderInputBox = ({
-    ...props
-  }: Partial<InputBoxProps<SegmentObjMock>>) => {
-    const mergedProps = {
-      ...defaultProps,
-      ...props,
-    } as InputBoxProps<SegmentObjMock>;
-
-    const finalMergedProps = {
-      ...mergedProps,
-      segmentComponent: mergedProps.segmentComponent ?? InputSegmentWrapper,
-    } as InputBoxProps<SegmentObjMock>;
-
-    result.rerender(<InputBox {...finalMergedProps} />);
-  };
+  const result = render(<InputBoxWithState {...props} />);
 
   const getDayInput = () =>
     result.getByTestId('input-segment-day') as HTMLInputElement;
@@ -175,6 +138,12 @@ export const renderInputBox = ({
     result.getByTestId('input-segment-month') as HTMLInputElement;
   const getYearInput = () =>
     result.getByTestId('input-segment-year') as HTMLInputElement;
+
+  const rerenderInputBox = (
+    newProps: Partial<InputBoxProps<SegmentObjMock>>,
+  ) => {
+    result.rerender(<InputBoxWithState {...props} {...newProps} />);
+  };
 
   return {
     ...result,
@@ -235,6 +204,9 @@ const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
   ['data-testid']: 'lg-input-segment',
 };
 
+/**
+ * Renders the InputSegment component for testing purposes.
+ */
 export const renderSegment = ({
   props = {},
   providerProps = {},

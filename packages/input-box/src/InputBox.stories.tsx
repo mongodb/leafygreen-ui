@@ -8,7 +8,8 @@ import { StoryFn } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
-import { InputBox } from './InputBox';
+import { SegmentObjMock } from './testutils/testutils.mocks';
+import { InputBox, InputBoxProps } from './InputBox';
 import { InputBoxWithState } from './testutils';
 
 const meta: StoryMetaType<typeof InputBox> = {
@@ -47,5 +48,7 @@ const meta: StoryMetaType<typeof InputBox> = {
 export default meta;
 
 export const LiveExample: StoryFn<typeof InputBox> = props => {
-  return <InputBoxWithState {...props} />;
+  return (
+    <InputBoxWithState {...(props as Partial<InputBoxProps<SegmentObjMock>>)} />
+  );
 };

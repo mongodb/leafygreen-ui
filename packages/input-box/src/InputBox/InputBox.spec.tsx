@@ -5,11 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
-import {
-  InputSegmentWrapper,
-  renderInputBox,
-  renderInputBoxWithState,
-} from '../testutils';
+import { InputSegmentWrapper, renderInputBox } from '../testutils';
 import {
   charsPerSegmentMock,
   defaultMinMock,
@@ -42,7 +38,9 @@ describe('packages/input-box', () => {
     });
 
     test('renders filled segments when a value is passed', () => {
-      const { dayInput, monthInput, yearInput } = renderInputBox({});
+      const { dayInput, monthInput, yearInput } = renderInputBox({
+        segments: { day: '02', month: '02', year: '2025' },
+      });
 
       expect(dayInput.value).toBe('02');
       expect(monthInput.value).toBe('02');
@@ -54,13 +52,20 @@ describe('packages/input-box', () => {
 
   describe('rerendering', () => {
     test('with new value updates the segments', () => {
+      const setSegment = jest.fn();
       const { rerenderInputBox, getDayInput, getMonthInput, getYearInput } =
-        renderInputBox({});
+        renderInputBox({
+          segments: { day: '02', month: '02', year: '2025' },
+          setSegment,
+        });
       expect(getDayInput().value).toBe('02');
       expect(getMonthInput().value).toBe('02');
       expect(getYearInput().value).toBe('2025');
 
-      rerenderInputBox({ segments: { day: '26', month: '09', year: '1993' } });
+      rerenderInputBox({
+        segments: { day: '26', month: '09', year: '1993' },
+        setSegment,
+      });
       expect(getDayInput().value).toBe('26');
       expect(getMonthInput().value).toBe('09');
       expect(getYearInput().value).toBe('1993');
@@ -122,7 +127,7 @@ describe('packages/input-box', () => {
 
   describe('auto-focus', () => {
     test('focuses the next segment when an explicit value is entered', () => {
-      const { dayInput, monthInput } = renderInputBoxWithState({});
+      const { dayInput, monthInput } = renderInputBox({});
 
       userEvent.type(monthInput, '02');
       expect(dayInput).toHaveFocus();
@@ -130,21 +135,21 @@ describe('packages/input-box', () => {
     });
 
     test('focus remains in the current segment when an ambiguous value is entered', () => {
-      const { dayInput } = renderInputBoxWithState({});
+      const { dayInput } = renderInputBox({});
 
       userEvent.type(dayInput, '2');
       expect(dayInput).toHaveFocus();
     });
 
     test('focuses the previous segment when a backspace is pressed and the current segment is empty', () => {
-      const { dayInput, monthInput } = renderInputBoxWithState({});
+      const { dayInput, monthInput } = renderInputBox({});
 
       userEvent.type(dayInput, '{backspace}');
       expect(monthInput).toHaveFocus();
     });
 
     test('focus remains in the current segment when a backspace is pressed and the current segment is not empty', () => {
-      const { monthInput } = renderInputBoxWithState({});
+      const { monthInput } = renderInputBox({});
 
       userEvent.type(monthInput, '2');
       userEvent.type(monthInput, '{backspace}');
@@ -154,7 +159,7 @@ describe('packages/input-box', () => {
 
   describe('Mouse interaction', () => {
     test('click on segment focuses it', () => {
-      const { dayInput } = renderInputBoxWithState({});
+      const { dayInput } = renderInputBox({});
       userEvent.click(dayInput);
       expect(dayInput).toHaveFocus();
     });
@@ -162,7 +167,7 @@ describe('packages/input-box', () => {
 
   describe('Keyboard interaction', () => {
     test('Tab moves focus to next segment', () => {
-      const { dayInput, monthInput, yearInput } = renderInputBoxWithState({});
+      const { dayInput, monthInput, yearInput } = renderInputBox({});
       userEvent.click(monthInput);
       userEvent.tab();
       expect(dayInput).toHaveFocus();
@@ -171,7 +176,7 @@ describe('packages/input-box', () => {
     });
 
     test('Right arrow key moves focus to next segment', () => {
-      const { dayInput, monthInput, yearInput } = renderInputBoxWithState({});
+      const { dayInput, monthInput, yearInput } = renderInputBox({});
       userEvent.click(monthInput);
       userEvent.type(monthInput, '{arrowright}');
       expect(dayInput).toHaveFocus();
@@ -180,7 +185,7 @@ describe('packages/input-box', () => {
     });
 
     test('Left arrow key moves focus to previous segment', () => {
-      const { dayInput, monthInput, yearInput } = renderInputBoxWithState({});
+      const { dayInput, monthInput, yearInput } = renderInputBox({});
       userEvent.click(yearInput);
       userEvent.type(yearInput, '{arrowleft}');
       expect(dayInput).toHaveFocus();
@@ -192,25 +197,25 @@ describe('packages/input-box', () => {
   describe('typing', () => {
     describe('explicit value', () => {
       test('updates the rendered segment value', () => {
-        const { dayInput } = renderInputBoxWithState({});
+        const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '26');
         expect(dayInput.value).toBe('26');
       });
 
       test('segment value is immediately formatted', () => {
-        const { dayInput } = renderInputBoxWithState({});
+        const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '5');
         expect(dayInput.value).toBe('05');
       });
 
       test('allows leading zeros', () => {
-        const { dayInput } = renderInputBoxWithState({});
+        const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '02');
         expect(dayInput.value).toBe('02');
       });
 
       test('allows 00 as minimum value', () => {
-        const { dayInput } = renderInputBoxWithState({});
+        const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '00');
         expect(dayInput.value).toBe('00');
       });
@@ -218,26 +223,26 @@ describe('packages/input-box', () => {
 
     describe('ambiguous value', () => {
       test('segment value is not immediately formatted', () => {
-        const { dayInput } = renderInputBoxWithState({});
+        const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '2');
         expect(dayInput.value).toBe('2');
       });
 
       test('value is formatted on segment blur', () => {
-        const { dayInput } = renderInputBoxWithState({});
+        const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '2');
         userEvent.tab();
         expect(dayInput.value).toBe('02');
       });
 
       test('allows leading zeros', () => {
-        const { dayInput } = renderInputBoxWithState({});
+        const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '0');
         expect(dayInput.value).toBe('0');
       });
 
       test('allows backspace to delete the value', () => {
-        const { dayInput } = renderInputBoxWithState({});
+        const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '2');
         userEvent.type(dayInput, '{backspace}');
         expect(dayInput.value).toBe('');
@@ -246,14 +251,14 @@ describe('packages/input-box', () => {
 
     describe('onBlur', () => {
       test('returns no value with leading zero on blur', () => {
-        const { monthInput } = renderInputBoxWithState({});
+        const { monthInput } = renderInputBox({});
         userEvent.type(monthInput, '0');
         userEvent.tab();
         expect(monthInput.value).toBe('');
       });
 
       test('returns value with leading zero on blur', () => {
-        const { dayInput } = renderInputBoxWithState({});
+        const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '0');
         userEvent.tab();
         expect(dayInput.value).toBe('00');
@@ -261,13 +266,13 @@ describe('packages/input-box', () => {
     });
 
     test('does not allow non-number characters', () => {
-      const { dayInput } = renderInputBoxWithState({});
+      const { dayInput } = renderInputBox({});
       userEvent.type(dayInput, 'aB$/');
       expect(dayInput.value).toBe('');
     });
 
     test('backspace resets the input', () => {
-      const { dayInput, yearInput } = renderInputBoxWithState({});
+      const { dayInput, yearInput } = renderInputBox({});
       userEvent.type(dayInput, '21');
       userEvent.type(dayInput, '{backspace}');
       expect(dayInput.value).toBe('');

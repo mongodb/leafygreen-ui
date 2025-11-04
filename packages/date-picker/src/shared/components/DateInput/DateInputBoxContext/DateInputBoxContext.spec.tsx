@@ -3,8 +3,8 @@ import React from 'react';
 import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
 
 import {
-  useDateInputBoxContext,
   DateInputBoxProvider,
+  useDateInputBoxContext,
 } from './DateInputBoxContext';
 
 describe('DateInputBoxContext', () => {
