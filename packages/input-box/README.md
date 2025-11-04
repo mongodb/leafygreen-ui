@@ -54,7 +54,7 @@ A controlled input segment component that renders a single input field within an
 - `segment`: The segment identifier (e.g., 'day', 'month', 'year')
 - `min`/`max`: Valid range for the segment value
 - `step`: Increment/decrement step for arrow keys (default: 1)
-- `shouldRollover`: Whether values should wrap around at boundaries
+- `shouldWrap`: Whether values should wrap around at min/max boundaries
 - `shouldSkipValidation`: Skips validation for segments that allow extended ranges
 - native input props are passed through to the input element
 

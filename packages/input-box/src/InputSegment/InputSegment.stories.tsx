@@ -42,7 +42,7 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
     max: defaultMaxMock[SegmentObjMock.Day],
     size: Size.Default,
     placeholder: defaultPlaceholderMock[SegmentObjMock.Day],
-    shouldRollover: true,
+    shouldWrap: true,
     step: 1,
     darkMode: false,
   },
@@ -67,7 +67,7 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
         'segmentEnum',
         'min',
         'max',
-        'shouldRollover',
+        'shouldWrap',
         'shouldSkipValidation',
         'step',
         'placeholder',
@@ -150,6 +150,3 @@ export const LiveExample: StoryFn<typeof InputSegment> = (
 };
 
 export const Generated = () => {};
-
-// TODO: add min/max tests
-// TODO: documentation

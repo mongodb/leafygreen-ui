@@ -66,11 +66,11 @@ export interface InputSegmentProps<Segment extends string>
   step?: number;
 
   /**
-   * Whether the segment should rollover
+   * Whether the segment should wrap at min/max boundaries
    *
    * @default true
    */
-  shouldRollover?: boolean;
+  shouldWrap?: boolean;
 
   /**
    * Whether the segment should skip validation. This is useful for segments that allow values outside of the default range.

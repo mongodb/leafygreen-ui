@@ -48,7 +48,7 @@ export const InputSegmentWrapper = ({
       data-testid={`input-segment-${segment}`}
       className={segmentWidthStyles[segment]}
       shouldSkipValidation={segment === SegmentObjMock.Year}
-      shouldRollover={segment !== SegmentObjMock.Year}
+      shouldWrap={segment !== SegmentObjMock.Year}
       placeholder={defaultPlaceholderMock[segment]}
     />
   );
@@ -229,7 +229,7 @@ const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
   segment: 'day',
   min: defaultMinMock['day'],
   max: defaultMaxMock['day'],
-  shouldRollover: true,
+  shouldWrap: true,
   placeholder: defaultPlaceholderMock['day'],
   // @ts-expect-error - data-testid
   ['data-testid']: 'lg-input-segment',

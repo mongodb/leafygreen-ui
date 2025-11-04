@@ -42,8 +42,8 @@ const InputSegmentWithRef = <Segment extends string>(
     onChange: onChangeProp,
     onBlur: onBlurProp,
     step = 1,
-    shouldRollover = true, // TODO: shouldRollover
-    shouldSkipValidation = false, // TODO: shouldSkipValidation
+    shouldWrap = true,
+    shouldSkipValidation = false,
     ...rest
   }: InputSegmentProps<Segment>,
   fwdRef: ForwardedRef<HTMLInputElement>,
@@ -132,7 +132,7 @@ const InputSegmentWithRef = <Segment extends string>(
           min,
           max,
           step,
-          shouldNotRollover: !shouldRollover,
+          shouldNotRollover: !shouldWrap,
         });
         const valueString = formatter(newValue);
 

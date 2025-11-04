@@ -45,7 +45,7 @@ export const DateInputSegment = React.forwardRef<
 
   const autoComplete = getAutoComplete(autoCompleteProp, segment);
 
-  const shouldRollover = !([DateSegment.Year] as Array<DateSegment>).includes(
+  const shouldWrap = !([DateSegment.Year] as Array<DateSegment>).includes(
     segment,
   );
 
@@ -64,7 +64,7 @@ export const DateInputSegment = React.forwardRef<
       autoComplete={autoComplete}
       className={cx(segmentWidthStyles[segment])}
       data-testid="lg-date_picker_input-segment"
-      shouldRollover={shouldRollover}
+      shouldWrap={shouldWrap}
       shouldSkipValidation={shouldSkipValidation}
       step={1}
     />

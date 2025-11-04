@@ -285,13 +285,13 @@ describe('packages/input-segment', () => {
             );
           });
 
-          test('does not rollover if `shouldNotRollover` is true', () => {
+          test('does not wrap if `shouldWrap` is false', () => {
             const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
               SegmentObjMock,
               string
             >;
             const { input } = renderSegment({
-              props: { shouldRollover: false },
+              props: { shouldWrap: false },
               providerProps: {
                 onChange: onChangeHandler,
                 segments: {
@@ -395,13 +395,13 @@ describe('packages/input-segment', () => {
             );
           });
 
-          test('does not rollover if `shouldNotRollover` is true', () => {
+          test('does not wrap if `shouldWrap` is false', () => {
             const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
               SegmentObjMock,
               string
             >;
             const { input } = renderSegment({
-              props: { shouldRollover: false },
+              props: { shouldWrap: false },
               providerProps: {
                 onChange: onChangeHandler,
                 segments: {
@@ -547,7 +547,7 @@ describe('packages/input-segment', () => {
         min={1}
         max={31}
         step={1}
-        shouldRollover={true}
+        shouldWrap={true}
         shouldSkipValidation={false}
         placeholder="12"
         className="test"
