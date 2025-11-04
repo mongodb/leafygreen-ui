@@ -1,54 +1,74 @@
-interface BabelAPI extends Record<string, any> {
-  template: {
-    smart: (opts: Record<string, any>) => any;
-  } & Record<string, any>;
+import { types as t } from '@babel/core';
+
+interface TemplateVariables {
+  jsx: any;
+  componentName: string;
+  imports: any;
+  exports: any;
+  interfaces?: any;
+  props?: any;
 }
 
-interface SVGROptions extends Record<string, any> {
-  state: {
-    componentName: string;
-  } & Record<string, any>;
-}
-
-interface ASTParts extends Record<string, any> {
-  jsx: Record<string, any>;
-  componentName: object;
-  imports: string;
-  exports: string;
-  interfaces: string;
-  props: string;
+interface TemplateOptions {
+  tpl: any;
 }
 
 export function svgrTemplate(
-  api: BabelAPI,
-  opts: SVGROptions,
-  { imports, jsx, exports }: ASTParts,
+  variables: TemplateVariables,
+  { tpl }: TemplateOptions,
 ) {
-  const { template, types: t } = api;
-  const { componentName } = opts.state;
-  const typeScriptTpl = template.smart({ plugins: ['jsx', 'typescript'] });
+  const { jsx, componentName, imports, exports } = variables;
+  
+  // Configure tpl to parse TypeScript
+  const typeScriptTpl = tpl.smart({ plugins: ['jsx', 'typescript'] });
 
-  const jsxAttributes = typeScriptTpl.ast`
-    <Glyph
-      className={cx(
-        {
-          [fillStyle]: fill != null,
-        },
-        noFlexShrink,
-        className,
-      )}
-      height={typeof size === 'number' ? size : sizeMap[size]}
-      width={typeof size === 'number' ? size : sizeMap[size]}
-      role={role}
-      {...accessibleProps}
-      {...props}
-    />`;
+  // Modify JSX attributes
+  const customAttributes = [
+    t.jsxAttribute(
+      t.jsxIdentifier('className'),
+      t.jsxExpressionContainer(
+        t.callExpression(t.identifier('cx'), [
+          t.objectExpression([
+            t.objectProperty(
+              t.memberExpression(t.identifier('fillStyle'), t.identifier('fillStyle')),
+              t.binaryExpression('!=', t.identifier('fill'), t.nullLiteral()),
+              true,
+            ),
+          ]),
+          t.identifier('noFlexShrink'),
+          t.identifier('className'),
+        ]),
+      ),
+    ),
+    t.jsxAttribute(
+      t.jsxIdentifier('height'),
+      t.jsxExpressionContainer(
+        t.conditionalExpression(
+          t.binaryExpression('===', t.unaryExpression('typeof', t.identifier('size')), t.stringLiteral('number')),
+          t.identifier('size'),
+          t.memberExpression(t.identifier('sizeMap'), t.identifier('size'), true),
+        ),
+      ),
+    ),
+    t.jsxAttribute(
+      t.jsxIdentifier('width'),
+      t.jsxExpressionContainer(
+        t.conditionalExpression(
+          t.binaryExpression('===', t.unaryExpression('typeof', t.identifier('size')), t.stringLiteral('number')),
+          t.identifier('size'),
+          t.memberExpression(t.identifier('sizeMap'), t.identifier('size'), true),
+        ),
+      ),
+    ),
+    t.jsxAttribute(t.jsxIdentifier('role'), t.jsxExpressionContainer(t.identifier('role'))),
+    t.jsxSpreadAttribute(t.identifier('accessibleProps')),
+    t.jsxSpreadAttribute(t.identifier('props')),
+  ];
 
   // Augment the `<svg attributes />` so we can customize it with the values above.
-  jsx.openingElement.attributes =
-    jsxAttributes.expression.openingElement.attributes.concat(
-      jsx.openingElement.attributes[2],
-    );
+  jsx.openingElement.attributes = customAttributes.concat(
+    jsx.openingElement.attributes[2],
+  );
 
   // Convert self-closing svg to have children
   jsx.openingElement.selfClosing = false;
@@ -80,47 +100,43 @@ export function svgrTemplate(
   // Add the conditional title as a child, followed by the original children
   jsx.children = [conditionalTitleExpression, ...jsx.children];
 
-  return typeScriptTpl(`
-    %%imports%%
-    import { css, cx } from '@leafygreen-ui/emotion';
-    import { useIdAllocator } from '@leafygreen-ui/hooks';
-    import { generateAccessibleProps, sizeMap } from '../glyphCommon';
-    import { LGGlyph } from '../types';
-  
-    export interface ${componentName}Props extends LGGlyph.ComponentProps {}
+  return typeScriptTpl`
+${imports}
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
 
-    const ${componentName} = ({
-      className,
-      size = 16,
-      title,
-      ['aria-label']: ariaLabel,
-      ['aria-labelledby']: ariaLabelledby,
-      fill,
-      role = 'img',
-      ...props
-    }: ${componentName}Props) => {
-      const titleId = useIdAllocator({ prefix: 'icon-title' });
-      const fillStyle = css\`
-        color: \${fill};
-      \`;
+export interface ${componentName}Props extends LGGlyph.ComponentProps {}
 
-      const noFlexShrink = css\`
-        flex-shrink: 0;
-      \`;
+const ${componentName} = ({
+  className,
+  size = 16,
+  title,
+  ['aria-label']: ariaLabel,
+  ['aria-labelledby']: ariaLabelledby,
+  fill,
+  role = 'img',
+  ...props
+}: ${componentName}Props) => {
+  const titleId = useIdAllocator({ prefix: 'icon-title' });
+  const fillStyle = css\`
+    color: \${fill};
+  \`;
 
-      const accessibleProps = generateAccessibleProps(role, '${componentName}', { title, titleId, ['aria-label']: ariaLabel, ['aria-labelledby']: ariaLabelledby })
+  const noFlexShrink = css\`
+    flex-shrink: 0;
+  \`;
 
-      return %%jsx%%;
-    }
+  const accessibleProps = generateAccessibleProps(role, '${componentName}', { title, titleId, ['aria-label']: ariaLabel, ['aria-labelledby']: ariaLabelledby })
 
-    ${componentName}.displayName = '${componentName}';
+  return ${jsx};
+}
 
-    ${componentName}.isGlyph = true;
+${componentName}.displayName = '${componentName}';
 
-    %%exports%%
-  `)({
-    imports: imports,
-    jsx: jsx,
-    exports: exports,
-  });
+${componentName}.isGlyph = true;
+
+${exports}
+`;
 }

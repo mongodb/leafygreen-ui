@@ -40,13 +40,14 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.3",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/lint": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
     "@rollup/plugin-node-resolve": "15.1.0",
-    "@svgr/core": "^5.3.1",
+    "@svgr/core": "^6.5.1",
     "commander": "^11.0.0",
     "fast-xml-parser": "^5.3.0",
     "fs-extra": "11.1.1",

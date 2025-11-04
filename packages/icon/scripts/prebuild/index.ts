@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { formatLG } from '@lg-tools/lint';
-// @ts-ignore - no types in svgr v5.5 // TODO: update to v8 LG-5484
-import { default as svgr } from '@svgr/core';
+import { transform } from '@svgr/core';
 import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
@@ -137,7 +136,7 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
     // @ts-ignore - svgrrc is not typed
     const svgrrc = await require('../../.svgrrc.js');
 
-    const processedSVGR = await svgr(
+    const processedSVGR = await transform(
       svgContent,
       {
         ...svgrrc,
