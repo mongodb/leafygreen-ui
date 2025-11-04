@@ -1,29 +1,62 @@
 import React, { createContext, useCallback, useContext } from 'react';
 import { ProviderValue, FieldProperties } from './FormTemplateContext.types';
 import { isStringInput } from '../Field/fieldTypeGuards';
+import { isPromise } from '../utils/typeGuards';
+import { ValidatorFunction } from './FormTemplateContext.types';
+import { isEqual } from 'lodash';
 
 const FormTemplateContext = createContext<ProviderValue>({
   fields: {
     invalidFields: [],
     fieldProperties: new Map(),
   },
-  addField: () => new Map(),
-  removeField: () => new Map(),
-  setFieldValue: () => new Map(),
-  clearFormValues: () => new Map(),
+  addField: () => {},
+  removeField: () => {},
+  setFieldValue: () => {},
+  clearFormValues: () => {},
+  upsertField: () => {},
+  updateField: () => {},
 });
 
-export const useFormTemplateContext = () => {
+export function useFormTemplateContext() {
   const context = useContext(FormTemplateContext);
 
   if (!context) {
     throw new Error(
-      'useFormTemplateContext must be used within a FormTemplateProvider',
+      'useFormTemplateContext must be used within a FormTemplateProvider.',
     );
   }
 
   return context;
-};
+}
+
+function fieldIsValid<T = any>(
+  value: T,
+  required: boolean = false,
+  validator?: ValidatorFunction,
+): boolean | Promise<boolean> {
+  if (!value && required) {
+    return false;
+  }
+
+  if (value && validator && typeof validator === 'function') {
+    return validator(value);
+  }
+
+  return true;
+}
+
+// Returns an array that omits the string that's passed to the function
+function removeStringFromArray(str: string, arr: Array<string>) {
+  const newArray = [...arr];
+  const index = newArray.indexOf(str);
+
+  if (index > -1) {
+    newArray.splice(index, 1);
+  }
+
+  return newArray;
+}
 
 interface FormTemplateProviderProps {
   children: React.ReactNode;
@@ -37,35 +70,35 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
     invalidFields: [],
   });
 
-  // Returns an array that omits the string that's passed to the function
-  function removeStringFromArray(str: string, arr: Array<string>) {
-    const newArray = [...arr];
-    const index = newArray.indexOf(str);
-
-    if (index > -1) {
-      newArray.splice(index, 1);
-    }
-
-    return newArray;
-  }
-
   const providerValue: ProviderValue = {
     fields,
 
+    // Updates the full field. Does not modify the value of the field if it already exists.
+    upsertField: (name, properties) => {
+      if (fields.fieldProperties.get(name)) {
+        providerValue.updateField(name, properties);
+      } else {
+        // Field does not exist, add it
+        providerValue.addField(name, properties);
+      }
+    },
+
     addField: (name, properties) => {
-      // console.log('addField', name, properties);
+      const { required, value } = properties;
+      const completeFieldProperties = {
+        ...properties,
+        valid: required ? !!value : true,
+      } as FieldProperties;
 
       setFields(current => {
-        const completeFieldProperties = {
-          ...properties, // TODO: Handle default values here
-          valid: properties.valid ?? !properties.required,
-        } as FieldProperties;
-
         current.fieldProperties.set(name, completeFieldProperties);
 
         const newInvalidFields = [...current.invalidFields];
 
-        if (!completeFieldProperties.valid) {
+        if (
+          !completeFieldProperties.valid &&
+          !newInvalidFields.includes(name)
+        ) {
           newInvalidFields.push(name);
         }
 
@@ -77,8 +110,6 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
     },
 
     removeField: name => {
-      // console.log('removeField', name);
-
       setFields(current => {
         const newInvalidFields = removeStringFromArray(
           name,
@@ -94,47 +125,85 @@ export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
       });
     },
 
-    setFieldValue: (name, value) => {
-      // console.log('setFieldValue', name, value);
+    // Sets the value of an existing field and updates its validity.
+    updateField: (name, properties) => {
+      const currentFieldProperties = fields.fieldProperties.get(name);
 
-      setFields(current => {
-        const currentFieldProperties = current.fieldProperties.get(name);
+      if (!currentFieldProperties) {
+        console.error(`Field with name ${name} does not exist`);
+        return;
+      }
 
-        if (!currentFieldProperties) {
-          console.error(`Field with name ${name} does not exist`);
+      const { required, validator } = currentFieldProperties;
+      const newValue =
+        properties.value != null
+          ? properties.value
+          : currentFieldProperties.value;
+      const isValid = fieldIsValid(newValue, required, validator);
 
-          return current;
-        }
+      function getNewFields(current: ProviderValue['fields'], valid: boolean) {
+        const completeFieldProperties = {
+          ...currentFieldProperties,
+          value: newValue,
+          valid: isValid,
+        } as FieldProperties;
 
-        currentFieldProperties.value = value;
-
-        // TODO: Add logic when validation function is supported. Must support return values of boolean | Promise<boolean>
-        const valid = currentFieldProperties.required
-          ? !!currentFieldProperties.value
-          : true;
+        current.fieldProperties.set(name, completeFieldProperties);
 
         let newInvalidFields = [...current.invalidFields];
 
-        if (!valid && !newInvalidFields.includes(name)) {
+        if (
+          !completeFieldProperties.valid &&
+          !newInvalidFields.includes(name)
+        ) {
           newInvalidFields.push(name);
-        } else {
+        } else if (
+          completeFieldProperties.valid &&
+          newInvalidFields.includes(name)
+        ) {
           newInvalidFields = removeStringFromArray(name, newInvalidFields);
         }
-
-        currentFieldProperties.valid = valid;
-
-        current.fieldProperties.set(name, currentFieldProperties);
 
         return {
           fieldProperties: current.fieldProperties,
           invalidFields: newInvalidFields,
         };
-      });
+      }
+
+      if (isPromise(isValid)) {
+        setFields(current => getNewFields(current, false));
+
+        isValid.then((res: boolean) => {
+          setFields(current => getNewFields(current, res));
+        });
+      } else {
+        setFields(current => getNewFields(current, isValid));
+      }
+    },
+
+    setFieldValue: (name, newValue) => {
+      const currentFieldProperties = fields.fieldProperties.get(name);
+
+      if (!currentFieldProperties) {
+        console.error(`Field with name ${name} does not exist`);
+
+        setFields(current => ({
+          fieldProperties: current.fieldProperties,
+          invalidFields: current.invalidFields,
+        }));
+
+        return;
+      }
+
+      console.log(newValue);
+
+      providerValue.updateField(name, {
+        ...currentFieldProperties,
+        value: newValue,
+      } as FieldProperties);
     },
 
     clearFormValues: () => {
-      console.log('clearFormValues');
-
       const newInvalidFields: Array<string> = [];
 
       setFields(current => {

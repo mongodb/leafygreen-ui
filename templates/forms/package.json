@@ -30,6 +30,8 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/text-input": "workspace:^",
+    "@leafygreen-ui/text-area": "workspace:^",
+    "@leafygreen-ui/select": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
     "@leafygreen-ui/modal": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",

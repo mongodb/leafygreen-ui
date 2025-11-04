@@ -7,7 +7,9 @@
 // Field.String
 
 import String from './String';
+import SingleSelect from './SingleSelect';
 
 export const Field = {
   String,
+  SingleSelect,
 };

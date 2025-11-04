@@ -5,6 +5,7 @@ import React from 'react';
 import { Modal } from '@leafygreen-ui/modal';
 import { ModalFormTemplatePassthroughProps } from './ModalFormTemplate.types';
 import { useFormTemplateContext } from '../../FormTemplateContext/FormTemplateContext';
+import { isPromise } from '../../utils/typeGuards';
 import FormFooter from '@leafygreen-ui/form-footer';
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -17,9 +18,6 @@ import {
 } from '../../Field/fieldTypeGuards';
 import StringInputFieldView from './ModalStringInputFieldView';
 
-const isPromise = (value: any): value is Promise<any> =>
-  value instanceof Promise;
-
 const ModalFormTemplateView = React.forwardRef<
   HTMLDialogElement,
   ModalFormTemplatePassthroughProps
@@ -30,7 +28,6 @@ const ModalFormTemplateView = React.forwardRef<
 
   const displayFields: Array<React.ReactNode> = [];
 
-  console.log('fieldProperties: ', fieldProperties);
   fieldProperties.forEach((properties, name) => {
     if (isStringInput(properties)) {
       displayFields.push(
@@ -42,7 +39,6 @@ const ModalFormTemplateView = React.forwardRef<
       // Handle Multi Select
     }
   });
-  console.log('invalidFields', invalidFields);
 
   function closeModal() {
     setOpen(false);
@@ -55,8 +51,7 @@ const ModalFormTemplateView = React.forwardRef<
 
     // TODO: Handle client-side validation
 
-    const onSubmitResult = onSubmit();
-    console.log('Submitting form', onSubmitResult);
+    const onSubmitResult = onSubmit(); // TODO: Pass form values here
 
     if (isPromise(onSubmitResult)) {
       setIsLoading(true);

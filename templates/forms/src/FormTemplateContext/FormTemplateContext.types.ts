@@ -1,3 +1,7 @@
+export type ValidatorFunction<T = any> = (
+  value: T,
+) => boolean | Promise<boolean>;
+
 export type FieldDetails =
   | string
   | { displayText: string; learnMoreURL: string }
@@ -29,7 +33,8 @@ export const stringInputTypes = [
   'textarea',
 ] as const;
 
-export interface StringFieldProperties extends UniversalFieldProperties {
+export interface StringFieldProperties<T = string>
+  extends UniversalFieldProperties {
   // The type of string input field.
   type: (typeof stringInputTypes)[number]; // Default 'text'
 
@@ -37,10 +42,13 @@ export interface StringFieldProperties extends UniversalFieldProperties {
   placeholder?: string; // No default
 
   // The current input value
-  value: string; // No default
+  value: T; // No default
 
   // The default value for the input
-  defaultValue?: string;
+  defaultValue?: T;
+
+  // Custom validation function for the field
+  validator?: ValidatorFunction<T>;
 }
 
 export interface OptionProperties {
@@ -51,6 +59,7 @@ export interface OptionProperties {
   description?: FieldDetails; // No default
 
   // The value for the option.
+  // Must be unique amongst options in the field, but can be repeated within the form.
   name: string; // No default
 
   // Sets this option as the default selected option.
@@ -59,7 +68,8 @@ export interface OptionProperties {
 
 export const singleSelectTypes = ['radio', 'radiobox', 'select'] as const;
 
-export interface SingleSelectFieldProperties extends UniversalFieldProperties {
+export interface SingleSelectFieldProperties<T = string>
+  extends UniversalFieldProperties {
   // The type of single select field.
   type: (typeof singleSelectTypes)[number]; // Default 'radio'
 
@@ -67,12 +77,16 @@ export interface SingleSelectFieldProperties extends UniversalFieldProperties {
   options: Map<string, OptionProperties>; // No default
 
   // The current selected value
-  value: string; // No default
+  value: T; // No default
+
+  // Custom validation function for the field
+  validator?: ValidatorFunction<T>;
 }
 
 export const multiSelectTypes = ['checkbox', 'select'] as const;
 
-export interface MultiSelectFieldProperties extends UniversalFieldProperties {
+export interface MultiSelectFieldProperties<T = string>
+  extends UniversalFieldProperties {
   // The type of multi select field.
   type: (typeof multiSelectTypes)[number]; // Default 'checkbox'
 
@@ -80,7 +94,10 @@ export interface MultiSelectFieldProperties extends UniversalFieldProperties {
   options: Map<string, OptionProperties>; // No default
 
   // The current selected value
-  value: string; // No default
+  value: T; // No default
+
+  // Custom validation function for the field
+  validator?: ValidatorFunction<T>;
 }
 
 export type FieldProperties =
@@ -88,7 +105,7 @@ export type FieldProperties =
   | SingleSelectFieldProperties
   | MultiSelectFieldProperties;
 
-export type InternalFieldProperties = 'value' | 'valid';
+export type InternalFieldProperties = 'value' | 'valid' | 'options';
 
 export type FieldMap = Map<string, FieldProperties>; // String is the field name
 
@@ -101,7 +118,15 @@ export interface ProviderValue {
     name: string,
     value: Omit<FieldProperties, 'valid'> & { valid?: boolean },
   ) => void;
+  upsertField: (
+    name: string,
+    value: Omit<FieldProperties, 'valid'> & { valid?: boolean },
+  ) => void;
   removeField: (name: string) => void;
+  updateField: (
+    name: string,
+    properties: Omit<FieldProperties, 'valid'> & { valid?: boolean },
+  ) => void;
   setFieldValue: (name: string, value: any) => void;
   clearFormValues: () => void;
 }

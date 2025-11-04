@@ -23,6 +23,12 @@
       "path": "../../packages/text-input"
     },
     {
+      "path": "../../packages/text-area"
+    },
+    {
+      "path": "../../packages/select"
+    },
+    {
       "path": "../../packages/button"
     },
     {
