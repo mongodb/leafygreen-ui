@@ -5,7 +5,11 @@ import userEvent from '@testing-library/user-event';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
-import { InputSegmentWrapper, renderInputBox } from '../testutils';
+import {
+  InputBoxWithState,
+  InputSegmentWrapper,
+  renderInputBox,
+} from '../testutils';
 import {
   charsPerSegmentMock,
   defaultMinMock,
@@ -16,6 +20,7 @@ import {
 } from '../testutils/testutils.mocks';
 
 import { InputBox } from './InputBox';
+import { render } from '@testing-library/react';
 
 describe('packages/input-box', () => {
   describe('Rendering', () => {
@@ -280,6 +285,111 @@ describe('packages/input-box', () => {
       userEvent.type(yearInput, '1993');
       userEvent.type(yearInput, '{backspace}');
       expect(yearInput.value).toBe('');
+    });
+  });
+
+  describe('Arrow keys with auto-advance', () => {
+    test('arrow up does not auto-advance to next segment', () => {
+      const { monthInput, dayInput } = renderInputBox({
+        segments: { day: '', month: '05', year: '' },
+      });
+
+      userEvent.click(monthInput);
+      userEvent.type(monthInput, '{arrowup}');
+      expect(monthInput).toHaveFocus();
+      expect(dayInput).not.toHaveFocus();
+    });
+
+    test('arrow down does not auto-advance to next segment', () => {
+      const { monthInput, dayInput } = renderInputBox({
+        segments: { day: '', month: '05', year: '' },
+      });
+
+      userEvent.click(monthInput);
+      userEvent.type(monthInput, '{arrowdown}');
+      expect(monthInput).toHaveFocus();
+      expect(dayInput).not.toHaveFocus();
+    });
+  });
+
+  describe('Edge cases for segment navigation', () => {
+    test('does not auto-advance from the last segment', () => {
+      const { yearInput } = renderInputBox({
+        segments: { day: '', month: '', year: '' },
+      });
+
+      userEvent.click(yearInput);
+      userEvent.type(yearInput, '2025');
+      expect(yearInput).toHaveFocus();
+    });
+
+    test('arrow left from first segment keeps focus on first segment', () => {
+      const { monthInput } = renderInputBox({});
+      userEvent.click(monthInput);
+      userEvent.type(monthInput, '{arrowleft}');
+      expect(monthInput).toHaveFocus();
+    });
+
+    test('arrow right from last segment keeps focus on last segment', () => {
+      const { yearInput } = renderInputBox({});
+      userEvent.click(yearInput);
+      userEvent.type(yearInput, '{arrowright}');
+      expect(yearInput).toHaveFocus();
+    });
+
+    test('backspace from first empty segment keeps focus on first segment', () => {
+      const { monthInput } = renderInputBox({
+        segments: { day: '', month: '', year: '' },
+      });
+
+      userEvent.click(monthInput);
+      userEvent.type(monthInput, '{backspace}');
+      expect(monthInput).toHaveFocus();
+    });
+  });
+
+  describe('Format parts and literal separators', () => {
+    test('renders literal separators between segments', () => {
+      const { container } = renderInputBox({
+        formatParts: [
+          { type: 'month', value: '02' },
+          { type: 'literal', value: '/' },
+          { type: 'day', value: '02' },
+          { type: 'literal', value: '/' },
+          { type: 'year', value: '2025' },
+        ],
+      });
+
+      const separators = container.querySelectorAll('span');
+      expect(separators.length).toBeGreaterThanOrEqual(2);
+      expect(container.textContent).toContain('/');
+    });
+
+    test('does not render non-segment parts as inputs', () => {
+      const { container } = render(
+        <InputBoxWithState
+          formatParts={[
+            { type: 'month', value: '02' },
+            { type: 'literal', value: '/' },
+            { type: 'day', value: '02' },
+          ]}
+        />,
+      );
+
+      const inputs = container.querySelectorAll('input');
+      expect(inputs).toHaveLength(2); // Only month and day, not the literal
+    });
+  });
+
+  describe('Disabled state', () => {
+    test('all segments are disabled when disabled prop is true', () => {
+      const { dayInput, monthInput, yearInput } = renderInputBox({
+        disabled: true,
+      });
+
+      expect(dayInput).toBeDisabled();
+      expect(monthInput).toBeDisabled();
+      expect(yearInput).toBeDisabled();
     });
   });
 
