@@ -29,12 +29,12 @@ describe('InputBoxContext', () => {
     if (isReact17()) {
       const { result } = renderHook(() => useInputBoxContext<SegmentObjMock>());
       expect(result.error.message).toEqual(
-        'useInputBoxContext must be used within an InputBoxProvider',
+        'useInputBoxContext must be used within a InputBoxProvider',
       );
     } else {
       expect(() =>
         renderHook(() => useInputBoxContext<SegmentObjMock>()),
-      ).toThrow('useInputBoxContext must be used within an InputBoxProvider');
+      ).toThrow('useInputBoxContext must be used within a InputBoxProvider');
     }
   });
 

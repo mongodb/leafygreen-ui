@@ -16,7 +16,7 @@ import {
 } from '../../../context';
 import { useSegmentRefs } from '../../../hooks';
 import { DateSegment } from '../../../types';
-import { DateInputBoxProvider } from '../DateInputBox/DateInputBoxContext';
+import { DateInputBoxProvider } from '../DateInputBoxContext';
 
 import { DateInputSegment } from './DateInputSegment';
 

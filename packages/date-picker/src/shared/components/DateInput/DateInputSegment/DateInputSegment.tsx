@@ -11,7 +11,7 @@ import {
   getMaxSegmentValue,
   getMinSegmentValue,
 } from '../../../utils';
-import { useDateInputBoxContext } from '../DateInputBox/DateInputBoxContext';
+import { useDateInputBoxContext } from '../DateInputBoxContext';
 
 import { segmentWidthStyles } from './DateInputSegment.styles';
 import { DateInputSegmentProps } from './DateInputSegment.types';

@@ -25,7 +25,7 @@ import {
 import { DateInputSegment } from '../DateInputSegment';
 
 import { DateInputBoxProps } from './DateInputBox.types';
-import { DateInputBoxProvider } from './DateInputBoxContext';
+import { DateInputBoxProvider } from '../DateInputBoxContext';
 
 /**
  * Renders a styled date input with appropriate segment order & separator characters.

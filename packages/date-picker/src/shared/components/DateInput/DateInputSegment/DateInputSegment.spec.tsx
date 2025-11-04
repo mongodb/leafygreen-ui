@@ -17,7 +17,7 @@ import {
 } from '../../../context';
 import { segmentRefsMock } from '../../../testutils';
 import { DateSegment } from '../../../types';
-import { DateInputBoxProvider } from '../DateInputBox/DateInputBoxContext';
+import { DateInputBoxProvider } from '../DateInputBoxContext';
 
 import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';

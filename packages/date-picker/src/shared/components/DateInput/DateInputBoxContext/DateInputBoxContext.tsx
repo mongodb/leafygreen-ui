@@ -1,18 +1,19 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-
-import { DateType } from '@leafygreen-ui/date-utils';
-
-export interface DateInputBoxContextType {
-  value?: DateType;
-}
-
-export interface DateInputBoxProviderProps {
-  value?: DateType;
-}
+import {
+  DateInputBoxContextType,
+  DateInputBoxProviderProps,
+} from './DateInputBoxContext.types';
 
 export const DateInputBoxContext =
   createContext<DateInputBoxContextType | null>(null);
 
+/**
+ * Provider to be used within the DateInputBox component.
+ *
+ * Depends on {@link DateInputBoxContextType}
+ * @param value - Date value in UTC time
+ * @returns
+ */
 export const DateInputBoxProvider = ({
   children,
   value,
@@ -24,6 +25,11 @@ export const DateInputBoxProvider = ({
   );
 };
 
+/**
+ * Hook to access the DateInputBoxContext
+ *
+ * Depends on {@link DateInputBoxContextType}
+ */
 export const useDateInputBoxContext = () => {
   const context = useContext(DateInputBoxContext);
 

@@ -99,7 +99,7 @@ export const useInputBoxContext = <Segment extends string>() => {
 
   if (!context) {
     throw new Error(
-      'useInputBoxContext must be used within an InputBoxProvider',
+      'useInputBoxContext must be used within a InputBoxProvider',
     );
   }
 
