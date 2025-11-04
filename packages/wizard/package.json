@@ -36,11 +36,22 @@
     "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "@lg-tools/test-harnesses": "workspace:^"
+    "@lg-tools/test-harnesses": "workspace:^",
+    "date-fns": "^2.30.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.0",
+    "@leafygreen-ui/badge": "workspace:^",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/card": "workspace:^",
+    "@leafygreen-ui/checkbox": "workspace:^",
+    "@leafygreen-ui/expandable-card": "workspace:^",
+    "@leafygreen-ui/form-footer": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
-    "@faker-js/faker": "^8.0.0"
+    "@leafygreen-ui/loading-indicator": "workspace:^",
+    "@leafygreen-ui/segmented-control": "workspace:^",
+    "@leafygreen-ui/skeleton-loader": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/wizard",
   "repository": {

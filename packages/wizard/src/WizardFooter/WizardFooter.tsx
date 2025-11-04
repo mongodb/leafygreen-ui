@@ -6,6 +6,7 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { WizardSubComponentProperties } from '../constants';
 import { useWizardContext } from '../WizardContext';
+import { useWizardStepContext } from '../WizardStep';
 
 import { WizardFooterProps } from './WizardFooter.types';
 
@@ -18,6 +19,7 @@ export const WizardFooter = CompoundSubComponent(
     ...rest
   }: WizardFooterProps) => {
     const { isWizardContext, activeStep, updateStep } = useWizardContext();
+    const { isAcknowledged } = useWizardStepContext();
 
     const handleBackButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
       updateStep(activeStep - 1);
@@ -53,6 +55,7 @@ export const WizardFooter = CompoundSubComponent(
         cancelButtonProps={cancelButtonProps}
         primaryButtonProps={{
           ...primaryButtonProps,
+          disabled: !isAcknowledged,
           onClick: handlePrimaryButtonClick,
         }}
       />

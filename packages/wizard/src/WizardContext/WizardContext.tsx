@@ -3,6 +3,13 @@ import React, { createContext, PropsWithChildren, useContext } from 'react';
 export interface WizardContextData {
   isWizardContext: boolean;
   activeStep: number;
+  /**
+   * Updates the Wizard `activeStep` to the provided step number.
+   * Note: The Wizard implementation internally handles clamping the step number
+   * to the available number of steps
+   * @param step
+   * @returns
+   */
   updateStep: (step: number) => void;
 }
 

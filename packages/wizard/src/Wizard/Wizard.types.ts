@@ -1,6 +1,6 @@
-import { ComponentPropsWithRef, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-export interface WizardProps extends ComponentPropsWithRef<'div'> {
+export interface WizardProps {
   /**
    * The current active step index (0-based). If provided, the component operates in controlled mode.
    */

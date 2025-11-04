@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
+import {
+  CompoundSubComponent,
+  filterChildren,
+  findChild,
+} from '@leafygreen-ui/compound-component';
 import { cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { consoleOnce } from '@leafygreen-ui/lib';
-import { Description, H3 } from '@leafygreen-ui/typography';
 
 import { WizardSubComponentProperties } from '../constants';
 import { useWizardContext } from '../WizardContext';
 
-import { TextNode } from './TextNode';
 import { stepStyles } from './WizardStep.styles';
 import { WizardStepProps } from './WizardStep.types';
+import { WizardStepContext } from './WizardStepContext';
 
 export const WizardStep = CompoundSubComponent(
-  ({ title, description, children, className, ...rest }: WizardStepProps) => {
+  ({ children, className, ...rest }: WizardStepProps) => {
+    const stepId = useIdAllocator({ prefix: 'wizard-step' });
     const { isWizardContext } = useWizardContext();
+    const [isAcknowledged, setAcknowledged] = useState(false);
 
     if (!isWizardContext) {
       consoleOnce.error(
@@ -23,12 +29,28 @@ export const WizardStep = CompoundSubComponent(
       return null;
     }
 
+    const footerChild = findChild(
+      children,
+      WizardSubComponentProperties.Footer,
+    );
+
+    const restChildren = filterChildren(children, [
+      WizardSubComponentProperties.Footer,
+    ]);
+
     return (
-      <div className={cx(stepStyles, className)} {...rest}>
-        <TextNode as={H3}>{title}</TextNode>
-        {description && <TextNode as={Description}>{description}</TextNode>}
-        <div>{children}</div>
-      </div>
+      <WizardStepContext.Provider
+        value={{
+          stepId,
+          isAcknowledged,
+          setAcknowledged,
+        }}
+      >
+        <div className={cx(stepStyles, className)} {...rest}>
+          {restChildren}
+          {footerChild}
+        </div>
+      </WizardStepContext.Provider>
     );
   },
   {

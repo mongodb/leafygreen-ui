@@ -1,17 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface WizardStepProps
-  extends Omit<React.ComponentProps<'div'>, 'title'> {
-  /**
-   * The title of the step
-   */
-  title: ReactNode;
-
-  /**
-   * The description of the step
-   */
-  description?: ReactNode;
-
+export interface WizardStepProps extends React.ComponentProps<'div'> {
   /**
    * The content of the step
    */
