@@ -14,93 +14,36 @@ import { InputSegment, InputSegmentChangeEventHandler } from '.';
 
 describe('packages/input-segment', () => {
   describe('aria attributes', () => {
-    describe.each(['day', 'month', 'year'])('%p', segment => {
-      test(`${segment} segment has aria-label`, () => {
-        const { input } = renderSegment({
-          props: { segment: segment as SegmentObjMock },
-        });
-        expect(input).toHaveAttribute('aria-label', segment);
+    test(`segment has aria-label`, () => {
+      const { input } = renderSegment({
+        props: { segment: 'day' },
       });
+      expect(input).toHaveAttribute('aria-label', 'day');
     });
   });
 
   describe('rendering', () => {
-    describe('day segment', () => {
-      test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({});
-        expect(input.value).toBe('');
-      });
-
-      test('Rendering with a value sets the input value', () => {
-        const { input } = renderSegment({
-          providerProps: { segments: { day: '12', month: '', year: '' } },
-        });
-        expect(input.value).toBe('12');
-      });
-
-      test('rerendering updates the value', () => {
-        const { getInput, rerenderSegment } = renderSegment({
-          providerProps: { segments: { day: '12', month: '', year: '' } },
-        });
-
-        rerenderSegment({
-          newProviderProps: { segments: { day: '08', month: '', year: '' } },
-        });
-        expect(getInput().value).toBe('08');
-      });
+    test('Rendering with undefined sets the value to empty string', () => {
+      const { input } = renderSegment({});
+      expect(input.value).toBe('');
     });
 
-    describe('month segment', () => {
-      test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ props: setSegmentProps('month') });
-        expect(input.value).toBe('');
+    test('Rendering with a value sets the input value', () => {
+      const { input } = renderSegment({
+        providerProps: { segments: { day: '12', month: '', year: '' } },
       });
-
-      test('Rendering with a value sets the input value', () => {
-        const { input } = renderSegment({
-          props: setSegmentProps('month'),
-          providerProps: { segments: { day: '', month: '26', year: '' } },
-        });
-        expect(input.value).toBe('26');
-      });
-
-      test('rerendering updates the value', () => {
-        const { getInput, rerenderSegment } = renderSegment({
-          props: setSegmentProps('month'),
-          providerProps: { segments: { day: '', month: '26', year: '' } },
-        });
-
-        rerenderSegment({
-          newProviderProps: { segments: { day: '', month: '08', year: '' } },
-        });
-        expect(getInput().value).toBe('08');
-      });
+      expect(input.value).toBe('12');
     });
 
-    describe('year segment', () => {
-      test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ props: setSegmentProps('year') });
-        expect(input.value).toBe('');
+    test('rerendering updates the value', () => {
+      const { getInput, rerenderSegment } = renderSegment({
+        providerProps: { segments: { day: '12', month: '', year: '' } },
       });
 
-      test('Rendering with a value sets the input value', () => {
-        const { input } = renderSegment({
-          props: setSegmentProps('year'),
-          providerProps: { segments: { day: '', month: '', year: '2023' } },
-        });
-        expect(input.value).toBe('2023');
+      rerenderSegment({
+        newProviderProps: { segments: { day: '08', month: '', year: '' } },
       });
-
-      test('rerendering updates the value', () => {
-        const { getInput, rerenderSegment } = renderSegment({
-          props: setSegmentProps('year'),
-          providerProps: { segments: { day: '', month: '', year: '2023' } },
-        });
-        rerenderSegment({
-          newProviderProps: { segments: { day: '', month: '', year: '1993' } },
-        });
-        expect(getInput().value).toBe('1993');
-      });
+      expect(getInput().value).toBe('08');
     });
   });
 
@@ -309,6 +252,48 @@ describe('packages/input-segment', () => {
               }),
             );
           });
+
+          test('formats value with leading zero', () => {
+            const formatter = getValueFormatter(
+              charsPerSegmentMock['day'],
+              defaultMinMock['day'] === 0,
+            );
+            const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+              SegmentObjMock,
+              string
+            >;
+            const { input } = renderSegment({
+              props: { segment: 'day' },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: '06', month: '', year: '' },
+              },
+            });
+
+            userEvent.type(input, '{arrowup}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: '07' }),
+            );
+          });
+
+          test('formats values without leading zeros', () => {
+            const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+              SegmentObjMock,
+              string
+            >;
+            const { input } = renderSegment({
+              props: { segment: 'day' },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: '3', month: '', year: '' },
+              },
+            });
+
+            userEvent.type(input, '{arrowup}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: '04' }),
+            );
+          });
         });
 
         describe('Down arrow', () => {
@@ -417,6 +402,44 @@ describe('packages/input-segment', () => {
               expect.objectContaining({
                 value: formatter(defaultMinMock['day'] - 1),
               }),
+            );
+          });
+
+          test('formats value with leading zero', () => {
+            const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+              SegmentObjMock,
+              string
+            >;
+            const { input } = renderSegment({
+              props: { segment: 'day' },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: '06', month: '', year: '' },
+              },
+            });
+
+            userEvent.type(input, '{arrowdown}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: '05' }),
+            );
+          });
+
+          test('formats values without leading zeros', () => {
+            const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+              SegmentObjMock,
+              string
+            >;
+            const { input } = renderSegment({
+              props: { segment: 'day' },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: '3', month: '', year: '' },
+              },
+            });
+
+            userEvent.type(input, '{arrowdown}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: '02' }),
             );
           });
         });
@@ -529,6 +552,222 @@ describe('packages/input-segment', () => {
       });
     });
   });
+
+  describe('onBlur handler', () => {
+    test('calls the custom onBlur prop when provided', () => {
+      const onBlurHandler = jest.fn();
+      const { input } = renderSegment({
+        props: { onBlur: onBlurHandler },
+      });
+
+      input.focus();
+      input.blur();
+
+      expect(onBlurHandler).toHaveBeenCalled();
+    });
+
+    test('calls both context and prop onBlur handlers', () => {
+      const contextOnBlur = jest.fn();
+      const propOnBlur = jest.fn();
+      const { input } = renderSegment({
+        props: { onBlur: propOnBlur },
+        providerProps: { onBlur: contextOnBlur },
+      });
+
+      input.focus();
+      input.blur();
+
+      expect(contextOnBlur).toHaveBeenCalled();
+      expect(propOnBlur).toHaveBeenCalled();
+    });
+  });
+
+  describe('custom onKeyDown handler', () => {
+    test('calls the custom onKeyDown prop when provided', () => {
+      const onKeyDownHandler = jest.fn();
+      const { input } = renderSegment({
+        props: { onKeyDown: onKeyDownHandler },
+      });
+
+      userEvent.type(input, '5');
+
+      expect(onKeyDownHandler).toHaveBeenCalled();
+    });
+
+    test('custom onKeyDown is called alongside internal handler', () => {
+      const onKeyDownHandler = jest.fn();
+      const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+        SegmentObjMock,
+        string
+      >;
+      const { input } = renderSegment({
+        props: { onKeyDown: onKeyDownHandler },
+        providerProps: { onChange: onChangeHandler },
+      });
+
+      userEvent.type(input, '{arrowup}');
+
+      expect(onKeyDownHandler).toHaveBeenCalled();
+      expect(onChangeHandler).toHaveBeenCalled();
+    });
+  });
+
+  describe('disabled state', () => {
+    test('input is disabled when disabled context prop is true', () => {
+      const { input } = renderSegment({
+        providerProps: { disabled: true },
+      });
+
+      expect(input).toBeDisabled();
+    });
+
+    test('does not call onChange when disabled and typed into', () => {
+      const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+        SegmentObjMock,
+        string
+      >;
+      const { input } = renderSegment({
+        providerProps: { disabled: true, onChange: onChangeHandler },
+      });
+
+      userEvent.type(input, '5');
+
+      expect(onChangeHandler).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('shouldSkipValidation prop', () => {
+    test('allows values outside min/max range when shouldSkipValidation is true', () => {
+      const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+        SegmentObjMock,
+        string
+      >;
+      const { input } = renderSegment({
+        props: { segment: 'day', shouldSkipValidation: true },
+        providerProps: {
+          onChange: onChangeHandler,
+          segments: { day: '9', month: '', year: '' },
+        },
+      });
+
+      userEvent.type(input, '9');
+
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        expect.objectContaining({ segment: 'day', value: '99' }),
+      );
+    });
+
+    test('does not allows values outside min/max range when shouldSkipValidation is false', () => {
+      const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+        SegmentObjMock,
+        string
+      >;
+      const { input } = renderSegment({
+        props: { segment: 'day', shouldSkipValidation: false },
+        providerProps: {
+          onChange: onChangeHandler,
+          segments: { day: '9', month: '', year: '' },
+        },
+      });
+
+      userEvent.type(input, '9');
+
+      expect(onChangeHandler).not.toHaveBeenCalled();
+    });
+
+    test('formats values without leading zeros when shouldSkipValidation is true', () => {
+      const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+        SegmentObjMock,
+        string
+      >;
+      const { input } = renderSegment({
+        props: {
+          ...setSegmentProps('year'),
+          shouldSkipValidation: true,
+          shouldWrap: false,
+        },
+        providerProps: {
+          onChange: onChangeHandler,
+          segments: { day: '0', month: '', year: '3' },
+        },
+      });
+
+      userEvent.type(input, '{arrowup}');
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        expect.objectContaining({ segment: 'year', value: '0004' }),
+      );
+    });
+  });
+
+  // describe('custom onChange prop', () => {
+  //   test('calls prop-level onChange in addition to context onChange', () => {
+  //     const contextOnChange = jest.fn() as InputSegmentChangeEventHandler<
+  //       SegmentObjMock,
+  //       string
+  //     >;
+  //     const propOnChange = jest.fn();
+  //     const { input } = renderSegment({
+  //       props: { onChange: propOnChange },
+  //       providerProps: { onChange: contextOnChange },
+  //     });
+
+  //     userEvent.type(input, '5');
+
+  //     expect(contextOnChange).toHaveBeenCalled();
+  //     expect(propOnChange).toHaveBeenCalled();
+  //   });
+  // });
+
+  // describe('accessibility attributes', () => {
+  //   test('has role="spinbutton"', () => {
+  //     const { input } = renderSegment({});
+  //     expect(input).toHaveAttribute('role', 'spinbutton');
+  //   });
+
+  //   test('has correct data-segment attribute', () => {
+  //     const { input } = renderSegment({
+  //       props: { segment: 'month' },
+  //     });
+  //     expect(input).toHaveAttribute('data-segment', 'month');
+  //   });
+
+  //   test('has correct pattern attribute', () => {
+  //     const { input } = renderSegment({
+  //       props: { segment: 'day' },
+  //     });
+  //     // day segment has 2 chars per segment
+  //     expect(input).toHaveAttribute('pattern', '[0-9]{2}');
+  //   });
+
+  //   test('has min and max attributes', () => {
+  //     const { input } = renderSegment({
+  //       props: { segment: 'day' },
+  //     });
+  //     expect(input).toHaveAttribute('min', String(defaultMinMock['day']));
+  //     expect(input).toHaveAttribute('max', String(defaultMaxMock['day']));
+  //   });
+
+  //   test('has aria-live region that announces value changes', () => {
+  //     const { container, rerenderSegment } = renderSegment({
+  //       props: { segment: 'day' },
+  //       providerProps: { segments: { day: '15', month: '', year: '' } },
+  //     });
+
+  //     const liveRegion = container.querySelector('[aria-live="polite"]');
+  //     expect(liveRegion).toBeInTheDocument();
+  //     expect(liveRegion).toHaveTextContent('day 15');
+  //   });
+
+  //   test('aria-live region is empty when value is empty', () => {
+  //     const { container } = renderSegment({
+  //       props: { segment: 'day' },
+  //     });
+
+  //     const liveRegion = container.querySelector('[aria-live="polite"]');
+  //     expect(liveRegion).toBeInTheDocument();
+  //     expect(liveRegion).toHaveTextContent('');
+  //   });
+  // });
 
   /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {

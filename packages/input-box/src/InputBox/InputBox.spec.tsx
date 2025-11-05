@@ -51,8 +51,6 @@ describe('packages/input-box', () => {
       expect(monthInput.value).toBe('02');
       expect(yearInput.value).toBe('2025');
     });
-
-    test.todo('does not render non-segment parts as inputs');
   });
 
   describe('rerendering', () => {
@@ -199,6 +197,24 @@ describe('packages/input-box', () => {
     });
   });
 
+  describe('onBlur', () => {
+    test('returns no value with leading zero on blur', () => {
+      // min value is 1
+      const { monthInput } = renderInputBox({});
+      userEvent.type(monthInput, '0');
+      userEvent.tab();
+      expect(monthInput.value).toBe('');
+    });
+
+    test('returns value with leading zero on blur', () => {
+      // min value is 0
+      const { dayInput } = renderInputBox({});
+      userEvent.type(dayInput, '0');
+      userEvent.tab();
+      expect(dayInput.value).toBe('00');
+    });
+  });
+
   describe('typing', () => {
     describe('explicit value', () => {
       test('updates the rendered segment value', () => {
@@ -219,7 +235,7 @@ describe('packages/input-box', () => {
         expect(dayInput.value).toBe('02');
       });
 
-      test('allows 00 as minimum value', () => {
+      test('allows 00 as a valid value if min value is 0', () => {
         const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '00');
         expect(dayInput.value).toBe('00');
@@ -254,19 +270,20 @@ describe('packages/input-box', () => {
       });
     });
 
-    describe('onBlur', () => {
-      test('returns no value with leading zero on blur', () => {
-        const { monthInput } = renderInputBox({});
-        userEvent.type(monthInput, '0');
-        userEvent.tab();
-        expect(monthInput.value).toBe('');
+    describe('min/max range', () => {
+      test('does not allow values outside max range', () => {
+        // max is 31
+        const { dayInput } = renderInputBox({});
+        userEvent.type(dayInput, '32');
+        expect(dayInput.value).toBe('02');
       });
 
-      test('returns value with leading zero on blur', () => {
-        const { dayInput } = renderInputBox({});
-        userEvent.type(dayInput, '0');
-        userEvent.tab();
-        expect(dayInput.value).toBe('00');
+      test('allows values below min range', () => {
+        // min is 1. We still allow values below min range because the user can still type in the value and it will be formatted. It should still be displayed but an error message should be shown.
+        const { monthInput } = renderInputBox({});
+        userEvent.type(monthInput, '2');
+        // should be formatted to 02 since 2 is explicitly valid
+        expect(monthInput.value).toBe('02');
       });
     });
 

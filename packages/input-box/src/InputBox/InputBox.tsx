@@ -83,6 +83,13 @@ export const InputBoxWithRef = <Segment extends string>(
     const changedViaArrowKeys =
       meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
+    console.log('🚨handleSegmentInputChange', {
+      segmentName,
+      segmentValue,
+      changedViaArrowKeys,
+      isExplicitSegmentValue: isExplicitSegmentValue(segmentName, segmentValue),
+    });
+
     // Auto-format the segment if it is explicit and was not changed via arrow-keys e.g. up/down arrows.
     if (
       !changedViaArrowKeys &&

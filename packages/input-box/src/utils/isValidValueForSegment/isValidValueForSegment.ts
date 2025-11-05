@@ -45,5 +45,12 @@ export const isValidValueForSegment = <T extends string, V extends string>(
 
   const isInRange = inRange(Number(value), defaultMin, defaultMax + 1);
 
+  // console.log('👿isInRange', {
+  //   value,
+  //   defaultMin,
+  //   defaultMax,
+  //   isInRange,
+  // });
+
   return isValidSegmentAndValue && isInRange;
 };

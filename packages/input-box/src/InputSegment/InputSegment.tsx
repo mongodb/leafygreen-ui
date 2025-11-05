@@ -88,6 +88,12 @@ const InputSegmentWithRef = <Segment extends string>(
       shouldSkipValidation,
     );
 
+    // console.log('😡newValue', {
+    //   segment,
+    //   value,
+    //   newValue,
+    // });
+
     const hasValueChanged = newValue !== value;
 
     if (hasValueChanged) {

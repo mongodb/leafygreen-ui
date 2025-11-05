@@ -72,6 +72,12 @@ export const getNewSegmentValueFromInputValue = <
     segmentEnum,
   );
 
+  // console.log('💚isIncomingValueValid', {
+  //   currentValue,
+  //   incomingValue,
+  //   isIncomingValueValid,
+  // });
+
   if (isIncomingValueValid || shouldSkipValidation) {
     const newValue = truncateStart(incomingValue, {
       length: charsPerSegment,
@@ -82,5 +88,8 @@ export const getNewSegmentValueFromInputValue = <
 
   const typedChar = last(incomingValue.split(''));
   const newValue = typedChar === '0' ? '0' : typedChar ?? '';
+  // console.log('💚💚is', {
+  //   newValue,
+  // });
   return newValue as V;
 };
