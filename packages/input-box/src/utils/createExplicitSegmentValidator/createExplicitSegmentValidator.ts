@@ -17,8 +17,20 @@ export interface ExplicitSegmentRule {
  * Factory function that creates a segment value validator
  * @param segmentEnum - The segment enum/object to validate against
  * @param rules - Rules for each segment type
- * @returns A function that checks if a segment value is explicit
+ * @returns A function that checks if a segment value is explicit and accepts the segment, value, and allowZero parameters
+ * @param segment - The segment to validate
+ * @param value - The value to validate
+ * @param allowZero - Whether to allow zero values
  *
+ * @example
+ * const segmentEnum = {
+ *   Day: 'day',
+ *   Month: 'month',
+ *   Year: 'year',
+ * };
+ * const rules = {
+ *   day: { maxChars: 2, minExplicitValue: 1 },
+ *   month: { maxChars: 2, minExplicitValue: 1 },
  * @example
  * const segmentObj = {
  *   Day: 'day',
