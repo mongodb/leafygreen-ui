@@ -20,6 +20,10 @@
     "docs": {
       "dependsOn": ["^tsc"],
       "outputs": ["tsdoc.json"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
     }
   }
 }
