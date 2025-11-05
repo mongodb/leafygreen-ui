@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { getContainerStyles } from './ChatLayout.styles';
 import { ChatLayoutProps } from './ChatLayout.types';
@@ -17,6 +17,7 @@ export function ChatLayout({
   ...rest
 }: ChatLayoutProps) {
   const [isPinned, setIsPinned] = useState(initialIsPinned);
+  const [isSideNavHovered, setIsSideNavHovered] = useState(false);
 
   const togglePin = useCallback(() => {
     const newValue = !isPinned;
@@ -24,8 +25,18 @@ export function ChatLayout({
     onTogglePinned?.(newValue);
   }, [isPinned, onTogglePinned]);
 
+  const value = useMemo(
+    () => ({
+      isPinned,
+      togglePin,
+      isSideNavHovered,
+      setIsSideNavHovered,
+    }),
+    [isPinned, togglePin, isSideNavHovered, setIsSideNavHovered],
+  );
+
   return (
-    <ChatLayoutContext.Provider value={{ isPinned, togglePin }}>
+    <ChatLayoutContext.Provider value={value}>
       <div className={getContainerStyles({ className, isPinned })} {...rest}>
         {children}
       </div>

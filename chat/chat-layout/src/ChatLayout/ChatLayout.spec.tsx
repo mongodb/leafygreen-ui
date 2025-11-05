@@ -135,5 +135,83 @@ describe('packages/chat-layout', () => {
       const element = screen.getByTestId('chat-layout');
       expect(element).toHaveClass('custom-class');
     });
+
+    test('provides isSideNavHovered context with default value', () => {
+      const TestConsumer = () => {
+        const { isSideNavHovered } = useChatLayoutContext();
+        return <div>isSideNavHovered: {isSideNavHovered.toString()}</div>;
+      };
+
+      render(
+        <ChatLayout>
+          <TestConsumer />
+        </ChatLayout>,
+      );
+      expect(screen.getByText('isSideNavHovered: false')).toBeInTheDocument();
+    });
+
+    test('setIsSideNavHovered function updates isSideNavHovered state', async () => {
+      const TestConsumer = () => {
+        const { isSideNavHovered, setIsSideNavHovered } =
+          useChatLayoutContext();
+        return (
+          <>
+            <div>isSideNavHovered: {isSideNavHovered.toString()}</div>
+            <button onClick={() => setIsSideNavHovered(true)}>
+              Set Hovered
+            </button>
+            <button onClick={() => setIsSideNavHovered(false)}>
+              Set Not Hovered
+            </button>
+          </>
+        );
+      };
+
+      render(
+        <ChatLayout>
+          <TestConsumer />
+        </ChatLayout>,
+      );
+
+      expect(screen.getByText('isSideNavHovered: false')).toBeInTheDocument();
+
+      await userEvent.click(
+        screen.getByRole('button', { name: 'Set Hovered' }),
+      );
+      expect(screen.getByText('isSideNavHovered: true')).toBeInTheDocument();
+
+      await userEvent.click(
+        screen.getByRole('button', { name: 'Set Not Hovered' }),
+      );
+      expect(screen.getByText('isSideNavHovered: false')).toBeInTheDocument();
+    });
+
+    test('togglePin updates isPinned state correctly when hovered', async () => {
+      const TestConsumer = () => {
+        const { isPinned, togglePin, isSideNavHovered } =
+          useChatLayoutContext();
+        return (
+          <>
+            <div>isPinned: {isPinned.toString()}</div>
+            <div>isSideNavHovered: {isSideNavHovered.toString()}</div>
+            <button onClick={togglePin}>Toggle</button>
+          </>
+        );
+      };
+
+      render(
+        <ChatLayout initialIsPinned={false}>
+          <TestConsumer />
+        </ChatLayout>,
+      );
+
+      expect(screen.getByText('isPinned: false')).toBeInTheDocument();
+      expect(screen.getByText('isSideNavHovered: false')).toBeInTheDocument();
+
+      await userEvent.click(screen.getByRole('button', { name: 'Toggle' }));
+
+      expect(screen.getByText('isPinned: true')).toBeInTheDocument();
+      expect(screen.getByText('isSideNavHovered: false')).toBeInTheDocument();
+    });
   });
 });
