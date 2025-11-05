@@ -160,14 +160,22 @@ describe('packages/input-box', () => {
   });
 
   describe('Mouse interaction', () => {
-    test('click on segment focuses it', () => {
+    test('click on segment focuses it when the segment is empty', () => {
       const { dayInput } = renderInputBox({});
+      userEvent.click(dayInput);
+      expect(dayInput).toHaveFocus();
+    });
+
+    test('click on segment focuses it when the segment is not empty', () => {
+      const { dayInput } = renderInputBox({
+        segments: { day: '02', month: '', year: '' },
+      });
       userEvent.click(dayInput);
       expect(dayInput).toHaveFocus();
     });
   });
 
-  describe('Keyboard interaction', () => {
+  describe.only('Keyboard interaction', () => {
     test('Tab moves focus to next segment', () => {
       const { dayInput, monthInput, yearInput } = renderInputBox({});
       userEvent.click(monthInput);
@@ -177,22 +185,62 @@ describe('packages/input-box', () => {
       expect(yearInput).toHaveFocus();
     });
 
-    test('Right arrow key moves focus to next segment', () => {
-      const { dayInput, monthInput, yearInput } = renderInputBox({});
-      userEvent.click(monthInput);
-      userEvent.type(monthInput, '{arrowright}');
-      expect(dayInput).toHaveFocus();
-      userEvent.type(dayInput, '{arrowright}');
-      expect(yearInput).toHaveFocus();
+    describe('Right arrow', () => {
+      test('Right arrow key moves focus to next segment when the segment is empty', () => {
+        const { dayInput, monthInput, yearInput } = renderInputBox({});
+        userEvent.click(monthInput);
+        userEvent.type(monthInput, '{arrowright}');
+        expect(dayInput).toHaveFocus();
+        userEvent.type(dayInput, '{arrowright}');
+        expect(yearInput).toHaveFocus();
+      });
+
+      test('Right arrow key moves focus to next segment when the segment is not empty', () => {
+        const { dayInput, monthInput, yearInput } = renderInputBox({
+          segments: { day: '20', month: '02', year: '1990' },
+        });
+        userEvent.click(monthInput);
+        userEvent.type(monthInput, '{arrowright}');
+        expect(dayInput).toHaveFocus();
+        userEvent.type(dayInput, '{arrowright}');
+        expect(yearInput).toHaveFocus();
+      });
+
+      test('Right arrow key moves focus to next segment when the value starts with 0', () => {
+        const { dayInput, monthInput } = renderInputBox({});
+        userEvent.click(monthInput);
+        userEvent.type(monthInput, '0{arrowright}');
+        expect(dayInput).toHaveFocus();
+      });
     });
 
-    test('Left arrow key moves focus to previous segment', () => {
-      const { dayInput, monthInput, yearInput } = renderInputBox({});
-      userEvent.click(yearInput);
-      userEvent.type(yearInput, '{arrowleft}');
-      expect(dayInput).toHaveFocus();
-      userEvent.type(dayInput, '{arrowleft}');
-      expect(monthInput).toHaveFocus();
+    describe('Left arrow', () => {
+      test('Left arrow key moves focus to previous segment when the segment is empty', () => {
+        const { dayInput, monthInput, yearInput } = renderInputBox({});
+        userEvent.click(yearInput);
+        userEvent.type(yearInput, '{arrowleft}');
+        expect(dayInput).toHaveFocus();
+        userEvent.type(dayInput, '{arrowleft}');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('Left arrow key moves focus to previous segment when the segment is not empty', () => {
+        const { dayInput, monthInput, yearInput } = renderInputBox({
+          segments: { day: '20', month: '02', year: '1990' },
+        });
+        userEvent.click(yearInput);
+        userEvent.type(yearInput, '{arrowleft}');
+        expect(dayInput).toHaveFocus();
+        userEvent.type(dayInput, '{arrowleft}');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('Left arrow key moves focus to previous segment when the value starts with 0', () => {
+        const { dayInput, yearInput } = renderInputBox({});
+        userEvent.click(yearInput);
+        userEvent.type(yearInput, '0{arrowleft}');
+        expect(dayInput).toHaveFocus();
+      });
     });
   });
 
