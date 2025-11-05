@@ -355,9 +355,6 @@ importers:
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../../packages/icon
-      '@leafygreen-ui/icon-button':
-        specifier: workspace:^
-        version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
         specifier: '>=3.2.0'
         version: 5.0.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
