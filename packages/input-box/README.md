@@ -29,7 +29,6 @@ The component handles high-level interactions like moving between segments, whil
 - `charsPerSegment`: Record of maximum characters per segment (e.g., `{ day: 2, month: 2, year: 4 }`)
 - `segmentRefs`: Record mapping segment names to their input refs
 - `segmentRules`: Record of validation rules per segment with `maxChars` and `minExplicitValue`
-- `minValues`: Record of minimum values per segment (e.g., `{ day: 1, month: 1, year: 1970 }`)
 - `disabled`: Whether the input is disabled
 - `size`: Size of the input (`Size.Default`, `Size.Small`, or `Size.XSmall`)
 - `onSegmentChange`: Optional callback fired when any segment changes
@@ -85,7 +84,6 @@ const MySegment = ({ segment, ...props }) => (
   charsPerSegment={charsPerSegment}
   segmentRefs={segmentRefs}
   segmentRules={segmentRules}
-  minValues={minValues}
   disabled={false}
   size={Size.Default}
 />;

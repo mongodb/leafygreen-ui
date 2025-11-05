@@ -63,11 +63,11 @@ export const InputBoxWithRef = <Segment extends string>(
   const getFormattedSegmentValue = (
     segmentName: (typeof segmentEnum)[keyof typeof segmentEnum],
     segmentValue: string,
-    allowsZero: boolean,
+    allowZero: boolean,
   ): string => {
     const formatter = getValueFormatter(
       charsPerSegment[segmentName],
-      allowsZero,
+      allowZero,
     );
     const formattedValue = formatter(segmentValue);
     return formattedValue;
@@ -83,17 +83,17 @@ export const InputBoxWithRef = <Segment extends string>(
     const changedViaArrowKeys =
       meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
     const minSegmentValue = meta?.min as number;
-    const allowsZero = minSegmentValue === 0;
+    const allowZero = minSegmentValue === 0;
 
     // Auto-format the segment if it is explicit and was not changed via arrow-keys e.g. up/down arrows.
     if (
       !changedViaArrowKeys &&
-      isExplicitSegmentValue(segmentName, segmentValue, allowsZero)
+      isExplicitSegmentValue(segmentName, segmentValue, allowZero)
     ) {
       segmentValue = getFormattedSegmentValue(
         segmentName,
         segmentValue,
-        allowsZero,
+        allowZero,
       );
 
       // Auto-advance focus (if possible)
@@ -118,13 +118,13 @@ export const InputBoxWithRef = <Segment extends string>(
     const segmentName = e.target.getAttribute('id');
     const segmentValue = e.target.value;
     const minValue = Number(e.target.getAttribute('min'));
-    const allowsZero = minValue === 0;
+    const allowZero = minValue === 0;
 
     if (isInputSegment(segmentName, segmentEnum)) {
       const formattedValue = getFormattedSegmentValue(
         segmentName,
         segmentValue,
-        allowsZero,
+        allowZero,
       );
       setSegment(segmentName, formattedValue);
     }

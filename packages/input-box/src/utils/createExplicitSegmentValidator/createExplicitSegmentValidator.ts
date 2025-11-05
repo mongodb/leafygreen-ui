@@ -32,14 +32,10 @@ export interface ExplicitSegmentRule {
 export function createExplicitSegmentValidator<
   T extends Record<string, string>,
 >(segmentEnum: T, rules: Record<T[keyof T], ExplicitSegmentRule>) {
-  return (
-    segment: T[keyof T],
-    value: string,
-    allowsZero?: boolean,
-  ): boolean => {
+  return (segment: T[keyof T], value: string, allowZero?: boolean): boolean => {
     if (
       !(
-        isValidSegmentValue(value, allowsZero) &&
+        isValidSegmentValue(value, allowZero) &&
         isValidSegmentName(segmentEnum, segment)
       )
     ) {

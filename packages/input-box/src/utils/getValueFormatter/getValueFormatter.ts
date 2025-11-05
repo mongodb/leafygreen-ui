@@ -7,7 +7,7 @@ import { isZeroLike } from '@leafygreen-ui/lib';
  * otherwise, pad the string with 0s, or trim it to n chars
  *
  * @param charsPerSegment - the number of characters per segment
- * @param allowsZero -
+ * @param allowZero -
  * @param val - the value to format
  * @returns a value formatter function for the provided segment
  *
