@@ -135,7 +135,6 @@ const getBaseContentWrapperStyles = ({
   position: relative;
   border-radius: ${borderRadius[200]}px;
   border: 1px solid ${palette.gray.base};
-  z-index: 2;
   background-color: ${color[theme].background[Variant.Primary][
     InteractionState.Default
   ]};
@@ -323,6 +322,6 @@ export const getHotkeyIndicatorStyles = ({
   });
 
 export const disclaimerTextStyles = css`
-  margin-top: ${spacing[50]}px;
+  margin-top: ${spacing[100]}px;
   text-align: center;
 `;
