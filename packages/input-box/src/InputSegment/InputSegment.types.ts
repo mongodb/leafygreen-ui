@@ -10,6 +10,7 @@ export interface InputSegmentChangeEvent<
   value: Value;
   meta?: {
     key?: (typeof keyMap)[keyof typeof keyMap];
+    min: number;
     [key: string]: any;
   };
 }

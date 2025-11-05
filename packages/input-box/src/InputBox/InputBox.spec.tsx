@@ -1,5 +1,6 @@
 import React from 'react';
 import { jest } from '@jest/globals';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Size } from '@leafygreen-ui/tokens';
@@ -12,7 +13,6 @@ import {
 } from '../testutils';
 import {
   charsPerSegmentMock,
-  defaultMinMock,
   SegmentObjMock,
   segmentRefsMock,
   segmentRulesMock,
@@ -20,7 +20,6 @@ import {
 } from '../testutils/testutils.mocks';
 
 import { InputBox } from './InputBox';
-import { render } from '@testing-library/react';
 
 describe('packages/input-box', () => {
   describe('Rendering', () => {
@@ -90,7 +89,7 @@ describe('packages/input-box', () => {
       );
     });
 
-    test('is called when deleting from a single segment', () => {
+    test('is called when deleting from a segment', () => {
       const onSegmentChange =
         jest.fn<InputSegmentChangeEventHandler<SegmentObjMock, string>>();
       const { dayInput } = renderInputBox({
@@ -198,7 +197,7 @@ describe('packages/input-box', () => {
   });
 
   describe('onBlur', () => {
-    test('returns no value with leading zero on blur', () => {
+    test('returns no value with leading zero if min value is not 0', () => {
       // min value is 1
       const { monthInput } = renderInputBox({});
       userEvent.type(monthInput, '0');
@@ -206,12 +205,36 @@ describe('packages/input-box', () => {
       expect(monthInput.value).toBe('');
     });
 
-    test('returns value with leading zero on blur', () => {
+    test('returns value with leading zero if min value is 0', () => {
       // min value is 0
       const { dayInput } = renderInputBox({});
       userEvent.type(dayInput, '0');
       userEvent.tab();
       expect(dayInput.value).toBe('00');
+    });
+
+    test('returns value with leading zero if value is explicit', () => {
+      const { dayInput } = renderInputBox({});
+      // 0-31
+      userEvent.type(dayInput, '4');
+      userEvent.tab();
+      expect(dayInput.value).toBe('04');
+    });
+
+    test('returns value without if value is explicit and meets the character limit', () => {
+      const { dayInput } = renderInputBox({});
+      // 0-31
+      userEvent.type(dayInput, '29');
+      userEvent.tab();
+      expect(dayInput.value).toBe('29');
+    });
+
+    test('returns value with leading zero if value is ambiguous', () => {
+      const { dayInput } = renderInputBox({});
+      // 1-31
+      userEvent.type(dayInput, '1'); // 1 can be 1 or 1n
+      userEvent.tab();
+      expect(dayInput.value).toBe('01');
     });
   });
 
@@ -271,19 +294,22 @@ describe('packages/input-box', () => {
     });
 
     describe('min/max range', () => {
-      test('does not allow values outside max range', () => {
-        // max is 31
-        const { dayInput } = renderInputBox({});
-        userEvent.type(dayInput, '32');
-        expect(dayInput.value).toBe('02');
-      });
+      describe('does not allow values outside max range', () => {
+        test('and returns single digit value if it is ambiguous', () => {
+          // max is 31
+          const { dayInput } = renderInputBox({});
+          userEvent.type(dayInput, '32');
+          // returns the last valid value
+          expect(dayInput.value).toBe('2');
+        });
 
-      test('allows values below min range', () => {
-        // min is 1. We still allow values below min range because the user can still type in the value and it will be formatted. It should still be displayed but an error message should be shown.
-        const { monthInput } = renderInputBox({});
-        userEvent.type(monthInput, '2');
-        // should be formatted to 02 since 2 is explicitly valid
-        expect(monthInput.value).toBe('02');
+        test('and returns formatted value if it is explicit', () => {
+          // max is 31
+          const { dayInput } = renderInputBox({});
+          userEvent.type(dayInput, '34');
+          // returns the last valid value
+          expect(dayInput.value).toBe('04');
+        });
       });
     });
 
@@ -426,7 +452,6 @@ describe('packages/input-box', () => {
       setSegment={() => {}}
       charsPerSegment={charsPerSegmentMock}
       segmentRules={segmentRulesMock}
-      minValues={defaultMinMock}
       segmentComponent={InputSegmentWrapper}
       size={Size.Default}
       disabled={false}

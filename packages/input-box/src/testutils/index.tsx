@@ -103,7 +103,6 @@ export const InputBoxWithState = ({
       charsPerSegment={charsPerSegmentMock}
       formatParts={defaultFormatPartsMock}
       segmentRules={segmentRulesMock}
-      minValues={defaultMinMock}
       segmentComponent={InputSegmentWrapper}
       size={Size.Default}
       disabled={disabled}

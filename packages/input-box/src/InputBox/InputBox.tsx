@@ -46,7 +46,6 @@ export const InputBoxWithRef = <Segment extends string>(
     segmentEnum,
     segmentRules,
     segmentComponent,
-    minValues,
     segments,
     size,
     ...rest
@@ -64,10 +63,11 @@ export const InputBoxWithRef = <Segment extends string>(
   const getFormattedSegmentValue = (
     segmentName: (typeof segmentEnum)[keyof typeof segmentEnum],
     segmentValue: string,
+    allowsZero: boolean,
   ): string => {
     const formatter = getValueFormatter(
       charsPerSegment[segmentName],
-      minValues[segmentName] === 0,
+      allowsZero,
     );
     const formattedValue = formatter(segmentValue);
     return formattedValue;
@@ -82,20 +82,19 @@ export const InputBoxWithRef = <Segment extends string>(
     const { segment: segmentName, meta } = segmentChangeEvent;
     const changedViaArrowKeys =
       meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
-
-    console.log('🚨handleSegmentInputChange', {
-      segmentName,
-      segmentValue,
-      changedViaArrowKeys,
-      isExplicitSegmentValue: isExplicitSegmentValue(segmentName, segmentValue),
-    });
+    const minSegmentValue = meta?.min as number;
+    const allowsZero = minSegmentValue === 0;
 
     // Auto-format the segment if it is explicit and was not changed via arrow-keys e.g. up/down arrows.
     if (
       !changedViaArrowKeys &&
-      isExplicitSegmentValue(segmentName, segmentValue)
+      isExplicitSegmentValue(segmentName, segmentValue, allowsZero)
     ) {
-      segmentValue = getFormattedSegmentValue(segmentName, segmentValue);
+      segmentValue = getFormattedSegmentValue(
+        segmentName,
+        segmentValue,
+        allowsZero,
+      );
 
       // Auto-advance focus (if possible)
       const nextSegmentName = getRelativeSegment('next', {
@@ -118,11 +117,14 @@ export const InputBoxWithRef = <Segment extends string>(
   const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
     const segmentName = e.target.getAttribute('id');
     const segmentValue = e.target.value;
+    const minValue = Number(e.target.getAttribute('min'));
+    const allowsZero = minValue === 0;
 
     if (isInputSegment(segmentName, segmentEnum)) {
       const formattedValue = getFormattedSegmentValue(
         segmentName,
         segmentValue,
+        allowsZero,
       );
       setSegment(segmentName, formattedValue);
     }

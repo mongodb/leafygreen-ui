@@ -88,18 +88,13 @@ const InputSegmentWithRef = <Segment extends string>(
       shouldSkipValidation,
     );
 
-    // console.log('😡newValue', {
-    //   segment,
-    //   value,
-    //   newValue,
-    // });
-
     const hasValueChanged = newValue !== value;
 
     if (hasValueChanged) {
       onChange({
         segment,
         value: newValue,
+        meta: { min },
       });
     } else {
       // If the value has not changed, ensure the input value is reset
@@ -146,7 +141,7 @@ const InputSegmentWithRef = <Segment extends string>(
         onChange({
           segment,
           value: valueString,
-          meta: { key },
+          meta: { key, min },
         });
         break;
       }
@@ -162,7 +157,7 @@ const InputSegmentWithRef = <Segment extends string>(
           onChange({
             segment,
             value: '',
-            meta: { key },
+            meta: { key, min },
           });
         }
 
@@ -179,7 +174,7 @@ const InputSegmentWithRef = <Segment extends string>(
           onChange({
             segment,
             value: '',
-            meta: { key },
+            meta: { key, min },
           });
         }
 

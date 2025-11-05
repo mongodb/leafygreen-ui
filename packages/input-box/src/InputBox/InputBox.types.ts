@@ -108,13 +108,6 @@ export interface InputBoxProps<Segment extends string>
    *
    */
   segmentRules: Record<Segment, ExplicitSegmentRule>;
-  /**
-   * An object that maps the segment names to their minimum values
-   *
-   * @example
-   * { day: 0, month: 1, year: 1970 }
-   */
-  minValues: Record<Segment, number>;
 
   /**
    * The component that renders a segment. When mapping over the formatParts, we will render the segment component for each part using this component.

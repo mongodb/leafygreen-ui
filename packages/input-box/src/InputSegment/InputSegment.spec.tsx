@@ -20,6 +20,19 @@ describe('packages/input-segment', () => {
       });
       expect(input).toHaveAttribute('aria-label', 'day');
     });
+
+    test('has role="spinbutton"', () => {
+      const { input } = renderSegment({});
+      expect(input).toHaveAttribute('role', 'spinbutton');
+    });
+
+    test('has min and max attributes', () => {
+      const { input } = renderSegment({
+        props: { segment: 'day' },
+      });
+      expect(input).toHaveAttribute('min', String(defaultMinMock['day']));
+      expect(input).toHaveAttribute('max', String(defaultMaxMock['day']));
+    });
   });
 
   describe('rendering', () => {
@@ -128,8 +141,6 @@ describe('packages/input-segment', () => {
           expect.objectContaining({ value: '4' }),
         );
       });
-
-      // TODO: test min/max
     });
 
     describe('keyboard events', () => {
@@ -253,11 +264,29 @@ describe('packages/input-segment', () => {
             );
           });
 
-          test('formats value with leading zero', () => {
-            const formatter = getValueFormatter(
-              charsPerSegmentMock['day'],
-              defaultMinMock['day'] === 0,
+          test('does not wrap if `shouldWrap` is false and value is less than min', () => {
+            const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+              SegmentObjMock,
+              string
+            >;
+            const { input } = renderSegment({
+              props: {
+                ...setSegmentProps('year'),
+                shouldWrap: false,
+              },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: '0', month: '', year: '3' },
+              },
+            });
+
+            userEvent.type(input, '{arrowup}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ segment: 'year', value: '0004' }),
             );
+          });
+
+          test('formats value with leading zero', () => {
             const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
               SegmentObjMock,
               string
@@ -402,6 +431,28 @@ describe('packages/input-segment', () => {
               expect.objectContaining({
                 value: formatter(defaultMinMock['day'] - 1),
               }),
+            );
+          });
+
+          test('does not wrap if `shouldWrap` is false and value is less than min', () => {
+            const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+              SegmentObjMock,
+              string
+            >;
+            const { input } = renderSegment({
+              props: {
+                ...setSegmentProps('year'),
+                shouldWrap: false,
+              },
+              providerProps: {
+                onChange: onChangeHandler,
+                segments: { day: '0', month: '', year: '3' },
+              },
+            });
+
+            userEvent.type(input, '{arrowdown}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ segment: 'year', value: '0002' }),
             );
           });
 
@@ -551,6 +602,70 @@ describe('packages/input-segment', () => {
         });
       });
     });
+
+    describe('min/max range', () => {
+      test('does not allow values outside max range', () => {
+        const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+          SegmentObjMock,
+          string
+        >;
+        // max is 31
+        const { input } = renderSegment({
+          providerProps: {
+            segments: { day: '3', month: '', year: '' },
+            onChange: onChangeHandler,
+          },
+        });
+        userEvent.type(input, '2');
+        // returns the last valid value
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '2' }),
+        );
+      });
+
+      test('allows values below min range', () => {
+        const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+          SegmentObjMock,
+          string
+        >;
+        // min is 1. We allow values below min range.
+        const { input } = renderSegment({
+          props: { ...setSegmentProps('month') },
+          providerProps: {
+            segments: { day: '', month: '', year: '' },
+            onChange: onChangeHandler,
+          },
+        });
+        userEvent.type(input, '0');
+        // returns the last valid value
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '0' }),
+        );
+      });
+
+      test('allows values above max range when skipValidation is true', () => {
+        const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+          SegmentObjMock,
+          string
+        >;
+        // max is 2038
+        const { input } = renderSegment({
+          props: {
+            ...setSegmentProps('year'),
+            shouldSkipValidation: true,
+          },
+          providerProps: {
+            segments: { day: '', month: '', year: '203' },
+            onChange: onChangeHandler,
+          },
+        });
+        userEvent.type(input, '9');
+        // returns the last valid value
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '2039' }),
+        );
+      });
+    });
   });
 
   describe('onBlur handler', () => {
@@ -674,100 +789,26 @@ describe('packages/input-segment', () => {
 
       expect(onChangeHandler).not.toHaveBeenCalled();
     });
+  });
 
-    test('formats values without leading zeros when shouldSkipValidation is true', () => {
-      const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+  describe('custom onChange prop', () => {
+    test('calls prop-level onChange in addition to context onChange', () => {
+      const contextOnChange = jest.fn() as InputSegmentChangeEventHandler<
         SegmentObjMock,
         string
       >;
+      const propOnChange = jest.fn();
       const { input } = renderSegment({
-        props: {
-          ...setSegmentProps('year'),
-          shouldSkipValidation: true,
-          shouldWrap: false,
-        },
-        providerProps: {
-          onChange: onChangeHandler,
-          segments: { day: '0', month: '', year: '3' },
-        },
+        props: { onChange: propOnChange },
+        providerProps: { onChange: contextOnChange },
       });
 
-      userEvent.type(input, '{arrowup}');
-      expect(onChangeHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ segment: 'year', value: '0004' }),
-      );
+      userEvent.type(input, '5');
+
+      expect(contextOnChange).toHaveBeenCalled();
+      expect(propOnChange).toHaveBeenCalled();
     });
   });
-
-  // describe('custom onChange prop', () => {
-  //   test('calls prop-level onChange in addition to context onChange', () => {
-  //     const contextOnChange = jest.fn() as InputSegmentChangeEventHandler<
-  //       SegmentObjMock,
-  //       string
-  //     >;
-  //     const propOnChange = jest.fn();
-  //     const { input } = renderSegment({
-  //       props: { onChange: propOnChange },
-  //       providerProps: { onChange: contextOnChange },
-  //     });
-
-  //     userEvent.type(input, '5');
-
-  //     expect(contextOnChange).toHaveBeenCalled();
-  //     expect(propOnChange).toHaveBeenCalled();
-  //   });
-  // });
-
-  // describe('accessibility attributes', () => {
-  //   test('has role="spinbutton"', () => {
-  //     const { input } = renderSegment({});
-  //     expect(input).toHaveAttribute('role', 'spinbutton');
-  //   });
-
-  //   test('has correct data-segment attribute', () => {
-  //     const { input } = renderSegment({
-  //       props: { segment: 'month' },
-  //     });
-  //     expect(input).toHaveAttribute('data-segment', 'month');
-  //   });
-
-  //   test('has correct pattern attribute', () => {
-  //     const { input } = renderSegment({
-  //       props: { segment: 'day' },
-  //     });
-  //     // day segment has 2 chars per segment
-  //     expect(input).toHaveAttribute('pattern', '[0-9]{2}');
-  //   });
-
-  //   test('has min and max attributes', () => {
-  //     const { input } = renderSegment({
-  //       props: { segment: 'day' },
-  //     });
-  //     expect(input).toHaveAttribute('min', String(defaultMinMock['day']));
-  //     expect(input).toHaveAttribute('max', String(defaultMaxMock['day']));
-  //   });
-
-  //   test('has aria-live region that announces value changes', () => {
-  //     const { container, rerenderSegment } = renderSegment({
-  //       props: { segment: 'day' },
-  //       providerProps: { segments: { day: '15', month: '', year: '' } },
-  //     });
-
-  //     const liveRegion = container.querySelector('[aria-live="polite"]');
-  //     expect(liveRegion).toBeInTheDocument();
-  //     expect(liveRegion).toHaveTextContent('day 15');
-  //   });
-
-  //   test('aria-live region is empty when value is empty', () => {
-  //     const { container } = renderSegment({
-  //       props: { segment: 'day' },
-  //     });
-
-  //     const liveRegion = container.querySelector('[aria-live="polite"]');
-  //     expect(liveRegion).toBeInTheDocument();
-  //     expect(liveRegion).toHaveTextContent('');
-  //   });
-  // });
 
   /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {

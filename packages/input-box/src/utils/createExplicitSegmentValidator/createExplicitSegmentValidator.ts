@@ -28,16 +28,21 @@ export interface ExplicitSegmentRule {
  * const rules = {
  *   day: { maxChars: 2, minExplicitValue: 1 },
  *   month: { maxChars: 2, minExplicitValue: 1 },
- *  //TODO: need to pass in allowZero as an argument to isValidSegmentValue
  */
 export function createExplicitSegmentValidator<
   T extends Record<string, string>,
 >(segmentEnum: T, rules: Record<T[keyof T], ExplicitSegmentRule>) {
-  return (segment: T[keyof T], value: string): boolean => {
+  return (
+    segment: T[keyof T],
+    value: string,
+    allowsZero?: boolean,
+  ): boolean => {
     if (
-      !(isValidSegmentValue(value) && isValidSegmentName(segmentEnum, segment))
+      !(
+        isValidSegmentValue(value, allowsZero) &&
+        isValidSegmentName(segmentEnum, segment)
+      )
     ) {
-      console.log('‼️');
       return false;
     }
 
@@ -48,14 +53,6 @@ export function createExplicitSegmentValidator<
     const meetsMinValue = rule.minExplicitValue
       ? Number(value) >= rule.minExplicitValue
       : false;
-
-    console.log('🎃isExplicitSegmentValue', {
-      segment,
-      value,
-      isMaxLength,
-      meetsMinValue,
-      isExplicitSegmentValue: isMaxLength || meetsMinValue,
-    });
 
     return isMaxLength || meetsMinValue;
   };

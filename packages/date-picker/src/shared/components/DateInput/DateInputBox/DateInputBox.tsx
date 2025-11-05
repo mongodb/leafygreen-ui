@@ -9,11 +9,7 @@ import {
 } from '@leafygreen-ui/date-utils';
 import { InputBox } from '@leafygreen-ui/input-box';
 
-import {
-  charsPerSegment,
-  dateSegmentRules,
-  defaultMin,
-} from '../../../constants';
+import { charsPerSegment, dateSegmentRules } from '../../../constants';
 import { useSharedDatePickerContext } from '../../../context';
 import { useDateSegments } from '../../../hooks';
 import { DateSegment, DateSegmentsState } from '../../../types';
@@ -113,7 +109,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           disabled={disabled}
           segmentRules={dateSegmentRules}
           onSegmentChange={onSegmentChange}
-          minValues={defaultMin} //TODO: this is incorrect, this should use the min/max utils
           labelledBy={labelledBy}
           segmentComponent={DateInputSegment}
           size={size}
