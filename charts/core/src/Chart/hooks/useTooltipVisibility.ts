@@ -273,16 +273,19 @@ export const useTooltipVisibility = ({
    * is rendered and in the DOM
    */
   useEffect(() => {
-    if (!tooltipPinnedRef.current) {
-      return;
+    if (tooltipPinned) {
+      const [x, y] = pinnedPosition;
+      setTimeout(() => {
+        showTooltip(x, y);
+        addUnpinCallbackToCloseButton();
+      });
     }
-
-    const [x, y] = pinnedPosition;
-    setTimeout(() => {
-      showTooltip(x, y);
-      addUnpinCallbackToCloseButton();
-    });
-  }, [pinnedPosition, showTooltip, addUnpinCallbackToCloseButton]);
+  }, [
+    tooltipPinned,
+    pinnedPosition,
+    showTooltip,
+    addUnpinCallbackToCloseButton,
+  ]);
 
   /**
    * Effect to clean up any tooltip elements when the component is unmounted.
