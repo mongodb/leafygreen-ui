@@ -7,9 +7,9 @@ import { isZeroLike } from '@leafygreen-ui/lib';
  * otherwise, pad the string with 0s, or trim it to n chars
  *
  * @param charsPerSegment - the number of characters per segment
- * @param allowsZero - whether to allow zero-like values
- * @param val - the value to format
+ * @param allowZero - whether to allow zero-like values
  * @returns a value formatter function for the provided segment
+ *   - @param val - the value to format (string, number, or undefined)
  *
  * @example
  * const formatter = getValueFormatter({ charsPerSegment: 2 });
