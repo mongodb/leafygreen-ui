@@ -322,6 +322,6 @@ export const getHotkeyIndicatorStyles = ({
   });
 
 export const disclaimerTextStyles = css`
-  margin-top: ${spacing[100]}px;
+  margin-top: ${spacing[50]}px;
   text-align: center;
 `;
