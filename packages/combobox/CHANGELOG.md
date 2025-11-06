@@ -1,5 +1,18 @@
 # @leafygreen-ui/combobox
 
+## 12.2.0
+
+### Minor Changes
+
+- 2876f61: This update adds support to change the dropdown's width basis (matching the functionality of the Select component)
+
+### Patch Changes
+
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
 ## 12.1.0
 
 ### Minor Changes
