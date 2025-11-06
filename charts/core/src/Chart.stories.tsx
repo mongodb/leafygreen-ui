@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
-import { ContinuousAxisProps } from './Axis/Axis.types';
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
-import { Bar, BarProps, LineProps } from './Series';
+import { BarHoverBehavior } from './Series/Bar';
+import { ContinuousAxisProps } from './Axis';
+import { Bar, LineProps } from './Series';
 import { makeSeriesData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
@@ -925,25 +926,30 @@ export const BarStacked: StoryObj<{}> = {
   },
 };
 
-export const BarWithSelfEmphasis: StoryObj<{
-  emphasis: BarProps['emphasis'];
+export const BarWithOnHoverDimOthersBehavior: StoryObj<{
+  hoverBehavior: BarHoverBehavior;
 }> = {
   args: {
-    emphasis: 'self',
+    hoverBehavior: BarHoverBehavior.DimOthers,
   },
   argTypes: {
-    emphasis: {
+    hoverBehavior: {
       control: 'select',
-      options: ['self', 'none'],
-      defaultValue: 'self',
+      options: [BarHoverBehavior.DimOthers, BarHoverBehavior.None],
+      defaultValue: BarHoverBehavior.DimOthers,
     },
   },
-  render: ({ emphasis }) => {
+  render: ({ hoverBehavior }) => {
     return (
       <Chart>
         <ChartTooltip />
         {lowDensitySeriesData.map(({ name, data }) => (
-          <Bar name={name} data={data} key={name} emphasis={emphasis} />
+          <Bar
+            name={name}
+            data={data}
+            key={name}
+            hoverBehavior={hoverBehavior}
+          />
         ))}
       </Chart>
     );
@@ -1013,8 +1019,8 @@ export const BarWithCategoryAxisLabel: StoryObj<{
 
     return (
       <Chart>
-        <XAxis type="category" data={xAxisData} />
-        <YAxis type="category" data={yAxisData} />
+        <XAxis type="category" labels={xAxisData} />
+        <YAxis type="category" labels={yAxisData} />
         <ChartTooltip axisPointer={axisPointer} />
         {lowDensitySeriesData.map(({ name, data }) => (
           <Bar

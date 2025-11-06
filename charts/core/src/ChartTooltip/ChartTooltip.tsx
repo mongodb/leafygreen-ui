@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 
+import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../ChartContext';
@@ -121,9 +122,7 @@ export function ChartTooltip({
          * didn't have high-enough specificity
          *
          */
-        className: className
-          ? `${CHART_TOOLTIP_CLASSNAME} ${className}`
-          : CHART_TOOLTIP_CLASSNAME,
+        className: cx(CHART_TOOLTIP_CLASSNAME, className),
         extraCssText: getRootStylesText(theme),
         borderWidth: 0,
         padding: 0,

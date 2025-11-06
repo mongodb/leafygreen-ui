@@ -1,3 +1,9 @@
+export type {
+  AxisProps,
+  AxisType,
+  ContinuousAxisProps,
+  DiscreteAxisProps,
+} from './Axis.types';
 export { XAxis } from './XAxis';
 export type { XAxisProps, XAxisType } from './XAxis.types';
 export { YAxis } from './YAxis';

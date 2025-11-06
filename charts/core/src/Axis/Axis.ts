@@ -20,9 +20,14 @@ export const getAxisOptions = (
 
   return {
     type,
-    ...(type !== 'category' && { min: props.min }),
-    ...(type !== 'category' && { max: props.max }),
-    ...(type === 'category' && { data: props.data }),
+    ...(type === 'category'
+      ? {
+          data: props.labels,
+        }
+      : {
+          min: props.min,
+          max: props.max,
+        }),
     axisLine: {
       show: true,
       lineStyle: {
@@ -37,7 +42,7 @@ export const getAxisOptions = (
       fontSize: 11,
       lineHeight: spacing[400],
       color: color[theme].text[Variant.Secondary][InteractionState.Default],
-      ...(type !== 'category' && { formatter: props.formatter }),
+      formatter: type === 'category' ? undefined : props.formatter,
     },
     axisTick: {
       show: false,

@@ -1,68 +1,74 @@
 import type { AxisLabelValueFormatter } from '../Echart/Echart.types';
 
-export const AxisType = {
+/**
+ * Note: choosing this axis type implicates that the charting library is free to automatically interpolate axis labels and their positions
+ * which might not exactly align to each provided data point.
+ */
+const ContinuousAxisTypes = {
   Log: 'log',
   Time: 'time',
   Value: 'value',
-  /**
-   * The 'category' axis type is suitable for discrete types of data like bar charts,
-   * where each label should be aligned directly under its corresponding bar. Without
-   * using 'category', the charting library may automatically determine axis label positions,
-   * which might not correspond to each bar or data point.
-   */
+} as const;
+
+type ContinuousAxisTypes =
+  (typeof ContinuousAxisTypes)[keyof typeof ContinuousAxisTypes];
+
+const DiscreteAxisTypes = {
   Category: 'category',
 } as const;
-type AxisType = (typeof AxisType)[keyof typeof AxisType];
 
-export type AxisProps = {
+type DiscreteAxisTypes =
+  (typeof DiscreteAxisTypes)[keyof typeof DiscreteAxisTypes];
+
+export const AxisType = {
+  ...ContinuousAxisTypes,
+  ...DiscreteAxisTypes,
+} as const;
+
+export type AxisType = (typeof AxisType)[keyof typeof AxisType];
+
+interface AxisPropsBase {
   /**
    * Label name of the axis.
    */
   label?: string;
-} & (
-  | {
-      /**
-       * All continuous axis types (value, log, time).
-       */
-      type: Exclude<AxisType, 'category'>;
+  /**
+   * Type of the axis.
+   */
+  type: AxisType;
+}
 
-      /**
-       *
-       * Formatter of axis label, which supports string template and callback function.
-       *
-       * ```ts
-       * formatter: (value, index) => `${value}GB`
-       * ```
-       */
-      formatter?: AxisLabelValueFormatter | string;
+export interface ContinuousAxisProps extends AxisPropsBase {
+  type: ContinuousAxisTypes;
 
-      /**
-       * Minimum value of the axis.
-       */
-      min?: number;
+  /**
+   *
+   * Formatter of axis label, which supports string template and callback function.
+   *
+   * ```ts
+   * formatter: (value, index) => `${value}GB`
+   * ```
+   */
+  formatter?: AxisLabelValueFormatter | string;
 
-      /**
-       * Maximum value of the axis.
-       */
-      max?: number;
-    }
-  | {
-      /**
-       * A 'category' axis type is suitable for discrete types of data
-       * where ideally all category names should be used as axis labels. Without
-       * using 'category', the charting library may automatically determine axis
-       * label values and positions, which might not correspond to each data point.
-       */
-      type: 'category';
+  /**
+   * Minimum value of the axis.
+   */
+  min?: number;
 
-      /**
-       * Labels of the data points on the axis.
-       */
-      data?: Array<string>;
-    }
-);
+  /**
+   * Maximum value of the axis.
+   */
+  max?: number;
+}
 
-export type ContinuousAxisProps = Extract<
-  AxisProps,
-  { type: Extract<AxisType, 'value' | 'log' | 'time'> }
->;
+export interface DiscreteAxisProps extends AxisPropsBase {
+  type: DiscreteAxisTypes;
+
+  /**
+   * Labels of the data points on the axis.
+   */
+  labels?: Array<string>;
+}
+
+export type AxisProps = ContinuousAxisProps | DiscreteAxisProps;

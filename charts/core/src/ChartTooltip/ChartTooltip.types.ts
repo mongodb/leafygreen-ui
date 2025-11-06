@@ -8,6 +8,15 @@ import { type CallbackDataParams } from 'echarts/types/dist/shared';
  */
 export type OptionDataValue = string | number | Date;
 
+export const AxisPointerType = {
+  None: 'none',
+  Line: 'line',
+  Shadow: 'shadow',
+} as const;
+
+export type AxisPointerType =
+  (typeof AxisPointerType)[keyof typeof AxisPointerType];
+
 export interface SeriesInfo {
   name: SeriesName;
   value: OptionDataValue;
@@ -25,7 +34,7 @@ export interface ChartTooltipProps {
    *   note: this is best suited for category axes; for continuous axes, it will appear as a thin, dim line.
    * - 'none': No line/shadow is shown.
    */
-  axisPointer?: 'none' | 'line' | 'shadow';
+  axisPointer?: AxisPointerType;
   /**
    * Additional CSS class names to apply to the tooltip element.
    * Useful for applying environment-specific styles like dark mode overrides.

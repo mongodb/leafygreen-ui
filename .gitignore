@@ -1,7 +1,6 @@
 # IDE files
 .idea
 *.iml
-.vscode
 
 # Locally-installed dependencies
 node_modules/
