@@ -24,7 +24,6 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-chat/chat-window": "workspace:^",
-    "@lg-chat/title-bar": "workspace:^",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {

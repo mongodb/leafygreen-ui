@@ -7,6 +7,9 @@
       ],
       "@leafygreen-ui/*": [
         "../../packages/*/src"
+      ],
+      "@lg-chat/*": [
+        "../*/src"
       ]
     }
   },
@@ -19,6 +22,9 @@
   "references": [
     {
       "path": "../avatar"
+    },
+    {
+      "path": "../leafygreen-chat-provider"
     },
     {
       "path": "../../packages/badge"
@@ -34,9 +40,6 @@
     },
     {
       "path": "../../packages/lib"
-    },
-    {
-      "path": "../../packages/palette"
     },
     {
       "path": "../../packages/tokens"
