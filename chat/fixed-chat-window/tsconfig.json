@@ -7,6 +7,9 @@
       ],
       "@leafygreen-ui/*": [
         "../../packages/*/src"
+      ],
+      "@lg-chat/*": [
+        "../*/src"
       ]
     }
   },
@@ -18,25 +21,19 @@
   ],
   "references": [
     {
-      "path": "../../packages/avatar"
+      "path": "../chat-window"
     },
     {
-      "path": "../../packages/button"
+      "path": "../leafygreen-chat-provider"
+    },
+    {
+      "path": "../../packages/avatar"
     },
     {
       "path": "../../packages/emotion"
     },
     {
-      "path": "../../packages/hooks"
-    },
-    {
       "path": "../../packages/icon"
-    },
-    {
-      "path": "../../packages/leafygreen-provider"
-    },
-    {
-      "path": "../../packages/logo"
     },
     {
       "path": "../../packages/lib"
@@ -45,25 +42,13 @@
       "path": "../../packages/palette"
     },
     {
-      "path": "../../packages/polymorphic"
-    },
-    {
-      "path": "../../packages/text-area"
+      "path": "../../packages/popover"
     },
     {
       "path": "../../packages/tokens"
     },
     {
       "path": "../../packages/typography"
-    },
-    {
-      "path": "../avatar"
-    },
-    {
-      "path": "../lg-markdown"
-    },
-    {
-      "path": "../message-feedback"
     },
     {
       "path": "../../packages/leafygreen-provider"

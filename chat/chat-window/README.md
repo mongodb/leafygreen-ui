@@ -32,7 +32,6 @@ import {
 } from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessageFeed } from '@lg-chat/message-feed';
-import { TitleBar } from '@lg-chat/title-bar';
 
 const CompactExample = props => {
   const userName = 'Sean Park';
@@ -48,8 +47,7 @@ const CompactExample = props => {
 
   return (
     <LeafyGreenChatProvider variant={Variant.Compact}>
-      <ChatWindow {...props}>
-        <TitleBar title="LG Chat Demo" badgeText="Beta" />
+      <ChatWindow title="LG Chat Demo" badgeText="Beta" {...props}>
         <MessageFeed>
           {messages.map(messageFields => (
             <Message key={messageFields.id} {...messageFields} />
@@ -72,7 +70,6 @@ import {
 } from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessageFeed } from '@lg-chat/message-feed';
-import { TitleBar } from '@lg-chat/title-bar';
 
 const SpaciousExample = props => {
   const userName = 'Sean Park';
@@ -88,8 +85,7 @@ const SpaciousExample = props => {
 
   return (
     <LeafyGreenChatProvider variant={Variant.Spacious}>
-      <ChatWindow {...props}>
-        <TitleBar title="LG Chat Demo" badgeText="Beta" />
+      <ChatWindow title="LG Chat Demo" badgeText="Beta" {...props}>
         <MessageFeed>
           {messages.map(messageFields => (
             <Message key={messageFields.id} {...messageFields} />
