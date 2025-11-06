@@ -21,11 +21,12 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
-    "@storybook/react": "8.6.14",
+    "@storybook/react": "9.1.16",
     "lodash": "4.17.21"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0",
+    "storybook": "^9.1.16"
   },
   "exports": {
     ".": {
