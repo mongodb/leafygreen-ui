@@ -25,7 +25,11 @@ export interface ExplicitSegmentRule {
  *
  * @param segmentEnum - The segment enum/object containing the segment names and their corresponding values to validate against
  * @param rules - Rules for each segment type
- * @returns A function that checks if a segment value is explicit
+ * @returns A function that checks if a segment value is explicit and accepts the segment, value, and allowZero parameters
+ *
+ * @param segment - The segment to validate
+ * @param value - The value to validate
+ * @param allowZero - Whether to allow zero values
  *
  * @example
  * const segmentObj = {
@@ -73,11 +77,19 @@ export function createExplicitSegmentValidator<
   segmentEnum: SegmentEnum;
   rules: Record<SegmentEnum[keyof SegmentEnum], ExplicitSegmentRule>;
 }) {
-  return (segment: SegmentEnum[keyof SegmentEnum], value: string): boolean => {
+  return (
+    segment: SegmentEnum[keyof SegmentEnum],
+    value: string,
+    allowZero?: boolean,
+  ): boolean => {
     if (
-      !(isValidSegmentValue(value) && isValidSegmentName(segmentEnum, segment))
-    )
+      !(
+        isValidSegmentValue(value, allowZero) &&
+        isValidSegmentName(segmentEnum, segment)
+      )
+    ) {
       return false;
+    }
 
     const rule = rules[segment];
     if (!rule) return false;
