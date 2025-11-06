@@ -53,6 +53,9 @@ const meta: StoryMetaType<typeof InputBox> = {
       options: Object.values(Size),
     },
   },
+  args: {
+    size: Size.Default,
+  },
 };
 export default meta;
 
