@@ -197,8 +197,6 @@ const InputSegmentWithRef = <Segment extends string>(
   // Note: Using a text input with pattern attribute due to Firefox
   // stripping leading zeros on number inputs - Thanks @matt-d-rat
   // Number inputs also don't support the `selectionStart`/`End` API
-
-  // These attributes are returned from the hook as input props and we pass that to an input element
   return (
     <>
       <input

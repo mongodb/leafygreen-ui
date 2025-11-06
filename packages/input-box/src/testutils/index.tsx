@@ -5,7 +5,7 @@ import { Size } from '@leafygreen-ui/tokens';
 
 import { InputBox, InputBoxProps } from '../InputBox';
 import { InputBoxProvider } from '../InputBoxContext';
-import { InputBoxProviderProps } from '../InputBoxContext/InputBoxContext';
+import { InputBoxProviderProps } from '../InputBoxContext';
 import { InputSegment } from '../InputSegment';
 import { InputSegmentProps } from '../InputSegment/InputSegment.types';
 
@@ -52,6 +52,7 @@ export const InputSegmentWrapper = ({
       shouldSkipValidation={segment === SegmentObjMock.Year}
       shouldWrap={segment !== SegmentObjMock.Year}
       placeholder={defaultPlaceholderMock[segment]}
+      autoComplete="off"
     />
   );
 };

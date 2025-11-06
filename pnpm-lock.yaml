@@ -2258,6 +2258,9 @@ importers:
 
   packages/input-box:
     dependencies:
+      '@leafygreen-ui/a11y':
+        specifier: workspace:^
+        version: link:../a11y
       '@leafygreen-ui/date-utils':
         specifier: workspace:^
         version: link:../date-utils

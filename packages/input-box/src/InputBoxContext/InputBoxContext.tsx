@@ -4,40 +4,10 @@ import React, {
   useContext,
   useMemo,
 } from 'react';
-
-import { DynamicRefGetter } from '@leafygreen-ui/hooks';
-import { Size } from '@leafygreen-ui/tokens';
-
-import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
-
-// Helper type to represent the constrained Enum Object structure
-type SegmentEnumObject<Segment extends string> = Record<string, Segment>;
-
-// T is the string union of segment names (e.g., 'areaCode' | 'prefix')
-export interface InputBoxContextType<Segment extends string = string> {
-  charsPerSegment: Record<Segment, number>;
-  disabled: boolean;
-  segmentEnum: SegmentEnumObject<Segment>;
-  onChange: InputSegmentChangeEventHandler<Segment, string>;
-  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
-  segmentRefs: Record<Segment, ReturnType<DynamicRefGetter<HTMLInputElement>>>;
-  segments: Record<Segment, string>;
-  labelledBy?: string;
-  size: Size;
-}
-
-// Props are generic over T and use SegmentEnumObject<T> for segmentEnum
-export interface InputBoxProviderProps<Segment extends string> {
-  charsPerSegment: Record<Segment, number>;
-  disabled: boolean;
-  segmentEnum: SegmentEnumObject<Segment>;
-  onChange: InputSegmentChangeEventHandler<Segment, string>;
-  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
-  segmentRefs: Record<Segment, ReturnType<DynamicRefGetter<HTMLInputElement>>>;
-  segments: Record<Segment, string>;
-  labelledBy?: string;
-  size: Size;
-}
+import {
+  InputBoxContextType,
+  InputBoxProviderProps,
+} from './InputBoxContext.types';
 
 // The Context constant is defined with the default/fixed type, which is string. This is the loose type because we don't know the type of the string yet.
 export const InputBoxContext = createContext<InputBoxContextType | null>(null);

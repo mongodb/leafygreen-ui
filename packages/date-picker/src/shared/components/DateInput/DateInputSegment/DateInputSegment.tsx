@@ -45,13 +45,8 @@ export const DateInputSegment = React.forwardRef<
 
   const autoComplete = getAutoComplete(autoCompleteProp, segment);
 
-  const shouldWrap = !([DateSegment.Year] as Array<DateSegment>).includes(
-    segment,
-  );
-
-  const shouldSkipValidation = (
-    [DateSegment.Year] as Array<DateSegment>
-  ).includes(segment);
+  const shouldWrap = segment !== DateSegment.Year;
+  const shouldSkipValidation = segment === DateSegment.Year;
 
   return (
     <InputSegment

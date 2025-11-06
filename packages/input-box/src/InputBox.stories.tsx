@@ -11,6 +11,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { SegmentObjMock } from './testutils/testutils.mocks';
 import { InputBox, InputBoxProps } from './InputBox';
 import { InputBoxWithState } from './testutils';
+import { Size } from '@leafygreen-ui/tokens';
 
 const meta: StoryMetaType<typeof InputBox> = {
   title: 'Components/Inputs/InputBox',
@@ -41,7 +42,15 @@ const meta: StoryMetaType<typeof InputBox> = {
         'labelledBy',
         'onSegmentChange',
         'renderSegment',
+        'segmentComponent',
+        'segmentEnum',
       ],
+    },
+  },
+  argTypes: {
+    size: {
+      control: 'select',
+      options: Object.values(Size),
     },
   },
 };

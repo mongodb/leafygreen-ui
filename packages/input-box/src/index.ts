@@ -3,7 +3,7 @@ export {
   InputBoxProvider,
   type InputBoxProviderProps,
   useInputBoxContext,
-} from './InputBoxContext/InputBoxContext';
+} from './InputBoxContext';
 export {
   InputSegment,
   type InputSegmentChangeEventHandler,

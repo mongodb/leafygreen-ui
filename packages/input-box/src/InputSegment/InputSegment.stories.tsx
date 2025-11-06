@@ -85,6 +85,11 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
             year: '2025',
           },
           {
+            day: '00',
+            month: '0',
+            year: '0000',
+          },
+          {
             day: '',
             month: '',
             year: '',
@@ -144,7 +149,7 @@ export const LiveExample: StoryFn<typeof InputSegment> = (
       disabled={false}
       size={context?.args?.size || Size.Default}
     >
-      <InputSegment {...props} />
+      <InputSegment {...props} autoComplete="off" />
     </InputBoxProvider>
   );
 };
