@@ -175,7 +175,7 @@ describe('packages/input-box', () => {
     });
   });
 
-  describe.only('Keyboard interaction', () => {
+  describe('Keyboard interaction', () => {
     test('Tab moves focus to next segment', () => {
       const { dayInput, monthInput, yearInput } = renderInputBox({});
       userEvent.click(monthInput);
@@ -239,6 +239,42 @@ describe('packages/input-box', () => {
         const { dayInput, yearInput } = renderInputBox({});
         userEvent.click(yearInput);
         userEvent.type(yearInput, '0{arrowleft}');
+        expect(dayInput).toHaveFocus();
+      });
+    });
+
+    describe('Up arrow', () => {
+      test('keeps the focus in the current segment when the segment is empty', () => {
+        const { dayInput } = renderInputBox({});
+        userEvent.click(dayInput);
+        userEvent.type(dayInput, '{arrowup}');
+        expect(dayInput).toHaveFocus();
+      });
+
+      test('keeps the focus in the current segment when the segment is not empty', () => {
+        const { dayInput } = renderInputBox({
+          segments: { day: '20', month: '02', year: '1990' },
+        });
+        userEvent.click(dayInput);
+        userEvent.type(dayInput, '{arrowup}');
+        expect(dayInput).toHaveFocus();
+      });
+    });
+
+    describe('Down arrow', () => {
+      test('keeps the focus in the current segment when the segment is empty', () => {
+        const { dayInput } = renderInputBox({});
+        userEvent.click(dayInput);
+        userEvent.type(dayInput, '{arrowdown}');
+        expect(dayInput).toHaveFocus();
+      });
+
+      test('keeps the focus in the current segment when the segment is not empty', () => {
+        const { dayInput } = renderInputBox({
+          segments: { day: '20', month: '02', year: '1990' },
+        });
+        userEvent.click(dayInput);
+        userEvent.type(dayInput, '{arrowdown}');
         expect(dayInput).toHaveFocus();
       });
     });
