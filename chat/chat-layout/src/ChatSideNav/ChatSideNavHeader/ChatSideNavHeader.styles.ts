@@ -28,6 +28,7 @@ const getBorderBottomStyle = (theme: Theme) => css`
 `;
 
 const getBaseHeaderStyles = (theme: Theme) => css`
+  overflow: hidden;
   background-color: ${color[theme].background[Variant.Secondary][
     InteractionState.Default
   ]};
@@ -60,7 +61,6 @@ export const getHeaderStyles = ({
   );
 
 const baseAvatarContainerStyles = css`
-  overflow: hidden;
   height: ${HEADER_SUB_CONTAINER_HEIGHT}px;
   padding: 0 ${AVATAR_WRAPPER_HORIZONTAL_PADDING}px;
   display: grid;

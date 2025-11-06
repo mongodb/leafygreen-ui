@@ -25,7 +25,7 @@ export const ChatSideNav = CompoundComponent(
   forwardRef<HTMLElement, ChatSideNavProps>(
     ({ children, className, darkMode: darkModeProp, ...rest }, ref) => {
       const { darkMode, theme } = useDarkMode(darkModeProp);
-      const { isPinned, isSideNavHovered, setIsSideNavHovered } =
+      const { isPinned, setIsSideNavHovered, shouldRenderExpanded } =
         useChatLayoutContext();
 
       const handleMouseEnter = () => {
@@ -46,8 +46,7 @@ export const ChatSideNav = CompoundComponent(
         ChatSideNavSubcomponentProperty.Content,
       );
 
-      const shouldRenderExpanded = isPinned || isSideNavHovered;
-      const showOverflowShadow = !isPinned && isSideNavHovered;
+      const showOverflowShadow = !isPinned && shouldRenderExpanded;
 
       return (
         <LeafyGreenProvider darkMode={darkMode}>

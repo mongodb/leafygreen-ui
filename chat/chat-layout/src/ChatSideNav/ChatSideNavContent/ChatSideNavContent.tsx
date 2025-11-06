@@ -26,9 +26,7 @@ export const ChatSideNavContent = CompoundSubComponent(
   forwardRef<HTMLDivElement, ChatSideNavContentProps>(
     ({ children, className, ...rest }, ref) => {
       const { theme } = useDarkMode();
-      const { isPinned, isSideNavHovered } = useChatLayoutContext();
-
-      const shouldRenderExpanded = isPinned || isSideNavHovered;
+      const { shouldRenderExpanded } = useChatLayoutContext();
 
       const sideNavItems = findChildren(
         children,

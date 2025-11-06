@@ -25,9 +25,7 @@ export const ChatSideNavItem = CompoundSubComponent(
     ) => {
       const { Component, rest } = useInferredPolymorphic(as, restProps, 'div');
       const { theme } = useDarkMode();
-      const { isPinned, isSideNavHovered } = useChatLayoutContext();
-
-      const shouldRenderExpanded = isPinned || isSideNavHovered;
+      const { shouldRenderExpanded } = useChatLayoutContext();
 
       return (
         <Component

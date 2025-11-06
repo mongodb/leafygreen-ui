@@ -34,9 +34,7 @@ export const ChatSideNavHeader = CompoundSubComponent(
     ({ children, className, onClickNewChat, ...rest }, ref) => {
       const { darkMode, theme } = useDarkMode();
       const { assistantName } = useLeafyGreenChatContext();
-      const { isPinned, isSideNavHovered } = useChatLayoutContext();
-
-      const shouldRenderExpanded = isPinned || isSideNavHovered;
+      const { shouldRenderExpanded } = useChatLayoutContext();
       const showNewChatButton = !!onClickNewChat;
 
       return (

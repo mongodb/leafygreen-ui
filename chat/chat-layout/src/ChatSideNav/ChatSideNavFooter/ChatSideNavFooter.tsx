@@ -16,9 +16,7 @@ export const ChatSideNavFooter = forwardRef<
   ChatSideNavFooterProps
 >(({ className, ...rest }, ref) => {
   const { theme } = useDarkMode();
-  const { isPinned, isSideNavHovered, togglePin } = useChatLayoutContext();
-
-  const shouldRenderExpanded = isPinned || isSideNavHovered;
+  const { isPinned, togglePin, shouldRenderExpanded } = useChatLayoutContext();
 
   return (
     <div

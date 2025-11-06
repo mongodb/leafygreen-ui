@@ -20,6 +20,12 @@ export interface ChatLayoutContextProps {
    * Function to set the hover state of the side nav
    */
   setIsSideNavHovered: (isHovered: boolean) => void;
+
+  /**
+   * Whether the side nav should render in expanded state.
+   * This is true when the nav is pinned OR when it's being hovered.
+   */
+  shouldRenderExpanded: boolean;
 }
 
 export const ChatLayoutContext = createContext<ChatLayoutContextProps>({
@@ -27,6 +33,7 @@ export const ChatLayoutContext = createContext<ChatLayoutContextProps>({
   togglePin: () => {},
   isSideNavHovered: false,
   setIsSideNavHovered: () => {},
+  shouldRenderExpanded: true,
 });
 
 export const useChatLayoutContext = () => useContext(ChatLayoutContext);

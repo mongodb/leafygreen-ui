@@ -21,6 +21,7 @@ const BUTTON_HEIGHT = 48;
 const FOOTER_HEIGHT = 48 + 1;
 
 const getBaseFooterStyles = (theme: Theme) => css`
+  overflow: hidden;
   background-color: ${color[theme].background[Variant.Secondary][
     InteractionState.Default
   ]};

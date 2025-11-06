@@ -25,14 +25,23 @@ export function ChatLayout({
     onTogglePinned?.(newValue);
   }, [isPinned, onTogglePinned]);
 
+  const shouldRenderExpanded = isPinned || isSideNavHovered;
+
   const value = useMemo(
     () => ({
       isPinned,
       togglePin,
       isSideNavHovered,
       setIsSideNavHovered,
+      shouldRenderExpanded,
     }),
-    [isPinned, togglePin, isSideNavHovered, setIsSideNavHovered],
+    [
+      isPinned,
+      togglePin,
+      isSideNavHovered,
+      setIsSideNavHovered,
+      shouldRenderExpanded,
+    ],
   );
 
   return (
