@@ -30,11 +30,6 @@ const nextConfig = {
             key: 'Access-Control-Allow-Credentials',
             value: 'true',
           },
-          // Allow iframe embedding from specific origins
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN', // Change to ALLOWALL for cross-origin iframes
-          },
           // Content Security Policy for iframe embedding
           {
             key: 'Content-Security-Policy',

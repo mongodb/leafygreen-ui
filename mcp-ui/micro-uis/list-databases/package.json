@@ -4,6 +4,12 @@
   "private": true,
   "main": "./src/index.tsx",
   "types": "./src/index.tsx",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
   "peerDependencies": {
     "react": "^18.2.0"
   },
