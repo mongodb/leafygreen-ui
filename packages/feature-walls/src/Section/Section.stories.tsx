@@ -33,12 +33,10 @@ const sectionChildrenContainerStyles = css`
 `;
 
 const SectionChild = ({ index }: { index: number }) => {
-  const { darkMode } = useDarkMode();
-
   return (
     <div key={index} className={sectionChildContainerStyles}>
-      <Subtitle darkMode={darkMode}>Lorem ipsum</Subtitle>
-      <Body darkMode={darkMode}>
+      <Subtitle>Lorem ipsum</Subtitle>
+      <Body>
         Lorem ipsum dolor sit amet, consectetur ipsum et adipiscing elit, sed do
         eiusmod.
       </Body>
