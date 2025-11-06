@@ -216,7 +216,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   describe('Keyboard', () => {
     describe('Arrow Keys', () => {
       describe('day input', () => {
-        const formatter = getValueFormatter(charsPerSegment['day']);
+        const formatter = getValueFormatter({
+          charsPerSegment: charsPerSegment['day'],
+        });
 
         describe('Up arrow', () => {
           test('calls handler with value +1 if value is less than max', () => {
@@ -324,7 +326,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       describe('month input', () => {
-        const formatter = getValueFormatter(charsPerSegment['month']);
+        const formatter = getValueFormatter({
+          charsPerSegment: charsPerSegment['month'],
+        });
 
         describe('Up arrow', () => {
           test('calls handler with value +1 if value is less than max', () => {
@@ -442,7 +446,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       describe('year input', () => {
-        const formatter = getValueFormatter(charsPerSegment['year']);
+        const formatter = getValueFormatter({
+          charsPerSegment: charsPerSegment['year'],
+        });
 
         describe('Up arrow', () => {
           test('calls handler with value +1 if value is less than max', () => {

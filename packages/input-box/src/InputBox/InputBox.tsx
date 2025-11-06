@@ -54,10 +54,10 @@ export const InputBoxWithRef = <Segment extends string>(
 ) => {
   const { theme } = useDarkMode();
 
-  const isExplicitSegmentValue = createExplicitSegmentValidator(
+  const isExplicitSegmentValue = createExplicitSegmentValidator({
     segmentEnum,
-    segmentRules,
-  );
+    rules: segmentRules,
+  });
 
   /** Formats and sets the segment value. */
   const getFormattedSegmentValue = (
@@ -65,10 +65,10 @@ export const InputBoxWithRef = <Segment extends string>(
     segmentValue: string,
     allowZero: boolean,
   ): string => {
-    const formatter = getValueFormatter(
-      charsPerSegment[segmentName],
+    const formatter = getValueFormatter({
+      charsPerSegment: charsPerSegment[segmentName],
       allowZero,
-    );
+    });
     const formattedValue = formatter(segmentValue);
     return formattedValue;
   };

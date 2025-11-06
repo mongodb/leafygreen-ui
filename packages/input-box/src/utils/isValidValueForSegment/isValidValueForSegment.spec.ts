@@ -23,16 +23,17 @@ const defaultMax = {
 } as const;
 
 const isValidValueForSegmentWrapper = (segment: SegmentObj, value: string) => {
-  return isValidValueForSegment(
+  return isValidValueForSegment({
     segment,
     value,
-    defaultMin[segment],
-    defaultMax[segment],
-    SegmentObj,
-    segment === 'year'
-      ? (value: string) => inRange(Number(value), 1000, 9999 + 1)
-      : undefined,
-  );
+    defaultMin: defaultMin[segment],
+    defaultMax: defaultMax[segment],
+    segmentEnum: SegmentObj,
+    customValidation:
+      segment === 'year'
+        ? (value: string) => inRange(Number(value), 1000, 9999 + 1)
+        : undefined,
+  });
 };
 
 describe('packages/input-box/utils/isValidSegmentValue', () => {

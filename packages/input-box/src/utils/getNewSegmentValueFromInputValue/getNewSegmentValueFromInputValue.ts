@@ -4,6 +4,20 @@ import { truncateStart } from '@leafygreen-ui/lib';
 
 import { isValidValueForSegment } from '..';
 
+interface GetNewSegmentValueFromInputValue<
+  SegmentName extends string,
+  Value extends string,
+> {
+  segmentName: SegmentName;
+  currentValue: Value;
+  incomingValue: Value;
+  charsPerSegment: number;
+  defaultMin: number;
+  defaultMax: number;
+  segmentEnum: Readonly<Record<string, SegmentName>>;
+  shouldSkipValidation?: boolean;
+}
+
 /**
  * Calculates the new value for the segment given an incoming change.
  *
@@ -18,34 +32,77 @@ import { isValidValueForSegment } from '..';
  * @param charsPerSegment - The number of characters per segment
  * @param defaultMin - The default minimum value for the segment
  * @param defaultMax - The default maximum value for the segment
- * @param segmentEnum - The segment object
+ * @param segmentEnum - The segment enum/object containing the segment names and their corresponding values to validate against
  * @param shouldSkipValidation - Whether the segment should skip validation. This is useful for segments that allow values outside of the default range.
  * @returns The new value for the segment
  * @example
  * // The segmentEnum is the object that contains the segment names and their corresponding values
  * const segmentEnum = {
  *   Day: 'day',
- *   Month: 'month',
  *   Year: 'year',
+ *   Minute: 'minute',
  * };
- * getNewSegmentValueFromInputValue('day', '1', '2', segmentEnum['day'], 1, 31, segmentEnum); // '2'
- * getNewSegmentValueFromInputValue('month', '1', '2', segmentEnum['month'], 1, 12, segmentEnum); // '2'
- * getNewSegmentValueFromInputValue('year', '1', '2', segmentEnum['year'], 1970, 2038, segmentEnum); // '2'
- * getNewSegmentValueFromInputValue('day', '1', '.', segmentEnum['day'], 1, 31, segmentEnum); // '1'
+ *
+ *  getNewSegmentValueFromInputValue({
+ *   segmentName: 'day',
+ *   currentValue: '0',
+ *   incomingValue: '1',
+ *   charsPerSegment: 2,
+ *   defaultMin: 1,
+ *   defaultMax: 31,
+ *   segmentEnum
+ * }); // '1'
+ * getNewSegmentValueFromInputValue({
+ *   segmentName: 'day',
+ *   currentValue: '1',
+ *   incomingValue: '12',
+ *   charsPerSegment: 2,
+ *   defaultMin: 1,
+ *   defaultMax: 31,
+ *   segmentEnum
+ * }); // '12'
+ * getNewSegmentValueFromInputValue({
+ *   segmentName: 'day',
+ *   currentValue: '1',
+ *   incomingValue: '.',
+ *   charsPerSegment: 2,
+ *   defaultMin: 1,
+ *   defaultMax: 31,
+ *   segmentEnum
+ * }); // '1'
+ * getNewSegmentValueFromInputValue({
+ *   segmentName: 'year',
+ *   currentValue: '00',
+ *   incomingValue: '000',
+ *   charsPerSegment: 4,
+ *   defaultMin: 1970,
+ *   defaultMax: 2038,
+ *   segmentEnum,
+ *   shouldSkipValidation: true,
+ * }); // '000'
+ *  *  * getNewSegmentValueFromInputValue({
+ *   segmentName: 'minute',
+ *   currentValue: '0',
+ *   incomingValue: '00',
+ *   charsPerSegment: 2,
+ *   defaultMin: 0,
+ *   defaultMax: 59,
+ *   segmentEnum,
+ * }); // '00'
  */
 export const getNewSegmentValueFromInputValue = <
-  T extends string,
-  V extends string,
->(
-  segmentName: T,
-  currentValue: V,
-  incomingValue: V,
-  charsPerSegment: number,
-  defaultMin: number,
-  defaultMax: number,
-  segmentEnum: Readonly<Record<string, T>>,
+  SegmentName extends string,
+  Value extends string,
+>({
+  segmentName,
+  currentValue,
+  incomingValue,
+  charsPerSegment,
+  defaultMin,
+  defaultMax,
+  segmentEnum,
   shouldSkipValidation = false,
-): V => {
+}: GetNewSegmentValueFromInputValue<SegmentName, Value>): Value => {
   // If the incoming value is not a valid number
   const isIncomingValueNumber = !isNaN(Number(incomingValue));
   // macOS adds a period when pressing SPACE twice inside a text input.
@@ -64,32 +121,24 @@ export const getNewSegmentValueFromInputValue = <
     return currentValue;
   }
 
-  const isIncomingValueValid = isValidValueForSegment(
-    segmentName,
-    incomingValue,
+  const isIncomingValueValid = isValidValueForSegment({
+    segment: segmentName,
+    value: incomingValue,
     defaultMin,
     defaultMax,
     segmentEnum,
-  );
-
-  // console.log('💚isIncomingValueValid', {
-  //   currentValue,
-  //   incomingValue,
-  //   isIncomingValueValid,
-  // });
+  });
 
   if (isIncomingValueValid || shouldSkipValidation) {
     const newValue = truncateStart(incomingValue, {
       length: charsPerSegment,
     });
 
-    return newValue as V;
+    return newValue as Value;
   }
 
   const typedChar = last(incomingValue.split(''));
   const newValue = typedChar === '0' ? '0' : typedChar ?? '';
-  // console.log('💚💚is', {
-  //   newValue,
-  // });
-  return newValue as V;
+
+  return newValue as Value;
 };

@@ -145,10 +145,10 @@ describe('packages/input-segment', () => {
 
     describe('keyboard events', () => {
       describe('Arrow keys', () => {
-        const formatter = getValueFormatter(
-          charsPerSegmentMock['day'],
-          defaultMinMock['day'] === 0,
-        );
+        const formatter = getValueFormatter({
+          charsPerSegment: charsPerSegmentMock['day'],
+          allowZero: defaultMinMock['day'] === 0,
+        });
 
         describe('Up arrow', () => {
           test('calls handler with value default +1 step', () => {

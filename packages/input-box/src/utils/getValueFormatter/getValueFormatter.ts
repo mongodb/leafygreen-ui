@@ -7,24 +7,31 @@ import { isZeroLike } from '@leafygreen-ui/lib';
  * otherwise, pad the string with 0s, or trim it to n chars
  *
  * @param charsPerSegment - the number of characters per segment
- * @param allowZero -
- * @param val - the value to format
+ * @param allowZero - whether to allow zero-like values
  * @returns a value formatter function for the provided segment
+ *   - @param val - the value to format (string, number, or undefined)
  *
  * @example
- * const charsPerSegment = {
- *   day: 2,
- *   month: 2,
- *   year: 4,
- * };
- * const formatter = getValueFormatter(charsPerSegment['day']);
+ * const formatter = getValueFormatter({ charsPerSegment: 2 });
  * formatter('0'); // ''
- * formatter('1'); // '01'
+ * formatter('1'); // '1'
+ * formatter('12'); // '12'
+ * formatter('123'); // '23'
+ *
+ * const formatter = getValueFormatter({ charsPerSegment: 2, allowZero: true });
+ * formatter('00'); // '00'
+ * formatter('01'); // '01'
  * formatter('12'); // '12'
  * formatter('123'); // '23'
  */
 export const getValueFormatter =
-  (charsPerSegment: number, allowZero = false) =>
+  ({
+    charsPerSegment,
+    allowZero = false,
+  }: {
+    charsPerSegment: number;
+    allowZero?: boolean;
+  }) =>
   (val: string | number | undefined) => {
     // If the value is empty, do not format it
     if (val === '') return '';

@@ -62,7 +62,10 @@ const InputSegmentWithRef = <Segment extends string>(
   } = useInputBoxContext<Segment>();
   const baseFontSize = useUpdatedBaseFontSize();
   const charsPerSegment = charsPerSegmentContext[segment];
-  const formatter = getValueFormatter(charsPerSegment, min === 0);
+  const formatter = getValueFormatter({
+    charsPerSegment,
+    allowZero: min === 0,
+  });
   const pattern = `[0-9]{${charsPerSegment}}`;
 
   const segmentRef = segmentRefs[segment];
@@ -77,16 +80,16 @@ const InputSegmentWithRef = <Segment extends string>(
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     const { target } = e;
 
-    const newValue = getNewSegmentValueFromInputValue(
-      segment,
-      value,
-      target.value,
+    const newValue = getNewSegmentValueFromInputValue({
+      segmentName: segment,
+      currentValue: value,
+      incomingValue: target.value,
       charsPerSegment,
-      min,
-      max,
+      defaultMin: min,
+      defaultMax: max,
       segmentEnum,
       shouldSkipValidation,
-    );
+    });
 
     const hasValueChanged = newValue !== value;
 
@@ -133,7 +136,7 @@ const InputSegmentWithRef = <Segment extends string>(
           min,
           max,
           step,
-          shouldNotRollover: !shouldWrap,
+          shouldWrap: shouldWrap,
         });
         const valueString = formatter(newValue);
 

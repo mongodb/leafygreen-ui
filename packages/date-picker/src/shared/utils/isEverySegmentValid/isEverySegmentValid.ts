@@ -10,15 +10,16 @@ import { DateSegment, DateSegmentsState, DateSegmentValue } from '../../types';
  */
 export const isEverySegmentValid = (segments: DateSegmentsState): boolean => {
   return Object.entries(segments).every(([segment, value]) =>
-    isValidValueForSegment(
-      segment as DateSegment,
-      value as DateSegmentValue,
-      defaultMin[segment as DateSegment],
-      defaultMax[segment as DateSegment],
-      DateSegment,
-      segment === DateSegment.Year
-        ? (value: DateSegmentValue) => inRange(Number(value), 1000, 9999 + 1)
-        : undefined,
-    ),
+    isValidValueForSegment({
+      segment: segment as DateSegment,
+      value: value as DateSegmentValue,
+      defaultMin: defaultMin[segment as DateSegment],
+      defaultMax: defaultMax[segment as DateSegment],
+      segmentEnum: DateSegment,
+      customValidation:
+        segment === DateSegment.Year
+          ? (value: DateSegmentValue) => inRange(Number(value), 1000, 9999 + 1)
+          : undefined,
+    }),
   );
 };

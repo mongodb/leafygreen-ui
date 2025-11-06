@@ -9,10 +9,10 @@ import { DateSegment, DateSegmentsState } from '../../types';
  * Explicit: Day = 5, 02
  * Ambiguous: Day = 2 (could be 20-29)
  */
-export const isExplicitSegmentValue = createExplicitSegmentValidator(
-  DateSegment,
-  dateSegmentRules,
-);
+export const isExplicitSegmentValue = createExplicitSegmentValidator({
+  segmentEnum: DateSegment,
+  rules: dateSegmentRules,
+});
 
 /**
  * Returns whether every segment's value is explicit and unambiguous
