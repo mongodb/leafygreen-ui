@@ -1,5 +1,17 @@
 # @leafygreen-ui/date-picker
 
+## 4.0.11
+
+### Patch Changes
+
+- Updated dependencies [6494d15]
+- Updated dependencies [2463aa4]
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/select@17.0.0
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
 ## 4.0.10
 
 ### Patch Changes
