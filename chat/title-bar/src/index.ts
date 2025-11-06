@@ -1,2 +1,1 @@
-export { TitleBar } from './TitleBar';
-export { Align, type TitleBarProps } from './TitleBar.types';
+export { Align, TitleBar, type TitleBarProps } from './TitleBar';

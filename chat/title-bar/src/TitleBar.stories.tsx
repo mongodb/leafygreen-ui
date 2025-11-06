@@ -6,7 +6,7 @@ import {
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
-import { TitleBar, TitleBarProps } from '.';
+import { TitleBar, type TitleBarProps } from './TitleBar';
 
 const meta: StoryMetaType<typeof TitleBar> = {
   title: 'Composition/Chat/TitleBar',

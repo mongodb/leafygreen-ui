@@ -425,9 +425,6 @@ importers:
       '@lg-chat/leafygreen-chat-provider':
         specifier: workspace:^
         version: link:../leafygreen-chat-provider
-      '@lg-chat/title-bar':
-        specifier: workspace:^
-        version: link:../title-bar
       react-transition-group:
         specifier: ^4.4.5
         version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

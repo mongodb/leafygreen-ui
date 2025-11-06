@@ -7,6 +7,9 @@
       ],
       "@leafygreen-ui/*": [
         "../../packages/*/src"
+      ],
+      "@lg-chat/*": [
+        "../*/src"
       ]
     }
   },
