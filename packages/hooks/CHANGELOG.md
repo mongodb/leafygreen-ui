@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 9.3.0
+
+### Minor Changes
+
+- 11cbe4f: Updated the useControlled hook argument to utilize the useState Dispatch while ensuring backwards compatibility
+
 ## 9.2.2
 
 ### Patch Changes

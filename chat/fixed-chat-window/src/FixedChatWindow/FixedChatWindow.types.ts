@@ -1,14 +1,12 @@
 import { PropsWithChildren, ReactNode } from 'react';
 import { MouseEventHandler } from 'react';
 import { ChatWindowProps } from '@lg-chat/chat-window';
-import { TitleBarProps } from '@lg-chat/title-bar';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 
 export type FixedChatWindowProps = DarkModeProps &
   ChatWindowProps &
-  TitleBarProps &
   PropsWithChildren<{
     /**
      * Define whether the chat window should be open by default when uncontrolled

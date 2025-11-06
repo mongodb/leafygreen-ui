@@ -6,4 +6,6 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 export interface ChatWindowProps
   extends Omit<React.ComponentPropsWithoutRef<'div'>, 'title'>,
     DarkModeProps,
-    Partial<TitleBarProps> {}
+    Partial<
+      Pick<TitleBarProps, 'badgeText' | 'title' | 'onClose' | 'iconSlot'>
+    > {}

@@ -1,5 +1,16 @@
 # @leafygreen-ui/icon
 
+## 14.7.0
+
+### Minor Changes
+
+- 2463aa4: Updated Icon to include <title> element when title is added. Deprecated the `createGlyphComponent`, and the design system is instead using glyphs from the `generated` folder
+
+### Patch Changes
+
+- Updated dependencies [11cbe4f]
+  - @leafygreen-ui/hooks@9.3.0
+
 ## 14.6.1
 
 ### Patch Changes

@@ -54,7 +54,6 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/input-option": "workspace:^",
-    "@leafygreen-ui/leafygreen-provider": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/menu": "workspace:^",
     "@leafygreen-ui/modal": "workspace:^",
@@ -77,7 +76,7 @@
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/code-editor",
   "repository": {

@@ -1,5 +1,16 @@
 # @lg-chat/title-bar
 
+## 4.2.0
+
+### Minor Changes
+
+- af60a2d: [LG-5664](https://jira.mongodb.org/browse/LG-5664): add compact variant of `TitleBar`
+
+### Patch Changes
+
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/icon@14.7.0
+
 ## 4.1.0
 
 ### Minor Changes
