@@ -6,7 +6,6 @@ import {
 } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
