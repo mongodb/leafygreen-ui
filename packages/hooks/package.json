@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/hooks",
-  "version": "9.2.2",
+  "version": "9.3.0",
   "description": "LeafyGreen UI Kit Custom Hooks",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

@@ -1,5 +1,22 @@
 # @leafygreen-ui/select
 
+## 17.0.0
+
+### Major Changes
+
+- 6494d15: Removes support for `refEl` property, which was never leveraged within the component logic. Instead, the `refEl` property always positions the internal MenuButton component against the internal ListBox component. There are no end user changes, just a more precise `SelectProps` type definition.
+
+### Minor Changes
+
+- 2463aa4: Updates testUtils files to accommodate changes to the Icon package
+
+### Patch Changes
+
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
 ## 16.3.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @leafygreen-ui/text-input
 
+## 16.2.0
+
+### Minor Changes
+
+- 2463aa4: Updates testUtils files to accommodate changes to the Icon package
+
+### Patch Changes
+
+- Updated dependencies [11cbe4f]
+  - @leafygreen-ui/hooks@9.3.0
+
 ## 16.1.3
 
 ### Patch Changes
