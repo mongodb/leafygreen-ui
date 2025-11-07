@@ -15,7 +15,6 @@ export interface InputSegmentChangeEvent<
   };
 }
 
-// TODO: consider renaming min/max names to minSegment/maxSegment
 /**
  * The type for the onChange handler
  */
