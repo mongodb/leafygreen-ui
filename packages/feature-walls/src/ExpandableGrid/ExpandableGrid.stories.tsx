@@ -7,9 +7,7 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
@@ -23,12 +21,10 @@ const childContainerStyles = css`
 `;
 
 const ExpandableGridChild = ({ index }: { index: number }) => {
-  const { darkMode } = useDarkMode();
-
   return (
     <div className={childContainerStyles}>
-      <Subtitle darkMode={darkMode}>Lorem ipsum {index + 1}</Subtitle>
-      <Body darkMode={darkMode}>
+      <Subtitle>Lorem ipsum {index + 1}</Subtitle>
+      <Body>
         Lorem ipsum dolor sit amet, consectetur ipsum et adipiscing elit, sed do
         eiusmod.
       </Body>

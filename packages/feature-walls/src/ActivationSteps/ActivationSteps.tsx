@@ -42,13 +42,12 @@ export const ActivationSteps = forwardRef<HTMLElement, ActivationStepsProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <Card className={cardStyles} darkMode={darkMode}>
+        <Card className={cardStyles}>
           <Section {...rest} className={className} ref={fwdRef} title={title}>
             <div className={childrenContainerStyles}>
               <VerticalStepper
                 className={verticalStepperStyles}
                 currentStep={currentStep}
-                darkMode={darkMode}
               >
                 {steps.map((props, index) => (
                   <VerticalStep key={props.title + index} {...props} />
@@ -62,7 +61,7 @@ export const ActivationSteps = forwardRef<HTMLElement, ActivationStepsProps>(
                 ref={messageContainerRef}
               >
                 <CheckmarkWithCircle fill={getIconFill(theme)} />
-                <Body className={getMessageStyles(theme)} darkMode={darkMode}>
+                <Body className={getMessageStyles(theme)}>
                   {completedMessage}
                 </Body>
               </div>

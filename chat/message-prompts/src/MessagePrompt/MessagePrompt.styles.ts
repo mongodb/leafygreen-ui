@@ -11,7 +11,7 @@ import {
 const baseStyles = css`
   display: block;
   padding: ${spacing[2]}px ${spacing[3]}px;
-  border: 1px solid ${palette.green.dark1};
+  border: 1px solid ${palette.green.dark2};
   border-radius: 12px;
   transition: all ${transitionDuration.slower}ms ease;
   box-shadow: none;

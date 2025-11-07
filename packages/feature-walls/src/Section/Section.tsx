@@ -42,7 +42,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
             ref={fwdRef}
             {...rest}
           >
-            <H3 darkMode={darkMode}>{title}</H3>
+            <H3>{title}</H3>
             {children}
           </section>
         </Wrapper>

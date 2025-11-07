@@ -1,5 +1,16 @@
 # @lg-chat/chat-window
 
+## 5.2.0
+
+### Minor Changes
+
+- af60a2d: [LG-5664](https://jira.mongodb.org/browse/LG-5664): add compact variant of `TitleBar`
+
+### Patch Changes
+
+- Updated dependencies [af60a2d]
+  - @lg-chat/title-bar@4.2.0
+
 ## 5.1.0
 
 ### Minor Changes

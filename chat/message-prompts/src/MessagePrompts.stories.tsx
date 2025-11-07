@@ -7,6 +7,8 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+
 import { MessagePrompt, MessagePrompts, MessagePromptsProps } from '.';
 
 // eslint-disable-next-line no-console
@@ -24,6 +26,15 @@ const meta: StoryMetaType<typeof MessagePrompts> = {
     enableHideOnSelect: { control: 'boolean' },
     label: { control: 'text' },
   },
+  decorators: [
+    (Story: StoryFn, context) => {
+      return (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Story />
+        </LeafyGreenProvider>
+      );
+    },
+  ],
   parameters: {
     default: 'LiveExample',
     controls: {
@@ -41,6 +52,13 @@ const meta: StoryMetaType<typeof MessagePrompts> = {
           onClickRefresh: testOnClickRefresh,
         },
       ],
+      decorator: (Instance, context) => {
+        return (
+          <LeafyGreenProvider darkMode={context?.args.darkMode}>
+            <Instance />
+          </LeafyGreenProvider>
+        );
+      },
     },
   },
 };

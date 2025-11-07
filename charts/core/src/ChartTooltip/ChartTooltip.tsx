@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 
+import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../ChartContext';
@@ -18,6 +19,8 @@ export function ChartTooltip({
   seriesValueFormatter,
   seriesNameFormatter,
   sort,
+  axisPointer = 'line',
+  className,
 }: ChartTooltipProps) {
   const {
     chart: {
@@ -117,14 +120,19 @@ export function ChartTooltip({
         /**
          * using `extraCssText` instead of `className` because emotion-defined class
          * didn't have high-enough specificity
+         *
          */
-        className: CHART_TOOLTIP_CLASSNAME,
+        className: cx(CHART_TOOLTIP_CLASSNAME, className),
         extraCssText: getRootStylesText(theme),
         borderWidth: 0,
         padding: 0,
         showDelay: 0,
         hideDelay: 0,
         transitionDuration: 0,
+        axisPointer: {
+          type: axisPointer,
+        },
+
         /**
          * Since the formatter trigger is set to 'axis', the seriesData will be
          * an array of objects. Additionally, it should contain axis related
@@ -148,6 +156,8 @@ export function ChartTooltip({
     theme,
     tooltipPinned,
     updateOptions,
+    axisPointer,
+    className,
   ]);
 
   return null;

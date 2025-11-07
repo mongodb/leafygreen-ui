@@ -69,7 +69,7 @@ export const ChatWindow = forwardRef<HTMLDivElement, ChatWindowProps>(
           ref={fwdRef}
           {...rest}
         >
-          {!isCompact && title && (
+          {title && (
             <TitleBar
               title={title}
               badgeText={badgeText}

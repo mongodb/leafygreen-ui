@@ -77,16 +77,12 @@ export const InfoBlock = forwardRef<HTMLDivElement, InfoBlockProps>(
               <Body
                 data-testid={LGIDS_INFO_BLOCK.label}
                 baseFontSize={BaseFontSize.Body2}
-                darkMode={darkMode}
                 weight="medium"
               >
                 {label}
               </Body>
               {description && (
-                <Description
-                  darkMode={darkMode}
-                  data-testid={LGIDS_INFO_BLOCK.description}
-                >
+                <Description data-testid={LGIDS_INFO_BLOCK.description}>
                   {description}
                 </Description>
               )}
@@ -97,7 +93,6 @@ export const InfoBlock = forwardRef<HTMLDivElement, InfoBlockProps>(
                 >
                   {badgePropsArray.map((badgeProps, i) => (
                     <Badge
-                      darkMode={darkMode}
                       key={`${i}` + badgeProps.children}
                       variant={BadgeVariant.Blue}
                       {...badgeProps}
@@ -108,7 +103,6 @@ export const InfoBlock = forwardRef<HTMLDivElement, InfoBlockProps>(
             </div>
             {buttonProps && (
               <Button
-                darkMode={darkMode}
                 data-testid={LGIDS_INFO_BLOCK.button}
                 size={Size.Small}
                 variant={ButtonVariant.Default}
