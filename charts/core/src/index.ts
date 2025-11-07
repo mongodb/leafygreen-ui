@@ -25,5 +25,11 @@ export {
   EventMarkerPoint,
   type EventMarkerPointProps,
 } from './EventMarkers';
-export { Bar, type BarProps, Line, type LineProps } from './Series';
+export {
+  Bar,
+  type BarHoverBehavior,
+  type BarProps,
+  Line,
+  type LineProps,
+} from './Series';
 export { ThresholdLine, type ThresholdLineProps } from './ThresholdLine';
