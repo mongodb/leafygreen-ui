@@ -1,4 +1,12 @@
 export {
+  XAxis,
+  type XAxisProps,
+  type XAxisType,
+  YAxis,
+  type YAxisProps,
+  type YAxisType,
+} from './Axis';
+export {
   Chart,
   type ChartProps,
   ChartStates,
@@ -17,7 +25,11 @@ export {
   EventMarkerPoint,
   type EventMarkerPointProps,
 } from './EventMarkers';
-export { Bar, type BarProps, Line, type LineProps } from './Series';
+export {
+  Bar,
+  BarHoverBehavior,
+  type BarProps,
+  Line,
+  type LineProps,
+} from './Series';
 export { ThresholdLine, type ThresholdLineProps } from './ThresholdLine';
-export { XAxis, type XAxisProps, type XAxisType } from './XAxis';
-export { YAxis, type YAxisProps, type YAxisType } from './YAxis';
