@@ -1,0 +1,1 @@
+export { ChatSideNavFooter } from './ChatSideNavFooter';

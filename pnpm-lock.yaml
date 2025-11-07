@@ -338,6 +338,64 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  chat/chat-layout:
+    dependencies:
+      '@leafygreen-ui/avatar':
+        specifier: workspace:^
+        version: link:../../packages/avatar
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../../packages/button
+      '@leafygreen-ui/compound-component':
+        specifier: workspace:^
+        version: link:../../packages/compound-component
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../../packages/emotion
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        version: link:../../packages/leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../../packages/lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../../packages/palette
+      '@leafygreen-ui/polymorphic':
+        specifier: workspace:^
+        version: link:../../packages/polymorphic
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../../packages/tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../../packages/typography
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+    devDependencies:
+      '@lg-chat/chat-window':
+        specifier: workspace:^
+        version: link:../chat-window
+      '@lg-chat/input-bar':
+        specifier: workspace:^
+        version: link:../input-bar
+      '@lg-chat/message':
+        specifier: workspace:^
+        version: link:../message
+      '@lg-chat/message-feed':
+        specifier: workspace:^
+        version: link:../message-feed
+      '@lg-chat/title-bar':
+        specifier: workspace:^
+        version: link:../title-bar
+
   chat/chat-window:
     dependencies:
       '@leafygreen-ui/emotion':
