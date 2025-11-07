@@ -1,1 +1,1 @@
-export { Bar, BarHoverBehavior } from './Bar';
+export { Bar, BarHoverBehavior, type BarProps } from './Bar';

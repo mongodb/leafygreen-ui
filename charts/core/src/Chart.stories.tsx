@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
+import { getByTestId, waitFor } from '@storybook/test';
+// @ts-ignore
+import { getInstanceByDom } from 'echarts';
 
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
@@ -941,7 +944,7 @@ export const BarWithOnHoverDimOthersBehavior: StoryObj<{
   },
   render: ({ hoverBehavior }) => {
     return (
-      <Chart>
+      <Chart data-testid="chart-component">
         <ChartTooltip />
         {lowDensitySeriesData.map(({ name, data }) => (
           <Bar
@@ -953,6 +956,21 @@ export const BarWithOnHoverDimOthersBehavior: StoryObj<{
         ))}
       </Chart>
     );
+  },
+  play: async ({ canvasElement }) => {
+    const chartDom = getByTestId(canvasElement, 'chart-component');
+
+    const echartsInstance = await waitFor(function getEChartsInstance() {
+      const instance = getInstanceByDom(chartDom);
+      if (!instance) throw new Error('ECharts instance not found');
+      return instance;
+    });
+
+    echartsInstance.dispatchAction({
+      type: 'highlight',
+      seriesIndex: 1,
+      dataIndex: 0,
+    });
   },
 };
 

@@ -12,6 +12,7 @@ import {
 } from './CustomTooltip.styles';
 import { CustomTooltipProps } from './CustomTooltip.types';
 import { SeriesList } from './SeriesList';
+import { isDefined } from '@leafygreen-ui/lib';
 
 function formatDate(dateTimeStamp: number) {
   const date = new Date(dateTimeStamp);
@@ -42,7 +43,7 @@ export function CustomTooltip({
 }: CustomTooltipProps) {
   const { theme } = useDarkMode(darkMode);
 
-  if (seriesData.length === 0 || seriesData[0].data[0] == undefined) {
+  if (seriesData.length === 0 || !isDefined(seriesData[0].data[0])) {
     return null;
   }
 

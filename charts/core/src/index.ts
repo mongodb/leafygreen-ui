@@ -1,4 +1,11 @@
-export { XAxis, type XAxisProps, YAxis, type YAxisProps } from './Axis';
+export {
+  XAxis,
+  type XAxisProps,
+  type XAxisType,
+  YAxis,
+  type YAxisProps,
+  type YAxisType,
+} from './Axis';
 export {
   Chart,
   type ChartProps,
