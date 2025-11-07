@@ -1,5 +1,11 @@
 # @lg-chat/input-bar
 
+## 11.0.2
+
+### Patch Changes
+
+- 8976ab2: Remove redundant `z-index: 2;` in `InputBar` content wrapping node.
+
 ## 11.0.1
 
 ### Patch Changes
