@@ -27,7 +27,7 @@ export {
 } from './EventMarkers';
 export {
   Bar,
-  type BarHoverBehavior,
+  BarHoverBehavior,
   type BarProps,
   Line,
   type LineProps,

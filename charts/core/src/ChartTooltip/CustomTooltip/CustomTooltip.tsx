@@ -4,6 +4,7 @@ import CursorIcon from '@leafygreen-ui/icon/dist/Cursor';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isDefined } from '@leafygreen-ui/lib';
 
 import {
   closeButtonStyles,
@@ -12,7 +13,6 @@ import {
 } from './CustomTooltip.styles';
 import { CustomTooltipProps } from './CustomTooltip.types';
 import { SeriesList } from './SeriesList';
-import { isDefined } from '@leafygreen-ui/lib';
 
 function formatDate(dateTimeStamp: number) {
   const date = new Date(dateTimeStamp);

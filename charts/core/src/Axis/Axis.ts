@@ -42,7 +42,7 @@ export const getAxisOptions = (
       fontSize: 11,
       lineHeight: spacing[400],
       color: color[theme].text[Variant.Secondary][InteractionState.Default],
-      formatter: type === 'category' ? undefined : props.formatter,
+      ...(type === 'category' ? undefined : { formatter: props.formatter }),
     },
     axisTick: {
       show: false,
