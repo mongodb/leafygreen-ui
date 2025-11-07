@@ -1738,8 +1738,8 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
       '@storybook/react':
-        specifier: latest
-        version: 10.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
+        specifier: 8.6.14
+        version: 8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)
 
   packages/drawer:
     dependencies:
@@ -6558,13 +6558,6 @@ packages:
       typescript: ~5.8.0
       webpack: '>= 4'
 
-  '@storybook/react-dom-shim@10.0.5':
-    resolution: {integrity: sha512-bC6pSrQWRHUVmDDxH5uYq/tf2oqIEyzGIC4+3mZl67ngOKwOgjaBatKLnHBDeWrn25pA11mymdFt1VOStbNzGQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      storybook: ^10.0.5
-
   '@storybook/react-dom-shim@8.6.14':
     resolution: {integrity: sha512-0hixr3dOy3f3M+HBofp3jtMQMS+sqzjKNgl7Arfuj3fvjmyXOks/yGjDImySR4imPtEllvPZfhiQNlejheaInw==}
     peerDependencies:
@@ -6579,17 +6572,6 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       storybook: ^8.6.14
-      typescript: ~5.8.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
-  '@storybook/react@10.0.5':
-    resolution: {integrity: sha512-FDajPP8HG4n1w3nql7lxQUNKg5+wEa+qJzAPNk583FRaeH6GuxSHlG1vUARQ1QnAZwwlrZzcmgjVNxIucms/5g==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      storybook: ^10.0.5
       typescript: ~5.8.0
     peerDependenciesMeta:
       typescript:
@@ -14965,12 +14947,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/react-dom-shim@10.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))':
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      storybook: 8.6.14(prettier@2.8.8)
-
   '@storybook/react-dom-shim@8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))':
     dependencies:
       react: 18.3.1
@@ -14995,16 +14971,6 @@ snapshots:
       - supports-color
       - uglify-js
       - webpack-cli
-
-  '@storybook/react@10.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
-    dependencies:
-      '@storybook/global': 5.0.0
-      '@storybook/react-dom-shim': 10.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      storybook: 8.6.14(prettier@2.8.8)
-    optionalDependencies:
-      typescript: 5.8.3
 
   '@storybook/react@8.6.14(@storybook/test@8.6.14(storybook@8.6.14(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.14(prettier@2.8.8))(typescript@5.8.3)':
     dependencies:
