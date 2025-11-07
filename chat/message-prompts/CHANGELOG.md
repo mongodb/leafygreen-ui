@@ -1,5 +1,11 @@
 # @lg-chat/message-prompts
 
+## 4.1.3
+
+### Patch Changes
+
+- 68b59a0: [LG-5687](https://jira.mongodb.org/browse/LG-5687): update border color from `green.dark1` to `green.dark2`
+
 ## 4.1.2
 
 ### Patch Changes
