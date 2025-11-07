@@ -31,14 +31,14 @@ export const FeatureOverview = forwardRef<HTMLElement, FeatureOverviewProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <Card className={cardStyles} darkMode={darkMode}>
+        <Card className={cardStyles}>
           <section
             {...rest}
             className={getSectionStyles(className)}
             ref={fwdRef}
           >
             <div className={textContainerStyles}>
-              <H3 darkMode={darkMode}>{title}</H3>
+              <H3>{title}</H3>
               <Accordion index={index} onIndexChange={setIndex}>
                 {features.map(({ title, description, onExpand }) => (
                   <AccordionItem key={title}>
@@ -46,9 +46,7 @@ export const FeatureOverview = forwardRef<HTMLElement, FeatureOverviewProps>(
                       {title}
                     </AccordionButton>
                     <AccordionPanel>
-                      <Description darkMode={darkMode}>
-                        {description}
-                      </Description>
+                      <Description>{description}</Description>
                     </AccordionPanel>
                   </AccordionItem>
                 ))}
