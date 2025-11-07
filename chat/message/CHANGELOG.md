@@ -1,5 +1,13 @@
 # @lg-chat/message
 
+## 9.1.1
+
+### Patch Changes
+
+- 5008087: [LG-5684](https://jira.mongodb.org/browse/LG-5684): update colors used for `RichLinkBadge` component which is used in `Message.Links`
+- Updated dependencies [5008087]
+  - @lg-chat/rich-links@4.0.4
+
 ## 9.1.0
 
 ### Minor Changes
