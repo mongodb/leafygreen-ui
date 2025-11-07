@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -78,7 +78,7 @@ export const segmentSizeStyles: Record<Size, string> = {
     font-size: var(--base-font-size, ${typeScales.body1.fontSize}px);
   `,
   [Size.Large]: css`
-    font-size: ${18}px; // Intentionally off-token
+    font-size: 18px; // Intentionally off-token
   `,
 };
 
@@ -93,11 +93,11 @@ export const getInputSegmentStyles = ({
   theme: Theme;
   size: Size;
 }) => {
-  return css`
-    ${baseStyles}
-    ${fontSizeStyles[baseFontSize]}
-    ${segmentThemeStyles[theme]}
-    ${segmentSizeStyles[size]}
-    ${className}
-  `;
+  return cx(
+    baseStyles,
+    fontSizeStyles[baseFontSize],
+    segmentThemeStyles[theme],
+    segmentSizeStyles[size],
+    className,
+  );
 };

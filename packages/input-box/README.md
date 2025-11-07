@@ -49,18 +49,18 @@ const MySegment = ({ segment, ...props }) => (
     { type: 'literal', value: '/' },
     { type: 'day', value: '01' },
     { type: 'literal', value: '/' },
-    { type: 'year', value: '2025' }
+    { type: 'year', value: '2025' },
   ]}
   charsPerSegment={{ day: 2, month: 2, year: 4 }}
   segmentRefs={{ day: dayRef, month: monthRef, year: yearRef }}
   segmentRules={{
     day: { maxChars: 2, minExplicitValue: 1 },
     month: { maxChars: 2, minExplicitValue: 4 },
-    year: { maxChars: 4, minExplicitValue: 1970 }
+    year: { maxChars: 4, minExplicitValue: 1970 },
   }}
   disabled={false}
   size={Size.Default}
-/>
+/>;
 ```
 
 Refer to `DateInputBox` in the `@leafygreen-ui/date-picker` package for an implementation example.
@@ -86,20 +86,20 @@ The component handles high-level interactions like moving between segments, whil
 
 #### Props
 
-| Prop               | Type                                                                         | Description                                                                                                                                                                   | Default |
-| ------------------ | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `segments`         | `Record<Segment, string>`                                                    | An object containing the values of the segments.<br/><br/>Example: `{ day: '01', month: '02', year: '2025' }`                                                                |         |
-| `setSegment`       | `(segment: Segment, value: string) => void`                                  | A function that sets the value of a segment.<br/><br/>Example: `(segment: 'day', value: '15') => void`                                                                       |         |
-| `segmentEnum`      | `Record<string, Segment>`                                                    | An enumerable object that maps the segment names to their values.<br/><br/>Example: `{ Day: 'day', Month: 'month', Year: 'year' }`                                           |         |
-| `segmentComponent` | `React.ComponentType<InputSegmentComponentProps<Segment>>`                   | React component to render each segment (must accept `InputSegmentComponentProps`).<br/><br/>Example: `DateInputSegment`                                                      |         |
-| `formatParts`      | `Array<Intl.DateTimeFormatPart>`                                             | Array of `Intl.DateTimeFormatPart` defining segment order and separators.<br/><br/>Example:<br/>`[{ type: 'month', value: '02' },`<br/>`{ type: 'literal', value: '/' }, ...]` |         |
-| `charsPerSegment`  | `Record<Segment, number>`                                                    | Record of maximum characters per segment.<br/><br/>Example: `{ day: 2, month: 2, year: 4 }`                                                                                  |         |
-| `segmentRefs`      | `Record<Segment, ReturnType<DynamicRefGetter<HTMLInputElement>>>`            | Record mapping segment names to their input refs.<br/><br/>Example: `{ day: dayRef, month: monthRef, year: yearRef }`                                                        |         |
-| `segmentRules`     | `Record<Segment, ExplicitSegmentRule>`                                       | Record of validation rules per segment with `maxChars` and `minExplicitValue`.<br/><br/>Example:<br/>`{ day: { maxChars: 2, minExplicitValue: 1 },`<br/>`month: { maxChars: 2, minExplicitValue: 4 }, ... }` |         |
-| `disabled`         | `boolean`                                                                    | Whether the input is disabled                                                                                                                                                 |         |
-| `size`             | `Size`                                                                       | Size of the input.<br/><br/>Example: `Size.Default`, `Size.Small`, or `Size.XSmall`                                                                                          |         |
-| `onSegmentChange`  | `InputSegmentChangeEventHandler<Segment, string>`                            | Optional callback fired when any segment changes                                                                                                                              |         |
-| `labelledBy`       | `string`                                                                     | ID of the labelling element for accessibility.<br/><br/>Example: `'date-input-label'`                                                                                        |         |
+| Prop               | Type                                                              | Description                                                                                                                                                                                                  | Default |
+| ------------------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `segments`         | `Record<Segment, string>`                                         | An object containing the values of the segments.<br/><br/>Example: `{ day: '01', month: '02', year: '2025' }`                                                                                                |         |
+| `setSegment`       | `(segment: Segment, value: string) => void`                       | A function that sets the value of a segment.<br/><br/>Example: `(segment: 'day', value: '15') => void`                                                                                                       |         |
+| `segmentEnum`      | `Record<string, Segment>`                                         | An enumerable object that maps the segment names to their values.<br/><br/>Example: `{ Day: 'day', Month: 'month', Year: 'year' }`                                                                           |         |
+| `segmentComponent` | `React.ComponentType<InputSegmentComponentProps<Segment>>`        | React component to render each segment (must accept `InputSegmentComponentProps`).<br/><br/>Example: `DateInputSegment`                                                                                      |         |
+| `formatParts`      | `Array<Intl.DateTimeFormatPart>`                                  | Array of `Intl.DateTimeFormatPart` defining segment order and separators.<br/><br/>Example:<br/>`[{ type: 'month', value: '02' },`<br/>`{ type: 'literal', value: '/' }, ...]`                               |         |
+| `charsPerSegment`  | `Record<Segment, number>`                                         | Record of maximum characters per segment.<br/><br/>Example: `{ day: 2, month: 2, year: 4 }`                                                                                                                  |         |
+| `segmentRefs`      | `Record<Segment, ReturnType<DynamicRefGetter<HTMLInputElement>>>` | Record mapping segment names to their input refs.<br/><br/>Example: `{ day: dayRef, month: monthRef, year: yearRef }`                                                                                        |         |
+| `segmentRules`     | `Record<Segment, ExplicitSegmentRule>`                            | Record of validation rules per segment with `maxChars` and `minExplicitValue`.<br/><br/>Example:<br/>`{ day: { maxChars: 2, minExplicitValue: 1 },`<br/>`month: { maxChars: 2, minExplicitValue: 4 }, ... }` |         |
+| `disabled`         | `boolean`                                                         | Whether the input is disabled                                                                                                                                                                                |         |
+| `size`             | `Size`                                                            | Size of the input.<br/><br/>Example: `Size.Default`, `Size.Small`, or `Size.XSmall`                                                                                                                          |         |
+| `onSegmentChange`  | `InputSegmentChangeEventHandler<Segment, string>`                 | Optional callback fired when any segment changes                                                                                                                                                             |         |
+| `labelledBy`       | `string`                                                          | ID of the labelling element for accessibility.<br/><br/>Example: `'date-input-label'`                                                                                                                        |         |
 
 \+ other HTML `div` element props
 
@@ -118,13 +118,13 @@ A controlled input segment component that renders a single input field within an
 
 #### Props
 
-| Prop                   | Type      | Description                                                                                                                     | Default |
-| ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `segment`              | `string`  | The segment identifier.<br/><br/>Example: `'day'`, `'month'`, or `'year'`                                                      |         |
-| `min`                  | `number`  | Minimum valid value for the segment.<br/><br/>Example: `1` for day, `1` for month, `1900` for year                             |         |
-| `max`                  | `number`  | Maximum valid value for the segment.<br/><br/>Example: `31` for day, `12` for month, `2100` for year                           |         |
-| `step`                 | `number`  | Increment/decrement step for arrow keys                                                                                         | `1`     |
-| `shouldWrap`           | `boolean` | Whether values should wrap around at min/max boundaries.<br/><br/>Example: `true` to wrap 31 → 1 for days                      |         |
-| `shouldSkipValidation` | `boolean` | Skips validation for segments that allow extended ranges                                                                        |         |
+| Prop                   | Type      | Description                                                                                               | Default |
+| ---------------------- | --------- | --------------------------------------------------------------------------------------------------------- | ------- |
+| `segment`              | `string`  | The segment identifier.<br/><br/>Example: `'day'`, `'month'`, or `'year'`                                 |         |
+| `min`                  | `number`  | Minimum valid value for the segment.<br/><br/>Example: `1` for day, `1` for month, `1900` for year        |         |
+| `max`                  | `number`  | Maximum valid value for the segment.<br/><br/>Example: `31` for day, `12` for month, `2100` for year      |         |
+| `step`                 | `number`  | Increment/decrement step for arrow keys                                                                   | `1`     |
+| `shouldWrap`           | `boolean` | Whether values should wrap around at min/max boundaries.<br/><br/>Example: `true` to wrap 31 → 1 for days |         |
+| `shouldSkipValidation` | `boolean` | Skips validation for segments that allow extended ranges                                                  |         |
 
 \+ native HTML `input` element props
