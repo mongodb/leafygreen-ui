@@ -20,34 +20,35 @@ import { DateInputBoxProvider } from '../DateInputBoxContext';
 
 import { DateInputSegment } from './DateInputSegment';
 
-const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
-  <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-    <SharedDatePickerProvider {...ctx?.args}>
-      <DateInputBoxProvider>
-        <InputBoxProvider
-          charsPerSegment={charsPerSegment}
-          segmentEnum={DateSegment}
-          onChange={() => {}}
-          onBlur={() => {}}
-          segmentRefs={useSegmentRefs()}
-          segments={ctx?.args.segments}
-          size={Size.Default}
-          disabled={false}
-        >
-          <Story
-            placeholder={
-              ctx?.args.segment === 'day'
-                ? 'DD'
-                : ctx?.args.segment === 'month'
-                ? 'MM'
-                : 'YYYY'
-            }
-          />
-        </InputBoxProvider>
-      </DateInputBoxProvider>
-    </SharedDatePickerProvider>
-  </LeafyGreenProvider>
-);
+const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => {
+  const { value, segment, size, darkMode } = ctx?.args ?? {};
+  const segments = {
+    day: segment === 'day' ? value : '',
+    month: segment === 'month' ? value : '',
+    year: segment === 'year' ? value : '',
+  };
+
+  return (
+    <LeafyGreenProvider darkMode={darkMode}>
+      <SharedDatePickerProvider {...ctx?.args}>
+        <DateInputBoxProvider>
+          <InputBoxProvider
+            charsPerSegment={charsPerSegment}
+            segmentEnum={DateSegment}
+            onChange={() => {}}
+            onBlur={() => {}}
+            segmentRefs={useSegmentRefs()}
+            segments={segments}
+            size={size}
+            disabled={false}
+          >
+            <Story />
+          </InputBoxProvider>
+        </DateInputBoxProvider>
+      </SharedDatePickerProvider>
+    </LeafyGreenProvider>
+  );
+};
 
 const meta: StoryMetaType<
   typeof DateInputSegment,
