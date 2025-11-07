@@ -8,7 +8,9 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { getContainerStyles } from './ChatSideNav.styles';
+import { useChatLayoutContext } from '../ChatLayout/ChatLayoutContext';
+
+import { getContainerStyles, getWrapperStyles } from './ChatSideNav.styles';
 import {
   type ChatSideNavProps,
   ChatSideNavSubcomponentProperty,
@@ -23,6 +25,17 @@ export const ChatSideNav = CompoundComponent(
   forwardRef<HTMLElement, ChatSideNavProps>(
     ({ children, className, darkMode: darkModeProp, ...rest }, ref) => {
       const { darkMode, theme } = useDarkMode(darkModeProp);
+      const { isPinned, setIsSideNavHovered, shouldRenderExpanded } =
+        useChatLayoutContext();
+
+      const handleMouseEnter = () => {
+        setIsSideNavHovered(true);
+      };
+
+      const handleMouseLeave = () => {
+        setIsSideNavHovered(false);
+      };
+
       // Find subcomponents
       const header = findChild(
         children,
@@ -33,17 +46,32 @@ export const ChatSideNav = CompoundComponent(
         ChatSideNavSubcomponentProperty.Content,
       );
 
+      const showOverflowShadow = !isPinned && shouldRenderExpanded;
+
       return (
         <LeafyGreenProvider darkMode={darkMode}>
           <nav
             ref={ref}
-            className={getContainerStyles({ className, theme })}
+            className={getWrapperStyles({
+              className,
+              theme,
+            })}
             aria-label="Side navigation"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             {...rest}
           >
-            {header}
-            {content}
-            <ChatSideNavFooter />
+            <div
+              className={getContainerStyles({
+                shouldRenderExpanded,
+                showOverflowShadow,
+                theme,
+              })}
+            >
+              {header}
+              {content}
+              <ChatSideNavFooter />
+            </div>
           </nav>
         </LeafyGreenProvider>
       );

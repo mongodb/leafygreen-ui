@@ -1,21 +1,27 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import {
+  COLLAPSED_SIDE_NAV_WIDTH_WITH_BORDER,
   gridAreas,
-  SIDE_NAV_WIDTH_COLLAPSED,
-  SIDE_NAV_WIDTH_PINNED,
+  PINNED_SIDE_NAV_WIDTH_WITH_BORDER,
+  SIDE_NAV_TRANSITION_DURATION,
 } from '../constants';
 
-const getBaseContainerStyles = (isPinned: boolean) => css`
-  display: grid;
-  grid-template-areas: '${gridAreas.sideNav} ${gridAreas.main}';
-  grid-template-columns: ${isPinned
-      ? `${SIDE_NAV_WIDTH_PINNED}px`
-      : `${SIDE_NAV_WIDTH_COLLAPSED}px`} 1fr;
+const baseContainerStyles = css`
+  overflow: hidden;
   height: 100%;
   width: 100%;
-  transition: grid-template-columns ${transitionDuration.default}ms ease-in-out;
+  max-height: 100vh;
+  max-width: 100vw;
+  display: grid;
+  grid-template-areas: '${gridAreas.sideNav} ${gridAreas.main}';
+  grid-template-columns: ${PINNED_SIDE_NAV_WIDTH_WITH_BORDER}px auto;
+  transition: grid-template-columns ${SIDE_NAV_TRANSITION_DURATION}ms
+    ease-in-out;
+`;
+
+const collapsedContainerStyles = css`
+  grid-template-columns: ${COLLAPSED_SIDE_NAV_WIDTH_WITH_BORDER}px auto;
 `;
 
 export const getContainerStyles = ({
@@ -24,4 +30,11 @@ export const getContainerStyles = ({
 }: {
   className?: string;
   isPinned: boolean;
-}) => cx(getBaseContainerStyles(isPinned), className);
+}) =>
+  cx(
+    baseContainerStyles,
+    {
+      [collapsedContainerStyles]: !isPinned,
+    },
+    className,
+  );

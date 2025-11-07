@@ -1,27 +1,36 @@
 import React, { forwardRef } from 'react';
 
+import { Button } from '@leafygreen-ui/button';
 import NavCollapseIcon from '@leafygreen-ui/icon/dist/NavCollapse';
 import NavExpandIcon from '@leafygreen-ui/icon/dist/NavExpand';
-import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChatLayoutContext } from '../../ChatLayout/ChatLayoutContext';
 import { type ChatSideNavFooterProps } from '../ChatSideNav.types';
 
-import { getFooterStyles } from './ChatSideNavFooter.styles';
+import { getButtonStyles, getFooterStyles } from './ChatSideNavFooter.styles';
 
 /** @internal */
 export const ChatSideNavFooter = forwardRef<
   HTMLDivElement,
   ChatSideNavFooterProps
 >(({ className, ...rest }, ref) => {
-  const { isPinned } = useChatLayoutContext();
   const { theme } = useDarkMode();
+  const { isPinned, togglePin, shouldRenderExpanded } = useChatLayoutContext();
+
   return (
-    <div ref={ref} className={getFooterStyles({ className, theme })} {...rest}>
-      <IconButton aria-label={`${isPinned ? 'Unpin' : 'Pin'} side nav`}>
+    <div
+      ref={ref}
+      className={getFooterStyles({ className, shouldRenderExpanded, theme })}
+      {...rest}
+    >
+      <Button
+        aria-label={`${isPinned ? 'Unpin' : 'Pin'} side nav`}
+        className={getButtonStyles(theme)}
+        onClick={togglePin}
+      >
         {isPinned ? <NavCollapseIcon /> : <NavExpandIcon />}
-      </IconButton>
+      </Button>
     </div>
   );
 });

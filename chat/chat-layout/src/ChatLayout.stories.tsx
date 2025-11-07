@@ -10,6 +10,7 @@ import { MessageFeed } from '@lg-chat/message-feed';
 import { TitleBar } from '@lg-chat/title-bar';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/test';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
@@ -106,6 +107,7 @@ const Template: StoryFn<ChatLayoutProps> = props => {
               {testMessages.map(msg => (
                 <Message
                   key={msg.id}
+                  isSender={msg.isSender}
                   messageBody={
                     msg.id === '2'
                       ? `${msg.messageBody} ${chatItems
@@ -113,7 +115,7 @@ const Template: StoryFn<ChatLayoutProps> = props => {
                           ?.name.toLowerCase()}`
                       : msg.messageBody
                   }
-                  isSender={msg.isSender}
+                  sourceType="markdown"
                 />
               ))}
             </MessageFeed>
@@ -130,6 +132,82 @@ export const LiveExample: StoryObj<ChatLayoutProps> = {
   parameters: {
     chromatic: {
       disableSnapshot: true,
+    },
+  },
+};
+
+export const PinnedLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: true,
+  },
+};
+
+export const PinnedDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: true,
+  },
+};
+
+export const UnpinnedLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: false,
+  },
+};
+
+export const UnpinnedDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: false,
+  },
+};
+
+export const UnpinnedAndHoveredLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Find the side nav
+    const sideNav = canvas.getByLabelText('Side navigation');
+
+    // Hover over the side nav
+    await userEvent.hover(sideNav);
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
+    },
+  },
+};
+
+export const UnpinnedAndHoveredDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Find the side nav
+    const sideNav = canvas.getByLabelText('Side navigation');
+
+    // Hover over the side nav
+    await userEvent.hover(sideNav);
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
     },
   },
 };

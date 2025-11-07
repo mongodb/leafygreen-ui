@@ -8,6 +8,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { useChatLayoutContext } from '../../ChatLayout';
 import { ChatSideNavSubcomponentProperty } from '../ChatSideNav.types';
 
 import { getItemStyles } from './ChatSideNavItem.styles';
@@ -24,6 +25,7 @@ export const ChatSideNavItem = CompoundSubComponent(
     ) => {
       const { Component, rest } = useInferredPolymorphic(as, restProps, 'div');
       const { theme } = useDarkMode();
+      const { shouldRenderExpanded } = useChatLayoutContext();
 
       return (
         <Component
@@ -31,8 +33,9 @@ export const ChatSideNavItem = CompoundSubComponent(
           aria-current={active ? AriaCurrentValue.Page : AriaCurrentValue.Unset}
           className={getItemStyles({
             active,
-            theme,
             className,
+            shouldRenderExpanded,
+            theme,
           })}
           onClick={onClick}
           ref={ref}

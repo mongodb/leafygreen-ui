@@ -13,16 +13,19 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+import {
+  PINNED_SIDE_NAV_WIDTH,
+  SIDE_NAV_TRANSITION_DURATION,
+} from '../../constants';
+
 const CHAT_SIDE_NAV_ITEM_HEIGHT = 32;
 const WEDGE_HEIGHT_BOUND = 6;
 const WEDGE_WIDTH = 4;
 
 const getBaseStyles = (theme: Theme) => css`
-  all: reset;
-
   // Layout
   position: relative;
-  width: 100%;
+  width: ${PINNED_SIDE_NAV_WIDTH}px;
   min-height: ${CHAT_SIDE_NAV_ITEM_HEIGHT}px;
   padding: ${spacing[150]}px ${spacing[400]}px;
   display: flex;
@@ -38,7 +41,8 @@ const getBaseStyles = (theme: Theme) => css`
   color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
 
   // Stateful transitions
-  transition: background-color ${transitionDuration.faster}ms ease-in-out;
+  transition: background-color ${transitionDuration.faster}ms ease-in-out,
+    opacity ${SIDE_NAV_TRANSITION_DURATION}ms ease-in-out;
 
   &::before {
     content: '';
@@ -83,6 +87,7 @@ const getActiveStyles = (theme: Theme) => css`
   text-decoration: none;
   color: ${theme === Theme.Light ? palette.green.dark2 : palette.white};
 
+  &,
   &:hover {
     background-color: ${color[theme].background[Variant.Success][
       InteractionState.Hover
@@ -97,19 +102,26 @@ const getActiveStyles = (theme: Theme) => css`
   }
 `;
 
+const collapsedItemStyles = css`
+  opacity: 0;
+`;
+
 export const getItemStyles = ({
   active = false,
   className,
+  shouldRenderExpanded,
   theme,
 }: {
   active?: boolean;
   className?: string;
+  shouldRenderExpanded: boolean;
   theme: Theme;
 }) =>
   cx(
     getBaseStyles(theme),
     {
       [getActiveStyles(theme)]: active,
+      [collapsedItemStyles]: !shouldRenderExpanded,
     },
     className,
   );

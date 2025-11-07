@@ -165,21 +165,31 @@ All other props are passed through to the underlying `<div>` element.
 Hook that returns the current chat layout context:
 
 ```tsx
-const { isPinned, togglePin } = useChatLayoutContext();
+const {
+  isPinned,
+  togglePin,
+  isSideNavHovered,
+  setIsSideNavHovered,
+  shouldRenderExpanded,
+} = useChatLayoutContext();
 ```
 
 **Returns:**
 
-| Property    | Type         | Description                              |
-| ----------- | ------------ | ---------------------------------------- |
-| `isPinned`  | `boolean`    | Whether the side nav is currently pinned |
-| `togglePin` | `() => void` | Function to toggle the pinned state      |
+| Property               | Type                           | Description                                                                                             |
+| ---------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `isPinned`             | `boolean`                      | Whether the side nav is currently pinned                                                                |
+| `togglePin`            | `() => void`                   | Function to toggle the pinned state                                                                     |
+| `isSideNavHovered`     | `boolean`                      | Whether the side nav is currently being hovered                                                         |
+| `setIsSideNavHovered`  | `(isHovered: boolean) => void` | Function to set the hover state of the side nav                                                         |
+| `shouldRenderExpanded` | `boolean`                      | Whether the side nav should render in expanded state. This is `true` when the nav is pinned OR hovered. |
 
 ## Behavior
 
 ### State Management
 
-- `ChatLayout` manages the `isPinned` state internally and provides it to all descendants via `ChatLayoutContext`
+- `ChatLayout` manages the `isPinned` and `isSideNavHovered` state internally and provides it to all descendants via `ChatLayoutContext`
+- `shouldRenderExpanded` is computed as `isPinned || isSideNavHovered` and provided in the context for convenience
 - When `togglePin` is called:
   1. The `isPinned` state updates
   2. Grid columns resize smoothly via CSS transition
@@ -187,3 +197,6 @@ const { isPinned, togglePin } = useChatLayoutContext();
 - Descendant components can consume the context to:
   - Read the current `isPinned` state
   - Call `togglePin()` to toggle the sidebar
+  - Read the current `isSideNavHovered` state
+  - Call `setIsSideNavHovered()` to update the hover state
+  - Use `shouldRenderExpanded` to determine if the side nav should render in expanded state

@@ -135,7 +135,6 @@ const getBaseContentWrapperStyles = ({
   position: relative;
   border-radius: ${borderRadius[200]}px;
   border: 1px solid ${palette.gray.base};
-  z-index: 2;
   background-color: ${color[theme].background[Variant.Primary][
     InteractionState.Default
   ]};
