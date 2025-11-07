@@ -1,6 +1,9 @@
 # project:chat
 chat/ @mongodb/lg-chat
 
+# project:deletion
+packages/wizard @mongodb/lg-deletion
+
 # project:time-input
 packages/date-picker @mongodb/lg-time-input
 packages/date-utils @mongodb/lg-time-input
