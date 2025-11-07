@@ -17,6 +17,7 @@ ALLOWED_IFRAME_ORIGINS=http://localhost:3000,http://localhost:3001,https://your-
 ```
 
 Configuration options:
+
 - `NEXT_PUBLIC_BASE_URL`: The base URL of your application
 - `ALLOWED_IFRAME_ORIGINS`: Comma-separated list of allowed parent origins for iframe embedding
 
@@ -49,6 +50,7 @@ console.log(config.baseUrl); // http://localhost:3000
 ### CORS and Iframe Embedding
 
 The app is configured with:
+
 - **CORS headers**: Allow cross-origin requests from specified origins
 - **CSP headers**: Content Security Policy appropriate for iframe embedding
 - **Frame ancestors**: Controls which domains can embed this app in an iframe
