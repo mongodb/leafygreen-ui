@@ -20,6 +20,9 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^"
   },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  },
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
