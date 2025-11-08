@@ -24,9 +24,6 @@
       "path": "../chat-window"
     },
     {
-      "path": "../leafygreen-chat-provider"
-    },
-    {
       "path": "../../packages/avatar"
     },
     {

@@ -10,7 +10,6 @@ import { TransitionChildren } from 'react-transition-group/Transition';
 import { ChatWindow } from '@lg-chat/chat-window';
 
 import { cx } from '@leafygreen-ui/emotion';
-import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import { Align, Justify, Popover, RenderMode } from '@leafygreen-ui/popover';
 
 import { ChatTrigger } from '../ChatTrigger/ChatTrigger';
@@ -49,11 +48,6 @@ export const FixedChatWindow = forwardRef(
       onTriggerClick?.(e);
     };
 
-    const handleClose: MouseEventHandler<HTMLButtonElement> = e => {
-      if (open === undefined) setLocalOpen(false);
-      onClose?.(e);
-    };
-
     return (
       <div ref={ref} {...rest} className={cx(baseStyles, className)}>
         {trigger ?? (
@@ -86,8 +80,6 @@ export const FixedChatWindow = forwardRef(
                     badgeText={badgeText}
                     className={chatWindowStyles}
                     title={title}
-                    onClose={handleClose}
-                    iconSlot={<ChevronDown />}
                   >
                     {children}
                   </ChatWindow>
