@@ -12,6 +12,9 @@ export interface InputSegmentProps<Segment extends string>
    * 'day'
    * 'month'
    * 'year'
+   * 'hours'
+   * 'minutes'
+   * 'seconds'
    */
   segment: Segment;
 
@@ -22,6 +25,9 @@ export interface InputSegmentProps<Segment extends string>
    * 1
    * 1
    * 1970
+   * 0
+   * 0
+   * 0
    */
   minSegmentValue: number;
 
@@ -32,6 +38,9 @@ export interface InputSegmentProps<Segment extends string>
    * 31
    * 12
    * 2038
+   * 23
+   * 59
+   * 59
    */
   maxSegmentValue: number;
 
