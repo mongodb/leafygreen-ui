@@ -1,8 +1,4 @@
 import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -29,47 +25,22 @@ Object.defineProperty(navigator, 'clipboard', {
 const renderMessageActions = (
   props?: Partial<MessageActionsProps>,
   options: {
-    variant?: Variant;
     messageBody?: string;
   } = {},
 ) => {
-  const { variant = Variant.Compact, messageBody = 'Test message body' } =
-    options;
+  const { messageBody = 'Test message body' } = options;
 
   return render(
-    <LeafyGreenChatProvider variant={variant}>
-      <Message messageBody={messageBody}>
-        <MessageActions {...props} />
-      </Message>
-    </LeafyGreenChatProvider>,
+    <Message messageBody={messageBody}>
+      <MessageActions {...props} />
+    </Message>,
   );
 };
 
 describe('packages/message-actions', () => {
-  beforeAll(() => {
-    global.ResizeObserver = jest.fn().mockImplementation(() => ({
-      observe: jest.fn(),
-      unobserve: jest.fn(),
-      disconnect: jest.fn(),
-    }));
-  });
-
   beforeEach(() => {
     jest.clearAllMocks();
     mockClipboard.writeText.mockResolvedValue(undefined);
-  });
-
-  test('renders nothing in spacious mode', () => {
-    renderMessageActions({}, { variant: Variant.Spacious });
-
-    expect(screen.queryByRole('button', { name: 'Copy message' })).toBeNull();
-    expect(screen.queryByRole('button', { name: 'Retry message' })).toBeNull();
-    expect(
-      screen.queryByRole('radio', { name: 'Like this message' }),
-    ).toBeNull();
-    expect(
-      screen.queryByRole('radio', { name: 'Dislike this message' }),
-    ).toBeNull();
   });
 
   test('renders all buttons when onClickRetry and onRatingChange are provided', () => {
@@ -137,11 +108,9 @@ describe('packages/message-actions', () => {
       const mockOnClickCopy = jest.fn();
 
       const { container: _container } = render(
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <Message messageBody={undefined}>
-            <MessageActions onClickCopy={mockOnClickCopy} />
-          </Message>
-        </LeafyGreenChatProvider>,
+        <Message messageBody={undefined}>
+          <MessageActions onClickCopy={mockOnClickCopy} />
+        </Message>,
       );
 
       const copyButton = screen.getByRole('button', { name: 'Copy message' });

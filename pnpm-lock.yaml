@@ -310,34 +310,6 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
-  chat/avatar:
-    dependencies:
-      '@leafygreen-ui/avatar':
-        specifier: workspace:^
-        version: link:../../packages/avatar
-      '@leafygreen-ui/emotion':
-        specifier: workspace:^
-        version: link:../../packages/emotion
-      '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
-        version: link:../../packages/leafygreen-provider
-      '@leafygreen-ui/lib':
-        specifier: workspace:^
-        version: link:../../packages/lib
-      '@leafygreen-ui/palette':
-        specifier: workspace:^
-        version: link:../../packages/palette
-      '@leafygreen-ui/tokens':
-        specifier: workspace:^
-        version: link:../../packages/tokens
-      '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-chat-provider
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
-
   chat/chat-layout:
     dependencies:
       '@leafygreen-ui/avatar':
@@ -413,9 +385,6 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
-      '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-chat-provider
       '@lg-chat/title-bar':
         specifier: workspace:^
         version: link:../title-bar
@@ -426,73 +395,12 @@ importers:
       '@leafygreen-ui/drawer':
         specifier: workspace:^
         version: link:../../packages/drawer
-      '@lg-chat/avatar':
-        specifier: workspace:^
-        version: link:../avatar
       '@lg-chat/input-bar':
         specifier: workspace:^
         version: link:../input-bar
-      '@lg-chat/message':
-        specifier: workspace:^
-        version: link:../message
-      '@lg-chat/message-feed':
-        specifier: workspace:^
-        version: link:../message-feed
-      '@lg-chat/message-feedback':
-        specifier: workspace:^
-        version: link:../message-feedback
-      '@lg-chat/message-prompts':
-        specifier: workspace:^
-        version: link:../message-prompts
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
-
-  chat/fixed-chat-window:
-    dependencies:
-      '@leafygreen-ui/avatar':
-        specifier: workspace:^
-        version: link:../../packages/avatar
-      '@leafygreen-ui/emotion':
-        specifier: workspace:^
-        version: link:../../packages/emotion
-      '@leafygreen-ui/icon':
-        specifier: workspace:^
-        version: link:../../packages/icon
-      '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
-        version: link:../../packages/leafygreen-provider
-      '@leafygreen-ui/lib':
-        specifier: workspace:^
-        version: link:../../packages/lib
-      '@leafygreen-ui/palette':
-        specifier: workspace:^
-        version: link:../../packages/palette
-      '@leafygreen-ui/popover':
-        specifier: workspace:^
-        version: link:../../packages/popover
-      '@leafygreen-ui/tokens':
-        specifier: workspace:^
-        version: link:../../packages/tokens
-      '@leafygreen-ui/typography':
-        specifier: workspace:^
-        version: link:../../packages/typography
-      '@lg-chat/chat-window':
-        specifier: workspace:^
-        version: link:../chat-window
       '@lg-chat/leafygreen-chat-provider':
         specifier: workspace:^
         version: link:../leafygreen-chat-provider
-      react-transition-group:
-        specifier: ^4.4.5
-        version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-    devDependencies:
-      '@lg-chat/avatar':
-        specifier: workspace:^
-        version: link:../avatar
-      '@lg-chat/input-bar':
-        specifier: workspace:^
-        version: link:../input-bar
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message
@@ -514,9 +422,6 @@ importers:
       '@leafygreen-ui/avatar':
         specifier: workspace:^
         version: link:../../packages/avatar
-      '@leafygreen-ui/badge':
-        specifier: workspace:^
-        version: link:../../packages/badge
       '@leafygreen-ui/banner':
         specifier: workspace:^
         version: link:../../packages/banner
@@ -572,7 +477,7 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0(react@18.3.1)
       react-textarea-autosize:
-        specifier: ^8.3.2
+        specifier: ^8.5.9
         version: 8.5.9(@types/react@18.2.23)(react@18.3.1)
     devDependencies:
       '@lg-tools/build':
@@ -580,10 +485,6 @@ importers:
         version: link:../../tools/build
 
   chat/leafygreen-chat-provider:
-    dependencies:
-      use-resize-observer:
-        specifier: ^9.1.0
-        version: 9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
@@ -707,12 +608,6 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
-      '@lg-chat/avatar':
-        specifier: workspace:^
-        version: link:../avatar
-      '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message
@@ -759,9 +654,6 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../../packages/palette
-      '@leafygreen-ui/popover':
-        specifier: workspace:^
-        version: link:../../packages/popover
       '@leafygreen-ui/text-area':
         specifier: workspace:^
         version: link:../../packages/text-area
@@ -771,9 +663,6 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
-      '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-chat/message-rating':
         specifier: workspace:^
@@ -839,12 +728,6 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
-      '@leafygreen-ui/typography':
-        specifier: workspace:^
-        version: link:../../packages/typography
-      '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
@@ -923,12 +806,6 @@ importers:
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../../packages/emotion
-      '@leafygreen-ui/icon':
-        specifier: workspace:^
-        version: link:../../packages/icon
-      '@leafygreen-ui/icon-button':
-        specifier: workspace:^
-        version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
         version: link:../../packages/leafygreen-provider
@@ -941,12 +818,6 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
-      '@lg-chat/avatar':
-        specifier: workspace:^
-        version: link:../avatar
-      '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
@@ -5939,9 +5810,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
-
-  '@juggle/resize-observer@3.4.0':
-    resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
   '@lezer/common@1.2.3':
     resolution: {integrity: sha512-w7ojc8ejBqr2REPsWxJjrMFsA/ysDCFICn8zEOR9mrqzOu2amhITYuLD8ag6XZf0CFXDrhKqw7+tW8cX66NaDA==}
@@ -11417,12 +11285,6 @@ packages:
       '@types/react':
         optional: true
 
-  use-resize-observer@9.1.0:
-    resolution: {integrity: sha512-R25VqO9Wb3asSD4eqtcxk8sJalvIOYBqS8MNZlpDSQ4l4xMQxC/J7Id9HoTqPq8FwULIn0PVW+OAqF2dyYbjow==}
-    peerDependencies:
-      react: 16.8.0 - 18
-      react-dom: 16.8.0 - 18
-
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -14171,8 +14033,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
-
-  '@juggle/resize-observer@3.4.0': {}
 
   '@lezer/common@1.2.3': {}
 
@@ -20948,12 +20808,6 @@ snapshots:
       use-isomorphic-layout-effect: 1.2.1(@types/react@18.2.23)(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.2.23
-
-  use-resize-observer@9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@juggle/resize-observer': 3.4.0
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   util-deprecate@1.0.2: {}
 

@@ -1,21 +1,25 @@
 import React, { forwardRef, useMemo } from 'react';
-import {
-  useLeafyGreenChatContext,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
+import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
+import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { consoleOnce } from '@leafygreen-ui/lib';
+import { filterChildren, findChild } from '@leafygreen-ui/lib';
+import { Body } from '@leafygreen-ui/typography';
 
 import { MessageActions } from '../MessageActions';
 import { MessageVerifiedBanner } from '../MessageBanner';
+import { MessageContent } from '../MessageContent';
 import { MessageContext } from '../MessageContext';
 import { MessageLinks } from '../MessageLinks';
 import { MessagePromotion } from '../MessagePromotion';
 
-import { CompactMessage } from './CompactMessage';
+import {
+  avatarContainerStyles,
+  getContainerStyles,
+  getMessageContainerStyles,
+} from './Message.styles';
 import {
   type ActionsType,
   type LinksType,
@@ -24,75 +28,83 @@ import {
   type PromotionType,
   type VerifiedBannerType,
 } from './Message.types';
-import { SpaciousMessage } from './SpaciousMessage';
 
 const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
   (
     {
-      align,
-      avatar,
-      baseFontSize,
       children,
-      componentOverrides,
+      className,
       darkMode: darkModeProp,
-      links,
-      linksHeading,
-      onLinkClick,
-      verified,
+      isSender = true,
+      markdownProps,
+      messageBody,
+      sourceType,
       ...rest
     },
     fwdRef,
   ) => {
-    const { darkMode } = useDarkMode(darkModeProp);
-    const { variant } = useLeafyGreenChatContext();
-    const isCompact = variant === Variant.Compact;
-
-    if (
-      isCompact &&
-      (align ||
-        avatar ||
-        baseFontSize ||
-        componentOverrides ||
-        links ||
-        linksHeading ||
-        onLinkClick ||
-        verified)
-    ) {
-      consoleOnce.warn(
-        `@lg-chat/message: The Message component's props 'align', 'avatar', 'baseFontSize', 'componentOverrides', 'links', 'linksHeading', 'onLinkClick', and 'verified' are only used in the 'spacious' variant. They will not be rendered in the 'compact' variant set by the provider.`,
-      );
-    }
+    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { assistantName } = useLeafyGreenChatContext();
 
     const contextValue = useMemo(
       () => ({
-        messageBody: rest.messageBody,
+        messageBody,
       }),
-      [rest.messageBody],
+      [messageBody],
+    );
+
+    // Find subcomponents
+    const actions = findChild(children, MessageSubcomponentProperty.Actions);
+    const verifiedBanner = findChild(
+      children,
+      MessageSubcomponentProperty.VerifiedBanner,
+    );
+    const links = findChild(children, MessageSubcomponentProperty.Links);
+    const promotion = findChild(
+      children,
+      MessageSubcomponentProperty.Promotion,
+    );
+
+    // Filter out subcomponents from children
+    const remainingChildren = filterChildren(
+      children,
+      Object.values(MessageSubcomponentProperty),
     );
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <MessageContext.Provider value={contextValue}>
-          {isCompact ? (
-            <CompactMessage ref={fwdRef} {...rest}>
-              {children}
-            </CompactMessage>
-          ) : (
-            <SpaciousMessage
-              align={align}
-              avatar={avatar}
-              baseFontSize={baseFontSize}
-              componentOverrides={componentOverrides}
-              links={links}
-              linksHeading={linksHeading}
-              onLinkClick={onLinkClick}
-              ref={fwdRef}
-              verified={verified}
-              {...rest}
+          <div
+            className={getContainerStyles({
+              className,
+              isSender,
+              theme,
+            })}
+            ref={fwdRef}
+            {...rest}
+          >
+            {!isSender && (
+              <div className={avatarContainerStyles}>
+                <AssistantAvatar darkMode={darkMode} size={20} />
+                <Body weight="semiBold">{assistantName}</Body>
+              </div>
+            )}
+            <div
+              className={getMessageContainerStyles({
+                isSender,
+                theme,
+              })}
             >
-              {children}
-            </SpaciousMessage>
-          )}
+              <MessageContent sourceType={sourceType} {...markdownProps}>
+                {messageBody ?? ''}
+              </MessageContent>
+              {promotion}
+              {actions}
+              {verifiedBanner}
+              {links}
+              {remainingChildren}
+            </div>
+          </div>
         </MessageContext.Provider>
       </LeafyGreenProvider>
     );

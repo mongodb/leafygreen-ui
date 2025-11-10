@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { ChatWindow } from '@lg-chat/chat-window';
 import { InputBar } from '@lg-chat/input-bar';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
+import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessageFeed } from '@lg-chat/message-feed';
 import { TitleBar } from '@lg-chat/title-bar';
@@ -76,7 +73,7 @@ const Template: StoryFn<ChatLayoutProps> = props => {
   };
 
   return (
-    <LeafyGreenChatProvider variant={Variant.Compact}>
+    <LeafyGreenChatProvider>
       <ChatLayout {...props}>
         <ChatSideNav>
           <ChatSideNav.Header

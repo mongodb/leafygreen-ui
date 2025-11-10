@@ -21,13 +21,7 @@
   ],
   "references": [
     {
-      "path": "../avatar"
-    },
-    {
       "path": "../input-bar"
-    },
-    {
-      "path": "../leafygreen-chat-provider"
     },
     {
       "path": "../message"

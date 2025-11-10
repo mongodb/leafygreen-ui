@@ -4,10 +4,6 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
@@ -25,11 +21,6 @@ const meta: StoryMetaType<typeof MessageRating> = {
         hideThumbsUp: [false, true],
         value: Object.values(MessageRatingValue),
       },
-      decorator: StoryFn => (
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <StoryFn />
-        </LeafyGreenChatProvider>
-      ),
       excludeCombinations: [
         {
           hideThumbsDown: true,
@@ -62,30 +53,19 @@ const meta: StoryMetaType<typeof MessageRating> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    description: { control: 'text' },
     value: {
       control: 'radio',
       options: Object.values(MessageRatingValue),
-    },
-    variant: {
-      control: 'radio',
-      options: Object.values(Variant),
     },
   },
 };
 export default meta;
 
-type MessageRatingStoryProps = MessageRatingProps & {
-  variant?: Variant;
-};
-
-const Template: StoryFn<MessageRatingStoryProps> = ({ variant, ...props }) => (
-  <LeafyGreenChatProvider variant={variant}>
-    <MessageRating {...props} />
-  </LeafyGreenChatProvider>
+const Template: StoryFn<MessageRatingProps> = props => (
+  <MessageRating {...props} />
 );
 
-export const LiveExample: StoryObj<MessageRatingStoryProps> = {
+export const LiveExample: StoryObj<MessageRatingProps> = {
   render: Template,
   parameters: {
     chromatic: {
@@ -112,12 +92,9 @@ export const Controlled: StoryFn<typeof MessageRating> = ({
   );
 };
 Controlled.argTypes = {
-  value: { control: 'none' },
+  value: { control: false },
 };
 
-export const Generated: StoryObj<MessageRatingStoryProps> = {
+export const Generated: StoryObj<MessageRatingProps> = {
   render: Template,
-  args: {
-    variant: Variant.Compact,
-  },
 };

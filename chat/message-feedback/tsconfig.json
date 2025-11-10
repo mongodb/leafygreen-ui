@@ -18,12 +18,6 @@
   ],
   "references": [
     {
-      "path": "../leafygreen-chat-provider"
-    },
-    {
-      "path": "../message-rating"
-    },
-    {
       "path": "../../packages/button"
     },
     {
@@ -43,9 +37,6 @@
     },
     {
       "path": "../../packages/palette"
-    },
-    {
-      "path": "../../packages/popover"
     },
     {
       "path": "../../packages/text-area"

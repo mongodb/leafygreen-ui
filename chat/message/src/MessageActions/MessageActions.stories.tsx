@@ -1,9 +1,5 @@
 import React from 'react';
 import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
-import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
@@ -45,11 +41,9 @@ const meta: StoryMetaType<typeof MessageActions> = {
   decorators: [
     (Story: StoryFn, context) => (
       <LeafyGreenProvider darkMode={context?.args.darkMode}>
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
-            <Story />
-          </Message>
-        </LeafyGreenChatProvider>
+        <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
+          <Story />
+        </Message>
       </LeafyGreenProvider>
     ),
   ],
@@ -66,11 +60,9 @@ const meta: StoryMetaType<typeof MessageActions> = {
       },
       decorator: (StoryFn, context) => (
         <LeafyGreenProvider darkMode={context?.args.darkMode}>
-          <LeafyGreenChatProvider variant={Variant.Compact}>
-            <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
-              <StoryFn />
-            </Message>
-          </LeafyGreenChatProvider>
+          <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
+            <StoryFn />
+          </Message>
         </LeafyGreenProvider>
       ),
     },

@@ -18,9 +18,6 @@
   ],
   "references": [
     {
-      "path": "../leafygreen-chat-provider"
-    },
-    {
       "path": "../../packages/emotion"
     },
     {
@@ -40,9 +37,6 @@
     },
     {
       "path": "../../packages/tokens"
-    },
-    {
-      "path": "../../packages/typography"
     },
     {
       "path": "../../packages/leafygreen-provider"

@@ -7,10 +7,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  useLeafyGreenChatContext,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 
 import {
   Button,
@@ -24,17 +20,16 @@ import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { consoleOnce } from '@leafygreen-ui/lib';
 import { State as TextAreaState, TextArea } from '@leafygreen-ui/text-area';
 import { Label } from '@leafygreen-ui/typography';
 
 import { SubmittedState } from './SubmittedState/SubmittedState';
 import {
   actionContainerStyles,
-  getBodyContainerStyles,
+  bodyContainerStyles,
   getFormContainerStyles,
-  getHeaderContainerStyles,
   getTextAreaStyles,
+  headerContainerStyles,
   labelStyles,
 } from './InlineMessageFeedback.styles';
 import { InlineMessageFeedbackProps } from '.';
@@ -44,9 +39,6 @@ export const InlineMessageFeedback = forwardRef(
     {
       className,
       label,
-      cancelButtonText = 'Cancel',
-      onCancel,
-      cancelButtonProps,
       submitButtonText = 'Submit',
       submitButtonProps,
       state = 'unset',
@@ -63,14 +55,6 @@ export const InlineMessageFeedback = forwardRef(
     forwardedRef: ForwardedRef<HTMLDivElement>,
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
-    const { variant } = useLeafyGreenChatContext();
-    const isCompact = variant === Variant.Compact;
-
-    if (isCompact && (cancelButtonProps || cancelButtonText || onCancel)) {
-      consoleOnce.warn(
-        `@lg-chat/message-rating: The MessageRating component's props 'cancelButtonProps', 'cancelButtonText', and 'onCancel' are only used in the 'spacious' variant. It will not be rendered in the 'compact' variant set by the provider.`,
-      );
-    }
 
     const textareaId = useIdAllocator({ prefix: 'lg-chat-imf-input' });
     const labelId = useIdAllocator({ prefix: 'lg-chat-imf-label' });
@@ -102,7 +86,6 @@ export const InlineMessageFeedback = forwardRef(
       isTextareaEmpty(),
     );
 
-    const showCancelButton = !isCompact && !!onCancel;
     const isSubmitting = state === 'submitting';
     const isSubmitted = state === 'submitted';
     const isError = state === 'error';
@@ -117,10 +100,10 @@ export const InlineMessageFeedback = forwardRef(
             />
           ) : (
             <form
-              className={getFormContainerStyles({ isCompact, theme })}
+              className={getFormContainerStyles(theme)}
               onSubmit={handleSubmit}
             >
-              <div className={getHeaderContainerStyles({ isCompact })}>
+              <div className={headerContainerStyles}>
                 <Label
                   id={labelId}
                   className={labelStyles}
@@ -138,7 +121,7 @@ export const InlineMessageFeedback = forwardRef(
                   </IconButton>
                 )}
               </div>
-              <div className={getBodyContainerStyles({ isCompact })}>
+              <div className={bodyContainerStyles}>
                 <TextArea
                   id={textareaId}
                   aria-labelledby={labelId}
@@ -160,22 +143,10 @@ export const InlineMessageFeedback = forwardRef(
                   onChange={handleChange}
                 />
                 <div className={actionContainerStyles}>
-                  {showCancelButton && (
-                    <Button
-                      type="button"
-                      variant={ButtonVariant.Default}
-                      size={ButtonSize.Small}
-                      onClick={onCancel}
-                      disabled={isSubmitting}
-                      {...cancelButtonProps}
-                    >
-                      {cancelButtonText}
-                    </Button>
-                  )}
                   <Button
                     type="submit"
-                    variant={ButtonVariant[isCompact ? 'Default' : 'Primary']}
-                    size={ButtonSize[isCompact ? 'Default' : 'Small']}
+                    variant={ButtonVariant.Default}
+                    size={ButtonSize.Default}
                     disabled={
                       !!hasEmptyTextarea || isSubmitting || disabledSend
                     }

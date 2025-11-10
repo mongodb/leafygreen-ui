@@ -10,12 +10,6 @@ export type InputBarProps = React.ComponentPropsWithoutRef<'form'> &
   DarkModeProps &
   SharedInputBarProps & {
     /**
-     * Determines the text inside the rendered Badge
-     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-     */
-    badgeText?: string;
-
-    /**
      * Determines whether the user can interact with the InputBar
      * @default false
      */
@@ -58,20 +52,6 @@ export type InputBarProps = React.ComponentPropsWithoutRef<'form'> &
       messageBody: string,
       e?: FormEvent<HTMLFormElement>,
     ) => void;
-
-    /**
-     * Toggles the gradient animation around the input
-     * @default true
-     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-     */
-    shouldRenderGradient?: boolean;
-
-    /**
-     * Toggles the hotkey indicator on the right side of the input
-     * @default false
-     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-     */
-    shouldRenderHotkeyIndicator?: boolean;
 
     /**
      * Props passed to the TextareaAutosize component.

@@ -7,19 +7,18 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { Align } from './TitleBar.types';
-
 const getBaseTitleBarStyles = (theme: Theme) => css`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px ${spacing[400]}px;
   border-bottom: 1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]};
   background-color: ${color[theme].background[Variant.Primary][
     InteractionState.Default
   ]};
+  padding: 14px ${spacing[400]}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: ${spacing[200]}px;
 `;
 
 export const getTitleBarStyles = ({
@@ -31,19 +30,3 @@ export const getTitleBarStyles = ({
 }) => {
   return cx(getBaseTitleBarStyles(theme), className);
 };
-
-const baseContentContainerStyles = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: ${spacing[200]}px;
-`;
-
-const contentAlignmentStyles = css`
-  margin: auto;
-`;
-
-export const getContentContainerStyles = ({ align }: { align: Align }) =>
-  cx(baseContentContainerStyles, {
-    [contentAlignmentStyles]: align === Align.Center,
-  });
