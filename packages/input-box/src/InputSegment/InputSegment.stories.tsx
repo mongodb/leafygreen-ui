@@ -108,11 +108,7 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
           >
             <StoryFn
               placeholder={
-                context?.args.segment === 'day'
-                  ? 'DD'
-                  : context?.args.segment === 'month'
-                  ? 'MM'
-                  : 'YYYY'
+                defaultPlaceholderMock[context?.args.segment as SegmentObjMock]
               }
             />
           </InputBoxProvider>
