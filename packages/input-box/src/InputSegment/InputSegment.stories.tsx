@@ -9,6 +9,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { InputBoxProvider } from '../InputBoxContext';
+import { InputSegmentChangeEventHandler } from '../shared/types';
 import {
   charsPerSegmentMock,
   defaultMaxMock,
@@ -20,7 +21,6 @@ import {
 } from '../testutils/testutils.mocks';
 
 import { InputSegment } from '.';
-import { InputSegmentChangeEventHandler } from '../shared/types';
 
 interface InputSegmentStoryProps {
   size: Size;

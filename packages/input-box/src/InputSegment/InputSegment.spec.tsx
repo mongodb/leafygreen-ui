@@ -1,6 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 
+import { InputSegmentChangeEventHandler } from '../shared/types';
 import { renderSegment, setSegmentProps } from '../testutils';
 import {
   charsPerSegmentMock,
@@ -11,7 +12,6 @@ import {
 import { getValueFormatter } from '../utils';
 
 import { InputSegment } from '.';
-import { InputSegmentChangeEventHandler } from '../shared/types';
 
 describe('packages/input-segment', () => {
   describe('aria attributes', () => {
