@@ -56,13 +56,24 @@ describe('InputBoxContext', () => {
       ),
     });
 
-    expect(result.current.charsPerSegment).toBe(charsPerSegmentMock);
-    expect(result.current.segmentEnum).toBe(SegmentObjMock);
-    expect(result.current.onChange).toBe(mockOnChange);
-    expect(result.current.onBlur).toBe(mockOnBlur);
-    expect(result.current.segmentRefs).toBe(segmentRefsMock);
-    expect(result.current.segments).toBe(segmentsMock);
-    expect(result.current.size).toBe(Size.Default);
-    expect(result.current.disabled).toBe(false);
+    const {
+      charsPerSegment,
+      segmentEnum,
+      onChange,
+      onBlur,
+      segmentRefs,
+      segments,
+      size,
+      disabled,
+    } = result.current;
+
+    expect(charsPerSegment).toBe(charsPerSegmentMock);
+    expect(segmentEnum).toBe(SegmentObjMock);
+    expect(onChange).toBe(mockOnChange);
+    expect(onBlur).toBe(mockOnBlur);
+    expect(segmentRefs).toBe(segmentRefsMock);
+    expect(segments).toBe(segmentsMock);
+    expect(size).toBe(Size.Default);
+    expect(disabled).toBe(false);
   });
 });

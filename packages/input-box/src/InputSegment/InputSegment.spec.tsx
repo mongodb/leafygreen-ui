@@ -10,7 +10,8 @@ import {
 } from '../testutils/testutils.mocks';
 import { getValueFormatter } from '../utils';
 
-import { InputSegment, InputSegmentChangeEventHandler } from '.';
+import { InputSegment } from '.';
+import { InputSegmentChangeEventHandler } from '../shared/types';
 
 describe('packages/input-segment', () => {
   describe('aria attributes', () => {

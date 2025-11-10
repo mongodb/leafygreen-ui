@@ -66,7 +66,7 @@ export const defaultFormatPartsMock: Array<Intl.DateTimeFormatPart> = [
 
 /** The percentage of 1ch these specific characters take up */
 export const characterWidth = {
-  // // Standard font
+  // Standard font
   D: 46 / 40,
   M: 55 / 40,
   Y: 50 / 40,
