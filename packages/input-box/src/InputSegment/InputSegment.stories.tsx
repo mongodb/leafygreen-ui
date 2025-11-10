@@ -19,7 +19,8 @@ import {
   segmentsMock,
 } from '../testutils/testutils.mocks';
 
-import { InputSegment, InputSegmentChangeEventHandler } from '.';
+import { InputSegment } from '.';
+import { InputSegmentChangeEventHandler } from '../shared/types';
 
 interface InputSegmentStoryProps {
   size: Size;
