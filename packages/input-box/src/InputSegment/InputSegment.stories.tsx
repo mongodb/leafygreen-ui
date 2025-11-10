@@ -39,8 +39,8 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
   ],
   args: {
     segment: SegmentObjMock.Day,
-    min: defaultMinMock[SegmentObjMock.Day],
-    max: defaultMaxMock[SegmentObjMock.Day],
+    minSegmentValue: defaultMinMock[SegmentObjMock.Day],
+    maxSegmentValue: defaultMaxMock[SegmentObjMock.Day],
     size: Size.Default,
     placeholder: defaultPlaceholderMock[SegmentObjMock.Day],
     shouldWrap: true,

@@ -819,14 +819,14 @@ describe('packages/input-segment', () => {
     });
 
     test('With required props', () => {
-      <InputSegment segment="day" min={1} max={31} />;
+      <InputSegment segment="day" minSegmentValue={1} maxSegmentValue={31} />;
     });
 
     test('With all props', () => {
       <InputSegment
         segment="day"
-        min={1}
-        max={31}
+        minSegmentValue={1}
+        maxSegmentValue={31}
         step={1}
         shouldWrap={true}
         shouldSkipValidation={false}

@@ -22,8 +22,8 @@ export const setSegmentProps = (segment: SegmentObjMock) => {
   return {
     segment: segment,
     charsPerSegment: charsPerSegmentMock[segment],
-    min: defaultMinMock[segment],
-    max: defaultMaxMock[segment],
+    minSegmentValue: defaultMinMock[segment],
+    maxSegmentValue: defaultMaxMock[segment],
     placeholder: defaultPlaceholderMock[segment],
   };
 };
@@ -54,8 +54,8 @@ const defaultSegmentProviderProps: Partial<
 
 const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
   segment: 'day',
-  min: defaultMinMock['day'],
-  max: defaultMaxMock['day'],
+  minSegmentValue: defaultMinMock['day'],
+  maxSegmentValue: defaultMaxMock['day'],
   shouldWrap: true,
   placeholder: defaultPlaceholderMock['day'],
   // @ts-expect-error - data-testid

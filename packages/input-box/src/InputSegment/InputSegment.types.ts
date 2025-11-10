@@ -23,7 +23,7 @@ export interface InputSegmentProps<Segment extends string>
    * 1
    * 1970
    */
-  min: number;
+  minSegmentValue: number;
 
   /**
    * Maximum value for the segment
@@ -33,7 +33,7 @@ export interface InputSegmentProps<Segment extends string>
    * 12
    * 2038
    */
-  max: number;
+  maxSegmentValue: number;
 
   /**
    * The step value for the arrow keys

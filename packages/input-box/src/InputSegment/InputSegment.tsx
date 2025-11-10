@@ -30,14 +30,13 @@ import {
  * Renders a single input segment with configurable
  * character padding, validation, and formatting.
  *
- * @internal
  */
 const InputSegmentWithRef = <Segment extends string>(
   {
     segment,
     onKeyDown,
-    min, // minSegmentValue
-    max, // maxSegmentValue
+    minSegmentValue,
+    maxSegmentValue,
     className,
     onChange: onChangeProp,
     onBlur: onBlurProp,
@@ -64,7 +63,7 @@ const InputSegmentWithRef = <Segment extends string>(
   const charsPerSegment = charsPerSegmentContext[segment];
   const formatter = getValueFormatter({
     charsPerSegment,
-    allowZero: min === 0,
+    allowZero: minSegmentValue === 0,
   });
   const pattern = `[0-9]{${charsPerSegment}}`;
 
@@ -85,8 +84,8 @@ const InputSegmentWithRef = <Segment extends string>(
       currentValue: value,
       incomingValue: target.value,
       charsPerSegment,
-      defaultMin: min,
-      defaultMax: max,
+      defaultMin: minSegmentValue,
+      defaultMax: maxSegmentValue,
       segmentEnum,
       shouldSkipValidation,
     });
@@ -97,7 +96,7 @@ const InputSegmentWithRef = <Segment extends string>(
       onChange({
         segment,
         value: newValue,
-        meta: { min },
+        meta: { min: minSegmentValue },
       });
     } else {
       // If the value has not changed, ensure the input value is reset
@@ -133,10 +132,10 @@ const InputSegmentWithRef = <Segment extends string>(
         const newValue = getNewSegmentValueFromArrowKeyPress({
           key,
           value,
-          min,
-          max,
+          min: minSegmentValue,
+          max: maxSegmentValue,
           step,
-          shouldWrap: shouldWrap,
+          shouldWrap,
         });
         const valueString = formatter(newValue);
 
@@ -144,7 +143,7 @@ const InputSegmentWithRef = <Segment extends string>(
         onChange({
           segment,
           value: valueString,
-          meta: { key, min },
+          meta: { key, min: minSegmentValue },
         });
         break;
       }
@@ -160,7 +159,7 @@ const InputSegmentWithRef = <Segment extends string>(
           onChange({
             segment,
             value: '',
-            meta: { key, min },
+            meta: { key, min: minSegmentValue },
           });
         }
 
@@ -177,7 +176,7 @@ const InputSegmentWithRef = <Segment extends string>(
           onChange({
             segment,
             value: '',
-            meta: { key, min },
+            meta: { key, min: minSegmentValue },
           });
         }
 
@@ -212,8 +211,8 @@ const InputSegmentWithRef = <Segment extends string>(
         pattern={pattern}
         role="spinbutton"
         value={value}
-        min={min}
-        max={max}
+        min={minSegmentValue}
+        max={maxSegmentValue}
         onChange={handleChange}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
