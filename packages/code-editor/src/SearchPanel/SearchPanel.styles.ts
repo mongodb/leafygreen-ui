@@ -88,7 +88,6 @@ export const findSectionStyles = css`
   display: flex;
   align-items: center;
   padding: ${spacing[200]}px;
-  height: 100%;
 `;
 
 export const replaceSectionStyles = css`
@@ -161,8 +160,4 @@ export const replaceInputContainerStyles = css`
 
 export const replaceButtonStyles = css`
   margin-left: ${spacing[100]}px;
-`;
-
-export const findInputStyles = css`
-  width: 100%;
 `;

@@ -32,7 +32,6 @@ import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import {
   closeButtonStyles,
   findInputContainerStyles,
-  findInputStyles,
   findOptionsContainerStyles,
   findSectionStyles,
   getContainerStyles,
@@ -294,7 +293,6 @@ export function SearchPanel({
               aria-labelledby="find"
               onChange={handleSearchQueryChange}
               onKeyDown={handleFindInputKeyDown}
-              className={findInputStyles}
               value={searchString}
               // CodeMirror looks for this attribute to refocus when CMD+F is pressed and the panel is already open
               main-field="true"

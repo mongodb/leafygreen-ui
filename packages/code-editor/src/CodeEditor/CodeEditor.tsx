@@ -90,7 +90,20 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const [undoDepth, setUndoDepth] = useState(0);
     const [redoDepth, setRedoDepth] = useState(0);
 
-    const { modules, isLoading } = useModules(props);
+    // Create normalized props object with all defaults applied
+    // This ensures that when we spread props, all default values are included
+    const normalizedProps: CodeEditorProps = {
+      ...props,
+      copyButtonAppearance,
+      enableSearchPanel,
+      extensions: consumerExtensions,
+      forceParsing: forceParsingProp,
+      isLoading: isLoadingProp,
+    };
+
+    const { modules, isLoading } = useModules({
+      ...normalizedProps,
+    });
 
     // Get formatting functionality
     const { formatCode, isFormattingAvailable } = useCodeFormatter({
@@ -102,11 +115,8 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const customExtensions = useExtensions({
       editorViewInstance: editorViewRef.current,
       props: {
-        ...props,
-        forceParsing: forceParsingProp,
+        ...normalizedProps,
         onChange: onChangeProp,
-        isLoading: isLoadingProp,
-        extensions: consumerExtensions,
         baseFontSize,
         /**
          * CodeEditorTooltip in particular renders outside of the LeafyGreenProvider
@@ -283,7 +293,7 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     const searchPanelExtension = useSearchPanelExtension({
       props: {
-        ...props,
+        ...normalizedProps,
         darkMode,
         baseFontSize,
       },
@@ -335,7 +345,6 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         !EditorView ||
         !Prec ||
         !commands ||
-        !searchModule ||
         !StateEffect
       ) {
         return;
