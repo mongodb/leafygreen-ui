@@ -43,6 +43,17 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     controls: {
       exclude: [...storybookExcludedControlParams, 'extensions'],
     },
+    generate: {
+      args: {
+        width: '100%',
+      },
+      combineArgs: {
+        darkMode: [false, true],
+        baseFontSize: Object.values(BaseFontSize),
+        copyButtonAppearance: Object.values(CopyButtonAppearance),
+        enableLineNumbers: [true, false],
+      },
+    },
   },
   decorators: [
     (Story: StoryFn, context) => (
@@ -251,6 +262,35 @@ LiveExample.args = {
   ),
 };
 
+/** This asserts that the editor loads correctly when no defaults are provided. */
+export const NoDefaults = Template.bind({});
+NoDefaults.args = {
+  copyButtonAppearance: undefined,
+  customContextMenuItems: undefined,
+  enableClickableUrls: undefined,
+  enableCodeFolding: undefined,
+  enableLineNumbers: undefined,
+  enableLineWrapping: undefined,
+  enableSearchPanel: undefined,
+  baseFontSize: undefined,
+  forceParsing: undefined,
+  placeholder: undefined,
+  readOnly: undefined,
+  indentSize: undefined,
+  indentUnit: undefined,
+  isLoading: undefined,
+  defaultValue: undefined,
+  tooltips: undefined,
+  darkMode: undefined,
+  height: undefined,
+  maxHeight: '',
+  maxWidth: undefined,
+  minHeight: undefined,
+  minWidth: undefined,
+  preLoadedModules: undefined,
+  width: undefined,
+};
+
 export const Minimal = Template.bind({});
 Minimal.args = {
   enableLineNumbers: false,
@@ -416,3 +456,5 @@ export const WithPreLoadedModules: StoryObj<typeof CodeEditor> = {
     />
   ),
 };
+
+export const Generated = () => {};

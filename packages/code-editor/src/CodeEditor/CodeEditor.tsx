@@ -92,13 +92,15 @@ const BaseCodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     // Create normalized props object with all defaults applied
     // This ensures that when we spread props, all default values are included
+    // Note: We spread props first, then override with destructured values (which have defaults applied)
+    // This ensures that if a prop is undefined in props, the default value is used
     const normalizedProps: CodeEditorProps = {
+      ...props,
       copyButtonAppearance,
       enableSearchPanel,
       extensions: consumerExtensions,
       forceParsing: forceParsingProp,
       isLoading: isLoadingProp,
-      ...props,
     };
 
     const { modules, isLoading } = useModules({
