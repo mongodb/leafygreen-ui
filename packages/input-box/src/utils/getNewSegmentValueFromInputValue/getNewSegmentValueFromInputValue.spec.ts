@@ -196,7 +196,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
         expect(newValue).toEqual(`00`);
       });
 
-      test('accepts 00 as input when shouldSkipValidation is true and value is less than defaultMin', () => {
+      test('accepts 00 as input when shouldValidate is false and value is less than defaultMin', () => {
         const newValue = getNewSegmentValueFromInputValue({
           segmentName: 'day',
           currentValue: '0',
@@ -205,7 +205,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
           defaultMin: 1,
           defaultMax: 15,
           segmentEnum: segmentObj,
-          shouldSkipValidation: true,
+          shouldValidate: false,
         });
         expect(newValue).toEqual(`00`);
       });
@@ -239,7 +239,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
       expect(newValue).toEqual('2024');
     });
 
-    test('truncates from start when shouldSkipValidation is true and value exceeds charsPerSegment', () => {
+    test('truncates from start when shouldValidate is false and value exceeds charsPerSegment', () => {
       const newValue = getNewSegmentValueFromInputValue({
         segmentName: 'year',
         currentValue: '000',
@@ -248,7 +248,7 @@ describe('packages/input-box/utils/getNewSegmentValueFromInputValue', () => {
         defaultMin: 1970,
         defaultMax: 2099,
         segmentEnum: segmentObj,
-        shouldSkipValidation: true,
+        shouldValidate: false,
       });
       expect(newValue).toEqual('0001');
     });

@@ -644,7 +644,7 @@ describe('packages/input-segment', () => {
         );
       });
 
-      test('allows values above max range when skipValidation is true', () => {
+      test('allows values above max range when shouldValidate is false', () => {
         const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
           SegmentObjMock,
           string
@@ -653,7 +653,7 @@ describe('packages/input-segment', () => {
         const { input } = renderSegment({
           props: {
             ...setSegmentProps('year'),
-            shouldSkipValidation: true,
+            shouldValidate: false,
           },
           providerProps: {
             segments: { day: '', month: '', year: '203' },
@@ -753,13 +753,13 @@ describe('packages/input-segment', () => {
   });
 
   describe('shouldSkipValidation prop', () => {
-    test('allows values outside min/max range when shouldSkipValidation is true', () => {
+    test('allows values outside min/max range when shouldValidate is false', () => {
       const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
         SegmentObjMock,
         string
       >;
       const { input } = renderSegment({
-        props: { segment: 'day', shouldSkipValidation: true },
+        props: { segment: 'day', shouldValidate: false },
         providerProps: {
           onChange: onChangeHandler,
           segments: { day: '9', month: '', year: '' },
@@ -773,13 +773,13 @@ describe('packages/input-segment', () => {
       );
     });
 
-    test('does not allows values outside min/max range when shouldSkipValidation is false', () => {
+    test('does not allows values outside min/max range when shouldValidate is true', () => {
       const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
         SegmentObjMock,
         string
       >;
       const { input } = renderSegment({
-        props: { segment: 'day', shouldSkipValidation: false },
+        props: { segment: 'day', shouldValidate: true },
         providerProps: {
           onChange: onChangeHandler,
           segments: { day: '9', month: '', year: '' },
@@ -829,7 +829,7 @@ describe('packages/input-segment', () => {
         maxSegmentValue={31}
         step={1}
         shouldWrap={true}
-        shouldSkipValidation={false}
+        shouldValidate={true}
         placeholder="12"
         className="test"
         onBlur={() => {}}

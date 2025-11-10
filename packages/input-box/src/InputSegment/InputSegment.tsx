@@ -42,7 +42,7 @@ const InputSegmentWithRef = <Segment extends string>(
     onBlur: onBlurProp,
     step = 1,
     shouldWrap = true,
-    shouldSkipValidation = false,
+    shouldValidate = true,
     ...rest
   }: InputSegmentProps<Segment>,
   fwdRef: ForwardedRef<HTMLInputElement>,
@@ -87,7 +87,7 @@ const InputSegmentWithRef = <Segment extends string>(
       defaultMin: minSegmentValue,
       defaultMax: maxSegmentValue,
       segmentEnum,
-      shouldSkipValidation,
+      shouldValidate,
     });
 
     const hasValueChanged = newValue !== value;

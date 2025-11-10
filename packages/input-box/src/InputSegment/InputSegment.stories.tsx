@@ -66,7 +66,7 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
         'onChange',
         'charsPerSegment',
         'segmentEnum',
-        'shouldSkipValidation',
+        'shouldValidate',
         'step',
         'placeholder',
       ],

@@ -52,18 +52,18 @@ export interface InputSegmentProps<Segment extends string>
   step?: number;
 
   /**
-   * Whether the segment should wrap at min/max boundaries
+   * Whether the segment should wrap at max boundaries when using the up arrow key.
    *
    * @default true
    */
   shouldWrap?: boolean;
 
   /**
-   * Whether the segment should skip validation. This is useful for segments that allow values outside of the default range.
+   * Whether the segment should validate. Skipping validation is useful for segments that allow values outside of the default range.
    *
-   * @default false
+   * @default true
    */
-  shouldSkipValidation?: boolean;
+  shouldValidate?: boolean;
 }
 
 /**
