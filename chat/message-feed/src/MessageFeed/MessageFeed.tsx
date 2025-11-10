@@ -14,7 +14,11 @@ import LeafyGreenProvider, {
 
 import { ScrollToLatestButton } from '../ScrollToLatestButton';
 
-import { getWrapperStyles, scrollContainerStyles } from './MessageFeed.styles';
+import {
+  getWrapperStyles,
+  interceptStyles,
+  scrollContainerStyles,
+} from './MessageFeed.styles';
 import { MessageFeedProps } from '.';
 
 export const MessageFeed = forwardRef(
@@ -106,10 +110,10 @@ export const MessageFeed = forwardRef(
         >
           <div className={scrollContainerStyles} ref={scrollContainerRef}>
             {/* Empty span element used to track if container can scroll up */}
-            <span ref={topInterceptRef} />
+            <span className={interceptStyles} ref={topInterceptRef} />
             {children}
             {/* Empty span element used to track if container can scroll down */}
-            <span ref={bottomInterceptRef} />
+            <span className={interceptStyles} ref={bottomInterceptRef} />
           </div>
           <ScrollToLatestButton
             darkMode={darkMode}

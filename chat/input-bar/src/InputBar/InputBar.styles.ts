@@ -15,6 +15,14 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+/**
+ * when `InputBar` is used in a drawer (or other context that restricts
+ * the width of the container), we need to set a minimum width so that
+ * `react-textarea-autosize` can properly calculate the initial height
+ * of the textarea element.
+ */
+const TEXT_AREA_MIN_WIDTH = 150;
+
 const baseFormStyles = css`
   width: 100%;
 `;
@@ -100,6 +108,7 @@ export const getContentWrapperStyles = ({
   });
 
 const getBaseTextAreaStyles = ({ theme }: { theme: Theme }) => css`
+  min-width: ${TEXT_AREA_MIN_WIDTH}px;
   width: 100%;
   font-size: ${BaseFontSize.Body1}px;
   font-family: ${fontFamilies.default};

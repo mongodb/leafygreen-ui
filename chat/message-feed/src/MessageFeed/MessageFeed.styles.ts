@@ -39,8 +39,13 @@ export const scrollContainerStyles = css`
   overflow-y: scroll;
   scroll-behavior: smooth;
   position: relative;
-  padding: 0 ${spacing[400]}px ${spacing[400]}px;
+  padding: 0 ${spacing[400]}px;
   display: flex;
   flex-direction: column;
   gap: ${spacing[400]}px;
+`;
+
+// Ensures the intercept element is visible and considered by the browser
+export const interceptStyles = css`
+  min-height: 1px;
 `;
