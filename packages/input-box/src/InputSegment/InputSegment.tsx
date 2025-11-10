@@ -49,8 +49,8 @@ const InputSegmentWithRef = <Segment extends string>(
 ) => {
   const { theme } = useDarkMode();
   const {
-    onChange,
-    onBlur,
+    onChange: onChangeContextProp,
+    onBlur: onBlurContextProp,
     charsPerSegment: charsPerSegmentContext,
     segmentEnum,
     segmentRefs,
@@ -93,7 +93,7 @@ const InputSegmentWithRef = <Segment extends string>(
     const hasValueChanged = newValue !== value;
 
     if (hasValueChanged) {
-      onChange({
+      onChangeContextProp({
         segment,
         value: newValue,
         meta: { min: minSegmentValue },
@@ -140,7 +140,7 @@ const InputSegmentWithRef = <Segment extends string>(
         const valueString = formatter(newValue);
 
         /** Fire a custom change event when the up/down arrow keys are pressed */
-        onChange({
+        onChangeContextProp({
           segment,
           value: valueString,
           meta: { key, min: minSegmentValue },
@@ -156,7 +156,7 @@ const InputSegmentWithRef = <Segment extends string>(
           e.stopPropagation();
 
           /** Fire a custom change event when the backspace key is pressed */
-          onChange({
+          onChangeContextProp({
             segment,
             value: '',
             meta: { key, min: minSegmentValue },
@@ -173,7 +173,7 @@ const InputSegmentWithRef = <Segment extends string>(
         // Don't fire change event if the input is initially empty
         if (value) {
           /** Fire a custom change event when the space key is pressed */
-          onChange({
+          onChangeContextProp({
             segment,
             value: '',
             meta: { key, min: minSegmentValue },
@@ -192,7 +192,7 @@ const InputSegmentWithRef = <Segment extends string>(
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    onBlur?.(e);
+    onBlurContextProp?.(e);
     onBlurProp?.(e);
   };
 
