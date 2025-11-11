@@ -1,7 +1,7 @@
 import {
   InputSegmentChangeEventHandler,
   SharedInputBoxTypes,
-} from '../shared/types';
+} from '../shared.types';
 
 export interface InputBoxContextType<Segment extends string = string>
   extends SharedInputBoxTypes<Segment> {
