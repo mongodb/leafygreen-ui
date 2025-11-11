@@ -1,10 +1,11 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 
-import { InputBoxProvider } from '../InputBoxContext/InputBoxContext';
-import { InputBoxProviderProps } from '../InputBoxContext/InputBoxContext.types';
-import { InputSegment } from '../InputSegment/InputSegment';
-import { InputSegmentProps } from '../InputSegment/InputSegment.types';
+import {
+  InputBoxProvider,
+  type InputBoxProviderProps,
+} from '../InputBoxContext';
+import { InputSegment, type InputSegmentProps } from '../InputSegment';
 
 import {
   charsPerSegmentMock,
