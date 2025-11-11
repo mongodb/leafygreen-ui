@@ -1,5 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'jest-axe';
 
 import { type InputSegmentChangeEventHandler } from '../shared.types';
 import { renderSegment, setSegmentProps } from '../testutils';
@@ -15,6 +16,14 @@ import { InputSegment } from '.';
 
 describe('packages/input-segment', () => {
   describe('aria attributes', () => {
+    test('does not have basic accessibility issues when tooltip is not open', async () => {
+      const { container } = renderSegment({
+        props: { segment: 'day' },
+      });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+
     test(`segment has aria-label`, () => {
       const { input } = renderSegment({
         props: { segment: 'day' },
