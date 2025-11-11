@@ -9,22 +9,23 @@
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
-    "docs": "lg-build docs"
+    "docs": "lg-build docs",
+    "dev": "lg-build bundle --watch"
   },
   "peerDependencies": {
     "react": "^18.2.0"
   },
   "dependencies": {
-    "@leafygreen-ui/card": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^",
-    "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/lib": "workspace:^"
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"
   },
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/umd/index.js"

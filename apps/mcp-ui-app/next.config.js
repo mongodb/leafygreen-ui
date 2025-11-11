@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  transpilePackages: [
+    '@lg-mcp-ui/list-databases',
+    '@leafygreen-ui/card',
+    '@leafygreen-ui/typography',
+    '@leafygreen-ui/emotion',
+    '@leafygreen-ui/tokens',
+    '@leafygreen-ui/lib',
+  ],
 
   async headers() {
     // Get allowed origins from environment variable

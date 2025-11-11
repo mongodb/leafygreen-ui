@@ -125,7 +125,7 @@ importers:
     dependencies:
       '@lg-mcp-ui/list-databases':
         specifier: workspace:*
-        version: link:../../mcp-ui/micro-uis/list-databases
+        version: link:../../mcp-ui/list-databases
       next:
         specifier: ^14.2.0
         version: 14.2.33(@babel/core@7.24.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.89.2)
@@ -980,27 +980,24 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
-  mcp-ui/micro-uis/list-databases:
+  mcp-ui/list-databases:
     dependencies:
-      '@leafygreen-ui/card':
-        specifier: workspace:^
-        version: link:../../../packages/card
-      '@leafygreen-ui/emotion':
-        specifier: workspace:^
-        version: link:../../../packages/emotion
       '@leafygreen-ui/lib':
         specifier: workspace:^
-        version: link:../../../packages/lib
-      '@leafygreen-ui/typography':
+        version: link:../../packages/lib
+      '@leafygreen-ui/palette':
         specifier: workspace:^
-        version: link:../../../packages/typography
+        version: link:../../packages/palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../../packages/tokens
       react:
         specifier: ^18.2.0
         version: 18.3.1
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
-        version: link:../../../tools/build
+        version: link:../../tools/build
 
   packages/a11y:
     dependencies:
