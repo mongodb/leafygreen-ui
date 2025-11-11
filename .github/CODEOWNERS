@@ -12,3 +12,7 @@ mcp-ui @mongodb/lg-mcp-ui
 packages/date-picker @mongodb/lg-time-input
 packages/date-utils @mongodb/lg-time-input
 packages/time-input @mongodb/lg-time-input
+
+# catch-all rule: any file not matching a more specific rule below
+# will be assigned to @leafygreen-ui-maintainers
+* @mongodb/leafygreen-ui-maintainers
