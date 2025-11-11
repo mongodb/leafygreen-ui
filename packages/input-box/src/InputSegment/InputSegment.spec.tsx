@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 
-import { InputSegmentChangeEventHandler } from '../shared/types';
+import { type InputSegmentChangeEventHandler } from '../shared.types';
 import { renderSegment, setSegmentProps } from '../testutils';
 import {
   charsPerSegmentMock,

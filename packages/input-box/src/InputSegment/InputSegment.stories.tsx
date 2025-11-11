@@ -9,7 +9,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { InputBoxProvider } from '../InputBoxContext';
-import { InputSegmentChangeEventHandler } from '../shared/types';
+import { type InputSegmentChangeEventHandler } from '../shared.types';
 import {
   charsPerSegmentMock,
   defaultMaxMock,
