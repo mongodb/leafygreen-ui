@@ -1,5 +1,14 @@
 # @leafygreen-ui/code-editor
 
+## 1.0.1
+
+### Patch Changes
+
+- a7fc5a8: - Fixes stuck loading state
+  - Includes minor small visual improvements
+- Updated dependencies [d8c4e35]
+  - @leafygreen-ui/typography@22.2.1
+
 ## 1.0.0
 
 ### Major Changes
