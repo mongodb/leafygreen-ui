@@ -32,7 +32,10 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
   },
   "peerDependencies": {

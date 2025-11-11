@@ -21,11 +21,13 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
-    "@storybook/react": "8.6.14",
+    "@floating-ui/react": "^0.26.20",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/popover": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@storybook/react": "8.6.14",
+    "polished": "^4.2.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"

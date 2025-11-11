@@ -26,9 +26,13 @@
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "devDependencies": {
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@faker-js/faker": "8.0.2",
     "@leafygreen-ui/icon": "workspace:^",
     "@lg-charts/core": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "echarts": "^5.5.0"
   },
   "repository": {
     "type": "git",

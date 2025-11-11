@@ -35,26 +35,31 @@
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "@lg-tools/test-harnesses": "workspace:^",
     "@tanstack/react-table": "^8.20.5",
     "@tanstack/react-virtual": "^3.10.7",
-    "lodash": "^4.17.21",
-    "polished": "^4.2.2",
     "react-fast-compare": "3.2.2",
     "react-intersection-observer": "^8.25.1"
   },
   "devDependencies": {
     "@emotion/styled": "^11.14.0",
     "@faker-js/faker": "^8.0.0",
+    "@floating-ui/react": "^0.26.20",
     "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/pagination": "workspace:^",
+    "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^",
+    "clipboard": "^2.0.11",
+    "facepaint": "^1.2.1",
+    "highlight.js": "^11.10.0",
+    "highlightjs-graphql": "^1.0.2",
+    "lodash": "^4.17.21",
+    "polished": "^4.2.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"

@@ -22,8 +22,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/split-button": "workspace:^",
-    "@leafygreen-ui/tokens": "workspace:^",
-    "polished": "^4.2.2"
+    "@leafygreen-ui/tokens": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
@@ -37,8 +36,10 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
+    "@floating-ui/react": "^0.26.20",
     "@leafygreen-ui/menu": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "polished": "^4.2.2"
   },
   "exports": {
     ".": {

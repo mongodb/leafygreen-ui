@@ -18,7 +18,6 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^"
   },
   "peerDependencies": {

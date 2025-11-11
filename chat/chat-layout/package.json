@@ -36,19 +36,25 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^",
-    "@lg-tools/test-harnesses": "workspace:^"
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0",
     "@lg-chat/leafygreen-chat-provider": "workspace:^6.0.0"
   },
   "devDependencies": {
+    "@floating-ui/react": "^0.26.20",
     "@lg-chat/chat-window": "workspace:^",
     "@lg-chat/input-bar": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feed": "workspace:^",
-    "@lg-chat/title-bar": "workspace:^"
+    "@lg-chat/title-bar": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "clipboard": "^2.0.11",
+    "facepaint": "^1.2.1",
+    "highlight.js": "^11.10.0",
+    "highlightjs-graphql": "^1.0.2",
+    "polished": "^4.2.2"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/chat/chat-layout",
   "repository": {

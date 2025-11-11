@@ -36,6 +36,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
+    "@lg-charts/core": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "exports": {

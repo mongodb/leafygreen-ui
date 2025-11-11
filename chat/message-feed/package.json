@@ -22,12 +22,16 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-rating": "workspace:^",
+    "@lg-chat/avatar": "workspace:^",
     "react-intersection-observer": "^8.25.1",
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {
+    "@lg-chat/message": "workspace:^",
     "@lg-chat/message-prompts": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-chat/message-rating": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "polished": "^4.2.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0",
