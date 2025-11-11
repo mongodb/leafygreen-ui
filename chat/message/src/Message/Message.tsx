@@ -85,7 +85,7 @@ const BaseMessage = forwardRef<HTMLDivElement, MessageProps>(
           >
             {!isSender && (
               <div className={avatarContainerStyles}>
-                <AssistantAvatar darkMode={darkMode} size={20} />
+                <AssistantAvatar size={20} />
                 <Body weight="semiBold">{assistantName}</Body>
               </div>
             )}
