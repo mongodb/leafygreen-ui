@@ -24,13 +24,6 @@ import {
   InputSegmentProps,
 } from './InputSegment.types';
 
-/**
- * Generic controlled input segment component
- *
- * Renders a single input segment with configurable
- * character padding, validation, and formatting.
- *
- */
 const InputSegmentWithRef = <Segment extends string>(
   {
     segment,
@@ -232,6 +225,36 @@ const InputSegmentWithRef = <Segment extends string>(
   );
 };
 
+/**
+ * Generic controlled input segment component to be used within the InputBox component.
+ *
+ * This component renders a single input segment from an array of format parts (typically `Intl.DateTimeFormatPart`)
+ * passed to the InputBox component. It is designed primarily for date and time input segments, where each segment
+ * represents a distinct part of the date/time format (e.g., month, day, year, hour, minute).
+ *
+ * Each segment is configurable with character padding, validation, and formatting rules.
+ *
+ * @example
+ * // Used internally by InputBox to render segments from formatParts:
+ *
+ * // Date format:
+ * // [
+ * //   { type: 'month', value: '02' },
+ * //   { type: 'literal', value: '-' },
+ * //   { type: 'day', value: '02' },
+ * //   { type: 'literal', value: '-' },
+ * //   { type: 'year', value: '2025' },
+ * // ]
+ *
+ * // Time format:
+ * // [
+ * //   { type: 'hour', value: '14' },
+ * //   { type: 'literal', value: ':' },
+ * //   { type: 'minute', value: '30' },
+ * //   { type: 'literal', value: ':' },
+ * //   { type: 'second', value: '45' },
+ * // ]
+ */
 export const InputSegment = React.forwardRef(
   InputSegmentWithRef,
 ) as InputSegmentComponentType;

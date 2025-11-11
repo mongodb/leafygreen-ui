@@ -81,28 +81,3 @@ export interface InputSegmentComponentType {
   ): ReactElement | null;
   displayName?: string;
 }
-
-/**
- * Returns whether the given string is a valid segment
- */
-export function isInputSegment<T extends Record<string, string>>(
-  str: any,
-  segmentObj: T,
-): str is T[keyof T] {
-  if (typeof str !== 'string') return false;
-  return Object.values(segmentObj).includes(str);
-}
-
-/**
- * Base props for custom segment components passed to InputBox.
- *
- * Extend this interface to define props for custom segment implementations.
- * InputBox will provide additional props internally (e.g., onChange, value, min, max).
- */
-export interface InputSegmentComponentProps<Segment extends string>
-  extends Omit<
-    React.ComponentPropsWithoutRef<'input'>,
-    'onChange' | 'value' | 'min' | 'max'
-  > {
-  segment: Segment;
-}

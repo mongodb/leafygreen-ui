@@ -2,6 +2,10 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 /**
+ *  SharedInput Segment Types
+ */
+
+/**
  *  Shared Input Segment Change Event
  */
 export interface InputSegmentChangeEvent<
@@ -24,6 +28,31 @@ export type InputSegmentChangeEventHandler<
   Segment extends string,
   Value extends string,
 > = (inputSegmentChangeEvent: InputSegmentChangeEvent<Segment, Value>) => void;
+
+/**
+ * Returns whether the given string is a valid segment
+ */
+export function isInputSegment<T extends Record<string, string>>(
+  segment: unknown,
+  segmentObj: T,
+): segment is T[keyof T] {
+  if (typeof segment !== 'string') return false;
+  return Object.values(segmentObj).includes(segment);
+}
+
+/**
+ * Base props for custom segment components passed to InputBox.
+ *
+ * Extend this interface to define props for custom segment implementations.
+ * InputBox will provide additional props internally (e.g., onChange, value, min, max).
+ */
+export interface InputSegmentComponentProps<Segment extends string>
+  extends Omit<
+    React.ComponentPropsWithoutRef<'input'>,
+    'onChange' | 'value' | 'min' | 'max'
+  > {
+  segment: Segment;
+}
 
 /**
  * Shared Input Box Types
