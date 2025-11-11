@@ -182,6 +182,9 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
     devDependencies:
+      '@lg-charts/core':
+        specifier: workspace:^
+        version: link:../core
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
@@ -703,12 +706,6 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1(react@18.3.1)
     devDependencies:
-      '@floating-ui/react':
-        specifier: ^0.26.20
-        version: 0.26.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@leafygreen-ui/palette':
-        specifier: workspace:^
-        version: link:../../packages/palette
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message
@@ -721,18 +718,6 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      clipboard:
-        specifier: ^2.0.11
-        version: 2.0.11
-      facepaint:
-        specifier: ^1.2.1
-        version: 1.2.1
-      highlight.js:
-        specifier: ^11.10.0
-        version: 11.11.1
-      highlightjs-graphql:
-        specifier: ^1.0.2
-        version: 1.0.2
       polished:
         specifier: ^4.2.2
         version: 4.3.1
@@ -1792,12 +1777,6 @@ importers:
       date-fns-tz:
         specifier: ^2.0.0
         version: 2.0.1(date-fns@2.30.0)
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      timezone-mock:
-        specifier: ^1.3.6
-        version: 1.3.6
       weekstart:
         specifier: ^2.0.0
         version: 2.0.0
@@ -1808,6 +1787,12 @@ importers:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      timezone-mock:
+        specifier: ^1.3.6
+        version: 1.3.6
 
   packages/descendants:
     dependencies:
@@ -3940,9 +3925,6 @@ importers:
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
-      polished:
-        specifier: ^4.2.2
-        version: 4.3.1
 
   packages/wizard:
     dependencies:
@@ -4073,14 +4055,8 @@ importers:
       fs-extra:
         specifier: 11.1.1
         version: 11.1.1
-      glob:
-        specifier: ^11.0.0
-        version: 11.0.3
       lodash:
         specifier: 4.17.21
-        version: 4.17.21
-      lodash-es:
-        specifier: ^4.17.21
         version: 4.17.21
       react-docgen-typescript:
         specifier: 2.2.2
@@ -4308,15 +4284,6 @@ importers:
       '@emotion/eslint-plugin':
         specifier: 11.12.0
         version: 11.12.0(eslint@9.16.0)(typescript@5.8.3)
-      '@eslint/compat':
-        specifier: ^1.2.4
-        version: 1.4.1(eslint@9.16.0)
-      '@eslint/eslintrc':
-        specifier: ^3.2.0
-        version: 3.3.1
-      '@eslint/js':
-        specifier: ^9.16.0
-        version: 9.16.0
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../build
@@ -4374,9 +4341,6 @@ importers:
       glob:
         specifier: 10.3.12
         version: 10.3.12
-      globals:
-        specifier: ^15.13.0
-        version: 15.15.0
       npm-package-json-lint:
         specifier: 8.0.0
         version: 8.0.0(typescript@5.8.3)
@@ -5888,15 +5852,6 @@ packages:
   '@eslint-community/regexpp@4.12.1':
     resolution: {integrity: sha512-CCZCDJuduB9OUkFkY2IgppNZMi2lBQgD2qzwXkEia16cge2pijY/aXi96CJMquDMn3nJdlPV1A5KrJEXwfLNzQ==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
-
-  '@eslint/compat@1.4.1':
-    resolution: {integrity: sha512-cfO82V9zxxGBxcQDr1lfaYB7wykTa0b00mGa36FrJl7iTFd0Z2cHfEYuxcBRP/iNijCsWsEkA+jzT8hGYmv33w==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^8.40 || 9
-    peerDependenciesMeta:
-      eslint:
-        optional: true
 
   '@eslint/config-array@0.19.2':
     resolution: {integrity: sha512-GNKqxfHG2ySmJOBSHg7LxeUx4xpuCoFjacmlCoYWEbaPXLwvfIjixRI12xCQZeULksQb23uiA8F40w5TojpV7w==}
@@ -8850,10 +8805,6 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@15.15.0:
-    resolution: {integrity: sha512-7ACyT3wmyp3I61S4fG682L0VA2RGD9otkqGJIwNUMF1SWUombIIk+af1unuDYgMm082aHYwD+mzJvv9Iu8dsgg==}
-    engines: {node: '>=18'}
-
   globalthis@1.0.4:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
     engines: {node: '>= 0.4'}
@@ -9624,9 +9575,6 @@ packages:
   locate-path@7.2.0:
     resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
-  lodash-es@4.17.21:
-    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -14020,12 +13968,6 @@ snapshots:
 
   '@eslint-community/regexpp@4.12.1': {}
 
-  '@eslint/compat@1.4.1(eslint@9.16.0)':
-    dependencies:
-      '@eslint/core': 0.17.0
-    optionalDependencies:
-      eslint: 9.16.0
-
   '@eslint/config-array@0.19.2':
     dependencies:
       '@eslint/object-schema': 2.1.6
@@ -16304,15 +16246,12 @@ snapshots:
 
   builtin-modules@3.3.0: {}
 
-<<<<<<< HEAD
-=======
   builtin-status-codes@3.0.0: {}
 
   busboy@1.6.0:
     dependencies:
       streamsearch: 1.1.0
 
->>>>>>> d8485a96a ([LG-5666] MCP-UI App Scaffolding (#3280))
   call-bind-apply-helpers@1.0.2:
     dependencies:
       es-errors: 1.3.0
@@ -17727,8 +17666,6 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@15.15.0: {}
-
   globalthis@1.0.4:
     dependencies:
       define-properties: 1.2.1
@@ -18732,8 +18669,6 @@ snapshots:
   locate-path@7.2.0:
     dependencies:
       p-locate: 6.0.0
-
-  lodash-es@4.17.21: {}
 
   lodash.debounce@4.0.8: {}
 

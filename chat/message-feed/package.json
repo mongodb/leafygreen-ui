@@ -19,20 +19,17 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-chat/message": "workspace:^",
+    "@lg-chat/message-rating": "workspace:^",
+    "@lg-chat/avatar": "workspace:^",
     "react-intersection-observer": "^8.25.1",
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {
-    "@floating-ui/react": "^0.26.20",
-    "@leafygreen-ui/palette": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-prompts": "workspace:^",
     "@lg-chat/message-rating": "workspace:^",
     "@lg-tools/build": "workspace:^",
-    "clipboard": "^2.0.11",
-    "facepaint": "^1.2.1",
-    "highlight.js": "^11.10.0",
-    "highlightjs-graphql": "^1.0.2",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
