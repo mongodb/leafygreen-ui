@@ -6,12 +6,10 @@ import React, {
 } from 'react';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { useInputBoxContext } from '../InputBoxContext';
 import {
   getNewSegmentValueFromArrowKeyPress,
   getNewSegmentValueFromInputValue,
@@ -24,53 +22,34 @@ import {
   InputSegmentProps,
 } from './InputSegment.types';
 
-/**
- * Generic controlled input segment component
- *
- * Renders a single input segment with configurable
- * character padding, validation, and formatting.
- *
- * @internal
- */
-const InputSegmentWithRef = <Segment extends string>(
+const InputSegmentWithRef = <Segment extends string, Value extends string>(
   {
     segment,
     onKeyDown,
-    min, // minSegmentValue
-    max, // maxSegmentValue
+    minSegmentValue,
+    maxSegmentValue,
     className,
-    onChange: onChangeProp,
-    onBlur: onBlurProp,
+    onChange,
+    onBlur,
+    segmentEnum,
+    size,
+    disabled,
+    value,
+    charsPerSegment,
     step = 1,
     shouldWrap = true,
-    shouldSkipValidation = false,
+    shouldValidate = true,
     ...rest
-  }: InputSegmentProps<Segment>,
+  }: InputSegmentProps<Segment, Value>,
   fwdRef: ForwardedRef<HTMLInputElement>,
 ) => {
   const { theme } = useDarkMode();
-  const {
-    onChange,
-    onBlur,
-    charsPerSegment: charsPerSegmentContext,
-    segmentEnum,
-    segmentRefs,
-    segments,
-    labelledBy,
-    size,
-    disabled,
-  } = useInputBoxContext<Segment>();
   const baseFontSize = useUpdatedBaseFontSize();
-  const charsPerSegment = charsPerSegmentContext[segment];
   const formatter = getValueFormatter({
     charsPerSegment,
-    allowZero: min === 0,
+    allowZero: minSegmentValue === 0,
   });
   const pattern = `[0-9]{${charsPerSegment}}`;
-
-  const segmentRef = segmentRefs[segment];
-  const mergedRef = useMergeRefs([fwdRef, segmentRef]);
-  const value = segments[segment];
 
   /**
    * Receives native input events,
@@ -85,10 +64,10 @@ const InputSegmentWithRef = <Segment extends string>(
       currentValue: value,
       incomingValue: target.value,
       charsPerSegment,
-      defaultMin: min,
-      defaultMax: max,
+      defaultMin: minSegmentValue,
+      defaultMax: maxSegmentValue,
       segmentEnum,
-      shouldSkipValidation,
+      shouldValidate,
     });
 
     const hasValueChanged = newValue !== value;
@@ -97,14 +76,12 @@ const InputSegmentWithRef = <Segment extends string>(
       onChange({
         segment,
         value: newValue,
-        meta: { min },
+        meta: { min: minSegmentValue },
       });
     } else {
       // If the value has not changed, ensure the input value is reset
       target.value = value;
     }
-
-    onChangeProp?.(e);
   };
 
   /** Handle keydown presses that don't natively fire a change event */
@@ -133,10 +110,10 @@ const InputSegmentWithRef = <Segment extends string>(
         const newValue = getNewSegmentValueFromArrowKeyPress({
           key,
           value,
-          min,
-          max,
+          min: minSegmentValue,
+          max: maxSegmentValue,
           step,
-          shouldWrap: shouldWrap,
+          shouldWrap,
         });
         const valueString = formatter(newValue);
 
@@ -144,7 +121,7 @@ const InputSegmentWithRef = <Segment extends string>(
         onChange({
           segment,
           value: valueString,
-          meta: { key, min },
+          meta: { key, min: minSegmentValue },
         });
         break;
       }
@@ -160,7 +137,7 @@ const InputSegmentWithRef = <Segment extends string>(
           onChange({
             segment,
             value: '',
-            meta: { key, min },
+            meta: { key, min: minSegmentValue },
           });
         }
 
@@ -177,7 +154,7 @@ const InputSegmentWithRef = <Segment extends string>(
           onChange({
             segment,
             value: '',
-            meta: { key, min },
+            meta: { key, min: minSegmentValue },
           });
         }
 
@@ -194,7 +171,6 @@ const InputSegmentWithRef = <Segment extends string>(
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     onBlur?.(e);
-    onBlurProp?.(e);
   };
 
   // Note: Using a text input with pattern attribute due to Firefox
@@ -204,16 +180,16 @@ const InputSegmentWithRef = <Segment extends string>(
     <>
       <input
         {...rest}
-        aria-labelledby={labelledBy}
+        // aria-labelledby={labelledBy}
         aria-label={String(segment)}
         id={String(segment)}
-        ref={mergedRef}
+        ref={fwdRef}
         type="text"
         pattern={pattern}
         role="spinbutton"
         value={value}
-        min={min}
-        max={max}
+        min={minSegmentValue}
+        max={maxSegmentValue}
         onChange={handleChange}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
@@ -233,6 +209,36 @@ const InputSegmentWithRef = <Segment extends string>(
   );
 };
 
+/**
+ * Generic controlled input segment component to be used within the InputBox component.
+ *
+ * This component renders a single input segment from an array of format parts (typically `Intl.DateTimeFormatPart`)
+ * passed to the InputBox component. It is designed primarily for date and time input segments, where each segment
+ * represents a distinct part of the date/time format (e.g., month, day, year, hour, minute).
+ *
+ * Each segment is configurable with character padding, validation, and formatting rules.
+ *
+ * @example
+ * // Used internally by InputBox to render segments from formatParts:
+ *
+ * // Date format:
+ * // [
+ * //   { type: 'month', value: '02' },
+ * //   { type: 'literal', value: '-' },
+ * //   { type: 'day', value: '02' },
+ * //   { type: 'literal', value: '-' },
+ * //   { type: 'year', value: '2025' },
+ * // ]
+ *
+ * // Time format:
+ * // [
+ * //   { type: 'hour', value: '14' },
+ * //   { type: 'literal', value: ':' },
+ * //   { type: 'minute', value: '30' },
+ * //   { type: 'literal', value: ':' },
+ * //   { type: 'second', value: '45' },
+ * // ]
+ */
 export const InputSegment = React.forwardRef(
   InputSegmentWithRef,
 ) as InputSegmentComponentType;

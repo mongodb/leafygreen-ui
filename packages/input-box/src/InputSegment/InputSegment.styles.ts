@@ -1,11 +1,13 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
+  color,
   fontFamilies,
+  InteractionState,
   Size,
   typeScales,
+  Variant,
 } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
@@ -31,31 +33,23 @@ export const baseStyles = css`
   }
 `;
 
-export const segmentThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
+export const getSegmentThemeStyles = (theme: Theme) => {
+  return css`
     background-color: transparent;
-    color: ${palette.black};
+    color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
 
     &::placeholder {
-      color: ${palette.gray.light1};
+      color: ${color[theme].text[Variant.Placeholder][
+        InteractionState.Default
+      ]};
     }
 
     &:focus {
-      background-color: ${palette.blue.light3};
+      background-color: ${color[theme].background[Variant.Primary][
+        InteractionState.Focus
+      ]};
     }
-  `,
-  [Theme.Dark]: css`
-    background-color: transparent;
-    color: ${palette.gray.light2};
-
-    &::placeholder {
-      color: ${palette.gray.dark1};
-    }
-
-    &:focus {
-      background-color: ${palette.blue.dark3};
-    }
-  `,
+  `;
 };
 
 export const fontSizeStyles: Record<BaseFontSize, string> = {
@@ -96,7 +90,7 @@ export const getInputSegmentStyles = ({
   return cx(
     baseStyles,
     fontSizeStyles[baseFontSize],
-    segmentThemeStyles[theme],
+    getSegmentThemeStyles(theme),
     segmentSizeStyles[size],
     className,
   );

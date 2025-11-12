@@ -24,115 +24,362 @@ const isExplicitSegmentValue = createExplicitSegmentValidator({
 describe('packages/input-box/utils/createExplicitSegmentValidator', () => {
   describe('day segment', () => {
     test('returns false for single digit below minExplicitValue', () => {
-      expect(isExplicitSegmentValue('day', '1')).toBe(false);
-      expect(isExplicitSegmentValue('day', '2')).toBe(false);
-      expect(isExplicitSegmentValue('day', '3')).toBe(false);
+      expect(isExplicitSegmentValue({ segment: 'day', value: '1' })).toBe(
+        false,
+      );
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '2',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '3',
+        }),
+      ).toBe(false);
     });
 
     test('returns true for single digit at or above minExplicitValue', () => {
-      expect(isExplicitSegmentValue('day', '4')).toBe(true);
-      expect(isExplicitSegmentValue('day', '5')).toBe(true);
-      expect(isExplicitSegmentValue('day', '9')).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '4',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '5',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '9',
+        }),
+      ).toBe(true);
     });
 
     test('returns true for two-digit values (maxChars)', () => {
-      expect(isExplicitSegmentValue('day', '01')).toBe(true);
-      expect(isExplicitSegmentValue('day', '10')).toBe(true);
-      expect(isExplicitSegmentValue('day', '22')).toBe(true);
-      expect(isExplicitSegmentValue('day', '31')).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '01',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '10',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '22',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '31',
+        }),
+      ).toBe(true);
     });
 
     test('returns false for invalid values', () => {
-      expect(isExplicitSegmentValue('day', '0')).toBe(false);
-      expect(isExplicitSegmentValue('day', '')).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '0',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({ segment: 'day', value: '', allowZero: false }),
+      ).toBe(false);
     });
   });
 
   describe('month segment', () => {
     test('returns false for single digit below minExplicitValue', () => {
-      expect(isExplicitSegmentValue('month', '1')).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'month',
+          value: '1',
+        }),
+      ).toBe(false);
     });
 
     test('returns true for single digit at or above minExplicitValue', () => {
-      expect(isExplicitSegmentValue('month', '2')).toBe(true);
-      expect(isExplicitSegmentValue('month', '3')).toBe(true);
-      expect(isExplicitSegmentValue('month', '9')).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'month',
+          value: '2',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'month',
+          value: '3',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'month',
+          value: '9',
+        }),
+      ).toBe(true);
     });
 
     test('returns true for two-digit values (maxChars)', () => {
-      expect(isExplicitSegmentValue('month', '01')).toBe(true);
-      expect(isExplicitSegmentValue('month', '12')).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'month',
+          value: '01',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'month',
+          value: '12',
+        }),
+      ).toBe(true);
     });
 
     test('returns false for invalid values', () => {
-      expect(isExplicitSegmentValue('month', '0')).toBe(false);
-      expect(isExplicitSegmentValue('month', '')).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'month',
+          value: '0',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'month',
+          value: '',
+        }),
+      ).toBe(false);
     });
   });
 
   describe('year segment', () => {
     test('returns false for values shorter than maxChars', () => {
-      expect(isExplicitSegmentValue('year', '1')).toBe(false);
-      expect(isExplicitSegmentValue('year', '20')).toBe(false);
-      expect(isExplicitSegmentValue('year', '200')).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'year',
+          value: '1',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'year',
+          value: '20',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'year',
+          value: '200',
+        }),
+      ).toBe(false);
     });
 
     test('returns true for four-digit values (maxChars)', () => {
-      expect(isExplicitSegmentValue('year', '1970')).toBe(true);
-      expect(isExplicitSegmentValue('year', '2000')).toBe(true);
-      expect(isExplicitSegmentValue('year', '2023')).toBe(true);
-      expect(isExplicitSegmentValue('year', '0001')).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'year',
+          value: '1970',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'year',
+          value: '2000',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'year',
+          value: '2023',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'year',
+          value: '0001',
+        }),
+      ).toBe(true);
     });
 
     test('returns false for invalid values', () => {
-      expect(isExplicitSegmentValue('year', '0')).toBe(false);
-      expect(isExplicitSegmentValue('year', '')).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'year',
+          value: '0',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'year',
+          value: '',
+        }),
+      ).toBe(false);
     });
   });
 
   describe('hour segment', () => {
     test('returns false for single digit below minExplicitValue', () => {
-      expect(isExplicitSegmentValue('hour', '1')).toBe(false);
-      expect(isExplicitSegmentValue('hour', '0')).toBe(false);
-      expect(isExplicitSegmentValue('hour', '2')).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'hour',
+          value: '1',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'hour',
+          value: '0',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'hour',
+          value: '2',
+        }),
+      ).toBe(false);
     });
 
     test('returns true for single digit at or above minExplicitValue', () => {
-      expect(isExplicitSegmentValue('hour', '3')).toBe(true);
-      expect(isExplicitSegmentValue('hour', '9')).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'hour',
+          value: '3',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'hour',
+          value: '9',
+        }),
+      ).toBe(true);
     });
 
     test('returns true for two-digit values at or above minExplicitValue', () => {
-      expect(isExplicitSegmentValue('hour', '12')).toBe(true);
-      expect(isExplicitSegmentValue('hour', '23')).toBe(true);
-      expect(isExplicitSegmentValue('hour', '05')).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'hour',
+          value: '12',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'hour',
+          value: '23',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'hour',
+          value: '05',
+        }),
+      ).toBe(true);
     });
   });
 
   describe('minute segment', () => {
     test('returns false for single digit below minExplicitValue', () => {
-      expect(isExplicitSegmentValue('minute', '0')).toBe(false);
-      expect(isExplicitSegmentValue('minute', '1')).toBe(false);
-      expect(isExplicitSegmentValue('minute', '5')).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'minute',
+          value: '0',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'minute',
+          value: '1',
+        }),
+      ).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'minute',
+          value: '5',
+        }),
+      ).toBe(false);
     });
 
     test('returns true for single digit at or above minExplicitValue', () => {
-      expect(isExplicitSegmentValue('minute', '6')).toBe(true);
-      expect(isExplicitSegmentValue('minute', '7')).toBe(true);
-      expect(isExplicitSegmentValue('minute', '9')).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'minute',
+          value: '6',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'minute',
+          value: '7',
+        }),
+      ).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'minute',
+          value: '9',
+        }),
+      ).toBe(true);
     });
 
     test('returns true for two-digit values at or above minExplicitValue', () => {
-      expect(isExplicitSegmentValue('minute', '59')).toBe(true);
+      expect(
+        isExplicitSegmentValue({
+          segment: 'minute',
+          value: '59',
+        }),
+      ).toBe(true);
+    });
+  });
+
+  describe('allowZero', () => {
+    test('returns false when allowZero is false', () => {
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '00',
+          allowZero: false,
+        }),
+      ).toBe(false);
+    });
+
+    test('returns true when allowZero is true', () => {
+      expect(
+        isExplicitSegmentValue({
+          segment: 'day',
+          value: '00',
+          allowZero: true,
+        }),
+      ).toBe(true);
     });
   });
 
   describe('invalid segment names', () => {
     test('returns false for unknown segment names', () => {
-      // @ts-expect-error Testing invalid segment
-      expect(isExplicitSegmentValue('invalid', '10')).toBe(false);
-      // @ts-expect-error Testing invalid segment
-      expect(isExplicitSegmentValue('millisecond', '12')).toBe(false);
+      expect(
+        isExplicitSegmentValue({
+          // @ts-expect-error Testing invalid segment
+          segment: 'invalid',
+          value: '10',
+        }),
+      ).toBe(false);
+
+      expect(
+        isExplicitSegmentValue({
+          // @ts-expect-error Testing invalid segment
+          segment: 'millisecond',
+          value: '12',
+        }),
+      ).toBe(false);
     });
   });
 });

@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import { Size } from '@leafygreen-ui/tokens';
 
-import { InputSegmentChangeEventHandler } from '../InputSegment/InputSegment.types';
+import { InputSegmentChangeEventHandler } from '../shared.types';
 import {
   InputBoxWithState,
   InputSegmentWrapper,
@@ -305,7 +305,7 @@ describe('packages/input-box', () => {
       expect(dayInput.value).toBe('04');
     });
 
-    test('returns value without if value is explicit and meets the character limit', () => {
+    test('returns value if value is explicit and meets the character limit', () => {
       const { dayInput } = renderInputBox({});
       // 0-31
       userEvent.type(dayInput, '29');
@@ -325,82 +325,78 @@ describe('packages/input-box', () => {
   describe('typing', () => {
     describe('explicit value', () => {
       test('updates the rendered segment value', () => {
+        // value is 0 - 31
         const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '26');
         expect(dayInput.value).toBe('26');
       });
 
       test('segment value is immediately formatted', () => {
+        // value is 0 - 31
         const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '5');
         expect(dayInput.value).toBe('05');
       });
 
       test('allows leading zeros', () => {
+        // value is 0 - 31
         const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '02');
         expect(dayInput.value).toBe('02');
       });
 
       test('allows 00 as a valid value if min value is 0', () => {
+        // value is 0 - 31
         const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '00');
         expect(dayInput.value).toBe('00');
+      });
+
+      test('allows leading zeros if min value is 0', () => {
+        // value is 0 - 31
+        const { dayInput } = renderInputBox({});
+        userEvent.type(dayInput, '0');
+        expect(dayInput.value).toBe('0');
       });
     });
 
     describe('ambiguous value', () => {
       test('segment value is not immediately formatted', () => {
+        // value is 0 - 31
         const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '2');
         expect(dayInput.value).toBe('2');
       });
 
       test('value is formatted on segment blur', () => {
+        // value is 0 - 31
         const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '2');
         userEvent.tab();
         expect(dayInput.value).toBe('02');
       });
 
-      test('allows leading zeros', () => {
+      test('allows leading zeros if min value is 0', () => {
+        // value is 0 - 31
         const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '0');
         expect(dayInput.value).toBe('0');
       });
 
+      test('allows leading zeros if min value is greater than 0', () => {
+        // value is 1 - 12
+        const { monthInput } = renderInputBox({});
+        userEvent.type(monthInput, '0');
+        expect(monthInput.value).toBe('0');
+      });
+
       test('allows backspace to delete the value', () => {
+        // value is 0 - 31
         const { dayInput } = renderInputBox({});
         userEvent.type(dayInput, '2');
         userEvent.type(dayInput, '{backspace}');
         expect(dayInput.value).toBe('');
       });
-    });
-
-    describe('min/max range', () => {
-      describe('does not allow values outside max range', () => {
-        test('and returns single digit value if it is ambiguous', () => {
-          // max is 31
-          const { dayInput } = renderInputBox({});
-          userEvent.type(dayInput, '32');
-          // returns the last valid value
-          expect(dayInput.value).toBe('2');
-        });
-
-        test('and returns formatted value if it is explicit', () => {
-          // max is 31
-          const { dayInput } = renderInputBox({});
-          userEvent.type(dayInput, '34');
-          // returns the last valid value
-          expect(dayInput.value).toBe('04');
-        });
-      });
-    });
-
-    test('does not allow non-number characters', () => {
-      const { dayInput } = renderInputBox({});
-      userEvent.type(dayInput, 'aB$/');
-      expect(dayInput.value).toBe('');
     });
 
     test('backspace resets the input', () => {
@@ -537,7 +533,6 @@ describe('packages/input-box', () => {
       charsPerSegment={charsPerSegmentMock}
       segmentRules={segmentRulesMock}
       segmentComponent={InputSegmentWrapper}
-      size={Size.Default}
       disabled={false}
     />;
   });

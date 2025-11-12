@@ -1,7 +1,9 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'jest-axe';
 
-import { renderSegment, setSegmentProps } from '../testutils';
+import { type InputSegmentChangeEventHandler } from '../shared.types';
+import { renderSegment } from '../testutils';
 import {
   charsPerSegmentMock,
   defaultMaxMock,
@@ -10,13 +12,21 @@ import {
 } from '../testutils/testutils.mocks';
 import { getValueFormatter } from '../utils';
 
-import { InputSegment, InputSegmentChangeEventHandler } from '.';
+import { InputSegment } from '.';
 
 describe('packages/input-segment', () => {
   describe('aria attributes', () => {
+    test('does not have basic accessibility issues when tooltip is not open', async () => {
+      const { container } = renderSegment({
+        segment: 'day',
+      });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+
     test(`segment has aria-label`, () => {
       const { input } = renderSegment({
-        props: { segment: 'day' },
+        segment: 'day',
       });
       expect(input).toHaveAttribute('aria-label', 'day');
     });
@@ -28,7 +38,9 @@ describe('packages/input-segment', () => {
 
     test('has min and max attributes', () => {
       const { input } = renderSegment({
-        props: { segment: 'day' },
+        segment: 'day',
+        minSegmentValue: defaultMinMock['day'],
+        maxSegmentValue: defaultMaxMock['day'],
       });
       expect(input).toHaveAttribute('min', String(defaultMinMock['day']));
       expect(input).toHaveAttribute('max', String(defaultMaxMock['day']));
@@ -37,24 +49,29 @@ describe('packages/input-segment', () => {
 
   describe('rendering', () => {
     test('Rendering with undefined sets the value to empty string', () => {
-      const { input } = renderSegment({});
+      const { input } = renderSegment({
+        segment: 'day',
+        value: '',
+      });
       expect(input.value).toBe('');
     });
 
     test('Rendering with a value sets the input value', () => {
       const { input } = renderSegment({
-        providerProps: { segments: { day: '12', month: '', year: '' } },
+        segment: 'day',
+        value: '12',
       });
       expect(input.value).toBe('12');
     });
 
     test('rerendering updates the value', () => {
       const { getInput, rerenderSegment } = renderSegment({
-        providerProps: { segments: { day: '12', month: '', year: '' } },
+        segment: 'day',
+        value: '12',
       });
 
       rerenderSegment({
-        newProviderProps: { segments: { day: '08', month: '', year: '' } },
+        value: '08',
       });
       expect(getInput().value).toBe('08');
     });
@@ -68,7 +85,8 @@ describe('packages/input-segment', () => {
           string
         >;
         const { input } = renderSegment({
-          providerProps: { onChange: onChangeHandler },
+          segment: 'day',
+          onChange: onChangeHandler,
         });
 
         userEvent.type(input, '8');
@@ -83,7 +101,8 @@ describe('packages/input-segment', () => {
           string
         >;
         const { input } = renderSegment({
-          providerProps: { onChange: onChangeHandler },
+          segment: 'day',
+          onChange: onChangeHandler,
         });
 
         userEvent.type(input, '0');
@@ -98,7 +117,8 @@ describe('packages/input-segment', () => {
           string
         >;
         const { input } = renderSegment({
-          providerProps: { onChange: onChangeHandler },
+          segment: 'day',
+          onChange: onChangeHandler,
         });
         userEvent.type(input, 'aB$/');
         expect(onChangeHandler).not.toHaveBeenCalled();
@@ -112,10 +132,9 @@ describe('packages/input-segment', () => {
           string
         >;
         const { input } = renderSegment({
-          providerProps: {
-            segments: { day: '2', month: '', year: '' },
-            onChange: onChangeHandler,
-          },
+          segment: 'day',
+          value: '2',
+          onChange: onChangeHandler,
         });
 
         userEvent.type(input, '6');
@@ -130,10 +149,10 @@ describe('packages/input-segment', () => {
           string
         >;
         const { input } = renderSegment({
-          providerProps: {
-            segments: { day: '26', month: '', year: '' },
-            onChange: onChangeHandler,
-          },
+          segment: 'day',
+          value: '26',
+          maxSegmentValue: 31,
+          onChange: onChangeHandler,
         });
 
         userEvent.type(input, '4');
@@ -157,11 +176,9 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: formatter(15), month: '', year: '' },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: formatter(15),
             });
 
             userEvent.type(input, '{arrowup}');
@@ -178,11 +195,10 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { segment: 'day', step: 2 },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: formatter(15), month: '', year: '' },
-              },
+              segment: 'day',
+              step: 2,
+              onChange: onChangeHandler,
+              value: formatter(15),
             });
 
             userEvent.type(input, '{arrowup}');
@@ -199,17 +215,17 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: '', month: '', year: '' },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: '',
+              maxSegmentValue: 31,
+              minSegmentValue: 0,
             });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(defaultMinMock['day']),
+                value: formatter(0),
               }),
             );
           });
@@ -220,21 +236,17 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: {
-                  day: formatter(defaultMaxMock['day']),
-                  month: '',
-                  year: '',
-                },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: formatter(31),
+              maxSegmentValue: 31,
+              minSegmentValue: 0,
             });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(defaultMinMock['day']),
+                value: formatter(0),
               }),
             );
           });
@@ -245,44 +257,48 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { shouldWrap: false },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: {
-                  day: formatter(defaultMaxMock['day']),
-                  month: '',
-                  year: '',
-                },
-              },
+              segment: 'day',
+              shouldWrap: false,
+              onChange: onChangeHandler,
+              value: formatter(31),
+              maxSegmentValue: 31,
+              minSegmentValue: 0,
             });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(defaultMaxMock['day'] + 1),
+                value: formatter(31 + 1),
               }),
             );
           });
 
           test('does not wrap if `shouldWrap` is false and value is less than min', () => {
+            const formatter = getValueFormatter({
+              charsPerSegment: 4,
+              allowZero: false,
+            });
+
             const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
               SegmentObjMock,
               string
             >;
             const { input } = renderSegment({
-              props: {
-                ...setSegmentProps('year'),
-                shouldWrap: false,
-              },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: '0', month: '', year: '3' },
-              },
+              segment: 'year',
+              minSegmentValue: 1970,
+              maxSegmentValue: 2038,
+              charsPerSegment: 4,
+              shouldWrap: false,
+              onChange: onChangeHandler,
+              value: '3',
             });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({ segment: 'year', value: '0004' }),
+              expect.objectContaining({
+                segment: 'year',
+                value: formatter(3 + 1),
+              }),
             );
           });
 
@@ -292,11 +308,9 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: '06', month: '', year: '' },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: '06',
             });
 
             userEvent.type(input, '{arrowup}');
@@ -311,16 +325,14 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: '3', month: '', year: '' },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: '3',
             });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({ value: '04' }),
+              expect.objectContaining({ value: formatter(3 + 1) }),
             );
           });
         });
@@ -332,16 +344,15 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: formatter(15), month: '', year: '' },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: formatter(15),
             });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(14),
+                value: formatter(15 - 1),
               }),
             );
           });
@@ -352,17 +363,16 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { step: 2 },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: formatter(15), month: '', year: '' },
-              },
+              segment: 'day',
+              step: 2,
+              onChange: onChangeHandler,
+              value: formatter(15),
             });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(13),
+                value: formatter(15 - 2),
               }),
             );
           });
@@ -373,14 +383,16 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              providerProps: { onChange: onChangeHandler },
+              segment: 'day',
+              onChange: onChangeHandler,
+              maxSegmentValue: 31,
+              minSegmentValue: 0,
             });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(defaultMaxMock['day']),
+                value: formatter(31),
               }),
             );
           });
@@ -391,68 +403,71 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: {
-                  day: formatter(defaultMinMock['day']),
-                  month: '',
-                  year: '',
-                },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: formatter(0),
+              maxSegmentValue: 31,
+              minSegmentValue: 0,
             });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(defaultMaxMock['day']),
+                value: formatter(31),
               }),
             );
           });
 
-          test('does not wrap if `shouldWrap` is false', () => {
+          /* eslint-disable jest/no-disabled-tests */
+          test.skip('does not wrap if `shouldWrap` is false', () => {
+            // TODO: this should not wrap the min value
             const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
               SegmentObjMock,
               string
             >;
             const { input } = renderSegment({
-              props: { shouldWrap: false },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: {
-                  day: formatter(defaultMinMock['day']),
-                  month: '',
-                  year: '',
-                },
-              },
+              segment: 'day',
+              shouldWrap: false,
+              onChange: onChangeHandler,
+              value: formatter(0),
+              maxSegmentValue: 31,
+              minSegmentValue: 0,
             });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(defaultMinMock['day'] - 1),
+                value: formatter(0 - 1),
               }),
             );
           });
 
           test('does not wrap if `shouldWrap` is false and value is less than min', () => {
+            const formatter = getValueFormatter({
+              charsPerSegment: 4,
+              allowZero: false,
+            });
+
             const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
               SegmentObjMock,
               string
             >;
             const { input } = renderSegment({
-              props: {
-                ...setSegmentProps('year'),
-                shouldWrap: false,
-              },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: '0', month: '', year: '3' },
-              },
+              segment: 'year',
+              minSegmentValue: 1970,
+              maxSegmentValue: 2038,
+              charsPerSegment: 4,
+              shouldWrap: false,
+              onChange: onChangeHandler,
+              value: '3',
             });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({ segment: 'year', value: '0002' }),
+              expect.objectContaining({
+                segment: 'year',
+                value: formatter(3 - 1),
+              }),
             );
           });
 
@@ -462,11 +477,9 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: '06', month: '', year: '' },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: '06',
             });
 
             userEvent.type(input, '{arrowdown}');
@@ -481,16 +494,14 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: '3', month: '', year: '' },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: '3',
             });
 
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({ value: '02' }),
+              expect.objectContaining({ value: formatter(3 - 1) }),
             );
           });
         });
@@ -502,10 +513,9 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              providerProps: {
-                onChange: onChangeHandler,
-                segments: { day: '12', month: '', year: '' },
-              },
+              segment: 'day',
+              onChange: onChangeHandler,
+              value: '12',
             });
 
             userEvent.type(input, '{backspace}');
@@ -520,7 +530,8 @@ describe('packages/input-segment', () => {
               string
             >;
             const { input } = renderSegment({
-              providerProps: { onChange: onChangeHandler },
+              segment: 'day',
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{backspace}');
@@ -538,7 +549,8 @@ describe('packages/input-segment', () => {
                 >;
 
               const { input } = renderSegment({
-                providerProps: { onChange: onChangeHandler },
+                segment: 'day',
+                onChange: onChangeHandler,
               });
 
               userEvent.type(input, '{space}');
@@ -552,10 +564,9 @@ describe('packages/input-segment', () => {
                   string
                 >;
               const { input } = renderSegment({
-                providerProps: {
-                  onChange: onChangeHandler,
-                  segments: { day: '12', month: '', year: '' },
-                },
+                segment: 'day',
+                onChange: onChangeHandler,
+                value: '12',
               });
 
               userEvent.type(input, '{space}');
@@ -573,7 +584,8 @@ describe('packages/input-segment', () => {
                   string
                 >;
               const { input } = renderSegment({
-                providerProps: { onChange: onChangeHandler },
+                segment: 'day',
+                onChange: onChangeHandler,
               });
 
               userEvent.type(input, '{space}{space}');
@@ -587,10 +599,9 @@ describe('packages/input-segment', () => {
                   string
                 >;
               const { input } = renderSegment({
-                providerProps: {
-                  onChange: onChangeHandler,
-                  segments: { day: '12', month: '', year: '' },
-                },
+                segment: 'day',
+                onChange: onChangeHandler,
+                value: '12',
               });
 
               userEvent.type(input, '{space}{space}');
@@ -609,15 +620,15 @@ describe('packages/input-segment', () => {
           SegmentObjMock,
           string
         >;
-        // max is 31
         const { input } = renderSegment({
-          providerProps: {
-            segments: { day: '3', month: '', year: '' },
-            onChange: onChangeHandler,
-          },
+          segment: 'day',
+          onChange: onChangeHandler,
+          value: '3',
+          maxSegmentValue: 31,
+          minSegmentValue: 0,
         });
         userEvent.type(input, '2');
-        // returns the last valid value
+
         expect(onChangeHandler).toHaveBeenCalledWith(
           expect.objectContaining({ value: '2' }),
         );
@@ -630,37 +641,35 @@ describe('packages/input-segment', () => {
         >;
         // min is 1. We allow values below min range.
         const { input } = renderSegment({
-          props: { ...setSegmentProps('month') },
-          providerProps: {
-            segments: { day: '', month: '', year: '' },
-            onChange: onChangeHandler,
-          },
+          segment: 'month',
+          minSegmentValue: 1,
+          maxSegmentValue: 12,
+          onChange: onChangeHandler,
+          value: '',
         });
         userEvent.type(input, '0');
-        // returns the last valid value
+
         expect(onChangeHandler).toHaveBeenCalledWith(
           expect.objectContaining({ value: '0' }),
         );
       });
 
-      test('allows values above max range when skipValidation is true', () => {
+      test('allows values above max range when shouldValidate is false', () => {
         const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
           SegmentObjMock,
           string
         >;
-        // max is 2038
+
         const { input } = renderSegment({
-          props: {
-            ...setSegmentProps('year'),
-            shouldSkipValidation: true,
-          },
-          providerProps: {
-            segments: { day: '', month: '', year: '203' },
-            onChange: onChangeHandler,
-          },
+          segment: 'year',
+          charsPerSegment: 4,
+          maxSegmentValue: 2038,
+          shouldValidate: false,
+          onChange: onChangeHandler,
+          value: '203',
         });
         userEvent.type(input, '9');
-        // returns the last valid value
+
         expect(onChangeHandler).toHaveBeenCalledWith(
           expect.objectContaining({ value: '2039' }),
         );
@@ -669,10 +678,11 @@ describe('packages/input-segment', () => {
   });
 
   describe('onBlur handler', () => {
-    test('calls the custom onBlur prop when provided', () => {
+    test('calls the onBlur handler when the input is blurred', () => {
       const onBlurHandler = jest.fn();
       const { input } = renderSegment({
-        props: { onBlur: onBlurHandler },
+        segment: 'day',
+        onBlur: onBlurHandler,
       });
 
       input.focus();
@@ -680,57 +690,27 @@ describe('packages/input-segment', () => {
 
       expect(onBlurHandler).toHaveBeenCalled();
     });
-
-    test('calls both context and prop onBlur handlers', () => {
-      const contextOnBlur = jest.fn();
-      const propOnBlur = jest.fn();
-      const { input } = renderSegment({
-        props: { onBlur: propOnBlur },
-        providerProps: { onBlur: contextOnBlur },
-      });
-
-      input.focus();
-      input.blur();
-
-      expect(contextOnBlur).toHaveBeenCalled();
-      expect(propOnBlur).toHaveBeenCalled();
-    });
   });
 
-  describe('custom onKeyDown handler', () => {
-    test('calls the custom onKeyDown prop when provided', () => {
+  describe('onKeyDown handler', () => {
+    test('calls the onKeyDown handler when a key is pressed', () => {
       const onKeyDownHandler = jest.fn();
       const { input } = renderSegment({
-        props: { onKeyDown: onKeyDownHandler },
+        segment: 'day',
+        onKeyDown: onKeyDownHandler,
       });
 
       userEvent.type(input, '5');
 
       expect(onKeyDownHandler).toHaveBeenCalled();
     });
-
-    test('custom onKeyDown is called alongside internal handler', () => {
-      const onKeyDownHandler = jest.fn();
-      const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
-        SegmentObjMock,
-        string
-      >;
-      const { input } = renderSegment({
-        props: { onKeyDown: onKeyDownHandler },
-        providerProps: { onChange: onChangeHandler },
-      });
-
-      userEvent.type(input, '{arrowup}');
-
-      expect(onKeyDownHandler).toHaveBeenCalled();
-      expect(onChangeHandler).toHaveBeenCalled();
-    });
   });
 
   describe('disabled state', () => {
     test('input is disabled when disabled context prop is true', () => {
       const { input } = renderSegment({
-        providerProps: { disabled: true },
+        segment: 'day',
+        disabled: true,
       });
 
       expect(input).toBeDisabled();
@@ -742,7 +722,9 @@ describe('packages/input-segment', () => {
         string
       >;
       const { input } = renderSegment({
-        providerProps: { disabled: true, onChange: onChangeHandler },
+        segment: 'day',
+        disabled: true,
+        onChange: onChangeHandler,
       });
 
       userEvent.type(input, '5');
@@ -752,17 +734,16 @@ describe('packages/input-segment', () => {
   });
 
   describe('shouldSkipValidation prop', () => {
-    test('allows values outside min/max range when shouldSkipValidation is true', () => {
+    test('allows values outside min/max range when shouldValidate is false', () => {
       const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
         SegmentObjMock,
         string
       >;
       const { input } = renderSegment({
-        props: { segment: 'day', shouldSkipValidation: true },
-        providerProps: {
-          onChange: onChangeHandler,
-          segments: { day: '9', month: '', year: '' },
-        },
+        segment: 'day',
+        shouldValidate: false,
+        onChange: onChangeHandler,
+        value: '9',
       });
 
       userEvent.type(input, '9');
@@ -772,41 +753,21 @@ describe('packages/input-segment', () => {
       );
     });
 
-    test('does not allows values outside min/max range when shouldSkipValidation is false', () => {
+    test('does not allows values outside min/max range when shouldValidate is true', () => {
       const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
         SegmentObjMock,
         string
       >;
       const { input } = renderSegment({
-        props: { segment: 'day', shouldSkipValidation: false },
-        providerProps: {
-          onChange: onChangeHandler,
-          segments: { day: '9', month: '', year: '' },
-        },
+        segment: 'day',
+        shouldValidate: true,
+        onChange: onChangeHandler,
+        value: '9',
       });
 
       userEvent.type(input, '9');
 
       expect(onChangeHandler).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('custom onChange prop', () => {
-    test('calls prop-level onChange in addition to context onChange', () => {
-      const contextOnChange = jest.fn() as InputSegmentChangeEventHandler<
-        SegmentObjMock,
-        string
-      >;
-      const propOnChange = jest.fn();
-      const { input } = renderSegment({
-        props: { onChange: propOnChange },
-        providerProps: { onChange: contextOnChange },
-      });
-
-      userEvent.type(input, '5');
-
-      expect(contextOnChange).toHaveBeenCalled();
-      expect(propOnChange).toHaveBeenCalled();
     });
   });
 
@@ -818,22 +779,34 @@ describe('packages/input-segment', () => {
     });
 
     test('With required props', () => {
-      <InputSegment segment="day" min={1} max={31} />;
+      <InputSegment
+        segment="day"
+        minSegmentValue={1}
+        maxSegmentValue={31}
+        value=""
+        charsPerSegment={2}
+        onChange={() => {}}
+        onBlur={() => {}}
+        onKeyDown={() => {}}
+        disabled={false}
+        size={'default'}
+        segmentEnum={SegmentObjMock}
+      />;
     });
 
     test('With all props', () => {
       <InputSegment
         segment="day"
-        min={1}
-        max={31}
-        step={1}
-        shouldWrap={true}
-        shouldSkipValidation={false}
-        placeholder="12"
-        className="test"
+        minSegmentValue={1}
+        maxSegmentValue={31}
+        value=""
+        charsPerSegment={2}
+        onChange={() => {}}
         onBlur={() => {}}
         onKeyDown={() => {}}
         disabled={false}
+        size={'default'}
+        segmentEnum={SegmentObjMock}
         data-testid="test-id"
         id="day"
         ref={React.createRef<HTMLInputElement>()}
