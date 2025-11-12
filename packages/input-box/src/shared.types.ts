@@ -62,7 +62,21 @@ export interface InputSegmentComponentProps<Segment extends string>
    * 'seconds'
    */
   segment: Segment;
+
+  /**
+   * The handler for the onChange event that will be read in the InputSegment component
+   *
+   * @example
+   * (event: InputSegmentChangeEvent<Segment, string>) => void
+   */
   onChange: InputSegmentChangeEventHandler<Segment, string>;
+
+  /**
+   * The handler for the onBlur event that will be read by the InputSegment component
+   *
+   * @example
+   * (event: React.FocusEvent<HTMLInputElement>) => void
+   */
   onBlur: React.FocusEventHandler<HTMLInputElement>;
 }
 
@@ -101,16 +115,6 @@ export interface SharedInputBoxTypes<Segment extends string> {
    * { day: '1', month: '2', year: '2025' }
    */
   segments: Record<Segment, string>;
-
-  // /**
-  //  * The size of the input box
-  //  *
-  //  * @example
-  //  * Size.Default
-  //  * Size.Small
-  //  * Size.Large
-  //  */
-  // size: Size;
 
   /**
    * Whether the input box is disabled
