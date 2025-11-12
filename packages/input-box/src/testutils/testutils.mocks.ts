@@ -5,8 +5,6 @@ import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 import { ExplicitSegmentRule } from '../utils';
 
-export type InputSegmentValueMock = string;
-
 export const SegmentObjMock = {
   Month: 'month',
   Day: 'day',
