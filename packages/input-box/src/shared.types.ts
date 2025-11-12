@@ -46,10 +46,7 @@ export function isInputSegment<T extends Record<string, string>>(
  */
 export interface InputSegmentComponentProps<Segment extends string>
   extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'>,
-    Pick<
-      SharedInputBoxTypes<Segment>,
-      'segments' | 'segmentEnum' | 'disabled' | 'segmentRefs'
-    > {
+    SharedInputBoxTypes<Segment> {
   /**
    * Which segment this input represents
    *
