@@ -1,11 +1,11 @@
 import React, { ForwardedRef, ReactElement } from 'react';
 
 import { DateType } from '@leafygreen-ui/date-utils';
-import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 import {
   InputSegmentChangeEventHandler,
   InputSegmentComponentProps,
+  SharedInputBoxTypes,
 } from '../shared.types';
 import { ExplicitSegmentRule } from '../utils';
 
@@ -19,7 +19,8 @@ export type InputChangeEventHandler<Segment extends string = string> = (
 ) => void;
 
 export interface InputBoxProps<Segment extends string>
-  extends Omit<React.ComponentPropsWithRef<'div'>, 'onChange' | 'children'> {
+  extends Omit<React.ComponentPropsWithRef<'div'>, 'onChange' | 'children'>,
+    SharedInputBoxTypes<Segment> {
   /**
    * Callback fired when any segment changes, but not necessarily a full value
    */
@@ -29,30 +30,6 @@ export interface InputBoxProps<Segment extends string>
    * id of the labelling element
    */
   labelledBy?: string;
-
-  /**
-   * An object that maps the segment names to their refs
-   *
-   * @example
-   * { day: ref, month: ref, year: ref }
-   */
-  segmentRefs: Record<Segment, ReturnType<DynamicRefGetter<HTMLInputElement>>>;
-
-  /**
-   * An enumerable object that maps the segment names to their values
-   *
-   * @example
-   * { Day: 'day', Month: 'month', Year: 'year' }
-   */
-  segmentEnum: Record<string, Segment>;
-
-  /**
-   * An object containing the values of the segments
-   *
-   * @example
-   * { day: '1', month: '2', year: '2025' }
-   */
-  segments: Record<Segment, string>;
 
   /**
    * A function that sets the value of a segment
@@ -83,11 +60,6 @@ export interface InputBoxProps<Segment extends string>
    * { day: 2, month: 2, year: 4 }
    */
   charsPerSegment: Record<Segment, number>;
-
-  /**
-   * Whether the input box is disabled
-   */
-  disabled: boolean;
 
   /**
    * An object that maps the segment names to their rules.

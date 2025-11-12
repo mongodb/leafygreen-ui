@@ -82,16 +82,10 @@ export interface InputSegmentComponentProps<Segment extends string>
 
 /**
  * Shared Input Box Types
+ *
+ * These types are shared between the InputBox and the segmentComponent.
  */
 export interface SharedInputBoxTypes<Segment extends string> {
-  /**
-   * The number of characters per segment
-   *
-   * @example
-   * { day: 2, month: 2, year: 4 }
-   */
-  charsPerSegment: Record<Segment, number>;
-
   /**
    * An enumerable object that maps the segment names to their values
    *
@@ -120,9 +114,4 @@ export interface SharedInputBoxTypes<Segment extends string> {
    * Whether the input box is disabled
    */
   disabled: boolean;
-
-  /**
-   * id of the labelling element
-   */
-  labelledBy?: string;
 }
