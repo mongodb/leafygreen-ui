@@ -37,7 +37,7 @@
     "@lg-tools/test-harnesses": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.2.0 || ^4.0.0 || workspace:^5.0.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toggle",
