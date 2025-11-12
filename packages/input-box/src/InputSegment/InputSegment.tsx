@@ -180,7 +180,6 @@ const InputSegmentWithRef = <Segment extends string>(
     <>
       <input
         {...rest}
-        // aria-labelledby={labelledBy}
         aria-label={String(segment)}
         id={String(segment)}
         ref={fwdRef}

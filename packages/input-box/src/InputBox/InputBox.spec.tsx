@@ -3,8 +3,6 @@ import { jest } from '@jest/globals';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Size } from '@leafygreen-ui/tokens';
-
 import { InputSegmentChangeEventHandler } from '../shared.types';
 import {
   InputBoxWithState,
