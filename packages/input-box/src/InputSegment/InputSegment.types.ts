@@ -7,9 +7,12 @@ import { InputSegmentComponentProps } from '../shared.types';
 export interface InputSegmentProps<Segment extends string, Value extends string>
   extends Omit<
       React.ComponentPropsWithRef<'input'>,
-      'size' | 'step' | 'value' | 'onBlur' | 'onChange'
+      'size' | 'step' | 'value' | 'onBlur' | 'onChange' | 'min' | 'max'
     >,
-    Omit<InputSegmentComponentProps<Segment>, 'segments'> {
+    Pick<
+      InputSegmentComponentProps<Segment>,
+      'onChange' | 'onBlur' | 'segment' | 'segmentEnum'
+    > {
   /**
    * Minimum value for the segment
    *
