@@ -32,7 +32,7 @@ export const ChatSideNavHeader = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, ChatSideNavHeaderProps>(
     ({ children, className, onClickNewChat, ...rest }, ref) => {
-      const { darkMode, theme } = useDarkMode();
+      const { theme } = useDarkMode();
       const { assistantName } = useLeafyGreenChatContext();
       const { shouldRenderExpanded } = useChatLayoutContext();
       const showNewChatButton = !!onClickNewChat;
@@ -54,7 +54,7 @@ export const ChatSideNavHeader = CompoundSubComponent(
               theme,
             })}
           >
-            <AssistantAvatar darkMode={darkMode} size={20} />
+            <AssistantAvatar size={20} />
             <Body
               className={getAssistantNameStyles({
                 shouldRender: shouldRenderExpanded,
