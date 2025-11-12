@@ -61,3 +61,5 @@ TODO.md
 .pr-train.yml
 migration-storybook.log
 
+# amplify settings
+apps/*/amplify_outputs.json
