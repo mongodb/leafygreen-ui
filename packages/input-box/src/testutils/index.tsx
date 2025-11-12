@@ -8,35 +8,18 @@ import {
   defaultMaxMock,
   defaultMinMock,
   defaultPlaceholderMock,
-  InputSegmentValueMock,
   SegmentObjMock,
 } from './testutils.mocks';
-
-/*
- * InputSegment Utils // TODO: remove this?
- */
-export const setSegmentProps = (segment: SegmentObjMock) => {
-  return {
-    segment: segment,
-    charsPerSegment: charsPerSegmentMock[segment],
-    minSegmentValue: defaultMinMock[segment],
-    maxSegmentValue: defaultMaxMock[segment],
-    placeholder: defaultPlaceholderMock[segment],
-  };
-};
 
 interface RenderSegmentReturnType {
   getInput: () => HTMLInputElement;
   input: HTMLInputElement;
   rerenderSegment: (
-    newProps: Partial<InputSegmentProps<SegmentObjMock, InputSegmentValueMock>>,
+    newProps: Partial<InputSegmentProps<SegmentObjMock>>,
   ) => void;
 }
 
-const defaultSegmentProps: InputSegmentProps<
-  SegmentObjMock,
-  InputSegmentValueMock
-> = {
+const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
   segment: 'day',
   minSegmentValue: defaultMinMock['day'],
   maxSegmentValue: defaultMaxMock['day'],
@@ -55,17 +38,17 @@ const defaultSegmentProps: InputSegmentProps<
  * Renders the InputSegment component for testing purposes.
  */
 export const renderSegment = (
-  props: Partial<InputSegmentProps<SegmentObjMock, InputSegmentValueMock>>,
+  props: Partial<InputSegmentProps<SegmentObjMock>>,
 ): RenderResult & RenderSegmentReturnType => {
   const mergedProps = {
     ...defaultSegmentProps,
     ...props,
-  } as InputSegmentProps<SegmentObjMock, InputSegmentValueMock>;
+  } as InputSegmentProps<SegmentObjMock>;
 
   const utils = render(<InputSegment {...mergedProps} />);
 
   const rerenderSegment = (
-    newProps: Partial<InputSegmentProps<SegmentObjMock, InputSegmentValueMock>>,
+    newProps: Partial<InputSegmentProps<SegmentObjMock>>,
   ) => {
     utils.rerender(<InputSegment {...mergedProps} {...newProps} />);
   };

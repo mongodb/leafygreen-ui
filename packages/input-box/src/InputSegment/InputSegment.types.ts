@@ -4,7 +4,7 @@ import { Size } from '@leafygreen-ui/tokens';
 
 import { InputSegmentComponentProps } from '../shared.types';
 
-export interface InputSegmentProps<Segment extends string, Value extends string>
+export interface InputSegmentProps<Segment extends string>
   extends Omit<
       React.ComponentPropsWithRef<'input'>,
       'size' | 'step' | 'value' | 'onBlur' | 'onChange' | 'min' | 'max'
@@ -68,7 +68,7 @@ export interface InputSegmentProps<Segment extends string, Value extends string>
    * '2'
    * '2025'
    */
-  value: Value;
+  value: string;
 
   /**
    * The number of characters per segment
@@ -100,8 +100,8 @@ export interface InputSegmentProps<Segment extends string, Value extends string>
  * @see https://stackoverflow.com/a/58473012
  */
 export interface InputSegmentComponentType {
-  <Segment extends string, Value extends string>(
-    props: InputSegmentProps<Segment, Value>,
+  <Segment extends string>(
+    props: InputSegmentProps<Segment>,
     ref: ForwardedRef<HTMLInputElement>,
   ): ReactElement | null;
   displayName?: string;
