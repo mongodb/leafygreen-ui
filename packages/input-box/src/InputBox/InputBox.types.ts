@@ -2,12 +2,11 @@ import React, { ForwardedRef, ReactElement } from 'react';
 
 import { DateType } from '@leafygreen-ui/date-utils';
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
-import { Size } from '@leafygreen-ui/tokens';
 
 import {
   InputSegmentChangeEventHandler,
   InputSegmentComponentProps,
-} from '../InputSegment/InputSegment.types';
+} from '../shared.types';
 import { ExplicitSegmentRule } from '../utils';
 
 export interface InputChangeEvent<Segment extends string = string> {
@@ -117,16 +116,6 @@ export interface InputBoxProps<Segment extends string>
    * segmentComponent={DateInputSegment}
    */
   segmentComponent: React.ComponentType<InputSegmentComponentProps<Segment>>;
-
-  /**
-   * The size of the input box
-   *
-   * @example
-   * Size.Default
-   * Size.Small
-   * Size.Large
-   */
-  size: Size;
 }
 
 /**

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
-import { Size } from '@leafygreen-ui/tokens';
 
 import {
   charsPerSegmentMock,
@@ -48,7 +47,6 @@ describe('InputBoxContext', () => {
           onBlur={mockOnBlur}
           segmentRefs={segmentRefsMock}
           segments={segmentsMock}
-          size={Size.Default}
           disabled={false}
         >
           {children}
@@ -56,13 +54,22 @@ describe('InputBoxContext', () => {
       ),
     });
 
-    expect(result.current.charsPerSegment).toBe(charsPerSegmentMock);
-    expect(result.current.segmentEnum).toBe(SegmentObjMock);
-    expect(result.current.onChange).toBe(mockOnChange);
-    expect(result.current.onBlur).toBe(mockOnBlur);
-    expect(result.current.segmentRefs).toBe(segmentRefsMock);
-    expect(result.current.segments).toBe(segmentsMock);
-    expect(result.current.size).toBe(Size.Default);
-    expect(result.current.disabled).toBe(false);
+    const {
+      charsPerSegment,
+      segmentEnum,
+      onChange,
+      onBlur,
+      segmentRefs,
+      segments,
+      disabled,
+    } = result.current;
+
+    expect(charsPerSegment).toBe(charsPerSegmentMock);
+    expect(segmentEnum).toBe(SegmentObjMock);
+    expect(onChange).toBe(mockOnChange);
+    expect(onBlur).toBe(mockOnBlur);
+    expect(segmentRefs).toBe(segmentRefsMock);
+    expect(segments).toBe(segmentsMock);
+    expect(disabled).toBe(false);
   });
 });

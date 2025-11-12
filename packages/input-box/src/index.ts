@@ -4,12 +4,7 @@ export {
   type InputBoxProviderProps,
   useInputBoxContext,
 } from './InputBoxContext';
-export {
-  InputSegment,
-  type InputSegmentChangeEventHandler,
-  type InputSegmentComponentProps,
-  type InputSegmentProps,
-} from './InputSegment';
+export { InputSegment, type InputSegmentProps } from './InputSegment';
 export {
   createExplicitSegmentValidator,
   type ExplicitSegmentRule,
@@ -21,3 +16,7 @@ export {
   isValidSegmentName,
   isValidSegmentValue,
 } from './utils/isValidSegment/isValidSegment';
+export {
+  type InputSegmentChangeEventHandler,
+  isInputSegment,
+} from './shared.types';

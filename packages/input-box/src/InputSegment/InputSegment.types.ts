@@ -1,44 +1,18 @@
 import React, { ForwardedRef, ReactElement } from 'react';
 
-import { keyMap } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
-export interface InputSegmentChangeEvent<
-  Segment extends string,
-  Value extends string,
-> {
-  segment: Segment;
-  value: Value;
-  meta?: {
-    key?: (typeof keyMap)[keyof typeof keyMap];
-    min: number;
-    [key: string]: any;
-  };
-}
+import { InputSegmentComponentProps } from '../shared.types';
 
-// TODO: consider renaming min/max names to minSegment/maxSegment
-/**
- * The type for the onChange handler
- */
-export type InputSegmentChangeEventHandler<
-  Segment extends string,
-  Value extends string,
-> = (inputSegmentChangeEvent: InputSegmentChangeEvent<Segment, Value>) => void;
-
-export interface InputSegmentProps<Segment extends string>
+export interface InputSegmentProps<Segment extends string, Value extends string>
   extends Omit<
-    React.ComponentPropsWithRef<'input'>,
-    'size' | 'step' | 'value'
-  > {
-  /**
-   * Which segment this input represents
-   *
-   * @example
-   * 'day'
-   * 'month'
-   * 'year'
-   */
-  segment: Segment;
-
+      React.ComponentPropsWithRef<'input'>,
+      'size' | 'step' | 'value' | 'onBlur' | 'onChange' | 'min' | 'max'
+    >,
+    Pick<
+      InputSegmentComponentProps<Segment>,
+      'onChange' | 'onBlur' | 'segment' | 'segmentEnum'
+    > {
   /**
    * Minimum value for the segment
    *
@@ -46,8 +20,11 @@ export interface InputSegmentProps<Segment extends string>
    * 1
    * 1
    * 1970
+   * 0
+   * 0
+   * 0
    */
-  min: number;
+  minSegmentValue: number;
 
   /**
    * Maximum value for the segment
@@ -56,8 +33,11 @@ export interface InputSegmentProps<Segment extends string>
    * 31
    * 12
    * 2038
+   * 23
+   * 59
+   * 59
    */
-  max: number;
+  maxSegmentValue: number;
 
   /**
    * The step value for the arrow keys
@@ -67,18 +47,48 @@ export interface InputSegmentProps<Segment extends string>
   step?: number;
 
   /**
-   * Whether the segment should wrap at min/max boundaries
+   * Whether the segment should wrap at max boundaries when using the up arrow key.
    *
    * @default true
    */
   shouldWrap?: boolean;
 
   /**
-   * Whether the segment should skip validation. This is useful for segments that allow values outside of the default range.
+   * Whether the segment should validate. Skipping validation is useful for segments that allow values outside of the default range.
    *
-   * @default false
+   * @default true
    */
-  shouldSkipValidation?: boolean;
+  shouldValidate?: boolean;
+
+  /**
+   * The value of the segment
+   *
+   * @example
+   * '1'
+   * '2'
+   * '2025'
+   */
+  value: Value;
+
+  /**
+   * The number of characters per segment
+   *
+   * @example
+   * 2
+   * 2
+   * 4
+   */
+  charsPerSegment: number;
+
+  /**
+   * The size of the input box
+   *
+   * @example
+   * Size.Default
+   * Size.Small
+   * Size.Large
+   */
+  size: Size;
 }
 
 /**
@@ -90,34 +100,9 @@ export interface InputSegmentProps<Segment extends string>
  * @see https://stackoverflow.com/a/58473012
  */
 export interface InputSegmentComponentType {
-  <Segment extends string>(
-    props: InputSegmentProps<Segment>,
+  <Segment extends string, Value extends string>(
+    props: InputSegmentProps<Segment, Value>,
     ref: ForwardedRef<HTMLInputElement>,
   ): ReactElement | null;
   displayName?: string;
-}
-
-/**
- * Returns whether the given string is a valid segment
- */
-export function isInputSegment<T extends Record<string, string>>(
-  str: any,
-  segmentObj: T,
-): str is T[keyof T] {
-  if (typeof str !== 'string') return false;
-  return Object.values(segmentObj).includes(str);
-}
-
-/**
- * Base props for custom segment components passed to InputBox.
- *
- * Extend this interface to define props for custom segment implementations.
- * InputBox will provide additional props internally (e.g., onChange, value, min, max).
- */
-export interface InputSegmentComponentProps<Segment extends string>
-  extends Omit<
-    React.ComponentPropsWithoutRef<'input'>,
-    'onChange' | 'value' | 'min' | 'max'
-  > {
-  segment: Segment;
 }

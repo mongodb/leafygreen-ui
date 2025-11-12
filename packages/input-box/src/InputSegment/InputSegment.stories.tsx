@@ -8,22 +8,19 @@ import { StoryFn } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { InputBoxProvider } from '../InputBoxContext';
 import {
   charsPerSegmentMock,
   defaultMaxMock,
   defaultMinMock,
   defaultPlaceholderMock,
+  InputSegmentValueMock,
   SegmentObjMock,
-  segmentRefsMock,
-  segmentsMock,
 } from '../testutils/testutils.mocks';
 
-import { InputSegment, InputSegmentChangeEventHandler } from '.';
+import { InputSegment } from '.';
 
 interface InputSegmentStoryProps {
-  size: Size;
-  segments: Record<SegmentObjMock, string>;
+  darkMode: boolean;
 }
 
 const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
@@ -38,13 +35,14 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
   ],
   args: {
     segment: SegmentObjMock.Day,
-    min: defaultMinMock[SegmentObjMock.Day],
-    max: defaultMaxMock[SegmentObjMock.Day],
+    minSegmentValue: defaultMinMock[SegmentObjMock.Day],
+    maxSegmentValue: defaultMaxMock[SegmentObjMock.Day],
     size: Size.Default,
     placeholder: defaultPlaceholderMock[SegmentObjMock.Day],
     shouldWrap: true,
     step: 1,
     darkMode: false,
+    charsPerSegment: charsPerSegmentMock[SegmentObjMock.Day],
   },
   argTypes: {
     size: {
@@ -65,7 +63,7 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
         'onChange',
         'charsPerSegment',
         'segmentEnum',
-        'shouldSkipValidation',
+        'shouldValidate',
         'step',
         'placeholder',
       ],
@@ -73,48 +71,27 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        segment: ['day', 'month', 'year'],
+        segment: ['day', 'year'],
         size: Object.values(Size),
-        segments: [
-          {
-            day: '2',
-            month: '8',
-            year: '2025',
-          },
-          {
-            day: '00',
-            month: '0',
-            year: '0000',
-          },
-          {
-            day: '',
-            month: '',
-            year: '',
-          },
-        ],
+        value: ['', '2', '0', '00', '2025', '0000'],
       },
+      excludeCombinations: [
+        {
+          value: ['2', '0', '00'],
+          segment: 'year',
+        },
+        {
+          value: ['2025', '0000'],
+          segment: ['day'],
+        },
+      ],
       decorator: (StoryFn, context) => (
         <LeafyGreenProvider darkMode={context?.args.darkMode}>
-          <InputBoxProvider
-            charsPerSegment={charsPerSegmentMock}
-            segmentEnum={SegmentObjMock}
-            onChange={() => {}}
-            onBlur={() => {}}
-            segmentRefs={segmentRefsMock}
-            segments={context?.args.segments}
-            size={context?.args.size}
-            disabled={false}
-          >
-            <StoryFn
-              placeholder={
-                context?.args.segment === 'day'
-                  ? 'DD'
-                  : context?.args.segment === 'month'
-                  ? 'MM'
-                  : 'YYYY'
-              }
-            />
-          </InputBoxProvider>
+          <StoryFn
+            placeholder={
+              defaultPlaceholderMock[context?.args.segment as SegmentObjMock]
+            }
+          />
         </LeafyGreenProvider>
       ),
     },
@@ -122,32 +99,22 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
 };
 export default meta;
 
-export const LiveExample: StoryFn<typeof InputSegment> = (
-  props,
-  context: any,
-) => {
-  const [segments, setSegments] = useState(segmentsMock);
-
-  const handleChange: InputSegmentChangeEventHandler<
-    SegmentObjMock,
-    string
-  > = ({ segment, value }) => {
-    setSegments(prev => ({ ...prev, [segment]: value }));
-  };
+export const LiveExample: StoryFn<typeof InputSegment> = ({
+  // @ts-ignore - darkMode is not a valid prop for InputSegment
+  darkMode: _darkMode,
+  ...rest
+}) => {
+  const [value, setValue] = useState<InputSegmentValueMock>('');
 
   return (
-    <InputBoxProvider
-      charsPerSegment={charsPerSegmentMock}
-      segmentEnum={SegmentObjMock}
-      onChange={handleChange}
-      onBlur={() => {}}
-      segmentRefs={segmentRefsMock}
-      segments={segments}
-      disabled={false}
-      size={context?.args?.size || Size.Default}
-    >
-      <InputSegment {...props} autoComplete="off" />
-    </InputBoxProvider>
+    <InputSegment
+      {...rest}
+      autoComplete="off"
+      value={value}
+      onChange={({ value }) => {
+        setValue(value);
+      }}
+    />
   );
 };
 

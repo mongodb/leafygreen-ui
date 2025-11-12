@@ -7,11 +7,10 @@ import React, {
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { InputBoxProvider } from '../InputBoxContext';
 import {
   InputSegmentChangeEventHandler,
   isInputSegment,
-} from '../InputSegment/InputSegment.types';
+} from '../shared.types';
 import {
   createExplicitSegmentValidator,
   getRelativeSegment,
@@ -47,7 +46,6 @@ export const InputBoxWithRef = <Segment extends string>(
     segmentRules,
     segmentComponent,
     segments,
-    size,
     ...rest
   }: InputBoxProps<Segment>,
   fwdRef: ForwardedRef<HTMLDivElement>,
@@ -88,7 +86,11 @@ export const InputBoxWithRef = <Segment extends string>(
     // Auto-format the segment if it is explicit and was not changed via arrow-keys e.g. up/down arrows.
     if (
       !changedViaArrowKeys &&
-      isExplicitSegmentValue(segmentName, segmentValue, allowZero)
+      isExplicitSegmentValue({
+        segment: segmentName,
+        value: segmentValue,
+        allowZero,
+      })
     ) {
       segmentValue = getFormattedSegmentValue(
         segmentName,
@@ -213,17 +215,7 @@ export const InputBoxWithRef = <Segment extends string>(
   };
 
   return (
-    <InputBoxProvider
-      charsPerSegment={charsPerSegment}
-      onChange={handleSegmentInputChange}
-      onBlur={handleSegmentInputBlur}
-      segmentEnum={segmentEnum}
-      segmentRefs={segmentRefs}
-      segments={segments}
-      labelledBy={labelledBy}
-      size={size}
-      disabled={disabled}
-    >
+    <>
       {/* We want to allow keydown events to be captured by the parent so that the parent can handle the event. */}
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
@@ -244,11 +236,23 @@ export const InputBoxWithRef = <Segment extends string>(
             );
           } else if (isInputSegment(part.type, segmentEnum)) {
             const Segment = segmentComponent;
-            return <Segment key={part.type} segment={part.type} />;
+            return (
+              <Segment
+                key={part.type}
+                segment={part.type}
+                aria-labelledby={labelledBy}
+                onChange={handleSegmentInputChange}
+                onBlur={handleSegmentInputBlur}
+                segmentEnum={segmentEnum}
+                segments={segments}
+                segmentRefs={segmentRefs}
+                disabled={disabled}
+              />
+            );
           }
         })}
       </div>
-    </InputBoxProvider>
+    </>
   );
 };
 
