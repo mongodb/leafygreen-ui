@@ -346,7 +346,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
+        specifier: workspace:^5.1.0 || workspace:^6.0.0
         version: link:../leafygreen-chat-provider
       '@lg-tools/test-harnesses':
         specifier: workspace:^
@@ -385,6 +385,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^5.1.0 || workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
       '@lg-chat/title-bar':
         specifier: workspace:^
         version: link:../title-bar
@@ -398,9 +401,6 @@ importers:
       '@lg-chat/input-bar':
         specifier: workspace:^
         version: link:../input-bar
-      '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
-        version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message
@@ -468,7 +468,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
+        specifier: workspace:^5.1.0 || workspace:^6.0.0
         version: link:../leafygreen-chat-provider
       lodash:
         specifier: ^4.17.21
@@ -563,7 +563,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^
+        specifier: workspace:^5.1.0 || workspace:^6.0.0
         version: link:../leafygreen-chat-provider
       '@lg-chat/lg-markdown':
         specifier: workspace:^
@@ -608,6 +608,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^5.1.0 || workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message
@@ -663,6 +666,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^5.1.0 || workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-chat/message-rating':
         specifier: workspace:^
@@ -728,6 +734,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^5.1.0 || workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
@@ -818,6 +827,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^5.1.0 || workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^

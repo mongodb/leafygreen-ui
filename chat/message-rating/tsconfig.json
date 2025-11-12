@@ -18,6 +18,9 @@
   ],
   "references": [
     {
+      "path": "../leafygreen-chat-provider"
+    },
+    {
       "path": "../../packages/emotion"
     },
     {
