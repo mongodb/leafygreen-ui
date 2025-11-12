@@ -1,3 +1,5 @@
+// TODO: NO LONGER NEEDED
+
 import React, {
   createContext,
   PropsWithChildren,
@@ -24,7 +26,6 @@ export const InputBoxProvider = <Segment extends string>({
   segments,
   segmentEnum,
   segmentRefs,
-  size,
 }: PropsWithChildren<InputBoxProviderProps<Segment>>) => {
   const value = useMemo(
     () => ({
@@ -37,7 +38,6 @@ export const InputBoxProvider = <Segment extends string>({
       segments,
       segmentEnum,
       segmentRefs,
-      size,
     }),
     [
       charsPerSegment,
@@ -49,7 +49,6 @@ export const InputBoxProvider = <Segment extends string>({
       segments,
       segmentEnum,
       segmentRefs,
-      size,
     ],
   );
 

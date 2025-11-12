@@ -1,5 +1,4 @@
 import { keyMap } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
 
 /**
  *  SharedInput Segment Types
@@ -44,14 +43,27 @@ export function isInputSegment<T extends Record<string, string>>(
  * Base props for custom segment components passed to InputBox.
  *
  * Extend this interface to define props for custom segment implementations.
- * InputBox will provide additional props internally (e.g., onChange, value, min, max).
  */
 export interface InputSegmentComponentProps<Segment extends string>
   extends Omit<
-    React.ComponentPropsWithoutRef<'input'>,
-    'onChange' | 'value' | 'min' | 'max'
-  > {
+      React.ComponentPropsWithoutRef<'input'>,
+      'onChange' | 'value' | 'min' | 'max' | 'size' | 'disabled'
+    >,
+    Pick<SharedInputBoxTypes<Segment>, 'segments' | 'segmentEnum'> {
+  /**
+   * Which segment this input represents
+   *
+   * @example
+   * 'day'
+   * 'month'
+   * 'year'
+   * 'hours'
+   * 'minutes'
+   * 'seconds'
+   */
   segment: Segment;
+  onChange: InputSegmentChangeEventHandler<Segment, string>;
+  onBlur: React.FocusEventHandler<HTMLInputElement>;
 }
 
 /**
@@ -90,15 +102,15 @@ export interface SharedInputBoxTypes<Segment extends string> {
    */
   segments: Record<Segment, string>;
 
-  /**
-   * The size of the input box
-   *
-   * @example
-   * Size.Default
-   * Size.Small
-   * Size.Large
-   */
-  size: Size;
+  // /**
+  //  * The size of the input box
+  //  *
+  //  * @example
+  //  * Size.Default
+  //  * Size.Small
+  //  * Size.Large
+  //  */
+  // size: Size;
 
   /**
    * Whether the input box is disabled

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
-import { Size } from '@leafygreen-ui/tokens';
 
 import {
   charsPerSegmentMock,
@@ -48,7 +47,6 @@ describe('InputBoxContext', () => {
           onBlur={mockOnBlur}
           segmentRefs={segmentRefsMock}
           segments={segmentsMock}
-          size={Size.Default}
           disabled={false}
         >
           {children}
@@ -63,7 +61,6 @@ describe('InputBoxContext', () => {
       onBlur,
       segmentRefs,
       segments,
-      size,
       disabled,
     } = result.current;
 
@@ -73,7 +70,6 @@ describe('InputBoxContext', () => {
     expect(onBlur).toBe(mockOnBlur);
     expect(segmentRefs).toBe(segmentRefsMock);
     expect(segments).toBe(segmentsMock);
-    expect(size).toBe(Size.Default);
     expect(disabled).toBe(false);
   });
 });

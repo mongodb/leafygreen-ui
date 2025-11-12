@@ -1,23 +1,15 @@
 import React, { ForwardedRef, ReactElement } from 'react';
 
-export interface InputSegmentProps<Segment extends string>
-  extends Omit<
-    React.ComponentPropsWithRef<'input'>,
-    'size' | 'step' | 'value'
-  > {
-  /**
-   * Which segment this input represents
-   *
-   * @example
-   * 'day'
-   * 'month'
-   * 'year'
-   * 'hours'
-   * 'minutes'
-   * 'seconds'
-   */
-  segment: Segment;
+import { Size } from '@leafygreen-ui/tokens';
 
+import { InputSegmentComponentProps } from '../shared.types';
+
+export interface InputSegmentProps<Segment extends string, Value extends string>
+  extends Omit<
+      React.ComponentPropsWithRef<'input'>,
+      'size' | 'step' | 'value' | 'onBlur' | 'onChange'
+    >,
+    Omit<InputSegmentComponentProps<Segment>, 'segments'> {
   /**
    * Minimum value for the segment
    *
@@ -64,6 +56,36 @@ export interface InputSegmentProps<Segment extends string>
    * @default true
    */
   shouldValidate?: boolean;
+
+  /**
+   * The value of the segment
+   *
+   * @example
+   * '1'
+   * '2'
+   * '2025'
+   */
+  value: Value;
+
+  /**
+   * The number of characters per segment
+   *
+   * @example
+   * 2
+   * 2
+   * 4
+   */
+  charsPerSegment: number;
+
+  /**
+   * The size of the input box
+   *
+   * @example
+   * Size.Default
+   * Size.Small
+   * Size.Large
+   */
+  size: Size;
 }
 
 /**
@@ -75,8 +97,8 @@ export interface InputSegmentProps<Segment extends string>
  * @see https://stackoverflow.com/a/58473012
  */
 export interface InputSegmentComponentType {
-  <Segment extends string>(
-    props: InputSegmentProps<Segment>,
+  <Segment extends string, Value extends string>(
+    props: InputSegmentProps<Segment, Value>,
     ref: ForwardedRef<HTMLInputElement>,
   ): ReactElement | null;
   displayName?: string;

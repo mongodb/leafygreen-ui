@@ -6,12 +6,10 @@ import React, {
 } from 'react';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { useInputBoxContext } from '../InputBoxContext';
 import {
   getNewSegmentValueFromArrowKeyPress,
   getNewSegmentValueFromInputValue,
@@ -24,45 +22,34 @@ import {
   InputSegmentProps,
 } from './InputSegment.types';
 
-const InputSegmentWithRef = <Segment extends string>(
+const InputSegmentWithRef = <Segment extends string, Value extends string>(
   {
     segment,
     onKeyDown,
     minSegmentValue,
     maxSegmentValue,
     className,
-    onChange: onChangeProp,
-    onBlur: onBlurProp,
+    onChange,
+    onBlur,
+    segmentEnum,
+    size,
+    disabled,
+    value,
+    charsPerSegment,
     step = 1,
     shouldWrap = true,
     shouldValidate = true,
     ...rest
-  }: InputSegmentProps<Segment>,
+  }: InputSegmentProps<Segment, Value>,
   fwdRef: ForwardedRef<HTMLInputElement>,
 ) => {
   const { theme } = useDarkMode();
-  const {
-    onChange: onChangeContextProp,
-    onBlur: onBlurContextProp,
-    charsPerSegment: charsPerSegmentContext,
-    segmentEnum,
-    segmentRefs,
-    segments,
-    labelledBy,
-    size,
-    disabled,
-  } = useInputBoxContext<Segment>();
   const baseFontSize = useUpdatedBaseFontSize();
-  const charsPerSegment = charsPerSegmentContext[segment];
   const formatter = getValueFormatter({
     charsPerSegment,
     allowZero: minSegmentValue === 0,
   });
   const pattern = `[0-9]{${charsPerSegment}}`;
-
-  const segmentRef = segmentRefs[segment];
-  const mergedRef = useMergeRefs([fwdRef, segmentRef]);
-  const value = segments[segment];
 
   /**
    * Receives native input events,
@@ -86,7 +73,7 @@ const InputSegmentWithRef = <Segment extends string>(
     const hasValueChanged = newValue !== value;
 
     if (hasValueChanged) {
-      onChangeContextProp({
+      onChange({
         segment,
         value: newValue,
         meta: { min: minSegmentValue },
@@ -95,8 +82,6 @@ const InputSegmentWithRef = <Segment extends string>(
       // If the value has not changed, ensure the input value is reset
       target.value = value;
     }
-
-    onChangeProp?.(e);
   };
 
   /** Handle keydown presses that don't natively fire a change event */
@@ -133,7 +118,7 @@ const InputSegmentWithRef = <Segment extends string>(
         const valueString = formatter(newValue);
 
         /** Fire a custom change event when the up/down arrow keys are pressed */
-        onChangeContextProp({
+        onChange({
           segment,
           value: valueString,
           meta: { key, min: minSegmentValue },
@@ -149,7 +134,7 @@ const InputSegmentWithRef = <Segment extends string>(
           e.stopPropagation();
 
           /** Fire a custom change event when the backspace key is pressed */
-          onChangeContextProp({
+          onChange({
             segment,
             value: '',
             meta: { key, min: minSegmentValue },
@@ -166,7 +151,7 @@ const InputSegmentWithRef = <Segment extends string>(
         // Don't fire change event if the input is initially empty
         if (value) {
           /** Fire a custom change event when the space key is pressed */
-          onChangeContextProp({
+          onChange({
             segment,
             value: '',
             meta: { key, min: minSegmentValue },
@@ -185,8 +170,7 @@ const InputSegmentWithRef = <Segment extends string>(
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    onBlurContextProp?.(e);
-    onBlurProp?.(e);
+    onBlur?.(e);
   };
 
   // Note: Using a text input with pattern attribute due to Firefox
@@ -196,10 +180,10 @@ const InputSegmentWithRef = <Segment extends string>(
     <>
       <input
         {...rest}
-        aria-labelledby={labelledBy}
+        // aria-labelledby={labelledBy}
         aria-label={String(segment)}
         id={String(segment)}
-        ref={mergedRef}
+        ref={fwdRef}
         type="text"
         pattern={pattern}
         role="spinbutton"
