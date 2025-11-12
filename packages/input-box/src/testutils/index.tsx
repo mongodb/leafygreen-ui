@@ -74,6 +74,8 @@ export const InputSegmentWrapper = React.forwardRef<
   },
 );
 
+InputSegmentWrapper.displayName = 'InputSegmentWrapper';
+
 /**
  * This component is used to render the InputBox component for testing purposes.
  * Includes segment state management and a default renderSegment function.
