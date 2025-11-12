@@ -22,6 +22,6 @@ export const isEverySegmentValueExplicit = (
   segments: DateSegmentsState,
 ): boolean => {
   return Object.entries(segments).every(([segment, value]) =>
-    isExplicitSegmentValue(segment as DateSegment, value),
+    isExplicitSegmentValue({ segment: segment as DateSegment, value }),
   );
 };

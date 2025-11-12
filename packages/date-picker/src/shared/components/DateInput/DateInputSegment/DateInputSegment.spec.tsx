@@ -4,94 +4,56 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { getValueFormatter } from '@leafygreen-ui/input-box';
-import {
-  InputBoxProvider,
-  type InputBoxProviderProps,
-} from '@leafygreen-ui/input-box';
-import { Size } from '@leafygreen-ui/tokens';
 
-import { charsPerSegment, defaultMax, defaultMin } from '../../../constants';
+import {
+  charsPerSegment,
+  defaultMax,
+  defaultMin,
+  defaultPlaceholder,
+} from '../../../constants';
 import {
   SharedDatePickerProvider,
   SharedDatePickerProviderProps,
 } from '../../../context';
-import { segmentRefsMock } from '../../../testutils';
 import { DateSegment } from '../../../types';
 import { DateInputBoxProvider } from '../DateInputBoxContext';
 
 import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';
 
-const renderSegment = ({
-  props = {},
-  sharedDatePickerProviderProps = {},
-  inputBoxProviderProps = {},
-}: {
-  props?: Partial<DateInputSegmentProps>;
-  sharedDatePickerProviderProps?: Partial<SharedDatePickerProviderProps>;
-  inputBoxProviderProps?: Partial<InputBoxProviderProps<DateSegment>>;
-}) => {
+const renderSegment = (
+  props?: Partial<DateInputSegmentProps>,
+  ctx?: Partial<SharedDatePickerProviderProps>,
+) => {
   const defaultSegmentProps = {
     value: '',
-    onChange: () => {}, //TODO: remove this
-    segment: 'day' as DateSegment,
-  };
-
-  const defaultInputBoxProviderProps = {
     onChange: () => {},
-    onBlur: () => {},
+    segment: 'day' as DateSegment,
     disabled: false,
-    size: Size.Default,
-    segmentRefs: segmentRefsMock,
-    segments: {
-      day: '',
-      month: '',
-      year: '',
-    },
+    segmentEnum: DateSegment,
+    charsPerSegment: charsPerSegment['day'],
+    minSegmentValue: defaultMin['day'],
+    maxSegmentValue: defaultMax['day'],
+    placeholder: defaultPlaceholder['day'],
+    shouldWrap: true,
+    shouldValidate: true,
+    step: 1,
   };
 
   const result = render(
-    <SharedDatePickerProvider label="label" {...sharedDatePickerProviderProps}>
-      <InputBoxProvider
-        charsPerSegment={charsPerSegment}
-        segmentEnum={DateSegment}
-        {...defaultInputBoxProviderProps}
-        {...inputBoxProviderProps}
-      >
-        <DateInputBoxProvider>
-          <DateInputSegment {...defaultSegmentProps} {...props} />
-        </DateInputBoxProvider>
-      </InputBoxProvider>
+    <SharedDatePickerProvider label="label" {...ctx}>
+      <DateInputBoxProvider>
+        <DateInputSegment {...defaultSegmentProps} {...props} />
+      </DateInputBoxProvider>
     </SharedDatePickerProvider>,
   );
 
-  const rerenderSegment = ({
-    newProps = {},
-    newInputBoxProviderProps = {},
-  }: {
-    newProps?: Partial<DateInputSegmentProps>;
-    newInputBoxProviderProps?: Partial<InputBoxProviderProps<DateSegment>>;
-  }) =>
+  const rerenderSegment = (newProps: Partial<DateInputSegmentProps>) =>
     result.rerender(
-      <SharedDatePickerProvider
-        label="label"
-        {...sharedDatePickerProviderProps}
-      >
-        <InputBoxProvider
-          charsPerSegment={charsPerSegment}
-          segmentEnum={DateSegment}
-          {...defaultInputBoxProviderProps}
-          {...newInputBoxProviderProps}
-        >
-          <DateInputBoxProvider>
-            <DateInputSegment
-              {...defaultSegmentProps}
-              {...props}
-              {...newProps}
-            />
-          </DateInputBoxProvider>
-        </InputBoxProvider>
-        ,
+      <SharedDatePickerProvider label="label" {...ctx}>
+        <DateInputBoxProvider>
+          <DateInputSegment {...defaultSegmentProps} {...props} {...newProps} />
+        </DateInputBoxProvider>
       </SharedDatePickerProvider>,
     );
 
@@ -116,65 +78,51 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   describe('rendering', () => {
     describe('day segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ props: { segment: 'day' } });
+        const { input } = renderSegment({ segment: 'day' });
         expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
         const { input } = renderSegment({
-          props: { segment: 'day' },
-          inputBoxProviderProps: {
-            segments: { day: '12', month: '', year: '' },
-          },
+          segment: 'day',
+          value: '12',
         });
         expect(input.value).toBe('12');
       });
 
       test('rerendering updates the value', () => {
         const { getInput, rerenderSegment } = renderSegment({
-          props: { segment: 'day' },
-          inputBoxProviderProps: {
-            segments: { day: '12', month: '', year: '' },
-          },
+          segment: 'day',
+          value: '12',
         });
 
-        rerenderSegment({
-          newInputBoxProviderProps: {
-            segments: { day: '08', month: '', year: '' },
-          },
-        });
+        rerenderSegment({ value: '08' });
         expect(getInput().value).toBe('08');
       });
     });
 
     describe('month segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ props: { segment: 'month' } });
+        const { input } = renderSegment({ segment: 'month' });
         expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
         const { input } = renderSegment({
-          props: { segment: 'month' },
-          inputBoxProviderProps: {
-            segments: { day: '', month: '26', year: '' },
-          },
+          segment: 'month',
+          value: '26',
         });
         expect(input.value).toBe('26');
       });
 
       test('rerendering updates the value', () => {
         const { getInput, rerenderSegment } = renderSegment({
-          props: { segment: 'month' },
-          inputBoxProviderProps: {
-            segments: { day: '', month: '26', year: '' },
-          },
+          segment: 'month',
+          value: '26',
         });
 
         rerenderSegment({
-          newInputBoxProviderProps: {
-            segments: { day: '', month: '08', year: '' },
-          },
+          value: '08',
         });
         expect(getInput().value).toBe('08');
       });
@@ -182,31 +130,25 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
     describe('year segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const { input } = renderSegment({ props: { segment: 'year' } });
+        const { input } = renderSegment({ segment: 'year' });
         expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
         const { input } = renderSegment({
-          props: { segment: 'year' },
-          inputBoxProviderProps: {
-            segments: { day: '', month: '', year: '2023' },
-          },
+          segment: 'year',
+          value: '2023',
         });
         expect(input.value).toBe('2023');
       });
 
       test('rerendering updates the value', () => {
         const { getInput, rerenderSegment } = renderSegment({
-          props: { segment: 'year' },
-          inputBoxProviderProps: {
-            segments: { day: '', month: '', year: '2023' },
-          },
+          segment: 'year',
+          value: '2023',
         });
         rerenderSegment({
-          newInputBoxProviderProps: {
-            segments: { day: '', month: '', year: '1993' },
-          },
+          value: '1993',
         });
         expect(getInput().value).toBe('1993');
       });
@@ -223,11 +165,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         describe('Up arrow', () => {
           test('calls handler with value +1 if value is less than max', () => {
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              inputBoxProviderProps: {
-                segments: { day: formatter(15), month: '', year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'day',
+              value: formatter(15),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowup}');
@@ -238,11 +178,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('calls handler with min if value is undefined', () => {
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: '', year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'day',
+              value: '',
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowup}');
@@ -253,15 +191,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('rolls value over to min value if value exceeds `max`', () => {
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              inputBoxProviderProps: {
-                segments: {
-                  day: formatter(defaultMax['day']),
-                  month: '',
-                  year: '',
-                },
-                onChange: onChangeHandler,
-              },
+              segment: 'day',
+              value: formatter(defaultMax['day']),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowup}');
@@ -274,11 +206,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         describe('Down arrow', () => {
           test('calls handler with value -1 if value is greater than min', () => {
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              inputBoxProviderProps: {
-                segments: { day: formatter(15), month: '', year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'day',
+              value: formatter(15),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowdown}');
@@ -291,11 +221,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('calls handler with max if value is undefined', () => {
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: '', year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'day',
+              value: '',
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowdown}');
@@ -306,15 +234,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('rolls value over to max value if value is less than min', () => {
             const { input } = renderSegment({
-              props: { segment: 'day' },
-              inputBoxProviderProps: {
-                segments: {
-                  day: formatter(defaultMin['day']),
-                  month: '',
-                  year: '',
-                },
-                onChange: onChangeHandler,
-              },
+              segment: 'day',
+              value: formatter(defaultMin['day']),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowdown}');
@@ -333,11 +255,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         describe('Up arrow', () => {
           test('calls handler with value +1 if value is less than max', () => {
             const { input } = renderSegment({
-              props: { segment: 'month' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: formatter(6), year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'month',
+              value: formatter(6),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowup}');
@@ -350,11 +270,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('calls handler with min if value is undefined', () => {
             const { input } = renderSegment({
-              props: { segment: 'month' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: '', year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'month',
+              value: '',
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowup}');
@@ -367,15 +285,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('rolls value over to min value if value exceeds max', () => {
             const { input } = renderSegment({
-              props: { segment: 'month' },
-              inputBoxProviderProps: {
-                segments: {
-                  day: '',
-                  month: formatter(defaultMax['month']),
-                  year: '',
-                },
-                onChange: onChangeHandler,
-              },
+              segment: 'month',
+              value: formatter(defaultMax['month']),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowup}');
@@ -390,11 +302,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         describe('Down arrow', () => {
           test('calls handler with value -1 if value is greater than min', () => {
             const { input } = renderSegment({
-              props: { segment: 'month' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: formatter(6), year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'month',
+              value: formatter(6),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowdown}');
@@ -407,11 +317,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('calls handler with max if value is undefined', () => {
             const { input } = renderSegment({
-              props: { segment: 'month' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: '', year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'month',
+              value: '',
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowdown}');
@@ -424,15 +332,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('rolls value over to max value if value is less than min', () => {
             const { input } = renderSegment({
-              props: { segment: 'month' },
-              inputBoxProviderProps: {
-                segments: {
-                  day: '',
-                  month: formatter(defaultMin['month']),
-                  year: '',
-                },
-                onChange: onChangeHandler,
-              },
+              segment: 'month',
+              value: formatter(defaultMin['month']),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowdown}');
@@ -453,11 +355,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         describe('Up arrow', () => {
           test('calls handler with value +1 if value is less than max', () => {
             const { input } = renderSegment({
-              props: { segment: 'year' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: '', year: formatter(1993) },
-                onChange: onChangeHandler,
-              },
+              segment: 'year',
+              value: formatter(1993),
+              onChange: onChangeHandler,
             });
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -469,11 +369,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('calls handler with min if value is undefined', () => {
             const { input } = renderSegment({
-              props: { segment: 'year' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: '', year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'year',
+              value: '',
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowup}');
@@ -486,15 +384,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('does _not_ rollover if value exceeds max', () => {
             const { input } = renderSegment({
-              props: { segment: 'year' },
-              inputBoxProviderProps: {
-                segments: {
-                  day: '',
-                  month: '',
-                  year: formatter(defaultMax['year']),
-                },
-                onChange: onChangeHandler,
-              },
+              segment: 'year',
+              value: formatter(defaultMax['year']),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowup}');
@@ -509,11 +401,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         describe('Down arrow', () => {
           test('calls handler with value -1 if value is greater than min', () => {
             const { input } = renderSegment({
-              props: { segment: 'year' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: '', year: formatter(1993) },
-                onChange: onChangeHandler,
-              },
+              segment: 'year',
+              value: formatter(1993),
+              onChange: onChangeHandler,
             });
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
@@ -525,11 +415,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('calls handler with max if value is undefined', () => {
             const { input } = renderSegment({
-              props: { segment: 'year' },
-              inputBoxProviderProps: {
-                segments: { day: '', month: '', year: '' },
-                onChange: onChangeHandler,
-              },
+              segment: 'year',
+              value: '',
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowdown}');
@@ -542,15 +430,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('does _not_ rollover if value exceeds min', () => {
             const { input } = renderSegment({
-              props: { segment: 'year' },
-              inputBoxProviderProps: {
-                segments: {
-                  day: '',
-                  month: '',
-                  year: formatter(defaultMin['year']),
-                },
-                onChange: onChangeHandler,
-              },
+              segment: 'year',
+              value: formatter(defaultMin['year']),
+              onChange: onChangeHandler,
             });
 
             userEvent.type(input, '{arrowdown}');

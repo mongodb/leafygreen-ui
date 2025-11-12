@@ -50,7 +50,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { isDirty, formatParts, disabled, setIsDirty, size } =
+    const { isDirty, formatParts, disabled, setIsDirty } =
       useSharedDatePickerContext();
 
     /** if the value is a `Date` the component is dirty */

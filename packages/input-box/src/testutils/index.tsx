@@ -5,6 +5,7 @@ import { Size } from '@leafygreen-ui/tokens';
 
 import { InputBox, InputBoxProps } from '../InputBox';
 import { InputSegment, type InputSegmentProps } from '../InputSegment';
+import { InputSegmentComponentProps } from '../shared.types';
 
 import {
   charsPerSegmentMock,
@@ -18,7 +19,6 @@ import {
   segmentsMock,
   segmentWidthStyles,
 } from './testutils.mocks';
-import { InputSegmentComponentProps } from '../shared.types';
 
 export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
   segments: segmentsMock,
