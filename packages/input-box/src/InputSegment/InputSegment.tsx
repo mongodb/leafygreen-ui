@@ -22,7 +22,7 @@ import {
   InputSegmentProps,
 } from './InputSegment.types';
 
-const InputSegmentWithRef = <Segment extends string, Value extends string>(
+const InputSegmentWithRef = <Segment extends string>(
   {
     segment,
     onKeyDown,
@@ -40,7 +40,7 @@ const InputSegmentWithRef = <Segment extends string, Value extends string>(
     shouldWrap = true,
     shouldValidate = true,
     ...rest
-  }: InputSegmentProps<Segment, Value>,
+  }: InputSegmentProps<Segment>,
   fwdRef: ForwardedRef<HTMLInputElement>,
 ) => {
   const { theme } = useDarkMode();

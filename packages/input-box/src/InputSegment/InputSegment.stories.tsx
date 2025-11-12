@@ -13,7 +13,6 @@ import {
   defaultMaxMock,
   defaultMinMock,
   defaultPlaceholderMock,
-  InputSegmentValueMock,
   SegmentObjMock,
 } from '../testutils/testutils.mocks';
 
@@ -104,7 +103,7 @@ export const LiveExample: StoryFn<typeof InputSegment> = ({
   darkMode: _darkMode,
   ...rest
 }) => {
-  const [value, setValue] = useState<InputSegmentValueMock>('');
+  const [value, setValue] = useState<string>('');
 
   return (
     <InputSegment

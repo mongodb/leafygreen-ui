@@ -45,7 +45,10 @@ export function isInputSegment<T extends Record<string, string>>(
  * Extend this interface to define props for custom segment implementations.
  */
 export interface InputSegmentComponentProps<Segment extends string>
-  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'>,
+  extends Omit<
+      React.ComponentPropsWithRef<'input'>,
+      'onChange' | 'value' | 'disabled'
+    >,
     SharedInputBoxTypes<Segment> {
   /**
    * Which segment this input represents
@@ -69,12 +72,14 @@ export interface InputSegmentComponentProps<Segment extends string>
   onChange: InputSegmentChangeEventHandler<Segment, string>;
 
   /**
-   * The handler for the onBlur event that will be read by the InputSegment component
+   * The value of the segment
    *
    * @example
-   * (event: React.FocusEvent<HTMLInputElement>) => void
+   * '1'
+   * '2'
+   * '2025'
    */
-  onBlur: React.FocusEventHandler<HTMLInputElement>;
+  value: string;
 }
 
 /**
@@ -90,22 +95,6 @@ export interface SharedInputBoxTypes<Segment extends string> {
    * { Day: 'day', Month: 'month', Year: 'year' }
    */
   segmentEnum: Record<string, Segment>;
-
-  /**
-   * An object that maps the segment names to their refs
-   *
-   * @example
-   * { day: ref, month: ref, year: ref }
-   */
-  segmentRefs: Record<Segment, React.RefObject<HTMLInputElement>>;
-
-  /**
-   * An object containing the values of the segments
-   *
-   * @example
-   * { day: '1', month: '2', year: '2025' }
-   */
-  segments: Record<Segment, string>;
 
   /**
    * Whether the input box is disabled

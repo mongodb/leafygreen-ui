@@ -32,6 +32,14 @@ export interface InputBoxProps<Segment extends string>
   labelledBy?: string;
 
   /**
+   * An object containing the values of the segments
+   *
+   * @example
+   * { day: '1', month: '2', year: '2025' }
+   */
+  segments: Record<Segment, string>;
+
+  /**
    * A function that sets the value of a segment
    *
    * @example
@@ -88,6 +96,14 @@ export interface InputBoxProps<Segment extends string>
    * segmentComponent={DateInputSegment}
    */
   segmentComponent: React.ComponentType<InputSegmentComponentProps<Segment>>;
+
+  /**
+   * An object that maps the segment names to their refs
+   *
+   * @example
+   * { day: ref, month: ref, year: ref }
+   */
+  segmentRefs: Record<Segment, React.RefObject<HTMLInputElement>>;
 }
 
 /**

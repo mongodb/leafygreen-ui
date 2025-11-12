@@ -12,7 +12,6 @@ import {
   defaultMaxMock,
   defaultMinMock,
   defaultPlaceholderMock,
-  InputSegmentValueMock,
   SegmentObjMock,
   segmentRefsMock,
   segmentRulesMock,
@@ -36,37 +35,44 @@ export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
  * @param segment - The segment to render
  * @returns
  */
-export const InputSegmentWrapper = ({
-  segment,
-  segments,
-  onChange = () => {},
-  onBlur = () => {},
-  segmentEnum = SegmentObjMock,
-  disabled = false,
-  segmentRefs = segmentRefsMock,
-}: InputSegmentComponentProps<SegmentObjMock>) => {
-  return (
-    <InputSegment
-      segment={segment}
-      data-testid={`input-segment-${segment}`}
-      className={segmentWidthStyles[segment]}
-      shouldValidate={segment !== SegmentObjMock.Year}
-      shouldWrap={segment !== SegmentObjMock.Year}
-      placeholder={defaultPlaceholderMock[segment]}
-      autoComplete="off"
-      minSegmentValue={defaultMinMock[segment]}
-      maxSegmentValue={defaultMaxMock[segment]}
-      value={segments[segment]}
-      charsPerSegment={charsPerSegmentMock[segment]}
-      onChange={onChange}
-      onBlur={onBlur}
-      size={Size.Default}
-      segmentEnum={segmentEnum}
-      ref={segmentRefs[segment]}
-      disabled={disabled}
-    />
-  );
-};
+export const InputSegmentWrapper = React.forwardRef<
+  HTMLInputElement,
+  InputSegmentComponentProps<SegmentObjMock>
+>(
+  (
+    {
+      segment,
+      value,
+      onChange = () => {},
+      onBlur = () => {},
+      segmentEnum = SegmentObjMock,
+      disabled = false,
+    },
+    ref,
+  ) => {
+    return (
+      <InputSegment
+        segment={segment}
+        data-testid={`input-segment-${segment}`}
+        className={segmentWidthStyles[segment]}
+        shouldValidate={segment !== SegmentObjMock.Year}
+        shouldWrap={segment !== SegmentObjMock.Year}
+        placeholder={defaultPlaceholderMock[segment]}
+        autoComplete="off"
+        minSegmentValue={defaultMinMock[segment]}
+        maxSegmentValue={defaultMaxMock[segment]}
+        value={value}
+        charsPerSegment={charsPerSegmentMock[segment]}
+        onChange={onChange}
+        onBlur={onBlur}
+        size={Size.Default}
+        segmentEnum={segmentEnum}
+        ref={ref}
+        disabled={disabled}
+      />
+    );
+  },
+);
 
 /**
  * This component is used to render the InputBox component for testing purposes.
@@ -167,31 +173,15 @@ export const renderInputBox = ({
   };
 };
 
-/*
- * InputSegment Utils // TODO: remove this?
- */
-export const setSegmentProps = (segment: SegmentObjMock) => {
-  return {
-    segment: segment,
-    charsPerSegment: charsPerSegmentMock[segment],
-    minSegmentValue: defaultMinMock[segment],
-    maxSegmentValue: defaultMaxMock[segment],
-    placeholder: defaultPlaceholderMock[segment],
-  };
-};
-
 interface RenderSegmentReturnType {
   getInput: () => HTMLInputElement;
   input: HTMLInputElement;
   rerenderSegment: (
-    newProps: Partial<InputSegmentProps<SegmentObjMock, InputSegmentValueMock>>,
+    newProps: Partial<InputSegmentProps<SegmentObjMock>>,
   ) => void;
 }
 
-const defaultSegmentProps: InputSegmentProps<
-  SegmentObjMock,
-  InputSegmentValueMock
-> = {
+const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
   segment: 'day',
   minSegmentValue: defaultMinMock['day'],
   maxSegmentValue: defaultMaxMock['day'],
@@ -210,17 +200,17 @@ const defaultSegmentProps: InputSegmentProps<
  * Renders the InputSegment component for testing purposes.
  */
 export const renderSegment = (
-  props: Partial<InputSegmentProps<SegmentObjMock, InputSegmentValueMock>>,
+  props: Partial<InputSegmentProps<SegmentObjMock>>,
 ): RenderResult & RenderSegmentReturnType => {
   const mergedProps = {
     ...defaultSegmentProps,
     ...props,
-  } as InputSegmentProps<SegmentObjMock, InputSegmentValueMock>;
+  } as InputSegmentProps<SegmentObjMock>;
 
   const utils = render(<InputSegment {...mergedProps} />);
 
   const rerenderSegment = (
-    newProps: Partial<InputSegmentProps<SegmentObjMock, InputSegmentValueMock>>,
+    newProps: Partial<InputSegmentProps<SegmentObjMock>>,
   ) => {
     utils.rerender(<InputSegment {...mergedProps} {...newProps} />);
   };
