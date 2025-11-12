@@ -244,8 +244,8 @@ export const InputBoxWithRef = <Segment extends string>(
                 onChange={handleSegmentInputChange}
                 onBlur={handleSegmentInputBlur}
                 segmentEnum={segmentEnum}
-                segments={segments}
-                segmentRefs={segmentRefs}
+                value={segments[part.type]}
+                ref={segmentRefs[part.type]}
                 disabled={disabled}
               />
             );

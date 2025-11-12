@@ -35,37 +35,44 @@ export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
  * @param segment - The segment to render
  * @returns
  */
-export const InputSegmentWrapper = ({
-  segment,
-  segments,
-  onChange = () => {},
-  onBlur = () => {},
-  segmentEnum = SegmentObjMock,
-  disabled = false,
-  segmentRefs = segmentRefsMock,
-}: InputSegmentComponentProps<SegmentObjMock>) => {
-  return (
-    <InputSegment
-      segment={segment}
-      data-testid={`input-segment-${segment}`}
-      className={segmentWidthStyles[segment]}
-      shouldValidate={segment !== SegmentObjMock.Year}
-      shouldWrap={segment !== SegmentObjMock.Year}
-      placeholder={defaultPlaceholderMock[segment]}
-      autoComplete="off"
-      minSegmentValue={defaultMinMock[segment]}
-      maxSegmentValue={defaultMaxMock[segment]}
-      value={segments[segment]}
-      charsPerSegment={charsPerSegmentMock[segment]}
-      onChange={onChange}
-      onBlur={onBlur}
-      size={Size.Default}
-      segmentEnum={segmentEnum}
-      ref={segmentRefs[segment]}
-      disabled={disabled}
-    />
-  );
-};
+export const InputSegmentWrapper = React.forwardRef<
+  HTMLInputElement,
+  InputSegmentComponentProps<SegmentObjMock>
+>(
+  (
+    {
+      segment,
+      value,
+      onChange = () => {},
+      onBlur = () => {},
+      segmentEnum = SegmentObjMock,
+      disabled = false,
+    },
+    ref,
+  ) => {
+    return (
+      <InputSegment
+        segment={segment}
+        data-testid={`input-segment-${segment}`}
+        className={segmentWidthStyles[segment]}
+        shouldValidate={segment !== SegmentObjMock.Year}
+        shouldWrap={segment !== SegmentObjMock.Year}
+        placeholder={defaultPlaceholderMock[segment]}
+        autoComplete="off"
+        minSegmentValue={defaultMinMock[segment]}
+        maxSegmentValue={defaultMaxMock[segment]}
+        value={value}
+        charsPerSegment={charsPerSegmentMock[segment]}
+        onChange={onChange}
+        onBlur={onBlur}
+        size={Size.Default}
+        segmentEnum={segmentEnum}
+        ref={ref}
+        disabled={disabled}
+      />
+    );
+  },
+);
 
 /**
  * This component is used to render the InputBox component for testing purposes.
