@@ -1,21 +1,10 @@
-// @ts-ignore
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED as ReactInternals } from 'react';
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook } from '@leafygreen-ui/testing-lib';
 
 import { EChartEvents, EChartEventsType, EChartsInstance } from '../../Echart';
 
 import { useTooltipVisibility } from './useTooltipVisibility';
 
 describe('@lg-echarts/core/hooks/useTooltipVisibility', () => {
-  // a function to simulate unbatched action dispatching in React 17
-  async function actUnbatched(fn: () => void) {
-    await act(async () => {
-      ReactInternals.ReactCurrentActQueue.isBatchingLegacy = false;
-      fn();
-      ReactInternals.ReactCurrentActQueue.isBatchingLegacy = true;
-    });
-  }
-
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
@@ -26,7 +15,7 @@ describe('@lg-echarts/core/hooks/useTooltipVisibility', () => {
     jest.useRealTimers();
   });
 
-  test('should pin the tooltip when the click event is triggered (in unbatched environment like React 17)', async () => {
+  test('should pin the tooltip when the click event is triggered', async () => {
     // mock the echart instance
     const echart: jest.Mocked<EChartsInstance> = {
       _getEChartsInstance: jest.fn(),
@@ -58,15 +47,12 @@ describe('@lg-echarts/core/hooks/useTooltipVisibility', () => {
       },
     );
 
-    // To mimic the behavior of React 17, we need to use the `legacyRoot: true` option.
-    const renderedHook = renderHook(
-      () =>
-        useTooltipVisibility({
-          chartId: 'test-chart',
-          container: null,
-          echart,
-        }),
-      { legacyRoot: true },
+    const renderedHook = renderHook(() =>
+      useTooltipVisibility({
+        chartId: 'test-chart',
+        container: null,
+        echart,
+      }),
     );
 
     // Set tooltip as mounted
@@ -78,8 +64,7 @@ describe('@lg-echarts/core/hooks/useTooltipVisibility', () => {
     expect(capturedPinTooltipFn).toBeDefined();
 
     // simulate a click event on the echart instance to pin the tooltip
-    // do it unbatched to simulate the real behavior of React 17 in Atlas UI
-    await actUnbatched(() => {
+    await act(() => {
       capturedPinTooltipFn!({ offsetX: 10, offsetY: 10 });
     });
 
