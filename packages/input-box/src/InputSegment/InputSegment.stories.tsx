@@ -72,11 +72,11 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
         darkMode: [false, true],
         segment: ['day', 'year'],
         size: Object.values(Size),
-        value: ['', '2', '0', '00', '2025', '0000'],
+        value: ['', '2', '02', '0', '00', '2025', '0000'],
       },
       excludeCombinations: [
         {
-          value: ['2', '0', '00'],
+          value: ['2', '02', '0', '00'],
           segment: 'year',
         },
         {
