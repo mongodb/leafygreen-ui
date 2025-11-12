@@ -16,6 +16,7 @@
     "build": "turbo run build tsc",
     "build:apps": "turbo run build --filter='@lg-apps/*'",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
+    "build:packages": "turbo run build tsc --filter=!'@lg-apps/*'",
     "dev:mcp-ui": "turbo run dev --filter=@lg-apps/mcp-ui-app",
     "build:docs": "turbo run docs",
     "build:tsc": "turbo run tsc",
