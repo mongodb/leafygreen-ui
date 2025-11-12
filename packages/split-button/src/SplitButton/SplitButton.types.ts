@@ -10,13 +10,14 @@ import {
   type MenuProps as ImportedMenuProps,
 } from '@leafygreen-ui/menu';
 import {
+  Align as ImportedAlign,
+  Justify as ImportedJustify,
+  RenderMode,
+} from '@leafygreen-ui/menu';
+import {
   InferredPolymorphicProps,
   PolymorphicAs,
 } from '@leafygreen-ui/polymorphic';
-import {
-  Align as ImportedAlign,
-  Justify as ImportedJustify,
-} from '@leafygreen-ui/popover';
 
 export type MenuItemType = ReactElement<
   InferredPolymorphicProps<PolymorphicAs, MenuItemProps>
@@ -45,6 +46,8 @@ export const Justify = {
 } as const;
 
 export type Justify = (typeof Justify)[keyof typeof Justify];
+
+export { RenderMode };
 
 type ButtonProps = Omit<BaseButtonProps, 'rightGlyph' | 'variant'>;
 
