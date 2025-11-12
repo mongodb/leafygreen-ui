@@ -3,12 +3,11 @@ const baseMessages: Array<unknown> = [
   {
     id: 0,
     messageBody: 'Hi! Ask me anything.',
-    isMongo: true,
+    isSender: false,
   },
   {
     id: 1,
     messageBody: 'Can you tell me the answer to this thing?',
-    userName: 'Sean Park',
   },
   {
     id: 2,
@@ -20,20 +19,19 @@ function helloWorld() {
 return "Hello, world!" satisfies HelloWorld;
 }
 \`\`\``,
-    isMongo: true,
+    isSender: false,
     hasMessageActions: true,
   },
   {
     id: 3,
     messageBody: 'How about another question?',
-    userName: 'Sean Park',
   },
   {
     id: 4,
     messageBody: `Sorry, MongoAI can't do that right now.
 
 Refer to [LeafyGreen UI](mongodb.design) or [LeafyGreen UI](mongodb.design) for more details. I'm filling out this space to see if the message will line up to the right side.`,
-    isMongo: true,
+    isSender: false,
     hasMessageActions: true,
   },
 ];

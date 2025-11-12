@@ -21,9 +21,6 @@
   ],
   "references": [
     {
-      "path": "../avatar"
-    },
-    {
       "path": "../input-bar"
     },
     {

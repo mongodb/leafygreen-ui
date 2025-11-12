@@ -1,8 +1,4 @@
 import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
@@ -15,25 +11,20 @@ const meta: StoryMetaType<typeof TitleBar> = {
     title: 'LeafyGreen Chat',
   },
   argTypes: {
-    onClose: { control: 'none' },
-    iconSlot: { control: 'none' },
     badgeText: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
     default: null,
     generate: {
-      storyNames: ['CompactVariant', 'SpaciousVariant'],
       combineArgs: {
         badgeText: [undefined, 'Beta'],
         darkMode: [false, true],
       },
-      decorator: (Instance, context) => {
+      decorator: Instance => {
         return (
           <div style={{ width: 700 }}>
-            <LeafyGreenChatProvider variant={context?.args.variant}>
-              <Instance />
-            </LeafyGreenChatProvider>
+            <Instance />
           </div>
         );
       },
@@ -43,19 +34,13 @@ const meta: StoryMetaType<typeof TitleBar> = {
 
 export default meta;
 
-type TitleBarStoryProps = TitleBarProps & {
-  variant?: Variant;
-};
-
-const Template: StoryFn<TitleBarStoryProps> = ({ variant, ...props }) => (
+const Template: StoryFn<TitleBarProps> = props => (
   <div style={{ width: 700 }}>
-    <LeafyGreenChatProvider variant={variant}>
-      <TitleBar {...props} />
-    </LeafyGreenChatProvider>
+    <TitleBar {...props} />
   </div>
 );
 
-export const LiveExample: StoryObj<TitleBarStoryProps> = {
+export const LiveExample: StoryObj<TitleBarProps> = {
   render: Template,
   args: {
     title: 'LeafyGreen Chat',
@@ -67,38 +52,9 @@ export const LiveExample: StoryObj<TitleBarStoryProps> = {
   },
 };
 
-export const CompactVariant: StoryObj<TitleBarStoryProps> = {
+export const Generated: StoryObj<TitleBarProps> = {
   render: Template,
   args: {
     title: 'LeafyGreen Chat',
-    variant: Variant.Compact,
-  },
-};
-
-export const SpaciousVariant: StoryObj<TitleBarStoryProps> = {
-  render: Template,
-  args: {
-    title: 'LeafyGreen Chat',
-    variant: Variant.Spacious,
-  },
-};
-
-export const LeftAligned: StoryObj<TitleBarStoryProps> = {
-  render: Template,
-  args: {
-    title: 'LeafyGreen Chat',
-    variant: Variant.Spacious,
-    align: 'left',
-    onClose: undefined,
-  },
-};
-
-export const WithCloseButton: StoryObj<TitleBarStoryProps> = {
-  render: Template,
-  args: {
-    title: 'LeafyGreen Chat',
-    variant: Variant.Spacious,
-    // eslint-disable-next-line no-console
-    onClose: () => console.log('Close clicked'),
   },
 };

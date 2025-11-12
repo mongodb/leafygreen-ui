@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar } from '@lg-chat/avatar';
 import { InputBar } from '@lg-chat/input-bar';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessageFeed } from '@lg-chat/message-feed';
 import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/stories';
@@ -41,17 +36,10 @@ const meta: StoryMetaType<typeof FixedChatWindow> = {
 
 export default meta;
 
-const MyMessage = ({
-  id,
-  isMongo,
-  messageBody,
-  userName,
-  messageRatingProps,
-}: any) => (
+const MyMessage = ({ id, messageBody, userName, messageRatingProps }: any) => (
   <Message
     key={id}
     sourceType="markdown"
-    avatar={<Avatar variant={isMongo ? 'mongo' : 'user'} />}
     isSender={!!userName}
     messageBody={messageBody}
   >
@@ -94,22 +82,20 @@ export const Uncontrolled: StoryFn<typeof FixedChatWindow> = props => {
 
   return (
     <div className={containerStyles}>
-      <LeafyGreenChatProvider variant={Variant.Spacious}>
-        <FixedChatWindow
-          {...props}
-          defaultOpen
-          title="LG Chat Demo"
-          badgeText="Beta"
-          triggerText="MongoDB AI"
-        >
-          <MessageFeed>
-            {messages.map(messageFields => (
-              <MyMessage key={messageFields.id} {...messageFields} />
-            ))}
-          </MessageFeed>
-          <InputBar onMessageSend={handleMessageSend} />
-        </FixedChatWindow>
-      </LeafyGreenChatProvider>
+      <FixedChatWindow
+        {...props}
+        defaultOpen
+        title="LG Chat Demo"
+        badgeText="Beta"
+        triggerText="MongoDB AI"
+      >
+        <MessageFeed>
+          {messages.map(messageFields => (
+            <MyMessage key={messageFields.id} {...messageFields} />
+          ))}
+        </MessageFeed>
+        <InputBar onMessageSend={handleMessageSend} />
+      </FixedChatWindow>
     </div>
   );
 };
@@ -137,25 +123,23 @@ export const Controlled: StoryFn<typeof FixedChatWindow> = props => {
 
   return (
     <div className={containerStyles}>
-      <LeafyGreenChatProvider variant={Variant.Spacious}>
-        <FixedChatWindow
-          {...props}
-          defaultOpen
-          title="LG Chat Demo"
-          badgeText="Beta"
-          triggerText="MongoDB AI"
-          open={open}
-          onClose={handleClose}
-          onTriggerClick={handleTriggerClick}
-        >
-          <MessageFeed>
-            {messages.map(messageFields => (
-              <MyMessage key={messageFields.id} {...messageFields} />
-            ))}
-          </MessageFeed>
-          <InputBar onMessageSend={handleMessageSend} />
-        </FixedChatWindow>
-      </LeafyGreenChatProvider>
+      <FixedChatWindow
+        {...props}
+        defaultOpen
+        title="LG Chat Demo"
+        badgeText="Beta"
+        triggerText="MongoDB AI"
+        open={open}
+        onClose={handleClose}
+        onTriggerClick={handleTriggerClick}
+      >
+        <MessageFeed>
+          {messages.map(messageFields => (
+            <MyMessage key={messageFields.id} {...messageFields} />
+          ))}
+        </MessageFeed>
+        <InputBar onMessageSend={handleMessageSend} />
+      </FixedChatWindow>
     </div>
   );
 };
@@ -174,22 +158,20 @@ export const Empty: StoryFn<typeof FixedChatWindow> = props => {
 
   return (
     <div className={containerStyles}>
-      <LeafyGreenChatProvider variant={Variant.Spacious}>
-        <FixedChatWindow
-          {...props}
-          defaultOpen
-          title="LG Chat Demo"
-          badgeText="Beta"
-          triggerText="MongoDB AI"
-        >
-          <MessageFeed>
-            {messages.map(messageFields => (
-              <MyMessage key={messageFields.id} {...messageFields} />
-            ))}
-          </MessageFeed>
-          <InputBar onMessageSend={handleMessageSend} />
-        </FixedChatWindow>
-      </LeafyGreenChatProvider>
+      <FixedChatWindow
+        {...props}
+        defaultOpen
+        title="LG Chat Demo"
+        badgeText="Beta"
+        triggerText="MongoDB AI"
+      >
+        <MessageFeed>
+          {messages.map(messageFields => (
+            <MyMessage key={messageFields.id} {...messageFields} />
+          ))}
+        </MessageFeed>
+        <InputBar onMessageSend={handleMessageSend} />
+      </FixedChatWindow>
     </div>
   );
 };

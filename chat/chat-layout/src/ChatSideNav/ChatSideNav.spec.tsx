@@ -1,32 +1,15 @@
 import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
+import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { ChatSideNav } from '.';
 
 const Providers = ({ children }: { children: React.ReactNode }) => (
-  <LeafyGreenChatProvider variant={Variant.Compact}>
-    {children}
-  </LeafyGreenChatProvider>
+  <LeafyGreenChatProvider>{children}</LeafyGreenChatProvider>
 );
 
 describe('ChatSideNav', () => {
-  beforeAll(() => {
-    global.ResizeObserver = jest.fn().mockImplementation(() => ({
-      observe: jest.fn(),
-      unobserve: jest.fn(),
-      disconnect: jest.fn(),
-    }));
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   test('Header shows "New Chat" button when onClickNewChat provided', async () => {
     const onClickNewChat = jest.fn();
 

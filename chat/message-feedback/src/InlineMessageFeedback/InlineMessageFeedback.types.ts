@@ -30,26 +30,6 @@ export type InlineMessageFeedbackProps = Required<
   DarkModeProps &
   Omit<React.ComponentPropsWithoutRef<'div'>, 'children' | 'onSubmit'> & {
     /**
-     * Text displayed inside the cancel Button
-     *
-     * @default: 'Cancel'
-     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-     */
-    cancelButtonText?: string;
-
-    /**
-     * Click event handler for the cancel Button
-     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-     */
-    onCancel?: MouseEventHandler<HTMLElement>;
-
-    /**
-     * Override props for the cancel Button
-     * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-     */
-    cancelButtonProps?: BaseButtonProps;
-
-    /**
      * Text displayed inside the submit Button
      *
      * @default: 'Submit'
@@ -97,8 +77,6 @@ export type InlineMessageFeedbackProps = Required<
 
     /**
      * Event handler called on close button click. Close button will not be rendered when undefined.
-     *
-     * This is mainly for internal use as most instances of InlineMessageFeedback should be closed solely by onCancel.
      */
     onClose?: MouseEventHandler<HTMLButtonElement>;
 
