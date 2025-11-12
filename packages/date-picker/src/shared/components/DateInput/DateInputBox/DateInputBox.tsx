@@ -111,7 +111,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           onSegmentChange={onSegmentChange}
           labelledBy={labelledBy}
           segmentComponent={DateInputSegment}
-          size={size}
           {...rest}
         />
       </DateInputBoxProvider>

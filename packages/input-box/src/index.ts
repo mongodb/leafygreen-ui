@@ -14,4 +14,5 @@ export {
 export {
   type InputSegmentChangeEventHandler,
   isInputSegment,
+  type InputSegmentComponentProps,
 } from './shared.types';
