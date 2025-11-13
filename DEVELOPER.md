@@ -72,19 +72,27 @@ We use @testing-library/react for writing tests locally. This library helps mock
 
 ### Linking
 
-We also have a link script, such that you can test components that are in development in environments beyond Storybook. To do so, run `yarn run link -- [path-to-application]`.
+We provide a `link` script to help you test in-development components within environments outside of Storybook. To do this, run:
 
-Note: There are some known issues using `yarn link` from yarn workspaces. Using Verdaccio, while more involved, is the more reliable and recommended approach for testing in an external project.
-
-### Using a local registry (Verdaccio)
-
-Publishing test versions to a local registry can be helpful when you need to make changes and test in an external app (or other library). To do this, you can install and use [Verdaccio](https://verdaccio.org/)
-
-#### 1. Install `verdaccio`
-
-```bash
-yarn install --global verdaccio
 ```
+yarn run link --to=[path-to-application]
+```
+
+If you encounter issues while linking, try the following troubleshooting flags:
+
+- When linking multiple packages with `--scope` or multiple `--packages` options, link processes run in parallel by default. If you experience failures, add the `--no-parallel` flag to run the linking tasks sequentially, which can help avoid race conditions.
+
+- If you are using a Node version manager such as `asdf` or `nvm`, add the `--launch-env="$(env)"` flag. This ensures the link script spawns commands using your current shell’s environment, preventing environment pollutions that may happen through the tooling of the version manager.
+
+- In your external project, make sure your module resolver picks up `'react'` from your own `node_modules` (not from LeafyGreen’s). If using webpack, you can enforce this by adding an alias in your webpack configuration:
+
+  ```js
+  resolve: {
+    alias: {
+      react: path.dirname(require.resolve('react/package.json'))
+    },
+  },
+  ```
 
 #### 2. Start `verdaccio`, and make note on the localhost port (should be `http://localhost:4873/` by default)
 
@@ -115,12 +123,12 @@ You should expect to see the following line in that file. (if not you can add it
 Ensure all packages are built, then navigate to some package and manually publish:
 
 ```bash
-pnpm build;
+yarn build;
 cd packages/<package-name>;
-pnpm publish;
+yarn publish;
 ```
 
-To ensure you are pointing to the correct registry, you can add the `--dry-run` flag to the `pnpm publish` command. This command should echo:
+To ensure you are pointing to the correct registry, you can add the `--dry-run` flag to the `yarn publish` command. This command should echo:
 
 ```
 npm notice Publishing to http://localhost:4873
