@@ -30,6 +30,11 @@ export interface CopyableProps extends React.ComponentProps<'div'> {
   copyable?: boolean;
 
   /**
+   * Styles applied to the outermost div of the component
+   */
+  wrapperClassName?: string;
+
+  /**
    * The display size of the label, description, and copyable children
    */
 

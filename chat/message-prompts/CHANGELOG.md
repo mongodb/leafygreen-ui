@@ -1,5 +1,42 @@
 # @lg-chat/message-prompts
 
+## 4.1.3
+
+### Patch Changes
+
+- 68b59a0: [LG-5687](https://jira.mongodb.org/browse/LG-5687): update border color from `green.dark1` to `green.dark2`
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 4.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+
+## 4.1.0
+
+### Minor Changes
+
+- 9c44076: - [LG-5438](https://jira.mongodb.org/browse/LG-5438) add `onClickRefresh` prop which conditionally renders refresh button
+  - [LG-5440](https://jira.mongodb.org/browse/LG-5440) add `enableHideOnSelect` prop which causes fade/shrink transition when a prompt is selected. This is set to `true` by default.
+
 ## 4.0.6
 
 ### Patch Changes

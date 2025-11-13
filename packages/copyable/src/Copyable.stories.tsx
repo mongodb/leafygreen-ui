@@ -5,7 +5,7 @@ import {
   StoryType,
 } from '@lg-tools/storybook-utils';
 
-import Copyable from '.';
+import { Copyable } from '.';
 
 const meta: StoryMetaType<typeof Copyable> = {
   title: 'Components/Actions/Copyable',
@@ -40,19 +40,37 @@ const meta: StoryMetaType<typeof Copyable> = {
     description: { control: 'text' },
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
+    className: { control: 'text' },
   },
 };
 
 export default meta;
 
 export const LiveExample: StoryType<typeof Copyable> = args => (
-  <div>
-    <Copyable {...args} />
-  </div>
+  <Copyable {...args} />
 );
 
 LiveExample.parameters = {
   chromatic: { disableSnapshot: true },
+};
+
+export const CopyableWithGrid = () => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 32,
+      }}
+    >
+      <Copyable
+        label="Grid Item"
+        description="Surrounding div has a gap of 32px"
+      >
+        npm install @leafygreen-ui/copyable
+      </Copyable>
+    </div>
+  );
 };
 
 export const Generated = () => {};

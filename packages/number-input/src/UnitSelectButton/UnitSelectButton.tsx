@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -10,7 +10,7 @@ import {
   popoverClassName,
 } from '@leafygreen-ui/select';
 import { Size } from '@leafygreen-ui/tokens';
-import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
+import { Align, Justify, RenderMode, Tooltip } from '@leafygreen-ui/tooltip';
 
 import {
   baseStyles,

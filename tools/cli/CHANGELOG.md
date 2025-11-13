@@ -1,5 +1,21 @@
 # @lg-tools/cli
 
+## 0.10.10
+
+### Patch Changes
+
+- Updated dependencies [9778d7b]
+- Updated dependencies [f3a8bdc]
+  - @lg-tools/codemods@0.6.0
+  - @lg-tools/install@0.4.1
+
+## 0.10.9
+
+### Patch Changes
+
+- Updated dependencies [d027d4c]
+  - @lg-tools/codemods@0.5.0
+
 ## 0.10.8
 
 ### Patch Changes

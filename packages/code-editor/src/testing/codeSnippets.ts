@@ -231,7 +231,7 @@ const AlienContactForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="contact-form">
-      <h2>🌌 Intergalactic Contact Protocol</h2>
+      <h2>Intergalactic Contact Protocol</h2>
       <label>
         Species:
         <input 

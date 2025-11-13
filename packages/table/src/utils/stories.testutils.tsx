@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 import {
@@ -127,7 +127,6 @@ export const DynamicDataComponent: StoryFn<StoryTableProps> = args => {
                     })}
                   </Row>
                 )}
-                {/* @ts-expect-error FIXME: ExpandedContent is incorrectly generic<unknown> */}
                 {isExpandedContent && <ExpandedContent row={row} />}
               </Fragment>
             );

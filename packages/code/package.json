@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/code",
-  "version": "20.0.8",
+  "version": "20.2.2",
   "description": "leafyGreen UI Kit Code Blocks",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,7 @@
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs",
-    "postinstall": "npx ts-node scripts/postinstall.ts"
+    "prepare": "npx ts-node scripts/prepare.ts"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -57,7 +57,7 @@
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/code",

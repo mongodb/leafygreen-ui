@@ -48,26 +48,20 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     );
 
     return (
-      <SharedDatePickerProvider
+      <LeafyGreenProvider
         darkMode={darkMode}
-        baseFontSize={baseFontSize}
-        {...contextProps}
+        baseFontSize={baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize}
       >
-        <DatePickerProvider
-          value={value}
-          setValue={setValue}
-          handleValidation={handleValidation}
-        >
-          <LeafyGreenProvider
-            darkMode={darkMode}
-            baseFontSize={
-              baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize
-            }
+        <SharedDatePickerProvider baseFontSize={baseFontSize} {...contextProps}>
+          <DatePickerProvider
+            value={value}
+            setValue={setValue}
+            handleValidation={handleValidation}
           >
             <DatePickerContent ref={fwdRef} {...componentProps} />
-          </LeafyGreenProvider>
-        </DatePickerProvider>
-      </SharedDatePickerProvider>
+          </DatePickerProvider>
+        </SharedDatePickerProvider>
+      </LeafyGreenProvider>
     );
   },
 );

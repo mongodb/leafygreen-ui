@@ -15,7 +15,7 @@ export const badgeStyles = css`
   display: flex;
   flex-direction: row;
   justify-content: center;
-
-  width: ${BADGE_WIDTH}px;
-  height: ${BADGE_HEIGHT}px;
+  box-sizing: border-box;
+  min-width: ${BADGE_WIDTH}px;
+  min-height: ${BADGE_HEIGHT}px;
 `;

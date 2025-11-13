@@ -15,7 +15,7 @@ import { SideNavGroupProps } from './SideNavGroup.types';
  * # SideNavGroup
  *
  * ```
-<SideNavGroup headerText="Section Header">
+<SideNavGroup header="Section Header">
   <SideNavItem href="/">
     Back to Home
   </SideNavItem>

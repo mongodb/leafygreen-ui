@@ -1,10 +1,4 @@
 import React, { ChangeEvent, Fragment, useState } from 'react';
-import { Avatar } from '@lg-chat/avatar';
-import { DisclaimerText } from '@lg-chat/chat-disclaimer';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
 import { MessageRating } from '@lg-chat/message-rating';
@@ -12,7 +6,6 @@ import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Link } from '@leafygreen-ui/typography';
 
 import {
   baseMessages,
@@ -25,24 +18,17 @@ const meta: StoryMetaType<typeof MessageFeed> = {
   component: MessageFeed,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    variant: {
-      control: 'radio',
-      options: Object.values(Variant),
-    },
   },
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: ['CompactVariant', 'SpaciousVariant'],
       combineArgs: {
         darkMode: [false, true],
       },
       decorator: (Instance, context) => {
         return (
           <LeafyGreenProvider darkMode={context?.args.darkMode}>
-            <LeafyGreenChatProvider variant={context?.args.variant}>
-              <Instance />
-            </LeafyGreenChatProvider>
+            <Instance />
           </LeafyGreenProvider>
         );
       },
@@ -53,7 +39,6 @@ export default meta;
 
 const MyMessage = ({
   id,
-  isMongo,
   messageBody,
   userName,
   messageRatingProps,
@@ -62,7 +47,6 @@ const MyMessage = ({
     <Message
       key={id}
       sourceType="markdown"
-      avatar={<Avatar variant={isMongo ? 'mongo' : 'user'} />}
       isSender={!!userName}
       messageBody={messageBody}
     >
@@ -81,35 +65,16 @@ const MyMessage = ({
   );
 };
 
-type MessageFeedStoryProps = MessageFeedProps & {
-  variant?: Variant;
-};
-
-const Template: StoryFn<MessageFeedStoryProps> = ({
-  children,
-  variant,
-  ...rest
-}) => (
-  <LeafyGreenChatProvider variant={variant}>
-    <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
-      {children ?? (
-        <>
-          {variant === Variant.Spacious && (
-            <DisclaimerText title="Terms and Conditions">
-              This is a test description. There&apos;s also a{' '}
-              <Link>link inside of it</Link>.
-            </DisclaimerText>
-          )}
-          {baseMessages.map(messageFields => (
-            <MyMessage key={messageFields.id} {...messageFields} />
-          ))}
-        </>
-      )}
-    </MessageFeed>
-  </LeafyGreenChatProvider>
+const Template: StoryFn<MessageFeedProps> = ({ children, ...rest }) => (
+  <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+    {children ??
+      baseMessages.map(messageFields => (
+        <MyMessage key={messageFields.id} {...messageFields} />
+      ))}
+  </MessageFeed>
 );
 
-export const LiveExample: StoryObj<MessageFeedStoryProps> = {
+export const LiveExample: StoryObj<MessageFeedProps> = {
   render: Template,
   parameters: {
     chromatic: {
@@ -118,27 +83,15 @@ export const LiveExample: StoryObj<MessageFeedStoryProps> = {
   },
 };
 
-export const OneMessage: StoryObj<MessageFeedStoryProps> = {
+export const OneMessage: StoryObj<MessageFeedProps> = {
   render: Template,
   args: {
-    children: (
-      <>
-        <DisclaimerText title="Terms and Conditions">
-          This is a test description. There&apos;s also a{' '}
-          <Link>link inside of it</Link>.
-        </DisclaimerText>
-        <MyMessage {...baseMessages[0]} />
-      </>
-    ),
+    children: <MyMessage {...baseMessages[0]} />,
   },
 };
 
-const ChangingMessagesComponent = ({
-  darkMode,
-  variant,
-  ...rest
-}: MessageFeedStoryProps) => {
-  const [messages, setMessages] = useState<Array<any>>(baseMessages);
+const ChangingMessagesComponent = ({ darkMode, ...rest }: MessageFeedProps) => {
+  const [messages, setMessages] = useState<Array<any>>([...baseMessages]);
   const [newMessageId, setNewMessageId] = useState<number>(
     baseMessages.length + 1,
   );
@@ -173,45 +126,31 @@ const ChangingMessagesComponent = ({
 
   return (
     <div>
-      <LeafyGreenChatProvider variant={variant}>
-        <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
-          <DisclaimerText title="Terms and Conditions">
-            This is a test description. There&apos;s also a{' '}
-            <Link>link inside of it</Link>.
-          </DisclaimerText>
-          {messages.map(message => {
-            const { id, isMongo, messageBody, userName } =
-              message as MessageFields;
-            return (
-              <Fragment key={id}>
-                <Message
-                  sourceType="markdown"
-                  darkMode={darkMode}
-                  avatar={
-                    <Avatar
-                      variant={isMongo ? 'mongo' : 'user'}
-                      darkMode={darkMode}
-                      name={userName}
-                    />
-                  }
-                  isSender={!!userName}
-                  messageBody={messageBody}
-                ></Message>
-                {id === 1 && (
-                  <MessagePrompts>
-                    <MessagePrompt selected>
-                      Can you tell me the answer to this thing?
-                    </MessagePrompt>
-                    <MessagePrompt>
-                      Can you tell me the answer to that thing?
-                    </MessagePrompt>
-                  </MessagePrompts>
-                )}
-              </Fragment>
-            );
-          })}
-        </MessageFeed>
-      </LeafyGreenChatProvider>
+      <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+        {messages.map(message => {
+          const { id, messageBody, userName } = message as MessageFields;
+          return (
+            <Fragment key={id}>
+              <Message
+                sourceType="markdown"
+                darkMode={darkMode}
+                isSender={!!userName}
+                messageBody={messageBody}
+              ></Message>
+              {id === 1 && (
+                <MessagePrompts>
+                  <MessagePrompt selected>
+                    Can you tell me the answer to this thing?
+                  </MessagePrompt>
+                  <MessagePrompt>
+                    Can you tell me the answer to that thing?
+                  </MessagePrompt>
+                </MessagePrompts>
+              )}
+            </Fragment>
+          );
+        })}
+      </MessageFeed>
       <button onClick={() => handleButtonClick(shortMessage)}>
         Click me to add a message
       </button>
@@ -221,38 +160,7 @@ const ChangingMessagesComponent = ({
     </div>
   );
 };
-export const ChangingMessages: StoryObj<MessageFeedStoryProps> = {
+
+export const ChangingMessages: StoryObj<MessageFeedProps> = {
   render: ChangingMessagesComponent,
-};
-
-export const CompactVariant: StoryObj<MessageFeedStoryProps> = {
-  render: Template,
-  args: {
-    children: (
-      <>
-        {baseMessages.map(messageFields => (
-          <MyMessage key={messageFields.id} {...messageFields} />
-        ))}
-      </>
-    ),
-    variant: Variant.Compact,
-  },
-};
-
-export const SpaciousVariant: StoryObj<MessageFeedStoryProps> = {
-  render: Template,
-  args: {
-    children: (
-      <>
-        <DisclaimerText title="Terms and Conditions">
-          This is a test description. There&apos;s also a{' '}
-          <Link>link inside of it</Link>.
-        </DisclaimerText>
-        {baseMessages.map(messageFields => (
-          <MyMessage key={messageFields.id} {...messageFields} />
-        ))}
-      </>
-    ),
-    variant: Variant.Spacious,
-  },
 };

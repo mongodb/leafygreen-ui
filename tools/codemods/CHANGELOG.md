@@ -1,5 +1,25 @@
 # @lg-tools/codemods
 
+## 0.6.0
+
+### Minor Changes
+
+- 9778d7b: [LG-5608](https://jira.mongodb.org/browse/LG-5608)
+
+  Update `modal-v20` codemod to no longer remove the `initialFocus` prop. Instead, it adds a recommendation comment, suggesting migration to refs for better type safety.
+
+## 0.5.1
+
+### Patch Changes
+
+- 8f4889e: Adds `banner` to list of code-mod-able components for "named-exports" codemod
+
+## 0.5.0
+
+### Minor Changes
+
+- d027d4c: Add `named-exports` codemod for migrating LG package default exports to named exports. [codemods README](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports)
+
 ## 0.4.2
 
 ### Patch Changes

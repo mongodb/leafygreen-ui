@@ -178,6 +178,51 @@ describe('packages/select', () => {
     });
   });
 
+  test('composes aria-label with selected value for screen readers', () => {
+    const { getInput } = renderSelect({
+      label: undefined,
+      'aria-label': 'Color',
+      defaultValue: Color.Blue,
+    });
+
+    const button = getInput();
+    expect(button).toHaveAttribute('aria-label', 'Color, Blue');
+  });
+
+  test('composes aria-label with placeholder when no value is selected', () => {
+    const { getInput } = renderSelect({
+      label: undefined,
+      'aria-label': 'Color',
+      placeholder: 'Choose a color',
+    });
+
+    const button = getInput();
+    expect(button).toHaveAttribute('aria-label', 'Color, Choose a color');
+  });
+
+  test('does not compose aria-label when a visible label is present', () => {
+    const { getInput } = renderSelect({
+      label: 'Color',
+      'aria-label': 'Color',
+      defaultValue: Color.Blue,
+    });
+
+    const button = getInput();
+    expect(button).not.toHaveAttribute('aria-label');
+  });
+
+  test('does not compose aria-label when aria-labelledby is present', () => {
+    const { getInput } = renderSelect({
+      label: undefined,
+      'aria-label': 'Color',
+      'aria-labelledby': 'custom-label',
+      defaultValue: Color.Blue,
+    });
+
+    const button = getInput();
+    expect(button).not.toHaveAttribute('aria-label');
+  });
+
   test('option & group passes through data props', async () => {
     const { queryByTestId } = render(
       <Select label="Label">
@@ -268,7 +313,6 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'warn'), spy => {
       spy.mockImplementation();
 
-      // @ts-ignore React18-expect-error - expecting `readOnly` prop
       render(<Select {...defaultProps} value="" />);
 
       expect(spy).toHaveBeenCalledTimes(1);
@@ -276,13 +320,12 @@ describe('packages/select', () => {
         'You provided a `value` prop to a form field without an `onChange` handler. ' +
           'This will render a read-only field. ' +
           'If the field should be mutable use `defaultValue`. ' +
-          'Otherwise, set either `onChange` or `readOnly`.',
+          'Otherwise, set `onChange`.',
       );
 
       spy.mockClear();
 
       render(<Select {...defaultProps} defaultValue="" />);
-      render(<Select {...defaultProps} value="" readOnly />);
       render(<Select {...defaultProps} value="" onChange={() => {}} />);
 
       expect(spy).not.toHaveBeenCalled();

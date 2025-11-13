@@ -42,6 +42,10 @@ export interface PanelTestContextConfig {
   redo?: () => boolean;
   downloadContent?: () => void;
   lgIds?: GetLgIdsReturnType;
+  undoDepth?: number;
+  redoDepth?: number;
+  baseFontSize?: 13 | 14 | 16 | undefined;
+  darkMode?: boolean;
 }
 
 /**
@@ -68,6 +72,11 @@ export function renderPanel(config: RenderPanelConfig = {}) {
     redo: defaultStubRedo,
     downloadContent: defaultStubDownloadContent,
     lgIds: getLgIds(),
+    undoDepth: 1,
+    redoDepth: 1,
+    baseFontSize: 13 as const,
+    darkMode: false,
+    isLoading: false,
     ...contextConfig,
   };
 

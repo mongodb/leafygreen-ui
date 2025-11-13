@@ -42,7 +42,7 @@ export { sideNavSelector };
  *
  * ```
 <SideNav>
-  <SideNavGroup headerText="Section Header">
+  <SideNavGroup header="Section Header">
     <SideNavItem href="/">
       Back to Home
     </SideNavItem>

@@ -17,6 +17,7 @@ import {
 import { TimeInputContent } from '../TimeInputContent';
 
 import { TimeInputProps } from './TimeInput.types';
+import { DateType } from '@leafygreen-ui/date-utils';
 
 export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
   (
@@ -35,7 +36,7 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
     const { darkMode } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
 
-    const { value, updateValue } = useControlled(
+    const { value, updateValue } = useControlled<DateType | undefined>(
       valueProp,
       onChangeProp,
       initialValueProp,

@@ -1,61 +1,38 @@
 import React, { ForwardedRef, forwardRef } from 'react';
-import { Avatar, Variant as ChatAvatarVariant } from '@lg-chat/avatar';
 
-import Badge from '@leafygreen-ui/badge';
-import { cx } from '@leafygreen-ui/emotion';
-import XIcon from '@leafygreen-ui/icon/dist/X';
-import IconButton from '@leafygreen-ui/icon-button';
+import { Badge } from '@leafygreen-ui/badge';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import {
-  baseStyles,
-  contentAlignmentStyles,
-  contentContainerStyles,
-  themeStyles,
-} from './TitleBar.styles';
-import { Align, TitleBarProps } from '.';
+import { getTitleBarStyles } from './TitleBar.styles';
+import { type TitleBarProps } from './TitleBar.types';
 
 export const TitleBar = forwardRef(
   (
     {
-      title,
-      className,
-      align = Align.Center,
-      onClose,
       badgeText,
+      className,
       darkMode: darkModeProp,
-      iconSlot,
+      title,
       ...rest
     }: TitleBarProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div
-          className={cx(baseStyles, themeStyles[theme], className)}
+          className={getTitleBarStyles({ theme, className })}
           {...rest}
           ref={ref}
         >
-          <div
-            className={cx(contentContainerStyles, {
-              [contentAlignmentStyles]: align === Align.Center,
-            })}
-          >
-            <Avatar variant={ChatAvatarVariant.Mongo} sizeOverride={24} />
-            <Body>
-              <strong>{title}</strong>
-            </Body>
-            {badgeText && <Badge variant="blue">{badgeText}</Badge>}
-          </div>
-          {!!onClose && (
-            <IconButton aria-label="Close chat" onClick={onClose}>
-              {iconSlot ? iconSlot : <XIcon />}
-            </IconButton>
-          )}
+          <Body>
+            <strong>{title}</strong>
+          </Body>
+          {badgeText && <Badge variant="blue">{badgeText}</Badge>}
         </div>
       </LeafyGreenProvider>
     );

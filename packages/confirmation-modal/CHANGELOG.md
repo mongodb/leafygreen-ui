@@ -1,5 +1,62 @@
 # @leafygreen-ui/confirmation-modal
 
+## 10.2.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/modal@20.3.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/text-input@16.1.3
+
+## 10.1.2
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [9778d7b]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/modal@20.2.0
+  - @leafygreen-ui/text-input@16.1.2
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/button@25.1.1
+
+## 10.1.1
+
+### Patch Changes
+
+- fb93ebb: Update `@leafygreen-ui/modal` dependency to use version 20.1.1
+
+## 10.1.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- 88e25a1: Fix data-testid attributes to allow consumer override
+- Updated dependencies [88e25a1]
+- Updated dependencies [88e25a1]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/modal@20.1.0
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/text-input@16.1.0
+  - @leafygreen-ui/button@25.1.0
+  - @leafygreen-ui/icon@14.6.0
+
 ## 10.0.2
 
 ### Patch Changes

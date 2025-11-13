@@ -29,6 +29,17 @@ describe('useModuleLoaders', () => {
     expect(typeof loaders['@codemirror/commands']).toBe('function');
   });
 
+  test('includes search module when enableSearchPanel is true', () => {
+    const props: CodeEditorProps = {
+      ...baseProps,
+      enableSearchPanel: true,
+    };
+
+    const { result } = renderHook(() => useModuleLoaders(props));
+
+    expect(result.current).toHaveProperty('@codemirror/search');
+  });
+
   test('includes hyperlink module when enableClickableUrls is true', () => {
     const props: CodeEditorProps = {
       ...baseProps,
@@ -95,7 +106,7 @@ describe('useModuleLoaders', () => {
         {
           line: 1,
           column: 1,
-          content: 'Error message',
+          messages: ['Error message'],
           severity: 'error',
           length: 0,
         },
@@ -359,7 +370,7 @@ describe('useModuleLoaders', () => {
         {
           line: 1,
           column: 1,
-          content: 'Error',
+          messages: ['Error'],
           severity: 'error',
           length: 0,
         },

@@ -1,5 +1,58 @@
 # @lg-chat/chat-window
 
+## 5.2.0
+
+### Minor Changes
+
+- af60a2d: [LG-5664](https://jira.mongodb.org/browse/LG-5664): add compact variant of `TitleBar`
+
+### Patch Changes
+
+- Updated dependencies [af60a2d]
+  - @lg-chat/title-bar@4.2.0
+
+## 5.1.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @lg-chat/title-bar@4.1.0
+
+## 5.0.0
+
+### Major Changes
+
+- bd83675: Updated height of outer container to ensure `ChatWindow` takes up the full vertical space of its parent container element. Also, added a hidden spacer element to ensure messages vertically flow from the bottom of the scroll container when child `MessageFeed` instance does not take up the full vertical space.
+
+  Note: this should be upgraded with the following packages to avoid UI regressions:
+
+  - `@lg-chat/leafygreen-chat-provider@5.1.0`
+  - `@lg-chat/message-feed@8.0.0`
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [bd83675]
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @lg-chat/leafygreen-chat-provider@5.1.0
+  - @leafygreen-ui/emotion@5.0.4
+  - @lg-chat/title-bar@4.0.9
+
+## 4.1.6
+
+### Patch Changes
+
+- 9b2d156: [LG-5486](https://jira.mongodb.org/browse/LG-5486) reverts style changes from [v4.1.4](https://github.com/mongodb/leafygreen-ui/blob/main/chat/chat-window/CHANGELOG.md#414)
+- Updated dependencies [88e25a1]
+  - @leafygreen-ui/lib@15.6.1
+
 ## 4.1.5
 
 ### Patch Changes
