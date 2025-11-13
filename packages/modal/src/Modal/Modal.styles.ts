@@ -59,6 +59,7 @@ const getBaseDialogStyles = (theme: Theme) => css`
   background-color: ${color[theme].background[Variant.Primary][
     InteractionState.Default
   ]};
+  margin: auto;
   padding: ${spacing[1000]}px ${spacing[900]}px;
   color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
   font-family: ${fontFamilies.default};
