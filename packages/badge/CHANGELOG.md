@@ -1,5 +1,32 @@
 # @leafygreen-ui/badge
 
+## 10.2.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+
+## 10.2.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
+## 10.2.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- Updated dependencies [88e25a1]
+  - @leafygreen-ui/lib@15.6.1
+
 ## 10.1.3
 
 ### Patch Changes

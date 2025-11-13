@@ -15,7 +15,7 @@ import {
   createUniqueClassName,
   keyMap,
 } from '@leafygreen-ui/lib';
-import Portal from '@leafygreen-ui/portal';
+import { Portal } from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST_CONSTANTS } from '../constants';

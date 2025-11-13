@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import {
   type DateType,
   MAX_DATE,
@@ -17,7 +17,7 @@ import {
 } from '@leafygreen-ui/date-utils/testing';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import Modal from '@leafygreen-ui/modal';
+import { Modal } from '@leafygreen-ui/modal';
 import { Size } from '@leafygreen-ui/tokens';
 
 import {

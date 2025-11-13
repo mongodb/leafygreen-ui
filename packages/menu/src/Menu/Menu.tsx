@@ -4,7 +4,7 @@ import {
   getDescendantById,
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
@@ -13,11 +13,12 @@ import {
   keyMap,
   Theme,
 } from '@leafygreen-ui/lib';
-import Popover, {
+import {
   Align,
   DismissMode,
   getPopoverRenderModeProps,
   Justify,
+  Popover,
   RenderMode,
 } from '@leafygreen-ui/popover';
 
@@ -28,8 +29,9 @@ import {
 } from '../MenuContext/MenuContext';
 import { getLgIds } from '../utils';
 
-import { useMenuHeight } from './utils/useMenuHeight';
 import {
+  DEFAULT_MAX_HEIGHT,
+  DEFAULT_WIDTH,
   getDarkInLightModeMenuStyles,
   getMenuStyles,
   scrollContainerStyle,
@@ -63,7 +65,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     onOpen,
     onClose,
     spacing = 6,
-    maxHeight = 344,
+    maxHeight = DEFAULT_MAX_HEIGHT,
     initialOpen = false,
     open: controlledOpen,
     setOpen: controlledSetOpen,
@@ -130,12 +132,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     },
     [setOpen, shouldClose, triggerRef],
   );
-
-  const maxMenuHeightValue = useMenuHeight({
-    refEl: triggerRef,
-    spacing,
-    maxHeight,
-  });
 
   useBackdropClick(handleClose, [popoverRef, triggerRef], {
     enabled: open,
@@ -244,6 +240,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
           onExited={handlePopoverClose}
+          maxHeight={maxHeight}
+          maxWidth={DEFAULT_WIDTH}
           ref={popoverRef}
           {...popoverProps}
         >
@@ -251,9 +249,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             data-theme={theme}
             className={cx(
               getMenuStyles({ theme, variant }),
-              css`
-                max-height: ${maxMenuHeightValue};
-              `,
               {
                 // TODO: Remove dark-in-light mode styles
                 // after https://jira.mongodb.org/browse/LG-3974

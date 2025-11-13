@@ -10,11 +10,11 @@ import { ControlledReturnObject } from './useControlled.types';
  *
  * Returns a {@link ControlledReturnObject}
  */
-export const useControlled = <T extends any>(
+export const useControlled = <T extends any = undefined>(
   controlledValue?: T,
-  onChange?: (val?: T) => void,
+  onChange?: (val: T) => void,
   initialValue?: T,
-): ControlledReturnObject<T | undefined> => {
+): ControlledReturnObject<T> => {
   /**
    * isControlled should only be computed once
    */
@@ -23,9 +23,13 @@ export const useControlled = <T extends any>(
 
   /**
    * Keep track of the uncontrolled value state internally
+   *
+   * Note on type assertion:
+   * if `controlledValue` is undefined _and_ `initialValue` is also undefined,
+   * then T is necessarily `undefined`, so asserting `(initialValue as T)` is safe
    */
-  const [uncontrolledValue, setUncontrolledValue] = useState<T | undefined>(
-    initialValue,
+  const [uncontrolledValue, setUncontrolledValue] = useState<T>(
+    !isUndefined(controlledValue) ? controlledValue : (initialValue as T),
   );
 
   /**
@@ -34,7 +38,7 @@ export const useControlled = <T extends any>(
    * If the component is controlled, it will return the controlled value.
    */
   const value = useMemo(
-    () => (isControlled ? controlledValue : uncontrolledValue),
+    () => (isControlled ? (controlledValue as T) : uncontrolledValue),
     [isControlled, uncontrolledValue, controlledValue],
   );
 
@@ -44,12 +48,30 @@ export const useControlled = <T extends any>(
    * If the component is controlled, it will not update the controlled value.
    *
    * onChange callback is called if provided.
+   * Accepts either a direct value or a function that receives the previous value.
    */
-  const updateValue = (newVal: T | undefined) => {
+  const updateValue = (newVal: React.SetStateAction<T>) => {
     if (!isControlled) {
-      setUncontrolledValue(newVal);
+      // In uncontrolled mode, use the state setter's functional update
+      // to ensure we always get the latest value
+      if (typeof newVal === 'function') {
+        setUncontrolledValue(prev => {
+          const resolvedValue = (newVal as (prev: T) => T)(prev);
+          onChange?.(resolvedValue);
+          return resolvedValue;
+        });
+      } else {
+        setUncontrolledValue(newVal);
+        onChange?.(newVal);
+      }
+    } else {
+      // In controlled mode, resolve the value using the current controlled value
+      const resolvedValue =
+        typeof newVal === 'function'
+          ? (newVal as (prev: T) => T)(value)
+          : newVal;
+      onChange?.(resolvedValue);
     }
-    onChange?.(newVal);
   };
 
   /**

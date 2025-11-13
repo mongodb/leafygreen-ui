@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -8,10 +8,10 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
+const baseStyles = css`
   display: block;
   padding: ${spacing[2]}px ${spacing[3]}px;
-  border: 1px solid ${palette.green.dark1};
+  border: 1px solid ${palette.green.dark2};
   border-radius: 12px;
   transition: all ${transitionDuration.slower}ms ease;
   box-shadow: none;
@@ -22,7 +22,7 @@ export const baseStyles = css`
   }
 `;
 
-export const themeStyles: Record<Theme, string> = {
+const themeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background: ${palette.black};
     color: ${palette.gray.light2};
@@ -49,7 +49,7 @@ export const themeStyles: Record<Theme, string> = {
   `,
 };
 
-export const disabledStyles: Record<Theme, string> = {
+const disabledStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     border-color: ${palette.gray.dark1};
     color: ${palette.gray.dark1};
@@ -61,6 +61,27 @@ export const disabledStyles: Record<Theme, string> = {
   `,
 };
 
-export const selectedStyles = css`
+const selectedStyles = css`
   box-shadow: 0 0 0 2px ${palette.green.dark1};
 `;
+
+export const getButtonStyles = ({
+  className,
+  disabled,
+  selected,
+  theme,
+}: {
+  className?: string;
+  disabled?: boolean;
+  selected?: boolean;
+  theme: Theme;
+}) =>
+  cx(
+    baseStyles,
+    themeStyles[theme],
+    {
+      [disabledStyles[theme]]: disabled,
+      [selectedStyles]: selected,
+    },
+    className,
+  );

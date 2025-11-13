@@ -1,5 +1,1 @@
-export {
-  LGMarkdown,
-  type LGMarkdownProps,
-  lgMarkdownStyles,
-} from './LGMarkdown';
+export { LGMarkdown, type LGMarkdownProps } from './LGMarkdown';

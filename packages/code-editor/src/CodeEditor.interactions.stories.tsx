@@ -16,6 +16,7 @@ import {
   CopyButtonAppearance,
   IndentUnits,
 } from './CodeEditor/CodeEditor.types';
+import { preLoadedModules } from './testing/preLoadedModules';
 import { CodeEditor, LanguageName } from '.';
 
 const meta: StoryMetaType<typeof CodeEditor> = {
@@ -196,6 +197,7 @@ export const ErrorTooltipOnHover: StoryObj<{}> = {
     return (
       <CodeEditor
         defaultValue={'test\n'.repeat(5)}
+        preLoadedModules={preLoadedModules}
         tooltips={[
           {
             line: 2,
@@ -227,6 +229,7 @@ export const HintTooltipOnHover: StoryObj<{}> = {
     return (
       <CodeEditor
         defaultValue={'test\n'.repeat(5)}
+        preLoadedModules={preLoadedModules}
         tooltips={[
           {
             line: 2,
@@ -258,6 +261,7 @@ export const InfoTooltipOnHover: StoryObj<{}> = {
     return (
       <CodeEditor
         defaultValue={'test\n'.repeat(5)}
+        preLoadedModules={preLoadedModules}
         tooltips={[
           {
             line: 2,
@@ -289,6 +293,7 @@ export const WarningTooltipOnHover: StoryObj<{}> = {
     return (
       <CodeEditor
         defaultValue={'test\n'.repeat(5)}
+        preLoadedModules={preLoadedModules}
         tooltips={[
           {
             line: 2,
@@ -319,6 +324,7 @@ export const ContextMenuOnRightClick: StoryObj<{}> = {
   render: () => {
     return (
       <CodeEditor
+        preLoadedModules={preLoadedModules}
         customContextMenuItems={[{ label: 'Custom Action', action: () => {} }]}
       />
     );

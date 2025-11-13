@@ -1,5 +1,66 @@
 # @lg-charts/core
 
+## 2.3.0
+
+### Minor Changes
+
+- dca8419: - ChartTooltip:
+  - Added `axisPointer` prop supporting 'line', 'shadow', and 'none' options
+  - Added `className` prop for custom styling
+  - Bug Fix: renders correctly for values like 0 and empty strings by only checking for null or undefined, not all falsy values
+  - Bar: `hoverBehavior` prop now accepts 'dim-others' and 'none' options to control hover focus behavior
+  - XAxis/YAxis: Introduced a new `category` axis type for discrete/categorical datasets (such as for X axes in bar charts).
+    - It uses a dedicated axis type definition and a `labels` prop for specifying category names.
+    - Existing continuous axis types (`'log'`, `'time'`, `'value'`) remain unchanged, continuing to support `min`, `max`, and `formatter` for customization.
+
+## 2.2.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @lg-charts/chart-card@1.1.2
+  - @lg-charts/colors@1.0.5
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 2.2.0
+
+### Minor Changes
+
+- 91d5f35: Add optional `min` and `max` props to XAxis and YAxis components to allow consumers to set explicit value ranges for chart axes
+- 1d67179: Allow charts to use Bar series data in addition to Line series
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- 62ddea8: introduce `Series` abstraction as a superclass of `Line` this allows supporting more diverse series
+  types such as `Bar` in a follow up PR
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @lg-charts/series-provider@1.0.5
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @lg-charts/chart-card@1.1.1
+  - @lg-charts/colors@1.0.5
+
+## 2.1.0
+
+### Minor Changes
+
+- e0c767c: Updates `ChartHeader` component's `title` prop to accept a `React.ReactNode` rather than a `string`
+
+### Patch Changes
+
+- Updated dependencies [e0c767c]
+  - @lg-charts/chart-card@1.1.0
+
 ## 2.0.4
 
 ### Patch Changes

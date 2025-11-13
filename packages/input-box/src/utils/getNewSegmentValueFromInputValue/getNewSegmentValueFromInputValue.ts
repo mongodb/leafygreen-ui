@@ -107,7 +107,6 @@ export const getNewSegmentValueFromInputValue = <
   const isIncomingValueNumber = !isNaN(Number(incomingValue));
   // macOS adds a period when pressing SPACE twice inside a text input.
   const doesIncomingValueContainPeriod = /\./.test(incomingValue);
-  const shouldSkipValidation = !shouldValidate;
 
   // if the current value is "full", do not allow any additional characters to be entered
   const wouldCauseOverflow =
@@ -130,7 +129,7 @@ export const getNewSegmentValueFromInputValue = <
     segmentEnum,
   });
 
-  if (isIncomingValueValid || shouldSkipValidation) {
+  if (isIncomingValueValid || !shouldValidate) {
     const newValue = truncateStart(incomingValue, {
       length: charsPerSegment,
     });

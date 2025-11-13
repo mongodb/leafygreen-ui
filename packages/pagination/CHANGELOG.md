@@ -1,5 +1,62 @@
 # @leafygreen-ui/pagination
 
+## 4.1.3
+
+### Patch Changes
+
+- Updated dependencies [6494d15]
+- Updated dependencies [2463aa4]
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/select@17.0.0
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/select@16.3.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 4.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [7fc3077]
+- Updated dependencies [c8559f3]
+- Updated dependencies [51c453b]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/select@16.2.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+
+## 4.1.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/icon-button@17.1.0
+  - @leafygreen-ui/icon@14.6.0
+
 ## 4.0.7
 
 ### Patch Changes

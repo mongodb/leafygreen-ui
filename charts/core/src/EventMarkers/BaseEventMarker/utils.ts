@@ -109,6 +109,7 @@ export function getMarkConfig({
         symbolSize: [16, 16],
         symbolRotate: 360, // Icon shows upside down without this
       },
+      data: [],
     } as SeriesOption;
   } else {
     return {
@@ -130,6 +131,7 @@ export function getMarkConfig({
         symbolSize: [16, 16],
         symbol: generateSymbolDataUri(level, theme),
       },
+      data: [],
     } as SeriesOption;
   }
 }

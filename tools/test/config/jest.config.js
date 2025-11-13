@@ -5,6 +5,14 @@
 // we still need to declare the path relative to `<rootDir>` (repository root)
 
 module.exports = {
+  // Collect coverage information
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'packages/**/src/**/*.{ts,tsx}',
+    'charts/**/src/**/*.{ts,tsx}',
+    'chat/**/src/**/*.{ts,tsx}',
+  ],
+
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [
@@ -14,6 +22,7 @@ module.exports = {
     '/index.tsx?',
     '.(d|json|md|spec|stories|styles|types).tsx?',
   ],
+  coverageReporters: ['lcov', 'html'],
 
   displayName: 'Client',
 
@@ -49,7 +58,7 @@ module.exports = {
   testEnvironment: 'jsdom',
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: ['/node_modules/'],
+  testPathIgnorePatterns: ['/node_modules/', '/deprecated-packages/'],
 
   // The regexp pattern Jest uses to detect test files
   testRegex: '.spec.[jt]sx?$',

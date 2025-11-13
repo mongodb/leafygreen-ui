@@ -1,5 +1,58 @@
 # @leafygreen-ui/text-input
 
+## 16.2.0
+
+### Minor Changes
+
+- 2463aa4: Updates testUtils files to accommodate changes to the Icon package
+
+### Patch Changes
+
+- Updated dependencies [11cbe4f]
+  - @leafygreen-ui/hooks@9.3.0
+
+## 16.1.3
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/form-field@4.0.6
+  - @leafygreen-ui/hooks@9.2.2
+
+## 16.1.2
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/form-field@4.0.5
+  - @leafygreen-ui/typography@22.1.4
+
+## 16.1.1
+
+### Patch Changes
+
+- 5d8f337: Fixes props such that component now accepts a properly typed `ref`
+
+## 16.1.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+
 ## 16.0.4
 
 ### Patch Changes

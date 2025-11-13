@@ -15,27 +15,11 @@ export interface InputSegmentProps<Segment extends string>
     > {
   /**
    * Minimum value for the segment
-   *
-   * @example
-   * 1
-   * 1
-   * 1970
-   * 0
-   * 0
-   * 0
    */
   minSegmentValue: number;
 
   /**
    * Maximum value for the segment
-   *
-   * @example
-   * 31
-   * 12
-   * 2038
-   * 23
-   * 59
-   * 59
    */
   maxSegmentValue: number;
 
@@ -62,21 +46,11 @@ export interface InputSegmentProps<Segment extends string>
 
   /**
    * The value of the segment
-   *
-   * @example
-   * '1'
-   * '2'
-   * '2025'
    */
   value: string;
 
   /**
    * The number of characters per segment
-   *
-   * @example
-   * 2
-   * 2
-   * 4
    */
   charsPerSegment: number;
 

@@ -1,4 +1,4 @@
-import { css, cx, keyframes } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -16,14 +16,12 @@ import {
 } from '@leafygreen-ui/tokens';
 
 /**
- * "adornment" refers to any element added to user interface (UI) primarily for
- * enhancing its visual appeal, providing supplementary information, or facilitating
- * interaction, but not fundamentally essential to the basic functionality.
+ * when `InputBar` is used in a drawer (or other context that restricts
+ * the width of the container), we need to set a minimum width so that
+ * `react-textarea-autosize` can properly calculate the initial height
+ * of the textarea element.
  */
-const ADORNMENT_CONTAINER_HEIGHT = 36;
-const GRADIENT_WIDTH = 3;
-const GRADIENT_OFFSET = 1;
-const HOTKEY_INDICATOR_HEIGHT = 28;
+const TEXT_AREA_MIN_WIDTH = 150;
 
 const baseFormStyles = css`
   width: 100%;
@@ -40,66 +38,6 @@ const baseFocusContainerStyles = css`
   border-radius: ${borderRadius[200]}px;
 `;
 
-const gradientAnimationStyles = css`
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -${GRADIENT_WIDTH + GRADIENT_OFFSET}px;
-    left: -${GRADIENT_WIDTH + GRADIENT_OFFSET}px;
-    width: calc(100% + ${(GRADIENT_WIDTH + GRADIENT_OFFSET) * 2}px);
-    height: calc(100% + ${(GRADIENT_WIDTH + GRADIENT_OFFSET) * 2}px);
-    border-radius: ${borderRadius[300]}px;
-    background-color: ${palette.blue.light1};
-    background-size: 400% 400%;
-    background-position: 800% 800%; // set final state of animation
-  }
-
-  &::after {
-    animation: 4s animateBg linear;
-  }
-
-  &::before {
-    filter: blur(4px) opacity(0.6);
-    animation: 4s animateBg, animateShadow linear infinite;
-    opacity: 0;
-  }
-
-  @keyframes animateBg {
-    0% {
-      background-position: 400% 400%;
-      background-image: linear-gradient(
-        20deg,
-        ${palette.blue.light1} 0%,
-        ${palette.blue.light1} 30%,
-        #00ede0 45%,
-        #00ebc1 75%,
-        #0498ec
-      );
-    }
-    100% {
-      background-position: 0% 0%;
-      background-image: linear-gradient(
-        20deg,
-        ${palette.blue.light1} 0%,
-        ${palette.blue.light1} 30%,
-        #00ede0 45%,
-        #00ebc1 75%,
-        #0498ec
-      );
-    }
-  }
-
-  @keyframes animateShadow {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-`;
-
 const focusStyles = css`
   box-shadow: ${focusRing.light.input};
   border-color: transparent;
@@ -110,32 +48,22 @@ const focusStyles = css`
 export const getInnerFocusContainerStyles = ({
   disabled,
   isFocused,
-  shouldRenderGradient,
 }: {
   disabled: boolean;
   isFocused: boolean;
-  shouldRenderGradient: boolean;
 }) =>
   cx(baseFocusContainerStyles, {
-    [gradientAnimationStyles]: shouldRenderGradient,
-    [focusStyles]: !disabled && isFocused && !shouldRenderGradient,
+    [focusStyles]: !disabled && isFocused,
   });
 
-const getBaseContentWrapperStyles = ({
-  isCompact,
-  theme,
-}: {
-  isCompact: boolean;
-  theme: Theme;
-}) => css`
+const getBaseContentWrapperStyles = ({ theme }: { theme: Theme }) => css`
   overflow: hidden;
   width: 100%;
   display: flex;
-  flex-direction: ${isCompact ? 'column' : 'row'};
+  flex-direction: column;
   position: relative;
   border-radius: ${borderRadius[200]}px;
   border: 1px solid ${palette.gray.base};
-  z-index: 2;
   background-color: ${color[theme].background[Variant.Primary][
     InteractionState.Default
   ]};
@@ -167,37 +95,21 @@ const contentWrapperFocusStyles = css`
 
 export const getContentWrapperStyles = ({
   disabled,
-  isCompact,
   isFocused,
   theme,
 }: {
   disabled: boolean;
-  isCompact: boolean;
   isFocused: boolean;
   theme: Theme;
 }) =>
-  cx(getBaseContentWrapperStyles({ isCompact, theme }), {
+  cx(getBaseContentWrapperStyles({ theme }), {
     [getDisabledThemeStyles(theme)]: disabled,
     [contentWrapperFocusStyles]: isFocused,
   });
 
-export const adornmentContainerStyles = css`
-  height: ${ADORNMENT_CONTAINER_HEIGHT}px;
-  display: flex;
-  gap: ${spacing[200]}px;
-  align-items: center;
-  align-self: flex-start;
-  padding: ${spacing[100]}px 0px ${spacing[100]}px ${spacing[200]}px;
-`;
-
-const getBaseTextAreaStyles = ({
-  isCompact,
-  theme,
-}: {
-  isCompact: boolean;
-  theme: Theme;
-}) => css`
-  flex: ${isCompact ? 'initial' : 1};
+const getBaseTextAreaStyles = ({ theme }: { theme: Theme }) => css`
+  min-width: ${TEXT_AREA_MIN_WIDTH}px;
+  width: 100%;
   font-size: ${BaseFontSize.Body1}px;
   font-family: ${fontFamilies.default};
   font-weight: ${fontWeights.regular};
@@ -238,13 +150,11 @@ const getBaseTextAreaStyles = ({
 
 export const getTextAreaStyles = ({
   className,
-  isCompact,
   theme,
 }: {
   className?: string;
-  isCompact: boolean;
   theme: Theme;
-}) => cx(getBaseTextAreaStyles({ isCompact, theme }), className);
+}) => cx(getBaseTextAreaStyles({ theme }), className);
 
 export const actionContainerStyles = css`
   display: flex;
@@ -254,75 +164,7 @@ export const actionContainerStyles = css`
   padding: ${spacing[100]}px;
 `;
 
-const baseHotkeyIndicatorStyles = css`
-  padding: ${spacing[100]}px ${spacing[400]}px;
-  border-radius: ${borderRadius[400]}px;
-  height: ${HOTKEY_INDICATOR_HEIGHT}px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: default;
-  user-select: none;
-`;
-
-const hotkeyIndicatorThemeStyles = {
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
-    border: 1px solid ${palette.gray.dark2};
-    color: ${palette.gray.light2};
-  `,
-  [Theme.Light]: css`
-    background-color: ${palette.gray.light2};
-    border: 1px solid ${palette.gray.light2};
-    color: ${palette.green.dark2};
-  `,
-};
-
-const vanishAnimation = keyframes`
-  from {
-    display: flex;
-    opacity: 1;
-  }
-  to {
-    display: none;
-    opacity: 0;
-  }
-`;
-
-const hotkeyIndicatorFocusedStyles = css`
-  opacity: 0;
-  animation: ${vanishAnimation} ${transitionDuration.default}ms forwards;
-`;
-
-const appearAnimation = keyframes`
-  from {
-    opacity: 0;
-    display: none;
-  }
-  to {
-    opacity: 1;
-    display: flex;
-  }
-`;
-
-const hotkeyIndicatorUnfocusedStyles = css`
-  opacity: 1;
-  animation: ${appearAnimation} ${transitionDuration.default}ms forwards;
-`;
-
-export const getHotkeyIndicatorStyles = ({
-  isFocused,
-  theme,
-}: {
-  isFocused: boolean;
-  theme: Theme;
-}) =>
-  cx(baseHotkeyIndicatorStyles, hotkeyIndicatorThemeStyles[theme], {
-    [hotkeyIndicatorFocusedStyles]: isFocused,
-    [hotkeyIndicatorUnfocusedStyles]: !isFocused,
-  });
-
 export const disclaimerTextStyles = css`
   margin-top: ${spacing[50]}px;
-  margin-left: ${spacing[200]}px;
+  text-align: center;
 `;

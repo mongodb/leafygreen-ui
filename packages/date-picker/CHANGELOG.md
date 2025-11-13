@@ -1,5 +1,54 @@
 # @leafygreen-ui/date-picker
 
+## 4.0.11
+
+### Patch Changes
+
+- Updated dependencies [6494d15]
+- Updated dependencies [2463aa4]
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/select@17.0.0
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
+## 4.0.10
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/select@16.3.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/form-field@4.0.6
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 4.0.9
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- 49ea1b7: Adds screen reader announcements for date input segment values using VisuallyHidden component with aria-live
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [7fc3077]
+- Updated dependencies [c8559f3]
+- Updated dependencies [51c453b]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/select@16.2.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/form-field@4.0.5
+  - @leafygreen-ui/typography@22.1.4
+
 ## 4.0.8
 
 ### Patch Changes

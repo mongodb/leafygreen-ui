@@ -10,6 +10,7 @@ import { axe } from 'jest-axe';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 
 import { getTestUtils } from '../utils/getTestUtils';
+import { Modal } from '..';
 import ModalView from '..';
 
 const modalContent = 'Modal Content';
@@ -188,29 +189,119 @@ describe('packages/modal', () => {
       expect(modal).toHaveAttribute('open');
     });
 
-    test('supports autofocus on child elements', () => {
-      const { getByTestId } = render(
-        <ModalView open={true}>
-          {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
-          <input data-testid="auto-focus-input" autoFocus />
-          <button>Submit</button>
-        </ModalView>,
-      );
+    describe('initialFocus prop', () => {
+      test('focuses element specified by string selector', () => {
+        const { getByTestId } = render(
+          <Modal open={true} initialFocus="#secondary-button">
+            <button data-testid="primary-button" id="primary-button">
+              Primary
+            </button>
+            <button data-testid="secondary-button" id="secondary-button">
+              Secondary
+            </button>
+          </Modal>,
+        );
 
-      const input = getByTestId('auto-focus-input');
-      expect(input).toHaveFocus();
-    });
+        const secondaryButton = getByTestId('secondary-button');
+        expect(secondaryButton).toHaveFocus();
+      });
 
-    test('focuses first focusable element when no autoFocus is set', () => {
-      const { getByRole } = render(
-        <ModalView open={true}>
-          <button>Submit</button>
-          <input />
-        </ModalView>,
-      );
+      test('focuses element specified by ref', () => {
+        const TestComponent = () => {
+          const buttonRef = React.useRef<HTMLButtonElement>(null);
 
-      const submitButton = getByRole('button', { name: 'Submit' });
-      expect(submitButton).toHaveFocus();
+          return (
+            <Modal open={true} initialFocus={buttonRef}>
+              <button data-testid="primary-button">Primary</button>
+              <button data-testid="secondary-button" ref={buttonRef}>
+                Secondary
+              </button>
+            </Modal>
+          );
+        };
+
+        const { getByTestId } = render(<TestComponent />);
+
+        const secondaryButton = getByTestId('secondary-button');
+        expect(secondaryButton).toHaveFocus();
+      });
+
+      test('does not focus any element when initialFocus is null', () => {
+        const { getByTestId } = render(
+          <Modal open={true} initialFocus={null}>
+            <button data-testid="button">Submit</button>
+            <input data-testid="input" />
+          </Modal>,
+        );
+
+        const button = getByTestId('button');
+        const input = getByTestId('input');
+
+        // Neither should have focus
+        expect(button).not.toHaveFocus();
+        expect(input).not.toHaveFocus();
+      });
+
+      test('focuses first focusable element when initialFocus is "auto"', () => {
+        const { getByTestId } = render(
+          <Modal open={true} initialFocus="auto">
+            <button data-testid="first-button">First</button>
+            <button data-testid="second-button">Second</button>
+          </Modal>,
+        );
+
+        const firstButton = getByTestId('first-button');
+        expect(firstButton).toHaveFocus();
+      });
+
+      test('initialFocus selector takes priority over autoFocus attribute', () => {
+        const { getByTestId } = render(
+          <Modal open={true} initialFocus="#target-button">
+            {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+            <input data-testid="auto-input" autoFocus />
+            <button data-testid="target-button" id="target-button">
+              Target
+            </button>
+          </Modal>,
+        );
+
+        const targetButton = getByTestId('target-button');
+        expect(targetButton).toHaveFocus();
+      });
+
+      test('initialFocus ref takes priority over autoFocus attribute', () => {
+        const TestComponent = () => {
+          const buttonRef = React.useRef<HTMLButtonElement>(null);
+
+          return (
+            <Modal open={true} initialFocus={buttonRef}>
+              {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+              <input data-testid="auto-input" autoFocus />
+              <button data-testid="target-button" ref={buttonRef}>
+                Target
+              </button>
+            </Modal>
+          );
+        };
+
+        const { getByTestId } = render(<TestComponent />);
+
+        const targetButton = getByTestId('target-button');
+        expect(targetButton).toHaveFocus();
+      });
+
+      test('falls back to autoFocus when initialFocus selector is not found', () => {
+        const { getByTestId } = render(
+          <Modal open={true} initialFocus="#nonexistent">
+            {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+            <input data-testid="auto-input" autoFocus />
+            <button data-testid="button">Submit</button>
+          </Modal>,
+        );
+
+        const input = getByTestId('auto-input');
+        expect(input).toHaveFocus();
+      });
     });
 
     test('deprecated backdropClassName still works', () => {
@@ -253,11 +344,25 @@ describe('packages/modal', () => {
   });
 
   describe('when "open" prop is false', () => {
-    test('renders to DOM but dialog is not open', () => {
-      const { queryModal } = renderModal({ open: false });
+    test('renders dialog element but children are not rendered', () => {
+      const { queryModal, queryByText } = renderModal({ open: false });
       const modal = queryModal();
+      expect(modal).toBeInTheDocument();
       expect(modal).not.toHaveAttribute('open');
       expect(modal).not.toBeVisible();
+      expect(queryByText(modalContent)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('testid attribute', () => {
+    it('propagates to the dom element', () => {
+      const { getByTestId } = renderModal({
+        open: true,
+        'data-testid': 'my-modal',
+      });
+
+      const modal = getByTestId('my-modal');
+      expect(modal).toBeInTheDocument();
     });
   });
 });

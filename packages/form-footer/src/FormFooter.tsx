@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Banner, { Variant as BannerVariant } from '@leafygreen-ui/banner';
-import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
+import { Banner, Variant as BannerVariant } from '@leafygreen-ui/banner';
+import { Button, Variant as ButtonVariant } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import LeafyGreenProvider, {
@@ -13,8 +13,7 @@ import {
   bannerStyle,
   contentStyle,
   flexEndContent,
-  footerBaseStyle,
-  footerThemeStyle,
+  getFormFooterStyles,
 } from './FormFooter.styles';
 import { FormFooterProps } from './FormFooter.types';
 import { getLgIds } from './utils';
@@ -48,7 +47,7 @@ export default function FormFooter({
     <LeafyGreenProvider darkMode={darkMode}>
       <footer
         data-testid={lgIds.root}
-        className={cx(footerBaseStyle, footerThemeStyle[theme], className)}
+        className={getFormFooterStyles({ theme, className })}
         {...rest}
       >
         <div className={cx(contentStyle, contentClassName)}>

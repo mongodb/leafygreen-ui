@@ -1,9 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
@@ -167,16 +163,11 @@ const meta: StoryMetaType<typeof Message> = {
     avatar: { control: 'none' },
     components: { control: 'none' },
     markdownProps: { control: 'none' },
-    variant: {
-      control: 'radio',
-      options: Object.values(Variant),
-    },
   },
   parameters: {
     default: null,
     exclude: ['children'],
     generate: {
-      storyNames: ['CompactVariant', 'SpaciousVariant'],
       combineArgs: {
         darkMode: [false, true],
         isSender: [false, true],
@@ -186,9 +177,7 @@ const meta: StoryMetaType<typeof Message> = {
       decorator: (Instance, context) => {
         return (
           <LeafyGreenProvider darkMode={context?.args.darkMode}>
-            <LeafyGreenChatProvider variant={context?.args.variant}>
-              <Instance glyph={context?.args.glyph} />
-            </LeafyGreenChatProvider>
+            <Instance glyph={context?.args.glyph} />
           </LeafyGreenProvider>
         );
       },
@@ -197,17 +186,9 @@ const meta: StoryMetaType<typeof Message> = {
 };
 export default meta;
 
-type MessageStoryProps = MessageProps & {
-  variant?: Variant;
-};
+const Template: StoryFn<MessageProps> = props => <Message {...props} />;
 
-const Template: StoryFn<MessageStoryProps> = ({ variant, ...props }) => (
-  <LeafyGreenChatProvider variant={variant}>
-    <Message {...props} />
-  </LeafyGreenChatProvider>
-);
-
-export const LiveExample: StoryObj<MessageStoryProps> = {
+export const LiveExample: StoryObj<MessageProps> = {
   render: Template,
   args: {
     messageBody: USER_MESSAGE,
@@ -219,7 +200,7 @@ export const LiveExample: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const Text: StoryObj<MessageStoryProps> = {
+export const Text: StoryObj<MessageProps> = {
   render: Template,
   args: {
     messageBody: MARKDOWN_TEXT,
@@ -227,7 +208,7 @@ export const Text: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const Markdown: StoryObj<MessageStoryProps> = {
+export const Markdown: StoryObj<MessageProps> = {
   render: Template,
   args: {
     messageBody: MARKDOWN_TEXT,
@@ -235,7 +216,7 @@ export const Markdown: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const Assistant: StoryObj<MessageStoryProps> = {
+export const Assistant: StoryObj<MessageProps> = {
   render: Template,
   args: {
     isSender: false,
@@ -243,7 +224,7 @@ export const Assistant: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const WithActions: StoryObj<MessageStoryProps> = {
+export const WithActions: StoryObj<MessageProps> = {
   render: Template,
   args: {
     children: getActionsChild(),
@@ -252,7 +233,7 @@ export const WithActions: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const WithVerifiedBanner: StoryObj<MessageStoryProps> = {
+export const WithVerifiedBanner: StoryObj<MessageProps> = {
   render: Template,
   args: {
     children: getVerifiedBannerChild(),
@@ -265,23 +246,18 @@ const StyledVerifiedBanner = styled(Message.VerifiedBanner)`
   background-color: lightgray;
 `;
 
-const WithStyledVerifiedBannerComponent = ({
-  variant,
-  ...props
-}: MessageStoryProps) => {
+const WithStyledVerifiedBannerComponent = (props: MessageProps) => {
   return (
-    <LeafyGreenChatProvider variant={variant}>
-      <Message {...props}>
-        <StyledVerifiedBanner
-          verifier="MongoDB Staff"
-          verifiedAt={new Date('2023-08-24T16:20:00Z')}
-          learnMoreUrl="https://mongodb.com/docs"
-        />
-      </Message>
-    </LeafyGreenChatProvider>
+    <Message {...props}>
+      <StyledVerifiedBanner
+        verifier="MongoDB Staff"
+        verifiedAt={new Date('2023-08-24T16:20:00Z')}
+        learnMoreUrl="https://mongodb.com/docs"
+      />
+    </Message>
   );
 };
-export const WithStyledVerifiedBanner: StoryObj<MessageStoryProps> = {
+export const WithStyledVerifiedBanner: StoryObj<MessageProps> = {
   render: WithStyledVerifiedBannerComponent,
   args: {
     isSender: false,
@@ -289,7 +265,7 @@ export const WithStyledVerifiedBanner: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const WithMessageLinksCollapsed: StoryObj<MessageStoryProps> = {
+export const WithMessageLinksCollapsed: StoryObj<MessageProps> = {
   render: Template,
   args: {
     children: getLinksChild(),
@@ -298,7 +274,7 @@ export const WithMessageLinksCollapsed: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const WithMessageLinksExpanded: StoryObj<MessageStoryProps> = {
+export const WithMessageLinksExpanded: StoryObj<MessageProps> = {
   render: Template,
   args: {
     children: getLinksChild(),
@@ -319,7 +295,7 @@ export const WithMessageLinksExpanded: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const WithPromotion: StoryObj<MessageStoryProps> = {
+export const WithPromotion: StoryObj<MessageProps> = {
   render: Template,
   args: {
     children: getPromotionChild(),
@@ -328,10 +304,9 @@ export const WithPromotion: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const WithAllSubComponents: StoryObj<MessageStoryProps> = {
+export const WithAllSubComponents: StoryObj<MessageProps> = {
   render: Template,
   args: {
-    variant: Variant.Compact,
     children: (
       <>
         {getActionsChild()}
@@ -345,16 +320,6 @@ export const WithAllSubComponents: StoryObj<MessageStoryProps> = {
   },
 };
 
-export const CompactVariant: StoryObj<MessageStoryProps> = {
+export const Generated: StoryObj<MessageProps> = {
   render: Template,
-  args: {
-    variant: Variant.Compact,
-  },
-};
-
-export const SpaciousVariant: StoryObj<MessageStoryProps> = {
-  render: Template,
-  args: {
-    variant: Variant.Spacious,
-  },
 };

@@ -1,5 +1,30 @@
 # @leafygreen-ui/icon
 
+## 14.7.0
+
+### Minor Changes
+
+- 2463aa4: Updated Icon to include <title> element when title is added. Deprecated the `createGlyphComponent`, and the design system is instead using glyphs from the `generated` folder
+
+### Patch Changes
+
+- Updated dependencies [11cbe4f]
+  - @leafygreen-ui/hooks@9.3.0
+
+## 14.6.1
+
+### Patch Changes
+
+- c6b4d3f: Updates build process to avoid race conditions in `rollup` plugins that intermittently caused `@emotion/server/create-instance` to be marked as a direct dependency of icon
+- Updated dependencies [92693df]
+  - @leafygreen-ui/emotion@5.1.0
+
+## 14.6.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
 ## 14.5.1
 
 ### Patch Changes

@@ -1,5 +1,62 @@
 # @leafygreen-ui/modal
 
+## 20.3.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 20.2.0
+
+### Minor Changes
+
+- 9778d7b: [LG-5608](https://jira.mongodb.org/browse/LG-5608)
+
+  In v20, the `initialFocus` prop was prematurely removed without proper migration paths. This change restores the prop with enhanced functionality and control. See more on [initial focus behavior](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal#initial-focus-behavior).
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/icon-button@17.1.1
+
+## 20.1.1
+
+### Patch Changes
+
+- b9fb557: [LG-5601](https://jira.mongodb.org/browse/LG-5601) Fix regression where `Modal` children remained mounted when closed. Restores v19 behavior where children are conditionally rendered based on the `open` prop.
+- Updated dependencies [a565b3f]
+  - @leafygreen-ui/lib@15.6.2
+
+## 20.1.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- 88e25a1: Fix data-testid attributes to allow consumer override
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/icon-button@17.1.0
+  - @leafygreen-ui/icon@14.6.0
+
 ## 20.0.3
 
 ### Patch Changes
@@ -63,14 +120,17 @@
   #### Breaking Changes
 
   - **Top layer rendering**: Component renders in [top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer) instead of portaling
-  - **Props**: `className` → `backdropClassName`, `contentClassName` → `className`, `initialFocus` prop removed
+  - **Props**: `className` → `backdropClassName`, `contentClassName` → `className`, `initialFocus` prop removed (restored in v20.2)
   - **Backdrop styling**: `backdropClassName` deprecated in favor of CSS `::backdrop` pseudo-element
-  - **Focus management**: Specifying `autoFocus` on focusable child element replaces manual `initialFocus` prop
+  - **Focus management**: Modal now automatically focuses the first focusable element by default. Use `autoFocus` attribute on a child element to specify focus target.
+    - **Note: Automatic focus management introduced in v20 may cause unexpected behavior. Please use v20.2 which has `initialFocus` prop added back.**
   - **Type changes**: Component now extends `HTMLElementProps<'dialog'>` instead of `HTMLElementProps<'div'>`
 
   #### Migration Guide
 
-  Use the [modal-v20 codemod]([popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#modal-v20) for migration assistance.
+  Use the [modal-v20 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#modal-v20) for migration assistance.
+
+  **Note: this has been updated to support the migration to v20.2**
 
   ```shell
   pnpm lg codemod modal-v20 <path>
@@ -80,7 +140,7 @@
 
   1. Rename `className` prop to `backdropClassName`
   2. Rename `contentClassName` prop to `className`
-  3. Remove `initialFocus` prop and add guidance comments
+  3. Add guidance comment for `initialFocus` prop (prop was removed in v20 but is now available again in v20.2)
 
 ## 19.0.1
 

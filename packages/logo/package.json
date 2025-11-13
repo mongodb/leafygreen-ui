@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/logo",
-  "version": "11.0.4",
+  "version": "11.1.0",
   "description": "LeafyGreen UI Kit Logos",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",

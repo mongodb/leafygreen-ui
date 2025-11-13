@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Banner from '@leafygreen-ui/banner';
+import { Banner } from '@leafygreen-ui/banner';
 import { css } from '@leafygreen-ui/emotion';
 
 /**

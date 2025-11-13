@@ -7,6 +7,9 @@
       ],
       "@leafygreen-ui/*": [
         "../../packages/*/src"
+      ],
+      "@lg-chat/*": [
+        "../*/src"
       ]
     }
   },
@@ -17,9 +20,6 @@
     "**/*.stories.*"
   ],
   "references": [
-    {
-      "path": "../avatar"
-    },
     {
       "path": "../input-bar"
     },
@@ -49,6 +49,9 @@
     },
     {
       "path": "../../packages/code"
+    },
+    {
+      "path": "../../packages/drawer"
     },
     {
       "path": "../../packages/emotion"

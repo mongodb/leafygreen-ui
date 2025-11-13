@@ -1,12 +1,7 @@
 import React, { useRef } from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
-import { act, render, screen } from '@testing-library/react';
+import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { State } from '../shared.types';
 
@@ -14,33 +9,15 @@ import { InputBar, InputBarProps } from '.';
 
 const TEST_INPUT_TEXT = 'test';
 
-const renderInputBar = (
-  props: Partial<InputBarProps> = {},
-  variant: Variant = Variant.Compact,
-) => {
+const renderInputBar = (props: Partial<InputBarProps> = {}) => {
   return render(
-    <LeafyGreenChatProvider variant={variant}>
+    <LeafyGreenChatProvider>
       <InputBar {...props} />
     </LeafyGreenChatProvider>,
   );
 };
 
 describe('packages/input-bar', () => {
-  // mock the ResizeObserver used in LeafyGreenChatProvider
-  beforeAll(() => {
-    global.ResizeObserver = jest.fn().mockImplementation(() => ({
-      observe: jest.fn(),
-      unobserve: jest.fn(),
-      disconnect: jest.fn(),
-    }));
-  });
-
-  test('renders `badgeText` when the prop is set', () => {
-    renderInputBar({ badgeText: 'beta' }, Variant.Spacious);
-
-    expect(screen.getByText('beta')).toBeInTheDocument();
-  });
-
   test('fires `onChange` when user types', () => {
     const onChange = jest.fn();
     renderInputBar({ onChange });
@@ -190,47 +167,6 @@ describe('packages/input-bar', () => {
     expect(textarea).toHaveFocus();
   });
 
-  describe('Hotkey Indicator', () => {
-    beforeEach(() => {
-      renderInputBar({ shouldRenderHotkeyIndicator: true }, Variant.Spacious);
-    });
-
-    test('renders when the prop is set', () => {
-      expect(
-        screen.getByTestId('lg-chat-hotkey-indicator'),
-      ).toBeInTheDocument();
-    });
-
-    test('is hidden when InputBar is focused and visible when unfocused', async () => {
-      const textarea = screen.getByRole('textbox');
-
-      act(() => {
-        textarea.focus();
-      });
-      // Wait for CSS animation
-      await new Promise(resolve =>
-        setTimeout(resolve, transitionDuration.default),
-      );
-
-      expect(screen.getByTestId('lg-chat-hotkey-indicator')).not.toBeVisible();
-
-      act(() => {
-        textarea.blur();
-      });
-      // Wait for CSS animation
-      await new Promise(resolve =>
-        setTimeout(resolve, transitionDuration.default),
-      );
-      expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeVisible();
-    });
-
-    test('focuses the input when the hotkey indicator is enabled and hotkey is pressed', async () => {
-      userEvent.keyboard('/');
-      const textarea = screen.getByRole('textbox');
-      expect(textarea).toHaveFocus();
-    });
-  });
-
   describe('controlled vs uncontrolled behavior', () => {
     test('resets value to empty string after form submission when uncontrolled', () => {
       const onMessageSend = jest.fn();
@@ -313,10 +249,7 @@ describe('packages/input-bar', () => {
 
     test('renders loading state with custom assistantName when state is "loading"', () => {
       render(
-        <LeafyGreenChatProvider
-          variant={Variant.Compact}
-          assistantName="Custom Assistant"
-        >
+        <LeafyGreenChatProvider assistantName="Custom Assistant">
           <InputBar state={State.Loading} />
         </LeafyGreenChatProvider>,
       );
@@ -364,7 +297,7 @@ describe('packages/input-bar', () => {
       );
 
       rerender(
-        <LeafyGreenChatProvider variant={Variant.Compact}>
+        <LeafyGreenChatProvider>
           <InputBar
             state={State.Error}
             onMessageSend={onMessageSend}
@@ -382,6 +315,125 @@ describe('packages/input-bar', () => {
           type: 'submit',
         }),
       );
+    });
+  });
+
+  describe('onClickStopButton', () => {
+    test('renders stop button during loading state', () => {
+      renderInputBar({ state: State.Loading });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      expect(stopButton).toBeInTheDocument();
+      expect(stopButton).not.toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('does not render send button during loading state', () => {
+      renderInputBar({ state: State.Loading });
+
+      const sendButton = screen.queryByRole('button', { name: 'Send message' });
+      expect(sendButton).not.toBeInTheDocument();
+    });
+
+    test('calls onClickStopButton when button is clicked during loading state', () => {
+      const onClickStopButton = jest.fn();
+      renderInputBar({ state: State.Loading, onClickStopButton });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      userEvent.click(stopButton);
+
+      expect(onClickStopButton).toHaveBeenCalledTimes(1);
+    });
+
+    test('restores previous message when stop is clicked in uncontrolled mode', () => {
+      const onClickStopButton = jest.fn();
+      const onMessageSend = jest.fn();
+      const { rerender } = renderInputBar({ onClickStopButton, onMessageSend });
+
+      const textarea = screen.getByRole('textbox');
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+
+      userEvent.type(textarea, TEST_INPUT_TEXT);
+      expect(textarea).toHaveValue(TEST_INPUT_TEXT);
+
+      userEvent.click(sendButton);
+      expect(onMessageSend).toHaveBeenCalledTimes(1);
+      expect(textarea).toHaveValue('');
+
+      rerender(
+        <LeafyGreenChatProvider>
+          <InputBar
+            state={State.Loading}
+            onClickStopButton={onClickStopButton}
+            onMessageSend={onMessageSend}
+          />
+        </LeafyGreenChatProvider>,
+      );
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+
+      userEvent.click(stopButton);
+
+      expect(onClickStopButton).toHaveBeenCalledTimes(1);
+      expect(textarea).toHaveValue(TEST_INPUT_TEXT);
+    });
+
+    test('does not call onMessageSend when stopping during loading state', () => {
+      const onMessageSend = jest.fn();
+      const onClickStopButton = jest.fn();
+
+      renderInputBar({
+        state: State.Loading,
+        onMessageSend,
+        onClickStopButton,
+        textareaProps: { value: TEST_INPUT_TEXT },
+      });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      userEvent.click(stopButton);
+
+      expect(onClickStopButton).toHaveBeenCalledTimes(1);
+      expect(onMessageSend).not.toHaveBeenCalled();
+    });
+
+    test('disabled prop takes precedence over loading state', () => {
+      const onClickStopButton = jest.fn();
+      renderInputBar({
+        state: State.Loading,
+        disabled: true,
+        onClickStopButton,
+      });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      expect(stopButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('disableSend prop takes precedence over loading state', () => {
+      const onClickStopButton = jest.fn();
+      renderInputBar({
+        state: State.Loading,
+        disableSend: true,
+        onClickStopButton,
+      });
+
+      const stopButton = screen.getByRole('button', { name: 'Stop message' });
+      expect(stopButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('does not call onClickStopButton if not in loading state', () => {
+      const onClickStopButton = jest.fn();
+      const onMessageSend = jest.fn();
+
+      renderInputBar({
+        onClickStopButton,
+        onMessageSend,
+        textareaProps: { value: TEST_INPUT_TEXT },
+      });
+
+      const sendButton = screen.getByRole('button', { name: 'Send message' });
+      userEvent.click(sendButton);
+
+      expect(onClickStopButton).not.toHaveBeenCalled();
+      expect(onMessageSend).toHaveBeenCalledTimes(1);
     });
   });
 });

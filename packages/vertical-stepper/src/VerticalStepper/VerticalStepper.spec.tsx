@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { Link } from '@leafygreen-ui/typography';
 
 import { LGIDS_VERTICAL_STEPPER } from '../constants';

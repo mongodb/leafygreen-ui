@@ -72,7 +72,6 @@ import Button from '@leafygreen-ui/button';
 | [@leafygreen-ui/avatar](./packages/avatar)                           | [![version](https://img.shields.io/npm/v/@leafygreen-ui/avatar)](https://www.npmjs.com/package/@leafygreen-ui/avatar)                           | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/avatar?color=white)              | [Live Example](http://mongodb.design/component/avatar/live-example)                   |
 | [@leafygreen-ui/badge](./packages/badge)                             | [![version](https://img.shields.io/npm/v/@leafygreen-ui/badge)](https://www.npmjs.com/package/@leafygreen-ui/badge)                             | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/badge?color=white)               | [Live Example](http://mongodb.design/component/badge/live-example)                    |
 | [@leafygreen-ui/banner](./packages/banner)                           | [![version](https://img.shields.io/npm/v/@leafygreen-ui/banner)](https://www.npmjs.com/package/@leafygreen-ui/banner)                           | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/banner?color=white)              | [Live Example](http://mongodb.design/component/banner/live-example)                   |
-| [@leafygreen-ui/box](./packages/box)                                 | [![version](https://img.shields.io/npm/v/@leafygreen-ui/box)](https://www.npmjs.com/package/@leafygreen-ui/box)                                 | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/box?color=white)                 | [Live Example](http://mongodb.design/component/box/live-example)                      |
 | [@leafygreen-ui/button](./packages/button)                           | [![version](https://img.shields.io/npm/v/@leafygreen-ui/button)](https://www.npmjs.com/package/@leafygreen-ui/button)                           | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/button?color=white)              | [Live Example](http://mongodb.design/component/button/live-example)                   |
 | [@leafygreen-ui/callout](./packages/callout)                         | [![version](https://img.shields.io/npm/v/@leafygreen-ui/callout)](https://www.npmjs.com/package/@leafygreen-ui/callout)                         | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/callout?color=white)             | [Live Example](http://mongodb.design/component/callout/live-example)                  |
 | [@leafygreen-ui/card](./packages/card)                               | [![version](https://img.shields.io/npm/v/@leafygreen-ui/card)](https://www.npmjs.com/package/@leafygreen-ui/card)                               | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/card?color=white)                | [Live Example](http://mongodb.design/component/card/live-example)                     |
@@ -91,6 +90,7 @@ import Button from '@leafygreen-ui/button';
 | [@leafygreen-ui/emotion](./packages/emotion)                         | [![version](https://img.shields.io/npm/v/@leafygreen-ui/emotion)](https://www.npmjs.com/package/@leafygreen-ui/emotion)                         | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/emotion?color=white)             | [Live Example](http://mongodb.design/component/emotion/live-example)                  |
 | [@leafygreen-ui/empty-state](./packages/empty-state)                 | [![version](https://img.shields.io/npm/v/@leafygreen-ui/empty-state)](https://www.npmjs.com/package/@leafygreen-ui/empty-state)                 | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/empty-state?color=white)         | [Live Example](http://mongodb.design/component/empty-state/live-example)              |
 | [@leafygreen-ui/expandable-card](./packages/expandable-card)         | [![version](https://img.shields.io/npm/v/@leafygreen-ui/expandable-card)](https://www.npmjs.com/package/@leafygreen-ui/expandable-card)         | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/expandable-card?color=white)     | [Live Example](http://mongodb.design/component/expandable-card/live-example)          |
+| [@leafygreen-ui/feature-walls](./packages/feature-walls)             | [![version](https://img.shields.io/npm/v/@leafygreen-ui/feature-walls)](https://www.npmjs.com/package/@leafygreen-ui/feature-walls)             | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/feature-walls?color=white)       | [Live Example](http://mongodb.design/component/feature-walls/live-example)            |
 | [@leafygreen-ui/form-field](./packages/form-field)                   | [![version](https://img.shields.io/npm/v/@leafygreen-ui/form-field)](https://www.npmjs.com/package/@leafygreen-ui/form-field)                   | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/form-field?color=white)          | [Live Example](http://mongodb.design/component/form-field/live-example)               |
 | [@leafygreen-ui/form-footer](./packages/form-footer)                 | [![version](https://img.shields.io/npm/v/@leafygreen-ui/form-footer)](https://www.npmjs.com/package/@leafygreen-ui/form-footer)                 | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/form-footer?color=white)         | [Live Example](http://mongodb.design/component/form-footer/live-example)              |
 | [@leafygreen-ui/gallery-indicator](./packages/gallery-indicator)     | [![version](https://img.shields.io/npm/v/@leafygreen-ui/gallery-indicator)](https://www.npmjs.com/package/@leafygreen-ui/gallery-indicator)     | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/gallery-indicator?color=white)   | [Live Example](http://mongodb.design/component/gallery-indicator/live-example)        |
@@ -149,14 +149,13 @@ import Button from '@leafygreen-ui/button';
 | [@lg-charts/legend](./charts/legend)                                 | [![version](https://img.shields.io/npm/v/@lg-charts/legend)](https://www.npmjs.com/package/@lg-charts/legend)                                   | ![downloads](https://img.shields.io/npm/dm/@lg-charts/legend?color=white)                  | [Live Example](http://mongodb.design/component/legend/live-example)                   |
 | [@lg-charts/series-provider](./charts/series-provider)               | [![version](https://img.shields.io/npm/v/@lg-charts/series-provider)](https://www.npmjs.com/package/@lg-charts/series-provider)                 | ![downloads](https://img.shields.io/npm/dm/@lg-charts/series-provider?color=white)         | [Live Example](http://mongodb.design/component/series-provider/live-example)          |
 | [@lg-chat/avatar](./chat/avatar)                                     | [![version](https://img.shields.io/npm/v/@lg-chat/avatar)](https://www.npmjs.com/package/@lg-chat/avatar)                                       | ![downloads](https://img.shields.io/npm/dm/@lg-chat/avatar?color=white)                    | [Live Example](http://mongodb.design/component/avatar/live-example)                   |
-| [@lg-chat/chat-disclaimer](./chat/chat-disclaimer)                   | [![version](https://img.shields.io/npm/v/@lg-chat/chat-disclaimer)](https://www.npmjs.com/package/@lg-chat/chat-disclaimer)                     | ![downloads](https://img.shields.io/npm/dm/@lg-chat/chat-disclaimer?color=white)           | [Live Example](http://mongodb.design/component/chat-disclaimer/live-example)          |
+| [@lg-chat/chat-layout](./chat/chat-layout)                           | [![version](https://img.shields.io/npm/v/@lg-chat/chat-layout)](https://www.npmjs.com/package/@lg-chat/chat-layout)                             | ![downloads](https://img.shields.io/npm/dm/@lg-chat/chat-layout?color=white)               | [Live Example](http://mongodb.design/component/chat-layout/live-example)              |
 | [@lg-chat/chat-window](./chat/chat-window)                           | [![version](https://img.shields.io/npm/v/@lg-chat/chat-window)](https://www.npmjs.com/package/@lg-chat/chat-window)                             | ![downloads](https://img.shields.io/npm/dm/@lg-chat/chat-window?color=white)               | [Live Example](http://mongodb.design/component/chat-window/live-example)              |
 | [@lg-chat/fixed-chat-window](./chat/fixed-chat-window)               | [![version](https://img.shields.io/npm/v/@lg-chat/fixed-chat-window)](https://www.npmjs.com/package/@lg-chat/fixed-chat-window)                 | ![downloads](https://img.shields.io/npm/dm/@lg-chat/fixed-chat-window?color=white)         | [Live Example](http://mongodb.design/component/fixed-chat-window/live-example)        |
 | [@lg-chat/input-bar](./chat/input-bar)                               | [![version](https://img.shields.io/npm/v/@lg-chat/input-bar)](https://www.npmjs.com/package/@lg-chat/input-bar)                                 | ![downloads](https://img.shields.io/npm/dm/@lg-chat/input-bar?color=white)                 | [Live Example](http://mongodb.design/component/input-bar/live-example)                |
 | [@lg-chat/leafygreen-chat-provider](./chat/leafygreen-chat-provider) | [![version](https://img.shields.io/npm/v/@lg-chat/leafygreen-chat-provider)](https://www.npmjs.com/package/@lg-chat/leafygreen-chat-provider)   | ![downloads](https://img.shields.io/npm/dm/@lg-chat/leafygreen-chat-provider?color=white)  | [Live Example](http://mongodb.design/component/leafygreen-chat-provider/live-example) |
 | [@lg-chat/lg-markdown](./chat/lg-markdown)                           | [![version](https://img.shields.io/npm/v/@lg-chat/lg-markdown)](https://www.npmjs.com/package/@lg-chat/lg-markdown)                             | ![downloads](https://img.shields.io/npm/dm/@lg-chat/lg-markdown?color=white)               | [Live Example](http://mongodb.design/component/lg-markdown/live-example)              |
 | [@lg-chat/message](./chat/message)                                   | [![version](https://img.shields.io/npm/v/@lg-chat/message)](https://www.npmjs.com/package/@lg-chat/message)                                     | ![downloads](https://img.shields.io/npm/dm/@lg-chat/message?color=white)                   | [Live Example](http://mongodb.design/component/message/live-example)                  |
-| [@lg-chat/message-actions](./chat/message-actions)                   | [![version](https://img.shields.io/npm/v/@lg-chat/message-actions)](https://www.npmjs.com/package/@lg-chat/message-actions)                     | ![downloads](https://img.shields.io/npm/dm/@lg-chat/message-actions?color=white)           | [Live Example](http://mongodb.design/component/message-actions/live-example)          |
 | [@lg-chat/message-feed](./chat/message-feed)                         | [![version](https://img.shields.io/npm/v/@lg-chat/message-feed)](https://www.npmjs.com/package/@lg-chat/message-feed)                           | ![downloads](https://img.shields.io/npm/dm/@lg-chat/message-feed?color=white)              | [Live Example](http://mongodb.design/component/message-feed/live-example)             |
 | [@lg-chat/message-feedback](./chat/message-feedback)                 | [![version](https://img.shields.io/npm/v/@lg-chat/message-feedback)](https://www.npmjs.com/package/@lg-chat/message-feedback)                   | ![downloads](https://img.shields.io/npm/dm/@lg-chat/message-feedback?color=white)          | [Live Example](http://mongodb.design/component/message-feedback/live-example)         |
 | [@lg-chat/message-prompts](./chat/message-prompts)                   | [![version](https://img.shields.io/npm/v/@lg-chat/message-prompts)](https://www.npmjs.com/package/@lg-chat/message-prompts)                     | ![downloads](https://img.shields.io/npm/dm/@lg-chat/message-prompts?color=white)           | [Live Example](http://mongodb.design/component/message-prompts/live-example)          |
@@ -185,15 +184,18 @@ import Button from '@leafygreen-ui/button';
 
 ### Setup
 
-1. Node >= 18.0.0 required.
+1. Install [`asdf`](https://asdf-vm.com/guide/getting-started.html)
 
-   via [homebrew](https://brew.sh/) with `brew install node`
+```zsh
+brew install asdf;
+echo 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"' >> ~/.zshrc
+```
 
-   via [nodejs installer](https://nodejs.org/en/)
+2. Install Node & pnpm
 
-2. Install PNPM >= 9.15.0.
-
-   [PNPM Installation documentation](https://pnpm.io/installation)
+```zsh
+asdf install
+```
 
 3. Clone the repository.
 
@@ -361,19 +363,6 @@ Any new work you do should be done in the _original_ (`new-feature`) branch.
 To publish a new pre-release version, pull the changes from `new-feature` into branch `pre-release`, and follow steps 3-5.
 
 When `new-feature` is merged into `main`, you can safely delete the `pre-release` branch
-
-## Deploy gh-pages
-
-You can deploy a static build of our Storybook site to gh-pages from the `main` branch.
-
-1. First be sure you've built a static version of Storybook with the script: `build-storybook`
-2. Then deploy to gh-pages: `pnpm release:site`
-
-### To deploy to your own mirror of leafygreen-ui
-
-1. Run `pnpm demo:site [your_github_username]`.
-2. If you haven't built a static version of Storybook yet, you will be prompted to do so.
-3. You will be asked for confirmation before Storybook is published.
 
 ## License
 

@@ -1,5 +1,60 @@
 # @leafygreen-ui/combobox
 
+## 12.2.0
+
+### Minor Changes
+
+- 2876f61: This update adds support to change the dropdown's width basis (matching the functionality of the Select component)
+
+### Patch Changes
+
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
+## 12.1.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/checkbox@18.1.2
+  - @leafygreen-ui/chip@4.0.8
+  - @leafygreen-ui/form-field@4.0.6
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+  - @leafygreen-ui/input-option@4.1.2
+
+## 12.0.8
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/input-option@4.1.1
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/form-field@4.0.5
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/checkbox@18.1.1
+  - @leafygreen-ui/chip@4.0.7
+
 ## 12.0.7
 
 ### Patch Changes

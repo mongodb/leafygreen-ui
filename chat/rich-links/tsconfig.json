@@ -30,6 +30,9 @@
       "path": "../../packages/icon"
     },
     {
+      "path": "../../packages/palette"
+    },
+    {
       "path": "../../packages/polymorphic"
     },
     {

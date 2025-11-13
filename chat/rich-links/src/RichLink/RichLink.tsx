@@ -1,8 +1,10 @@
 import React, { forwardRef } from 'react';
 
-import Card from '@leafygreen-ui/card';
+import { Card } from '@leafygreen-ui/card';
 import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 import { Body } from '@leafygreen-ui/typography';
 
@@ -52,25 +54,25 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
       : {};
 
     return (
-      <Card
-        darkMode={darkMode}
-        className={cx(baseStyles, themeStyles[theme])}
-        title={children}
-        {...conditionalProps}
-        onClick={() => onLinkClick?.(props)}
-      >
-        <Body as="span" className={richLinkTextClassName} darkMode={darkMode}>
-          {children}
-        </Body>
-        {showBadge ? (
-          <RichLinkBadge
-            darkMode={darkMode}
-            color={badgeColor}
-            label={badgeLabel}
-            glyph={badgeGlyph}
-          />
-        ) : null}
-      </Card>
+      <LeafyGreenProvider darkMode={darkMode}>
+        <Card
+          className={cx(baseStyles, themeStyles[theme])}
+          title={children}
+          {...conditionalProps}
+          onClick={() => onLinkClick?.(props)}
+        >
+          <Body as="span" className={richLinkTextClassName}>
+            {children}
+          </Body>
+          {showBadge ? (
+            <RichLinkBadge
+              color={badgeColor}
+              label={badgeLabel}
+              glyph={badgeGlyph}
+            />
+          ) : null}
+        </Card>
+      </LeafyGreenProvider>
     );
   },
 );

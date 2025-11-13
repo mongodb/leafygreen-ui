@@ -22,50 +22,16 @@ npm install @lg-chat/message-feed
 
 ## Example
 
-### Compact
-
 ```tsx
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { MessageFeed } from '@lg-chat/message-feed';
+import { Message } from '@lg-chat/message';
 
 return (
-  <LeafyGreenChatProvider variant={Variant.Compact}>
-    <MessageFeed darkMode={darkMode} {...rest}>
-      {messages.map(({ id, messageBody, userName }) => (
-        <Message key={id} isSender={!!userName} messageBody={messageBody} />
-      ))}
-    </MessageFeed>
-  </LeafyGreenChatProvider>
-);
-```
-
-### Spacious
-
-```tsx
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
-import { MessageFeed } from '@lg-chat/message-feed';
-
-return (
-  <LeafyGreenChatProvider variant={Variant.Spacious}>
-    <MessageFeed darkMode={darkMode} {...rest}>
-      {messages.map(({ id, messageBody, userName }) => (
-        <Message
-          key={id}
-          avatar={
-            <Avatar name={userName} variant={isMongo ? 'mongo' : 'user'} />
-          }
-          isSender={!!userName}
-          messageBody={messageBody}
-        />
-      ))}
-    </MessageFeed>
-  </LeafyGreenChatProvider>
+  <MessageFeed darkMode={darkMode} {...rest}>
+    {messages.map(({ id, messageBody, userName }) => (
+      <Message key={id} isSender={!!userName} messageBody={messageBody} />
+    ))}
+  </MessageFeed>
 );
 ```
 

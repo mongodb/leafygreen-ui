@@ -15,13 +15,6 @@ export interface MessageRatingProps
   extends React.ComponentPropsWithoutRef<'div'>,
     DarkModeProps {
   /**
-   * Custom description text
-   * @default "How was the response?"
-   * @remarks This prop is only considered when the parent `LeafyGreenChatProvider` has `variant="spacious"`.
-   */
-  description?: string;
-
-  /**
    * Hides the thumbs down button
    * @default false
    */
