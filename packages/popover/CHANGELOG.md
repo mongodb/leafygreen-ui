@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 14.3.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
 ## 14.3.0
 
 ### Minor Changes

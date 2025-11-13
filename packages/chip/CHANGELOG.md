@@ -1,5 +1,13 @@
 # @leafygreen-ui/chip
 
+## 4.0.9
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/inline-definition@9.1.3
+
 ## 4.0.8
 
 ### Patch Changes

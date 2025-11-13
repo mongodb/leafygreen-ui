@@ -1,5 +1,12 @@
 # @leafygreen-ui/avatar
 
+## 3.1.5
+
+### Patch Changes
+
+- 63d7b62: [LG-5665](https://jira.mongodb.org/browse/LG-5665): `AssistantAvatar` reads `darkMode` value from `LeafyGreenContext` and no longer requires explicitly passing `darkMode` prop.
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
 ## 3.1.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 15.0.10
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
 ## 15.0.9
 
 ### Patch Changes
