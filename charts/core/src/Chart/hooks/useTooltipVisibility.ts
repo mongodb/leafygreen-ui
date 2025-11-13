@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { isDefined } from '@leafygreen-ui/lib';
+
 import { CHART_TOOLTIP_CLASSNAME } from '../../constants';
 import { EChartEvents, EChartsInstance } from '../../Echart';
 
@@ -21,12 +23,11 @@ export const useTooltipVisibility = ({
 }): UseTooltipVisibilityReturnObj => {
   // if groupId is not provided, this state will always be true
   const [isChartHovered, setIsChartHovered] = useState(!groupId);
-  const [pinnedPosition, setPinnedPosition] = useState([0, 0]);
+  const [pinState, setPinState] = useState<{ x: number; y: number }>();
   const [tooltipMounted, setTooltipMounted] = useState(false);
-  const [tooltipPinned, setTooltipPinned] = useState(false);
 
   const tooltipMountedRef = useRef(tooltipMounted);
-  const tooltipPinnedRef = useRef(tooltipPinned);
+  const pinStateRef = useRef(pinState);
 
   const {
     addToGroup,
@@ -52,7 +53,7 @@ export const useTooltipVisibility = ({
    */
   const showTooltipOnMouseMove = useCallback(
     (params: any) => {
-      if (!tooltipMountedRef.current || tooltipPinnedRef.current) {
+      if (!tooltipMountedRef.current || pinStateRef.current) {
         return;
       }
 
@@ -89,8 +90,7 @@ export const useTooltipVisibility = ({
       });
 
       const { offsetX, offsetY } = params;
-      setPinnedPosition([offsetX, offsetY]);
-      setTooltipPinned(true);
+      setPinState({ x: offsetX, y: offsetY });
     },
     [groupId, off, removeFromGroup, showTooltipOnMouseMove],
   );
@@ -110,7 +110,7 @@ export const useTooltipVisibility = ({
       addToGroup(groupId);
     }
 
-    setTooltipPinned(false);
+    setPinState(undefined);
 
     /**
      * Use requestAnimationFrame to ensure that the tooltip is hidden after
@@ -146,7 +146,7 @@ export const useTooltipVisibility = ({
         return;
       }
 
-      if (tooltipPinnedRef.current) {
+      if (pinStateRef.current) {
         unpinTooltip();
         return;
       } else {
@@ -209,8 +209,8 @@ export const useTooltipVisibility = ({
   }, [tooltipMounted]);
 
   useEffect(() => {
-    tooltipPinnedRef.current = tooltipPinned;
-  }, [tooltipPinned]);
+    pinStateRef.current = pinState;
+  }, [pinState]);
 
   /**
    * Effect to add event listeners to the chart container to toggle the `isChartHovered`
@@ -241,7 +241,7 @@ export const useTooltipVisibility = ({
    * is not already pinned.
    */
   useEffect(() => {
-    if (!ready || tooltipPinned) {
+    if (!ready || pinState) {
       return;
     }
 
@@ -251,7 +251,7 @@ export const useTooltipVisibility = ({
     on(EChartEvents.Click, toggleTooltipPinning, {
       useCanvasAsTrigger: true,
     });
-  }, [ready, tooltipPinned, on, showTooltipOnMouseMove, toggleTooltipPinning]);
+  }, [ready, pinState, on, showTooltipOnMouseMove, toggleTooltipPinning]);
 
   /**
    * Effect to add the event listeners to hide the tooltip when hovering a mark.
@@ -273,16 +273,16 @@ export const useTooltipVisibility = ({
    * is rendered and in the DOM
    */
   useEffect(() => {
-    if (!tooltipPinnedRef.current) {
+    if (!pinState) {
       return;
     }
 
-    const [x, y] = pinnedPosition;
+    const { x, y } = pinState;
     setTimeout(() => {
       showTooltip(x, y);
       addUnpinCallbackToCloseButton();
     });
-  }, [pinnedPosition, showTooltip, addUnpinCallbackToCloseButton]);
+  }, [pinState, showTooltip, addUnpinCallbackToCloseButton]);
 
   /**
    * Effect to clean up any tooltip elements when the component is unmounted.
@@ -302,7 +302,7 @@ export const useTooltipVisibility = ({
   return {
     isChartHovered,
     setTooltipMounted,
-    tooltipPinned,
+    tooltipPinned: isDefined(pinState),
     unpinTooltip,
   };
 };
