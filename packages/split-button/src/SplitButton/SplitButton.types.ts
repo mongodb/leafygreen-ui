@@ -6,12 +6,10 @@ import {
 } from '@leafygreen-ui/button';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import {
-  MenuItemProps,
-  type MenuProps as ImportedMenuProps,
-} from '@leafygreen-ui/menu';
-import {
   Align as ImportedAlign,
   Justify as ImportedJustify,
+  MenuItemProps,
+  type MenuProps as ImportedMenuProps,
   RenderMode,
 } from '@leafygreen-ui/menu';
 import {
