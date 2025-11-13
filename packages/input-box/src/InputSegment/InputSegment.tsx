@@ -35,7 +35,7 @@ const InputSegmentWithRef = <Segment extends string>(
     size,
     disabled,
     value,
-    charsPerSegment,
+    charsCount,
     step = 1,
     shouldWrap = true,
     shouldValidate = true,
@@ -46,10 +46,10 @@ const InputSegmentWithRef = <Segment extends string>(
   const { theme } = useDarkMode();
   const baseFontSize = useUpdatedBaseFontSize();
   const formatter = getValueFormatter({
-    charsPerSegment,
+    charsPerSegment: charsCount,
     allowZero: minSegmentValue === 0,
   });
-  const pattern = `[0-9]{${charsPerSegment}}`;
+  const pattern = `[0-9]{${charsCount}}`;
 
   /**
    * Receives native input events,
@@ -63,7 +63,7 @@ const InputSegmentWithRef = <Segment extends string>(
       segmentName: segment,
       currentValue: value,
       incomingValue: target.value,
-      charsPerSegment,
+      charsPerSegment: charsCount,
       defaultMin: minSegmentValue,
       defaultMax: maxSegmentValue,
       segmentEnum,
@@ -97,7 +97,7 @@ const InputSegmentWithRef = <Segment extends string>(
     if (isNumber) {
       // if the value length is equal to the maxLength, reset the input. This will clear the input and the number will be inserted into the input when onChange is called.
 
-      if (target.value.length === charsPerSegment) {
+      if (target.value.length === charsCount) {
         target.value = '';
       }
     }

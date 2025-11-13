@@ -3,13 +3,7 @@ import { render, RenderResult } from '@testing-library/react';
 
 import { InputSegment, type InputSegmentProps } from '../InputSegment';
 
-import {
-  charsPerSegmentMock,
-  defaultMaxMock,
-  defaultMinMock,
-  defaultPlaceholderMock,
-  SegmentObjMock,
-} from './testutils.mocks';
+import { SegmentObjMock } from './testutils.mocks';
 
 interface RenderSegmentReturnType {
   getInput: () => HTMLInputElement;
@@ -21,14 +15,14 @@ interface RenderSegmentReturnType {
 
 const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
   segment: 'day',
-  minSegmentValue: defaultMinMock['day'],
-  maxSegmentValue: defaultMaxMock['day'],
+  minSegmentValue: 0,
+  maxSegmentValue: 31,
   shouldWrap: true,
-  placeholder: defaultPlaceholderMock['day'],
+  placeholder: 'DD',
   onChange: () => {},
   onBlur: () => {},
   value: '',
-  charsPerSegment: charsPerSegmentMock['day'],
+  charsCount: 2,
   segmentEnum: SegmentObjMock,
   // @ts-expect-error - data-testid
   ['data-testid']: 'lg-input-segment',

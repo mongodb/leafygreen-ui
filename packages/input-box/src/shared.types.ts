@@ -52,14 +52,6 @@ export interface InputSegmentComponentProps<Segment extends string>
     SharedInputBoxTypes<Segment> {
   /**
    * Which segment this input represents
-   *
-   * @example
-   * 'day'
-   * 'month'
-   * 'year'
-   * 'hour'
-   * 'minute'
-   * 'second'
    */
   segment: Segment;
 
@@ -73,11 +65,6 @@ export interface InputSegmentComponentProps<Segment extends string>
 
   /**
    * The value of the segment
-   *
-   * @example
-   * '1'
-   * '2'
-   * '2025'
    */
   value: string;
 }
