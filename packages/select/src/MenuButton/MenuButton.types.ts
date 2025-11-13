@@ -9,7 +9,6 @@ export interface MenuButtonBaseProps extends React.ComponentProps<'button'> {
   text: React.ReactNode;
   name?: string;
   deselected: boolean;
-  readOnly?: boolean;
   onClose: () => void;
   onOpen: () => void;
   state?: State;

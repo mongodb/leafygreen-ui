@@ -3,7 +3,7 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import { glyphs, Icon } from '@leafygreen-ui/icon';
 
 import { MenuProps } from '../Menu';
 import { withMenuContext } from '../testUtils/withMenuContextDecorator.testutils';

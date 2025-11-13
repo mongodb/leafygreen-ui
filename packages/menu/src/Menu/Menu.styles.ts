@@ -1,9 +1,7 @@
-import { transparentize } from 'polished';
-
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { color, spacing } from '@leafygreen-ui/tokens';
+import { popoverCSSProperties } from '@leafygreen-ui/popover';
+import { boxShadows, color, spacing } from '@leafygreen-ui/tokens';
 
 import { menuColor } from '../styles';
 
@@ -14,12 +12,15 @@ export interface MenuStyleArgs {
   variant: MenuVariant;
 }
 
+export const DEFAULT_MAX_HEIGHT = 344;
+export const DEFAULT_WIDTH = 210;
 const DEFAULT_MENU_PADDING = spacing[300];
 const COMPACT_MENU_PADDING = spacing[150];
 
 export const getMenuStyles = ({ theme, variant }: MenuStyleArgs) => {
   return css`
-    width: 210px;
+    width: ${DEFAULT_WIDTH}px;
+    max-height: var(${popoverCSSProperties.maxHeight}, ${DEFAULT_MAX_HEIGHT});
     border-radius: ${spacing[300]}px;
     overflow: auto;
     padding: ${variant === MenuVariant.Default
@@ -33,7 +34,7 @@ export const getMenuStyles = ({ theme, variant }: MenuStyleArgs) => {
     /* // Light mode only */
     ${theme === 'light' &&
     css`
-      box-shadow: 0 2px 4px 1px ${transparentize(0.85, palette.black)};
+      box-shadow: ${boxShadows[Theme.Light][1]};
     `}
   `;
 };

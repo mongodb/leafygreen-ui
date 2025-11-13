@@ -2,8 +2,9 @@ import React, { ReactNode } from 'react';
 
 import CursorIcon from '@leafygreen-ui/icon/dist/Cursor';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isDefined } from '@leafygreen-ui/lib';
 
 import {
   closeButtonStyles,
@@ -42,7 +43,7 @@ export function CustomTooltip({
 }: CustomTooltipProps) {
   const { theme } = useDarkMode(darkMode);
 
-  if (seriesData.length === 0 || !seriesData[0].data[0]) {
+  if (seriesData.length === 0 || !isDefined(seriesData[0].data[0])) {
     return null;
   }
 

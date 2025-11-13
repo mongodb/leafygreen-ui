@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 
-import Card from '@leafygreen-ui/card';
+import { Card } from '@leafygreen-ui/card';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, usePrevious } from '@leafygreen-ui/hooks';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import { Icon } from '@leafygreen-ui/icon';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';

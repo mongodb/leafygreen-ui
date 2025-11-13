@@ -90,13 +90,11 @@ const InputSegmentWithRef = <Segment extends string>(
       target: HTMLInputElement;
     };
 
-    // A key press can be an `arrow`, `enter`, `space`, etc so we check for number presses
-    // We also check for `space` because Number(' ') returns true
-    const isNumber = Number(key) && key !== keyMap.Space;
+    // If the value is a number, we check if the input is full and reset it if it is. The number will be inserted into the input when onChange is called.
+    // This is to handle the case where the user tries to type a number when the input is already full. Usually this happens when the focus is moved to the next segment or a segment is clicked
+    const isNumber = /^[0-9]$/.test(key);
 
     if (isNumber) {
-      // if the value length is equal to the maxLength, reset the input. This will clear the input and the number will be inserted into the input when onChange is called.
-
       if (target.value.length === charsPerSegment) {
         target.value = '';
       }

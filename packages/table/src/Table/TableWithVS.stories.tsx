@@ -7,10 +7,10 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Badge from '@leafygreen-ui/badge';
-import Button from '@leafygreen-ui/button';
+import { Badge } from '@leafygreen-ui/badge';
+import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import Tooltip from '@leafygreen-ui/tooltip';
+import { Tooltip } from '@leafygreen-ui/tooltip';
 
 import {
   KitchenSink,

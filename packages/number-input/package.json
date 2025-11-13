@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/number-input",
-  "version": "5.0.7",
+  "version": "5.0.10",
   "description": "leafyGreen UI Kit Number Input",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -38,7 +38,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"

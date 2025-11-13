@@ -5,14 +5,14 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
-import Badge from '@leafygreen-ui/badge';
-import Button from '@leafygreen-ui/button';
-import Checkbox from '@leafygreen-ui/checkbox';
+import { Badge } from '@leafygreen-ui/badge';
+import { Button } from '@leafygreen-ui/button';
+import { Checkbox } from '@leafygreen-ui/checkbox';
 import { css, cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
-import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
-import Tooltip from '@leafygreen-ui/tooltip';
+import { Icon } from '@leafygreen-ui/icon';
+import { IconButton } from '@leafygreen-ui/icon-button';
+import { Pagination, PaginationProps } from '@leafygreen-ui/pagination';
+import { Tooltip } from '@leafygreen-ui/tooltip';
 
 import { VerticalAlignment } from './Table/Table.types';
 import {

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "14.0.6",
+  "version": "14.3.0",
   "description": "LeafyGreen UI Kit Popover",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -26,13 +26,14 @@
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@oddbird/popover-polyfill": "^0.6.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover",

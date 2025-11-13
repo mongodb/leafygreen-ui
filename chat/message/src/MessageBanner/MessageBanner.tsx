@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import Banner from '@leafygreen-ui/banner';
+import { Banner } from '@leafygreen-ui/banner';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 import { getMessageBannerStyles } from './MessageBanner.styles';

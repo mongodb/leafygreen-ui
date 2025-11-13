@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
-import Banner from '@leafygreen-ui/banner';
-import Button from '@leafygreen-ui/button';
+import { Banner } from '@leafygreen-ui/banner';
+import { Button } from '@leafygreen-ui/button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body, Error } from '@leafygreen-ui/typography';
 
@@ -38,7 +38,7 @@ export const InputBarFeedback = forwardRef<
     },
     fwdRef,
   ) => {
-    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { theme } = useDarkMode(darkModeProp);
     const { assistantName } = useLeafyGreenChatContext();
 
     return (
@@ -51,7 +51,7 @@ export const InputBarFeedback = forwardRef<
       >
         {state === State.Loading && (
           <div className={loadingContainerStyles}>
-            <AssistantAvatar darkMode={darkMode} size={20} />
+            <AssistantAvatar size={20} />
             <Body className={getLoadingTextStyles(theme)}>
               {`${assistantName} is thinking`}
             </Body>

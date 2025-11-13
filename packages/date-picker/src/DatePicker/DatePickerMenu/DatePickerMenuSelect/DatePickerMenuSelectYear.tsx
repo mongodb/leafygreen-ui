@@ -36,7 +36,7 @@ export const DatePickerMenuSelectYear = ({
   return (
     <Select
       {...selectElementProps}
-      aria-label={`Select year - ${month.getUTCFullYear().toString()} selected`}
+      aria-label="select year"
       value={month.getUTCFullYear().toString()}
       onChange={handleYearOnChange}
       className={cx(selectTruncateStyles, selectInputWidthStyles)}

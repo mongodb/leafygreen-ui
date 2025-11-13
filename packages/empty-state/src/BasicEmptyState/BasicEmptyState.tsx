@@ -1,7 +1,7 @@
 import React, { forwardRef, Ref } from 'react';
 
-import Badge from '@leafygreen-ui/badge';
-import Button from '@leafygreen-ui/button';
+import { Badge } from '@leafygreen-ui/badge';
+import { Button } from '@leafygreen-ui/button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';

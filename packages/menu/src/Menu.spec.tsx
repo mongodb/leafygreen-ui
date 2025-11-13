@@ -9,7 +9,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { Optional } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
@@ -639,15 +639,102 @@ describe('packages/menu', () => {
     });
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('Types work as expected', () => {
-    test('Types work as expected', () => {
-      render(
-        <Menu data-testid="menu">
-          <MenuItem>Item</MenuItem>
-          <MenuItem>Item</MenuItem>
+  describe('refEl and trigger props', () => {
+    test('Menu works with only trigger prop', async () => {
+      const trigger = <button data-testid="trigger-btn">Open Menu</button>;
+      const { getByTestId, findByTestId } = render(
+        <Menu trigger={trigger}>
+          <MenuItem data-testid="menu-item">Item</MenuItem>
         </Menu>,
       );
+
+      const triggerBtn = getByTestId('trigger-btn');
+      expect(triggerBtn).toBeInTheDocument();
+
+      userEvent.click(triggerBtn);
+
+      const menu = await findByTestId(lgIds.root);
+      expect(menu).toBeInTheDocument();
+
+      const menuItem = getByTestId('menu-item');
+      expect(menuItem).toBeInTheDocument();
+    });
+
+    test('Menu works with only refEl prop', async () => {
+      const refEl = React.createRef<HTMLButtonElement>();
+      const { getByTestId, findByTestId } = render(
+        <>
+          <button ref={refEl} data-testid="ref-element">
+            Reference Element
+          </button>
+          <Menu refEl={refEl} open>
+            <MenuItem data-testid="menu-item">Item</MenuItem>
+          </Menu>
+        </>,
+      );
+
+      const refElement = getByTestId('ref-element');
+      expect(refElement).toBeInTheDocument();
+
+      const menu = await findByTestId(lgIds.root);
+      expect(menu).toBeInTheDocument();
+
+      const menuItem = getByTestId('menu-item');
+      expect(menuItem).toBeInTheDocument();
+    });
+
+    test('Menu works with both trigger and refEl props', async () => {
+      const refEl = React.createRef<HTMLDivElement>();
+      const trigger = <button data-testid="trigger-btn">Open Menu</button>;
+      const { getByTestId, findByTestId } = render(
+        <>
+          <div ref={refEl} data-testid="ref-element">
+            Reference Element
+          </div>
+          <Menu trigger={trigger} refEl={refEl}>
+            <MenuItem data-testid="menu-item">Item</MenuItem>
+          </Menu>
+        </>,
+      );
+
+      const triggerBtn = getByTestId('trigger-btn');
+      expect(triggerBtn).toBeInTheDocument();
+
+      userEvent.click(triggerBtn);
+
+      const menu = await findByTestId(lgIds.root);
+      expect(menu).toBeInTheDocument();
+
+      const menuItem = getByTestId('menu-item');
+      expect(menuItem).toBeInTheDocument();
+    });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('Types work as expected', () => {
+    test('Menu requires at least one of refEl or trigger', () => {
+      const refEl = React.createRef<HTMLDivElement>();
+      const trigger = <button>Open Menu</button>;
+
+      // @ts-expect-error - Missing both refEl and trigger
+      <Menu>
+        <MenuItem>Item</MenuItem>
+      </Menu>;
+
+      // Valid: Menu with only trigger
+      <Menu trigger={trigger}>
+        <MenuItem>Item</MenuItem>
+      </Menu>;
+
+      // Valid: Menu with only refEl
+      <Menu refEl={refEl} open>
+        <MenuItem>Item</MenuItem>
+      </Menu>;
+
+      // Valid: Menu with both trigger and refEl
+      <Menu trigger={trigger} refEl={refEl}>
+        <MenuItem>Item</MenuItem>
+      </Menu>;
     });
   });
 });

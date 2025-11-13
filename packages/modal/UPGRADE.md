@@ -1,5 +1,7 @@
 # Upgrading v19 to v20
 
+**Note: when upgrading, skip to v20.2. v20 temporarily and prematurely removed the `initialFocus` prop, and it is added back in v20.2**
+
 `Modal` v20 introduces breaking changes that modernize the component with top layer rendering, improved accessibility, and updated prop interfaces.
 
 Prior to v20, Modal components used portal-based rendering and different prop names for styling. In v20, the component has been updated to use the native HTML dialog element with top layer rendering for better stacking context management.
@@ -9,7 +11,7 @@ Key changes include:
 - `className` → `backdropClassName`
   - **Note:** `backdropClassName` is also deprecated in v20 and only provided for migration ease. For custom backdrop styles, use the CSS `::backdrop` pseudo-element to target and style the dialog backdrop instead of relying on this prop.
 - `contentClassName` → `className`
-- `initialFocus` prop removed in favor of `autoFocus` attribute on child elements
+- [Initial focus behavior](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal#initial-focus-behavior)
 
 Follow these steps to upgrade:
 
@@ -35,11 +37,7 @@ If you prefer to migrate manually or need to handle edge cases not covered by th
 **Before:**
 
 ```tsx
-<Modal
-  className="modal-backdrop-styles"
-  contentClassName="modal-root-styles"
-  initialFocus="#primary-button"
->
+<Modal className="modal-backdrop-styles" contentClassName="modal-root-styles">
   <button id="primary-button">Action</button>
 </Modal>
 ```
@@ -48,9 +46,7 @@ If you prefer to migrate manually or need to handle edge cases not covered by th
 
 ```tsx
 <Modal backdropClassName="modal-backdrop-styles" className="modal-root-styles">
-  <button id="primary-button" autoFocus>
-    Action
-  </button>
+  <button id="primary-button">Action</button>
 </Modal>
 ```
 
@@ -91,31 +87,3 @@ The preferred approach for backdrop styling is now the CSS `::backdrop` pseudo-e
   }
 }
 ```
-
-### 3. Update Focus Management
-
-Replace `initialFocus` with `autoFocus` attribute on the desired element:
-
-**Before:**
-
-```tsx
-<Modal initialFocus="#submit-btn">
-  <form>
-    <input type="text" />
-    <button id="submit-btn">Submit</button>
-  </form>
-</Modal>
-```
-
-**After:**
-
-```tsx
-<Modal>
-  <form>
-    <input type="text" />
-    <button autoFocus>Submit</button>
-  </form>
-</Modal>
-```
-
-If no element has `autoFocus`, the first focusable element will automatically receive focus.

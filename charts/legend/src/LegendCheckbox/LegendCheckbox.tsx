@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useSeriesContext } from '@lg-charts/series-provider';
 
-import Checkbox from '@leafygreen-ui/checkbox';
+import { Checkbox } from '@leafygreen-ui/checkbox';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { getLegendCheckboxStyles } from './LegendCheckbox.styles';

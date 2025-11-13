@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/search-input",
-  "version": "6.0.6",
+  "version": "6.1.0",
   "description": "leafyGreen UI Kit Search Input",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -39,7 +39,7 @@
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"

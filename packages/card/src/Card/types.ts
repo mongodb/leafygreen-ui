@@ -13,6 +13,11 @@ export type ContentStyle = (typeof ContentStyle)[keyof typeof ContentStyle];
 
 export interface InternalCardProps extends DarkModeProps {
   /**
+   * The content that will appear inside of the `<Card />` component.
+   */
+  children?: React.ReactNode;
+
+  /**
    * Determines whether the Card should be styled as clickable.
    *
    * Defaults to `'clickable'` (when a valid `onClick` handler or `href` link is provided

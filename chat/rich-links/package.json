@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/rich-links",
-  "version": "4.0.1",
+  "version": "4.0.4",
   "description": "lg-chat Rich Links",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -18,7 +18,6 @@
     "@leafygreen-ui/card": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
-    "@leafygreen-ui/leafygreen-provider": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
@@ -26,7 +25,7 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/rich-links",
   "repository": {

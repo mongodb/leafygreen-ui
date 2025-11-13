@@ -1,5 +1,4 @@
 import type { XAXisComponentOption, YAXisComponentOption } from 'echarts';
-import type { LineSeriesOption } from 'echarts/charts';
 import type {
   DatasetComponentOption,
   GridComponentOption,
@@ -9,16 +8,44 @@ import type {
   TooltipComponentOption,
 } from 'echarts/components';
 import type { ComposeOption, EChartsType } from 'echarts/core';
+import {
+  BarSeriesOption,
+  LineSeriesOption,
+  SeriesOption,
+} from 'echarts/types/dist/shared';
 
-import { Theme } from '@leafygreen-ui/lib';
+import { Theme, ValuesOf } from '@leafygreen-ui/lib';
 
 // Type not exported by echarts.
 // reference: https://github.com/apache/echarts/blob/master/src/coord/axisCommonTypes.ts#L193
 export type AxisLabelValueFormatter = (value: number, index?: number) => string;
 
-type RequiredSeriesProps = 'type' | 'name' | 'data';
-export type EChartSeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
-  Partial<Omit<LineSeriesOption, RequiredSeriesProps>>;
+export interface StylingContext {
+  seriesColor?: string;
+}
+
+// to convert an SeriesOption type of echarts into a structured form more aligned with LeafyGreen design standards,
+// where the 'type', 'name', and 'data' fields are explicitly required and typed,
+// and all additional series properties encapsulated within the 'options' object
+interface DisciplinedSeriesOption<EChartType extends SeriesOption> {
+  type: NonNullable<EChartType['type']>;
+  name: string;
+  data: NonNullable<EChartType['data']>;
+  options: Omit<EChartType, 'type' | 'name' | 'data'>;
+}
+
+// all supported series options types disciplined and grouped into a single interface
+export interface EChartSeriesOptions {
+  line: DisciplinedSeriesOption<LineSeriesOption>;
+  bar: DisciplinedSeriesOption<BarSeriesOption>;
+}
+
+// a disciplined substitute for SeriesOption type of echarts limited to the ones supported here
+export type EChartSeriesOption = Omit<
+  ValuesOf<EChartSeriesOptions>,
+  'options'
+> &
+  ValuesOf<EChartSeriesOptions>['options'];
 
 /**
  * TODO: This might need to be improved. `ComposeOption` appears to make most base option
@@ -108,6 +135,7 @@ interface EChartsEventHandlerType {
     callback: (params: any) => void,
     options?: Partial<{ useCanvasAsTrigger: boolean }>,
   ): void;
+
   (
     event: 'zoomselect',
     callback: (params: EChartZoomSelectionEvent) => void,

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 
-import Button, { Size as ButtonSize, Variant } from '@leafygreen-ui/button';
+import { Button, Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -36,7 +36,6 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       text,
       name,
       deselected,
-      readOnly,
       onClose,
       onOpen,
       state,

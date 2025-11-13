@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 
+import { DateType } from '@leafygreen-ui/date-utils';
 import { useControlled } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
@@ -35,7 +36,7 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
     const { darkMode } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
 
-    const { value, updateValue } = useControlled(
+    const { value, updateValue } = useControlled<DateType | undefined>(
       valueProp,
       onChangeProp,
       initialValueProp,

@@ -22,12 +22,12 @@ export const badgeVariants: Record<
 > = {
   [Theme.Dark]: {
     [RichLinkBadgeColors.Gray]: css`
-      background-color: ${palette.gray.dark1};
+      background-color: ${palette.gray.dark2};
       & svg {
-        color: ${palette.gray.light3};
+        color: ${palette.gray.light1};
       }
       & p {
-        color: ${palette.gray.light3};
+        color: ${palette.gray.light2};
       }
     `,
     [RichLinkBadgeColors.Blue]: css`
@@ -92,7 +92,7 @@ export const badgeVariants: Record<
         color: ${palette.blue.dark2};
       }
       & p {
-        color: ${palette.blue.dark1};
+        color: ${palette.blue.dark3};
       }
     `,
     [RichLinkBadgeColors.Green]: css`

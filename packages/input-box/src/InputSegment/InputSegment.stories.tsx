@@ -42,6 +42,7 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
     step: 1,
     darkMode: false,
     charsPerSegment: charsPerSegmentMock[SegmentObjMock.Day],
+    segmentEnum: SegmentObjMock,
   },
   argTypes: {
     size: {
@@ -115,6 +116,9 @@ export const LiveExample: StoryFn<typeof InputSegment> = ({
       }}
     />
   );
+};
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const Generated = () => {};

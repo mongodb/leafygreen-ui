@@ -2,21 +2,22 @@ import React, { useEffect, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { useBackdropClick } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import {
   useDarkMode,
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import Tooltip, {
+import {
   Align,
   hoverDelay,
   Justify,
   RenderMode,
+  Tooltip,
 } from '@leafygreen-ui/tooltip';
 
 import { useCodeContext } from '../CodeContext/CodeContext';

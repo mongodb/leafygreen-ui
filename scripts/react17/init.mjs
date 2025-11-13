@@ -112,18 +112,29 @@ function mergePackageVersions() {
     fs.readFileSync(ROOT_PACKAGE_JSON_PATH, 'utf-8'),
   );
 
-  // Merge dependencies - keep existing versions, add new ones from r17
+  // Merge dependencies - add/override versions from r17
   if (r17Package.dependencies) {
-    rootPackage.devDependencies = defaultsDeep(
-      {},
-      rootPackage.devDependencies,
-      r17Package.dependencies,
-    );
+    rootPackage.devDependencies = {
+      ...rootPackage.devDependencies,
+      ...r17Package.dependencies,
+    };
   }
 
-  // Merge pnpm overrides
-  if (r17Package.pnpm?.overrides) {
-    rootPackage.pnpm = defaultsDeep({}, rootPackage.pnpm, r17Package.pnpm);
+  // Merge pnpm overrides and peer dependency rules
+  if (r17Package.pnpm) {
+    rootPackage.pnpm = rootPackage.pnpm || {};
+
+    if (r17Package.pnpm.overrides) {
+      rootPackage.pnpm.overrides = {
+        ...rootPackage.pnpm.overrides,
+        ...r17Package.pnpm.overrides,
+      };
+    }
+
+    if (r17Package.pnpm.peerDependencyRules) {
+      rootPackage.pnpm.peerDependencyRules =
+        r17Package.pnpm.peerDependencyRules;
+    }
   }
 
   // Write the updated package.json
@@ -184,30 +195,3 @@ main().catch(error => {
   console.error('❌ Script failed:', error);
   process.exit(1);
 });
-
-/**
- * Deep merge objects, with later objects taking precedence over earlier ones
- * @param {...Object} objects - Objects to merge
- * @returns {Object} Merged object
- */
-function defaultsDeep(...objects) {
-  const result = {};
-
-  objects.forEach(obj => {
-    if (obj && typeof obj === 'object') {
-      Object.keys(obj).forEach(key => {
-        if (
-          obj[key] &&
-          typeof obj[key] === 'object' &&
-          !Array.isArray(obj[key])
-        ) {
-          result[key] = defaultsDeep(result[key] || {}, obj[key]);
-        } else {
-          result[key] = obj[key];
-        }
-      });
-    }
-  });
-
-  return result;
-}

@@ -1,12 +1,12 @@
 import React, { forwardRef, useMemo, useState } from 'react';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Modal, { Footer } from '@leafygreen-ui/modal';
+import { Footer, Modal } from '@leafygreen-ui/modal';
 import { palette } from '@leafygreen-ui/palette';
-import TextInput from '@leafygreen-ui/text-input';
+import { TextInput } from '@leafygreen-ui/text-input';
 import { H3 } from '@leafygreen-ui/typography';
 
 import { getLgIds } from '../utils/getLgIds';
@@ -134,8 +134,8 @@ export const ConfirmationModal = forwardRef<
         </div>
         <Footer>
           <Button
-            {...confirmButtonProps}
             data-testid={lgIds.confirm}
+            {...confirmButtonProps}
             disabled={!confirmEnabled || isConfirmDisabled}
             className={cx(buttonStyle, confirmButtonProps?.className)}
             variant={variant}
@@ -145,10 +145,10 @@ export const ConfirmationModal = forwardRef<
             {buttonText || confirmButtonProps?.children || 'Confirm'}
           </Button>
           <Button
+            data-testid={lgIds.cancel}
             {...cancelButtonProps}
             onClick={handleCancel}
             className={cx(buttonStyle, cancelButtonProps?.className)}
-            data-testid={lgIds.cancel}
           >
             Cancel
           </Button>
