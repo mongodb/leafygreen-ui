@@ -160,6 +160,24 @@ describe('packages/input-segment', () => {
           expect.objectContaining({ value: '4' }),
         );
       });
+
+      test('resets the value when the value is complete with zeros', () => {
+        const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+          SegmentObjMock,
+          string
+        >;
+        const { input } = renderSegment({
+          segment: 'day',
+          value: '00',
+          maxSegmentValue: 31,
+          onChange: onChangeHandler,
+        });
+
+        userEvent.type(input, '4');
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '4' }),
+        );
+      });
     });
 
     describe('keyboard events', () => {
