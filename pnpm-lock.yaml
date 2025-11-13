@@ -346,8 +346,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^5.1.0 || workspace:^6.0.0
-        version: 5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
@@ -386,8 +386,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/tokens
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^5.1.0 || workspace:^6.0.0
-        version: 5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
       '@lg-chat/title-bar':
         specifier: workspace:^
         version: link:../title-bar
@@ -468,8 +468,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^5.1.0 || workspace:^6.0.0
-        version: 5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -563,8 +563,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^5.1.0 || workspace:^6.0.0
-        version: 5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
       '@lg-chat/lg-markdown':
         specifier: workspace:^
         version: link:../lg-markdown
@@ -609,8 +609,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/tokens
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^5.1.0 || workspace:^6.0.0
-        version: 5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message
@@ -667,8 +667,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^5.1.0 || workspace:^6.0.0
-        version: 5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-chat/message-rating':
         specifier: workspace:^
@@ -735,8 +735,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/tokens
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^5.1.0 || workspace:^6.0.0
-        version: 5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
@@ -828,8 +828,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^5.1.0 || workspace:^6.0.0
-        version: 5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^6.0.0
+        version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-tools/build':
         specifier: workspace:^
@@ -5823,9 +5823,6 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@juggle/resize-observer@3.4.0':
-    resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
-
   '@leafygreen-ui/hooks@8.4.1':
     resolution: {integrity: sha512-WZ1p+HeYqqbWVDGTffkRLDE83K/GbjRDYW8jcSYgznba0NAkOkWT9n/+MJp83rd55iyPhBopOKx7270s/sIH4A==}
 
@@ -5875,9 +5872,6 @@ packages:
 
   '@lezer/rust@1.0.2':
     resolution: {integrity: sha512-Lz5sIPBdF2FUXcWeCu1//ojFAZqzTQNRga0aYv6dYXqJqPfMdCAI0NzajWUd4Xijj1IKJLtjoXRPMvTKWBcqKg==}
-
-  '@lg-chat/leafygreen-chat-provider@5.1.0':
-    resolution: {integrity: sha512-L0fGWaRBcR4a9x3cbsKAZrO166I235zYHlrWT1SWhDAnrnvT5SAp5qfnJ4/iiod4YTKsRavagxOu9IxJfst5bQ==}
 
   '@lg-tools/test-harnesses@0.3.4':
     resolution: {integrity: sha512-JfJj2LSMe5vTSDQoLxWUHx2r4wUgKqU1UrgqjvNYM7iebXE0JCE7RvLiEg5SnsRO8xXQbEMjgISErmCDR4DS7Q==}
@@ -11314,12 +11308,6 @@ packages:
       '@types/react':
         optional: true
 
-  use-resize-observer@9.1.0:
-    resolution: {integrity: sha512-R25VqO9Wb3asSD4eqtcxk8sJalvIOYBqS8MNZlpDSQ4l4xMQxC/J7Id9HoTqPq8FwULIn0PVW+OAqF2dyYbjow==}
-    peerDependencies:
-      react: 16.8.0 - 18
-      react-dom: 16.8.0 - 18
-
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -14069,8 +14057,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
 
-  '@juggle/resize-observer@3.4.0': {}
-
   '@leafygreen-ui/hooks@8.4.1(react@18.3.1)':
     dependencies:
       '@leafygreen-ui/lib': 14.2.0(react@18.3.1)
@@ -14161,13 +14147,6 @@ snapshots:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
       '@lezer/lr': 1.4.2
-
-  '@lg-chat/leafygreen-chat-provider@5.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      use-resize-observer: 9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-    transitivePeerDependencies:
-      - react
-      - react-dom
 
   '@lg-tools/test-harnesses@0.3.4':
     dependencies:
@@ -20873,12 +20852,6 @@ snapshots:
       use-isomorphic-layout-effect: 1.2.1(@types/react@18.2.23)(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.2.23
-
-  use-resize-observer@9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@juggle/resize-observer': 3.4.0
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   util-deprecate@1.0.2: {}
 
