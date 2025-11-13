@@ -1,5 +1,15 @@
 # @leafygreen-ui/marketing-modal
 
+## 8.1.4
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/button@25.1.3
+  - @leafygreen-ui/modal@20.3.1
+
 ## 8.1.3
 
 ### Patch Changes

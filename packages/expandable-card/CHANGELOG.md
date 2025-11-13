@@ -1,5 +1,15 @@
 # @leafygreen-ui/expandable-card
 
+## 5.2.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/card@13.2.1
+
 ## 5.2.0
 
 ### Minor Changes

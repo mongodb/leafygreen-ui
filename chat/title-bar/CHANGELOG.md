@@ -1,5 +1,25 @@
 # @lg-chat/title-bar
 
+## 5.0.0
+
+### Major Changes
+
+- 3dfa899: [LG-5575](https://jira.mongodb.org/browse/LG-5575)
+
+  - Added compatibility with `@lg-chat/leafygreen-chat-provider@6.0.0`. We recommend new projects use `@lg-chat/leafygreen-chat-provider` v6; support for v5 will be removed in a future major version.
+  - All chat components have been simplified by removing variant-specific conditional logic.
+    - Removed `align`, `iconSlot`, and `onClose` props.
+    - Removed `Align` enum export.
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+- Updated dependencies [3dfa899]
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/badge@10.2.3
+  - @lg-chat/leafygreen-chat-provider@6.0.0
+
 ## 4.2.0
 
 ### Minor Changes

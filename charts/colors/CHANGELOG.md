@@ -1,5 +1,11 @@
 # @lg-charts/colors
 
+## 1.0.6
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
 ## 1.0.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 22.2.2
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
 ## 22.2.1
 
 ### Patch Changes

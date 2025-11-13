@@ -1,5 +1,35 @@
 # @lg-chat/input-bar
 
+## 12.0.0
+
+### Major Changes
+
+- 3dfa899: [LG-5575](https://jira.mongodb.org/browse/LG-5575)
+
+  - Added compatibility with `@lg-chat/leafygreen-chat-provider@6.0.0`. We recommend new projects use `@lg-chat/leafygreen-chat-provider` v6; support for v5 will be removed in a future major version.
+  - Removed deprecated `lgInputBarStyles` export.
+  - All chat components have been simplified by removing variant-specific conditional logic.
+    - Removed props: `badgeText`, `shouldRenderGradient`, and `shouldRenderHotKeyIndicator`
+  - Added min-width of 150px to `textarea` element to ensure proper height calculation.
+  - Updated `react-textarea-autosize` from `^8.3.2` to `^8.5.9`.
+
+### Patch Changes
+
+- 63d7b62: [LG-5665](https://jira.mongodb.org/browse/LG-5665): `AssistantAvatar` reads `darkMode` value from `LeafyGreenContext` and no longer requires explicitly passing `darkMode` prop.
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [63d7b62]
+- Updated dependencies [9cf3b18]
+- Updated dependencies [3dfa899]
+  - @leafygreen-ui/avatar@3.1.5
+  - @leafygreen-ui/input-option@4.1.3
+  - @leafygreen-ui/search-input@6.1.1
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/popover@14.3.1
+  - @leafygreen-ui/banner@10.2.3
+  - @leafygreen-ui/button@25.1.3
+  - @lg-chat/leafygreen-chat-provider@6.0.0
+
 ## 11.0.2
 
 ### Patch Changes

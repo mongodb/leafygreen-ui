@@ -1,5 +1,19 @@
 # @leafygreen-ui/combobox
 
+## 12.2.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/input-option@4.1.3
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/form-field@4.0.7
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/checkbox@18.1.3
+  - @leafygreen-ui/popover@14.3.1
+  - @leafygreen-ui/chip@4.0.9
+
 ## 12.2.0
 
 ### Minor Changes
