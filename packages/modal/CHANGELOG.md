@@ -1,5 +1,11 @@
 # @leafygreen-ui/modal
 
+## 20.3.2
+
+### Patch Changes
+
+- 587f14e: Add explicit `margin: auto;` to `<dialog>` element styles to prevent `margin` property being reset
+
 ## 20.3.1
 
 ### Patch Changes
