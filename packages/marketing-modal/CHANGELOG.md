@@ -1,5 +1,13 @@
 # @leafygreen-ui/marketing-modal
 
+## 8.1.5
+
+### Patch Changes
+
+- 587f14e: Add explicit `margin: auto;` to `<dialog>` element styles to prevent `margin` property being reset
+- Updated dependencies [587f14e]
+  - @leafygreen-ui/modal@20.3.2
+
 ## 8.1.4
 
 ### Patch Changes

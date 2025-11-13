@@ -1,5 +1,13 @@
 # @leafygreen-ui/confirmation-modal
 
+## 10.2.2
+
+### Patch Changes
+
+- 587f14e: Add explicit `margin: auto;` to `<dialog>` element styles to prevent `margin` property being reset
+- Updated dependencies [587f14e]
+  - @leafygreen-ui/modal@20.3.2
+
 ## 10.2.1
 
 ### Patch Changes
