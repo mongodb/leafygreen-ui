@@ -1,5 +1,36 @@
 # @leafygreen-ui/hooks
 
+## 9.3.0
+
+### Minor Changes
+
+- 11cbe4f: Updated the useControlled hook argument to utilize the useState Dispatch while ensuring backwards compatibility
+
+## 9.2.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+
+## 9.2.1
+
+### Patch Changes
+
+- bab8e2a: The type of the returned `value` is now inferred from the types of the parameters in `useControlled`
+
+## 9.2.0
+
+### Minor Changes
+
+- 579e8c7: - Creates `useControlled` hook. This hook is a more generic version of `useControlledValue` that can be used for any component.
+  - Refactors `useControlledValue` to use `useControlled` under the hood.
+
+### Patch Changes
+
+- Updated dependencies [88e25a1]
+  - @leafygreen-ui/lib@15.6.1
+
 ## 9.1.4
 
 ### Patch Changes

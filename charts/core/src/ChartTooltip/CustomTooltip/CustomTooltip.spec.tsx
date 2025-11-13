@@ -136,4 +136,22 @@ describe('@lg-charts/core/ChartTooltip/CustomTooltip', () => {
 
     expect(screen.getByText('Axis Value: test')).toBeInTheDocument();
   });
+
+  test('should properly display zero values', () => {
+    const seriesDataWithZero: CustomTooltipProps['seriesData'] = [
+      {
+        ...baseSeriesData,
+        data: [0, 1000],
+        value: [0, 1000],
+        seriesName: 'Series A with label 0',
+        name: 'Series A with label 0',
+      },
+    ];
+
+    renderCustomTooltip({
+      seriesData: seriesDataWithZero,
+    });
+
+    expect(screen.getByText('1000')).toBeInTheDocument();
+  });
 });

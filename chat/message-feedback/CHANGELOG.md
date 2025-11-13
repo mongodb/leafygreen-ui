@@ -1,5 +1,53 @@
 # @lg-chat/message-feedback
 
+## 8.1.0
+
+### Minor Changes
+
+- 6bb6c00: [LG-5643](https://jira.mongodb.org/browse/LG-5643)
+
+  Add `enableFadeAfterSubmit` prop to `InlineMessageFeedback` component to enable optional fade-out animation after feedback is submitted.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+  - @leafygreen-ui/text-area@12.1.2
+
+## 8.0.0
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [bd83675]
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @lg-chat/leafygreen-chat-provider@5.1.0
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/text-area@12.1.1
+  - @leafygreen-ui/button@25.1.1
+
+## 7.1.0
+
+### Minor Changes
+
+- 0042205: Adds `disabledSend` prop to disable submit button
+
 ## 7.0.3
 
 ### Patch Changes

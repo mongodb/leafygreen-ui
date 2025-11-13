@@ -12,7 +12,7 @@ import { StoryFn } from '@storybook/react';
 
 import { Size } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import { glyphs, Icon } from '@leafygreen-ui/icon';
 import { MenuItem } from '@leafygreen-ui/menu';
 import { TestUtils } from '@leafygreen-ui/popover';
 const { getAlign, getJustify } = TestUtils;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Tooltip, { RenderMode } from '@leafygreen-ui/tooltip';
+import { RenderMode, Tooltip } from '@leafygreen-ui/tooltip';
 
 import { getTriggerElementStyles } from './InlineDefinition.styles';
 import { InlineDefinitionProps } from './InlineDefinition.types';

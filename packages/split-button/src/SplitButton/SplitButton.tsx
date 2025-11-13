@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button, { Size } from '@leafygreen-ui/button';
+import { Button, Size } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {

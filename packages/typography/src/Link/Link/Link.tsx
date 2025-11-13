@@ -87,7 +87,11 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
 
     if (defaultAnchorProps.target === '_blank' && !hideExternalIcon) {
       icon = (
-        <OpenNewTabIcon role="presentation" className={openInNewTabStyles} />
+        <OpenNewTabIcon
+          role="presentation"
+          size={12}
+          className={openInNewTabStyles}
+        />
       );
     } else if (arrowAppearance !== ArrowAppearance.None) {
       icon = (

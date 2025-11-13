@@ -2,6 +2,7 @@ export {
   ComboboxElement,
   ComboboxSize,
   type DiffObject,
+  DropdownWidthBasis,
   getNullSelection,
   type onChangeType,
   Overflow,

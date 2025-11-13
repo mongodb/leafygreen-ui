@@ -5,8 +5,9 @@ import {
   PopoverProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import Popover, {
+import {
   DismissMode,
+  Popover,
   PopoverProps,
   RenderMode,
 } from '@leafygreen-ui/popover';

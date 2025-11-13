@@ -1,9 +1,5 @@
 import React from 'react';
 import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
-import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
@@ -45,11 +41,9 @@ const meta: StoryMetaType<typeof MessageActions> = {
   decorators: [
     (Story: StoryFn, context) => (
       <LeafyGreenProvider darkMode={context?.args.darkMode}>
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
-            <Story />
-          </Message>
-        </LeafyGreenChatProvider>
+        <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
+          <Story />
+        </Message>
       </LeafyGreenProvider>
     ),
   ],
@@ -66,11 +60,9 @@ const meta: StoryMetaType<typeof MessageActions> = {
       },
       decorator: (StoryFn, context) => (
         <LeafyGreenProvider darkMode={context?.args.darkMode}>
-          <LeafyGreenChatProvider variant={Variant.Compact}>
-            <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
-              <StoryFn />
-            </Message>
-          </LeafyGreenChatProvider>
+          <Message isSender={false} messageBody={SAMPLE_MESSAGE_BODY}>
+            <StoryFn />
+          </Message>
         </LeafyGreenProvider>
       ),
     },
@@ -292,6 +284,85 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<Messa
     parameters: {
       chromatic: {
         delay: 300,
+      },
+    },
+  };
+
+export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryObj<MessageActionsProps> =
+  {
+    render: Template,
+    args: {
+      onRatingChange: testOnRatingChange,
+      onSubmitFeedback: testOnSubmitFeedback,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+
+      // Click thumbs up button
+      const thumbsUpButton = canvas.getByRole('radio', {
+        name: 'Like this message',
+      });
+      await userEvent.click(thumbsUpButton);
+
+      // Type in feedback textarea
+      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
+      await userEvent.type(textarea, 'Lorem ipsum');
+
+      // Submit feedback
+      const submitButton = canvas.getByRole('button', { name: 'Submit' });
+      await userEvent.click(submitButton);
+
+      // Verify success message is shown
+      const successMessage = canvas.getByText('Thanks for your feedback!');
+      expect(successMessage).toBeInTheDocument();
+
+      // Verify feedback form is no longer interactive
+      expect(canvas.queryByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeNull();
+      expect(canvas.queryByRole('button', { name: 'Submit' })).toBeNull();
+    },
+    parameters: {
+      chromatic: {
+        delay: 3600,
+      },
+    },
+  };
+
+export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryObj<MessageActionsProps> =
+  {
+    render: Template,
+    args: {
+      darkMode: true,
+      onRatingChange: testOnRatingChange,
+      onSubmitFeedback: testOnSubmitFeedback,
+    },
+    play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+
+      // Click thumbs up button
+      const thumbsUpButton = canvas.getByRole('radio', {
+        name: 'Like this message',
+      });
+      await userEvent.click(thumbsUpButton);
+
+      // Type in feedback textarea
+      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
+      await userEvent.type(textarea, 'Lorem ipsum');
+
+      // Submit feedback
+      const submitButton = canvas.getByRole('button', { name: 'Submit' });
+      await userEvent.click(submitButton);
+
+      // Verify success message is shown
+      const successMessage = canvas.getByText('Thanks for your feedback!');
+      expect(successMessage).toBeInTheDocument();
+
+      // Verify feedback form is no longer interactive
+      expect(canvas.queryByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeNull();
+      expect(canvas.queryByRole('button', { name: 'Submit' })).toBeNull();
+    },
+    parameters: {
+      chromatic: {
+        delay: 3600,
       },
     },
   };

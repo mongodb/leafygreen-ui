@@ -9,11 +9,11 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, within } from '@storybook/test';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import SparkleIcon from '@leafygreen-ui/icon/dist/Sparkle';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
 import {
   BaseFontSize,

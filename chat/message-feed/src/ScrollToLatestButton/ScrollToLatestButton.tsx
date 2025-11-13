@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button, { Size as ButtonSize } from '@leafygreen-ui/button';
+import { Button, Size as ButtonSize } from '@leafygreen-ui/button';
 import ArrowDownIcon from '@leafygreen-ui/icon/dist/ArrowDown';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 

@@ -11,7 +11,7 @@ import isUndefined from 'lodash/isUndefined';
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { keyMap } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,

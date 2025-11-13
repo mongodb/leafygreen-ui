@@ -10,7 +10,6 @@ import { CodeSkeleton } from '@leafygreen-ui/skeleton-loader';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import CodeContextProvider from '../CodeContext/CodeContext';
-import { numOfCollapsedLinesOfCode } from '../constants';
 import CopyButton from '../CopyButton/CopyButton';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
@@ -41,6 +40,7 @@ function Code({
   showLineNumbers = false,
   lineNumberStart = 1,
   expandable = false,
+  collapsedLines = 5,
   isLoading = false,
   highlightLines = [],
   copyButtonAppearance = CopyButtonAppearance.Hover,
@@ -67,25 +67,6 @@ function Code({
 
   const showPanel = !!panel;
 
-  if (
-    // @ts-expect-error detecting deprecated props
-    rest.copyable ||
-    // @ts-expect-error detecting deprecated props
-    rest.showCustomActionButtons ||
-    // @ts-expect-error detecting deprecated props
-    rest.languageOptions ||
-    // @ts-expect-error detecting deprecated props
-    rest.customActionButtons ||
-    // @ts-expect-error detecting deprecated props
-    rest.chromeTitle ||
-    // @ts-expect-error detecting deprecated props
-    rest.onChange
-  ) {
-    console.warn(
-      'The following props are deprecated and have been removed: copyable, showCustomActionButtons, languageOptions, customActionButtons, chromeTitle, onChange. Please use the Panel component instead.',
-    );
-  }
-
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
 
@@ -106,9 +87,9 @@ function Code({
     const linesOfCode = scrollableElement.querySelectorAll('tr');
     let collapsedCodeHeight = codeHeight;
 
-    if (linesOfCode.length > numOfCollapsedLinesOfCode) {
+    if (linesOfCode.length > collapsedLines) {
       const topOfCode = scrollableElement.getBoundingClientRect().top;
-      const lastVisisbleLineOfCode = linesOfCode[numOfCollapsedLinesOfCode - 1];
+      const lastVisisbleLineOfCode = linesOfCode[collapsedLines - 1];
       const bottomOfLastVisibleLineOfCode =
         lastVisisbleLineOfCode.getBoundingClientRect().bottom;
       collapsedCodeHeight =
@@ -124,6 +105,7 @@ function Code({
     expandable,
     scrollableElementRef,
     baseFontSize, // will cause changes in code height
+    collapsedLines,
   ]);
 
   const renderedSyntaxComponent = (
@@ -170,7 +152,7 @@ function Code({
   const showExpandButton = !!(
     expandable &&
     numOfLinesOfCode &&
-    numOfLinesOfCode > numOfCollapsedLinesOfCode &&
+    numOfLinesOfCode > collapsedLines &&
     !isLoading
   );
 

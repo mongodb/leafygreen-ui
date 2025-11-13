@@ -2,10 +2,10 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
+  boxShadows,
   color,
   fontFamilies,
   InteractionState,
-  shadow,
   spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
@@ -19,7 +19,7 @@ export const getTooltipStyles = (theme: Theme) => css`
   border-radius: ${borderRadius[200]}px;
   border: 1px solid
     ${color[theme].border[Variant.Secondary][InteractionState.Default]};
-  box-shadow: ${shadow[theme][100]};
+  box-shadow: ${boxShadows[theme][1]};
   line-height: ${MESSAGE_LINE_HEIGHT}px;
   width: fit-content;
 `;

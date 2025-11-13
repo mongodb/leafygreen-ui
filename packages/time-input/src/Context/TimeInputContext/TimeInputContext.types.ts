@@ -27,6 +27,6 @@ export interface TimeInputContextProps {
  */
 export interface TimeInputProviderProps {
   value: DateType | undefined;
-  setValue: (newVal: DateType | undefined) => void;
+  setValue: (newVal: React.SetStateAction<DateType | undefined>) => void;
   handleValidation?: TimeInputProps['handleValidation'];
 }

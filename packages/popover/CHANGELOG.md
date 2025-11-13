@@ -1,5 +1,57 @@
 # @leafygreen-ui/popover
 
+## 14.3.0
+
+### Minor Changes
+
+- 83b0b92: Popover sizes are now restricted to the available space in the viewport, based on the computed position, align & justify.
+
+  Adds `maxHeight` & `maxWidth` props to further restrict the popover size.
+  If the provided value is _greater than_ the available space above/below (for height), or left/right (for width) of the reference element,
+  the size will be restricted to the available space (i.e. the popover will not overflow the viewport).
+
+  Note: Any `max-height` or `max-width` value applied with additional CSS will take precedence, and will override the "available space" calculation
+
+  Exports `popoverCSSProperties` constant for use in components that extend popover
+
+### Patch Changes
+
+- 83b0b92: Separates popover reference element position calculation into separate hook
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/hooks@9.2.2
+
+## 14.2.0
+
+### Minor Changes
+
+- 4ea4f00: [LG-5008](https://jira.mongodb.org/browse/LG-5008)
+
+  - Improves positioning logic with enhanced positioning fallback to optimize popover element visibility
+  - Assigns `GuideCue` component's internal beacon ref for better positioning of tooltip instances relative to beacon
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
+## 14.1.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/portal@7.1.0
+
 ## 14.0.6
 
 ### Patch Changes

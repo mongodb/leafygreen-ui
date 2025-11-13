@@ -3,16 +3,18 @@ import isUndefined from 'lodash/isUndefined';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
-import Popover from '@leafygreen-ui/popover';
+import { Popover } from '@leafygreen-ui/popover';
 import { Error } from '@leafygreen-ui/typography';
 
 import { ComboboxProps } from '../Combobox';
 import { ComboboxContext } from '../ComboboxContext';
+import { DropdownWidthBasis } from '../types';
 
 import {
+  autoWidthStyles,
   getMenuThemeStyles,
   loadingIconStyle,
   menuBaseStyle,
@@ -30,6 +32,7 @@ type ComboboxMenuProps = {
   id: string;
   labelId: string;
   menuWidth: number;
+  dropdownWidthBasis?: DropdownWidthBasis;
 } & Pick<
   ComboboxProps<any>,
   'searchLoadingMessage' | 'searchErrorMessage' | 'searchEmptyMessage'
@@ -46,6 +49,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
       searchLoadingMessage,
       searchErrorMessage,
       searchEmptyMessage,
+      dropdownWidthBasis = DropdownWidthBasis.Trigger,
     }: ComboboxMenuProps,
     forwardedRef,
   ) => {
@@ -134,7 +138,9 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
         justify="middle"
         refEl={refEl}
         adjustOnMutation={true}
-        className={cx(popoverStyle(menuWidth), popoverThemeStyle[theme])}
+        className={cx(popoverStyle(menuWidth), popoverThemeStyle[theme], {
+          [autoWidthStyles]: dropdownWidthBasis === DropdownWidthBasis.Option,
+        })}
       >
         <div
           ref={ref}

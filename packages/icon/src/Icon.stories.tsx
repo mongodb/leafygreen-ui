@@ -17,7 +17,7 @@ const meta: StoryMetaType<typeof Icon> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [...storybookExcludedControlParams, 'title', 'data-testid'],
+      exclude: [...storybookExcludedControlParams, 'data-testid'],
     },
   },
   args: {
@@ -32,6 +32,11 @@ const meta: StoryMetaType<typeof Icon> = {
     },
     fill: {
       control: 'color',
+    },
+    title: {
+      control: 'text',
+      description: 'The title of the icon for accessibility',
+      defaultValue: undefined,
     },
   },
 };

@@ -12,7 +12,10 @@ import {
   baseStyles,
   expandedContentThemeStyles,
 } from './ExpandedContent.styles';
-import { ExpandedContentProps } from './ExpandedContent.types';
+import {
+  ExpandedContentComponentType,
+  ExpandedContentProps,
+} from './ExpandedContent.types';
 
 const ExpandedContentWithRef = <T extends RowData>(
   { row, virtualRow, ...rest }: ExpandedContentProps<T>,
@@ -48,7 +51,9 @@ const ExpandedContentWithRef = <T extends RowData>(
 
 // React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
 // This assertion has an interface that restores the original function signature to work with generics.
-export const ExpandedContent = React.forwardRef(ExpandedContentWithRef);
+export const ExpandedContent = React.forwardRef(
+  ExpandedContentWithRef,
+) as ExpandedContentComponentType;
 
 ExpandedContent.displayName = 'ExpandedContent';
 

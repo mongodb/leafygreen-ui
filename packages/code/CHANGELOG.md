@@ -1,5 +1,87 @@
 # @leafygreen-ui/code
 
+## 20.2.2
+
+### Patch Changes
+
+- Updated dependencies [6494d15]
+- Updated dependencies [2463aa4]
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/select@17.0.0
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
+## 20.2.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/select@16.3.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+  - @leafygreen-ui/skeleton-loader@3.0.8
+  - @leafygreen-ui/tooltip@14.2.2
+
+## 20.2.0
+
+### Minor Changes
+
+- 37be24b: Add `collapsedLines` prop to allow customization of the number of visible lines when code block is collapsed
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [7f7c385]
+- Updated dependencies [7fc3077]
+- Updated dependencies [c8559f3]
+- Updated dependencies [51c453b]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/skeleton-loader@3.0.7
+  - @leafygreen-ui/select@16.2.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/tooltip@14.2.1
+  - @leafygreen-ui/button@25.1.1
+
+## 20.1.1
+
+### Patch Changes
+
+- 708b5fc: Replaces `postinstall` script with `prepare`. This ensures that the step is performed only pre-publish and not when the package is installed by consumers
+- 6e0615c: Remove dev dependency from prod dependencies; Rename file to trigger a release
+- Updated dependencies [6e0615c]
+- Updated dependencies [a565b3f]
+  - @leafygreen-ui/select@16.1.4
+  - @leafygreen-ui/lib@15.6.2
+
+## 20.1.0
+
+### Minor Changes
+
+- d027d4c: Mark default export as deprecated and add named export if missing. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.
+
+### Patch Changes
+
+- e07939c: Remove mentions of props removed in v18
+- Updated dependencies [88e25a1]
+- Updated dependencies [579e8c7]
+- Updated dependencies [d027d4c]
+  - @leafygreen-ui/lib@15.6.1
+  - @leafygreen-ui/hooks@9.2.0
+  - @leafygreen-ui/icon-button@17.1.0
+  - @leafygreen-ui/tooltip@14.2.0
+  - @leafygreen-ui/button@25.1.0
+  - @leafygreen-ui/icon@14.6.0
+
 ## 20.0.8
 
 ### Patch Changes

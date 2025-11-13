@@ -18,7 +18,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
@@ -95,7 +95,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -148,7 +148,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -191,8 +191,8 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          version: pnpm run version
-          publish: pnpm publish -r --no-git-checks
+          version: pnpm run version # Rebuild packages to ensure any uncommitted pre-build artifacts
+          publish: pnpm publish -r --no-git-checks # Use `pnpm publish` directly to resolve `workspace` dependencies
           createGithubReleases: true
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
@@ -209,7 +209,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -220,7 +220,7 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
-      
+
       - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
@@ -264,7 +264,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
@@ -309,7 +309,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       - name: Dispatch to Website repo
         uses: peter-evans/repository-dispatch@v2

@@ -6,7 +6,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { GalleryIndicator } from '.';
+import { GalleryIndicator, Variant } from '.';
 
 const meta: StoryMetaType<typeof GalleryIndicator> = {
   title: 'Components/Display/GalleryIndicator',
@@ -20,6 +20,7 @@ const meta: StoryMetaType<typeof GalleryIndicator> = {
       combineArgs: {
         darkMode: [false, true],
         activeIndex: [0, 1, 2, 3],
+        variant: Object.values(Variant),
       },
     },
   },
@@ -27,6 +28,7 @@ const meta: StoryMetaType<typeof GalleryIndicator> = {
     activeIndex: 0,
     length: 4,
     darkMode: false,
+    variant: Variant.Default,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -41,6 +43,11 @@ const meta: StoryMetaType<typeof GalleryIndicator> = {
         type: 'range',
         max: 10,
       },
+    },
+    variant: {
+      control: { type: 'select' },
+      options: Object.values(Variant),
+      defaultValue: Variant.Default,
     },
   },
 };

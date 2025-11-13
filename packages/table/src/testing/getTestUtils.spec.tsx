@@ -78,7 +78,6 @@ function TableWithHook(props: TestTableWithHookProps) {
                       })}
                   </Row>
                 )}
-                {/* @ts-expect-error FIXME: ExpandedContent is incorrectly generic */}
                 {isExpandedContent && <ExpandedContent row={row} />}
               </Fragment>
             );

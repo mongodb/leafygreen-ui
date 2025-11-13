@@ -14,6 +14,7 @@ import {
 
 import { getElementDocumentPosition } from '../../utils/positionUtils';
 import {
+  ElementPosition,
   PopoverProps,
   RenderMode,
   UseContentNodeReturnObj,
@@ -122,7 +123,6 @@ export function usePopoverProps({
  */
 export function useReferenceElement(
   refEl?: PopoverProps['refEl'],
-  scrollContainer?: PopoverProps['scrollContainer'],
 ): UseReferenceElementReturnObj {
   const [placeholderElement, setPlaceholderElement] =
     useState<HTMLSpanElement | null>(null);
@@ -154,18 +154,30 @@ export function useReferenceElement(
     }
   }, [didRefElementChange, placeholderElement, refEl]);
 
-  const referenceElDocumentPos = useObjectDependency(
-    useMemo(
-      () => getElementDocumentPosition(referenceElement, scrollContainer, true),
-      [referenceElement, scrollContainer],
-    ),
-  );
-
   return {
     referenceElement,
-    referenceElDocumentPos,
     setPlaceholderElement,
   };
+}
+
+/**
+ *
+ */
+export function useReferenceElementPosition(
+  referenceElement: HTMLElement | null,
+  scrollContainer?: PopoverProps['scrollContainer'],
+): ElementPosition {
+  // Recalculate the currentPos when the refEl object changes
+  const currentPosMemo = useMemo(
+    () => getElementDocumentPosition(referenceElement, scrollContainer, true),
+    [referenceElement, scrollContainer],
+  );
+
+  // Ensures the same object reference is returned
+  // even if `currentPosMemo` is a new object reference with identical values
+  const referenceElDocumentPos = useObjectDependency(currentPosMemo);
+
+  return referenceElDocumentPos;
 }
 
 export function useContentNode(): UseContentNodeReturnObj {

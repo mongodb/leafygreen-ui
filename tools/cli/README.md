@@ -7,13 +7,13 @@ Defines a command line interface for LeafyGreen.
 ### Global
 
 ```bash
-> yarn add --global @lg-tools/cli
+yarn global add @lg-tools/cli
 ```
 
 ### Local
 
 ```bash
-> yarn add -D @lg-tools/cli
+yarn add --dev @lg-tools/cli
 ```
 
 ## Usage

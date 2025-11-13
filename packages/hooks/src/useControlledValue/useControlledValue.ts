@@ -16,7 +16,7 @@ export const useControlledValue = <T>(
   controlledValue?: T,
   changeHandler?: ChangeEventHandler<any> | null,
   initialValue?: T,
-): ControlledValueReturnObject<T | undefined> => {
+): ControlledValueReturnObject<T> => {
   // Use the new useControlled hook under the hood
   const { isControlled, value, setUncontrolledValue } = useControlled(
     controlledValue,

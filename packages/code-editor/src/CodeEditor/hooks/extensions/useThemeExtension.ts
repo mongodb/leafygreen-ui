@@ -2,6 +2,7 @@ import { type EditorView } from '@codemirror/view';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
   borderRadius,
   color,
@@ -18,6 +19,11 @@ import {
 import { type CodeEditorModules } from '../moduleLoaders.types';
 
 import { useExtension } from './useExtension';
+
+// Exported so that an estimated height can be calculated for the editor while it's loading
+export const LINE_HEIGHT = 1.5;
+export const PADDING_TOP = spacing[200];
+export const PADDING_BOTTOM = spacing[200];
 
 /**
  * Hook for applying LeafyGreen UI theme styling to the CodeMirror editor.
@@ -77,8 +83,6 @@ export function useThemeExtension({
             borderTopLeftRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             borderTopRightRadius: hasPanel ? 0 : `${borderRadius[300]}px`,
             color: color[theme].text[Variant.Primary][InteractionState.Default],
-            paddingTop: `${spacing[200]}px`,
-            paddingBottom: `${spacing[200]}px`,
           },
 
           [`&${CodeEditorSelectors.Focused}`]: {
@@ -87,9 +91,19 @@ export function useThemeExtension({
     ${color[theme].border[Variant.Secondary][InteractionState.Default]}`,
           },
 
+          [CodeEditorSelectors.Scroller]: {
+            paddingTop: `${PADDING_TOP}px`,
+            paddingBottom: `${PADDING_BOTTOM}px`,
+          },
+
+          [CodeEditorSelectors.FoldPlaceholder]: {
+            background: 'transparent',
+          },
+
           [CodeEditorSelectors.Content]: {
             fontFamily: fontFamilies.code,
             fontSize: `${fontSize}px`,
+            padding: '0px',
           },
 
           [CodeEditorSelectors.Gutters]: {
@@ -110,9 +124,17 @@ export function useThemeExtension({
             {
               width: '48px',
               userSelect: 'none',
+              // Set on the fold gutter element instead so there's still padding when line numbers are disabled
+              paddingRight: 0,
+            },
+
+          [`${CodeEditorSelectors.FoldGutter} ${CodeEditorSelectors.GutterElement}`]:
+            {
+              paddingLeft: `${spacing[100]}px`,
             },
 
           [CodeEditorSelectors.Line]: {
+            lineHeight: LINE_HEIGHT,
             paddingLeft: `${spacing[300]}px`,
           },
 
@@ -140,6 +162,33 @@ export function useThemeExtension({
           [CodeEditorSelectors.DiagnosticInfo]: {
             border: 'none',
           },
+
+          [CodeEditorSelectors.SearchPanelContainer]: {
+            backgroundColor: 'transparent',
+          },
+
+          [CodeEditorSelectors.SearchPanelContainerTop]: {
+            border: 'none',
+          },
+
+          [`${CodeEditorSelectors.SearchMatch}:not(${CodeEditorSelectors.SearchMatchSelected}), 
+            ${CodeEditorSelectors.SearchMatch}:not(${CodeEditorSelectors.SearchMatchSelected}) > *`]:
+            {
+              backgroundColor: palette.yellow.light2,
+              color:
+                color[Theme.Light].text[Variant.Primary][
+                  InteractionState.Default
+                ],
+            },
+
+          [`${CodeEditorSelectors.SearchMatchSelected}, ${CodeEditorSelectors.SearchMatchSelected} > *`]:
+            {
+              backgroundColor: `${palette.yellow.base}`,
+              color:
+                color[Theme.Light].text[Variant.Primary][
+                  InteractionState.Default
+                ],
+            },
         },
         { dark: theme === Theme.Dark },
       );
