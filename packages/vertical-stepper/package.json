@@ -32,7 +32,7 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",

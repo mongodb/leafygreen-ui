@@ -142,7 +142,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -161,7 +161,7 @@ importers:
   charts/colors:
     dependencies:
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -201,7 +201,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -247,7 +247,7 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@lg-charts/chart-card':
         specifier: workspace:^
@@ -269,7 +269,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -297,7 +297,7 @@ importers:
   charts/series-provider:
     dependencies:
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -328,7 +328,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -346,7 +346,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^5.1.0
+        specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
       '@lg-tools/test-harnesses':
         specifier: workspace:^
@@ -374,7 +374,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -386,7 +386,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/tokens
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^5.1.0
+        specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
       '@lg-chat/title-bar':
         specifier: workspace:^
@@ -444,7 +444,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -468,7 +468,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^5.1.0
+        specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
       lodash:
         specifier: ^4.17.21
@@ -499,7 +499,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -545,7 +545,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -563,7 +563,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^5.1.0
+        specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
       '@lg-chat/lg-markdown':
         specifier: workspace:^
@@ -597,7 +597,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -609,7 +609,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/tokens
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^5.1.0
+        specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: workspace:^
@@ -649,7 +649,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -667,7 +667,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^5.1.0
+        specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-chat/message-rating':
@@ -689,7 +689,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -723,7 +723,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -735,7 +735,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/tokens
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^5.1.0
+        specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-tools/build':
@@ -754,7 +754,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -791,7 +791,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -816,7 +816,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -828,7 +828,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: workspace:^5.1.0
+        specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
     devDependencies:
       '@lg-tools/build':
@@ -860,7 +860,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -888,7 +888,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -916,7 +916,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -941,7 +941,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -984,7 +984,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1012,7 +1012,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1043,7 +1043,7 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1080,7 +1080,7 @@ importers:
         specifier: workspace:^
         version: link:../inline-definition
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1117,7 +1117,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1256,7 +1256,7 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1341,7 +1341,7 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1396,7 +1396,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1436,7 +1436,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1479,7 +1479,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1531,7 +1531,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1614,7 +1614,7 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1660,7 +1660,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1737,7 +1737,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1774,7 +1774,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1823,7 +1823,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1860,7 +1860,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1900,7 +1900,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1931,7 +1931,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -1971,7 +1971,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2100,7 +2100,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2131,7 +2131,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2156,7 +2156,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2187,7 +2187,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2250,7 +2250,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2300,7 +2300,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2343,7 +2343,7 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2398,7 +2398,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2462,7 +2462,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2499,7 +2499,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2530,7 +2530,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2591,7 +2591,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2622,7 +2622,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2672,7 +2672,7 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2743,7 +2743,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2783,7 +2783,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2816,7 +2816,7 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2844,7 +2844,7 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2906,7 +2906,7 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2943,7 +2943,7 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -2973,7 +2973,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3025,7 +3025,7 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3077,7 +3077,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3129,7 +3129,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3166,7 +3166,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3200,7 +3200,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3240,7 +3240,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3319,7 +3319,7 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3393,7 +3393,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3427,7 +3427,7 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3461,7 +3461,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3516,7 +3516,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3572,7 +3572,7 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3612,7 +3612,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3652,7 +3652,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -3686,7 +3686,7 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
@@ -4323,7 +4323,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/palette':
         specifier: workspace:^
