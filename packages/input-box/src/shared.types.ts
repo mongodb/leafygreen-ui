@@ -57,9 +57,9 @@ export interface InputSegmentComponentProps<Segment extends string>
    * 'day'
    * 'month'
    * 'year'
-   * 'hours'
-   * 'minutes'
-   * 'seconds'
+   * 'hour'
+   * 'minute'
+   * 'second'
    */
   segment: Segment;
 

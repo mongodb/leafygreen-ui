@@ -116,5 +116,8 @@ export const LiveExample: StoryFn<typeof InputSegment> = ({
     />
   );
 };
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const Generated = () => {};
