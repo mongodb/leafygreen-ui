@@ -1,6 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 export const segmentPartsWrapperStyles = css`
   display: flex;
@@ -12,14 +12,10 @@ export const separatorLiteralStyles = css`
   user-select: none;
 `;
 
-export const separatorLiteralDisabledStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    color: ${palette.gray.dark2};
-  `,
-  [Theme.Light]: css`
-    color: ${palette.gray.base};
-  `,
-};
+export const getSeparatorLiteralDisabledStyles = (theme: Theme) =>
+  css`
+    color: ${color[theme].text[Variant.Disabled][InteractionState.Default]};
+  `;
 
 export const getSeparatorLiteralStyles = ({
   theme,
@@ -29,7 +25,7 @@ export const getSeparatorLiteralStyles = ({
   disabled?: boolean;
 }) => {
   return cx(separatorLiteralStyles, {
-    [separatorLiteralDisabledStyles[theme]]: disabled,
+    [getSeparatorLiteralDisabledStyles(theme)]: disabled,
   });
 };
 
