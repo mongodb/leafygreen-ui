@@ -6,10 +6,10 @@ import React, {
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
 
 import {
   InputSegmentChangeEventHandler,
+  Size,
   isInputSegment,
 } from '../shared.types';
 import {

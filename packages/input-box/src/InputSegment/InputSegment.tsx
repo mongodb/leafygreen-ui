@@ -8,7 +8,7 @@ import React, {
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
+import { Size } from '../shared.types';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {

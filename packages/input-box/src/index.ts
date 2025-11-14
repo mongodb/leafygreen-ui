@@ -3,6 +3,7 @@ export { InputSegment, type InputSegmentProps } from './InputSegment';
 export {
   type InputSegmentChangeEventHandler,
   isInputSegment,
+  Size,
 } from './shared.types';
 export {
   createExplicitSegmentValidator,

@@ -1,6 +1,8 @@
 import { keyMap } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
+export { Size };
+
 /**
  *  SharedInput Segment Types
  */

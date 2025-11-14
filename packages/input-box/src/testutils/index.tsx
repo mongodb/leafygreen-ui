@@ -1,11 +1,9 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 
-import { Size } from '@leafygreen-ui/tokens';
-
 import { InputBox, InputBoxProps } from '../InputBox';
 import { InputSegment, type InputSegmentProps } from '../InputSegment';
-import { InputSegmentComponentProps } from '../shared.types';
+import { InputSegmentComponentProps, Size } from '../shared.types';
 
 import {
   defaultFormatPartsMock,

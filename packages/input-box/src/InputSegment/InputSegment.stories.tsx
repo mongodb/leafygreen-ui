@@ -6,7 +6,7 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Size } from '@leafygreen-ui/tokens';
+import { Size } from '../shared.types';
 
 import {
   defaultPlaceholderMock,
