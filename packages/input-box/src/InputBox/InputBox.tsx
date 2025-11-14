@@ -6,6 +6,7 @@ import React, {
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
 import {
   InputSegmentChangeEventHandler,
@@ -34,12 +35,12 @@ const InputBoxWithRef = <Segment extends string>(
     onKeyDown,
     setSegment,
     disabled,
-    charsPerSegment,
     formatParts,
     segmentEnum,
     segmentRules,
     segmentComponent,
     segments,
+    size = Size.Default,
     ...rest
   }: InputBoxProps<Segment>,
   fwdRef: ForwardedRef<HTMLDivElement>,
@@ -51,6 +52,9 @@ const InputBoxWithRef = <Segment extends string>(
     rules: segmentRules,
   });
 
+  const getCharsPerSegment = (segment: Segment) =>
+    segmentRules[segment].maxChars;
+
   /** Formats and sets the segment value. */
   const getFormattedSegmentValue = (
     segmentName: (typeof segmentEnum)[keyof typeof segmentEnum],
@@ -58,7 +62,7 @@ const InputBoxWithRef = <Segment extends string>(
     allowZero: boolean,
   ): string => {
     const formatter = getValueFormatter({
-      charsPerSegment: charsPerSegment[segmentName],
+      charsPerSegment: getCharsPerSegment(segmentName),
       allowZero,
     });
     const formattedValue = formatter(segmentValue);
@@ -241,6 +245,8 @@ const InputBoxWithRef = <Segment extends string>(
                 value={segments[part.type]}
                 ref={segmentRefs[part.type]}
                 disabled={disabled}
+                charsCount={getCharsPerSegment(part.type)}
+                size={size}
               />
             );
           }

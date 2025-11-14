@@ -10,7 +10,6 @@ import {
   renderInputBox,
 } from '../testutils';
 import {
-  charsPerSegmentMock,
   SegmentObjMock,
   segmentRefsMock,
   segmentRulesMock,
@@ -528,10 +527,10 @@ describe('packages/input-box', () => {
       segmentRefs={segmentRefsMock}
       segments={segmentsMock}
       setSegment={() => {}}
-      charsPerSegment={charsPerSegmentMock}
       segmentRules={segmentRulesMock}
       segmentComponent={InputSegmentWrapper}
       disabled={false}
+      size={'default'}
     />;
   });
 });

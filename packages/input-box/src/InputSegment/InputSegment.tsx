@@ -8,6 +8,7 @@ import React, {
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
@@ -33,10 +34,10 @@ const InputSegmentWithRef = <Segment extends string>(
     onChange,
     onBlur,
     segmentEnum,
-    size,
     disabled,
     value,
     charsCount,
+    size = Size.Default,
     step = 1,
     shouldWrap = true,
     shouldValidate = true,

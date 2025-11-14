@@ -29,11 +29,6 @@ export const segmentsMock: Record<SegmentObjMock, string> = {
   day: '02',
   year: '2025',
 };
-export const charsPerSegmentMock: Record<SegmentObjMock, number> = {
-  month: 2,
-  day: 2,
-  year: 4,
-};
 export const segmentRulesMock: Record<SegmentObjMock, ExplicitSegmentRule> = {
   month: { maxChars: 2, minExplicitValue: 2 },
   day: { maxChars: 2, minExplicitValue: 4 },
@@ -74,12 +69,12 @@ export const characterWidth = {
 
 export const segmentWidthStyles: Record<SegmentObjMock, string> = {
   day: css`
-    width: ${charsPerSegmentMock.day * characterWidth.D}ch;
+    width: ${segmentRulesMock['day'].maxChars * characterWidth.D}ch;
   `,
   month: css`
-    width: ${charsPerSegmentMock.month * characterWidth.M}ch;
+    width: ${segmentRulesMock['month'].maxChars * characterWidth.M}ch;
   `,
   year: css`
-    width: ${charsPerSegmentMock.year * characterWidth.Y}ch;
+    width: ${segmentRulesMock['year'].maxChars * characterWidth.Y}ch;
   `,
 };

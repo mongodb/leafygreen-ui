@@ -7,6 +7,7 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { Size } from '@leafygreen-ui/tokens';
 
 import { SegmentObjMock } from './testutils/testutils.mocks';
 import { InputBox, InputBoxProps } from './InputBox';
@@ -35,7 +36,6 @@ const meta: StoryMetaType<typeof InputBox> = {
         'segmentObj',
         'segmentRefs',
         'setSegment',
-        'charsPerSegment',
         'formatParts',
         'segmentRules',
         'labelledBy',
@@ -50,9 +50,14 @@ const meta: StoryMetaType<typeof InputBox> = {
     disabled: {
       control: 'boolean',
     },
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+    },
   },
   args: {
     disabled: false,
+    size: Size.Default,
   },
 };
 export default meta;

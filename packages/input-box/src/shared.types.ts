@@ -1,4 +1,5 @@
 import { keyMap } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
 /**
  *  SharedInput Segment Types
@@ -47,7 +48,7 @@ export function isInputSegment<T extends Record<string, string>>(
 export interface InputSegmentComponentProps<Segment extends string>
   extends Omit<
       React.ComponentPropsWithRef<'input'>,
-      'onChange' | 'value' | 'disabled'
+      'onChange' | 'value' | 'disabled' | 'size' | 'step'
     >,
     SharedInputBoxTypes<Segment> {
   /**
@@ -67,6 +68,11 @@ export interface InputSegmentComponentProps<Segment extends string>
    * The value of the segment
    */
   value: string;
+
+  /**
+   * The number of characters per segment
+   */
+  charsCount: number;
 }
 
 /**
@@ -87,4 +93,16 @@ export interface SharedInputBoxTypes<Segment extends string> {
    * Whether the input box is disabled
    */
   disabled: boolean;
+
+  /**
+   * The size of the input box
+   *
+   * @example
+   * Size.Default
+   * Size.Small
+   * Size.Large
+   *
+   * @default Size.Default
+   */
+  size?: Size;
 }

@@ -8,7 +8,6 @@ import { InputSegment, type InputSegmentProps } from '../InputSegment';
 import { InputSegmentComponentProps } from '../shared.types';
 
 import {
-  charsPerSegmentMock,
   defaultFormatPartsMock,
   defaultMaxMock,
   defaultMinMock,
@@ -25,7 +24,6 @@ export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
   segmentEnum: SegmentObjMock,
   segmentRefs: segmentRefsMock,
   setSegment: () => {},
-  charsPerSegment: charsPerSegmentMock,
   formatParts: defaultFormatPartsMock,
   segmentRules: segmentRulesMock,
 };
@@ -47,6 +45,8 @@ export const InputSegmentWrapper = React.forwardRef<
       onBlur = () => {},
       segmentEnum = SegmentObjMock,
       disabled = false,
+      charsCount,
+      size,
     },
     ref,
   ) => {
@@ -62,10 +62,10 @@ export const InputSegmentWrapper = React.forwardRef<
         minSegmentValue={defaultMinMock[segment]}
         maxSegmentValue={defaultMaxMock[segment]}
         value={value}
-        charsCount={charsPerSegmentMock[segment]}
+        charsCount={charsCount}
         onChange={onChange}
         onBlur={onBlur}
-        size={Size.Default}
+        size={size}
         segmentEnum={segmentEnum}
         ref={ref}
         disabled={disabled}
@@ -89,6 +89,7 @@ export const InputBoxWithState = ({
   },
   setSegment: setSegmentProp,
   disabled = false,
+  size = Size.Default,
   ...props
 }: Partial<InputBoxProps<SegmentObjMock>> & {
   segments?: Record<SegmentObjMock, string>;
@@ -120,11 +121,11 @@ export const InputBoxWithState = ({
       segmentRefs={segmentRefs}
       segments={effectiveSegments}
       setSegment={effectiveSetSegment}
-      charsPerSegment={charsPerSegmentMock}
       formatParts={defaultFormatPartsMock}
       segmentRules={segmentRulesMock}
       segmentComponent={InputSegmentWrapper}
       disabled={disabled}
+      size={size}
       {...props}
     />
   );

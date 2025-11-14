@@ -5,7 +5,6 @@ import { axe } from 'jest-axe';
 import { type InputSegmentChangeEventHandler } from '../shared.types';
 import { renderSegment } from '../testutils';
 import {
-  charsPerSegmentMock,
   defaultMaxMock,
   defaultMinMock,
   SegmentObjMock,
@@ -183,8 +182,8 @@ describe('packages/input-segment', () => {
     describe('keyboard events', () => {
       describe('Arrow keys', () => {
         const formatter = getValueFormatter({
-          charsPerSegment: charsPerSegmentMock['day'],
-          allowZero: defaultMinMock['day'] === 0,
+          charsPerSegment: 2,
+          allowZero: true,
         });
 
         describe('Up arrow', () => {
