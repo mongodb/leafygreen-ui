@@ -90,11 +90,11 @@ const InputSegmentWithRef = <Segment extends string>(
       target: HTMLInputElement;
     };
 
-    // If the value is a number, we check if the input is full and reset it if it is. The number will be inserted into the input when onChange is called.
-    // This is to handle the case where the user tries to type a number when the input is already full. Usually this happens when the focus is moved to the next segment or a segment is clicked
-    const isNumber = /^[0-9]$/.test(key);
+    // If the value is a single digit, we check if the input is full and reset it if it is. The digit will be inserted into the input when onChange is called.
+    // This is to handle the case where the user tries to type a single digit when the input is already full. Usually this happens when the focus is moved to the next segment or a segment is clicked
+    const isSingleDigit = /^[0-9]$/.test(key);
 
-    if (isNumber) {
+    if (isSingleDigit) {
       if (target.value.length === charsCount) {
         target.value = '';
       }
