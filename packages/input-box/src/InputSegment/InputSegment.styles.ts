@@ -1,0 +1,97 @@
+import { css, cx } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
+import {
+  BaseFontSize,
+  color,
+  fontFamilies,
+  InteractionState,
+  Size,
+  typeScales,
+  Variant,
+} from '@leafygreen-ui/tokens';
+
+export const baseStyles = css`
+  font-family: ${fontFamilies.default};
+  font-size: ${BaseFontSize.Body1}px;
+  font-variant: tabular-nums;
+  text-align: center;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const getSegmentThemeStyles = (theme: Theme) => {
+  return css`
+    background-color: transparent;
+    color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
+
+    &::placeholder {
+      color: ${color[theme].text[Variant.Placeholder][
+        InteractionState.Default
+      ]};
+    }
+
+    &:focus {
+      background-color: ${color[theme].background[Variant.Primary][
+        InteractionState.Focus
+      ]};
+    }
+  `;
+};
+
+export const fontSizeStyles: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    --base-font-size: ${BaseFontSize.Body1}px;
+  `,
+  [BaseFontSize.Body2]: css`
+    --base-font-size: ${BaseFontSize.Body2}px;
+  `,
+};
+
+export const segmentSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+  `,
+  [Size.Small]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+  `,
+  [Size.Default]: css`
+    font-size: var(--base-font-size, ${typeScales.body1.fontSize}px);
+  `,
+  [Size.Large]: css`
+    font-size: 18px; // Intentionally off-token
+  `,
+};
+
+export const getInputSegmentStyles = ({
+  className,
+  baseFontSize,
+  theme,
+  size,
+}: {
+  className?: string;
+  baseFontSize: BaseFontSize;
+  theme: Theme;
+  size: Size;
+}) => {
+  return cx(
+    baseStyles,
+    fontSizeStyles[baseFontSize],
+    getSegmentThemeStyles(theme),
+    segmentSizeStyles[size],
+    className,
+  );
+};

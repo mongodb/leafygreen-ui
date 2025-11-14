@@ -25,7 +25,11 @@ export interface ExplicitSegmentRule {
  *
  * @param segmentEnum - The segment enum/object containing the segment names and their corresponding values to validate against
  * @param rules - Rules for each segment type
- * @returns A function that checks if a segment value is explicit
+ * @returns A function that checks if a segment value is explicit and accepts the segment, value, and allowZero parameters
+ *
+ * @param segment - The segment to validate
+ * @param value - The value to validate
+ * @param allowZero - Whether to allow zero values
  *
  * @example
  * const segmentObj = {
@@ -39,7 +43,6 @@ export interface ExplicitSegmentRule {
  *   day: { maxChars: 2, minExplicitValue: 4 },
  *   month: { maxChars: 2, minExplicitValue: 2 },
  *   year: { maxChars: 4 },
- *   hour: { maxChars: 2, minExplicitValue: 3 },
  *   minute: { maxChars: 2, minExplicitValue: 6 },
  * };
  *
@@ -52,17 +55,14 @@ export interface ExplicitSegmentRule {
  *   rules,
  * });
  *
- * isExplicitSegmentValue('day', '1'); // false (Ambiguous - below min value and max length)
- * isExplicitSegmentValue('day', '01'); // true (Explicit - meets max length)
- * isExplicitSegmentValue('day', '4'); // true (Explicit - meets min value)
- * isExplicitSegmentValue('year', '2000'); // true (Explicit - meets max length)
- * isExplicitSegmentValue('year', '1'); // false (Ambiguous - below max length)
- * isExplicitSegmentValue('hour', '05'); // true (Explicit - meets min value)
- * isExplicitSegmentValue('hour', '23'); // true (Explicit - meets max length)
- * isExplicitSegmentValue('hour', '2'); // false (Ambiguous - below min value)
- * isExplicitSegmentValue('minute', '07'); // true (Explicit - meets min value)
- * isExplicitSegmentValue('minute', '59'); // true (Explicit - meets max length)
- * isExplicitSegmentValue('minute', '5'); // false (Ambiguous - below min value)
+ * isExplicitSegmentValue({ segment: 'day', value: '1', allowZero: false }); // false (Ambiguous - below min value and max length)
+ * isExplicitSegmentValue({ segment: 'day', value: '01', allowZero: false }); // true (Explicit - meets max length)
+ * isExplicitSegmentValue({ segment: 'day', value: '4', allowZero: false }); // true (Explicit - meets min value)
+ * isExplicitSegmentValue({ segment: 'year', value: '2000', allowZero: false }); // true (Explicit - meets max length)
+ * isExplicitSegmentValue({ segment: 'year', value: '1', allowZero: false }); // false (Ambiguous - below max length)
+ * isExplicitSegmentValue({ segment: 'minute', value: '07', allowZero: false }); // true (Explicit - meets min value)
+ * isExplicitSegmentValue({ segment: 'minute', value: '59', allowZero: false }); // true (Explicit - meets max length)
+ * isExplicitSegmentValue({ segment: 'minute', value: '5', allowZero: false }); // false (Ambiguous - below min value)
  */
 export function createExplicitSegmentValidator<
   SegmentEnum extends Record<string, string>,
@@ -73,11 +73,23 @@ export function createExplicitSegmentValidator<
   segmentEnum: SegmentEnum;
   rules: Record<SegmentEnum[keyof SegmentEnum], ExplicitSegmentRule>;
 }) {
-  return (segment: SegmentEnum[keyof SegmentEnum], value: string): boolean => {
+  return ({
+    segment,
+    value,
+    allowZero = false,
+  }: {
+    segment: SegmentEnum[keyof SegmentEnum];
+    value: string;
+    allowZero?: boolean;
+  }): boolean => {
     if (
-      !(isValidSegmentValue(value) && isValidSegmentName(segmentEnum, segment))
-    )
+      !(
+        isValidSegmentValue(value, allowZero) &&
+        isValidSegmentName(segmentEnum, segment)
+      )
+    ) {
       return false;
+    }
 
     const rule = rules[segment];
     if (!rule) return false;

@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 
+import { DateType } from '@leafygreen-ui/date-utils';
 import { useControlled } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
@@ -17,7 +18,6 @@ import {
 import { TimeInputContent } from '../TimeInputContent';
 
 import { TimeInputProps } from './TimeInput.types';
-import { DateType } from '@leafygreen-ui/date-utils';
 
 export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
   (

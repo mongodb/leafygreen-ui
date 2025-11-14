@@ -15,7 +15,7 @@ interface GetNewSegmentValueFromInputValue<
   defaultMin: number;
   defaultMax: number;
   segmentEnum: Readonly<Record<string, SegmentName>>;
-  shouldSkipValidation?: boolean;
+  shouldValidate?: boolean;
 }
 
 /**
@@ -33,7 +33,7 @@ interface GetNewSegmentValueFromInputValue<
  * @param defaultMin - The default minimum value for the segment
  * @param defaultMax - The default maximum value for the segment
  * @param segmentEnum - The segment enum/object containing the segment names and their corresponding values to validate against
- * @param shouldSkipValidation - Whether the segment should skip validation. This is useful for segments that allow values outside of the default range.
+ * @param shouldValidate - Whether the segment should validate. Skipping validation is useful for segments that allow values outside of the default range.
  * @returns The new value for the segment
  * @example
  * // The segmentEnum is the object that contains the segment names and their corresponding values
@@ -78,7 +78,7 @@ interface GetNewSegmentValueFromInputValue<
  *   defaultMin: 1970,
  *   defaultMax: 2038,
  *   segmentEnum,
- *   shouldSkipValidation: true,
+ *   shouldValidate: false,
  * }); // '000'
  *  *  * getNewSegmentValueFromInputValue({
  *   segmentName: 'minute',
@@ -101,7 +101,7 @@ export const getNewSegmentValueFromInputValue = <
   defaultMin,
   defaultMax,
   segmentEnum,
-  shouldSkipValidation = false,
+  shouldValidate = true,
 }: GetNewSegmentValueFromInputValue<SegmentName, Value>): Value => {
   // If the incoming value is not a valid number
   const isIncomingValueNumber = !isNaN(Number(incomingValue));
@@ -129,7 +129,7 @@ export const getNewSegmentValueFromInputValue = <
     segmentEnum,
   });
 
-  if (isIncomingValueValid || shouldSkipValidation) {
+  if (isIncomingValueValid || !shouldValidate) {
     const newValue = truncateStart(incomingValue, {
       length: charsPerSegment,
     });
