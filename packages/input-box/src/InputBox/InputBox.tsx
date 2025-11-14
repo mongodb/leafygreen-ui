@@ -182,7 +182,7 @@ export const InputBoxWithRef = <Segment extends string>(
 
       case keyMap.ArrowUp:
       case keyMap.ArrowDown: {
-        // increment/decrement logic implemented by DateInputSegment
+        // increment/decrement logic implemented by InputSegment
         break;
       }
 
