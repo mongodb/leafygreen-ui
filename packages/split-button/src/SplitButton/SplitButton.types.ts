@@ -6,8 +6,8 @@ import {
 } from '@leafygreen-ui/button';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import {
-  Align as ImportedAlign,
-  Justify as ImportedJustify,
+  Align as MenuAlign,
+  Justify as MenuJustify,
   MenuItemProps,
   type MenuProps as ImportedMenuProps,
   RenderMode,
@@ -32,15 +32,15 @@ export const Variant = {
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
 export const Align = {
-  Top: ImportedAlign.Top,
-  Bottom: ImportedAlign.Bottom,
+  Top: MenuAlign.Top,
+  Bottom: MenuAlign.Bottom,
 } as const;
 
 export type Align = (typeof Align)[keyof typeof Align];
 
 export const Justify = {
-  Start: ImportedJustify.Start,
-  End: ImportedJustify.End,
+  Start: MenuJustify.Start,
+  End: MenuJustify.End,
 } as const;
 
 export type Justify = (typeof Justify)[keyof typeof Justify];
