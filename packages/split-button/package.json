@@ -31,13 +31,13 @@
     "@leafygreen-ui/menu": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
-    "@leafygreen-ui/popover": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "devDependencies": {
+    "@leafygreen-ui/popover": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "exports": {

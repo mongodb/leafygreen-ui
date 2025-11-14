@@ -3180,13 +3180,13 @@ importers:
       '@leafygreen-ui/polymorphic':
         specifier: workspace:^
         version: link:../polymorphic
-      '@leafygreen-ui/popover':
-        specifier: workspace:^
-        version: link:../popover
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
     devDependencies:
+      '@leafygreen-ui/popover':
+        specifier: workspace:^
+        version: link:../popover
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
