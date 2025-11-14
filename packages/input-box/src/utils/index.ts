@@ -15,3 +15,4 @@ export {
   isValidSegmentValue,
 } from './isValidSegment/isValidSegment';
 export { isValidValueForSegment } from './isValidValueForSegment/isValidValueForSegment';
+export { isSingleDigit } from './isSingleDigit/isSingleDigit';
