@@ -118,8 +118,8 @@ export async function linkPackagesForScope(
 
     await linkPackagesForScope(
       { scopeName, scopePath },
-      destination,
       source,
+      destination,
       packages,
       verbose,
       parallel,

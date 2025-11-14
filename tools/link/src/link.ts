@@ -36,7 +36,7 @@ export async function linkPackages(
     const keyValuePairs = launchEnvString
       .split('\n')
       .filter(line => line.trim() && line.includes('='))
-      .map(line => line.trim().split(/=(.*)/));
+      .map(line => line.trim().split(/=(.*)/).slice(0, 2));
     launchEnv = Object.fromEntries(keyValuePairs);
   }
 

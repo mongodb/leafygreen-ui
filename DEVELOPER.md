@@ -72,19 +72,29 @@ We use @testing-library/react for writing tests locally. This library helps mock
 
 ### Linking
 
-We provide a `link` script to help you test in-development components within environments outside of Storybook. To do this, run:
+We provide a `link` script to help you test in-development components within environments outside of Storybook such as in your application. To do this, run:
 
 ```
 pnpm run link --to=[path-to-application]
 ```
 
-If you encounter issues while linking, try the following troubleshooting flags:
+The script does the following in order:
+
+- It scans the destination application for any installed `leafygreen-ui` components in its `node_modules` folder.
+  **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within the destination application inside `node_modules` before running this command.
+- If any `leafygreen-ui` components are found then:
+  - The script runs `pnpm link` in the corresponding leafygreen-ui package directory to publish a link to the package in the pnpm global registry.
+  - The script then runs `pnpm link <package-name>` in the destination application directory to install the package from the published link in the pnpm global registry.
+
+After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, make sure to rebuild the component and the changes will be visible on your running application.
+
+If you encounter issues while linking, try the following any of the following flags:
 
 - When linking multiple packages with `--scope` or multiple `--packages` options, link processes run in parallel by default. If you experience failures, add the `--no-parallel` flag to run the linking tasks sequentially, which can help avoid race conditions.
 
 - If you are using a Node version manager such as `asdf` or `nvm`, add the `--launch-env="$(env)"` flag. This ensures the link script spawns commands using your current shell’s environment, preventing environment pollutions that may happen through the tooling of the version manager.
 
-- In your external project, make sure your module resolver picks up `'react'` from your own `node_modules` (not from LeafyGreen’s). If using webpack, you can enforce this by adding an alias in your webpack configuration:
+- In your destination application project, make sure your module resolver picks up `'react'` from your own `node_modules` (not from LeafyGreen’s). If using webpack, you can enforce this by adding an alias in your webpack configuration:
 
   ```js
   resolve: {
@@ -94,8 +104,7 @@ If you encounter issues while linking, try the following troubleshooting flags:
   },
   ```
 
-Note: There are some known issues using `pnpm link` from pnpm workspaces. Using Verdaccio, while
-more involved, is the more reliable and recommended approach for testing in an external project.
+Note: There are some known issues in linking packages with `pnpm link`, if you encounter issues, try using a local registry instead. `Verdaccio` for example is a more reliable and recommended approach for testing in an external project.
 
 ### Using a local registry (Verdaccio)
 
@@ -175,7 +184,7 @@ pnpm install @leafygreen-ui/<package-name>
 
 #### 6. Publishing additional versions
 
-To publish additional versions, manually the version number in `packages/<package-name>/package.json`, and re-run step 4. Then, either manually update the external project's `package.json`, or re-run `pnpm install @leafygreen-ui/<package-name>`.
+To publish additional versions, manually update the version number in `packages/<package-name>/package.json`, and re-run step 4. Then, either manually update the external project's `package.json`, or re-run `pnpm install @leafygreen-ui/<package-name>`.
 
 #### 7. Publishing to NPM
 
