@@ -25,13 +25,7 @@ import {
 } from './InputBox.styles';
 import { InputBoxComponentType, InputBoxProps } from './InputBox.types';
 
-/**
- * Generic controlled input box component
- * Renders an input box with appropriate segment order & separator characters.
- *
- * @internal
- */
-export const InputBoxWithRef = <Segment extends string>(
+const InputBoxWithRef = <Segment extends string>(
   {
     className,
     labelledBy,
@@ -256,6 +250,12 @@ export const InputBoxWithRef = <Segment extends string>(
   );
 };
 
+/**
+ * Generic controlled input box component that renders multiple input segments with separators.
+ *
+ * Supports auto-formatting, auto-advance focus, keyboard navigation (arrow keys), value increment/decrement,
+ * validation, and blur formatting. It is designed primarily for date and time inputs.
+ */
 export const InputBox = React.forwardRef(
   InputBoxWithRef,
 ) as InputBoxComponentType;
