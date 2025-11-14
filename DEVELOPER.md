@@ -68,14 +68,14 @@ When you run the scaffold script, a `README` file will appear, which is a templa
 
 ### Locally
 
-We use @testing-library/react for writing tests locally. This library helps mock out user interactions with components. You can run all tests by running `yarn test` or turn on watch mode with `yarn test --watch`.
+We use @testing-library/react for writing tests locally. This library helps mock out user interactions with components. You can run all tests by running `pnpm test` or turn on watch mode with `pnpm test --watch`.
 
 ### Linking
 
 We provide a `link` script to help you test in-development components within environments outside of Storybook. To do this, run:
 
 ```
-yarn run link --to=[path-to-application]
+pnpm run link --to=[path-to-application]
 ```
 
 If you encounter issues while linking, try the following troubleshooting flags:
@@ -93,6 +93,21 @@ If you encounter issues while linking, try the following troubleshooting flags:
     },
   },
   ```
+
+Note: There are some known issues using `pnpm link` from pnpm workspaces. Using Verdaccio, while
+more involved, is the more reliable and recommended approach for testing in an external project.
+
+### Using a local registry (Verdaccio)
+
+Publishing test versions to a local registry can be helpful when you need to make changes and test
+in an external app (or other library). To do this, you can install and
+use [Verdaccio](https://verdaccio.org/)
+
+#### 1. Install `verdaccio`
+
+```bash
+pnpm install --global verdaccio
+```
 
 #### 2. Start `verdaccio`, and make note on the localhost port (should be `http://localhost:4873/` by default)
 
@@ -123,12 +138,12 @@ You should expect to see the following line in that file. (if not you can add it
 Ensure all packages are built, then navigate to some package and manually publish:
 
 ```bash
-yarn build;
+pnpm build;
 cd packages/<package-name>;
-yarn publish;
+pnpm publish;
 ```
 
-To ensure you are pointing to the correct registry, you can add the `--dry-run` flag to the `yarn publish` command. This command should echo:
+To ensure you are pointing to the correct registry, you can add the `--dry-run` flag to the `pnpm publish` command. This command should echo:
 
 ```
 npm notice Publishing to http://localhost:4873
@@ -155,12 +170,12 @@ With your local version published, open up some external app. If the app uses a 
 Next, install the newly published version of your package in the external project.
 
 ```bash
-yarn install @leafygreen-ui/<package-name>
+pnpm install @leafygreen-ui/<package-name>
 ```
 
 #### 6. Publishing additional versions
 
-To publish additional versions, manually the version number in `packages/<package-name>/package.json`, and re-run step 4. Then, either manually update the external project's `package.json`, or re-run `yarn install @leafygreen-ui/<package-name>`.
+To publish additional versions, manually the version number in `packages/<package-name>/package.json`, and re-run step 4. Then, either manually update the external project's `package.json`, or re-run `pnpm install @leafygreen-ui/<package-name>`.
 
 #### 7. Publishing to NPM
 
@@ -168,10 +183,10 @@ If you want to stop publishing to and/or reading from your local Verdaccio serve
 
 ## Creating a new component
 
-- Run `yarn create-package <package-name>` to create a new component directory with default configurations
+- Run `pnpm create-package <package-name>` to create a new component directory with default configurations
 - Add the new component to `build.tsconfig.json`
 - If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
-- Run `yarn run init` to link all packages before starting development
+- Run `pnpm run init` to link all packages before starting development
 
 ## Marking a Storybook story to be imported in mongodb.design
 
