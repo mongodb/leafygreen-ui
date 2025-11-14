@@ -62,7 +62,7 @@ export const InputSegmentWrapper = React.forwardRef<
         minSegmentValue={defaultMinMock[segment]}
         maxSegmentValue={defaultMaxMock[segment]}
         value={value}
-        charsPerSegment={charsPerSegmentMock[segment]}
+        charsCount={charsPerSegmentMock[segment]}
         onChange={onChange}
         onBlur={onBlur}
         size={Size.Default}
@@ -185,14 +185,14 @@ interface RenderSegmentReturnType {
 
 const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
   segment: 'day',
-  minSegmentValue: defaultMinMock['day'],
-  maxSegmentValue: defaultMaxMock['day'],
+  minSegmentValue: 0,
+  maxSegmentValue: 31,
   shouldWrap: true,
-  placeholder: defaultPlaceholderMock['day'],
+  placeholder: 'DD',
   onChange: () => {},
   onBlur: () => {},
   value: '',
-  charsPerSegment: charsPerSegmentMock['day'],
+  charsCount: 2,
   segmentEnum: SegmentObjMock,
   // @ts-expect-error - data-testid
   ['data-testid']: 'lg-input-segment',

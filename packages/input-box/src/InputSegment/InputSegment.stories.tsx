@@ -9,9 +9,6 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
 import {
-  charsPerSegmentMock,
-  defaultMaxMock,
-  defaultMinMock,
   defaultPlaceholderMock,
   SegmentObjMock,
 } from '../testutils/testutils.mocks';
@@ -34,14 +31,14 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
   ],
   args: {
     segment: SegmentObjMock.Day,
-    minSegmentValue: defaultMinMock[SegmentObjMock.Day],
-    maxSegmentValue: defaultMaxMock[SegmentObjMock.Day],
+    minSegmentValue: 0,
+    maxSegmentValue: 31,
     size: Size.Default,
-    placeholder: defaultPlaceholderMock[SegmentObjMock.Day],
+    placeholder: 'DD',
     shouldWrap: true,
     step: 1,
     darkMode: false,
-    charsPerSegment: charsPerSegmentMock[SegmentObjMock.Day],
+    charsCount: 2,
     segmentEnum: SegmentObjMock,
   },
   argTypes: {

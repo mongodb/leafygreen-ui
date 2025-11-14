@@ -52,7 +52,7 @@ export interface InputSegmentProps<Segment extends string>
   /**
    * The number of characters per segment
    */
-  charsPerSegment: number;
+  charsCount: number;
 
   /**
    * The size of the input box
