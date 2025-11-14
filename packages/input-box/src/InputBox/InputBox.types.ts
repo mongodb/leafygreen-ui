@@ -95,7 +95,7 @@ export interface InputBoxProps<Segment extends string>
    * @example
    * { day: ref, month: ref, year: ref }
    */
-  segmentRefs: Record<Segment, React.RefObject<HTMLInputElement>>;
+  segmentRefs?: Record<Segment, React.RefObject<HTMLInputElement>>;
 }
 
 /**

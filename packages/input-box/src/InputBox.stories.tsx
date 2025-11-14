@@ -7,10 +7,10 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { Size } from './shared.types';
 
 import { SegmentObjMock } from './testutils/testutils.mocks';
 import { InputBox, InputBoxProps } from './InputBox';
+import { Size } from './shared.types';
 import { InputBoxWithState } from './testutils';
 
 const meta: StoryMetaType<typeof InputBox> = {

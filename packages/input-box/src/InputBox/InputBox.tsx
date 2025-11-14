@@ -7,10 +7,11 @@ import React, {
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
+import { useSegmentRefs } from '../hooks';
 import {
   InputSegmentChangeEventHandler,
-  Size,
   isInputSegment,
+  Size,
 } from '../shared.types';
 import {
   createExplicitSegmentValidator,
@@ -30,7 +31,7 @@ const InputBoxWithRef = <Segment extends string>(
   {
     className,
     labelledBy,
-    segmentRefs,
+    segmentRefs: segmentRefsProp,
     onSegmentChange,
     onKeyDown,
     setSegment,
@@ -47,11 +48,17 @@ const InputBoxWithRef = <Segment extends string>(
 ) => {
   const { theme } = useDarkMode();
 
+  /** If segmentRefs are provided, use them. Otherwise, create them using the segments. */
+  const internalSegmentRefs = useSegmentRefs(segments);
+  const segmentRefs = segmentRefsProp || internalSegmentRefs;
+
+  /** Create a validator for explicit segment values. */
   const isExplicitSegmentValue = createExplicitSegmentValidator({
     segmentEnum,
     rules: segmentRules,
   });
 
+  /** Get the maximum number of characters per segment. */
   const getCharsPerSegment = (segment: Segment) =>
     segmentRules[segment].maxChars;
 

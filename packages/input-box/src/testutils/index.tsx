@@ -92,16 +92,6 @@ export const InputBoxWithState = ({
 }: Partial<InputBoxProps<SegmentObjMock>> & {
   segments?: Record<SegmentObjMock, string>;
 }) => {
-  const dayRef = React.useRef<HTMLInputElement>(null);
-  const monthRef = React.useRef<HTMLInputElement>(null);
-  const yearRef = React.useRef<HTMLInputElement>(null);
-
-  const segmentRefs = {
-    day: dayRef,
-    month: monthRef,
-    year: yearRef,
-  };
-
   const [segments, setSegments] = React.useState(segmentsProp);
 
   const defaultSetSegment = (segment: SegmentObjMock, value: string) => {
@@ -116,7 +106,6 @@ export const InputBoxWithState = ({
   return (
     <InputBox
       segmentEnum={SegmentObjMock}
-      segmentRefs={segmentRefs}
       segments={effectiveSegments}
       setSegment={effectiveSetSegment}
       formatParts={defaultFormatPartsMock}
