@@ -8,7 +8,8 @@
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
-    "docs": "lg-build docs"
+    "docs": "lg-build docs",
+    "minify": "lg-build minify"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -36,7 +37,11 @@
       "types": "./dist/types/index.d.ts",
       "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/umd/index.js"
+      "require": "./dist/umd/index.js",
+      "production": {
+        "import": "./dist/esm/index-min.js",
+        "require": "./dist/umd/index-min.js"
+      }
     }
   },
   "typesVersions": {}

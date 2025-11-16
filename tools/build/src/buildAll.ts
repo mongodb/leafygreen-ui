@@ -6,7 +6,7 @@ interface BuildOptions {
   verbose: boolean;
 }
 
-const validSteps = ['build', 'tsc', 'docs'];
+const validSteps = ['build', 'tsc', 'docs', 'minify'];
 
 export function buildAll(packages: Array<string>, { only }: BuildOptions) {
   console.log({ packages, only });

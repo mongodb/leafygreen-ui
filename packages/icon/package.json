@@ -10,23 +10,36 @@
       "types": "./dist/types/index.d.ts",
       "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/umd/index.js"
+      "require": "./dist/umd/index.js",
+      "production": {
+        "import": "./dist/esm/index-min.js",
+        "require": "./dist/umd/index-min.js"
+      }
     },
     "./dist/*": {
       "types": "./dist/types/generated/*.d.ts",
       "import": "./dist/esm/*.js",
-      "require": "./dist/umd/*.js"
+      "require": "./dist/umd/*.js",
+      "production": {
+        "import": "./dist/esm/*.js-min.js",
+        "require": "./dist/umd/*.js-min.js"
+      }
     },
     "./*": {
       "types": "./dist/types/generated/*.d.ts",
       "import": "./dist/esm/*.js",
-      "require": "./dist/umd/*.js"
+      "require": "./dist/umd/*.js",
+      "production": {
+        "import": "./dist/esm/*.js-min.js",
+        "require": "./dist/umd/*.js-min.js"
+      }
     }
   },
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild/index.ts",
     "build": "ts-node ./scripts/build/build.ts",
     "postbuild": "ts-node ./scripts/postbuild/index.ts",
+    "minify": "lg-build minify",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
   },

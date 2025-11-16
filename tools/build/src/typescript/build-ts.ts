@@ -16,6 +16,11 @@ interface BuildTypescriptOptions {
    * Builds all TS downlevel targets based on the typesVersions field in package.json
    */
   downlevel?: boolean;
+
+  /**
+   * Update package.json typesVersions and exports fields
+   */
+  update?: boolean;
 }
 
 /**
@@ -25,7 +30,7 @@ export function buildTypescript(
   passThru?: Array<string>,
   options?: BuildTypescriptOptions,
 ) {
-  const { verbose } = options ?? { verbose: false };
+  const { verbose, downlevel } = options ?? {};
   const packageDir = process.cwd();
   const tsConfigPath = path.join(packageDir, 'tsconfig.json');
 
@@ -61,7 +66,7 @@ export function buildTypescript(
   // Build the project
   const exitStatus = builder.build();
 
-  if (options?.downlevel) {
+  if (downlevel) {
     runTypescriptDownlevel({
       verbose,
     });

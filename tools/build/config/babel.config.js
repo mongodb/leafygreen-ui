@@ -1,7 +1,5 @@
 module.exports = function (api) {
   api.cache.using(() => process.env.NODE_ENV);
-  const isProduction = api.env('production');
-  const modules = isProduction ? false : 'commonjs';
 
   const presets = [
     '@babel/preset-typescript',
@@ -9,7 +7,6 @@ module.exports = function (api) {
     [
       '@babel/preset-env',
       {
-        modules,
         targets: {
           browsers: ['last 2 versions', 'safari >= 7', 'ie >= 10'],
         },

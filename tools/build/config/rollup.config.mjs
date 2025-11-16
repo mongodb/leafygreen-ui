@@ -3,7 +3,6 @@ import { fileURLToPath } from 'node:url';
 
 import babel from '@rollup/plugin-babel';
 import nodeResolve from '@rollup/plugin-node-resolve';
-import terser from '@rollup/plugin-terser';
 import svgr from '@svgr/rollup';
 import { glob } from 'glob';
 import path from 'path';
@@ -63,13 +62,10 @@ const createConfigForFormat = (format, overrides) => {
         babelHelpers: 'bundled',
         extensions,
         configFile: babelConfigPath,
-        sourceMaps: 'inline',
-        envName: 'production',
+        sourceMaps: true,
       }),
 
       svgr(),
-
-      terser(),
     ],
     external,
     strictDeprecations: true,

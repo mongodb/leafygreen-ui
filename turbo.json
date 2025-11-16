@@ -30,6 +30,10 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "minify": {
+      "dependsOn": ["build"],
+      "outputs": ["dist/**/*-min.js", "dist/**/*-min.js.map"]
     }
   }
 }

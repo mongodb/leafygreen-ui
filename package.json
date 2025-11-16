@@ -21,6 +21,7 @@
     "build:docs": "turbo run docs",
     "build:tsc": "turbo run tsc",
     "build:ts-downlevel": "pnpm recursive exec lg-ts-downlevel",
+    "build:minify": "turbo run minify '--filter=!@lg-tools/*'",
     "build-storybook": "npx storybook build",
     "chromatic": "npx chromatic",
     "clean": "npx npm-run-all --parallel clean:*",

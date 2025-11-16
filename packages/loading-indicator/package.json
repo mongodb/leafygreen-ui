@@ -10,31 +10,48 @@
       "types": "./dist/types/index.d.ts",
       "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/umd/index.js"
+      "require": "./dist/umd/index.js",
+      "production": {
+        "import": "./dist/esm/index-min.js",
+        "require": "./dist/umd/index-min.js"
+      }
     },
     "./page-loader": {
       "types": "./dist/types/page-loader/index.d.ts",
       "types@<=5.0": "./dist/types/ts4.9/page-loader/index.d.ts",
       "import": "./dist/esm/page-loader/index.js",
-      "require": "./dist/umd/page-loader/index.js"
+      "require": "./dist/umd/page-loader/index.js",
+      "production": {
+        "import": "./dist/esm/page-loader/index-min.js",
+        "require": "./dist/umd/page-loader/index-min.js"
+      }
     },
     "./spinner": {
       "types": "./dist/types/spinner/index.d.ts",
       "types@<=5.0": "./dist/types/ts4.9/spinner/index.d.ts",
       "import": "./dist/esm/spinner/index.js",
-      "require": "./dist/umd/spinner/index.js"
+      "require": "./dist/umd/spinner/index.js",
+      "production": {
+        "import": "./dist/esm/spinner/index-min.js",
+        "require": "./dist/umd/spinner/index-min.js"
+      }
     },
     "./testing": {
       "types": "./dist/types/testing/index.d.ts",
       "types@<=5.0": "./dist/types/ts4.9/testing/index.d.ts",
       "import": "./dist/esm/testing/index.js",
-      "require": "./dist/umd/testing/index.js"
+      "require": "./dist/umd/testing/index.js",
+      "production": {
+        "import": "./dist/esm/testing/index-min.js",
+        "require": "./dist/umd/testing/index-min.js"
+      }
     }
   },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
-    "docs": "lg-build docs"
+    "docs": "lg-build docs",
+    "minify": "lg-build minify"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/loading-indicator",

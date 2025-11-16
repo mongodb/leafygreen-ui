@@ -183,6 +183,9 @@ jobs:
             tools/*/stories.js
           key: ${{needs.build.outputs.cache-primary-key}}
 
+      - name: Minify packages
+        run: pnpm build:minify
+
       - name: Updating .npmrc
         run: |
           cat << EOF > "$HOME/.npmrc"

@@ -11,18 +11,27 @@
       "types": "./dist/types/index.d.ts",
       "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/umd/index.js"
+      "require": "./dist/umd/index.js",
+      "production": {
+        "import": "./dist/esm/index-min.js",
+        "require": "./dist/umd/index-min.js"
+      }
     },
     "./testing": {
       "types": "./dist/types/testing/index.d.ts",
       "import": "./dist/esm/testing/index.js",
-      "require": "./dist/umd/testing/index.js"
+      "require": "./dist/umd/testing/index.js",
+      "production": {
+        "import": "./dist/esm/testing/index-min.js",
+        "require": "./dist/umd/testing/index-min.js"
+      }
     }
   },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
-    "docs": "lg-build docs"
+    "docs": "lg-build docs",
+    "minify": "lg-build minify"
   },
   "publishConfig": {
     "access": "public"

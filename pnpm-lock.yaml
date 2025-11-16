@@ -3787,9 +3787,6 @@ importers:
       '@rollup/plugin-node-resolve':
         specifier: 15.1.0
         version: 15.1.0(rollup@4.16.1)
-      '@rollup/plugin-terser':
-        specifier: 0.4.3
-        version: 0.4.3(rollup@4.16.1)
       '@svgr/babel-plugin-replace-jsx-attribute-value':
         specifier: 8.0.0
         version: 8.0.0(@babel/core@7.24.3)
@@ -3844,6 +3841,9 @@ importers:
       rollup-plugin-polyfill-node:
         specifier: 0.13.0
         version: 0.13.0(rollup@4.16.1)
+      terser:
+        specifier: ^5.44.1
+        version: 5.44.1
       turbo:
         specifier: ^2.0.6
         version: 2.5.5
@@ -6134,15 +6134,6 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.78.0||^3.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-
-  '@rollup/plugin-terser@0.4.3':
-    resolution: {integrity: sha512-EF0oejTMtkyhrkwCdg0HJ0IpkcaVg1MMSf2olHb2Jp+1mnLM04OhjpJWGma4HobiDTF0WCyViWuvadyE9ch2XA==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^2.x || ^3.x
     peerDependenciesMeta:
       rollup:
         optional: true
@@ -10840,9 +10831,6 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
 
-  smob@1.5.0:
-    resolution: {integrity: sha512-g6T+p7QO8npa+/hNx9ohv1E5pVCmWrVCUzUXJyLdMmftX6ER0oiWY/w9knEonLpnOp6b6FenKnMfR8gqwWdwig==}
-
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
@@ -11101,8 +11089,8 @@ packages:
       uglify-js:
         optional: true
 
-  terser@5.43.1:
-    resolution: {integrity: sha512-+6erLbBm0+LROX2sPXlUYx/ux5PyE9K/a92Wrt6oA+WDAoFTdpHE5tCYCI5PNzq2y8df4rA+QgHLJuR4jNymsg==}
+  terser@5.44.1:
+    resolution: {integrity: sha512-t/R3R/n0MSwnnazuPpPNVO60LX0SKL45pyl9YlvxIdkH0Of7D5qM2EVe+yASRIlY5pZ73nclYJfNANGWPwFDZw==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -14459,14 +14447,6 @@ snapshots:
     optionalDependencies:
       rollup: 4.16.1
 
-  '@rollup/plugin-terser@0.4.3(rollup@4.16.1)':
-    dependencies:
-      serialize-javascript: 6.0.2
-      smob: 1.5.0
-      terser: 5.43.1
-    optionalDependencies:
-      rollup: 4.16.1
-
   '@rollup/plugin-url@8.0.2(rollup@4.16.1)':
     dependencies:
       '@rollup/pluginutils': 5.2.0(rollup@4.16.1)
@@ -17712,7 +17692,7 @@ snapshots:
       he: 1.2.0
       param-case: 3.0.4
       relateurl: 0.2.7
-      terser: 5.43.1
+      terser: 5.44.1
 
   html-tokenize@2.0.1:
     dependencies:
@@ -20427,8 +20407,6 @@ snapshots:
 
   slash@3.0.0: {}
 
-  smob@1.5.0: {}
-
   snake-case@3.0.4:
     dependencies:
       dot-case: 3.0.4
@@ -20703,10 +20681,10 @@ snapshots:
       jest-worker: 27.5.1
       schema-utils: 4.3.2
       serialize-javascript: 6.0.2
-      terser: 5.43.1
+      terser: 5.44.1
       webpack: 5.88.0
 
-  terser@5.43.1:
+  terser@5.44.1:
     dependencies:
       '@jridgewell/source-map': 0.3.10
       acorn: 8.15.0
