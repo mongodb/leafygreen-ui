@@ -14,7 +14,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "use-resize-observer": "^9.1.0"
   },
   "exports": {
     ".": {

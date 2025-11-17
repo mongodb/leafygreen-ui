@@ -25,6 +25,8 @@
     "@lg-chat/leafygreen-chat-provider": "workspace:^6.0.0"
   },
   "devDependencies": {
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "exports": {
