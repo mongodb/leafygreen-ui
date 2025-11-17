@@ -65,7 +65,13 @@ async function main() {
 function findTsConfigFiles(dir) {
   /** @type {Array<string>} */
   const results = [];
-  const packageDirs = ['packages', 'charts', 'chat', 'tools'];
+
+  // Read the root package.json to get package directories dynamically
+  const rootPackage = JSON.parse(
+    fs.readFileSync(ROOT_PACKAGE_JSON_PATH, 'utf-8'),
+  );
+  // Get package directories from lg.scopes
+  const packageDirs = Object.values(rootPackage.lg?.scopes ?? {});
 
   for (const packageDir of packageDirs) {
     const packagePath = path.join(dir, packageDir);
