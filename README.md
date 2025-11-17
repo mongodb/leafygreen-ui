@@ -149,6 +149,7 @@ import Button from '@leafygreen-ui/button';
 | [@lg-charts/legend](./charts/legend)                                 | [![version](https://img.shields.io/npm/v/@lg-charts/legend)](https://www.npmjs.com/package/@lg-charts/legend)                                   | ![downloads](https://img.shields.io/npm/dm/@lg-charts/legend?color=white)                  | [Live Example](http://mongodb.design/component/legend/live-example)                   |
 | [@lg-charts/series-provider](./charts/series-provider)               | [![version](https://img.shields.io/npm/v/@lg-charts/series-provider)](https://www.npmjs.com/package/@lg-charts/series-provider)                 | ![downloads](https://img.shields.io/npm/dm/@lg-charts/series-provider?color=white)         | [Live Example](http://mongodb.design/component/series-provider/live-example)          |
 | [@lg-chat/avatar](./chat/avatar)                                     | [![version](https://img.shields.io/npm/v/@lg-chat/avatar)](https://www.npmjs.com/package/@lg-chat/avatar)                                       | ![downloads](https://img.shields.io/npm/dm/@lg-chat/avatar?color=white)                    | [Live Example](http://mongodb.design/component/avatar/live-example)                   |
+| [@lg-chat/chat-layout](./chat/chat-layout)                           | [![version](https://img.shields.io/npm/v/@lg-chat/chat-layout)](https://www.npmjs.com/package/@lg-chat/chat-layout)                             | ![downloads](https://img.shields.io/npm/dm/@lg-chat/chat-layout?color=white)               | [Live Example](http://mongodb.design/component/chat-layout/live-example)              |
 | [@lg-chat/chat-window](./chat/chat-window)                           | [![version](https://img.shields.io/npm/v/@lg-chat/chat-window)](https://www.npmjs.com/package/@lg-chat/chat-window)                             | ![downloads](https://img.shields.io/npm/dm/@lg-chat/chat-window?color=white)               | [Live Example](http://mongodb.design/component/chat-window/live-example)              |
 | [@lg-chat/fixed-chat-window](./chat/fixed-chat-window)               | [![version](https://img.shields.io/npm/v/@lg-chat/fixed-chat-window)](https://www.npmjs.com/package/@lg-chat/fixed-chat-window)                 | ![downloads](https://img.shields.io/npm/dm/@lg-chat/fixed-chat-window?color=white)         | [Live Example](http://mongodb.design/component/fixed-chat-window/live-example)        |
 | [@lg-chat/input-bar](./chat/input-bar)                               | [![version](https://img.shields.io/npm/v/@lg-chat/input-bar)](https://www.npmjs.com/package/@lg-chat/input-bar)                                 | ![downloads](https://img.shields.io/npm/dm/@lg-chat/input-bar?color=white)                 | [Live Example](http://mongodb.design/component/input-bar/live-example)                |
@@ -183,15 +184,18 @@ import Button from '@leafygreen-ui/button';
 
 ### Setup
 
-1. Node >= 18.0.0 required.
+1. Install [`asdf`](https://asdf-vm.com/guide/getting-started.html)
 
-   via [homebrew](https://brew.sh/) with `brew install node`
+```zsh
+brew install asdf;
+echo 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"' >> ~/.zshrc
+```
 
-   via [nodejs installer](https://nodejs.org/en/)
+2. Install Node & pnpm
 
-2. Install PNPM >= 9.15.0.
-
-   [PNPM Installation documentation](https://pnpm.io/installation)
+```zsh
+asdf install
+```
 
 3. Clone the repository.
 
@@ -359,19 +363,6 @@ Any new work you do should be done in the _original_ (`new-feature`) branch.
 To publish a new pre-release version, pull the changes from `new-feature` into branch `pre-release`, and follow steps 3-5.
 
 When `new-feature` is merged into `main`, you can safely delete the `pre-release` branch
-
-## Deploy gh-pages
-
-You can deploy a static build of our Storybook site to gh-pages from the `main` branch.
-
-1. First be sure you've built a static version of Storybook with the script: `build-storybook`
-2. Then deploy to gh-pages: `pnpm release:site`
-
-### To deploy to your own mirror of leafygreen-ui
-
-1. Run `pnpm demo:site [your_github_username]`.
-2. If you haven't built a static version of Storybook yet, you will be prompted to do so.
-3. You will be asked for confirmation before Storybook is published.
 
 ## License
 

@@ -1,9 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
 import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
-import {
   MessageRating,
   MessageRatingProps,
   MessageRatingValue,
@@ -63,11 +59,6 @@ const meta: StoryMetaType<typeof InlineMessageFeedback> = {
           state: FormState.Submitted,
         },
       ],
-      decorator: StoryFn => (
-        <LeafyGreenChatProvider variant={Variant.Compact}>
-          <StoryFn />
-        </LeafyGreenChatProvider>
-      ),
     },
   },
   args: {
@@ -80,24 +71,15 @@ const meta: StoryMetaType<typeof InlineMessageFeedback> = {
 };
 export default meta;
 
-type InlineMessageFeedbackStoryProps = InlineMessageFeedbackProps & {
-  variant?: Variant;
-};
-
-const Template: StoryFn<InlineMessageFeedbackStoryProps> = ({
-  variant,
-  ...props
-}) => (
-  <LeafyGreenChatProvider variant={variant}>
-    <InlineMessageFeedback {...props} />
-  </LeafyGreenChatProvider>
+const Template: StoryFn<InlineMessageFeedbackProps> = props => (
+  <InlineMessageFeedback {...props} />
 );
 
-export const LiveExample: StoryObj<InlineMessageFeedbackStoryProps> = {
+export const LiveExample: StoryObj<InlineMessageFeedbackProps> = {
   render: Template,
 };
 
-export const Controlled: StoryObj<InlineMessageFeedbackStoryProps> = {
+export const Controlled: StoryObj<InlineMessageFeedbackProps> = {
   render: Template,
   args: {
     textareaProps: {
@@ -106,12 +88,12 @@ export const Controlled: StoryObj<InlineMessageFeedbackStoryProps> = {
   },
   parameters: {
     controls: {
-      exclude: ['onSubmit', 'onCancel'],
+      exclude: ['onSubmit'],
     },
   },
 };
 
-export const SubmittedState: StoryObj<InlineMessageFeedbackStoryProps> = {
+export const SubmittedState: StoryObj<InlineMessageFeedbackProps> = {
   render: Template,
   args: {
     state: FormState.Submitted,
@@ -165,7 +147,6 @@ export const WithMessageRating: StoryFn<typeof MessageRating> = args => {
       {rating === 'disliked' && (
         <InlineMessageFeedback
           label="What do you think?"
-          onCancel={handleCancel}
           onClose={handleCancel}
           onSubmit={handleSubmit}
           state={feedbackFormState}
@@ -175,9 +156,6 @@ export const WithMessageRating: StoryFn<typeof MessageRating> = args => {
   );
 };
 
-export const Generated: StoryObj<InlineMessageFeedbackStoryProps> = {
+export const Generated: StoryObj<InlineMessageFeedbackProps> = {
   render: Template,
-  args: {
-    variant: Variant.Compact,
-  },
 };

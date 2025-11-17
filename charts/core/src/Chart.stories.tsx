@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
+import { getByTestId, waitFor } from '@storybook/test';
+// @ts-ignore
+import { getInstanceByDom } from 'echarts';
 
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
+import { BarHoverBehavior } from './Series/Bar';
+import { ContinuousAxisProps } from './Axis';
 import { Bar, LineProps } from './Series';
 import { makeSeriesData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
@@ -92,16 +97,16 @@ export const LiveExample: StoryObj<{
   renderGrid: boolean;
   renderXAxis: boolean;
   xAxisType: XAxisProps['type'];
-  xAxisFormatter: XAxisProps['formatter'];
+  xAxisFormatter: ContinuousAxisProps['formatter'];
   xAxisLabel: XAxisProps['label'];
-  xAxisMin: XAxisProps['min'];
-  xAxisMax: XAxisProps['max'];
+  xAxisMin?: ContinuousAxisProps['min'];
+  xAxisMax?: ContinuousAxisProps['max'];
   renderYAxis: boolean;
   yAxisType: YAxisProps['type'];
-  yAxisFormatter: YAxisProps['formatter'];
+  yAxisFormatter: ContinuousAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
-  yAxisMin: YAxisProps['min'];
-  yAxisMax: YAxisProps['max'];
+  yAxisMin?: ContinuousAxisProps['min'];
+  yAxisMax?: ContinuousAxisProps['max'];
   renderTooltip: boolean;
   tooltipSeriesValueFormatter: ChartTooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
@@ -894,10 +899,10 @@ export const _Line: StoryObj<{}> = {
 };
 
 export const _Bar: StoryObj<{}> = {
-  name: 'Bar',
   render: () => {
     return (
       <Chart>
+        <ChartTooltip />
         {lowDensitySeriesData.map(({ name, data }) => (
           <Bar name={name} data={data} key={name} />
         ))}
@@ -910,12 +915,139 @@ export const BarStacked: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
+        <ChartTooltip />
         {lowDensitySeriesData.map(({ name, data }, index) => (
           <Bar
             name={name}
             data={data}
             key={name}
             stack={index < 2 ? 'same' : undefined}
+          />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const BarWithOnHoverDimOthersBehavior: StoryObj<{
+  hoverBehavior: BarHoverBehavior;
+}> = {
+  args: {
+    hoverBehavior: BarHoverBehavior.DimOthers,
+  },
+  argTypes: {
+    hoverBehavior: {
+      control: 'select',
+      options: [BarHoverBehavior.DimOthers, BarHoverBehavior.None],
+      defaultValue: BarHoverBehavior.DimOthers,
+    },
+  },
+  render: ({ hoverBehavior }) => {
+    return (
+      <Chart data-testid="chart-component">
+        <ChartTooltip />
+        {lowDensitySeriesData.map(({ name, data }) => (
+          <Bar
+            name={name}
+            data={data}
+            key={name}
+            hoverBehavior={hoverBehavior}
+          />
+        ))}
+      </Chart>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const chartDom = getByTestId(canvasElement, 'chart-component');
+
+    const echartsInstance = await waitFor(function getEChartsInstance() {
+      const instance = getInstanceByDom(chartDom);
+      if (!instance) throw new Error('ECharts instance not found');
+      return instance;
+    });
+
+    echartsInstance.dispatchAction({
+      type: 'highlight',
+      seriesIndex: 1,
+      dataIndex: 0,
+    });
+  },
+};
+
+export const BarWithCustomAxisPointer: StoryObj<{
+  axisPointer: ChartTooltipProps['axisPointer'];
+}> = {
+  args: {
+    axisPointer: 'shadow',
+  },
+  argTypes: {
+    axisPointer: {
+      control: 'select',
+      options: ['line', 'shadow', 'none'],
+      defaultValue: 'shadow',
+    },
+  },
+  render: ({ axisPointer }) => {
+    return (
+      <Chart>
+        <XAxis type="time" />
+        <YAxis type="value" />
+        <ChartTooltip axisPointer={axisPointer} />
+        {lowDensitySeriesData.map(({ name, data }) => (
+          <Bar name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const BarWithCategoryAxisLabel: StoryObj<{
+  axisPointer: ChartTooltipProps['axisPointer'];
+}> = {
+  args: {
+    axisPointer: 'shadow',
+  },
+  argTypes: {
+    axisPointer: {
+      control: 'select',
+      options: ['line', 'shadow', 'none'],
+      defaultValue: 'shadow',
+    },
+  },
+  render: ({ axisPointer }) => {
+    const xAxisData = lowDensitySeriesData[0].data.map(([x, _]) =>
+      // Format as "mm:ss" instead of slicing the ISO string
+      (() => {
+        const date = new Date(x as number);
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+        return `⏱️ ${minutes}:${seconds}`;
+      })(),
+    );
+
+    const yAxisData = [
+      'Low',
+      'Medium-Low',
+      'Medium',
+      'Medium-High',
+      'High',
+      'Very High',
+      'Extreme',
+    ];
+
+    return (
+      <Chart>
+        <XAxis type="category" labels={xAxisData} />
+        <YAxis type="category" labels={yAxisData} />
+        <ChartTooltip axisPointer={axisPointer} />
+        {lowDensitySeriesData.map(({ name, data }) => (
+          <Bar
+            key={name}
+            name={name}
+            data={data.map(([_, value], i) => [
+              i,
+              (value as number) % yAxisData.length,
+            ])}
           />
         ))}
       </Chart>

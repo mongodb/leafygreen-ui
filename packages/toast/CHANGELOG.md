@@ -1,5 +1,14 @@
 # @leafygreen-ui/toast
 
+## 8.1.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+
 ## 8.1.0
 
 ### Minor Changes

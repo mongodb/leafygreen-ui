@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/title-bar",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "lg-chat Title Bar",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -16,16 +16,13 @@
   "dependencies": {
     "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/icon": "workspace:^",
-    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^",
-    "@lg-chat/avatar": "workspace:^"
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0",
+    "@lg-chat/leafygreen-chat-provider": "workspace:^6.0.0"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"

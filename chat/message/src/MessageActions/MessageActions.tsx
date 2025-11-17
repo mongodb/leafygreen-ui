@@ -6,10 +6,6 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {
-  useLeafyGreenChatContext,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { FormState, InlineMessageFeedback } from '@lg-chat/message-feedback';
 import { MessageRating, MessageRatingValue } from '@lg-chat/message-rating';
 
@@ -47,8 +43,6 @@ export function MessageActions({
   ...rest
 }: MessageActionsProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
-  const { variant } = useLeafyGreenChatContext();
-  const isCompact = variant === Variant.Compact;
   const { messageBody } = useMessageContext();
 
   const [copied, setCopied] = useState(false);
@@ -176,10 +170,6 @@ export function MessageActions({
     }),
     [isSubmitting],
   );
-
-  if (!isCompact) {
-    return null;
-  }
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

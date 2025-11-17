@@ -1,12 +1,7 @@
 import React, { useRef } from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
-import { act, render, screen } from '@testing-library/react';
+import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { State } from '../shared.types';
 
@@ -14,33 +9,15 @@ import { InputBar, InputBarProps } from '.';
 
 const TEST_INPUT_TEXT = 'test';
 
-const renderInputBar = (
-  props: Partial<InputBarProps> = {},
-  variant: Variant = Variant.Compact,
-) => {
+const renderInputBar = (props: Partial<InputBarProps> = {}) => {
   return render(
-    <LeafyGreenChatProvider variant={variant}>
+    <LeafyGreenChatProvider>
       <InputBar {...props} />
     </LeafyGreenChatProvider>,
   );
 };
 
 describe('packages/input-bar', () => {
-  // mock the ResizeObserver used in LeafyGreenChatProvider
-  beforeAll(() => {
-    global.ResizeObserver = jest.fn().mockImplementation(() => ({
-      observe: jest.fn(),
-      unobserve: jest.fn(),
-      disconnect: jest.fn(),
-    }));
-  });
-
-  test('renders `badgeText` when the prop is set', () => {
-    renderInputBar({ badgeText: 'beta' }, Variant.Spacious);
-
-    expect(screen.getByText('beta')).toBeInTheDocument();
-  });
-
   test('fires `onChange` when user types', () => {
     const onChange = jest.fn();
     renderInputBar({ onChange });
@@ -190,47 +167,6 @@ describe('packages/input-bar', () => {
     expect(textarea).toHaveFocus();
   });
 
-  describe('Hotkey Indicator', () => {
-    beforeEach(() => {
-      renderInputBar({ shouldRenderHotkeyIndicator: true }, Variant.Spacious);
-    });
-
-    test('renders when the prop is set', () => {
-      expect(
-        screen.getByTestId('lg-chat-hotkey-indicator'),
-      ).toBeInTheDocument();
-    });
-
-    test('is hidden when InputBar is focused and visible when unfocused', async () => {
-      const textarea = screen.getByRole('textbox');
-
-      act(() => {
-        textarea.focus();
-      });
-      // Wait for CSS animation
-      await new Promise(resolve =>
-        setTimeout(resolve, transitionDuration.default),
-      );
-
-      expect(screen.getByTestId('lg-chat-hotkey-indicator')).not.toBeVisible();
-
-      act(() => {
-        textarea.blur();
-      });
-      // Wait for CSS animation
-      await new Promise(resolve =>
-        setTimeout(resolve, transitionDuration.default),
-      );
-      expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeVisible();
-    });
-
-    test('focuses the input when the hotkey indicator is enabled and hotkey is pressed', async () => {
-      userEvent.keyboard('/');
-      const textarea = screen.getByRole('textbox');
-      expect(textarea).toHaveFocus();
-    });
-  });
-
   describe('controlled vs uncontrolled behavior', () => {
     test('resets value to empty string after form submission when uncontrolled', () => {
       const onMessageSend = jest.fn();
@@ -313,10 +249,7 @@ describe('packages/input-bar', () => {
 
     test('renders loading state with custom assistantName when state is "loading"', () => {
       render(
-        <LeafyGreenChatProvider
-          variant={Variant.Compact}
-          assistantName="Custom Assistant"
-        >
+        <LeafyGreenChatProvider assistantName="Custom Assistant">
           <InputBar state={State.Loading} />
         </LeafyGreenChatProvider>,
       );
@@ -364,7 +297,7 @@ describe('packages/input-bar', () => {
       );
 
       rerender(
-        <LeafyGreenChatProvider variant={Variant.Compact}>
+        <LeafyGreenChatProvider>
           <InputBar
             state={State.Error}
             onMessageSend={onMessageSend}
@@ -427,7 +360,7 @@ describe('packages/input-bar', () => {
       expect(textarea).toHaveValue('');
 
       rerender(
-        <LeafyGreenChatProvider variant={Variant.Compact}>
+        <LeafyGreenChatProvider>
           <InputBar
             state={State.Loading}
             onClickStopButton={onClickStopButton}

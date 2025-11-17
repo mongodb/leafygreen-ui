@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/pipeline",
-  "version": "8.0.7",
+  "version": "8.0.8",
   "description": "LeafyGreen UI Kit Pipeline",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -25,7 +25,7 @@
     "react-intersection-observer": "^8.25.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline",

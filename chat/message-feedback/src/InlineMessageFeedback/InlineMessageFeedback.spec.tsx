@@ -1,8 +1,4 @@
 import React, { createRef } from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { act, render, RenderResult, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -14,29 +10,15 @@ import {
 
 const defaultProps = {
   label: 'label test',
-  onCancel: jest.fn(),
   submittedMessage: 'was submitted!',
-  cancelButtonText: 'cancel the feedback',
   submitButtonText: 'submit the feedback',
 } as const;
 
 const renderInlineMessageFeedback = (
   props: Partial<InlineMessageFeedbackProps> = {},
-  variant: Variant = Variant.Spacious,
 ): RenderResult => {
-  return render(
-    <LeafyGreenChatProvider variant={variant}>
-      <InlineMessageFeedback {...defaultProps} {...props} />
-    </LeafyGreenChatProvider>,
-  );
+  return render(<InlineMessageFeedback {...defaultProps} {...props} />);
 };
-
-// Mock the ResizeObserver
-global.ResizeObserver = jest.fn().mockImplementation(() => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
-}));
 
 describe('packages/inline-message-feedback', () => {
   describe('state prop', () => {
@@ -134,13 +116,9 @@ describe('packages/inline-message-feedback', () => {
 
         const textarea = container.querySelector('textarea');
         const submitButton = container.querySelector('button[type="submit"]');
-        const cancelButton = container.querySelector('button[type="button"]');
 
         expect(textarea).toHaveAttribute('aria-disabled', 'true');
         expect(submitButton).toHaveAttribute('aria-disabled', 'true');
-        if (cancelButton) {
-          expect(cancelButton).toHaveAttribute('aria-disabled', 'true');
-        }
       });
 
       test('disables form elements when disabledSend prop is true', () => {
@@ -185,35 +163,6 @@ describe('packages/inline-message-feedback', () => {
     test('renders label', () => {
       const { getByText } = renderInlineMessageFeedback();
       expect(getByText(defaultProps.label)).toBeInTheDocument();
-    });
-  });
-
-  describe('cancel button props', () => {
-    describe.each([
-      [Variant.Spacious, true],
-      [Variant.Compact, false],
-    ])('given the provider is in %s mode', (variant, shouldShow) => {
-      if (shouldShow) {
-        test('it renders the cancel button', () => {
-          const { container } = renderInlineMessageFeedback({}, variant);
-          const cancelButton = container.querySelector('button[type="button"]');
-          expect(cancelButton).toBeInTheDocument();
-          expect(cancelButton).toHaveTextContent(defaultProps.cancelButtonText);
-        });
-
-        test('cancel button calls onCancel', () => {
-          const { container } = renderInlineMessageFeedback({}, variant);
-          const cancelButton = container.querySelector('button[type="button"]');
-          userEvent.click(cancelButton!);
-          expect(defaultProps.onCancel).toHaveBeenCalled();
-        });
-      } else {
-        test('it does not render the cancel button', () => {
-          const { container } = renderInlineMessageFeedback({}, variant);
-          const cancelButton = container.querySelector('button[type="button"]');
-          expect(cancelButton).not.toBeInTheDocument();
-        });
-      }
     });
   });
 

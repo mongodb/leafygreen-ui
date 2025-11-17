@@ -1,5 +1,49 @@
 # @lg-chat/message
 
+## 10.0.0
+
+### Major Changes
+
+- 3dfa899: [LG-5575](https://jira.mongodb.org/browse/LG-5575)
+
+  - Added compatibility with `@lg-chat/leafygreen-chat-provider@6.0.0`. We recommend new projects use `@lg-chat/leafygreen-chat-provider` v6; support for v5 will be removed in a future major version.
+  - Removed the following exports:
+    - `lgMessageStyles`
+    - `MessageContainer` component, `lgMessageContainerStyles`, and `MessageContainerProps` type
+    - `MessageContent` component and `MessageContentProps` type
+    - `MessageLinks` component
+  - All chat components have been simplified by removing variant-specific conditional logic.
+    - Removed props: `align`, `avatar`, `baseFontSize`, `componentOverrides`, `links`, `linksHeading`, `onLinkClick`, and `verified`
+
+### Patch Changes
+
+- 63d7b62: [LG-5665](https://jira.mongodb.org/browse/LG-5665): `AssistantAvatar` reads `darkMode` value from `LeafyGreenContext` and no longer requires explicitly passing `darkMode` prop.
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [63d7b62]
+- Updated dependencies [9cf3b18]
+- Updated dependencies [3dfa899]
+- Updated dependencies [3dfa899]
+- Updated dependencies [3dfa899]
+- Updated dependencies [3dfa899]
+  - @leafygreen-ui/avatar@3.1.5
+  - @lg-chat/message-feedback@9.0.0
+  - @leafygreen-ui/icon-button@17.1.3
+  - @lg-chat/message-rating@7.0.0
+  - @leafygreen-ui/typography@22.2.2
+  - @lg-chat/lg-markdown@5.0.0
+  - @lg-chat/rich-links@4.0.5
+  - @leafygreen-ui/banner@10.2.3
+  - @leafygreen-ui/badge@10.2.3
+  - @lg-chat/leafygreen-chat-provider@6.0.0
+
+## 9.1.1
+
+### Patch Changes
+
+- 5008087: [LG-5684](https://jira.mongodb.org/browse/LG-5684): update colors used for `RichLinkBadge` component which is used in `Message.Links`
+- Updated dependencies [5008087]
+  - @lg-chat/rich-links@4.0.4
+
 ## 9.1.0
 
 ### Minor Changes

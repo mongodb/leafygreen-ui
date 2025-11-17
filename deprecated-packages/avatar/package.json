@@ -1,0 +1,39 @@
+{
+  "name": "@lg-chat/avatar",
+  "version": "8.0.1",
+  "description": "lg-chat Avatar",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/avatar": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0",
+    "@lg-chat/leafygreen-chat-provider": "^5.1.0 || workspace:^6.0.0"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    }
+  },
+  "typesVersions": {}
+}

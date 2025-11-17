@@ -1,5 +1,29 @@
 # @leafygreen-ui/date-picker
 
+## 4.0.12
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/form-field@4.0.7
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/popover@14.3.1
+  - @leafygreen-ui/select@17.0.1
+
+## 4.0.11
+
+### Patch Changes
+
+- Updated dependencies [6494d15]
+- Updated dependencies [2463aa4]
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/select@17.0.0
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
 ## 4.0.10
 
 ### Patch Changes

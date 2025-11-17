@@ -1,5 +1,31 @@
 # @lg-charts/core
 
+## 2.3.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- 60ccb1e: Stabilizes tooltip pinning behavior when using React 17 environments when state updates are not automatically batched.
+- Updated dependencies [9cf3b18]
+  - @lg-charts/series-provider@1.0.6
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @lg-charts/chart-card@1.1.3
+  - @lg-charts/colors@1.0.6
+
+## 2.3.0
+
+### Minor Changes
+
+- dca8419: - ChartTooltip:
+  - Added `axisPointer` prop supporting 'line', 'shadow', and 'none' options
+  - Added `className` prop for custom styling
+  - Bug Fix: renders correctly for values like 0 and empty strings by only checking for null or undefined, not all falsy values
+  - Bar: `hoverBehavior` prop now accepts 'dim-others' and 'none' options to control hover focus behavior
+  - XAxis/YAxis: Introduced a new `category` axis type for discrete/categorical datasets (such as for X axes in bar charts).
+    - It uses a dedicated axis type definition and a `labels` prop for specifying category names.
+    - Existing continuous axis types (`'log'`, `'time'`, `'value'`) remain unchanged, continuing to support `min`, `max`, and `formatter` for customization.
+
 ## 2.2.1
 
 ### Patch Changes

@@ -5,9 +5,16 @@ import {
   InferredPolymorphicPropsWithRef,
   PolymorphicAs,
 } from '@leafygreen-ui/polymorphic';
-import { PopoverProps } from '@leafygreen-ui/popover';
+import {
+  Align,
+  Justify,
+  PopoverProps,
+  RenderMode,
+} from '@leafygreen-ui/popover';
 
 import { type SubMenuProps } from '../SubMenu/';
+
+export { Align, Justify, RenderMode };
 
 export type SubMenuType = ReactElement<
   InferredPolymorphicPropsWithRef<PolymorphicAs, SubMenuProps>

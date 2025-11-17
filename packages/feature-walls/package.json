@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/feature-walls",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "LeafyGreen UI Kit Feature Walls",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -40,7 +40,7 @@
     "@lg-tools/storybook-utils": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "homepage": "https://github.com/10gen/leafygreen-ui/tree/main/packages/feature-walls",
   "repository": {

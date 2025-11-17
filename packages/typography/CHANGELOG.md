@@ -1,5 +1,17 @@
 # @leafygreen-ui/typography
 
+## 22.2.2
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
+## 22.2.1
+
+### Patch Changes
+
+- d8c4e35: [LG-5691](https://jira.mongodb.org/browse/LG-5691): in `Link` component, vertically align text and icons
+
 ## 22.2.0
 
 ### Minor Changes

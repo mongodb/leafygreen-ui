@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { createGlyphComponent } from '@leafygreen-ui/icon';
-import { getTheme } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { getDisabledFill } from './AssistantAvatar.styles';
 import { AssistantAvatarProps } from './AssistantAvatar.types';
@@ -11,8 +11,12 @@ const DEFAULT_FILL = 'url(#sparkle-gradient)';
 export const AssistantAvatar: React.ComponentType<AssistantAvatarProps> =
   createGlyphComponent(
     'Sparkle',
-    ({ darkMode = false, disabled = false, ...rest }: AssistantAvatarProps) => {
-      const theme = getTheme(darkMode);
+    ({
+      darkMode: darkModeProp,
+      disabled = false,
+      ...rest
+    }: AssistantAvatarProps) => {
+      const { theme } = useDarkMode(darkModeProp);
       const fill = disabled ? getDisabledFill(theme) : DEFAULT_FILL;
 
       return (

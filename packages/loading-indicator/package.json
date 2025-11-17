@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/loading-indicator",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "leafyGreen UI Kit Loading Indicator",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -58,7 +58,7 @@
     "react-lottie-player": "^1.5.6"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"

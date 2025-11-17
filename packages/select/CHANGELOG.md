@@ -1,5 +1,34 @@
 # @leafygreen-ui/select
 
+## 17.0.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/input-option@4.1.3
+  - @leafygreen-ui/form-field@4.0.7
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/popover@14.3.1
+  - @leafygreen-ui/button@25.1.3
+
+## 17.0.0
+
+### Major Changes
+
+- 6494d15: Removes support for `refEl` property, which was never leveraged within the component logic. Instead, the `refEl` property always positions the internal MenuButton component against the internal ListBox component. There are no end user changes, just a more precise `SelectProps` type definition.
+
+### Minor Changes
+
+- 2463aa4: Updates testUtils files to accommodate changes to the Icon package
+
+### Patch Changes
+
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
 ## 16.3.0
 
 ### Minor Changes

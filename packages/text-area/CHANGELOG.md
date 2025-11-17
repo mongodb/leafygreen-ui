@@ -1,5 +1,14 @@
 # @leafygreen-ui/text-area
 
+## 12.1.3
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/form-field@4.0.7
+  - @leafygreen-ui/typography@22.2.2
+
 ## 12.1.2
 
 ### Patch Changes

@@ -1,8 +1,5 @@
 import React, { ChangeEventHandler, useState } from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
+import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
@@ -31,7 +28,7 @@ const meta: StoryMetaType<typeof InputBar> = {
         ],
       },
       decorator: StoryFn => (
-        <LeafyGreenChatProvider variant={Variant.Compact}>
+        <LeafyGreenChatProvider>
           <StoryFn />
         </LeafyGreenChatProvider>
       ),
@@ -45,56 +42,29 @@ const meta: StoryMetaType<typeof InputBar> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    badgeText: { control: 'text' },
-    shouldRenderGradient: { control: 'boolean' },
     disabled: { control: 'boolean' },
     disableSend: { control: 'boolean' },
     state: {
       control: { type: 'radio' },
       options: Object.values(State),
     },
-    variant: {
-      control: { type: 'radio' },
-      options: Object.values(Variant),
-    },
   },
 };
 export default meta;
 
-type InputBarStoryProps = InputBarProps & {
-  variant?: Variant;
-};
-
-const Template: StoryFn<InputBarStoryProps> = ({
-  variant,
-  ...props
-}: InputBarStoryProps) => (
+const Template: StoryFn<InputBarProps> = (props: InputBarProps) => (
   <div style={{ width: '100%' }}>
-    <LeafyGreenChatProvider variant={variant}>
+    <LeafyGreenChatProvider>
       <InputBar {...props} />
     </LeafyGreenChatProvider>
   </div>
 );
 
-export const LiveExample: StoryObj<InputBarStoryProps> = {
+export const LiveExample: StoryObj<InputBarProps> = {
   render: Template,
 };
 
-export const WithBadge: StoryObj<InputBarStoryProps> = {
-  render: Template,
-  args: {
-    badgeText: 'Beta',
-  },
-};
-
-export const WithHotkeyIndicator: StoryObj<InputBarStoryProps> = {
-  render: Template,
-  args: {
-    shouldRenderHotkeyIndicator: true,
-  },
-};
-
-export const WithDropdown: StoryObj<InputBarStoryProps> = {
+export const WithDropdown: StoryObj<InputBarProps> = {
   render: Template,
   args: {
     children: (
@@ -142,7 +112,7 @@ export const WithDropdown: StoryObj<InputBarStoryProps> = {
   },
 };
 
-export const WithDropdownAndFooter: StoryObj<InputBarStoryProps> = {
+export const WithDropdownAndFooter: StoryObj<InputBarProps> = {
   render: Template,
   args: {
     dropdownFooterSlot: <>This is a test</>,
@@ -217,9 +187,6 @@ export const Controlled = (_: InputBarProps) => {
   );
 };
 
-export const Generated: StoryObj<InputBarStoryProps> = {
+export const Generated: StoryObj<InputBarProps> = {
   render: Template,
-  args: {
-    variant: Variant.Compact,
-  },
 };

@@ -1,5 +1,16 @@
+# catch-all rule: any file changes not matching a more specific rule below
+# will be assigned to @leafygreen-ui-maintainers
+* @mongodb/leafygreen-ui-maintainers
+
 # project:chat
 chat/ @mongodb/lg-chat
+
+# project:deletion
+packages/wizard @mongodb/lg-deletion
+
+# project:mcp-ui
+apps/mcp-ui-app @mongodb/lg-mcp-ui
+mcp-ui @mongodb/lg-mcp-ui
 
 # project:time-input
 packages/date-picker @mongodb/lg-time-input

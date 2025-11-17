@@ -1,5 +1,15 @@
 # @leafygreen-ui/form-footer
 
+## 9.2.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/split-button@6.1.7
+  - @leafygreen-ui/banner@10.2.3
+  - @leafygreen-ui/button@25.1.3
+
 ## 9.2.0
 
 ### Minor Changes

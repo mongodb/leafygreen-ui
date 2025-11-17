@@ -38,7 +38,7 @@ export const InputBarFeedback = forwardRef<
     },
     fwdRef,
   ) => {
-    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { theme } = useDarkMode(darkModeProp);
     const { assistantName } = useLeafyGreenChatContext();
 
     return (
@@ -51,7 +51,7 @@ export const InputBarFeedback = forwardRef<
       >
         {state === State.Loading && (
           <div className={loadingContainerStyles}>
-            <AssistantAvatar darkMode={darkMode} size={20} />
+            <AssistantAvatar size={20} />
             <Body className={getLoadingTextStyles(theme)}>
               {`${assistantName} is thinking`}
             </Body>
