@@ -2,6 +2,7 @@ import React, {
   FocusEventHandler,
   ForwardedRef,
   KeyboardEventHandler,
+  MouseEventHandler,
 } from 'react';
 import isEmpty from 'lodash/isEmpty';
 
@@ -18,6 +19,7 @@ import {
   createExplicitSegmentValidator,
   getRelativeSegment,
   getRelativeSegmentRef,
+  getSegmentToFocus,
   getValueFormatter,
   isElementInputSegment,
 } from '../utils';
@@ -35,6 +37,7 @@ const InputBoxWithRef = <Segment extends string>(
     segmentRefs: segmentRefsProp,
     onSegmentChange,
     onKeyDown,
+    onClick,
     setSegment,
     disabled,
     formatParts,
@@ -78,6 +81,23 @@ const InputBoxWithRef = <Segment extends string>(
     });
     const formattedValue = formatter(segmentValue);
     return formattedValue;
+  };
+
+  /** Called when the input box is clicked. Focuses the appropriate segment and calls the onClick callback. */
+  const handleInputClick: MouseEventHandler<HTMLDivElement> = e => {
+    onClick?.(e);
+
+    if (disabled) return;
+
+    const { target } = e;
+    const segmentToFocus = getSegmentToFocus({
+      target,
+      formatParts,
+      segmentRefs,
+    });
+
+    segmentToFocus?.focus();
+    segmentToFocus?.select();
   };
 
   /** Fired when an individual segment value changes */
@@ -230,6 +250,7 @@ const InputBoxWithRef = <Segment extends string>(
       <div
         className={getSegmentPartsWrapperStyles({ className })}
         onKeyDown={handleInputKeyDown}
+        onClick={handleInputClick}
         ref={fwdRef}
         {...rest}
       >

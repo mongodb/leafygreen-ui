@@ -59,7 +59,7 @@ export interface InputBoxProps<Segment extends string>
    *   { type: 'year', value: '2025' },
    * ]
    */
-  formatParts?: Array<Intl.DateTimeFormatPart>;
+  formatParts: Array<Intl.DateTimeFormatPart>;
 
   /**
    * An object that maps the segment names to their rules.

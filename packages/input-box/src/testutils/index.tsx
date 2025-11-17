@@ -111,6 +111,7 @@ export const InputBoxWithState = ({
       segmentComponent={InputSegmentWrapper}
       disabled={disabled}
       size={size}
+      data-testid="lg-input_box"
       {...props}
     />
   );
@@ -124,6 +125,7 @@ interface RenderInputBoxReturnType {
   getDayInput: () => HTMLInputElement;
   getMonthInput: () => HTMLInputElement;
   getYearInput: () => HTMLInputElement;
+  inputBoxEl: HTMLElement;
 }
 
 /**
@@ -149,6 +151,8 @@ export const renderInputBox = ({
     result.rerender(<InputBoxWithState {...props} {...newProps} />);
   };
 
+  const inputBoxEl = result.getByTestId('lg-input_box');
+
   return {
     ...result,
     rerenderInputBox,
@@ -158,6 +162,7 @@ export const renderInputBox = ({
     getDayInput,
     getMonthInput,
     getYearInput,
+    inputBoxEl,
   };
 };
 
