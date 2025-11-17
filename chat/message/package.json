@@ -23,7 +23,6 @@
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-chat/lg-markdown": "workspace:^",
@@ -33,6 +32,7 @@
   },
   "devDependencies": {
     "@emotion/styled": "^11.10.5",
+    "@leafygreen-ui/polymorphic": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {

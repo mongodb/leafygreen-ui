@@ -36,8 +36,11 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
+    "polished": "^4.2.2"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
-    "polished": "^4.2.2",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {

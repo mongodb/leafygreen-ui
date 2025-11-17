@@ -32,7 +32,12 @@
     "@lg-chat/message-feed": "workspace:^",
     "@lg-chat/message-feedback": "workspace:^",
     "@lg-chat/message-prompts": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "clipboard": "^2.0.11",
+    "facepaint": "^1.2.1",
+    "highlight.js": "^11.10.0",
+    "highlightjs-graphql": "^1.0.2",
+    "polished": "^4.2.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"

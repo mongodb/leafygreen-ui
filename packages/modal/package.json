@@ -27,13 +27,18 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
+    "@floating-ui/react": "^0.26.20",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/copyable": "workspace:^",
     "@leafygreen-ui/select": "workspace:^",
     "@leafygreen-ui/toast": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@lg-tools/build": "workspace:^",
+    "clipboard": "^2.0.11",
+    "facepaint": "^1.2.1",
+    "highlight.js": "^11.10.0",
+    "highlightjs-graphql": "^1.0.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"

@@ -16,8 +16,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/hooks": "workspace:^",
-    "@leafygreen-ui/lib": "workspace:^"
+    "@leafygreen-ui/hooks": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/a11y",
   "repository": {

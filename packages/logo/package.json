@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo",

@@ -16,15 +16,21 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^"
   },
   "devDependencies": {
+    "@floating-ui/react": "^0.26.20",
     "@leafygreen-ui/code": "workspace:^",
-    "@lg-tools/build": "workspace:^"
+    "@leafygreen-ui/icon": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "clipboard": "^2.0.11",
+    "facepaint": "^1.2.1",
+    "highlight.js": "^11.10.0",
+    "highlightjs-graphql": "^1.0.2",
+    "polished": "^4.2.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"

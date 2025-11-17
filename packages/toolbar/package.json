@@ -30,14 +30,12 @@
   "dependencies": {
     "@leafygreen-ui/descendants": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/tooltip": "workspace:^",
-    "@lg-tools/test-harnesses": "workspace:^"
+    "@leafygreen-ui/tooltip": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
@@ -45,7 +43,10 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
     "@leafygreen-ui/button": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^"
+    "@leafygreen-ui/typography": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^",
+    "polished": "^4.2.2"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toolbar",
   "repository": {

@@ -19,8 +19,6 @@
     "@emotion/react": "11.11.1",
     "@emotion/server": "11.11.0",
     "@leafygreen-ui/testing-lib": "workspace:^",
-    "@lg-tools/build": "workspace:^",
-    "@lg-tools/meta": "workspace:^",
     "@testing-library/dom": "9.3.1",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "14.0.0",
@@ -41,6 +39,10 @@
     "jest-junit": "16.0.0",
     "react-test-renderer": "18.2.0",
     "regenerator-runtime": "0.14.0"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/meta": "workspace:^"
   },
   "peerDependencies": {
     "@babel/core": "^7.23.2"

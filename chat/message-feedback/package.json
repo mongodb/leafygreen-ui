@@ -34,12 +34,13 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/text-area": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^"
   },
   "devDependencies": {
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/popover": "workspace:^",
     "@lg-chat/message-rating": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },

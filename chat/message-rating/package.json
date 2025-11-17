@@ -19,7 +19,6 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^"
   },
   "peerDependencies": {
@@ -27,6 +26,8 @@
     "@lg-chat/leafygreen-chat-provider": "workspace:^6.0.0"
   },
   "devDependencies": {
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "exports": {
