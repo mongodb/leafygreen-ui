@@ -191,12 +191,12 @@ describe('packages/guide-cue', () => {
         open: true,
       });
 
+      const primaryButton = getByRole('button', { name: buttonTextDefault });
+      expect(primaryButton).toBeInTheDocument();
+
+      userEvent.tab();
       await waitFor(() => {
-        const primaryButton = getByRole('button', { name: buttonTextDefault });
-        // Verify the button exists and is in the document
-        expect(primaryButton).toBeInTheDocument();
-        // Verify button can receive focus (tabindex is not -1)
-        expect(primaryButton).not.toHaveAttribute('tabindex', '-1');
+        expect(primaryButton).toHaveFocus();
       });
     });
   });
@@ -377,12 +377,12 @@ describe('packages/guide-cue', () => {
         await waitForTimeout(timeout1);
       });
 
+      const primaryButton = getByRole('button', { name: buttonTextDefault });
+      expect(primaryButton).toBeInTheDocument();
+
+      userEvent.tab();
       await waitFor(() => {
-        const primaryButton = getByRole('button', { name: buttonTextDefault });
-        // Verify the button exists and is in the document
-        expect(primaryButton).toBeInTheDocument();
-        // Verify button can receive focus (tabindex is not -1)
-        expect(primaryButton).not.toHaveAttribute('tabindex', '-1');
+        expect(primaryButton).toHaveFocus();
       });
     });
   });
