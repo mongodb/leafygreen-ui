@@ -100,7 +100,8 @@ docker run --name "${CONTAINER_NAME}" \
     /bin/bash -c '
         set -e
         npx node ./scripts/react17/init.mjs
-        pnpm run init
+        pnpm install
+        pnpm run build:packages
         pnpm run test --react17 -- --testTimeout=120000
         pnpm build-storybook
     '
