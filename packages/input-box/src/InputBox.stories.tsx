@@ -87,13 +87,6 @@ const meta: StoryMetaType<typeof InputBox> = {
   args: {
     disabled: false,
     size: Size.Default,
-    setSegment: (segment: SegmentObjMock, value: string) => {
-      console.log('setSegment', segment, value);
-    },
-    segmentComponent: InputSegmentWrapper,
-    formatParts: defaultFormatPartsMock,
-    segmentRules: segmentRulesMock,
-    segmentEnum: SegmentObjMock,
   },
 };
 export default meta;

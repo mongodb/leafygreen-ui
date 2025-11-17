@@ -11,7 +11,6 @@ import {
   defaultMinMock,
   defaultPlaceholderMock,
   SegmentObjMock,
-  segmentRefsMock,
   segmentRulesMock,
   segmentsMock,
   segmentWidthStyles,
@@ -20,7 +19,6 @@ import {
 export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
   segments: segmentsMock,
   segmentEnum: SegmentObjMock,
-  segmentRefs: segmentRefsMock,
   setSegment: () => {},
   formatParts: defaultFormatPartsMock,
   segmentRules: segmentRulesMock,
