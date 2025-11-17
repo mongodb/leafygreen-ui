@@ -3,9 +3,10 @@ import React, {
   ForwardedRef,
   KeyboardEventHandler,
 } from 'react';
+import isEmpty from 'lodash/isEmpty';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap } from '@leafygreen-ui/lib';
+import { consoleOnce, keyMap } from '@leafygreen-ui/lib';
 
 import { useSegmentRefs } from '../hooks';
 import {
@@ -47,6 +48,9 @@ const InputBoxWithRef = <Segment extends string>(
   fwdRef: ForwardedRef<HTMLDivElement>,
 ) => {
   const { theme } = useDarkMode();
+
+  if (isEmpty(segments))
+    consoleOnce.error('Error in Leafygreen InputBox: segments is required');
 
   /** If segmentRefs are provided, use them. Otherwise, create them using the segments. */
   const internalSegmentRefs = useSegmentRefs(segments);

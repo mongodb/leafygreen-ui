@@ -2204,6 +2204,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
 
   packages/input-option:
     dependencies:

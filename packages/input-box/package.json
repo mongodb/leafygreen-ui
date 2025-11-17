@@ -34,7 +34,8 @@
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/date-utils": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^"
+    "@leafygreen-ui/typography": "workspace:^",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

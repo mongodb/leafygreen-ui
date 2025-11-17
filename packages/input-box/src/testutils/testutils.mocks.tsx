@@ -1,8 +1,10 @@
-import { createRef } from 'react';
+import React, { createRef, forwardRef } from 'react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
+import { InputSegment } from '../InputSegment';
+import { InputSegmentComponentProps } from '../shared.types';
 import { ExplicitSegmentRule } from '../utils';
 
 export const SegmentObjMock = {
@@ -22,6 +24,12 @@ export const segmentRefsMock: SegmentRefsMock = {
   month: createRef<HTMLInputElement>(),
   day: createRef<HTMLInputElement>(),
   year: createRef<HTMLInputElement>(),
+};
+
+export const dateSegmentEmptyMock: Record<SegmentObjMock, string> = {
+  month: '',
+  day: '',
+  year: '',
 };
 
 export const segmentsMock: Record<SegmentObjMock, string> = {
@@ -65,6 +73,9 @@ export const characterWidth = {
   D: 46 / 40,
   M: 55 / 40,
   Y: 50 / 40,
+  H: 46 / 40,
+  MM: 55 / 40,
+  S: 46 / 40,
 } as const;
 
 export const segmentWidthStyles: Record<SegmentObjMock, string> = {
@@ -78,3 +89,90 @@ export const segmentWidthStyles: Record<SegmentObjMock, string> = {
     width: ${segmentRulesMock['year'].maxChars * characterWidth.Y}ch;
   `,
 };
+
+/** Mocks for time generate story */
+export const TimeSegmentObjMock = {
+  Hour: 'hour',
+  Minute: 'minute',
+  Second: 'second',
+} as const;
+export type TimeSegmentObjMock =
+  (typeof TimeSegmentObjMock)[keyof typeof TimeSegmentObjMock];
+
+export const timeSegmentsMock: Record<TimeSegmentObjMock, string> = {
+  hour: '23',
+  minute: '00',
+  second: '59',
+};
+
+export const timeSegmentsEmptyMock: Record<TimeSegmentObjMock, string> = {
+  hour: '',
+  minute: '',
+  second: '',
+};
+
+export const timeSegmentRulesMock: Record<
+  TimeSegmentObjMock,
+  ExplicitSegmentRule
+> = {
+  hour: { maxChars: 2, minExplicitValue: 3 },
+  minute: { maxChars: 2, minExplicitValue: 6 },
+  second: { maxChars: 2, minExplicitValue: 6 },
+};
+
+export const timeMinMock: Record<TimeSegmentObjMock, number> = {
+  hour: 0,
+  minute: 0,
+  second: 0,
+};
+export const timeMaxMock: Record<TimeSegmentObjMock, number> = {
+  hour: 23,
+  minute: 59,
+  second: 59,
+};
+
+export const timePlaceholderMock: Record<TimeSegmentObjMock, string> = {
+  hour: 'HH',
+  minute: 'MM',
+  second: 'SS',
+} as const;
+
+export const timeFormatPartsMock: Array<Intl.DateTimeFormatPart> = [
+  { type: 'hour', value: '' },
+  { type: 'literal', value: ':' },
+  { type: 'minute', value: '' },
+  { type: 'literal', value: ':' },
+  { type: 'second', value: '' },
+];
+
+export const timeSegmentWidthStyles: Record<TimeSegmentObjMock, string> = {
+  hour: css`
+    width: ${timeSegmentRulesMock['hour'].maxChars * characterWidth.D}ch;
+  `,
+  minute: css`
+    width: ${timeSegmentRulesMock['minute'].maxChars * characterWidth.MM}ch;
+  `,
+  second: css`
+    width: ${timeSegmentRulesMock['second'].maxChars * characterWidth.Y}ch;
+  `,
+};
+
+export const TimeInputSegmentWrapper = forwardRef<
+  HTMLInputElement,
+  InputSegmentComponentProps<TimeSegmentObjMock>
+>((props, ref) => {
+  const { segment, ...rest } = props;
+  return (
+    <InputSegment
+      {...rest}
+      ref={ref}
+      segment={segment}
+      minSegmentValue={timeMinMock[segment]}
+      maxSegmentValue={timeMaxMock[segment]}
+      className={timeSegmentWidthStyles[segment]}
+      placeholder={timePlaceholderMock[segment]}
+    />
+  );
+});
+
+TimeInputSegmentWrapper.displayName = 'TimeInputSegmentWrapper';
