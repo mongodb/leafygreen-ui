@@ -8,7 +8,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { colorSet, containerStyle } from './styles';
+import { getCardStyles } from './styles';
 import { ContentStyle, InternalCardProps } from './types';
 
 /**
@@ -40,15 +40,7 @@ export const Card = InferredPolymorphic<InternalCardProps, 'div'>(
     return (
       <Component
         ref={ref}
-        className={cx(
-          containerStyle,
-          colorSet[theme].containerStyle,
-          {
-            [colorSet[theme].clickableStyle]:
-              contentStyle === ContentStyle.Clickable,
-          },
-          className,
-        )}
+        className={cx(getCardStyles({ theme, contentStyle, className }))}
         {...rest}
       />
     );
