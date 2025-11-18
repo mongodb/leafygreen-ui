@@ -42,7 +42,7 @@ jobs:
             tools/*/dist/*
             tools/*/tsdoc.json
             tools/*/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '**/scripts/', '**/config/') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18

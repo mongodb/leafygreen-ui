@@ -35,7 +35,7 @@ jobs:
             mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{ runner.os }}-REACT17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
+          key: ${{ runner.os }}-REACT17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '**/scripts/', '**/config/') }}
 
       - name: Setup Node 18
         uses: actions/setup-node@v4
