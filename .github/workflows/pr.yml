@@ -77,6 +77,18 @@ jobs:
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
+      - uses: actions/upload-artifact@v4
+        name: Upload build artifacts
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        with:
+          name: built-packages-${{ github.run_id }}.zip
+          path: |
+            charts/*/dist/
+            chat/*/dist/
+            packages/*/dist/
+            tools/*/dist/
+          retention-days: 30
+
       # @leafygreen-ui/icon has an additional built-in cache layer
       - name: Save icon build
         uses: actions/cache/save@v4
