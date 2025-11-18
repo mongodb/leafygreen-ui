@@ -67,6 +67,18 @@ jobs:
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: pnpm build:packages
 
+      - uses: actions/upload-artifact@v4
+        name: Upload build artifacts
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        with:
+          name: built-packages-${{ github.run_id }}.zip
+          path: |
+            charts/*/dist/
+            chat/*/dist/
+            packages/*/dist/
+            tools/*/dist/
+          retention-days: 30
+
       - uses: actions/cache/save@v4
         name: Save build cache
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
