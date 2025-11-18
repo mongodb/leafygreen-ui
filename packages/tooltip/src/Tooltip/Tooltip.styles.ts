@@ -3,9 +3,10 @@ import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
+import { fontFamilies, fontWeights, spacing } from '@leafygreen-ui/tokens';
 
-import { borderRadius, notchWidth } from './tooltipConstants';
+import { TooltipVariant } from './Tooltip.types';
+import { borderRadiuses, notchWidth } from './tooltipConstants';
 
 // The typographic styles below are largely copied from the Body component.
 // We can't use the Body component here due to it rendering a paragraph tag,
@@ -23,12 +24,18 @@ export const baseTypeStyle = css`
 export const baseStyles = css`
   display: flex;
   align-items: center;
-  border-radius: ${borderRadius}px;
-  padding: 12px ${borderRadius}px;
+  border-radius: ${borderRadiuses[TooltipVariant.Default]}px;
+  padding: ${spacing[300]}px ${spacing[400]}px;
   box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
   cursor: default;
   width: fit-content;
   max-width: 256px;
+`;
+
+export const compactStyles = css`
+  padding: ${spacing[100]}px ${spacing[150]}px;
+  min-height: 28px;
+  border-radius: ${borderRadiuses[TooltipVariant.Compact]}px;
 `;
 
 export const positionRelative = css`
@@ -58,7 +65,7 @@ export const colorSet = {
   },
 };
 
-export const minSize = notchWidth + 2 * borderRadius;
+export const minSize = notchWidth + 2 * borderRadiuses[TooltipVariant.Default];
 export const minHeightStyle = css`
   min-height: ${minSize}px;
 `;

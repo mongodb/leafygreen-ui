@@ -3,20 +3,23 @@ import clamp from 'lodash/clamp';
 import { css } from '@leafygreen-ui/emotion';
 import { Align, ElementPosition, Justify } from '@leafygreen-ui/popover';
 
-import { borderRadius, notchHeight, notchWidth } from './tooltipConstants';
+import { TooltipVariant } from './Tooltip.types';
+import { borderRadiuses, notchHeight, notchWidth } from './tooltipConstants';
 
 interface NotchPositionStylesArgs {
   align: Align;
   justify: Justify;
   triggerRect: ElementPosition | DOMRect | ClientRect | null;
+  isCompact: boolean;
 }
 
 export function notchPositionStyles({
   align,
   justify,
   triggerRect,
+  isCompact,
 }: NotchPositionStylesArgs) {
-  if (!align || !justify || !triggerRect) {
+  if (!align || !justify || !triggerRect || isCompact) {
     return {
       notchContainer: '',
       notch: '',
@@ -35,7 +38,7 @@ export function notchPositionStyles({
    * The bounds used to clamp the notchOffset value.
    * Should match the border-radius of the tooltip
    */
-  const notchOffsetLowerBound = borderRadius;
+  const notchOffsetLowerBound = borderRadiuses[TooltipVariant.Default];
 
   /**
    * This number is somewhat "magical", but adjusted for the Tooltip alignment.

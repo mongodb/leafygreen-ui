@@ -29,6 +29,7 @@ import {
   baseStyles,
   baseTypeStyle,
   colorSet,
+  compactStyles,
   minHeightStyle,
   positionRelative,
 } from './Tooltip.styles';
@@ -37,6 +38,7 @@ import {
   PopoverFunctionParameters,
   RenderMode,
   TooltipProps,
+  TooltipVariant,
   TriggerEvent,
 } from './Tooltip.types';
 import { notchPositionStyles } from './tooltipUtils';
@@ -87,7 +89,7 @@ function Tooltip({
   justify = 'start',
   spacing = 12,
   renderMode = RenderMode.TopLayer,
-  onClose = () => {},
+  onClose,
   id,
   shouldClose,
   portalClassName,
@@ -99,6 +101,7 @@ function Tooltip({
   className,
   children,
   trigger,
+  variant = TooltipVariant.Default,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -129,7 +132,7 @@ function Tooltip({
 
   const handleClose = useCallback(() => {
     if (typeof shouldClose !== 'function' || shouldClose()) {
-      onClose();
+      onClose?.();
       setOpen(false);
     }
   }, [setOpen, shouldClose, onClose]);
@@ -164,6 +167,7 @@ function Tooltip({
 
   const active = enabled && open;
   const isLeftOrRightAligned = ['left', 'right'].includes(align);
+  const isCompact = variant === TooltipVariant.Compact;
 
   const tooltip = (
     <Popover
@@ -189,6 +193,7 @@ function Tooltip({
           align,
           justify,
           triggerRect: referenceElPos,
+          isCompact,
         });
 
         return (
@@ -201,10 +206,11 @@ function Tooltip({
               id={tooltipId}
               className={cx(
                 baseStyles,
-                tooltipNotchStyle,
+                !isCompact && tooltipNotchStyle,
                 colorSet[theme].tooltip,
                 {
                   [minHeightStyle]: isLeftOrRightAligned,
+                  [compactStyles]: isCompact,
                 },
                 className,
               )}
@@ -213,19 +219,23 @@ function Tooltip({
               <div
                 className={cx(
                   baseTypeStyle,
-                  bodyTypeScaleStyles[size],
+                  {
+                    [bodyTypeScaleStyles[size]]: !isCompact,
+                  },
                   colorSet[theme].children,
                 )}
               >
                 {children}
               </div>
 
-              <div className={notchContainerStyle}>
-                <SvgNotch
-                  className={cx(notchStyle)}
-                  fill={colorSet[theme].notchFill}
-                />
-              </div>
+              {!isCompact && (
+                <div className={notchContainerStyle}>
+                  <SvgNotch
+                    className={cx(notchStyle)}
+                    fill={colorSet[theme].notchFill}
+                  />
+                </div>
+              )}
             </div>
           </LeafyGreenProvider>
         );

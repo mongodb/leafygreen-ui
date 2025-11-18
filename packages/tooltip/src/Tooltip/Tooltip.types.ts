@@ -17,6 +17,14 @@ export const TriggerEvent = {
 
 export type TriggerEvent = (typeof TriggerEvent)[keyof typeof TriggerEvent];
 
+export const TooltipVariant = {
+  Default: 'default',
+  Compact: 'compact',
+} as const;
+
+export type TooltipVariant =
+  (typeof TooltipVariant)[keyof typeof TooltipVariant];
+
 export const Align = {
   Top: PopoverAlign.Top,
   Bottom: PopoverAlign.Bottom,
@@ -47,7 +55,7 @@ type ModifiedPopoverProps = Omit<
   | 'onToggle'
 >;
 
-export type TooltipProps = Omit<
+type BaseTooltipProps = Omit<
   React.ComponentPropsWithoutRef<'div'>,
   keyof ModifiedPopoverProps
 > &
@@ -119,10 +127,38 @@ export type TooltipProps = Omit<
      *
      */
     onClose?: () => void;
-
-    /**
-     * Allows consuming applications to override font-size as set by the LeafyGreen Provider.
-     *
-     */
-    baseFontSize?: BaseFontSize;
   };
+
+type TooltipPropsWithDefault = BaseTooltipProps & {
+  /**
+   * Variant of the tooltip to be rendered.
+   *
+   * @default 'default'
+   */
+  variant?: typeof TooltipVariant.Default;
+
+  /**
+   * Allows consuming applications to override font-size as set by the LeafyGreen Provider.
+   *
+   * @remarks This prop is only allowed when variant is 'default'
+   */
+  baseFontSize?: BaseFontSize;
+};
+
+type TooltipPropsWithCompact = BaseTooltipProps & {
+  /**
+   * Variant of the tooltip to be rendered.
+   *
+   * @default 'default'
+   */
+  variant: typeof TooltipVariant.Compact;
+
+  /**
+   * baseFontSize is not allowed when variant is 'compact'
+   *
+   *  @remarks This prop is only allowed when variant is 'default'
+   */
+  baseFontSize?: never;
+};
+
+export type TooltipProps = TooltipPropsWithDefault | TooltipPropsWithCompact;
