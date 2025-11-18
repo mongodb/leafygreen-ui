@@ -37,7 +37,7 @@
   },
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild/index.ts",
-    "build": "ts-node ./scripts/build/build.ts",
+    "build": "ts-node ./scripts/build/build.ts --verbose",
     "postbuild": "ts-node ./scripts/postbuild/index.ts",
     "minify": "lg-build minify",
     "tsc": "lg-build tsc",
