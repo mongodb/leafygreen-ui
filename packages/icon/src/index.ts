@@ -1,3 +1,4 @@
+// cache buster x2
 export { createGlyphComponent } from './createGlyphComponent';
 export type { IconProps } from './createIconComponent';
 export { createIconComponent } from './createIconComponent';
