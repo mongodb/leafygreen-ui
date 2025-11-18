@@ -8,6 +8,7 @@ import { glob } from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 import { getUMDGlobals } from './utils/getUMDGlobals.mjs';
 import { defaultsDeep } from 'lodash-es';
@@ -66,6 +67,10 @@ const createConfigForFormat = (format, overrides) => {
       }),
 
       svgr(),
+      visualizer({
+        open: false,
+        filename: `${moduleFormatToDirectory[format]}/bundle-stats.html`,
+      }),
     ],
     external,
     strictDeprecations: true,
