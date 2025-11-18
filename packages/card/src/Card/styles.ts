@@ -36,7 +36,7 @@ const colorSet: Record<Theme, ColorSet> = {
 
       &:focus {
         outline: none;
-        box-shadow: ${lightFocusBoxShadow};
+        box-shadow: ${lightFocusBoxShadow}, ${lightBaseBoxShadow};
       }
 
       &:hover,
@@ -68,7 +68,7 @@ const colorSet: Record<Theme, ColorSet> = {
         box-shadow: ${darkHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${darkBaseBoxShadow};
+          box-shadow: ${darkBaseBoxShadow}, ${darkFocusBoxShadow};
         }
       }
     `,
