@@ -3,6 +3,8 @@ import { jest } from '@jest/globals';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { consoleOnce } from '@leafygreen-ui/lib';
+
 import { InputSegmentChangeEventHandler } from '../shared.types';
 import {
   InputBoxWithState,
@@ -19,6 +21,22 @@ import {
 import { InputBox } from './InputBox';
 
 describe('packages/input-box', () => {
+  describe('basic functionality', () => {
+    test('returns null when no segments are provided', () => {
+      const consoleOnceSpy = jest
+        .spyOn(consoleOnce, 'error')
+        .mockImplementation(() => {});
+
+      // @ts-expect-error - missing props
+      const { container } = render(<InputBox segments={{}} />);
+
+      expect(container.firstChild).toBeNull();
+      expect(consoleOnceSpy).toHaveBeenCalledWith(
+        'Error in Leafygreen InputBox: segments is required',
+      );
+    });
+  });
+
   describe('Rendering', () => {
     describe.each(['day', 'month', 'year'])('%p', segment => {
       test('renders the correct aria attributes', () => {
