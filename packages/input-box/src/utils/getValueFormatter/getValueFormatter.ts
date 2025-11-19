@@ -6,10 +6,12 @@ import { isZeroLike } from '@leafygreen-ui/lib';
  * If the value is any form of zero, we set it to an empty string
  * otherwise, pad the string with 0s, or trim it to n chars
  *
- * @param charsPerSegment - the number of characters per segment
+ * @param charsCount - the number of characters
  * @param allowZero - whether to allow zero-like values
+ *
  * @returns a value formatter function for the provided segment
- *   - @param val - the value to format (string, number, or undefined)
+ *
+ * @param val - the value to format (string, number, or undefined)
  *
  * @example
  * const formatter = getValueFormatter({ charsPerSegment: 2 });
@@ -26,10 +28,10 @@ import { isZeroLike } from '@leafygreen-ui/lib';
  */
 export const getValueFormatter =
   ({
-    charsPerSegment,
+    charsCount,
     allowZero = false,
   }: {
-    charsPerSegment: number;
+    charsCount: number;
     allowZero?: boolean;
   }) =>
   (val: string | number | undefined) => {
@@ -40,11 +42,8 @@ export const getValueFormatter =
     if (!allowZero && isZeroLike(val)) return '';
 
     // otherwise, pad the string with 0s, or trim it to n chars
-    const padded = padStart(Number(val).toString(), charsPerSegment, '0');
-    const trimmed = padded.slice(
-      padded.length - charsPerSegment,
-      padded.length,
-    );
+    const padded = padStart(Number(val).toString(), charsCount, '0');
+    const trimmed = padded.slice(padded.length - charsCount, padded.length);
 
     return trimmed;
   };

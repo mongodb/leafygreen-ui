@@ -80,7 +80,7 @@ describe('DatePicker keyboard interaction', () => {
     const segmentCases = ['year', 'month', 'day'] as Array<DateSegment>;
     describe.each(segmentCases)('%p segment', segment => {
       const formatter = getValueFormatter({
-        charsPerSegment: charsPerSegment[segment],
+        charsCount: charsPerSegment[segment],
       });
       /** Utility only for this suite. Returns the day|month|year element from the render result */
       const getRelevantInput = (renderResult: RenderDatePickerResult) =>

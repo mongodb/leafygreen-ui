@@ -19,7 +19,7 @@ export const getFormattedDateStringFromSegments = (
 
     const segment = part.type as DateSegment;
     const formatter = getValueFormatter({
-      charsPerSegment: charsPerSegment[segment],
+      charsCount: charsPerSegment[segment],
     });
     const formattedSegment = formatter(segments[segment]);
     return dateString + formattedSegment;

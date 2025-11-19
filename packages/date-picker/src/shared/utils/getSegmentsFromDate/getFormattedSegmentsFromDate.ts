@@ -13,13 +13,13 @@ export const getFormattedSegmentsFromDate = (
   const segments = getSegmentsFromDate(date);
 
   return {
-    day: getValueFormatter({ charsPerSegment: charsPerSegment['day'] })(
+    day: getValueFormatter({ charsCount: charsPerSegment['day'] })(
       segments['day'],
     ),
-    month: getValueFormatter({ charsPerSegment: charsPerSegment['month'] })(
+    month: getValueFormatter({ charsCount: charsPerSegment['month'] })(
       segments['month'],
     ),
-    year: getValueFormatter({ charsPerSegment: charsPerSegment['year'] })(
+    year: getValueFormatter({ charsCount: charsPerSegment['year'] })(
       segments['year'],
     ),
   };

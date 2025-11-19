@@ -48,7 +48,7 @@ const InputSegmentWithRef = <Segment extends string>(
   const { theme } = useDarkMode();
   const baseFontSize = useUpdatedBaseFontSize();
   const formatter = getValueFormatter({
-    charsPerSegment: charsCount,
+    charsCount,
     allowZero: minSegmentValue === 0,
   });
   const pattern = `[0-9]{${charsCount}}`;
