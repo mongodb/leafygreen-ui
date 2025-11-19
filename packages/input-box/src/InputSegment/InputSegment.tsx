@@ -15,7 +15,7 @@ import {
   getNewSegmentValueFromArrowKeyPress,
   getNewSegmentValueFromInputValue,
   getValueFormatter,
-  isSingleDigit,
+  isSingleDigitKey,
 } from '../utils';
 
 import { getInputSegmentStyles } from './InputSegment.styles';
@@ -94,7 +94,7 @@ const InputSegmentWithRef = <Segment extends string>(
 
     // If the value is a single digit, we check if the input is full and reset it if it is. The digit will be inserted into the input when onChange is called.
     // This is to handle the case where the user tries to type a single digit when the input is already full. Usually this happens when the focus is moved to the next segment or a segment is clicked
-    if (isSingleDigit(key)) {
+    if (isSingleDigitKey(key)) {
       if (target.value.length === charsCount) {
         target.value = '';
       }

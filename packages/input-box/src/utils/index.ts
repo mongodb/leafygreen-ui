@@ -10,7 +10,7 @@ export {
 } from './getRelativeSegment/getRelativeSegment';
 export { getValueFormatter } from './getValueFormatter/getValueFormatter';
 export { isElementInputSegment } from './isElementInputSegment/isElementInputSegment';
-export { isSingleDigit } from './isSingleDigit/isSingleDigit';
+export { isSingleDigitKey } from './isSingleDigitKey/isSingleDigitKey';
 export {
   isValidSegmentName,
   isValidSegmentValue,
