@@ -17,6 +17,7 @@ const Variant = {
   Placeholder: 'placeholder',
   Primary: 'primary',
   Secondary: 'secondary',
+  Tertiary: 'tertiary',
   InversePrimary: 'inversePrimary',
   InverseSecondary: 'inverseSecondary',
   Info: 'info',

@@ -63,6 +63,11 @@ const lightModeBorderColors = {
     [InteractionState.Hover]: gray.light2,
     [InteractionState.Focus]: blue.light1,
   },
+  [Variant.Tertiary]: {
+    [InteractionState.Default]: gray.light1,
+    [InteractionState.Hover]: gray.light1,
+    [InteractionState.Focus]: blue.light1,
+  },
   [Variant.Success]: {
     [InteractionState.Default]: green.dark1,
     [InteractionState.Hover]: green.dark1,
