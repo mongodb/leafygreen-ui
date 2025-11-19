@@ -23,22 +23,22 @@
     "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/icon": "^13.0.0",
-    "@leafygreen-ui/lib": "^14.0.0",
-    "@leafygreen-ui/palette": "^4.1.0",
-    "@leafygreen-ui/tokens": "^2.11.0",
-    "@leafygreen-ui/tooltip": "^13.0.0",
-    "@leafygreen-ui/typography": "^20.0.0"
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/badge": "^9.0.0",
-    "@leafygreen-ui/button": "^22.0.0",
-    "@lg-tools/build": "0.8.0",
-    "@lg-tools/storybook-utils": "^0.3.0",
+    "@leafygreen-ui/badge": "workspace:^",
+    "@leafygreen-ui/button": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:^",
     "@faker-js/faker": "^8.4.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/canvas-header",
