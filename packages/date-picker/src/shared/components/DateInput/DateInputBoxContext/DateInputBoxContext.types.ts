@@ -1,5 +1,6 @@
-import { DateType } from '@leafygreen-ui/date-utils';
 import { PropsWithChildren } from 'react';
+
+import { DateType } from '@leafygreen-ui/date-utils';
 
 export interface DateInputBoxContextType {
   /**
