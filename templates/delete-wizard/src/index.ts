@@ -1,0 +1,1 @@
+export { DeleteWizard, type DeleteWizardProps } from './DeleteWizard';
