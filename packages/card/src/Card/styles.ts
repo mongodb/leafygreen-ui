@@ -3,6 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   boxShadows,
+  color,
   focusRing,
   fontFamilies,
   transitionDuration,
@@ -27,7 +28,7 @@ const darkFocusBoxShadow = focusRing.dark.default;
 const colorSet: Record<Theme, ColorSet> = {
   [Theme.Light]: {
     containerStyle: css`
-      border: 1px solid ${palette.gray.light1};
+      border: 1px solid ${color[Theme.Light].border.tertiary.default};
       background-color: ${palette.white};
       color: ${palette.gray.dark3};
     `,
@@ -52,7 +53,7 @@ const colorSet: Record<Theme, ColorSet> = {
   },
   [Theme.Dark]: {
     containerStyle: css`
-      border: 1px solid ${palette.gray.dark2};
+      border: 1px solid ${color[Theme.Dark].border.tertiary.default};
       background-color: ${palette.black};
       color: ${palette.white};
     `,

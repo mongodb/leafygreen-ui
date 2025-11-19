@@ -29,7 +29,7 @@ export interface InternalCardProps extends DarkModeProps {
    * Defaults to `'clickable'` (when a valid `onClick` handler or `href` link is provided
    *
    * @default 'clickable' | 'none'
-   * @deprecated No longer supported. We don't want card to be clickable from a root level.
+   * @deprecated No longer supported. We don't want card to be clickable from a root level. Use interactive elements inside the card instead.
    */
   contentStyle?: ContentStyle;
 
@@ -42,14 +42,14 @@ export interface InternalCardProps extends DarkModeProps {
   /**
    * Click handler for the Card component.
    *
-   * @deprecated No longer supported. We don't want card to be clickable from a root level.
+   * @deprecated No longer supported. We don't want card to be clickable from a root level. Use interactive elements inside the card instead.
    */
   onClick?: React.MouseEventHandler<any>;
 
   /**
    * Link for the Card component.
    *
-   * @deprecated No longer supported. We don't want card to be clickable from a root level.
+   * @deprecated No longer supported. We don't want card to be clickable from a root level. Use interactive elements inside the card instead.
    */
   href?: string;
 }

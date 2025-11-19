@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   InferredPolymorphic,
@@ -40,7 +39,7 @@ export const Card = InferredPolymorphic<InternalCardProps, 'div'>(
     return (
       <Component
         ref={ref}
-        className={cx(getCardStyles({ theme, contentStyle, className }))}
+        className={getCardStyles({ theme, contentStyle, className })}
         {...rest}
       />
     );
