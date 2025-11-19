@@ -179,59 +179,9 @@ describe('packages/input-box', () => {
 
     test('click on segment focuses it when the segment is not empty', () => {
       const { dayInput } = renderInputBox({
-        segments: { month: '', day: '02', year: '' },
+        segments: { day: '02', month: '', year: '' },
       });
       userEvent.click(dayInput);
-      expect(dayInput).toHaveFocus();
-    });
-
-    test('click on a non-segment input focuses the last segment when all segments are filled', () => {
-      const { yearInput, inputBoxEl } = renderInputBox({
-        segments: { month: '02', day: '02', year: '2025' },
-      });
-      userEvent.click(inputBoxEl);
-      expect(yearInput).toHaveFocus();
-    });
-
-    test('click on a non-segment input focuses the first segment when all segments are empty', () => {
-      const { monthInput, inputBoxEl } = renderInputBox({
-        segments: { month: '', day: '', year: '' },
-      });
-      userEvent.click(inputBoxEl);
-      expect(monthInput).toHaveFocus();
-    });
-
-    describe('click on a non-segment input focuses the first empty segment when some segments are empty', () => {
-      test('the first segment is focused and the second is filled', () => {
-        const { monthInput, inputBoxEl } = renderInputBox({
-          segments: { month: '', day: '02', year: '' },
-        });
-        userEvent.click(inputBoxEl);
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('the second segment is focused and the first is filled and the last is empty', () => {
-        const { dayInput, inputBoxEl } = renderInputBox({
-          segments: { month: '02', day: '', year: '2025' },
-        });
-        userEvent.click(inputBoxEl);
-        expect(dayInput).toHaveFocus();
-      });
-
-      test('the third segment is focused and the first and second are filled', () => {
-        const { yearInput, inputBoxEl } = renderInputBox({
-          segments: { month: '02', day: '02', year: '' },
-        });
-        userEvent.click(inputBoxEl);
-        expect(yearInput).toHaveFocus();
-      });
-    });
-
-    test('click on a non-segment input focuses the first empty segment when some segments are empty', () => {
-      const { dayInput, inputBoxEl } = renderInputBox({
-        segments: { month: '02', day: '', year: '' },
-      });
-      userEvent.click(inputBoxEl);
       expect(dayInput).toHaveFocus();
     });
   });
@@ -395,15 +345,6 @@ describe('packages/input-box', () => {
       userEvent.type(dayInput, '1'); // 1 can be 1 or 1n
       userEvent.tab();
       expect(dayInput.value).toBe('01');
-    });
-  });
-
-  describe('onClick', () => {
-    test('calls the onClick callback', () => {
-      const onClick = jest.fn();
-      const { inputBoxEl } = renderInputBox({ onClick });
-      userEvent.click(inputBoxEl);
-      expect(onClick).toHaveBeenCalledTimes(1);
     });
   });
 

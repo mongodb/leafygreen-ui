@@ -85,11 +85,8 @@ describe('packages/date-picker/utils/getSegmentToFocus', () => {
 
   test('returns undefined for undefined input', () => {
     const segment = getSegmentToFocus({
-      // @ts-expect-error
       target: undefined,
-      // @ts-expect-error
       formatParts: undefined,
-      // @ts-expect-error
       segmentRefs: undefined,
     });
 
