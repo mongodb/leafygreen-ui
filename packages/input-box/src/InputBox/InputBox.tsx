@@ -50,8 +50,10 @@ const InputBoxWithRef = <Segment extends string>(
   const { theme } = useDarkMode();
 
   /** If segmentRefs are provided, use them. Otherwise, create them using the segments. */
-  const internalSegmentRefs = useSegmentRefs(segments ?? {});
-  const segmentRefs = segmentRefsProp || internalSegmentRefs;
+  const segmentRefs = useSegmentRefs({
+    segments,
+    segmentRefs: segmentRefsProp,
+  });
 
   if (isEmpty(segmentRefs) || isEmpty(segments)) {
     consoleOnce.error('Error in Leafygreen InputBox: segments is required');
