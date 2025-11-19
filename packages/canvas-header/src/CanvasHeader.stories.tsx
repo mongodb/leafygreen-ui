@@ -7,6 +7,7 @@ import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import { breakpoints } from '@leafygreen-ui/tokens';
 import { BackLink } from '@leafygreen-ui/typography';
 
 import { CanvasHeader } from '.';
@@ -127,7 +128,8 @@ export default meta;
 export const LiveExample: StoryFn<typeof CanvasHeader> = props => (
   <div
     className={css`
-      min-width: 50vw;
+      width: 50vw;
+      max-width: ${breakpoints.XLDesktop}px,
       position: relative;
       z-index: 0;
     `}
