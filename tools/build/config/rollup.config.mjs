@@ -63,7 +63,7 @@ const createConfigForFormat = (format, overrides) => {
         babelHelpers: 'bundled',
         extensions,
         configFile: babelConfigPath,
-        sourceMaps: 'inline',
+        sourceMaps: true,
         envName: 'production',
       }),
 
