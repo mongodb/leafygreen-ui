@@ -129,7 +129,7 @@ export const LiveExample: StoryFn<typeof CanvasHeader> = props => (
   <div
     className={css`
       width: 50vw;
-      max-width: ${breakpoints.XLDesktop}px,
+      max-width: ${breakpoints.XLDesktop}px;
       position: relative;
       z-index: 0;
     `}

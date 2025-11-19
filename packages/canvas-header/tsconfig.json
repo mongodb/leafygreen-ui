@@ -7,5 +7,14 @@
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.*", "**/*.story.*"],
-  "references": []
+  "references": [
+    {"path": "../emotion"},
+    {"path": "../icon"},
+    {"path": "../leafygreen-provider"},
+    {"path": "../lib"},
+    {"path": "../palette"},
+    {"path": "../tokens"},
+    {"path": "../tooltip"},
+    {"path": "../typography"},
+  ]
 }
