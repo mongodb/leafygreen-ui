@@ -3902,6 +3902,9 @@ importers:
       rollup-plugin-polyfill-node:
         specifier: 0.13.0
         version: 0.13.0(rollup@4.16.1)
+      terser:
+        specifier: ^5.43.1
+        version: 5.43.1
       turbo:
         specifier: ^2.0.6
         version: 2.5.5

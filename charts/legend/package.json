@@ -7,7 +7,7 @@
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "lg-build bundle",
+    "build": "lg-build bundle && lg-build minify",
     "tsc": "lg-build tsc",
     "docs": "lg-build docs"
   },
@@ -41,8 +41,18 @@
     ".": {
       "types": "./dist/types/index.d.ts",
       "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/umd/index.js"
+      "import": {
+        "browser": {
+          "production": "./dist/esm/index-min.js"
+        },
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "browser": {
+          "production": "./dist/umd/index-min.js"
+        },
+        "default": "./dist/umd/index.js"
+      }
     }
   },
   "typesVersions": {}

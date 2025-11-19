@@ -2,6 +2,7 @@ import {
   registerBuildDocsCommand,
   registerBuildTSCommand,
   registerBundleCommand,
+  registerMinifyCommand,
 } from '@lg-tools/build';
 import { migrator } from '@lg-tools/codemods';
 import { createPackage } from '@lg-tools/create';
@@ -244,6 +245,7 @@ cli
 registerBundleCommand(cli.command('build-package'));
 registerBuildTSCommand(cli.command('build-ts'));
 registerBuildDocsCommand(cli.command('build-tsdoc'));
+registerMinifyCommand(cli.command('build-minify'));
 
 /** Merge editor settings */
 cli
