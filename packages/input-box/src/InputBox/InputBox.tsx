@@ -35,7 +35,6 @@ const InputBoxWithRef = <Segment extends string>(
     segmentRefs: segmentRefsProp,
     onSegmentChange,
     onKeyDown,
-    onClick,
     setSegment,
     disabled,
     formatParts,

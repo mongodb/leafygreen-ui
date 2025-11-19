@@ -8,11 +8,10 @@ export {
 export {
   createExplicitSegmentValidator,
   type ExplicitSegmentRule,
+  getSegmentToFocus,
+  getValueFormatter,
   isElementInputSegment,
-  isValidValueForSegment,
-} from './utils';
-export { getValueFormatter } from './utils/getValueFormatter/getValueFormatter';
-export {
   isValidSegmentName,
   isValidSegmentValue,
-} from './utils/isValidSegment/isValidSegment';
+  isValidValueForSegment,
+} from './utils';

@@ -10,7 +10,6 @@ import {
   renderInputBox,
 } from '../testutils';
 import {
-  defaultFormatPartsMock,
   SegmentObjMock,
   segmentRefsMock,
   segmentRulesMock,
@@ -559,7 +558,6 @@ describe('packages/input-box', () => {
       segmentComponent={InputSegmentWrapper}
       disabled={false}
       size={'default'}
-      formatParts={defaultFormatPartsMock}
     />;
   });
 });
