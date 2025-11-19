@@ -1,4 +1,5 @@
 import { DateType } from '@leafygreen-ui/date-utils';
+import { PropsWithChildren } from 'react';
 
 export interface DateInputBoxContextType {
   /**
@@ -7,9 +8,5 @@ export interface DateInputBoxContextType {
   value?: DateType;
 }
 
-export interface DateInputBoxProviderProps {
-  /**
-   * Date value in UTC time
-   */
-  value?: DateType;
-}
+export interface DateInputBoxProviderProps
+  extends PropsWithChildren<DateInputBoxContextType> {}

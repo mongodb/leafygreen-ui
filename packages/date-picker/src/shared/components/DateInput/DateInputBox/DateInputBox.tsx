@@ -45,7 +45,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       labelledBy,
       segmentRefs,
       onSegmentChange,
-      onKeyDown,
       ...rest
     }: DateInputBoxProps,
     fwdRef,
@@ -99,7 +98,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       <DateInputBoxProvider value={value}>
         <InputBox
           ref={fwdRef}
-          onKeyDown={onKeyDown}
           segmentRefs={segmentRefs}
           segmentEnum={DateSegment}
           formatParts={formatParts}
