@@ -1,4 +1,6 @@
-# @lg-private/canvas-header
+# @leafygreen-ui/canvas-header
+
+Previously published as `@lg-private/canvas-header`
 
 ## 3.0.1
 

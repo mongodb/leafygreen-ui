@@ -1,5 +1,5 @@
 {
-  "name": "@lg-private/canvas-header",
+  "name": "@leafygreen-ui/canvas-header",
   "version": "3.0.1",
   "description": "LeafyGreen UI Kit Canvas Header",
   "main": "./dist/umd/index.js",
@@ -47,6 +47,6 @@
     "url": "https://github.com/mongodb/leafygreen-ui"
   },
   "bugs": {
-    "url": "https://jira.mongodb.org/projects/PD/summary"
+    "url": "https://jira.mongodb.org/projects/LG/summary"
   }
 }
