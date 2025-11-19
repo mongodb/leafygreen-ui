@@ -1,13 +1,39 @@
-export type ValidatorFunction<T = any> = (
-  value: T,
-) => boolean | Promise<boolean>;
+/**
+ * Function used to create custom field validation rules. This function should be memoized using useCallback() if possible to prevent unnecessary re-rendering of the field.
+ *
+ * @param {any} value - The current value of the input to be validated. This value is based on the type of field being declared.
+ * @returns {boolean | Promise<boolean>} a boolean, or a promise that resolves to a boolean representing whether or not the value adheres to the custom validation rules. If the return value is a promise, the form will handle loading behaviors and the correct display patterns until the promise resolves.
+ *
+ * @example
+ * Checks if the value is exactly the string 'hello':
+ * ```js
+ * function(value) {
+ *   return value === 'hello';
+ * }
+ * ```
+ *
+ * @example
+ * Validates server-side if a value is valid.
+ * ```js
+ * async function(value) {
+ *   const response = await fetch('example.com/api/validate-entry', {
+ *     method: "POST",
+ *     body: JSON.stringify({ value }),
+ *   });
+ *   const result = await response.json();
+ *
+ *   return result.valid;
+ * }
+ * ```
+ * */
+export type ValidatorFunction<T = any> = (value: T) => boolean; // TODO: Add promise return support
 
 export type FieldDetails =
   | string
   | { displayText: string; learnMoreURL: string }
   | { displayText: string; infoSprinkleText: string };
 
-export interface UniversalFieldProperties {
+export interface UniversalFieldProperties<T = string> {
   // Set to true if the field is required
   required?: boolean; // Default false
 
@@ -23,6 +49,9 @@ export interface UniversalFieldProperties {
   // Whether the current value of the field is considered valid.
   // Will take into account whether a field is required, as well as custom validation.
   valid: boolean;
+
+  // The default value for the input
+  defaultValue?: T;
 }
 
 export const stringInputTypes = [
@@ -34,7 +63,7 @@ export const stringInputTypes = [
 ] as const;
 
 export interface StringFieldProperties<T = string>
-  extends UniversalFieldProperties {
+  extends UniversalFieldProperties<T> {
   // The type of string input field.
   type: (typeof stringInputTypes)[number]; // Default 'text'
 
@@ -43,9 +72,6 @@ export interface StringFieldProperties<T = string>
 
   // The current input value
   value: T; // No default
-
-  // The default value for the input
-  defaultValue?: T;
 
   // Custom validation function for the field
   validator?: ValidatorFunction<T>;
@@ -108,25 +134,3 @@ export type FieldProperties =
 export type InternalFieldProperties = 'value' | 'valid' | 'options';
 
 export type FieldMap = Map<string, FieldProperties>; // String is the field name
-
-export interface ProviderValue {
-  fields: {
-    fieldProperties: FieldMap;
-    invalidFields: Array<string>;
-  };
-  addField: (
-    name: string,
-    value: Omit<FieldProperties, 'valid'> & { valid?: boolean },
-  ) => void;
-  upsertField: (
-    name: string,
-    value: Omit<FieldProperties, 'valid'> & { valid?: boolean },
-  ) => void;
-  removeField: (name: string) => void;
-  updateField: (
-    name: string,
-    properties: Omit<FieldProperties, 'valid'> & { valid?: boolean },
-  ) => void;
-  setFieldValue: (name: string, value: any) => void;
-  clearFormValues: () => void;
-}

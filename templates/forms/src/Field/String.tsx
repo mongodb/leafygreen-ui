@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
-import { useFormTemplateContext } from '../FormTemplateContext/FormTemplateContext';
+import { useCallback, useEffect, useState } from 'react';
 import {
   StringFieldProperties,
   InternalFieldProperties,
-} from '../FormTemplateContext/FormTemplateContext.types';
+} from '../store/FormStore.types';
+import { useFormStore } from '../store/FormStoreContext';
+import { action } from 'mobx';
 
 interface StringProps
   extends Omit<StringFieldProperties, InternalFieldProperties> {
@@ -14,65 +15,35 @@ interface StringProps
 function String({
   name,
   type = 'text',
-  required = false,
   defaultValue = '',
-  placeholder,
-  validator,
-  label,
-  description,
-  errorMessage,
   ...rest
 }: StringProps) {
-  const { addField, upsertField, removeField } = useFormTemplateContext();
+  const formStore = useFormStore();
 
-  useEffect(() => {
-    const properties: Omit<StringFieldProperties, 'name' | 'valid'> = {
-      type,
-      value: defaultValue,
-      required,
-      placeholder,
-      validator,
-      label,
-      description,
-      errorMessage,
-    };
-
-    upsertField(name, properties);
-  }, [
+  const fieldProperties: Omit<StringFieldProperties, 'valid'> = {
     type,
-    required,
-    placeholder,
-    validator,
-    label,
-    description,
-    errorMessage,
-  ]);
+    value: defaultValue,
+    ...rest,
+  };
 
-  // Only fires on unmount
-  useEffect(() => () => removeField(name), []);
+  // Effect to add to store on mount, remove from store on unmount
+  useEffect(
+    action(() => {
+      formStore.addField(name, fieldProperties);
 
-  // useEffect(() => {
-  //   // TODO: Handle changing field names more gracefully.
-  //   console.error('Error: Do not change the field name for "Field.String".');
-  // }, [name]);
+      return action(() => formStore.removeField(name));
+    }),
+    [],
+  );
 
-  useEffect(() => {
-    console.warn(
-      'Changing the defaultValue for "Field.String" after mount has no effect.',
-    );
-  }, [defaultValue]);
+  useEffect(
+    action(() => {
+      console.log(fieldProperties);
+      formStore.updateField(name, fieldProperties);
+    }),
+    Object.values(fieldProperties),
+  );
 
-  // useEffect(() => {
-  //   return () => {
-  //     setFieldValue(name, {
-  //       type,
-  //       required,
-  //       ...rest,
-  //     });
-  //   };
-  // }, [type, required, rest]);
-
-  // Fields are not responsible for rendering themselves.
   return null;
 }
 

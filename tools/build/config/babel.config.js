@@ -22,6 +22,8 @@ module.exports = function (api) {
   const plugins = [
     '@babel/plugin-proposal-export-default-from',
     '@emotion/babel-plugin',
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
+    '@babel/plugin-transform-class-properties',
   ];
 
   return { presets, plugins };

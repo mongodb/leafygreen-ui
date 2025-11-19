@@ -2,7 +2,7 @@
 // It sets up the FormTemplate context provider and renders the ModalFormTemplateView.
 
 import React, { useEffect } from 'react';
-import { FormTemplateProvider } from '../../FormTemplateContext/FormTemplateContext';
+import { FormTemplateProvider } from '../../store/FormStoreContext';
 import ModalFormTemplateView from './ModalFormTemplateView';
 import { ModalFormTemplateProps } from './ModalFormTemplate.types';
 import useValidChildren from '../../utils/useValidChildren';

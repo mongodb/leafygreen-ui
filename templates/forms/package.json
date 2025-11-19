@@ -38,7 +38,9 @@
     "@leafygreen-ui/typography": "workspace:^",
     "@leafygreen-ui/form-footer": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/loading-indicator": "workspace:^"
+    "@leafygreen-ui/loading-indicator": "workspace:^",
+    "mobx": "^6.15.0",
+    "mobx-react-lite": "^4.1.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/forms",
   "repository": {

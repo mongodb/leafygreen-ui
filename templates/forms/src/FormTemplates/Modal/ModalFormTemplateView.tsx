@@ -4,41 +4,23 @@
 import React from 'react';
 import { Modal } from '@leafygreen-ui/modal';
 import { ModalFormTemplatePassthroughProps } from './ModalFormTemplate.types';
-import { useFormTemplateContext } from '../../FormTemplateContext/FormTemplateContext';
+import { useFormStore } from '../../store/FormStoreContext';
 import { isPromise } from '../../utils/typeGuards';
 import FormFooter from '@leafygreen-ui/form-footer';
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
-import {
-  isStringInput,
-  isSingleSelect,
-  isMultiSelect,
-} from '../../Field/fieldTypeGuards';
-import StringInputFieldView from './ModalStringInputFieldView';
+import FormFields from './FormFields';
+import { observer } from 'mobx-react-lite';
+import { action } from 'mobx';
 
 const ModalFormTemplateView = React.forwardRef<
   HTMLDialogElement,
   ModalFormTemplatePassthroughProps
 >(({ children, open, setOpen, onSubmit, title, onClose }, ref) => {
-  const { fields, clearFormValues } = useFormTemplateContext();
-  const { fieldProperties, invalidFields } = fields;
   const [isLoading, setIsLoading] = React.useState(false);
-
-  const displayFields: Array<React.ReactNode> = [];
-
-  fieldProperties.forEach((properties, name) => {
-    if (isStringInput(properties)) {
-      displayFields.push(
-        <StringInputFieldView key={name} name={name} {...properties} />,
-      );
-    } else if (isSingleSelect(properties)) {
-      // Handle Single Select
-    } else if (isMultiSelect(properties)) {
-      // Handle Multi Select
-    }
-  });
+  const formStore = useFormStore();
 
   function closeModal() {
     setOpen(false);
@@ -56,10 +38,12 @@ const ModalFormTemplateView = React.forwardRef<
     if (isPromise(onSubmitResult)) {
       setIsLoading(true);
 
-      onSubmitResult.then(() => {
-        closeModal();
-        clearFormValues();
-      });
+      onSubmitResult.then(
+        action(() => {
+          closeModal();
+          formStore.resetFields();
+        }),
+      );
     } else {
       closeModal();
     }
@@ -95,7 +79,7 @@ const ModalFormTemplateView = React.forwardRef<
             {title}
           </H2>
 
-          {displayFields}
+          <FormFields />
         </div>
 
         {children}
@@ -116,7 +100,7 @@ const ModalFormTemplateView = React.forwardRef<
           primaryButtonProps={{
             children: 'Submit',
             type: 'submit',
-            disabled: !!invalidFields.length,
+            disabled: !formStore.isValid,
             isLoading,
             loadingIndicator: <Spinner />,
             loadingText: 'Submitting...', // TODO: Make this customizable via props
@@ -129,4 +113,4 @@ const ModalFormTemplateView = React.forwardRef<
 
 ModalFormTemplateView.displayName = 'ModalFormTemplateView';
 
-export default ModalFormTemplateView;
+export default observer(ModalFormTemplateView);

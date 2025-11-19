@@ -6,7 +6,7 @@ import {
   StringFieldProperties,
   SingleSelectFieldProperties,
   MultiSelectFieldProperties,
-} from '../FormTemplateContext/FormTemplateContext.types';
+} from '../store/FormStore.types';
 
 // Checks if a set of field properties is for a string input
 export const isStringInput = (

@@ -2,12 +2,14 @@ import React from 'react';
 import {
   FieldDetails,
   StringFieldProperties,
-} from '../../FormTemplateContext/FormTemplateContext.types';
-import { useFormTemplateContext } from '../../FormTemplateContext/FormTemplateContext';
+} from '../../store/FormStore.types';
+import { useFormStore } from '../../store/FormStoreContext';
 import TextArea from '@leafygreen-ui/text-area';
 import TextInput from '@leafygreen-ui/text-input';
 import { spacing } from '@leafygreen-ui/tokens';
 import { css } from '@leafygreen-ui/emotion';
+import { action } from 'mobx';
+import { observer } from 'mobx-react-lite';
 
 const inputStyles = css`
   & + & {
@@ -29,19 +31,14 @@ function renderFieldDetails(details: FieldDetails) {
   return details.displayText;
 }
 
-interface StringInputFieldViewProps extends StringFieldProperties {
+interface StringInputFieldViewProps {
   name: string;
 }
 
-export default function StringInputFieldView({
-  type,
-  label,
-  name,
-  value,
-  required,
-  description,
-}: StringInputFieldViewProps) {
-  const { setFieldValue } = useFormTemplateContext();
+function StringInputFieldView({ name }: StringInputFieldViewProps) {
+  const formStore = useFormStore();
+  const { type, label, value, required, description } =
+    (formStore.fields.get(name) as StringFieldProperties) ?? {};
 
   const sharedProps = {
     value,
@@ -54,7 +51,9 @@ export default function StringInputFieldView({
   if (type === 'textarea') {
     return (
       <TextArea
-        onChange={({ target }) => setFieldValue(name, target.value)}
+        onChange={action(({ target }) =>
+          formStore.setFieldValue(name, target.value),
+        )}
         {...sharedProps}
       />
     );
@@ -64,8 +63,14 @@ export default function StringInputFieldView({
     <TextInput
       type={type}
       optional={!required}
-      onChange={({ target }) => setFieldValue(name, target.value)}
+      onChange={action(({ target }) =>
+        formStore.setFieldValue(name, target.value),
+      )}
       {...sharedProps}
     />
   );
 }
+
+StringInputFieldView.displayName = 'StringInputFieldView';
+
+export default observer(StringInputFieldView);

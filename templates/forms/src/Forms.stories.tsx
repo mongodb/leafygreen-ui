@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-key */
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { FormTemplate, Field, ModalFormTemplateProps } from '.';
+import { ValidatorFunction } from './store/FormStore.types';
 
 export default {
   title: 'Components/Forms',
@@ -26,6 +27,10 @@ const Template: StoryFn<FormTemplateKnobProps> = ({
   ...props
 }) => {
   const [open, setOpen] = useState(false);
+  const customValidator = useCallback<ValidatorFunction>(
+    value => value === 'hello',
+    [],
+  );
 
   return (
     <>
@@ -60,7 +65,7 @@ const Template: StoryFn<FormTemplateKnobProps> = ({
           name="third"
           label="This is a special custom validated input"
           description="Only the word 'hello' is valid"
-          validator={value => value === 'hello'}
+          validator={customValidator}
         />
 
         {/* <Field.SingleSelect

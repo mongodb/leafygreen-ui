@@ -11,6 +11,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
+    "useDefineForClassFields": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": false,
     "allowJs": true,
