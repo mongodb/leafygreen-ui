@@ -10,10 +10,12 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { Size } from '../shared.types';
 import {
   getNewSegmentValueFromArrowKeyPress,
   getNewSegmentValueFromInputValue,
   getValueFormatter,
+  isSingleDigit,
 } from '../utils';
 
 import { getInputSegmentStyles } from './InputSegment.styles';
@@ -32,10 +34,10 @@ const InputSegmentWithRef = <Segment extends string>(
     onChange,
     onBlur,
     segmentEnum,
-    size,
     disabled,
     value,
-    charsPerSegment,
+    charsCount,
+    size = Size.Default,
     step = 1,
     shouldWrap = true,
     shouldValidate = true,
@@ -46,10 +48,10 @@ const InputSegmentWithRef = <Segment extends string>(
   const { theme } = useDarkMode();
   const baseFontSize = useUpdatedBaseFontSize();
   const formatter = getValueFormatter({
-    charsPerSegment,
+    charsPerSegment: charsCount,
     allowZero: minSegmentValue === 0,
   });
-  const pattern = `[0-9]{${charsPerSegment}}`;
+  const pattern = `[0-9]{${charsCount}}`;
 
   /**
    * Receives native input events,
@@ -63,7 +65,7 @@ const InputSegmentWithRef = <Segment extends string>(
       segmentName: segment,
       currentValue: value,
       incomingValue: target.value,
-      charsPerSegment,
+      charsPerSegment: charsCount,
       defaultMin: minSegmentValue,
       defaultMax: maxSegmentValue,
       segmentEnum,
@@ -90,12 +92,10 @@ const InputSegmentWithRef = <Segment extends string>(
       target: HTMLInputElement;
     };
 
-    // If the value is a number, we check if the input is full and reset it if it is. The number will be inserted into the input when onChange is called.
-    // This is to handle the case where the user tries to type a number when the input is already full. Usually this happens when the focus is moved to the next segment or a segment is clicked
-    const isNumber = /^[0-9]$/.test(key);
-
-    if (isNumber) {
-      if (target.value.length === charsPerSegment) {
+    // If the value is a single digit, we check if the input is full and reset it if it is. The digit will be inserted into the input when onChange is called.
+    // This is to handle the case where the user tries to type a single digit when the input is already full. Usually this happens when the focus is moved to the next segment or a segment is clicked
+    if (isSingleDigit(key)) {
+      if (target.value.length === charsCount) {
         target.value = '';
       }
     }

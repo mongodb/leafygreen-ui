@@ -3,6 +3,8 @@ import { jest } from '@jest/globals';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { consoleOnce } from '@leafygreen-ui/lib';
+
 import { InputSegmentChangeEventHandler } from '../shared.types';
 import {
   InputBoxWithState,
@@ -10,7 +12,6 @@ import {
   renderInputBox,
 } from '../testutils';
 import {
-  charsPerSegmentMock,
   SegmentObjMock,
   segmentRefsMock,
   segmentRulesMock,
@@ -20,6 +21,22 @@ import {
 import { InputBox } from './InputBox';
 
 describe('packages/input-box', () => {
+  describe('basic functionality', () => {
+    test('returns null when no segments are provided', () => {
+      const consoleOnceSpy = jest
+        .spyOn(consoleOnce, 'error')
+        .mockImplementation(() => {});
+
+      // @ts-expect-error - missing props
+      const { container } = render(<InputBox segments={{}} />);
+
+      expect(container.firstChild).toBeNull();
+      expect(consoleOnceSpy).toHaveBeenCalledWith(
+        'Error in Leafygreen InputBox: segments is required',
+      );
+    });
+  });
+
   describe('Rendering', () => {
     describe.each(['day', 'month', 'year'])('%p', segment => {
       test('renders the correct aria attributes', () => {
@@ -126,35 +143,48 @@ describe('packages/input-box', () => {
   });
 
   describe('auto-focus', () => {
-    test('focuses the next segment when an explicit value is entered', () => {
-      const { dayInput, monthInput } = renderInputBox({});
+    describe.each([undefined, segmentRefsMock])(
+      'when segmentRefs are %p',
+      segmentRefs => {
+        test('focuses the next segment when an explicit value is entered', () => {
+          const { dayInput, monthInput } = renderInputBox({
+            segmentRefs,
+          });
 
-      userEvent.type(monthInput, '02');
-      expect(dayInput).toHaveFocus();
-      expect(monthInput.value).toBe('02');
-    });
+          userEvent.type(monthInput, '02');
+          expect(dayInput).toHaveFocus();
+          expect(monthInput.value).toBe('02');
+        });
 
-    test('focus remains in the current segment when an ambiguous value is entered', () => {
-      const { dayInput } = renderInputBox({});
+        test('focus remains in the current segment when an ambiguous value is entered', () => {
+          const { dayInput } = renderInputBox({
+            segmentRefs,
+          });
 
-      userEvent.type(dayInput, '2');
-      expect(dayInput).toHaveFocus();
-    });
+          userEvent.type(dayInput, '2');
+          expect(dayInput).toHaveFocus();
+        });
 
-    test('focuses the previous segment when a backspace is pressed and the current segment is empty', () => {
-      const { dayInput, monthInput } = renderInputBox({});
+        test('focuses the previous segment when a backspace is pressed and the current segment is empty', () => {
+          const { dayInput, monthInput } = renderInputBox({
+            segmentRefs,
+          });
 
-      userEvent.type(dayInput, '{backspace}');
-      expect(monthInput).toHaveFocus();
-    });
+          userEvent.type(dayInput, '{backspace}');
+          expect(monthInput).toHaveFocus();
+        });
 
-    test('focus remains in the current segment when a backspace is pressed and the current segment is not empty', () => {
-      const { monthInput } = renderInputBox({});
+        test('focus remains in the current segment when a backspace is pressed and the current segment is not empty', () => {
+          const { monthInput } = renderInputBox({
+            segmentRefs,
+          });
 
-      userEvent.type(monthInput, '2');
-      userEvent.type(monthInput, '{backspace}');
-      expect(monthInput).toHaveFocus();
-    });
+          userEvent.type(monthInput, '2');
+          userEvent.type(monthInput, '{backspace}');
+          expect(monthInput).toHaveFocus();
+        });
+      },
+    );
   });
 
   describe('Mouse interaction', () => {
@@ -181,64 +211,6 @@ describe('packages/input-box', () => {
       expect(dayInput).toHaveFocus();
       userEvent.tab();
       expect(yearInput).toHaveFocus();
-    });
-
-    describe('Right arrow', () => {
-      test('Right arrow key moves focus to next segment when the segment is empty', () => {
-        const { dayInput, monthInput, yearInput } = renderInputBox({});
-        userEvent.click(monthInput);
-        userEvent.type(monthInput, '{arrowright}');
-        expect(dayInput).toHaveFocus();
-        userEvent.type(dayInput, '{arrowright}');
-        expect(yearInput).toHaveFocus();
-      });
-
-      test('Right arrow key moves focus to next segment when the segment is not empty', () => {
-        const { dayInput, monthInput, yearInput } = renderInputBox({
-          segments: { day: '20', month: '02', year: '1990' },
-        });
-        userEvent.click(monthInput);
-        userEvent.type(monthInput, '{arrowright}');
-        expect(dayInput).toHaveFocus();
-        userEvent.type(dayInput, '{arrowright}');
-        expect(yearInput).toHaveFocus();
-      });
-
-      test('Right arrow key moves focus to next segment when the value starts with 0', () => {
-        const { dayInput, monthInput } = renderInputBox({});
-        userEvent.click(monthInput);
-        userEvent.type(monthInput, '0{arrowright}');
-        expect(dayInput).toHaveFocus();
-      });
-    });
-
-    describe('Left arrow', () => {
-      test('Left arrow key moves focus to previous segment when the segment is empty', () => {
-        const { dayInput, monthInput, yearInput } = renderInputBox({});
-        userEvent.click(yearInput);
-        userEvent.type(yearInput, '{arrowleft}');
-        expect(dayInput).toHaveFocus();
-        userEvent.type(dayInput, '{arrowleft}');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('Left arrow key moves focus to previous segment when the segment is not empty', () => {
-        const { dayInput, monthInput, yearInput } = renderInputBox({
-          segments: { day: '20', month: '02', year: '1990' },
-        });
-        userEvent.click(yearInput);
-        userEvent.type(yearInput, '{arrowleft}');
-        expect(dayInput).toHaveFocus();
-        userEvent.type(dayInput, '{arrowleft}');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('Left arrow key moves focus to previous segment when the value starts with 0', () => {
-        const { dayInput, yearInput } = renderInputBox({});
-        userEvent.click(yearInput);
-        userEvent.type(yearInput, '0{arrowleft}');
-        expect(dayInput).toHaveFocus();
-      });
     });
 
     describe('Up arrow', () => {
@@ -276,6 +248,79 @@ describe('packages/input-box', () => {
         expect(dayInput).toHaveFocus();
       });
     });
+
+    describe.each([undefined, segmentRefsMock])(
+      'when segmentRefs are %p',
+      segmentRefs => {
+        describe('Right arrow', () => {
+          test('Right arrow key moves focus to next segment when the segment is empty', () => {
+            const { dayInput, monthInput, yearInput } = renderInputBox({
+              segmentRefs,
+            });
+            userEvent.click(monthInput);
+            userEvent.type(monthInput, '{arrowright}');
+            expect(dayInput).toHaveFocus();
+            userEvent.type(dayInput, '{arrowright}');
+            expect(yearInput).toHaveFocus();
+          });
+
+          test('Right arrow key moves focus to next segment when the segment is not empty', () => {
+            const { dayInput, monthInput, yearInput } = renderInputBox({
+              segmentRefs,
+              segments: { day: '20', month: '02', year: '1990' },
+            });
+            userEvent.click(monthInput);
+            userEvent.type(monthInput, '{arrowright}');
+            expect(dayInput).toHaveFocus();
+            userEvent.type(dayInput, '{arrowright}');
+            expect(yearInput).toHaveFocus();
+          });
+
+          test('Right arrow key moves focus to next segment when the value starts with 0', () => {
+            const { dayInput, monthInput } = renderInputBox({
+              segmentRefs,
+            });
+            userEvent.click(monthInput);
+            userEvent.type(monthInput, '0{arrowright}');
+            expect(dayInput).toHaveFocus();
+          });
+        });
+
+        describe('Left arrow', () => {
+          test('Left arrow key moves focus to previous segment when the segment is empty', () => {
+            const { dayInput, monthInput, yearInput } = renderInputBox({
+              segmentRefs,
+            });
+            userEvent.click(yearInput);
+            userEvent.type(yearInput, '{arrowleft}');
+            expect(dayInput).toHaveFocus();
+            userEvent.type(dayInput, '{arrowleft}');
+            expect(monthInput).toHaveFocus();
+          });
+
+          test('Left arrow key moves focus to previous segment when the segment is not empty', () => {
+            const { dayInput, monthInput, yearInput } = renderInputBox({
+              segmentRefs,
+              segments: { day: '20', month: '02', year: '1990' },
+            });
+            userEvent.click(yearInput);
+            userEvent.type(yearInput, '{arrowleft}');
+            expect(dayInput).toHaveFocus();
+            userEvent.type(dayInput, '{arrowleft}');
+            expect(monthInput).toHaveFocus();
+          });
+
+          test('Left arrow key moves focus to previous segment when the value starts with 0', () => {
+            const { dayInput, yearInput } = renderInputBox({
+              segmentRefs,
+            });
+            userEvent.click(yearInput);
+            userEvent.type(yearInput, '0{arrowleft}');
+            expect(dayInput).toHaveFocus();
+          });
+        });
+      },
+    );
   });
 
   describe('onBlur', () => {
@@ -525,13 +570,12 @@ describe('packages/input-box', () => {
   test('With required props', () => {
     <InputBox
       segmentEnum={SegmentObjMock}
-      segmentRefs={segmentRefsMock}
       segments={segmentsMock}
       setSegment={() => {}}
-      charsPerSegment={charsPerSegmentMock}
       segmentRules={segmentRulesMock}
       segmentComponent={InputSegmentWrapper}
       disabled={false}
+      size={'default'}
     />;
   });
 });

@@ -3,13 +3,16 @@ import React, {
   ForwardedRef,
   KeyboardEventHandler,
 } from 'react';
+import isEmpty from 'lodash/isEmpty';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap } from '@leafygreen-ui/lib';
+import { consoleOnce, keyMap } from '@leafygreen-ui/lib';
 
+import { useSegmentRefs } from '../hooks';
 import {
   InputSegmentChangeEventHandler,
   isInputSegment,
+  Size,
 } from '../shared.types';
 import {
   createExplicitSegmentValidator,
@@ -25,37 +28,45 @@ import {
 } from './InputBox.styles';
 import { InputBoxComponentType, InputBoxProps } from './InputBox.types';
 
-/**
- * Generic controlled input box component
- * Renders an input box with appropriate segment order & separator characters.
- *
- * @internal
- */
-export const InputBoxWithRef = <Segment extends string>(
+const InputBoxWithRef = <Segment extends string>(
   {
     className,
     labelledBy,
-    segmentRefs,
+    segmentRefs: segmentRefsProp,
     onSegmentChange,
     onKeyDown,
     setSegment,
     disabled,
-    charsPerSegment,
     formatParts,
     segmentEnum,
     segmentRules,
     segmentComponent,
     segments,
+    size = Size.Default,
     ...rest
   }: InputBoxProps<Segment>,
   fwdRef: ForwardedRef<HTMLDivElement>,
 ) => {
   const { theme } = useDarkMode();
 
+  /** If segmentRefs are provided, use them. Otherwise, create them using the segments. */
+  const internalSegmentRefs = useSegmentRefs(segments ?? {});
+  const segmentRefs = segmentRefsProp || internalSegmentRefs;
+
+  if (isEmpty(segmentRefs) || isEmpty(segments)) {
+    consoleOnce.error('Error in Leafygreen InputBox: segments is required');
+    return null;
+  }
+
+  /** Create a validator for explicit segment values. */
   const isExplicitSegmentValue = createExplicitSegmentValidator({
     segmentEnum,
     rules: segmentRules,
   });
+
+  /** Get the maximum number of characters per segment. */
+  const getCharsPerSegment = (segment: Segment) =>
+    segmentRules[segment].maxChars;
 
   /** Formats and sets the segment value. */
   const getFormattedSegmentValue = (
@@ -64,7 +75,7 @@ export const InputBoxWithRef = <Segment extends string>(
     allowZero: boolean,
   ): string => {
     const formatter = getValueFormatter({
-      charsPerSegment: charsPerSegment[segmentName],
+      charsPerSegment: getCharsPerSegment(segmentName),
       allowZero,
     });
     const formattedValue = formatter(segmentValue);
@@ -182,7 +193,7 @@ export const InputBoxWithRef = <Segment extends string>(
 
       case keyMap.ArrowUp:
       case keyMap.ArrowDown: {
-        // increment/decrement logic implemented by DateInputSegment
+        // increment/decrement logic implemented by InputSegment
         break;
       }
 
@@ -247,6 +258,8 @@ export const InputBoxWithRef = <Segment extends string>(
                 value={segments[part.type]}
                 ref={segmentRefs[part.type]}
                 disabled={disabled}
+                charsCount={getCharsPerSegment(part.type)}
+                size={size}
               />
             );
           }
@@ -256,6 +269,12 @@ export const InputBoxWithRef = <Segment extends string>(
   );
 };
 
+/**
+ * Generic controlled input box component that renders multiple input segments with separators.
+ *
+ * Supports auto-formatting, auto-advance focus, keyboard navigation (arrow keys), value increment/decrement,
+ * validation, and blur formatting. It is designed primarily for date and time inputs.
+ */
 export const InputBox = React.forwardRef(
   InputBoxWithRef,
 ) as InputBoxComponentType;

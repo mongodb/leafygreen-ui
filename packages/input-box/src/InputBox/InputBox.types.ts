@@ -62,14 +62,6 @@ export interface InputBoxProps<Segment extends string>
   formatParts?: Array<Intl.DateTimeFormatPart>;
 
   /**
-   * The number of characters per segment
-   *
-   * @example
-   * { day: 2, month: 2, year: 4 }
-   */
-  charsPerSegment: Record<Segment, number>;
-
-  /**
    * An object that maps the segment names to their rules.
    *
    * maxChars: the maximum number of characters for the segment
@@ -103,7 +95,7 @@ export interface InputBoxProps<Segment extends string>
    * @example
    * { day: ref, month: ref, year: ref }
    */
-  segmentRefs: Record<Segment, React.RefObject<HTMLInputElement>>;
+  segmentRefs?: Record<Segment, React.RefObject<HTMLInputElement>>;
 }
 
 /**

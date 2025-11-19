@@ -5,7 +5,6 @@ import { axe } from 'jest-axe';
 import { type InputSegmentChangeEventHandler } from '../shared.types';
 import { renderSegment } from '../testutils';
 import {
-  charsPerSegmentMock,
   defaultMaxMock,
   defaultMinMock,
   SegmentObjMock,
@@ -183,8 +182,8 @@ describe('packages/input-segment', () => {
     describe('keyboard events', () => {
       describe('Arrow keys', () => {
         const formatter = getValueFormatter({
-          charsPerSegment: charsPerSegmentMock['day'],
-          allowZero: defaultMinMock['day'] === 0,
+          charsPerSegment: 2,
+          allowZero: true,
         });
 
         describe('Up arrow', () => {
@@ -305,7 +304,7 @@ describe('packages/input-segment', () => {
               segment: 'year',
               minSegmentValue: 1970,
               maxSegmentValue: 2038,
-              charsPerSegment: 4,
+              charsCount: 4,
               shouldWrap: false,
               onChange: onChangeHandler,
               value: '3',
@@ -474,7 +473,7 @@ describe('packages/input-segment', () => {
               segment: 'year',
               minSegmentValue: 1970,
               maxSegmentValue: 2038,
-              charsPerSegment: 4,
+              charsCount: 4,
               shouldWrap: false,
               onChange: onChangeHandler,
               value: '3',
@@ -680,7 +679,7 @@ describe('packages/input-segment', () => {
 
         const { input } = renderSegment({
           segment: 'year',
-          charsPerSegment: 4,
+          charsCount: 4,
           maxSegmentValue: 2038,
           shouldValidate: false,
           onChange: onChangeHandler,
@@ -802,7 +801,7 @@ describe('packages/input-segment', () => {
         minSegmentValue={1}
         maxSegmentValue={31}
         value=""
-        charsPerSegment={2}
+        charsCount={2}
         onChange={() => {}}
         onBlur={() => {}}
         onKeyDown={() => {}}
@@ -818,7 +817,7 @@ describe('packages/input-segment', () => {
         minSegmentValue={1}
         maxSegmentValue={31}
         value=""
-        charsPerSegment={2}
+        charsCount={2}
         onChange={() => {}}
         onBlur={() => {}}
         onKeyDown={() => {}}

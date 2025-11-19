@@ -4,6 +4,7 @@ export {
   type InputSegmentChangeEventHandler,
   type InputSegmentComponentProps,
   isInputSegment,
+  Size,
 } from './shared.types';
 export {
   createExplicitSegmentValidator,

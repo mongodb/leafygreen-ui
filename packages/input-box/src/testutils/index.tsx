@@ -1,20 +1,16 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 
-import { Size } from '@leafygreen-ui/tokens';
-
 import { InputBox, InputBoxProps } from '../InputBox';
 import { InputSegment, type InputSegmentProps } from '../InputSegment';
-import { InputSegmentComponentProps } from '../shared.types';
+import { InputSegmentComponentProps, Size } from '../shared.types';
 
 import {
-  charsPerSegmentMock,
   defaultFormatPartsMock,
   defaultMaxMock,
   defaultMinMock,
   defaultPlaceholderMock,
   SegmentObjMock,
-  segmentRefsMock,
   segmentRulesMock,
   segmentsMock,
   segmentWidthStyles,
@@ -23,9 +19,7 @@ import {
 export const defaultProps: Partial<InputBoxProps<SegmentObjMock>> = {
   segments: segmentsMock,
   segmentEnum: SegmentObjMock,
-  segmentRefs: segmentRefsMock,
   setSegment: () => {},
-  charsPerSegment: charsPerSegmentMock,
   formatParts: defaultFormatPartsMock,
   segmentRules: segmentRulesMock,
 };
@@ -47,6 +41,8 @@ export const InputSegmentWrapper = React.forwardRef<
       onBlur = () => {},
       segmentEnum = SegmentObjMock,
       disabled = false,
+      charsCount,
+      size,
     },
     ref,
   ) => {
@@ -62,10 +58,10 @@ export const InputSegmentWrapper = React.forwardRef<
         minSegmentValue={defaultMinMock[segment]}
         maxSegmentValue={defaultMaxMock[segment]}
         value={value}
-        charsPerSegment={charsPerSegmentMock[segment]}
+        charsCount={charsCount}
         onChange={onChange}
         onBlur={onBlur}
-        size={Size.Default}
+        size={size}
         segmentEnum={segmentEnum}
         ref={ref}
         disabled={disabled}
@@ -89,20 +85,11 @@ export const InputBoxWithState = ({
   },
   setSegment: setSegmentProp,
   disabled = false,
+  size = Size.Default,
   ...props
 }: Partial<InputBoxProps<SegmentObjMock>> & {
   segments?: Record<SegmentObjMock, string>;
 }) => {
-  const dayRef = React.useRef<HTMLInputElement>(null);
-  const monthRef = React.useRef<HTMLInputElement>(null);
-  const yearRef = React.useRef<HTMLInputElement>(null);
-
-  const segmentRefs = {
-    day: dayRef,
-    month: monthRef,
-    year: yearRef,
-  };
-
   const [segments, setSegments] = React.useState(segmentsProp);
 
   const defaultSetSegment = (segment: SegmentObjMock, value: string) => {
@@ -117,14 +104,13 @@ export const InputBoxWithState = ({
   return (
     <InputBox
       segmentEnum={SegmentObjMock}
-      segmentRefs={segmentRefs}
       segments={effectiveSegments}
       setSegment={effectiveSetSegment}
-      charsPerSegment={charsPerSegmentMock}
       formatParts={defaultFormatPartsMock}
       segmentRules={segmentRulesMock}
       segmentComponent={InputSegmentWrapper}
       disabled={disabled}
+      size={size}
       {...props}
     />
   );
@@ -185,14 +171,14 @@ interface RenderSegmentReturnType {
 
 const defaultSegmentProps: InputSegmentProps<SegmentObjMock> = {
   segment: 'day',
-  minSegmentValue: defaultMinMock['day'],
-  maxSegmentValue: defaultMaxMock['day'],
+  minSegmentValue: 0,
+  maxSegmentValue: 31,
   shouldWrap: true,
-  placeholder: defaultPlaceholderMock['day'],
+  placeholder: 'DD',
   onChange: () => {},
   onBlur: () => {},
   value: '',
-  charsPerSegment: charsPerSegmentMock['day'],
+  charsCount: 2,
   segmentEnum: SegmentObjMock,
   // @ts-expect-error - data-testid
   ['data-testid']: 'lg-input-segment',

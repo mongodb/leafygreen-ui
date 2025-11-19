@@ -1,4 +1,7 @@
 import { keyMap } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
+
+export { Size };
 
 /**
  *  SharedInput Segment Types
@@ -47,19 +50,11 @@ export function isInputSegment<T extends Record<string, string>>(
 export interface InputSegmentComponentProps<Segment extends string>
   extends Omit<
       React.ComponentPropsWithRef<'input'>,
-      'onChange' | 'value' | 'disabled'
+      'onChange' | 'value' | 'disabled' | 'size' | 'step'
     >,
     SharedInputBoxTypes<Segment> {
   /**
    * Which segment this input represents
-   *
-   * @example
-   * 'day'
-   * 'month'
-   * 'year'
-   * 'hour'
-   * 'minute'
-   * 'second'
    */
   segment: Segment;
 
@@ -73,13 +68,13 @@ export interface InputSegmentComponentProps<Segment extends string>
 
   /**
    * The value of the segment
-   *
-   * @example
-   * '1'
-   * '2'
-   * '2025'
    */
   value: string;
+
+  /**
+   * The number of characters per segment
+   */
+  charsCount: number;
 }
 
 /**
@@ -100,4 +95,16 @@ export interface SharedInputBoxTypes<Segment extends string> {
    * Whether the input box is disabled
    */
   disabled: boolean;
+
+  /**
+   * The size of the input box
+   *
+   * @example
+   * Size.Default
+   * Size.Small
+   * Size.Large
+   *
+   * @default Size.Default
+   */
+  size?: Size;
 }
