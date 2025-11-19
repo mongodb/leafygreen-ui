@@ -63,14 +63,19 @@ const lightModeBorderColors = {
     [InteractionState.Hover]: gray.light2,
     [InteractionState.Focus]: blue.light1,
   },
+  [Variant.Tertiary]: {
+    [InteractionState.Default]: gray.light1,
+    [InteractionState.Hover]: gray.light1,
+    [InteractionState.Focus]: blue.light1,
+  },
   [Variant.Success]: {
-    [InteractionState.Default]: green.dark1,
-    [InteractionState.Hover]: green.dark1,
+    [InteractionState.Default]: green.light2,
+    [InteractionState.Hover]: green.light2,
     [InteractionState.Focus]: blue.light1,
   },
   [Variant.Error]: {
-    [InteractionState.Default]: red.base,
-    [InteractionState.Hover]: red.base,
+    [InteractionState.Default]: red.light2,
+    [InteractionState.Hover]: red.light2,
     [InteractionState.Focus]: blue.light1,
   },
   [Variant.Disabled]: {
@@ -144,10 +149,15 @@ const lightModeTextColors = {
     [InteractionState.Hover]: white,
     [InteractionState.Focus]: blue.light2,
   },
+  [Variant.Success]: {
+    [InteractionState.Default]: green.dark2,
+    [InteractionState.Hover]: green.dark2,
+    [InteractionState.Focus]: green.dark2,
+  },
   [Variant.Error]: {
-    [InteractionState.Default]: red.base,
-    [InteractionState.Hover]: red.base,
-    [InteractionState.Focus]: red.base,
+    [InteractionState.Default]: red.dark2,
+    [InteractionState.Hover]: red.dark2,
+    [InteractionState.Focus]: red.dark2,
   },
   [Variant.Disabled]: {
     [InteractionState.Default]: gray.base,
@@ -158,6 +168,11 @@ const lightModeTextColors = {
     [InteractionState.Default]: gray.base,
     [InteractionState.Hover]: gray.base,
     [InteractionState.Focus]: gray.base,
+  },
+  [Variant.SuccessLink]: {
+    [InteractionState.Default]: green.dark3,
+    [InteractionState.Hover]: green.dark3,
+    [InteractionState.Focus]: green.dark3,
   },
   [Variant.Link]: {
     [InteractionState.Default]: blue.base,
