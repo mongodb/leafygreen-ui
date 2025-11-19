@@ -8,11 +8,6 @@ export function registerBundleCommand(command: Command) {
   command
     .description('Builds a package using Rollup')
     .option('-v, --verbose', 'Enable verbose logging', false)
-    .option(
-      '-d, --direct',
-      'Build package using the lg-build rollup command directly from @lg-tools/build',
-      true,
-    )
     .action(buildPackage);
 }
 
