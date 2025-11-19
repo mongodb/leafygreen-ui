@@ -55,7 +55,7 @@ type ModifiedPopoverProps = Omit<
   | 'onToggle'
 >;
 
-type BaseTooltipProps = Omit<
+export type TooltipProps = Omit<
   React.ComponentPropsWithoutRef<'div'>,
   keyof ModifiedPopoverProps
 > &
@@ -127,38 +127,18 @@ type BaseTooltipProps = Omit<
      *
      */
     onClose?: () => void;
+
+    /**
+     * Allows consuming applications to override font-size as set by the LeafyGreen Provider.
+     *
+     * @remarks This prop is only considered when variant is 'default'
+     */
+    baseFontSize?: BaseFontSize;
+
+    /**
+     * Variant of the tooltip to be rendered.
+     *
+     * @default 'default'
+     */
+    variant?: TooltipVariant;
   };
-
-type TooltipPropsWithDefault = BaseTooltipProps & {
-  /**
-   * Variant of the tooltip to be rendered.
-   *
-   * @default 'default'
-   */
-  variant?: typeof TooltipVariant.Default;
-
-  /**
-   * Allows consuming applications to override font-size as set by the LeafyGreen Provider.
-   *
-   * @remarks This prop is only allowed when variant is 'default'
-   */
-  baseFontSize?: BaseFontSize;
-};
-
-type TooltipPropsWithCompact = BaseTooltipProps & {
-  /**
-   * Variant of the tooltip to be rendered.
-   *
-   * @default 'default'
-   */
-  variant: typeof TooltipVariant.Compact;
-
-  /**
-   * baseFontSize is not allowed when variant is 'compact'
-   *
-   *  @remarks This prop is only allowed when variant is 'default'
-   */
-  baseFontSize?: never;
-};
-
-export type TooltipProps = TooltipPropsWithDefault | TooltipPropsWithCompact;

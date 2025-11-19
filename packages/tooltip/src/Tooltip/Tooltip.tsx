@@ -206,7 +206,7 @@ function Tooltip({
             >
               <Body
                 as="span"
-                baseFontSize={baseFontSize}
+                baseFontSize={isCompact ? undefined : baseFontSize}
                 className={textStyles}
               >
                 {children}
