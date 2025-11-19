@@ -13,14 +13,14 @@
       "require": "./dist/umd/index.js"
     },
     "./page-loader": {
-      "types": "./dist/types/page-loader/index.d.ts",
-      "types@<=5.0": "./dist/types/ts4.9/page-loader/index.d.ts",
+      "types": "./dist/types/PageLoader/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/PageLoader/index.d.ts",
       "import": "./dist/esm/page-loader/index.js",
       "require": "./dist/umd/page-loader/index.js"
     },
     "./spinner": {
-      "types": "./dist/types/spinner/index.d.ts",
-      "types@<=5.0": "./dist/types/ts4.9/spinner/index.d.ts",
+      "types": "./dist/types/Spinner/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/Spinner/index.d.ts",
       "import": "./dist/esm/spinner/index.js",
       "require": "./dist/umd/spinner/index.js"
     },
