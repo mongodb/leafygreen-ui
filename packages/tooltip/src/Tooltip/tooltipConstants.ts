@@ -2,8 +2,9 @@ import { borderRadius, transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TooltipVariant } from './Tooltip.types';
 
-export const notchHeight = 8;
-export const notchWidth = 26;
+export const TOOLTIP_MAX_WIDTH = 256;
+export const NOTCH_HEIGHT = 8;
+export const NOTCH_WIDTH = 26;
 export const borderRadiuses = {
   [TooltipVariant.Default]: borderRadius[400],
   [TooltipVariant.Compact]: borderRadius[150],

@@ -1,27 +1,31 @@
 import { transparentize } from 'polished';
 
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, fontWeights, spacing } from '@leafygreen-ui/tokens';
+import {
+  color,
+  InteractionState,
+  spacing,
+  Variant as ColorVariant,
+} from '@leafygreen-ui/tokens';
 
 import { TooltipVariant } from './Tooltip.types';
-import { borderRadiuses, notchWidth } from './tooltipConstants';
+import {
+  borderRadiuses,
+  NOTCH_WIDTH,
+  TOOLTIP_MAX_WIDTH,
+} from './tooltipConstants';
 
-// The typographic styles below are largely copied from the Body component.
-// We can't use the Body component here due to it rendering a paragraph tag,
-// Which would conflict with any children passed to it containing a div.
-export const baseTypeStyle = css`
-  margin: unset;
-  font-family: ${fontFamilies.default};
-  color: ${palette.gray.light1};
-  font-weight: ${fontWeights.regular};
-  width: 100%;
-  overflow-wrap: anywhere;
-  text-transform: none;
+/**
+ * Try to fit all the content on one line (until it hits max-width)
+ * Overrides default behavior, which is to set width to size of the trigger.
+ */
+export const tooltipPopoverStyles = css`
+  width: max-content;
 `;
 
-export const baseStyles = css`
+const getBaseStyles = (theme: Theme) => css`
   display: flex;
   align-items: center;
   border-radius: ${borderRadiuses[TooltipVariant.Default]}px;
@@ -29,43 +33,61 @@ export const baseStyles = css`
   box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
   cursor: default;
   width: fit-content;
-  max-width: 256px;
+  max-width: ${TOOLTIP_MAX_WIDTH}px;
+  background-color: ${color[theme].background[ColorVariant.InversePrimary][
+    InteractionState.Default
+  ]};
+  color: ${theme === Theme.Dark ? palette.black : palette.gray.light1};
 `;
 
-export const compactStyles = css`
-  padding: ${spacing[100]}px ${spacing[150]}px;
-  min-height: 28px;
+const minSize = NOTCH_WIDTH + 2 * borderRadiuses[TooltipVariant.Default];
+const minHeightStyle = css`
+  min-height: ${minSize}px;
+`;
+
+const compactStyles = css`
   border-radius: ${borderRadiuses[TooltipVariant.Compact]}px;
+  padding: ${spacing[100]}px ${spacing[150]}px;
 `;
 
-export const positionRelative = css`
+export const getTooltipStyles = ({
+  className,
+  isCompact,
+  isLeftOrRightAligned,
+  tooltipAdjustmentStyles,
+  theme,
+}: {
+  className?: string;
+  isCompact: boolean;
+  isLeftOrRightAligned: boolean;
+  tooltipAdjustmentStyles: string;
+  theme: Theme;
+}) =>
+  cx(
+    getBaseStyles(theme),
+    {
+      [tooltipAdjustmentStyles]: !isCompact,
+      [minHeightStyle]: !isCompact && isLeftOrRightAligned,
+      [compactStyles]: isCompact,
+    },
+    className,
+  );
+
+export const textStyles = css`
+  width: 100%;
+  overflow-wrap: anywhere;
+  text-transform: none;
+  color: inherit;
+`;
+
+export const getNotchFill = (theme: Theme) =>
+  color[theme].background[ColorVariant.InversePrimary][
+    InteractionState.Default
+  ];
+
+const baseTriggerStyles = css`
   position: relative;
 `;
 
-export const colorSet = {
-  [Theme.Light]: {
-    tooltip: css`
-      background-color: ${palette.black};
-      color: ${palette.gray.light1};
-    `,
-    children: css`
-      color: inherit;
-    `,
-    notchFill: palette.black,
-  },
-  [Theme.Dark]: {
-    tooltip: css`
-      background-color: ${palette.gray.light2};
-      color: ${palette.black};
-    `,
-    children: css`
-      color: inherit;
-    `,
-    notchFill: palette.gray.light2,
-  },
-};
-
-export const minSize = notchWidth + 2 * borderRadiuses[TooltipVariant.Default];
-export const minHeightStyle = css`
-  min-height: ${minSize}px;
-`;
+export const getTriggerStyles = (className?: string) =>
+  cx(baseTriggerStyles, className);

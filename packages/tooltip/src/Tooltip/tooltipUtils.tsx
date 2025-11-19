@@ -4,7 +4,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Align, ElementPosition, Justify } from '@leafygreen-ui/popover';
 
 import { TooltipVariant } from './Tooltip.types';
-import { borderRadiuses, notchHeight, notchWidth } from './tooltipConstants';
+import { borderRadiuses, NOTCH_HEIGHT, NOTCH_WIDTH } from './tooltipConstants';
 
 interface NotchPositionStylesArgs {
   align: Align;
@@ -27,8 +27,8 @@ export function notchPositionStyles({
     };
   }
 
-  const containerSize = notchWidth;
-  const notchOverlap = -(containerSize - notchHeight) / 2;
+  const containerSize = NOTCH_WIDTH;
+  const notchOverlap = -(containerSize - NOTCH_HEIGHT) / 2;
 
   type Styles = 'left' | 'right' | 'top' | 'bottom' | 'margin' | 'transform';
   const notchStyleObj: Partial<Record<Styles, string>> = {};
@@ -198,8 +198,8 @@ export function notchPositionStyles({
     notch: css`
       ${css(notchStyleObj)};
       position: absolute;
-      width: ${notchWidth}px;
-      height: ${notchWidth}px; // Keep it square. Rotating is simpler
+      width: ${NOTCH_WIDTH}px;
+      height: ${NOTCH_WIDTH}px; // Keep it square. Rotating is simpler
       margin: 0;
     `,
     tooltip: css`
