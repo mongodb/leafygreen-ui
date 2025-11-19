@@ -73,7 +73,7 @@ function renderTooltip(
       <Tooltip
         trigger={<button onClick={onClick}>{buttonText}</button>}
         data-testid={tooltipTestId}
-        {...(props as TooltipProps)}
+        {...props}
       >
         <div>Tooltip Contents!</div>
       </Tooltip>

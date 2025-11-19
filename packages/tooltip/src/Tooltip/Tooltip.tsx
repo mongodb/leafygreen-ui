@@ -163,6 +163,7 @@ function Tooltip({
   const active = enabled && open;
   const isLeftOrRightAligned = ['left', 'right'].includes(align);
   const isCompact = variant === TooltipVariant.Compact;
+  const showNotch = !isCompact;
 
   const tooltip = (
     <Popover
@@ -211,7 +212,7 @@ function Tooltip({
               >
                 {children}
               </Body>
-              {!isCompact && (
+              {showNotch && (
                 <div className={notchContainerStyles}>
                   <SvgNotch
                     className={notchStyles}
