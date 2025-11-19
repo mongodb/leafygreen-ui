@@ -325,7 +325,7 @@ const generateTable = (theme: Theme) => {
                       width: 100px;
                     `}
                   >
-                    <code>{type}</code>
+                    <code style={{ textTransform: 'capitalize' }}>{type}</code>
                   </th>
                   <th
                     className={css`
