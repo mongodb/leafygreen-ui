@@ -9,7 +9,7 @@ import {
 } from '@leafygreen-ui/date-utils';
 import { InputBox } from '@leafygreen-ui/input-box';
 
-import { charsPerSegment, dateSegmentRules } from '../../../constants';
+import { dateSegmentRules } from '../../../constants';
 import { useSharedDatePickerContext } from '../../../context';
 import { useDateSegments } from '../../../hooks';
 import { DateSegment, DateSegmentsState } from '../../../types';
@@ -102,7 +102,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           onKeyDown={onKeyDown}
           segmentRefs={segmentRefs}
           segmentEnum={DateSegment}
-          charsPerSegment={charsPerSegment}
           formatParts={formatParts}
           segments={segments}
           setSegment={setSegment}

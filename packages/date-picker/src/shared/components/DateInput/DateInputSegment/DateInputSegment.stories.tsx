@@ -37,7 +37,7 @@ const meta: StoryMetaType<
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        value: [undefined, '6', '2023'],
+        value: ['', '6', '2023'],
         segment: ['day', 'month', 'year'],
         size: Object.values(Size),
       },
@@ -54,7 +54,7 @@ const meta: StoryMetaType<
       ],
     },
     controls: {
-      exclude: ['segmentEnum', 'onChange', 'disabled'],
+      exclude: ['segmentEnum', 'onChange', 'disabled', 'charsCount', 'value'],
     },
   },
   args: {
@@ -65,6 +65,10 @@ const meta: StoryMetaType<
     segment: {
       control: 'select',
       options: ['day', 'month', 'year'],
+    },
+    size: {
+      control: 'select',
+      options: Object.values(Size),
     },
   },
 };

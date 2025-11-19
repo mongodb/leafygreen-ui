@@ -38,7 +38,6 @@ export const DateInputSegment = React.forwardRef<
     autoComplete: autoCompleteProp,
     min: minContextProp,
     max: maxContextProp,
-    size,
   } = useSharedDatePickerContext();
 
   const { value: dateValue } = useDateInputBoxContext();
@@ -67,9 +66,7 @@ export const DateInputSegment = React.forwardRef<
       data-testid="lg-date_picker_input-segment"
       shouldWrap={shouldWrap}
       shouldValidate={shouldValidate}
-      step={1}
-      size={size}
-      charsPerSegment={charsPerSegment[segment]}
+      charsCount={charsPerSegment[segment]}
     />
   );
 });

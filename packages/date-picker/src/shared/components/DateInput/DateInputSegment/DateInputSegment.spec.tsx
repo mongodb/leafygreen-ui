@@ -31,7 +31,7 @@ const renderSegment = (
     segment: 'day' as DateSegment,
     disabled: false,
     segmentEnum: DateSegment,
-    charsPerSegment: charsPerSegment['day'],
+    charsCount: charsPerSegment['day'],
     minSegmentValue: defaultMin['day'],
     maxSegmentValue: defaultMax['day'],
     placeholder: defaultPlaceholder['day'],
