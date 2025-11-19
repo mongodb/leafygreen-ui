@@ -38,7 +38,7 @@ import { DateInputBoxProps } from './DateInputBox.types';
  */
 export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
   ({ value, setValue, ...rest }: DateInputBoxProps, fwdRef) => {
-    const { isDirty, formatParts, disabled, setIsDirty } =
+    const { isDirty, formatParts, disabled, setIsDirty, size } =
       useSharedDatePickerContext();
 
     /** if the value is a `Date` the component is dirty */
@@ -94,6 +94,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           disabled={disabled}
           segmentRules={dateSegmentRules}
           segmentComponent={DateInputSegment}
+          size={size}
           {...rest}
         />
       </DateInputBoxProvider>
