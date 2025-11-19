@@ -1,0 +1,52 @@
+{
+  "name": "@lg-private/canvas-header",
+  "version": "3.0.1",
+  "description": "LeafyGreen UI Kit Canvas Header",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/icon": "^13.0.0",
+    "@leafygreen-ui/lib": "^14.0.0",
+    "@leafygreen-ui/palette": "^4.1.0",
+    "@leafygreen-ui/tokens": "^2.11.0",
+    "@leafygreen-ui/tooltip": "^13.0.0",
+    "@leafygreen-ui/typography": "^20.0.0"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/badge": "^9.0.0",
+    "@leafygreen-ui/button": "^22.0.0",
+    "@lg-tools/build": "0.8.0",
+    "@lg-tools/storybook-utils": "^0.3.0",
+    "@faker-js/faker": "^8.4.1"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/canvas-header",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}
