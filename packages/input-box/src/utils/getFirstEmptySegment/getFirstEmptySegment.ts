@@ -1,43 +1,27 @@
-interface GetFirstEmptySegmentProps<
-  SegmentRefs extends Record<string, React.RefObject<HTMLInputElement>>,
-> {
-  formatParts: Array<Intl.DateTimeFormatPart>;
-  segmentRefs: SegmentRefs;
-}
+import { SharedDatePickerContextProps } from '../../context';
+import { SegmentRefs } from '../../hooks';
+import { DateSegment } from '../../types';
+
 /**
- * @param formatParts - The format parts of the date
- * @param segmentRefs - The segment refs
  *
- * @returns The first empty date segment input for the given format
- *
- * @example
- * const formatParts = [
- *   { type: 'year', value: '' },
- *   { type: 'month', value: '' },
- *   { type: 'day', value: '' },
- * ];
- * const segmentRefs = {
- *   year: { current: yearRef },
- *   month: { current: monthRef },
- *   day: { current: dayRef },
- * };
- * getFirstEmptySegment({ formatParts, segmentRefs }); // yearRef.current
+ * @returns The first empty date segment for the given format
  */
-export const getFirstEmptySegment = <
-  SegmentRefs extends Record<string, React.RefObject<HTMLInputElement>>,
->({
+export const getFirstEmptySegment = ({
   formatParts,
   segmentRefs,
-}: GetFirstEmptySegmentProps<SegmentRefs>): HTMLInputElement | null => {
+}: {
+  formatParts: Required<SharedDatePickerContextProps>['formatParts'];
+  segmentRefs: SegmentRefs;
+}) => {
   // if 1+ are empty, focus the first empty one
   const formatSegments = formatParts.filter(part => part.type !== 'literal');
   const emptySegmentKeys = formatSegments
     .map(p => p.type)
     .filter(type => {
-      const element = segmentRefs[type as keyof SegmentRefs];
+      const element = segmentRefs[type as DateSegment];
       return !element?.current?.value;
     });
-  const firstEmptySegmentKey = emptySegmentKeys[0] as keyof SegmentRefs;
+  const firstEmptySegmentKey = emptySegmentKeys[0] as DateSegment;
   const firstEmptySegmentRef = segmentRefs[firstEmptySegmentKey];
-  return firstEmptySegmentRef?.current ?? null;
+  return firstEmptySegmentRef.current;
 };
