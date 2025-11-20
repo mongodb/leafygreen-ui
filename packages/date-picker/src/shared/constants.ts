@@ -2,6 +2,8 @@ import { MAX_DATE, MIN_DATE } from '@leafygreen-ui/date-utils';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
 
+import { DateSegment } from './types';
+
 // TODO: Update how defaultMin & defaultMax are defined,
 // since day/month are constants,
 // but year is consumer-defined
@@ -69,3 +71,17 @@ export const selectElementProps = {
   dropdownWidthBasis: DropdownWidthBasis.Option,
   renderMode: RenderMode.TopLayer,
 } as const;
+
+export const dateSegmentRules = {
+  [DateSegment.Day]: {
+    maxChars: charsPerSegment.day,
+    minExplicitValue: 4,
+  },
+  [DateSegment.Month]: {
+    maxChars: charsPerSegment.month,
+    minExplicitValue: 2,
+  },
+  [DateSegment.Year]: {
+    maxChars: charsPerSegment.year,
+  },
+};

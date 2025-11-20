@@ -182,7 +182,7 @@ describe('packages/input-segment', () => {
     describe('keyboard events', () => {
       describe('Arrow keys', () => {
         const formatter = getValueFormatter({
-          charsPerSegment: 2,
+          charsCount: 2,
           allowZero: true,
         });
 
@@ -292,7 +292,7 @@ describe('packages/input-segment', () => {
 
           test('does not wrap if `shouldWrap` is false and value is less than min', () => {
             const formatter = getValueFormatter({
-              charsPerSegment: 4,
+              charsCount: 4,
               allowZero: false,
             });
 
@@ -461,7 +461,7 @@ describe('packages/input-segment', () => {
 
           test('does not wrap if `shouldWrap` is false and value is less than min', () => {
             const formatter = getValueFormatter({
-              charsPerSegment: 4,
+              charsCount: 4,
               allowZero: false,
             });
 

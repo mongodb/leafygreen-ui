@@ -1530,6 +1530,9 @@ importers:
       '@leafygreen-ui/icon-button':
         specifier: workspace:^
         version: link:../icon-button
+      '@leafygreen-ui/input-box':
+        specifier: workspace:^
+        version: link:../input-box
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0
         version: link:../leafygreen-provider
