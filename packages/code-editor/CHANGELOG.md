@@ -1,5 +1,22 @@
 # @leafygreen-ui/code-editor
 
+## 1.0.2
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/input-option@4.1.3
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/text-input@16.2.1
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/checkbox@18.1.3
+  - @leafygreen-ui/tooltip@14.2.3
+  - @leafygreen-ui/button@25.1.3
+  - @leafygreen-ui/badge@10.2.3
+  - @leafygreen-ui/modal@20.3.1
+  - @leafygreen-ui/menu@33.0.1
+
 ## 1.0.1
 
 ### Patch Changes

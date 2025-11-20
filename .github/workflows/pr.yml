@@ -32,6 +32,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
@@ -64,7 +65,7 @@ jobs:
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: pnpm build
+        run: pnpm build:packages
 
       - uses: actions/cache/save@v4
         name: Save build cache
@@ -73,6 +74,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
@@ -111,6 +113,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
@@ -150,6 +153,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
@@ -201,6 +205,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
@@ -246,6 +251,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}

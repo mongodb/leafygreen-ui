@@ -10,7 +10,6 @@ import {
   InferredPolymorphic,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
-import { RenderMode } from '@leafygreen-ui/popover';
 
 import { Menu } from '../Menu';
 import { getLgIds } from '../utils/getLgIds';
@@ -24,6 +23,7 @@ import {
   Align,
   InternalSplitButtonProps,
   Justify,
+  RenderMode,
   Variant,
 } from './SplitButton.types';
 

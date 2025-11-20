@@ -1,5 +1,15 @@
 # @lg-charts/drag-provider
 
+## 1.0.10
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+- Updated dependencies [60ccb1e]
+  - @lg-charts/chart-card@1.1.3
+  - @lg-charts/core@2.3.1
+
 ## 1.0.9
 
 ### Patch Changes

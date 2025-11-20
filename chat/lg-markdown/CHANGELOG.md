@@ -1,5 +1,18 @@
 # @lg-chat/lg-markdown
 
+## 5.0.0
+
+### Major Changes
+
+- 3dfa899: - Removed deprecated `lgMarkdownStyles` export.
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/code@20.2.3
+
 ## 4.2.2
 
 ### Patch Changes

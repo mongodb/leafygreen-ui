@@ -1,5 +1,24 @@
 # @lg-chat/chat-window
 
+## 6.0.0
+
+### Major Changes
+
+- 3dfa899: [LG-5575](https://jira.mongodb.org/browse/LG-5575)
+
+  - Added compatibility with `@lg-chat/leafygreen-chat-provider@6.0.0`. We recommend new projects use `@lg-chat/leafygreen-chat-provider` v6; support for v5 will be removed in a future major version.
+  - All chat components have been simplified by removing variant-specific conditional logic.
+    - Removed `onClose` and `iconSlot` props from `ChatWindowProps`. These props were only used in the spacious variant.
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+- Updated dependencies [3dfa899]
+- Updated dependencies [3dfa899]
+  - @lg-chat/title-bar@5.0.0
+  - @lg-chat/leafygreen-chat-provider@6.0.0
+
 ## 5.2.0
 
 ### Minor Changes

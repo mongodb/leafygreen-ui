@@ -1,5 +1,13 @@
 # @leafygreen-ui/inline-definition
 
+## 9.1.3
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/tooltip@14.2.3
+
 ## 9.1.2
 
 ### Patch Changes

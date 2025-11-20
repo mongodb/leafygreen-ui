@@ -1,13 +1,11 @@
-import { ChildProcess } from 'child_process';
-import xSpawn from 'cross-spawn';
 import fsx from 'fs-extra';
 import path from 'path';
 
 import { createLinkFrom } from './createLinkFrom';
-import { MockChildProcess } from './mocks.testutils';
+import * as spawnLoggedModule from './spawnLogged';
 
 describe('tools/link/createLinkFrom', () => {
-  let spawnSpy: jest.SpyInstance<ChildProcess>;
+  let spawnLoggedSpy: jest.SpyInstance;
 
   beforeAll(() => {
     fsx.emptyDirSync('./tmp');
@@ -18,30 +16,32 @@ describe('tools/link/createLinkFrom', () => {
   });
 
   beforeEach(() => {
-    spawnSpy = jest.spyOn(xSpawn, 'spawn');
-    spawnSpy.mockImplementation((..._args) => new MockChildProcess());
+    spawnLoggedSpy = jest
+      .spyOn(spawnLoggedModule, 'spawnLogged')
+      .mockResolvedValue(undefined);
   });
 
   afterEach(() => {
-    spawnSpy.mockRestore();
+    spawnLoggedSpy.mockRestore();
     fsx.emptyDirSync('./tmp');
   });
 
   afterAll(() => {
-    fsx.rmdirSync('./tmp/');
+    fsx.removeSync('./tmp/');
   });
 
-  test('calls `npm link` command from package directory', () => {
-    createLinkFrom(path.resolve('./tmp/'), {
+  test('calls `npm link` command from package directory', async () => {
+    await createLinkFrom(path.resolve('./tmp/'), {
       scopeName: '@example',
       scopePath: 'scope',
       packageName: 'test-package',
     });
 
-    expect(spawnSpy).toHaveBeenCalledWith(
+    expect(spawnLoggedSpy).toHaveBeenCalledWith(
       'npm',
       ['link'],
       expect.objectContaining({
+        name: 'link_src:test-package',
         cwd: expect.stringContaining('tmp/scope/test-package'),
       }),
     );

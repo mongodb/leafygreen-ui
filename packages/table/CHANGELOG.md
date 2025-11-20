@@ -1,5 +1,15 @@
 # @leafygreen-ui/table
 
+## 15.2.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/checkbox@18.1.3
+
 ## 15.2.0
 
 ### Minor Changes

@@ -1,5 +1,15 @@
 # @leafygreen-ui/vertical-stepper
 
+## 3.0.3
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/descendants@3.0.6
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/button@25.1.3
+
 ## 3.0.2
 
 ### Patch Changes

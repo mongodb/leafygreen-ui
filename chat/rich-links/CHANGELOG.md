@@ -1,5 +1,14 @@
 # @lg-chat/rich-links
 
+## 4.0.5
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/card@13.2.1
+
 ## 4.0.4
 
 ### Patch Changes

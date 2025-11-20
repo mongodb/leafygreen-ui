@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/colors",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "lg-charts colors",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -19,7 +19,7 @@
     "@leafygreen-ui/palette": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "workspace:^",

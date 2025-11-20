@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 13.2.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
 ## 13.2.0
 
 ### Minor Changes
