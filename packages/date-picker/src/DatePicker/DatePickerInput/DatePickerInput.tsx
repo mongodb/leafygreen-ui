@@ -23,7 +23,6 @@ import { DateInputSegmentChangeEventHandler } from '../../shared/components/Date
 import { useSharedDatePickerContext } from '../../shared/context';
 import { getFormattedDateStringFromSegments } from '../../shared/utils';
 import { useDatePickerContext } from '../DatePickerContext';
-import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
 
