@@ -2,4 +2,4 @@
 '@leafygreen-ui/tokens': minor
 ---
 
-Updated existing success and error border color variants, added tertiary border color variant, added text Success and SuccessLink color variants
+Added `Tertiary`, `OnSuccess`, and `OnError` border color variants. Added `OnSuccess`, `OnError`, and `OnSuccessLink` text color variants
