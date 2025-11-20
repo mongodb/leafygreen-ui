@@ -1,3 +1,4 @@
+export { WizardSubComponentProperties } from './constants';
 export { Wizard, type WizardProps } from './Wizard';
 export {
   useWizardContext,
