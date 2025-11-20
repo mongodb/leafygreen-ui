@@ -37,14 +37,12 @@ describe('tools/link/linkPackagesForScope', () => {
     fsx.mkdirSync('./tmp/app/node_modules/@example');
     fsx.mkdirSync('./tmp/app/node_modules/@example/test-package');
 
-    await linkPackagesForScope(
-      {
-        scopeName: '@example',
-        scopePath: 'scope',
-      },
-      path.resolve('./tmp/packages'),
-      path.resolve('./tmp/app'),
-    );
+    await linkPackagesForScope({
+      scopeName: '@example',
+      scopePath: 'scope',
+      source: path.resolve('./tmp/packages'),
+      destination: path.resolve('./tmp/app'),
+    });
 
     // Creates links
     expect(spawnLoggedSpy).toHaveBeenCalledWith(
