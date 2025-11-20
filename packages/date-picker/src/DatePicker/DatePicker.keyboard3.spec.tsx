@@ -33,6 +33,9 @@ describe('DatePicker keyboard interaction', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   describe('arrow keys interaction when Input is focused', () => {
     describe('Left Arrow', () => {

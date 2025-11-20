@@ -298,6 +298,10 @@ describe('packages/date-picker/menu/header', () => {
       jest.useFakeTimers();
     });
 
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
     const AllMockProviders = ({ children }: PropsWithChildren<{}>) => {
       const [isSelectOpen, _setIsSelectOpen] = useState(false);
 

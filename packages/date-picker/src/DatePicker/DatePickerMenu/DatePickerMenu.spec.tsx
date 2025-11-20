@@ -112,6 +112,10 @@ describe('packages/date-picker/date-picker-menu', () => {
     jest.useFakeTimers().setSystemTime(testToday);
   });
 
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   describe('Rendering', () => {
     test('renders calendar grid', () => {
       const result = renderDatePickerMenu();

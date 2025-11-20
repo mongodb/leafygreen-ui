@@ -55,6 +55,10 @@ describe('packages/date-picker/date-picker-input', () => {
     jest.useFakeTimers().setSystemTime(testDate);
   });
 
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   describe('Typing', () => {
     test('typing into a segment updates the segment value', () => {
       const { dayInput } = renderDatePickerInput();

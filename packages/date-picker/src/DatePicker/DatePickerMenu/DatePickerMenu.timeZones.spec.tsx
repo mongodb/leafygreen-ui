@@ -128,6 +128,7 @@ describe('DatePicker time zone testing', () => {
           mockTimeZone(tz, UTCOffset);
         });
         afterEach(() => {
+          jest.useRealTimers();
           jest.restoreAllMocks();
         });
 
