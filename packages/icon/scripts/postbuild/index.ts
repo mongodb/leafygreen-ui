@@ -26,11 +26,6 @@ function validateBuiltIcons(): void {
     const jsFiles = files.filter(file => file.endsWith('.js'));
 
     for (const file of jsFiles) {
-      // Skip the main index file and glyphCommon as they may have different rules
-      if (file === 'index.js' || file === 'glyphCommon.js') {
-        continue;
-      }
-
       const filePath = path.join(fullPath, file);
       const content = fs.readFileSync(filePath, 'utf-8');
 
