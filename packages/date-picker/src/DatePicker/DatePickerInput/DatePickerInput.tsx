@@ -84,7 +84,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         /**
          * Focus and select the appropriate segment.
          *
-         * This is done here instead of in the InputBox component because this component has padding that needs to be accounted for onClick.
+         * This is done here instead of `InputBox` because this component has padding that needs to be accounted for on click.
          */
         focusAndSelectSegment({
           target,
