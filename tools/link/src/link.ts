@@ -94,15 +94,16 @@ export async function linkPackages(
   for (const [scopeName, scopePath] of Object.entries(availableScopes)) {
     if (!scopeFlag || scopeFlag.includes(scopeName)) {
       linkPromises.push(
-        linkPackagesForScope(
-          { scopeName, scopePath },
+        linkPackagesForScope({
+          scopeName,
+          scopePath,
           source,
           destination,
           packages,
           verbose,
           parallel,
           launchEnv,
-        ),
+        }),
       );
     }
   }

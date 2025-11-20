@@ -13,15 +13,30 @@ import { PackageDetails } from './types';
 /** Packages that we will not link */
 const ignorePackages = ['mongo-nav'];
 
+interface LinkPackagesForScopeOptions
+  extends Pick<PackageDetails, 'scopeName' | 'scopePath'> {
+  source: string;
+  destination: string;
+  packages?: Array<string>;
+  verbose?: boolean;
+  parallel?: boolean;
+  launchEnv?: NodeJS.ProcessEnv;
+}
+
 export async function linkPackagesForScope(
-  { scopeName, scopePath }: Pick<PackageDetails, 'scopeName' | 'scopePath'>,
-  source: string,
-  destination: string,
-  packages?: Array<string>,
-  verbose?: boolean,
-  parallel?: boolean,
-  launchEnv?: NodeJS.ProcessEnv,
+  options: LinkPackagesForScopeOptions,
 ): Promise<void> {
+  const {
+    scopeName,
+    scopePath,
+    source,
+    destination,
+    packages,
+    verbose,
+    parallel,
+    launchEnv,
+  } = options;
+
   const node_modulesDir = path.join(destination, 'node_modules');
 
   // The directory where the scope's packages are installed
@@ -116,14 +131,6 @@ export async function linkPackagesForScope(
       env: launchEnv,
     });
 
-    await linkPackagesForScope(
-      { scopeName, scopePath },
-      source,
-      destination,
-      packages,
-      verbose,
-      parallel,
-      launchEnv,
-    );
+    await linkPackagesForScope(options);
   }
 }

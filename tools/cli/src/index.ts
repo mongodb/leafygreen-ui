@@ -86,7 +86,6 @@ cli
   .option(
     '--no-parallel',
     'Run the link command sequentially for each package. Useful for debugging or when the parallel approach fails',
-    true,
   )
   .option(
     '--launch-env <launchEnv>',
