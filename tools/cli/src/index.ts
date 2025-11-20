@@ -1,4 +1,8 @@
-import { buildPackage, buildTSDoc, buildTypescript } from '@lg-tools/build';
+import {
+  registerBuildDocsCommand,
+  registerBuildTSCommand,
+  registerBundleCommand,
+} from '@lg-tools/build';
 import { migrator } from '@lg-tools/codemods';
 import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
@@ -236,33 +240,10 @@ cli
   .action(migrator);
 
 /** Build steps */
-cli
-  .command('build-package')
-  .description('Builds a package')
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .action(buildPackage);
-cli
-  .command('build-ts')
-  .description("Builds a package's TypeScript definitions")
-  .argument('[pass-through...]', 'Pass-through options for `tsc`')
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .option(
-    '--downlevel',
-    'Builds all TS downlevel targets based on the typesVersions field in package.json',
-    false,
-  )
-  .option(
-    '-u, --update',
-    'Update package.json typesVersions and exports fields',
-    false,
-  )
-  .allowUnknownOption(true)
-  .action(buildTypescript);
-cli
-  .command('build-tsdoc')
-  .description("Builds a package's TSDoc file")
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .action(buildTSDoc);
+
+registerBundleCommand(cli.command('build-package'));
+registerBuildTSCommand(cli.command('build-ts'));
+registerBuildDocsCommand(cli.command('build-tsdoc'));
 
 /** Merge editor settings */
 cli
