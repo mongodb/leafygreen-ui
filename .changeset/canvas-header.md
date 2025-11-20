@@ -1,5 +1,5 @@
 ---
-'@lg-private/canvas-header': patch
+'@leafygreen-ui/canvas-header': patch
 ---
 
 First public release of CanvasHeader
