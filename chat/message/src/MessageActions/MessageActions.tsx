@@ -16,6 +16,8 @@ import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { spacing as spacingToken } from '@leafygreen-ui/tokens';
+import { Justify, Tooltip, TooltipVariant } from '@leafygreen-ui/tooltip';
 
 import { useMessageContext } from '../MessageContext';
 
@@ -182,21 +184,31 @@ export function MessageActions({
       >
         <div className={actionBarStyles}>
           <div className={primaryActionsContainerStyles}>
-            <IconButton
-              aria-label="Copy message"
-              onClick={handleCopy}
-              title="Copy"
+            <Tooltip
+              justify={Justify.Middle}
+              spacing={spacingToken[100]}
+              trigger={
+                <IconButton aria-label="Copy message" onClick={handleCopy}>
+                  {copied ? <CheckmarkIcon /> : <CopyIcon />}
+                </IconButton>
+              }
+              variant={TooltipVariant.Compact}
             >
-              {copied ? <CheckmarkIcon /> : <CopyIcon />}
-            </IconButton>
+              Copy
+            </Tooltip>
             {onClickRetry && (
-              <IconButton
-                aria-label="Retry message"
-                onClick={onClickRetry}
-                title="Retry"
+              <Tooltip
+                justify={Justify.Middle}
+                spacing={spacingToken[100]}
+                trigger={
+                  <IconButton aria-label="Retry message" onClick={onClickRetry}>
+                    <RefreshIcon />
+                  </IconButton>
+                }
+                variant={TooltipVariant.Compact}
               >
-                <RefreshIcon />
-              </IconButton>
+                Retry
+              </Tooltip>
             )}
           </div>
           {showMessageRating && (
