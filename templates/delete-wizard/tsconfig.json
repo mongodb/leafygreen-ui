@@ -10,10 +10,22 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../../packages/canvas-header"
+    },
+    {
+      "path": "../../packages/compound-component"
+    },
+    {
       "path": "../../packages/emotion"
     },
     {
       "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/wizard"
     },
     {
       "path": "../../tools/test-harnesses"

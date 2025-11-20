@@ -1,5 +1,4 @@
-  
-{
+  {
   "name": "@lg-templates/delete-wizard",
   "version": "0.0.1",
   "description": "LeafyGreen UI Kit Delete Wizard",
@@ -28,8 +27,12 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/canvas-header": "workspace:^",
+    "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/wizard": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/delete-wizard",
