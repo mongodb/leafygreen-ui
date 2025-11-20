@@ -69,8 +69,8 @@ const lightModeBorderColors = {
     [InteractionState.Focus]: blue.light1,
   },
   [Variant.Success]: {
-    [InteractionState.Default]: green.light1,
-    [InteractionState.Hover]: green.light1,
+    [InteractionState.Default]: green.dark1,
+    [InteractionState.Hover]: green.dark1,
     [InteractionState.Focus]: blue.light1,
   },
   [Variant.Error]: {
@@ -82,6 +82,16 @@ const lightModeBorderColors = {
     [InteractionState.Default]: gray.light1,
     [InteractionState.Hover]: gray.light1,
     [InteractionState.Focus]: gray.light1,
+  },
+  [Variant.OnSuccess]: {
+    [InteractionState.Default]: green.light2,
+    [InteractionState.Hover]: green.light2,
+    [InteractionState.Focus]: green.light2,
+  },
+  [Variant.OnError]: {
+    [InteractionState.Default]: red.light2,
+    [InteractionState.Hover]: red.light2,
+    [InteractionState.Focus]: red.light2,
   },
 } as const satisfies VariantColorRecord;
 
@@ -153,6 +163,16 @@ const lightModeTextColors = {
     [InteractionState.Default]: gray.base,
     [InteractionState.Hover]: gray.base,
     [InteractionState.Focus]: gray.base,
+  },
+  [Variant.Success]: {
+    [InteractionState.Default]: green.dark2,
+    [InteractionState.Hover]: green.dark2,
+    [InteractionState.Focus]: green.dark2,
+  },
+  [Variant.Error]: {
+    [InteractionState.Default]: red.base,
+    [InteractionState.Hover]: red.base,
+    [InteractionState.Focus]: red.base,
   },
   [Variant.Placeholder]: {
     [InteractionState.Default]: gray.base,

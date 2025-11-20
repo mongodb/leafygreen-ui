@@ -169,6 +169,16 @@ const darkModeTextColors = {
     [InteractionState.Hover]: gray.dark1,
     [InteractionState.Focus]: gray.dark1,
   },
+  [Variant.Success]: {
+    [InteractionState.Default]: green.light2,
+    [InteractionState.Hover]: green.light2,
+    [InteractionState.Focus]: green.light2,
+  },
+  [Variant.Error]: {
+    [InteractionState.Default]: red.light1,
+    [InteractionState.Hover]: red.light1,
+    [InteractionState.Focus]: red.light1,
+  },
   [Variant.OnSuccess]: {
     [InteractionState.Default]: green.light1,
     [InteractionState.Hover]: green.light1,
@@ -180,9 +190,9 @@ const darkModeTextColors = {
     [InteractionState.Focus]: green.light3,
   },
   [Variant.OnError]: {
-    [InteractionState.Default]: red.light1,
-    [InteractionState.Hover]: red.light1,
-    [InteractionState.Focus]: red.light1,
+    [InteractionState.Default]: red.light2,
+    [InteractionState.Hover]: red.light2,
+    [InteractionState.Focus]: red.light2,
   },
   [Variant.Link]: {
     [InteractionState.Default]: blue.light1,
