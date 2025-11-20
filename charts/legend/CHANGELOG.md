@@ -1,5 +1,14 @@
 # @lg-charts/legend
 
+## 1.0.9
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @lg-charts/series-provider@1.0.6
+  - @leafygreen-ui/checkbox@18.1.3
+
 ## 1.0.8
 
 ### Patch Changes

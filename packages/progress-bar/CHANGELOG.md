@@ -1,5 +1,13 @@
 # @leafygreen-ui/progress-bar
 
+## 1.0.6
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/typography@22.2.2
+
 ## 1.0.5
 
 ### Patch Changes

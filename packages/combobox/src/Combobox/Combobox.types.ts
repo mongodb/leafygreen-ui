@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { type ChipProps } from '@leafygreen-ui/chip';
 import { Either } from '@leafygreen-ui/lib';
-import { PopoverProps } from '@leafygreen-ui/popover';
+import { PopoverProps, RenderMode } from '@leafygreen-ui/popover';
 
 import {
   ComboboxSize,
@@ -13,6 +13,8 @@ import {
   SelectValueType,
   State,
 } from '../types';
+
+export { RenderMode };
 
 /**
  * Combobox Props

@@ -1,5 +1,11 @@
 # @leafygreen-ui/gallery-indicator
 
+## 3.1.2
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
 ## 3.1.1
 
 ### Patch Changes

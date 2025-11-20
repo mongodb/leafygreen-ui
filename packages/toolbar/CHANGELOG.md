@@ -1,5 +1,15 @@
 # @leafygreen-ui/toolbar
 
+## 1.1.3
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/descendants@3.0.6
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/tooltip@14.2.3
+
 ## 1.1.2
 
 ### Patch Changes

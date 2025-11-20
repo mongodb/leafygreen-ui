@@ -1,24 +1,10 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { Align, Justify } from '@leafygreen-ui/popover';
-import { TooltipProps } from '@leafygreen-ui/tooltip';
-
-export const TooltipAlign = {
-  Top: Align.Top,
-  Bottom: Align.Bottom,
-  Left: Align.Left,
-  Right: Align.Right,
-} as const;
-
-export type TooltipAlign = (typeof TooltipAlign)[keyof typeof TooltipAlign];
-
-export const TooltipJustify = {
-  Start: Justify.Start,
-  Middle: Justify.Middle,
-  End: Justify.End,
-} as const;
-
-export type TooltipJustify =
-  (typeof TooltipJustify)[keyof typeof TooltipJustify];
+import { Align as BeaconAlign } from '@leafygreen-ui/popover';
+import {
+  Align as TooltipAlign,
+  Justify as TooltipJustify,
+  TooltipProps,
+} from '@leafygreen-ui/tooltip';
 
 // Exclude these from tooltip (tooltip already extends popover props)
 type ModifiedTooltipProps = Omit<
@@ -72,6 +58,8 @@ interface MultistepProps {
 }
 
 type ConditionalProps = StandaloneProps | MultistepProps;
+
+export { BeaconAlign, TooltipAlign, TooltipJustify };
 
 export type GuideCueProps = ModifiedTooltipProps &
   ConditionalProps &
@@ -138,5 +126,5 @@ export type GuideCueProps = ModifiedTooltipProps &
      * Determines the alignment of the beacon(animated pulsing circle that appears on top of the trigger element). This only applies to the multi-step tooltip.
      * @default 'center-horizontal'
      */
-    beaconAlign?: Align;
+    beaconAlign?: BeaconAlign;
   };

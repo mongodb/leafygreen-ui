@@ -1,5 +1,14 @@
 # @leafygreen-ui/tabs
 
+## 17.0.7
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/descendants@3.0.6
+  - @leafygreen-ui/typography@22.2.2
+
 ## 17.0.6
 
 ### Patch Changes

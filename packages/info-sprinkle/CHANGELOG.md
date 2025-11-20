@@ -1,5 +1,13 @@
 # @leafygreen-ui/info-sprinkle
 
+## 5.0.9
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/tooltip@14.2.3
+
 ## 5.0.8
 
 ### Patch Changes

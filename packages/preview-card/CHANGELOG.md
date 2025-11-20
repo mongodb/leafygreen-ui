@@ -1,5 +1,13 @@
 # @leafygreen-ui/preview-card
 
+## 0.2.6
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/button@25.1.3
+
 ## 0.2.5
 
 ### Patch Changes

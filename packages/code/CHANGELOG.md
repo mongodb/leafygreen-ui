@@ -1,5 +1,18 @@
 # @leafygreen-ui/code
 
+## 20.2.3
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/skeleton-loader@3.0.9
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/tooltip@14.2.3
+  - @leafygreen-ui/button@25.1.3
+  - @leafygreen-ui/select@17.0.1
+
 ## 20.2.2
 
 ### Patch Changes
