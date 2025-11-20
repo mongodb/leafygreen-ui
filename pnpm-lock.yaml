@@ -1149,6 +1149,49 @@ importers:
         specifier: ^4.2.2
         version: 4.3.1
 
+  packages/canvas-header:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
+    devDependencies:
+      '@faker-js/faker':
+        specifier: ^8.4.1
+        version: 8.4.1
+      '@leafygreen-ui/badge':
+        specifier: workspace:^
+        version: link:../badge
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
+      '@lg-tools/storybook-utils':
+        specifier: workspace:^
+        version: link:../../tools/storybook-utils
+
   packages/card:
     dependencies:
       '@leafygreen-ui/emotion':
@@ -5816,6 +5859,10 @@ packages:
     resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
     deprecated: Please update to a newer version
+
+  '@faker-js/faker@8.4.1':
+    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
 
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
@@ -13946,6 +13993,8 @@ snapshots:
   '@faker-js/faker@10.1.0': {}
 
   '@faker-js/faker@8.0.2': {}
+
+  '@faker-js/faker@8.4.1': {}
 
   '@fastify/busboy@2.1.1': {}
 
