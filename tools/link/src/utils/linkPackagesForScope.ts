@@ -13,13 +13,30 @@ import { PackageDetails } from './types';
 /** Packages that we will not link */
 const ignorePackages = ['mongo-nav'];
 
+interface LinkPackagesForScopeOptions
+  extends Pick<PackageDetails, 'scopeName' | 'scopePath'> {
+  source: string;
+  destination: string;
+  packages?: Array<string>;
+  verbose?: boolean;
+  parallel?: boolean;
+  launchEnv?: NodeJS.ProcessEnv;
+}
+
 export async function linkPackagesForScope(
-  { scopeName, scopePath }: Pick<PackageDetails, 'scopeName' | 'scopePath'>,
-  source: string,
-  destination: string,
-  packages?: Array<string>,
-  verbose?: boolean,
+  options: LinkPackagesForScopeOptions,
 ): Promise<void> {
+  const {
+    scopeName,
+    scopePath,
+    source,
+    destination,
+    packages,
+    verbose,
+    parallel,
+    launchEnv,
+  } = options;
+
   const node_modulesDir = path.join(destination, 'node_modules');
 
   // The directory where the scope's packages are installed
@@ -39,7 +56,11 @@ export async function linkPackagesForScope(
         installedPkg =>
           !ignorePackages.includes(installedPkg) &&
           (!packages ||
-            packages.some(pkgFlag => pkgFlag.includes(installedPkg))),
+            packages.some(
+              pkgFlag =>
+                pkgFlag === `${scopeName}/${installedPkg}` ||
+                pkgFlag === installedPkg,
+            )),
       );
 
       /** Create links */
@@ -48,17 +69,23 @@ export async function linkPackagesForScope(
           ` Creating links to ${formatLog.scope(scopeName)} packages...`,
         ),
       );
-      await Promise.all(
-        packagesToLink.map(pkg => {
-          createLinkFrom(source, {
-            scopeName,
-            scopePath,
-            packageName: pkg,
-            verbose,
-            packageManager: destinationPackageManager,
-          });
-        }),
-      );
+      const linkFromSource = (pkg: string) =>
+        createLinkFrom(source, {
+          scopeName,
+          scopePath,
+          packageName: pkg,
+          verbose,
+          packageManager: destinationPackageManager,
+          env: launchEnv,
+        });
+
+      if (parallel) {
+        await Promise.all(packagesToLink.map(linkFromSource));
+      } else {
+        for (const pkg of packagesToLink) {
+          await linkFromSource(pkg);
+        }
+      }
 
       /** Connect link */
       console.log(
@@ -68,16 +95,22 @@ export async function linkPackagesForScope(
           )} packages to ${chalk.blue(formatLog.path(destination))}...`,
         ),
       );
-      await Promise.all(
-        packagesToLink.map((pkg: string) =>
-          linkPackageTo(destination, {
-            scopeName,
-            packageName: pkg,
-            packageManager: destinationPackageManager,
-            verbose,
-          }),
-        ),
-      );
+      const linkToDestination = (pkg: string) =>
+        linkPackageTo(destination, {
+          scopeName,
+          packageName: pkg,
+          packageManager: destinationPackageManager,
+          verbose,
+          env: launchEnv,
+        });
+
+      if (parallel) {
+        await Promise.all(packagesToLink.map(linkToDestination));
+      } else {
+        for (const pkg of packagesToLink) {
+          await linkToDestination(pkg);
+        }
+      }
     } else {
       console.error(
         chalk.gray(
@@ -93,14 +126,11 @@ export async function linkPackagesForScope(
     console.error(chalk.yellow(`${formatLog.path('node_modules')} not found.`));
     // TODO: Prompt user to install instead of just running it
 
-    await installPackages(destination);
-
-    await linkPackagesForScope(
-      { scopeName, scopePath },
-      destination,
-      source,
-      packages,
+    await installPackages(destination, {
       verbose,
-    );
+      env: launchEnv,
+    });
+
+    await linkPackagesForScope(options);
   }
 }

@@ -83,10 +83,22 @@ cli
     'When running from a consuming application, defines the source of linked packages',
   )
   .option('-v --verbose', 'Prints additional information to the console', false)
-  .option('--scope <name>', 'The NPM organization')
+  .option(
+    '--no-parallel',
+    'Run the link command sequentially for each package. Useful for debugging or when the parallel approach fails',
+  )
+  .option(
+    '--launch-env <launchEnv>',
+    'A string of environment variable lines as `KEY=VALUE`, separated by a newline. ' +
+      'Only the specified environment variables will be used during npm link commands in the source and destination directories. ' +
+      'This is useful to workaround environment variable pollution by tools such as version managers (e.g., asdf) or script runners (e.g., pnpm) that interfere with `npm link`. ' +
+      'We recommend using --launch-env="$(env)" to use your original shell environment.',
+    undefined,
+  )
+  .option('--scope <name>', 'The NPM organization, e.g. @lg-charts')
   .option(
     '--packages <names...>',
-    'Specific package names (requires `scope` option, or full package name)',
+    'Specific package names (requires `scope` option, or full package name) e.g. `@lg-charts/core` or `core` if @lg-charts is the scope',
   )
   .action(linkPackages);
 
