@@ -2,7 +2,6 @@
 import chalk from 'chalk';
 import rollup, { type MergedRollupOptions } from 'rollup';
 import {
-  type BatchWarnings,
   type LoadConfigFile,
   loadConfigFile as _loadConfigFile,
 } from 'rollup/loadConfigFile';
@@ -25,7 +24,9 @@ interface BuildPackageOptions {
 /**
  * Builds packages using rollup for the current directory
  */
-export function buildPackage({ verbose }: BuildPackageOptions) {
+export async function buildPackage({
+  verbose,
+}: BuildPackageOptions): Promise<void> {
   const packageDir = process.cwd();
 
   const splitPath = packageDir.split('/');
@@ -36,61 +37,56 @@ export function buildPackage({ verbose }: BuildPackageOptions) {
   const rollupConfigPath = findRollupConfigFile(packageName, { verbose });
 
   // load the rollup config file, and run rollup
-  loadConfigFile(rollupConfigPath, {}).then(
-    async ({
-      options,
-      warnings,
-    }: {
-      options: Array<MergedRollupOptions>;
-      warnings: BatchWarnings;
-    }) => {
-      verbose &&
-        console.log(
-          `Building ${packageName} with the following config:`,
-          options.map(config => ({
-            input: config.input,
-            output: config.output[0].dir ?? config.output[0].file,
-          })),
-        );
+  const { options, warnings } = await loadConfigFile(rollupConfigPath, {});
 
-      if (warnings.count > 0) {
-        if (verbose) {
-          // This prints all deferred warnings
-          warnings.flush();
-        } else {
-          console.log(
-            warnings.count + ' build warnings. Run with `--verbose` for more',
-          );
-        }
-      }
+  if (verbose) {
+    console.log(
+      `Building ${packageName} with the following config:`,
+      options.map(config => ({
+        input: config.input,
+        output: config.output[0].dir ?? config.output[0].file,
+      })),
+    );
+  }
 
-      for (const optionsObj of options) {
-        const config: MergedRollupOptions = {
-          ...optionsObj,
-          logLevel: verbose ? 'debug' : 'warn',
-        };
+  if (warnings.count > 0) {
+    if (verbose) {
+      // This prints all deferred warnings
+      warnings.flush();
+    } else {
+      console.log(
+        warnings.count + ' build warnings. Run with `--verbose` for more',
+      );
+    }
+  }
 
-        // Log the bundle stats in verbose mode
-        if (verbose) {
-          config.plugins.push(
-            bundleStats({
-              html: false,
-              json: false,
-              compare: false,
-            }),
-          );
-        }
+  for (const optionsObj of options) {
+    const config: MergedRollupOptions = {
+      ...optionsObj,
+      logLevel: verbose ? 'debug' : 'warn',
+    };
 
-        const bundle = await rollup.rollup(config);
+    // Log the bundle stats in verbose mode
+    if (verbose) {
+      config.plugins.push(
+        bundleStats({
+          html: false,
+          json: false,
+          compare: false,
+        }),
+      );
+    }
 
-        verbose &&
-          console.log(
-            `${chalk.bold(optionsObj.input)} > ${chalk.bold(
-              optionsObj.output.map(obj => obj.dir || obj.file),
-            )}`,
-          );
-        await Promise.all(optionsObj.output.map(bundle.write));
-      }
-    },
-  );
+    const bundle = await rollup.rollup(config);
+
+    if (verbose) {
+      console.log(
+        `${chalk.bold(optionsObj.input)} > ${chalk.bold(
+          optionsObj.output.map(obj => obj.dir || obj.file),
+        )}`,
+      );
+    }
+
+    await Promise.all(optionsObj.output.map(bundle.write));
+  }
 }
