@@ -99,7 +99,8 @@
       "@lg-charts": "charts",
       "@lg-chat": "chat",
       "@lg-tools": "tools",
-      "@lg-mcp-ui": "mcp-ui"
+      "@lg-mcp-ui": "mcp-ui",
+      "@lg-templates": "templates"
     }
   },
   "keywords": [
