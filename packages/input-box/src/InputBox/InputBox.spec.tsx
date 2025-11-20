@@ -575,7 +575,6 @@ describe('packages/input-box', () => {
       segmentRules={segmentRulesMock}
       segmentComponent={InputSegmentWrapper}
       disabled={false}
-      size={'default'}
     />;
   });
 });
