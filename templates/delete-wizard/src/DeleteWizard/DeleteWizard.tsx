@@ -14,6 +14,7 @@ import {
   DeleteWizardHeader,
   DeleteWizardHeaderKey,
 } from './DeleteWizardHeader';
+import { DeleteWizardStepContents } from './DeleteWizardStepContents';
 
 export const DeleteWizard = CompoundComponent(
   ({ children, className }: DeleteWizardProps) => {
@@ -30,6 +31,7 @@ export const DeleteWizard = CompoundComponent(
     displayName: 'DeleteWizard',
     Header: DeleteWizardHeader,
     Step: Wizard.Step,
+    StepContent: DeleteWizardStepContents,
     Footer: DeleteWizardFooter,
   },
 );

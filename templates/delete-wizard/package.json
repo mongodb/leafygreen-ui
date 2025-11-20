@@ -1,6 +1,6 @@
-  {
+{
   "name": "@lg-templates/delete-wizard",
-  "version": "0.0.1",
+  "version": "0.1.0-local.1",
   "description": "LeafyGreen UI Kit Delete Wizard",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -42,5 +42,10 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/LG/summary"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   }
 }
