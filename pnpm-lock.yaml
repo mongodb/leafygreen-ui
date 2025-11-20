@@ -587,6 +587,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../../packages/tooltip
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
@@ -728,6 +731,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../../packages/tooltip
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
@@ -762,6 +768,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../../packages/tooltip
       '@lg-chat/leafygreen-chat-provider':
         specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
