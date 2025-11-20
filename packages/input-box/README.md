@@ -30,7 +30,7 @@ import { Size } from '@leafygreen-ui/tokens';
 
 // 1. Create a custom segment component
 // InputBox will pass: segment, value, onChange, onBlur, segmentEnum, disabled, ref, aria-labelledby
-// You add: minSegmentValue, maxSegmentValue, charsPerSegment, size, and any other InputSegment props
+// You add: minSegmentValue, maxSegmentValue, charsCount, size, and any other InputSegment props
 const MySegment = ({
   segment,
   value,
@@ -49,7 +49,7 @@ const MySegment = ({
     disabled={disabled}
     minSegmentValue={minValues[segment]}
     maxSegmentValue={maxValues[segment]}
-    charsPerSegment={charsPerSegment[segment]}
+    charsCount={charsPerSegment[segment]}
     size={Size.Default}
     {...props}
   />
@@ -68,7 +68,6 @@ const MySegment = ({
     { type: 'literal', value: '/' },
     { type: 'year', value: '2025' },
   ]}
-  charsPerSegment={{ day: 2, month: 2, year: 4 }}
   segmentRefs={{ day: dayRef, month: monthRef, year: yearRef }}
   segmentRules={{
     day: { maxChars: 2, minExplicitValue: 4 },
@@ -103,11 +102,11 @@ An internal component for building date or time inputs with multiple segments (e
    - `disabled` - whether the segment is disabled
    - `ref` - ref for the input element
    - `aria-labelledby` - accessibility label reference
+   - `charsCount` - character length
+   - `size` - input size
 
 2. **Your `segmentComponent` adds** segment-specific configuration:
    - `minSegmentValue` / `maxSegmentValue` - validation ranges
-   - `charsPerSegment` - character length
-   - `size` - input size
    - `step`, `shouldWrap`, `shouldValidate` - optional behavior customization
 
 This pattern allows you to define segment-specific rules (like min/max values that vary by segment) while keeping the core InputBox logic generic and reusable.
@@ -131,7 +130,6 @@ A generic controlled input component that renders multiple segments separated by
 | `segmentEnum`      | `Record<string, Segment>`                                  | Maps segment names to values (e.g., `{ Day: 'day' }`)                          |         |
 | `segmentComponent` | `React.ComponentType<InputSegmentComponentProps<Segment>>` | Custom wrapper component that renders InputSegment with segment-specific props |         |
 | `formatParts`      | `Array<Intl.DateTimeFormatPart>`                           | Defines segment order and separators                                           |         |
-| `charsPerSegment`  | `Record<Segment, number>`                                  | Max characters per segment (e.g., `{ day: 2, year: 4 }`)                       |         |
 | `segmentRefs`      | `Record<Segment, React.RefObject<HTMLInputElement>>`       | Refs for each segment input                                                    |         |
 | `segmentRules`     | `Record<Segment, ExplicitSegmentRule>`                     | Rules for auto-formatting (`maxChars`, `minExplicitValue`)                     |         |
 | `disabled`         | `boolean`                                                  | Disables all segments                                                          |         |
@@ -158,7 +156,7 @@ A generic controlled input field for a single segment within `InputBox`.
 | `value`           | `string`                                          | Current segment value                        |         |
 | `minSegmentValue` | `number`                                          | Minimum valid value                          |         |
 | `maxSegmentValue` | `number`                                          | Maximum valid value                          |         |
-| `charsPerSegment` | `number`                                          | Max character length                         |         |
+| `charsCount`      | `number`                                          | Max character length                         |         |
 | `size`            | `Size`                                            | Input size                                   |         |
 | `segmentEnum`     | `Record<string, Segment>`                         | Segment enum from InputBox                   |         |
 | `onChange`        | `InputSegmentChangeEventHandler<Segment, string>` | Change handler                               |         |
