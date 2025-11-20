@@ -5,7 +5,6 @@ import { axe } from 'jest-axe';
 import { type InputSegmentChangeEventHandler } from '../shared.types';
 import { renderSegment } from '../testutils';
 import {
-  charsPerSegmentMock,
   defaultMaxMock,
   defaultMinMock,
   SegmentObjMock,
@@ -160,13 +159,31 @@ describe('packages/input-segment', () => {
           expect.objectContaining({ value: '4' }),
         );
       });
+
+      test('resets the value when the value is complete with zeros', () => {
+        const onChangeHandler = jest.fn() as InputSegmentChangeEventHandler<
+          SegmentObjMock,
+          string
+        >;
+        const { input } = renderSegment({
+          segment: 'day',
+          value: '00',
+          maxSegmentValue: 31,
+          onChange: onChangeHandler,
+        });
+
+        userEvent.type(input, '4');
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '4' }),
+        );
+      });
     });
 
     describe('keyboard events', () => {
       describe('Arrow keys', () => {
         const formatter = getValueFormatter({
-          charsPerSegment: charsPerSegmentMock['day'],
-          allowZero: defaultMinMock['day'] === 0,
+          charsPerSegment: 2,
+          allowZero: true,
         });
 
         describe('Up arrow', () => {

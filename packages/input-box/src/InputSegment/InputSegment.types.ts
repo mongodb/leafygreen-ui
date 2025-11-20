@@ -1,18 +1,9 @@
-import React, { ForwardedRef, ReactElement } from 'react';
-
-import { Size } from '@leafygreen-ui/tokens';
+import { ForwardedRef, ReactElement } from 'react';
 
 import { InputSegmentComponentProps } from '../shared.types';
 
 export interface InputSegmentProps<Segment extends string>
-  extends Omit<
-      React.ComponentPropsWithRef<'input'>,
-      'size' | 'step' | 'value' | 'onBlur' | 'onChange' | 'min' | 'max'
-    >,
-    Pick<
-      InputSegmentComponentProps<Segment>,
-      'onChange' | 'onBlur' | 'segment' | 'segmentEnum'
-    > {
+  extends InputSegmentComponentProps<Segment> {
   /**
    * Minimum value for the segment
    */
@@ -43,26 +34,6 @@ export interface InputSegmentProps<Segment extends string>
    * @default true
    */
   shouldValidate?: boolean;
-
-  /**
-   * The value of the segment
-   */
-  value: string;
-
-  /**
-   * The number of characters per segment
-   */
-  charsCount: number;
-
-  /**
-   * The size of the input box
-   *
-   * @example
-   * Size.Default
-   * Size.Small
-   * Size.Large
-   */
-  size: Size;
 }
 
 /**

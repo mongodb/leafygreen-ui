@@ -6,8 +6,8 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Size } from '@leafygreen-ui/tokens';
 
+import { Size } from '../shared.types';
 import {
   defaultPlaceholderMock,
   SegmentObjMock,
@@ -39,6 +39,7 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
     step: 1,
     darkMode: false,
     charsCount: 2,
+    segmentEnum: SegmentObjMock,
   },
   argTypes: {
     size: {
@@ -57,7 +58,7 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
         'segment',
         'value',
         'onChange',
-        'charsPerSegment',
+        'charsCount',
         'segmentEnum',
         'shouldValidate',
         'step',

@@ -10,10 +10,12 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { Size } from '../shared.types';
 import {
   getNewSegmentValueFromArrowKeyPress,
   getNewSegmentValueFromInputValue,
   getValueFormatter,
+  isSingleDigitKey,
 } from '../utils';
 
 import { getInputSegmentStyles } from './InputSegment.styles';
@@ -32,10 +34,10 @@ const InputSegmentWithRef = <Segment extends string>(
     onChange,
     onBlur,
     segmentEnum,
-    size,
     disabled,
     value,
     charsCount,
+    size = Size.Default,
     step = 1,
     shouldWrap = true,
     shouldValidate = true,
@@ -90,13 +92,9 @@ const InputSegmentWithRef = <Segment extends string>(
       target: HTMLInputElement;
     };
 
-    // A key press can be an `arrow`, `enter`, `space`, etc so we check for number presses
-    // We also check for `space` because Number(' ') returns true
-    const isNumber = Number(key) && key !== keyMap.Space;
-
-    if (isNumber) {
-      // if the value length is equal to the maxLength, reset the input. This will clear the input and the number will be inserted into the input when onChange is called.
-
+    // If the value is a single digit, we check if the input is full and reset it if it is. The digit will be inserted into the input when onChange is called.
+    // This is to handle the case where the user tries to type a single digit when the input is already full. Usually this happens when the focus is moved to the next segment or a segment is clicked
+    if (isSingleDigitKey(key)) {
       if (target.value.length === charsCount) {
         target.value = '';
       }
