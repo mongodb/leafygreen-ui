@@ -8,7 +8,10 @@ import React, {
 import isNull from 'lodash/isNull';
 
 import { isInvalidDateObject, isSameUTCDay } from '@leafygreen-ui/date-utils';
-import { isElementInputSegment } from '@leafygreen-ui/input-box';
+import {
+  focusAndSelectSegment,
+  isElementInputSegment,
+} from '@leafygreen-ui/input-box';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import {
@@ -77,14 +80,17 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       if (!disabled) {
         openMenu(e);
         const { target } = e;
-        const segmentToFocus = getSegmentToFocus({
+
+        /**
+         * Focus and select the appropriate segment.
+         *
+         * This is done here instead of in the InputBox component because this component has padding that needs to be accounted for onClick.
+         */
+        focusAndSelectSegment({
           target,
           formatParts,
           segmentRefs,
         });
-
-        segmentToFocus?.focus();
-        segmentToFocus?.select();
       }
     };
 

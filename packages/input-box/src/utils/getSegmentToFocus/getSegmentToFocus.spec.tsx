@@ -34,13 +34,10 @@ describe('packages/date-picker/utils/getSegmentToFocus', () => {
 
     const yearEl = document.createElement('input');
     yearEl.value = '1993';
-    yearEl.id = 'year';
     const monthEl = document.createElement('input');
     monthEl.value = '12';
-    monthEl.id = 'month';
     const dayEl = document.createElement('input');
     dayEl.value = '26';
-    dayEl.id = 'day';
 
     const segmentRefs: SegmentRefsType = {
       year: { current: yearEl },
@@ -57,16 +54,36 @@ describe('packages/date-picker/utils/getSegmentToFocus', () => {
     expect(segment).toBe(dayEl);
   });
 
-  test('if first input is filled, return second input', () => {
+  test('if all inputs are empty, return the first input', () => {
+    const target = document.createElement('div');
+
+    const yearEl = document.createElement('input');
+    const monthEl = document.createElement('input');
+    const dayEl = document.createElement('input');
+
+    const segmentRefs: SegmentRefsType = {
+      year: { current: yearEl },
+      month: { current: monthEl },
+      day: { current: dayEl },
+    };
+
+    const segment = getSegmentToFocus({
+      target,
+      formatParts,
+      segmentRefs,
+    });
+
+    expect(segment).toBe(yearEl);
+  });
+
+  test('if first input is filled, and the second is empty, return second input', () => {
     const target = document.createElement('div');
 
     const yearEl = document.createElement('input');
     yearEl.value = '1993';
-    yearEl.id = 'year';
     const monthEl = document.createElement('input');
-    monthEl.id = 'month';
     const dayEl = document.createElement('input');
-    dayEl.id = 'day';
+    dayEl.value = '26';
 
     const segmentRefs: SegmentRefsType = {
       year: { current: yearEl },
@@ -81,6 +98,54 @@ describe('packages/date-picker/utils/getSegmentToFocus', () => {
     });
 
     expect(segment).toBe(monthEl);
+  });
+
+  test('if first and second inputs are filled, and the third is empty, return third input', () => {
+    const target = document.createElement('div');
+
+    const yearEl = document.createElement('input');
+    yearEl.value = '1993';
+    const monthEl = document.createElement('input');
+    monthEl.value = '12';
+    const dayEl = document.createElement('input');
+
+    const segmentRefs: SegmentRefsType = {
+      year: { current: yearEl },
+      month: { current: monthEl },
+      day: { current: dayEl },
+    };
+
+    const segment = getSegmentToFocus({
+      target,
+      formatParts,
+      segmentRefs,
+    });
+
+    expect(segment).toBe(dayEl);
+  });
+
+  test('if the first input is empty, and the second and third are filled, return first input', () => {
+    const target = document.createElement('div');
+
+    const yearEl = document.createElement('input');
+    const monthEl = document.createElement('input');
+    monthEl.value = '12';
+    const dayEl = document.createElement('input');
+    dayEl.value = '26';
+
+    const segmentRefs: SegmentRefsType = {
+      year: { current: yearEl },
+      month: { current: monthEl },
+      day: { current: dayEl },
+    };
+
+    const segment = getSegmentToFocus({
+      target,
+      formatParts,
+      segmentRefs,
+    });
+
+    expect(segment).toBe(yearEl);
   });
 
   test('returns undefined for undefined input', () => {

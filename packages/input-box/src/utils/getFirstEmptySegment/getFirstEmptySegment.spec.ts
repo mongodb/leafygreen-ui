@@ -11,11 +11,29 @@ describe('packages/input-box/utils/getFirstEmptySegment', () => {
 
   test('returns first segment when all segments are empty', () => {
     const yearEl = document.createElement('input');
-    yearEl.id = 'year';
     const monthEl = document.createElement('input');
-    monthEl.id = 'month';
     const dayEl = document.createElement('input');
-    dayEl.id = 'day';
+
+    const segmentRefs = {
+      year: { current: yearEl },
+      month: { current: monthEl },
+      day: { current: dayEl },
+    };
+
+    const segment = getFirstEmptySegment({
+      formatParts,
+      segmentRefs,
+    });
+
+    expect(segment).toBe(yearEl);
+  });
+
+  test('returns first segment when the other segments are filled', () => {
+    const yearEl = document.createElement('input');
+    const monthEl = document.createElement('input');
+    monthEl.value = '12';
+    const dayEl = document.createElement('input');
+    dayEl.value = '26';
 
     const segmentRefs = {
       year: { current: yearEl },
@@ -34,11 +52,9 @@ describe('packages/input-box/utils/getFirstEmptySegment', () => {
   test('returns second segment when first segment is filled', () => {
     const yearEl = document.createElement('input');
     yearEl.value = '1993';
-    yearEl.id = 'year';
     const monthEl = document.createElement('input');
-    monthEl.id = 'month';
     const dayEl = document.createElement('input');
-    dayEl.id = 'day';
+    dayEl.value = '26';
 
     const segmentRefs = {
       year: { current: yearEl },
@@ -57,12 +73,9 @@ describe('packages/input-box/utils/getFirstEmptySegment', () => {
   test('returns third segment when first two segments are filled', () => {
     const yearEl = document.createElement('input');
     yearEl.value = '1993';
-    yearEl.id = 'year';
     const monthEl = document.createElement('input');
     monthEl.value = '12';
-    monthEl.id = 'month';
     const dayEl = document.createElement('input');
-    dayEl.id = 'day';
 
     const segmentRefs = {
       year: { current: yearEl },

@@ -2,6 +2,7 @@ export {
   createExplicitSegmentValidator,
   ExplicitSegmentRule,
 } from './createExplicitSegmentValidator/createExplicitSegmentValidator';
+export { focusAndSelectSegment } from './focusAndSelectSegment/focusAndSelectSegment';
 export { getFirstEmptySegment } from './getFirstEmptySegment/getFirstEmptySegment';
 export { getNewSegmentValueFromArrowKeyPress } from './getNewSegmentValueFromArrowKeyPress/getNewSegmentValueFromArrowKeyPress';
 export { getNewSegmentValueFromInputValue } from './getNewSegmentValueFromInputValue/getNewSegmentValueFromInputValue';

@@ -9,6 +9,7 @@ export {
 export {
   createExplicitSegmentValidator,
   type ExplicitSegmentRule,
+  focusAndSelectSegment,
   getSegmentToFocus,
   getValueFormatter,
   isElementInputSegment,
