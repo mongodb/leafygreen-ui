@@ -15,7 +15,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Menu as LGMenu } from '@leafygreen-ui/menu';
 
-import { MenuItemType } from '../SplitButton';
+import { type MenuItemType } from '../shared.types';
 
 import {
   triggerBaseStyles,
@@ -44,6 +44,7 @@ export const Menu = ({
   triggerAriaLabel,
   open: controlledOpen,
   setOpen: controlledSetOpen,
+  children,
   ...rest
 }: MenuProps) => {
   const { theme } = useDarkMode();
@@ -120,6 +121,9 @@ export const Menu = ({
     }
   }, [handleClose, menuItems, onChange]);
 
+  // Use children if provided, otherwise use rendered menuItems
+  const menuContent = children ?? renderMenuItems;
+
   return (
     <LGMenu
       align={align}
@@ -153,7 +157,7 @@ export const Menu = ({
         />
       }
     >
-      {renderMenuItems}
+      {menuContent}
     </LGMenu>
   );
 };
