@@ -185,6 +185,20 @@ describe('packages/guide-cue', () => {
       const body = getByText(guideCueChildren);
       expect(body).toBeInTheDocument();
     });
+
+    test('primary button is focusable for focus trap targeting', async () => {
+      const { getByRole } = renderGuideCue({
+        open: true,
+      });
+
+      const primaryButton = getByRole('button', { name: buttonTextDefault });
+      expect(primaryButton).toBeInTheDocument();
+
+      userEvent.tab();
+      await waitFor(() => {
+        expect(primaryButton).toHaveFocus();
+      });
+    });
   });
 
   describe('Multi-step tooltip', () => {
@@ -351,6 +365,25 @@ describe('packages/guide-cue', () => {
       });
       const numOfButtons = getAllByRole('button').length;
       await waitFor(() => expect(numOfButtons).toEqual(2));
+    });
+
+    test('primary button is focusable for focus trap targeting', async () => {
+      const { getByRole } = renderGuideCue({
+        open: true,
+        numberOfSteps: 2,
+        currentStep: 1,
+      });
+      await act(async () => {
+        await waitForTimeout(timeout1);
+      });
+
+      const primaryButton = getByRole('button', { name: buttonTextDefault });
+      expect(primaryButton).toBeInTheDocument();
+
+      userEvent.tab();
+      await waitFor(() => {
+        expect(primaryButton).toHaveFocus();
+      });
     });
   });
 });

@@ -23,6 +23,9 @@ describe('DatePicker mouse interaction', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   describe('Clicking the input', () => {
     test('opens the menu', async () => {

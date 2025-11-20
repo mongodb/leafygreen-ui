@@ -1,5 +1,11 @@
 # @leafygreen-ui/descendants
 
+## 3.0.6
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
 ## 3.0.5
 
 ### Patch Changes

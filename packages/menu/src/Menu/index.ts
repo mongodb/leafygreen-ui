@@ -1,2 +1,8 @@
 export { default as Menu } from './Menu';
-export { type MenuProps, MenuVariant } from './Menu.types';
+export {
+  Align,
+  Justify,
+  type MenuProps,
+  MenuVariant,
+  RenderMode,
+} from './Menu.types';

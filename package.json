@@ -14,7 +14,10 @@
     "init:react17": "pnpm clean; npx node ./scripts/react17/init.mjs; pnpm run init",
     "create-package": "lg create",
     "build": "turbo run build tsc",
+    "build:apps": "turbo run build --filter='@lg-apps/*'",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
+    "build:packages": "turbo run build tsc --filter=!'@lg-apps/*'",
+    "dev:mcp-ui": "turbo run dev --filter=@lg-apps/mcp-ui-app",
     "build:docs": "turbo run docs",
     "build:tsc": "turbo run tsc",
     "build:ts-downlevel": "pnpm recursive exec lg-ts-downlevel",
@@ -95,7 +98,8 @@
       "@leafygreen-ui": "packages",
       "@lg-charts": "charts",
       "@lg-chat": "chat",
-      "@lg-tools": "tools"
+      "@lg-tools": "tools",
+      "@lg-mcp-ui": "mcp-ui"
     }
   },
   "keywords": [

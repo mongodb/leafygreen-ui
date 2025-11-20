@@ -13,6 +13,10 @@ describe('packages/date-utils/isTodayTZ', () => {
       );
     });
 
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
     test('Pacific/Honolulu', () => {
       const isToday = isTodayTZ(utc25, 'Pacific/Honolulu');
       expect(isToday).toBe(true);
@@ -41,6 +45,11 @@ describe('packages/date-utils/isTodayTZ', () => {
         new Date(Date.UTC(2023, Month.December, 26, 9, 0, 0)),
       );
     });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
     test('Pacific/Honolulu', () => {
       const isToday = isTodayTZ(utc25, 'Pacific/Honolulu');
       expect(isToday).toBe(true);
@@ -70,6 +79,10 @@ describe('packages/date-utils/isTodayTZ', () => {
       );
     });
 
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
     test('America/New_York', () => {
       const isToday = isTodayTZ(utc25, 'America/New_York');
       expect(isToday).toBe(true);
@@ -97,6 +110,10 @@ describe('packages/date-utils/isTodayTZ', () => {
         // 00:00 on Dec. 25 in AKL
         new Date(Date.UTC(2023, Month.December, 24, 12, 0, 0)),
       );
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
     });
 
     test('America/New_York', () => {

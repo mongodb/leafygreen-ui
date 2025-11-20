@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 12.1.3
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
 ## 12.1.2
 
 ### Patch Changes

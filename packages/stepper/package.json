@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/stepper",
-  "version": "6.1.2",
+  "version": "6.1.3",
   "description": "leafyGreen UI Kit Stepper",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -24,7 +24,7 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^3.2.0 || workspace:^4.0.0 || workspace:^5.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/stepper",
   "repository": {

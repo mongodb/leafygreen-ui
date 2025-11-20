@@ -36,6 +36,9 @@ describe('DatePicker typing interaction', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   describe('Typing', () => {
     test('does not open the menu', async () => {

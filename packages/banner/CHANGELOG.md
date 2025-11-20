@@ -1,5 +1,14 @@
 # @leafygreen-ui/banner
 
+## 10.2.3
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+
 ## 10.2.2
 
 ### Patch Changes

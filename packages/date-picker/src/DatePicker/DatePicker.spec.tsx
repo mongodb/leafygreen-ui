@@ -39,6 +39,9 @@ describe('packages/date-picker', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   describe('Rendering', () => {
     /// Note: Many rendering tests should be handled by Chromatic

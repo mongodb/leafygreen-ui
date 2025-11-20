@@ -1,5 +1,18 @@
 # @lg-charts/core
 
+## 2.3.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- 60ccb1e: Stabilizes tooltip pinning behavior when using React 17 environments when state updates are not automatically batched.
+- Updated dependencies [9cf3b18]
+  - @lg-charts/series-provider@1.0.6
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @lg-charts/chart-card@1.1.3
+  - @lg-charts/colors@1.0.6
+
 ## 2.3.0
 
 ### Minor Changes

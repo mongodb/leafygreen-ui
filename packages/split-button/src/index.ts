@@ -2,6 +2,7 @@ export {
   Align,
   type InternalSplitButtonProps,
   Justify,
+  RenderMode,
   SplitButton,
   type SplitButtonProps,
   Variant,
