@@ -84,7 +84,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     });
 
     return (
-      <DateInputBoxProvider value={value}>
+      <DateInputBoxProvider dateValue={value}>
         <InputBox
           ref={fwdRef}
           segmentEnum={DateSegment}

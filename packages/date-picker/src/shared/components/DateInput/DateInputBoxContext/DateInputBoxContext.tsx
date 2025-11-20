@@ -17,10 +17,10 @@ export const DateInputBoxContext =
  */
 export const DateInputBoxProvider = ({
   children,
-  value,
+  dateValue,
 }: PropsWithChildren<DateInputBoxProviderProps>) => {
   return (
-    <DateInputBoxContext.Provider value={{ value }}>
+    <DateInputBoxContext.Provider value={{ dateValue }}>
       {children}
     </DateInputBoxContext.Provider>
   );
