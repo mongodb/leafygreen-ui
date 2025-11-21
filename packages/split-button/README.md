@@ -27,22 +27,20 @@ npm install @leafygreen-ui/split-button
 ## Example
 
 ```js
-
-import { SplitButton } from `@leafygreen-ui/split-button`;
-import { MenuItem } from '@leafygreen-ui/menu';
+import { MenuItem, SplitButton } from '@leafygreen-ui/split-button';
 
 <SplitButton
   label="label"
-  menuItems={
-    [
-      <MenuItem key='0'>Menu Item</MenuItem>,
-      <MenuItem key='1' disabled>Disabled Menu Item</MenuItem>,
-      <MenuItem key='2' description="I am also a description">
-        Menu Item With Description
-      </MenuItem>
-    ]
-  }
-/>
+  menuItems={[
+    <MenuItem key="0">Menu Item</MenuItem>,
+    <MenuItem key="1" disabled>
+      Disabled Menu Item
+    </MenuItem>,
+    <MenuItem key="2" description="I am also a description">
+      Menu Item With Description
+    </MenuItem>,
+  ]}
+/>;
 ```
 
 ## Properties
