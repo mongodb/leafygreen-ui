@@ -1,5 +1,4 @@
 import React from 'react';
-import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -7,20 +6,14 @@ import { AriaCurrentValue } from '@leafygreen-ui/lib';
 
 import { ChatSideNav } from '../..';
 
-const Providers = ({ children }: { children: React.ReactNode }) => (
-  <LeafyGreenChatProvider>{children}</LeafyGreenChatProvider>
-);
-
 describe('ChatSideNavItem', () => {
   test('renders with children', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem>Chat Name</ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem>Chat Name</ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
     expect(screen.getByText('Chat Name')).toBeInTheDocument();
@@ -28,15 +21,13 @@ describe('ChatSideNavItem', () => {
 
   test('renders as anchor when href is provided', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem href="/chat/123">
-              Chat Name
-            </ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem href="/chat/123">
+            Chat Name
+          </ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
     const link = screen.getByRole('link');
@@ -46,33 +37,27 @@ describe('ChatSideNavItem', () => {
 
   test('applies expected aria-current value when active', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem active>
-              Active Chat
-            </ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem active>Active Chat</ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
-    const item = screen.getByText('Active Chat');
+    const item = screen.getByText('Active Chat').closest('div');
     expect(item).toHaveAttribute('aria-current', AriaCurrentValue.Page);
   });
 
   test('applies expected aria-current value when inactive', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem>Inactive Chat</ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem>Inactive Chat</ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
-    const item = screen.getByText('Inactive Chat');
+    const item = screen.getByText('Inactive Chat').closest('div');
     expect(item).toHaveAttribute('aria-current', AriaCurrentValue.Unset);
   });
 
@@ -80,37 +65,33 @@ describe('ChatSideNavItem', () => {
     const onClick = jest.fn();
 
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem onClick={onClick}>
-              Clickable Chat
-            </ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem onClick={onClick}>
+            Clickable Chat
+          </ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
-    const item = screen.getByText('Clickable Chat');
-    await userEvent.click(item);
+    const item = screen.getByText('Clickable Chat').closest('div');
+    await userEvent.click(item!);
 
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
   test('applies className prop', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem className="custom-class">
-              Custom Chat
-            </ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem className="custom-class">
+            Custom Chat
+          </ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
-    const item = screen.getByText('Custom Chat');
+    const item = screen.getByText('Custom Chat').closest('div');
     expect(item).toHaveClass('custom-class');
   });
 });
