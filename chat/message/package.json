@@ -24,6 +24,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-chat/lg-markdown": "workspace:^",
     "@lg-chat/message-feedback": "workspace:^",
