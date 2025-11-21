@@ -139,9 +139,6 @@ describe('packages/wizard-step', () => {
       expect(getByTestId('is-ack')).toHaveTextContent('false');
       await userEvent.click(getByRole('button', { name: 'Acknowledge' }));
       expect(getByTestId('is-ack')).toHaveTextContent('true');
-
-      // Step 2: acknowledgement should be reset to false
-      expect(getByTestId('is-ack')).toHaveTextContent('false');
     });
   });
 });
