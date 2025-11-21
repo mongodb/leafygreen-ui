@@ -367,7 +367,7 @@ describe('packages/guide-cue', () => {
       await waitFor(() => expect(numOfButtons).toEqual(2));
     });
 
-    test('primary button is focusable for focus trap targeting', async () => {
+    test('primary button is focused for focus trap targeting', async () => {
       const { getByRole } = renderGuideCue({
         open: true,
         numberOfSteps: 2,
