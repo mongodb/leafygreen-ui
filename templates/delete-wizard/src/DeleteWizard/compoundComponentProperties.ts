@@ -1,8 +1,8 @@
 import { WizardSubComponentProperties } from '@leafygreen-ui/wizard';
 
-export const DeleteWizardCompoundComponentProperties = {
-  Header: 'DeleteWizardHeader',
+export const DeleteWizardSubComponentKeys = {
+  Header: 'isDeleteWizardHeader',
   Step: WizardSubComponentProperties.Step,
-  StepContent: 'DeleteWizardStepContent',
+  StepContent: 'isDeleteWizardStepContent',
   Footer: WizardSubComponentProperties.Footer,
 };

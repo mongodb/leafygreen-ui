@@ -1,5 +1,7 @@
 import { ComponentProps } from 'react';
 
-export interface DeleteWizardProps extends ComponentProps<'div'> {
-  header?: React.ReactNode;
-}
+import { WizardProps } from '@leafygreen-ui/wizard';
+
+export interface DeleteWizardProps
+  extends WizardProps,
+    Omit<ComponentProps<'div'>, 'children'> {}
