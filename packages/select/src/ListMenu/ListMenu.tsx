@@ -41,12 +41,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
 
     const ref = useForwardedRef(forwardedRef, null);
 
-    console.log('🚗', {
-      visibility: referenceElement?.current?.style.visibility,
-      display: referenceElement?.current?.style.display,
-      opacity: referenceElement?.current?.style.opacity,
-    });
-
     const availableSpace = useAvailableSpace(referenceElement, menuMargin);
     const maxHeightValue = !isUndefined(availableSpace)
       ? `${Math.min(availableSpace, maxMenuHeight)}px`
