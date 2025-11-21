@@ -1,4 +1,11 @@
-import { createContext, Dispatch, SetStateAction, useContext } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  useContext,
+  useState,
+} from 'react';
 
 export interface WizardStepContextData {
   stepId: string;
@@ -13,5 +20,28 @@ export const WizardStepContext = createContext<WizardStepContextData>({
   isAcknowledged: false,
   setAcknowledged: () => {},
 });
+
+export const WizardStepProvider = ({
+  stepId,
+  requiresAcknowledgement,
+  children,
+}: PropsWithChildren<
+  Omit<WizardStepContextData, 'isAcknowledged' | 'setAcknowledged'>
+>) => {
+  const [isAcknowledged, setAcknowledged] = useState(false);
+
+  return (
+    <WizardStepContext.Provider
+      value={{
+        stepId,
+        requiresAcknowledgement,
+        isAcknowledged,
+        setAcknowledged,
+      }}
+    >
+      {children}
+    </WizardStepContext.Provider>
+  );
+};
 
 export const useWizardStepContext = () => useContext(WizardStepContext);

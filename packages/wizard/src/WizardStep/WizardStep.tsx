@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   CompoundSubComponent,
@@ -12,13 +12,12 @@ import { WizardSubComponentProperties } from '../constants';
 import { useWizardContext } from '../WizardContext';
 
 import { WizardStepProps } from './WizardStep.types';
-import { WizardStepContext } from './WizardStepContext';
+import { WizardStepProvider } from './WizardStepContext';
 
 export const WizardStep = CompoundSubComponent(
   ({ children, requiresAcknowledgement = false }: WizardStepProps) => {
     const stepId = useIdAllocator({ prefix: 'wizard-step' });
     const { isWizardContext } = useWizardContext();
-    const [isAcknowledged, setAcknowledged] = useState(false);
 
     if (!isWizardContext) {
       consoleOnce.error(
@@ -37,17 +36,13 @@ export const WizardStep = CompoundSubComponent(
     ]);
 
     return (
-      <WizardStepContext.Provider
-        value={{
-          stepId,
-          requiresAcknowledgement,
-          isAcknowledged,
-          setAcknowledged,
-        }}
+      <WizardStepProvider
+        stepId={stepId}
+        requiresAcknowledgement={requiresAcknowledgement}
       >
         {restChildren}
         {footerChild}
-      </WizardStepContext.Provider>
+      </WizardStepProvider>
     );
   },
   {
