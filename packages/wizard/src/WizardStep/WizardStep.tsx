@@ -15,7 +15,7 @@ import { WizardStepProps } from './WizardStep.types';
 import { WizardStepContext } from './WizardStepContext';
 
 export const WizardStep = CompoundSubComponent(
-  ({ children }: WizardStepProps) => {
+  ({ children, requiresAcknowledgement = false }: WizardStepProps) => {
     const stepId = useIdAllocator({ prefix: 'wizard-step' });
     const { isWizardContext } = useWizardContext();
     const [isAcknowledged, setAcknowledged] = useState(false);
@@ -40,6 +40,7 @@ export const WizardStep = CompoundSubComponent(
       <WizardStepContext.Provider
         value={{
           stepId,
+          requiresAcknowledgement,
           isAcknowledged,
           setAcknowledged,
         }}

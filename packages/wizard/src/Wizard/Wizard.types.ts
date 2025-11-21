@@ -2,7 +2,9 @@ import { ReactNode } from 'react';
 
 export interface WizardProps {
   /**
-   * The current active step index (0-based). If provided, the component operates in controlled mode.
+   * The current active step index (0-based).
+   * If provided, the component operates in controlled mode, and any interaction will not update internal state.
+   * Use `onStepChange` to update your external state
    */
   activeStep?: number;
 
