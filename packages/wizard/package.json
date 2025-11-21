@@ -27,7 +27,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/form-footer": "workspace:^",
@@ -35,18 +34,16 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^",
-    "@lg-tools/test-harnesses": "workspace:^",
-    "date-fns": "^2.30.0"
+    "@lg-tools/test-harnesses": "workspace:^"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/badge": "workspace:^",
+    "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/card": "workspace:^",
     "@leafygreen-ui/checkbox": "workspace:^",
     "@leafygreen-ui/expandable-card": "workspace:^",
-    "@leafygreen-ui/form-footer": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/loading-indicator": "workspace:^",
     "@leafygreen-ui/segmented-control": "workspace:^",

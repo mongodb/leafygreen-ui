@@ -3809,9 +3809,6 @@ importers:
 
   packages/wizard:
     dependencies:
-      '@leafygreen-ui/button':
-        specifier: workspace:^
-        version: link:../button
       '@leafygreen-ui/compound-component':
         specifier: workspace:^
         version: link:../compound-component
@@ -3833,15 +3830,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
-      '@leafygreen-ui/typography':
-        specifier: workspace:^
-        version: link:../typography
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
-      date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0
     devDependencies:
       '@faker-js/faker':
         specifier: ^8.0.0
@@ -3849,6 +3840,12 @@ importers:
       '@leafygreen-ui/badge':
         specifier: workspace:^
         version: link:../badge
+      '@leafygreen-ui/banner':
+        specifier: workspace:^
+        version: link:../banner
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
       '@leafygreen-ui/card':
         specifier: workspace:^
         version: link:../card
@@ -3870,6 +3867,9 @@ importers:
       '@leafygreen-ui/skeleton-loader':
         specifier: workspace:^
         version: link:../skeleton-loader
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
 
   tools/build:
     dependencies:
