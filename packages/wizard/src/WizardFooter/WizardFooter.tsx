@@ -18,7 +18,8 @@ export const WizardFooter = CompoundSubComponent(
     className,
     ...rest
   }: WizardFooterProps) => {
-    const { isWizardContext, activeStep, updateStep } = useWizardContext();
+    const { isWizardContext, activeStep, updateStep, lgIds } =
+      useWizardContext();
     const { isAcknowledged, requiresAcknowledgement } = useWizardStepContext();
     const isPrimaryButtonDisabled =
       (requiresAcknowledgement && !isAcknowledged) ||
@@ -48,6 +49,7 @@ export const WizardFooter = CompoundSubComponent(
       <FormFooter
         {...rest}
         className={className}
+        data-lgid={lgIds.footer}
         backButtonProps={
           activeStep > 0
             ? {
