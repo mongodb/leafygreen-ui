@@ -1,6 +1,5 @@
-import { screen } from '@testing-library/react';
-
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
+import { screen } from '@testing-library/react';
 
 import { LgIdString } from '@leafygreen-ui/lib';
 
