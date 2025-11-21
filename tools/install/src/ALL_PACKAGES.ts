@@ -118,4 +118,5 @@ export const ALL_PACKAGES = [
   '@lg-tools/update',
   '@lg-tools/validate',
   '@lg-mcp-ui/list-databases',
+  '@lg-templates/delete-wizard',
 ] as const;
