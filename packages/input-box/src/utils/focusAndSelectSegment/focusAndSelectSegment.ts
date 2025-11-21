@@ -1,13 +1,11 @@
 import {
   getSegmentToFocus,
+  GetSegmentToFocusProps,
   SegmentRefsType,
 } from '../getSegmentToFocus/getSegmentToFocus';
 
-interface FocusAndSelectSegmentProps<SegmentRefs extends SegmentRefsType> {
-  target?: EventTarget;
-  formatParts?: Array<Intl.DateTimeFormatPart>;
-  segmentRefs?: SegmentRefs;
-}
+interface FocusAndSelectSegmentProps<SegmentRefs extends SegmentRefsType>
+  extends GetSegmentToFocusProps<SegmentRefs> {}
 
 /**
  * Helper function that focuses and selects the appropriate input segment

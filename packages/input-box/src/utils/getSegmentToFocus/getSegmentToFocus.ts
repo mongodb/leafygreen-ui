@@ -5,7 +5,7 @@ import { getFirstEmptySegment } from '../getFirstEmptySegment/getFirstEmptySegme
 
 export type SegmentRefsType = Record<string, React.RefObject<HTMLInputElement>>;
 
-interface GetSegmentToFocusProps<SegmentRefs extends SegmentRefsType> {
+export interface GetSegmentToFocusProps<SegmentRefs extends SegmentRefsType> {
   target?: EventTarget;
   formatParts?: Array<Intl.DateTimeFormatPart>;
   segmentRefs?: SegmentRefs;
