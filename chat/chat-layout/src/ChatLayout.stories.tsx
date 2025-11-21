@@ -57,7 +57,11 @@ export default meta;
 
 const chatItems = [
   { id: '1', name: 'MongoDB Atlas Setup', href: '/chat/1' },
-  { id: '2', name: 'Writing a Database Query', href: '/chat/2' },
+  {
+    id: '2',
+    name: 'Writing a very very very long Database Query',
+    href: '/chat/2',
+  },
   { id: '3', name: 'Schema Design Discussion', href: '/chat/3' },
   { id: '4', name: 'Performance Optimization', href: '/chat/4' },
   { id: '5', name: 'Migration Planning', href: '/chat/5' },
@@ -205,6 +209,54 @@ export const UnpinnedAndHoveredDark: StoryObj<ChatLayoutProps> = {
   parameters: {
     chromatic: {
       delay: 350,
+    },
+  },
+};
+
+export const SideNavItemHoveredLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Find the side nav item with long text that will overflow
+    const longItem = canvas.getByText(
+      'Writing a very very very long Database Query',
+    );
+
+    // Hover over the side nav item to show tooltip
+    await userEvent.hover(longItem);
+  },
+  parameters: {
+    chromatic: {
+      delay: 500,
+    },
+  },
+};
+
+export const SideNavItemHoveredDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Find the side nav item with long text that will overflow
+    const longItem = canvas.getByText(
+      'Writing a very very very long Database Query',
+    );
+
+    // Hover over the side nav item to show tooltip
+    await userEvent.hover(longItem);
+  },
+  parameters: {
+    chromatic: {
+      delay: 500,
     },
   },
 };
