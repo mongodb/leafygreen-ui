@@ -19,11 +19,14 @@ export const WizardContext = createContext<WizardContextData>({
   updateStep: () => {},
 });
 
+interface WizardProviderProps
+  extends PropsWithChildren<Omit<WizardContextData, 'isWizardContext'>> {}
+
 export const WizardProvider = ({
   children,
   activeStep,
   updateStep,
-}: PropsWithChildren<Omit<WizardContextData, 'isWizardContext'>>) => {
+}: WizardProviderProps) => {
   return (
     <WizardContext.Provider
       value={{
