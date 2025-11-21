@@ -4,7 +4,11 @@ export const DEFAULT_LGID_ROOT = 'lg-wizard';
 
 export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   const ids = {
-    root,
+    step: `${root}-step`,
+    footer: `${root}-footer`,
+    footerPrimaryButton: `${root}-footer-primary_button`,
+    footerBackButton: `${root}-footer-back_button`,
+    footerCancelButton: `${root}-footer-cancel_button`,
   } as const;
   return ids;
 };

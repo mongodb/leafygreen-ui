@@ -17,7 +17,7 @@ import { WizardStepProvider } from './WizardStepContext';
 export const WizardStep = CompoundSubComponent(
   ({ children, requiresAcknowledgement = false }: WizardStepProps) => {
     const stepId = useIdAllocator({ prefix: 'wizard-step' });
-    const { isWizardContext } = useWizardContext();
+    const { isWizardContext, lgIds } = useWizardContext();
 
     if (!isWizardContext) {
       consoleOnce.error(
@@ -36,13 +36,15 @@ export const WizardStep = CompoundSubComponent(
     ]);
 
     return (
-      <WizardStepProvider
-        stepId={stepId}
-        requiresAcknowledgement={requiresAcknowledgement}
-      >
-        {restChildren}
-        {footerChild}
-      </WizardStepProvider>
+      <div data-lgid={lgIds.step}>
+        <WizardStepProvider
+          stepId={stepId}
+          requiresAcknowledgement={requiresAcknowledgement}
+        >
+          {restChildren}
+          {footerChild}
+        </WizardStepProvider>
+      </div>
     );
   },
   {
