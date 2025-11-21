@@ -1,5 +1,8 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
+import { getLgIds } from '../utils/getLgIds';
+import { GetLgIdsReturnType } from '../utils/getLgIds';
+
 export interface WizardContextData {
   isWizardContext: boolean;
   activeStep: number;
@@ -11,12 +14,14 @@ export interface WizardContextData {
    * @returns
    */
   updateStep: (step: number) => void;
+  lgIds: GetLgIdsReturnType;
 }
 
 export const WizardContext = createContext<WizardContextData>({
   isWizardContext: false,
   activeStep: 0,
   updateStep: () => {},
+  lgIds: getLgIds('lg-wizard'),
 });
 
 interface WizardProviderProps
@@ -26,6 +31,7 @@ export const WizardProvider = ({
   children,
   activeStep,
   updateStep,
+  lgIds = getLgIds('lg-wizard'),
 }: WizardProviderProps) => {
   return (
     <WizardContext.Provider
@@ -33,6 +39,7 @@ export const WizardProvider = ({
         isWizardContext: true,
         activeStep,
         updateStep,
+        lgIds,
       }}
     >
       {children}
