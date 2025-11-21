@@ -7,6 +7,7 @@ import {
 import { useControlled } from '@leafygreen-ui/hooks';
 
 import { WizardSubComponentProperties } from '../constants';
+import { getLgIds } from '../utils/getLgIds';
 import { WizardProvider } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
@@ -14,7 +15,13 @@ import { WizardStep } from '../WizardStep';
 import { WizardProps } from './Wizard.types';
 
 export const Wizard = CompoundComponent(
-  ({ activeStep: activeStepProp, onStepChange, children }: WizardProps) => {
+  ({
+    activeStep: activeStepProp,
+    onStepChange,
+    children,
+    'data-lgid': dataLgId,
+  }: WizardProps) => {
+    const lgIds = getLgIds(dataLgId);
     const stepChildren = findChildren(
       children,
       WizardSubComponentProperties.Step,
@@ -48,7 +55,11 @@ export const Wizard = CompoundComponent(
     );
 
     return (
-      <WizardProvider activeStep={activeStep} updateStep={updateStep}>
+      <WizardProvider
+        activeStep={activeStep}
+        updateStep={updateStep}
+        lgIds={lgIds}
+      >
         {stepChildren.map((child, i) => (i === activeStep ? child : null))}
       </WizardProvider>
     );
