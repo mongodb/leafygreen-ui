@@ -42,8 +42,9 @@ export const findChild = (
   }
 
   const allChildren = unwrapRootFragment(children);
+  if (!allChildren) return;
 
-  return allChildren?.find(child =>
-    isChildWithProperty(child, staticProperty),
-  ) as ReactElement | undefined;
+  return allChildren
+    .flat()
+    .find(child => isChildWithProperty(child, staticProperty)) as ReactElement;
 };
