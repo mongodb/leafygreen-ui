@@ -7,6 +7,14 @@ import { AriaCurrentValue } from '@leafygreen-ui/lib';
 import { ChatSideNav } from '../..';
 
 describe('ChatSideNavItem', () => {
+  beforeAll(() => {
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+  });
+
   test('renders with children', () => {
     render(
       <ChatSideNav>
@@ -44,7 +52,7 @@ describe('ChatSideNavItem', () => {
       </ChatSideNav>,
     );
 
-    const item = screen.getByText('Active Chat').closest('div');
+    const item = screen.getByText('Active Chat').parentElement;
     expect(item).toHaveAttribute('aria-current', AriaCurrentValue.Page);
   });
 
@@ -57,7 +65,7 @@ describe('ChatSideNavItem', () => {
       </ChatSideNav>,
     );
 
-    const item = screen.getByText('Inactive Chat').closest('div');
+    const item = screen.getByText('Inactive Chat').parentElement;
     expect(item).toHaveAttribute('aria-current', AriaCurrentValue.Unset);
   });
 
@@ -74,7 +82,7 @@ describe('ChatSideNavItem', () => {
       </ChatSideNav>,
     );
 
-    const item = screen.getByText('Clickable Chat').closest('div');
+    const item = screen.getByText('Clickable Chat').parentElement;
     await userEvent.click(item!);
 
     expect(onClick).toHaveBeenCalledTimes(1);
@@ -91,7 +99,7 @@ describe('ChatSideNavItem', () => {
       </ChatSideNav>,
     );
 
-    const item = screen.getByText('Custom Chat').closest('div');
+    const item = screen.getByText('Custom Chat').parentElement;
     expect(item).toHaveClass('custom-class');
   });
 });

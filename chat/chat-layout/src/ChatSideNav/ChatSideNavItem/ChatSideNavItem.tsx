@@ -1,4 +1,4 @@
-import React, { ComponentType } from 'react';
+import React, { ComponentType, useEffect, useRef, useState } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -34,11 +34,44 @@ export const ChatSideNavItem = CompoundSubComponent(
       const { theme } = useDarkMode();
       const { shouldRenderExpanded } = useChatLayoutContext();
 
+      const textRef = useRef<HTMLSpanElement>(null);
+      const [isTruncated, setIsTruncated] = useState(false);
+
       const tooltipTextContent = getNodeTextContent(children);
+
+      useEffect(() => {
+        const checkTruncation = () => {
+          if (!textRef.current) {
+            return;
+          }
+
+          const shouldTruncate =
+            textRef.current.scrollWidth > textRef.current.clientWidth;
+
+          if (isTruncated === shouldTruncate) {
+            return;
+          }
+
+          setIsTruncated(shouldTruncate);
+        };
+
+        checkTruncation();
+
+        const resizeObserver = new ResizeObserver(checkTruncation);
+
+        if (textRef.current) {
+          resizeObserver.observe(textRef.current);
+        }
+
+        return () => {
+          resizeObserver.disconnect();
+        };
+      }, [children, isTruncated]);
 
       return (
         <Tooltip
           align={Align.Right}
+          enabled={isTruncated}
           justify={Justify.Middle}
           spacing={spacingToken[100]}
           variant={TooltipVariant.Compact}
@@ -57,7 +90,9 @@ export const ChatSideNavItem = CompoundSubComponent(
               onClick={onClick}
               ref={ref}
             >
-              <span className={textOverflowStyles}>{children}</span>
+              <span className={textOverflowStyles} ref={textRef}>
+                {children}
+              </span>
             </Component>
           }
         >
