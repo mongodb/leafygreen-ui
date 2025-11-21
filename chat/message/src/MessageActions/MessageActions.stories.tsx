@@ -74,6 +74,88 @@ const Template: StoryFn<MessageActionsProps> = props => (
   <MessageActions {...props} />
 );
 
+/** Helper function to hover over a button and verify tooltip appears */
+const hoverAndVerifyTooltip = async (
+  canvas: ReturnType<typeof within>,
+  options: {
+    buttonRole: 'button' | 'radio';
+    buttonName: string;
+    tooltipName: string;
+  },
+) => {
+  const { buttonRole, buttonName, tooltipName } = options;
+  const button = canvas.getByRole(buttonRole, { name: buttonName });
+  await userEvent.hover(button);
+  const tooltip = await canvas.findByRole('tooltip', { name: tooltipName });
+  expect(tooltip).toBeInTheDocument();
+};
+
+/** Helper function to click a button and unhover it */
+const clickAndUnhover = async (
+  canvas: ReturnType<typeof within>,
+  options: {
+    buttonRole: 'button' | 'radio';
+    buttonName: string;
+  },
+) => {
+  const { buttonRole, buttonName } = options;
+  const button = canvas.getByRole(buttonRole, { name: buttonName });
+  await userEvent.click(button);
+  await userEvent.unhover(button);
+  return button;
+};
+
+/** Helper to get feedback form elements */
+const getFeedbackFormElements = (canvas: ReturnType<typeof within>) => {
+  const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
+  const submitButton = canvas.getByRole('button', { name: 'Submit' });
+  return { textarea, submitButton };
+};
+
+/** Helper to verify feedback form is visible */
+const verifyFeedbackFormVisible = (canvas: ReturnType<typeof within>) => {
+  const { textarea, submitButton } = getFeedbackFormElements(canvas);
+  expect(textarea).toBeInTheDocument();
+  expect(submitButton).toBeInTheDocument();
+};
+
+/** Helper to verify feedback form is hidden */
+const verifyFeedbackFormHidden = (canvas: ReturnType<typeof within>) => {
+  expect(canvas.queryByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeNull();
+  expect(canvas.queryByRole('button', { name: 'Submit' })).toBeNull();
+};
+
+/** Helper to type feedback text */
+const typeFeedback = async (
+  canvas: ReturnType<typeof within>,
+  text: string,
+) => {
+  const { textarea } = getFeedbackFormElements(canvas);
+  await userEvent.type(textarea, text);
+  expect(textarea).toHaveValue(text);
+};
+
+/** Helper to submit feedback */
+const submitFeedback = async (canvas: ReturnType<typeof within>) => {
+  const { submitButton } = getFeedbackFormElements(canvas);
+  await userEvent.click(submitButton);
+};
+
+/** Helper to verify success message */
+const verifySuccessMessage = (canvas: ReturnType<typeof within>) => {
+  const successMessage = canvas.getByText('Thanks for your feedback!');
+  expect(successMessage).toBeInTheDocument();
+};
+
+/** Helper to verify error message */
+const verifyErrorMessage = (
+  canvas: ReturnType<typeof within>,
+  errorMessage: string,
+) => {
+  const error = canvas.getByText(errorMessage);
+  expect(error).toBeInTheDocument();
+};
+
 export const LiveExample: StoryObj<MessageActionsProps> = {
   render: Template,
   parameters: {
@@ -89,13 +171,11 @@ export const LightModeWithCopyHover: StoryObj<MessageActionsProps> = {
     onClickCopy: testOnClickCopy,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const copyButton = canvas.getByRole('button', { name: 'Copy message' });
-    await userEvent.hover(copyButton);
-
-    const copyTooltip = await canvas.findByRole('tooltip', { name: 'Copy' });
-    expect(copyTooltip).toBeInTheDocument();
+    await hoverAndVerifyTooltip(within(canvasElement), {
+      buttonRole: 'button',
+      buttonName: 'Copy message',
+      tooltipName: 'Copy',
+    });
   },
   parameters: {
     chromatic: {
@@ -111,13 +191,11 @@ export const DarkModeWithCopyHover: StoryObj<MessageActionsProps> = {
     onClickCopy: testOnClickCopy,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const copyButton = canvas.getByRole('button', { name: 'Copy message' });
-    await userEvent.hover(copyButton);
-
-    const copyTooltip = await canvas.findByRole('tooltip', { name: 'Copy' });
-    expect(copyTooltip).toBeInTheDocument();
+    await hoverAndVerifyTooltip(within(canvasElement), {
+      buttonRole: 'button',
+      buttonName: 'Copy message',
+      tooltipName: 'Copy',
+    });
   },
   parameters: {
     chromatic: {
@@ -132,13 +210,11 @@ export const LightModeWithRetryHover: StoryObj<MessageActionsProps> = {
     onClickRetry: testOnClickRetry,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const retryButton = canvas.getByRole('button', { name: 'Retry message' });
-    await userEvent.hover(retryButton);
-
-    const retryTooltip = await canvas.findByRole('tooltip', { name: 'Retry' });
-    expect(retryTooltip).toBeInTheDocument();
+    await hoverAndVerifyTooltip(within(canvasElement), {
+      buttonRole: 'button',
+      buttonName: 'Retry message',
+      tooltipName: 'Retry',
+    });
   },
   parameters: {
     chromatic: {
@@ -154,13 +230,11 @@ export const DarkModeWithRetryHover: StoryObj<MessageActionsProps> = {
     onClickRetry: testOnClickRetry,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const retryButton = canvas.getByRole('button', { name: 'Retry message' });
-    await userEvent.hover(retryButton);
-
-    const retryTooltip = await canvas.findByRole('tooltip', { name: 'Retry' });
-    expect(retryTooltip).toBeInTheDocument();
+    await hoverAndVerifyTooltip(within(canvasElement), {
+      buttonRole: 'button',
+      buttonName: 'Retry message',
+      tooltipName: 'Retry',
+    });
   },
   parameters: {
     chromatic: {
@@ -176,17 +250,11 @@ export const LightModeWithRatingHover: StoryObj<MessageActionsProps> = {
     onSubmitFeedback: testOnSubmitFeedback,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const thumbsUpButton = canvas.getByRole('radio', {
-      name: 'Like this message',
+    await hoverAndVerifyTooltip(within(canvasElement), {
+      buttonRole: 'radio',
+      buttonName: 'Like this message',
+      tooltipName: 'Helpful',
     });
-    await userEvent.hover(thumbsUpButton);
-
-    const thumbsUpTooltip = await canvas.findByRole('tooltip', {
-      name: 'Helpful',
-    });
-    expect(thumbsUpTooltip).toBeInTheDocument();
   },
   parameters: {
     chromatic: {
@@ -203,17 +271,11 @@ export const DarkModeWithRatingHover: StoryObj<MessageActionsProps> = {
     onSubmitFeedback: testOnSubmitFeedback,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const thumbsUpButton = canvas.getByRole('radio', {
-      name: 'Like this message',
+    await hoverAndVerifyTooltip(within(canvasElement), {
+      buttonRole: 'radio',
+      buttonName: 'Like this message',
+      tooltipName: 'Helpful',
     });
-    await userEvent.hover(thumbsUpButton);
-
-    const thumbsUpTooltip = await canvas.findByRole('tooltip', {
-      name: 'Helpful',
-    });
-    expect(thumbsUpTooltip).toBeInTheDocument();
   },
   parameters: {
     chromatic: {
@@ -231,19 +293,12 @@ export const LightModeWithRatingSelect: StoryObj<MessageActionsProps> = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Click thumbs up button
-    const thumbsUpButton = canvas.getByRole('radio', {
-      name: 'Like this message',
+    await clickAndUnhover(canvas, {
+      buttonRole: 'radio',
+      buttonName: 'Like this message',
     });
-    await userEvent.click(thumbsUpButton);
-    await userEvent.unhover(thumbsUpButton);
 
-    // Verify feedback form is visible
-    const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-    expect(textarea).toBeInTheDocument();
-
-    const submitButton = canvas.getByRole('button', { name: 'Submit' });
-    expect(submitButton).toBeInTheDocument();
+    verifyFeedbackFormVisible(canvas);
   },
   parameters: {
     chromatic: {
@@ -262,19 +317,12 @@ export const DarkModeWithRatingSelect: StoryObj<MessageActionsProps> = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // Click thumbs up button
-    const thumbsUpButton = canvas.getByRole('radio', {
-      name: 'Like this message',
+    await clickAndUnhover(canvas, {
+      buttonRole: 'radio',
+      buttonName: 'Like this message',
     });
-    await userEvent.click(thumbsUpButton);
-    await userEvent.unhover(thumbsUpButton);
 
-    // Verify feedback form is visible
-    const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-    expect(textarea).toBeInTheDocument();
-
-    const submitButton = canvas.getByRole('button', { name: 'Submit' });
-    expect(submitButton).toBeInTheDocument();
+    verifyFeedbackFormVisible(canvas);
   },
   parameters: {
     chromatic: {
@@ -293,21 +341,14 @@ export const LightModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps>
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
-      // Click thumbs up button
-      const thumbsUpButton = canvas.getByRole('radio', {
-        name: 'Like this message',
+      await clickAndUnhover(canvas, {
+        buttonRole: 'radio',
+        buttonName: 'Like this message',
       });
-      await userEvent.click(thumbsUpButton);
-      await userEvent.unhover(thumbsUpButton);
 
-      // Type in feedback textarea
-      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-      await userEvent.type(textarea, 'Lorem ipsum');
+      await typeFeedback(canvas, 'Lorem ipsum');
 
-      // Verify text was entered
-      expect(textarea).toHaveValue('Lorem ipsum');
-
-      const submitButton = canvas.getByRole('button', { name: 'Submit' });
+      const { submitButton } = getFeedbackFormElements(canvas);
       expect(submitButton).toBeInTheDocument();
     },
     parameters: {
@@ -328,21 +369,14 @@ export const DarkModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps> 
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
-      // Click thumbs up button
-      const thumbsUpButton = canvas.getByRole('radio', {
-        name: 'Like this message',
+      await clickAndUnhover(canvas, {
+        buttonRole: 'radio',
+        buttonName: 'Like this message',
       });
-      await userEvent.click(thumbsUpButton);
-      await userEvent.unhover(thumbsUpButton);
 
-      // Type in feedback textarea
-      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-      await userEvent.type(textarea, 'Lorem ipsum');
+      await typeFeedback(canvas, 'Lorem ipsum');
 
-      // Verify text was entered
-      expect(textarea).toHaveValue('Lorem ipsum');
-
-      const submitButton = canvas.getByRole('button', { name: 'Submit' });
+      const { submitButton } = getFeedbackFormElements(canvas);
       expect(submitButton).toBeInTheDocument();
     },
     parameters: {
@@ -362,28 +396,18 @@ export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<Mess
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
-      // Click thumbs up button
-      const thumbsUpButton = canvas.getByRole('radio', {
-        name: 'Like this message',
+      await clickAndUnhover(canvas, {
+        buttonRole: 'radio',
+        buttonName: 'Like this message',
       });
-      await userEvent.click(thumbsUpButton);
 
-      // Type in feedback textarea
-      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-      await userEvent.type(textarea, 'Lorem ipsum');
+      await typeFeedback(canvas, 'Lorem ipsum');
 
-      // Submit feedback
-      const submitButton = canvas.getByRole('button', { name: 'Submit' });
-      await userEvent.click(submitButton);
-      await userEvent.unhover(thumbsUpButton);
+      await submitFeedback(canvas);
 
-      // Verify success message is shown
-      const successMessage = canvas.getByText('Thanks for your feedback!');
-      expect(successMessage).toBeInTheDocument();
+      verifySuccessMessage(canvas);
 
-      // Verify feedback form is no longer interactive
-      expect(canvas.queryByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeNull();
-      expect(canvas.queryByRole('button', { name: 'Submit' })).toBeNull();
+      verifyFeedbackFormHidden(canvas);
     },
     parameters: {
       chromatic: {
@@ -403,28 +427,18 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<Messa
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
-      // Click thumbs up button
-      const thumbsUpButton = canvas.getByRole('radio', {
-        name: 'Like this message',
+      await clickAndUnhover(canvas, {
+        buttonRole: 'radio',
+        buttonName: 'Like this message',
       });
-      await userEvent.click(thumbsUpButton);
-      await userEvent.unhover(thumbsUpButton);
 
-      // Type in feedback textarea
-      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-      await userEvent.type(textarea, 'Lorem ipsum');
+      await typeFeedback(canvas, 'Lorem ipsum');
 
-      // Submit feedback
-      const submitButton = canvas.getByRole('button', { name: 'Submit' });
-      await userEvent.click(submitButton);
+      await submitFeedback(canvas);
 
-      // Verify success message is shown
-      const successMessage = canvas.getByText('Thanks for your feedback!');
-      expect(successMessage).toBeInTheDocument();
+      verifySuccessMessage(canvas);
 
-      // Verify feedback form is no longer interactive
-      expect(canvas.queryByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeNull();
-      expect(canvas.queryByRole('button', { name: 'Submit' })).toBeNull();
+      verifyFeedbackFormHidden(canvas);
     },
     parameters: {
       chromatic: {
@@ -443,28 +457,18 @@ export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryO
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
-      // Click thumbs up button
-      const thumbsUpButton = canvas.getByRole('radio', {
-        name: 'Like this message',
+      await clickAndUnhover(canvas, {
+        buttonRole: 'radio',
+        buttonName: 'Like this message',
       });
-      await userEvent.click(thumbsUpButton);
-      await userEvent.unhover(thumbsUpButton);
 
-      // Type in feedback textarea
-      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-      await userEvent.type(textarea, 'Lorem ipsum');
+      await typeFeedback(canvas, 'Lorem ipsum');
 
-      // Submit feedback
-      const submitButton = canvas.getByRole('button', { name: 'Submit' });
-      await userEvent.click(submitButton);
+      await submitFeedback(canvas);
 
-      // Verify success message is shown
-      const successMessage = canvas.getByText('Thanks for your feedback!');
-      expect(successMessage).toBeInTheDocument();
+      verifySuccessMessage(canvas);
 
-      // Verify feedback form is no longer interactive
-      expect(canvas.queryByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeNull();
-      expect(canvas.queryByRole('button', { name: 'Submit' })).toBeNull();
+      verifyFeedbackFormHidden(canvas);
     },
     parameters: {
       chromatic: {
@@ -484,28 +488,18 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryOb
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
-      // Click thumbs up button
-      const thumbsUpButton = canvas.getByRole('radio', {
-        name: 'Like this message',
+      await clickAndUnhover(canvas, {
+        buttonRole: 'radio',
+        buttonName: 'Like this message',
       });
-      await userEvent.click(thumbsUpButton);
-      await userEvent.unhover(thumbsUpButton);
 
-      // Type in feedback textarea
-      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-      await userEvent.type(textarea, 'Lorem ipsum');
+      await typeFeedback(canvas, 'Lorem ipsum');
 
-      // Submit feedback
-      const submitButton = canvas.getByRole('button', { name: 'Submit' });
-      await userEvent.click(submitButton);
+      await submitFeedback(canvas);
 
-      // Verify success message is shown
-      const successMessage = canvas.getByText('Thanks for your feedback!');
-      expect(successMessage).toBeInTheDocument();
+      verifySuccessMessage(canvas);
 
-      // Verify feedback form is no longer interactive
-      expect(canvas.queryByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeNull();
-      expect(canvas.queryByRole('button', { name: 'Submit' })).toBeNull();
+      verifyFeedbackFormHidden(canvas);
     },
     parameters: {
       chromatic: {
@@ -520,7 +514,6 @@ export const LightModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageAc
     args: {
       onRatingChange: testOnRatingChange,
       onSubmitFeedback: async () => {
-        // Simulate a failed submission by throwing an error
         throw new Error('Network error');
       },
       errorMessage: 'Failed to submit feedback. Please try again.',
@@ -528,32 +521,21 @@ export const LightModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageAc
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
-      // Click thumbs up button
-      const thumbsUpButton = canvas.getByRole('radio', {
-        name: 'Like this message',
+      await clickAndUnhover(canvas, {
+        buttonRole: 'radio',
+        buttonName: 'Like this message',
       });
-      await userEvent.click(thumbsUpButton);
-      await userEvent.unhover(thumbsUpButton);
 
-      // Type in feedback textarea
-      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-      await userEvent.type(textarea, 'Lorem ipsum');
+      await typeFeedback(canvas, 'Lorem ipsum');
 
-      // Submit feedback (this will fail)
-      const submitButton = canvas.getByRole('button', { name: 'Submit' });
-      await userEvent.click(submitButton);
+      await submitFeedback(canvas);
 
-      // Verify error message is shown
-      const errorMessage = canvas.getByText(
+      verifyErrorMessage(
+        canvas,
         'Failed to submit feedback. Please try again.',
       );
-      expect(errorMessage).toBeInTheDocument();
 
-      // Verify feedback form is still visible and interactive
-      expect(canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeInTheDocument();
-      expect(
-        canvas.getByRole('button', { name: 'Submit' }),
-      ).toBeInTheDocument();
+      verifyFeedbackFormVisible(canvas);
     },
     parameters: {
       chromatic: {
@@ -569,7 +551,6 @@ export const DarkModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageAct
       darkMode: true,
       onRatingChange: testOnRatingChange,
       onSubmitFeedback: async () => {
-        // Simulate a failed submission by throwing an error
         throw new Error('Network error');
       },
       errorMessage: 'Failed to submit feedback. Please try again.',
@@ -577,32 +558,21 @@ export const DarkModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageAct
     play: async ({ canvasElement }) => {
       const canvas = within(canvasElement);
 
-      // Click thumbs up button
-      const thumbsUpButton = canvas.getByRole('radio', {
-        name: 'Like this message',
+      await clickAndUnhover(canvas, {
+        buttonRole: 'radio',
+        buttonName: 'Like this message',
       });
-      await userEvent.click(thumbsUpButton);
-      await userEvent.unhover(thumbsUpButton);
 
-      // Type in feedback textarea
-      const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
-      await userEvent.type(textarea, 'Lorem ipsum');
+      await typeFeedback(canvas, 'Lorem ipsum');
 
-      // Submit feedback (this will fail)
-      const submitButton = canvas.getByRole('button', { name: 'Submit' });
-      await userEvent.click(submitButton);
+      await submitFeedback(canvas);
 
-      // Verify error message is shown
-      const errorMessage = canvas.getByText(
+      verifyErrorMessage(
+        canvas,
         'Failed to submit feedback. Please try again.',
       );
-      expect(errorMessage).toBeInTheDocument();
 
-      // Verify feedback form is still visible and interactive
-      expect(canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID)).toBeInTheDocument();
-      expect(
-        canvas.getByRole('button', { name: 'Submit' }),
-      ).toBeInTheDocument();
+      verifyFeedbackFormVisible(canvas);
     },
     parameters: {
       chromatic: {
