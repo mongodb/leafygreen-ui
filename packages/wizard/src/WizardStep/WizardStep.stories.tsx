@@ -1,12 +1,12 @@
 import React from 'react';
-import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
-import { Body } from '@leafygreen-ui/typography';
+import { Body, Description, H3 } from '@leafygreen-ui/typography';
 
 import { WizardProvider } from '../WizardContext';
 
-import { WizardStep } from '.';
+import { WizardStep, WizardStepProps } from '.';
 
 const meta: StoryMetaType<typeof WizardStep> = {
   title: 'Composition/Wizard/WizardStep',
@@ -21,16 +21,16 @@ const meta: StoryMetaType<typeof WizardStep> = {
       </WizardProvider>
     ),
   ],
-  argTypes: {
-    title: storybookArgTypes.children,
-    description: storybookArgTypes.children,
-    children: storybookArgTypes.children,
-  },
 };
 
 export default meta;
 
-export const LiveExample: StoryObj<typeof WizardStep> = {
+interface WizardStepStoryProps extends WizardStepProps {
+  title: string;
+  description: string;
+}
+
+export const LiveExample: StoryObj<WizardStepStoryProps> = {
   args: {
     title: 'Step 1: Basic Information',
     description: 'Please provide your basic information to get started.',
@@ -43,32 +43,16 @@ export const LiveExample: StoryObj<typeof WizardStep> = {
       </div>
     ),
   },
-  render: args => <WizardStep {...args} />,
-};
-
-export const WithLongDescription: StoryObj<typeof WizardStep> = {
-  args: {
-    title: 'Step 2: Detailed Configuration',
-    description: (
-      <div>
-        <Body>
-          This step involves more complex configuration options. Please read
-          carefully before proceeding.
-        </Body>
-        <Body>
-          <ul>
-            <li>Configure your primary settings</li>
-            <li>Set up your preferences</li>
-            <li>Review the terms and conditions</li>
-          </ul>
-        </Body>
-      </div>
-    ),
-    children: (
-      <div>
-        <Body>Complex form content would go here...</Body>
-        <button type="button">Sample Button</button>
-      </div>
-    ),
+  argTypes: {
+    title: { control: 'text' },
+    description: { control: 'text' },
+    children: { control: 'text' },
   },
+  render: args => (
+    <WizardStep>
+      <H3>{args.title}</H3>
+      <Description>{args.description}</Description>
+      <Body>{args.children}</Body>
+    </WizardStep>
+  ),
 };

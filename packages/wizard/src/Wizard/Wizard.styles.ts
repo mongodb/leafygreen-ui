@@ -8,8 +8,3 @@ export const wizardContainerStyles = css`
   flex-direction: column;
   gap: ${spacing[600]}px;
 `;
-
-export const stepContentStyles = css`
-  flex: 1;
-  min-height: 0; /* Allow content to shrink */
-`;

@@ -1,12 +1,12 @@
 import React, { MouseEventHandler } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
-import { Direction } from '@leafygreen-ui/descendants';
 import { FormFooter } from '@leafygreen-ui/form-footer';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { WizardSubComponentProperties } from '../constants';
 import { useWizardContext } from '../WizardContext';
+import { useWizardStepContext } from '../WizardStep';
 
 import { WizardFooterProps } from './WizardFooter.types';
 
@@ -19,16 +19,21 @@ export const WizardFooter = CompoundSubComponent(
     ...rest
   }: WizardFooterProps) => {
     const { isWizardContext, activeStep, updateStep } = useWizardContext();
+    const { isAcknowledged, requiresAcknowledgement } = useWizardStepContext();
+    const isPrimaryButtonDisabled =
+      (requiresAcknowledgement && !isAcknowledged) ||
+      primaryButtonProps.disabled ||
+      false;
 
     const handleBackButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
-      updateStep(Direction.Prev);
+      updateStep(activeStep - 1);
       backButtonProps?.onClick?.(e);
     };
 
     const handlePrimaryButtonClick: MouseEventHandler<
       HTMLButtonElement
     > = e => {
-      updateStep(Direction.Next);
+      updateStep(activeStep + 1);
       primaryButtonProps.onClick?.(e);
     };
 
@@ -54,6 +59,7 @@ export const WizardFooter = CompoundSubComponent(
         cancelButtonProps={cancelButtonProps}
         primaryButtonProps={{
           ...primaryButtonProps,
+          disabled: isPrimaryButtonDisabled,
           onClick: handlePrimaryButtonClick,
         }}
       />

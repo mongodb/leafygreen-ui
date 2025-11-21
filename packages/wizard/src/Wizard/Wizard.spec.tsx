@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { useWizardStepContext } from '../WizardStep';
+
 import { Wizard } from '.';
 
 describe('packages/wizard', () => {
@@ -9,10 +11,10 @@ describe('packages/wizard', () => {
     test('renders first Wizard.Step', () => {
       const { getByTestId, queryByTestId } = render(
         <Wizard>
-          <Wizard.Step title="Step 1" description="First step">
+          <Wizard.Step>
             <div data-testid="step-1-content">Step 1 content</div>
           </Wizard.Step>
-          <Wizard.Step title="Step 2">
+          <Wizard.Step>
             <div data-testid="step-2-content">Step 2 content</div>
           </Wizard.Step>
         </Wizard>,
@@ -24,14 +26,14 @@ describe('packages/wizard', () => {
     test('renders Wizard.Footer', () => {
       const { getByTestId } = render(
         <Wizard>
-          <Wizard.Step title="Step 1">
+          <Wizard.Step>
             <div data-testid="step-content">Content</div>
+            <Wizard.Footer
+              data-testid="wizard-footer"
+              primaryButtonProps={{ children: 'Next' }}
+              cancelButtonProps={{ children: 'Cancel' }}
+            />
           </Wizard.Step>
-          <Wizard.Footer
-            data-testid="wizard-footer"
-            primaryButtonProps={{ children: 'Next' }}
-            cancelButtonProps={{ children: 'Cancel' }}
-          />
         </Wizard>,
       );
 
@@ -52,10 +54,10 @@ describe('packages/wizard', () => {
     test('renders correct step when activeStep is provided', () => {
       const { queryByTestId, getByTestId } = render(
         <Wizard activeStep={1}>
-          <Wizard.Step title="Step 1">
+          <Wizard.Step>
             <div data-testid="step-1-content">Step 1 content</div>
           </Wizard.Step>
-          <Wizard.Step title="Step 2">
+          <Wizard.Step>
             <div data-testid="step-2-content">Step 2 content</div>
           </Wizard.Step>
         </Wizard>,
@@ -69,16 +71,20 @@ describe('packages/wizard', () => {
     test('does not render back button on first step', () => {
       const { queryByRole, getByRole } = render(
         <Wizard activeStep={0}>
-          <Wizard.Step title="Step 1">
+          <Wizard.Step>
             <div data-testid="step-1-content">Content 1</div>
+            <Wizard.Footer
+              backButtonProps={{ children: 'Back' }}
+              primaryButtonProps={{ children: 'Next' }}
+            />
           </Wizard.Step>
-          <Wizard.Step title="Step 2">
+          <Wizard.Step>
             <div data-testid="step-2-content">Content 2</div>
+            <Wizard.Footer
+              backButtonProps={{ children: 'Back' }}
+              primaryButtonProps={{ children: 'Next' }}
+            />
           </Wizard.Step>
-          <Wizard.Footer
-            backButtonProps={{ children: 'Back' }}
-            primaryButtonProps={{ children: 'Next' }}
-          />
         </Wizard>,
       );
 
@@ -90,16 +96,20 @@ describe('packages/wizard', () => {
     test('renders back button on second step', () => {
       const { getByRole } = render(
         <Wizard activeStep={1}>
-          <Wizard.Step title="Step 1">
+          <Wizard.Step>
             <div data-testid="step-1-content">Content 1</div>
+            <Wizard.Footer
+              backButtonProps={{ children: 'Back' }}
+              primaryButtonProps={{ children: 'Next' }}
+            />
           </Wizard.Step>
-          <Wizard.Step title="Step 2">
+          <Wizard.Step>
             <div data-testid="step-2-content">Content 2</div>
+            <Wizard.Footer
+              backButtonProps={{ children: 'Back' }}
+              primaryButtonProps={{ children: 'Next' }}
+            />
           </Wizard.Step>
-          <Wizard.Footer
-            backButtonProps={{ children: 'Back' }}
-            primaryButtonProps={{ children: 'Next' }}
-          />
         </Wizard>,
       );
 
@@ -114,13 +124,14 @@ describe('packages/wizard', () => {
 
       const { getByRole } = render(
         <Wizard activeStep={0} onStepChange={onStepChange}>
-          <Wizard.Step title="Step 1">
+          <Wizard.Step>
             <div data-testid="step-1-content">Content 1</div>
+            <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
           </Wizard.Step>
-          <Wizard.Step title="Step 2">
+          <Wizard.Step>
             <div data-testid="step-2-content">Content 2</div>
+            <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
           </Wizard.Step>
-          <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
         </Wizard>,
       );
 
@@ -134,16 +145,20 @@ describe('packages/wizard', () => {
 
       const { getByRole } = render(
         <Wizard activeStep={1} onStepChange={onStepChange}>
-          <Wizard.Step title="Step 1">
+          <Wizard.Step>
             <div data-testid="step-1-content">Content 1</div>
+            <Wizard.Footer
+              backButtonProps={{ children: 'Back' }}
+              primaryButtonProps={{ children: 'Next' }}
+            />
           </Wizard.Step>
-          <Wizard.Step title="Step 2">
+          <Wizard.Step>
             <div data-testid="step-2-content">Content 2</div>
+            <Wizard.Footer
+              backButtonProps={{ children: 'Back' }}
+              primaryButtonProps={{ children: 'Next' }}
+            />
           </Wizard.Step>
-          <Wizard.Footer
-            backButtonProps={{ children: 'Back' }}
-            primaryButtonProps={{ children: 'Next' }}
-          />
         </Wizard>,
       );
 
@@ -160,17 +175,22 @@ describe('packages/wizard', () => {
 
       const { getByRole } = render(
         <Wizard activeStep={1} onStepChange={onStepChange}>
-          <Wizard.Step title="Step 1">
+          <Wizard.Step>
             <div data-testid="step-1-content">Content 1</div>
+            <Wizard.Footer
+              backButtonProps={{ children: 'Back', onClick: onBackClick }}
+              primaryButtonProps={{ children: 'Next', onClick: onPrimaryClick }}
+              cancelButtonProps={{ children: 'Cancel', onClick: onCancelClick }}
+            />
           </Wizard.Step>
-          <Wizard.Step title="Step 2">
+          <Wizard.Step>
             <div data-testid="step-2-content">Content 2</div>
+            <Wizard.Footer
+              backButtonProps={{ children: 'Back', onClick: onBackClick }}
+              primaryButtonProps={{ children: 'Next', onClick: onPrimaryClick }}
+              cancelButtonProps={{ children: 'Cancel', onClick: onCancelClick }}
+            />
           </Wizard.Step>
-          <Wizard.Footer
-            backButtonProps={{ children: 'Back', onClick: onBackClick }}
-            primaryButtonProps={{ children: 'Next', onClick: onPrimaryClick }}
-            cancelButtonProps={{ children: 'Cancel', onClick: onCancelClick }}
-          />
         </Wizard>,
       );
 
@@ -188,30 +208,31 @@ describe('packages/wizard', () => {
 
     describe('uncontrolled', () => {
       test('does not increment step beyond Steps count', async () => {
-        const { getByText, queryByText, getByRole } = render(
+        const { getByTestId, queryByTestId, getByRole } = render(
           <Wizard>
-            <Wizard.Step title="Step 1">
+            <Wizard.Step>
               <div data-testid="step-1-content">Content 1</div>
+              <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
             </Wizard.Step>
-            <Wizard.Step title="Step 2">
+            <Wizard.Step>
               <div data-testid="step-2-content">Content 2</div>
+              <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
             </Wizard.Step>
-            <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
           </Wizard>,
         );
 
         // Start at step 1
-        expect(getByText('Step 1')).toBeInTheDocument();
+        expect(getByTestId('step-1-content')).toBeInTheDocument();
 
         // Click next to go to step 2
         await userEvent.click(getByRole('button', { name: 'Next' }));
-        expect(getByText('Step 2')).toBeInTheDocument();
-        expect(queryByText('Step 1')).not.toBeInTheDocument();
+        expect(getByTestId('step-2-content')).toBeInTheDocument();
+        expect(queryByTestId('step-1-content')).not.toBeInTheDocument();
 
         // Click next again - should stay at step 2 (last step)
         await userEvent.click(getByRole('button', { name: 'Next' }));
-        expect(getByText('Step 2')).toBeInTheDocument();
-        expect(queryByText('Step 1')).not.toBeInTheDocument();
+        expect(getByTestId('step-2-content')).toBeInTheDocument();
+        expect(queryByTestId('step-1-content')).not.toBeInTheDocument();
       });
     });
 
@@ -219,27 +240,28 @@ describe('packages/wizard', () => {
       test('does not change steps internally when controlled', async () => {
         const onStepChange = jest.fn();
 
-        const { getByText, queryByText, getByRole } = render(
+        const { getByTestId, queryByTestId, getByRole } = render(
           <Wizard activeStep={0} onStepChange={onStepChange}>
-            <Wizard.Step title="Step 1">
+            <Wizard.Step>
               <div data-testid="step-1-content">Content 1</div>
+              <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
             </Wizard.Step>
-            <Wizard.Step title="Step 2">
+            <Wizard.Step>
               <div data-testid="step-2-content">Content 2</div>
+              <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
             </Wizard.Step>
-            <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
           </Wizard>,
         );
 
         // Should start at step 1
-        expect(getByText('Step 1')).toBeInTheDocument();
+        expect(getByTestId('step-1-content')).toBeInTheDocument();
 
         // Click next
         await userEvent.click(getByRole('button', { name: 'Next' }));
 
         // Should still be at step 1 since it's controlled
-        expect(getByText('Step 1')).toBeInTheDocument();
-        expect(queryByText('Step 2')).not.toBeInTheDocument();
+        expect(getByTestId('step-1-content')).toBeInTheDocument();
+        expect(queryByTestId('step-2-content')).not.toBeInTheDocument();
 
         // But onStepChange should have been called
         expect(onStepChange).toHaveBeenCalledWith(1);
@@ -252,10 +274,10 @@ describe('packages/wizard', () => {
 
         render(
           <Wizard activeStep={5}>
-            <Wizard.Step title="Step 1">
+            <Wizard.Step>
               <div data-testid="step-1-content">Content 1</div>
             </Wizard.Step>
-            <Wizard.Step title="Step 2">
+            <Wizard.Step>
               <div data-testid="step-2-content">Content 2</div>
             </Wizard.Step>
           </Wizard>,
@@ -276,10 +298,10 @@ describe('packages/wizard', () => {
 
         render(
           <Wizard activeStep={-1}>
-            <Wizard.Step title="Step 1">
+            <Wizard.Step>
               <div data-testid="step-1-content">Content 1</div>
             </Wizard.Step>
-            <Wizard.Step title="Step 2">
+            <Wizard.Step>
               <div data-testid="step-2-content">Content 2</div>
             </Wizard.Step>
           </Wizard>,
@@ -291,6 +313,78 @@ describe('packages/wizard', () => {
         );
 
         consoleWarnSpy.mockRestore();
+      });
+    });
+
+    describe('requiresAcknowledgement', () => {
+      test('disables primary button when requiresAcknowledgement is true and not acknowledged', () => {
+        const { getByRole } = render(
+          <Wizard>
+            <Wizard.Step requiresAcknowledgement>
+              <div data-testid="step-1-content">Content 1</div>
+              <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
+            </Wizard.Step>
+          </Wizard>,
+        );
+
+        const primaryButton = getByRole('button', { name: 'Next' });
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
+      });
+
+      test('enables primary button when requiresAcknowledgement is true and acknowledged', async () => {
+        const AcknowledgeButton = () => {
+          const { setAcknowledged } = useWizardStepContext();
+          return (
+            <button onClick={() => setAcknowledged(true)}>Acknowledge</button>
+          );
+        };
+
+        const { getByRole } = render(
+          <Wizard>
+            <Wizard.Step requiresAcknowledgement>
+              <div data-testid="step-1-content">Content 1</div>
+              <AcknowledgeButton />
+              <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
+            </Wizard.Step>
+          </Wizard>,
+        );
+
+        const primaryButton = getByRole('button', { name: 'Next' });
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
+
+        // Acknowledge the step
+        const acknowledgeButton = getByRole('button', { name: 'Acknowledge' });
+        await userEvent.click(acknowledgeButton);
+
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
+      });
+
+      test('enables primary button when requiresAcknowledgement is false', () => {
+        const { getByRole } = render(
+          <Wizard>
+            <Wizard.Step requiresAcknowledgement={false}>
+              <div data-testid="step-1-content">Content 1</div>
+              <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
+            </Wizard.Step>
+          </Wizard>,
+        );
+
+        const primaryButton = getByRole('button', { name: 'Next' });
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
+      });
+
+      test('enables primary button when requiresAcknowledgement is not set (default)', () => {
+        const { getByRole } = render(
+          <Wizard>
+            <Wizard.Step>
+              <div data-testid="step-1-content">Content 1</div>
+              <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
+            </Wizard.Step>
+          </Wizard>,
+        );
+
+        const primaryButton = getByRole('button', { name: 'Next' });
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
       });
     });
   });

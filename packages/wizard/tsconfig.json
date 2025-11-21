@@ -13,19 +13,46 @@
       "path": "../button"
     },
     {
-      "path": "../compound-component"
+      "path": "../badge"
     },
     {
-      "path": "../button"
+      "path": "../card"
+    },
+    {
+      "path": "../checkbox"
+    },
+    {
+      "path": "../compound-component"
     },
     {
       "path": "../emotion"
     },
     {
+      "path": "../expandable-card"
+    },
+    {
       "path": "../form-footer"
     },
     {
+      "path": "../icon"
+    },
+    {
       "path": "../lib"
+    },
+    {
+      "path": "../loading-indicator"
+    },
+    {
+      "path": "../segmented-control"
+    },
+    {
+      "path": "../skeleton-loader"
+    },
+    {
+      "path": "../table"
+    },
+    {
+      "path": "../typography"
     },
     {
       "path": "../../tools/test-harnesses"
