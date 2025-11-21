@@ -3,9 +3,12 @@ import React, { ComponentProps } from 'react';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { DeleteWizardCompoundComponentProperties } from './compoundComponentProperties';
+import { DeleteWizardSubComponentKeys } from './compoundComponentProperties';
 
-export const DeleteWizardStepContents = CompoundSubComponent(
+/**
+ * A styled `div` for use inside a `DeleteWizard.Step` to ensure proper page scrolling and footer positioning
+ */
+export const DeleteWizardStepContent = CompoundSubComponent(
   ({ children, className, ...rest }: ComponentProps<'div'>) => {
     return (
       <div
@@ -22,7 +25,7 @@ export const DeleteWizardStepContents = CompoundSubComponent(
     );
   },
   {
-    displayName: 'DeleteWizardStepContents',
-    key: DeleteWizardCompoundComponentProperties.StepContent,
+    displayName: 'DeleteWizardStepContent',
+    key: DeleteWizardSubComponentKeys.StepContent,
   },
 );

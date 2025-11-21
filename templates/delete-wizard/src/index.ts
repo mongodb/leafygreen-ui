@@ -1,1 +1,6 @@
-export { DeleteWizard, type DeleteWizardProps } from './DeleteWizard';
+export {
+  DeleteWizard,
+  type DeleteWizardProps,
+  useDeleteWizardContext,
+  useDeleteWizardStepContext,
+} from './DeleteWizard';
