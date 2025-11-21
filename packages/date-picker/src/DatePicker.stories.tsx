@@ -134,7 +134,7 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
 };
 LiveExample.parameters = {
   chromatic: {
-    disableSnapshots: true,
+    disableSnapshot: true,
   },
 };
 
@@ -143,7 +143,7 @@ export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
 };
 Uncontrolled.parameters = {
   chromatic: {
-    disableSnapshots: true,
+    disableSnapshot: true,
   },
 };
 
@@ -163,7 +163,7 @@ export const InModal: StoryFn<typeof DatePicker> = props => {
 };
 InModal.parameters = {
   chromatic: {
-    disableSnapshots: true,
+    disableSnapshot: true,
   },
 };
 

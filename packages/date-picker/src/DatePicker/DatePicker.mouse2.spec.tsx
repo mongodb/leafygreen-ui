@@ -19,6 +19,9 @@ describe('DatePicker mouse interaction', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   describe('Clicking a Calendar cell', () => {
     test('closes the menu', async () => {

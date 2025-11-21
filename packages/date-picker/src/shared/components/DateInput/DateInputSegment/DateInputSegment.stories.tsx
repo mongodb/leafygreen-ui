@@ -9,17 +9,22 @@ import {
   SharedDatePickerContextProps,
   SharedDatePickerProvider,
 } from '../../../context';
-import { DateSegmentValue } from '../../../types';
+import { DateSegment, DateSegmentValue } from '../../../types';
+import { DateInputBoxProvider } from '../DateInputBoxContext';
 
 import { DateInputSegment } from './DateInputSegment';
 
-const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
-  <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-    <SharedDatePickerProvider {...ctx?.args}>
-      <Story />
-    </SharedDatePickerProvider>
-  </LeafyGreenProvider>
-);
+const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => {
+  return (
+    <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+      <SharedDatePickerProvider {...ctx?.args}>
+        <DateInputBoxProvider>
+          <Story />
+        </DateInputBoxProvider>
+      </SharedDatePickerProvider>
+    </LeafyGreenProvider>
+  );
+};
 
 const meta: StoryMetaType<
   typeof DateInputSegment,
@@ -32,7 +37,7 @@ const meta: StoryMetaType<
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        value: [undefined, '6', '2023'],
+        value: ['', '6', '2023'],
         segment: ['day', 'month', 'year'],
         size: Object.values(Size),
       },
@@ -48,14 +53,22 @@ const meta: StoryMetaType<
         },
       ],
     },
+    controls: {
+      exclude: ['segmentEnum', 'onChange', 'disabled', 'charsCount', 'value'],
+    },
   },
   args: {
     segment: 'day',
+    segmentEnum: DateSegment,
   },
   argTypes: {
     segment: {
       control: 'select',
       options: ['day', 'month', 'year'],
+    },
+    size: {
+      control: 'select',
+      options: Object.values(Size),
     },
   },
 };
@@ -67,13 +80,15 @@ const Template: StoryFn<typeof DateInputSegment> = props => {
 
   return (
     <LeafyGreenProvider>
-      <DateInputSegment
-        {...props}
-        value={value}
-        onChange={({ value }) => {
-          setValue(value);
-        }}
-      />
+      <DateInputBoxProvider>
+        <DateInputSegment
+          {...props}
+          value={value}
+          onChange={({ value }) => {
+            setValue(value);
+          }}
+        />
+      </DateInputBoxProvider>
     </LeafyGreenProvider>
   );
 };

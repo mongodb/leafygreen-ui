@@ -8,6 +8,10 @@ describe('packages/date-utils/isCurrentUTCDay', () => {
     jest.useFakeTimers();
   });
 
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   test('returns true with UTC dates', () => {
     const midnightUTC = newUTC(2020, Month.December, 25, 0, 0);
     const elevenUTC = newUTC(2020, Month.December, 25, 23, 59);

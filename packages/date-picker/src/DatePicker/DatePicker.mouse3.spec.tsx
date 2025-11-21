@@ -18,6 +18,9 @@ describe('DatePicker mouse interaction', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   describe('Month select menu', () => {
     test('menu opens over the calendar menu', async () => {

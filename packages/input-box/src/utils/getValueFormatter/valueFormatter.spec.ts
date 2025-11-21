@@ -10,7 +10,7 @@ const charsPerSegment: Record<Segment, number> = {
 describe('packages/input-box/utils/valueFormatter', () => {
   describe('one segment', () => {
     const formatter = getValueFormatter({
-      charsPerSegment: charsPerSegment['one'],
+      charsCount: charsPerSegment['one'],
     });
 
     test('returns the value as is', () => {
@@ -28,7 +28,7 @@ describe('packages/input-box/utils/valueFormatter', () => {
 
   describe('two segments', () => {
     const formatter = getValueFormatter({
-      charsPerSegment: charsPerSegment['two'],
+      charsCount: charsPerSegment['two'],
     });
 
     test('formats 2 digit values', () => {
@@ -58,7 +58,7 @@ describe('packages/input-box/utils/valueFormatter', () => {
 
   describe('three segments', () => {
     const formatter = getValueFormatter({
-      charsPerSegment: charsPerSegment['three'],
+      charsCount: charsPerSegment['three'],
     });
 
     test('formats 4 digit values', () => {
@@ -89,7 +89,7 @@ describe('packages/input-box/utils/valueFormatter', () => {
   describe('with allowZero allows leading zeros', () => {
     test('with one segment', () => {
       const formatter = getValueFormatter({
-        charsPerSegment: charsPerSegment['one'],
+        charsCount: charsPerSegment['one'],
         allowZero: true,
       });
       expect(formatter('0')).toEqual('0');
@@ -97,7 +97,7 @@ describe('packages/input-box/utils/valueFormatter', () => {
 
     test('with two segments', () => {
       const formatter = getValueFormatter({
-        charsPerSegment: charsPerSegment['two'],
+        charsCount: charsPerSegment['two'],
         allowZero: true,
       });
       expect(formatter('0')).toEqual('00');
@@ -105,7 +105,7 @@ describe('packages/input-box/utils/valueFormatter', () => {
 
     test('with three segments', () => {
       const formatter = getValueFormatter({
-        charsPerSegment: charsPerSegment['three'],
+        charsCount: charsPerSegment['three'],
         allowZero: true,
       });
       expect(formatter('0')).toEqual('000');

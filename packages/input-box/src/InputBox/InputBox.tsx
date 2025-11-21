@@ -77,7 +77,7 @@ const InputBoxWithRef = <Segment extends string>(
     allowZero: boolean,
   ): string => {
     const formatter = getValueFormatter({
-      charsPerSegment: getCharsPerSegment(segmentName),
+      charsCount: getCharsPerSegment(segmentName),
       allowZero,
     });
     const formattedValue = formatter(segmentValue);

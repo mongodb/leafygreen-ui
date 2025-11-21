@@ -27,6 +27,9 @@ describe('DatePicker keyboard interaction', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   describe('focuses the current value', () => {
     test("when month returns to value's month", async () => {
