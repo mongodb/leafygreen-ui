@@ -20,7 +20,10 @@ export const WizardFooter = CompoundSubComponent(
   }: WizardFooterProps) => {
     const { isWizardContext, activeStep, updateStep } = useWizardContext();
     const { isAcknowledged, requiresAcknowledgement } = useWizardStepContext();
-    const isPrimaryButtonDisabled = requiresAcknowledgement && !isAcknowledged;
+    const isPrimaryButtonDisabled =
+      (requiresAcknowledgement && !isAcknowledged) ||
+      primaryButtonProps.disabled ||
+      false;
 
     const handleBackButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
       updateStep(activeStep - 1);
