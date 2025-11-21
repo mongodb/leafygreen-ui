@@ -4,7 +4,5 @@ import { render } from '@testing-library/react';
 import { DeleteWizard } from '.';
 
 describe('packages/delete-wizard/getTestUtils', () => {
-  test('condition', () => {
-
-  })
-})
+  test('condition', () => {});
+});
