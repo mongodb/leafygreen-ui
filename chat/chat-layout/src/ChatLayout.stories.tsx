@@ -67,6 +67,24 @@ const chatItems = [
   { id: '5', name: 'Migration Planning', href: '/chat/5' },
 ];
 
+const hoverSideNav = async (canvasElement: HTMLElement) => {
+  const canvas = within(canvasElement);
+  const sideNav = canvas.getByLabelText('Side navigation');
+  await userEvent.hover(sideNav);
+};
+
+const hoverSideNavItem = async ({
+  canvasElement,
+  itemText,
+}: {
+  canvasElement: HTMLElement;
+  itemText: string;
+}) => {
+  const canvas = within(canvasElement);
+  const item = canvas.getByText(itemText);
+  await userEvent.hover(item);
+};
+
 const Template: StoryFn<ChatLayoutProps> = props => {
   const [activeId, setActiveId] = useState<string | null>('1');
 
@@ -176,13 +194,7 @@ export const UnpinnedAndHoveredLight: StoryObj<ChatLayoutProps> = {
     initialIsPinned: false,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Find the side nav
-    const sideNav = canvas.getByLabelText('Side navigation');
-
-    // Hover over the side nav
-    await userEvent.hover(sideNav);
+    await hoverSideNav(canvasElement);
   },
   parameters: {
     chromatic: {
@@ -198,13 +210,39 @@ export const UnpinnedAndHoveredDark: StoryObj<ChatLayoutProps> = {
     initialIsPinned: false,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+    await hoverSideNav(canvasElement);
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
+    },
+  },
+};
 
-    // Find the side nav
-    const sideNav = canvas.getByLabelText('Side navigation');
+export const UnpinnedAndFocusedLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement: _canvasElement }) => {
+    userEvent.tab();
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
+    },
+  },
+};
 
-    // Hover over the side nav
-    await userEvent.hover(sideNav);
+export const UnpinnedAndFocusedDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement: _canvasElement }) => {
+    userEvent.tab();
   },
   parameters: {
     chromatic: {
@@ -220,15 +258,10 @@ export const SideNavItemHoveredLight: StoryObj<ChatLayoutProps> = {
     initialIsPinned: true,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Find the side nav item with long text that will overflow
-    const longItem = canvas.getByText(
-      'Writing a very very very long Database Query',
-    );
-
-    // Hover over the side nav item to show tooltip
-    await userEvent.hover(longItem);
+    await hoverSideNavItem({
+      canvasElement,
+      itemText: 'Writing a very very very long Database Query',
+    });
   },
   parameters: {
     chromatic: {
@@ -244,15 +277,10 @@ export const SideNavItemHoveredDark: StoryObj<ChatLayoutProps> = {
     initialIsPinned: true,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Find the side nav item with long text that will overflow
-    const longItem = canvas.getByText(
-      'Writing a very very very long Database Query',
-    );
-
-    // Hover over the side nav item to show tooltip
-    await userEvent.hover(longItem);
+    await hoverSideNavItem({
+      canvasElement,
+      itemText: 'Writing a very very very long Database Query',
+    });
   },
   parameters: {
     chromatic: {
