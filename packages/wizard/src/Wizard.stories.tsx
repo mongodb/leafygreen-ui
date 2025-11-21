@@ -1,15 +1,43 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
+import { Banner } from '@leafygreen-ui/banner';
 import { Card } from '@leafygreen-ui/card';
+import { Checkbox } from '@leafygreen-ui/checkbox';
 import { css } from '@leafygreen-ui/emotion';
+import { isDefined } from '@leafygreen-ui/lib';
+import { Description, H3, InlineCode } from '@leafygreen-ui/typography';
 
-import { Wizard } from '.';
+import { useWizardStepContext, Wizard } from '.';
 
 faker.seed(0);
+
+const ExampleStepConfig = [
+  {
+    title: 'Apple',
+    description: faker.lorem.paragraph(),
+    content: faker.lorem.paragraph(10),
+    requiresAcknowledgement: true,
+    primaryButtonText: 'Continue',
+  },
+  {
+    title: 'Banana',
+    description: faker.lorem.paragraph(),
+    content: faker.lorem.paragraph(10),
+    requiresAcknowledgement: false,
+    primaryButtonText: 'Continue',
+  },
+  {
+    title: 'Carrot',
+    description: faker.lorem.paragraph(),
+    content: faker.lorem.paragraph(10),
+    requiresAcknowledgement: true,
+    primaryButtonText: 'Finish',
+  },
+];
 
 export default {
   title: 'Composition/Wizard',
@@ -19,12 +47,34 @@ export default {
   },
   decorators: [
     Fn => (
-      <div style={{ margin: -100, height: '100vh', width: '100vw' }}>
+      <div style={{ height: '100vh', width: '100vw' }}>
         <Fn />
       </div>
     ),
   ],
 } satisfies StoryMetaType<typeof Wizard>;
+
+const ExampleContentCard = ({ children }: PropsWithChildren<{}>) => {
+  const { isAcknowledged, setAcknowledged, requiresAcknowledgement } =
+    useWizardStepContext();
+
+  return (
+    <Card
+      className={css`
+        margin-top: 24px;
+      `}
+    >
+      {requiresAcknowledgement && (
+        <Checkbox
+          label="Acknowledge"
+          checked={isAcknowledged}
+          onChange={e => setAcknowledged(e.target.checked)}
+        />
+      )}
+      {children}
+    </Card>
+  );
+};
 
 export const LiveExample: StoryObj<typeof Wizard> = {
   parameters: {
@@ -32,33 +82,58 @@ export const LiveExample: StoryObj<typeof Wizard> = {
       exclude: ['children', 'activeStep', 'onStepChange'],
     },
   },
-  render: props => (
-    <Wizard {...props}>
-      {['Apple', 'Banana', 'Carrot'].map((title, i) => (
-        <Wizard.Step
-          className={css`
-            margin-top: 24px;
-          `}
-          key={i}
-          title={`Step ${i + 1}: ${title}`}
-          description={faker.lorem.paragraph()}
-        >
-          <Card>{faker.lorem.paragraph(10)}</Card>
-        </Wizard.Step>
-      ))}
-      <Wizard.Footer
-        backButtonProps={{
-          onClick: () => console.log('[Storybook] Clicked Back'),
-        }}
-        cancelButtonProps={{
-          children: 'Cancel',
-          onClick: () => console.log('[Storybook] Clicked Cancel'),
-        }}
-        primaryButtonProps={{
-          children: 'Primary',
-          onClick: () => console.log('[Storybook] Clicked Primary'),
-        }}
-      />
+  render: args => (
+    <Wizard
+      activeStep={args.activeStep}
+      onStepChange={x =>
+        console.log(`[Storybook] activeStep should change to ${x}`)
+      }
+      {...args}
+    >
+      {ExampleStepConfig.map(
+        (
+          {
+            title,
+            description,
+            content,
+            primaryButtonText,
+            requiresAcknowledgement,
+          },
+          i,
+        ) => (
+          <Wizard.Step
+            key={i}
+            requiresAcknowledgement={requiresAcknowledgement}
+          >
+            <H3>
+              Step {i + 1}: {title}
+            </H3>
+            <Description>{description}</Description>
+            <ExampleContentCard>
+              {isDefined(args.activeStep) && (
+                <Banner variant="warning">
+                  <InlineCode>activeStep</InlineCode> is controlled. Use
+                  Storybook controls to update the step
+                </Banner>
+              )}
+              {content}
+            </ExampleContentCard>
+            <Wizard.Footer
+              backButtonProps={{
+                onClick: () => console.log('[Storybook] Clicked Back'),
+              }}
+              cancelButtonProps={{
+                children: 'Cancel',
+                onClick: () => console.log('[Storybook] Clicked Cancel'),
+              }}
+              primaryButtonProps={{
+                children: primaryButtonText,
+                onClick: () => console.log('[Storybook] Clicked Primary'),
+              }}
+            />
+          </Wizard.Step>
+        ),
+      )}
     </Wizard>
   ),
 };
@@ -72,47 +147,5 @@ export const Controlled: StoryObj<typeof Wizard> = {
   args: {
     activeStep: 0,
   },
-  render: ({ activeStep, ...props }) => {
-    return (
-      <Wizard
-        activeStep={activeStep}
-        onStepChange={x =>
-          console.log(`[Storybook] activeStep should change to ${x}`)
-        }
-        {...props}
-      >
-        {['Apple', 'Banana', 'Carrot'].map((title, i) => (
-          <Wizard.Step
-            className={css`
-              margin-top: 24px;
-            `}
-            key={i}
-            title={`Step ${i + 1}: ${title}`}
-            description={faker.lorem.paragraph()}
-          >
-            <Card>
-              <p>
-                This Wizard is controlled. Clicking the buttons will not do
-                anything. Use the Storybook controls to see the next step
-              </p>
-              {faker.lorem.paragraph(10)}
-            </Card>
-          </Wizard.Step>
-        ))}
-        <Wizard.Footer
-          backButtonProps={{
-            onClick: () => console.log('[Storybook] Clicked Back'),
-          }}
-          cancelButtonProps={{
-            children: 'Cancel',
-            onClick: () => console.log('[Storybook] Clicked Cancel'),
-          }}
-          primaryButtonProps={{
-            children: 'Primary',
-            onClick: () => console.log('[Storybook] Clicked Primary'),
-          }}
-        />
-      </Wizard>
-    );
-  },
+  render: LiveExample.render,
 };
