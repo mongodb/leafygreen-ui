@@ -8,6 +8,7 @@ export async function installPackages(
   options?: {
     packageManager?: SupportedPackageManager;
     verbose?: boolean;
+    env?: NodeJS.ProcessEnv;
   },
 ): Promise<void> {
   if (fsx.existsSync(path)) {
@@ -18,6 +19,7 @@ export async function installPackages(
         name: 'install',
         cwd: path,
         verbose: options?.verbose,
+        env: options?.env,
       });
     } catch (err) {
       throw new Error(`Error installing packages\n` + err);

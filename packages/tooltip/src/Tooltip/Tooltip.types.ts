@@ -17,6 +17,14 @@ export const TriggerEvent = {
 
 export type TriggerEvent = (typeof TriggerEvent)[keyof typeof TriggerEvent];
 
+export const TooltipVariant = {
+  Default: 'default',
+  Compact: 'compact',
+} as const;
+
+export type TooltipVariant =
+  (typeof TooltipVariant)[keyof typeof TooltipVariant];
+
 export const Align = {
   Top: PopoverAlign.Top,
   Bottom: PopoverAlign.Bottom,
@@ -123,6 +131,14 @@ export type TooltipProps = Omit<
     /**
      * Allows consuming applications to override font-size as set by the LeafyGreen Provider.
      *
+     * @remarks This prop is only considered when variant is 'default'
      */
     baseFontSize?: BaseFontSize;
+
+    /**
+     * Variant of the tooltip to be rendered.
+     *
+     * @default 'default'
+     */
+    variant?: TooltipVariant;
   };

@@ -10,6 +10,7 @@ import { PackageDetails } from './types';
 interface CreateLinkOptions extends PackageDetails {
   verbose?: boolean;
   packageManager?: SupportedPackageManager;
+  env?: NodeJS.ProcessEnv;
 }
 
 /**
@@ -24,6 +25,7 @@ export async function createLinkFrom(
     packageName,
     packageManager,
     verbose,
+    env,
   }: CreateLinkOptions,
 ): Promise<void> {
   const scopeSrc = scopePath;
@@ -44,6 +46,7 @@ export async function createLinkFrom(
         name: `link_src:${packageName}`,
         cwd: path.join(packagesDirectory, packageName),
         verbose,
+        env,
       });
     } catch (_) {
       throw new Error(`Couldn't create link for package: ${packageName}`);
