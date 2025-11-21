@@ -5,7 +5,13 @@ import { Icon } from '@leafygreen-ui/icon';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
-import { Align, Tooltip } from '@leafygreen-ui/tooltip';
+import { spacing as spacingToken } from '@leafygreen-ui/tokens';
+import {
+  Align,
+  Justify,
+  Tooltip,
+  TooltipVariant,
+} from '@leafygreen-ui/tooltip';
 
 import { ToolbarDescendantsContext, useToolbarContext } from '../Context';
 
@@ -61,6 +67,7 @@ export const ToolbarIconButton = React.forwardRef<
         data-testid={`${lgIds.iconButtonTooltip}-${index}`}
         data-lgid={`${lgIds.iconButtonTooltip}-${index}`}
         align={Align.Left}
+        justify={Justify.Middle}
         enabled={isTooltipEnabled}
         trigger={
           <div className={triggerStyles}>
@@ -88,6 +95,8 @@ export const ToolbarIconButton = React.forwardRef<
             </IconButton>
           </div>
         }
+        spacing={spacingToken[100]}
+        variant={TooltipVariant.Compact}
       >
         {label}
       </Tooltip>
