@@ -40,7 +40,7 @@ export const DateInputSegment = React.forwardRef<
     max: maxContextProp,
   } = useSharedDatePickerContext();
 
-  const { value: dateValue } = useDateInputBoxContext();
+  const { dateValue } = useDateInputBoxContext();
   const min =
     getMinSegmentValue(segment, { date: dateValue, min: minContextProp }) ??
     defaultMin[segment];

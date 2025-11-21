@@ -30,9 +30,11 @@ describe('DateInputBoxContext', () => {
     const value = new Date();
     const { result } = renderHook(() => useDateInputBoxContext(), {
       wrapper: ({ children }) => (
-        <DateInputBoxProvider value={value}>{children}</DateInputBoxProvider>
+        <DateInputBoxProvider dateValue={value}>
+          {children}
+        </DateInputBoxProvider>
       ),
     });
-    expect(result.current.value).toEqual(value);
+    expect(result.current.dateValue).toEqual(value);
   });
 });

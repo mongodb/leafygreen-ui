@@ -6,7 +6,7 @@ export interface DateInputBoxContextType {
   /**
    * Date value in UTC time
    */
-  value?: DateType;
+  dateValue?: DateType;
 }
 
 export interface DateInputBoxProviderProps
