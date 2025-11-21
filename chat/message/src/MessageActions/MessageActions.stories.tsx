@@ -83,6 +83,145 @@ export const LiveExample: StoryObj<MessageActionsProps> = {
   },
 };
 
+export const LightModeWithCopyHover: StoryObj<MessageActionsProps> = {
+  render: Template,
+  args: {
+    onClickCopy: testOnClickCopy,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const copyButton = canvas.getByRole('button', { name: 'Copy message' });
+    await userEvent.hover(copyButton);
+
+    const copyTooltip = await canvas.findByRole('tooltip', { name: 'Copy' });
+    expect(copyTooltip).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 500,
+    },
+  },
+};
+
+export const DarkModeWithCopyHover: StoryObj<MessageActionsProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    onClickCopy: testOnClickCopy,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const copyButton = canvas.getByRole('button', { name: 'Copy message' });
+    await userEvent.hover(copyButton);
+
+    const copyTooltip = await canvas.findByRole('tooltip', { name: 'Copy' });
+    expect(copyTooltip).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 500,
+    },
+  },
+};
+
+export const LightModeWithRetryHover: StoryObj<MessageActionsProps> = {
+  render: Template,
+  args: {
+    onClickRetry: testOnClickRetry,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const retryButton = canvas.getByRole('button', { name: 'Retry message' });
+    await userEvent.hover(retryButton);
+
+    const retryTooltip = await canvas.findByRole('tooltip', { name: 'Retry' });
+    expect(retryTooltip).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 500,
+    },
+  },
+};
+
+export const DarkModeWithRetryHover: StoryObj<MessageActionsProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    onClickRetry: testOnClickRetry,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const retryButton = canvas.getByRole('button', { name: 'Retry message' });
+    await userEvent.hover(retryButton);
+
+    const retryTooltip = await canvas.findByRole('tooltip', { name: 'Retry' });
+    expect(retryTooltip).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 500,
+    },
+  },
+};
+
+export const LightModeWithRatingHover: StoryObj<MessageActionsProps> = {
+  render: Template,
+  args: {
+    onRatingChange: testOnRatingChange,
+    onSubmitFeedback: testOnSubmitFeedback,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const thumbsUpButton = canvas.getByRole('radio', {
+      name: 'Like this message',
+    });
+    await userEvent.hover(thumbsUpButton);
+
+    const thumbsUpTooltip = await canvas.findByRole('tooltip', {
+      name: 'Helpful',
+    });
+    expect(thumbsUpTooltip).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 500,
+    },
+  },
+};
+
+export const DarkModeWithRatingHover: StoryObj<MessageActionsProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    onRatingChange: testOnRatingChange,
+    onSubmitFeedback: testOnSubmitFeedback,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const thumbsUpButton = canvas.getByRole('radio', {
+      name: 'Like this message',
+    });
+    await userEvent.hover(thumbsUpButton);
+
+    const thumbsUpTooltip = await canvas.findByRole('tooltip', {
+      name: 'Helpful',
+    });
+    expect(thumbsUpTooltip).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 500,
+    },
+  },
+};
+
 export const LightModeWithRatingSelect: StoryObj<MessageActionsProps> = {
   render: Template,
   args: {
@@ -97,6 +236,7 @@ export const LightModeWithRatingSelect: StoryObj<MessageActionsProps> = {
       name: 'Like this message',
     });
     await userEvent.click(thumbsUpButton);
+    await userEvent.unhover(thumbsUpButton);
 
     // Verify feedback form is visible
     const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
@@ -127,6 +267,7 @@ export const DarkModeWithRatingSelect: StoryObj<MessageActionsProps> = {
       name: 'Like this message',
     });
     await userEvent.click(thumbsUpButton);
+    await userEvent.unhover(thumbsUpButton);
 
     // Verify feedback form is visible
     const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
@@ -157,6 +298,7 @@ export const LightModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps>
         name: 'Like this message',
       });
       await userEvent.click(thumbsUpButton);
+      await userEvent.unhover(thumbsUpButton);
 
       // Type in feedback textarea
       const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
@@ -191,6 +333,7 @@ export const DarkModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps> 
         name: 'Like this message',
       });
       await userEvent.click(thumbsUpButton);
+      await userEvent.unhover(thumbsUpButton);
 
       // Type in feedback textarea
       const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
@@ -232,6 +375,7 @@ export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<Mess
       // Submit feedback
       const submitButton = canvas.getByRole('button', { name: 'Submit' });
       await userEvent.click(submitButton);
+      await userEvent.unhover(thumbsUpButton);
 
       // Verify success message is shown
       const successMessage = canvas.getByText('Thanks for your feedback!');
@@ -264,6 +408,7 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<Messa
         name: 'Like this message',
       });
       await userEvent.click(thumbsUpButton);
+      await userEvent.unhover(thumbsUpButton);
 
       // Type in feedback textarea
       const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
@@ -303,6 +448,7 @@ export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryO
         name: 'Like this message',
       });
       await userEvent.click(thumbsUpButton);
+      await userEvent.unhover(thumbsUpButton);
 
       // Type in feedback textarea
       const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
@@ -343,6 +489,7 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryOb
         name: 'Like this message',
       });
       await userEvent.click(thumbsUpButton);
+      await userEvent.unhover(thumbsUpButton);
 
       // Type in feedback textarea
       const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
@@ -386,6 +533,7 @@ export const LightModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageAc
         name: 'Like this message',
       });
       await userEvent.click(thumbsUpButton);
+      await userEvent.unhover(thumbsUpButton);
 
       // Type in feedback textarea
       const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
@@ -434,6 +582,7 @@ export const DarkModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageAct
         name: 'Like this message',
       });
       await userEvent.click(thumbsUpButton);
+      await userEvent.unhover(thumbsUpButton);
 
       // Type in feedback textarea
       const textarea = canvas.getByTestId(FEEDBACK_TEXTAREA_TEST_ID);
