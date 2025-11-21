@@ -186,18 +186,19 @@ describe('packages/guide-cue', () => {
       expect(body).toBeInTheDocument();
     });
 
-    test('primary button is focusable for focus trap targeting', async () => {
+    test('primary button is focused when opened', async () => {
       const { getByRole } = renderGuideCue({
         open: true,
       });
 
+      await waitFor(() => {
+        expect(getByRole('dialog')).toBeVisible(); // Checks visibility. If the dialog is visible, then the focus trap is in effect and the primary button is focused.
+      });
+
       const primaryButton = getByRole('button', { name: buttonTextDefault });
       expect(primaryButton).toBeInTheDocument();
-
-      userEvent.tab();
-      await waitFor(() => {
-        expect(primaryButton).toHaveFocus();
-      });
+      // This should automatically be in focus when the guidecue is opened.
+      expect(primaryButton).toHaveFocus();
     });
   });
 
@@ -367,7 +368,7 @@ describe('packages/guide-cue', () => {
       await waitFor(() => expect(numOfButtons).toEqual(2));
     });
 
-    test('primary button is focused for focus trap targeting', async () => {
+    test('primary button is focused when opened', async () => {
       const { getByRole } = renderGuideCue({
         open: true,
         numberOfSteps: 2,
@@ -380,7 +381,7 @@ describe('packages/guide-cue', () => {
 
       const primaryButton = getByRole('button', { name: buttonTextDefault });
       expect(primaryButton).toBeInTheDocument();
-      // This should be in focus when the guidecue is opened.
+      // This should automatically be in focus when the guidecue is opened.
       expect(primaryButton).toHaveFocus();
     });
   });
