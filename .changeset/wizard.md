@@ -32,6 +32,7 @@ Initial Wizard package release.
 The `Wizard` component establishes a context with an internal state, and will render only the `activeStep`. 
 
 You can also control the Wizard externally using the `activeStep` and `onStepChange` callback. 
+
 Note: if you externally control the state, you opt out of the automatic range validation, and you must ensure that the provided `activeStep` index is valid relative to the `Wizard.Step`s provided.
 
 ### Wizard.Step
