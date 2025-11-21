@@ -55,7 +55,18 @@ export const Wizard = CompoundComponent(
   },
   {
     displayName: 'Wizard',
+    /**
+     * A single step in the wizard. A Wizard will only render Steps as children
+     */
     Step: WizardStep,
+
+    /**
+     * The footer of a Step component.
+     * Render this inside of each Step with the relevant button props for that Step.
+     *
+     * Back and Primary buttons trigger onStepChange.
+     * Automatically renders the "Back" button for all Steps except the first
+     */
     Footer: WizardFooter,
   },
 );
