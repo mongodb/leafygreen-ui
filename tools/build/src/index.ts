@@ -3,7 +3,9 @@ export {
   registerBuildDocsCommand,
   registerBuildTSCommand,
   registerBundleCommand,
+  registerMinifyCommand,
 } from './cli-commands';
+export { minifyPackage } from './minify';
 export { buildPackage } from './rollup/build-package';
 export { buildTSDoc } from './tsdoc/build-tsdoc';
 export { parseTSDoc } from './tsdoc/tsdocParser';
