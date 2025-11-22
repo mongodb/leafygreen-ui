@@ -44,7 +44,8 @@ export const getSegmentThemeStyles = (theme: Theme) => {
       ]};
     }
 
-    &:focus {
+    &:focus,
+    &[data-focus='true'] {
       background-color: ${color[theme].background[Variant.Primary][
         InteractionState.Focus
       ]};
