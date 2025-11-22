@@ -28,7 +28,8 @@ export const baseStyles = css`
   -moz-appearance: textfield; /* Firefox */
   appearance: textfield;
 
-  &:focus {
+  &:focus,
+  &[data-focus='true'] {
     outline: none;
   }
 `;
