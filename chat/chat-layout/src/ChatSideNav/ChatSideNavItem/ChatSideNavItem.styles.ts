@@ -125,3 +125,11 @@ export const getItemStyles = ({
     },
     className,
   );
+
+export const textOverflowStyles = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1;
+`;
