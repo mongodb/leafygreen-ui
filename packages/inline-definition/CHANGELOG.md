@@ -1,5 +1,16 @@
 # @leafygreen-ui/inline-definition
 
+## 9.1.4
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [f7a63e2]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @leafygreen-ui/tokens@4.1.0
+
 ## 9.1.3
 
 ### Patch Changes

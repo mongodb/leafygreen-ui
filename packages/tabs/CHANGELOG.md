@@ -1,5 +1,15 @@
 # @leafygreen-ui/tabs
 
+## 17.0.8
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/typography@22.2.3
+
 ## 17.0.7
 
 ### Patch Changes
