@@ -278,6 +278,83 @@ const playClosesDrawerWhenActiveItemIsRemovedFromToolbarData = async ({
   });
 };
 
+// Reusable play function for testing focus management with toolbar buttons
+const playToolbarFocusManagement = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  const canvas = within(canvasElement);
+  const { getToolbarTestUtils, isOpen, getDrawer } = getTestUtils();
+  const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
+  const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
+  // Wait for the component to be fully rendered and find the button by test ID
+  const openCodeButton = await canvas.findByTestId('open-code-drawer-button');
+
+  // Verify initial state
+  expect(isOpen()).toBe(false);
+  userEvent.click(openCodeButton);
+
+  await waitFor(() => {
+    expect(isOpen()).toBe(true);
+    expect(canvas.getByText('Code Title')).toBeVisible();
+    expect(getDrawer()).toContain(document.activeElement);
+  });
+
+  // Toggle the drawer close
+  userEvent.click(codeButton!);
+
+  await waitFor(() => {
+    expect(isOpen()).toBe(false);
+  });
+
+  // Focus should remain on the toolbar button
+  await waitFor(() => {
+    expect(document.activeElement).toBe(codeButton);
+  });
+};
+
+// Reusable play function for testing focus management with main content button
+const playMainContentButtonFocusManagement = async ({
+  canvasElement,
+}: {
+  canvasElement: HTMLElement;
+}) => {
+  const canvas = within(canvasElement);
+  const { getCloseButtonUtils, isOpen, getDrawer } = getTestUtils();
+
+  // Wait for the component to be fully rendered and find the button by test ID
+  const openCodeButton = await canvas.findByTestId('open-code-drawer-button');
+
+  // Verify initial state
+  expect(isOpen()).toBe(false);
+  expect(openCodeButton).toBeInTheDocument();
+
+  userEvent.click(openCodeButton);
+
+  await waitFor(() => {
+    expect(isOpen()).toBe(true);
+    expect(canvas.getByText('Code Title')).toBeVisible();
+    expect(getDrawer()).toContain(document.activeElement);
+  });
+
+  // Get the close button from the drawer
+  const closeButton = getCloseButtonUtils().getButton();
+  expect(closeButton).toBeInTheDocument();
+
+  // Click the close button to close the drawer
+  userEvent.click(closeButton!);
+
+  await waitFor(() => {
+    expect(isOpen()).toBe(false);
+  });
+
+  // Focus should return to the original "Open Code Drawer" button
+  await waitFor(() => {
+    expect(document.activeElement).toBe(openCodeButton);
+  });
+};
+
 // For testing purposes. displayMode is read from the context, so we need to
 // pass it down to the DrawerToolbarLayoutProps.
 type DrawerToolbarLayoutPropsWithDisplayMode = DrawerToolbarLayoutProps & {
@@ -332,7 +409,12 @@ const Template: StoryFn<DrawerToolbarLayoutPropsWithDisplayMode> = ({
           padding: ${spacing[400]}px;
         `}
       >
-        <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
+        <Button
+          onClick={() => openDrawer('Code')}
+          data-testid="open-code-drawer-button"
+        >
+          Open Code Drawer
+        </Button>
         <LongContent />
         <LongContent />
       </main>
@@ -482,6 +564,24 @@ export const OverlayClosesDrawerWhenActiveItemIsRemovedFromToolbarData: StoryObj
     play: playClosesDrawerWhenActiveItemIsRemovedFromToolbarData,
   };
 
+export const OverlayToolbarIsFocusedOnClose: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
+    args: {
+      displayMode: DisplayMode.Overlay,
+    },
+    play: playToolbarFocusManagement,
+  };
+
+export const OverlayButtonIsFocusedOnClose: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutProps) => <Template {...args} />,
+    args: {
+      displayMode: DisplayMode.Overlay,
+    },
+    play: playMainContentButtonFocusManagement,
+  };
+
 export const EmbeddedOpensFirstToolbarItem: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
   {
     render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
@@ -546,6 +646,28 @@ export const EmbeddedClosesDrawerWhenActiveItemIsRemovedFromToolbarData: StoryOb
       displayMode: DisplayMode.Embedded,
     },
     play: playClosesDrawerWhenActiveItemIsRemovedFromToolbarData,
+  };
+
+export const EmbeddedToolbarIsFocusedOnClose: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <Template {...args} />
+    ),
+    args: {
+      displayMode: DisplayMode.Embedded,
+    },
+    play: playToolbarFocusManagement,
+  };
+
+export const EmbeddedButtonIsFocusedOnClose: StoryObj<DrawerToolbarLayoutPropsWithDisplayMode> =
+  {
+    render: (args: DrawerToolbarLayoutPropsWithDisplayMode) => (
+      <Template {...args} />
+    ),
+    args: {
+      displayMode: DisplayMode.Embedded,
+    },
+    play: playMainContentButtonFocusManagement,
   };
 
 interface MainContentProps {
