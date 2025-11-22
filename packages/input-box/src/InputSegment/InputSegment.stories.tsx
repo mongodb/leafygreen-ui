@@ -71,6 +71,8 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
         segment: ['day', 'year'],
         size: Object.values(Size),
         value: ['', '2', '02', '0', '00', '2025', '0000'],
+        // @ts-expect-error - data-focus is not a valid prop for InputSegment
+        'data-focus': [false, true],
       },
       excludeCombinations: [
         {
@@ -81,6 +83,13 @@ const meta: StoryMetaType<typeof InputSegment, InputSegmentStoryProps> = {
           value: ['2025', '0000'],
           segment: ['day'],
         },
+        [
+          // @ts-expect-error - data-focus is not a valid prop for InputSegment
+          'data-focus',
+          {
+            value: ['02', '0', '00', '2025', '0000'],
+          },
+        ],
       ],
       decorator: (StoryFn, context) => (
         <LeafyGreenProvider darkMode={context?.args.darkMode}>
