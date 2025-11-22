@@ -16,7 +16,7 @@
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
-    "docs": "lg-build tsdoc"
+    "docs": "lg-build docs"
   },
   "publishConfig": {
     "access": "public",
