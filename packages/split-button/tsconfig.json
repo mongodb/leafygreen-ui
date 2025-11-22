@@ -21,6 +21,9 @@
       "path": "../button"
     },
     {
+      "path": "../compound-component"
+    },
+    {
       "path": "../emotion"
     },
     {

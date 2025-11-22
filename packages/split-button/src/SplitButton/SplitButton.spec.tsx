@@ -443,8 +443,6 @@ describe('packages/split-button', () => {
         />
         {/* @ts-expect-error - expects label and menuItems*/}
         <SplitButton />
-        {/* @ts-expect-error - expects menuItems */}
-        <SplitButton label="label" />
         {/* @ts-expect-error - expects label */}
         <SplitButton menuItems={getMenuItems()} />
       </>;

@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactElement } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 
 import {
   type BaseButtonProps,
@@ -8,7 +8,6 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 import {
   Align as MenuAlign,
   Justify as MenuJustify,
-  MenuItemProps,
   type MenuProps as ImportedMenuProps,
   RenderMode,
 } from '@leafygreen-ui/menu';
@@ -17,9 +16,7 @@ import {
   PolymorphicAs,
 } from '@leafygreen-ui/polymorphic';
 
-export type MenuItemType = ReactElement<
-  InferredPolymorphicProps<PolymorphicAs, MenuItemProps>
->;
+import { type MenuItemType } from '../shared.types';
 
 export type MenuItemsType = Array<MenuItemType>;
 
@@ -47,7 +44,7 @@ export type Justify = (typeof Justify)[keyof typeof Justify];
 
 export { RenderMode };
 
-type ButtonProps = Omit<BaseButtonProps, 'rightGlyph' | 'variant'>;
+type ButtonProps = Omit<BaseButtonProps, 'children' | 'rightGlyph' | 'variant'>;
 
 export type SelectedMenuProps = Pick<
   ImportedMenuProps,
@@ -97,8 +94,9 @@ export interface MenuProps extends SelectedMenuProps {
    * ```
    *
    * @type Array<MenuItem>
+   * @deprecated Use children with SplitButton.MenuItem instead
    */
-  menuItems: MenuItemsType;
+  menuItems?: MenuItemsType;
 
   /**
    * Callback fired when the trigger is clicked.
@@ -131,6 +129,11 @@ export interface InternalSplitButtonProps
    * The text that will appear inside of the primary button.
    */
   label: string;
+
+  /**
+   * Children to be passed to SplitButton. Use SplitButton.MenuItem to render menu items.
+   */
+  children?: ReactNode;
 }
 
 // External only
