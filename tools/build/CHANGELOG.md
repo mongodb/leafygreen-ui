@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.8.4
+
+### Patch Changes
+
+- 56804b8: Refactored lg and lg-build scripts to share build command registration logic, ensuring consistent options and argument handling which fixes an issue where lg-build tsc was not processing args (e.g. --verbose) correctly. Also removed the unused --direct option from the build commands/scripts.
+
 ## 0.8.3
 
 ### Patch Changes

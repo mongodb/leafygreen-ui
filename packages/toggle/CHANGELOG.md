@@ -1,5 +1,15 @@
 # @leafygreen-ui/toggle
 
+## 12.1.4
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+
 ## 12.1.3
 
 ### Patch Changes

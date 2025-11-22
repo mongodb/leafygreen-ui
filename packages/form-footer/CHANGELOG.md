@@ -1,5 +1,19 @@
 # @leafygreen-ui/form-footer
 
+## 9.2.2
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [c7d6e62]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/split-button@6.2.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/banner@10.2.4
+
 ## 9.2.1
 
 ### Patch Changes

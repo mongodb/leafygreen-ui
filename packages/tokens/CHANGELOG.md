@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 4.1.0
+
+### Minor Changes
+
+- ec4fad8: Added `Tertiary`, `OnSuccess`, and `OnError` border color variants. Added `OnSuccess`, `OnError`, and `OnSuccessLink` text color variants
+
 ## 4.0.0
 
 ### Major Changes

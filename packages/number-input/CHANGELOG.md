@@ -1,5 +1,21 @@
 # @leafygreen-ui/number-input
 
+## 5.0.12
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [f7a63e2]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/form-field@4.0.8
+  - @leafygreen-ui/select@17.0.2
+  - @leafygreen-ui/typography@22.2.3
+
 ## 5.0.11
 
 ### Patch Changes
