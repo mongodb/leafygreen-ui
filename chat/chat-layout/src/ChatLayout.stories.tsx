@@ -265,7 +265,7 @@ export const SideNavItemHoveredLight: StoryObj<ChatLayoutProps> = {
   },
   parameters: {
     chromatic: {
-      delay: 500,
+      delay: 550,
     },
   },
 };
@@ -284,7 +284,7 @@ export const SideNavItemHoveredDark: StoryObj<ChatLayoutProps> = {
   },
   parameters: {
     chromatic: {
-      delay: 500,
+      delay: 550,
     },
   },
 };
