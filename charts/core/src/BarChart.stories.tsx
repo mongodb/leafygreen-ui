@@ -1,6 +1,7 @@
 import React from 'react';
 import type { StoryObj } from '@storybook/react';
 import { getByTestId, waitFor } from '@storybook/test';
+// because storybook ts files are excluded in the tsconfig to avoid redundant type-definition generation
 // @ts-ignore
 import { getInstanceByDom } from 'echarts';
 
@@ -84,10 +85,10 @@ export const BarWithOnHoverDimOthersBehavior: StoryObj<{
     );
   },
   play: async ({ canvasElement }) => {
-    const chartDom = getByTestId(canvasElement, 'chart-component');
+    const chartContainerElement = getByTestId(canvasElement, 'chart-component');
 
     const echartsInstance = await waitFor(function getEChartsInstance() {
-      const instance = getInstanceByDom(chartDom);
+      const instance = getInstanceByDom(chartContainerElement);
       if (!instance) throw new Error('ECharts instance not found');
       return instance;
     });
