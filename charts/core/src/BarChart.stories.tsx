@@ -117,7 +117,15 @@ export const BarWithCustomAxisPointer: StoryObj<{
   render: ({ axisPointer }) => {
     return (
       <Chart>
-        <XAxis type="time" />
+        <XAxis
+          type="time"
+          formatter={value => {
+            const date = new Date(value);
+            const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+            return `${minutes}:${seconds}`;
+          }}
+        />
         <YAxis type="value" />
         <ChartTooltip axisPointer={axisPointer} />
         {lowDensitySeriesData.map(({ name, data }) => (

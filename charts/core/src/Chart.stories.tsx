@@ -958,7 +958,7 @@ export const WithTooltip: StoryObj<{}> = {
     const tooltipElement = await waitFor(function AssertTooltipHeaderText() {
       const tooltip = canvasElement.querySelector('.lg-chart-tooltip');
       expect(tooltip).toBeVisible();
-      getByText(tooltip as HTMLElement, 'Jan 1, 2024, 8:00:00 AM (UTC)');
+      getByText(tooltip as HTMLElement, 'Jan 1, 2024, 12:00:00 AM (UTC)');
       return tooltip;
     });
 
