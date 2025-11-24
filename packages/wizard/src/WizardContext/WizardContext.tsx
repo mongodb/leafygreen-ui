@@ -11,11 +11,13 @@ export interface WizardContextData {
    * @returns
    */
   updateStep: (step: number) => void;
+  totalSteps: number;
 }
 
 export const WizardContext = createContext<WizardContextData>({
   isWizardContext: false,
   activeStep: 0,
+  totalSteps: 0,
   updateStep: () => {},
 });
 
@@ -26,6 +28,7 @@ export const WizardProvider = ({
   children,
   activeStep,
   updateStep,
+  totalSteps,
 }: WizardProviderProps) => {
   return (
     <WizardContext.Provider
@@ -33,6 +36,7 @@ export const WizardProvider = ({
         isWizardContext: true,
         activeStep,
         updateStep,
+        totalSteps,
       }}
     >
       {children}
