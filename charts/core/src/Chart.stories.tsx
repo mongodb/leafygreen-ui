@@ -922,8 +922,12 @@ export const NullValues: StoryObj<{}> = {
 
 export const WithTooltip: StoryObj<{}> = {
   render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [ready, setReady] = useState(false);
+
     return (
-      <Chart data-testid="chart-component">
+      <Chart data-testid="chart-component" onChartReady={() => setReady(true)}>
+        {ready && <div data-testid="chart-is-ready" />}
         <ChartTooltip />
         {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
@@ -936,6 +940,8 @@ export const WithTooltip: StoryObj<{}> = {
 
     const [echartsInstance, chartCanvasElement] = await waitFor(
       function CaptureEChartsInstanceAndCanvas() {
+        expect(getByTestId(canvasElement, 'chart-is-ready')).toBeVisible();
+
         const instance = getInstanceByDom(chartContainerElement);
         if (!instance) throw new Error('ECharts instance not found');
 
@@ -947,12 +953,17 @@ export const WithTooltip: StoryObj<{}> = {
       },
     );
 
-    step('Trigger tooltip display', async () => {
-      echartsInstance.dispatchAction({
-        type: 'showTip',
-        seriesIndex: 1,
-        dataIndex: 0,
-      });
+    await step('Trigger tooltip display', () => {
+      echartsInstance.dispatchAction(
+        {
+          type: 'showTip',
+          seriesIndex: 1,
+          dataIndex: 0,
+        },
+        {
+          flush: true,
+        },
+      );
     });
 
     const tooltipElement = await waitFor(function AssertTooltipHeaderText() {

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { StoryObj } from '@storybook/react';
-import { getByTestId, waitFor } from '@storybook/test';
+import { expect, getByTestId, waitFor } from '@storybook/test';
 // because storybook ts files are excluded in the tsconfig to avoid redundant type-definition generation
 // @ts-ignore
 import { getInstanceByDom } from 'echarts';
@@ -70,8 +70,12 @@ export const BarWithOnHoverDimOthersBehavior: StoryObj<{
     },
   },
   render: ({ hoverBehavior }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [ready, setReady] = useState(false);
+
     return (
-      <Chart data-testid="chart-component">
+      <Chart data-testid="chart-component" onChartReady={() => setReady(true)}>
+        {ready && <div data-testid="chart-is-ready" />}
         <ChartTooltip />
         {lowDensitySeriesData.map(({ name, data }) => (
           <Bar
@@ -84,19 +88,28 @@ export const BarWithOnHoverDimOthersBehavior: StoryObj<{
       </Chart>
     );
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const chartContainerElement = getByTestId(canvasElement, 'chart-component');
 
     const echartsInstance = await waitFor(function getEChartsInstance() {
+      expect(getByTestId(canvasElement, 'chart-is-ready')).toBeVisible();
+
       const instance = getInstanceByDom(chartContainerElement);
       if (!instance) throw new Error('ECharts instance not found');
       return instance;
     });
 
-    echartsInstance.dispatchAction({
-      type: 'highlight',
-      seriesIndex: 1,
-      dataIndex: 0,
+    await step('Trigger data point hover', () => {
+      echartsInstance.dispatchAction(
+        {
+          type: 'highlight',
+          seriesIndex: 1,
+          dataIndex: 0,
+        },
+        {
+          flush: true,
+        },
+      );
     });
   },
 };
