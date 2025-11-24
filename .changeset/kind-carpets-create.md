@@ -1,6 +1,6 @@
 ---
-'@leafygreen-ui/code-editor': minor
-'@leafygreen-ui/code': minor
+'@leafygreen-ui/code-editor': patch
+'@leafygreen-ui/code': patch
 ---
 
 Refactor `IconButton` instances to use compact tooltip UI
