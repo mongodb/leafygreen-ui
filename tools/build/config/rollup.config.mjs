@@ -54,7 +54,7 @@ const createOutput = ({ format, useTerser = false, outputNameSuffix = '' }) => {
 };
 
 /**
- * @param {import('rollup').OutputOptions} output
+ * @param {import('rollup').RollupOptions['output']} output
  * @param {Partial<import('rollup').RollupOptions>} [overrides]
  * @returns {import('rollup').RollupOptions}
  */

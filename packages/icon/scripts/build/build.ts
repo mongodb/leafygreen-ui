@@ -89,6 +89,7 @@ async function buildIcons(options: BuildIconOptions): Promise<void> {
 
 new Command()
   .description('Split icon files into batches for bundling in parallel')
+  .option('-f, --force', 'Force build all icons', false)
   .option('-v, --verbose', 'Enable verbose output', false)
   .action(buildIcons)
   .parse();
