@@ -53,13 +53,18 @@ export const WizardFooter = CompoundSubComponent(
         backButtonProps={
           activeStep > 0
             ? {
+                'data-lgid': lgIds.footerBackButton,
                 ...backButtonProps,
                 onClick: handleBackButtonClick,
               }
             : undefined
         }
-        cancelButtonProps={cancelButtonProps}
+        cancelButtonProps={{
+          'data-lgid': lgIds.footerCancelButton,
+          ...cancelButtonProps,
+        }}
         primaryButtonProps={{
+          'data-lgid': lgIds.footerPrimaryButton,
           ...primaryButtonProps,
           disabled: isPrimaryButtonDisabled,
           onClick: handlePrimaryButtonClick,

@@ -77,7 +77,7 @@ describe('packages/wizard/getTestUtils', () => {
       expect(primaryButton).toHaveTextContent('Next Step');
     });
 
-    test('queryPrimaryButton returns null when button is not present', () => {
+    test('queryPrimaryButton returns null when the primary button is not present', () => {
       render(<div>No wizard here</div>);
 
       const { queryPrimaryButton } = getTestUtils();
@@ -191,7 +191,7 @@ describe('packages/wizard/getTestUtils', () => {
       expect(cancelButton).toHaveTextContent('Cancel Process');
     });
 
-    test('queryCancelButton returns null when cancel button is not present', () => {
+    test('queryCancelButton returns the default cancel button if no props are provided', () => {
       render(
         <Wizard>
           <Wizard.Step>
@@ -203,7 +203,7 @@ describe('packages/wizard/getTestUtils', () => {
 
       const { queryCancelButton } = getTestUtils();
       const button = queryCancelButton();
-      expect(button).not.toBeInTheDocument();
+      expect(button).toBeInTheDocument();
     });
 
     test('findCancelButton finds the cancel button element', async () => {
@@ -241,13 +241,13 @@ describe('packages/wizard/getTestUtils', () => {
 
       const footer = getFooter();
       expect(footer).toBeInTheDocument();
-      expect(footer).toHaveAttribute('data-testid', 'custom-wizard-footer');
+      expect(footer).toHaveAttribute('data-testid', 'lg-custom-wizard-footer');
 
       const button = getPrimaryButton();
       expect(button).toBeInTheDocument();
       expect(button).toHaveAttribute(
         'data-testid',
-        'custom-wizard-footer-primary_button',
+        'lg-custom-wizard-footer-primary_button',
       );
     });
   });
