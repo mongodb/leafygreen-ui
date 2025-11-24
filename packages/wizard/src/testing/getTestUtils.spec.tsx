@@ -6,97 +6,6 @@ import { Wizard } from '../Wizard';
 import { getTestUtils } from './getTestUtils';
 
 describe('packages/wizard/getTestUtils', () => {
-  describe('Current Step utils', () => {
-    test('getCurrentStep returns the currently active step element', () => {
-      render(
-        <Wizard>
-          <Wizard.Step>
-            <div data-testid="step-1">Step 1 content</div>
-            <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
-          </Wizard.Step>
-          <Wizard.Step>
-            <div data-testid="step-2">Step 2 content</div>
-            <Wizard.Footer primaryButtonProps={{ children: 'Finish' }} />
-          </Wizard.Step>
-        </Wizard>,
-      );
-
-      const { getCurrentStep } = getTestUtils();
-      const step = getCurrentStep();
-      expect(step).toBeInTheDocument();
-      expect(step).toHaveAttribute('data-lgid', 'lg-wizard-step');
-      // Verify it's the first step
-      expect(step).toContainElement(
-        document.querySelector('[data-testid="step-1"]'),
-      );
-      expect(step).toHaveTextContent('Step 1 content');
-      // Verify second step is not rendered
-      expect(document.querySelector('[data-testid="step-2"]')).toBeNull();
-    });
-
-    test('getCurrentStep returns different step when activeStep changes', () => {
-      const { rerender } = render(
-        <Wizard activeStep={0}>
-          <Wizard.Step>
-            <div data-testid="step-1">Step 1</div>
-            <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
-          </Wizard.Step>
-          <Wizard.Step>
-            <div data-testid="step-2">Step 2</div>
-            <Wizard.Footer primaryButtonProps={{ children: 'Finish' }} />
-          </Wizard.Step>
-        </Wizard>,
-      );
-
-      const { getCurrentStep } = getTestUtils();
-      const step1 = getCurrentStep();
-      expect(step1).toHaveTextContent('Step 1');
-
-      rerender(
-        <Wizard activeStep={1}>
-          <Wizard.Step>
-            <div data-testid="step-1">Step 1</div>
-            <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
-          </Wizard.Step>
-          <Wizard.Step>
-            <div data-testid="step-2">Step 2</div>
-            <Wizard.Footer primaryButtonProps={{ children: 'Finish' }} />
-          </Wizard.Step>
-        </Wizard>,
-      );
-
-      const step2 = getCurrentStep();
-      expect(step2).toHaveTextContent('Step 2');
-      expect(step2).not.toBe(step1);
-    });
-
-    test('queryCurrentStep returns null when no step is present', () => {
-      render(<div>No wizard here</div>);
-
-      const { queryCurrentStep } = getTestUtils();
-      const step = queryCurrentStep();
-      expect(step).not.toBeInTheDocument();
-    });
-
-    test('findCurrentStep finds the current step element', async () => {
-      render(
-        <Wizard>
-          <Wizard.Step>
-            <div data-testid="step-content">Step 1</div>
-            <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
-          </Wizard.Step>
-        </Wizard>,
-      );
-
-      const { findCurrentStep } = getTestUtils();
-      const step = await findCurrentStep();
-      expect(step).toBeInTheDocument();
-      expect(step).toContainElement(
-        document.querySelector('[data-testid="step-content"]'),
-      );
-    });
-  });
-
   describe('Footer utils', () => {
     test('getFooter returns the correct footer element', () => {
       render(
@@ -320,7 +229,7 @@ describe('packages/wizard/getTestUtils', () => {
   describe('with custom lgId', () => {
     test('uses custom lgId when provided', () => {
       render(
-        <Wizard data-lgid="custom-wizard">
+        <Wizard data-lgid="lg-custom-wizard">
           <Wizard.Step>
             <div data-testid="custom-content">Step 1</div>
             <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
@@ -328,12 +237,7 @@ describe('packages/wizard/getTestUtils', () => {
         </Wizard>,
       );
 
-      const { getCurrentStep, getFooter, getPrimaryButton } =
-        getTestUtils('custom-wizard');
-
-      const step = getCurrentStep();
-      expect(step).toBeInTheDocument();
-      expect(step).toHaveAttribute('data-lgid', 'custom-wizard-step');
+      const { getFooter, getPrimaryButton } = getTestUtils('lg-custom-wizard');
 
       const footer = getFooter();
       expect(footer).toBeInTheDocument();

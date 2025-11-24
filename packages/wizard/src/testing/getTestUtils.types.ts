@@ -1,9 +1,4 @@
 export interface TestUtilsReturnType {
-  // Current Step utils
-  findCurrentStep: () => Promise<HTMLDivElement>;
-  getCurrentStep: () => HTMLDivElement;
-  queryCurrentStep: () => HTMLDivElement | null;
-
   // Footer utils
   findFooter: () => Promise<HTMLElement>;
   getFooter: () => HTMLElement;
