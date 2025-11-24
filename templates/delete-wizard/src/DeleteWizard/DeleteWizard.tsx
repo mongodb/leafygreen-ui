@@ -5,35 +5,40 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 import { cx } from '@leafygreen-ui/emotion';
-import { useWizardContext, Wizard } from '@leafygreen-ui/wizard';
+import { Wizard } from '@leafygreen-ui/wizard';
 
 import { DeleteWizardSubComponentKeys } from './compoundComponentProperties';
 import { wizardWrapperStyles } from './DeleteWizard.styles';
 import { DeleteWizardProps } from './DeleteWizard.types';
+import { DeleteWizardContextProvider } from './DeleteWizardContext';
 import { DeleteWizardFooter } from './DeleteWizardFooter';
 import { DeleteWizardHeader } from './DeleteWizardHeader';
 import { DeleteWizardStep } from './DeleteWizardStep';
 import { DeleteWizardStepContent } from './DeleteWizardStepContents';
 
 /**
- * A re-export of `useWizardContext` specifically for this DeleteWizard
- */
-export const useDeleteWizardContext = useWizardContext;
-
-/**
  * The parent DeleteWizard component.
  * Pass a `DeleteWizard.Header` and any number of `DeleteWizard.Step`s as children
  */
 export const DeleteWizard = CompoundComponent(
-  ({ activeStep, onStepChange, children, className }: DeleteWizardProps) => {
+  ({
+    activeStep,
+    children,
+    className,
+    onCancel,
+    onDelete,
+    onStepChange,
+  }: DeleteWizardProps) => {
     const header = findChild(children, DeleteWizardSubComponentKeys.Header);
 
     return (
       <div className={cx(wizardWrapperStyles, className)}>
         {header}
-        <Wizard activeStep={activeStep} onStepChange={onStepChange}>
-          {children}
-        </Wizard>
+        <DeleteWizardContextProvider onCancel={onCancel} onDelete={onDelete}>
+          <Wizard activeStep={activeStep} onStepChange={onStepChange}>
+            {children}
+          </Wizard>
+        </DeleteWizardContextProvider>
       </div>
     );
   },

@@ -5,7 +5,6 @@ import { StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/Beaker';
-import TrashIcon from '@leafygreen-ui/icon/Trash';
 import { BackLink, Body } from '@leafygreen-ui/typography';
 
 import { ExampleStepContent } from './testUtils/ExampleStepContent';
@@ -50,6 +49,10 @@ export const LiveExample: StoryObj<typeof DeleteWizard> = {
       window.location.reload();
     };
 
+    const handleStepChange = step => {
+      console.log('[STORYBOOK] step changed to ', step);
+    };
+
     return (
       <div
         className={css`
@@ -58,6 +61,9 @@ export const LiveExample: StoryObj<typeof DeleteWizard> = {
       >
         <DeleteWizard
           activeStep={args.activeStep}
+          onStepChange={handleStepChange}
+          onCancel={handleCancel}
+          onDelete={handleDelete}
           className={css`
             height: 100vh;
             width: 100vw;
@@ -83,13 +89,8 @@ export const LiveExample: StoryObj<typeof DeleteWizard> = {
               />
             </DeleteWizard.StepContent>
             <DeleteWizard.Footer
-              cancelButtonProps={{
-                children: 'Cancel wizard',
-                onClick: handleCancel,
-              }}
-              primaryButtonProps={{
-                children: 'Continue to next step',
-              }}
+              cancelButtonText="Cancel wizard"
+              primaryButtonText="Continue to next step"
             />
           </DeleteWizard.Step>
 
@@ -104,16 +105,9 @@ export const LiveExample: StoryObj<typeof DeleteWizard> = {
               />
             </DeleteWizard.StepContent>
             <DeleteWizard.Footer
-              cancelButtonProps={{
-                children: 'Cancel wizard',
-                onClick: handleCancel,
-              }}
-              primaryButtonProps={{
-                leftGlyph: <TrashIcon />,
-                variant: 'danger',
-                children: 'Delete my thing',
-                onClick: handleDelete,
-              }}
+              backButtonText="Go back"
+              cancelButtonText="Cancel wizard"
+              primaryButtonText="Delete the prop"
             />
           </DeleteWizard.Step>
         </DeleteWizard>
