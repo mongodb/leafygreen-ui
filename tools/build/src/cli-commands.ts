@@ -3,7 +3,6 @@ import { Command } from 'commander';
 import { buildPackage } from './rollup/build-package';
 import { buildTSDoc } from './tsdoc/build-tsdoc';
 import { buildTypescript } from './typescript/build-ts';
-import { minifyPackage } from './minify';
 
 export function registerBundleCommand(command: Command) {
   command
@@ -36,16 +35,4 @@ export function registerBuildDocsCommand(command: Command) {
     .description('Build TSDoc documentation')
     .option('-v, --verbose', 'Enable verbose logging', false)
     .action(buildTSDoc);
-}
-
-export function registerMinifyCommand(command: Command) {
-  command
-    .description('Minify built JavaScript bundles')
-    .option(
-      '-p, --glob <glob>',
-      'Glob pattern to match javascript files to minify, prefixed with ! to exclude',
-      ['dist/**/*.*js', '!dist/**/*-min.*js'],
-    )
-    .option('-v, --verbose', 'Enable verbose logging', false)
-    .action(minifyPackage);
 }
