@@ -78,16 +78,14 @@ export const LiveExample: StoryObj<typeof DeleteWizard> = {
               margin-inline: 72px;
             `}
           />
-          <DeleteWizard.Step requiresAcknowledgement>
-            <DeleteWizard.StepContent>
-              <ExampleStepContent
-                index={0}
-                description={demoSteps[0].description}
-                content={demoSteps[0].content.split('\n').map((p, i) => (
-                  <Body key={i}>{p}</Body>
-                ))}
-              />
-            </DeleteWizard.StepContent>
+          <DeleteWizard.Step>
+            <ExampleStepContent
+              index={0}
+              description={demoSteps[0].description}
+              content={demoSteps[0].content.split('\n').map((p, i) => (
+                <Body key={i}>{p}</Body>
+              ))}
+            />
             <DeleteWizard.Footer
               cancelButtonText="Cancel wizard"
               primaryButtonText="Continue to next step"
@@ -95,19 +93,17 @@ export const LiveExample: StoryObj<typeof DeleteWizard> = {
           </DeleteWizard.Step>
 
           <DeleteWizard.Step requiresAcknowledgement>
-            <DeleteWizard.StepContent>
-              <ExampleStepContent
-                index={1}
-                description={demoSteps[1].description}
-                content={demoSteps[1].content.split('\n').map((p, i) => (
-                  <Body key={i}>{p}</Body>
-                ))}
-              />
-            </DeleteWizard.StepContent>
+            <ExampleStepContent
+              index={1}
+              description={demoSteps[1].description}
+              content={demoSteps[1].content.split('\n').map((p, i) => (
+                <Body key={i}>{p}</Body>
+              ))}
+            />
             <DeleteWizard.Footer
               backButtonText="Go back"
               cancelButtonText="Cancel wizard"
-              primaryButtonText="Delete the prop"
+              primaryButtonText="Delete the thing"
             />
           </DeleteWizard.Step>
         </DeleteWizard>

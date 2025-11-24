@@ -14,7 +14,6 @@ import { DeleteWizardContextProvider } from './DeleteWizardContext';
 import { DeleteWizardFooter } from './DeleteWizardFooter';
 import { DeleteWizardHeader } from './DeleteWizardHeader';
 import { DeleteWizardStep } from './DeleteWizardStep';
-import { DeleteWizardStepContent } from './DeleteWizardStepContents';
 
 /**
  * The parent DeleteWizard component.
@@ -53,11 +52,6 @@ export const DeleteWizard = CompoundComponent(
      * A simple wrapper around Wizard.Step to ensure correct Wizard context
      */
     Step: DeleteWizardStep,
-
-    /**
-     * A styled `div` for use inside a `DeleteWizard.Step` to ensure proper page scrolling and footer positioning
-     */
-    StepContent: DeleteWizardStepContent,
 
     /**
      * A wrapper around Wizard.Footer with embedded styles for the DeleteWizard template.
