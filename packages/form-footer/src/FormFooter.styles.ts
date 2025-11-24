@@ -4,15 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { addOverflowShadow, Side } from '@leafygreen-ui/tokens';
 
 const footerBaseStyle = css`
-  min-height: 92px;
   width: 100%;
-  padding: 26px 24px;
-  display: flex;
-  align-items: center;
-
-  button {
-    white-space: nowrap;
-  }
 `;
 
 const footerThemeStyle: Record<Theme, string> = {
@@ -25,7 +17,20 @@ const footerThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const contentStyle = css`
+const innerContainerBaseStyle = css`
+  min-height: 92px;
+  width: 100%;
+  padding: 26px 24px;
+  display: flex;
+  align-items: center;
+  background: inherit;
+
+  button {
+    white-space: nowrap;
+  }
+`;
+
+const contentStyle = css`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -51,10 +56,13 @@ export const getFormFooterStyles = ({
 }: {
   theme: Theme;
   className?: string;
-}) =>
+}) => cx(footerBaseStyle, footerThemeStyle[theme], className);
+
+export const getInnerContainerStyles = ({ theme }: { theme: Theme }) =>
   cx(
-    footerBaseStyle,
-    footerThemeStyle[theme],
+    innerContainerBaseStyle,
     addOverflowShadow({ side: Side.Top, theme, isInside: false }),
-    className,
   );
+
+export const getContentStyles = (contentClassName?: string) =>
+  cx(contentStyle, contentClassName);

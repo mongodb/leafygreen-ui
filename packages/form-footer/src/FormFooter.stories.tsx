@@ -11,7 +11,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Icon } from '@leafygreen-ui/icon';
 import { MenuItem } from '@leafygreen-ui/menu';
 
-import FormFooter, { FormFooterProps } from '.';
+import { FormFooter, FormFooterProps } from '.';
 
 const wrapperStyle = css`
   min-width: 40vw;
@@ -80,6 +80,27 @@ const Template: StoryType<typeof FormFooter> = ({
   />
 );
 
+const StickyTemplate: StoryType<typeof FormFooter> = ({
+  primaryButtonProps,
+  ...args
+}: FormFooterStoryProps) => (
+  <div
+    className={css`
+      padding-top: calc(100vh - 92px);
+      position: relative;
+    `}
+  >
+    <FormFooter
+      {...args}
+      primaryButtonProps={{ children: 'Button', variant: 'primary' }}
+      className={css`
+        position: sticky;
+        bottom: 0;
+        z-index: 1;
+      `}
+    />
+  </div>
+);
 export const LiveExample: StoryObj<FormFooterProps> = {
   render: Template,
   parameters: {
@@ -119,4 +140,9 @@ export const DarkMode: StoryObj<typeof FormFooter> = {
   args: {
     darkMode: true,
   },
+};
+
+export const StickyFooter: StoryObj<typeof FormFooter> = {
+  render: StickyTemplate,
+  args: {},
 };
