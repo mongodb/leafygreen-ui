@@ -48,7 +48,12 @@ export const Wizard = CompoundComponent(
     );
 
     return (
-      <WizardProvider activeStep={activeStep} updateStep={updateStep}>
+      <WizardProvider
+        activeStep={activeStep}
+        updateStep={updateStep}
+        totalSteps={stepChildren.length}
+        lgIds={lgIds}
+      >
         {stepChildren.map((child, i) => (i === activeStep ? child : null))}
       </WizardProvider>
     );
