@@ -1,7 +1,6 @@
 export { doesSomeSegmentExist } from './doesSomeSegmentExist';
 export { doSegmentsFormValidDate } from './doSegmentsFormValidDate';
 export { getAutoComplete } from './getAutoComplete';
-export { getFirstEmptySegment } from './getFirstEmptySegment';
 export { getFormatParts, getFormatter } from './getFormatParts';
 export {
   getFormattedDateString,
