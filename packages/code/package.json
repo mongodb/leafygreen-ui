@@ -54,7 +54,7 @@
     "highlight.js": "~11.5.0",
     "highlightjs-graphql": "^1.0.1",
     "lodash": "catalog:",
-    "polished": "^4.2.2"
+    "polished": "catalog:"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"

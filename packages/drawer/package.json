@@ -42,7 +42,7 @@
     "@leafygreen-ui/toolbar": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
-    "polished": "^4.2.2",
+    "polished": "catalog:",
     "react-intersection-observer": "^8.25.1"
   },
   "devDependencies": {

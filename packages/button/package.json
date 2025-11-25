@@ -40,7 +40,7 @@
     "@leafygreen-ui/ripple": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
-    "polished": "^4.2.2"
+    "polished": "catalog:"
   },
   "devDependencies": {
     "@leafygreen-ui/icon": "workspace:^",

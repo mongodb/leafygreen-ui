@@ -28,7 +28,7 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "lodash": "catalog:",
-    "polished": "^4.3.1",
+    "polished": "catalog:",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {

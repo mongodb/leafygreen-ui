@@ -42,7 +42,7 @@
     "@tanstack/react-table": "^8.20.5",
     "@tanstack/react-virtual": "^3.10.7",
     "lodash": "catalog:",
-    "polished": "^4.2.2",
+    "polished": "catalog:",
     "react-fast-compare": "3.2.2",
     "react-intersection-observer": "^8.25.1"
   },

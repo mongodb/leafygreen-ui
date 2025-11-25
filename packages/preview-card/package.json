@@ -35,7 +35,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
-    "polished": "^4.2.2"
+    "polished": "catalog:"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",

@@ -30,7 +30,7 @@
     "@leafygreen-ui/typography": "workspace:^",
     "date-fns": "^2.30.0",
     "lodash": "catalog:",
-    "polished": "^4.2.2",
+    "polished": "catalog:",
     "weekstart": "^2.0.0"
   },
   "peerDependencies": {
