@@ -4,6 +4,7 @@ import { StoryObj } from '@storybook/react';
 
 import { Body, Description, H3 } from '@leafygreen-ui/typography';
 
+import { getLgIds } from '../utils/getLgIds';
 import { WizardProvider } from '../WizardContext';
 
 import { WizardStep, WizardStepProps } from '.';
@@ -16,7 +17,12 @@ const meta: StoryMetaType<typeof WizardStep> = {
   },
   decorators: [
     Story => (
-      <WizardProvider activeStep={0} updateStep={() => {}} totalSteps={1}>
+      <WizardProvider
+        activeStep={0}
+        updateStep={() => {}}
+        totalSteps={1}
+        lgIds={getLgIds()}
+      >
         <Story />
       </WizardProvider>
     ),
