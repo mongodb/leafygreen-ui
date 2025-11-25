@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
+import {
+  expect,
+  getByTestId,
+  getByText,
+  userEvent,
+  waitFor,
+} from '@storybook/test';
+// because storybook ts files are excluded in the tsconfig to avoid redundant type-definition generation
+// @ts-ignore
+import { getInstanceByDom } from 'echarts';
 
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
@@ -39,42 +49,7 @@ const xAxisMax = Math.max(...allXValues);
 const yAxisMin = 0;
 const yAxisMax = 2500;
 
-export default {
-  title: 'Composition/Charts/Core',
-  component: Chart,
-  parameters: {
-    default: 'LiveExample',
-    chromatic: {
-      /**
-       * For some reason diffs keep getting flagged on non-changes to the canvas.
-       * The default threshold is .063, so bumping it up to 1 to test. We might
-       * consider lowering this in the future.
-       */
-      diffThreshold: 1,
-    },
-  },
-
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-    state: {
-      table: {
-        disable: true,
-      },
-    },
-    key: {
-      table: {
-        disable: true,
-      },
-    },
-    ref: {
-      table: {
-        disable: true,
-      },
-    },
-  },
-};
-
-export const LiveExample: StoryObj<{
+interface LiveExampleProps {
   darkMode: boolean;
   data: Array<LineProps>;
   state: ChartProps['state'];
@@ -120,7 +95,44 @@ export const LiveExample: StoryObj<{
   thresholdLineLabel: ThresholdLineProps['label'];
   thresholdLineValue: ThresholdLineProps['value'];
   thresholdLinePosition: ThresholdLineProps['position'];
-}> = {
+}
+
+export default {
+  title: 'Composition/Charts/Core',
+  component: Chart,
+  parameters: {
+    default: 'LiveExample',
+    chromatic: {
+      /**
+       * For some reason diffs keep getting flagged on non-changes to the canvas.
+       * The default threshold is .063, so bumping it up to 1 to test. We might
+       * consider lowering this in the future.
+       */
+      diffThreshold: 1,
+    },
+  },
+
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+    state: {
+      table: {
+        disable: true,
+      },
+    },
+    key: {
+      table: {
+        disable: true,
+      },
+    },
+    ref: {
+      table: {
+        disable: true,
+      },
+    },
+  },
+} as StoryObj<LiveExampleProps>;
+
+export const LiveExample: StoryObj<LiveExampleProps> = {
   args: {
     data: seriesData,
     state: 'unset',
@@ -910,14 +922,64 @@ export const NullValues: StoryObj<{}> = {
 
 export const WithTooltip: StoryObj<{}> = {
   render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [ready, setReady] = useState(false);
+
     return (
-      <Chart>
+      <Chart data-testid="chart-component" onChartReady={() => setReady(true)}>
+        {ready && <div data-testid="chart-is-ready" />}
         <ChartTooltip />
         {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
     );
+  },
+  play: async ({ canvasElement, step }) => {
+    const chartContainerElement = getByTestId(canvasElement, 'chart-component');
+
+    const [echartsInstance, chartCanvasElement] = await waitFor(
+      function CaptureEChartsInstanceAndCanvas() {
+        expect(getByTestId(canvasElement, 'chart-is-ready')).toBeVisible();
+
+        const instance = getInstanceByDom(chartContainerElement);
+        if (!instance) throw new Error('ECharts instance not found');
+
+        const canvas =
+          chartContainerElement.querySelector<HTMLCanvasElement>('canvas');
+        if (!canvas) throw new Error('Canvas element not found');
+
+        return [instance, canvas];
+      },
+    );
+
+    await step('Trigger tooltip display', () => {
+      echartsInstance.dispatchAction(
+        {
+          type: 'showTip',
+          seriesIndex: 1,
+          dataIndex: 0,
+        },
+        {
+          flush: true,
+        },
+      );
+    });
+
+    const tooltipElement = await waitFor(function AssertTooltipHeaderText() {
+      const tooltip = canvasElement.querySelector('.lg-chart-tooltip');
+      expect(tooltip).toBeVisible();
+      getByText(tooltip as HTMLElement, 'Jan 1, 2024, 12:00:00 AM (UTC)');
+      return tooltip;
+    });
+
+    await step('Trigger tooltip hide', async () => {
+      userEvent.unhover(chartCanvasElement!);
+    });
+
+    await waitFor(function AssertTooltipIsHidden() {
+      expect(tooltipElement).not.toBeVisible();
+    });
   },
 };
 
