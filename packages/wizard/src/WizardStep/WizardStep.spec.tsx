@@ -6,6 +6,7 @@ import { getLgIds as getFooterLgIds } from '@leafygreen-ui/form-footer';
 
 import { Wizard } from '../Wizard/Wizard';
 import { useWizardContext } from '../WizardContext';
+import { WizardFooter } from '../WizardFooter';
 
 import { useWizardStepContext, WizardStep } from '.';
 
@@ -132,9 +133,11 @@ describe('packages/wizard-step', () => {
         <Wizard>
           <Wizard.Step requiresAcknowledgement>
             <TestComponent />
+            <WizardFooter primaryButtonProps={{ children: 'Continue' }} />
           </Wizard.Step>
           <Wizard.Step requiresAcknowledgement>
             <TestComponent />
+            <WizardFooter primaryButtonProps={{ children: 'Finish' }} />
           </Wizard.Step>
         </Wizard>,
       );
@@ -153,6 +156,7 @@ describe('packages/wizard-step', () => {
         expect(getByTestId('step-1')).toBeInTheDocument();
       });
 
+      // Step 2: Acknowledgement is reset
       expect(getByTestId('is-ack')).toHaveTextContent('false');
       userEvent.click(getByRole('button', { name: 'Acknowledge' }));
       expect(getByTestId('is-ack')).toHaveTextContent('true');
