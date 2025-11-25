@@ -27,7 +27,7 @@
     "@leafygreen-ui/popover": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "lodash": "^4.17.21",
+    "lodash": "catalog:",
     "polished": "^4.2.2"
   },
   "peerDependencies": {

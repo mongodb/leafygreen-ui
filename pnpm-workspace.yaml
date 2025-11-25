@@ -6,3 +6,6 @@ packages:
   - 'mcp-ui/*'
   - 'packages/*'
   - 'tools/*'
+
+catalog:
+  lodash: ^4.17.21
