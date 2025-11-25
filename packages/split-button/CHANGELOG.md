@@ -1,5 +1,11 @@
 # @leafygreen-ui/split-button
 
+## 6.3.0
+
+### Minor Changes
+
+- 9ed0058: [LG-5285](https://jira.mongodb.org/browse/LG-5285): pass through and export `MenuItem` and `MenuItemProps` to fix cross-dependency issues with `@leafygreen-ui/menu`
+
 ## 6.2.0
 
 ### Minor Changes

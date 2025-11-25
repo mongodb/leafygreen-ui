@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 20.2.5
+
+### Patch Changes
+
+- 19c0cbe: Refactor `IconButton` instances to use compact tooltip UI
+
 ## 20.2.4
 
 ### Patch Changes
