@@ -1,8 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { getLgIds as getFooterLgIds } from '@leafygreen-ui/form-footer';
+
 import { Wizard } from '../Wizard/Wizard';
+import { useWizardContext } from '../WizardContext';
 
 import { useWizardStepContext, WizardStep } from '.';
 
@@ -28,7 +31,7 @@ describe('packages/wizard-step', () => {
   });
 
   describe('requiresAcknowledgement', () => {
-    test('when false, does not require acknowledgement', () => {
+    test('by default, does not require acknowledgement', () => {
       const TestComponent = () => {
         const { requiresAcknowledgement } = useWizardStepContext();
         return (
@@ -70,7 +73,7 @@ describe('packages/wizard-step', () => {
       expect(getByTestId('requires-ack')).toHaveTextContent('true');
     });
 
-    test('isAcknowledged starts as false', () => {
+    test('isAcknowledged is false by default', () => {
       const TestComponent = () => {
         const { isAcknowledged } = useWizardStepContext();
         return <div data-testid="is-ack">{String(isAcknowledged)}</div>;
@@ -115,12 +118,13 @@ describe('packages/wizard-step', () => {
 
     test('acknowledgement state resets between steps', async () => {
       const TestComponent = () => {
+        const { activeStep } = useWizardContext();
         const { isAcknowledged, setAcknowledged } = useWizardStepContext();
         return (
-          <>
+          <div data-testid={`step-${activeStep}`}>
             <div data-testid="is-ack">{String(isAcknowledged)}</div>
             <button onClick={() => setAcknowledged(true)}>Acknowledge</button>
-          </>
+          </div>
         );
       };
 
@@ -136,8 +140,21 @@ describe('packages/wizard-step', () => {
       );
 
       // Step 1: acknowledge and move forward
+      expect(getByTestId('step-0')).toBeInTheDocument();
       expect(getByTestId('is-ack')).toHaveTextContent('false');
-      await userEvent.click(getByRole('button', { name: 'Acknowledge' }));
+      userEvent.click(getByRole('button', { name: 'Acknowledge' }));
+      expect(getByTestId('is-ack')).toHaveTextContent('true');
+
+      // TODO: replace with Wizard test harness
+      const primaryBtn = getByTestId(getFooterLgIds().primaryButton);
+      userEvent.click(primaryBtn);
+
+      await waitFor(() => {
+        expect(getByTestId('step-1')).toBeInTheDocument();
+      });
+
+      expect(getByTestId('is-ack')).toHaveTextContent('false');
+      userEvent.click(getByRole('button', { name: 'Acknowledge' }));
       expect(getByTestId('is-ack')).toHaveTextContent('true');
     });
   });

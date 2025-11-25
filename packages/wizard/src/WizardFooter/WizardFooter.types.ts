@@ -5,9 +5,7 @@ import type {
   PrimaryStandardButtonProps,
 } from '@leafygreen-ui/form-footer';
 
-export interface WizardFooterProps
-  extends React.ComponentProps<'footer'>,
-    FormFooterProps {
+export interface WizardFooterProps extends FormFooterProps {
   backButtonProps?: BackStandardButtonProps;
   cancelButtonProps?: CancelStandardButtonProps;
   primaryButtonProps: PrimaryStandardButtonProps;
