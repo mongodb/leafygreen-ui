@@ -9,3 +9,4 @@ packages:
 
 catalog:
   lodash: ^4.17.21
+  prettier: 2.8.8
