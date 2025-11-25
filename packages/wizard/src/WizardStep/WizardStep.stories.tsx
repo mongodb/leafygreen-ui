@@ -16,7 +16,7 @@ const meta: StoryMetaType<typeof WizardStep> = {
   },
   decorators: [
     Story => (
-      <WizardProvider activeStep={0} updateStep={() => {}}>
+      <WizardProvider activeStep={0} updateStep={() => {}} totalSteps={1}>
         <Story />
       </WizardProvider>
     ),
@@ -50,9 +50,11 @@ export const LiveExample: StoryObj<WizardStepStoryProps> = {
   },
   render: args => (
     <WizardStep>
-      <H3>{args.title}</H3>
-      <Description>{args.description}</Description>
-      <Body>{args.children}</Body>
+      <div>
+        <H3>{args.title}</H3>
+        <Description>{args.description}</Description>
+        <Body>{args.children}</Body>
+      </div>
     </WizardStep>
   ),
 };
