@@ -9,7 +9,7 @@ import { Card } from '@leafygreen-ui/card';
 import { Checkbox } from '@leafygreen-ui/checkbox';
 import { css } from '@leafygreen-ui/emotion';
 import { isDefined } from '@leafygreen-ui/lib';
-import { Description, H3, InlineCode } from '@leafygreen-ui/typography';
+import { Body, Description, H3, InlineCode } from '@leafygreen-ui/typography';
 
 import { useWizardStepContext, Wizard } from '.';
 
@@ -61,7 +61,10 @@ const ExampleContentCard = ({ children }: PropsWithChildren<{}>) => {
   return (
     <Card
       className={css`
-        margin-top: 24px;
+        margin: 24px;
+        & > * {
+          margin-block: 8px;
+        }
       `}
     >
       {requiresAcknowledgement && (
@@ -116,7 +119,7 @@ export const LiveExample: StoryObj<typeof Wizard> = {
                   Storybook controls to update the step
                 </Banner>
               )}
-              {content}
+              <Body>{content}</Body>
             </ExampleContentCard>
             <Wizard.Footer
               backButtonProps={{
