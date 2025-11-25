@@ -27,7 +27,7 @@
     "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "polished": "catalog:",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "catalog:"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"

@@ -23,7 +23,7 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@types/react-transition-group": "^4.4.5",
     "lodash": "catalog:",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "catalog:"
   },
   "devDependencies": {
     "@faker-js/faker": "catalog:",

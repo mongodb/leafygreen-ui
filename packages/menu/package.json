@@ -29,7 +29,7 @@
     "@leafygreen-ui/typography": "workspace:^",
     "lodash": "catalog:",
     "polished": "catalog:",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "catalog:"
   },
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^",
