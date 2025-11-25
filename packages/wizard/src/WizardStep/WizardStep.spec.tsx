@@ -2,12 +2,13 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { getLgIds as getFooterLgIds } from '@leafygreen-ui/form-footer';
-
+import { getTestUtils } from '../testing';
 import { Wizard } from '../Wizard/Wizard';
 import { useWizardContext } from '../WizardContext';
 
 import { useWizardStepContext, WizardStep } from '.';
+
+const wizardUtils = getTestUtils();
 
 describe('packages/wizard-step', () => {
   test('does not render outside WizardContext', () => {
@@ -145,8 +146,7 @@ describe('packages/wizard-step', () => {
       userEvent.click(getByRole('button', { name: 'Acknowledge' }));
       expect(getByTestId('is-ack')).toHaveTextContent('true');
 
-      // TODO: replace with Wizard test harness
-      const primaryBtn = getByTestId(getFooterLgIds().primaryButton);
+      const primaryBtn = wizardUtils.getPrimaryButton();
       userEvent.click(primaryBtn);
 
       await waitFor(() => {
