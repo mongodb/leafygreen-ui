@@ -17,7 +17,7 @@
     "@lg-tools/build": "workspace:^",
     "chalk": "catalog:",
     "fs-extra": "catalog:",
-    "glob": "10.3.12",
+    "glob": "catalog:",
     "is-git-clean": "1.1.0",
     "jscodeshift": "17.3.0",
     "prettier": "catalog:"

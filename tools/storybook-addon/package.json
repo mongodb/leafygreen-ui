@@ -88,7 +88,7 @@
     "crypto-browserify": "^3.12.1",
     "events": "^3.3.0",
     "file-loader": "6.2.0",
-    "glob": "10.3.12",
+    "glob": "catalog:",
     "lodash": "catalog:",
     "node-polyfill-webpack-plugin": "^4.1.0",
     "os-browserify": "0.3.0",
