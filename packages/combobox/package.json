@@ -28,7 +28,7 @@
     "@leafygreen-ui/popover": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "chalk": "^4.1.2",
+    "chalk": "catalog:",
     "lodash": "catalog:",
     "polished": "catalog:"
   },

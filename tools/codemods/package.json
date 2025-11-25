@@ -15,15 +15,15 @@
   },
   "dependencies": {
     "@lg-tools/build": "workspace:^",
-    "chalk": "4.1.2",
-    "fs-extra": "11.1.1",
+    "chalk": "catalog:",
+    "fs-extra": "catalog:",
     "glob": "10.3.12",
     "is-git-clean": "1.1.0",
     "jscodeshift": "17.3.0",
     "prettier": "catalog:"
   },
   "devDependencies": {
-    "@types/fs-extra": "11.0.1",
+    "@types/fs-extra": "catalog:",
     "@types/is-git-clean": "1.1.0",
     "@types/jscodeshift": "0.11.11"
   },
