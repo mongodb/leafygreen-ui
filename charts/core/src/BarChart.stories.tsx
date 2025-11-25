@@ -3,7 +3,7 @@ import type { StoryObj } from '@storybook/react';
 import { expect, getByTestId, waitFor } from '@storybook/test';
 // because storybook ts files are excluded in the tsconfig to avoid redundant type-definition generation
 // @ts-ignore
-import { getInstanceByDom } from 'echarts';
+import { EChartsOption, getInstanceByDom, SeriesOption } from 'echarts';
 
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
 import { BarHoverBehavior } from './Series/Bar';
@@ -97,6 +97,12 @@ export const BarWithOnHoverDimOthersBehavior: StoryObj<{
       const instance = getInstanceByDom(chartContainerElement);
       if (!instance) throw new Error('ECharts instance not found');
       return instance;
+    });
+
+    await waitFor(function WaitForSeries() {
+      const option = echartsInstance.getOption() as EChartsOption;
+      const series = (option['series'] as Array<SeriesOption>) || [];
+      expect(series.length).toBe(lowDensitySeriesData.length);
     });
 
     await step('Trigger data point hover', () => {
