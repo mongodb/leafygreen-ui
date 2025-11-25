@@ -1,5 +1,15 @@
 # @leafygreen-ui/typography
 
+## 22.2.3
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+
 ## 22.2.2
 
 ### Patch Changes

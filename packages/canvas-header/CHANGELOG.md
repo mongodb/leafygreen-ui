@@ -1,5 +1,19 @@
 # @leafygreen-ui/canvas-header
 
+## 3.0.2
+
+### Patch Changes
+
+- 78f8481: First public release of CanvasHeader
+- Updated dependencies [f7a63e2]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/typography@22.2.3
+
 Previously published as `@lg-private/canvas-header`
 
 ## 3.0.1

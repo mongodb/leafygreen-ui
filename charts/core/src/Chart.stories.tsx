@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
-import { getByTestId, waitFor } from '@storybook/test';
+import {
+  expect,
+  getByTestId,
+  getByText,
+  userEvent,
+  waitFor,
+} from '@storybook/test';
+// because storybook ts files are excluded in the tsconfig to avoid redundant type-definition generation
 // @ts-ignore
 import { getInstanceByDom } from 'echarts';
 
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
-import { BarHoverBehavior } from './Series/Bar';
 import { ContinuousAxisProps } from './Axis';
-import { Bar, LineProps } from './Series';
+import { LineProps } from './Series';
 import { makeSeriesData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
@@ -32,12 +38,6 @@ import {
 
 const numOfLineColors = 15;
 const seriesData = makeSeriesData(numOfLineColors);
-const lowDensitySeriesData = seriesData
-  .filter((_, i) => i < 3)
-  .map(series => ({
-    ...series,
-    data: series.data.filter((d, i) => i % 4 === 0),
-  }));
 
 // Dynamically calculate x-axis min/max from the generated data to avoid timezone issues
 const allXValues =
@@ -49,42 +49,7 @@ const xAxisMax = Math.max(...allXValues);
 const yAxisMin = 0;
 const yAxisMax = 2500;
 
-export default {
-  title: 'Composition/Charts/Core',
-  component: Chart,
-  parameters: {
-    default: 'LiveExample',
-    chromatic: {
-      /**
-       * For some reason diffs keep getting flagged on non-changes to the canvas.
-       * The default threshold is .063, so bumping it up to 1 to test. We might
-       * consider lowering this in the future.
-       */
-      diffThreshold: 1,
-    },
-  },
-
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-    state: {
-      table: {
-        disable: true,
-      },
-    },
-    key: {
-      table: {
-        disable: true,
-      },
-    },
-    ref: {
-      table: {
-        disable: true,
-      },
-    },
-  },
-};
-
-export const LiveExample: StoryObj<{
+interface LiveExampleProps {
   darkMode: boolean;
   data: Array<LineProps>;
   state: ChartProps['state'];
@@ -130,7 +95,44 @@ export const LiveExample: StoryObj<{
   thresholdLineLabel: ThresholdLineProps['label'];
   thresholdLineValue: ThresholdLineProps['value'];
   thresholdLinePosition: ThresholdLineProps['position'];
-}> = {
+}
+
+export default {
+  title: 'Composition/Charts/Core',
+  component: Chart,
+  parameters: {
+    default: 'LiveExample',
+    chromatic: {
+      /**
+       * For some reason diffs keep getting flagged on non-changes to the canvas.
+       * The default threshold is .063, so bumping it up to 1 to test. We might
+       * consider lowering this in the future.
+       */
+      diffThreshold: 1,
+    },
+  },
+
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+    state: {
+      table: {
+        disable: true,
+      },
+    },
+    key: {
+      table: {
+        disable: true,
+      },
+    },
+    ref: {
+      table: {
+        disable: true,
+      },
+    },
+  },
+} as StoryObj<LiveExampleProps>;
+
+export const LiveExample: StoryObj<LiveExampleProps> = {
   args: {
     data: seriesData,
     state: 'unset',
@@ -898,163 +900,6 @@ export const _Line: StoryObj<{}> = {
   },
 };
 
-export const _Bar: StoryObj<{}> = {
-  render: () => {
-    return (
-      <Chart>
-        <ChartTooltip />
-        {lowDensitySeriesData.map(({ name, data }) => (
-          <Bar name={name} data={data} key={name} />
-        ))}
-      </Chart>
-    );
-  },
-};
-
-export const BarStacked: StoryObj<{}> = {
-  render: () => {
-    return (
-      <Chart>
-        <ChartTooltip />
-        {lowDensitySeriesData.map(({ name, data }, index) => (
-          <Bar
-            name={name}
-            data={data}
-            key={name}
-            stack={index < 2 ? 'same' : undefined}
-          />
-        ))}
-      </Chart>
-    );
-  },
-};
-
-export const BarWithOnHoverDimOthersBehavior: StoryObj<{
-  hoverBehavior: BarHoverBehavior;
-}> = {
-  args: {
-    hoverBehavior: BarHoverBehavior.DimOthers,
-  },
-  argTypes: {
-    hoverBehavior: {
-      control: 'select',
-      options: [BarHoverBehavior.DimOthers, BarHoverBehavior.None],
-      defaultValue: BarHoverBehavior.DimOthers,
-    },
-  },
-  render: ({ hoverBehavior }) => {
-    return (
-      <Chart data-testid="chart-component">
-        <ChartTooltip />
-        {lowDensitySeriesData.map(({ name, data }) => (
-          <Bar
-            name={name}
-            data={data}
-            key={name}
-            hoverBehavior={hoverBehavior}
-          />
-        ))}
-      </Chart>
-    );
-  },
-  play: async ({ canvasElement }) => {
-    const chartDom = getByTestId(canvasElement, 'chart-component');
-
-    const echartsInstance = await waitFor(function getEChartsInstance() {
-      const instance = getInstanceByDom(chartDom);
-      if (!instance) throw new Error('ECharts instance not found');
-      return instance;
-    });
-
-    echartsInstance.dispatchAction({
-      type: 'highlight',
-      seriesIndex: 1,
-      dataIndex: 0,
-    });
-  },
-};
-
-export const BarWithCustomAxisPointer: StoryObj<{
-  axisPointer: ChartTooltipProps['axisPointer'];
-}> = {
-  args: {
-    axisPointer: 'shadow',
-  },
-  argTypes: {
-    axisPointer: {
-      control: 'select',
-      options: ['line', 'shadow', 'none'],
-      defaultValue: 'shadow',
-    },
-  },
-  render: ({ axisPointer }) => {
-    return (
-      <Chart>
-        <XAxis type="time" />
-        <YAxis type="value" />
-        <ChartTooltip axisPointer={axisPointer} />
-        {lowDensitySeriesData.map(({ name, data }) => (
-          <Bar name={name} data={data} key={name} />
-        ))}
-      </Chart>
-    );
-  },
-};
-
-export const BarWithCategoryAxisLabel: StoryObj<{
-  axisPointer: ChartTooltipProps['axisPointer'];
-}> = {
-  args: {
-    axisPointer: 'shadow',
-  },
-  argTypes: {
-    axisPointer: {
-      control: 'select',
-      options: ['line', 'shadow', 'none'],
-      defaultValue: 'shadow',
-    },
-  },
-  render: ({ axisPointer }) => {
-    const xAxisData = lowDensitySeriesData[0].data.map(([x, _]) =>
-      // Format as "mm:ss" instead of slicing the ISO string
-      (() => {
-        const date = new Date(x as number);
-        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-        const seconds = String(date.getUTCSeconds()).padStart(2, '0');
-        return `⏱️ ${minutes}:${seconds}`;
-      })(),
-    );
-
-    const yAxisData = [
-      'Low',
-      'Medium-Low',
-      'Medium',
-      'Medium-High',
-      'High',
-      'Very High',
-      'Extreme',
-    ];
-
-    return (
-      <Chart>
-        <XAxis type="category" labels={xAxisData} />
-        <YAxis type="category" labels={yAxisData} />
-        <ChartTooltip axisPointer={axisPointer} />
-        {lowDensitySeriesData.map(({ name, data }) => (
-          <Bar
-            key={name}
-            name={name}
-            data={data.map(([_, value], i) => [
-              i,
-              (value as number) % yAxisData.length,
-            ])}
-          />
-        ))}
-      </Chart>
-    );
-  },
-};
-
 export const NullValues: StoryObj<{}> = {
   render: () => {
     return (
@@ -1077,14 +922,64 @@ export const NullValues: StoryObj<{}> = {
 
 export const WithTooltip: StoryObj<{}> = {
   render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [ready, setReady] = useState(false);
+
     return (
-      <Chart>
+      <Chart data-testid="chart-component" onChartReady={() => setReady(true)}>
+        {ready && <div data-testid="chart-is-ready" />}
         <ChartTooltip />
         {seriesData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
     );
+  },
+  play: async ({ canvasElement, step }) => {
+    const chartContainerElement = getByTestId(canvasElement, 'chart-component');
+
+    const [echartsInstance, chartCanvasElement] = await waitFor(
+      function CaptureEChartsInstanceAndCanvas() {
+        expect(getByTestId(canvasElement, 'chart-is-ready')).toBeVisible();
+
+        const instance = getInstanceByDom(chartContainerElement);
+        if (!instance) throw new Error('ECharts instance not found');
+
+        const canvas =
+          chartContainerElement.querySelector<HTMLCanvasElement>('canvas');
+        if (!canvas) throw new Error('Canvas element not found');
+
+        return [instance, canvas];
+      },
+    );
+
+    await step('Trigger tooltip display', () => {
+      echartsInstance.dispatchAction(
+        {
+          type: 'showTip',
+          seriesIndex: 1,
+          dataIndex: 0,
+        },
+        {
+          flush: true,
+        },
+      );
+    });
+
+    const tooltipElement = await waitFor(function AssertTooltipHeaderText() {
+      const tooltip = canvasElement.querySelector('.lg-chart-tooltip');
+      expect(tooltip).toBeVisible();
+      getByText(tooltip as HTMLElement, 'Jan 1, 2024, 12:00:00 AM (UTC)');
+      return tooltip;
+    });
+
+    await step('Trigger tooltip hide', async () => {
+      userEvent.unhover(chartCanvasElement!);
+    });
+
+    await waitFor(function AssertTooltipIsHidden() {
+      expect(tooltipElement).not.toBeVisible();
+    });
   },
 };
 

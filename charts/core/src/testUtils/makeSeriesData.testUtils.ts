@@ -146,7 +146,7 @@ export function makeSeriesData(numOfSets: number): Array<SeriesProps> {
   const seriesParams = generateSeriesParams(numOfSets);
 
   // Create the start date
-  const startDate = new Date(2024, 0, 1); // January 1st, 2024
+  const startDate = Date.parse('2024-01-01T00:00:00.000Z'); // January 1st, 2024
 
   for (let i = 0; i < numOfSets; i++) {
     const series: SeriesProps = {

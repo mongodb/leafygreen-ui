@@ -57,11 +57,33 @@ export default meta;
 
 const chatItems = [
   { id: '1', name: 'MongoDB Atlas Setup', href: '/chat/1' },
-  { id: '2', name: 'Writing a Database Query', href: '/chat/2' },
+  {
+    id: '2',
+    name: 'Writing a very very very long Database Query',
+    href: '/chat/2',
+  },
   { id: '3', name: 'Schema Design Discussion', href: '/chat/3' },
   { id: '4', name: 'Performance Optimization', href: '/chat/4' },
   { id: '5', name: 'Migration Planning', href: '/chat/5' },
 ];
+
+const hoverSideNav = async (canvasElement: HTMLElement) => {
+  const canvas = within(canvasElement);
+  const sideNav = canvas.getByLabelText('Side navigation');
+  await userEvent.hover(sideNav);
+};
+
+const hoverSideNavItem = async ({
+  canvasElement,
+  itemText,
+}: {
+  canvasElement: HTMLElement;
+  itemText: string;
+}) => {
+  const canvas = within(canvasElement);
+  const item = canvas.getByText(itemText);
+  await userEvent.hover(item);
+};
 
 const Template: StoryFn<ChatLayoutProps> = props => {
   const [activeId, setActiveId] = useState<string | null>('1');
@@ -172,13 +194,7 @@ export const UnpinnedAndHoveredLight: StoryObj<ChatLayoutProps> = {
     initialIsPinned: false,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Find the side nav
-    const sideNav = canvas.getByLabelText('Side navigation');
-
-    // Hover over the side nav
-    await userEvent.hover(sideNav);
+    await hoverSideNav(canvasElement);
   },
   parameters: {
     chromatic: {
@@ -194,17 +210,81 @@ export const UnpinnedAndHoveredDark: StoryObj<ChatLayoutProps> = {
     initialIsPinned: false,
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Find the side nav
-    const sideNav = canvas.getByLabelText('Side navigation');
-
-    // Hover over the side nav
-    await userEvent.hover(sideNav);
+    await hoverSideNav(canvasElement);
   },
   parameters: {
     chromatic: {
       delay: 350,
+    },
+  },
+};
+
+export const UnpinnedAndFocusedLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement: _canvasElement }) => {
+    userEvent.tab();
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
+    },
+  },
+};
+
+export const UnpinnedAndFocusedDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement: _canvasElement }) => {
+    userEvent.tab();
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
+    },
+  },
+};
+
+export const SideNavItemHoveredLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: true,
+  },
+  play: async ({ canvasElement }) => {
+    await hoverSideNavItem({
+      canvasElement,
+      itemText: 'Writing a very very very long Database Query',
+    });
+  },
+  parameters: {
+    chromatic: {
+      delay: 550,
+    },
+  },
+};
+
+export const SideNavItemHoveredDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: true,
+  },
+  play: async ({ canvasElement }) => {
+    await hoverSideNavItem({
+      canvasElement,
+      itemText: 'Writing a very very very long Database Query',
+    });
+  },
+  parameters: {
+    chromatic: {
+      delay: 550,
     },
   },
 };

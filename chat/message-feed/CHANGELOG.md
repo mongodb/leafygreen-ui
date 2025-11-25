@@ -1,5 +1,19 @@
 # @lg-chat/message-feed
 
+## 9.0.1
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [d21ec41]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @lg-chat/message-rating@7.1.0
+  - @lg-chat/message@10.1.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+
 ## 9.0.0
 
 ### Major Changes

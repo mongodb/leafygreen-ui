@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/canvas-header",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "LeafyGreen UI Kit Canvas Header",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -16,11 +16,10 @@
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
-    "docs": "lg-build tsdoc"
+    "docs": "lg-build docs"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+    "access": "public"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
