@@ -295,101 +295,101 @@ describe('packages/wizard-footer', () => {
       expect(onStepChange).toHaveBeenCalledWith(1);
       expect(getByTestId('step-2')).toBeInTheDocument();
     });
-  });
 
-  describe('requiresAcknowledgement', () => {
-    test('primary button is disabled when step requires acknowledgement and is not acknowledged', () => {
-      const { getByRole } = render(
-        <Wizard>
-          <Wizard.Step requiresAcknowledgement>
-            <div>Step content</div>
-            <Wizard.Footer primaryButtonProps={{ children: 'Continue' }} />
-          </Wizard.Step>
-        </Wizard>,
-      );
-
-      const primaryButton = getByRole('button', { name: 'Continue' });
-      expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
-    });
-
-    test('primary button is enabled when step requires acknowledgement and is acknowledged', async () => {
-      const TestComponent = () => {
-        const { setAcknowledged } = useWizardStepContext();
-        return (
-          <>
-            <div>Step content</div>
-            <button onClick={() => setAcknowledged(true)}>Acknowledge</button>
-            <Wizard.Footer primaryButtonProps={{ children: 'Continue' }} />
-          </>
+    describe('requiresAcknowledgement', () => {
+      test('primary button is disabled when step requires acknowledgement and is not acknowledged', () => {
+        const { getByRole } = render(
+          <Wizard>
+            <Wizard.Step requiresAcknowledgement>
+              <div>Step content</div>
+              <Wizard.Footer primaryButtonProps={{ children: 'Continue' }} />
+            </Wizard.Step>
+          </Wizard>,
         );
-      };
 
-      const { getByRole } = render(
-        <Wizard>
-          <Wizard.Step requiresAcknowledgement>
-            <TestComponent />
-          </Wizard.Step>
-        </Wizard>,
-      );
+        const primaryButton = getByRole('button', { name: 'Continue' });
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
+      });
 
-      const primaryButton = getByRole('button', { name: 'Continue' });
-      expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
+      test('primary button is enabled when step requires acknowledgement and is acknowledged', async () => {
+        const TestComponent = () => {
+          const { setAcknowledged } = useWizardStepContext();
+          return (
+            <>
+              <div>Step content</div>
+              <button onClick={() => setAcknowledged(true)}>Acknowledge</button>
+              <Wizard.Footer primaryButtonProps={{ children: 'Continue' }} />
+            </>
+          );
+        };
 
-      await userEvent.click(getByRole('button', { name: 'Acknowledge' }));
-
-      expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
-    });
-
-    test('primary button is enabled when step does not require acknowledgement', () => {
-      const { getByRole } = render(
-        <Wizard>
-          <Wizard.Step>
-            <div>Step content</div>
-            <Wizard.Footer primaryButtonProps={{ children: 'Continue' }} />
-          </Wizard.Step>
-        </Wizard>,
-      );
-
-      const primaryButton = getByRole('button', { name: 'Continue' });
-      expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
-    });
-
-    test('primary button can advance step after acknowledgement', async () => {
-      const TestComponent = () => {
-        const { setAcknowledged } = useWizardStepContext();
-        return (
-          <>
-            <div>Step content</div>
-            <button onClick={() => setAcknowledged(true)}>Acknowledge</button>
-            <Wizard.Footer primaryButtonProps={{ children: 'Continue' }} />
-          </>
+        const { getByRole } = render(
+          <Wizard>
+            <Wizard.Step requiresAcknowledgement>
+              <TestComponent />
+            </Wizard.Step>
+          </Wizard>,
         );
-      };
 
-      const { getByRole, getByTestId } = render(
-        <Wizard>
-          <Wizard.Step requiresAcknowledgement>
-            <div data-testid="step-1">Step 1</div>
-            <TestComponent />
-          </Wizard.Step>
-          <Wizard.Step>
-            <div data-testid="step-2">Step 2</div>
-          </Wizard.Step>
-        </Wizard>,
-      );
+        const primaryButton = getByRole('button', { name: 'Continue' });
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
 
-      expect(getByTestId('step-1')).toBeInTheDocument();
+        await userEvent.click(getByRole('button', { name: 'Acknowledge' }));
 
-      const primaryButton = getByRole('button', { name: 'Continue' });
-      expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
+      });
 
-      // Acknowledge the step
-      await userEvent.click(getByRole('button', { name: 'Acknowledge' }));
-      expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
+      test('primary button is enabled when step does not require acknowledgement', () => {
+        const { getByRole } = render(
+          <Wizard>
+            <Wizard.Step>
+              <div>Step content</div>
+              <Wizard.Footer primaryButtonProps={{ children: 'Continue' }} />
+            </Wizard.Step>
+          </Wizard>,
+        );
 
-      // Advance to next step
-      await userEvent.click(primaryButton);
-      expect(getByTestId('step-2')).toBeInTheDocument();
+        const primaryButton = getByRole('button', { name: 'Continue' });
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
+      });
+
+      test('primary button can advance step after acknowledgement', async () => {
+        const TestComponent = () => {
+          const { setAcknowledged } = useWizardStepContext();
+          return (
+            <>
+              <div>Step content</div>
+              <button onClick={() => setAcknowledged(true)}>Acknowledge</button>
+              <Wizard.Footer primaryButtonProps={{ children: 'Continue' }} />
+            </>
+          );
+        };
+
+        const { getByRole, getByTestId } = render(
+          <Wizard>
+            <Wizard.Step requiresAcknowledgement>
+              <div data-testid="step-1">Step 1</div>
+              <TestComponent />
+            </Wizard.Step>
+            <Wizard.Step>
+              <div data-testid="step-2">Step 2</div>
+            </Wizard.Step>
+          </Wizard>,
+        );
+
+        expect(getByTestId('step-1')).toBeInTheDocument();
+
+        const primaryButton = getByRole('button', { name: 'Continue' });
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
+
+        // Acknowledge the step
+        await userEvent.click(getByRole('button', { name: 'Acknowledge' }));
+        expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
+
+        // Advance to next step
+        await userEvent.click(primaryButton);
+        expect(getByTestId('step-2')).toBeInTheDocument();
+      });
     });
   });
 
