@@ -101,7 +101,7 @@ export const BarWithOnHoverDimOthersBehavior: StoryObj<{
 
     await waitFor(function WaitForSeries() {
       const option = echartsInstance.getOption() as EChartsOption;
-      const series = (option['series'] as Array<SeriesOption>) || [];
+      const series = (option.series as Array<SeriesOption>) || [];
       expect(series.length).toBe(lowDensitySeriesData.length);
     });
 
