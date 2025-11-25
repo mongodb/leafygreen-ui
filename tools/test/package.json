@@ -39,6 +39,6 @@
     "regenerator-runtime": "0.14.0"
   },
   "peerDependencies": {
-    "@babel/core": "^7.23.2"
+    "@babel/core": "catalog:"
   }
 }

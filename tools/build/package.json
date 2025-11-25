@@ -19,7 +19,7 @@
     "tsc": "./scripts/build-ts.sh"
   },
   "dependencies": {
-    "@babel/core": "7.24.3",
+    "@babel/core": "catalog:",
     "@babel/plugin-proposal-export-default-from": "7.24.1",
     "@babel/preset-env": "7.24.3",
     "@babel/preset-react": "7.24.1",
@@ -51,7 +51,7 @@
     "typescript": "~5.8.0"
   },
   "peerDependencies": {
-    "@babel/core": "7.24.0",
+    "@babel/core": "catalog:",
     "turbo": "^2.0.6",
     "typescript": "~5.8.0"
   },
