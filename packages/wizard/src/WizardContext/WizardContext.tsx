@@ -39,7 +39,7 @@ export const WizardContext = createContext<WizardContextData>({
   activeStep: 0,
   totalSteps: 0,
   updateStep: () => {},
-  lgIds: getLgIds('lg-wizard'),
+  lgIds: getLgIds(),
 });
 
 interface WizardProviderProps
@@ -50,7 +50,7 @@ export const WizardProvider = ({
   activeStep,
   updateStep,
   totalSteps,
-  lgIds = getLgIds('lg-wizard'),
+  lgIds = getLgIds(),
 }: WizardProviderProps) => {
   return (
     <WizardContext.Provider
