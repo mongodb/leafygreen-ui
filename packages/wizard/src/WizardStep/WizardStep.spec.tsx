@@ -28,7 +28,7 @@ describe('packages/wizard-step', () => {
   });
 
   describe('requiresAcknowledgement', () => {
-    test('when false, does not require acknowledgement', () => {
+    test('by default, does not require acknowledgement', () => {
       const TestComponent = () => {
         const { requiresAcknowledgement } = useWizardStepContext();
         return (
@@ -70,7 +70,7 @@ describe('packages/wizard-step', () => {
       expect(getByTestId('requires-ack')).toHaveTextContent('true');
     });
 
-    test('isAcknowledged starts as false', () => {
+    test('isAcknowledged is false by default', () => {
       const TestComponent = () => {
         const { isAcknowledged } = useWizardStepContext();
         return <div data-testid="is-ack">{String(isAcknowledged)}</div>;
