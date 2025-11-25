@@ -953,25 +953,24 @@ export const WithTooltip: StoryObj<{}> = {
       },
     );
 
-    await step('Trigger tooltip display', () => {
-      echartsInstance.dispatchAction(
-        {
-          type: 'showTip',
-          seriesIndex: 1,
-          dataIndex: 0,
-        },
-        {
-          flush: true,
-        },
-      );
-    });
-
-    const tooltipElement = await waitFor(function AssertTooltipHeaderText() {
-      const tooltip = canvasElement.querySelector('.lg-chart-tooltip');
-      expect(tooltip).toBeVisible();
-      getByText(tooltip as HTMLElement, 'Jan 1, 2024, 12:00:00 AM (UTC)');
-      return tooltip;
-    });
+    const tooltipElement = await waitFor(
+      function TriggerTooltipAndAssertHeader() {
+        echartsInstance.dispatchAction(
+          {
+            type: 'showTip',
+            seriesIndex: 1,
+            dataIndex: 0,
+          },
+          {
+            flush: true,
+          },
+        );
+        const tooltip = canvasElement.querySelector('.lg-chart-tooltip');
+        expect(tooltip).toBeVisible();
+        getByText(tooltip as HTMLElement, 'Jan 1, 2024, 12:00:00 AM (UTC)');
+        return tooltip;
+      },
+    );
 
     await step('Trigger tooltip hide', async () => {
       userEvent.unhover(chartCanvasElement!);
