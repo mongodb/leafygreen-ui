@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { addOverflowShadow, Side } from '@leafygreen-ui/tokens';
+import { addOverflowShadow, Side, spacing } from '@leafygreen-ui/tokens';
 
 const footerBaseStyle = css`
   width: 100%;
@@ -20,7 +20,7 @@ const footerThemeStyle: Record<Theme, string> = {
 const innerContainerBaseStyle = css`
   min-height: 92px;
   width: 100%;
-  padding: 26px 24px;
+  padding: 26px ${spacing[600]}px;
   display: flex;
   align-items: center;
   background: inherit;
@@ -33,7 +33,7 @@ const innerContainerBaseStyle = css`
 const contentStyle = css`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: ${spacing[200]}px;
   width: 100%;
 `;
 
