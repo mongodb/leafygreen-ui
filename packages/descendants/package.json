@@ -17,7 +17,7 @@
   "dependencies": {
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "lodash": "^4.17.21"
+    "lodash": "catalog:"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",

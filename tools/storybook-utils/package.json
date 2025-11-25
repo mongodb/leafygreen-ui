@@ -18,7 +18,7 @@
     "@storybook/core": "8.6.14",
     "@storybook/react": "8.6.14",
     "glob": "10.3.12",
-    "lodash": "^4.17.21"
+    "lodash": "catalog:"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-utils",
   "repository": {

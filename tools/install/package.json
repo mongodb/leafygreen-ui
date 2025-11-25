@@ -21,7 +21,7 @@
     "@types/cross-spawn": "6.0.2",
     "chalk": "4.1.2",
     "cross-spawn": "7.0.3",
-    "lodash": "^4.17.21"
+    "lodash": "catalog:"
   },
   "devDependencies": {
     "@lg-tools/lint": "workspace:^",
