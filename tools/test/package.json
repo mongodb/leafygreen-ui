@@ -14,10 +14,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@emotion/cache": "11.11.0",
-    "@emotion/css": "11.9.0",
-    "@emotion/react": "11.11.1",
-    "@emotion/server": "11.11.0",
     "@leafygreen-ui/testing-lib": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/meta": "workspace:^",
