@@ -38,7 +38,7 @@
     "polished": "catalog:"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2",
+    "@faker-js/faker": "catalog:",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },

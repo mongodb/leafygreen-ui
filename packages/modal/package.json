@@ -26,7 +26,7 @@
     "polished": "catalog:"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.0.2",
+    "@faker-js/faker": "catalog:",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/copyable": "workspace:^",

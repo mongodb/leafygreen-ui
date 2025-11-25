@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@emotion/styled": "^11.14.0",
-    "@faker-js/faker": "^8.0.0",
+    "@faker-js/faker": "catalog:",
     "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/code": "workspace:^",

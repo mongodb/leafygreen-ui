@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@faker-js/faker':
+      specifier: ^10.1.0
+      version: 10.1.0
     '@types/cross-spawn':
       specifier: 6.0.2
       version: 6.0.2
@@ -287,8 +290,8 @@ importers:
         version: 4.17.21
     devDependencies:
       '@faker-js/faker':
-        specifier: 8.0.2
-        version: 8.0.2
+        specifier: 'catalog:'
+        version: 10.1.0
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
@@ -1123,8 +1126,8 @@ importers:
         version: link:../typography
     devDependencies:
       '@faker-js/faker':
-        specifier: ^8.4.1
-        version: 8.4.1
+        specifier: 'catalog:'
+        version: 10.1.0
       '@leafygreen-ui/badge':
         specifier: workspace:^
         version: link:../badge
@@ -1587,8 +1590,8 @@ importers:
         version: 8.34.0(react@18.3.1)
     devDependencies:
       '@faker-js/faker':
-        specifier: ^8.0.2
-        version: 8.0.2
+        specifier: 'catalog:'
+        version: 10.1.0
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
@@ -1756,8 +1759,8 @@ importers:
         version: 4.17.21
     devDependencies:
       '@faker-js/faker':
-        specifier: ^8.0.0
-        version: 8.0.2
+        specifier: 'catalog:'
+        version: 10.1.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -1829,8 +1832,8 @@ importers:
         version: 8.34.0(react@18.3.1)
     devDependencies:
       '@faker-js/faker':
-        specifier: ^8.0.2
-        version: 8.0.2
+        specifier: 'catalog:'
+        version: 10.1.0
       '@leafygreen-ui/guide-cue':
         specifier: workspace:^
         version: link:../guide-cue
@@ -2549,8 +2552,8 @@ importers:
         version: 4.3.1
     devDependencies:
       '@faker-js/faker':
-        specifier: 8.0.2
-        version: 8.0.2
+        specifier: 'catalog:'
+        version: 10.1.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -2826,7 +2829,7 @@ importers:
         version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@faker-js/faker':
-        specifier: ^10.1.0
+        specifier: 'catalog:'
         version: 10.1.0
       '@leafygreen-ui/button':
         specifier: workspace:^
@@ -2891,8 +2894,8 @@ importers:
         version: 4.3.1
     devDependencies:
       '@faker-js/faker':
-        specifier: ^8.0.2
-        version: 8.0.2
+        specifier: 'catalog:'
+        version: 10.1.0
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
@@ -3415,8 +3418,8 @@ importers:
         specifier: ^11.14.0
         version: 11.14.1(@emotion/react@11.11.1(@types/react@18.2.23)(react@18.3.1))(@types/react@18.2.23)(react@18.3.1)
       '@faker-js/faker':
-        specifier: ^8.0.0
-        version: 8.0.2
+        specifier: 'catalog:'
+        version: 10.1.0
       '@leafygreen-ui/badge':
         specifier: workspace:^
         version: link:../badge
@@ -3621,8 +3624,8 @@ importers:
         version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@faker-js/faker':
-        specifier: ^8.0.0
-        version: 8.0.2
+        specifier: 'catalog:'
+        version: 10.1.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -3723,8 +3726,8 @@ importers:
         version: link:../../tools/test-harnesses
     devDependencies:
       '@faker-js/faker':
-        specifier: ^8.0.2
-        version: 8.0.2
+        specifier: 'catalog:'
+        version: 10.1.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -5802,15 +5805,6 @@ packages:
   '@faker-js/faker@10.1.0':
     resolution: {integrity: sha512-C3mrr3b5dRVlKPJdfrAXS8+dq+rq8Qm5SNRazca0JKgw1HQERFmrVb0towvMmw5uu8hHKNiQasMaR/tydf3Zsg==}
     engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
-
-  '@faker-js/faker@8.0.2':
-    resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
-    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
-    deprecated: Please update to a newer version
-
-  '@faker-js/faker@8.4.1':
-    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
-    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
 
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
@@ -14013,10 +14007,6 @@ snapshots:
       levn: 0.4.1
 
   '@faker-js/faker@10.1.0': {}
-
-  '@faker-js/faker@8.0.2': {}
-
-  '@faker-js/faker@8.4.1': {}
 
   '@fastify/busboy@2.1.1': {}
 
