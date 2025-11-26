@@ -1,5 +1,6 @@
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
+import { getTestUtils as getButtonUtils } from '@leafygreen-ui/button/testing';
 import { LgIdString } from '@leafygreen-ui/lib';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
@@ -33,64 +34,80 @@ export const getTestUtils = (
    * @returns the primary button element using the `data-testid` data attribute.
    * Will throw if no elements match or if more than one match is found.
    */
-  const getPrimaryButton = () =>
-    getByLgId!<HTMLButtonElement>(lgIds.footerPrimaryButton);
+  const getPrimaryButton = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerPrimaryButton,
+  ).getButton;
 
   /**
    * @returns the primary button element using the `data-testid` data attribute or `null` if no elements match.
    * Will throw if more than one match is found.
    */
-  const queryPrimaryButton = () =>
-    queryByLgId!<HTMLButtonElement>(lgIds.footerPrimaryButton);
+  const queryPrimaryButton = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerPrimaryButton,
+  ).queryButton;
 
   /**
    * @returns a promise that resolves to the primary button element using the `data-testid` data attribute.
    * The promise is rejected if no elements match or if more than one match is found.
    */
-  const findPrimaryButton = () =>
-    findByLgId!<HTMLButtonElement>(lgIds.footerPrimaryButton);
+  const findPrimaryButton = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerPrimaryButton,
+  ).findButton;
+
+  /**
+   * @returns whether the primary button is disabled (via `aria-disabled`)
+   */
+  const isPrimaryButtonDisabled = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerPrimaryButton,
+  ).isDisabled;
 
   /**
    * @returns the back button element using the `data-testid` data attribute.
    * Will throw if no elements match or if more than one match is found.
    */
-  const getBackButton = () =>
-    getByLgId!<HTMLButtonElement>(lgIds.footerBackButton);
+  const getBackButton = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerBackButton,
+  ).getButton;
 
   /**
    * @returns the back button element using the `data-testid` data attribute or `null` if no elements match.
    * Will throw if more than one match is found.
    */
-  const queryBackButton = () =>
-    queryByLgId!<HTMLButtonElement>(lgIds.footerBackButton);
+  const queryBackButton = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerBackButton,
+  ).queryButton;
 
   /**
    * @returns a promise that resolves to the back button element using the `data-testid` data attribute.
    * The promise is rejected if no elements match or if more than one match is found.
    */
-  const findBackButton = () =>
-    findByLgId!<HTMLButtonElement>(lgIds.footerBackButton);
+  const findBackButton = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerBackButton,
+  ).findButton;
 
   /**
    * @returns the cancel button element using the `data-testid` data attribute.
    * Will throw if no elements match or if more than one match is found.
    */
-  const getCancelButton = () =>
-    getByLgId!<HTMLButtonElement>(lgIds.footerCancelButton);
+  const getCancelButton = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerCancelButton,
+  ).getButton;
 
   /**
    * @returns the cancel button element using the `data-testid` data attribute or `null` if no elements match.
    * Will throw if more than one match is found.
    */
-  const queryCancelButton = () =>
-    queryByLgId!<HTMLButtonElement>(lgIds.footerCancelButton);
+  const queryCancelButton = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerCancelButton,
+  ).queryButton;
 
   /**
    * @returns a promise that resolves to the cancel button element using the `data-testid` data attribute.
    * The promise is rejected if no elements match or if more than one match is found.
    */
-  const findCancelButton = () =>
-    findByLgId!<HTMLButtonElement>(lgIds.footerCancelButton);
+  const findCancelButton = getButtonUtils<HTMLButtonElement>(
+    lgIds.footerCancelButton,
+  ).findButton;
 
   return {
     findFooter,
@@ -99,6 +116,7 @@ export const getTestUtils = (
     getPrimaryButton,
     queryPrimaryButton,
     findPrimaryButton,
+    isPrimaryButtonDisabled,
     getBackButton,
     queryBackButton,
     findBackButton,

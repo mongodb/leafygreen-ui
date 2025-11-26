@@ -101,6 +101,36 @@ describe('packages/wizard/getTestUtils', () => {
       expect(button).toHaveTextContent('Continue');
     });
 
+    test('isPrimaryButtonDisabled returns true when the primary button is disabled', () => {
+      render(
+        <Wizard>
+          <Wizard.Step>
+            <div>Step 1</div>
+            <Wizard.Footer
+              primaryButtonProps={{ children: 'Next', disabled: true }}
+            />
+          </Wizard.Step>
+        </Wizard>,
+      );
+
+      const { isPrimaryButtonDisabled } = getTestUtils();
+      expect(isPrimaryButtonDisabled()).toBe(true);
+    });
+
+    test('isPrimaryButtonDisabled returns false when the primary button is enabled', () => {
+      render(
+        <Wizard>
+          <Wizard.Step>
+            <div>Step 1</div>
+            <Wizard.Footer primaryButtonProps={{ children: 'Next' }} />
+          </Wizard.Step>
+        </Wizard>,
+      );
+
+      const { isPrimaryButtonDisabled } = getTestUtils();
+      expect(isPrimaryButtonDisabled()).toBe(false);
+    });
+
     test('getBackButton returns the correct back button element', () => {
       render(
         <Wizard activeStep={1}>

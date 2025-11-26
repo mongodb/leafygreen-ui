@@ -27,6 +27,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/form-footer": "workspace:^",
@@ -38,7 +39,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/card": "workspace:^",
