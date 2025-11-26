@@ -2,7 +2,8 @@ import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 import { Optional } from '@leafygreen-ui/lib';
 
-import { getLgIds, GetLgIdsReturnType } from '../utils/getLgIds';
+import type { GetLgIdsReturnType } from '../utils/getLgIds';
+import { getLgIds } from '../utils/getLgIds';
 
 export interface WizardContextData {
   /**
