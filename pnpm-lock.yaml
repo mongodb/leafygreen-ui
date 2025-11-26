@@ -3888,6 +3888,12 @@ importers:
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../../packages/emotion
+      '@leafygreen-ui/form-footer':
+        specifier: workspace:^
+        version: link:../../packages/form-footer
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -3904,9 +3910,6 @@ importers:
       '@faker-js/faker':
         specifier: ^10.1.0
         version: 10.1.0
-      '@leafygreen-ui/icon':
-        specifier: workspace:^
-        version: link:../../packages/icon
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography

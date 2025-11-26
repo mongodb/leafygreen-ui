@@ -30,6 +30,8 @@
     "@leafygreen-ui/canvas-header": "workspace:^",
     "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/form-footer": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/wizard": "workspace:^",
@@ -45,7 +47,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
-    "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^"
   }
 }

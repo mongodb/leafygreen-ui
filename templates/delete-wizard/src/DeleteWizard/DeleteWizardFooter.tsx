@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { PrimaryStandardButtonProps } from '@leafygreen-ui/form-footer';
+import { type PrimaryStandardButtonProps } from '@leafygreen-ui/form-footer';
 import TrashIcon from '@leafygreen-ui/icon/Trash';
 import { Either } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
