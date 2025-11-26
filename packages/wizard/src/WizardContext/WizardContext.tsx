@@ -1,5 +1,8 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
+import { getLgIds } from '../utils/getLgIds';
+import { GetLgIdsReturnType } from '../utils/getLgIds';
+
 export interface WizardContextData {
   /**
    * Defines whether the consuming component is within a Wizard context.
@@ -28,6 +31,7 @@ export interface WizardContextData {
    * Internally sets the number of steps in the Wizard
    */
   totalSteps: number;
+  lgIds: GetLgIdsReturnType;
 }
 
 export const WizardContext = createContext<WizardContextData>({
@@ -35,6 +39,7 @@ export const WizardContext = createContext<WizardContextData>({
   activeStep: 0,
   totalSteps: 0,
   updateStep: () => {},
+  lgIds: getLgIds(),
 });
 
 interface WizardProviderProps
@@ -45,6 +50,7 @@ export const WizardProvider = ({
   activeStep,
   updateStep,
   totalSteps,
+  lgIds = getLgIds(),
 }: WizardProviderProps) => {
   return (
     <WizardContext.Provider
@@ -53,6 +59,7 @@ export const WizardProvider = ({
         activeStep,
         updateStep,
         totalSteps,
+        lgIds,
       }}
     >
       {children}

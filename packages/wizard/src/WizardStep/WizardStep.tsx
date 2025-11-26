@@ -35,6 +35,10 @@ export const WizardStep = CompoundSubComponent(
       WizardSubComponentProperties.Footer,
     ]);
 
+    /**
+     * NB: We're intentionally do _not_ wrap the WizardStep` component in a container element.
+     * This is done to ensure the Wizard is flexible, and can be rendered in any containing layout.
+     */
     return (
       <WizardStepProvider
         stepId={stepId}

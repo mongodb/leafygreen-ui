@@ -2,8 +2,7 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { getLgIds as getFooterLgIds } from '@leafygreen-ui/form-footer';
-
+import { getTestUtils } from '../testing';
 import { Wizard } from '../Wizard/Wizard';
 import { useWizardContext } from '../WizardContext';
 import { WizardFooter } from '../WizardFooter';
@@ -148,9 +147,8 @@ describe('packages/wizard-step', () => {
       userEvent.click(getByRole('button', { name: 'Acknowledge' }));
       expect(getByTestId('is-ack')).toHaveTextContent('true');
 
-      // TODO: replace with Wizard test harness
-      const primaryBtn = getByTestId(getFooterLgIds().primaryButton);
-      userEvent.click(primaryBtn);
+      const { getPrimaryButton } = getTestUtils();
+      userEvent.click(getPrimaryButton());
 
       await waitFor(() => {
         expect(getByTestId('step-1')).toBeInTheDocument();

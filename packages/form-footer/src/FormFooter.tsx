@@ -47,6 +47,7 @@ export default function FormFooter({
     <LeafyGreenProvider darkMode={darkMode}>
       <footer
         data-testid={lgIds.root}
+        data-lgid={lgIds.root}
         className={getFormFooterStyles({ theme, className })}
         {...rest}
       >

@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { getTestUtils } from '../testing';
 import { Wizard } from '../Wizard';
 import { useWizardStepContext } from '../WizardStep';
 
@@ -22,7 +23,7 @@ describe('packages/wizard-footer', () => {
   });
 
   test('renders in WizardContext', () => {
-    const { getByTestId } = render(
+    render(
       <Wizard>
         <Wizard.Step>
           <WizardFooter
@@ -35,12 +36,13 @@ describe('packages/wizard-footer', () => {
       </Wizard>,
     );
 
-    expect(getByTestId('footer')).toBeInTheDocument();
+    const { getFooter } = getTestUtils();
+    expect(getFooter()).toBeInTheDocument();
   });
 
   describe('primary button behavior', () => {
     test('primary button is enabled by default', () => {
-      const { getByRole } = render(
+      render(
         <Wizard>
           <Wizard.Step>
             <Wizard.Footer primaryButtonProps={{ children: 'Continue' }} />
@@ -48,14 +50,14 @@ describe('packages/wizard-footer', () => {
         </Wizard>,
       );
 
-      const primaryButton = getByRole('button', { name: 'Continue' });
-      expect(primaryButton).toBeEnabled();
+      const { isPrimaryButtonDisabled } = getTestUtils();
+      expect(isPrimaryButtonDisabled()).toBe(false);
     });
 
     test('primary button advances to next step when clicked', async () => {
       const onStepChange = jest.fn();
 
-      const { getByRole, getByTestId } = render(
+      const { getByTestId } = render(
         <Wizard onStepChange={onStepChange}>
           <Wizard.Step>
             <div data-testid="step-1">Step 1</div>
@@ -70,8 +72,8 @@ describe('packages/wizard-footer', () => {
 
       expect(getByTestId('step-1')).toBeInTheDocument();
 
-      const nextButton = getByRole('button', { name: 'Next' });
-      await userEvent.click(nextButton);
+      const { getPrimaryButton } = getTestUtils();
+      userEvent.click(getPrimaryButton());
 
       expect(onStepChange).toHaveBeenCalledWith(1);
       expect(getByTestId('step-2')).toBeInTheDocument();
@@ -79,7 +81,7 @@ describe('packages/wizard-footer', () => {
 
     describe('requiresAcknowledgement', () => {
       test('primary button is disabled when step requires acknowledgement and is not acknowledged', () => {
-        const { getByRole } = render(
+        render(
           <Wizard>
             <Wizard.Step requiresAcknowledgement>
               <div>Step content</div>
@@ -88,8 +90,8 @@ describe('packages/wizard-footer', () => {
           </Wizard>,
         );
 
-        const primaryButton = getByRole('button', { name: 'Continue' });
-        expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
+        const { isPrimaryButtonDisabled } = getTestUtils();
+        expect(isPrimaryButtonDisabled()).toBe(true);
       });
 
       test('primary button is enabled when step requires acknowledgement and is acknowledged', async () => {
@@ -112,16 +114,16 @@ describe('packages/wizard-footer', () => {
           </Wizard>,
         );
 
-        const primaryButton = getByRole('button', { name: 'Continue' });
-        expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
+        const { isPrimaryButtonDisabled } = getTestUtils();
+        expect(isPrimaryButtonDisabled()).toBe(true);
 
         await userEvent.click(getByRole('button', { name: 'Acknowledge' }));
 
-        expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
+        expect(isPrimaryButtonDisabled()).toBe(false);
       });
 
       test('primary button is enabled when step does not require acknowledgement', () => {
-        const { getByRole } = render(
+        render(
           <Wizard>
             <Wizard.Step>
               <div>Step content</div>
@@ -130,8 +132,8 @@ describe('packages/wizard-footer', () => {
           </Wizard>,
         );
 
-        const primaryButton = getByRole('button', { name: 'Continue' });
-        expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
+        const { isPrimaryButtonDisabled } = getTestUtils();
+        expect(isPrimaryButtonDisabled()).toBe(false);
       });
 
       test('primary button can advance step after acknowledgement', async () => {
@@ -158,17 +160,17 @@ describe('packages/wizard-footer', () => {
           </Wizard>,
         );
 
-        expect(getByTestId('step-1')).toBeInTheDocument();
+        const { isPrimaryButtonDisabled, getPrimaryButton } = getTestUtils();
 
-        const primaryButton = getByRole('button', { name: 'Continue' });
-        expect(primaryButton).toHaveAttribute('aria-disabled', 'true');
+        expect(getByTestId('step-1')).toBeInTheDocument();
+        expect(isPrimaryButtonDisabled()).toBe(true);
 
         // Acknowledge the step
-        await userEvent.click(getByRole('button', { name: 'Acknowledge' }));
-        expect(primaryButton).toHaveAttribute('aria-disabled', 'false');
+        userEvent.click(getByRole('button', { name: 'Acknowledge' }));
+        expect(isPrimaryButtonDisabled()).toBe(false);
 
         // Advance to next step
-        await userEvent.click(primaryButton);
+        userEvent.click(getPrimaryButton());
         expect(getByTestId('step-2')).toBeInTheDocument();
       });
     });
@@ -176,7 +178,7 @@ describe('packages/wizard-footer', () => {
 
   describe('back button', () => {
     test('back button is not rendered on first step', () => {
-      const { queryByRole } = render(
+      render(
         <Wizard>
           <Wizard.Step>
             <Wizard.Footer
@@ -187,11 +189,12 @@ describe('packages/wizard-footer', () => {
         </Wizard>,
       );
 
-      expect(queryByRole('button', { name: 'Back' })).not.toBeInTheDocument();
+      const { queryBackButton } = getTestUtils();
+      expect(queryBackButton()).not.toBeInTheDocument();
     });
 
     test('back button is rendered on subsequent steps', async () => {
-      const { getByRole } = render(
+      render(
         <Wizard>
           <Wizard.Step>
             <div data-testid="step-1">Step 1</div>
@@ -210,17 +213,19 @@ describe('packages/wizard-footer', () => {
         </Wizard>,
       );
 
+      const { getPrimaryButton, getBackButton } = getTestUtils();
+
       // Move to step 2
-      await userEvent.click(getByRole('button', { name: 'Next' }));
+      userEvent.click(getPrimaryButton());
 
       // Back button should now be visible
-      expect(getByRole('button', { name: 'Back' })).toBeInTheDocument();
+      expect(getBackButton()).toBeInTheDocument();
     });
 
     test('back button navigates to previous step', async () => {
       const onStepChange = jest.fn();
 
-      const { getByRole, getByTestId } = render(
+      const { getByTestId } = render(
         <Wizard onStepChange={onStepChange}>
           <Wizard.Step>
             <div data-testid="step-1">Step 1</div>
@@ -239,12 +244,14 @@ describe('packages/wizard-footer', () => {
         </Wizard>,
       );
 
+      const { getPrimaryButton, getBackButton } = getTestUtils();
+
       // Move to step 2
-      await userEvent.click(getByRole('button', { name: 'Next' }));
+      userEvent.click(getPrimaryButton());
       expect(getByTestId('step-2')).toBeInTheDocument();
 
       // Go back to step 1
-      await userEvent.click(getByRole('button', { name: 'Back' }));
+      userEvent.click(getBackButton());
       expect(onStepChange).toHaveBeenCalledWith(0);
       expect(getByTestId('step-1')).toBeInTheDocument();
     });

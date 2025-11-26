@@ -7,6 +7,7 @@ import {
 import { useControlled } from '@leafygreen-ui/hooks';
 
 import { WizardSubComponentProperties } from '../constants';
+import { getLgIds } from '../utils/getLgIds';
 import { WizardProvider } from '../WizardContext/WizardContext';
 import { WizardFooter } from '../WizardFooter';
 import { WizardStep } from '../WizardStep';
@@ -14,7 +15,13 @@ import { WizardStep } from '../WizardStep';
 import { WizardProps } from './Wizard.types';
 
 export const Wizard = CompoundComponent(
-  ({ activeStep: activeStepProp, onStepChange, children }: WizardProps) => {
+  ({
+    activeStep: activeStepProp,
+    onStepChange,
+    children,
+    'data-lgid': dataLgId,
+  }: WizardProps) => {
+    const lgIds = getLgIds(dataLgId);
     const stepChildren = findChildren(
       children,
       WizardSubComponentProperties.Step,
@@ -47,11 +54,16 @@ export const Wizard = CompoundComponent(
       [setActiveStep, stepChildren.length],
     );
 
+    /**
+     * NB: We're intentionally do _not_ wrap the `Wizard` (or `WizardStep`) component in a container element.
+     * This is done to ensure the Wizard is flexible, and can be rendered in any containing layout.
+     */
     return (
       <WizardProvider
         activeStep={activeStep}
         updateStep={updateStep}
         totalSteps={stepChildren.length}
+        lgIds={lgIds}
       >
         {stepChildren.map((child, i) => (i === activeStep ? child : null))}
       </WizardProvider>

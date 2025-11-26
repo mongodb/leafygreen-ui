@@ -3815,6 +3815,9 @@ importers:
 
   packages/wizard:
     dependencies:
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
       '@leafygreen-ui/compound-component':
         specifier: workspace:^
         version: link:../compound-component
@@ -3849,9 +3852,6 @@ importers:
       '@leafygreen-ui/banner':
         specifier: workspace:^
         version: link:../banner
-      '@leafygreen-ui/button':
-        specifier: workspace:^
-        version: link:../button
       '@leafygreen-ui/card':
         specifier: workspace:^
         version: link:../card

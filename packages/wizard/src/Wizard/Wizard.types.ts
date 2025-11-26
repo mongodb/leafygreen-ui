@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
-export interface WizardProps {
+import { LgIdProps } from '@leafygreen-ui/lib';
+
+export interface WizardProps extends LgIdProps {
   /**
    * The current active step index (0-based).
    *
