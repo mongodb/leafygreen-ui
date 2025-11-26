@@ -84,16 +84,16 @@ const StickyTemplate: StoryType<typeof FormFooter> = ({
   primaryButtonProps,
   ...args
 }: FormFooterStoryProps) => (
-  <>
+  <div style={{ margin: `-100px` }}>
     <div
       className={css`
         padding: 24px;
-        height: 150vh;
+        height: 100vh;
+        overflow: hidden;
       `}
     >
       <h2>Scroll down to see the sticky footer in action</h2>
       <p>This content creates scrollable space...</p>
-      <p style={{ marginTop: '80vh' }}>Keep scrolling...</p>
     </div>
     <FormFooter
       {...args}
@@ -101,10 +101,9 @@ const StickyTemplate: StoryType<typeof FormFooter> = ({
       className={css`
         position: sticky;
         bottom: 0;
-        z-index: 1;
       `}
     />
-  </>
+  </div>
 );
 export const LiveExample: StoryObj<FormFooterProps> = {
   render: Template,

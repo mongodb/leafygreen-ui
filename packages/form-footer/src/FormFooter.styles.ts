@@ -3,6 +3,9 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { addOverflowShadow, Side, spacing } from '@leafygreen-ui/tokens';
 
+// Specified by Design team
+const MIN_HEIGHT = 92;
+
 const footerBaseStyle = css`
   width: 100%;
 `;
@@ -18,9 +21,9 @@ const footerThemeStyle: Record<Theme, string> = {
 };
 
 const innerContainerBaseStyle = css`
-  min-height: 92px;
+  min-height: ${MIN_HEIGHT}px;
   width: 100%;
-  padding: 26px ${spacing[600]}px;
+  padding: ${spacing[600]}px;
   display: flex;
   align-items: center;
   background: inherit;
