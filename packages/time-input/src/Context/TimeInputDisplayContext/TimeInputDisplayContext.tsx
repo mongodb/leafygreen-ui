@@ -11,6 +11,8 @@ import {
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
 import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
+import { hasDayPeriod } from '../../utils';
+import { getFormatParts } from '../../utils/getFormatParts/getFormatParts';
 
 export const TimeInputDisplayContext =
   createContext<TimeInputDisplayContextProps>(defaultTimeInputDisplayContext);
@@ -39,6 +41,17 @@ export const TimeInputDisplayProvider = ({
 
   // TODO: min, max helpers
 
+  // Determines if the input should show a select for the day period (AM/PM)
+  const shouldShowSelect = !!hasDayPeriod(providerValue.locale);
+
+  // Only used to track the presentation format of the segments, not the value itself
+  const formatParts = getFormatParts({
+    locale: providerValue.locale,
+    showSeconds: providerValue.showSeconds,
+  });
+
+  // TODO: timezone
+
   return (
     <TimeInputDisplayContext.Provider
       value={{
@@ -48,6 +61,8 @@ export const TimeInputDisplayProvider = ({
         ariaLabelledbyProp,
         isDirty,
         setIsDirty,
+        shouldShowSelect,
+        formatParts,
       }}
     >
       {children}

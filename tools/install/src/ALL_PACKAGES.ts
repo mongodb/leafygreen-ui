@@ -8,6 +8,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/banner',
   '@leafygreen-ui/button',
   '@leafygreen-ui/callout',
+  '@leafygreen-ui/canvas-header',
   '@leafygreen-ui/card',
   '@leafygreen-ui/checkbox',
   '@leafygreen-ui/chip',

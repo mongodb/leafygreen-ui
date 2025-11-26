@@ -38,6 +38,17 @@ export type TimeInputDisplayContextProps = Omit<
    * Setter for whether the input has been interacted with
    */
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /**
+   * Whether the AM/PM select should be shown
+   */
+  shouldShowSelect: boolean;
+
+  /**
+   * An array of {@link Intl.DateTimeFormatPart},
+   * used to determine the order of segments in the input
+   */
+  formatParts?: Array<Intl.DateTimeFormatPart>;
 };
 
 /**

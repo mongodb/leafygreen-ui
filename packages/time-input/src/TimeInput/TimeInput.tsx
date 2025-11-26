@@ -36,6 +36,8 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
     const { darkMode } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
 
+    // console.log('🪼', { valueProp });
+
     const { value, updateValue } = useControlled<DateType | undefined>(
       valueProp,
       onChangeProp,

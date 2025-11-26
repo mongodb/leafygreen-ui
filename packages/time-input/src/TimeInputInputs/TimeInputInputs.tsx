@@ -9,6 +9,7 @@ import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
+import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 
 /**
  * @internal
@@ -16,6 +17,10 @@ import { TimeInputInputsProps } from './TimeInputInputs.types';
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
     const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
+
+    const { shouldShowSelect, formatParts } = useTimeInputDisplayContext();
+
+    console.log('TimeInputInputs ⏰', { shouldShowSelect, formatParts });
 
     const handleSelectChange = (unit: UnitOption) => {
       setSelectUnit(unit);
