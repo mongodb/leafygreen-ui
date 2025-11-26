@@ -3815,15 +3815,9 @@ importers:
 
   packages/wizard:
     dependencies:
-      '@leafygreen-ui/button':
-        specifier: workspace:^
-        version: link:../button
       '@leafygreen-ui/compound-component':
         specifier: workspace:^
         version: link:../compound-component
-      '@leafygreen-ui/descendants':
-        specifier: workspace:^
-        version: link:../descendants
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -3842,9 +3836,6 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
-      '@leafygreen-ui/typography':
-        specifier: workspace:^
-        version: link:../typography
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
@@ -3852,9 +3843,39 @@ importers:
       '@faker-js/faker':
         specifier: ^8.0.0
         version: 8.0.2
+      '@leafygreen-ui/badge':
+        specifier: workspace:^
+        version: link:../badge
+      '@leafygreen-ui/banner':
+        specifier: workspace:^
+        version: link:../banner
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
+      '@leafygreen-ui/card':
+        specifier: workspace:^
+        version: link:../card
+      '@leafygreen-ui/checkbox':
+        specifier: workspace:^
+        version: link:../checkbox
+      '@leafygreen-ui/expandable-card':
+        specifier: workspace:^
+        version: link:../expandable-card
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../icon
+      '@leafygreen-ui/loading-indicator':
+        specifier: workspace:^
+        version: link:../loading-indicator
+      '@leafygreen-ui/segmented-control':
+        specifier: workspace:^
+        version: link:../segmented-control
+      '@leafygreen-ui/skeleton-loader':
+        specifier: workspace:^
+        version: link:../skeleton-loader
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
 
   tools/build:
     dependencies:
