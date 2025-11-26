@@ -1,2 +1,2 @@
 export { getTestUtils } from './getTestUtils';
-export { type TestUtilsReturnType } from './getTestUtils.types';
+export { type DeleteWizardTestUtilsReturnType } from './getTestUtils.types';

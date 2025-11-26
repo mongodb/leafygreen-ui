@@ -7,6 +7,8 @@ import {
 import { cx } from '@leafygreen-ui/emotion';
 import { Wizard } from '@leafygreen-ui/wizard';
 
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
+
 import { DeleteWizardSubComponentKeys } from './compoundComponentProperties';
 import { wizardWrapperStyles } from './DeleteWizard.styles';
 import { DeleteWizardProps } from './DeleteWizard.types';
@@ -27,14 +29,29 @@ export const DeleteWizard = CompoundComponent(
     onCancel,
     onDelete,
     onStepChange,
+    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+    ...rest
   }: DeleteWizardProps) => {
+    const lgIds = getLgIds(dataLgId);
     const header = findChild(children, DeleteWizardSubComponentKeys.Header);
 
     return (
-      <div className={cx(wizardWrapperStyles, className)}>
+      <div
+        className={cx(wizardWrapperStyles, className)}
+        data-lgid={lgIds.root}
+        {...rest}
+      >
         {header}
-        <DeleteWizardContextProvider onCancel={onCancel} onDelete={onDelete}>
-          <Wizard activeStep={activeStep} onStepChange={onStepChange}>
+        <DeleteWizardContextProvider
+          onCancel={onCancel}
+          onDelete={onDelete}
+          lgIds={lgIds}
+        >
+          <Wizard
+            activeStep={activeStep}
+            onStepChange={onStepChange}
+            data-lgid={lgIds.wizard}
+          >
             {children}
           </Wizard>
         </DeleteWizardContextProvider>

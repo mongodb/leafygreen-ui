@@ -14,6 +14,7 @@ import {
 } from '@leafygreen-ui/wizard';
 
 import { DeleteWizardSubComponentKeys } from './compoundComponentProperties';
+import { useDeleteWizardContext } from './DeleteWizardContext';
 
 export const useDeleteWizardStepContext = useWizardStepContext;
 
@@ -30,6 +31,7 @@ export const DeleteWizardStep = CompoundSubComponent(
     requiresAcknowledgement,
     ...rest
   }: DeleteWizardStepProps) => {
+    const { lgIds } = useDeleteWizardContext();
     const footerChild = findChild(
       children,
       WizardSubComponentProperties.Footer,
@@ -48,6 +50,7 @@ export const DeleteWizardStep = CompoundSubComponent(
             `,
             className,
           )}
+          data-lgid={lgIds.step}
           {...rest}
         >
           {restChildren}
