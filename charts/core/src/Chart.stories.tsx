@@ -10,7 +10,7 @@ import {
 } from '@storybook/test';
 // because storybook ts files are excluded in the tsconfig to avoid redundant type-definition generation
 // @ts-ignore
-import { getInstanceByDom } from 'echarts';
+import { EChartsOption, getInstanceByDom, SeriesOption } from 'echarts';
 
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
@@ -952,6 +952,12 @@ export const WithTooltip: StoryObj<{}> = {
         return [instance, canvas];
       },
     );
+
+    await waitFor(function WaitForSeries() {
+      const option = echartsInstance.getOption() as EChartsOption;
+      const series = (option.series as Array<SeriesOption>) || [];
+      expect(series.length).toBe(seriesData.length);
+    });
 
     const tooltipElement = await waitFor(
       function TriggerTooltipAndAssertHeader() {
