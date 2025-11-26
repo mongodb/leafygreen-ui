@@ -108,3 +108,51 @@ const MyWizardStepContents = () => {
 ### Wizard.Footer
 
 The `Wizard.Footer` is a convenience wrapper around the `FormFooter` component. Each step should render its own Footer component
+
+# Test Harnesses
+
+## getTestUtils()
+
+`getTestUtils()` is a util that allows consumers to reliably interact with LG `Wizard` in a product test suite. If the `Wizard` component cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import { getTestUtils } from '@leafygreen-ui/wizard';
+
+const utils = getTestUtils(lgId?: `lg-${string}`); // lgId refers to the custom `data-lgid` attribute passed to `Wizard`. It defaults to 'lg-wizard' if left empty.
+```
+
+### Test Utils
+
+```tsx
+const {
+  getFooter,
+  queryFooter,
+  findFooter,
+  getPrimaryButton,
+  queryPrimaryButton,
+  findPrimaryButton,
+  getBackButton,
+  queryBackButton,
+  findBackButton,
+  getCancelButton,
+  queryCancelButton,
+  findCancelButton,
+} = getTestUtils();
+```
+
+| Util                   | Description                                                   | Returns                       |
+| ---------------------- | ------------------------------------------------------------- | ----------------------------- |
+| `getFooter()`          | Returns the footer element                                    | `HTMLElement`                 |
+| `queryFooter()`        | Returns the footer element or null if not found               | `HTMLElement` \| `null`       |
+| `findFooter()`         | Returns a promise that resolves to the footer element         | `Promise<HTMLElement>`        |
+| `getPrimaryButton()`   | Returns the primary button element                            | `HTMLButtonElement`           |
+| `queryPrimaryButton()` | Returns the primary button element or null if not found       | `HTMLButtonElement` \| `null` |
+| `findPrimaryButton()`  | Returns a promise that resolves to the primary button element | `Promise<HTMLButtonElement>`  |
+| `getBackButton()`      | Returns the back button element                               | `HTMLButtonElement`           |
+| `queryBackButton()`    | Returns the back button element or null if not found          | `HTMLButtonElement` \| `null` |
+| `findBackButton()`     | Returns a promise that resolves to the back button element    | `Promise<HTMLButtonElement>`  |
+| `getCancelButton()`    | Returns the cancel button element                             | `HTMLButtonElement`           |
+| `queryCancelButton()`  | Returns the cancel button element or null if not found        | `HTMLButtonElement` \| `null` |
+| `findCancelButton()`   | Returns a promise that resolves to the cancel button element  | `Promise<HTMLButtonElement>`  |
