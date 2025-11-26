@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/wizard",
-  "version": "0.1.0-local.1",
+  "version": "0.0.1",
   "description": "LeafyGreen UI Kit Wizard",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
