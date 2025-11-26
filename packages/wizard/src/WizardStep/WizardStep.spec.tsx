@@ -9,8 +9,6 @@ import { WizardFooter } from '../WizardFooter';
 
 import { useWizardStepContext, WizardStep } from '.';
 
-const wizardUtils = getTestUtils();
-
 describe('packages/wizard-step', () => {
   test('does not render outside WizardContext', () => {
     const { container } = render(
@@ -149,8 +147,8 @@ describe('packages/wizard-step', () => {
       userEvent.click(getByRole('button', { name: 'Acknowledge' }));
       expect(getByTestId('is-ack')).toHaveTextContent('true');
 
-      const primaryBtn = wizardUtils.getPrimaryButton();
-      userEvent.click(primaryBtn);
+      const { getPrimaryButton } = getTestUtils();
+      userEvent.click(getPrimaryButton());
 
       await waitFor(() => {
         expect(getByTestId('step-1')).toBeInTheDocument();
