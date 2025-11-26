@@ -12,7 +12,7 @@ export const getTestUtils = (
   const lgIds = getLgIds(lgId);
 
   /**
-   * @returns a promise that resolves to the WizardFooter element using the `data-testid` data attribute.
+   * @returns a promise that resolves to the WizardFooter element using the `data-lgid` data attribute.
    * The promise is rejected if no elements match or if more than one match is found.
    */
   const findFooter = () => findByLgId!<HTMLElement>(lgIds.footer);
