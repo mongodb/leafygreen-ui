@@ -42,6 +42,7 @@ export const ExampleStepContent = ({
             <input
               type="checkbox"
               id="ack"
+              data-testid="acknowledgement-checkbox"
               checked={isAcknowledged}
               onChange={e => setAcknowledged(e.target.checked)}
             />

@@ -13,7 +13,7 @@ export const getTestUtils = (
   const lgIds = getLgIds(lgId);
 
   // Get the Wizard test utils (the DeleteWizard wraps a Wizard component internally)
-  const wizardUtils = getWizardTestUtils(lgId);
+  const wizardUtils = getWizardTestUtils(lgIds.wizard);
 
   /**
    * @returns the DeleteWizard root element using the `data-lgid` data attribute.
