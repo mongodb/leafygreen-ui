@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/split-button",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "description": "leafyGreen UI Kit Split Button",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
