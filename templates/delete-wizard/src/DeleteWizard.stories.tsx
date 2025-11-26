@@ -2,6 +2,7 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/test';
 
 import { css } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/Beaker';
@@ -32,6 +33,9 @@ export const LiveExample: StoryObj<typeof DeleteWizard> = {
   parameters: {
     controls: {
       exclude: ['children', 'onStepChange'],
+    },
+    chromatic: {
+      disableSnapshot: true,
     },
   },
   args: {
@@ -110,4 +114,31 @@ export const LiveExample: StoryObj<typeof DeleteWizard> = {
       </div>
     );
   },
+};
+
+export const Step1: StoryObj<typeof DeleteWizard> = {
+  args: {
+    activeStep: 0,
+  },
+  render: LiveExample.render,
+};
+
+export const Step2Default: StoryObj<typeof DeleteWizard> = {
+  args: {
+    activeStep: 1,
+  },
+  render: LiveExample.render,
+};
+
+export const Step2Acknowledged: StoryObj<typeof DeleteWizard> = {
+  args: {
+    activeStep: 1,
+  },
+  play: ({ canvasElement }) => {
+    const checkbox = within(canvasElement).getByTestId(
+      'acknowledgement-checkbox',
+    );
+    userEvent.click(checkbox);
+  },
+  render: LiveExample.render,
 };
