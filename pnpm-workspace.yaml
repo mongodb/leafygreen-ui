@@ -12,7 +12,7 @@ catalog:
   polished: ^4.2.2
   prettier: ^2.8.8
   react-transition-group: ^4.4.5
-  '@faker-js/faker': ^10.1.0
+  '@faker-js/faker': ^8.4.1
 
   # Build dependencies
   '@babel/core': 7.24.3
