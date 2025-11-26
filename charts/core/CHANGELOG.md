@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 2.4.1
+
+### Patch Changes
+
+- c5628dc: Fix the issue of chart tooltips not hiding when the user moves their mouse away from the chart, not through simple mouse movement (e.g., by scrolling away)
+
 ## 2.4.0
 
 ### Minor Changes
