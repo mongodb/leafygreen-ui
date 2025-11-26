@@ -87,7 +87,6 @@ export const ALL_PACKAGES = [
   '@lg-charts/series-provider',
   '@lg-chat/chat-layout',
   '@lg-chat/chat-window',
-  '@lg-chat/fixed-chat-window',
   '@lg-chat/input-bar',
   '@lg-chat/leafygreen-chat-provider',
   '@lg-chat/lg-markdown',
