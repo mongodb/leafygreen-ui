@@ -1,19 +1,8 @@
-import { ReactNode } from 'react';
-
-export interface WizardStepProps
-  extends Omit<React.ComponentProps<'div'>, 'title'> {
+export interface WizardStepProps extends React.PropsWithChildren<{}> {
   /**
-   * The title of the step
+   * Defines whether some action in Step must be taken by the user before enabling the primary action button
+   *
+   * @default false
    */
-  title: ReactNode;
-
-  /**
-   * The description of the step
-   */
-  description?: ReactNode;
-
-  /**
-   * The content of the step
-   */
-  children: ReactNode;
+  requiresAcknowledgement?: boolean;
 }
