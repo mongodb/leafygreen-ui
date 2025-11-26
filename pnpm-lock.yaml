@@ -10,8 +10,8 @@ catalogs:
       specifier: 7.24.3
       version: 7.24.3
     '@faker-js/faker':
-      specifier: ^8.4.1
-      version: 8.4.1
+      specifier: ^9.9.0
+      version: 9.9.0
     '@types/cross-spawn':
       specifier: 6.0.2
       version: 6.0.2
@@ -300,7 +300,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
@@ -1136,7 +1136,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/badge':
         specifier: workspace:^
         version: link:../badge
@@ -1600,7 +1600,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
@@ -1769,7 +1769,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -1842,7 +1842,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/guide-cue':
         specifier: workspace:^
         version: link:../guide-cue
@@ -2562,7 +2562,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -2839,7 +2839,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -2904,7 +2904,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
@@ -3428,7 +3428,7 @@ importers:
         version: 11.14.1(@emotion/react@11.11.1(@types/react@18.2.23)(react@18.3.1))(@types/react@18.2.23)(react@18.3.1)
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/badge':
         specifier: workspace:^
         version: link:../badge
@@ -3634,7 +3634,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -3736,7 +3736,7 @@ importers:
     devDependencies:
       '@faker-js/faker':
         specifier: 'catalog:'
-        version: 8.4.1
+        version: 9.9.0
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -5795,9 +5795,9 @@ packages:
     resolution: {integrity: sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@faker-js/faker@8.4.1':
-    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
-    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+  '@faker-js/faker@9.9.0':
+    resolution: {integrity: sha512-OEl393iCOoo/z8bMezRlJu+GlRGlsKbUAN7jKB6LhnKoqKve5DXRpalbItIIcwnCjs1k/FOPjFzcA6Qn+H+YbA==}
+    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
 
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
@@ -13936,7 +13936,7 @@ snapshots:
       '@eslint/core': 0.13.0
       levn: 0.4.1
 
-  '@faker-js/faker@8.4.1': {}
+  '@faker-js/faker@9.9.0': {}
 
   '@fastify/busboy@2.1.1': {}
 
