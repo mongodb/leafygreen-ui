@@ -221,6 +221,7 @@ jobs:
         with:
           lcov-file: coverage/lcov.info
           delete-old-comments: true
+          filter-changed-files: true
 
   validate-builds:
     name: Validate builds & dependencies
