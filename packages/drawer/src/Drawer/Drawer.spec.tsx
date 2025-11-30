@@ -14,19 +14,27 @@ const drawerTest = {
   title: 'Drawer title',
 } as const;
 
-const DrawerWithButton = () => {
+const DrawerWithButton = ({
+  displayMode = DisplayMode.Embedded,
+}: { displayMode?: DisplayMode } = {}) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(true);
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
   return (
     <DrawerLayout
       isDrawerOpen={isOpen}
       onClose={() => setIsOpen(false)}
-      displayMode={DisplayMode.Embedded}
+      displayMode={displayMode}
     >
       <button data-testid="open-drawer-button" onClick={handleOpen}>
         Open Drawer
       </button>
-      <Drawer title={drawerTest.title}>{drawerTest.content}</Drawer>
+      <Drawer title={drawerTest.title}>
+        <button data-testid="primary-button">Primary</button>
+        <button data-testid="secondary-button" ref={buttonRef}>
+          Secondary
+        </button>
+      </Drawer>
     </DrawerLayout>
   );
 };
@@ -66,42 +74,243 @@ describe('packages/drawer', () => {
       expect(results).toHaveNoViolations();
     });
 
-    test('focus is on the first focusable element when the drawer is opened by pressing the enter key on the open button', async () => {
-      const { getByTestId } = render(<DrawerWithButton />);
-      const { isOpen, getCloseButtonUtils } = getTestUtils();
+    describe('initialFocus prop', () => {
+      describe('auto', () => {
+        test('focus is on the first focusable element when the drawer is opened by pressing the enter key on the open button', async () => {
+          const { getByTestId } = render(<DrawerWithButton />);
+          const { isOpen, getCloseButtonUtils } = getTestUtils();
 
-      expect(isOpen()).toBe(false);
-      const openDrawerButton = getByTestId('open-drawer-button');
-      openDrawerButton.focus();
-      userEvent.keyboard('{enter}');
+          expect(isOpen()).toBe(false);
+          const openDrawerButton = getByTestId('open-drawer-button');
+          openDrawerButton.focus();
+          userEvent.keyboard('{enter}');
 
-      await waitFor(() => {
-        expect(isOpen()).toBe(true);
-        const closeButton = getCloseButtonUtils().getButton();
-        expect(closeButton).toHaveFocus();
+          await waitFor(() => {
+            expect(isOpen()).toBe(true);
+            const closeButton = getCloseButtonUtils().getButton();
+            expect(closeButton).toHaveFocus();
+          });
+        });
+
+        test('focus returns to the open button when the drawer is closed', async () => {
+          const { getByTestId } = render(<DrawerWithButton />);
+          const { isOpen, getCloseButtonUtils } = getTestUtils();
+
+          expect(isOpen()).toBe(false);
+          const openDrawerButton = getByTestId('open-drawer-button');
+          openDrawerButton.focus();
+          userEvent.keyboard('{enter}');
+
+          await waitFor(() => {
+            expect(isOpen()).toBe(true);
+            const closeButton = getCloseButtonUtils().getButton();
+            expect(closeButton).toHaveFocus();
+          });
+
+          userEvent.keyboard('{enter}');
+
+          await waitFor(() => {
+            expect(isOpen()).toBe(false);
+            expect(openDrawerButton).toHaveFocus();
+          });
+        });
       });
-    });
 
-    test('focus returns to the open button when the drawer is closed', async () => {
-      const { getByTestId } = render(<DrawerWithButton />);
-      const { isOpen, getCloseButtonUtils } = getTestUtils();
+      describe('string selector', () => {
+        describe.each([DisplayMode.Embedded, DisplayMode.Overlay])(
+          'displayMode: %s',
+          displayMode => {
+            test('focus is on the initial focus string selector', async () => {
+              const TestComponent = () => {
+                return (
+                  <DrawerLayout
+                    isDrawerOpen={true}
+                    onClose={() => {}}
+                    displayMode={displayMode}
+                    initialFocus="#secondary-button"
+                  >
+                    <Drawer title={drawerTest.title}>
+                      <button data-testid="primary-button">Primary</button>
+                      <button
+                        data-testid="secondary-button"
+                        id="secondary-button"
+                      >
+                        Secondary
+                      </button>
+                    </Drawer>
+                  </DrawerLayout>
+                );
+              };
 
-      expect(isOpen()).toBe(false);
-      const openDrawerButton = getByTestId('open-drawer-button');
-      openDrawerButton.focus();
-      userEvent.keyboard('{enter}');
+              const { getByTestId } = render(<TestComponent />);
 
-      await waitFor(() => {
-        expect(isOpen()).toBe(true);
-        const closeButton = getCloseButtonUtils().getButton();
-        expect(closeButton).toHaveFocus();
+              const secondaryButton = getByTestId('secondary-button');
+              expect(secondaryButton).toHaveFocus();
+            });
+          },
+        );
+
+        test('focus returns to the open button when the drawer is closed', async () => {
+          const TestComponent = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const handleOpen = () => setIsOpen(true);
+            return (
+              <DrawerLayout
+                isDrawerOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                displayMode={DisplayMode.Embedded}
+                initialFocus="#secondary-button"
+              >
+                <button data-testid="open-drawer-button" onClick={handleOpen}>
+                  Open Drawer
+                </button>
+                <Drawer title={drawerTest.title}>
+                  <button data-testid="primary-button">Primary</button>
+                  <button data-testid="secondary-button" id="secondary-button">
+                    Secondary
+                  </button>
+                </Drawer>
+              </DrawerLayout>
+            );
+          };
+
+          const { getByTestId } = render(<TestComponent />);
+          const { isOpen, getCloseButtonUtils } = getTestUtils();
+
+          const openDrawerButton = getByTestId('open-drawer-button');
+          openDrawerButton.focus();
+          userEvent.keyboard('{enter}');
+
+          await waitFor(() => {
+            expect(isOpen()).toBe(true);
+          });
+
+          const secondaryButton = getByTestId('secondary-button');
+          expect(secondaryButton).toHaveFocus();
+
+          const closeButton = getCloseButtonUtils().getButton();
+          closeButton.focus();
+          userEvent.keyboard('{enter}');
+
+          await waitFor(() => {
+            expect(isOpen()).toBe(false);
+            expect(openDrawerButton).toHaveFocus();
+          });
+        });
       });
 
-      userEvent.keyboard('{enter}');
+      describe('ref', () => {
+        describe.each([DisplayMode.Embedded, DisplayMode.Overlay])(
+          'displayMode: %s',
+          displayMode => {
+            test('focus is on the initial focus ref', async () => {
+              const TestComponent = () => {
+                const buttonRef = React.useRef<HTMLButtonElement>(null);
+                return (
+                  <DrawerLayout
+                    isDrawerOpen={true}
+                    onClose={() => {}}
+                    displayMode={displayMode}
+                    initialFocus={buttonRef}
+                  >
+                    <Drawer title={drawerTest.title}>
+                      <button data-testid="primary-button">Primary</button>
+                      <button data-testid="secondary-button" ref={buttonRef}>
+                        Secondary
+                      </button>
+                    </Drawer>
+                  </DrawerLayout>
+                );
+              };
 
-      await waitFor(() => {
-        expect(isOpen()).toBe(false);
-        expect(openDrawerButton).toHaveFocus();
+              const { getByTestId } = render(<TestComponent />);
+
+              const secondaryButton = getByTestId('secondary-button');
+              expect(secondaryButton).toHaveFocus();
+            });
+          },
+        );
+
+        test('focus returns to the open button when the drawer is closed', async () => {
+          const TestComponent = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const handleOpen = () => setIsOpen(true);
+            const buttonRef = React.useRef<HTMLButtonElement>(null);
+            return (
+              <DrawerLayout
+                isDrawerOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                displayMode={DisplayMode.Embedded}
+                initialFocus={buttonRef}
+              >
+                <button data-testid="open-drawer-button" onClick={handleOpen}>
+                  Open Drawer
+                </button>
+                <Drawer title={drawerTest.title}>
+                  <button data-testid="primary-button">Primary</button>
+                  <button data-testid="secondary-button" ref={buttonRef}>
+                    Secondary
+                  </button>
+                </Drawer>
+              </DrawerLayout>
+            );
+          };
+
+          const { getByTestId } = render(<TestComponent />);
+          const { isOpen, getCloseButtonUtils } = getTestUtils();
+
+          const openDrawerButton = getByTestId('open-drawer-button');
+          openDrawerButton.focus();
+          userEvent.keyboard('{enter}');
+
+          await waitFor(() => {
+            expect(isOpen()).toBe(true);
+          });
+
+          const secondaryButton = getByTestId('secondary-button');
+          expect(secondaryButton).toHaveFocus();
+
+          const closeButton = getCloseButtonUtils().getButton();
+          closeButton.focus();
+          userEvent.keyboard('{enter}');
+
+          await waitFor(() => {
+            expect(isOpen()).toBe(false);
+            expect(openDrawerButton).toHaveFocus();
+          });
+        });
+      });
+
+      describe('autoFocus attribute', () => {
+        test('focus is on the element with the autoFocus attribute', async () => {
+          const TestComponent = () => {
+            return (
+              <DrawerLayout
+                isDrawerOpen={true}
+                onClose={() => {}}
+                displayMode={DisplayMode.Embedded}
+              >
+                <Drawer title={drawerTest.title}>
+                  <button data-testid="primary-button">Primary</button>
+                  <button
+                    data-testid="secondary-button"
+                    id="secondary-button"
+                    autoFocus={true}
+                    // react does not add the autofocus attribute to the button element, so it needs to be added manually for embedded mode
+                    {...{ autofocus: '' }}
+                  >
+                    Secondary
+                  </button>
+                </Drawer>
+              </DrawerLayout>
+            );
+          };
+
+          const { getByTestId } = render(<TestComponent />);
+
+          const secondaryButton = getByTestId('secondary-button');
+          expect(secondaryButton).toHaveFocus();
+        });
       });
     });
   });

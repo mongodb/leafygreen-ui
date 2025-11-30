@@ -49,8 +49,13 @@ export const DrawerToolbarLayoutContent = forwardRef<
       hasPadding = true,
       scrollable = true,
     } = getActiveDrawerContent() || {};
-    const { onClose, displayMode, setIsDrawerOpen, setHasToolbar } =
-      useDrawerLayoutContext();
+    const {
+      onClose,
+      displayMode,
+      setIsDrawerOpen,
+      setHasToolbar,
+      initialFocus,
+    } = useDrawerLayoutContext();
     const lgIds = getLgIds(dataLgId);
 
     // runs synchronously after the DOM is updated and before the browser paints to avoid flickering of the toolbar
@@ -88,6 +93,7 @@ export const DrawerToolbarLayoutContent = forwardRef<
           scrollable={scrollable}
           data-lgid={`${dataLgId}`}
           data-testid={`${dataLgId}`}
+          initialFocus={initialFocus}
         >
           {content}
         </Drawer>
