@@ -11,6 +11,7 @@ export const TimeInputContext = createContext<TimeInputContextProps>(
   {} as TimeInputContextProps,
 );
 
+// TODO: get todays date if value is not provided
 /**
  * This provider is used for the state context of the TimeInput component
  */

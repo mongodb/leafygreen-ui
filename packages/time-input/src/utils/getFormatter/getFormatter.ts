@@ -15,17 +15,31 @@ import { isValidLocale } from '@leafygreen-ui/date-utils';
 export const getFormatter = ({
   locale,
   showSeconds = true,
+  isIsoLocale = false,
+  withFullDate = false,
+  options = {},
 }: {
   locale: string;
   showSeconds?: boolean;
+  isIsoLocale?: boolean;
+  withFullDate?: boolean;
+  options?: Intl.DateTimeFormatOptions;
 }) => {
   const isValid = isValidLocale(locale);
 
-  if (isValid) {
+  if (isValid || isIsoLocale) {
     return new Intl.DateTimeFormat(locale, {
       hour: 'numeric',
       minute: 'numeric',
       second: showSeconds ? 'numeric' : undefined,
+      ...(withFullDate
+        ? {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+          }
+        : {}),
+      ...options,
     });
   }
 

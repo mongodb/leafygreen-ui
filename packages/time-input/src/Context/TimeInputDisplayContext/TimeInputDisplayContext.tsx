@@ -13,6 +13,7 @@ import {
 import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
 import { hasDayPeriod } from '../../utils';
 import { getFormatParts } from '../../utils/getFormatParts/getFormatParts';
+import defaultTo from 'lodash/defaultTo';
 
 export const TimeInputDisplayContext =
   createContext<TimeInputDisplayContextProps>(defaultTimeInputDisplayContext);
@@ -50,6 +51,13 @@ export const TimeInputDisplayProvider = ({
     showSeconds: providerValue.showSeconds,
   });
 
+  const timeZone = defaultTo(
+    providerValue.timeZone,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+  );
+
+  // console.log('🍓', { timeZone });
+
   // TODO: timezone
 
   return (
@@ -63,6 +71,7 @@ export const TimeInputDisplayProvider = ({
         setIsDirty,
         shouldShowSelect,
         formatParts,
+        timeZone,
       }}
     >
       {children}

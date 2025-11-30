@@ -36,13 +36,13 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
     const { darkMode } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
 
-    // console.log('🪼', { valueProp });
-
     const { value, updateValue } = useControlled<DateType | undefined>(
       valueProp,
       onChangeProp,
       initialValueProp,
     );
+
+    // console.log('🥝', { value: value?.toUTCString() });
 
     /**
      * Separate the props that are added to the display context and the props that are added to the component

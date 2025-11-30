@@ -10,6 +10,8 @@ import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
+import { getFormatPartsValues } from '../utils';
 
 /**
  * @internal
@@ -18,13 +20,29 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
     const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
 
-    const { shouldShowSelect, formatParts } = useTimeInputDisplayContext();
+    const { shouldShowSelect, formatParts, timeZone, locale, showSeconds } =
+      useTimeInputDisplayContext();
 
-    console.log('TimeInputInputs ⏰', { shouldShowSelect, formatParts });
+    const { value } = useTimeInputContext();
 
     const handleSelectChange = (unit: UnitOption) => {
       setSelectUnit(unit);
     };
+
+    const timeParts = getFormatPartsValues({
+      locale: locale,
+      timeZone: timeZone,
+      value: value,
+      hasDayPeriod: shouldShowSelect,
+    });
+
+    console.log('TimeInputInputs 🍉', {
+      shouldShowSelect,
+      formatParts,
+      timeZone,
+      value: value?.toUTCString(),
+      timeParts,
+    });
 
     // TODO: break this out more
     return (
