@@ -21,7 +21,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
           cache: false
 
       - uses: actions/cache/restore@v4
@@ -32,6 +32,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ runner.os }}-REACT17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
@@ -51,7 +52,7 @@ jobs:
         run: pnpm install --prefer-offline # Intentionally not using --frozen-lockfile to allow for pnpm-lock.yaml updates
 
       - name: Build packages
-        run: pnpm build
+        run: pnpm build --filter=!'@lg-apps/*'
 
       - uses: actions/cache/save@v4
         name: Save build cache
@@ -60,6 +61,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
@@ -75,7 +77,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
           cache: false
 
       - uses: actions/cache/restore@v4
@@ -85,6 +87,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}

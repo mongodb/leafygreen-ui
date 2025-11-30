@@ -7,10 +7,6 @@ import React, {
   useState,
 } from 'react';
 import { useInView } from 'react-intersection-observer';
-import {
-  useLeafyGreenChatContext,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 
 import LeafyGreenProvider, {
   useDarkMode,
@@ -18,9 +14,11 @@ import LeafyGreenProvider, {
 
 import { ScrollToLatestButton } from '../ScrollToLatestButton';
 
-import { CompactMessageFeed } from './CompactMessageFeed';
-import { getWrapperStyles } from './MessageFeed.styles';
-import { SpaciousMessageFeed } from './SpaciousMessageFeed';
+import {
+  getWrapperStyles,
+  interceptStyles,
+  scrollContainerStyles,
+} from './MessageFeed.styles';
 import { MessageFeedProps } from '.';
 
 export const MessageFeed = forwardRef(
@@ -29,7 +27,6 @@ export const MessageFeed = forwardRef(
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
-    const { variant } = useLeafyGreenChatContext();
 
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -46,11 +43,6 @@ export const MessageFeed = forwardRef(
       root: scrollContainerRef.current,
       threshold: 0,
     });
-
-    const isCompact = variant === Variant.Compact;
-    const ScrollContainer = isCompact
-      ? CompactMessageFeed
-      : SpaciousMessageFeed;
 
     const scrollToLatest = useCallback(() => {
       if (scrollContainerRef.current) {
@@ -112,18 +104,17 @@ export const MessageFeed = forwardRef(
             className,
             hasBottomShadow: !isBottomInView,
             hasTopShadow: !isTopInView,
-            isCompact,
             theme,
           })}
           ref={ref}
         >
-          <ScrollContainer ref={scrollContainerRef}>
+          <div className={scrollContainerStyles} ref={scrollContainerRef}>
             {/* Empty span element used to track if container can scroll up */}
-            <span ref={topInterceptRef} />
+            <span className={interceptStyles} ref={topInterceptRef} />
             {children}
             {/* Empty span element used to track if container can scroll down */}
-            <span ref={bottomInterceptRef} />
-          </ScrollContainer>
+            <span className={interceptStyles} ref={bottomInterceptRef} />
+          </div>
           <ScrollToLatestButton
             darkMode={darkMode}
             onClick={scrollToLatest}

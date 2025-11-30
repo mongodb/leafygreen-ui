@@ -1,5 +1,22 @@
 # @lg-tools/storybook-decorators
 
+## 1.0.6
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/banner@10.2.3
+
+## 1.0.5
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/banner@10.2.2
+
 ## 1.0.4
 
 ### Patch Changes

@@ -7,10 +7,10 @@ import random from 'lodash/random';
 import range from 'lodash/range';
 import shuffle from 'lodash/shuffle';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import Popover from '@leafygreen-ui/popover';
+import { Popover } from '@leafygreen-ui/popover';
 
 import {
   TestDescendant,

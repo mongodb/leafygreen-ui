@@ -3,7 +3,7 @@ import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryFn, StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { getRootStylesText } from './ChartTooltip.styles';
@@ -76,7 +76,7 @@ export default {
       decorator: TooltipRoot,
     },
   },
-};
+} as StoryObj<CustomTooltipProps>;
 
 export const Default: StoryObj<CustomTooltipProps> = {
   args: {

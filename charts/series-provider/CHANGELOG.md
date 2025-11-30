@@ -1,5 +1,21 @@
 # @lg-charts/series-provider
 
+## 1.0.6
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @lg-charts/colors@1.0.6
+
+## 1.0.5
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [c8559f3]
+  - @lg-charts/colors@1.0.5
+
 ## 1.0.4
 
 ### Patch Changes

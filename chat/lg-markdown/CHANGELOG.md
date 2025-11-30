@@ -1,5 +1,60 @@
 # @lg-chat/lg-markdown
 
+## 5.0.2
+
+### Patch Changes
+
+- 19c0cbe: Use latest version of `@leafygreen-ui/code` for compact tooltip UI
+- Updated dependencies [19c0cbe]
+  - @leafygreen-ui/code@20.2.5
+
+## 5.0.1
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/code@20.2.4
+  - @leafygreen-ui/typography@22.2.3
+
+## 5.0.0
+
+### Major Changes
+
+- 3dfa899: - Removed deprecated `lgMarkdownStyles` export.
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/code@20.2.3
+
+## 4.2.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/code@20.2.1
+
+## 4.2.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [37be24b]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/code@20.2.0
+  - @leafygreen-ui/typography@22.1.4
+
 ## 4.2.0
 
 ### Minor Changes

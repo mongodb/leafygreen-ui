@@ -8,7 +8,7 @@ import {
 import { StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import { Icon } from '@leafygreen-ui/icon';
 import { MenuItem } from '@leafygreen-ui/menu';
 
 import FormFooter, { FormFooterProps } from '.';

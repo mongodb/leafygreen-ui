@@ -1,5 +1,77 @@
 # @leafygreen-ui/menu
 
+## 33.1.0
+
+### Minor Changes
+
+- c7d6e62: Export `Align`, `Justify`, and `RenderMode` enums
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/icon-button@17.1.4
+  - @leafygreen-ui/typography@22.2.3
+  - @leafygreen-ui/input-option@4.1.4
+
+## 33.0.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/input-option@4.1.3
+  - @leafygreen-ui/descendants@3.0.6
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/popover@14.3.1
+
+## 33.0.0
+
+### Major Changes
+
+- 392b350: Updated menu to require either refEl or trigger prop
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+- 3d64531: Updates Popover dependency. Menu height calculation is now handled by the Popover package.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+  - @leafygreen-ui/input-option@4.1.2
+
+## 32.1.2
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/input-option@4.1.1
+  - @leafygreen-ui/descendants@3.0.5
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+
 ## 32.1.1
 
 ### Patch Changes

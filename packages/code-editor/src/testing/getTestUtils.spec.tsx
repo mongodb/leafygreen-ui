@@ -7,6 +7,7 @@ import { act } from '@leafygreen-ui/testing-lib';
 import { CodeEditor, CodeEditorProps } from '../CodeEditor';
 
 import { getTestUtils } from './getTestUtils';
+import { preLoadedModules } from './preLoadedModules';
 
 // MutationObserver not supported in JSDOM
 global.MutationObserver = jest.fn().mockImplementation(() => ({
@@ -14,6 +15,13 @@ global.MutationObserver = jest.fn().mockImplementation(() => ({
   unobserve: jest.fn(),
   disconnect: jest.fn(),
   takeRecords: jest.fn().mockReturnValue([]),
+}));
+
+// Mock ResizeObserver which is used by CodeMirror
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
 }));
 
 const DEFAULT_LGID = 'lg-code-editor';
@@ -25,7 +33,11 @@ const TestComponent = ({
   return (
     <div>
       <h1>Code Editor</h1>
-      <CodeEditor data-lgid={DEFAULT_LGID} {...props}>
+      <CodeEditor
+        data-lgid={DEFAULT_LGID}
+        preLoadedModules={preLoadedModules}
+        {...props}
+      >
         {children}
       </CodeEditor>
     </div>

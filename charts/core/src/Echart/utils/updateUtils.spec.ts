@@ -1,14 +1,18 @@
-import { EChartOptions } from '../Echart.types';
+import { EChartOptions, EChartSeriesOption } from '../Echart.types';
 
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
 
 describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
   test('addSeries should add a series to the chart options', () => {
     const currentOptions: Partial<EChartOptions> = {
-      series: [{ name: 'series1' }],
+      series: [{ type: 'line', name: 'series1', data: [] }],
     };
     const newSeriesName = 'series2';
-    const data = { name: newSeriesName };
+    const data: EChartSeriesOption = {
+      type: 'line',
+      name: newSeriesName,
+      data: [],
+    };
     const updatedOptions = addSeries(currentOptions, data);
     expect(updatedOptions.series).toHaveLength(2);
     expect(updatedOptions.series?.[1].name).toBe(newSeriesName);
@@ -16,10 +20,14 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
 
   test('addSeries should not add a series if a chart with the same name exists', () => {
     const currentOptions: Partial<EChartOptions> = {
-      series: [{ name: 'series1' }],
+      series: [{ type: 'line', name: 'series1', data: [] }],
     };
     const newSeriesName = 'series1';
-    const data = { name: newSeriesName };
+    const data: EChartSeriesOption = {
+      type: 'line',
+      name: newSeriesName,
+      data: [],
+    };
     const updatedOptions = addSeries(currentOptions, data);
     expect(updatedOptions.series).toHaveLength(1);
     expect(updatedOptions.series?.[0].name).toBe(newSeriesName);
@@ -27,7 +35,10 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
 
   test('removeSeries should remove a series from the chart options', () => {
     const currentOptions: Partial<EChartOptions> = {
-      series: [{ name: 'series1' }, { name: 'series2' }],
+      series: [
+        { type: 'line', name: 'series1', data: [] },
+        { type: 'line', name: 'series2', data: [] },
+      ],
     };
     const seriesName1 = 'series1';
     const seriesName2 = 'series2';
@@ -42,7 +53,9 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
   test('updateOptions should merge chart options non-destructively', () => {
     const currentOptions: Partial<EChartOptions> = {
       xAxis: {
+        type: 'category',
         show: true,
+        data: ['series1', 'series2', 'series3'],
         splitLine: {
           show: true,
         },
@@ -50,7 +63,9 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
     };
     const updatedOptions = updateOptions(currentOptions, {
       xAxis: {
+        type: 'category',
         show: false, // This should only update the show property and not other properties
+        data: ['series4', 'series5'],
       },
       grid: {
         show: true,
@@ -58,6 +73,8 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
     });
     // @ts-ignore: Property 'show' does not exist on type 'Arrayable<AriaOption>'.
     expect(updatedOptions?.xAxis?.show).toBe(false);
+    // @ts-ignore: Property 'data' does not exist on type 'Arrayable<XAXisOption>'.
+    expect(updatedOptions?.xAxis?.data).toEqual(['series4', 'series5']);
     // @ts-ignore: Property 'show' does not exist on type 'Arrayable<AriaOption>'.
     expect(updatedOptions?.xAxis?.splitLine?.show).toBe(true);
     // @ts-ignore: Property 'show' does not exist on type 'Arrayable<GridOption>'.

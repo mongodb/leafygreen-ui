@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Badge from '@leafygreen-ui/badge';
+import { Badge } from '@leafygreen-ui/badge';
 import { Disclaimer, H3 } from '@leafygreen-ui/typography';
 
 import {

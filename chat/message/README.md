@@ -22,40 +22,14 @@ npm install @lg-chat/message
 
 ## Example
 
-### Basic Usage
-
-#### Compact
-
 ```tsx
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 
 return (
-  <LeafyGreenChatProvider variant={Variant.Compact}>
+  <div>
     <Message messageBody="Question" />
     <Message isSender={false} messageBody="Answer" />
-  </LeafyGreenChatProvider>
-);
-```
-
-#### Spacious
-
-```tsx
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
-import { Message } from '@lg-chat/message';
-import { Avatar } from '@leafygreen-ui/avatar';
-
-return (
-  <LeafyGreenChatProvider variant={Variant.Spacious}>
-    <Message avatar={<Avatar />} messageBody="Question" />
-    <Message avatar={<Avatar />} isSender={false} messageBody="Answer" />
-  </LeafyGreenChatProvider>
+  </div>
 );
 ```
 
@@ -63,17 +37,12 @@ return (
 
 The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, `Message.Promotion`, and `Message.VerifiedBanner`.
 
-**Note 1:** All compound components only render in the `compact` variant.  
-**Note 2:** The layout and order of compound components are enforced by the `Message` component itself. Even if you change the order of subcomponents in your JSX, they will be rendered in the correct, intended order within the message bubble. This ensures consistent UI and accessibility regardless of how you compose your message children.
+**Note:** The layout and order of compound components are enforced by the `Message` component itself. Even if you change the order of subcomponents in your JSX, they will be rendered in the correct, intended order within the message bubble. This ensures consistent UI and accessibility regardless of how you compose your message children.
 
 #### Message.Actions
 
 ```tsx
 import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 
@@ -96,16 +65,14 @@ const MessageWithActions = () => {
   };
 
   return (
-    <LeafyGreenChatProvider variant={Variant.Compact}>
-      <Message messageBody="Test message">
-        <Message.Actions
-          onClickCopy={handleCopy}
-          onClickRetry={handleRetry}
-          onRatingChange={handleRatingChange}
-          onSubmitFeedback={handleSubmitFeedback}
-        />
-      </Message>
-    </LeafyGreenChatProvider>
+    <Message messageBody="Test message">
+      <Message.Actions
+        onClickCopy={handleCopy}
+        onClickRetry={handleRetry}
+        onRatingChange={handleRatingChange}
+        onSubmitFeedback={handleSubmitFeedback}
+      />
+    </Message>
   );
 };
 ```
@@ -114,10 +81,6 @@ const MessageWithActions = () => {
 
 ```tsx
 import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 
 const MessageWithLinks = () => {
@@ -142,15 +105,13 @@ const MessageWithLinks = () => {
   const handleLinkClick = () => console.log('Link clicked');
 
   return (
-    <LeafyGreenChatProvider variant={Variant.Compact}>
-      <Message isSender={false} messageBody="Test message">
-        <Message.Links
-          links={links}
-          onLinkClick={handleLinkClick}
-          headingText="Related Resources"
-        />
-      </Message>
-    </LeafyGreenChatProvider>
+    <Message isSender={false} messageBody="Test message">
+      <Message.Links
+        links={links}
+        onLinkClick={handleLinkClick}
+        headingText="Related Resources"
+      />
+    </Message>
   );
 };
 ```
@@ -159,25 +120,19 @@ const MessageWithLinks = () => {
 
 ```tsx
 import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 
 const MessageWithPromotion = () => {
   const handlePromotionClick = () => console.log('Promotion clicked');
 
   return (
-    <LeafyGreenChatProvider variant={Variant.Compact}>
-      <Message isSender={false} messageBody="Test message">
-        <Message.Promotion
-          promotionText="Go learn more about this skill!"
-          promotionUrl="https://learn.mongodb.com/skills"
-          onPromotionLinkClick={handlePromotionClick}
-        />
-      </Message>
-    </LeafyGreenChatProvider>
+    <Message isSender={false} messageBody="Test message">
+      <Message.Promotion
+        promotionText="Go learn more about this skill!"
+        promotionUrl="https://learn.mongodb.com/skills"
+        onPromotionLinkClick={handlePromotionClick}
+      />
+    </Message>
   );
 };
 ```
@@ -186,23 +141,17 @@ const MessageWithPromotion = () => {
 
 ```tsx
 import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 
 const MessageWithVerifiedBanner = () => {
   return (
-    <LeafyGreenChatProvider variant={Variant.Compact}>
-      <Message isSender={false} messageBody="Test message">
-        <Message.VerifiedBanner
-          verifier="MongoDB Staff"
-          verifiedAt={new Date('2024-03-24T16:20:00Z')}
-          learnMoreUrl="https://mongodb.com/docs"
-        />
-      </Message>
-    </LeafyGreenChatProvider>
+    <Message isSender={false} messageBody="Test message">
+      <Message.VerifiedBanner
+        verifier="MongoDB Staff"
+        verifiedAt={new Date('2024-03-24T16:20:00Z')}
+        learnMoreUrl="https://mongodb.com/docs"
+      />
+    </Message>
   );
 };
 ```
@@ -211,10 +160,6 @@ const MessageWithVerifiedBanner = () => {
 
 ```tsx
 import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 
@@ -253,27 +198,25 @@ const Example = () => {
   const handlePromotionClick = () => console.log('Promotion clicked');
 
   return (
-    <LeafyGreenChatProvider variant={Variant.Compact}>
-      <Message isSender={false} messageBody="Test message">
-        <Message.Promotion
-          promotionText="Go learn more about this skill!"
-          promotionUrl="https://learn.mongodb.com/skills"
-          onPromotionLinkClick={handlePromotionClick}
-        />
-        <Message.Actions
-          onClickCopy={handleCopy}
-          onClickRetry={handleRetry}
-          onRatingChange={handleRatingChange}
-          onSubmitFeedback={handleSubmitFeedback}
-        />
-        <Message.VerifiedBanner
-          verifier="MongoDB Staff"
-          verifiedAt={new Date('2024-03-24T16:20:00Z')}
-          learnMoreUrl="https://mongodb.com/docs"
-        />
-        <Message.Links links={links} onLinkClick={handleLinkClick} />
-      </Message>
-    </LeafyGreenChatProvider>
+    <Message isSender={false} messageBody="Test message">
+      <Message.Promotion
+        promotionText="Go learn more about this skill!"
+        promotionUrl="https://learn.mongodb.com/skills"
+        onPromotionLinkClick={handlePromotionClick}
+      />
+      <Message.Actions
+        onClickCopy={handleCopy}
+        onClickRetry={handleRetry}
+        onRatingChange={handleRatingChange}
+        onSubmitFeedback={handleSubmitFeedback}
+      />
+      <Message.VerifiedBanner
+        verifier="MongoDB Staff"
+        verifiedAt={new Date('2024-03-24T16:20:00Z')}
+        learnMoreUrl="https://mongodb.com/docs"
+      />
+      <Message.Links links={links} onLinkClick={handleLinkClick} />
+    </Message>
   );
 };
 ```
@@ -282,20 +225,13 @@ const Example = () => {
 
 ### Message
 
-| Prop                              | Type                                                                                                | Description                                                                       | Default                                                                                                                   |
-| --------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `align`                           | `'left', 'right'`                                                                                   | Determines whether the message is aligned to the left or right                    | if `isSender === true`, the message is aligned to the right, and otherwise to the left. This prop overrides that behavior |
-| `avatar`                          | `ReactElement`                                                                                      | Avatar element                                                                    |                                                                                                                           |
-| `componentOverrides` (deprecated) | `Record<MarkdownComponent, ComponentType>`                                                          | Uses value to override key'ed markdown elements in terms of how they are rendered |                                                                                                                           |
-| `isSender`                        | `boolean`                                                                                           | Indicates if the message is from the current user                                 | `true`                                                                                                                    |
-| `links`                           | `{ url: string; text: string; imageUrl?: string; variant: string; }[]`                              | A list of links to show in a section at the end of the message.                   |                                                                                                                           |
-| `linksHeading`                    | `string`                                                                                            | The heading text to display for the links section.                                | "Related Resources"                                                                                                       |
-| `markdownProps`                   | [`LGMarkdownProps`](https://github.com/mongodb/leafygreen-ui/tree/main/chat/lg-markdown#properties) | Props passed to the internal ReactMarkdown instance                               |                                                                                                                           |
-| `messageBody`                     | `string`                                                                                            | Message body text passed to LGMarkdown                                            |                                                                                                                           |
-| `onLinkClick`                     | `({ children: string; imageUrl?: string }) => void`                                                 | A callback function that is called when the link is clicked.                      |                                                                                                                           |
-| `sourceType`                      | `'markdown' \| 'text'`                                                                              | Determines the rendering method of the message                                    |                                                                                                                           |
-| `verified`                        | `{ verifier?: string; verifiedAt?: Date; learnMoreUrl?: string; }`                                  | Sets if an answer is "verified" and controls the content of the message banner.   |                                                                                                                           |
-| `...`                             | `HTMLElementProps<'div'>`                                                                           | Props spread on the root element                                                  |                                                                                                                           |
+| Prop            | Type                                                                                                | Description                                         | Default |
+| --------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------- |
+| `isSender`      | `boolean`                                                                                           | Indicates if the message is from the current user   | `true`  |
+| `markdownProps` | [`LGMarkdownProps`](https://github.com/mongodb/leafygreen-ui/tree/main/chat/lg-markdown#properties) | Props passed to the internal ReactMarkdown instance |         |
+| `messageBody`   | `string`                                                                                            | Message body text passed to LGMarkdown              |         |
+| `sourceType`    | `'markdown' \| 'text'`                                                                              | Determines the rendering method of the message      |         |
+| `...`           | `HTMLElementProps<'div'>`                                                                           | Props spread on the root element                    |         |
 
 ### Message.Actions
 
@@ -344,7 +280,6 @@ The `MessageActions` component provides a comprehensive set of actions for chat 
 
 #### Rendering Behavior
 
-- The component only renders in the `compact` variant of the `LeafyGreenChatProvider`. In the `spacious` variant, the component returns `null`
 - If only some optional props are provided, only those corresponding buttons/functionality are rendered:
   - Copy Button: Always renders
   - Retry Button: Renders when `onClickRetry` is provided

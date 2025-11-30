@@ -1,5 +1,57 @@
 # @leafygreen-ui/guide-cue
 
+## 8.2.0
+
+### Minor Changes
+
+- c7d6e62: Export `BeaconAlign` enum
+
+### Patch Changes
+
+- 55580b8: The GuideCue is updated for the focus to be on the primary button instead of the close button when opened for an improved UX
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [f7a63e2]
+- Updated dependencies [43810b4]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/icon-button@17.1.4
+  - @leafygreen-ui/typography@22.2.3
+
+## 8.1.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/popover@14.3.1
+  - @leafygreen-ui/tooltip@14.2.3
+  - @leafygreen-ui/button@25.1.3
+
+## 8.1.0
+
+### Minor Changes
+
+- 4ea4f00: [LG-5008](https://jira.mongodb.org/browse/LG-5008)
+
+  - Improves positioning logic with enhanced positioning fallback to optimize popover element visibility
+  - Assigns `GuideCue` component's internal beacon ref for better positioning of tooltip instances relative to beacon
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/tooltip@14.2.1
+  - @leafygreen-ui/button@25.1.1
+
 ## 8.0.6
 
 ### Patch Changes

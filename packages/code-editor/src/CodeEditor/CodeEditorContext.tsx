@@ -1,13 +1,24 @@
 import React, { createContext, useContext } from 'react';
 
+import { DarkModeProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
 import { getLgIds, type GetLgIdsReturnType } from '../utils/getLgIds';
 
 import { type LanguageName } from './hooks/extensions/useLanguageExtension';
+import { CodeEditorProps } from './CodeEditor.types';
+
+interface BaseFontSizeProps {
+  baseFontSize: BaseFontSize | 14 | undefined;
+}
 
 /**
  * Internal context values provided by CodeEditor to its children (like Panel).
  */
-export interface CodeEditorContextValue {
+export interface CodeEditorContextValue
+  extends DarkModeProps,
+    BaseFontSizeProps,
+    Pick<CodeEditorProps, 'maxWidth' | 'minWidth' | 'width' | 'readOnly'> {
   /**
    * Function to retrieve the current editor contents.
    */
@@ -53,6 +64,21 @@ export interface CodeEditorContextValue {
    * to inherit custom data-lgid prefixes passed to the parent CodeEditor.
    */
   lgIds: GetLgIdsReturnType;
+
+  /**
+   * Depth of the undo stack.
+   */
+  undoDepth: number;
+
+  /**
+   * Depth of the redo stack.
+   */
+  redoDepth: number;
+
+  /**
+   * Stateful boolean indicating if the editor is loading.
+   */
+  isLoading: boolean;
 }
 
 // Default context value for when Panel is used standalone
@@ -67,6 +93,15 @@ const defaultContextValue: CodeEditorContextValue = {
     console.warn('downloadContent is not available - editor context not found');
   },
   lgIds: getLgIds(), // Use default lgIds when used standalone
+  maxWidth: undefined,
+  minWidth: undefined,
+  width: undefined,
+  readOnly: false,
+  undoDepth: 0,
+  redoDepth: 0,
+  baseFontSize: 13,
+  darkMode: false,
+  isLoading: false,
 };
 
 const CodeEditorContext =

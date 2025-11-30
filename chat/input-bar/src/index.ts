@@ -1,8 +1,6 @@
 export {
   InputBar,
   type InputBarProps,
-  /** @deprecated */
-  lgInputBarStyles,
   type TextareaAutosizeProps,
 } from './InputBar';
 export { State } from './shared.types';

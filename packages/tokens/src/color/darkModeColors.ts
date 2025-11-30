@@ -63,6 +63,11 @@ const darkModeBorderColors = {
     [InteractionState.Hover]: gray.dark2,
     [InteractionState.Focus]: blue.light1,
   },
+  [Variant.Tertiary]: {
+    [InteractionState.Default]: gray.dark1,
+    [InteractionState.Hover]: gray.dark1,
+    [InteractionState.Focus]: blue.light1,
+  },
   [Variant.Success]: {
     [InteractionState.Default]: green.dark1,
     [InteractionState.Hover]: green.dark1,
@@ -71,6 +76,16 @@ const darkModeBorderColors = {
   [Variant.Error]: {
     [InteractionState.Default]: red.light1,
     [InteractionState.Hover]: red.light1,
+    [InteractionState.Focus]: blue.light1,
+  },
+  [Variant.OnSuccess]: {
+    [InteractionState.Default]: green.dark2,
+    [InteractionState.Hover]: green.dark2,
+    [InteractionState.Focus]: blue.light1,
+  },
+  [Variant.OnError]: {
+    [InteractionState.Default]: red.dark2,
+    [InteractionState.Hover]: red.dark2,
     [InteractionState.Focus]: blue.light1,
   },
   [Variant.Disabled]: {
@@ -149,15 +164,35 @@ const darkModeTextColors = {
     [InteractionState.Hover]: black,
     [InteractionState.Focus]: blue.dark2,
   },
+  [Variant.Disabled]: {
+    [InteractionState.Default]: gray.dark1,
+    [InteractionState.Hover]: gray.dark1,
+    [InteractionState.Focus]: gray.dark1,
+  },
+  [Variant.Success]: {
+    [InteractionState.Default]: green.light2,
+    [InteractionState.Hover]: green.light2,
+    [InteractionState.Focus]: green.light2,
+  },
   [Variant.Error]: {
     [InteractionState.Default]: red.light1,
     [InteractionState.Hover]: red.light1,
     [InteractionState.Focus]: red.light1,
   },
-  [Variant.Disabled]: {
-    [InteractionState.Default]: gray.dark1,
-    [InteractionState.Hover]: gray.dark1,
-    [InteractionState.Focus]: gray.dark1,
+  [Variant.OnSuccess]: {
+    [InteractionState.Default]: green.light1,
+    [InteractionState.Hover]: green.light1,
+    [InteractionState.Focus]: green.light1,
+  },
+  [Variant.OnSuccessLink]: {
+    [InteractionState.Default]: green.light3,
+    [InteractionState.Hover]: green.light3,
+    [InteractionState.Focus]: green.light3,
+  },
+  [Variant.OnError]: {
+    [InteractionState.Default]: red.light2,
+    [InteractionState.Hover]: red.light2,
+    [InteractionState.Focus]: red.light2,
   },
   [Variant.Link]: {
     [InteractionState.Default]: blue.light1,

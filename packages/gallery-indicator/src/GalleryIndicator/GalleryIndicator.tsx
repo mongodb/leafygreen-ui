@@ -8,8 +8,11 @@ import {
   getGalleryIndicatorStyles,
   getIndicatorStyles,
 } from './GalleryIndicator.styles';
-import { GalleryIndicatorProps } from './GalleryIndicator.types';
+import { GalleryIndicatorProps, Variant } from './GalleryIndicator.types';
 
+/**
+ * GalleryIndicator is a component that displays a series of dots to indicate the current active index in a gallery.
+ */
 export const GalleryIndicator = React.forwardRef<
   HTMLUListElement,
   GalleryIndicatorProps
@@ -20,6 +23,7 @@ export const GalleryIndicator = React.forwardRef<
       length,
       activeIndex,
       className,
+      variant = Variant.Default,
       'data-lgid': dataLgId,
       ...rest
     }: GalleryIndicatorProps,
@@ -43,7 +47,7 @@ export const GalleryIndicator = React.forwardRef<
               key={i}
               data-testid={lgIds.indicator}
               data-lgid={lgIds.indicator}
-              className={getIndicatorStyles({ theme, isActive })}
+              className={getIndicatorStyles({ theme, isActive, variant })}
               data-active={isActive}
             />
           );

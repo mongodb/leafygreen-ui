@@ -1,4 +1,8 @@
-import { buildPackage, buildTSDoc, buildTypescript } from '@lg-tools/build';
+import {
+  registerBuildDocsCommand,
+  registerBuildTSCommand,
+  registerBundleCommand,
+} from '@lg-tools/build';
 import { migrator } from '@lg-tools/codemods';
 import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
@@ -83,10 +87,22 @@ cli
     'When running from a consuming application, defines the source of linked packages',
   )
   .option('-v --verbose', 'Prints additional information to the console', false)
-  .option('--scope <name>', 'The NPM organization')
+  .option(
+    '--no-parallel',
+    'Run the link command sequentially for each package. Useful for debugging or when the parallel approach fails',
+  )
+  .option(
+    '--launch-env <launchEnv>',
+    'A string of environment variable lines as `KEY=VALUE`, separated by a newline. ' +
+      'Only the specified environment variables will be used during npm link commands in the source and destination directories. ' +
+      'This is useful to workaround environment variable pollution by tools such as version managers (e.g., asdf) or script runners (e.g., pnpm) that interfere with `npm link`. ' +
+      'We recommend using --launch-env="$(env)" to use your original shell environment.',
+    undefined,
+  )
+  .option('--scope <name>', 'The NPM organization, e.g. @lg-charts')
   .option(
     '--packages <names...>',
-    'Specific package names (requires `scope` option, or full package name)',
+    'Specific package names (requires `scope` option, or full package name) e.g. `@lg-charts/core` or `core` if @lg-charts is the scope',
   )
   .action(linkPackages);
 
@@ -224,33 +240,10 @@ cli
   .action(migrator);
 
 /** Build steps */
-cli
-  .command('build-package')
-  .description('Builds a package')
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .action(buildPackage);
-cli
-  .command('build-ts')
-  .description("Builds a package's TypeScript definitions")
-  .argument('[pass-through...]', 'Pass-through options for `tsc`')
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .option(
-    '--downlevel',
-    'Builds all TS downlevel targets based on the typesVersions field in package.json',
-    false,
-  )
-  .option(
-    '-u, --update',
-    'Update package.json typesVersions and exports fields',
-    false,
-  )
-  .allowUnknownOption(true)
-  .action(buildTypescript);
-cli
-  .command('build-tsdoc')
-  .description("Builds a package's TSDoc file")
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .action(buildTSDoc);
+
+registerBundleCommand(cli.command('build-package'));
+registerBuildTSCommand(cli.command('build-ts'));
+registerBuildDocsCommand(cli.command('build-tsdoc'));
 
 /** Merge editor settings */
 cli

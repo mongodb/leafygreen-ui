@@ -48,12 +48,30 @@ export const useControlled = <T extends any = undefined>(
    * If the component is controlled, it will not update the controlled value.
    *
    * onChange callback is called if provided.
+   * Accepts either a direct value or a function that receives the previous value.
    */
-  const updateValue = (newVal: T) => {
+  const updateValue = (newVal: React.SetStateAction<T>) => {
     if (!isControlled) {
-      setUncontrolledValue(newVal);
+      // In uncontrolled mode, use the state setter's functional update
+      // to ensure we always get the latest value
+      if (typeof newVal === 'function') {
+        setUncontrolledValue(prev => {
+          const resolvedValue = (newVal as (prev: T) => T)(prev);
+          onChange?.(resolvedValue);
+          return resolvedValue;
+        });
+      } else {
+        setUncontrolledValue(newVal);
+        onChange?.(newVal);
+      }
+    } else {
+      // In controlled mode, resolve the value using the current controlled value
+      const resolvedValue =
+        typeof newVal === 'function'
+          ? (newVal as (prev: T) => T)(value)
+          : newVal;
+      onChange?.(resolvedValue);
     }
-    onChange?.(newVal);
   };
 
   /**

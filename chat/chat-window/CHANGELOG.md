@@ -1,5 +1,69 @@
 # @lg-chat/chat-window
 
+## 6.0.0
+
+### Major Changes
+
+- 3dfa899: [LG-5575](https://jira.mongodb.org/browse/LG-5575)
+
+  - Added compatibility with `@lg-chat/leafygreen-chat-provider@6.0.0`. We recommend new projects use `@lg-chat/leafygreen-chat-provider` v6; support for v5 will be removed in a future major version.
+  - All chat components have been simplified by removing variant-specific conditional logic.
+    - Removed `onClose` and `iconSlot` props from `ChatWindowProps`. These props were only used in the spacious variant.
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+- Updated dependencies [3dfa899]
+- Updated dependencies [3dfa899]
+  - @lg-chat/title-bar@5.0.0
+  - @lg-chat/leafygreen-chat-provider@6.0.0
+
+## 5.2.0
+
+### Minor Changes
+
+- af60a2d: [LG-5664](https://jira.mongodb.org/browse/LG-5664): add compact variant of `TitleBar`
+
+### Patch Changes
+
+- Updated dependencies [af60a2d]
+  - @lg-chat/title-bar@4.2.0
+
+## 5.1.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @lg-chat/title-bar@4.1.0
+
+## 5.0.0
+
+### Major Changes
+
+- bd83675: Updated height of outer container to ensure `ChatWindow` takes up the full vertical space of its parent container element. Also, added a hidden spacer element to ensure messages vertically flow from the bottom of the scroll container when child `MessageFeed` instance does not take up the full vertical space.
+
+  Note: this should be upgraded with the following packages to avoid UI regressions:
+
+  - `@lg-chat/leafygreen-chat-provider@5.1.0`
+  - `@lg-chat/message-feed@8.0.0`
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [bd83675]
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @lg-chat/leafygreen-chat-provider@5.1.0
+  - @leafygreen-ui/emotion@5.0.4
+  - @lg-chat/title-bar@4.0.9
+
 ## 4.1.6
 
 ### Patch Changes

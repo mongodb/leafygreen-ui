@@ -4,13 +4,14 @@ import { flushSync } from 'react-dom';
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Popover, {
+import {
   Align,
   DismissMode,
+  Popover,
   RenderMode,
 } from '@leafygreen-ui/popover';
 
-import TooltipContent from '../TooltipContent';
+import GuideCueTooltip from '../GuideCueTooltip';
 
 import { beaconStyles, timeout1, timeout2 } from './GuideCue.styles';
 import { GuideCueProps, TooltipAlign, TooltipJustify } from './GuideCue.types';
@@ -52,7 +53,7 @@ function GuideCue({
     : 'Next';
 
   /**
-   * Determines if the stand-alone tooltip should be shown. If there are multiple steps the multip-step tooltip will be shown.
+   * Determines if the stand-alone tooltip should be shown. If there are multiple steps the multi-step tooltip will be shown.
    */
   const isStandalone = numberOfSteps <= 1;
 
@@ -65,7 +66,7 @@ function GuideCue({
       setPopoverOpen(true);
       openTimeout = setTimeout(
         () =>
-          // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
+          // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
           flushSync(() => {
             // tooltip opens a little after the beacon opens
             setTooltipOpen(true);
@@ -76,7 +77,7 @@ function GuideCue({
       // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to multi-step tooltip.
       // tooltip closes first
       setTooltipOpen(false);
-      // beacon closes a little after the tooltip cloese
+      // beacon closes a little after the tooltip close
       closeTimeout = setTimeout(() => setPopoverOpen(false), timeout2);
     }
 
@@ -140,37 +141,36 @@ function GuideCue({
       {isStandalone ? (
         // Standalone tooltip
         // this is using the reference from the `refEl` prop to position itself against
-        <TooltipContent {...tooltipContentProps}>{children}</TooltipContent>
+        <GuideCueTooltip {...tooltipContentProps}>{children}</GuideCueTooltip>
       ) : (
-        // Multistep tooltip
-        <Popover
-          active={popoverOpen}
-          refEl={refEl}
-          align={beaconAlign}
-          justify={TooltipJustify.Middle}
-          spacing={-12} // width of beacon is 24px, 24/2 = 12
-          adjustOnMutation={true}
-          dismissMode={DismissMode.Manual}
-          renderMode={RenderMode.TopLayer}
-        >
-          {/* The beacon is using the popover component to position itself */}
-          <div
+        // Multi-step tooltip
+        <>
+          <Popover
+            active={popoverOpen}
+            refEl={refEl}
+            align={beaconAlign}
+            justify={TooltipJustify.Middle}
+            spacing={-12} // width of beacon is 24px, 24/2 = 12
+            adjustOnMutation={true}
+            dismissMode={DismissMode.Manual}
+            renderMode={RenderMode.TopLayer}
             ref={beaconRef}
-            className={beaconStyles(prefersReducedMotion, darkMode)}
           >
-            <div />
-          </div>
-
+            {/* The beacon is using the popover component to position itself */}
+            <div className={beaconStyles(prefersReducedMotion, darkMode)}>
+              <div />
+            </div>
+          </Popover>
           {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
           {/* Instead of passing the beacon as the tooltip trigger prop we pass a reference to the beacon to the `refEl` prop. By passing only the reference we avoid default tooltip behaviors such as closing the tooltip on background click or showing and hiding the tooltip on hover. */}
-          <TooltipContent
+          <GuideCueTooltip
             {...tooltipContentProps}
             refEl={beaconRef}
             open={tooltipOpen}
           >
             {children}
-          </TooltipContent>
-        </Popover>
+          </GuideCueTooltip>
+        </>
       )}
     </>
   );

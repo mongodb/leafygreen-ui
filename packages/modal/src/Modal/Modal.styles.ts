@@ -13,6 +13,7 @@ import {
   transitionDuration,
   Variant,
 } from '@leafygreen-ui/tokens';
+import { boxShadows } from '@leafygreen-ui/tokens';
 
 import { ModalSize } from './Modal.types';
 
@@ -54,10 +55,11 @@ const getBackdropStyles = ({
 const getBaseDialogStyles = (theme: Theme) => css`
   border: none;
   border-radius: ${borderRadius[600]}px;
-  box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
+  box-shadow: ${boxShadows[theme][3]};
   background-color: ${color[theme].background[Variant.Primary][
     InteractionState.Default
   ]};
+  margin: auto;
   padding: ${spacing[1000]}px ${spacing[900]}px;
   color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
   font-family: ${fontFamilies.default};

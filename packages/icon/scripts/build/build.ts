@@ -28,7 +28,7 @@ function chunkArray<T>(arr: Array<T>, size: number): Array<Array<T>> {
  * Runs the Rollup build command for index and story files.
  */
 async function buildIndex({ verbose }: { verbose?: boolean }): Promise<void> {
-  buildPackage({ direct: true, verbose });
+  await buildPackage({ verbose });
 }
 
 /**

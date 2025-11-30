@@ -1,13 +1,20 @@
 import { ReactElement, ReactNode } from 'react';
 
-import { LgIdProps } from '@leafygreen-ui/lib';
+import type { Either, LgIdProps } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphicPropsWithRef,
   PolymorphicAs,
 } from '@leafygreen-ui/polymorphic';
-import { PopoverProps } from '@leafygreen-ui/popover';
+import {
+  Align,
+  Justify,
+  PopoverProps,
+  RenderMode,
+} from '@leafygreen-ui/popover';
 
 import { type SubMenuProps } from '../SubMenu/';
+
+export { Align, Justify, RenderMode };
 
 export type SubMenuType = ReactElement<
   InferredPolymorphicPropsWithRef<PolymorphicAs, SubMenuProps>
@@ -19,9 +26,9 @@ export const MenuVariant = {
 } as const;
 export type MenuVariant = (typeof MenuVariant)[keyof typeof MenuVariant];
 
-export interface MenuProps
+interface BaseMenuProps
   extends Omit<React.ComponentPropsWithoutRef<'ul'>, 'onClick'>,
-    Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'>,
+    Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle' | 'refEl'>,
     LgIdProps {
   /**
    * The menu items, or submenus
@@ -33,6 +40,11 @@ export interface MenuProps
    * Test id for the menu element
    */
   'data-testid'?: string;
+
+  /**
+   * A reference to the element against which the popover component will be positioned.
+   */
+  refEl?: React.RefObject<HTMLElement>;
 
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
@@ -107,3 +119,8 @@ export interface MenuProps
    */
   variant?: MenuVariant;
 }
+
+/**
+ * Menu props require at least one of `refEl` or `trigger` to be provided
+ */
+export type MenuProps = Either<BaseMenuProps, 'refEl' | 'trigger'>;

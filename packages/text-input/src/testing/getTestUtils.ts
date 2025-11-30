@@ -76,24 +76,24 @@ export const getTestUtils = (
    * Queries the `element` for the checkmark Icon.
    */
   const isValid = () => {
-    const checkmarkIcon = queryBySelector<SVGElement>(
-      element,
-      'svg[title="Valid"]',
-    );
+    const checkmarkIcon = queryBySelector<SVGElement>(element, 'svg');
 
-    return !!checkmarkIcon;
+    if (!checkmarkIcon) return false;
+
+    const titleElement = checkmarkIcon.querySelector('title');
+    return titleElement?.textContent === 'Valid';
   };
 
   /**
    * Queries the `element` for the warning Icon.
    */
   const isError = () => {
-    const warningIcon = queryBySelector<SVGElement>(
-      element,
-      'svg[title="Error"]',
-    );
+    const warningIcon = queryBySelector<SVGElement>(element, 'svg');
 
-    return !!warningIcon;
+    if (!warningIcon) return false;
+
+    const titleElement = warningIcon.querySelector('title');
+    return titleElement?.textContent === 'Error';
   };
 
   /**

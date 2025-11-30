@@ -1,5 +1,70 @@
 # @lg-chat/message-rating
 
+## 7.1.0
+
+### Minor Changes
+
+- d21ec41: Refactor `IconButton` instances to use compact tooltip UI
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [f7a63e2]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/icon-button@17.1.4
+
+## 7.0.0
+
+### Major Changes
+
+- 3dfa899: [LG-5575](https://jira.mongodb.org/browse/LG-5575)
+
+  - Added compatibility with `@lg-chat/leafygreen-chat-provider@6.0.0`. We recommend new projects use `@lg-chat/leafygreen-chat-provider` v6; support for v5 will be removed in a future major version.
+  - Removed deprecated `lgMessageRatingStyles` export.
+  - All chat components have been simplified by removing variant-specific conditional logic.
+    - Removed `description` prop.
+    - Removed `RadioButton` component and related exports (`lgRadioButtonStyles`, `RadioButtonProps` type).
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+- Updated dependencies [3dfa899]
+  - @leafygreen-ui/icon-button@17.1.3
+  - @lg-chat/leafygreen-chat-provider@6.0.0
+
+## 6.0.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 6.0.0
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [bd83675]
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @lg-chat/leafygreen-chat-provider@5.1.0
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+
 ## 5.0.3
 
 ### Patch Changes

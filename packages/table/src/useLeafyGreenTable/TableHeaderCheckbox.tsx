@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from '@tanstack/react-table';
 
-import Checkbox from '@leafygreen-ui/checkbox';
+import { Checkbox } from '@leafygreen-ui/checkbox';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 

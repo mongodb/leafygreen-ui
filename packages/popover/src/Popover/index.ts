@@ -1,5 +1,5 @@
 export { Popover } from './Popover';
-export { contentClassName } from './Popover.styles';
+export { contentClassName, popoverCSSProperties } from './Popover.styles';
 export { getAlign, getJustify } from './Popover.testutils';
 export {
   Align,

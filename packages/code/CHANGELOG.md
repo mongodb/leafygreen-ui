@@ -1,5 +1,93 @@
 # @leafygreen-ui/code
 
+## 20.2.5
+
+### Patch Changes
+
+- 19c0cbe: Refactor `IconButton` instances to use compact tooltip UI
+
+## 20.2.4
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [f7a63e2]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/icon-button@17.1.4
+  - @leafygreen-ui/select@17.0.2
+  - @leafygreen-ui/skeleton-loader@3.0.10
+  - @leafygreen-ui/typography@22.2.3
+
+## 20.2.3
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/skeleton-loader@3.0.9
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/tooltip@14.2.3
+  - @leafygreen-ui/button@25.1.3
+  - @leafygreen-ui/select@17.0.1
+
+## 20.2.2
+
+### Patch Changes
+
+- Updated dependencies [6494d15]
+- Updated dependencies [2463aa4]
+- Updated dependencies [11cbe4f]
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/select@17.0.0
+  - @leafygreen-ui/hooks@9.3.0
+  - @leafygreen-ui/icon@14.7.0
+
+## 20.2.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/select@16.3.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+  - @leafygreen-ui/skeleton-loader@3.0.8
+  - @leafygreen-ui/tooltip@14.2.2
+
+## 20.2.0
+
+### Minor Changes
+
+- 37be24b: Add `collapsedLines` prop to allow customization of the number of visible lines when code block is collapsed
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [7f7c385]
+- Updated dependencies [7fc3077]
+- Updated dependencies [c8559f3]
+- Updated dependencies [51c453b]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/skeleton-loader@3.0.7
+  - @leafygreen-ui/select@16.2.0
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/tooltip@14.2.1
+  - @leafygreen-ui/button@25.1.1
+
 ## 20.1.1
 
 ### Patch Changes

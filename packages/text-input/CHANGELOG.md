@@ -1,5 +1,59 @@
 # @leafygreen-ui/text-input
 
+## 16.2.2
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/form-field@4.0.8
+  - @leafygreen-ui/typography@22.2.3
+
+## 16.2.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/form-field@4.0.7
+  - @leafygreen-ui/typography@22.2.2
+
+## 16.2.0
+
+### Minor Changes
+
+- 2463aa4: Updates testUtils files to accommodate changes to the Icon package
+
+### Patch Changes
+
+- Updated dependencies [11cbe4f]
+  - @leafygreen-ui/hooks@9.3.0
+
+## 16.1.3
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/form-field@4.0.6
+  - @leafygreen-ui/hooks@9.2.2
+
+## 16.1.2
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/form-field@4.0.5
+  - @leafygreen-ui/typography@22.1.4
+
 ## 16.1.1
 
 ### Patch Changes

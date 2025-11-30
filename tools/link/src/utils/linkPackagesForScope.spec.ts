@@ -1,13 +1,11 @@
-import { ChildProcess } from 'child_process';
-import xSpawn from 'cross-spawn';
 import fsx from 'fs-extra';
 import path from 'path';
 
 import { linkPackagesForScope } from './linkPackagesForScope';
-import { MockChildProcess } from './mocks.testutils';
+import * as spawnLoggedModule from './spawnLogged';
 
 describe('tools/link/linkPackagesForScope', () => {
-  let spawnSpy: jest.SpyInstance<ChildProcess>;
+  let spawnLoggedSpy: jest.SpyInstance;
 
   beforeAll(() => {
     fsx.emptyDirSync('./tmp');
@@ -16,12 +14,13 @@ describe('tools/link/linkPackagesForScope', () => {
   });
 
   beforeEach(() => {
-    spawnSpy = jest.spyOn(xSpawn, 'spawn');
-    spawnSpy.mockImplementation((..._args) => new MockChildProcess());
+    spawnLoggedSpy = jest
+      .spyOn(spawnLoggedModule, 'spawnLogged')
+      .mockResolvedValue(undefined);
   });
 
   afterEach(() => {
-    spawnSpy.mockRestore();
+    spawnLoggedSpy.mockRestore();
     fsx.emptyDirSync('./tmp');
   });
 
@@ -38,29 +37,29 @@ describe('tools/link/linkPackagesForScope', () => {
     fsx.mkdirSync('./tmp/app/node_modules/@example');
     fsx.mkdirSync('./tmp/app/node_modules/@example/test-package');
 
-    await linkPackagesForScope(
-      {
-        scopeName: '@example',
-        scopePath: 'scope',
-      },
-      path.resolve('./tmp/packages'),
-      path.resolve('./tmp/app'),
-    );
+    await linkPackagesForScope({
+      scopeName: '@example',
+      scopePath: 'scope',
+      source: path.resolve('./tmp/packages'),
+      destination: path.resolve('./tmp/app'),
+    });
 
     // Creates links
-    expect(spawnSpy).toHaveBeenCalledWith(
+    expect(spawnLoggedSpy).toHaveBeenCalledWith(
       'npm',
       ['link'],
       expect.objectContaining({
+        name: 'link_src:test-package',
         cwd: expect.stringContaining('tmp/packages/scope/test-package'),
       }),
     );
 
     // Consumes links
-    expect(spawnSpy).toHaveBeenCalledWith(
+    expect(spawnLoggedSpy).toHaveBeenCalledWith(
       'npm',
       ['link', '@example/test-package'],
       expect.objectContaining({
+        name: 'link_dst:test-package',
         cwd: expect.stringContaining('tmp/app'),
       }),
     );

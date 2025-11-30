@@ -1,48 +1,60 @@
 import React from 'react';
-import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryFn, StoryObj } from '@storybook/react';
 
-import { TitleBar } from '.';
+import { TitleBar, type TitleBarProps } from './TitleBar';
 
-export default {
+const meta: StoryMetaType<typeof TitleBar> = {
   title: 'Composition/Chat/TitleBar',
   component: TitleBar,
   args: {
     title: 'LeafyGreen Chat',
-    onClose: undefined,
   },
   argTypes: {
-    onClose: { control: 'none' },
     badgeText: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
   },
+  parameters: {
+    default: null,
+    generate: {
+      combineArgs: {
+        badgeText: [undefined, 'Beta'],
+        darkMode: [false, true],
+      },
+      decorator: Instance => {
+        return (
+          <div style={{ width: 700 }}>
+            <Instance />
+          </div>
+        );
+      },
+    },
+  },
 };
 
-const Template: StoryFn<typeof TitleBar> = props => (
+export default meta;
+
+const Template: StoryFn<TitleBarProps> = props => (
   <div style={{ width: 700 }}>
     <TitleBar {...props} />
   </div>
 );
 
-export const Centered = Template.bind({});
-
-export const LeftAligned = Template.bind({});
-LeftAligned.args = {
-  align: 'left',
+export const LiveExample: StoryObj<TitleBarProps> = {
+  render: Template,
+  args: {
+    title: 'LeafyGreen Chat',
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
-export const WithBeta = Template.bind({});
-WithBeta.args = {
-  badgeText: 'Beta',
-};
-
-export const CenteredWithClose = Template.bind({});
-CenteredWithClose.args = {
-  onClose: () => {},
-};
-
-export const LeftAlignedWithClose = Template.bind({});
-LeftAlignedWithClose.args = {
-  align: 'left',
-  onClose: () => {},
+export const Generated: StoryObj<TitleBarProps> = {
+  render: Template,
+  args: {
+    title: 'LeafyGreen Chat',
+  },
 };

@@ -1,5 +1,31 @@
 # @leafygreen-ui/gallery-indicator
 
+## 3.1.2
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
+## 3.1.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+
+## 3.1.0
+
+### Minor Changes
+
+- 772c55d: Add variant allowing user to pick between default and BaseGreen
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
 ## 3.0.4
 
 ### Patch Changes

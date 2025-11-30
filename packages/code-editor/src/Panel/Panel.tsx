@@ -12,11 +12,12 @@ import QuestionMarkWithCircleIcon from '@leafygreen-ui/icon/dist/QuestionMarkWit
 import RedoIcon from '@leafygreen-ui/icon/dist/Redo';
 // @ts-ignore LG icons don't currently support TS
 import UndoIcon from '@leafygreen-ui/icon/dist/Undo';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuItem, MenuVariant } from '@leafygreen-ui/menu';
-import Modal from '@leafygreen-ui/modal';
-import Tooltip from '@leafygreen-ui/tooltip';
+import { Modal } from '@leafygreen-ui/modal';
+import { spacing } from '@leafygreen-ui/tokens';
+import { Tooltip, TooltipVariant } from '@leafygreen-ui/tooltip';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { useCodeEditorContext } from '../CodeEditor/CodeEditorContext';
@@ -47,7 +48,7 @@ import { PanelProps } from './Panel.types';
 export function Panel({
   baseFontSize: baseFontSizeProp,
   customSecondaryButtons,
-  darkMode,
+  darkMode: darkModeProp,
   downloadFileName,
   innerContent,
   onCopyClick,
@@ -63,11 +64,29 @@ export function Panel({
 }: PanelProps) {
   const [shortcutsModalOpen, setShortcutsModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { theme } = useDarkMode(darkMode);
-  const baseFontSize = useUpdatedBaseFontSize();
 
-  const { getContents, formatCode, undo, redo, downloadContent, lgIds } =
-    useCodeEditorContext();
+  const {
+    baseFontSize: contextBaseFontSize,
+    darkMode: contextDarkMode,
+    downloadContent,
+    formatCode,
+    getContents,
+    isLoading,
+    lgIds,
+    maxWidth,
+    minWidth,
+    readOnly,
+    redo,
+    redoDepth,
+    undo,
+    undoDepth,
+    width,
+  } = useCodeEditorContext();
+
+  const { theme } = useDarkMode(darkModeProp || contextDarkMode);
+  const baseFontSize = useUpdatedBaseFontSize(
+    baseFontSizeProp || contextBaseFontSize,
+  );
 
   const handleFormatClick = async () => {
     if (formatCode) {
@@ -115,7 +134,10 @@ export function Panel({
 
   return (
     <>
-      <div className={getPanelStyles(theme)} data-lgid={lgIds.panel}>
+      <div
+        className={getPanelStyles({ theme, width, minWidth, maxWidth })}
+        data-lgid={lgIds.panel}
+      >
         <div
           className={getPanelTitleStyles(
             theme,
@@ -129,17 +151,23 @@ export function Panel({
         <div className={getPanelButtonsStyles()}>
           {showFormatButton && (
             <Tooltip
+              darkMode={theme === 'dark'}
+              baseFontSize={baseFontSize}
               align="top"
               justify="middle"
+              spacing={spacing[100]}
               trigger={
                 <IconButton
+                  darkMode={theme === 'dark'}
                   onClick={handleFormatClick}
                   aria-label="Format code"
                   data-lgid={lgIds.panelFormatButton}
+                  disabled={isLoading}
                 >
                   <FormatIcon />
                 </IconButton>
               }
+              variant={TooltipVariant.Compact}
             >
               Prettify code
             </Tooltip>
@@ -150,14 +178,17 @@ export function Panel({
               getContentsToCopy={getContents ?? (() => '')}
               onCopy={onCopyClick}
               data-lgid={lgIds.panelCopyButton}
+              disabled={isLoading}
             />
           )}
           {showSecondaryMenuButton && (
             <Menu
               trigger={
                 <IconButton
+                  darkMode={theme === 'dark'}
                   aria-label="Show more actions"
                   data-lgid={lgIds.panelSecondaryMenuButton}
+                  disabled={isLoading}
                 >
                   <EllipsisIcon />
                 </IconButton>
@@ -167,11 +198,13 @@ export function Panel({
               open={menuOpen}
               setOpen={setMenuOpen}
               data-lgid={lgIds.panelSecondaryMenu}
+              darkMode={theme === 'dark'}
             >
               <MenuItem
                 glyph={<UndoIcon />}
                 onClick={handleUndoClick}
                 aria-label="Undo changes"
+                disabled={readOnly || undoDepth === 0}
               >
                 Undo
               </MenuItem>
@@ -179,6 +212,7 @@ export function Panel({
                 glyph={<RedoIcon />}
                 onClick={handleRedoClick}
                 aria-label="Redo changes"
+                disabled={readOnly || redoDepth === 0}
               >
                 Redo
               </MenuItem>
@@ -225,6 +259,8 @@ export function Panel({
         open={shortcutsModalOpen}
         setOpen={setShortcutsModalOpen}
         className={ModalStyles}
+        initialFocus="auto"
+        darkMode={theme === 'dark'}
       >
         <ShortcutTable />
       </Modal>

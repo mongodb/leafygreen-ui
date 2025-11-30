@@ -63,6 +63,11 @@ const lightModeBorderColors = {
     [InteractionState.Hover]: gray.light2,
     [InteractionState.Focus]: blue.light1,
   },
+  [Variant.Tertiary]: {
+    [InteractionState.Default]: gray.light1,
+    [InteractionState.Hover]: gray.light1,
+    [InteractionState.Focus]: blue.light1,
+  },
   [Variant.Success]: {
     [InteractionState.Default]: green.dark1,
     [InteractionState.Hover]: green.dark1,
@@ -77,6 +82,16 @@ const lightModeBorderColors = {
     [InteractionState.Default]: gray.light1,
     [InteractionState.Hover]: gray.light1,
     [InteractionState.Focus]: gray.light1,
+  },
+  [Variant.OnSuccess]: {
+    [InteractionState.Default]: green.light2,
+    [InteractionState.Hover]: green.light2,
+    [InteractionState.Focus]: green.light2,
+  },
+  [Variant.OnError]: {
+    [InteractionState.Default]: red.light2,
+    [InteractionState.Hover]: red.light2,
+    [InteractionState.Focus]: red.light2,
   },
 } as const satisfies VariantColorRecord;
 
@@ -144,20 +159,40 @@ const lightModeTextColors = {
     [InteractionState.Hover]: white,
     [InteractionState.Focus]: blue.light2,
   },
-  [Variant.Error]: {
-    [InteractionState.Default]: red.base,
-    [InteractionState.Hover]: red.base,
-    [InteractionState.Focus]: red.base,
-  },
   [Variant.Disabled]: {
     [InteractionState.Default]: gray.base,
     [InteractionState.Hover]: gray.base,
     [InteractionState.Focus]: gray.base,
   },
+  [Variant.Success]: {
+    [InteractionState.Default]: green.dark2,
+    [InteractionState.Hover]: green.dark2,
+    [InteractionState.Focus]: green.dark2,
+  },
+  [Variant.Error]: {
+    [InteractionState.Default]: red.base,
+    [InteractionState.Hover]: red.base,
+    [InteractionState.Focus]: red.base,
+  },
   [Variant.Placeholder]: {
     [InteractionState.Default]: gray.base,
     [InteractionState.Hover]: gray.base,
     [InteractionState.Focus]: gray.base,
+  },
+  [Variant.OnSuccess]: {
+    [InteractionState.Default]: green.dark2,
+    [InteractionState.Hover]: green.dark2,
+    [InteractionState.Focus]: green.dark2,
+  },
+  [Variant.OnSuccessLink]: {
+    [InteractionState.Default]: green.dark3,
+    [InteractionState.Hover]: green.dark3,
+    [InteractionState.Focus]: green.dark3,
+  },
+  [Variant.OnError]: {
+    [InteractionState.Default]: red.dark2,
+    [InteractionState.Hover]: red.dark2,
+    [InteractionState.Focus]: red.dark2,
   },
   [Variant.Link]: {
     [InteractionState.Default]: blue.base,

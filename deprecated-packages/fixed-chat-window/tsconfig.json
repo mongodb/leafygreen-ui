@@ -1,0 +1,54 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": [
+        "../../packages/icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../../packages/*/src"
+      ],
+      "@lg-chat/*": [
+        "../*/src"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.stories.*"
+  ],
+  "references": [
+    {
+      "path": "../chat-window"
+    },
+    {
+      "path": "../../packages/avatar"
+    },
+    {
+      "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/icon"
+    },
+    {
+      "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/palette"
+    },
+    {
+      "path": "../../packages/popover"
+    },
+    {
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
+    },
+    {
+      "path": "../../packages/leafygreen-provider"
+    }
+  ]
+}

@@ -1,11 +1,26 @@
 import React from 'react';
+import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
+
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { RichLink } from '.';
 
 export default {
   title: 'Composition/Chat/RichLink',
   component: RichLink,
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+  },
+  decorators: [
+    (Story: StoryFn, context) => {
+      return (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Story />
+        </LeafyGreenProvider>
+      );
+    },
+  ],
 };
 
 const Template: StoryFn<typeof RichLink> = props => (

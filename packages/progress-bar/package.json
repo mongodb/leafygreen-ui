@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/progress-bar",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "description": "LeafyGreen UI Kit Progress Bar",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -41,7 +41,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/progress-bar",
   "repository": {
@@ -50,9 +50,6 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/LG/summary"
-  },
-  "devDependencies": {
-    "@storybook/test": "^8.6.14"
   },
   "typesVersions": {}
 }

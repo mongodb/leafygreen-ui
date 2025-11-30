@@ -1,3 +1,5 @@
+import { isPlainObject } from 'lodash';
+
 import { EChartOptions, EChartSeriesOption } from '../Echart.types';
 
 export function addSeries(
@@ -46,10 +48,7 @@ function recursiveMerge(
   const updatedObj = { ...target };
 
   for (const key in source) {
-    if (
-      typeof source[key] === 'object' &&
-      typeof updatedObj[key] === 'object'
-    ) {
+    if (isPlainObject(source[key]) && isPlainObject(updatedObj[key])) {
       // Recursively update nested objects
       updatedObj[key] = recursiveMerge(updatedObj[key], source[key]);
     } else {

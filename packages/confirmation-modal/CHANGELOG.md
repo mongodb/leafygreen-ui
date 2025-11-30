@@ -1,5 +1,71 @@
 # @leafygreen-ui/confirmation-modal
 
+## 10.2.3
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/modal@20.3.3
+  - @leafygreen-ui/typography@22.2.3
+  - @leafygreen-ui/text-input@16.2.2
+
+## 10.2.2
+
+### Patch Changes
+
+- 587f14e: Add explicit `margin: auto;` to `<dialog>` element styles to prevent `margin` property being reset
+- Updated dependencies [587f14e]
+  - @leafygreen-ui/modal@20.3.2
+
+## 10.2.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/text-input@16.2.1
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/button@25.1.3
+  - @leafygreen-ui/modal@20.3.1
+
+## 10.2.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/modal@20.3.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/text-input@16.1.3
+
+## 10.1.2
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [9778d7b]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/modal@20.2.0
+  - @leafygreen-ui/text-input@16.1.2
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/button@25.1.1
+
 ## 10.1.1
 
 ### Patch Changes

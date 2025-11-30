@@ -6,14 +6,18 @@
   "private": true,
   "engines": {
     "node": ">= 18.20.8",
-    "pnpm": ">= 9.15.0"
+    "pnpm": ">= 10.18.3"
   },
+  "packageManager": "pnpm@10.18.3",
   "scripts": {
     "init": "pnpm install && pnpm build",
     "init:react17": "pnpm clean; npx node ./scripts/react17/init.mjs; pnpm run init",
     "create-package": "lg create",
     "build": "turbo run build tsc",
+    "build:apps": "turbo run build --filter='@lg-apps/*'",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
+    "build:packages": "turbo run build tsc --filter=!'@lg-apps/*'",
+    "dev:mcp-ui": "turbo run dev --filter=@lg-apps/mcp-ui-app",
     "build:docs": "turbo run docs",
     "build:tsc": "turbo run tsc",
     "build:ts-downlevel": "pnpm recursive exec lg-ts-downlevel",
@@ -36,7 +40,7 @@
     "test": "lg test",
     "unlink": "lg unlink",
     "validate": "lg validate",
-    "version": "pnpm changeset version",
+    "version": "pnpm run build && pnpm changeset version",
     "watch": "npx nodemon --watch packages/ -e tsx,ts --exec 'pnpm run storybook build --test'"
   },
   "devDependencies": {
@@ -53,7 +57,8 @@
     "@lg-tools/storybook-addon": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
     "@lg-tools/test": "workspace:^",
-    "@storybook/react": "8.6.14",
+    "@storybook/react": "^8.6.14",
+    "@storybook/test": "^8.6.14",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "13.5.0",
     "@types/jest": "^29.5.12",
@@ -82,14 +87,19 @@
       "caniuse-lite": "^1.0.30001585",
       "jackspeak": "2.1.1",
       "typescript": "$typescript"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild"
+    ]
   },
   "lg": {
     "scopes": {
       "@leafygreen-ui": "packages",
       "@lg-charts": "charts",
       "@lg-chat": "chat",
-      "@lg-tools": "tools"
+      "@lg-tools": "tools",
+      "@lg-mcp-ui": "mcp-ui"
     }
   },
   "keywords": [
@@ -107,7 +117,5 @@
   },
   "bugs": {
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
-  },
-  "packageManager": "pnpm@9.15.0",
-  "typesVersions": {}
+  }
 }

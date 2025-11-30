@@ -22,7 +22,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       - uses: actions/cache/restore@v4
         name: Check for build cache
@@ -32,6 +32,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
@@ -64,7 +65,7 @@ jobs:
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: pnpm build
+        run: pnpm build:packages
 
       - uses: actions/cache/save@v4
         name: Save build cache
@@ -73,6 +74,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
@@ -95,7 +97,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -111,6 +113,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
@@ -134,7 +137,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -150,6 +153,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
@@ -172,13 +176,17 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     needs: [build]
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -197,6 +205,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
@@ -205,6 +214,14 @@ jobs:
         run: pnpm run test --ci
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+
+      - name: Coverage Report Comment
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        if: github.event_name == 'pull_request'
+        with:
+          lcov-file: coverage/lcov.info
+          delete-old-comments: true
+          filter-changed-files: true
 
   validate-builds:
     name: Validate builds & dependencies
@@ -216,7 +233,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 10.18.3
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -235,6 +252,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}

@@ -1,5 +1,118 @@
 # @lg-chat/input-bar
 
+## 12.1.0
+
+### Minor Changes
+
+- 384f19b: [LG-5736](https://jira.mongodb.org/browse/LG-5736): update disclaimer text
+
+## 12.0.1
+
+### Patch Changes
+
+- 5845283: Update tsdocs for `errorMessage` and `state` props
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/avatar@3.1.6
+  - @leafygreen-ui/banner@10.2.4
+  - @leafygreen-ui/icon-button@17.1.4
+  - @leafygreen-ui/search-input@6.1.2
+  - @leafygreen-ui/typography@22.2.3
+  - @leafygreen-ui/input-option@4.1.4
+
+## 12.0.0
+
+### Major Changes
+
+- 3dfa899: [LG-5575](https://jira.mongodb.org/browse/LG-5575)
+
+  - Added compatibility with `@lg-chat/leafygreen-chat-provider@6.0.0`. We recommend new projects use `@lg-chat/leafygreen-chat-provider` v6; support for v5 will be removed in a future major version.
+  - Removed deprecated `lgInputBarStyles` export.
+  - All chat components have been simplified by removing variant-specific conditional logic.
+    - Removed props: `badgeText`, `shouldRenderGradient`, and `shouldRenderHotKeyIndicator`
+  - Added min-width of 150px to `textarea` element to ensure proper height calculation.
+  - Updated `react-textarea-autosize` from `^8.3.2` to `^8.5.9`.
+
+### Patch Changes
+
+- 63d7b62: [LG-5665](https://jira.mongodb.org/browse/LG-5665): `AssistantAvatar` reads `darkMode` value from `LeafyGreenContext` and no longer requires explicitly passing `darkMode` prop.
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [63d7b62]
+- Updated dependencies [9cf3b18]
+- Updated dependencies [3dfa899]
+  - @leafygreen-ui/avatar@3.1.5
+  - @leafygreen-ui/input-option@4.1.3
+  - @leafygreen-ui/search-input@6.1.1
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/popover@14.3.1
+  - @leafygreen-ui/banner@10.2.3
+  - @leafygreen-ui/button@25.1.3
+  - @lg-chat/leafygreen-chat-provider@6.0.0
+
+## 11.0.2
+
+### Patch Changes
+
+- 8976ab2: Remove redundant `z-index: 2;` in `InputBar` content wrapping node.
+
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+- Updated dependencies [83b0b92]
+- Updated dependencies [83b0b92]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/search-input@6.1.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/popover@14.3.0
+  - @leafygreen-ui/avatar@3.1.4
+  - @leafygreen-ui/badge@10.2.2
+  - @leafygreen-ui/banner@10.2.2
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+  - @leafygreen-ui/input-option@4.1.2
+
+## 11.0.0
+
+### Minor Changes
+
+- 71ff953: [LG-5600](https://jira.mongodb.org/browse/LG-5600)
+  Fix send button disabled logic: the send button now remains enabled during loading state (even with empty message body) to allow users to stop the request. The `disabled` and `disableSend` props still take precedence.
+
+  Add `onClickStopButton` prop to handle stop actions during loading state. When triggered, the previous message body is restored to the input field (similar to error state behavior).
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- 71ff953: Remove console warning when `shouldRenderGradient` prop is true to avoid it requiring an explicit false value.
+- bd83675: Fix disclaimer text alignment to be centered below input
+- Updated dependencies [bd83675]
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [4ea4f00]
+- Updated dependencies [c8559f3]
+  - @lg-chat/leafygreen-chat-provider@5.1.0
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/popover@14.2.0
+  - @leafygreen-ui/input-option@4.1.1
+  - @leafygreen-ui/search-input@6.0.7
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/avatar@3.1.3
+  - @leafygreen-ui/banner@10.2.1
+  - @leafygreen-ui/button@25.1.1
+  - @leafygreen-ui/badge@10.2.1
+
 ## 10.1.0
 
 ### Minor Changes

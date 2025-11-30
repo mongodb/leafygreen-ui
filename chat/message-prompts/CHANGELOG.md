@@ -1,5 +1,63 @@
 # @lg-chat/message-prompts
 
+## 4.2.0
+
+### Minor Changes
+
+- d21ec41: Refactor `IconButton` instances to use compact tooltip UI
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [f7a63e2]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/icon-button@17.1.4
+  - @leafygreen-ui/typography@22.2.3
+
+## 4.1.4
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/icon-button@17.1.3
+  - @leafygreen-ui/typography@22.2.2
+
+## 4.1.3
+
+### Patch Changes
+
+- 68b59a0: [LG-5687](https://jira.mongodb.org/browse/LG-5687): update border color from `green.dark1` to `green.dark2`
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 4.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+
 ## 4.1.0
 
 ### Minor Changes

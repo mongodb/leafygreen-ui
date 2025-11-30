@@ -1,8 +1,4 @@
 import React from 'react';
-import {
-  LeafyGreenChatProvider,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -33,26 +29,11 @@ const defaultProps: MessageLinksProps = {
   links: mockLinks,
 };
 
-const renderMessageLinks = (
-  props: Partial<MessageLinksProps> = {},
-  variant: Variant = Variant.Compact,
-) => {
-  return render(
-    <LeafyGreenChatProvider variant={variant}>
-      <MessageLinks {...defaultProps} {...props} />
-    </LeafyGreenChatProvider>,
-  );
+const renderMessageLinks = (props: Partial<MessageLinksProps> = {}) => {
+  return render(<MessageLinks {...defaultProps} {...props} />);
 };
 
 describe('MessageLinks', () => {
-  beforeAll(() => {
-    global.ResizeObserver = jest.fn().mockImplementation(() => ({
-      observe: jest.fn(),
-      unobserve: jest.fn(),
-      disconnect: jest.fn(),
-    }));
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
   });

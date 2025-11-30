@@ -1,5 +1,60 @@
 # @leafygreen-ui/copyable
 
+## 12.0.2
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [f7a63e2]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/typography@22.2.3
+
+## 12.0.1
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/tooltip@14.2.3
+  - @leafygreen-ui/button@25.1.3
+
+## 12.0.0
+
+### Major Changes
+
+- 86385a7: This major change wraps the Copyable component in a new outer div. The existing `className` prop now applies to the inner container, while the new `wrapperClassName` prop applies to the outer wrapper. This prevents box model styles (e.g. gap) from parent elements affecting the component's internal layout. Existing usages that relied on `className` applying to the outer wrapper may break and should be updated to use `wrapperClassName` instead.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @leafygreen-ui/button@25.1.2
+  - @leafygreen-ui/hooks@9.2.2
+  - @leafygreen-ui/tooltip@14.2.2
+
+## 11.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/tooltip@14.2.1
+  - @leafygreen-ui/button@25.1.1
+
 ## 11.1.0
 
 ### Minor Changes

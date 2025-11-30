@@ -4,12 +4,14 @@ import { useBackdropClick } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color } from '@leafygreen-ui/tokens';
-import Tooltip, {
+import { color, spacing } from '@leafygreen-ui/tokens';
+import {
   Align,
   hoverDelay,
   Justify,
   RenderMode,
+  Tooltip,
+  TooltipVariant,
 } from '@leafygreen-ui/tooltip';
 
 import { CopyButtonTrigger } from '../CodeEditorCopyButtonTrigger';
@@ -177,6 +179,8 @@ export function CodeEditorCopyButton({
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
+      darkMode={theme === 'dark'}
+      spacing={spacing[100]}
       trigger={
         <CopyButtonTrigger
           variant={variant}
@@ -187,6 +191,7 @@ export function CodeEditorCopyButton({
         />
       }
       shouldClose={shouldClose}
+      variant={TooltipVariant.Compact}
     >
       {copied ? COPIED_TEXT : COPY_TEXT}
     </Tooltip>

@@ -9,11 +9,12 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, within } from '@storybook/test';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import SparkleIcon from '@leafygreen-ui/icon/dist/Sparkle';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import {
   BaseFontSize,
@@ -90,20 +91,22 @@ export default {
   component: Drawer,
   decorators: [
     (StoryFn, ctx) => (
-      <div
-        className={css`
-          height: 100%;
-          display: flex;
-          align-items: center;
-          margin: -100px;
-          width: 100vw;
-          border: 1px solid
-            ${color[ctx?.args?.darkMode ? Theme.Dark : Theme.Light].border
-              .secondary.default};
-        `}
-      >
-        <StoryFn />
-      </div>
+      <LeafyGreenProvider darkMode={ctx?.args?.darkMode}>
+        <div
+          className={css`
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin: -100px;
+            width: 100vw;
+            border: 1px solid
+              ${color[ctx?.args?.darkMode ? Theme.Dark : Theme.Light].border
+                .secondary.default};
+          `}
+        >
+          <StoryFn />
+        </div>
+      </LeafyGreenProvider>
     ),
   ],
   parameters: {

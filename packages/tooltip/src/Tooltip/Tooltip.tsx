@@ -6,7 +6,6 @@ import React, {
   useState,
 } from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useBackdropClick,
   useEscapeKey,
@@ -16,27 +15,25 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { getPopoverRenderModeProps } from '@leafygreen-ui/popover';
-import {
-  bodyTypeScaleStyles,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+import { getPopoverRenderModeProps, Popover } from '@leafygreen-ui/popover';
+import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import SvgNotch from '../Notch';
 
 import { useTooltipTriggerEventHandlers } from './utils/useTooltipTriggerEventHandlers';
 import {
-  baseStyles,
-  baseTypeStyle,
-  colorSet,
-  minHeightStyle,
-  positionRelative,
+  getNotchFill,
+  getTooltipStyles,
+  getTriggerStyles,
+  textStyles,
+  tooltipPopoverStyles,
 } from './Tooltip.styles';
 import {
   DismissMode,
   PopoverFunctionParameters,
   RenderMode,
   TooltipProps,
+  TooltipVariant,
   TriggerEvent,
 } from './Tooltip.types';
 import { notchPositionStyles } from './tooltipUtils';
@@ -80,14 +77,14 @@ function Tooltip({
   open: controlledOpen,
   setOpen: controlledSetOpen,
   darkMode: darkThemeProp,
-  baseFontSize: baseFontSizeOverride,
+  baseFontSize: baseFontSizeProp,
   triggerEvent = TriggerEvent.Hover,
   enabled = true,
   align = 'top',
   justify = 'start',
   spacing = 12,
   renderMode = RenderMode.TopLayer,
-  onClose = () => {},
+  onClose,
   id,
   shouldClose,
   portalClassName,
@@ -99,11 +96,12 @@ function Tooltip({
   className,
   children,
   trigger,
+  variant = TooltipVariant.Default,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
-  const size = useUpdatedBaseFontSize(baseFontSizeOverride);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
   const setOpen =
@@ -129,7 +127,7 @@ function Tooltip({
 
   const handleClose = useCallback(() => {
     if (typeof shouldClose !== 'function' || shouldClose()) {
-      onClose();
+      onClose?.();
       setOpen(false);
     }
   }, [setOpen, shouldClose, onClose]);
@@ -164,6 +162,8 @@ function Tooltip({
 
   const active = enabled && open;
   const isLeftOrRightAligned = ['left', 'right'].includes(align);
+  const isCompact = variant === TooltipVariant.Compact;
+  const showNotch = !isCompact;
 
   const tooltip = (
     <Popover
@@ -173,22 +173,19 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       onClick={stopClickPropagation}
-      className={css`
-        // Try to fit all the content on one line (until it hits max-width)
-        // Overrides default behavior, which is to set width to size of the trigger.
-        width: max-content;
-      `}
+      className={tooltipPopoverStyles}
       {...popoverProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
         const {
-          notchContainer: notchContainerStyle,
-          notch: notchStyle,
-          tooltip: tooltipNotchStyle,
+          notchContainer: notchContainerStyles,
+          notch: notchStyles,
+          tooltip: tooltipAdjustmentStyles,
         } = notchPositionStyles({
           align,
           justify,
           triggerRect: referenceElPos,
+          isCompact,
         });
 
         return (
@@ -199,33 +196,30 @@ function Tooltip({
               role="tooltip"
               {...rest}
               id={tooltipId}
-              className={cx(
-                baseStyles,
-                tooltipNotchStyle,
-                colorSet[theme].tooltip,
-                {
-                  [minHeightStyle]: isLeftOrRightAligned,
-                },
+              className={getTooltipStyles({
                 className,
-              )}
+                isCompact,
+                isLeftOrRightAligned,
+                tooltipAdjustmentStyles,
+                theme,
+              })}
               ref={tooltipRef}
             >
-              <div
-                className={cx(
-                  baseTypeStyle,
-                  bodyTypeScaleStyles[size],
-                  colorSet[theme].children,
-                )}
+              <Body
+                as="span"
+                baseFontSize={isCompact ? undefined : baseFontSize}
+                className={textStyles}
               >
                 {children}
-              </div>
-
-              <div className={notchContainerStyle}>
-                <SvgNotch
-                  className={cx(notchStyle)}
-                  fill={colorSet[theme].notchFill}
-                />
-              </div>
+              </Body>
+              {showNotch && (
+                <div className={notchContainerStyles}>
+                  <SvgNotch
+                    className={notchStyles}
+                    fill={getNotchFill(theme)}
+                  />
+                </div>
+              )}
             </div>
           </LeafyGreenProvider>
         );
@@ -243,7 +237,7 @@ function Tooltip({
           {tooltip}
         </>
       ),
-      className: cx(positionRelative, triggerComponent.props.className),
+      className: getTriggerStyles(triggerComponent.props.className),
     });
   }
 

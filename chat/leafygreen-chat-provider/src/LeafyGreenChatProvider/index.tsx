@@ -5,5 +5,4 @@ export {
 export {
   type LeafyGreenChatContextProps,
   type LeafyGreenChatProviderProps,
-  Variant,
 } from './LeafyGreenChatProvider.types';

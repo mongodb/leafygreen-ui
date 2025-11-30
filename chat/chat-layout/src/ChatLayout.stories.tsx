@@ -1,0 +1,290 @@
+import React, { useState } from 'react';
+import { ChatWindow } from '@lg-chat/chat-window';
+import { InputBar } from '@lg-chat/input-bar';
+import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
+import { Message } from '@lg-chat/message';
+import { MessageFeed } from '@lg-chat/message-feed';
+import { TitleBar } from '@lg-chat/title-bar';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryFn, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/test';
+
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+
+import { ChatLayout, type ChatLayoutProps, ChatMain, ChatSideNav } from '.';
+
+const testMessages = [
+  {
+    id: '1',
+    messageBody: 'Hello! How can I help you today?',
+    isSender: false,
+  },
+  {
+    id: '2',
+    messageBody: 'I need help with ',
+  },
+  {
+    id: '3',
+    messageBody:
+      'Sure! I can help with that. What specific issue are you encountering?',
+    isSender: false,
+  },
+];
+
+const meta: StoryMetaType<typeof ChatLayout> = {
+  title: 'Composition/Chat/ChatLayout',
+  component: ChatLayout,
+  parameters: {
+    default: 'LiveExample',
+  },
+  decorators: [
+    (Story, context) => (
+      <div
+        style={{
+          margin: '-100px',
+          height: '100vh',
+          width: '100vw',
+        }}
+      >
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Story />
+        </LeafyGreenProvider>
+      </div>
+    ),
+  ],
+};
+export default meta;
+
+const chatItems = [
+  { id: '1', name: 'MongoDB Atlas Setup', href: '/chat/1' },
+  {
+    id: '2',
+    name: 'Writing a very very very long Database Query',
+    href: '/chat/2',
+  },
+  { id: '3', name: 'Schema Design Discussion', href: '/chat/3' },
+  { id: '4', name: 'Performance Optimization', href: '/chat/4' },
+  { id: '5', name: 'Migration Planning', href: '/chat/5' },
+];
+
+const hoverSideNav = async (canvasElement: HTMLElement) => {
+  const canvas = within(canvasElement);
+  const sideNav = canvas.getByLabelText('Side navigation');
+  await userEvent.hover(sideNav);
+};
+
+const hoverSideNavItem = async ({
+  canvasElement,
+  itemText,
+}: {
+  canvasElement: HTMLElement;
+  itemText: string;
+}) => {
+  const canvas = within(canvasElement);
+  const item = canvas.getByText(itemText);
+  await userEvent.hover(item);
+};
+
+const Template: StoryFn<ChatLayoutProps> = props => {
+  const [activeId, setActiveId] = useState<string | null>('1');
+
+  const handleClick = (id: string) => {
+    // eslint-disable-next-line no-console
+    console.log('Clicked', id);
+    setActiveId(id);
+  };
+
+  return (
+    <LeafyGreenChatProvider>
+      <ChatLayout {...props}>
+        <ChatSideNav>
+          <ChatSideNav.Header
+            // eslint-disable-next-line no-console
+            onClickNewChat={() => console.log('Clicked new chat')}
+          />
+          <ChatSideNav.Content>
+            {chatItems.map(item => (
+              <ChatSideNav.SideNavItem
+                key={item.id}
+                href={item.href}
+                active={item.id === activeId}
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  e.preventDefault();
+
+                  handleClick(item.id);
+                }}
+              >
+                {item.name}
+              </ChatSideNav.SideNavItem>
+            ))}
+          </ChatSideNav.Content>
+        </ChatSideNav>
+        <ChatMain>
+          <TitleBar title="Chat Assistant" />
+          <ChatWindow>
+            <MessageFeed>
+              {testMessages.map(msg => (
+                <Message
+                  key={msg.id}
+                  isSender={msg.isSender}
+                  messageBody={
+                    msg.id === '2'
+                      ? `${msg.messageBody} ${chatItems
+                          .find(item => item.id === activeId)
+                          ?.name.toLowerCase()}`
+                      : msg.messageBody
+                  }
+                  sourceType="markdown"
+                />
+              ))}
+            </MessageFeed>
+            <InputBar onMessageSend={() => {}} />
+          </ChatWindow>
+        </ChatMain>
+      </ChatLayout>
+    </LeafyGreenChatProvider>
+  );
+};
+
+export const LiveExample: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+
+export const PinnedLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: true,
+  },
+};
+
+export const PinnedDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: true,
+  },
+};
+
+export const UnpinnedLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: false,
+  },
+};
+
+export const UnpinnedDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: false,
+  },
+};
+
+export const UnpinnedAndHoveredLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement }) => {
+    await hoverSideNav(canvasElement);
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
+    },
+  },
+};
+
+export const UnpinnedAndHoveredDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement }) => {
+    await hoverSideNav(canvasElement);
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
+    },
+  },
+};
+
+export const UnpinnedAndFocusedLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement: _canvasElement }) => {
+    userEvent.tab();
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
+    },
+  },
+};
+
+export const UnpinnedAndFocusedDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: false,
+  },
+  play: async ({ canvasElement: _canvasElement }) => {
+    userEvent.tab();
+  },
+  parameters: {
+    chromatic: {
+      delay: 350,
+    },
+  },
+};
+
+export const SideNavItemHoveredLight: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: false,
+    initialIsPinned: true,
+  },
+  play: async ({ canvasElement }) => {
+    await hoverSideNavItem({
+      canvasElement,
+      itemText: 'Writing a very very very long Database Query',
+    });
+  },
+  parameters: {
+    chromatic: {
+      delay: 550,
+    },
+  },
+};
+
+export const SideNavItemHoveredDark: StoryObj<ChatLayoutProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    initialIsPinned: true,
+  },
+  play: async ({ canvasElement }) => {
+    await hoverSideNavItem({
+      canvasElement,
+      itemText: 'Writing a very very very long Database Query',
+    });
+  },
+  parameters: {
+    chromatic: {
+      delay: 550,
+    },
+  },
+};

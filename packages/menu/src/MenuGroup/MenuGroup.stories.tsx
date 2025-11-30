@@ -4,7 +4,7 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import { glyphs, Icon } from '@leafygreen-ui/icon';
 
 import { MenuItem } from '../MenuItem';
 import { SubMenu } from '../SubMenu';

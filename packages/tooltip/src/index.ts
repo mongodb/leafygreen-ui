@@ -7,6 +7,7 @@ export {
   Justify,
   RenderMode,
   type TooltipProps,
+  TooltipVariant,
   TriggerEvent,
 } from './Tooltip';
 export { useTooltipTriggerEventHandlers } from './Tooltip/utils/useTooltipTriggerEventHandlers';

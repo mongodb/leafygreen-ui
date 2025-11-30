@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/modal",
-  "version": "20.1.1",
+  "version": "20.3.3",
   "description": "LeafyGreen UI Kit Modal",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -36,7 +36,7 @@
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": ">=3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal",
   "repository": {

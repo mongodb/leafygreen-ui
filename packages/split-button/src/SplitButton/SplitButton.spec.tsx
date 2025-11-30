@@ -11,11 +11,14 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { getLgIds as getMenuLgIds, MenuItem } from '@leafygreen-ui/menu';
-import { RenderMode } from '@leafygreen-ui/popover';
 
 import { getLgIds } from '../utils/getLgIds';
 
-import { MenuItemsType, SplitButtonProps } from './SplitButton.types';
+import {
+  MenuItemsType,
+  RenderMode,
+  SplitButtonProps,
+} from './SplitButton.types';
 import { SplitButton } from '.';
 
 const lgIds = getLgIds();

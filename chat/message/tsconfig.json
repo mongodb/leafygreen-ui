@@ -7,6 +7,9 @@
       ],
       "@leafygreen-ui/*": [
         "../../packages/*/src"
+      ],
+      "@lg-chat/*": [
+        "../*/src"
       ]
     }
   },
@@ -67,6 +70,9 @@
     },
     {
       "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/tooltip"
     },
     {
       "path": "../../packages/typography"

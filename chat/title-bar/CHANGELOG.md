@@ -1,5 +1,78 @@
 # @lg-chat/title-bar
 
+## 5.0.1
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/typography@22.2.3
+
+## 5.0.0
+
+### Major Changes
+
+- 3dfa899: [LG-5575](https://jira.mongodb.org/browse/LG-5575)
+
+  - Added compatibility with `@lg-chat/leafygreen-chat-provider@6.0.0`. We recommend new projects use `@lg-chat/leafygreen-chat-provider` v6; support for v5 will be removed in a future major version.
+  - All chat components have been simplified by removing variant-specific conditional logic.
+    - Removed `align`, `iconSlot`, and `onClose` props.
+    - Removed `Align` enum export.
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+- Updated dependencies [3dfa899]
+  - @leafygreen-ui/typography@22.2.2
+  - @leafygreen-ui/badge@10.2.3
+  - @lg-chat/leafygreen-chat-provider@6.0.0
+
+## 4.2.0
+
+### Minor Changes
+
+- af60a2d: [LG-5664](https://jira.mongodb.org/browse/LG-5664): add compact variant of `TitleBar`
+
+### Patch Changes
+
+- Updated dependencies [2463aa4]
+  - @leafygreen-ui/icon@14.7.0
+
+## 4.1.0
+
+### Minor Changes
+
+- 92693df: Updated major version to Shadow tokens. `shadow` object and its key/values have been changed. Other packages utilizing the shadow values have had a minor update to accommodate the changes.
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+- Updated dependencies [888a37d]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @leafygreen-ui/typography@22.2.0
+  - @lg-chat/avatar@8.0.1
+  - @leafygreen-ui/badge@10.2.2
+  - @leafygreen-ui/icon-button@17.1.2
+
+## 4.0.9
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @leafygreen-ui/icon-button@17.1.1
+  - @leafygreen-ui/typography@22.1.4
+  - @leafygreen-ui/badge@10.2.1
+  - @lg-chat/avatar@8.0.0
+
 ## 4.0.8
 
 ### Patch Changes

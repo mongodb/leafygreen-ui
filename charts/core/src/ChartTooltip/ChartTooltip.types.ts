@@ -8,6 +8,15 @@ import { type CallbackDataParams } from 'echarts/types/dist/shared';
  */
 export type OptionDataValue = string | number | Date;
 
+export const AxisPointerType = {
+  None: 'none',
+  Line: 'line',
+  Shadow: 'shadow',
+} as const;
+
+export type AxisPointerType =
+  (typeof AxisPointerType)[keyof typeof AxisPointerType];
+
 export interface SeriesInfo {
   name: SeriesName;
   value: OptionDataValue;
@@ -17,7 +26,20 @@ export interface ChartTooltipProps {
   sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
   seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
   seriesNameFormatter?: (name: SeriesName) => ReactNode;
-  headerFormatter?: (value: number | string) => ReactNode;
+  headerFormatter?: (value: number | string, index: number) => ReactNode;
+  /**
+   * Specifies the visual indicator (axis pointer) used with the tooltip:
+   * - 'line' (default): Shows a vertical dashed line on hover.
+   * - 'shadow': Displays a shadow under data points sharing the same x-axis value.
+   *   note: this is best suited for category axes; for continuous axes, it will appear as a thin, dim line.
+   * - 'none': No line/shadow is shown.
+   */
+  axisPointer?: AxisPointerType;
+  /**
+   * Additional CSS class names to apply to the tooltip element.
+   * Useful for applying environment-specific styles like dark mode overrides.
+   */
+  className?: string;
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {

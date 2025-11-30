@@ -6,8 +6,9 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -39,19 +40,21 @@ const toolbarExcludedControls = [
 export default {
   title: 'Sections/Drawer/Toolbar',
   decorators: [
-    StoryFn => (
-      <div
-        className={css`
-          height: 100%;
-          display: flex;
-          align-items: center;
-          margin: -100px;
-          width: 100vw;
-          border-bottom: 3px solid ${palette.green.base};
-        `}
-      >
-        <StoryFn />
-      </div>
+    (StoryFn, ctx) => (
+      <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+        <div
+          className={css`
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin: -100px;
+            width: 100vw;
+            border-bottom: 3px solid ${palette.green.base};
+          `}
+        >
+          <StoryFn />
+        </div>
+      </LeafyGreenProvider>
     ),
   ],
   parameters: {

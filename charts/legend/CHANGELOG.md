@@ -1,5 +1,44 @@
 # @lg-charts/legend
 
+## 1.0.10
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/checkbox@18.1.4
+
+## 1.0.9
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [9cf3b18]
+  - @lg-charts/series-provider@1.0.6
+  - @leafygreen-ui/checkbox@18.1.3
+
+## 1.0.8
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/checkbox@18.1.2
+
+## 1.0.7
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @leafygreen-ui/emotion@5.0.4
+  - @lg-charts/series-provider@1.0.5
+  - @leafygreen-ui/checkbox@18.1.1
+
 ## 1.0.6
 
 ### Patch Changes

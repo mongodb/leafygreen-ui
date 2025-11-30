@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button, { Size } from '@leafygreen-ui/button';
+import { Button, Size } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
@@ -10,7 +10,6 @@ import {
   InferredPolymorphic,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
-import { RenderMode } from '@leafygreen-ui/popover';
 
 import { Menu } from '../Menu';
 import { getLgIds } from '../utils/getLgIds';
@@ -24,6 +23,7 @@ import {
   Align,
   InternalSplitButtonProps,
   Justify,
+  RenderMode,
   Variant,
 } from './SplitButton.types';
 

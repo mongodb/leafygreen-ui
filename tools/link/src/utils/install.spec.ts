@@ -1,24 +1,23 @@
-import { ChildProcess } from 'child_process';
-import xSpawn from 'cross-spawn';
 import fsx from 'fs-extra';
 
 import { installPackages } from './install';
-import { MockChildProcess } from './mocks.testutils';
+import * as spawnLoggedModule from './spawnLogged';
 
 describe('tools/link/utils/install', () => {
-  let spawnSpy: jest.SpyInstance<ChildProcess>;
+  let spawnLoggedSpy: jest.SpyInstance;
 
   beforeAll(() => {
     fsx.ensureDirSync('./tmp/');
   });
 
   beforeEach(() => {
-    spawnSpy = jest.spyOn(xSpawn, 'spawn');
-    spawnSpy.mockImplementation((..._args) => new MockChildProcess());
+    spawnLoggedSpy = jest
+      .spyOn(spawnLoggedModule, 'spawnLogged')
+      .mockResolvedValue(undefined);
   });
 
   afterEach(() => {
-    spawnSpy.mockRestore();
+    spawnLoggedSpy.mockRestore();
     fsx.emptyDirSync('./tmp');
   });
 
@@ -28,20 +27,24 @@ describe('tools/link/utils/install', () => {
 
   test('runs `npm install` command', async () => {
     await installPackages('./tmp');
-    expect(spawnSpy).toHaveBeenCalledWith(
+    expect(spawnLoggedSpy).toHaveBeenCalledWith(
       'npm',
       ['install'],
-      expect.objectContaining({}),
+      expect.objectContaining({
+        cwd: './tmp',
+      }),
     );
   });
 
   test('runs install command using local package manager', async () => {
     fsx.createFileSync('./tmp/pnpm-lock.yaml');
     await installPackages('./tmp');
-    expect(spawnSpy).toHaveBeenCalledWith(
+    expect(spawnLoggedSpy).toHaveBeenCalledWith(
       'pnpm',
       ['install'],
-      expect.objectContaining({}),
+      expect.objectContaining({
+        cwd: './tmp',
+      }),
     );
   });
 });

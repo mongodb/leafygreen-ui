@@ -17,6 +17,7 @@ const Variant = {
   Placeholder: 'placeholder',
   Primary: 'primary',
   Secondary: 'secondary',
+  Tertiary: 'tertiary',
   InversePrimary: 'inversePrimary',
   InverseSecondary: 'inverseSecondary',
   Info: 'info',
@@ -24,6 +25,9 @@ const Variant = {
   Error: 'error',
   Success: 'success',
   Link: 'link',
+  OnError: 'onError',
+  OnSuccess: 'onSuccess',
+  OnSuccessLink: 'onSuccessLink',
 } as const;
 type Variant = (typeof Variant)[keyof typeof Variant];
 

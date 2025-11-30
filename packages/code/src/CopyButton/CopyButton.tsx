@@ -2,21 +2,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { useBackdropClick } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import {
   useDarkMode,
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import Tooltip, {
+import { spacing } from '@leafygreen-ui/tokens';
+import {
   Align,
   hoverDelay,
   Justify,
   RenderMode,
+  Tooltip,
+  TooltipVariant,
 } from '@leafygreen-ui/tooltip';
 
 import { useCodeContext } from '../CodeContext/CodeContext';
@@ -151,6 +154,8 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
+      shouldClose={shouldClose}
+      spacing={spacing[100]}
       trigger={
         showPanel ? (
           <IconButton {...sharedButtonProps}>
@@ -171,7 +176,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
           </Button>
         )
       }
-      shouldClose={shouldClose}
+      variant={TooltipVariant.Compact}
     >
       {copied ? COPIED_TEXT : COPY_TEXT}
     </Tooltip>

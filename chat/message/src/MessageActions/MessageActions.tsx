@@ -6,20 +6,18 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {
-  useLeafyGreenChatContext,
-  Variant,
-} from '@lg-chat/leafygreen-chat-provider';
 import { FormState, InlineMessageFeedback } from '@lg-chat/message-feedback';
 import { MessageRating, MessageRatingValue } from '@lg-chat/message-rating';
 
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
-import IconButton from '@leafygreen-ui/icon-button';
+import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { spacing as spacingToken } from '@leafygreen-ui/tokens';
+import { Justify, Tooltip, TooltipVariant } from '@leafygreen-ui/tooltip';
 
 import { useMessageContext } from '../MessageContext';
 
@@ -47,8 +45,6 @@ export function MessageActions({
   ...rest
 }: MessageActionsProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
-  const { variant } = useLeafyGreenChatContext();
-  const isCompact = variant === Variant.Compact;
   const { messageBody } = useMessageContext();
 
   const [copied, setCopied] = useState(false);
@@ -61,9 +57,9 @@ export function MessageActions({
   );
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
 
-  const isSubmitState =
-    feedbackFormState === FormState.Submitted ||
-    feedbackFormState === FormState.Submitting;
+  const isSubmitted = feedbackFormState === FormState.Submitted;
+  const isSubmitting = feedbackFormState === FormState.Submitting;
+  const isSubmitState = isSubmitted || isSubmitting;
 
   const resetFeedback = useCallback(() => {
     setFeedback('');
@@ -156,8 +152,9 @@ export function MessageActions({
 
   const showMessageRating = !!onRatingChange;
   const showMessageFeedbackComponent =
-    (showFeedbackForm && !!onSubmitFeedback) ||
-    feedbackFormState === FormState.Submitted;
+    (showFeedbackForm && !!onSubmitFeedback) || isSubmitted;
+  const hideThumbsDown = isSubmitted && rating === MessageRatingValue.Liked;
+  const hideThumbsUp = isSubmitted && rating === MessageRatingValue.Disliked;
 
   const textareaProps = useMemo(
     () => ({
@@ -170,42 +167,48 @@ export function MessageActions({
 
   const submitButtonProps = useMemo(
     () => ({
-      isLoading: feedbackFormState === FormState.Submitting,
+      isLoading: isSubmitting,
       loadingText: 'Submitting...',
     }),
-    [feedbackFormState],
+    [isSubmitting],
   );
-
-  if (!isCompact) {
-    return null;
-  }
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div
         className={getContainerStyles({
           className,
-          isSubmitted: feedbackFormState === FormState.Submitted,
+          isSubmitted,
         })}
         {...rest}
       >
         <div className={actionBarStyles}>
           <div className={primaryActionsContainerStyles}>
-            <IconButton
-              aria-label="Copy message"
-              onClick={handleCopy}
-              title="Copy"
+            <Tooltip
+              justify={Justify.Middle}
+              spacing={spacingToken[100]}
+              trigger={
+                <IconButton aria-label="Copy message" onClick={handleCopy}>
+                  {copied ? <CheckmarkIcon /> : <CopyIcon />}
+                </IconButton>
+              }
+              variant={TooltipVariant.Compact}
             >
-              {copied ? <CheckmarkIcon /> : <CopyIcon />}
-            </IconButton>
+              Copy
+            </Tooltip>
             {onClickRetry && (
-              <IconButton
-                aria-label="Retry message"
-                onClick={onClickRetry}
-                title="Retry"
+              <Tooltip
+                justify={Justify.Middle}
+                spacing={spacingToken[100]}
+                trigger={
+                  <IconButton aria-label="Retry message" onClick={onClickRetry}>
+                    <RefreshIcon />
+                  </IconButton>
+                }
+                variant={TooltipVariant.Compact}
               >
-                <RefreshIcon />
-              </IconButton>
+                Retry
+              </Tooltip>
             )}
           </div>
           {showMessageRating && (
@@ -216,6 +219,8 @@ export function MessageActions({
                 inert={isSubmitState ? 'inert' : undefined}
                 onChange={handleRatingChange}
                 value={rating}
+                hideThumbsDown={hideThumbsDown}
+                hideThumbsUp={hideThumbsUp}
               />
             </>
           )}
@@ -231,6 +236,7 @@ export function MessageActions({
             submitButtonText={submitButtonText}
             submittedMessage={submittedMessage}
             textareaProps={textareaProps}
+            enableFadeAfterSubmit
           />
         )}
       </div>

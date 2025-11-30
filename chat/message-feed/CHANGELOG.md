@@ -1,5 +1,81 @@
 # @lg-chat/message-feed
 
+## 9.0.1
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [d21ec41]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @lg-chat/message-rating@7.1.0
+  - @lg-chat/message@10.1.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+
+## 9.0.0
+
+### Major Changes
+
+- 3dfa899: [LG-5575](https://jira.mongodb.org/browse/LG-5575)
+
+  - Added compatibility with `@lg-chat/leafygreen-chat-provider@6.0.0`. We recommend new projects use `@lg-chat/leafygreen-chat-provider` v6; support for v5 will be removed in a future major version.
+  - Removed deprecated `lgMessageFeedStyles` export.
+  - All chat components have been simplified by removing variant-specific conditional logic.
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+- Updated dependencies [63d7b62]
+- Updated dependencies [9cf3b18]
+- Updated dependencies [3dfa899]
+- Updated dependencies [3dfa899]
+- Updated dependencies [3dfa899]
+  - @lg-chat/message@10.0.0
+  - @lg-chat/message-rating@7.0.0
+  - @leafygreen-ui/button@25.1.3
+  - @lg-chat/leafygreen-chat-provider@6.0.0
+
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [6bb6c00]
+- Updated dependencies [92693df]
+- Updated dependencies [c6b4d3f]
+  - @lg-chat/message@9.1.0
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/icon@14.6.1
+  - @lg-chat/avatar@8.0.1
+  - @lg-chat/message-rating@6.0.1
+  - @leafygreen-ui/button@25.1.2
+
+## 8.0.0
+
+### Major Changes
+
+- bd83675: Removed fixed default height of 500px from `MessageFeed` component. Now, `MessageFeed` will grow to the bounds of its parent container.
+
+  Note: this should be upgraded with the following packages to avoid UI regressions:
+
+  - `@lg-chat/leafygreen-chat-provider@5.1.0`
+  - `@lg-chat/chat-window@5.0.0`
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [bd83675]
+- Updated dependencies [f3a8bdc]
+- Updated dependencies [c8559f3]
+  - @lg-chat/leafygreen-chat-provider@5.1.0
+  - @leafygreen-ui/emotion@5.0.4
+  - @lg-chat/message-rating@6.0.0
+  - @leafygreen-ui/button@25.1.1
+  - @lg-chat/message@9.0.0
+  - @lg-chat/avatar@8.0.0
+
 ## 7.0.3
 
 ### Patch Changes

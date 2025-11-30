@@ -1,5 +1,28 @@
 # @leafygreen-ui/button
 
+## 25.1.3
+
+### Patch Changes
+
+- 9cf3b18: Updates provider peer dependency version string to correctly use `pnpm` `workspace` syntax
+
+## 25.1.2
+
+### Patch Changes
+
+- Updated dependencies [92693df]
+  - @leafygreen-ui/tokens@4.0.0
+  - @leafygreen-ui/emotion@5.1.0
+  - @leafygreen-ui/ripple@2.0.7
+
+## 25.1.1
+
+### Patch Changes
+
+- c8559f3: Widens the range of `@leafygreen-ui/leafygreen-provider` peer dependency to `>=3.2.0`
+- Updated dependencies [f3a8bdc]
+  - @leafygreen-ui/emotion@5.0.4
+
 ## 25.1.0
 
 ### Minor Changes
