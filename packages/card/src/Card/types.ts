@@ -5,7 +5,7 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 /**
- * @deprecated No longer supported. We don't want card to be clickable from a root level.
+ * @deprecated No longer supported. We don't want card to be clickable from a root level. Use interactive elements inside the card instead.
  */
 export const ContentStyle = {
   None: 'none',
@@ -13,7 +13,7 @@ export const ContentStyle = {
 } as const;
 
 /**
- * @deprecated No longer supported. We don't want card to be clickable from a root level.
+ * @deprecated No longer supported. We don't want card to be clickable from a root level. Use interactive elements inside the card instead.
  */
 export type ContentStyle = (typeof ContentStyle)[keyof typeof ContentStyle];
 
@@ -44,7 +44,7 @@ export interface InternalCardProps extends DarkModeProps {
    *
    * @deprecated No longer supported. We don't want card to be clickable from a root level. Use interactive elements inside the card instead.
    */
-  onClick?: React.MouseEventHandler<any>;
+  onClick?: React.MouseEventHandler;
 
   /**
    * Link for the Card component.

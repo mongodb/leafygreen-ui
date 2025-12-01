@@ -26,7 +26,7 @@ npm install @leafygreen-ui/card
 
 ## Example
 
-```js
+```tsx
 import Card from '@leafygreen-ui/card';
 
 <Card className="card-styles" as="article">
@@ -48,18 +48,18 @@ _Any other properties will be spread on the Box element._
 
 ## Usage and Interactivity
 
-This component is designed to be a container for other elements and content. Adding `onClick` or `href` directly to the component is discouraged. Instead, we recommend adding interactive elements inside the component.
+This component is designed to be a container for other elements and content. We discourage `onClick` or `href` directly to the Card component. Instead, we recommend adding interactive elements inside the component.
 
-### DON'T
+### DO ✅
 
-```js
-<Card onClick={handleOnClick}>This is my card component</Card>
+```tsx
+<Card>
+  <Button onClick={handleOnClick} />
+</Card>
 ```
 
-### DO
+### DON'T 🚫
 
-```js
-<Card>
-  <CustomCardHeader onClick={handleOnClick} />
-</Card>
+```tsx
+<Card onClick={handleOnClick}>This is my card component</Card>
 ```
