@@ -16,23 +16,29 @@ export const getFormatter = ({
   locale,
   showSeconds = true,
   isIsoLocale = false,
-  withFullDate = false,
+  withDate = false,
+  withTime = true,
   options = {},
 }: {
   locale: string;
   showSeconds?: boolean;
   isIsoLocale?: boolean;
-  withFullDate?: boolean;
+  withDate?: boolean;
+  withTime?: boolean;
   options?: Intl.DateTimeFormatOptions;
 }) => {
   const isValid = isValidLocale(locale);
 
   if (isValid || isIsoLocale) {
     return new Intl.DateTimeFormat(locale, {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: showSeconds ? 'numeric' : undefined,
-      ...(withFullDate
+      ...(withTime
+        ? {
+            hour: 'numeric',
+            minute: 'numeric',
+            second: showSeconds ? 'numeric' : undefined,
+          }
+        : {}),
+      ...(withDate
         ? {
             year: 'numeric',
             month: 'numeric',

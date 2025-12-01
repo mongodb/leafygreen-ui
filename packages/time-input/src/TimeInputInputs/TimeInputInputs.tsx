@@ -42,6 +42,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       timeZone,
       value: value?.toUTCString(),
       timeParts,
+      locale,
     });
 
     // TODO: break this out more
