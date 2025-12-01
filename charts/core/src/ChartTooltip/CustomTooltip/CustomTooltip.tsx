@@ -54,6 +54,7 @@ export function CustomTooltip({
       seriesData[0].axisType === 'xAxis.time'
         ? (seriesData[0].axisValue as number) // Should be num since axisType is time
         : seriesData[0].axisValueLabel,
+      seriesData[0].dataIndex,
     );
   } else {
     axisValueLabel =

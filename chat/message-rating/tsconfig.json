@@ -42,6 +42,9 @@
       "path": "../../packages/tokens"
     },
     {
+      "path": "../../packages/tooltip"
+    },
+    {
       "path": "../../packages/leafygreen-provider"
     }
   ]

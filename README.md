@@ -148,10 +148,8 @@ import Button from '@leafygreen-ui/button';
 | [@lg-charts/drag-provider](./charts/drag-provider)                   | [![version](https://img.shields.io/npm/v/@lg-charts/drag-provider)](https://www.npmjs.com/package/@lg-charts/drag-provider)                     | ![downloads](https://img.shields.io/npm/dm/@lg-charts/drag-provider?color=white)           | [Live Example](http://mongodb.design/component/drag-provider/live-example)            |
 | [@lg-charts/legend](./charts/legend)                                 | [![version](https://img.shields.io/npm/v/@lg-charts/legend)](https://www.npmjs.com/package/@lg-charts/legend)                                   | ![downloads](https://img.shields.io/npm/dm/@lg-charts/legend?color=white)                  | [Live Example](http://mongodb.design/component/legend/live-example)                   |
 | [@lg-charts/series-provider](./charts/series-provider)               | [![version](https://img.shields.io/npm/v/@lg-charts/series-provider)](https://www.npmjs.com/package/@lg-charts/series-provider)                 | ![downloads](https://img.shields.io/npm/dm/@lg-charts/series-provider?color=white)         | [Live Example](http://mongodb.design/component/series-provider/live-example)          |
-| [@lg-chat/avatar](./chat/avatar)                                     | [![version](https://img.shields.io/npm/v/@lg-chat/avatar)](https://www.npmjs.com/package/@lg-chat/avatar)                                       | ![downloads](https://img.shields.io/npm/dm/@lg-chat/avatar?color=white)                    | [Live Example](http://mongodb.design/component/avatar/live-example)                   |
 | [@lg-chat/chat-layout](./chat/chat-layout)                           | [![version](https://img.shields.io/npm/v/@lg-chat/chat-layout)](https://www.npmjs.com/package/@lg-chat/chat-layout)                             | ![downloads](https://img.shields.io/npm/dm/@lg-chat/chat-layout?color=white)               | [Live Example](http://mongodb.design/component/chat-layout/live-example)              |
 | [@lg-chat/chat-window](./chat/chat-window)                           | [![version](https://img.shields.io/npm/v/@lg-chat/chat-window)](https://www.npmjs.com/package/@lg-chat/chat-window)                             | ![downloads](https://img.shields.io/npm/dm/@lg-chat/chat-window?color=white)               | [Live Example](http://mongodb.design/component/chat-window/live-example)              |
-| [@lg-chat/fixed-chat-window](./chat/fixed-chat-window)               | [![version](https://img.shields.io/npm/v/@lg-chat/fixed-chat-window)](https://www.npmjs.com/package/@lg-chat/fixed-chat-window)                 | ![downloads](https://img.shields.io/npm/dm/@lg-chat/fixed-chat-window?color=white)         | [Live Example](http://mongodb.design/component/fixed-chat-window/live-example)        |
 | [@lg-chat/input-bar](./chat/input-bar)                               | [![version](https://img.shields.io/npm/v/@lg-chat/input-bar)](https://www.npmjs.com/package/@lg-chat/input-bar)                                 | ![downloads](https://img.shields.io/npm/dm/@lg-chat/input-bar?color=white)                 | [Live Example](http://mongodb.design/component/input-bar/live-example)                |
 | [@lg-chat/leafygreen-chat-provider](./chat/leafygreen-chat-provider) | [![version](https://img.shields.io/npm/v/@lg-chat/leafygreen-chat-provider)](https://www.npmjs.com/package/@lg-chat/leafygreen-chat-provider)   | ![downloads](https://img.shields.io/npm/dm/@lg-chat/leafygreen-chat-provider?color=white)  | [Live Example](http://mongodb.design/component/leafygreen-chat-provider/live-example) |
 | [@lg-chat/lg-markdown](./chat/lg-markdown)                           | [![version](https://img.shields.io/npm/v/@lg-chat/lg-markdown)](https://www.npmjs.com/package/@lg-chat/lg-markdown)                             | ![downloads](https://img.shields.io/npm/dm/@lg-chat/lg-markdown?color=white)               | [Live Example](http://mongodb.design/component/lg-markdown/live-example)              |
@@ -240,26 +238,7 @@ pnpm build --filter="[package]"
 
 ### Development within an Application
 
-To actively develop `leafygreen-ui` components within an application, the following script will link all `leafygreen-ui` components within your application to the local `leafygreen-ui` repository.
-
-This will allow you to make changes to your local repository of `leafygreen-ui` and see those changes immediately reflected within your running application. This allows you to develop both in isolation (within `leafygreen-ui`) and in the context of your application.
-
-To do this, clone this repository and navigate to the root directory (where `package.json` is located), then run the following:
-
-```
-pnpm run link -- ${PATH_TO_APPLICATION}
-```
-
-The script does several things in order:
-
-1. This builds every `leafygreen-ui` component so they are ready to be linked
-
-2. It scans your application for any installed `leafygreen-ui` components in your `node_modules/@leafygreen-ui` folder.
-   **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within your application inside `node_modules/@leafygreen-ui` before running this command.
-
-3. If any `leafygreen-ui` components are found then the script uses `pnpm link` to link every `node_modules/@leafygreen-ui` module to your local `leafygreen-ui` repository.
-
-After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `pnpm build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
+To actively develop `leafygreen-ui` components within an application, we have a `link` script that will link all `leafygreen-ui` components within your application to the local `leafygreen-ui` repository. See the [DEVELOPER.md](./DEVELOPER.md) file for more information.
 
 ## Creating New Component
 

@@ -1,4 +1,9 @@
 export { buildAll as build } from './buildAll';
+export {
+  registerBuildDocsCommand,
+  registerBuildTSCommand,
+  registerBundleCommand,
+} from './cli-commands';
 export { buildPackage } from './rollup/build-package';
 export { buildTSDoc } from './tsdoc/build-tsdoc';
 export { parseTSDoc } from './tsdoc/tsdocParser';
