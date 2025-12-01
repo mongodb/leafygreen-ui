@@ -2,15 +2,52 @@ import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
 import { getFormatter } from '../getFormatter/getFormatter';
 import defaultsDeep from 'lodash/defaultsDeep';
 
-const defaultTimeParts: Array<Intl.DateTimeFormatPart> = [
-  { type: 'hour', value: '' },
-  { type: 'minute', value: '' },
-  { type: 'second', value: '' },
-  { type: 'month', value: '' },
-  { type: 'day', value: '' },
-  { type: 'year', value: '' },
-  { type: 'dayPeriod', value: 'AM' },
-];
+const defaultTimePartsObject: Record<FormattedTimeParts, string> = {
+  hour: '',
+  minute: '',
+  second: '',
+  month: '',
+  day: '',
+  year: '',
+  dayPeriod: 'AM',
+};
+
+type FormattedTimeParts =
+  | 'hour'
+  | 'minute'
+  | 'second'
+  | 'month'
+  | 'day'
+  | 'year'
+  | 'dayPeriod';
+
+const getFilteredTimeParts = ({
+  timeParts,
+}: {
+  timeParts?: Array<Intl.DateTimeFormatPart>;
+}) => {
+  const filteredTimeParts =
+    timeParts?.filter(part => part.type !== 'literal') ?? [];
+
+  return filteredTimeParts;
+};
+
+const getFormattedAndMergedTimeParts = (
+  timeParts: Array<Intl.DateTimeFormatPart>,
+): Record<FormattedTimeParts, string> => {
+  const formattedTimeParts: Record<FormattedTimeParts, string> =
+    timeParts.reduce((acc, part) => {
+      acc[part.type as FormattedTimeParts] = part.value;
+      return acc;
+    }, {} as Record<FormattedTimeParts, string>);
+
+  const mergedTimeParts = defaultsDeep(
+    formattedTimeParts,
+    defaultTimePartsObject,
+  );
+
+  return mergedTimeParts;
+};
 
 /**
  * Used when the component is uncontrolled, and the value is undefined
@@ -35,18 +72,10 @@ export const getDefaultTimeParts = (
   });
 
   const timeParts = formatter?.formatToParts(new Date());
-  const filteredTimeParts =
-    timeParts?.filter(part => part.type !== 'literal') ?? [];
-  const mergedTimeParts = defaultsDeep(filteredTimeParts, defaultTimeParts);
+  const filteredTimeParts = getFilteredTimeParts({ timeParts });
+  const formattedTimeParts = getFormattedAndMergedTimeParts(filteredTimeParts);
 
-  // console.log('🪼getDefaultTimeParts', {
-  //   locale,
-  //   timeZone,
-  //   mergedTimeParts,
-  //   hasDayPeriod,
-  // });
-
-  return mergedTimeParts;
+  return formattedTimeParts;
 };
 
 export const getFormatPartsValues = ({
@@ -63,15 +92,13 @@ export const getFormatPartsValues = ({
   if (!value) return getDefaultTimeParts(timeZone, locale, hasDayPeriod);
 
   if (!isValidDate(value)) {
-    return defaultTimeParts;
+    const formattedTimeParts = getDefaultTimeParts(
+      timeZone,
+      locale,
+      hasDayPeriod,
+    );
+    return formattedTimeParts;
   }
-
-  // console.log('🍓getFormatPartsValues', {
-  //   locale,
-  //   timeZone,
-  //   value,
-  //   hasDayPeriod,
-  // });
 
   // Get the formatter
   const formatter = getFormatter({
@@ -85,9 +112,8 @@ export const getFormatPartsValues = ({
 
   // Get the time parts
   const timeParts = formatter?.formatToParts(value);
-  const filteredTimeParts: Array<Intl.DateTimeFormatPart> =
-    timeParts?.filter(part => part.type !== 'literal') ?? [];
-  const mergedTimeParts = defaultsDeep(filteredTimeParts, defaultTimeParts);
+  const filteredTimeParts = getFilteredTimeParts({ timeParts });
+  const formattedTimeParts = getFormattedAndMergedTimeParts(filteredTimeParts);
 
-  return mergedTimeParts;
+  return formattedTimeParts;
 };

@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
@@ -12,15 +12,14 @@ import { TimeInputInputsProps } from './TimeInputInputs.types';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { getFormatPartsValues } from '../utils';
+import { isValidDate } from '@leafygreen-ui/date-utils';
 
 /**
  * @internal
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
-    const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
-
-    const { shouldShowSelect, formatParts, timeZone, locale, showSeconds } =
+    const { shouldShowSelect, formatParts, timeZone, locale } =
       useTimeInputDisplayContext();
 
     const { value } = useTimeInputContext();
@@ -35,6 +34,32 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       value: value,
       hasDayPeriod: shouldShowSelect,
     });
+
+    // const { selectUnit, setSelectUnit } = useSelectUnit(timeParts);
+
+    // const useSelectUnit = (timeParts: Array<Intl.DateTimeFormatPart>) => {
+    //   const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
+    //   return { selectUnit, setSelectUnit };
+    // };
+
+    // get select unit from time parts
+    const initialSelectUnitFromTimeParts = timeParts.dayPeriod;
+    const selectUnitOption = unitOptions.find(
+      option => option.displayName === initialSelectUnitFromTimeParts,
+    );
+
+    const [selectUnit, setSelectUnit] = useState<UnitOption>(selectUnitOption);
+
+    useEffect(() => {
+      if (isValidDate(value)) {
+        const selectUnitFromTimeParts = timeParts.dayPeriod;
+        const selectUnitOption = unitOptions.find(
+          option => option.displayName === selectUnitFromTimeParts,
+        );
+
+        setSelectUnit(selectUnitOption);
+      }
+    }, [value, selectUnitOption]);
 
     console.log('TimeInputInputs 🍉', {
       shouldShowSelect,
@@ -52,12 +77,14 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           <FormFieldInputContainer>
             <div>TODO: Input segments go here</div>
           </FormFieldInputContainer>
-          <TimeInputSelect
-            unit={selectUnit.displayName}
-            onChange={unit => {
-              handleSelectChange(unit);
-            }}
-          />
+          {shouldShowSelect && (
+            <TimeInputSelect
+              unit={selectUnit.displayName}
+              onChange={unit => {
+                handleSelectChange(unit);
+              }}
+            />
+          )}
         </div>
       </FormField>
     );
