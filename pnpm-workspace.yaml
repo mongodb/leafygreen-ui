@@ -6,4 +6,3 @@ packages:
   - 'mcp-ui/*'
   - 'packages/*'
   - 'tools/*'
-  - 'templates/*'

@@ -1,5 +1,5 @@
 {
-  "name": "@lg-templates/delete-wizard",
+  "name": "@leafygreen-ui/delete-wizard",
   "version": "0.0.1",
   "description": "LeafyGreen UI Kit Delete Wizard",
   "main": "./dist/umd/index.js",
