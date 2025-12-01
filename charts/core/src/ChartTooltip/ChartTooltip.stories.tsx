@@ -76,7 +76,7 @@ export default {
       decorator: TooltipRoot,
     },
   },
-};
+} as StoryObj<CustomTooltipProps>;
 
 export const Default: StoryObj<CustomTooltipProps> = {
   args: {
