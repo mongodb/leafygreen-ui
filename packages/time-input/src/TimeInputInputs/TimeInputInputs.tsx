@@ -1,7 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 
 import { unitOptions } from '../constants';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
@@ -13,6 +12,7 @@ import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/T
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { getFormatPartsValues } from '../utils';
 import { isValidDate } from '@leafygreen-ui/date-utils';
+import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 
 /**
  * @internal
@@ -70,13 +70,12 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       locale,
     });
 
-    // TODO: break this out more
     return (
-      <FormField aria-labelledby="temp" label="Time Input" ref={forwardedRef}>
-        <div className={cx(wrapperBaseStyles)}>
-          <FormFieldInputContainer>
+      <TimeFormField ref={forwardedRef}>
+        <div className={wrapperBaseStyles}>
+          <TimeFormFieldInputContainer>
             <div>TODO: Input segments go here</div>
-          </FormFieldInputContainer>
+          </TimeFormFieldInputContainer>
           {shouldShowSelect && (
             <TimeInputSelect
               unit={selectUnit.displayName}
@@ -86,7 +85,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             />
           )}
         </div>
-      </FormField>
+      </TimeFormField>
     );
   },
 );

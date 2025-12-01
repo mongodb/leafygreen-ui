@@ -26,6 +26,7 @@ const meta: StoryMetaType<typeof TimeInput> = {
     showSeconds: true,
     locale: SupportedLocales.ISO_8601,
     timeZone: 'UTC',
+    label: 'Time Input',
     // value: new Date('1990-02-20T12:30:00Z'),
   },
   argTypes: {
