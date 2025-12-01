@@ -67,5 +67,5 @@ export interface DrawerProps
    */
   title: React.ReactNode;
 
-  initialFocus?: 'auto' | string | React.RefObject<HTMLElement> | null;
+  initialFocus?: 'auto' | string | React.RefObject<HTMLElement>;
 }

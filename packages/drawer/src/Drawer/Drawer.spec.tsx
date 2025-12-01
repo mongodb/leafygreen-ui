@@ -295,6 +295,7 @@ describe('packages/drawer', () => {
                   <button
                     data-testid="secondary-button"
                     id="secondary-button"
+                    // eslint-disable-next-line jsx-a11y/no-autofocus
                     autoFocus={true}
                     // react does not add the autofocus attribute to the button element, so it needs to be added manually for embedded mode
                     {...{ autofocus: '' }}

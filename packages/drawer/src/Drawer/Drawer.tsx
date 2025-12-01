@@ -121,6 +121,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     // This will use the default value of 0 if not wrapped in a DrawerStackProvider. If using a Drawer + Toolbar, the DrawerStackProvider will not be necessary.
     const drawerIndex = getDrawerIndex(id);
 
+    /**
+     * Opens and closes the dialog element.
+     *
+     * If the initialFocus is not 'auto', we focus the appropriate element.
+     */
     useIsomorphicLayoutEffect(() => {
       const drawerElement = ref.current;
 
@@ -128,13 +133,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         return;
       }
 
-      if (open) {
+      if (open && !drawerElement.open) {
         drawerElement.show();
         setShouldAnimate(true);
+        setOverlayDrawerFocus(drawerElement, initialFocus);
       } else {
         drawerElement.close();
       }
-    }, [ref, open]);
+    }, [ref, open, initialFocus]);
 
     useEffect(() => {
       if (open) {
@@ -148,11 +154,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const hasHandledFocusRef = useRef<boolean>(false);
 
     /**
-     * Handles focus for both embedded and overlay drawers.
+     * Handles focus for embedded drawers.
      *
-     * For overlay drawers, we use the native focus behavior of the dialog element but if the initialFocus is not 'auto', we focus the appropriate element.
-     *
-     * For embedded drawers, we mimic the native focus behavior of the dialog element and if the initialFocus is not 'auto', we focus the appropriate element.
+     * We mimic the native focus behavior of the dialog element and if the initialFocus is not 'auto', we focus the appropriate element.
      */
     useIsomorphicLayoutEffect(() => {
       // If the drawer element is not found, we can't focus anything.
@@ -160,25 +164,16 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         return;
       }
 
-      if (isOverlay) {
-        setOverlayDrawerFocus(
-          open,
-          ref.current as HTMLDialogElement,
-          initialFocus,
-          hasHandledFocusRef,
-        );
-      }
-
       if (isEmbedded) {
         setEmbeddedDrawerFocus(
           open,
-          ref.current,
+          ref.current as HTMLDivElement,
           initialFocus,
           previouslyFocusedRef,
           hasHandledFocusRef,
         );
       }
-    }, [isOverlay, open, initialFocus, isEmbedded]);
+    }, [open, initialFocus, isEmbedded]);
 
     /**
      * Enables resizable functionality if the drawer is resizable, embedded and open.
