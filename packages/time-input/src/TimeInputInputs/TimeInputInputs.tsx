@@ -1,7 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
-
 import { unitOptions } from '../constants';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
 import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
@@ -35,27 +33,22 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       hasDayPeriod: shouldShowSelect,
     });
 
-    // const { selectUnit, setSelectUnit } = useSelectUnit(timeParts);
-
-    // const useSelectUnit = (timeParts: Array<Intl.DateTimeFormatPart>) => {
-    //   const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
-    //   return { selectUnit, setSelectUnit };
-    // };
-
+    // TODO: temporary fix for select unit
     // get select unit from time parts
     const initialSelectUnitFromTimeParts = timeParts.dayPeriod;
     const selectUnitOption = unitOptions.find(
       option => option.displayName === initialSelectUnitFromTimeParts,
-    );
+    ) as UnitOption;
 
     const [selectUnit, setSelectUnit] = useState<UnitOption>(selectUnitOption);
 
+    // TODO: temporary fix for select unit
     useEffect(() => {
       if (isValidDate(value)) {
         const selectUnitFromTimeParts = timeParts.dayPeriod;
         const selectUnitOption = unitOptions.find(
           option => option.displayName === selectUnitFromTimeParts,
-        );
+        ) as UnitOption;
 
         setSelectUnit(selectUnitOption);
       }
