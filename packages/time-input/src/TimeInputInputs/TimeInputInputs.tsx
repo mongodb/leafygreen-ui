@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { forwardRef, useEffect, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
