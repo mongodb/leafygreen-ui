@@ -10,7 +10,7 @@ import {
 } from '@storybook/test';
 // because storybook ts files are excluded in the tsconfig to avoid redundant type-definition generation
 // @ts-ignore
-import { getInstanceByDom } from 'echarts';
+import { EChartsOption, getInstanceByDom, SeriesOption } from 'echarts';
 
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
@@ -953,25 +953,30 @@ export const WithTooltip: StoryObj<{}> = {
       },
     );
 
-    await step('Trigger tooltip display', () => {
-      echartsInstance.dispatchAction(
-        {
-          type: 'showTip',
-          seriesIndex: 1,
-          dataIndex: 0,
-        },
-        {
-          flush: true,
-        },
-      );
+    await waitFor(function WaitForSeries() {
+      const option = echartsInstance.getOption() as EChartsOption;
+      const series = (option.series as Array<SeriesOption>) || [];
+      expect(series.length).toBe(seriesData.length);
     });
 
-    const tooltipElement = await waitFor(function AssertTooltipHeaderText() {
-      const tooltip = canvasElement.querySelector('.lg-chart-tooltip');
-      expect(tooltip).toBeVisible();
-      getByText(tooltip as HTMLElement, 'Jan 1, 2024, 12:00:00 AM (UTC)');
-      return tooltip;
-    });
+    const tooltipElement = await waitFor(
+      function TriggerTooltipAndAssertHeader() {
+        echartsInstance.dispatchAction(
+          {
+            type: 'showTip',
+            seriesIndex: 1,
+            dataIndex: 0,
+          },
+          {
+            flush: true,
+          },
+        );
+        const tooltip = canvasElement.querySelector('.lg-chart-tooltip');
+        expect(tooltip).toBeVisible();
+        getByText(tooltip as HTMLElement, 'Jan 1, 2024, 12:00:00 AM (UTC)');
+        return tooltip;
+      },
+    );
 
     await step('Trigger tooltip hide', async () => {
       userEvent.unhover(chartCanvasElement!);

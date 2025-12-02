@@ -1,5 +1,13 @@
 # @lg-chat/lg-markdown
 
+## 5.0.2
+
+### Patch Changes
+
+- 19c0cbe: Use latest version of `@leafygreen-ui/code` for compact tooltip UI
+- Updated dependencies [19c0cbe]
+  - @leafygreen-ui/code@20.2.5
+
 ## 5.0.1
 
 ### Patch Changes

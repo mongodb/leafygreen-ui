@@ -1,5 +1,11 @@
 # @lg-chat/input-bar
 
+## 12.1.0
+
+### Minor Changes
+
+- 384f19b: [LG-5736](https://jira.mongodb.org/browse/LG-5736): update disclaimer text
+
 ## 12.0.1
 
 ### Patch Changes
