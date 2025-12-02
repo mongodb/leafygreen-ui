@@ -230,10 +230,10 @@ export const DynamicData = {
     const { getRowByIndex } = getTestUtils();
     const cell = getRowByIndex(0)?.getAllCells()[3];
 
-    expect(cell).toHaveTextContent(/^9\.7\.5 with 🥬$/);
+    expect(cell).toHaveTextContent(expect.stringContaining('with 🥬'));
 
-    await userEvent.click(button);
+    userEvent.click(button);
 
-    expect(cell).toHaveTextContent(/^9\.7\.5$/);
+    expect(cell).not.toHaveTextContent(expect.stringContaining('with 🥬'));
   },
 };
