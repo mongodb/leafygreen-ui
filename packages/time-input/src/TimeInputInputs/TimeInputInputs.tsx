@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import { unitOptions } from '../constants';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
@@ -9,17 +9,17 @@ import { TimeInputInputsProps } from './TimeInputInputs.types';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { getFormatPartsValues } from '../utils';
-import { isValidDate } from '@leafygreen-ui/date-utils';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
+import { TimeSegmentsState } from '../TimeInputSegment/TimeInputSegment.types';
+import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
+import { useSelectUnit } from '../hooks';
 
 /**
  * @internal
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
-    const { shouldShowSelect, formatParts, timeZone, locale } =
-      useTimeInputDisplayContext();
-
+    const { shouldShowSelect, timeZone, locale } = useTimeInputDisplayContext();
     const { value } = useTimeInputContext();
 
     const handleSelectChange = (unit: UnitOption) => {
@@ -33,41 +33,44 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       hasDayPeriod: shouldShowSelect,
     });
 
-    // TODO: temporary fix for select unit
-    // get select unit from time parts
-    const initialSelectUnitFromTimeParts = timeParts.dayPeriod;
-    const selectUnitOption = unitOptions.find(
-      option => option.displayName === initialSelectUnitFromTimeParts,
-    ) as UnitOption;
+    const { hour, minute, second } = timeParts;
 
-    const [selectUnit, setSelectUnit] = useState<UnitOption>(selectUnitOption);
+    /**
+     * Creates a memoized object of the time segments
+     */
+    const segmentObj: TimeSegmentsState = useMemo(
+      () => ({
+        hour,
+        minute,
+        second,
+      }),
+      [hour, minute, second],
+    );
 
-    // TODO: temporary fix for select unit
-    useEffect(() => {
-      if (isValidDate(value)) {
-        const selectUnitFromTimeParts = timeParts.dayPeriod;
-        const selectUnitOption = unitOptions.find(
-          option => option.displayName === selectUnitFromTimeParts,
-        ) as UnitOption;
-
-        setSelectUnit(selectUnitOption);
-      }
-    }, [value, selectUnitOption]);
+    /**
+     * Hook to manage the select unit
+     */
+    const { selectUnit, setSelectUnit } = useSelectUnit({
+      dayPeriod: timeParts.dayPeriod,
+      value,
+      unitOptions,
+    });
 
     console.log('TimeInputInputs 🍉', {
-      shouldShowSelect,
-      formatParts,
-      timeZone,
       value: value?.toUTCString(),
-      timeParts,
-      locale,
+      segmentObj,
     });
 
     return (
       <TimeFormField ref={forwardedRef}>
         <div className={wrapperBaseStyles}>
           <TimeFormFieldInputContainer>
-            <div>TODO: Input segments go here</div>
+            <TimeInputBox
+              segments={segmentObj}
+              setSegment={(segment, value) => {
+                console.log({ segment, value });
+              }}
+            />
           </TimeFormFieldInputContainer>
           {shouldShowSelect && (
             <TimeInputSelect

@@ -21,6 +21,8 @@ type FormattedTimeParts =
   | 'year'
   | 'dayPeriod';
 
+export type TimeParts = Record<FormattedTimeParts, string>;
+
 const getFilteredTimeParts = ({
   timeParts,
 }: {
@@ -34,7 +36,7 @@ const getFilteredTimeParts = ({
 
 const getFormattedAndMergedTimeParts = (
   timeParts: Array<Intl.DateTimeFormatPart>,
-): Record<FormattedTimeParts, string> => {
+): TimeParts => {
   const formattedTimeParts: Record<FormattedTimeParts, string> =
     timeParts.reduce((acc, part) => {
       acc[part.type as FormattedTimeParts] = part.value;
@@ -88,9 +90,7 @@ export const getFormatPartsValues = ({
   timeZone: string;
   value: DateType | undefined;
   hasDayPeriod: boolean;
-}) => {
-  if (!value) return getDefaultTimeParts(timeZone, locale, hasDayPeriod);
-
+}): TimeParts => {
   if (!isValidDate(value)) {
     const formattedTimeParts = getDefaultTimeParts(
       timeZone,
