@@ -47,7 +47,6 @@ export const TimeInputDisplayProvider = ({
 
   // Only used to track the presentation format of the segments, not the value itself
   const formatParts = getFormatParts({
-    locale: providerValue.locale,
     showSeconds: providerValue.showSeconds,
   });
 
