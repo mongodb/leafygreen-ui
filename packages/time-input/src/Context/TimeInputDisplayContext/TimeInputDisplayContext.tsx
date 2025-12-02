@@ -5,15 +5,16 @@ import React, {
   useState,
 } from 'react';
 import defaults from 'lodash/defaults';
+import defaultTo from 'lodash/defaultTo';
+
+import { hasDayPeriod } from '../../utils';
+import { getFormatParts } from '../../utils/getFormatParts/getFormatParts';
 
 import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
 import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
-import { hasDayPeriod } from '../../utils';
-import { getFormatParts } from '../../utils/getFormatParts/getFormatParts';
-import defaultTo from 'lodash/defaultTo';
 
 export const TimeInputDisplayContext =
   createContext<TimeInputDisplayContextProps>(defaultTimeInputDisplayContext);

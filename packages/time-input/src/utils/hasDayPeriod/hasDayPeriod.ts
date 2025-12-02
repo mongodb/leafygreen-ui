@@ -1,4 +1,5 @@
 import { SupportedLocales } from '@leafygreen-ui/date-utils';
+
 import { getFormatter } from '../getFormatter/getFormatter';
 
 /**

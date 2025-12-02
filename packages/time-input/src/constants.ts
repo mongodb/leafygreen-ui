@@ -5,29 +5,33 @@ export const unitOptions = [
   { displayName: 'PM', value: 'PM' },
 ];
 
-export const timeSegmentRules = {
-  [TimeSegments.Hour]: {
-    maxChars: 2,
-    minExplicitValue: 2, // TODO: this depends on 12/24h format
-  },
-  [TimeSegments.Minute]: {
-    maxChars: 2,
-    minExplicitValue: 6,
-  },
-  [TimeSegments.Second]: {
-    maxChars: 2,
-    minExplicitValue: 6,
-  },
+export const getTimeSegmentRules = (is12HourFormat: boolean) => {
+  return {
+    [TimeSegments.Hour]: {
+      maxChars: 2,
+      minExplicitValue: is12HourFormat ? 1 : 2,
+    },
+    [TimeSegments.Minute]: {
+      maxChars: 2,
+      minExplicitValue: 6,
+    },
+    [TimeSegments.Second]: {
+      maxChars: 2,
+      minExplicitValue: 6,
+    },
+  };
 };
 
 /**
  * The minimum number for each segment
  */
-export const defaultMin = {
-  hour: 0, // TODO: this depends on 12/24h format
-  minute: 0,
-  second: 0,
-} as const;
+export const getDefaultMin = (is12HourFormat: boolean) => {
+  return {
+    hour: is12HourFormat ? 1 : 0,
+    minute: 0,
+    second: 0,
+  } as const;
+};
 
 /**
  * The maximum number for each segment
@@ -45,13 +49,4 @@ export const defaultPlaceholder = {
   hour: 'HH',
   minute: 'MM',
   second: 'SS',
-};
-
-/**
- * The number of characters per input segment
- */
-export const charsPerSegment = {
-  day: 2,
-  month: 2,
-  year: 4,
-};
+} as const;

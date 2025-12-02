@@ -1,20 +1,23 @@
 import React from 'react';
-import { TimeInputBoxProps } from './TimeInputBox.types';
 
 import { InputBox } from '@leafygreen-ui/input-box';
-import { TimeSegments } from '../TimeInputSegment/TimeInputSegment.types';
-import { timeSegmentRules } from '../constants';
+
+import { getTimeSegmentRules } from '../constants';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { TimeInputSegment } from '../TimeInputSegment/TimeInputSegment';
+import { TimeSegments } from '../TimeInputSegment/TimeInputSegment.types';
+
+import { TimeInputBoxProps } from './TimeInputBox.types';
 
 export const TimeInputBox = React.forwardRef<HTMLDivElement, TimeInputBoxProps>(
   ({ children, ...rest }: TimeInputBoxProps, fwdRef) => {
-    const { disabled, formatParts, size } = useTimeInputDisplayContext();
+    const { disabled, formatParts, size, shouldShowSelect } =
+      useTimeInputDisplayContext();
     return (
       <InputBox
         ref={fwdRef}
         segmentEnum={TimeSegments}
-        segmentRules={timeSegmentRules}
+        segmentRules={getTimeSegmentRules(shouldShowSelect)}
         disabled={disabled}
         segmentComponent={TimeInputSegment}
         size={size}

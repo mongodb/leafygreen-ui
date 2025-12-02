@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { TimeInput } from '.';
 import { DateType, SupportedLocales } from '@leafygreen-ui/date-utils';
+
+import { TimeInput } from '.';
 
 const meta: StoryMetaType<typeof TimeInput> = {
   title: 'Components/Inputs/TimeInput',

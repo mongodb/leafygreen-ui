@@ -1,18 +1,18 @@
 import React, { forwardRef, useMemo } from 'react';
 
 import { unitOptions } from '../constants';
+import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
+import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { useSelectUnit } from '../hooks';
+import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
+import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
+import { TimeSegmentsState } from '../TimeInputSegment/TimeInputSegment.types';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
 import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
+import { getFormatPartsValues } from '../utils';
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
-import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
-import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
-import { getFormatPartsValues } from '../utils';
-import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
-import { TimeSegmentsState } from '../TimeInputSegment/TimeInputSegment.types';
-import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
-import { useSelectUnit } from '../hooks';
 
 /**
  * @internal

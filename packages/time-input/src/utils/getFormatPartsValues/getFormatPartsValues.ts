@@ -1,6 +1,8 @@
-import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
-import { getFormatter } from '../getFormatter/getFormatter';
 import defaultsDeep from 'lodash/defaultsDeep';
+
+import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
+
+import { getFormatter } from '../getFormatter/getFormatter';
 
 const defaultTimePartsObject: Record<FormattedTimeParts, string> = {
   hour: '',

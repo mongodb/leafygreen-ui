@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { FormField } from '@leafygreen-ui/form-field';
+
 import { useTimeInputDisplayContext } from '../../Context/TimeInputDisplayContext';
 
 import { TimeFormFieldProps } from './TimeFormField.types';
@@ -19,7 +20,6 @@ export const TimeFormField = React.forwardRef<
     // stateNotification: { state, message: errorMessage },
     disabled,
     size,
-    shouldShowSelect,
   } = useTimeInputDisplayContext();
 
   return (
