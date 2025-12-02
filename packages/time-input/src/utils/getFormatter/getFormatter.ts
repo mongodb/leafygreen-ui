@@ -1,6 +1,7 @@
 import { isValidLocale } from '@leafygreen-ui/date-utils';
 
 /**
+ * // TODO: what is a formatter?
  * Returns a formatter for the given locale. If the locale is invalid, returns undefined.
  *
  * @param locale - The locale to get the formatter for

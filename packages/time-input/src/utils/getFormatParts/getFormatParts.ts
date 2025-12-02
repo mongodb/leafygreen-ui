@@ -25,7 +25,6 @@
 export const getFormatParts = ({
   showSeconds = false,
 }: {
-  locale: string;
   showSeconds?: boolean;
 }): Array<Intl.DateTimeFormatPart> | undefined => {
   const formatParts: Array<Intl.DateTimeFormatPart> = [
