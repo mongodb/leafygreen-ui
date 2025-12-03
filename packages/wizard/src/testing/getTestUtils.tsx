@@ -1,5 +1,4 @@
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
-import { screen } from '@testing-library/react';
 
 import { getTestUtils as getButtonUtils } from '@leafygreen-ui/button/testing';
 import { LgIdString } from '@leafygreen-ui/lib';
