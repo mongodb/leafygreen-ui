@@ -1,3 +1,4 @@
+import { audit } from '@lg-tools/audit';
 import {
   registerBuildDocsCommand,
   registerBuildTSCommand,
@@ -203,6 +204,35 @@ cli
     false,
   )
   .action(validate);
+
+/** Audit */
+cli
+  .command('audit')
+  .description(
+    'Audits LeafyGreen dependencies and compares installed versions against the latest on npm',
+  )
+  .argument(
+    '[path]',
+    'Path to the repository to audit. Defaults to current working directory.',
+  )
+  .option(
+    '-o, --output <filename>',
+    'Name of the output report file',
+    'leafygreen-audit-report.md',
+  )
+  .option('--no-write', 'Do not write the report to a file')
+  .action(
+    async (
+      repoPath: string | undefined,
+      options: { output: string; write: boolean },
+    ) => {
+      await audit({
+        repoPath: repoPath || process.cwd(),
+        outputFileName: options.output,
+        writeFile: options.write,
+      });
+    },
+  );
 
 /** Migrator */
 cli

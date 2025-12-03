@@ -17,6 +17,7 @@
     "tsc": "lg-build tsc"
   },
   "dependencies": {
+    "@lg-tools/audit": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/codemods": "workspace:^",
     "@lg-tools/create": "workspace:^",

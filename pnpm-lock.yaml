@@ -3813,6 +3813,12 @@ importers:
         specifier: workspace:^
         version: link:../../tools/storybook-utils
 
+  tools/audit:
+    dependencies:
+      '@lg-tools/meta':
+        specifier: workspace:^
+        version: link:../meta
+
   tools/build:
     dependencies:
       '@babel/core':
@@ -3918,6 +3924,9 @@ importers:
 
   tools/cli:
     dependencies:
+      '@lg-tools/audit':
+        specifier: workspace:^
+        version: link:../audit
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../build
