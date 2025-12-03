@@ -2,8 +2,7 @@
   "extends": "@lg-tools/build/config/package.tsconfig.json",
    "compilerOptions": {
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../../packages/*/src"]
+      "@lg-tools": ["../*/src"]
     }
   },
   "include": ["src/**/*"],
