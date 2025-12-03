@@ -79,6 +79,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/tooltip',
   '@leafygreen-ui/typography',
   '@leafygreen-ui/vertical-stepper',
+  '@leafygreen-ui/wizard',
   '@lg-charts/chart-card',
   '@lg-charts/colors',
   '@lg-charts/core',
