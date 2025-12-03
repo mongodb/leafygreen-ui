@@ -19,19 +19,19 @@ export const getTestUtils = (
   const findFooter = () => findByLgId!<HTMLElement>(lgIds.footer);
 
   /**
-   * @returns the WizardFooter element using the `data-testid` data attribute.
+   * @returns the WizardFooter element using the `data-lgid` data attribute.
    * Will throw if no elements match or if more than one match is found.
    */
   const getFooter = () => getByLgId!<HTMLElement>(lgIds.footer);
 
   /**
-   * @returns the WizardFooter element using the `data-testid` data attribute or `null` if no elements match.
+   * @returns the WizardFooter element using the `data-lgid` data attribute or `null` if no elements match.
    * Will throw if more than one match is found.
    */
   const queryFooter = () => queryByLgId!<HTMLElement>(lgIds.footer);
 
   /**
-   * @returns the primary button element using the `data-testid` data attribute.
+   * @returns the primary button element using the `data-lgid` data attribute.
    * Will throw if no elements match or if more than one match is found.
    */
   const getPrimaryButton = getButtonUtils<HTMLButtonElement>(
@@ -39,7 +39,7 @@ export const getTestUtils = (
   ).getButton;
 
   /**
-   * @returns the primary button element using the `data-testid` data attribute or `null` if no elements match.
+   * @returns the primary button element using the `data-lgid` data attribute or `null` if no elements match.
    * Will throw if more than one match is found.
    */
   const queryPrimaryButton = getButtonUtils<HTMLButtonElement>(
@@ -47,7 +47,7 @@ export const getTestUtils = (
   ).queryButton;
 
   /**
-   * @returns a promise that resolves to the primary button element using the `data-testid` data attribute.
+   * @returns a promise that resolves to the primary button element using the `data-lgid` data attribute.
    * The promise is rejected if no elements match or if more than one match is found.
    */
   const findPrimaryButton = getButtonUtils<HTMLButtonElement>(
@@ -62,7 +62,7 @@ export const getTestUtils = (
   ).isDisabled;
 
   /**
-   * @returns the back button element using the `data-testid` data attribute.
+   * @returns the back button element using the `data-lgid` data attribute.
    * Will throw if no elements match or if more than one match is found.
    */
   const getBackButton = getButtonUtils<HTMLButtonElement>(
@@ -70,7 +70,7 @@ export const getTestUtils = (
   ).getButton;
 
   /**
-   * @returns the back button element using the `data-testid` data attribute or `null` if no elements match.
+   * @returns the back button element using the `data-lgid` data attribute or `null` if no elements match.
    * Will throw if more than one match is found.
    */
   const queryBackButton = getButtonUtils<HTMLButtonElement>(
@@ -78,7 +78,7 @@ export const getTestUtils = (
   ).queryButton;
 
   /**
-   * @returns a promise that resolves to the back button element using the `data-testid` data attribute.
+   * @returns a promise that resolves to the back button element using the `data-lgid` data attribute.
    * The promise is rejected if no elements match or if more than one match is found.
    */
   const findBackButton = getButtonUtils<HTMLButtonElement>(
@@ -86,7 +86,7 @@ export const getTestUtils = (
   ).findButton;
 
   /**
-   * @returns the cancel button element using the `data-testid` data attribute.
+   * @returns the cancel button element using the `data-lgid` data attribute.
    * Will throw if no elements match or if more than one match is found.
    */
   const getCancelButton = getButtonUtils<HTMLButtonElement>(
@@ -94,7 +94,7 @@ export const getTestUtils = (
   ).getButton;
 
   /**
-   * @returns the cancel button element using the `data-testid` data attribute or `null` if no elements match.
+   * @returns the cancel button element using the `data-lgid` data attribute or `null` if no elements match.
    * Will throw if more than one match is found.
    */
   const queryCancelButton = getButtonUtils<HTMLButtonElement>(
@@ -102,7 +102,7 @@ export const getTestUtils = (
   ).queryButton;
 
   /**
-   * @returns a promise that resolves to the cancel button element using the `data-testid` data attribute.
+   * @returns a promise that resolves to the cancel button element using the `data-lgid` data attribute.
    * The promise is rejected if no elements match or if more than one match is found.
    */
   const findCancelButton = getButtonUtils<HTMLButtonElement>(

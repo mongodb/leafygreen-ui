@@ -55,7 +55,7 @@ export const Wizard = CompoundComponent(
     );
 
     /**
-     * NB: We're intentionally do _not_ wrap the `Wizard` (or `WizardStep`) component in a container element.
+     * NB: We intentionally do _not_ wrap the `Wizard` (or `WizardStep`) component in a container element.
      * This is done to ensure the Wizard is flexible, and can be rendered in any containing layout.
      */
     return (

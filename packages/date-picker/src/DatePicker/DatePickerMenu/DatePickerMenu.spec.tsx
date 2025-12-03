@@ -123,16 +123,32 @@ describe('packages/date-picker/date-picker-menu', () => {
       expect(grid).toHaveAttribute('aria-label', 'September 2023');
     });
     test('chevrons have aria labels', () => {
-      const { getByLabelText } = renderDatePickerMenu();
-      const leftChevron = getByLabelText('Previous month');
-      const rightChevron = getByLabelText('Next month');
+      const { getByTestId } = renderDatePickerMenu();
+      const leftChevron = getByTestId('lg-date_picker-menu-prev_month_button');
+      const rightChevron = getByTestId('lg-date_picker-menu-next_month_button');
       expect(leftChevron).toBeInTheDocument();
       expect(rightChevron).toBeInTheDocument();
+      expect(leftChevron).toHaveAttribute(
+        'aria-label',
+        expect.stringContaining('Previous month'),
+      );
+      expect(rightChevron).toHaveAttribute(
+        'aria-label',
+        expect.stringContaining('Next month'),
+      );
     });
     test('select menu triggers have aria labels', () => {
       const { monthSelect, yearSelect } = renderDatePickerMenu();
       expect(monthSelect).toBeInTheDocument();
       expect(yearSelect).toBeInTheDocument();
+      expect(monthSelect).toHaveAttribute(
+        'aria-label',
+        expect.stringContaining('Select month'),
+      );
+      expect(yearSelect).toHaveAttribute(
+        'aria-label',
+        expect.stringContaining('Select year'),
+      );
     });
     test('select menus have correct values', () => {
       const { monthSelect, yearSelect } = renderDatePickerMenu();

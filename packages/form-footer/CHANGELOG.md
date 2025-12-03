@@ -1,5 +1,11 @@
 # @leafygreen-ui/form-footer
 
+## 9.2.3
+
+### Patch Changes
+
+- 9e5932c: Added internal container to preserve component styles when sticky positioning is applied externally
+
 ## 9.2.2
 
 ### Patch Changes
