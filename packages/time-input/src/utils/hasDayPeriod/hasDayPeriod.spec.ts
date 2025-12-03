@@ -1,5 +1,6 @@
-import { hasDayPeriod } from './hasDayPeriod';
 import { SupportedLocales } from '@leafygreen-ui/date-utils';
+
+import { hasDayPeriod } from './hasDayPeriod';
 
 describe('packages/time-input/utils/hasDayPeriod', () => {
   test('returns false for ISO_8601', () => {

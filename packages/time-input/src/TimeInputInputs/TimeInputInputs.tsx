@@ -1,19 +1,18 @@
 // @ts-nocheck
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 
 import { unitOptions } from '../constants';
+import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
+import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
 import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
+import { getFormatPartsValues } from '../utils';
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
-import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
-import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
-import { getFormatPartsValues } from '../utils';
-import { isValidDate } from '@leafygreen-ui/date-utils';
 
 /**
  * @internal
@@ -22,6 +21,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
     const { shouldShowSelect, formatParts, timeZone, locale } =
       useTimeInputDisplayContext();
+    const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
 
     const { value } = useTimeInputContext();
 
@@ -33,43 +33,16 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       locale: locale,
       timeZone: timeZone,
       value: value,
-      hasDayPeriod: shouldShowSelect,
     });
 
-    // const { selectUnit, setSelectUnit } = useSelectUnit(timeParts);
-
-    // const useSelectUnit = (timeParts: Array<Intl.DateTimeFormatPart>) => {
-    //   const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
-    //   return { selectUnit, setSelectUnit };
-    // };
-
-    // get select unit from time parts
-    const initialSelectUnitFromTimeParts = timeParts.dayPeriod;
-    const selectUnitOption = unitOptions.find(
-      option => option.displayName === initialSelectUnitFromTimeParts,
-    );
-
-    const [selectUnit, setSelectUnit] = useState<UnitOption>(selectUnitOption);
-
-    useEffect(() => {
-      if (isValidDate(value)) {
-        const selectUnitFromTimeParts = timeParts.dayPeriod;
-        const selectUnitOption = unitOptions.find(
-          option => option.displayName === selectUnitFromTimeParts,
-        );
-
-        setSelectUnit(selectUnitOption);
-      }
-    }, [value, selectUnitOption]);
-
-    console.log('TimeInputInputs 🍉', {
-      shouldShowSelect,
-      formatParts,
-      timeZone,
-      value: value?.toUTCString(),
-      timeParts,
-      locale,
-    });
+    // console.log('TimeInputInputs 🍉', {
+    //   shouldShowSelect,
+    //   formatParts,
+    //   timeZone,
+    //   value: value?.toUTCString(),
+    //   timeParts,
+    //   locale,
+    // });
 
     // TODO: break this out more
     return (

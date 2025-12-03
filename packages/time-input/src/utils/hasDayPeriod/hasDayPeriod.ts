@@ -1,4 +1,5 @@
 import { SupportedLocales } from '@leafygreen-ui/date-utils';
+
 import { getFormatter } from '../getFormatter/getFormatter';
 
 /**
@@ -6,6 +7,8 @@ import { getFormatter } from '../getFormatter/getFormatter';
  *
  * @param locale - The locale to check
  * @returns Whether the locale has a day period (AM/PM)
+ *
+ * @default false
  *
  * @example
  * ```js
@@ -19,6 +22,8 @@ export const hasDayPeriod = (locale: string) => {
   if (locale === SupportedLocales.ISO_8601) return false;
 
   const formatter = getFormatter({ locale });
+
+  if (!formatter) return false;
 
   // Format a sample time and check for dayPeriod (AM/PM)
   const parts = formatter?.formatToParts(new Date());
