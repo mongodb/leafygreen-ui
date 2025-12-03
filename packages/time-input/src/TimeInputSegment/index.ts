@@ -1,1 +1,1 @@
-export { TimeSegments } from './TimeInputSegment.types';
+export { TimeInputSegment } from './TimeInputSegment';

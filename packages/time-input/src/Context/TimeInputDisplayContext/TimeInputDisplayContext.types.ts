@@ -40,9 +40,11 @@ export type TimeInputDisplayContextProps = Omit<
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
-   * Whether the AM/PM select should be shown
+   * Whether the time input is in 12-hour format. Helps determine if the AM/PM select should be shown.
+   *
+   * @default false
    */
-  shouldShowSelect: boolean;
+  is12HourFormat: boolean;
 
   /**
    * An array of {@link Intl.DateTimeFormatPart},

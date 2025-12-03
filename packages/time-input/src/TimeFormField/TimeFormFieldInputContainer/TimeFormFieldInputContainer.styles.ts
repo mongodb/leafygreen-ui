@@ -12,7 +12,11 @@ const baseStyles = css`
   }
 `;
 
-export const getContainerStyles = (shouldShowSelect: boolean) =>
+export const getContainerStyles = ({
+  is12HourFormat,
+}: {
+  is12HourFormat: boolean;
+}) =>
   cx(baseStyles, {
-    [selectStyles]: shouldShowSelect,
+    [selectStyles]: is12HourFormat,
   });

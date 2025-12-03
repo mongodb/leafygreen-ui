@@ -15,7 +15,7 @@ export const TimeFormFieldInputContainer = React.forwardRef<
   HTMLDivElement,
   TimeFormFieldInputContainerProps
 >(({ children, onInputClick }: TimeFormFieldInputContainerProps, fwdRef) => {
-  const { label, ariaLabelProp, ariaLabelledbyProp, shouldShowSelect } =
+  const { label, ariaLabelProp, ariaLabelledbyProp, is12HourFormat } =
     useTimeInputDisplayContext();
 
   return (
@@ -30,7 +30,7 @@ export const TimeFormFieldInputContainer = React.forwardRef<
           : undefined
       }
       onClick={onInputClick}
-      className={getContainerStyles(shouldShowSelect)}
+      className={getContainerStyles({ is12HourFormat })}
     >
       {children}
     </FormFieldInputContainer>

@@ -1,23 +1,33 @@
-import { TimeSegments } from './TimeInputSegment/TimeInputSegment.types';
-import { TimeParts } from './shared.types';
+import { TimeParts, TimeSegment } from './shared.types';
 
+/**
+ * The options for the unit select
+ */
 export const unitOptions = [
   { displayName: 'AM', value: 'AM' },
   { displayName: 'PM', value: 'PM' },
 ];
 
-// TODO: make is12HourFormat an explicit prop
-export const getTimeSegmentRules = (is12HourFormat: boolean) => {
+/**
+ * The rules for the time segments
+ *
+ * @param is12HourFormat - Whether the time input is in 12-hour format
+ */
+export const getTimeSegmentRules = ({
+  is12HourFormat,
+}: {
+  is12HourFormat: boolean;
+}) => {
   return {
-    [TimeSegments.Hour]: {
+    [TimeSegment.Hour]: {
       maxChars: 2,
       minExplicitValue: is12HourFormat ? 1 : 2,
     },
-    [TimeSegments.Minute]: {
+    [TimeSegment.Minute]: {
       maxChars: 2,
       minExplicitValue: 6,
     },
-    [TimeSegments.Second]: {
+    [TimeSegment.Second]: {
       maxChars: 2,
       minExplicitValue: 6,
     },
@@ -26,9 +36,14 @@ export const getTimeSegmentRules = (is12HourFormat: boolean) => {
 
 /**
  * The minimum number for each segment
+ *
+ * @param is12HourFormat - Whether the time input is in 12-hour format
  */
-// TODO: make is12HourFormat an explicit prop
-export const getDefaultMin = (is12HourFormat: boolean) => {
+export const getDefaultMin = ({
+  is12HourFormat,
+}: {
+  is12HourFormat: boolean;
+}) => {
   return {
     hour: is12HourFormat ? 1 : 0,
     minute: 0,
@@ -38,9 +53,14 @@ export const getDefaultMin = (is12HourFormat: boolean) => {
 
 /**
  * The maximum number for each segment
+ *
+ * @param is12HourFormat - Whether the time input is in 12-hour format
  */
-// TODO: make is12HourFormat an explicit prop
-export const getDefaultMax = (is12HourFormat: boolean) => {
+export const getDefaultMax = ({
+  is12HourFormat,
+}: {
+  is12HourFormat: boolean;
+}) => {
   return {
     hour: is12HourFormat ? 12 : 23,
     minute: 59,
@@ -56,6 +76,10 @@ export const defaultPlaceholder = {
   minute: 'MM',
   second: 'SS',
 } as const;
+
+/**
+ * The default time parts
+ */
 export const defaultTimeParts: TimeParts = {
   hour: '',
   minute: '',

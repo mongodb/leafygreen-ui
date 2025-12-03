@@ -14,28 +14,28 @@ import {
 } from '../constants';
 import { TimeInputDisplayContextProps } from '../Context/TimeInputDisplayContext';
 import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext';
+import { TimeSegment } from '../shared.types';
 
 import { TimeInputSegment } from './TimeInputSegment';
 import {
   TimeInputSegmentChangeEventHandler,
   TimeInputSegmentProps,
-  TimeSegments,
 } from './TimeInputSegment.types';
 
 const renderSegment = (
   props?: Partial<TimeInputSegmentProps>,
   ctx?: Partial<TimeInputDisplayContextProps>,
 ) => {
-  const is12HourFormat = !!ctx?.shouldShowSelect;
+  const is12HourFormat = !!ctx?.is12HourFormat;
   const defaultSegmentProps = {
     value: '',
     onChange: () => {},
-    segment: 'hour' as TimeSegments, // TODO: should be TimeSegment not TimeSegments
+    segment: 'hour' as TimeSegment,
     disabled: false,
-    segmentEnum: TimeSegments,
-    charsCount: getTimeSegmentRules(is12HourFormat)['hour'].maxChars,
-    minSegmentValue: getDefaultMin(is12HourFormat)['hour'],
-    maxSegmentValue: getDefaultMax(is12HourFormat)['hour'],
+    segmentEnum: TimeSegment,
+    charsCount: getTimeSegmentRules({ is12HourFormat })['hour'].maxChars,
+    minSegmentValue: getDefaultMin({ is12HourFormat })['hour'],
+    maxSegmentValue: getDefaultMax({ is12HourFormat })['hour'],
     placeholder: defaultPlaceholder['hour'],
     shouldWrap: true,
     shouldValidate: true,
@@ -101,7 +101,8 @@ describe('packages/time-input/time-input-segment', () => {
       describe('hour input', () => {
         describe('Up arrow', () => {});
         const formatter = getValueFormatter({
-          charsCount: getTimeSegmentRules(true)['hour'].maxChars,
+          charsCount: getTimeSegmentRules({ is12HourFormat: true })['hour']
+            .maxChars,
         });
         test('calls handler with value +1 if value is less than max', () => {
           const onChangeHandler = jest.fn<TimeInputSegmentChangeEventHandler>();
@@ -119,7 +120,8 @@ describe('packages/time-input/time-input-segment', () => {
 
         describe('12 hour format', () => {
           const formatter = getValueFormatter({
-            charsCount: getTimeSegmentRules(true)['hour'].maxChars,
+            charsCount: getTimeSegmentRules({ is12HourFormat: true })['hour']
+              .maxChars,
           });
 
           test('calls handler with min if value is undefined', () => {
@@ -139,7 +141,9 @@ describe('packages/time-input/time-input-segment', () => {
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(getDefaultMin(true)['hour']),
+                value: formatter(
+                  getDefaultMin({ is12HourFormat: true })['hour'],
+                ),
               }),
             );
           });
@@ -150,7 +154,9 @@ describe('packages/time-input/time-input-segment', () => {
             const { input } = renderSegment(
               {
                 segment: 'hour',
-                value: formatter(getDefaultMax(true)['hour']),
+                value: formatter(
+                  getDefaultMax({ is12HourFormat: true })['hour'],
+                ),
                 onChange: onChangeHandler,
               },
               {
@@ -161,7 +167,9 @@ describe('packages/time-input/time-input-segment', () => {
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(getDefaultMin(true)['hour']),
+                value: formatter(
+                  getDefaultMin({ is12HourFormat: true })['hour'],
+                ),
               }),
             );
           });
@@ -169,7 +177,8 @@ describe('packages/time-input/time-input-segment', () => {
 
         describe('24 hour format', () => {
           const formatter = getValueFormatter({
-            charsCount: getTimeSegmentRules(false)['hour'].maxChars,
+            charsCount: getTimeSegmentRules({ is12HourFormat: false })['hour']
+              .maxChars,
             allowZero: true,
           });
 
@@ -190,7 +199,9 @@ describe('packages/time-input/time-input-segment', () => {
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(getDefaultMin(false)['hour']),
+                value: formatter(
+                  getDefaultMin({ is12HourFormat: false })['hour'],
+                ),
               }),
             );
           });
@@ -201,7 +212,9 @@ describe('packages/time-input/time-input-segment', () => {
             const { input } = renderSegment(
               {
                 segment: 'hour',
-                value: formatter(getDefaultMax(false)['hour']),
+                value: formatter(
+                  getDefaultMax({ is12HourFormat: false })['hour'],
+                ),
                 onChange: onChangeHandler,
               },
               {
@@ -212,7 +225,9 @@ describe('packages/time-input/time-input-segment', () => {
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(getDefaultMin(false)['hour']),
+                value: formatter(
+                  getDefaultMin({ is12HourFormat: false })['hour'],
+                ),
               }),
             );
           });
@@ -220,7 +235,8 @@ describe('packages/time-input/time-input-segment', () => {
 
         describe('Down arrow', () => {
           const formatter = getValueFormatter({
-            charsCount: getTimeSegmentRules(true)['hour'].maxChars,
+            charsCount: getTimeSegmentRules({ is12HourFormat: true })['hour']
+              .maxChars,
           });
           test('calls handler with value -1 if value is greater than min', () => {
             const onChangeHandler =
@@ -255,7 +271,9 @@ describe('packages/time-input/time-input-segment', () => {
               userEvent.type(input, '{arrowdown}');
               expect(onChangeHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                  value: formatter(getDefaultMax(true)['hour']),
+                  value: formatter(
+                    getDefaultMax({ is12HourFormat: true })['hour'],
+                  ),
                 }),
               );
             });
@@ -266,7 +284,9 @@ describe('packages/time-input/time-input-segment', () => {
               const { input } = renderSegment(
                 {
                   segment: 'hour',
-                  value: formatter(getDefaultMin(true)['hour']),
+                  value: formatter(
+                    getDefaultMin({ is12HourFormat: true })['hour'],
+                  ),
                   onChange: onChangeHandler,
                 },
                 {
@@ -277,7 +297,9 @@ describe('packages/time-input/time-input-segment', () => {
               userEvent.type(input, '{arrowdown}');
               expect(onChangeHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                  value: formatter(getDefaultMax(true)['hour']),
+                  value: formatter(
+                    getDefaultMax({ is12HourFormat: true })['hour'],
+                  ),
                 }),
               );
             });
@@ -285,7 +307,8 @@ describe('packages/time-input/time-input-segment', () => {
 
           describe('24 hour format', () => {
             const formatter = getValueFormatter({
-              charsCount: getTimeSegmentRules(true)['hour'].maxChars,
+              charsCount: getTimeSegmentRules({ is12HourFormat: false })['hour']
+                .maxChars,
               allowZero: true,
             });
 
@@ -306,7 +329,9 @@ describe('packages/time-input/time-input-segment', () => {
               userEvent.type(input, '{arrowdown}');
               expect(onChangeHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                  value: formatter(getDefaultMax(false)['hour']),
+                  value: formatter(
+                    getDefaultMax({ is12HourFormat: false })['hour'],
+                  ),
                 }),
               );
             });
@@ -317,7 +342,9 @@ describe('packages/time-input/time-input-segment', () => {
               const { input } = renderSegment(
                 {
                   segment: 'hour',
-                  value: formatter(getDefaultMin(false)['hour']),
+                  value: formatter(
+                    getDefaultMin({ is12HourFormat: false })['hour'],
+                  ),
                   onChange: onChangeHandler,
                 },
                 {
@@ -328,7 +355,9 @@ describe('packages/time-input/time-input-segment', () => {
               userEvent.type(input, '{arrowdown}');
               expect(onChangeHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                  value: formatter(getDefaultMax(false)['hour']),
+                  value: formatter(
+                    getDefaultMax({ is12HourFormat: false })['hour'],
+                  ),
                 }),
               );
             });
@@ -336,11 +365,12 @@ describe('packages/time-input/time-input-segment', () => {
         });
       });
 
-      describe.each(['minute', 'second'] as Array<TimeSegments>)(
+      describe.each(['minute', 'second'] as Array<TimeSegment>)(
         '%p input',
         segment => {
           const formatter = getValueFormatter({
-            charsCount: getTimeSegmentRules(true)[segment].maxChars,
+            charsCount: getTimeSegmentRules({ is12HourFormat: true })[segment]
+              .maxChars,
             allowZero: true,
           });
 
@@ -372,7 +402,9 @@ describe('packages/time-input/time-input-segment', () => {
               userEvent.type(input, '{arrowup}');
               expect(onChangeHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                  value: formatter(getDefaultMin(true)[segment]),
+                  value: formatter(
+                    getDefaultMin({ is12HourFormat: true })[segment],
+                  ),
                 }),
               );
             });
@@ -382,14 +414,18 @@ describe('packages/time-input/time-input-segment', () => {
                 jest.fn<TimeInputSegmentChangeEventHandler>();
               const { input } = renderSegment({
                 segment,
-                value: formatter(getDefaultMax(true)[segment]),
+                value: formatter(
+                  getDefaultMax({ is12HourFormat: true })[segment],
+                ),
                 onChange: onChangeHandler,
               });
 
               userEvent.type(input, '{arrowup}');
               expect(onChangeHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                  value: formatter(getDefaultMin(true)[segment]),
+                  value: formatter(
+                    getDefaultMin({ is12HourFormat: true })[segment],
+                  ),
                 }),
               );
             });
@@ -422,7 +458,9 @@ describe('packages/time-input/time-input-segment', () => {
               userEvent.type(input, '{arrowdown}');
               expect(onChangeHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                  value: formatter(getDefaultMax(true)[segment]),
+                  value: formatter(
+                    getDefaultMax({ is12HourFormat: true })[segment],
+                  ),
                 }),
               );
             });
@@ -432,14 +470,18 @@ describe('packages/time-input/time-input-segment', () => {
                 jest.fn<TimeInputSegmentChangeEventHandler>();
               const { input } = renderSegment({
                 segment: 'minute',
-                value: formatter(getDefaultMin(true)[segment]),
+                value: formatter(
+                  getDefaultMin({ is12HourFormat: true })[segment],
+                ),
                 onChange: onChangeHandler,
               });
 
               userEvent.type(input, '{arrowdown}');
               expect(onChangeHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                  value: formatter(getDefaultMax(true)[segment]),
+                  value: formatter(
+                    getDefaultMax({ is12HourFormat: true })[segment],
+                  ),
                 }),
               );
             });

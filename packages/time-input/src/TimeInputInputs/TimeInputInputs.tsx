@@ -1,12 +1,12 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef } from 'react';
 
 import { unitOptions } from '../constants';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { useSelectUnit } from '../hooks';
+import { TimeSegmentsState } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
-import { TimeSegmentsState } from '../TimeInputSegment/TimeInputSegment.types';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
 import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 import { getFormatPartsValues } from '../utils';
@@ -19,13 +19,16 @@ import { TimeInputInputsProps } from './TimeInputInputs.types';
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
-    const { shouldShowSelect, timeZone, locale } = useTimeInputDisplayContext();
+    const { is12HourFormat, timeZone, locale } = useTimeInputDisplayContext();
     const { value } = useTimeInputContext();
 
     const handleSelectChange = (unit: UnitOption) => {
       setSelectUnit(unit);
     };
 
+    /**
+     * Gets the time parts from the value
+     */
     const timeParts = getFormatPartsValues({
       locale: locale,
       timeZone: timeZone,
@@ -35,16 +38,15 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
     const { hour, minute, second } = timeParts;
 
     /**
-     * Creates a memoized object of the time segments
+     * Creates time segments object
+     *
+     * // TODO: these are temp
      */
-    const segmentObj: TimeSegmentsState = useMemo(
-      () => ({
-        hour,
-        minute,
-        second,
-      }),
-      [hour, minute, second],
-    );
+    const segmentObj: TimeSegmentsState = {
+      hour,
+      minute,
+      second,
+    };
 
     /**
      * Hook to manage the select unit
@@ -55,11 +57,11 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       unitOptions,
     });
 
-    // eslint-disable-next-line no-console
-    console.log('TimeInputInputs 🍉', {
-      value: value?.toUTCString(),
-      segmentObj,
-    });
+    // // eslint-disable-next-line no-console
+    // console.log('TimeInputInputs 🍉', {
+    //   value: value?.toUTCString(),
+    //   segmentObj,
+    // });
 
     return (
       <TimeFormField ref={forwardedRef}>
@@ -68,11 +70,12 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             <TimeInputBox
               segments={segmentObj}
               setSegment={(segment, value) => {
+                // eslint-disable-next-line no-console
                 console.log({ segment, value });
               }}
             />
           </TimeFormFieldInputContainer>
-          {shouldShowSelect && (
+          {is12HourFormat && (
             <TimeInputSelect
               unit={selectUnit.displayName}
               onChange={unit => {

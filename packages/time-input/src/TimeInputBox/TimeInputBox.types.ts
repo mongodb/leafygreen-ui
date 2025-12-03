@@ -1,10 +1,7 @@
-import {
-  TimeSegments,
-  TimeSegmentsState,
-} from '../TimeInputSegment/TimeInputSegment.types'; // TODO: move to a shared types
+import { TimeSegment, TimeSegmentsState } from '../shared.types';
 
 export interface TimeInputBoxProps
   extends React.ComponentPropsWithoutRef<'div'> {
   segments: TimeSegmentsState;
-  setSegment: (segment: TimeSegments, value: string) => void;
+  setSegment: (segment: TimeSegment, value: string) => void;
 }
