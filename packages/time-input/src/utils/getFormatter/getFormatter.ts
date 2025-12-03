@@ -1,7 +1,9 @@
-import { isValidLocale } from '@leafygreen-ui/date-utils';
+import { isValidLocale, SupportedLocales } from '@leafygreen-ui/date-utils';
 
 /**
- * Returns a formatter for the given locale. If the locale is invalid, returns undefined.
+ * Returns a formatter for the given locale. This determines the format of the time parts that are returned when called with a date.
+ *
+ * If the locale is invalid, returns undefined.
  *
  * @param locale - The locale to get the formatter for
  * @param showSeconds - Whether to show seconds
@@ -13,22 +15,22 @@ import { isValidLocale } from '@leafygreen-ui/date-utils';
  * ```
  */
 export const getFormatter = ({
-  locale,
+  locale = SupportedLocales.ISO_8601,
   showSeconds = true,
-  isIsoLocale = false,
   withDate = false,
   withTime = true,
   options = {},
 }: {
-  locale: string;
+  locale?: string;
   showSeconds?: boolean;
-  isIsoLocale?: boolean;
   withDate?: boolean;
   withTime?: boolean;
   options?: Intl.DateTimeFormatOptions;
 }) => {
+  const isIsoLocale = locale === SupportedLocales.ISO_8601;
   const isValid = isValidLocale(locale);
 
+  // If the locale is iso-8601, the default locale of the runtime environment is used, which is fine since we can explicitly set the format to 24h
   if (isValid || isIsoLocale) {
     return new Intl.DateTimeFormat(locale, {
       ...(withTime
@@ -45,6 +47,7 @@ export const getFormatter = ({
             day: 'numeric',
           }
         : {}),
+      ...(isIsoLocale ? { hourCycle: 'h23' } : {}),
       ...options,
     });
   }

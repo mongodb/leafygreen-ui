@@ -8,6 +8,11 @@ describe('packages/time-input/utils/getFormatter', () => {
     expect(formatter).toBeDefined();
   });
 
+  test('returns a formatter for iso-8601', () => {
+    const formatter = getFormatter({ locale: SupportedLocales.ISO_8601 });
+    expect(formatter).toBeDefined();
+  });
+
   test('returns undefined for an invalid locale', () => {
     const formatter = getFormatter({ locale: '!!!' });
     expect(formatter).toBeUndefined();

@@ -1,4 +1,5 @@
 import { TimeSegments } from './TimeInputSegment/TimeInputSegment.types';
+import { TimeParts } from './shared.types';
 
 export const unitOptions = [
   { displayName: 'AM', value: 'AM' },
@@ -50,3 +51,12 @@ export const defaultPlaceholder = {
   minute: 'MM',
   second: 'SS',
 } as const;
+export const defaultTimeParts: TimeParts = {
+  hour: '',
+  minute: '',
+  second: '',
+  month: '',
+  day: '',
+  year: '',
+  dayPeriod: 'AM',
+};

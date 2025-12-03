@@ -30,7 +30,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       locale: locale,
       timeZone: timeZone,
       value: value,
-      hasDayPeriod: shouldShowSelect,
     });
 
     const { hour, minute, second } = timeParts;
