@@ -1,0 +1,41 @@
+  
+{
+  "name": "@lg-tools/audit",
+  "version": "0.0.1",
+  "description": "LeafyGreen UI Kit Audit",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@lg-tools/meta": "workspace:^"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/audit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  }
+}
