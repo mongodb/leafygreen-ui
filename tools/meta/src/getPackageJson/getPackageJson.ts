@@ -5,14 +5,21 @@ import path from 'path';
 
 import { isValidJSON } from '../getRootPackageJson';
 
+export interface PackageJson {
+  name?: string;
+  version?: string;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+  [key: string]: unknown;
+}
+
 /**
  * Returns the `package.json` data for a given directory.
  *
  * @param dir defaults to `__dirname`
  */
-export function getPackageJson(
-  dir = __dirname,
-): Record<string, any> | undefined {
+export function getPackageJson(dir = __dirname): PackageJson | undefined {
   if (!fse.existsSync(dir)) {
     console.log(chalk.red(`Could not get package name. ${dir} does not exist`));
     return;
@@ -21,7 +28,7 @@ export function getPackageJson(
   return findPackageJson(dir);
 }
 
-function findPackageJson(dir: string): Record<string, any> | undefined {
+function findPackageJson(dir: string): PackageJson | undefined {
   if (dir === '/') {
     console.log(
       chalk.red(`Could not find a package.json file in any parent directory`),

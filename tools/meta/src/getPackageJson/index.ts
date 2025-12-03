@@ -1,1 +1,1 @@
-export { getPackageJson } from './getPackageJson';
+export { getPackageJson, type PackageJson } from './getPackageJson';

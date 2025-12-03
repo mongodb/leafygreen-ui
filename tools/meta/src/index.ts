@@ -1,7 +1,7 @@
 export { exitWithErrorMessage } from './exitWithErrorMessage';
 export { getAllPackageNames, getAllPackages } from './getAllPackages';
 export { getLGConfig, type LGConfig } from './getLGConfig';
-export { getPackageJson } from './getPackageJson';
+export { getPackageJson, type PackageJson } from './getPackageJson';
 export {
   getPackageManager,
   type SupportedPackageManager,
