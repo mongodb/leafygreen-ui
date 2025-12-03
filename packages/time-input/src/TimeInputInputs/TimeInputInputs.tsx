@@ -55,6 +55,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       unitOptions,
     });
 
+    // eslint-disable-next-line no-console
     console.log('TimeInputInputs 🍉', {
       value: value?.toUTCString(),
       segmentObj,

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { type StoryMetaType } from '@lg-tools/storybook-utils';
+import {
+  storybookArgTypes,
+  type StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { DateType, SupportedLocales } from '@leafygreen-ui/date-utils';
 
 import { TimeInput } from '.';
+import { Size } from './TimeInput/TimeInput.types';
 
 const meta: StoryMetaType<typeof TimeInput> = {
   title: 'Components/Inputs/TimeInput',
@@ -20,6 +24,8 @@ const meta: StoryMetaType<typeof TimeInput> = {
         'onSegmentChange',
         'value',
         'onTimeChange',
+        'data-lgid',
+        'data-testid',
       ],
     },
   },
@@ -28,6 +34,8 @@ const meta: StoryMetaType<typeof TimeInput> = {
     locale: SupportedLocales.ISO_8601,
     timeZone: 'UTC',
     label: 'Time Input',
+    darkMode: false,
+    size: Size.Default,
   },
   argTypes: {
     locale: { control: 'select', options: Object.values(SupportedLocales) },
@@ -35,6 +43,8 @@ const meta: StoryMetaType<typeof TimeInput> = {
       control: 'select',
       options: [undefined, 'UTC', 'America/New_York', 'Europe/London'],
     },
+    darkMode: storybookArgTypes.darkMode,
+    size: { control: 'select', options: Object.values(Size) },
   },
 };
 

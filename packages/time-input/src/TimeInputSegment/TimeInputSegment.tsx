@@ -17,6 +17,7 @@ export const TimeInputSegment = React.forwardRef<
   TimeInputSegmentProps
 >(({ children, segment, ...rest }: TimeInputSegmentProps, fwdRef) => {
   const { shouldShowSelect } = useTimeInputDisplayContext();
+
   return (
     <InputSegment
       {...rest}
@@ -26,7 +27,8 @@ export const TimeInputSegment = React.forwardRef<
       maxSegmentValue={defaultMax[segment]}
       placeholder={defaultPlaceholder[segment]}
       // className={cx(segmentWidthStyles[segment])}
-      // data-testid="lg-date_picker_input-segment"
+      // data-testid
+      // data-lgid
       charsCount={getTimeSegmentRules(shouldShowSelect)[segment].maxChars}
       autoComplete="off"
     />
