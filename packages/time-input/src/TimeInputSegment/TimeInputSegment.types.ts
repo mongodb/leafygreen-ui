@@ -14,7 +14,7 @@ export type TimeSegments = (typeof TimeSegments)[keyof typeof TimeSegments];
 
 export type TimeSegmentsState = Record<TimeSegments, string>;
 
-export interface DateInputSegmentChangeEvent {
+export interface TimeInputSegmentChangeEvent {
   segment: TimeSegments;
   value: string;
   meta?: {
@@ -23,7 +23,7 @@ export interface DateInputSegmentChangeEvent {
   };
 }
 
-export type DateInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
+export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
   TimeSegments,
   string
 >;

@@ -44,6 +44,7 @@ export const TimeInputDisplayProvider = ({
   // TODO: min, max helpers
 
   // Determines if the input should show a select for the day period (AM/PM)
+  // TODO: make this is12HourFormat an explicit prop
   const shouldShowSelect = !!hasDayPeriod(providerValue.locale);
 
   // Only used to track the presentation format of the segments, not the value itself

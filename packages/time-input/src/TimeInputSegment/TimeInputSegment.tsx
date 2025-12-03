@@ -3,8 +3,8 @@ import React from 'react';
 import { InputSegment } from '@leafygreen-ui/input-box';
 
 import {
-  defaultMax,
   defaultPlaceholder,
+  getDefaultMax,
   getDefaultMin,
   getTimeSegmentRules,
 } from '../constants';
@@ -24,11 +24,11 @@ export const TimeInputSegment = React.forwardRef<
       ref={fwdRef}
       segment={segment}
       minSegmentValue={getDefaultMin(shouldShowSelect)[segment]}
-      maxSegmentValue={defaultMax[segment]}
+      maxSegmentValue={getDefaultMax(shouldShowSelect)[segment]}
       placeholder={defaultPlaceholder[segment]}
       // className={cx(segmentWidthStyles[segment])}
-      // data-testid
       // data-lgid
+      data-testid="lg-time_input_input-segment" // TODO: temp
       charsCount={getTimeSegmentRules(shouldShowSelect)[segment].maxChars}
       autoComplete="off"
     />

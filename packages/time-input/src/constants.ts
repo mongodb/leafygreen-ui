@@ -6,6 +6,7 @@ export const unitOptions = [
   { displayName: 'PM', value: 'PM' },
 ];
 
+// TODO: make is12HourFormat an explicit prop
 export const getTimeSegmentRules = (is12HourFormat: boolean) => {
   return {
     [TimeSegments.Hour]: {
@@ -26,6 +27,7 @@ export const getTimeSegmentRules = (is12HourFormat: boolean) => {
 /**
  * The minimum number for each segment
  */
+// TODO: make is12HourFormat an explicit prop
 export const getDefaultMin = (is12HourFormat: boolean) => {
   return {
     hour: is12HourFormat ? 1 : 0,
@@ -37,11 +39,14 @@ export const getDefaultMin = (is12HourFormat: boolean) => {
 /**
  * The maximum number for each segment
  */
-export const defaultMax = {
-  hour: 23,
-  minute: 59,
-  second: 59,
-} as const;
+// TODO: make is12HourFormat an explicit prop
+export const getDefaultMax = (is12HourFormat: boolean) => {
+  return {
+    hour: is12HourFormat ? 12 : 23,
+    minute: 59,
+    second: 59,
+  } as const;
+};
 
 /**
  * The default placeholders for each segment
