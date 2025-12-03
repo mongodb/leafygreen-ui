@@ -30,7 +30,7 @@ Baz.displayName = 'Baz';
 (Bar as any).isBar = true;
 (Baz as any).isBaz = true;
 
-describe('packages/compound-component/findChild', () => {
+describe('packages/lib/findChild', () => {
   test('should find a child component with matching static property', () => {
     // Create an iterable to test different iteration scenarios
     const children = [<Foo text="Foo" />, <Bar text="Bar" />];
