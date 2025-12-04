@@ -1,12 +1,14 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color, Size, spacing } from '@leafygreen-ui/tokens';
+import { color, Size } from '@leafygreen-ui/tokens';
 
 import {
   DASH_DURATION,
+  getHorizontalGap,
   getPadding,
   getSpinnerSize,
   getStrokeWidth,
+  getVerticalGap,
   ROTATION_DURATION,
 } from './constants';
 import { SpinnerDirection } from './Spinner.types';
@@ -168,9 +170,15 @@ export const getCircleSVGArgs = (size: Size | number) => {
 };
 
 /**
- * Returns the wrapper div styles based on direction
+ * Returns the wrapper div styles based on direction and size
  */
-export const getWrapperStyles = (direction: SpinnerDirection) =>
+export const getWrapperStyles = ({
+  direction,
+  size,
+}: {
+  direction: SpinnerDirection;
+  size: Size | number;
+}) =>
   cx(
     css`
       display: flex;
@@ -179,11 +187,11 @@ export const getWrapperStyles = (direction: SpinnerDirection) =>
     {
       [css`
         flex-direction: column;
-        gap: ${spacing[200]}px;
+        gap: ${getVerticalGap(size)}px;
       `]: direction === SpinnerDirection.Vertical,
       [css`
         flex-direction: row;
-        gap: ${spacing[200]}px;
+        gap: ${getHorizontalGap(size)}px;
       `]: direction === SpinnerDirection.Horizontal,
     },
   );

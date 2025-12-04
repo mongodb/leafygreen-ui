@@ -45,7 +45,7 @@ export const Spinner = ({
 
   return (
     <div
-      className={cx(getWrapperStyles(direction), className)}
+      className={cx(getWrapperStyles({ direction, size }), className)}
       data-lgid={getLgIds(lgid).spinner}
       data-testid={getLgIds(lgid).spinner}
       {...rest}
