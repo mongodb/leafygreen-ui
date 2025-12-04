@@ -47,6 +47,7 @@ export const CalendarCell = React.forwardRef<
       isHighlighted,
       className,
       onClick,
+      'aria-label': ariaLabel,
       ...rest
     }: CalendarCellProps,
     fwdRef,
@@ -86,6 +87,7 @@ export const CalendarCell = React.forwardRef<
         role="gridcell"
         data-testid="lg-date_picker-calendar_cell"
         data-highlighted={isHighlighted}
+        aria-label={ariaLabel}
         aria-current={isCurrent}
         aria-selected={isActive}
         aria-disabled={state === CalendarCellState.Disabled}
@@ -109,6 +111,7 @@ export const CalendarCell = React.forwardRef<
       >
         <div className={cx(indicatorBaseStyles, indicatorClassName)}></div>
         <span
+          aria-hidden={true} // hidden, since the `td` announces the value via `aria-label`
           className={cx(cellTextStyles, {
             [cellTextCurrentStyles]: isCurrent,
           })}

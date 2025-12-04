@@ -1,0 +1,61 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+   "compilerOptions": {
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
+      "@leafygreen-ui/*": ["../*/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "references": [
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../badge"
+    },
+    {
+      "path": "../card"
+    },
+    {
+      "path": "../checkbox"
+    },
+    {
+      "path": "../compound-component"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../expandable-card"
+    },
+    {
+      "path": "../form-footer"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../loading-indicator"
+    },
+    {
+      "path": "../segmented-control"
+    },
+    {
+      "path": "../skeleton-loader"
+    },
+    {
+      "path": "../table"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../../tools/test-harnesses"
+    }
+  ]
+}

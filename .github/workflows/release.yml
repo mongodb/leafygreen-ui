@@ -196,11 +196,17 @@ jobs:
         uses: changesets/action@v1
         with:
           version: pnpm run version # Rebuild packages to ensure any uncommitted pre-build artifacts
-          publish: pnpm publish -r --no-git-checks # Use `pnpm publish` directly to resolve `workspace` dependencies
+          publish: pnpm run publish
           createGithubReleases: true
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
+
+      - name: Debug changesets output
+        run: |
+          echo "Changesets output: ${{ steps.changesets.outputs }}"
+          echo "Changesets output type: ${{ toJSON(steps.changesets.outputs) }}"
+          echo "--------------------------------"
 
   release-aws:
     name: Publish to AWS CodeArtifact
