@@ -3,7 +3,9 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
+import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { descriptionThemeColor } from '../LoadingIndicator.styles';
 import { getLgIds } from '../utils/getLgIds';
 
 import { getSpinnerSize } from './constants';
@@ -11,8 +13,9 @@ import {
   getCircleStyles,
   getCircleSVGArgs,
   getSvgStyles,
+  getWrapperStyles,
 } from './Spinner.styles';
-import { SpinnerProps } from './Spinner.types';
+import { SpinnerDirection, SpinnerProps } from './Spinner.types';
 
 /**
  * SVG-based spinner loading indicator
@@ -21,7 +24,7 @@ import { SpinnerProps } from './Spinner.types';
  * or provide a custom number in px
  *
  * @param {SpinnerProps} props - Props for the Spinner component.
- * @returns {JSX.Element} SVG element representing the loading spinner.
+ * @returns {JSX.Element} Div element containing the loading spinner SVG.
  */
 export const Spinner = ({
   size = Size.Default,
@@ -29,30 +32,51 @@ export const Spinner = ({
   colorOverride,
   darkMode,
   className,
+  description,
+  direction = SpinnerDirection.Vertical,
+  baseFontSize: baseFontSizeProp,
+  svgProps,
   'data-lgid': lgid,
   ...rest
 }: SpinnerProps) => {
   const sizeInPx = getSpinnerSize(size);
   const { theme } = useDarkMode(darkMode);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
   return (
-    <svg
-      className={cx(getSvgStyles({ size, disableAnimation }), className)}
-      viewBox={`0 0 ${sizeInPx} ${sizeInPx}`}
-      xmlns="http://www.w3.org/2000/svg"
+    <div
+      className={cx(getWrapperStyles(direction), className)}
       data-lgid={getLgIds(lgid).spinner}
       data-testid={getLgIds(lgid).spinner}
       {...rest}
     >
-      <circle
-        className={getCircleStyles({
-          size,
-          theme,
-          colorOverride,
-          disableAnimation,
-        })}
-        {...getCircleSVGArgs(size)}
-      />
-    </svg>
+      <svg
+        className={cx(
+          getSvgStyles({ size, disableAnimation }),
+          svgProps?.className,
+        )}
+        viewBox={`0 0 ${sizeInPx} ${sizeInPx}`}
+        xmlns="http://www.w3.org/2000/svg"
+        {...svgProps}
+      >
+        <circle
+          className={getCircleStyles({
+            size,
+            theme,
+            colorOverride,
+            disableAnimation,
+          })}
+          {...getCircleSVGArgs(size)}
+        />
+      </svg>
+      {description && (
+        <Body
+          className={descriptionThemeColor[theme]}
+          baseFontSize={baseFontSize}
+        >
+          {description}
+        </Body>
+      )}
+    </div>
   );
 };

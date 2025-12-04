@@ -1,6 +1,6 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color, Size } from '@leafygreen-ui/tokens';
+import { color, Size, spacing } from '@leafygreen-ui/tokens';
 
 import {
   DASH_DURATION,
@@ -9,6 +9,7 @@ import {
   getStrokeWidth,
   ROTATION_DURATION,
 } from './constants';
+import { SpinnerDirection } from './Spinner.types';
 
 /**
  * Defines the outer SVG element keyframes
@@ -165,3 +166,24 @@ export const getCircleSVGArgs = (size: Size | number) => {
     r: (sizeInPx - strokeWidth) / 2,
   };
 };
+
+/**
+ * Returns the wrapper div styles based on direction
+ */
+export const getWrapperStyles = (direction: SpinnerDirection) =>
+  cx(
+    css`
+      display: flex;
+      align-items: center;
+    `,
+    {
+      [css`
+        flex-direction: column;
+        gap: ${spacing[200]}px;
+      `]: direction === SpinnerDirection.Vertical,
+      [css`
+        flex-direction: row;
+        gap: ${spacing[200]}px;
+      `]: direction === SpinnerDirection.Horizontal,
+    },
+  );
