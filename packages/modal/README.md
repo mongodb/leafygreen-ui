@@ -223,7 +223,7 @@ const { findModal, getModal, queryModal } = getTestUtils();
 
 ## Testing Considerations
 
-The `ConfirmationModal` component uses the native `HTMLDialogElement` API for better accessibility and browser-native behavior. However, `JSDOM` (used by `Jest` and other test runners) does not fully support this API. You'll need to mock the `show`, `showModal`, and `close` methods in your test setup:
+The `Modal` component uses the native `HTMLDialogElement` API for better accessibility and browser-native behavior. However, `JSDOM` (used by `Jest` and other test runners) does not fully support this API. You'll need to mock the `show`, `showModal`, and `close` methods in your test setup:
 
 ```tsx
 beforeAll(() => {
