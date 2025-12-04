@@ -18,6 +18,9 @@
   ],
   "references": [
     {
+      "path": "../compound-component"
+    },
+    {
       "path": "../emotion"
     },
     {

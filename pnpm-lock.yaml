@@ -2351,6 +2351,9 @@ importers:
 
   packages/loading-indicator:
     dependencies:
+      '@leafygreen-ui/compound-component':
+        specifier: workspace:^
+        version: link:../compound-component
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
