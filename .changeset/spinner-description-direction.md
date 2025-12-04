@@ -9,5 +9,14 @@ Adds `description` and `direction` props to the `Spinner` component to support t
 - `baseFontSize`: Controls the font size of the description text
 - `svgProps`: Pass-through props for the SVG element
 
-The Spinner component now always wraps in a `<div>` element. The `className` and other props are passed to the wrapper `div`.
+```tsx
+<Spinner
+  size="large"
+  direction="hoirizontal"
+  description="Loading..."
+  className=""
+  svgProps={{...}}
+/>
+```
+
 
