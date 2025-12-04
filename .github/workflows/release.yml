@@ -263,7 +263,7 @@ jobs:
 
       - name: Notify Slack channel of new releases
         id: slackbot
-        run: pnpm slackbot release '${{ needs.release.outputs.publishedPackages }}'
+        run: pnpm run slackbot '${{ needs.release.outputs.publishedPackages }}'
         env:
           SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
 
