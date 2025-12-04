@@ -23,8 +23,8 @@
     "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "lodash": "^4.17.21",
-    "polished": "^4.2.2"
+    "lodash": "catalog:",
+    "polished": "catalog:"
   },
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^",

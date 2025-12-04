@@ -41,14 +41,14 @@
     "@lg-tools/test-harnesses": "workspace:^",
     "@tanstack/react-table": "^8.20.5",
     "@tanstack/react-virtual": "^3.10.7",
-    "lodash": "^4.17.21",
-    "polished": "^4.2.2",
+    "lodash": "catalog:",
+    "polished": "catalog:",
     "react-fast-compare": "3.2.2",
     "react-intersection-observer": "^8.25.1"
   },
   "devDependencies": {
     "@emotion/styled": "^11.14.0",
-    "@faker-js/faker": "^8.0.0",
+    "@faker-js/faker": "catalog:",
     "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/code": "workspace:^",

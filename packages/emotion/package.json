@@ -23,7 +23,7 @@
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
     "@lg-tools/meta": "workspace:^",
-    "fs-extra": "11.1.1"
+    "fs-extra": "catalog:"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/emotion",

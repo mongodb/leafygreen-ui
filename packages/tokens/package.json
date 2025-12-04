@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
-    "lodash": "^4.17.21"
+    "lodash": "catalog:"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tokens",
   "repository": {

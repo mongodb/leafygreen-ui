@@ -36,7 +36,7 @@
     "@leafygreen-ui/typography": "workspace:^",
     "focus-trap": "6.9.4",
     "focus-trap-react": "9.0.2",
-    "polished": "^4.2.2"
+    "polished": "catalog:"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"

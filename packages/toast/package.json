@@ -24,15 +24,15 @@
     "@leafygreen-ui/portal": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "lodash": "^4.17.21",
-    "polished": "^4.2.2",
-    "react-transition-group": "^4.4.5"
+    "lodash": "catalog:",
+    "polished": "catalog:",
+    "react-transition-group": "catalog:"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.0",
+    "@faker-js/faker": "catalog:",
     "@leafygreen-ui/button": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@storybook/types": "^8.5.3",

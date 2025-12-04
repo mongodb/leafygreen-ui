@@ -38,7 +38,7 @@
     "@leafygreen-ui/button": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
-    "@faker-js/faker": "^8.4.1"
+    "@faker-js/faker": "catalog:"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/canvas-header",
   "repository": {
