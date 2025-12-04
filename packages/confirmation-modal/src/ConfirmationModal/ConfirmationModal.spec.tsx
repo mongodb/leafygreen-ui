@@ -6,7 +6,7 @@ import { axe } from 'jest-axe';
 import { getLgIds as getLgModalIds } from '@leafygreen-ui/modal';
 
 import { getLgIds } from '..';
-import ConfirmationModal from '..';
+import { ConfirmationModal } from '..';
 
 const lgIds = getLgIds();
 
@@ -110,7 +110,7 @@ describe('packages/confirmation-modal', () => {
     });
 
     // TODO: remove - buttonText is deprecated
-    test('overrides "confirmButtonProps"', () => {
+    test('overrides deprecated "buttonText" with "confirmButtonProps"', () => {
       const { getByText } = renderModal({
         open: true,
         buttonText: 'custom button text',
@@ -200,6 +200,22 @@ describe('packages/confirmation-modal', () => {
       userEvent.click(button);
       expect(confirmSpy).not.toHaveBeenCalled();
       expect(cancelSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('button id props', () => {
+    test('propagates to the buttons', () => {
+      const { getByText } = renderModal({
+        open: true,
+        confirmButtonProps: { id: 'my-confirm-btn', children: 'Confirm' },
+        cancelButtonProps: { id: 'my-cancel-btn' },
+      });
+
+      const confirmButton = getByText('Confirm').closest('button');
+      expect(confirmButton).toHaveAttribute('id', 'my-confirm-btn');
+
+      const cancelButton = getByText('Cancel').closest('button');
+      expect(cancelButton).toHaveAttribute('id', 'my-cancel-btn');
     });
   });
 

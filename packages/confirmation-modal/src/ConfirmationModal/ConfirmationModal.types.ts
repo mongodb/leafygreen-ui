@@ -1,4 +1,4 @@
-import { BaseButtonProps } from '@leafygreen-ui/button';
+import { ButtonProps } from '@leafygreen-ui/button';
 import { ModalProps } from '@leafygreen-ui/modal';
 
 export const Variant = {
@@ -11,9 +11,21 @@ export type Variant = (typeof Variant)[keyof typeof Variant];
 interface CustomButtonOnClick {
   onClick?: () => void;
 }
-type CustomConfirmButtonProps = Omit<BaseButtonProps, 'variant' | 'onClick'> &
+
+// Exclude the anchor branch by removing types that require href
+// InferredPolymorphicProps<'button'> = (InferredAnchorProps | InheritedComponentProps) & BaseButtonProps
+// We exclude types where href is required (the anchor branch)
+type ButtonOnlyProps = Exclude<ButtonProps<'button'>, { href: string }>;
+
+type CustomConfirmButtonProps = Omit<
+  ButtonOnlyProps,
+  'as' | 'variant' | 'onClick'
+> &
   CustomButtonOnClick;
-type CustomCancelButtonProps = Omit<BaseButtonProps, 'onClick' | 'children'> &
+type CustomCancelButtonProps = Omit<
+  ButtonOnlyProps,
+  'as' | 'onClick' | 'children'
+> &
   CustomButtonOnClick;
 
 export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {

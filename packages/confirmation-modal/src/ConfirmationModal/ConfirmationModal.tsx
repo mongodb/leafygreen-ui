@@ -136,6 +136,7 @@ export const ConfirmationModal = forwardRef<
           <Button
             data-testid={lgIds.confirm}
             {...confirmButtonProps}
+            as="button"
             disabled={!confirmEnabled || isConfirmDisabled}
             className={cx(buttonStyle, confirmButtonProps?.className)}
             variant={variant}
@@ -147,6 +148,7 @@ export const ConfirmationModal = forwardRef<
           <Button
             data-testid={lgIds.cancel}
             {...cancelButtonProps}
+            as="button"
             onClick={handleCancel}
             className={cx(buttonStyle, cancelButtonProps?.className)}
           >
