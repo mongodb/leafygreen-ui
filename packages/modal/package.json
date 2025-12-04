@@ -52,6 +52,11 @@
       "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/umd/index.js"
+    },
+    "./testing": {
+      "types": "./dist/types/testing/index.d.ts",
+      "import": "./dist/esm/testing/index.js",
+      "require": "./dist/umd/testing/index.js"
     }
   },
   "typesVersions": {}

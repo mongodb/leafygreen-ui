@@ -12,8 +12,8 @@ import LeafyGreenProvider, {
 
 import { CloseButton } from '../CloseButton';
 import { CloseIconColor } from '../shared.types';
+import { getLgIds } from '../testing';
 import { focusModalChildElement } from '../utils';
-import { getLgIds } from '../utils';
 
 import { getDialogStyles, portalContainerStyles } from './Modal.styles';
 import { ModalProps, ModalSize } from './Modal.types';
