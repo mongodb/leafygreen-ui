@@ -6,7 +6,7 @@
 // Field.MultiSelect.Option
 // Field.String
 
-import String from './String';
+import { String } from './String';
 import SingleSelect from './SingleSelect';
 
 export const Field = {

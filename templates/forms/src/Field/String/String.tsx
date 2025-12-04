@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
+  useFormStore,
   StringFieldProperties,
   InternalFieldProperties,
-} from '../store/FormStore.types';
-import { useFormStore } from '../store/FormStoreContext';
+} from '../../formStore';
 import { action } from 'mobx';
 
-interface StringProps
+export interface StringProps
   extends Omit<StringFieldProperties, InternalFieldProperties> {
   // The name for the input
   name: string;
@@ -38,7 +38,6 @@ function String({
 
   useEffect(
     action(() => {
-      console.log(fieldProperties);
       formStore.updateField(name, fieldProperties);
     }),
     Object.values(fieldProperties),

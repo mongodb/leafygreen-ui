@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-key */
 import React, { useState, useCallback } from 'react';
 import { StoryFn } from '@storybook/react';
-import Button from '@leafygreen-ui/button';
+import { Button } from '@leafygreen-ui/button';
 import { FormTemplate, Field, ModalFormTemplateProps } from '.';
-import { ValidatorFunction } from './store/FormStore.types';
+import { ValidatorFunction } from './formStore/FormStore.types';
+import { fi } from 'date-fns/locale';
 
 export default {
   title: 'Components/Forms',
@@ -41,8 +42,11 @@ const Template: StoryFn<FormTemplateKnobProps> = ({
         setOpen={setOpen}
         title={title}
         // name="hello" TODO: Add name support for id prefixes, eventual telemetry tie-ins
-        onSubmit={() => {
+        onSubmit={values => {
           return new Promise(resolve => setTimeout(resolve, 2000));
+        }}
+        onChange={(values, event) => {
+          console.log('onChange fired', values, event);
         }}
         {...props}
       >
@@ -68,15 +72,14 @@ const Template: StoryFn<FormTemplateKnobProps> = ({
           validator={customValidator}
         />
 
-        {/* <Field.SingleSelect
+        <Field.SingleSelect
           type="select"
           label="This is a single select field"
-          name="singleselect"
+          name="singleselectname"
         >
-          <Field.SingleSelect.Option name="option1" label="hello" /> // TODO:
-          Option should be scoped more broadly
+          <Field.SingleSelect.Option name="option1" label="hello" />
           <Field.SingleSelect.Option name="option2" label="world" />
-        </Field.SingleSelect> */}
+        </Field.SingleSelect>
       </FormTemplate.Modal>
     </>
   );

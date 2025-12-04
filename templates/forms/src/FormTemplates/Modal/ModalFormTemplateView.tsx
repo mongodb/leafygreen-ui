@@ -4,7 +4,7 @@
 import React from 'react';
 import { Modal } from '@leafygreen-ui/modal';
 import { ModalFormTemplatePassthroughProps } from './ModalFormTemplate.types';
-import { useFormStore } from '../../store/FormStoreContext';
+import { useFormStore } from '../../formStore';
 import { isPromise } from '../../utils/typeGuards';
 import FormFooter from '@leafygreen-ui/form-footer';
 import { css } from '@leafygreen-ui/emotion';
@@ -18,9 +18,11 @@ import { action } from 'mobx';
 const ModalFormTemplateView = React.forwardRef<
   HTMLDialogElement,
   ModalFormTemplatePassthroughProps
->(({ children, open, setOpen, onSubmit, title, onClose }, ref) => {
+>(({ children, open, setOpen, onChange, onSubmit, title, onClose }, ref) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const formStore = useFormStore();
+
+  console.log('rendered: ModalFormTemplateView');
 
   function closeModal() {
     setOpen(false);
@@ -33,7 +35,7 @@ const ModalFormTemplateView = React.forwardRef<
 
     // TODO: Handle client-side validation
 
-    const onSubmitResult = onSubmit(); // TODO: Pass form values here
+    const onSubmitResult = onSubmit(formStore.fieldValues);
 
     if (isPromise(onSubmitResult)) {
       setIsLoading(true);
@@ -69,17 +71,14 @@ const ModalFormTemplateView = React.forwardRef<
           className={css`
             position: relative;
             z-index: 1; // Allows focus states to appear above the footer without adding spacing.
+            gap: ${spacing[600]}px;
+            display: flex;
+            flex-direction: column;
           `}
         >
-          <H2
-            className={css`
-              margin-bottom: ${spacing[600]}px;
-            `}
-          >
-            {title}
-          </H2>
+          <H2>{title}</H2>
 
-          <FormFields />
+          <FormFields onChange={onChange} />
         </div>
 
         {children}

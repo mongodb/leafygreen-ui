@@ -79,10 +79,10 @@ export interface StringFieldProperties<T = string>
 
 export interface OptionProperties {
   // The display text for the option.
-  label: FieldDetails; // No default
+  label: string; // No default
 
   // The description for the option.
-  description?: FieldDetails; // No default
+  description?: string; // No default
 
   // The value for the option.
   // Must be unique amongst options in the field, but can be repeated within the form.
@@ -134,3 +134,13 @@ export type FieldProperties =
 export type InternalFieldProperties = 'value' | 'valid' | 'options';
 
 export type FieldMap = Map<string, FieldProperties>; // String is the field name
+
+/**
+ * An object representing the values of all fields in the form, using the field name as keys.
+ */
+export type FieldValues<T = any> = Record<string, T>;
+
+/**
+ * A set representing a list of all invalid fields in the form.
+ */
+export type InvalidFieldSet = Set<string>;

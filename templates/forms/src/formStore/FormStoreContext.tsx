@@ -13,11 +13,11 @@ export function useFormStore() {
   return context;
 }
 
-interface FormTemplateProviderProps {
+interface FormStoreProviderProps {
   children: React.ReactNode;
 }
 
-export const FormTemplateProvider: React.FC<FormTemplateProviderProps> = ({
+export const FormStoreProvider: React.FC<FormStoreProviderProps> = ({
   children,
 }) => {
   const [formStore] = useState(() => new FormStore());

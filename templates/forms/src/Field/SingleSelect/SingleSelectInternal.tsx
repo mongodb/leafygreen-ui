@@ -1,47 +1,61 @@
-// import React, { useEffect } from 'react';
-// import { useFormTemplateContext } from '../../FormTemplateContext/FormTemplateContext';
-// import {
-//   SingleSelectFieldProperties,
-//   InternalFieldProperties,
-// } from '../../FormTemplateContext/FormTemplateContext.types';
-// import { useSingleSelectContext } from './SingleSelectContext';
+import React, { useEffect } from 'react';
+import {
+  useFormStore,
+  SingleSelectFieldProperties,
+  InternalFieldProperties,
+} from '../../formStore';
+import { action } from 'mobx';
+import { useSingleSelectStore } from './singleSelectStore';
+import { observer } from 'mobx-react-lite';
 
-// interface SingleSelectProps
-//   extends Omit<SingleSelectFieldProperties, InternalFieldProperties> {
-//   // The name for the input
-//   name: string;
+interface SingleSelectProps
+  extends Omit<SingleSelectFieldProperties, InternalFieldProperties> {
+  // The name for the input
+  name: string;
 
-//   // Option Definitions
-//   children: React.ReactNode;
-// }
+  // Option Definitions
+  children: React.ReactNode;
+}
 
-// function SingleSelectInternal({
-//   name,
-//   type = 'select',
-//   required = false,
-//   ...rest
-// }: SingleSelectProps) {
-//   const { addField, removeField } = useFormTemplateContext();
-//   const { options } = useSingleSelectContext();
+function SingleSelectInternal({
+  name,
+  type = 'select',
+  required = false,
+  children,
+  ...rest
+}: SingleSelectProps) {
+  const formStore = useFormStore();
+  const singleSelectStore = useSingleSelectStore();
 
-//   useEffect(() => {
-//     addField(name, {
-//       type,
-//       value: '',
-//       required,
-//       // options,
-//       ...rest,
-//     });
+  const fieldProperties = {
+    type,
+    value: '',
+    required,
+    options: singleSelectStore.options,
+    ...rest,
+  };
 
-//     return () => {
-//       removeField(name);
-//     };
-//   }, []);
+  useEffect(
+    action(() => {
+      formStore.addField(name, fieldProperties);
 
-//   // Fields are not responsible for rendering themselves.
-//   return null;
-// }
+      return action(() => {
+        formStore.removeField(name);
+      });
+    }),
+    [],
+  );
 
-// SingleSelectInternal.displayName = 'Field.SingleSelect';
+  useEffect(
+    action(() => {
+      formStore.updateField(name, fieldProperties);
+    }),
+    Object.values(fieldProperties),
+  );
 
-// export default SingleSelectInternal;
+  return children;
+}
+
+SingleSelectInternal.displayName = 'Field.SingleSelect';
+
+export default observer(SingleSelectInternal);

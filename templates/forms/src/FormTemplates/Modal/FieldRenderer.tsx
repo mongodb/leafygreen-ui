@@ -4,19 +4,24 @@ import {
   isSingleSelect,
   isMultiSelect,
 } from '../../Field/fieldTypeGuards';
-import StringInputFieldView from './ModalStringInputFieldView';
+import { ModalStringInput, ModalSingleSelectInput } from './fieldViews';
 import { observer } from 'mobx-react-lite';
-import { useFormStore } from '../../store/FormStoreContext';
-import { FieldProperties } from '../../store/FormStore.types';
+import { useFormStore, FieldProperties } from '../../formStore';
+import { ModalFormTemplateProps } from './ModalFormTemplate.types';
 
-function FieldRenderer({ name }: { name: string }) {
+interface FieldRendererProps {
+  name: string;
+  onChange: ModalFormTemplateProps['onChange'];
+}
+
+function FieldRenderer({ name, onChange }: FieldRendererProps) {
   const formStore = useFormStore();
   const properties = formStore.fields.get(name) ?? ({} as FieldProperties);
 
   if (isStringInput(properties)) {
-    return <StringInputFieldView name={name} />;
+    return <ModalStringInput name={name} onChange={onChange} />;
   } else if (isSingleSelect(properties)) {
-    return null; // TODO: Handle Single Select
+    return <ModalSingleSelectInput name={name} onChange={onChange} />; // TODO: Handle Single Select
   } else if (isMultiSelect(properties)) {
     return null; // TODO: Handle Multi Select
   } else {

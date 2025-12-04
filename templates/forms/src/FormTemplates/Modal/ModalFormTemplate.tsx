@@ -1,8 +1,5 @@
-// ModalFormTemplate is the top-level component that is used directly by consumers.
-// It sets up the FormTemplate context provider and renders the ModalFormTemplateView.
-
-import React, { useEffect } from 'react';
-import { FormTemplateProvider } from '../../store/FormStoreContext';
+import React, { createContext, useContext } from 'react';
+import { FormStoreProvider } from '../../formStore';
 import ModalFormTemplateView from './ModalFormTemplateView';
 import { ModalFormTemplateProps } from './ModalFormTemplate.types';
 import useValidChildren from '../../utils/useValidChildren';
@@ -14,11 +11,11 @@ const ModalFormTemplate = React.forwardRef<
   const validChildren = useValidChildren(children);
 
   return (
-    <FormTemplateProvider>
+    <FormStoreProvider>
       <ModalFormTemplateView ref={ref} {...props}>
         {validChildren}
       </ModalFormTemplateView>
-    </FormTemplateProvider>
+    </FormStoreProvider>
   );
 });
 

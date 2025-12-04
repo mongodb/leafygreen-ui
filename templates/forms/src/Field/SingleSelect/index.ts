@@ -1,3 +1,3 @@
-// import SingleSelect from './SingleSelect';
+import SingleSelect from './SingleSelect';
 
-// export default SingleSelect;
+export default SingleSelect;
