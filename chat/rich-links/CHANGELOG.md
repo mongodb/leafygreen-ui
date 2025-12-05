@@ -1,5 +1,13 @@
 # @lg-chat/rich-links
 
+## 4.0.7
+
+### Patch Changes
+
+- 26e5267: Deprecated clickable styling and functionality for Card component. Updated styles (removed shadows and added border) for Card component.
+- Updated dependencies [26e5267]
+  - @leafygreen-ui/card@13.3.0
+
 ## 4.0.6
 
 ### Patch Changes
