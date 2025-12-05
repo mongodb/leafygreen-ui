@@ -13,6 +13,9 @@ import { getFormatPartsValues } from '../utils';
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
+import { useObjectDependency } from '@leafygreen-ui/hooks';
+import { DateType, LocaleString } from '@leafygreen-ui/date-utils';
+import { useTimeSegments } from '../hooks/useTimeSegments';
 
 /**
  * @internal
@@ -35,26 +38,71 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       value: value,
     });
 
-    const { hour, minute, second } = timeParts;
+    const { hour, minute, second, dayPeriod, month, day, year } = timeParts;
 
     /**
      * Creates time segments object
      *
      * // TODO: these are temp
      */
-    const segmentObj: TimeSegmentsState = {
-      hour,
-      minute,
-      second,
-    };
+    // const derivedSegments: TimeSegmentsState = {
+    //   hour,
+    //   minute,
+    //   second,
+    // };
+
+    // const derivedSegmentsDependency = useObjectDependency(derivedSegments);
+
+    const { segments, setSegment } = useTimeSegments({
+      date: value,
+      locale,
+      timeZone,
+      options: {
+        onUpdate: (newSegments, prevSegments) => {
+          console.log('TimeInputInputs 🍉🍉🍉', {
+            newSegments,
+            prevSegments,
+            selectUnit: selectUnit.displayName,
+            is12HourFormat,
+            date: {
+              day,
+              month,
+              year,
+              hour: newSegments.hour,
+              minute: newSegments.minute,
+              second: newSegments.second,
+            },
+          });
+        },
+      },
+    });
+
+    // console.log('TimeInputInputs 🍉', { segments });
 
     /**
      * Hook to manage the select unit
      */
     const { selectUnit, setSelectUnit } = useSelectUnit({
-      dayPeriod: timeParts.dayPeriod,
+      dayPeriod,
       value,
       unitOptions,
+      options: {
+        onUpdate: (newSelectUnit, prevSelectUnit) => {
+          console.log('TimeInputInputs Select Unit 🪼🪼🪼', {
+            newSelectUnit,
+            prevSelectUnit,
+            is12HourFormat,
+            date: {
+              day,
+              month,
+              year,
+              hour: segments.hour,
+              minute: segments.minute,
+              second: segments.second,
+            },
+          });
+        },
+      },
     });
 
     // // eslint-disable-next-line no-console
@@ -68,9 +116,10 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
         <div className={wrapperBaseStyles}>
           <TimeFormFieldInputContainer>
             <TimeInputBox
-              segments={segmentObj}
+              segments={segments}
               setSegment={(segment, value) => {
                 // eslint-disable-next-line no-console
+                setSegment(segment, value);
                 console.log({ segment, value });
               }}
             />

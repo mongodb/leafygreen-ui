@@ -21,7 +21,7 @@ export const getTimeSegmentRules = ({
   return {
     [TimeSegment.Hour]: {
       maxChars: 2,
-      minExplicitValue: is12HourFormat ? 1 : 2,
+      minExplicitValue: is12HourFormat ? 2 : 3,
     },
     [TimeSegment.Minute]: {
       maxChars: 2,

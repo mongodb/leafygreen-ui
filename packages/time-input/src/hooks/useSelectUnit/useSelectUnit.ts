@@ -6,8 +6,13 @@ import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
 
 interface UseSelectUnitReturn {
   selectUnit: UnitOption;
-  setSelectUnit: React.Dispatch<React.SetStateAction<UnitOption>>;
+  // setSelectUnit: React.Dispatch<React.SetStateAction<UnitOption>>;
+  setSelectUnit: (selectUnit: UnitOption) => void;
 }
+
+type UseSelectUnitOptions = {
+  onUpdate: (newSelectUnit: UnitOption, prevSelectUnit?: UnitOption) => void;
+};
 
 /**
  * Finds the select unit option based on the day period.
@@ -38,21 +43,44 @@ export const useSelectUnit = ({
   dayPeriod,
   value,
   unitOptions,
+  options: { onUpdate },
 }: {
   dayPeriod: string;
   value: DateType | undefined;
   unitOptions: Array<UnitOption>;
+  options: UseSelectUnitOptions;
 }): UseSelectUnitReturn => {
   const selectUnitOption = findSelectUnit(dayPeriod, unitOptions);
-  const [selectUnit, setSelectUnit] = useState<UnitOption>(selectUnitOption);
+  const [selectUnitState, setSelectUnitState] =
+    useState<UnitOption>(selectUnitOption);
+
+  // useEffect(() => {
+  //   onUpdate?.(selectUnit, selectUnit);
+  // }, [selectUnit, onUpdate]);
 
   useEffect(() => {
     // Only update the select unit if the value is valid. This way the previous valid value is not lost.
     if (isValidDate(value)) {
       const selectUnitOption = findSelectUnit(dayPeriod, unitOptions);
-      setSelectUnit(selectUnitOption);
-    }
-  }, [value, dayPeriod, unitOptions, setSelectUnit]);
 
-  return { selectUnit, setSelectUnit };
+      const haveSelectUnitChanged = selectUnitOption !== selectUnitState;
+
+      if (haveSelectUnitChanged) {
+        setSelectUnitState(selectUnitOption);
+        onUpdate?.(selectUnitOption, { ...selectUnitState });
+      }
+    }
+  }, [value, dayPeriod, unitOptions, setSelectUnitState]);
+
+  const setSelectUnit = (selectUnit: UnitOption) => {
+    setSelectUnitState(selectUnit);
+
+    const haveSelectUnitChanged = selectUnit !== selectUnitState;
+
+    if (haveSelectUnitChanged) {
+      onUpdate?.(selectUnit, { ...selectUnitState });
+    }
+  };
+
+  return { selectUnit: selectUnitState, setSelectUnit };
 };
