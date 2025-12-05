@@ -12,9 +12,7 @@ interface CustomButtonOnClick {
   onClick?: () => void;
 }
 
-// Exclude the anchor branch by removing types that require href
-// InferredPolymorphicProps<'button'> = (InferredAnchorProps | InheritedComponentProps) & BaseButtonProps
-// We exclude types where href is required (the anchor branch)
+// Exclude anchor types (where href is required) to ensure buttons render as buttons
 type ButtonOnlyProps = Exclude<ButtonProps<'button'>, { href: string }>;
 
 type CustomConfirmButtonProps = Omit<
