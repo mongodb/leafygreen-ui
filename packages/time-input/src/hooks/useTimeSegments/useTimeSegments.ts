@@ -3,6 +3,7 @@ import { TimeSegment, TimeSegmentsState } from '../../shared.types';
 import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
 import { getFormatPartsValues } from '../../utils/getFormatPartsValues/getFormatPartsValues';
 import isEqual from 'lodash/isEqual';
+import { getValueFormatter } from '@leafygreen-ui/input-box';
 
 type UseTimeSegmentsOptions = {
   onUpdate: (
@@ -21,18 +22,28 @@ const timeSegmentsReducer = (
   };
   return state;
 };
+
 // TODO: move this to a utils file
+const getFormattedTimeSegments = (segments: TimeSegmentsState) => {
+  const hour = getValueFormatter({ charsCount: 2 })(segments.hour);
+  const minute = getValueFormatter({ charsCount: 2 })(segments.minute);
+  const second = getValueFormatter({ charsCount: 2 })(segments.second);
+  return { hour, minute, second };
+};
+
 const getTimeSegmentsFromDate = (
   date: DateType,
   locale: LocaleString,
   timeZone: string,
 ): TimeSegmentsState => {
+  // TODO: format these so there is padding
   const { hour, minute, second } = getFormatPartsValues({
     locale,
     timeZone,
     value: date,
   });
-  return { hour, minute, second };
+
+  return getFormattedTimeSegments({ hour, minute, second });
 };
 
 export const useTimeSegments = ({
@@ -57,7 +68,7 @@ export const useTimeSegments = ({
 
     if (isDateValid && haveSegmentsChanged) {
       const newSegments = getTimeSegmentsFromDate(date, locale, timeZone);
-      console.log('useEffect 🦄', { newSegments, segments });
+      // console.log('useEffect 🦄', { newSegments, segments });
       onUpdate?.(newSegments, { ...segments });
       dispatch(newSegments);
     }

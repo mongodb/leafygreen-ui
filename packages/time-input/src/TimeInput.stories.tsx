@@ -60,7 +60,17 @@ const Template: StoryFn<typeof TimeInput> = props => {
   // );
 
   return (
-    <TimeInput {...props} value={value} onTimeChange={time => setValue(time)} />
+    <TimeInput
+      {...props}
+      value={value}
+      onTimeChange={time => {
+        setValue(time);
+        console.log('onTimeChange 🦁🦁🦁', {
+          time,
+          timeString: time?.toUTCString(),
+        });
+      }}
+    />
   );
 };
 

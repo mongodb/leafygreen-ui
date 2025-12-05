@@ -17,13 +17,15 @@ import { useObjectDependency } from '@leafygreen-ui/hooks';
 import { DateType, LocaleString } from '@leafygreen-ui/date-utils';
 import { useTimeSegments } from '../hooks/useTimeSegments';
 
+import { zonedTimeToUtc } from 'date-fns-tz';
+
 /**
  * @internal
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
     const { is12HourFormat, timeZone, locale } = useTimeInputDisplayContext();
-    const { value } = useTimeInputContext();
+    const { value, setValue } = useTimeInputContext();
 
     const handleSelectChange = (unit: UnitOption) => {
       setSelectUnit(unit);
@@ -38,7 +40,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       value: value,
     });
 
-    const { hour, minute, second, dayPeriod, month, day, year } = timeParts;
+    const { dayPeriod, month, day, year } = timeParts;
 
     /**
      * Creates time segments object
@@ -59,6 +61,19 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       timeZone,
       options: {
         onUpdate: (newSegments, prevSegments) => {
+          const convertedHour = convertHourTo24HourFormat(
+            newSegments.hour,
+            selectUnit.displayName,
+          );
+          const newDate = new Date(
+            Number(year),
+            Number(month) - 1,
+            Number(day),
+            Number(convertedHour),
+            Number(newSegments.minute),
+            Number(newSegments.second),
+          );
+          const UtcTime = zonedTimeToUtc(newDate, timeZone);
           console.log('TimeInputInputs 🍉🍉🍉', {
             newSegments,
             prevSegments,
@@ -69,10 +84,16 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
               month,
               year,
               hour: newSegments.hour,
+              convertedHour,
               minute: newSegments.minute,
               second: newSegments.second,
+              dayPeriod: selectUnit.displayName,
             },
+            UtcTime,
+            UtcTimeString: UtcTime.toUTCString(),
           });
+
+          setValue(UtcTime);
         },
       },
     });
@@ -86,8 +107,23 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       dayPeriod,
       value,
       unitOptions,
+      is12HourFormat,
       options: {
+        // TODO: when the locale changes, the segment values are stale in this hook. We should not call onUpdate when the locale changes.
         onUpdate: (newSelectUnit, prevSelectUnit) => {
+          const convertedHour = convertHourTo24HourFormat(
+            segments.hour,
+            newSelectUnit.displayName,
+          );
+          const newDate = new Date(
+            Number(year),
+            Number(month) - 1,
+            Number(day),
+            Number(convertedHour),
+            Number(segments.minute),
+            Number(segments.second),
+          );
+          const UtcTime = zonedTimeToUtc(newDate, timeZone);
           console.log('TimeInputInputs Select Unit 🪼🪼🪼', {
             newSelectUnit,
             prevSelectUnit,
@@ -97,10 +133,16 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
               month,
               year,
               hour: segments.hour,
+              convertedHour,
               minute: segments.minute,
               second: segments.second,
+              dayPeriod: newSelectUnit.displayName,
             },
+            UtcTime,
+            UtcTimeString: UtcTime.toUTCString(),
           });
+
+          setValue(UtcTime);
         },
       },
     });
@@ -139,3 +181,23 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 );
 
 TimeInputInputs.displayName = 'TimeInputInputs';
+
+const convertHourTo24HourFormat = (hour: string, dayPeriod: string) => {
+  if (hour === '') return hour;
+
+  // if dayPeriod is AM and hour is 12, return 0 since 12 AM is 00:00
+  if (dayPeriod === 'AM') {
+    if (hour === '12') {
+      return '0';
+    }
+    // else return hour as-is
+    return hour;
+  }
+
+  // if dayPeriod is PM and hour is 12, return 12 since 12 PM is 12:00
+  if (hour === '12') {
+    return '12';
+  }
+  // else return hour + 12
+  return `${parseInt(hour) + 12}`;
+};
