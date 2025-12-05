@@ -3,7 +3,7 @@ import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { getLgIds as getLgModalIds } from '@leafygreen-ui/modal/testing';
+import { getLgIds as getLgModalIds } from '@leafygreen-ui/modal';
 
 import { getLgIds } from '..';
 import ConfirmationModal from '..';

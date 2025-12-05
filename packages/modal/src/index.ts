@@ -9,3 +9,4 @@ export {
   ModalSize,
 } from './Modal';
 export { CloseIconColor } from './shared.types';
+export { getLgIds } from './utils';
