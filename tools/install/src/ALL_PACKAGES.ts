@@ -86,6 +86,7 @@ export const ALL_PACKAGES = [
   '@lg-charts/drag-provider',
   '@lg-charts/legend',
   '@lg-charts/series-provider',
+  '@lg-chat/chat-button',
   '@lg-chat/chat-layout',
   '@lg-chat/chat-window',
   '@lg-chat/input-bar',
