@@ -12,7 +12,7 @@ Adds `description` and `direction` props to the `Spinner` component to support t
 ```tsx
 <Spinner
   size="large"
-  direction="hoirizontal"
+  direction="horizontal"
   description="Loading..."
   className=""
   svgProps={{...}}
