@@ -279,7 +279,7 @@ jobs:
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
-        run: pnpm global add node-gyp
+        run: pnpm add --global node-gyp
 
       - name: Install
         run: pnpm install --frozen-lockfile --prefer-offline
