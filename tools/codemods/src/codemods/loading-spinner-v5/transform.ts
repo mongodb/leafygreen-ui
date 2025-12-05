@@ -81,7 +81,7 @@ export default function transformer(
     }
   });
 
-  /** Transform displayOption -> size + direction for each Spinner component s*/
+  /** Transform displayOption -> size + direction for each Spinner component */
   spinnerComponentNames.forEach(componentName => {
     const elements = source.findJSXElements(componentName);
 
