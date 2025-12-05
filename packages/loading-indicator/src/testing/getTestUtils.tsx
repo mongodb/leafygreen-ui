@@ -15,22 +15,19 @@ export const getTestUtils = (
    * @returns a promise that resolves to the Spinner element using the `data-lgid` data attribute.
    * The promise is rejected if no elements match or if more than one match is found.
    */
-  const findSpinner = () =>
-    findByLgId!(lgIds.spinner) as unknown as Promise<SVGSVGElement>;
+  const findSpinner = () => findByLgId!<HTMLDivElement>(lgIds.spinner);
 
   /**
    * @returns the Spinner element using the `data-lgid` data attribute.
    * Will throw if no elements match or if more than one match is found.
    */
-  const getSpinner = () =>
-    getByLgId!(lgIds.spinner) as unknown as SVGSVGElement;
+  const getSpinner = () => getByLgId!<HTMLDivElement>(lgIds.spinner);
 
   /**
    * @returns the Spinner element using the `data-lgid` data attribute or `null` if no elements match.
    * Will throw if more than one match is found.
    */
-  const querySpinner = () =>
-    queryByLgId!(lgIds.spinner) as unknown as SVGSVGElement | null;
+  const querySpinner = () => queryByLgId!<HTMLDivElement>(lgIds.spinner);
 
   /**
    * @returns a promise that resolves to the PageLoader element using the `data-lgid` data attribute.

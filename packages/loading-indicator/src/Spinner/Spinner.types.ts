@@ -1,12 +1,23 @@
 import React from 'react';
 
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
+import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
+
+/**
+ * Determines the position of the description text relative to the spinner
+ */
+export const SpinnerDirection = {
+  Vertical: 'vertical',
+  Horizontal: 'horizontal',
+} as const;
+
+export type SpinnerDirection =
+  (typeof SpinnerDirection)[keyof typeof SpinnerDirection];
 
 export interface SpinnerProps
   extends DarkModeProps,
     LgIdProps,
-    React.ComponentProps<'svg'> {
+    React.ComponentProps<'div'> {
   /**
    * Provide a standard `Size` enum, or a custom number in px.
    */
@@ -24,4 +35,28 @@ export interface SpinnerProps
    * @internal
    */
   disableAnimation?: boolean;
+
+  /**
+   * Description text to display alongside the spinner
+   */
+  description?: string;
+
+  /**
+   * Determines the position of the description text relative to the spinner.
+   * - `vertical`: Description appears below the spinner
+   * - `horizontal`: Description appears to the right of the spinner
+   *
+   * @default 'vertical'
+   */
+  direction?: SpinnerDirection;
+
+  /**
+   * The base font size of the description text.
+   */
+  baseFontSize?: BaseFontSize;
+
+  /**
+   * Props to pass through to the SVG element
+   */
+  svgProps?: React.ComponentProps<'svg'>;
 }

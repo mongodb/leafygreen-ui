@@ -4,11 +4,14 @@ import { color, Size } from '@leafygreen-ui/tokens';
 
 import {
   DASH_DURATION,
+  getHorizontalGap,
   getPadding,
   getSpinnerSize,
   getStrokeWidth,
+  getVerticalGap,
   ROTATION_DURATION,
 } from './constants';
+import { SpinnerDirection } from './Spinner.types';
 
 /**
  * Defines the outer SVG element keyframes
@@ -165,3 +168,30 @@ export const getCircleSVGArgs = (size: Size | number) => {
     r: (sizeInPx - strokeWidth) / 2,
   };
 };
+
+/**
+ * Returns the wrapper div styles based on direction and size
+ */
+export const getWrapperStyles = ({
+  direction,
+  size,
+}: {
+  direction: SpinnerDirection;
+  size: Size | number;
+}) =>
+  cx(
+    css`
+      display: flex;
+      align-items: center;
+    `,
+    {
+      [css`
+        flex-direction: column;
+        gap: ${getVerticalGap(size)}px;
+      `]: direction === SpinnerDirection.Vertical,
+      [css`
+        flex-direction: row;
+        gap: ${getHorizontalGap(size)}px;
+      `]: direction === SpinnerDirection.Horizontal,
+    },
+  );
