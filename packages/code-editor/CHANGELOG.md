@@ -1,5 +1,12 @@
 # @leafygreen-ui/code-editor
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies [fda2d29]
+  - @leafygreen-ui/modal@21.0.0
+
 ## 1.0.3
 
 ### Patch Changes

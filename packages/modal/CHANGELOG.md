@@ -1,5 +1,11 @@
 # @leafygreen-ui/modal
 
+## 21.0.0
+
+### Major Changes
+
+- fda2d29: Update modal testing exports from `@leafygreen-ui/modal` to `@leafygreen-ui/modal/testing`
+
 ## 20.3.3
 
 ### Patch Changes
