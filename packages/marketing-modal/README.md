@@ -77,3 +77,31 @@ function Example() {
 | `blobPosition`   | `'top left'`, `'top right'`, `'bottom right'` | Determines the position of the blob if `showBlob` is set to `true`.                                                                                                                   | `top left`  |
 | `disclaimer`     | `React.ReactElement`                          | Disclaimer text to be rendered under the primary action button.                                                                                                                       |             |
 | `buttonProps`    | `ButtonProps`                                 | The primary button. An object that accepts all [Button props](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#properties) except for the `variant` prop. |             |
+
+## Testing Considerations
+
+The `MarketingModal` component uses the native `HTMLDialogElement` API for better accessibility and browser-native behavior. However, `JSDOM` (used by `Jest` and other test runners) does not fully support this API. You'll need to mock the `show`, `showModal`, and `close` methods in your test setup:
+
+```tsx
+beforeAll(() => {
+  HTMLDialogElement.prototype.show = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = true;
+  });
+
+  HTMLDialogElement.prototype.showModal = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = true;
+  });
+
+  HTMLDialogElement.prototype.close = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = false;
+  });
+});
+```
+
+This mock can be placed in a `beforeAll` block in your test file, or in a global test setup file.
