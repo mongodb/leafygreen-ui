@@ -42,6 +42,8 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 
     const { dayPeriod, month, day, year } = timeParts;
 
+    console.log('TimeInputInputs 🥝🥝🥝', { timeParts });
+
     /**
      * Creates time segments object
      *
@@ -74,7 +76,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             Number(newSegments.second),
           );
           const UtcTime = zonedTimeToUtc(newDate, timeZone);
-          console.log('TimeInputInputs 🍉🍉🍉', {
+          console.log('TimeInputInputs > useTimeSegments > onUpdate 🍉🍉🍉', {
             newSegments,
             prevSegments,
             selectUnit: selectUnit.displayName,
@@ -98,7 +100,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       },
     });
 
-    // console.log('TimeInputInputs 🍉', { segments });
+    console.log('TimeInputInputs 🍉', { segments });
 
     /**
      * Hook to manage the select unit
@@ -108,9 +110,12 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       value,
       unitOptions,
       is12HourFormat,
+      timeZone,
       options: {
-        // TODO: when the locale changes, the segment values are stale in this hook. We should not call onUpdate when the locale changes.
         onUpdate: (newSelectUnit, prevSelectUnit) => {
+          console.log('TimeInputInputs > useSelectUnit > segments 🔆', {
+            segments,
+          });
           const convertedHour = convertHourTo24HourFormat(
             segments.hour,
             newSelectUnit.displayName,
@@ -124,7 +129,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             Number(segments.second),
           );
           const UtcTime = zonedTimeToUtc(newDate, timeZone);
-          console.log('TimeInputInputs Select Unit 🪼🪼🪼', {
+          console.log('TimeInputInputs > useSelectUnit > onUpdate 🪼🪼🪼', {
             newSelectUnit,
             prevSelectUnit,
             is12HourFormat,
@@ -142,6 +147,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             UtcTimeString: UtcTime.toUTCString(),
           });
 
+          // TODO: also both useTimeSegments and useSelectUnit should not call onUpdate when that happens.
           setValue(UtcTime);
         },
       },
@@ -183,6 +189,8 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 TimeInputInputs.displayName = 'TimeInputInputs';
 
 const convertHourTo24HourFormat = (hour: string, dayPeriod: string) => {
+  console.log('convertHourTo24HourFormat 🐸🐸🐸', { hour, dayPeriod });
+
   if (hour === '') return hour;
 
   // if dayPeriod is AM and hour is 12, return 0 since 12 AM is 00:00
