@@ -108,14 +108,28 @@ export const useTimeSegments = ({
     // });
 
     // if (isDateValid && haveSegmentsChanged && hasDateAndTimeChanged) {
+    // TODO: maybe i don't need the haveSegmentsChanged because what if the date has changed but the segments are the same?
     if (isDateValid && haveSegmentsChanged) {
+      // TODO: maybe this should be if the date, timezone, or locale has changed?
       // const newSegments = getTimeSegmentsFromDate(date, locale, timeZone);
-      // console.log('useTimeSegments > useEffect > newSegments  🦄', {
-      //   newSegments,
-      //   segments,
-      // });
+      console.log('useTimeSegments > useEffect > newSegments  🦄', {
+        newSegments,
+        segments,
+      });
+
+      // if the date is valid and the segments have changed, that means
+      // The date has not changed but
+      // the timezone or locale might have changed or
+      // the segments have changed because the user has typed in a new value
+
+      // if the user has typed in a new value but the date is the same then do not update the segments here.
+      if (!hasDateAndTimeChanged) {
+        return;
+      }
+      // if the timezone or locale has changed then update the segments here.
+
       // onUpdate?.(newSegments, { ...segments });
-      // This means that segments have changed because the timezone or locale has changed but the date is the same so don't call onUpdate.
+      // This means that segments have changed because the timezone or locale has changed but the date might be the same so don't call onUpdate.
       dispatch(newSegments);
 
       // This means that segments have changed because the date is different so we should call onUpdate.
@@ -127,7 +141,7 @@ export const useTimeSegments = ({
   }, [date, locale, timeZone, segments, onUpdate]);
 
   const setSegment = (segment: TimeSegment, value: string) => {
-    // console.log('useTimeSegments > setSegment 💬', { segment, value });
+    console.log('useTimeSegments > setSegment 💬', { segment, value });
     const updateObject = { [segment]: value };
     // This returns a new state object with the updated segments
     const nextState = timeSegmentsReducer(segments, updateObject);

@@ -102,7 +102,6 @@ export const useSelectUnit = ({
       setSelectUnitState(findSelectUnit(dayPeriod, unitOptions));
     }
 
-    // TODO: this is still firing when switching from 12 hour format to 24 hour format. IS this because of strictmode?
     // Only update the select unit if the value is valid. This way the previous valid value is not lost.
     if (shouldUpdate) {
       // console.log('useSelectUnit > useEffect > shouldUpdate check  🍎');
