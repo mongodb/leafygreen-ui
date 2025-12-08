@@ -42,7 +42,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 
     const { dayPeriod, month, day, year } = timeParts;
 
-    console.log('TimeInputInputs 🥝🥝🥝', { timeParts });
+    // console.log('TimeInputInputs 🥝🥝🥝', { timeParts });
 
     /**
      * Creates time segments object
@@ -100,7 +100,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       },
     });
 
-    console.log('TimeInputInputs 🍉', { segments });
+    // console.log('TimeInputInputs 🍉', { segments });
 
     /**
      * Hook to manage the select unit

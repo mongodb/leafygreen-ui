@@ -84,49 +84,48 @@ export const useSelectUnit = ({
     const isValueValid = isValidDate(value);
     const shouldUpdate = isValueValid && !haveFormatChanged;
 
-    console.log('useSelectUnit > useEffect > 🥺', {
-      prevIs12HourFormat,
-      haveFormatChanged,
-      is12HourFormat,
-      dayPeriod,
-      isSameDate,
-      isSameTimeZone,
-      isSameDateAndTimeZone,
-    });
+    // console.log('useSelectUnit > useEffect > 🥺', {
+    //   prevIs12HourFormat,
+    //   haveFormatChanged,
+    //   is12HourFormat,
+    //   dayPeriod,
+    //   isSameDate,
+    //   isSameTimeZone,
+    //   isSameDateAndTimeZone,
+    // });
 
     // if is12hourFormat is true and hasFormChanged is true then update the select unit but don't call onUpdate because the unit didn't really change.
 
     // This should update the state but not call onUpdate because the unit didn't really change.
     if (haveFormatChanged) {
-      console.log('useSelectUnit > useEffect > haveFormatChanged  🥺🍎🌈');
+      // console.log('useSelectUnit > useEffect > haveFormatChanged  🥺🍎🌈');
       setSelectUnitState(findSelectUnit(dayPeriod, unitOptions));
     }
 
     // TODO: this is still firing when switching from 12 hour format to 24 hour format. IS this because of strictmode?
     // Only update the select unit if the value is valid. This way the previous valid value is not lost.
     if (shouldUpdate) {
-      console.log('useSelectUnit > useEffect > shouldUpdate check  🍎');
+      // console.log('useSelectUnit > useEffect > shouldUpdate check  🍎');
       const selectUnitOption = findSelectUnit(dayPeriod, unitOptions);
 
       const haveSelectUnitChanged = selectUnitOption !== selectUnitState;
 
       if (haveSelectUnitChanged) {
-        console.log('useSelectUnit > useEffect > haveSelectUnitChanged  🍎🌈');
+        // console.log('useSelectUnit > useEffect > haveSelectUnitChanged  🍎🌈');
         setSelectUnitState(selectUnitOption);
 
         // if the timezone has changed don't call onUpdate because presentation value has changes but the underlying value has not.
-        //TODO: this is still firing when the date is the same a WORK ON ME
         if (!isSameDate) {
-          console.log(
-            'useSelectUnit > useEffect > isSameDateAndTimeZone  👿👿👿',
-            {
-              isSameDateAndTimeZone,
-              value,
-              prevDate,
-              timeZone,
-              prevTimeZone,
-            },
-          );
+          // console.log(
+          //   'useSelectUnit > useEffect > isSameDateAndTimeZone  👿👿👿',
+          //   {
+          //     isSameDateAndTimeZone,
+          //     value,
+          //     prevDate,
+          //     timeZone,
+          //     prevTimeZone,
+          //   },
+          // );
           onUpdate?.(selectUnitOption, { ...selectUnitState });
         }
       }
@@ -146,18 +145,18 @@ export const useSelectUnit = ({
 
     const haveSelectUnitChanged = selectUnit !== selectUnitState;
 
-    console.log('setSelectUnit 🍌', {
-      selectUnit,
-      selectUnitState,
-      haveSelectUnitChanged,
-    });
+    // console.log('setSelectUnit 🍌', {
+    //   selectUnit,
+    //   selectUnitState,
+    //   haveSelectUnitChanged,
+    // });
 
     if (haveSelectUnitChanged) {
-      console.log('setSelectUnit > haveSelectUnitChanged  🍌🍌🍌', {
-        selectUnit,
-        selectUnitState,
-        haveSelectUnitChanged,
-      });
+      // console.log('setSelectUnit > haveSelectUnitChanged  🍌🍌🍌', {
+      //   selectUnit,
+      //   selectUnitState,
+      //   haveSelectUnitChanged,
+      // });
       onUpdate?.(selectUnit, { ...selectUnitState });
     }
   };
@@ -180,11 +179,11 @@ export const isSameUTCDayAndTime = (
     day1.getUTCSeconds() === day2.getUTCSeconds() &&
     day1.getUTCMilliseconds() === day2.getUTCMilliseconds();
 
-  console.log('isSameUTCDayAndTime 🪢🪢🪢', {
-    isSame,
-    day1,
-    day2,
-  });
+  // console.log('isSameUTCDayAndTime 🪢🪢🪢', {
+  //   isSame,
+  //   day1,
+  //   day2,
+  // });
 
   return isSame;
 };

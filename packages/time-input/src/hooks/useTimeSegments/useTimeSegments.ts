@@ -26,9 +26,15 @@ const timeSegmentsReducer = (
 
 // TODO: move this to a utils file
 const getFormattedTimeSegments = (segments: TimeSegmentsState) => {
-  const hour = getValueFormatter({ charsCount: 2 })(segments.hour);
-  const minute = getValueFormatter({ charsCount: 2 })(segments.minute);
-  const second = getValueFormatter({ charsCount: 2 })(segments.second);
+  const hour = getValueFormatter({ charsCount: 2, allowZero: true })(
+    segments.hour,
+  );
+  const minute = getValueFormatter({ charsCount: 2, allowZero: true })(
+    segments.minute,
+  );
+  const second = getValueFormatter({ charsCount: 2, allowZero: true })(
+    segments.second,
+  );
   return { hour, minute, second };
 };
 
@@ -88,26 +94,26 @@ export const useTimeSegments = ({
   useEffect(() => {
     const isDateValid = isValidDate(date);
     const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
-    const newSegments = getTimeSegmentsFromDate(date, locale, timeZone);
+    const newSegments = getTimeSegmentsFromDate(date, locale, timeZone); // TODO: this is being formatted to early?
     const haveSegmentsChanged = !isEqual(newSegments, segments);
 
-    console.log('useTimeSegments > useEffect > 🐡🐡🐡', {
-      date,
-      prevDate,
-      isDateValid,
-      haveSegmentsChanged,
-      segments,
-      newSegments,
-      hasDateAndTimeChanged,
-    });
+    // console.log('useTimeSegments > useEffect > 🐡🐡🐡', {
+    //   date,
+    //   prevDate,
+    //   isDateValid,
+    //   haveSegmentsChanged,
+    //   segments,
+    //   newSegments,
+    //   hasDateAndTimeChanged,
+    // });
 
     // if (isDateValid && haveSegmentsChanged && hasDateAndTimeChanged) {
     if (isDateValid && haveSegmentsChanged) {
       // const newSegments = getTimeSegmentsFromDate(date, locale, timeZone);
-      console.log('useTimeSegments > useEffect > newSegments  🦄', {
-        newSegments,
-        segments,
-      });
+      // console.log('useTimeSegments > useEffect > newSegments  🦄', {
+      //   newSegments,
+      //   segments,
+      // });
       // onUpdate?.(newSegments, { ...segments });
       // This means that segments have changed because the timezone or locale has changed but the date is the same so don't call onUpdate.
       dispatch(newSegments);
@@ -121,7 +127,7 @@ export const useTimeSegments = ({
   }, [date, locale, timeZone, segments, onUpdate]);
 
   const setSegment = (segment: TimeSegment, value: string) => {
-    console.log('useTimeSegments > setSegment 💬', { segment, value });
+    // console.log('useTimeSegments > setSegment 💬', { segment, value });
     const updateObject = { [segment]: value };
     // This returns a new state object with the updated segments
     const nextState = timeSegmentsReducer(segments, updateObject);

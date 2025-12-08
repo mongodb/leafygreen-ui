@@ -51,8 +51,14 @@ const meta: StoryMetaType<typeof TimeInput> = {
 export default meta;
 
 const Template: StoryFn<typeof TimeInput> = props => {
+  // const [value, setValue] = useState<DateType | undefined>(
+  //   new Date('1990-02-20T14:00:00Z'),
+  // );
+  // const [value, setValue] = useState<DateType | undefined>(
+  //   new Date('2022-03-13T06:00:00Z'),
+  // );
   const [value, setValue] = useState<DateType | undefined>(
-    new Date('1990-02-20T14:30:50Z'),
+    new Date('1990-02-20T04:00:00Z'),
   );
   // const [value, setValue] = useState<DateType | undefined>();
   // const [value, setValue] = useState<DateType | undefined>(
