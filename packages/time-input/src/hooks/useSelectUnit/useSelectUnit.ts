@@ -76,8 +76,9 @@ export const useSelectUnit = ({
     // if (prevIs12HourFormat !== is12HourFormat) {
     //   return;
     // }
-    const isSameDateAndTimeZone =
-      isSameUTCDayAndTime(value, prevDate) && prevTimeZone === timeZone;
+    const isSameTimeZone = prevTimeZone === timeZone;
+    const isSameDate = isSameUTCDayAndTime(value, prevDate);
+    const isSameDateAndTimeZone = isSameDate && isSameTimeZone;
 
     const haveFormatChanged = prevIs12HourFormat !== is12HourFormat;
     const isValueValid = isValidDate(value);
@@ -88,6 +89,8 @@ export const useSelectUnit = ({
       haveFormatChanged,
       is12HourFormat,
       dayPeriod,
+      isSameDate,
+      isSameTimeZone,
       isSameDateAndTimeZone,
     });
 
@@ -111,16 +114,19 @@ export const useSelectUnit = ({
         console.log('useSelectUnit > useEffect > haveSelectUnitChanged  🍎🌈');
         setSelectUnitState(selectUnitOption);
 
-        // if the timezone has changed don't call onUpdate because the unit didn't really change.
+        // if the timezone has changed don't call onUpdate because presentation value has changes but the underlying value has not.
         //TODO: this is still firing when the date is the same a WORK ON ME
-        if (!isSameDateAndTimeZone) {
-          console.log('useSelectUnit > useEffect > isSameDateAndTimeZone  👿', {
-            isSameDateAndTimeZone,
-            value,
-            prevDate,
-            timeZone,
-            prevTimeZone,
-          });
+        if (!isSameDate) {
+          console.log(
+            'useSelectUnit > useEffect > isSameDateAndTimeZone  👿👿👿',
+            {
+              isSameDateAndTimeZone,
+              value,
+              prevDate,
+              timeZone,
+              prevTimeZone,
+            },
+          );
           onUpdate?.(selectUnitOption, { ...selectUnitState });
         }
       }
@@ -165,13 +171,20 @@ export const isSameUTCDayAndTime = (
 ): boolean => {
   if (!isValidDate(day1) || !isValidDate(day2)) return false;
 
-  return (
+  const isSame =
     day1.getUTCDate() === day2.getUTCDate() &&
     day1.getUTCMonth() === day2.getUTCMonth() &&
     day1.getUTCFullYear() === day2.getUTCFullYear() &&
     day1.getUTCHours() === day2.getUTCHours() &&
     day1.getUTCMinutes() === day2.getUTCMinutes() &&
     day1.getUTCSeconds() === day2.getUTCSeconds() &&
-    day1.getUTCMilliseconds() === day2.getUTCMilliseconds()
-  );
+    day1.getUTCMilliseconds() === day2.getUTCMilliseconds();
+
+  console.log('isSameUTCDayAndTime 🪢🪢🪢', {
+    isSame,
+    day1,
+    day2,
+  });
+
+  return isSame;
 };

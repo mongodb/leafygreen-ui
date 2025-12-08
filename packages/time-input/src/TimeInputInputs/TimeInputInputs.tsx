@@ -113,9 +113,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       timeZone,
       options: {
         onUpdate: (newSelectUnit, prevSelectUnit) => {
-          console.log('TimeInputInputs > useSelectUnit > segments 🔆', {
-            segments,
-          });
           const convertedHour = convertHourTo24HourFormat(
             segments.hour,
             newSelectUnit.displayName,
@@ -130,6 +127,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           );
           const UtcTime = zonedTimeToUtc(newDate, timeZone);
           console.log('TimeInputInputs > useSelectUnit > onUpdate 🪼🪼🪼', {
+            segments,
             newSelectUnit,
             prevSelectUnit,
             is12HourFormat,
@@ -189,7 +187,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 TimeInputInputs.displayName = 'TimeInputInputs';
 
 const convertHourTo24HourFormat = (hour: string, dayPeriod: string) => {
-  console.log('convertHourTo24HourFormat 🐸🐸🐸', { hour, dayPeriod });
+  // console.log('convertHourTo24HourFormat 🐸🐸🐸', { hour, dayPeriod });
 
   if (hour === '') return hour;
 
