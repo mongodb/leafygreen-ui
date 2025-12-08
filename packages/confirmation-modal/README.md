@@ -76,3 +76,31 @@ function ExampleComponent() {
 | buttonText(`Deprecated`)     | `string`                | Text content of the confirmation button. `@deprecated` - use `confirmButtonProps` and pass the `children` property.                                                                                                                                                                                                                               |             |
 | submitDisabled(`Deprecated`) | `boolean`               | Determines if the submit button should appear as disabled `@deprecated` - use `confirmButtonProps` and pass the `disabled` property                                                                                                                                                                                                               | `false`     |
 | onCancel(`Deprecated`)       | `function`              | Callback that fires when the cancel button, x button, or backdrop is clicked. This can be used to set the modal to be closed. `@deprecated` - use `cancelButtonProps` and pass the `onClick` property                                                                                                                                             | `() => {}`  |
+
+## Testing Considerations
+
+The `ConfirmationModal` component uses the native `HTMLDialogElement` API for better accessibility and browser-native behavior. However, `JSDOM` (used by `Jest` and other test runners) does not fully support this API. You'll need to mock the `show`, `showModal`, and `close` methods in your test setup:
+
+```tsx
+beforeAll(() => {
+  HTMLDialogElement.prototype.show = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = true;
+  });
+
+  HTMLDialogElement.prototype.showModal = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = true;
+  });
+
+  HTMLDialogElement.prototype.close = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = false;
+  });
+});
+```
+
+This mock can be placed in a `beforeAll` block in your test file, or in a global test setup file.

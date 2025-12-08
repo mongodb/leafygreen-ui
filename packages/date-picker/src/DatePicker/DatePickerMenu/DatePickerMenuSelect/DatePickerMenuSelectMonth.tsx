@@ -1,6 +1,10 @@
 import React, { useCallback } from 'react';
 
-import { getLocaleMonths, setUTCMonth } from '@leafygreen-ui/date-utils';
+import {
+  getLocaleMonths,
+  getMonthName,
+  setUTCMonth,
+} from '@leafygreen-ui/date-utils';
 import { cx } from '@leafygreen-ui/emotion';
 import { Option, Select } from '@leafygreen-ui/select';
 
@@ -40,16 +44,18 @@ export const DatePickerMenuSelectMonth = ({
     updateMonth(newMonth);
   };
 
+  const monthString = getMonthName(month.getUTCMonth(), locale);
+
   return (
     <Select
       {...selectElementProps}
-      aria-label="select month"
+      aria-label={`Select month (${monthString.long} selected)`}
       value={month.getUTCMonth().toString()}
       onChange={handleMonthOnChange}
       className={cx(selectTruncateStyles, selectInputWidthStyles)}
       onEntered={() => setIsSelectOpen(true)}
       onExited={() => setIsSelectOpen(false)}
-      placeholder={monthOptions[month.getUTCMonth()].short}
+      placeholder={monthString.short}
     >
       {monthOptions.map((m, i) => (
         <Option

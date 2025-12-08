@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 17.0.9
+
+### Patch Changes
+
+- 26e5267: Deprecated clickable styling and functionality for Card component. Updated styles (removed shadows and added border) for Card component.
+
 ## 17.0.8
 
 ### Patch Changes
