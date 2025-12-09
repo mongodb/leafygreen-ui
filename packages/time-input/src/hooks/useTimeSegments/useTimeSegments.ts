@@ -94,7 +94,13 @@ export const useTimeSegments = ({
   useEffect(() => {
     const isDateValid = isValidDate(date);
     const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
-    const newSegments = getTimeSegmentsFromDate(date, locale, timeZone); // TODO: this is being formatted to early?
+    const newSegments = getTimeSegmentsFromDate(date, locale, timeZone);
+    const hasLocaleChanged = prevLocale !== locale;
+    const hasTimeZoneChanged = prevTimeZone !== timeZone;
+    console.log('useTimeSegments > useEffect > newSegments  🦄🦄🦄🦄', {
+      newSegments,
+      segments,
+    });
     const haveSegmentsChanged = !isEqual(newSegments, segments);
 
     // console.log('useTimeSegments > useEffect > 🐡🐡🐡', {
@@ -107,11 +113,8 @@ export const useTimeSegments = ({
     //   hasDateAndTimeChanged,
     // });
 
-    // if (isDateValid && haveSegmentsChanged && hasDateAndTimeChanged) {
     // TODO: maybe i don't need the haveSegmentsChanged because what if the date has changed but the segments are the same?
     if (isDateValid && haveSegmentsChanged) {
-      // TODO: maybe this should be if the date, timezone, or locale has changed?
-      // const newSegments = getTimeSegmentsFromDate(date, locale, timeZone);
       console.log('useTimeSegments > useEffect > newSegments  🦄', {
         newSegments,
         segments,
@@ -122,18 +125,24 @@ export const useTimeSegments = ({
       // the timezone or locale might have changed or
       // the segments have changed because the user has typed in a new value
 
-      // if the user has typed in a new value but the date is the same then do not update the segments here.
-      if (!hasDateAndTimeChanged) {
+      // if the user has typed in a new(ambiguous)value but the date is the same then do not update the segments here.
+      // This prevents the segments from changing when user is in the middle of typing an ambiguous value. We don't want to trigger an update because the value will pull from the stale date.
+      if (!hasDateAndTimeChanged && !hasLocaleChanged && !hasTimeZoneChanged) {
+        console.log(
+          'useTimeSegments > useEffect > !hasDateAndTimeChanged  ❌',
+          {
+            newSegments,
+            segments,
+          },
+        );
         return;
       }
       // if the timezone or locale has changed then update the segments here.
 
-      // onUpdate?.(newSegments, { ...segments });
       // This means that segments have changed because the timezone or locale has changed but the date might be the same so don't call onUpdate.
       dispatch(newSegments);
 
       // This means that segments have changed because the date is different so we should call onUpdate.
-      // TODO: what happens if the date is different but the segments are the same?
       if (hasDateAndTimeChanged) {
         onUpdate?.(newSegments, { ...segments });
       }

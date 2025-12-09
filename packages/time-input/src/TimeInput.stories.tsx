@@ -73,7 +73,7 @@ const Template: StoryFn<typeof TimeInput> = props => {
         setValue(time);
         console.log('onTimeChange 🦁🦁🦁', {
           time,
-          timeString: time?.toUTCString(),
+          utc: time?.toUTCString(),
         });
       }}
     />
