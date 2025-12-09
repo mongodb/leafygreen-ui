@@ -44,14 +44,11 @@ export const ReviewCardDescription = ({
       );
     case ReviewState.Loading:
       return (
-        <>
-          <Spinner
-            size={Size.XSmall}
-            // direction={'horizontal'}
-            // description={loadingDescription}
-          />
-          {loadingDescription}
-        </>
+        <Spinner
+          size={Size.XSmall}
+          direction={'horizontal'}
+          description={loadingDescription}
+        />
       );
     case ReviewState.Complete:
       return (
