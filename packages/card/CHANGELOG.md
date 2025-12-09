@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 13.3.0
+
+### Minor Changes
+
+- 26e5267: Deprecated clickable styling and functionality for Card component. Updated styles (removed shadows and added border) for Card component.
+
 ## 13.2.1
 
 ### Patch Changes
