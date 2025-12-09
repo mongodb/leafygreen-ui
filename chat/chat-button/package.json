@@ -28,9 +28,13 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/avatar": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
   },
   "peerDependencies": {
