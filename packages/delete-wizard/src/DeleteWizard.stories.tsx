@@ -53,7 +53,7 @@ export const LiveExample: StoryObj<typeof DeleteWizard> = {
       window.location.reload();
     };
 
-    const handleStepChange = step => {
+    const handleStepChange = (step: number) => {
       console.log('[STORYBOOK] step changed to ', step);
     };
 
