@@ -206,11 +206,13 @@ This repository uses [npm trusted publishing with OIDC](https://docs.npmjs.com/t
 When you create a new package, you must manually publish the first version:
 
 1. **Build the package**
+
    ```bash
    pnpm build --filter="<package-name>"
    ```
 
 2. **Publish to npm**
+
    ```bash
    cd <directory>/<package-name>
    npm publish --access public
