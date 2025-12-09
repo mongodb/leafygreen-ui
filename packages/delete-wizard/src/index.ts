@@ -4,3 +4,7 @@ export {
   useDeleteWizardContext,
   useDeleteWizardStepContext,
 } from './DeleteWizard';
+export {
+  RecommendationCard,
+  type RecommendationCardProps,
+} from './RecommendationCard';
