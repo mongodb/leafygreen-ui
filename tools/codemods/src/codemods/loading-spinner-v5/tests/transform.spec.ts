@@ -7,7 +7,7 @@ const tests = [
     name: 'replace-displayOption-with-size',
   },
   {
-    name: 'remove-description',
+    name: 'keep-description',
   },
   {
     name: 'combined-props',
@@ -17,6 +17,9 @@ const tests = [
   },
   {
     name: 'no-changes',
+  },
+  {
+    name: 'tree-shaken-import',
   },
 ];
 
