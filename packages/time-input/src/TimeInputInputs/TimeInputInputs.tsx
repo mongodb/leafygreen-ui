@@ -180,36 +180,104 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             segments.hour,
             newSelectUnit.displayName,
           );
-          const newDate = new Date(
-            Number(year),
-            Number(month) - 1,
-            Number(day),
-            Number(convertedHour),
-            Number(segments.minute),
-            Number(segments.second),
-          );
-          const UtcTime = zonedTimeToUtc(newDate, timeZone);
-          console.log('TimeInputInputs > useSelectUnit > onUpdate 🪼🪼🪼', {
+          // const newDate = new Date(
+          //   Number(year),
+          //   Number(month) - 1,
+          //   Number(day),
+          //   Number(convertedHour),
+          //   Number(segments.minute),
+          //   Number(segments.second),
+          // );
+          // const UtcTime = zonedTimeToUtc(newDate, timeZone);
+          // console.log('TimeInputInputs > useSelectUnit > onUpdate 🪼🪼🪼', {
+          //   segments,
+          //   newSelectUnit,
+          //   prevSelectUnit,
+          //   is12HourFormat,
+          //   date: {
+          //     day,
+          //     month,
+          //     year,
+          //     hour: segments.hour,
+          //     convertedHour,
+          //     minute: segments.minute,
+          //     second: segments.second,
+          //     dayPeriod: newSelectUnit.displayName,
+          //   },
+          //   UtcTime,
+          //   UtcTimeString: UtcTime.toUTCString(),
+          // });
+
+          // TODO: also both useTimeSegments and useSelectUnit should not call onUpdate when that happens.
+          // setValue(UtcTime);
+
+          const newDate = newDateFromSegments({
             segments,
-            newSelectUnit,
-            prevSelectUnit,
             is12HourFormat,
-            date: {
+            dateValues: {
               day,
               month,
               year,
-              hour: segments.hour,
-              convertedHour,
+              hour: convertedHour,
               minute: segments.minute,
               second: segments.second,
-              dayPeriod: newSelectUnit.displayName,
             },
-            UtcTime,
-            UtcTimeString: UtcTime.toUTCString(),
+            timeZone,
           });
 
-          // TODO: also both useTimeSegments and useSelectUnit should not call onUpdate when that happens.
-          setValue(UtcTime);
+          // console.log('TimeInputInputs > useTimeSegments > onUpdate 🍉🍉🍉', {
+          //   newSegments,
+          //   prevSegments,
+          //   selectUnit: selectUnit.displayName,
+          //   is12HourFormat,
+          //   date: {
+          //     day,
+          //     month,
+          //     year,
+          //     hour: newSegments.hour,
+          //     convertedHour,
+          //     minute: newSegments.minute,
+          //     second: newSegments.second,
+          //     dayPeriod: selectUnit.displayName,
+          //   },
+          //   newDate,
+          //   utcString: newDate?.toUTCString() ?? '',
+          // });
+
+          // TODO: need to check if all segments are explicit
+
+          const isNullDateCheck = isNull(newDate);
+          const isValidDateCheck = isValidDate(newDate);
+          const isEverySegmentValueExplicitCheck = isEverySegmentValueExplicit(
+            segments,
+            is12HourFormat,
+          );
+          const isInvalidDateObjectCheck = isInvalidDateObject(newDate);
+          const isEverySegmentFilledCheck = isEverySegmentFilled(segments);
+
+          const shouldSetValue =
+            isNullDateCheck ||
+            (isValidDateCheck && isEverySegmentValueExplicitCheck) ||
+            (isInvalidDateObjectCheck &&
+              (isDirty || isEverySegmentFilledCheck));
+
+          console.log(
+            '🥺🥺🥺 TimeInputInputs > useSelectUnit > onUpdate > shouldSetValue 🥺🥺🥺',
+            {
+              newDate,
+              segments,
+              shouldSetValue,
+              isNullDateCheck,
+              isValidDateCheck,
+              isEverySegmentValueExplicitCheck,
+              isInvalidDateObjectCheck,
+              isEverySegmentFilledCheck,
+            },
+          );
+
+          if (shouldSetValue) {
+            setValue(newDate);
+          }
         },
       },
     });
@@ -274,7 +342,7 @@ const convertHourTo24HourFormat = (hour: string, dayPeriod: string) => {
 const isEverySegmentFilled = (segments: TimeSegmentsState) => {
   const isEverySegmentFilled = Object.values(segments).every(segment => {
     const isEmpty = segment === '';
-    console.log('isEverySegmentFilled > isEmpty 🌼🌼🌼', { segment, isEmpty });
+    // console.log('isEverySegmentFilled > isEmpty 🌼🌼🌼', { segment, isEmpty });
     return !isEmpty;
   });
   // check if all segments are not empty
@@ -299,11 +367,11 @@ const isEverySegmentValid = (
       segmentEnum: TimeSegment,
     });
 
-    console.log('isEverySegmentValid > isValid 🍎🍎🍎', {
-      segment,
-      value,
-      isValid,
-    });
+    // console.log('isEverySegmentValid > isValid 🍎🍎🍎', {
+    //   segment,
+    //   value,
+    //   isValid,
+    // });
 
     return isValid;
   });
@@ -354,11 +422,11 @@ const newDateFromSegments = ({
   }
 
   if (!doesSomeSegmentExist(segments)) {
-    console.log('newDateFromSegments > !doesSomeSegmentExist  🍭🍭🍭');
+    // console.log('newDateFromSegments > !doesSomeSegmentExist  🍭🍭🍭');
     return null;
   }
 
-  console.log('newDateFromSegments > new Date("invalid")  🍭🍭🍭');
+  // console.log('newDateFromSegments > new Date("invalid")  🍭🍭🍭');
   return new Date('invalid');
 };
 
@@ -383,11 +451,11 @@ export const isEverySegmentValueExplicit = (
       allowZero: segment === TimeSegment.Hour ? !is12HourFormat : true,
     });
 
-    console.log('isEverySegmentValueExplicit > isExplicit 🍕🍕🍕', {
-      segment,
-      value,
-      isExplicit,
-    });
+    // console.log('isEverySegmentValueExplicit > isExplicit 🍕🍕🍕', {
+    //   segment,
+    //   value,
+    //   isExplicit,
+    // });
 
     return isExplicit;
   });
