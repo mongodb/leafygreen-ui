@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
+import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
 
 import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 interface UseSelectUnitReturn {
   selectUnit: UnitOption;
-  // setSelectUnit: React.Dispatch<React.SetStateAction<UnitOption>>;
   setSelectUnit: (selectUnit: UnitOption) => void;
 }
 
@@ -45,144 +44,63 @@ export const useSelectUnit = ({
   value,
   unitOptions,
   is12HourFormat,
-  timeZone,
   options: { onUpdate },
 }: {
   dayPeriod: string;
   value: DateType | undefined;
   unitOptions: Array<UnitOption>;
   is12HourFormat: boolean;
-  timeZone: string;
   options: UseSelectUnitOptions;
 }): UseSelectUnitReturn => {
   const selectUnitOption = findSelectUnit(dayPeriod, unitOptions);
   const [selectUnitState, setSelectUnitState] =
     useState<UnitOption>(selectUnitOption);
 
+  // Save the previous 12 hour format
   const prevIs12HourFormat = usePrevious(is12HourFormat);
-  // if the date is the same and so is the timezone, then don't trigger an update.
-  const prevDate = usePrevious(value);
-  const prevTimeZone = usePrevious(timeZone);
 
-  // if was previously 12 hour format, and then is now 24 hour format, don't trigger an update
-  // if was previously 24 hour format, and then is now 12 hour format, don't trigger an update
-
-  // useEffect(() => {
-  //   onUpdate?.(selectUnit, selectUnit);
-  // }, [selectUnit, onUpdate]);
-
+  // Update the select unit if the date, timeZone, or locale(12h/24h) changes
   useEffect(() => {
     // console.log('useEffect 🍎🍎🍎', { prevIs12HourFormat, is12HourFormat });
-    // if (prevIs12HourFormat !== is12HourFormat) {
-    //   return;
-    // }
-    const isSameTimeZone = prevTimeZone === timeZone;
-    const isSameDate = isSameUTCDayAndTime(value, prevDate);
-    const isSameDateAndTimeZone = isSameDate && isSameTimeZone;
 
-    const haveFormatChanged = prevIs12HourFormat !== is12HourFormat;
+    const hasFormatChanged = prevIs12HourFormat !== is12HourFormat;
     const isValueValid = isValidDate(value);
-    const shouldUpdate = isValueValid && !haveFormatChanged;
 
-    // console.log('useSelectUnit > useEffect > 🥺', {
-    //   prevIs12HourFormat,
-    //   haveFormatChanged,
-    //   is12HourFormat,
-    //   dayPeriod,
-    //   isSameDate,
-    //   isSameTimeZone,
-    //   isSameDateAndTimeZone,
-    // });
-
-    // if is12hourFormat is true and hasFormChanged is true then update the select unit but don't call onUpdate because the unit didn't really change.
-
-    // This should update the state but not call onUpdate because the unit didn't really change.
-    if (haveFormatChanged) {
-      // console.log('useSelectUnit > useEffect > haveFormatChanged  🥺🍎🌈');
-      setSelectUnitState(findSelectUnit(dayPeriod, unitOptions));
-    }
-
-    // Only update the select unit if the value is valid. This way the previous valid value is not lost.
-    if (shouldUpdate) {
-      // console.log('useSelectUnit > useEffect > shouldUpdate check  🍎');
+    /**
+     * Run this effect if the format has changed from 12h to 24h or 24h to 12h OR if the date is valid and the format is 12h.
+     *
+     * If the format has changed, the value doesn't matter if the format is 24h. This should update the state but not call onUpdate only the presentational format changed.
+     *
+     * If the date changes and is valid then update the select unit. The date could be new or the timeZone could have changed.
+     */
+    if (hasFormatChanged || (isValueValid && is12HourFormat)) {
+      // console.log('useSelectUnit > useEffect  🥺🍎🥺');
       const selectUnitOption = findSelectUnit(dayPeriod, unitOptions);
-
-      const haveSelectUnitChanged = selectUnitOption !== selectUnitState;
-
-      if (haveSelectUnitChanged) {
-        // console.log('useSelectUnit > useEffect > haveSelectUnitChanged  🍎🌈');
-        setSelectUnitState(selectUnitOption);
-
-        // if the timezone has changed don't call onUpdate because presentation value has changes but the underlying value has not.
-        if (!isSameDate) {
-          // console.log(
-          //   'useSelectUnit > useEffect > isSameDateAndTimeZone  👿👿👿',
-          //   {
-          //     isSameDateAndTimeZone,
-          //     value,
-          //     prevDate,
-          //     timeZone,
-          //     prevTimeZone,
-          //   },
-          // );
-          onUpdate?.(selectUnitOption, { ...selectUnitState });
-        }
-      }
+      setSelectUnitState(selectUnitOption);
     }
   }, [
     value,
     dayPeriod,
     unitOptions,
     setSelectUnitState,
-    onUpdate,
     prevIs12HourFormat,
     is12HourFormat,
   ]);
 
+  /**
+   * Set the select unit and call onUpdate callback if the select unit has changed.
+   *
+   * @param selectUnit - The select unit to set
+   */
   const setSelectUnit = (selectUnit: UnitOption) => {
     setSelectUnitState(selectUnit);
 
-    const haveSelectUnitChanged = selectUnit !== selectUnitState;
+    const hasSelectUnitChanged = selectUnit !== selectUnitState;
 
-    // console.log('setSelectUnit 🍌', {
-    //   selectUnit,
-    //   selectUnitState,
-    //   haveSelectUnitChanged,
-    // });
-
-    if (haveSelectUnitChanged) {
-      // console.log('setSelectUnit > haveSelectUnitChanged  🍌🍌🍌', {
-      //   selectUnit,
-      //   selectUnitState,
-      //   haveSelectUnitChanged,
-      // });
+    if (hasSelectUnitChanged) {
       onUpdate?.(selectUnit, { ...selectUnitState });
     }
   };
 
   return { selectUnit: selectUnitState, setSelectUnit };
-};
-
-export const isSameUTCDayAndTime = (
-  day1?: DateType,
-  day2?: DateType,
-): boolean => {
-  if (!isValidDate(day1) || !isValidDate(day2)) return false;
-
-  const isSame =
-    day1.getUTCDate() === day2.getUTCDate() &&
-    day1.getUTCMonth() === day2.getUTCMonth() &&
-    day1.getUTCFullYear() === day2.getUTCFullYear() &&
-    day1.getUTCHours() === day2.getUTCHours() &&
-    day1.getUTCMinutes() === day2.getUTCMinutes() &&
-    day1.getUTCSeconds() === day2.getUTCSeconds() &&
-    day1.getUTCMilliseconds() === day2.getUTCMilliseconds();
-
-  // console.log('isSameUTCDayAndTime 🪢🪢🪢', {
-  //   isSame,
-  //   day1,
-  //   day2,
-  // });
-
-  return isSame;
 };

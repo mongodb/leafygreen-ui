@@ -43,7 +43,6 @@ const getTimeSegmentsFromDate = (
   locale: LocaleString,
   timeZone: string,
 ): TimeSegmentsState => {
-  // TODO: format these so there is padding
   const { hour, minute, second } = getFormatPartsValues({
     locale,
     timeZone,
@@ -97,10 +96,10 @@ export const useTimeSegments = ({
     const newSegments = getTimeSegmentsFromDate(date, locale, timeZone);
     const hasLocaleChanged = prevLocale !== locale;
     const hasTimeZoneChanged = prevTimeZone !== timeZone;
-    console.log('useTimeSegments > useEffect > newSegments  🦄🦄🦄🦄', {
-      newSegments,
-      segments,
-    });
+    // console.log('useTimeSegments > useEffect > newSegments  🦄🦄🦄🦄', {
+    //   newSegments,
+    //   segments,
+    // });
     const haveSegmentsChanged = !isEqual(newSegments, segments);
 
     // console.log('useTimeSegments > useEffect > 🐡🐡🐡', {
