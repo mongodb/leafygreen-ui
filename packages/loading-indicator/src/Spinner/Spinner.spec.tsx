@@ -78,7 +78,7 @@ describe('packages/loading-spinner', () => {
       expect(svg).toHaveAttribute('role', 'img');
     });
 
-    test('merges svgProps className with internal className', () => {
+    test('passes className into svg', () => {
       render(<Spinner svgProps={{ className: 'svg-custom-class' }} />);
       const { getSpinner } = getTestUtils();
       const svg = getSpinner().querySelector('svg');

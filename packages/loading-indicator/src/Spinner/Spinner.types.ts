@@ -37,9 +37,10 @@ export interface SpinnerProps
   disableAnimation?: boolean;
 
   /**
-   * Description text to display alongside the spinner
+   * Description text to display alongside the spinner.
+   * Can be a string or ReactNode for more flexibility.
    */
-  description?: string;
+  description?: React.ReactNode;
 
   /**
    * Determines the position of the description text relative to the spinner.
