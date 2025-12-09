@@ -46,7 +46,7 @@ export const ReviewCardDescription = ({
       return (
         <>
           <Spinner
-            size={Size.Small}
+            size={Size.XSmall}
             // direction={'horizontal'}
             // description={loadingDescription}
           />
