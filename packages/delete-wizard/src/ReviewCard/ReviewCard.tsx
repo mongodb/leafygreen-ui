@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { Card } from '@leafygreen-ui/card';
 import { ExpandableCard } from '@leafygreen-ui/expandable-card';
+import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import {
   defaultCompleteDescription,
@@ -12,6 +14,7 @@ import {
 } from './constants';
 import {
   cardContentWrapperStyles,
+  descriptionBodyStyles,
   expandableCardContentStyles,
   reviewCardStyles,
 } from './ReviewCard.styles';
@@ -31,9 +34,24 @@ export const ReviewCard = ({
   children,
   ...rest
 }: ReviewCardProps) => {
+  if (state === ReviewState.Review) {
+    return (
+      <ExpandableCard
+        title={title}
+        description={description}
+        className={reviewCardStyles}
+        contentClassName={expandableCardContentStyles}
+        defaultOpen={false}
+        {...rest}
+      >
+        <div className={cardContentWrapperStyles}>{children}</div>
+      </ExpandableCard>
+    );
+  }
+
   return (
-    <ExpandableCard
-      title={
+    <Card className={reviewCardStyles}>
+      <Subtitle>
         <ReviewCardTitleElement
           state={state}
           title={title}
@@ -41,24 +59,18 @@ export const ReviewCard = ({
           loadingTitle={loadingTitle}
           errorTitle={errorTitle}
         />
-      }
-      description={
-        <ReviewCardDescription
-          state={state}
-          description={description}
-          completedDescription={completedDescription}
-          loadingDescription={loadingDescription}
-          errorDescription={errorDescription}
-        />
-      }
-      className={reviewCardStyles}
-      contentClassName={expandableCardContentStyles}
-      defaultOpen={false}
-      {...rest}
-    >
-      {state === ReviewState.Review && (
-        <div className={cardContentWrapperStyles}>{children}</div>
+      </Subtitle>
+      {description && (
+        <Body as="div" className={descriptionBodyStyles}>
+          <ReviewCardDescription
+            state={state}
+            description={description}
+            completedDescription={completedDescription}
+            loadingDescription={loadingDescription}
+            errorDescription={errorDescription}
+          />
+        </Body>
       )}
-    </ExpandableCard>
+    </Card>
   );
 };
