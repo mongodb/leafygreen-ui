@@ -254,7 +254,27 @@ Note: it's important to follow the kebab-casing convention described above.
 
 ### Initial Release
 
-The starting version in the generated `package.json` will be 0.0.1, but this will not be published to npm automatically. A new package is only published after its first changeset is added and the resulting "Version Packages" pull request is merged into the `main` branch.
+The starting version in the generated `package.json` will be 0.0.1, but this will not be published to npm automatically. **You must manually publish the first version** of your new package before the automated release workflow can take over.
+
+#### Why Manual First Publish?
+
+This repository uses [npm trusted publishing with OIDC](https://docs.npmjs.com/trusted-publishers) for secure, token-free publishing from GitHub Actions. However, trusted publishing requires the package to already exist on npm before it can be configured. This means:
+
+1. **You must publish the first version manually** using `npm publish` with your npm credentials
+2. **You must configure the trusted publisher** on npmjs.com after the initial publish
+
+#### Steps for Initial Release
+
+1. Build the package: `pnpm build --filter="<package-name>"`
+2. Navigate to the package directory: `cd <directory>/<package-name>`
+3. Publish the initial version: `npm publish --access public`
+4. Configure trusted publisher on npmjs.com:
+   - Go to your package's settings on [npmjs.com](https://www.npmjs.com)
+   - Navigate to "Settings" → "Trusted Publishers"
+   - Add a new trusted publisher with:
+     - **Repository**: `mongodb/leafygreen-ui`
+     - **Workflow**: `release.yml`
+5. Subsequent releases will be handled automatically via the "Version Packages" PR workflow
 
 Note: The `create-package` script automatically generates a starter changeset file. By default this is marked as a **minor** release, which will lead to an initial release of 0.1.0. If you'd like the initial release to be a **major** version (1.0.0), this starter changeset file must be manually edited.
 

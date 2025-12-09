@@ -197,6 +197,42 @@ If you want to stop publishing to and/or reading from your local Verdaccio serve
 - If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
 - Run `pnpm run init` to link all packages before starting development
 
+## Publishing a new package
+
+This repository uses [npm trusted publishing with OIDC](https://docs.npmjs.com/trusted-publishers) for secure automated releases. However, new packages require a manual first publish before automation can take over.
+
+### Initial Publish (Required for New Packages)
+
+When you create a new package, you must manually publish the first version:
+
+1. **Build the package**
+   ```bash
+   pnpm build --filter="<package-name>"
+   ```
+
+2. **Publish to npm**
+   ```bash
+   cd <directory>/<package-name>
+   npm publish --access public
+   ```
+
+3. **Configure trusted publisher** on [npmjs.com](https://www.npmjs.com):
+   - Navigate to your package → Settings → Trusted Publishers
+   - Add a trusted publisher:
+     - **Repository**: `mongodb/leafygreen-ui`
+     - **Workflow**: `release.yml`
+
+### Subsequent Releases
+
+After the initial publish and trusted publisher configuration, all future releases are handled automatically:
+
+1. Add a changeset: `pnpm changeset`
+2. Merge your PR to `main`
+3. The "Version Packages" PR will be created automatically
+4. Merge the "Version Packages" PR to publish to npm
+
+For more details on changesets and versioning, see the [README](./README.md#committing).
+
 ## Marking a Storybook story to be imported in mongodb.design
 
 The mongodb.design website will automatically import the `*.story.tsx` file from its installed package directory to render its live example. By default, the first exported story from the `*.story.tsx` file will be rendered. To specify a different story to be rendered, define the following in the Storybook file's Meta object:
