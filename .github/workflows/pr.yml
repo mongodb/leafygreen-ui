@@ -51,11 +51,11 @@ jobs:
             icon-dist-${{ github.ref }}-
 
       # Only setup & build if there was no build cache hit
-      - name: Use Node 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -99,10 +99,10 @@ jobs:
         with:
           version: 10.18.3
 
-      - name: Use Node 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -139,10 +139,10 @@ jobs:
         with:
           version: 10.18.3
 
-      - name: Use Node 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -188,10 +188,10 @@ jobs:
         with:
           version: 10.18.3
 
-      - name: Use Node 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -235,10 +235,10 @@ jobs:
         with:
           version: 10.18.3
 
-      - name: Use Node 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
