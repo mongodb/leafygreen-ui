@@ -1,16 +1,23 @@
 import React from 'react';
-import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { ChatButton, type ChatButtonProps } from '.';
+import { ChatButton, type ChatButtonProps, Size, Variant } from '.';
 
 const meta: StoryMetaType<typeof ChatButton> = {
   title: 'Composition/Chat/ChatButton',
   component: ChatButton,
   parameters: {
     default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        size: Object.values(Size),
+        variant: Object.values(Variant),
+      },
+    },
   },
   decorators: [
     (Story, context) => (
@@ -19,6 +26,27 @@ const meta: StoryMetaType<typeof ChatButton> = {
       </LeafyGreenProvider>
     ),
   ],
+  args: {
+    children: 'MongoDB Assistant',
+    variant: Variant.Default,
+  },
+  argTypes: {
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
+    disabled: {
+      control: { type: 'boolean' },
+    },
+    darkMode: storybookArgTypes.darkMode,
+    size: {
+      options: Object.values(Size),
+      control: { type: 'select' },
+      defaultValue: Size.Default,
+    },
+    variant: {
+      options: Object.values(Variant),
+      control: { type: 'select' },
+      defaultValue: Variant.Default,
+    },
+  },
 };
 export default meta;
 
@@ -31,4 +59,8 @@ export const LiveExample: StoryObj<ChatButtonProps> = {
       disableSnapshot: true,
     },
   },
+};
+
+export const Generated: StoryObj<ChatButtonProps> = {
+  render: () => <></>,
 };

@@ -10,16 +10,28 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../../packages/avatar"
+    },
+    {
       "path": "../../packages/button"
     },
     {
       "path": "../../packages/emotion"
     },
     {
+      "path": "../../packages/icon"
+    },
+    {
       "path": "../../packages/leafygreen-provider"
     },
     {
       "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/palette"
+    },
+    {
+      "path": "../../packages/tokens"
     },
     {
       "path": "../../tools/test-harnesses"

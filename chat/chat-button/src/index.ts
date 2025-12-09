@@ -1,1 +1,1 @@
-export { ChatButton, type ChatButtonProps } from './ChatButton';
+export { ChatButton, type ChatButtonProps, Size, Variant } from './ChatButton';
