@@ -6,7 +6,7 @@ import { Link } from '@leafygreen-ui/typography';
 import { RecommendationCard } from './RecommendationCard';
 
 export default {
-  title: 'Templates/DeleteWizard/RecommendedActionCard',
+  title: 'Templates/DeleteWizard/RecommendationCard',
   component: RecommendationCard,
   args: {
     category: 'Things',

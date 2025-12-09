@@ -1686,9 +1686,15 @@ importers:
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../icon
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@leafygreen-ui/loading-indicator':
+        specifier: workspace:^
+        version: link:../loading-indicator
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
