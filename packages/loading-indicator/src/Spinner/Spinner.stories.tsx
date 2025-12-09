@@ -4,6 +4,7 @@ import { StoryObj } from '@storybook/react';
 
 import { Size } from '@leafygreen-ui/tokens';
 
+import { SpinnerDirection } from './Spinner.types';
 import { Spinner } from '.';
 
 export default {
@@ -20,14 +21,47 @@ export default {
     colorOverride: {
       control: 'color',
     },
+    description: {
+      control: 'text',
+    },
+    direction: {
+      control: 'select',
+      options: Object.values(SpinnerDirection),
+    },
   },
   args: {
     size: Size.Default,
+    direction: SpinnerDirection.Vertical,
   },
 } satisfies StoryMetaType<typeof Spinner>;
 
 export const LiveExample: StoryObj<typeof Spinner> = {
   render: args => <Spinner {...args} />,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+
+export const WithDescription: StoryObj<typeof Spinner> = {
+  render: args => <Spinner {...args} />,
+  args: {
+    description: 'Loading...',
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+
+export const HorizontalDirection: StoryObj<typeof Spinner> = {
+  render: args => <Spinner {...args} />,
+  args: {
+    description: 'Loading...',
+    direction: SpinnerDirection.Horizontal,
+  },
   parameters: {
     chromatic: {
       disableSnapshot: true,
@@ -46,7 +80,15 @@ export const Generated: StoryObj<typeof Spinner> = {
         darkMode: [false, true],
         size: [...Object.values(Size), 87],
         colorOverride: [undefined, '#f00'],
+        description: [undefined, 'Loading...'],
+        direction: Object.values(SpinnerDirection),
       },
+      excludeCombinations: [
+        {
+          description: undefined,
+          direction: SpinnerDirection.Horizontal,
+        },
+      ],
     },
   },
 };
