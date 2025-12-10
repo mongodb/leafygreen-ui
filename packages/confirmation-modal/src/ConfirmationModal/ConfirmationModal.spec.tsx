@@ -6,7 +6,7 @@ import { axe } from 'jest-axe';
 import { getLgIds as getLgModalIds } from '@leafygreen-ui/modal';
 
 import { getLgIds } from '..';
-import ConfirmationModal from '..';
+import { ConfirmationModal } from '..';
 
 const lgIds = getLgIds();
 
@@ -110,7 +110,7 @@ describe('packages/confirmation-modal', () => {
     });
 
     // TODO: remove - buttonText is deprecated
-    test('overrides "confirmButtonProps"', () => {
+    test('overrides deprecated "buttonText" with "confirmButtonProps"', () => {
       const { getByText } = renderModal({
         open: true,
         buttonText: 'custom button text',
@@ -200,6 +200,72 @@ describe('packages/confirmation-modal', () => {
       userEvent.click(button);
       expect(confirmSpy).not.toHaveBeenCalled();
       expect(cancelSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('closes modal when `handleClose` sets state to false', async () => {
+      const confirmSpy = jest.fn();
+      const handleCloseSpy = jest.fn((_e?: MouseEvent | KeyboardEvent) => {});
+
+      const TestWrapper = () => {
+        const [open, setOpen] = useState(true);
+
+        const handleClose = (e?: MouseEvent | KeyboardEvent) => {
+          handleCloseSpy(e);
+          setOpen(false);
+        };
+
+        return (
+          <ConfirmationModal
+            title="Title text"
+            buttonText="Confirm"
+            open={open}
+            onConfirm={confirmSpy}
+            cancelButtonProps={{
+              onClick: handleClose,
+            }}
+          >
+            Content text
+          </ConfirmationModal>
+        );
+      };
+
+      const { getByText, getByRole } = render(<TestWrapper />);
+
+      const button = getByText('Cancel');
+      const modal = getByRole('dialog');
+      expect(button).toBeVisible();
+      expect(modal).toBeVisible();
+
+      // Click the button - the event is not passed to the `onCancel` callback
+      // but we verify the function is called
+      userEvent.click(button);
+      expect(confirmSpy).not.toHaveBeenCalled();
+      expect(handleCloseSpy).toHaveBeenCalledTimes(1);
+      expect(handleCloseSpy).toHaveBeenCalledWith(undefined);
+
+      // Verify that the function signature accepts MouseEvent by calling it directly
+      const mockMouseEvent = new MouseEvent('click', { bubbles: true });
+      handleCloseSpy.mockClear();
+      handleCloseSpy(mockMouseEvent);
+      expect(handleCloseSpy).toHaveBeenCalledWith(mockMouseEvent);
+
+      await waitFor(() => expect(modal).not.toBeVisible());
+    });
+  });
+
+  describe('button id props', () => {
+    test('propagates to the buttons', () => {
+      const { getByText } = renderModal({
+        open: true,
+        confirmButtonProps: { id: 'my-confirm-btn', children: 'Confirm' },
+        cancelButtonProps: { id: 'my-cancel-btn' },
+      });
+
+      const confirmButton = getByText('Confirm').closest('button');
+      expect(confirmButton).toHaveAttribute('id', 'my-confirm-btn');
+
+      const cancelButton = getByText('Cancel').closest('button');
+      expect(cancelButton).toHaveAttribute('id', 'my-cancel-btn');
     });
   });
 
@@ -581,6 +647,29 @@ describe('packages/confirmation-modal', () => {
           variant: 'primary',
           disabled: true,
           isLoading: true,
+        }}
+      >
+        Hey
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        title="Title text"
+        cancelButtonProps={{
+          variant: 'primary',
+          disabled: true,
+          id: 'my-cancel-btn',
+        }}
+      >
+        Hey
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        title="Title text"
+        // @ts-expect-error - href is not valid on a button
+        href="https://mongodb.design"
+        cancelButtonProps={{
+          variant: 'primary',
+          disabled: true,
         }}
       >
         Hey
