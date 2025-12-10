@@ -145,9 +145,9 @@ const darkModeTextColors = {
     [InteractionState.Focus]: blue.light3,
   },
   [Variant.Placeholder]: {
-    [InteractionState.Default]: gray.dark1,
-    [InteractionState.Hover]: gray.dark1,
-    [InteractionState.Focus]: gray.dark1,
+    [InteractionState.Default]: gray.light1,
+    [InteractionState.Hover]: gray.light1,
+    [InteractionState.Focus]: gray.light1,
   },
   [Variant.Secondary]: {
     [InteractionState.Default]: gray.light1,
