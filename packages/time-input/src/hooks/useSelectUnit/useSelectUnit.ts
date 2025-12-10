@@ -4,6 +4,7 @@ import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
+import { findUnitOptionByDayPeriod } from '../../utils';
 
 interface UseSelectUnitReturn {
   selectUnit: UnitOption;
@@ -13,23 +14,6 @@ interface UseSelectUnitReturn {
 interface UseSelectUnitOptions {
   onUpdate: (newSelectUnit: UnitOption, prevSelectUnit?: UnitOption) => void;
 }
-
-/**
- * Finds the select unit option based on the day period.
- *
- * @param dayPeriod - The day period to use for the select unit.
- * @param unitOptions - The valid unit options to use for the select unit.
- * @returns The select unit option.
- */
-const findSelectUnit = (
-  dayPeriod: string,
-  unitOptions: Array<UnitOption>,
-): UnitOption => {
-  const selectUnitOption = unitOptions.find(
-    option => option.displayName === dayPeriod,
-  ) as UnitOption;
-  return selectUnitOption;
-};
 
 /**
  * Hook to manage the select unit.
@@ -52,16 +36,23 @@ export const useSelectUnit = ({
   is12HourFormat: boolean;
   options: UseSelectUnitOptions;
 }): UseSelectUnitReturn => {
-  const selectUnitOption = findSelectUnit(dayPeriod, unitOptions);
-  const [selectUnitState, setSelectUnitState] =
-    useState<UnitOption>(selectUnitOption);
+  const initialSelectUnitOption = findUnitOptionByDayPeriod(
+    dayPeriod,
+    unitOptions,
+  );
+  const [selectUnitState, setSelectUnitState] = useState<UnitOption>(
+    initialSelectUnitOption,
+  );
 
   // Save the previous 12 hour format
   const prevIs12HourFormat = usePrevious(is12HourFormat);
 
   // Update the select unit if the date, timeZone, or locale(12h/24h) changes
   useEffect(() => {
-    // console.log('useEffect 🍎🍎🍎', { prevIs12HourFormat, is12HourFormat });
+    console.log('useSelectUnit > useEffect 🧼🧼🧼', {
+      prevIs12HourFormat,
+      is12HourFormat,
+    });
 
     const hasFormatChanged = prevIs12HourFormat !== is12HourFormat;
     const isValueValid = isValidDate(value);
@@ -71,11 +62,14 @@ export const useSelectUnit = ({
      *
      * If the format has changed, the value doesn't matter if the format is 24h. This should update the state but not call onUpdate only the presentational format changed.
      *
-     * If the date changes and is valid then update the select unit. The date could be new or the timeZone could have changed.
+     * If the format has changed OR if the timeZone has changed then update the select unit.
      */
     if (hasFormatChanged || (isValueValid && is12HourFormat)) {
-      // console.log('useSelectUnit > useEffect  🥺🍎🥺');
-      const selectUnitOption = findSelectUnit(dayPeriod, unitOptions);
+      console.log('useSelectUnit > useEffect  🥺🍎🥺');
+      const selectUnitOption = findUnitOptionByDayPeriod(
+        dayPeriod,
+        unitOptions,
+      );
       setSelectUnitState(selectUnitOption);
     }
   }, [
@@ -94,6 +88,7 @@ export const useSelectUnit = ({
    */
   const setSelectUnit = (selectUnit: UnitOption) => {
     setSelectUnitState(selectUnit);
+    console.log('useSelectUnit > setSelectUnit 🥝🥝🥝', { selectUnit });
 
     const hasSelectUnitChanged = selectUnit !== selectUnitState;
 

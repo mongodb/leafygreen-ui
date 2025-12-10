@@ -3,10 +3,12 @@ import isEqual from 'lodash/isEqual';
 
 import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
-import { getValueFormatter } from '@leafygreen-ui/input-box';
 
 import { TimeSegment, TimeSegmentsState } from '../../shared.types';
-import { getFormatPartsValues } from '../../utils/getFormatPartsValues/getFormatPartsValues';
+import {
+  getFormattedTimeSegmentsFromDate,
+  isSameUTCDayAndTime,
+} from '../../utils';
 
 interface UseTimeSegmentsOptions {
   onUpdate: (
@@ -26,51 +28,11 @@ const timeSegmentsReducer = (
   return state;
 };
 
-// TODO: move this to a utils file
-const getFormattedTimeSegments = (segments: TimeSegmentsState) => {
-  const hour = getValueFormatter({ charsCount: 2, allowZero: true })(
-    segments.hour,
-  );
-  const minute = getValueFormatter({ charsCount: 2, allowZero: true })(
-    segments.minute,
-  );
-  const second = getValueFormatter({ charsCount: 2, allowZero: true })(
-    segments.second,
-  );
-  return { hour, minute, second };
-};
-
-const getTimeSegmentsFromDate = (
-  date: DateType,
-  locale: LocaleString,
-  timeZone: string,
-): TimeSegmentsState => {
-  const { hour, minute, second } = getFormatPartsValues({
-    locale,
-    timeZone,
-    value: date,
-  });
-
-  return getFormattedTimeSegments({ hour, minute, second });
-};
-
-export const isSameUTCDayAndTime = (
-  day1?: DateType,
-  day2?: DateType,
-): boolean => {
-  if (!isValidDate(day1) || !isValidDate(day2)) return false;
-
-  return (
-    day1.getUTCDate() === day2.getUTCDate() &&
-    day1.getUTCMonth() === day2.getUTCMonth() &&
-    day1.getUTCFullYear() === day2.getUTCFullYear() &&
-    day1.getUTCHours() === day2.getUTCHours() &&
-    day1.getUTCMinutes() === day2.getUTCMinutes() &&
-    day1.getUTCSeconds() === day2.getUTCSeconds() &&
-    day1.getUTCMilliseconds() === day2.getUTCMilliseconds()
-  );
-};
-
+/**
+ * Returns an object with all 3 time segments, and a setter function
+ *
+ * Returned segments are relative to the formatter time zone
+ */
 export const useTimeSegments = ({
   date = null,
   locale,
@@ -83,7 +45,7 @@ export const useTimeSegments = ({
   options: UseTimeSegmentsOptions;
 }) => {
   const [segments, dispatch] = useReducer(timeSegmentsReducer, date, date =>
-    getTimeSegmentsFromDate(date, locale, timeZone),
+    getFormattedTimeSegmentsFromDate(date, locale, timeZone),
   );
   const prevDate = usePrevious(date);
   const prevLocale = usePrevious(locale);
@@ -102,7 +64,11 @@ export const useTimeSegments = ({
   useEffect(() => {
     const isDateValid = isValidDate(date);
     const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
-    const newSegments = getTimeSegmentsFromDate(date, locale, timeZone);
+    const newSegments = getFormattedTimeSegmentsFromDate(
+      date,
+      locale,
+      timeZone,
+    );
     const hasLocaleChanged = prevLocale !== locale;
     const hasTimeZoneChanged = prevTimeZone !== timeZone;
 
@@ -159,6 +125,12 @@ export const useTimeSegments = ({
     prevTimeZone,
   ]);
 
+  /**
+   * Sets a segment value. Is called when the user types in a new value.
+   *
+   * @param segment - The segment to set
+   * @param value - The value to set
+   */
   const setSegment = (segment: TimeSegment, value: string) => {
     console.log('useTimeSegments > setSegment 💬', { segment, value });
     const updateObject = { [segment]: value };
