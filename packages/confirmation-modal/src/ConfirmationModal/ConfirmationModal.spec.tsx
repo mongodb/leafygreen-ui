@@ -651,6 +651,29 @@ describe('packages/confirmation-modal', () => {
       >
         Hey
       </ConfirmationModal>
+
+      <ConfirmationModal
+        title="Title text"
+        cancelButtonProps={{
+          variant: 'primary',
+          disabled: true,
+          id: 'my-cancel-btn',
+        }}
+      >
+        Hey
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        title="Title text"
+        // @ts-expect-error - href is not valid on a button
+        href="https://mongodb.design"
+        cancelButtonProps={{
+          variant: 'primary',
+          disabled: true,
+        }}
+      >
+        Hey
+      </ConfirmationModal>
     </>;
   });
 });
