@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -238,7 +238,7 @@ describe('packages/confirmation-modal', () => {
 
       // Click the button - the component's handleCancel doesn't pass the event,
       // but we verify the function is called
-      fireEvent.click(button);
+      userEvent.click(button);
       expect(confirmSpy).not.toHaveBeenCalled();
       expect(handleCloseSpy).toHaveBeenCalledTimes(1);
       expect(handleCloseSpy).toHaveBeenCalledWith(undefined);
@@ -266,46 +266,6 @@ describe('packages/confirmation-modal', () => {
 
       const cancelButton = getByText('Cancel').closest('button');
       expect(cancelButton).toHaveAttribute('id', 'my-cancel-btn');
-    });
-  });
-
-  describe('custom  button onClick props', () => {
-    test('fires `onClick` when button is clicked', async () => {
-      const confirmSpy = jest.fn();
-
-      const TestWrapper = () => {
-        const [open, setOpen] = useState(true);
-
-        const handleClose = (_e?: MouseEvent | KeyboardEvent) => {
-          setOpen(false);
-        };
-
-        return (
-          <ConfirmationModal
-            title="Title text"
-            buttonText="Confirm"
-            open={open}
-            onConfirm={confirmSpy}
-            cancelButtonProps={{
-              onClick: handleClose,
-            }}
-          >
-            Content text
-          </ConfirmationModal>
-        );
-      };
-
-      const { getByText, getByRole } = render(<TestWrapper />);
-
-      const button = getByText('Cancel');
-      const modal = getByRole('dialog');
-      expect(button).toBeVisible();
-      expect(modal).toBeVisible();
-
-      userEvent.click(button);
-      expect(confirmSpy).not.toHaveBeenCalled();
-
-      await waitFor(() => expect(modal).not.toBeVisible());
     });
   });
 

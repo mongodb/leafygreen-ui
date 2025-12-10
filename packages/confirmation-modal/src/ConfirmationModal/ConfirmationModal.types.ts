@@ -13,17 +13,14 @@ interface CustomButtonOnClick {
 }
 
 // Exclude anchor types (where href is required) to ensure buttons render as buttons
-type ButtonOnlyProps = Exclude<ButtonProps<'button'>, { href: string }>;
+type ButtonOnlyProps = Omit<
+  Exclude<ButtonProps<'button'>, { href: string }>,
+  'onClick' | 'as'
+>;
 
-type CustomConfirmButtonProps = Omit<
-  ButtonOnlyProps,
-  'as' | 'variant' | 'onClick'
-> &
+type CustomConfirmButtonProps = Omit<ButtonOnlyProps, 'variant'> &
   CustomButtonOnClick;
-type CustomCancelButtonProps = Omit<
-  ButtonOnlyProps,
-  'as' | 'onClick' | 'children'
-> &
+type CustomCancelButtonProps = Omit<ButtonOnlyProps, 'children'> &
   CustomButtonOnClick;
 
 export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
