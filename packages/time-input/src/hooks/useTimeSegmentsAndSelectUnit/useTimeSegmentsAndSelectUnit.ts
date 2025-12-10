@@ -18,7 +18,7 @@ import {
   Action,
   UseTimeSegmentsOptions,
   ActionKind,
-} from './useTimeSegmentsAndSelect.types';
+} from './useTimeSegmentsAndSelectUnit.types';
 
 /**
  * Reducer for the useTimeSegmentsAndSelect hook

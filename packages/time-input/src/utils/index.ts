@@ -10,3 +10,4 @@ export { getFormattedTimeSegments } from './getFormattedTimeSegments/getFormatte
 export { isSameUTCDayAndTime } from './isSameUTCDayAndTime/isSameUTCDayAndTime';
 export { getFormattedTimeSegmentsFromDate } from './getFormattedTimeSegmentsFromDate/getFormattedTimeSegmentsFromDate';
 export { findUnitOptionByDayPeriod } from './findUnitOptionByDayPeriod/findUnitOptionByDayPeriod';
+export { getNewUTCDateFromSegments } from './getNewUTCDateFromSegments/getNewUTCDateFromSegments';

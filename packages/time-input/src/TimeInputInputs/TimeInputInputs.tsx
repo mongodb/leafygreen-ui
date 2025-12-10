@@ -1,5 +1,4 @@
 import React, { forwardRef, useEffect } from 'react';
-import { zonedTimeToUtc } from 'date-fns-tz';
 import isNull from 'lodash/isNull';
 
 import {
@@ -9,11 +8,8 @@ import {
   isValidDate,
 } from '@leafygreen-ui/date-utils';
 
-import { unitOptions } from '../constants';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
-import { useSelectUnit } from '../hooks';
-import { useTimeSegments } from '../hooks/useTimeSegments';
 import { TimeSegmentsState } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
@@ -21,16 +17,15 @@ import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
 import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 import {
   convert12hTo24h,
-  doesSomeSegmentExist,
   getFormatPartsValues,
+  getNewUTCDateFromSegments,
   isEverySegmentFilled,
-  isEverySegmentValid,
   isEverySegmentValueExplicit,
 } from '../utils';
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
-import { useTimeSegmentsAndSelectUnit } from '../hooks/useTimeSegmentsAndSelect/useTimeSegmentsAndSelect';
+import { useTimeSegmentsAndSelectUnit } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit';
 
 /**
  * @internal
@@ -41,7 +36,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       useTimeInputDisplayContext();
     const { value, setValue } = useTimeInputContext();
 
-    /** if the value is a `Date` the component is dirty */
+    /** if the value is a `Date` the component is dirty, meaning the component has been interacted with */
     useEffect(() => {
       if (isDateObject(value) && !isDirty) {
         setIsDirty(true);
@@ -59,16 +54,17 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
     /**
      * Gets the time parts from the value
      */
-    const timeParts = getFormatPartsValues({
+    const { month, day, year } = getFormatPartsValues({
       locale: locale,
       timeZone: timeZone,
       value: value,
     });
 
-    const { dayPeriod, month, day, year } = timeParts;
-
     // console.log('TimeInputInputs 🥝🥝🥝', { timeParts });
 
+    /**
+     * Hook to manage the time segments and select unit
+     */
     const { segments, setSegment, setSelectUnit, selectUnit } =
       useTimeSegmentsAndSelectUnit({
         date: value,
@@ -82,23 +78,16 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             newSelectUnit,
             prevSelectUnit,
           }) => {
-            const convertedHour = convert12hTo24h(
-              newSegments.hour,
-              newSelectUnit.displayName,
-            );
-
-            const newDate = newDateFromSegments({
+            const newDate = getNewUTCDateFromSegments({
               segments: newSegments,
               is12HourFormat,
               dateValues: {
                 day,
                 month,
                 year,
-                hour: convertedHour,
-                minute: newSegments.minute,
-                second: newSegments.second,
               },
               timeZone,
+              dayPeriod: newSelectUnit.displayName,
             });
 
             const shouldSetNewValue = shouldSetValue(
@@ -131,77 +120,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       segments,
       selectUnit,
     });
-
-    /**
-     * Hook to manage the select unit
-     */
-    // const { selectUnit, setSelectUnit } = useSelectUnit({
-    //   dayPeriod,
-    //   value,
-    //   unitOptions,
-    //   is12HourFormat,
-    //   options: {
-    //     onUpdate: (newSelectUnit, prevSelectUnit) => {
-    //       const convertedHour = convert12hTo24h(
-    //         segments.hour,
-    //         newSelectUnit.displayName,
-    //       );
-
-    //       const newDate = newDateFromSegments({
-    //         segments,
-    //         is12HourFormat,
-    //         dateValues: {
-    //           day,
-    //           month,
-    //           year,
-    //           hour: convertedHour,
-    //           minute: segments.minute,
-    //           second: segments.second,
-    //         },
-    //         timeZone,
-    //       });
-
-    //       // console.log('TimeInputInputs > useTimeSegments > onUpdate 🍉🍉🍉', {
-    //       //   newSegments,
-    //       //   prevSegments,
-    //       //   selectUnit: selectUnit.displayName,
-    //       //   is12HourFormat,
-    //       //   date: {
-    //       //     day,
-    //       //     month,
-    //       //     year,
-    //       //     hour: newSegments.hour,
-    //       //     convertedHour,
-    //       //     minute: newSegments.minute,
-    //       //     second: newSegments.second,
-    //       //     dayPeriod: selectUnit.displayName,
-    //       //   },
-    //       //   newDate,
-    //       //   utcString: newDate?.toUTCString() ?? '',
-    //       // });
-
-    //       const shouldSetNewValue = shouldSetValue(
-    //         newDate,
-    //         isDirty,
-    //         segments,
-    //         is12HourFormat,
-    //       );
-
-    //       console.log(
-    //         '🥺🥺🥺 TimeInputInputs > useSelectUnit > onUpdate > shouldSetValue 🥺🥺🥺',
-    //         {
-    //           newDate,
-    //           segments,
-    //           shouldSetNewValue,
-    //         },
-    //       );
-
-    //       if (shouldSetNewValue) {
-    //         setValue(newDate);
-    //       }
-    //     },
-    //   },
-    // });
 
     // // eslint-disable-next-line no-console
     // console.log('TimeInputInputs 🍉', {
@@ -237,107 +155,43 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 
 TimeInputInputs.displayName = 'TimeInputInputs';
 
+/**
+ * Checks if the new date should be set.
+ *
+ * @param newDate - The new date to check
+ * @param isDirty - Whether the component is dirty
+ * @param segments - The segments to check
+ * @param is12HourFormat - Whether the time is in 12 hour format
+ * @returns Whether the new date should be set
+ */
 const shouldSetValue = (
   newDate: DateType,
   isDirty: boolean,
   segments: TimeSegmentsState,
   is12HourFormat: boolean,
-) => {
-  const isNullDateCheck = isNull(newDate);
-  const isValidDateCheck = isValidDate(newDate);
-  const isEverySegmentValueExplicitCheck = isEverySegmentValueExplicit({
-    segments,
-    is12HourFormat,
-  });
-  const isInvalidDateObjectCheck = isInvalidDateObject(newDate);
-  const isEverySegmentFilledCheck = isEverySegmentFilled(segments);
+): boolean => {
+  // If the date is valid and all segments are explicit, then the value should be set.
+  const isValidDateAndSegmentsAreExplicit =
+    isValidDate(newDate) &&
+    isEverySegmentValueExplicit({
+      segments,
+      is12HourFormat,
+    });
+
+  // If the date is invalid and the component is dirty, it means the user has interacted with the component and the value should be set.
+  // If the date is invalid and every segment is filled, then the value should be set.
+  const isInvalidDateObjectAndDirty =
+    isInvalidDateObject(newDate) && (isDirty || isEverySegmentFilled(segments));
 
   const shouldSetValue =
-    isNullDateCheck ||
-    (isValidDateCheck && isEverySegmentValueExplicitCheck) ||
-    (isInvalidDateObjectCheck && (isDirty || isEverySegmentFilledCheck));
+    isNull(newDate) ||
+    isValidDateAndSegmentsAreExplicit ||
+    isInvalidDateObjectAndDirty;
 
   return shouldSetValue;
-};
-
-/**
- * Creates a new date object in UTC from the segments.
- *
- * @param segments - The segments to create the date from
- * @param is12HourFormat - Whether the time is in 12 hour format
- * @param dateValues - The date values to create the date from
- * @param timeZone - The time zone to create the date in
- * @returns The either a new date object in UTC, null, or an invalid date object
- */
-const newDateFromSegments = ({
-  segments,
-  is12HourFormat,
-  dateValues,
-  timeZone,
-}: {
-  segments: TimeSegmentsState;
-  is12HourFormat: boolean;
-  timeZone: string;
-  dateValues: {
-    day: string;
-    month: string;
-    year: string;
-    hour: string;
-    minute: string;
-    second: string;
-  };
-}) => {
-  const { day, month, year, hour, minute, second } = dateValues;
-
-  /**
-   * Check if all segments are filled and valid. If they are, return the UTC date.
-   */
-  if (
-    isEverySegmentFilled(segments) &&
-    isEverySegmentValid({ segments, is12HourFormat })
-  ) {
-    /**
-     * Create a new local date object with the date values
-     */
-    const newDate = new Date(
-      Number(year),
-      Number(month) - 1,
-      Number(day),
-      Number(hour),
-      Number(minute),
-      Number(second),
-    );
-
-    /**
-     * Convert the new date object to UTC.
-     *
-     * This takes the local date created above and converts it to UTC using the `zonedTimeToUtc` helper function.
-     */
-    const utcTime = zonedTimeToUtc(newDate, timeZone);
-    console.log(
-      'newDateFromSegments > isEverySegmentFilled && isEverySegmentValid  🍭🍭🍭',
-      { utcTime },
-    );
-
-    return utcTime;
-  }
-
-  /**
-   * Check if any segments are filled. If not, return null. This means all segments are empty.
-   */
-  if (!doesSomeSegmentExist(segments)) {
-    // console.log('newDateFromSegments > !doesSomeSegmentExist  🍭🍭🍭');
-    return null;
-  }
-
-  // console.log('newDateFromSegments > new Date("invalid")  🍭🍭🍭');
-  /**
-   * Return an invalid date object if some segments are empty or invalid.
-   */
-  return new Date('invalid');
 };
 
 // TODO:
 // add refs
 // add onSegmentChange
-//
+// add tests!
