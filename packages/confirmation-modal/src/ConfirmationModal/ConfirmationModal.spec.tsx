@@ -236,7 +236,7 @@ describe('packages/confirmation-modal', () => {
       expect(button).toBeVisible();
       expect(modal).toBeVisible();
 
-      // Click the button - the component's handleCancel doesn't pass the event,
+      // Click the button - the event is not passed to the `onCancel` callback
       // but we verify the function is called
       userEvent.click(button);
       expect(confirmSpy).not.toHaveBeenCalled();

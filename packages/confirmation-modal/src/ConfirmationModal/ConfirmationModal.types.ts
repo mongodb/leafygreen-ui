@@ -9,7 +9,7 @@ export const Variant = {
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
 interface CustomButtonOnClick {
-  onClick?: (args?: MouseEvent | KeyboardEvent) => void;
+  onClick?: () => void;
 }
 
 // Exclude anchor types (where href is required) to ensure buttons render as buttons
