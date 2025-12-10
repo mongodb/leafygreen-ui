@@ -1,9 +1,19 @@
 import React, { forwardRef, useEffect } from 'react';
+import { zonedTimeToUtc } from 'date-fns-tz';
+import isNull from 'lodash/isNull';
+
+import {
+  DateType,
+  isDateObject,
+  isInvalidDateObject,
+  isValidDate,
+} from '@leafygreen-ui/date-utils';
 
 import { unitOptions } from '../constants';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { useSelectUnit } from '../hooks';
+import { useTimeSegments } from '../hooks/useTimeSegments';
 import { TimeSegmentsState } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
@@ -11,26 +21,15 @@ import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
 import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 import {
   convert12hTo24h,
+  doesSomeSegmentExist,
   getFormatPartsValues,
+  isEverySegmentFilled,
   isEverySegmentValid,
   isEverySegmentValueExplicit,
-  doesSomeSegmentExist,
-  isEverySegmentFilled,
 } from '../utils';
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
-import {
-  DateType,
-  isDateObject,
-  isInvalidDateObject,
-  isValidDate,
-} from '@leafygreen-ui/date-utils';
-import { useTimeSegments } from '../hooks/useTimeSegments';
-
-import { zonedTimeToUtc } from 'date-fns-tz';
-
-import isNull from 'lodash/isNull';
 
 /**
  * @internal
@@ -199,7 +198,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             <TimeInputBox
               segments={segments}
               setSegment={(segment, value) => {
-                // eslint-disable-next-line no-console
                 setSegment(segment, value);
                 console.log({ segment, value });
               }}

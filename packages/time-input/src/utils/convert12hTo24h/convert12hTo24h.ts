@@ -23,6 +23,7 @@ export const convert12hTo24h = (hour: string, dayPeriod: string) => {
     if (hour === '12') {
       return '0';
     }
+
     // else return hour as-is
     return hour;
   }
@@ -31,6 +32,7 @@ export const convert12hTo24h = (hour: string, dayPeriod: string) => {
   if (hour === '12') {
     return '12';
   }
+
   // else return hour + 12
   return `${parseInt(hour) + 12}`;
 };

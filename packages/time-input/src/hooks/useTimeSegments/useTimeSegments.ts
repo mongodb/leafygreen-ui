@@ -1,17 +1,19 @@
 import { useEffect, useReducer } from 'react';
-import { TimeSegment, TimeSegmentsState } from '../../shared.types';
-import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
-import { getFormatPartsValues } from '../../utils/getFormatPartsValues/getFormatPartsValues';
 import isEqual from 'lodash/isEqual';
-import { getValueFormatter } from '@leafygreen-ui/input-box';
-import { usePrevious } from '@leafygreen-ui/hooks';
 
-type UseTimeSegmentsOptions = {
+import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
+import { usePrevious } from '@leafygreen-ui/hooks';
+import { getValueFormatter } from '@leafygreen-ui/input-box';
+
+import { TimeSegment, TimeSegmentsState } from '../../shared.types';
+import { getFormatPartsValues } from '../../utils/getFormatPartsValues/getFormatPartsValues';
+
+interface UseTimeSegmentsOptions {
   onUpdate: (
     newSegments: TimeSegmentsState,
     prevSegments?: TimeSegmentsState,
   ) => void;
-};
+}
 
 const timeSegmentsReducer = (
   currentState: TimeSegmentsState,
@@ -146,7 +148,16 @@ export const useTimeSegments = ({
         onUpdate?.(newSegments, { ...segments });
       }
     }
-  }, [date, locale, timeZone, segments, onUpdate]);
+  }, [
+    date,
+    locale,
+    timeZone,
+    segments,
+    onUpdate,
+    prevDate,
+    prevLocale,
+    prevTimeZone,
+  ]);
 
   const setSegment = (segment: TimeSegment, value: string) => {
     console.log('useTimeSegments > setSegment 💬', { segment, value });

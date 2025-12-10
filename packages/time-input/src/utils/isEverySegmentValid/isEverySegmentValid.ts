@@ -1,7 +1,7 @@
 import { isValidValueForSegment } from '@leafygreen-ui/input-box';
-import { getDefaultMin, getDefaultMax } from '../../constants';
-import { TimeSegment } from '../../shared.types';
 
+import { getDefaultMax, getDefaultMin } from '../../constants';
+import { TimeSegment } from '../../shared.types';
 import { TimeSegmentsState } from '../../shared.types';
 
 /**

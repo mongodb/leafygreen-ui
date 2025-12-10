@@ -1,5 +1,6 @@
-import { convert12hTo24h } from './convert12hTo24h';
 import range from 'lodash/range';
+
+import { convert12hTo24h } from './convert12hTo24h';
 
 describe('convert12hTo24h', () => {
   describe('AM', () => {

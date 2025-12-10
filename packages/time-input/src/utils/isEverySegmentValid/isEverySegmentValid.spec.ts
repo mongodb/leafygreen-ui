@@ -1,4 +1,5 @@
 import { getDefaultMax, getDefaultMin } from '../../constants';
+
 import { isEverySegmentValid } from './isEverySegmentValid';
 
 describe('isEverySegmentValueValid', () => {

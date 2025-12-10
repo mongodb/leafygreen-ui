@@ -1,5 +1,6 @@
-import { isEverySegmentValueExplicit } from './isEverySegmentValueExplicit';
 import range from 'lodash/range';
+
+import { isEverySegmentValueExplicit } from './isEverySegmentValueExplicit';
 
 describe('isEverySegmentValueExplicit', () => {
   describe('12 hour format', () => {

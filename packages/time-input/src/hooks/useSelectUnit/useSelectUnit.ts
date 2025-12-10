@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 
 import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
+import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
-import { usePrevious } from '@leafygreen-ui/hooks';
 
 interface UseSelectUnitReturn {
   selectUnit: UnitOption;
   setSelectUnit: (selectUnit: UnitOption) => void;
 }
 
-type UseSelectUnitOptions = {
+interface UseSelectUnitOptions {
   onUpdate: (newSelectUnit: UnitOption, prevSelectUnit?: UnitOption) => void;
-};
+}
 
 /**
  * Finds the select unit option based on the day period.

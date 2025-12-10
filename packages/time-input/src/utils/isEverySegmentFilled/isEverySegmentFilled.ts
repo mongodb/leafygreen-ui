@@ -1,4 +1,5 @@
 import { isDefined } from '@leafygreen-ui/lib';
+
 import { TimeSegmentsState } from '../../shared.types';
 
 /**

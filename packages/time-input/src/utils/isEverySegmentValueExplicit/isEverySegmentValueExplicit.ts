@@ -1,6 +1,7 @@
-import { TimeSegment, TimeSegmentsState } from '../../shared.types';
 import { createExplicitSegmentValidator } from '@leafygreen-ui/input-box';
+
 import { getTimeSegmentRules } from '../../constants';
+import { TimeSegment, TimeSegmentsState } from '../../shared.types';
 
 export const isExplicitSegmentValue = (is12HourFormat: boolean) =>
   createExplicitSegmentValidator({
