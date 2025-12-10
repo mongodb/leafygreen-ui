@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "private": true,
   "engines": {
-    "node": ">= 18.20.8",
+    "node": ">= 22.21.0",
     "pnpm": ">= 10.18.3"
   },
   "packageManager": "pnpm@10.18.3",
@@ -32,9 +32,9 @@
     "link": "lg link",
     "lint": "lg lint",
     "prepublishOnly": "pnpm run build && pnpm build:ts-downlevel && pnpm build:docs",
-    "publish": "pnpm publish --recursive --no-git-checks",
+    "publish": "pnpm changeset publish --public",
     "reset:react17": "npx node ./scripts/react17/reset.mjs; pnpm run init",
-    "slackbot": "lg slackbot",
+    "slackbot": "lg slackbot release",
     "start": "npx storybook dev -p 9001 --no-version-updates --no-open",
     "serve": "npx http-server storybook-static -c5",
     "test": "lg test",
