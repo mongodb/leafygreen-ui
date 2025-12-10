@@ -1,0 +1,37 @@
+import { TimeSegmentsState } from '../../shared.types';
+import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
+
+/**
+ * Options for the useTimeSegmentsAndSelect hook
+ */
+export interface UseTimeSegmentsOptions {
+  onUpdate: (params: {
+    newSegments: TimeSegmentsState;
+    prevSegments?: TimeSegmentsState;
+    newSelectUnit: UnitOption;
+    prevSelectUnit?: UnitOption;
+  }) => void;
+}
+
+/**
+ * An enum with all the types of actions to use in our reducer
+ */
+export enum ActionKind {
+  UPDATE_TIME_SEGMENTS = 'UPDATE_TIME_SEGMENTS',
+  UPDATE_SELECT_UNIT = 'UPDATE_SELECT_UNIT',
+}
+
+/**
+ * An interface for our actions
+ */
+export type Action =
+  | {
+      type: ActionKind.UPDATE_TIME_SEGMENTS;
+      payload: Partial<TimeSegmentsState>;
+    }
+  | { type: ActionKind.UPDATE_SELECT_UNIT; payload: UnitOption };
+
+export type TimeSegmentsAndSelectUnitState = {
+  segments: TimeSegmentsState;
+  selectUnit: UnitOption;
+};

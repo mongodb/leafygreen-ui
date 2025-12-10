@@ -30,6 +30,7 @@ import {
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
+import { useTimeSegmentsAndSelectUnit } from '../hooks/useTimeSegmentsAndSelect/useTimeSegmentsAndSelect';
 
 /**
  * @internal
@@ -48,6 +49,10 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
     }, [isDirty, setIsDirty, value]);
 
     const handleSelectChange = (unit: UnitOption) => {
+      console.log(
+        'TimeInputInputs > handleSelectChange 🍌🍌🍌🍌🍌🍌🍌🍌🍌🍌🍌',
+        { unit },
+      );
       setSelectUnit(unit);
     };
 
@@ -64,126 +69,139 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 
     // console.log('TimeInputInputs 🥝🥝🥝', { timeParts });
 
-    const { segments, setSegment } = useTimeSegments({
-      date: value,
-      locale,
-      timeZone,
-      options: {
-        onUpdate: (newSegments, prevSegments) => {
-          const convertedHour = convert12hTo24h(
-            newSegments.hour,
-            selectUnit.displayName,
-          );
-
-          const newDate = newDateFromSegments({
-            segments: newSegments,
-            is12HourFormat,
-            dateValues: {
-              day,
-              month,
-              year,
-              hour: convertedHour,
-              minute: newSegments.minute,
-              second: newSegments.second,
-            },
-            timeZone,
-          });
-
-          const shouldSetNewValue = shouldSetValue(
-            newDate,
-            isDirty,
+    const { segments, setSegment, setSelectUnit, selectUnit } =
+      useTimeSegmentsAndSelectUnit({
+        date: value,
+        locale,
+        timeZone,
+        is12HourFormat,
+        options: {
+          onUpdate: ({
             newSegments,
-            is12HourFormat,
-          );
+            prevSegments,
+            newSelectUnit,
+            prevSelectUnit,
+          }) => {
+            const convertedHour = convert12hTo24h(
+              newSegments.hour,
+              newSelectUnit.displayName,
+            );
 
-          console.log(
-            '🍎🍎🍎TimeInputInputs > useTimeSegments > onUpdate > shouldSetValue 🍎🍎🍎',
-            {
+            const newDate = newDateFromSegments({
+              segments: newSegments,
+              is12HourFormat,
+              dateValues: {
+                day,
+                month,
+                year,
+                hour: convertedHour,
+                minute: newSegments.minute,
+                second: newSegments.second,
+              },
+              timeZone,
+            });
+
+            const shouldSetNewValue = shouldSetValue(
               newDate,
+              isDirty,
               newSegments,
-              shouldSetNewValue,
-            },
-          );
+              is12HourFormat,
+            );
 
-          if (shouldSetNewValue) {
-            setValue(newDate);
-          }
+            console.log(
+              '🍎🍎🍎TimeInputInputs > useTimeSegments > onUpdate > shouldSetValue 🍎🍎🍎',
+              {
+                newDate,
+                newSegments,
+                shouldSetNewValue,
+                prevSegments,
+                newSelectUnit,
+                prevSelectUnit,
+              },
+            );
+
+            if (shouldSetNewValue) {
+              setValue(newDate);
+            }
+          },
         },
-      },
-    });
+      });
 
-    // console.log('TimeInputInputs 🍉', { segments });
+    console.log('TimeInputInputs 🍉🍉🍉🍉🍉🍉🍉🍉🍉🍉🍉', {
+      segments,
+      selectUnit,
+    });
 
     /**
      * Hook to manage the select unit
      */
-    const { selectUnit, setSelectUnit } = useSelectUnit({
-      dayPeriod,
-      value,
-      unitOptions,
-      is12HourFormat,
-      options: {
-        onUpdate: (newSelectUnit, prevSelectUnit) => {
-          const convertedHour = convert12hTo24h(
-            segments.hour,
-            newSelectUnit.displayName,
-          );
+    // const { selectUnit, setSelectUnit } = useSelectUnit({
+    //   dayPeriod,
+    //   value,
+    //   unitOptions,
+    //   is12HourFormat,
+    //   options: {
+    //     onUpdate: (newSelectUnit, prevSelectUnit) => {
+    //       const convertedHour = convert12hTo24h(
+    //         segments.hour,
+    //         newSelectUnit.displayName,
+    //       );
 
-          const newDate = newDateFromSegments({
-            segments,
-            is12HourFormat,
-            dateValues: {
-              day,
-              month,
-              year,
-              hour: convertedHour,
-              minute: segments.minute,
-              second: segments.second,
-            },
-            timeZone,
-          });
+    //       const newDate = newDateFromSegments({
+    //         segments,
+    //         is12HourFormat,
+    //         dateValues: {
+    //           day,
+    //           month,
+    //           year,
+    //           hour: convertedHour,
+    //           minute: segments.minute,
+    //           second: segments.second,
+    //         },
+    //         timeZone,
+    //       });
 
-          // console.log('TimeInputInputs > useTimeSegments > onUpdate 🍉🍉🍉', {
-          //   newSegments,
-          //   prevSegments,
-          //   selectUnit: selectUnit.displayName,
-          //   is12HourFormat,
-          //   date: {
-          //     day,
-          //     month,
-          //     year,
-          //     hour: newSegments.hour,
-          //     convertedHour,
-          //     minute: newSegments.minute,
-          //     second: newSegments.second,
-          //     dayPeriod: selectUnit.displayName,
-          //   },
-          //   newDate,
-          //   utcString: newDate?.toUTCString() ?? '',
-          // });
+    //       // console.log('TimeInputInputs > useTimeSegments > onUpdate 🍉🍉🍉', {
+    //       //   newSegments,
+    //       //   prevSegments,
+    //       //   selectUnit: selectUnit.displayName,
+    //       //   is12HourFormat,
+    //       //   date: {
+    //       //     day,
+    //       //     month,
+    //       //     year,
+    //       //     hour: newSegments.hour,
+    //       //     convertedHour,
+    //       //     minute: newSegments.minute,
+    //       //     second: newSegments.second,
+    //       //     dayPeriod: selectUnit.displayName,
+    //       //   },
+    //       //   newDate,
+    //       //   utcString: newDate?.toUTCString() ?? '',
+    //       // });
 
-          const shouldSetNewValue = shouldSetValue(
-            newDate,
-            isDirty,
-            segments,
-            is12HourFormat,
-          );
+    //       const shouldSetNewValue = shouldSetValue(
+    //         newDate,
+    //         isDirty,
+    //         segments,
+    //         is12HourFormat,
+    //       );
 
-          console.log(
-            '🥺🥺🥺 TimeInputInputs > useSelectUnit > onUpdate > shouldSetValue 🥺🥺🥺',
-            {
-              newDate,
-              segments,
-              shouldSetNewValue,
-            },
-          );
+    //       console.log(
+    //         '🥺🥺🥺 TimeInputInputs > useSelectUnit > onUpdate > shouldSetValue 🥺🥺🥺',
+    //         {
+    //           newDate,
+    //           segments,
+    //           shouldSetNewValue,
+    //         },
+    //       );
 
-          if (shouldSetNewValue) {
-            setValue(newDate);
-          }
-        },
-      },
-    });
+    //       if (shouldSetNewValue) {
+    //         setValue(newDate);
+    //       }
+    //     },
+    //   },
+    // });
 
     // // eslint-disable-next-line no-console
     // console.log('TimeInputInputs 🍉', {
