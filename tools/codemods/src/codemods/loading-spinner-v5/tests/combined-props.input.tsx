@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div>
       <Spinner
-        displayOption="default-vertical"
+        displayOption="default-horizontal"
         description="Loading data..."
         darkMode={true}
         className="my-spinner"
