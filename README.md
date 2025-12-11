@@ -254,7 +254,9 @@ Note: it's important to follow the kebab-casing convention described above.
 
 ### Initial Release
 
-The starting version in the generated `package.json` will be 0.0.1, but this will not be published to npm automatically. A new package is only published after its first changeset is added and the resulting "Version Packages" pull request is merged into the `main` branch.
+The starting version in the generated `package.json` will be 0.0.1, but this will not be published to npm automatically.
+**Note: You must manually publish the first version** of your new package before the automated release workflow can take over.
+See [DEVELOPER.md](./DEVELOPER.md#publishing-a-new-package) for detailed instructions.
 
 Note: The `create-package` script automatically generates a starter changeset file. By default this is marked as a **minor** release, which will lead to an initial release of 0.1.0. If you'd like the initial release to be a **major** version (1.0.0), this starter changeset file must be manually edited.
 

@@ -10,6 +10,11 @@ Use from `@lg-tools/cli`:
 lg create <package-name>
 ```
 
+## Initial Publish Required
+
+After creating a new package, **you must manually publish the first version** before the automated release workflow can take over.
+See [DEVELOPER.md](../../DEVELOPER.md#publishing-a-new-package) for detailed instructions.
+
 ## Options
 
 ### Scope
