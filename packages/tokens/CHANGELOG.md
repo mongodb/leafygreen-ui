@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 4.2.0
+
+### Minor Changes
+
+- 76d5a8f: Updated placeholder color tokens to increase color contrast and improve accessibility
+
 ## 4.1.0
 
 ### Minor Changes
