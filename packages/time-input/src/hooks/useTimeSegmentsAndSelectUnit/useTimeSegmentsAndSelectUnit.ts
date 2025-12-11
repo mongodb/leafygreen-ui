@@ -4,20 +4,21 @@ import isEqual from 'lodash/isEqual';
 import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
+import { unitOptions } from '../../constants';
 import { TimeSegment } from '../../shared.types';
+import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
 import {
   findUnitOptionByDayPeriod,
   getFormatPartsValues,
   getFormattedTimeSegmentsFromDate,
   isSameUTCDayAndTime,
 } from '../../utils';
-import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
-import { unitOptions } from '../../constants';
+
 import {
-  TimeSegmentsAndSelectUnitState,
   Action,
-  UseTimeSegmentsOptions,
   ActionKind,
+  TimeSegmentsAndSelectUnitState,
+  UseTimeSegmentsOptions,
 } from './useTimeSegmentsAndSelectUnit.types';
 
 /**
@@ -123,32 +124,32 @@ export const useTimeSegmentsAndSelectUnit = ({
     // If the segments were updated in setSegment then the newSegments should be the same as the segments in state.
     const haveSegmentsChanged = !isEqual(newSegments, segments);
 
-    console.log('useTimeSegments > useEffect > 🦧🦧🦧🦧🦧🦧🦧🦧🦧', {
-      date,
-      prevDate,
-      isDateValid,
-      haveSegmentsChanged,
-      segments,
-      newSegments,
-      hasDateAndTimeChanged,
-    });
+    // console.log('useTimeSegments > useEffect > 🦧🦧🦧🦧🦧🦧🦧🦧🦧', {
+    //   date,
+    //   prevDate,
+    //   isDateValid,
+    //   haveSegmentsChanged,
+    //   segments,
+    //   newSegments,
+    //   hasDateAndTimeChanged,
+    // });
 
     // Checks if the date is valid and the segments have changed
     if (isDateValid && haveSegmentsChanged) {
-      console.log('useTimeSegments > useEffect > newSegments ☎️🌼☎️🌼', {
-        newSegments,
-        segments,
-      });
+      // console.log('useTimeSegments > useEffect > newSegments ☎️🌼☎️🌼', {
+      //   newSegments,
+      //   segments,
+      // });
 
       // If the date is the same but the timezone or locale has changed then update the segments but don't call onUpdate because the date value did not change, only the presentation format changed. (instead on segmentChange should be called)
       if (!hasDateAndTimeChanged && (hasLocaleChanged || hasTimeZoneChanged)) {
-        console.log(
-          'useTimeSegments > useEffect > locale or timezone changed  🎃',
-          {
-            newSegments,
-            segments,
-          },
-        );
+        // console.log(
+        //   'useTimeSegments > useEffect > locale or timezone changed  🎃',
+        //   {
+        //     newSegments,
+        //     segments,
+        //   },
+        // );
         dispatch({
           type: ActionKind.UPDATE_TIME_SEGMENTS,
           payload: newSegments,
@@ -157,10 +158,10 @@ export const useTimeSegmentsAndSelectUnit = ({
 
       // If the date has changed then update the segments and call `onUpdate`
       if (hasDateAndTimeChanged) {
-        console.log('useTimeSegments > useEffect > hasDateAndTimeChanged  🐡', {
-          newSegments,
-          segments,
-        });
+        // console.log('useTimeSegments > useEffect > hasDateAndTimeChanged  🐡', {
+        //   newSegments,
+        //   segments,
+        // });
         dispatch({
           type: ActionKind.UPDATE_TIME_SEGMENTS,
           payload: newSegments,
@@ -178,6 +179,7 @@ export const useTimeSegmentsAndSelectUnit = ({
     locale,
     timeZone,
     segments,
+    selectUnit,
     onUpdate,
     prevDate,
     prevLocale,
@@ -191,7 +193,7 @@ export const useTimeSegmentsAndSelectUnit = ({
    * @param value - The value to set
    */
   const setSegment = (segment: TimeSegment, value: string) => {
-    console.log('useTimeSegments > setSegment 💬', { segment, value });
+    // console.log('useTimeSegments > setSegment 💬', { segment, value });
     const updateObject = { [segment]: value };
 
     // We need a way to pass the updated segments to onUpdate and update the reducer state at the same time so we manually call the reducer to get the next state. This will not update the reducer state so we still need to dispatch the action to update the reducer state.
@@ -221,10 +223,10 @@ export const useTimeSegmentsAndSelectUnit = ({
    * Updates the select unit if the format has changed from 12h to 24h or 24h to 12h OR if the date is valid and the format is 12h.
    */
   useEffect(() => {
-    console.log('useSelectUnit > useEffect 🧼🧼🧼', {
-      prevIs12HourFormat,
-      is12HourFormat,
-    });
+    // console.log('useSelectUnit > useEffect 🧼🧼🧼', {
+    //   prevIs12HourFormat,
+    //   is12HourFormat,
+    // });
 
     const hasFormatChanged = prevIs12HourFormat !== is12HourFormat;
     const isValueValid = isValidDate(date);
@@ -237,7 +239,7 @@ export const useTimeSegmentsAndSelectUnit = ({
      * If the format has changed OR if the timeZone has changed then update the select unit.
      */
     if (hasFormatChanged || (isValueValid && is12HourFormat)) {
-      console.log('useSelectUnit > useEffect  🥺🍎🥺');
+      // console.log('useSelectUnit > useEffect  🥺🍎🥺');
       const { dayPeriod } = getFormatPartsValues({
         locale,
         timeZone,
@@ -262,10 +264,10 @@ export const useTimeSegmentsAndSelectUnit = ({
    * @param selectUnit - The select unit to set
    */
   const setSelectUnit = (newSelectUnit: UnitOption) => {
-    console.log('useSelectUnit > setSelectUnit 🥝🥝🥝', {
-      newSelectUnit,
-      selectUnit,
-    });
+    // console.log('useSelectUnit > setSelectUnit 🥝🥝🥝', {
+    //   newSelectUnit,
+    //   selectUnit,
+    // });
 
     dispatch({
       type: ActionKind.UPDATE_SELECT_UNIT,

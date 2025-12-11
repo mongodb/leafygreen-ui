@@ -1,4 +1,5 @@
 import { DateType, LocaleString } from '@leafygreen-ui/date-utils';
+
 import { TimeSegmentsState } from '../../shared.types';
 import { getFormatPartsValues } from '../getFormatPartsValues/getFormatPartsValues';
 import { getFormattedTimeSegments } from '../getFormattedTimeSegments/getFormattedTimeSegments';

@@ -1,9 +1,10 @@
 import { zonedTimeToUtc } from 'date-fns-tz';
+
 import { TimeSegmentsState } from '../../shared.types';
+import { convert12hTo24h } from '../convert12hTo24h/convert12hTo24h';
 import { doesSomeSegmentExist } from '../doesSomeSegmentExist/doesSomeSegmentExist';
 import { isEverySegmentFilled } from '../isEverySegmentFilled/isEverySegmentFilled';
 import { isEverySegmentValid } from '../isEverySegmentValid/isEverySegmentValid';
-import { convert12hTo24h } from '../convert12hTo24h/convert12hTo24h';
 
 /**
  * Takes local time segments, creates a local date object and converts it to UTC.
@@ -28,9 +29,6 @@ export const getNewUTCDateFromSegments = ({
     day: string;
     month: string;
     year: string;
-    // hour: string;
-    // minute: string;
-    // second: string;
   };
   dayPeriod: string; //TODO: add type
 }) => {

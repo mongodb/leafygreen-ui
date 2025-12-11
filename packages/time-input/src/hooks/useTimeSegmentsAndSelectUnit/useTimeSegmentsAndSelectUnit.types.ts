@@ -31,7 +31,7 @@ export type Action =
     }
   | { type: ActionKind.UPDATE_SELECT_UNIT; payload: UnitOption };
 
-export type TimeSegmentsAndSelectUnitState = {
+export interface TimeSegmentsAndSelectUnitState {
   segments: TimeSegmentsState;
   selectUnit: UnitOption;
-};
+}

@@ -1,4 +1,5 @@
 import { getValueFormatter } from '@leafygreen-ui/input-box';
+
 import { TimeSegmentsState } from '../../shared.types';
 
 /**

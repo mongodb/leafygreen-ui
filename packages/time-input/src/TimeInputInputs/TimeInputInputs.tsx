@@ -10,13 +10,13 @@ import {
 
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { useTimeSegmentsAndSelectUnit } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit';
 import { TimeSegmentsState } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
 import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 import {
-  convert12hTo24h,
   getFormatPartsValues,
   getNewUTCDateFromSegments,
   isEverySegmentFilled,
@@ -25,7 +25,6 @@ import {
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
-import { useTimeSegmentsAndSelectUnit } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit';
 
 /**
  * @internal
@@ -44,10 +43,10 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
     }, [isDirty, setIsDirty, value]);
 
     const handleSelectChange = (unit: UnitOption) => {
-      console.log(
-        'TimeInputInputs > handleSelectChange 🍌🍌🍌🍌🍌🍌🍌🍌🍌🍌🍌',
-        { unit },
-      );
+      // console.log(
+      //   'TimeInputInputs > handleSelectChange 🍌🍌🍌🍌🍌🍌🍌🍌🍌🍌🍌',
+      //   { unit },
+      // );
       setSelectUnit(unit);
     };
 
@@ -116,10 +115,10 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
         },
       });
 
-    console.log('TimeInputInputs 🍉🍉🍉🍉🍉🍉🍉🍉🍉🍉🍉', {
-      segments,
-      selectUnit,
-    });
+    // console.log('TimeInputInputs 🍉🍉🍉🍉🍉🍉🍉🍉🍉🍉🍉', {
+    //   segments,
+    //   selectUnit,
+    // });
 
     // // eslint-disable-next-line no-console
     // console.log('TimeInputInputs 🍉', {
