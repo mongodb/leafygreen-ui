@@ -32,7 +32,6 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
-            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ runner.os }}-REACT17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
@@ -61,7 +60,6 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
-            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
@@ -87,7 +85,6 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
-            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
