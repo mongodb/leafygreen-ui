@@ -1,5 +1,13 @@
 # @leafygreen-ui/avatar
 
+## 3.1.7
+
+### Patch Changes
+
+- 7d81983: [LG-5686](https://jira.mongodb.org/browse/LG-5686): update `AssistantAvatar` gradients
+- Updated dependencies [76d5a8f]
+  - @leafygreen-ui/tokens@4.2.0
+
 ## 3.1.6
 
 ### Patch Changes
