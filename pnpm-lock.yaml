@@ -918,6 +918,9 @@ importers:
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../icon
