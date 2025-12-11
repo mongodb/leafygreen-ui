@@ -31,7 +31,7 @@ export function createIconComponent<G extends GlyphObject = GlyphObject>(
     const SVGComponent = glyphs[glyph];
 
     if (SVGComponent) {
-      return <SVGComponent fill={fill} {...rest} />;
+      return <SVGComponent {...rest} fill={fill} />;
     } else {
       // TODO: improve fuzzy match
       // Suggest the proper icon casing if there's a near match
