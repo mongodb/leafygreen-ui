@@ -27,11 +27,11 @@ type GlyphObject = Record<string, LGGlyph.Component>;
 export function createIconComponent<G extends GlyphObject = GlyphObject>(
   glyphs: G,
 ) {
-  const Icon = ({ glyph, ...rest }: IconProps) => {
+  const Icon = ({ glyph, fill, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];
 
     if (SVGComponent) {
-      return <SVGComponent {...rest} />;
+      return <SVGComponent fill={fill} {...rest} />;
     } else {
       // TODO: improve fuzzy match
       // Suggest the proper icon casing if there's a near match

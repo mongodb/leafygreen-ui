@@ -9,6 +9,7 @@ import { typeIs } from '@leafygreen-ui/lib';
 
 import EditIcon from './generated/Edit';
 import { Size } from './glyphCommon';
+import { Icon } from './Icon';
 import { isComponentGlyph } from './isComponentGlyph';
 import { SVGR } from './types';
 import { createGlyphComponent, createIconComponent, glyphs } from '.';
@@ -244,6 +245,16 @@ describe('packages/Icon/createIconComponent', () => {
       );
       const glyph = getByTestId('my-glyph');
       expect(glyph).toHaveAttribute('role', 'presentation');
+    });
+
+    test('`fill` prop applies CSS color correctly', () => {
+      const { container } = render(<Icon glyph="Edit" fill="red" />);
+      const svg = container.querySelector('svg');
+      expect(svg).toBeTruthy();
+      // The fill prop should be applied as a CSS color via emotion
+      // We check that the SVG has a className (from emotion) and the computed style
+      const computedStyle = window.getComputedStyle(svg!);
+      expect(computedStyle.color).toBe('red');
     });
   });
 
