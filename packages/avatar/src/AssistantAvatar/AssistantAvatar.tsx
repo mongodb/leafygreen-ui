@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { createGlyphComponent } from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -10,8 +11,6 @@ import {
 } from './AssistantAvatar.styles';
 import { AssistantAvatarProps } from './AssistantAvatar.types';
 
-const GRADIENT_ID = 'sparkle-gradient';
-
 export const AssistantAvatar: React.ComponentType<AssistantAvatarProps> =
   createGlyphComponent(
     'Sparkle',
@@ -21,7 +20,11 @@ export const AssistantAvatar: React.ComponentType<AssistantAvatarProps> =
       ...rest
     }: AssistantAvatarProps) => {
       const { darkMode, theme } = useDarkMode(darkModeProp);
-      const fill = disabled ? getDisabledFill(theme) : `url(#${GRADIENT_ID})`;
+      const gradientId = useIdAllocator({
+        prefix: 'lg-assistant_avatar-gradient',
+        id: rest.id,
+      });
+      const fill = disabled ? getDisabledFill(theme) : `url(#${gradientId})`;
       const gradientStartColor = getGradientStartColor(darkMode);
       const gradientEndColor = getGradientEndColor(darkMode);
 
@@ -38,7 +41,7 @@ export const AssistantAvatar: React.ComponentType<AssistantAvatarProps> =
           {!disabled && (
             <defs>
               <linearGradient
-                id={GRADIENT_ID}
+                id={gradientId}
                 x1="3.00005"
                 y1="3"
                 x2="12.5001"
