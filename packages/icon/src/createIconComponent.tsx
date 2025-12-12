@@ -4,6 +4,7 @@ import mapValues from 'lodash/mapValues';
 
 import { createGlyphComponent } from './createGlyphComponent';
 import { Size } from './glyphCommon';
+import { isComponentGlyph } from './isComponentGlyph';
 import { LGGlyph } from './types';
 
 // We omit size here because we map string values for size to numbers in this component.
@@ -29,22 +30,23 @@ type GlyphObject = Record<string, LGGlyph.Component>;
 export function createIconComponent<G extends GlyphObject = GlyphObject>(
   glyphs: G,
 ) {
+  const allGlyphsAreComponents = Object.values(glyphs).every(isComponentGlyph);
+  const glyphDict = allGlyphsAreComponents
+    ? glyphs
+    : mapValues(glyphs, (val, key) => {
+        if (isComponentGlyph(val)) return val;
+
+        const isValSVG = typeof val === 'string';
+
+        return isValSVG ? createGlyphComponent(key, val) : val;
+      });
+
   const Icon = ({ glyph, ...rest }: IconProps) => {
-    const SVGComponent = glyphs[glyph];
+    const SVGComponent = glyphDict[glyph];
 
     if (SVGComponent) {
       return <SVGComponent {...rest} />;
     } else {
-      const generatedGlyphs = mapValues(glyphs, (val, key) => {
-        return createGlyphComponent(key, val);
-      });
-
-      const GeneratedSVGComponent = generatedGlyphs[glyph];
-
-      if (GeneratedSVGComponent) {
-        return <GeneratedSVGComponent {...rest} />;
-      }
-
       // TODO: improve fuzzy match
       // Suggest the proper icon casing if there's a near match
       const nearMatch = Object.keys(glyphs).find(

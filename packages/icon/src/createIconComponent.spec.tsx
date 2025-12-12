@@ -6,21 +6,13 @@ import { createIconComponent } from './createIconComponent';
 import * as generatedGlyphs from './generated';
 import { Size } from './glyphCommon';
 import { isComponentGlyph } from './isComponentGlyph';
-import { SVGR } from './types';
-
-// Mock SVGR component representing a custom SVG
-const CustomSVGRGlyph: SVGR.Component = ({ children, ...props }) => (
-  <svg data-testid="custom-svgr-glyph" {...props}>
-    {children}
-  </svg>
-);
-
-// Another mock glyph for multiple glyph testing
-const AnotherCustomGlyph: SVGR.Component = ({ children, ...props }) => (
-  <svg data-testid="another-custom-glyph" {...props}>
-    {children}
-  </svg>
-);
+import {
+  AnotherCustomGlyph,
+  createMockSVGRComponent,
+  CustomSVGRGlyph,
+  expectFillColor,
+  expectSize,
+} from './testUtils';
 
 // Create glyph components from the SVGR components
 const customGlyphs = {
@@ -107,10 +99,7 @@ describe('packages/Icon/createIconComponent', () => {
   });
 
   describe('custom SVG support', () => {
-    // Create an Icon component that uses raw SVGR components (custom SVGs)
-    const RawSVGGlyph: SVGR.Component = props => (
-      <svg data-testid="raw-svg-glyph" {...props}></svg>
-    );
+    const RawSVGGlyph = createMockSVGRComponent('raw-svg-glyph');
 
     const customSVGGlyphs = {
       RawSVG: createGlyphComponent('RawSVG', RawSVGGlyph),
@@ -128,15 +117,13 @@ describe('packages/Icon/createIconComponent', () => {
     test('applies size prop to custom SVGs', () => {
       render(<IconComponent glyph="RawSVG" size={32} />);
       const glyph = screen.getByTestId('raw-svg-glyph');
-      expect(glyph).toHaveAttribute('height', '32');
-      expect(glyph).toHaveAttribute('width', '32');
+      expectSize(glyph, '32');
     });
 
     test('applies Size enum to custom SVGs', () => {
       render(<IconComponent glyph="RawSVG" size={Size.Large} />);
       const glyph = screen.getByTestId('raw-svg-glyph');
-      expect(glyph).toHaveAttribute('height', '20');
-      expect(glyph).toHaveAttribute('width', '20');
+      expectSize(glyph, '20');
     });
   });
 
@@ -184,11 +171,8 @@ describe('packages/Icon/createIconComponent', () => {
   });
 
   describe('title prop with custom SVGR glyphs', () => {
-    // Custom SVGR component that renders title similar to generated glyphs
-    const CustomGlyphWithTitle: SVGR.Component = ({ children, ...props }) => (
-      <svg data-testid="custom-glyph-with-title" {...props}>
-        {children}
-      </svg>
+    const CustomGlyphWithTitle = createMockSVGRComponent(
+      'custom-glyph-with-title',
     );
 
     const customGlyphsWithTitle = {
@@ -269,9 +253,7 @@ describe('packages/Icon/createIconComponent', () => {
   });
 
   describe('className prop with custom SVGs', () => {
-    const RawSVGGlyph: SVGR.Component = props => (
-      <svg data-testid="raw-svg-for-class" {...props}></svg>
-    );
+    const RawSVGGlyph = createMockSVGRComponent('raw-svg-for-class');
 
     const customSVGGlyphs = {
       RawSVG: createGlyphComponent('RawSVG', RawSVGGlyph),
@@ -292,43 +274,37 @@ describe('packages/Icon/createIconComponent', () => {
     test('applies numeric size to glyph', () => {
       render(<IconComponent glyph="CustomGlyph" size={24} />);
       const glyph = screen.getByTestId('custom-svgr-glyph');
-      expect(glyph).toHaveAttribute('height', '24');
-      expect(glyph).toHaveAttribute('width', '24');
+      expectSize(glyph, '24');
     });
 
     test('applies Size.Small correctly', () => {
       render(<IconComponent glyph="CustomGlyph" size={Size.Small} />);
       const glyph = screen.getByTestId('custom-svgr-glyph');
-      expect(glyph).toHaveAttribute('height', '14');
-      expect(glyph).toHaveAttribute('width', '14');
+      expectSize(glyph, '14');
     });
 
     test('applies Size.Default correctly', () => {
       render(<IconComponent glyph="CustomGlyph" size={Size.Default} />);
       const glyph = screen.getByTestId('custom-svgr-glyph');
-      expect(glyph).toHaveAttribute('height', '16');
-      expect(glyph).toHaveAttribute('width', '16');
+      expectSize(glyph, '16');
     });
 
     test('applies Size.Large correctly', () => {
       render(<IconComponent glyph="CustomGlyph" size={Size.Large} />);
       const glyph = screen.getByTestId('custom-svgr-glyph');
-      expect(glyph).toHaveAttribute('height', '20');
-      expect(glyph).toHaveAttribute('width', '20');
+      expectSize(glyph, '20');
     });
 
     test('applies Size.XLarge correctly', () => {
       render(<IconComponent glyph="CustomGlyph" size={Size.XLarge} />);
       const glyph = screen.getByTestId('custom-svgr-glyph');
-      expect(glyph).toHaveAttribute('height', '24');
-      expect(glyph).toHaveAttribute('width', '24');
+      expectSize(glyph, '24');
     });
 
     test('uses default size when size prop is not provided', () => {
       render(<IconComponent glyph="CustomGlyph" />);
       const glyph = screen.getByTestId('custom-svgr-glyph');
-      expect(glyph).toHaveAttribute('height', '16');
-      expect(glyph).toHaveAttribute('width', '16');
+      expectSize(glyph, '16');
     });
   });
 
@@ -377,8 +353,7 @@ describe('packages/Icon/createIconComponent', () => {
     test('applies fill as CSS color', () => {
       render(<IconComponent glyph="CustomGlyph" fill="red" />);
       const glyph = screen.getByTestId('custom-svgr-glyph');
-      const computedStyle = window.getComputedStyle(glyph);
-      expect(computedStyle.color).toBe('red');
+      expectFillColor(glyph, 'red');
     });
 
     test('applies fill alongside className', () => {
@@ -391,8 +366,7 @@ describe('packages/Icon/createIconComponent', () => {
       );
       const glyph = screen.getByTestId('custom-svgr-glyph');
       expect(glyph).toHaveClass('custom-class');
-      const computedStyle = window.getComputedStyle(glyph);
-      expect(computedStyle.color).toBe('blue');
+      expectFillColor(glyph, 'blue');
     });
   });
 
@@ -402,8 +376,7 @@ describe('packages/Icon/createIconComponent', () => {
     test('applies fill as CSS color to generated glyph', () => {
       render(<IconComponent glyph="Edit" fill="purple" />);
       const glyph = screen.getByRole('img');
-      const computedStyle = window.getComputedStyle(glyph);
-      expect(computedStyle.color).toBe('purple');
+      expectFillColor(glyph, 'purple');
     });
   });
 
@@ -422,11 +395,7 @@ describe('packages/Icon/createIconComponent', () => {
       );
       const glyph = screen.getByRole('img');
 
-      // Check size
-      expect(glyph).toHaveAttribute('height', '24');
-      expect(glyph).toHaveAttribute('width', '24');
-
-      // Check className
+      expectSize(glyph, '24');
       expect(glyph).toHaveClass('combined-class');
 
       // Check title
@@ -437,9 +406,7 @@ describe('packages/Icon/createIconComponent', () => {
       // Check aria-labelledby points to title
       expect(glyph.getAttribute('aria-labelledby')).toBe(titleElement?.id);
 
-      // Check fill (as CSS color)
-      const computedStyle = window.getComputedStyle(glyph);
-      expect(computedStyle.color).toBe('green');
+      expectFillColor(glyph, 'green');
     });
   });
 
@@ -457,16 +424,9 @@ describe('packages/Icon/createIconComponent', () => {
       );
       const glyph = screen.getByTestId('custom-svgr-glyph');
 
-      // Check size
-      expect(glyph).toHaveAttribute('height', '32');
-      expect(glyph).toHaveAttribute('width', '32');
-
-      // Check className
+      expectSize(glyph, '32');
       expect(glyph).toHaveClass('combined-custom-class');
-
-      // Check fill (as CSS color)
-      const computedStyle = window.getComputedStyle(glyph);
-      expect(computedStyle.color).toBe('orange');
+      expectFillColor(glyph, 'orange');
     });
 
     test('applies accessibility props with className', () => {
