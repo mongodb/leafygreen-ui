@@ -1,5 +1,4 @@
 import React from 'react';
-import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -7,20 +6,22 @@ import { AriaCurrentValue } from '@leafygreen-ui/lib';
 
 import { ChatSideNav } from '../..';
 
-const Providers = ({ children }: { children: React.ReactNode }) => (
-  <LeafyGreenChatProvider>{children}</LeafyGreenChatProvider>
-);
-
 describe('ChatSideNavItem', () => {
+  beforeAll(() => {
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+  });
+
   test('renders with children', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem>Chat Name</ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem>Chat Name</ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
     expect(screen.getByText('Chat Name')).toBeInTheDocument();
@@ -28,15 +29,13 @@ describe('ChatSideNavItem', () => {
 
   test('renders as anchor when href is provided', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem href="/chat/123">
-              Chat Name
-            </ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem href="/chat/123">
+            Chat Name
+          </ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
     const link = screen.getByRole('link');
@@ -46,33 +45,27 @@ describe('ChatSideNavItem', () => {
 
   test('applies expected aria-current value when active', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem active>
-              Active Chat
-            </ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem active>Active Chat</ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
-    const item = screen.getByText('Active Chat');
+    const item = screen.getByText('Active Chat').parentElement;
     expect(item).toHaveAttribute('aria-current', AriaCurrentValue.Page);
   });
 
   test('applies expected aria-current value when inactive', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem>Inactive Chat</ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem>Inactive Chat</ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
-    const item = screen.getByText('Inactive Chat');
+    const item = screen.getByText('Inactive Chat').parentElement;
     expect(item).toHaveAttribute('aria-current', AriaCurrentValue.Unset);
   });
 
@@ -80,37 +73,33 @@ describe('ChatSideNavItem', () => {
     const onClick = jest.fn();
 
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem onClick={onClick}>
-              Clickable Chat
-            </ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem onClick={onClick}>
+            Clickable Chat
+          </ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
-    const item = screen.getByText('Clickable Chat');
-    await userEvent.click(item);
+    const item = screen.getByText('Clickable Chat').parentElement;
+    await userEvent.click(item!);
 
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
   test('applies className prop', () => {
     render(
-      <Providers>
-        <ChatSideNav>
-          <ChatSideNav.Content>
-            <ChatSideNav.SideNavItem className="custom-class">
-              Custom Chat
-            </ChatSideNav.SideNavItem>
-          </ChatSideNav.Content>
-        </ChatSideNav>
-      </Providers>,
+      <ChatSideNav>
+        <ChatSideNav.Content>
+          <ChatSideNav.SideNavItem className="custom-class">
+            Custom Chat
+          </ChatSideNav.SideNavItem>
+        </ChatSideNav.Content>
+      </ChatSideNav>,
     );
 
-    const item = screen.getByText('Custom Chat');
+    const item = screen.getByText('Custom Chat').parentElement;
     expect(item).toHaveClass('custom-class');
   });
 });

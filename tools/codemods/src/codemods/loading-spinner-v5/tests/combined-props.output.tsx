@@ -5,12 +5,20 @@ import { Spinner } from '@leafygreen-ui/loading-indicator';
 export default function App() {
   return (
     <div>
-      {/* Previous description: "Loading data..." */}
-      {/* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */}
-      <Spinner size="default" darkMode={true} className="my-spinner" />
-      {/* Previous description: "Processing..." */}
-      {/* TODO: The Spinner component no longer supports the `description` prop. Please render description text separately using the Typography component. */}
-      <Spinner size="large" colorOverride="#FF0000" />
+      <Spinner
+        size="default"
+        description="Loading data..."
+        darkMode={true}
+        className="my-spinner"
+        direction="horizontal"
+      />
+      <Spinner
+        size="large"
+        description="Processing..."
+        baseFontSize={16}
+        colorOverride="#FF0000"
+        direction="vertical"
+      />
     </div>
   );
 }

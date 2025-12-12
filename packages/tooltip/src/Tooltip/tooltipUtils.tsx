@@ -3,29 +3,34 @@ import clamp from 'lodash/clamp';
 import { css } from '@leafygreen-ui/emotion';
 import { Align, ElementPosition, Justify } from '@leafygreen-ui/popover';
 
-import { borderRadius, notchHeight, notchWidth } from './tooltipConstants';
+import { TooltipVariant } from './Tooltip.types';
+import {
+  borderRadiuses,
+  CONTAINER_SIZE,
+  NOTCH_OVERLAP,
+  NOTCH_WIDTH,
+} from './tooltipConstants';
 
 interface NotchPositionStylesArgs {
   align: Align;
   justify: Justify;
   triggerRect: ElementPosition | DOMRect | ClientRect | null;
+  isCompact: boolean;
 }
 
 export function notchPositionStyles({
   align,
   justify,
   triggerRect,
+  isCompact,
 }: NotchPositionStylesArgs) {
-  if (!align || !justify || !triggerRect) {
+  if (!align || !justify || !triggerRect || isCompact) {
     return {
       notchContainer: '',
       notch: '',
       tooltip: '',
     };
   }
-
-  const containerSize = notchWidth;
-  const notchOverlap = -(containerSize - notchHeight) / 2;
 
   type Styles = 'left' | 'right' | 'top' | 'bottom' | 'margin' | 'transform';
   const notchStyleObj: Partial<Record<Styles, string>> = {};
@@ -35,7 +40,7 @@ export function notchPositionStyles({
    * The bounds used to clamp the notchOffset value.
    * Should match the border-radius of the tooltip
    */
-  const notchOffsetLowerBound = borderRadius;
+  const notchOffsetLowerBound = borderRadiuses[TooltipVariant.Default];
 
   /**
    * This number is somewhat "magical", but adjusted for the Tooltip alignment.
@@ -74,7 +79,7 @@ export function notchPositionStyles({
     case 'top':
     case 'bottom':
       notchOffsetUpperBound = notchOffsetLowerBound * 3;
-      notchOffsetActual = triggerRect.width / 2 - containerSize / 2;
+      notchOffsetActual = triggerRect.width / 2 - CONTAINER_SIZE / 2;
       notchOffset = clamp(
         notchOffsetActual,
         notchOffsetLowerBound,
@@ -87,10 +92,10 @@ export function notchPositionStyles({
 
       if (align === 'top') {
         containerStyleObj.top = 'calc(100% - 1px)';
-        notchStyleObj.top = `${notchOverlap}px`;
+        notchStyleObj.top = `${NOTCH_OVERLAP}px`;
       } else {
         containerStyleObj.bottom = 'calc(100% - 1px)';
-        notchStyleObj.bottom = `${notchOverlap}px`;
+        notchStyleObj.bottom = `${NOTCH_OVERLAP}px`;
         notchStyleObj.transform = `rotate(180deg)`;
       }
 
@@ -129,7 +134,7 @@ export function notchPositionStyles({
     case 'left':
     case 'right':
       notchOffsetUpperBound = notchOffsetLowerBound * 2;
-      notchOffsetActual = triggerRect.height / 2 - containerSize / 2;
+      notchOffsetActual = triggerRect.height / 2 - CONTAINER_SIZE / 2;
       notchOffset = clamp(
         notchOffsetActual,
         notchOffsetLowerBound,
@@ -142,11 +147,11 @@ export function notchPositionStyles({
 
       if (align === 'left') {
         containerStyleObj.left = 'calc(100% - 1px)';
-        notchStyleObj.left = `${notchOverlap}px`;
+        notchStyleObj.left = `${NOTCH_OVERLAP}px`;
         notchStyleObj.transform = `rotate(-90deg)`;
       } else {
         containerStyleObj.right = 'calc(100% - 1px)';
-        notchStyleObj.right = `${notchOverlap}px`;
+        notchStyleObj.right = `${NOTCH_OVERLAP}px`;
         notchStyleObj.transform = `rotate(90deg)`;
       }
 
@@ -185,8 +190,8 @@ export function notchPositionStyles({
   return {
     notchContainer: css`
       position: absolute;
-      width: ${containerSize}px;
-      height: ${containerSize}px;
+      width: ${CONTAINER_SIZE}px;
+      height: ${CONTAINER_SIZE}px;
       overflow: hidden;
       margin: auto;
       pointer-events: none;
@@ -195,12 +200,12 @@ export function notchPositionStyles({
     notch: css`
       ${css(notchStyleObj)};
       position: absolute;
-      width: ${notchWidth}px;
-      height: ${notchWidth}px; // Keep it square. Rotating is simpler
+      width: ${NOTCH_WIDTH}px;
+      height: ${NOTCH_WIDTH}px; // Keep it square. Rotating is simpler
       margin: 0;
     `,
     tooltip: css`
-      min-width: ${notchOffset * 2 + containerSize}px;
+      min-width: ${notchOffset * 2 + CONTAINER_SIZE}px;
       transform: ${tooltipOffsetTransform};
     `,
   };

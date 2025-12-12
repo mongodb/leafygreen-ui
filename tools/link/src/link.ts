@@ -13,13 +13,32 @@ interface LinkOptions {
   verbose: boolean;
   to?: string;
   from?: string;
+  parallel?: boolean;
+  launchEnv?: string;
 }
 
 export async function linkPackages(
   dest: string | undefined,
   opts: LinkOptions,
 ) {
-  const { verbose, scope: scopeFlag, packages, to, from } = opts;
+  const {
+    verbose,
+    scope: scopeFlag,
+    packages,
+    to,
+    from,
+    parallel,
+    launchEnv: launchEnvString,
+  } = opts;
+  let launchEnv: NodeJS.ProcessEnv | undefined;
+
+  if (launchEnvString) {
+    const keyValuePairs = launchEnvString
+      .split('\n')
+      .filter(line => line.trim() && line.includes('='))
+      .map(line => line.trim().split(/=(.*)/).slice(0, 2));
+    launchEnv = Object.fromEntries(keyValuePairs);
+  }
 
   const rootDir = process.cwd();
 
@@ -75,13 +94,16 @@ export async function linkPackages(
   for (const [scopeName, scopePath] of Object.entries(availableScopes)) {
     if (!scopeFlag || scopeFlag.includes(scopeName)) {
       linkPromises.push(
-        linkPackagesForScope(
-          { scopeName, scopePath },
+        linkPackagesForScope({
+          scopeName,
+          scopePath,
           source,
           destination,
           packages,
           verbose,
-        ),
+          parallel,
+          launchEnv,
+        }),
       );
     }
   }

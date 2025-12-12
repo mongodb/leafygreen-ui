@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-prompts",
-  "version": "4.1.4",
+  "version": "4.2.0",
   "description": "LeafyGreen UI Kit Message Prompts",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -21,6 +21,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {

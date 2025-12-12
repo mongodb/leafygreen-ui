@@ -129,12 +129,17 @@ describe('@lg-charts/core/ChartTooltip/CustomTooltip', () => {
     expect(screen.getByText('$300')).toBeInTheDocument();
   });
 
-  test('should render custom axis value with headerFormatter', () => {
+  test('should render custom axis header with headerFormatter', () => {
     renderCustomTooltip({
-      headerFormatter: () => `Axis Value: test`,
+      headerFormatter: (value, dataIndex) =>
+        `Axis Value: ${value} ${dataIndex}`,
     });
 
-    expect(screen.getByText('Axis Value: test')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        `Axis Value: ${baseSeriesData.axisValue} ${baseSeriesData.dataIndex}`,
+      ),
+    ).toBeInTheDocument();
   });
 
   test('should properly display zero values', () => {

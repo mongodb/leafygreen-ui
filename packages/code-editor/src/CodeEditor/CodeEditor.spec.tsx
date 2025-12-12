@@ -350,9 +350,9 @@ describe('packages/code-editor/CodeEditor', () => {
       defaultValue: 'console.log("test");',
     });
 
-    // Focus the editor by clicking on the content area
-    const contentElement = editor.getBySelector(CodeEditorSelectors.Content);
-    userEvent.click(contentElement);
+    // Focus the editor
+    const view = editor.getHandle()?.getEditorViewInstance();
+    view?.focus();
 
     // Verify the editor is focused
     await waitFor(() => {
@@ -378,9 +378,9 @@ describe('packages/code-editor/CodeEditor', () => {
       indentUnit: 'tab',
     });
 
-    // Focus the editor and position cursor at the start of the line
-    const contentElement = editor.getBySelector(CodeEditorSelectors.Content);
-    userEvent.click(contentElement);
+    // Focus the editor
+    const view = editor.getHandle()?.getEditorViewInstance();
+    view?.focus();
 
     // Position cursor at the beginning of the line
     userEvent.keyboard('{Home}');
@@ -407,9 +407,9 @@ describe('packages/code-editor/CodeEditor', () => {
       indentUnit: 'tab',
     });
 
-    // Focus the editor and position cursor on the indented line
-    const contentElement = editor.getBySelector(CodeEditorSelectors.Content);
-    userEvent.click(contentElement);
+    // Focus the editor
+    const view = editor.getHandle()?.getEditorViewInstance();
+    view?.focus();
 
     // Position cursor at the beginning of the line
     userEvent.keyboard('{Home}');

@@ -1,5 +1,36 @@
 # @lg-charts/core
 
+## 2.4.2
+
+### Patch Changes
+
+- 651c0bb: Ensure array fields like `labels` in `<XAxis>` are updated as expected in the chart options.
+  This update changes the recursive merge function in the EChart options utility to treat arrays as atoms: instead of merging their elements, it now replaces arrays entirely. Previously, arrays were being merged like objects, resulting in arrays becoming plain objects with numeric keys. With this fix, when merging, any existing array field (such as `labels` on `<XAxis>`) is now overwritten by the new array rather than partially merged.
+
+## 2.4.1
+
+### Patch Changes
+
+- c5628dc: Fix the issue of chart tooltips not hiding when the user moves their mouse away from the chart, not through simple mouse movement (e.g., by scrolling away)
+
+## 2.4.0
+
+### Minor Changes
+
+- 980a17f: - Adds `index` extra parameter to `headerFormatter` prop of `ChartTooltip` component, particularly useful to format header of category axes.
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/icon-button@17.1.4
+  - @leafygreen-ui/typography@22.2.3
+  - @lg-charts/chart-card@1.1.4
+
 ## 2.3.1
 
 ### Patch Changes

@@ -1,5 +1,28 @@
 # @leafygreen-ui/split-button
 
+## 6.3.0
+
+### Minor Changes
+
+- 9ed0058: [LG-5285](https://jira.mongodb.org/browse/LG-5285): pass through and export `MenuItem` and `MenuItemProps` to fix cross-dependency issues with `@leafygreen-ui/menu`
+
+## 6.2.0
+
+### Minor Changes
+
+- c7d6e62: Export `RenderMode` enum
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+- Updated dependencies [c7d6e62]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/menu@33.1.0
+
 ## 6.1.7
 
 ### Patch Changes
