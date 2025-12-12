@@ -13,6 +13,7 @@ export const ChatButton = forwardRef<HTMLButtonElement, ChatButtonProps>(
     {
       children,
       className,
+      disabled = false,
       variant = Variant.Default,
       ...rest
     }: ChatButtonProps,
@@ -26,8 +27,15 @@ export const ChatButton = forwardRef<HTMLButtonElement, ChatButtonProps>(
       <Button
         {...rest}
         as="button"
-        className={getButtonStyles({ className, theme, variant })}
-        leftGlyph={isDefaultVariant ? <AssistantAvatar /> : <SparkleIcon />}
+        className={getButtonStyles({ className, disabled, theme, variant })}
+        disabled={disabled}
+        leftGlyph={
+          isDefaultVariant ? (
+            <AssistantAvatar disabled={disabled} />
+          ) : (
+            <SparkleIcon />
+          )
+        }
         ref={fwdRef}
         variant={variant}
       >

@@ -34,6 +34,15 @@ const getDefaultButtonStyles = (theme: Theme) => {
     ]};
     color: ${darkMode ? palette.white : palette.green.dark2};
 
+    &:active,
+    &:hover,
+    &:focus-visible {
+      background-color: ${color[theme].background[ColorVariant.Primary][
+        InteractionState.Default
+      ]};
+      color: ${darkMode ? palette.white : palette.green.dark2};
+    }
+
     /* Create gradient border using pseudo-element */
     &::before {
       content: '';
@@ -52,16 +61,18 @@ const getDefaultButtonStyles = (theme: Theme) => {
 
 export const getButtonStyles = ({
   className,
+  disabled,
   theme,
   variant,
 }: {
   className?: string;
+  disabled?: boolean;
   theme: Theme;
   variant: Variant;
 }) =>
   cx(
     {
-      [getDefaultButtonStyles(theme)]: variant === Variant.Default,
+      [getDefaultButtonStyles(theme)]: variant === Variant.Default && !disabled,
     },
     className,
   );
