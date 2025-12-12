@@ -25,7 +25,7 @@ export function buildTypescript(
   passThru?: Array<string>,
   options?: BuildTypescriptOptions,
 ) {
-  const { verbose } = options ?? { verbose: false };
+  const { verbose, downlevel } = options ?? {};
   const packageDir = process.cwd();
   const tsConfigPath = path.join(packageDir, 'tsconfig.json');
 
@@ -34,10 +34,11 @@ export function buildTypescript(
     process.exit(1);
   }
 
-  verbose &&
+  if (verbose) {
     console.log(chalk.blue.bold(`Building TypeScript (v${ts.version})`));
-  verbose && console.log(chalk.blue('Building TypeScript'));
-  verbose && console.log(chalk.gray(tsConfigPath));
+    console.log(chalk.blue('Building TypeScript'));
+    console.log(chalk.gray(tsConfigPath));
+  }
 
   // Any additional options passed in via the CLI
   const cliCompilerOptions = parsePassThruOptions(passThru);
@@ -61,7 +62,7 @@ export function buildTypescript(
   // Build the project
   const exitStatus = builder.build();
 
-  if (options?.downlevel) {
+  if (downlevel) {
     runTypescriptDownlevel({
       verbose,
     });

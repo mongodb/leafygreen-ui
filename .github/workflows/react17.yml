@@ -32,15 +32,14 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
-            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ runner.os }}-REACT17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
-      - name: Setup Node 18
+      - name: Setup Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Install node-gyp
         run: pnpm add --global node-gyp
@@ -61,7 +60,6 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
-            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
@@ -87,15 +85,14 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
-            mcp-ui/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
 
-      - name: Setup Node 18
+      - name: Setup Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Install node-gyp
         run: pnpm add --global node-gyp

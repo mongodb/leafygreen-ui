@@ -10,6 +10,14 @@ const Providers = ({ children }: { children: React.ReactNode }) => (
 );
 
 describe('ChatSideNav', () => {
+  beforeAll(() => {
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
+  });
+
   test('Header shows "New Chat" button when onClickNewChat provided', async () => {
     const onClickNewChat = jest.fn();
 

@@ -114,7 +114,7 @@ export function ChartTooltip({
         renderMode: 'html',
         showContent: enableGroupTooltipSync || isChartHovered || tooltipPinned,
         trigger: 'axis',
-        triggerOn: 'none',
+        triggerOn: tooltipPinned ? 'none' : 'mousemove',
 
         /* STYLING PROPERTIES */
         /**

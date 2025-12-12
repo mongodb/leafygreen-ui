@@ -12,12 +12,14 @@ import {
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
+import { spacing } from '@leafygreen-ui/tokens';
 import {
   Align,
   hoverDelay,
   Justify,
   RenderMode,
   Tooltip,
+  TooltipVariant,
 } from '@leafygreen-ui/tooltip';
 
 import { useCodeContext } from '../CodeContext/CodeContext';
@@ -152,6 +154,8 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
+      shouldClose={shouldClose}
+      spacing={spacing[100]}
       trigger={
         showPanel ? (
           <IconButton {...sharedButtonProps}>
@@ -172,7 +176,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
           </Button>
         )
       }
-      shouldClose={shouldClose}
+      variant={TooltipVariant.Compact}
     >
       {copied ? COPIED_TEXT : COPY_TEXT}
     </Tooltip>

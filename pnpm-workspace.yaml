@@ -3,6 +3,5 @@ packages:
   - 'apps/*'
   - 'charts/*'
   - 'chat/*'
-  - 'mcp-ui/*'
   - 'packages/*'
   - 'tools/*'

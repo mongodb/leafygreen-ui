@@ -1,5 +1,47 @@
 # @lg-chat/message
 
+## 10.1.2
+
+### Patch Changes
+
+- 26e5267: Deprecated clickable styling and functionality for Card component. Updated styles (removed shadows and added border) for Card component.
+- Updated dependencies [26e5267]
+  - @lg-chat/rich-links@4.0.7
+
+## 10.1.1
+
+### Patch Changes
+
+- 19c0cbe: Use latest version of `@leafygreen-ui/code` for compact tooltip UI
+- Updated dependencies [19c0cbe]
+  - @lg-chat/lg-markdown@5.0.2
+
+## 10.1.0
+
+### Minor Changes
+
+- d21ec41: Refactor `IconButton` instances to use compact tooltip UI
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [f7a63e2]
+- Updated dependencies [d21ec41]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @lg-chat/message-rating@7.1.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/avatar@3.1.6
+  - @leafygreen-ui/banner@10.2.4
+  - @leafygreen-ui/icon-button@17.1.4
+  - @leafygreen-ui/typography@22.2.3
+  - @lg-chat/message-feedback@9.0.1
+  - @lg-chat/rich-links@4.0.6
+  - @lg-chat/lg-markdown@5.0.1
+
 ## 10.0.0
 
 ### Major Changes
