@@ -44,7 +44,7 @@ export const TimeInputDisplayProvider = ({
   // TODO: min, max helpers
 
   // Determines if the input should show a select for the day period (AM/PM)
-  const shouldShowSelect = !!hasDayPeriod(providerValue.locale);
+  const is12hFormat = !!hasDayPeriod(providerValue.locale);
 
   // Only used to track the presentation format of the segments, not the value itself
   const formatParts = getFormatParts({
@@ -65,7 +65,7 @@ export const TimeInputDisplayProvider = ({
         ariaLabelledbyProp,
         isDirty,
         setIsDirty,
-        shouldShowSelect,
+        is12hFormat,
         formatParts,
         timeZone,
       }}

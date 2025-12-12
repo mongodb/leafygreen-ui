@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { forwardRef, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -19,7 +18,7 @@ import { TimeInputInputsProps } from './TimeInputInputs.types';
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
-    const { shouldShowSelect, formatParts, timeZone, locale } =
+    const { is12hFormat, formatParts, timeZone, locale } =
       useTimeInputDisplayContext();
     const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
 
@@ -35,15 +34,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       value: value,
     });
 
-    // console.log('TimeInputInputs 🍉', {
-    //   shouldShowSelect,
-    //   formatParts,
-    //   timeZone,
-    //   value: value?.toUTCString(),
-    //   timeParts,
-    //   locale,
-    // });
-
     // TODO: break this out more
     return (
       <FormField aria-labelledby="temp" label="Time Input" ref={forwardedRef}>
@@ -51,7 +41,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           <FormFieldInputContainer>
             <div>TODO: Input segments go here</div>
           </FormFieldInputContainer>
-          {shouldShowSelect && (
+          {is12hFormat && (
             <TimeInputSelect
               unit={selectUnit.displayName}
               onChange={unit => {

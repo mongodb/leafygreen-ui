@@ -42,7 +42,7 @@ export type TimeInputDisplayContextProps = Omit<
   /**
    * Whether the AM/PM select should be shown
    */
-  shouldShowSelect: boolean;
+  is12hFormat: boolean;
 
   /**
    * An array of {@link Intl.DateTimeFormatPart},
