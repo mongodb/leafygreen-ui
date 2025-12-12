@@ -1,6 +1,8 @@
 import React from 'react';
 import kebabCase from 'lodash/kebabCase';
+import mapValues from 'lodash/mapValues';
 
+import { createGlyphComponent } from './createGlyphComponent';
 import { Size } from './glyphCommon';
 import { LGGlyph } from './types';
 
@@ -27,12 +29,22 @@ type GlyphObject = Record<string, LGGlyph.Component>;
 export function createIconComponent<G extends GlyphObject = GlyphObject>(
   glyphs: G,
 ) {
-  const Icon = ({ glyph, fill, ...rest }: IconProps) => {
+  const Icon = ({ glyph, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];
 
     if (SVGComponent) {
-      return <SVGComponent {...rest} fill={fill} />;
+      return <SVGComponent {...rest} />;
     } else {
+      const generatedGlyphs = mapValues(glyphs, (val, key) => {
+        return createGlyphComponent(key, val);
+      });
+
+      const GeneratedSVGComponent = generatedGlyphs[glyph];
+
+      if (GeneratedSVGComponent) {
+        return <GeneratedSVGComponent {...rest} />;
+      }
+
       // TODO: improve fuzzy match
       // Suggest the proper icon casing if there's a near match
       const nearMatch = Object.keys(glyphs).find(

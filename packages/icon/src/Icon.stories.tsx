@@ -9,7 +9,13 @@ import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
 import { GlyphName } from './glyphs';
-import Icon, { glyphs, IconProps, Size } from '.';
+import Icon, {
+  createGlyphComponent,
+  createIconComponent,
+  glyphs,
+  IconProps,
+  Size,
+} from '.';
 
 const meta: StoryMetaType<typeof Icon> = {
   title: 'Components/Display/Icon',
@@ -107,6 +113,22 @@ export const LiveExample: StoryObj<IconProps> = {
       })}
     </div>
   ),
+};
+
+const customGlyphs = {
+  CustomGlyph: createGlyphComponent('CustomGlyph', props => <svg {...props} />),
+};
+
+export const Custom: StoryObj<typeof Icon> = {
+  parameters: {
+    controls: {
+      exclude: [...meta.parameters.controls!.exclude!, 'glyph'],
+    },
+  },
+  render: (args: Omit<IconProps, 'glyph'>) => {
+    const IconComponent = createIconComponent(customGlyphs);
+    return <IconComponent glyph="CustomGlyph" {...args} />;
+  },
 };
 
 export const Generated: StoryObj<typeof Icon> = {
