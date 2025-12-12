@@ -196,7 +196,6 @@ export const useTimeSegmentsAndSelectUnit = ({
    * @param value - The value to set
    */
   const setSegment = (segment: TimeSegment, value: string) => {
-    console.log('useTimeSegments > setSegment 💬💬💬💬💬', { segment, value });
     const updateObject = { [segment]: value };
 
     // We need a way to pass the updated segments to onUpdate and update the reducer state at the same time so we manually call the reducer to get the next state. This will not update the reducer state so we still need to dispatch the action to update the reducer state.
