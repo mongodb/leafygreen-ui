@@ -30,7 +30,7 @@ export const getNewUTCDateFromSegments = ({
     month: string;
     year: string;
   };
-  dayPeriod: string; //TODO: add type
+  dayPeriod: string;
 }) => {
   const { day, month, year } = dateValues;
   const { hour, minute, second } = segments;
@@ -38,15 +38,6 @@ export const getNewUTCDateFromSegments = ({
   const convertedHour = is12HourFormat
     ? convert12hTo24h(hour, dayPeriod)
     : hour;
-
-  console.log('getNewUTCDateFromSegments > segments  🐸🐸🐸', {
-    segments,
-    dayPeriod,
-    hour,
-    minute,
-    second,
-    convertedHour,
-  });
 
   /**
    * Check if all segments are filled and valid. If they are, return the UTC date.
@@ -73,11 +64,6 @@ export const getNewUTCDateFromSegments = ({
      * This takes the local date created above and converts it to UTC using the `zonedTimeToUtc` helper function.
      */
     const utcTime = zonedTimeToUtc(newDate, timeZone); // TODO: move this to date-utils
-    console.log(
-      'getNewUTCDateFromSegments > isEverySegmentFilled && isEverySegmentValid  🍭🍭🍭',
-      { utcTime },
-    );
-
     return utcTime;
   }
 
@@ -85,11 +71,9 @@ export const getNewUTCDateFromSegments = ({
    * Check if any segments are filled. If not, return null. This means all segments are empty.
    */
   if (!doesSomeSegmentExist(segments)) {
-    // console.log('getNewUTCDateFromSegments > !doesSomeSegmentExist  🍭🍭🍭');
     return null;
   }
 
-  // console.log('getNewUTCDateFromSegments > new Date("invalid")  🍭🍭🍭');
   /**
    * Return an invalid date object if some segments are empty or invalid.
    */

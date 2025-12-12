@@ -6,9 +6,9 @@ import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
  */
 export type OnUpdateCallback = (params: {
   newSegments: TimeSegmentsState;
-  prevSegments?: TimeSegmentsState;
+  prevSegments: TimeSegmentsState;
   newSelectUnit: UnitOption;
-  prevSelectUnit?: UnitOption;
+  prevSelectUnit: UnitOption;
 }) => void;
 
 /**
@@ -24,6 +24,7 @@ export interface UseTimeSegmentsOptions {
 export enum ActionKind {
   UPDATE_TIME_SEGMENTS = 'UPDATE_TIME_SEGMENTS',
   UPDATE_SELECT_UNIT = 'UPDATE_SELECT_UNIT',
+  UPDATE_TIME_SEGMENTS_AND_SELECT_UNIT = 'UPDATE_TIME_SEGMENTS_AND_SELECT_UNIT',
 }
 
 /**
@@ -34,7 +35,11 @@ export type Action =
       type: ActionKind.UPDATE_TIME_SEGMENTS;
       payload: Partial<TimeSegmentsState>;
     }
-  | { type: ActionKind.UPDATE_SELECT_UNIT; payload: UnitOption };
+  | { type: ActionKind.UPDATE_SELECT_UNIT; payload: UnitOption }
+  | {
+      type: ActionKind.UPDATE_TIME_SEGMENTS_AND_SELECT_UNIT;
+      payload: { segments: Partial<TimeSegmentsState>; selectUnit: UnitOption };
+    };
 
 export interface TimeSegmentsAndSelectUnitState {
   segments: TimeSegmentsState;

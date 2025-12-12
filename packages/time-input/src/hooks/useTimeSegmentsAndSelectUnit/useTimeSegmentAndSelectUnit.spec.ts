@@ -7,8 +7,8 @@ import {
 } from '@leafygreen-ui/date-utils';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { OnUpdateCallback } from './useTimeSegmentsAndSelectUnit.types';
 import { useTimeSegmentsAndSelectUnit } from './useTimeSegmentsAndSelectUnit';
+import { OnUpdateCallback } from './useTimeSegmentsAndSelectUnit.types';
 
 const renderUseTimeSegmentsAndSelectUnitHook = ({
   initialDate,

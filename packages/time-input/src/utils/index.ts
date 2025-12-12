@@ -11,3 +11,4 @@ export { isEverySegmentFilled } from './isEverySegmentFilled/isEverySegmentFille
 export { isEverySegmentValid } from './isEverySegmentValid/isEverySegmentValid';
 export { isEverySegmentValueExplicit } from './isEverySegmentValueExplicit/isEverySegmentValueExplicit';
 export { isSameUTCDayAndTime } from './isSameUTCDayAndTime/isSameUTCDayAndTime';
+export { shouldSetValue } from './shouldSetValue/shouldSetValue';
