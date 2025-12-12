@@ -64,6 +64,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             <TimeInputBox
               segments={segmentObj}
               setSegment={(segment, value) => {
+                // TODO: This is temp and will be replaced in the next PR
                 // eslint-disable-next-line no-console
                 console.log({ segment, value });
               }}

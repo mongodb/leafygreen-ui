@@ -99,137 +99,139 @@ describe('packages/time-input/time-input-segment', () => {
   describe('Keyboard', () => {
     describe('Arrow Keys', () => {
       describe('hour input', () => {
-        describe('Up arrow', () => {});
-        const formatter = getValueFormatter({
-          charsCount: getTimeSegmentRules({ is12HourFormat: true })['hour']
-            .maxChars,
-        });
-        test('calls handler with value +1 if value is less than max', () => {
-          const onChangeHandler = jest.fn<TimeInputSegmentChangeEventHandler>();
-          const { input } = renderSegment({
-            segment: 'hour',
-            value: formatter(15),
-            onChange: onChangeHandler,
-          });
-
-          userEvent.type(input, '{arrowup}');
-          expect(onChangeHandler).toHaveBeenCalledWith(
-            expect.objectContaining({ value: formatter(16) }),
-          );
-        });
-
-        describe('12 hour format', () => {
+        describe('Up arrow', () => {
           const formatter = getValueFormatter({
             charsCount: getTimeSegmentRules({ is12HourFormat: true })['hour']
               .maxChars,
           });
-
-          test('calls handler with min if value is undefined', () => {
+          test('calls handler with value +1 if value is less than max', () => {
             const onChangeHandler =
               jest.fn<TimeInputSegmentChangeEventHandler>();
-            const { input } = renderSegment(
-              {
-                segment: 'hour',
-                value: '',
-                onChange: onChangeHandler,
-              },
-              {
-                locale: SupportedLocales.en_US,
-              },
-            );
+            const { input } = renderSegment({
+              segment: 'hour',
+              value: formatter(15),
+              onChange: onChangeHandler,
+            });
 
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({
-                value: formatter(
-                  getDefaultMin({ is12HourFormat: true })['hour'],
-                ),
-              }),
+              expect.objectContaining({ value: formatter(16) }),
             );
           });
 
-          test('rolls value over to min value if value exceeds `max`', () => {
-            const onChangeHandler =
-              jest.fn<TimeInputSegmentChangeEventHandler>();
-            const { input } = renderSegment(
-              {
-                segment: 'hour',
-                value: formatter(
-                  getDefaultMax({ is12HourFormat: true })['hour'],
-                ),
-                onChange: onChangeHandler,
-              },
-              {
-                locale: SupportedLocales.en_US,
-              },
-            );
+          describe('12 hour format', () => {
+            const formatter = getValueFormatter({
+              charsCount: getTimeSegmentRules({ is12HourFormat: true })['hour']
+                .maxChars,
+            });
 
-            userEvent.type(input, '{arrowup}');
-            expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({
-                value: formatter(
-                  getDefaultMin({ is12HourFormat: true })['hour'],
-                ),
-              }),
-            );
+            test('calls handler with min if value is undefined', () => {
+              const onChangeHandler =
+                jest.fn<TimeInputSegmentChangeEventHandler>();
+              const { input } = renderSegment(
+                {
+                  segment: 'hour',
+                  value: '',
+                  onChange: onChangeHandler,
+                },
+                {
+                  locale: SupportedLocales.en_US,
+                },
+              );
+
+              userEvent.type(input, '{arrowup}');
+              expect(onChangeHandler).toHaveBeenCalledWith(
+                expect.objectContaining({
+                  value: formatter(
+                    getDefaultMin({ is12HourFormat: true })['hour'],
+                  ),
+                }),
+              );
+            });
+
+            test('rolls value over to min value if value exceeds `max`', () => {
+              const onChangeHandler =
+                jest.fn<TimeInputSegmentChangeEventHandler>();
+              const { input } = renderSegment(
+                {
+                  segment: 'hour',
+                  value: formatter(
+                    getDefaultMax({ is12HourFormat: true })['hour'],
+                  ),
+                  onChange: onChangeHandler,
+                },
+                {
+                  locale: SupportedLocales.en_US,
+                },
+              );
+
+              userEvent.type(input, '{arrowup}');
+              expect(onChangeHandler).toHaveBeenCalledWith(
+                expect.objectContaining({
+                  value: formatter(
+                    getDefaultMin({ is12HourFormat: true })['hour'],
+                  ),
+                }),
+              );
+            });
           });
-        });
 
-        describe('24 hour format', () => {
-          const formatter = getValueFormatter({
-            charsCount: getTimeSegmentRules({ is12HourFormat: false })['hour']
-              .maxChars,
-            allowZero: true,
-          });
+          describe('24 hour format', () => {
+            const formatter = getValueFormatter({
+              charsCount: getTimeSegmentRules({ is12HourFormat: false })['hour']
+                .maxChars,
+              allowZero: true,
+            });
 
-          test('calls handler with min if value is undefined', () => {
-            const onChangeHandler =
-              jest.fn<TimeInputSegmentChangeEventHandler>();
-            const { input } = renderSegment(
-              {
-                segment: 'hour',
-                value: '',
-                onChange: onChangeHandler,
-              },
-              {
-                locale: SupportedLocales.ISO_8601,
-              },
-            );
+            test('calls handler with min if value is undefined', () => {
+              const onChangeHandler =
+                jest.fn<TimeInputSegmentChangeEventHandler>();
+              const { input } = renderSegment(
+                {
+                  segment: 'hour',
+                  value: '',
+                  onChange: onChangeHandler,
+                },
+                {
+                  locale: SupportedLocales.ISO_8601,
+                },
+              );
 
-            userEvent.type(input, '{arrowup}');
-            expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({
-                value: formatter(
-                  getDefaultMin({ is12HourFormat: false })['hour'],
-                ),
-              }),
-            );
-          });
+              userEvent.type(input, '{arrowup}');
+              expect(onChangeHandler).toHaveBeenCalledWith(
+                expect.objectContaining({
+                  value: formatter(
+                    getDefaultMin({ is12HourFormat: false })['hour'],
+                  ),
+                }),
+              );
+            });
 
-          test('rolls value over to min value if value exceeds `max`', () => {
-            const onChangeHandler =
-              jest.fn<TimeInputSegmentChangeEventHandler>();
-            const { input } = renderSegment(
-              {
-                segment: 'hour',
-                value: formatter(
-                  getDefaultMax({ is12HourFormat: false })['hour'],
-                ),
-                onChange: onChangeHandler,
-              },
-              {
-                locale: SupportedLocales.ISO_8601,
-              },
-            );
+            test('rolls value over to min value if value exceeds `max`', () => {
+              const onChangeHandler =
+                jest.fn<TimeInputSegmentChangeEventHandler>();
+              const { input } = renderSegment(
+                {
+                  segment: 'hour',
+                  value: formatter(
+                    getDefaultMax({ is12HourFormat: false })['hour'],
+                  ),
+                  onChange: onChangeHandler,
+                },
+                {
+                  locale: SupportedLocales.ISO_8601,
+                },
+              );
 
-            userEvent.type(input, '{arrowup}');
-            expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({
-                value: formatter(
-                  getDefaultMin({ is12HourFormat: false })['hour'],
-                ),
-              }),
-            );
+              userEvent.type(input, '{arrowup}');
+              expect(onChangeHandler).toHaveBeenCalledWith(
+                expect.objectContaining({
+                  value: formatter(
+                    getDefaultMin({ is12HourFormat: false })['hour'],
+                  ),
+                }),
+              );
+            });
           });
         });
 
