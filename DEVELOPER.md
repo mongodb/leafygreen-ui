@@ -68,22 +68,54 @@ When you run the scaffold script, a `README` file will appear, which is a templa
 
 ### Locally
 
-We use @testing-library/react for writing tests locally. This library helps mock out user interactions with components. You can run all tests by running `yarn test` or turn on watch mode with `yarn test --watch`.
+We use @testing-library/react for writing tests locally. This library helps mock out user interactions with components. You can run all tests by running `pnpm test` or turn on watch mode with `pnpm test --watch`.
 
 ### Linking
 
-We also have a link script, such that you can test components that are in development in environments beyond Storybook. To do so, run `yarn run link -- [path-to-application]`.
+We provide a `link` script to help you test in-development components within environments outside of Storybook such as in your application. To do this, run:
 
-Note: There are some known issues using `yarn link` from yarn workspaces. Using Verdaccio, while more involved, is the more reliable and recommended approach for testing in an external project.
+```
+pnpm run link --to=[path-to-application]
+```
+
+The script does the following in order:
+
+- It scans the destination application for any installed `leafygreen-ui` components in its `node_modules` folder.
+  **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within the destination application inside `node_modules` before running this command.
+- If any `leafygreen-ui` components are found then:
+  - The script runs `pnpm link` in the corresponding leafygreen-ui package directory to publish a link to the package in the pnpm global registry.
+  - The script then runs `pnpm link <package-name>` in the destination application directory to install the package from the published link in the pnpm global registry.
+
+After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, make sure to rebuild the component and the changes will be visible on your running application.
+
+If you encounter issues while linking, try the following any of the following flags:
+
+- When linking multiple packages with `--scope` or multiple `--packages` options, link processes run in parallel by default. If you experience failures, add the `--no-parallel` flag to run the linking tasks sequentially, which can help avoid race conditions.
+
+- If you are using a Node version manager such as `asdf` or `nvm`, add the `--launch-env="$(env)"` flag. This ensures the link script spawns commands using your current shell’s environment, preventing environment pollutions that may happen through the tooling of the version manager.
+
+- In your destination application project, make sure your module resolver picks up `'react'` from your own `node_modules` (not from LeafyGreen’s). If using webpack, you can enforce this by adding an alias in your webpack configuration:
+
+  ```js
+  resolve: {
+    alias: {
+      react: path.dirname(require.resolve('react/package.json'))
+    },
+  },
+  ```
+
+Note: There are some known issues in linking packages with `pnpm link`, if you encounter issues, try using a local registry instead. `Verdaccio` for example is a more reliable and recommended approach for testing in an external project.
 
 ### Using a local registry (Verdaccio)
 
-Publishing test versions to a local registry can be helpful when you need to make changes and test in an external app (or other library). To do this, you can install and use [Verdaccio](https://verdaccio.org/)
+Publishing test versions to a local registry can be helpful when you need to make changes and test
+in an external app (or other library). To do this, you can install and
+use [Verdaccio](https://verdaccio.org/)
 
 #### 1. Install `verdaccio`
 
 ```bash
-yarn install --global verdaccio
+pnpm install --global verdaccio
 ```
 
 #### 2. Start `verdaccio`, and make note on the localhost port (should be `http://localhost:4873/` by default)
@@ -147,12 +179,12 @@ With your local version published, open up some external app. If the app uses a 
 Next, install the newly published version of your package in the external project.
 
 ```bash
-yarn install @leafygreen-ui/<package-name>
+pnpm install @leafygreen-ui/<package-name>
 ```
 
 #### 6. Publishing additional versions
 
-To publish additional versions, manually the version number in `packages/<package-name>/package.json`, and re-run step 4. Then, either manually update the external project's `package.json`, or re-run `yarn install @leafygreen-ui/<package-name>`.
+To publish additional versions, manually update the version number in `packages/<package-name>/package.json`, and re-run step 4. Then, either manually update the external project's `package.json`, or re-run `pnpm install @leafygreen-ui/<package-name>`.
 
 #### 7. Publishing to NPM
 
@@ -160,10 +192,48 @@ If you want to stop publishing to and/or reading from your local Verdaccio serve
 
 ## Creating a new component
 
-- Run `yarn create-package <package-name>` to create a new component directory with default configurations
+- Run `pnpm create-package <package-name>` to create a new component directory with default configurations
 - Add the new component to `build.tsconfig.json`
 - If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
-- Run `yarn run init` to link all packages before starting development
+- Run `pnpm run init` to link all packages before starting development
+
+## Publishing a new package
+
+This repository uses [npm trusted publishing with OIDC](https://docs.npmjs.com/trusted-publishers) for secure automated releases. However, new packages require a manual first publish before automation can take over.
+
+### Initial Publish (Required for New Packages)
+
+When you create a new package, you must manually publish the first version:
+
+1. **Build the package**
+
+   ```bash
+   pnpm build --filter="<package-name>"
+   ```
+
+2. **Publish to npm**
+
+   ```bash
+   cd <directory>/<package-name>
+   npm publish --access public
+   ```
+
+3. **Configure trusted publisher** on [npmjs.com](https://www.npmjs.com):
+   - Navigate to your package → Settings → Trusted Publishers
+   - Add a trusted publisher:
+     - **Repository**: `mongodb/leafygreen-ui`
+     - **Workflow**: `release.yml`
+
+### Subsequent Releases
+
+After the initial publish and trusted publisher configuration, all future releases are handled automatically:
+
+1. Add a changeset: `pnpm changeset`
+2. Merge your PR to `main`
+3. The "Version Packages" PR will be created automatically
+4. Merge the "Version Packages" PR to publish to npm
+
+For more details on changesets and versioning, see the [README](./README.md#committing).
 
 ## Marking a Storybook story to be imported in mongodb.design
 

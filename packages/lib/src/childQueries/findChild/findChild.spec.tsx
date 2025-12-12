@@ -77,6 +77,30 @@ describe('packages/lib/findChild', () => {
     expect((found as React.ReactElement).props.text).toBe('also-in-fragment');
   });
 
+  test('should find mapped children', () => {
+    const COUNT = 5;
+    const children = new Array(COUNT).fill(null).map((_, i) => {
+      return <Foo text={`Foo number ${i}`} />;
+    });
+
+    const found = findChild(children, 'isFoo');
+    expect((found as React.ReactElement).props.text).toBe('Foo number 0');
+  });
+
+  test('should find deeply mapped children', () => {
+    const COUNT = 5;
+    const children = (
+      <>
+        {new Array(COUNT).fill(null).map((_, i) => {
+          return <Foo text={`Foo number ${i}`} />;
+        })}
+      </>
+    );
+
+    const found = findChild(children, 'isFoo');
+    expect((found as React.ReactElement).props.text).toBe('Foo number 0');
+  });
+
   test('should NOT find components in deeply nested fragments (search depth limitation)', () => {
     const children = (
       <React.Fragment>

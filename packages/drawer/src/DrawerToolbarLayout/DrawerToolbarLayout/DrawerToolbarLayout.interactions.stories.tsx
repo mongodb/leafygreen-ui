@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { storybookExcludedControlParams } from '@lg-tools/storybook-utils';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 
@@ -7,6 +10,7 @@ import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { GuideCue } from '@leafygreen-ui/guide-cue';
 import { usePrevious } from '@leafygreen-ui/hooks';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -298,21 +302,23 @@ export default {
     },
   },
   decorators: [
-    (Story: StoryFn) => (
-      <div
-        className={css`
-          height: 100%;
-          display: flex;
-          align-items: center;
-          margin: -100px;
-          width: 100vw;
-        `}
-      >
-        <Story />
-      </div>
+    (StoryFn, ctx) => (
+      <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+        <div
+          className={css`
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin: -100px;
+            width: 100vw;
+          `}
+        >
+          <StoryFn />
+        </div>
+      </LeafyGreenProvider>
     ),
   ],
-};
+} satisfies StoryMetaType<typeof Drawer>;
 
 const Template: StoryFn<DrawerToolbarLayoutPropsWithDisplayMode> = ({
   displayMode = DisplayMode.Embedded,

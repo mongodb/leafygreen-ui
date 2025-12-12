@@ -1,5 +1,23 @@
 # @leafygreen-ui/modal
 
+## 21.0.0
+
+### Major Changes
+
+- fda2d29: Update modal testing exports from `@leafygreen-ui/modal` to `@leafygreen-ui/modal/testing`
+
+## 20.3.3
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/icon-button@17.1.4
+
 ## 20.3.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 14.7.1
+
+### Patch Changes
+
+- 43810b4: Expand post-build script to validate that no unnecessary @emotion packages are imported into icon bundles.
+
 ## 14.7.0
 
 ### Minor Changes

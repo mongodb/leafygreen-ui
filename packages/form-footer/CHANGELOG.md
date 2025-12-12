@@ -1,5 +1,37 @@
 # @leafygreen-ui/form-footer
 
+## 9.3.0
+
+### Minor Changes
+
+- 9930f12: Exports button prop interfaces
+
+### Patch Changes
+
+- 9930f12: Passes `data-lgid` to the root `footer` element
+- Updated dependencies [9930f12]
+  - @leafygreen-ui/lib@15.7.0
+
+## 9.2.3
+
+### Patch Changes
+
+- 9e5932c: Added internal container to preserve component styles when sticky positioning is applied externally
+
+## 9.2.2
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [c7d6e62]
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/split-button@6.2.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/banner@10.2.4
+
 ## 9.2.1
 
 ### Patch Changes

@@ -64,7 +64,7 @@ describe('packages/message-actions', () => {
   });
 
   describe('copy button', () => {
-    test('renders copy button in compact mode by default', () => {
+    test('renders copy button', () => {
       renderMessageActions();
 
       expect(

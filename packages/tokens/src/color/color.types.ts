@@ -24,8 +24,10 @@ const Variant = {
   Warning: 'warning',
   Error: 'error',
   Success: 'success',
-  SuccessLink: 'successLink',
   Link: 'link',
+  OnError: 'onError',
+  OnSuccess: 'onSuccess',
+  OnSuccessLink: 'onSuccessLink',
 } as const;
 type Variant = (typeof Variant)[keyof typeof Variant];
 

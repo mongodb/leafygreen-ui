@@ -8,6 +8,7 @@ interface LinkPackagesToOptions
   extends Pick<PackageDetails, 'scopeName' | 'packageName'> {
   verbose?: boolean;
   packageManager?: SupportedPackageManager;
+  env?: NodeJS.ProcessEnv;
 }
 
 /**
@@ -16,7 +17,13 @@ interface LinkPackagesToOptions
  */
 export async function linkPackageTo(
   destination: string,
-  { scopeName, packageName, verbose, packageManager }: LinkPackagesToOptions,
+  {
+    scopeName,
+    packageName,
+    verbose,
+    packageManager,
+    env,
+  }: LinkPackagesToOptions,
 ): Promise<void> {
   const fullPackageName = `${scopeName}/${packageName}`;
   // eslint-disable-next-line no-console
@@ -30,6 +37,7 @@ export async function linkPackageTo(
       name: `link_dst:${packageName}`,
       cwd: destination,
       verbose,
+      env,
     });
   } catch (_) {
     throw new Error(`Couldn't link package: ${fullPackageName}`);

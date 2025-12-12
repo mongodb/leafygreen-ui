@@ -25,6 +25,9 @@
       "path": "../../packages/emotion"
     },
     {
+      "path": "../../packages/hooks"
+    },
+    {
       "path": "../../packages/icon"
     },
     {
@@ -41,6 +44,9 @@
     },
     {
       "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/tooltip"
     },
     {
       "path": "../../packages/typography"

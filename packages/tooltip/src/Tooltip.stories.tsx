@@ -5,7 +5,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { type StoryObj } from '@storybook/react';
+import { StoryFn, type StoryObj } from '@storybook/react';
 import {
   expect,
   within,
@@ -17,13 +17,19 @@ import {
 import { Button, Size } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { Icon } from '@leafygreen-ui/icon';
-import { RenderMode, TestUtils } from '@leafygreen-ui/popover';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { RenderMode } from '@leafygreen-ui/popover';
 import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
-import { Align, Justify, Tooltip, TooltipProps, TriggerEvent } from '.';
-
-const { getAlign, getJustify } = TestUtils;
+import {
+  Align,
+  Justify,
+  Tooltip,
+  TooltipProps,
+  TooltipVariant,
+  TriggerEvent,
+} from '.';
 
 const meta: StoryMetaType<typeof Tooltip> = {
   title: 'Composition/Overlays/Tooltip',
@@ -33,6 +39,7 @@ const meta: StoryMetaType<typeof Tooltip> = {
     renderMode: RenderMode.TopLayer,
     triggerEvent: TriggerEvent.Hover,
     children: 'I am a tooltip!',
+    variant: TooltipVariant.Default,
   },
   argTypes: {
     open: { control: 'boolean' },
@@ -45,6 +52,10 @@ const meta: StoryMetaType<typeof Tooltip> = {
     triggerEvent: {
       control: 'select',
       options: Object.values(TriggerEvent),
+    },
+    variant: {
+      control: 'radio',
+      options: Object.values(TooltipVariant),
     },
   },
   parameters: {
@@ -61,75 +72,86 @@ const meta: StoryMetaType<typeof Tooltip> = {
       delay: transitionDuration.slowest,
     },
     generate: {
-      storyNames: ['ShortString', 'LongString', 'JSXChildren'],
+      storyNames: ['LightMode', 'DarkMode'],
       combineArgs: {
-        darkMode: [false, true],
-        align: Object.values(Align),
-        justify: Object.values(Justify),
         baseFontSize: Object.values(BaseFontSize),
+        variant: Object.values(TooltipVariant),
       },
+      excludeCombinations: [
+        {
+          baseFontSize: BaseFontSize.Body2,
+          variant: TooltipVariant.Compact,
+        },
+      ],
       args: {
         open: true,
       },
       decorator: (Instance, ctx) => (
-        <div
-          className={css`
-            width: 256px;
-            height: 100px;
-            display: flex;
-            align-items: ${getAlign(ctx?.args.align, ctx?.args.justify)};
-            justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
-          `}
-        >
-          <Instance
-            trigger={
-              <Button darkMode={ctx?.args.darkMode} size="xsmall">
-                Trigger
-              </Button>
-            }
-          />
-        </div>
+        <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+          <div
+            className={css`
+              width: 240px;
+              height: 120px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+          >
+            <Instance trigger={<Button size="xsmall">Trigger</Button>} />
+          </div>
+        </LeafyGreenProvider>
       ),
     },
   },
 };
 export default meta;
 
+const TemplateComponent: StoryFn<TooltipProps> = (args: TooltipProps) => (
+  <div
+    className={css`
+      padding: 100px;
+    `}
+  >
+    <Tooltip
+      trigger={<Button size={Size.XSmall}>{args.triggerEvent} me!</Button>}
+      {...args}
+    />
+  </div>
+);
+
 export const LiveExample: StoryObj<TooltipProps> = {
+  render: TemplateComponent,
   parameters: {
     chromatic: {
       disableSnapshot: true,
     },
   },
-  render: ({ darkMode, ...args }: TooltipProps) => (
-    <div
-      className={css`
-        padding: 100px;
-      `}
-    >
-      <Tooltip
-        trigger={<Button size={Size.XSmall}>{args.triggerEvent} me!</Button>}
-        darkMode={darkMode}
-        {...args}
-      />
-    </div>
-  ),
 };
 
 export const Controlled: StoryObj<TooltipProps> = {
-  ...LiveExample,
+  render: TemplateComponent,
   args: {
-    ...LiveExample.args,
     open: true,
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
 
 export const HoverTrigger: StoryObj<TooltipProps> = {
+  render: TemplateComponent,
   args: {
     triggerEvent: TriggerEvent.Hover,
   },
-  render: LiveExample.render,
-  play: async ({ canvasElement, args }) => {
+  play: async ({
+    canvasElement,
+    args,
+  }: {
+    canvasElement: HTMLElement;
+    args: TooltipProps;
+  }) => {
     const trigger = within(canvasElement).getByRole('button');
 
     userEvent.hover(trigger);
@@ -144,11 +166,17 @@ export const HoverTrigger: StoryObj<TooltipProps> = {
 };
 
 export const HoverTriggerUnhover: StoryObj<TooltipProps> = {
+  render: TemplateComponent,
   args: {
     triggerEvent: TriggerEvent.Hover,
   },
-  render: LiveExample.render,
-  play: async ({ canvasElement, args }) => {
+  play: async ({
+    canvasElement,
+    args,
+  }: {
+    canvasElement: HTMLElement;
+    args: TooltipProps;
+  }) => {
     const trigger = within(canvasElement).getByRole('button');
     let tooltip: HTMLElement;
 
@@ -168,11 +196,17 @@ export const HoverTriggerUnhover: StoryObj<TooltipProps> = {
 };
 
 export const ClickTrigger: StoryObj<TooltipProps> = {
+  render: TemplateComponent,
   args: {
     triggerEvent: TriggerEvent.Click,
   },
-  render: LiveExample.render,
-  play: async ({ canvasElement, args }) => {
+  play: async ({
+    canvasElement,
+    args,
+  }: {
+    canvasElement: HTMLElement;
+    args: TooltipProps;
+  }) => {
     const trigger = within(canvasElement).getByRole('button');
 
     userEvent.click(trigger);
@@ -209,7 +243,13 @@ export const InitialOpen: StoryObj<TooltipProps> = {
       </div>
     );
   },
-  play: async ({ canvasElement, args }) => {
+  play: async ({
+    canvasElement,
+    args,
+  }: {
+    canvasElement: HTMLElement;
+    args: TooltipProps;
+  }) => {
     await waitFor(async () => {
       const tooltip = await within(canvasElement).findByText(
         args.children as string,
@@ -220,7 +260,7 @@ export const InitialOpen: StoryObj<TooltipProps> = {
 };
 
 export const WithLeafyGreenChildren: StoryObj<TooltipProps> = {
-  ...LiveExample,
+  render: TemplateComponent,
   args: {
     initialOpen: true,
     children: (
@@ -380,7 +420,13 @@ export const ScrollableContainer: StoryObj<TooltipScrollableProps> = {
       </div>
     );
   },
-  play: async ({ canvasElement, args }) => {
+  play: async ({
+    canvasElement,
+    args,
+  }: {
+    canvasElement: HTMLElement;
+    args: TooltipProps;
+  }) => {
     const container = within(canvasElement).getByTestId('scrollable-container');
     const trigger = within(canvasElement).getByRole('button');
     userEvent.click(trigger);
@@ -394,5 +440,19 @@ export const ScrollableContainer: StoryObj<TooltipScrollableProps> = {
       top: 1000,
       left: 0,
     });
+  },
+};
+
+export const LightMode: StoryObj<TooltipProps> = {
+  render: TemplateComponent,
+  args: {
+    darkMode: false,
+  },
+};
+
+export const DarkMode: StoryObj<TooltipProps> = {
+  render: TemplateComponent,
+  args: {
+    darkMode: true,
   },
 };

@@ -88,8 +88,8 @@ async function renderEditorAndOpenSearchPanel(defaultValue: string) {
   });
 
   // Focus the editor
-  const contentElement = editor.getBySelector(CodeEditorSelectors.Content);
-  await userEvent.click(contentElement);
+  const view = editor.getHandle()?.getEditorViewInstance();
+  view?.focus();
 
   // Wait for editor to be focused
   await waitFor(() => {

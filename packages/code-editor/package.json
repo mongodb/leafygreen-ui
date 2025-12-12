@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/code-editor",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "LeafyGreen UI Kit Code Editor",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
