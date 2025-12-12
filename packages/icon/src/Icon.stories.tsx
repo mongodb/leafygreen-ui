@@ -116,7 +116,7 @@ export const LiveExample: StoryObj<IconProps> = {
 };
 
 const customGlyphs = {
-  CustomGlyph: createGlyphComponent('CustomGlyph', props => <svg {...props} />),
+  ...glyphs,
 };
 
 export const Custom: StoryObj<typeof Icon> = {
@@ -126,8 +126,8 @@ export const Custom: StoryObj<typeof Icon> = {
     },
   },
   render: (args: Omit<IconProps, 'glyph'>) => {
-    const IconComponent = createIconComponent(customGlyphs);
-    return <IconComponent glyph="CustomGlyph" {...args} />;
+    const CustomIcon = createIconComponent(customGlyphs);
+    return <CustomIcon glyph="Checkmark" {...args} />;
   },
 };
 
