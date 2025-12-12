@@ -109,7 +109,6 @@ export const getContentWrapperStyles = ({
 
 const getBaseTextAreaStyles = ({ theme }: { theme: Theme }) => css`
   min-width: ${TEXT_AREA_MIN_WIDTH}px;
-  width: 100%;
   font-size: ${BaseFontSize.Body1}px;
   font-family: ${fontFamilies.default};
   font-weight: ${fontWeights.regular};

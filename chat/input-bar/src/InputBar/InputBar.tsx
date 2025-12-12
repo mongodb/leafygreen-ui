@@ -398,7 +398,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
               })}
               ref={focusContainerRef}
             >
-              <div
+              <label
                 className={getContentWrapperStyles({
                   disabled,
                   isFocused,
@@ -432,7 +432,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                     <InputBarSendButton disabled={isSendButtonDisabled} />
                   )}
                 </div>
-              </div>
+              </label>
             </div>
           </div>
           <DisclaimerText className={disclaimerTextStyles} />
