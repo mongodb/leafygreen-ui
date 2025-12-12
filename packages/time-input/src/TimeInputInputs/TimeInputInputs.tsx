@@ -18,8 +18,7 @@ import { TimeInputInputsProps } from './TimeInputInputs.types';
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
-    const { is12hFormat, formatParts, timeZone, locale } =
-      useTimeInputDisplayContext();
+    const { is12hFormat, timeZone, locale } = useTimeInputDisplayContext();
     const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
 
     const { value } = useTimeInputContext();
@@ -33,6 +32,9 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       timeZone: timeZone,
       value: value,
     });
+
+    // eslint-disable-next-line no-console
+    console.log('timeParts 🍎🍎🍎', timeParts);
 
     // TODO: break this out more
     return (

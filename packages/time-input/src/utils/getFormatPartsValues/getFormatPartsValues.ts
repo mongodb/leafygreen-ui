@@ -37,9 +37,9 @@ export const getFormatPartsValues = ({
   const formatter = getFormatter({
     locale,
     withDate: true,
-    withTime: isValueValid ? true : false, // if the value is not valid then we don't want to return hour, minute, and second but we still want to return day, month, and year.
+    withTime: isValueValid, // if the value is not valid then we don't want to return hour, minute, and second but we still want to return day, month, and year.
     options: {
-      timeZone: timeZone,
+      timeZone,
     },
   });
 

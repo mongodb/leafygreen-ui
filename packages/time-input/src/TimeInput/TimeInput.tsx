@@ -42,8 +42,6 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
       initialValueProp,
     );
 
-    // console.log('🥝', { value: value?.toUTCString() });
-
     /**
      * Separate the props that are added to the display context and the props that are added to the component
      */
