@@ -39,8 +39,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 
     /**
      * Creates time segments object
-     *
-     * // TODO: these are temp
+     * // TODO: these are temp and will be replaced in the next PR
      */
     const segmentObj: TimeSegmentsState = {
       hour,
@@ -50,18 +49,13 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 
     /**
      * Hook to manage the select unit
+     * // TODO: This is temp and will be replaced in the next PR
      */
     const { selectUnit, setSelectUnit } = useSelectUnit({
       dayPeriod: timeParts.dayPeriod,
       value,
       unitOptions,
     });
-
-    // // eslint-disable-next-line no-console
-    // console.log('TimeInputInputs 🍉', {
-    //   value: value?.toUTCString(),
-    //   segmentObj,
-    // });
 
     return (
       <TimeFormField ref={forwardedRef}>
