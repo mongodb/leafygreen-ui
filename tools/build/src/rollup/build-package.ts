@@ -12,12 +12,6 @@ const loadConfigFile = _loadConfigFile as LoadConfigFile;
 import { bundleStats } from 'rollup-plugin-bundle-stats';
 
 interface BuildPackageOptions {
-  /**
-   * Pass this option if the function is called directly, and not via Commander.action.
-   * We use this option in this package's `bin/build-packages.js` command,
-   * in order to log a warning to consumers to use the `lg` command from @lg-tools/cli
-   */
-  direct?: boolean;
   verbose?: boolean;
 }
 

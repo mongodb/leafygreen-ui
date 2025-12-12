@@ -1,5 +1,16 @@
 # @leafygreen-ui/descendants
 
+## 3.1.0
+
+### Minor Changes
+
+- 9930f12: Exports `Position` enum. Removes type annotation from `Direction` export
+
+### Patch Changes
+
+- Updated dependencies [9930f12]
+  - @leafygreen-ui/lib@15.7.0
+
 ## 3.0.6
 
 ### Patch Changes

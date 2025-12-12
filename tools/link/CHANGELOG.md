@@ -1,5 +1,20 @@
 # @lg-tools/link
 
+## 0.3.0
+
+### Minor Changes
+
+- ee58160: - Added new flags to `link` script to cover broader use cases:
+  - `--no-parallel`: Run the link command sequentially for each package. Useful for when the default parallel approach fails
+  - `--launch-env`: A string of environment variable lines as `KEY=VALUE`, separated by a newline. Only the specified environment variables will be used during npm link commands in the source and destination directories. This is useful to workaround environment variable pollution by tools such as version managers (e.g., asdf) or script runners (e.g., pnpm) that override the script's environment which impacts the launched `npm link` commands. We recommend using `--launch-env="$(env)"` to use your original shell environment.
+  - Improve documentation for linking in DEVELOPER.md
+- 999febf: developer experience slightly improves by adding more detailed logging to spawn processes in the link script. Previously, running link script would lead to a group of processes being spawned in parallel all piping their stdout and stderr to the console in verbose mode which made it difficult to distinguish what each line of output was from which process. The command and working directory are also now logged for each process along with their exit code.
+
+### Patch Changes
+
+- Updated dependencies [56804b8]
+  - @lg-tools/build@0.8.4
+
 ## 0.2.14
 
 ### Patch Changes

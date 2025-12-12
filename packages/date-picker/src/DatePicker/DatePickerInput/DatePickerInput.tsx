@@ -8,7 +8,10 @@ import React, {
 import isNull from 'lodash/isNull';
 
 import { isInvalidDateObject, isSameUTCDay } from '@leafygreen-ui/date-utils';
-import { isElementInputSegment } from '@leafygreen-ui/input-box';
+import {
+  focusAndSelectSegment,
+  isElementInputSegment,
+} from '@leafygreen-ui/input-box';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import {
@@ -20,7 +23,6 @@ import { DateInputSegmentChangeEventHandler } from '../../shared/components/Date
 import { useSharedDatePickerContext } from '../../shared/context';
 import { getFormattedDateStringFromSegments } from '../../shared/utils';
 import { useDatePickerContext } from '../DatePickerContext';
-import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
 
@@ -77,14 +79,17 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       if (!disabled) {
         openMenu(e);
         const { target } = e;
-        const segmentToFocus = getSegmentToFocus({
+
+        /**
+         * Focus and select the appropriate segment.
+         *
+         * This is done here instead of `InputBox` because this component has padding that needs to be accounted for on click.
+         */
+        focusAndSelectSegment({
           target,
           formatParts,
           segmentRefs,
         });
-
-        segmentToFocus?.focus();
-        segmentToFocus?.select();
       }
     };
 

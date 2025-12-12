@@ -7,6 +7,8 @@ import { IconButton } from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { spacing as spacingToken } from '@leafygreen-ui/tokens';
+import { Justify, Tooltip, TooltipVariant } from '@leafygreen-ui/tooltip';
 
 import {
   buttonContainerStyles,
@@ -80,40 +82,56 @@ export const MessageRating = forwardRef(
             className={buttonContainerStyles}
             role="radiogroup"
           >
-            <IconButton
-              id={`like-${inputName}`}
-              aria-label="Like this message"
-              title="Helpful"
-              value="liked"
-              onClick={handleLikeClick}
-              active={isLiked}
-              ref={likeButtonRef}
-              className={getIconButtonStyles({
-                isActive: isLiked,
-                isHidden: hideThumbsUp,
-              })}
-              aria-checked={isLiked}
-              role="radio"
+            <Tooltip
+              justify={Justify.Middle}
+              spacing={spacingToken[100]}
+              trigger={
+                <IconButton
+                  id={`like-${inputName}`}
+                  aria-label="Like this message"
+                  value="liked"
+                  onClick={handleLikeClick}
+                  active={isLiked}
+                  ref={likeButtonRef}
+                  className={getIconButtonStyles({
+                    isActive: isLiked,
+                    isHidden: hideThumbsUp,
+                  })}
+                  aria-checked={isLiked}
+                  role="radio"
+                >
+                  <ThumbsUp />
+                </IconButton>
+              }
+              variant={TooltipVariant.Compact}
             >
-              <ThumbsUp />
-            </IconButton>
-            <IconButton
-              id={`dislike-${inputName}`}
-              aria-label="Dislike this message"
-              title="Not helpful"
-              value="disliked"
-              onClick={handleDislikeClick}
-              active={isDisliked}
-              ref={dislikeButtonRef}
-              className={getIconButtonStyles({
-                isActive: isDisliked,
-                isHidden: hideThumbsDown,
-              })}
-              aria-checked={isDisliked}
-              role="radio"
+              Helpful
+            </Tooltip>
+            <Tooltip
+              justify={Justify.Middle}
+              spacing={spacingToken[100]}
+              trigger={
+                <IconButton
+                  id={`dislike-${inputName}`}
+                  aria-label="Dislike this message"
+                  value="disliked"
+                  onClick={handleDislikeClick}
+                  active={isDisliked}
+                  ref={dislikeButtonRef}
+                  className={getIconButtonStyles({
+                    isActive: isDisliked,
+                    isHidden: hideThumbsDown,
+                  })}
+                  aria-checked={isDisliked}
+                  role="radio"
+                >
+                  <ThumbsDown />
+                </IconButton>
+              }
+              variant={TooltipVariant.Compact}
             >
-              <ThumbsDown />
-            </IconButton>
+              Not helpful
+            </Tooltip>
           </div>
         </div>
       </LeafyGreenProvider>

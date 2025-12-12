@@ -4,6 +4,13 @@ import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
+import { spacing as spacingToken } from '@leafygreen-ui/tokens';
+import {
+  Align,
+  Justify,
+  Tooltip,
+  TooltipVariant,
+} from '@leafygreen-ui/tooltip';
 import { Body } from '@leafygreen-ui/typography';
 
 import { MessagePromptsProvider } from '../MessagePromptsContext';
@@ -54,15 +61,24 @@ export const MessagePrompts = forwardRef<HTMLDivElement, MessagePromptsProps>(
                   <Body className={getLabelStyles(theme)}>{label}</Body>
                 )}
                 {onClickRefresh && (
-                  <IconButton
-                    aria-label="Refresh prompts"
-                    darkMode={darkMode}
-                    disabled={hasSelectedPrompt}
-                    onClick={onClickRefresh}
-                    title="Refresh prompts"
+                  <Tooltip
+                    align={Align.Right}
+                    justify={Justify.Middle}
+                    spacing={spacingToken[100]}
+                    trigger={
+                      <IconButton
+                        aria-label="Refresh prompts"
+                        darkMode={darkMode}
+                        disabled={hasSelectedPrompt}
+                        onClick={onClickRefresh}
+                      >
+                        <RefreshIcon />
+                      </IconButton>
+                    }
+                    variant={TooltipVariant.Compact}
                   >
-                    <RefreshIcon />
-                  </IconButton>
+                    Refresh prompts
+                  </Tooltip>
                 )}
               </div>
             )}

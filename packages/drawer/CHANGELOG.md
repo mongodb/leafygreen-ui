@@ -1,5 +1,25 @@
 # @leafygreen-ui/drawer
 
+## 5.2.0
+
+### Minor Changes
+
+- d48f73f: Refactor `ToolbarIconButton` to use compact tooltip UI
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+- Updated dependencies [d48f73f]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/icon-button@17.1.4
+  - @leafygreen-ui/toolbar@1.2.0
+  - @leafygreen-ui/typography@22.2.3
+  - @leafygreen-ui/tabs@17.0.8
+
 ## 5.1.3
 
 ### Patch Changes

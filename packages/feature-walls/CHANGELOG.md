@@ -1,5 +1,26 @@
 # @lg-private/feature-walls
 
+## 5.0.4
+
+### Patch Changes
+
+- 26e5267: Deprecated clickable styling and functionality for Card component. Updated styles (removed shadows and added border) for Card component.
+- Updated dependencies [26e5267]
+  - @leafygreen-ui/card@13.3.0
+
+## 5.0.3
+
+### Patch Changes
+
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [43810b4]
+- Updated dependencies [ec4fad8]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/tokens@4.1.0
+  - @leafygreen-ui/typography@22.2.3
+  - @leafygreen-ui/vertical-stepper@3.0.4
+
 ## 5.0.2
 
 ### Patch Changes

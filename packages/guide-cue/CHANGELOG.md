@@ -1,5 +1,23 @@
 # @leafygreen-ui/guide-cue
 
+## 8.2.0
+
+### Minor Changes
+
+- c7d6e62: Export `BeaconAlign` enum
+
+### Patch Changes
+
+- 55580b8: The GuideCue is updated for the focus to be on the primary button instead of the close button when opened for an improved UX
+- cb31ce6: fix: remove unexpected @emotion imports from icon package dependency
+- Updated dependencies [f7a63e2]
+- Updated dependencies [43810b4]
+- Updated dependencies [cb31ce6]
+  - @leafygreen-ui/tooltip@14.3.0
+  - @leafygreen-ui/icon@14.7.1
+  - @leafygreen-ui/icon-button@17.1.4
+  - @leafygreen-ui/typography@22.2.3
+
 ## 8.1.1
 
 ### Patch Changes

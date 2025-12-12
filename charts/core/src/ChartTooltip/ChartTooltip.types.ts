@@ -26,7 +26,7 @@ export interface ChartTooltipProps {
   sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
   seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
   seriesNameFormatter?: (name: SeriesName) => ReactNode;
-  headerFormatter?: (value: number | string) => ReactNode;
+  headerFormatter?: (value: number | string, index: number) => ReactNode;
   /**
    * Specifies the visual indicator (axis pointer) used with the tooltip:
    * - 'line' (default): Shows a vertical dashed line on hover.

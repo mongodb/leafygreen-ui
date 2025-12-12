@@ -1,5 +1,18 @@
 # @leafygreen-ui/code-editor
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies [fda2d29]
+  - @leafygreen-ui/modal@21.0.0
+
+## 1.0.3
+
+### Patch Changes
+
+- 19c0cbe: Refactor `IconButton` instances to use compact tooltip UI
+
 ## 1.0.2
 
 ### Patch Changes
