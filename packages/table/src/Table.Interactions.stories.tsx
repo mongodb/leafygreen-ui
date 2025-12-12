@@ -219,6 +219,11 @@ export const StickyHeader = {
       expect(headerRow).toBeVisible();
     });
   },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
 };
 
 export const DynamicData = {
@@ -235,5 +240,10 @@ export const DynamicData = {
     await userEvent.click(button);
 
     expect(cell).toHaveTextContent(/^9\.7\.5$/);
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
   },
 };
