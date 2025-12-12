@@ -39,7 +39,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -80,7 +79,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -124,7 +122,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -178,7 +175,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -231,7 +227,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -284,7 +279,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js

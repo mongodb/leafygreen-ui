@@ -1,5 +1,5 @@
 import PageLoader, { type PageLoaderProps } from './PageLoader';
-import { Spinner, type SpinnerProps } from './Spinner';
+import { Spinner, SpinnerDirection, type SpinnerProps } from './Spinner';
 export {
   PageLoader,
   type PageLoaderProps,
@@ -8,5 +8,6 @@ export {
    * For simple loading spinners, prefer importing the tree-shaken version from `@leafygreen-ui/loading-indicator/spinner`
    */
   Spinner,
+  SpinnerDirection,
   type SpinnerProps,
 };
