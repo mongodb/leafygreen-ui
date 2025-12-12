@@ -40,7 +40,7 @@
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
-  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/chat-button",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/chat/chat-button",
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui"
