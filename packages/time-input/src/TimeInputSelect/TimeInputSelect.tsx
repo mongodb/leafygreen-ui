@@ -9,6 +9,7 @@ import {
 } from '@leafygreen-ui/select';
 
 import { unitOptions } from '../constants';
+import { getLgIds } from '../utils/getLgIds';
 
 import { selectStyles, wrapperBaseStyles } from './TimeInputSelect.styles';
 import { TimeInputSelectProps, UnitOption } from './TimeInputSelect.types';
@@ -50,6 +51,7 @@ export const TimeInputSelect = ({
         allowDeselect={false}
         dropdownWidthBasis={DropdownWidthBasis.Option}
         renderMode={RenderMode.TopLayer}
+        data-lgid={getLgIds().select} // TODO: temp get lg ids from context
       >
         {unitOptions.map(option => (
           <Option key={option.displayName} value={option.displayName}>

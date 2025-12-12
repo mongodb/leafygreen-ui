@@ -6,6 +6,7 @@ import { isDateObject } from '@leafygreen-ui/date-utils';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { useTimeSegmentsAndSelectUnit } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit';
+import { OnUpdateCallback } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit.types';
 import { TimeSegmentsState } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
@@ -22,6 +23,7 @@ import { TimeInputInputsProps } from './TimeInputInputs.types';
 
 /**
  * @internal
+ * This component renders and updates the time segments and select unit.
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
@@ -38,21 +40,10 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 
     /**
      * Handles the change of the select unit.
-     *
-     * @param unit - The new select unit
      */
     const handleSelectChange = (unit: UnitOption) => {
       setSelectUnit(unit);
     };
-
-    /**
-     * Gets the time parts from the value
-     */
-    const { month, day, year } = getFormatPartsValues({
-      locale: locale,
-      timeZone: timeZone,
-      value: value,
-    });
 
     /**
      * Handles the update of the segments and select unit.
@@ -62,21 +53,26 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
      * @param newSelectUnit - The new select unit
      * @param prevSelectUnit - The previous select unit
      */
-    const handleSegmentUpdate = ({
+    const handleSegmentUpdate: OnUpdateCallback = ({
       newSegments,
       prevSegments,
       newSelectUnit,
       prevSelectUnit,
-    }: {
-      newSegments: TimeSegmentsState;
-      prevSegments: TimeSegmentsState;
-      newSelectUnit: UnitOption;
-      prevSelectUnit: UnitOption;
     }) => {
       const hasAnySegmentChanged = !isEqual(newSegments, prevSegments);
       const hasSelectUnitChanged = !isEqual(newSelectUnit, prevSelectUnit);
 
+      // If any segment has changed or the select unit has changed and the time is in 12 hour format, then we need to update the date
+      // If the time is in 24h format we don't need to check for the select unit since it's not applicable.
       if (hasAnySegmentChanged || (hasSelectUnitChanged && is12HourFormat)) {
+        //Gets the time parts from the value
+        const { month, day, year } = getFormatPartsValues({
+          locale: locale,
+          timeZone: timeZone,
+          value: value,
+        });
+
+        // Constructs a date object in UTC from day, month, year segments
         const newDate = getNewUTCDateFromSegments({
           segments: newSegments,
           is12HourFormat,
@@ -89,6 +85,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           dayPeriod: newSelectUnit.displayName,
         });
 
+        // Checks if the new date should be set
         const shouldSetNewValue = shouldSetValue({
           newDate,
           isDirty,
@@ -96,6 +93,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           is12HourFormat,
         });
 
+        // TODO: There will be a few more checks added once validation is implemented
         if (shouldSetNewValue) setValue(newDate);
       }
     };
