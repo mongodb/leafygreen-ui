@@ -61,10 +61,6 @@ const Template: StoryFn<typeof TimeInput> = props => {
   const [value, setValue] = useState<DateType | undefined>(
     new Date('1990-02-20T04:00:00Z'),
   );
-  // const [value, setValue] = useState<DateType | undefined>();
-  // const [value, setValue] = useState<DateType | undefined>(
-  //   new Date('1990--20T14:30:50Z'),
-  // );
 
   return (
     <TimeInput

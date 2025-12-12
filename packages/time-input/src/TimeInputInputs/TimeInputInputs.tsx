@@ -140,13 +140,3 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 );
 
 TimeInputInputs.displayName = 'TimeInputInputs';
-
-// TODO:
-// OPen up a few PRs
-// ADD tests for this component
-// Extend timeline
-// add a new row for adding on segmentChange
-// tell brooke
-
-// add refs
-// add onSegmentChange

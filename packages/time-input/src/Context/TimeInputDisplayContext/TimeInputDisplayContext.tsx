@@ -61,7 +61,7 @@ export const TimeInputDisplayProvider = ({
     Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
 
-  // TODO: min, max helpers coming soon
+  // TODO: min, max helpers will be in a future PR
 
   return (
     <TimeInputDisplayContext.Provider
