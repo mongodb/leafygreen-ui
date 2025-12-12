@@ -41,20 +41,27 @@ export const TimeInputDisplayProvider = ({
     ...defaults(rest, defaultTimeInputDisplayContext),
   };
 
-  // TODO: min, max helpers
+  /**
+   * Determines if the input should show a select for the day period (AM/PM)
+   */
+  const is12HourFormat = !!hasDayPeriod(providerValue.locale);
 
-  // Determines if the input should show a select for the day period (AM/PM)
-  const is12hFormat = !!hasDayPeriod(providerValue.locale);
-
-  // Only used to track the presentation format of the segments, not the value itself
+  /**
+   * Only used to track the presentation format of the segments, not the value itself
+   */
   const formatParts = getFormatParts({
     showSeconds: providerValue.showSeconds,
   });
 
+  /**
+   * Gets the time zone from the provider value or the browser's default
+   */
   const timeZone = defaultTo(
     providerValue.timeZone,
     Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
+
+  // TODO: min, max helpers will be in a future PR
 
   return (
     <TimeInputDisplayContext.Provider
@@ -65,7 +72,7 @@ export const TimeInputDisplayProvider = ({
         ariaLabelledbyProp,
         isDirty,
         setIsDirty,
-        is12hFormat,
+        is12HourFormat,
         formatParts,
         timeZone,
       }}

@@ -52,6 +52,6 @@ export const defaultTimeInputDisplayContext: TimeInputDisplayContextProps = {
   errorMessage: '',
   isDirty: false,
   setIsDirty: () => {},
-  is12hFormat: false,
+  is12HourFormat: false,
   showSeconds: true,
 };

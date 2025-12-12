@@ -1,3 +1,6 @@
+/**
+ * An enumerable object that maps the time part names to their values
+ */
 export const TimePartKeys = {
   hour: 'hour',
   minute: 'minute',
@@ -11,3 +14,16 @@ export const TimePartKeys = {
 export type TimePartKeys = (typeof TimePartKeys)[keyof typeof TimePartKeys];
 
 export type TimeParts = Record<TimePartKeys, string>;
+
+/**
+ * An enumerable object that maps the time segment names to their values
+ */
+export const TimeSegment = {
+  Hour: 'hour',
+  Minute: 'minute',
+  Second: 'second',
+} as const;
+
+export type TimeSegment = (typeof TimeSegment)[keyof typeof TimeSegment];
+
+export type TimeSegmentsState = Record<TimeSegment, string>;

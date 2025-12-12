@@ -39,6 +39,9 @@
       "path": "../hooks"
     },
     {
+      "path": "../input-box"
+    },
+    {
       "path": "../select"
     },
     {

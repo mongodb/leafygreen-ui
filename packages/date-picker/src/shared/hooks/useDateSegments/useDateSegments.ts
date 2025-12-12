@@ -54,8 +54,12 @@ export const useDateSegments = (
       (isNull(date) || isUndefined(date)) && isValidDate(prevDate);
 
     if (hasDateValueChanged || hasDateBeenCleared) {
+      // This returns a new state object with the updated segments from the new date
       const newSegments = getFormattedSegmentsFromDate(date);
+      // Pass the new state and a copy of the previous state to the callback
       onUpdate?.(newSegments, { ...segments });
+      // This updates all segments in the internal state of the hook
+      // This internally invokes `dateSegmentsReducer` and passes `updateObject` as the second argument. `segments` is the first argument. This updates the internal state of the hook.
       dispatch(newSegments);
     }
   }, [date, onUpdate, prevDate, segments]);
@@ -69,8 +73,11 @@ export const useDateSegments = (
     // finally, commit the new state
 
     const updateObject = { [segment]: value };
+    // This returns a new state object with the updated segment
     const nextState = dateSegmentsReducer(segments, updateObject);
+    // Pass the new state and a copy of the previous state to the callback
     onUpdate?.(nextState, { ...segments }, segment);
+    // This internally invokes `dateSegmentsReducer` and passes `updateObject` as the second argument. `segments` is the first argument. This updates the internal state of the hook.
     dispatch(updateObject);
   };
 

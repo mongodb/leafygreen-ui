@@ -34,6 +34,7 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/form-field": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/input-box": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/select": "workspace:^",
