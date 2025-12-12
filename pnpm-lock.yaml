@@ -3543,6 +3543,9 @@ importers:
       '@leafygreen-ui/hooks':
         specifier: workspace:^
         version: link:../hooks
+      '@leafygreen-ui/input-box':
+        specifier: workspace:^
+        version: link:../input-box
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../leafygreen-provider
