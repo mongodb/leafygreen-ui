@@ -31,6 +31,7 @@ export const displayContextPropNames: Array<DisplayContextPropKeys> = [
   'size',
   'errorMessage',
   'state',
+  'showSeconds',
 ];
 
 /**
@@ -51,4 +52,6 @@ export const defaultTimeInputDisplayContext: TimeInputDisplayContextProps = {
   errorMessage: '',
   isDirty: false,
   setIsDirty: () => {},
+  is12hFormat: false,
+  showSeconds: true,
 };
