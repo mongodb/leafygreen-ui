@@ -36,9 +36,7 @@ export function createIconComponent<G extends GlyphObject = GlyphObject>(
     : mapValues(glyphs, (val, key) => {
         if (isComponentGlyph(val)) return val;
 
-        const isValSVG = typeof val === 'string';
-
-        return isValSVG ? createGlyphComponent(key, val) : val;
+        return createGlyphComponent(key, val);
       });
 
   const Icon = ({ glyph, ...rest }: IconProps) => {

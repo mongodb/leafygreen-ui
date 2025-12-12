@@ -9,13 +9,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
 import { GlyphName } from './glyphs';
-import Icon, {
-  createGlyphComponent,
-  createIconComponent,
-  glyphs,
-  IconProps,
-  Size,
-} from '.';
+import Icon, { createIconComponent, glyphs, IconProps, Size } from '.';
 
 const meta: StoryMetaType<typeof Icon> = {
   title: 'Components/Display/Icon',
@@ -115,10 +109,6 @@ export const LiveExample: StoryObj<IconProps> = {
   ),
 };
 
-const customGlyphs = {
-  ...glyphs,
-};
-
 export const Custom: StoryObj<typeof Icon> = {
   parameters: {
     controls: {
@@ -126,7 +116,7 @@ export const Custom: StoryObj<typeof Icon> = {
     },
   },
   render: (args: Omit<IconProps, 'glyph'>) => {
-    const CustomIcon = createIconComponent(customGlyphs);
+    const CustomIcon = createIconComponent(glyphs);
     return <CustomIcon glyph="Checkmark" {...args} />;
   },
 };
