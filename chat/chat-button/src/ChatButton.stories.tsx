@@ -17,6 +17,11 @@ const meta: StoryMetaType<typeof ChatButton> = {
         size: Object.values(Size),
         variant: Object.values(Variant),
       },
+      decorator: (Instance, context) => (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <Instance />
+        </LeafyGreenProvider>
+      ),
     },
   },
   decorators: [
@@ -63,4 +68,9 @@ export const LiveExample: StoryObj<ChatButtonProps> = {
 
 export const Generated: StoryObj<ChatButtonProps> = {
   render: () => <></>,
+  parameters: {
+    chromatic: {
+      delay: 2500,
+    },
+  },
 };
