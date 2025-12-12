@@ -21,11 +21,6 @@ export const TimeInputProvider = ({
   handleValidation: _handleValidation,
 }: PropsWithChildren<TimeInputProviderProps>) => {
   const setValue = (newVal?: DateType) => {
-    // eslint-disable-next-line no-console
-    console.log('setValue 🍊🍊🍊', {
-      newVal,
-      newValueString: newVal?.toUTCString(),
-    });
     _setValue(newVal ?? null);
   };
 
