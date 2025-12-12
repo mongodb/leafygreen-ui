@@ -25,6 +25,7 @@ import {
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
+import { isEqual } from 'lodash';
 
 /**
  * @internal
@@ -77,39 +78,58 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             newSelectUnit,
             prevSelectUnit,
           }) => {
-            const newDate = getNewUTCDateFromSegments({
-              segments: newSegments,
-              is12HourFormat,
-              dateValues: {
-                day,
-                month,
-                year,
-              },
-              timeZone,
-              dayPeriod: newSelectUnit.displayName,
-            });
-
-            const shouldSetNewValue = shouldSetValue(
-              newDate,
-              isDirty,
-              newSegments,
-              is12HourFormat,
+            const hasAnySegmentChanged = !isEqual(newSegments, prevSegments);
+            const hasSelectUnitChanged = !isEqual(
+              newSelectUnit,
+              prevSelectUnit,
             );
 
             console.log(
-              '🍎🍎🍎TimeInputInputs > useTimeSegments > onUpdate > shouldSetValue 🍎🍎🍎',
+              'TimeInputInputs > useTimeSegments > onUpdate  🎉🎉🎉',
               {
-                newDate,
-                newSegments,
-                shouldSetNewValue,
-                prevSegments,
-                newSelectUnit,
-                prevSelectUnit,
+                hasAnySegmentChanged,
+                hasSelectUnitChanged,
               },
             );
 
-            if (shouldSetNewValue) {
-              setValue(newDate);
+            if (
+              hasAnySegmentChanged ||
+              (hasSelectUnitChanged && is12HourFormat)
+            ) {
+              const newDate = getNewUTCDateFromSegments({
+                segments: newSegments,
+                is12HourFormat,
+                dateValues: {
+                  day,
+                  month,
+                  year,
+                },
+                timeZone,
+                dayPeriod: newSelectUnit.displayName,
+              });
+
+              const shouldSetNewValue = shouldSetValue(
+                newDate,
+                isDirty,
+                newSegments,
+                is12HourFormat,
+              );
+
+              console.log(
+                '🌈🌈🌈TimeInputInputs > useTimeSegments > onUpdate > shouldSetValue 🌈🌈🌈',
+                {
+                  newDate,
+                  newSegments,
+                  shouldSetNewValue,
+                  prevSegments,
+                  newSelectUnit,
+                  prevSelectUnit,
+                },
+              );
+
+              if (shouldSetNewValue) {
+                setValue(newDate);
+              }
             }
           },
         },

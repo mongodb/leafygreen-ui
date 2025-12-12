@@ -35,7 +35,18 @@ export const getNewUTCDateFromSegments = ({
   const { day, month, year } = dateValues;
   const { hour, minute, second } = segments;
 
-  const convertedHour = convert12hTo24h(hour, dayPeriod);
+  const convertedHour = is12HourFormat
+    ? convert12hTo24h(hour, dayPeriod)
+    : hour;
+
+  console.log('getNewUTCDateFromSegments > segments  🐸🐸🐸', {
+    segments,
+    dayPeriod,
+    hour,
+    minute,
+    second,
+    convertedHour,
+  });
 
   /**
    * Check if all segments are filled and valid. If they are, return the UTC date.

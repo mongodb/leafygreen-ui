@@ -2,15 +2,20 @@ import { TimeSegmentsState } from '../../shared.types';
 import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
 
 /**
+ * Callback passed into the hook, called when any segment updates
+ */
+export type OnUpdateCallback = (params: {
+  newSegments: TimeSegmentsState;
+  prevSegments?: TimeSegmentsState;
+  newSelectUnit: UnitOption;
+  prevSelectUnit?: UnitOption;
+}) => void;
+
+/**
  * Options for the useTimeSegmentsAndSelect hook
  */
 export interface UseTimeSegmentsOptions {
-  onUpdate: (params: {
-    newSegments: TimeSegmentsState;
-    prevSegments?: TimeSegmentsState;
-    newSelectUnit: UnitOption;
-    prevSelectUnit?: UnitOption;
-  }) => void;
+  onUpdate?: OnUpdateCallback;
 }
 
 /**

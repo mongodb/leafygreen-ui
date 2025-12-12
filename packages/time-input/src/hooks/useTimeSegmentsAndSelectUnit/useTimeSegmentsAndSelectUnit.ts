@@ -1,5 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
@@ -60,6 +62,13 @@ const getInitialState = (
     timeZone,
     value: date,
   });
+
+  // console.log('getInitialState 🍎🍎🍎', {
+  //   date,
+  //   locale,
+  //   timeZone,
+  //   dayPeriod,
+  // });
 
   const initialSelectUnitOption = findUnitOptionByDayPeriod(
     dayPeriod,
@@ -124,56 +133,141 @@ export const useTimeSegmentsAndSelectUnit = ({
     // If the segments were updated in setSegment then the newSegments should be the same as the segments in state.
     const haveSegmentsChanged = !isEqual(newSegments, segments);
 
-    // console.log('useTimeSegments > useEffect > 🦧🦧🦧🦧🦧🦧🦧🦧🦧', {
-    //   date,
-    //   prevDate,
-    //   isDateValid,
-    //   haveSegmentsChanged,
-    //   segments,
-    //   newSegments,
-    //   hasDateAndTimeChanged,
-    // });
+    // If the date has been set to null from a previously valid date
+    const hasTimeBeenCleared =
+      (isNull(date) || isUndefined(date)) && isValidDate(prevDate);
 
-    // Checks if the date is valid and the segments have changed
-    if (isDateValid && haveSegmentsChanged) {
-      // console.log('useTimeSegments > useEffect > newSegments ☎️🌼☎️🌼', {
-      //   newSegments,
-      //   segments,
-      // });
+    console.log('useTimeSegments > useEffect > 🦧🦧🦧🦧🦧🦧🦧🦧🦧', {
+      date,
+      prevDate,
+      isDateValid,
+      haveSegmentsChanged,
+      segments,
+      newSegments,
+      hasDateAndTimeChanged,
+      hasTimeBeenCleared,
+      hasLocaleChanged,
+      hasTimeZoneChanged,
+    });
 
-      // If the date is the same but the timezone or locale has changed then update the segments but don't call onUpdate because the date value did not change, only the presentation format changed. (instead on segmentChange should be called)
-      if (!hasDateAndTimeChanged && (hasLocaleChanged || hasTimeZoneChanged)) {
-        // console.log(
-        //   'useTimeSegments > useEffect > locale or timezone changed  🎃',
-        //   {
-        //     newSegments,
-        //     segments,
-        //   },
-        // );
-        dispatch({
-          type: ActionKind.UPDATE_TIME_SEGMENTS,
-          payload: newSegments,
-        });
-      }
+    // if the date is valid, date has been changed, or the time has been cleared then update the segments and call onUpdate and dispatch
 
-      // If the date has changed then update the segments and call `onUpdate`
-      if (hasDateAndTimeChanged) {
-        // console.log('useTimeSegments > useEffect > hasDateAndTimeChanged  🐡', {
-        //   newSegments,
-        //   segments,
-        // });
-        dispatch({
-          type: ActionKind.UPDATE_TIME_SEGMENTS,
-          payload: newSegments,
-        });
-        onUpdate?.({
+    if ((isDateValid && hasDateAndTimeChanged) || hasTimeBeenCleared) {
+      console.log(
+        'useTimeSegments > useEffect > hasDateAndTimeChanged  🐡🐡🐡🐡',
+        {
           newSegments,
-          prevSegments: { ...segments },
-          newSelectUnit: selectUnit,
-          prevSelectUnit: selectUnit,
-        });
-      }
+          segments,
+        },
+      );
+      const { dayPeriod } = getFormatPartsValues({
+        locale,
+        timeZone,
+        value: date,
+      });
+
+      dispatch({
+        type: ActionKind.UPDATE_TIME_SEGMENTS,
+        payload: newSegments,
+      });
+      dispatch({
+        type: ActionKind.UPDATE_SELECT_UNIT,
+        payload: findUnitOptionByDayPeriod(dayPeriod, unitOptions),
+      });
+      onUpdate?.({
+        newSegments,
+        prevSegments: { ...segments },
+        newSelectUnit: findUnitOptionByDayPeriod(dayPeriod, unitOptions),
+        prevSelectUnit: selectUnit,
+      });
+
+      return;
     }
+
+    // if the date is valid and the date has not changed but the segments are different then update the segments and only call dispatch
+
+    if (
+      isDateValid &&
+      !hasDateAndTimeChanged &&
+      haveSegmentsChanged &&
+      (hasLocaleChanged || hasTimeZoneChanged)
+    ) {
+      console.log('useTimeSegments > useEffect > haveSegmentsChanged  🐡', {
+        newSegments,
+        segments,
+        hasLocaleChanged,
+        hasTimeZoneChanged,
+      });
+      dispatch({
+        type: ActionKind.UPDATE_TIME_SEGMENTS,
+        payload: newSegments,
+      });
+    }
+
+    // // If the date has been set to null from a previously valid date then update the segments and call onUpdate
+    // if (hasTimeBeenCleared) {
+    //   dispatch({
+    //     type: ActionKind.UPDATE_TIME_SEGMENTS,
+    //     payload: newSegments,
+    //   });
+    //   onUpdate?.({
+    //     newSegments: newSegments,
+    //     prevSegments: { ...segments },
+    //     newSelectUnit: selectUnit,
+    //     prevSelectUnit: selectUnit,
+    //   });
+    // }
+
+    // // Checks if the date is valid and the segments have changed
+    // if (isDateValid && haveSegmentsChanged) {
+    //   console.log('useTimeSegments > useEffect > newSegments ☎️🌼☎️🌼', {
+    //     newSegments,
+    //     segments,
+    //   });
+
+    //   // If the date is the same but the timezone or locale has changed then update the segments but don't call onUpdate because the date value did not change, only the presentation format changed. (instead on segmentChange should be called)
+    //   if (!hasDateAndTimeChanged && (hasLocaleChanged || hasTimeZoneChanged)) {
+    //     console.log(
+    //       'useTimeSegments > useEffect > locale or timezone changed  🎃',
+    //       {
+    //         newSegments,
+    //         segments,
+    //       },
+    //     );
+    //     dispatch({
+    //       type: ActionKind.UPDATE_TIME_SEGMENTS,
+    //       payload: newSegments,
+    //     });
+    //   }
+
+    //   // If the date has changed then update the segments and call `onUpdate`
+    //   if (hasDateAndTimeChanged) {
+    //     console.log('useTimeSegments > useEffect > hasDateAndTimeChanged  🐡', {
+    //       newSegments,
+    //       segments,
+    //     });
+    //     const { dayPeriod } = getFormatPartsValues({
+    //       locale,
+    //       timeZone,
+    //       value: date,
+    //     });
+
+    //     dispatch({
+    //       type: ActionKind.UPDATE_TIME_SEGMENTS,
+    //       payload: newSegments,
+    //     });
+    //     dispatch({
+    //       type: ActionKind.UPDATE_SELECT_UNIT,
+    //       payload: findUnitOptionByDayPeriod(dayPeriod, unitOptions),
+    //     });
+    //     onUpdate?.({
+    //       newSegments,
+    //       prevSegments: { ...segments },
+    //       newSelectUnit: findUnitOptionByDayPeriod(dayPeriod, unitOptions),
+    //       prevSelectUnit: selectUnit,
+    //     });
+    //   }
+    // }
   }, [
     date,
     locale,
@@ -193,7 +287,7 @@ export const useTimeSegmentsAndSelectUnit = ({
    * @param value - The value to set
    */
   const setSegment = (segment: TimeSegment, value: string) => {
-    // console.log('useTimeSegments > setSegment 💬', { segment, value });
+    console.log('useTimeSegments > setSegment 💬💬💬💬💬', { segment, value });
     const updateObject = { [segment]: value };
 
     // We need a way to pass the updated segments to onUpdate and update the reducer state at the same time so we manually call the reducer to get the next state. This will not update the reducer state so we still need to dispatch the action to update the reducer state.
@@ -228,17 +322,12 @@ export const useTimeSegmentsAndSelectUnit = ({
     //   is12HourFormat,
     // });
 
-    const hasFormatChanged = prevIs12HourFormat !== is12HourFormat;
     const isValueValid = isValidDate(date);
-
     /**
-     * Run this effect if the format has changed from 12h to 24h or 24h to 12h OR if the date is valid and the format is 12h.
-     *
-     * If the format has changed, the value doesn't matter if the format is 24h. This should update the state but not call onUpdate since only the presentational format has changed.
-     *
-     * If the format has changed OR if the timeZone has changed then update the select unit.
+     * Run this effect if the date is valid and the format is 12h. We don't call onUpdate because this change is most likely from the presentation format changing, not the date value changing.
      */
-    if (hasFormatChanged || (isValueValid && is12HourFormat)) {
+
+    if (isValueValid && is12HourFormat) {
       // console.log('useSelectUnit > useEffect  🥺🍎🥺');
       const { dayPeriod } = getFormatPartsValues({
         locale,
