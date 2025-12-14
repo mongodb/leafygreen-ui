@@ -14,8 +14,6 @@
  * @returns The converted hour
  */
 export const convert12hTo24h = (hour: string, dayPeriod: string) => {
-  // console.log('convert12hTo24h 🐸🐸🐸', { hour, dayPeriod });
-
   if (hour === '') return hour;
 
   // if dayPeriod is AM and hour is 12, return 0 since 12 AM is 00:00

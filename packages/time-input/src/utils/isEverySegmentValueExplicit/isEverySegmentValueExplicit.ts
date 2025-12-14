@@ -27,12 +27,6 @@ export const isEverySegmentValueExplicit = ({
       allowZero: segment === TimeSegment.Hour ? !is12HourFormat : true,
     });
 
-    // console.log('isEverySegmentValueExplicit > isExplicit 🍕🍕🍕', {
-    //   segment,
-    //   value,
-    //   isExplicit,
-    // });
-
     return isExplicit;
   });
 };

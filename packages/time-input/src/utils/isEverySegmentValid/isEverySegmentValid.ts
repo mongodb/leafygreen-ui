@@ -28,12 +28,6 @@ export const isEverySegmentValid = ({
         segmentEnum: TimeSegment,
       });
 
-      // console.log('isEverySegmentValid > isSegmentValid 🍎🍎🍎', {
-      //   segment,
-      //   value,
-      //   isSegmentValid,
-      // });
-
       return isSegmentValid;
     },
   );
