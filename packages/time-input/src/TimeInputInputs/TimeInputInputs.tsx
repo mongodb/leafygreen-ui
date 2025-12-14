@@ -15,13 +15,11 @@ import { Overline } from '@leafygreen-ui/typography';
 import { TWENTY_FOUR_HOURS_TEXT } from '../constants';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
-import { useTimeSegmentsAndSelectUnit } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit';
-import { OnUpdateCallback } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit.types';
+import { OnUpdateCallback,useTimeSegmentsAndSelectUnit } from '../hooks';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSegmentChangeEventHandler } from '../TimeInputSegment/TimeInputSegment.types';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
-import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 import {
   getFormatPartsValues,
   getNewUTCDateFromSegments,
@@ -71,13 +69,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
     }, [isDirty, setIsDirty, value]);
 
     /**
-     * Handles the change of the select unit.
-     */
-    const handleSelectChange = (unit: UnitOption) => {
-      setSelectUnit(unit);
-    };
-
-    /**
      * Handles the update of the segments and select unit.
      *
      * @param newSegments - The new segments
@@ -85,7 +76,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
      * @param newSelectUnit - The new select unit
      * @param prevSelectUnit - The previous select unit
      */
-    const handleSegmentUpdate: OnUpdateCallback = ({
+    const handleSegmentAndSelectUpdate: OnUpdateCallback = ({
       newSegments,
       prevSegments,
       newSelectUnit,
@@ -141,7 +132,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
         locale,
         timeZone,
         options: {
-          onUpdate: handleSegmentUpdate,
+          onUpdate: handleSegmentAndSelectUpdate,
         },
       });
 
@@ -203,7 +194,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             <TimeInputSelect
               unit={selectUnit.displayName}
               onChange={unit => {
-                handleSelectChange(unit);
+                setSelectUnit(unit);
               }}
             />
           )}

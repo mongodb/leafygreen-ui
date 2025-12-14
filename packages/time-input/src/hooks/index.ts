@@ -1,1 +1,4 @@
-export { useTimeSegmentsAndSelectUnit } from './useTimeSegmentsAndSelectUnit';
+export {
+  type OnUpdateCallback,
+  useTimeSegmentsAndSelectUnit,
+} from './useTimeSegmentsAndSelectUnit';
