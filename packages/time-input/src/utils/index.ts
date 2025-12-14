@@ -1,3 +1,14 @@
+export { convert12hTo24h } from './convert12hTo24h/convert12hTo24h';
+export { doesSomeSegmentExist } from './doesSomeSegmentExist/doesSomeSegmentExist';
+export { findUnitOptionByDayPeriod } from './findUnitOptionByDayPeriod/findUnitOptionByDayPeriod';
 export { getFormatPartsValues } from './getFormatPartsValues/getFormatPartsValues';
+export { getFormattedTimeSegments } from './getFormattedTimeSegments/getFormattedTimeSegments';
+export { getFormattedTimeSegmentsFromDate } from './getFormattedTimeSegmentsFromDate/getFormattedTimeSegmentsFromDate';
 export { getFormatter } from './getFormatter/getFormatter';
+export { getNewUTCDateFromSegments } from './getNewUTCDateFromSegments/getNewUTCDateFromSegments';
 export { hasDayPeriod } from './hasDayPeriod/hasDayPeriod';
+export { isEverySegmentFilled } from './isEverySegmentFilled/isEverySegmentFilled';
+export { isEverySegmentValid } from './isEverySegmentValid/isEverySegmentValid';
+export { isEverySegmentValueExplicit } from './isEverySegmentValueExplicit/isEverySegmentValueExplicit';
+export { isSameUTCDayAndTime } from './isSameUTCDayAndTime/isSameUTCDayAndTime';
+export { shouldSetValue } from './shouldSetValue/shouldSetValue';
