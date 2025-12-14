@@ -38,13 +38,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
     }, [isDirty, setIsDirty, value]);
 
     /**
-     * Handles the change of the select unit.
-     */
-    const handleSelectChange = (unit: UnitOption) => {
-      setSelectUnit(unit);
-    };
-
-    /**
      * Handles the update of the segments and select unit.
      *
      * @param newSegments - The new segments
@@ -125,7 +118,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             <TimeInputSelect
               unit={selectUnit.displayName}
               onChange={unit => {
-                handleSelectChange(unit);
+                setSelectUnit(unit);
               }}
             />
           )}
