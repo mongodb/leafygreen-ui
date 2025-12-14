@@ -161,6 +161,7 @@ describe('packages/time-input-inputs', () => {
                 },
               });
 
+            // February 20, 2025 00:00:00 UTC in ISO_8601 is February 20, 2025 00:00:00 (UTC+0 hours)
             expect(hourInput.value).toBe('00');
             expect(minuteInput.value).toBe('00');
             expect(secondInput.value).toBe('00');
@@ -529,24 +530,79 @@ describe('packages/time-input-inputs', () => {
       });
 
       describe('With no initial value', () => {
-        test('is called when typing an explicit value', () => {
-          const setValue = jest.fn();
+        describe('With different time zones', () => {
+          describe('UTC', () => {
+            test('is called when typing an explicit value', () => {
+              const setValue = jest.fn();
 
-          const { hourInput, minuteInput, secondInput } = renderTimeInputInputs(
-            {
-              providerProps: { value: null, setValue },
-              displayProps: {
-                timeZone: 'UTC',
-              },
-            },
-          );
-          userEvent.type(hourInput, '08');
-          userEvent.type(minuteInput, '20');
-          userEvent.type(secondInput, '30');
-          expect(setValue).toHaveBeenCalledWith(
-            new Date('2025-01-01T08:20:30Z'),
-          );
+              const { hourInput, minuteInput, secondInput } =
+                renderTimeInputInputs({
+                  providerProps: { value: null, setValue },
+                  displayProps: {
+                    timeZone: 'UTC',
+                  },
+                });
+              userEvent.type(hourInput, '08');
+              userEvent.type(minuteInput, '20');
+              userEvent.type(secondInput, '30');
+
+              // Without a value, new Date() will be used to get the current date.
+              // 2025-01-01T00:00:00Z UTC is January 1, 2025 00:00:00 in UTC (UTC+0 hours)
+              expect(setValue).toHaveBeenCalledWith(
+                new Date('2025-01-01T08:20:30Z'),
+              );
+            });
+          });
+
+          describe('America/New_York', () => {
+            test('is called when typing an explicit value', () => {
+              const setValue = jest.fn();
+
+              const { hourInput, minuteInput, secondInput } =
+                renderTimeInputInputs({
+                  providerProps: { value: null, setValue },
+                  displayProps: {
+                    timeZone: 'America/New_York',
+                  },
+                });
+              userEvent.type(hourInput, '08');
+              userEvent.type(minuteInput, '20');
+              userEvent.type(secondInput, '30');
+
+              // Without a value, new Date() will be used to get the current date in the time zone.
+              // current date is january 1, 2025 00:00:00 in UTC is December 31, 2024 in America/New_York
+              // December 31, 2024 08:20:30 America/New_York is December 31, 2024 13:20:30 in UTC (UTC-5 hours)
+              expect(setValue).toHaveBeenCalledWith(
+                new Date('2024-12-31T13:20:30Z'),
+              );
+            });
+          });
+
+          describe('Pacific/Kiritimati', () => {
+            test('is called when typing an explicit value', () => {
+              const setValue = jest.fn();
+
+              const { hourInput, minuteInput, secondInput } =
+                renderTimeInputInputs({
+                  providerProps: { value: null, setValue },
+                  displayProps: {
+                    timeZone: 'Pacific/Kiritimati',
+                  },
+                });
+              userEvent.type(hourInput, '08');
+              userEvent.type(minuteInput, '20');
+              userEvent.type(secondInput, '30');
+
+              // Without a value, new Date() will be used to get the current date in the time zone.
+              // current date is january 1, 2025 00:00:00 in UTC is January 1, 2025 in Pacific/Kiritimati
+              // January 1, 2025 08:20:30 Pacific/Kiritimati is December 31, 2024 18:20:30 in UTC (UTC+14 hours)
+              expect(setValue).toHaveBeenCalledWith(
+                new Date('2024-12-31T18:20:30Z'),
+              );
+            });
+          });
         });
+
         test('is not called when typing an ambiguous value', () => {
           const setValue = jest.fn();
           const { hourInput, minuteInput, secondInput } = renderTimeInputInputs(
@@ -658,6 +714,8 @@ describe('packages/time-input-inputs', () => {
 
           userEvent.type(secondInput, '{backspace}{backspace}');
           expect(setValue).toHaveBeenCalled();
+
+          // Returns invalid date object
           const calledWith = setValue.mock.calls[0][0];
           expect(calledWith).toBeInstanceOf(Date);
           expect(calledWith.getTime()).toBeNaN();
@@ -801,6 +859,8 @@ describe('packages/time-input-inputs', () => {
         userEvent.click(selectTestUtils.getInput());
         userEvent.click(selectTestUtils.getOptionByValue('PM')!);
         expect(setValue).toHaveBeenCalled();
+
+        // Returns invalid date object
         const calledWith = setValue.mock.calls[0][0];
         expect(calledWith).toBeInstanceOf(Date);
         expect(calledWith.getTime()).toBeNaN();
