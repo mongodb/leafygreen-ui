@@ -63,8 +63,7 @@ export const getNewUTCDateFromSegments = ({
      *
      * This takes the local date created above and converts it to UTC using the `zonedTimeToUtc` helper function.
      */
-    const utcTime = zonedTimeToUtc(newDate, timeZone); // TODO: move this to date-utils
-    return utcTime;
+    return zonedTimeToUtc(newDate, timeZone); // TODO: move this to date-utils
   }
 
   /**
