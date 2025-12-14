@@ -6,6 +6,7 @@ import {
   TimeInputContextProps,
   TimeInputProviderProps,
 } from './TimeInputContext.types';
+import { useTimeInputComponentRefs } from './useTimeInputComponentRefs';
 
 export const TimeInputContext = createContext<TimeInputContextProps>(
   {} as TimeInputContextProps,
@@ -20,6 +21,7 @@ export const TimeInputProvider = ({
   setValue: _setValue,
   handleValidation: _handleValidation,
 }: PropsWithChildren<TimeInputProviderProps>) => {
+  const refs = useTimeInputComponentRefs();
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
   };
@@ -31,6 +33,7 @@ export const TimeInputProvider = ({
   return (
     <TimeInputContext.Provider
       value={{
+        refs,
         value,
         setValue,
         handleValidation,

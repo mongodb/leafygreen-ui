@@ -1,4 +1,9 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, {
+  ChangeEvent,
+  forwardRef,
+  MouseEventHandler,
+  useEffect,
+} from 'react';
 import { isEqual } from 'lodash';
 
 import { isDateObject } from '@leafygreen-ui/date-utils';
@@ -19,16 +24,33 @@ import {
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
+import { TimeInputSegmentChangeEventHandler } from '../TimeInputSegment/TimeInputSegment.types';
+import { createSyntheticEvent } from '@leafygreen-ui/lib';
+import { focusAndSelectSegment } from '@leafygreen-ui/input-box';
 
 /**
  * @internal
  * This component renders and updates the time segments and select unit.
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
-  (_props: TimeInputInputsProps, forwardedRef) => {
-    const { is12HourFormat, timeZone, locale, isDirty, setIsDirty } =
-      useTimeInputDisplayContext();
-    const { value, setValue } = useTimeInputContext();
+  (
+    { onChange: onSegmentChange, onKeyDown, ...rest }: TimeInputInputsProps,
+    forwardedRef,
+  ) => {
+    const {
+      is12HourFormat,
+      timeZone,
+      locale,
+      isDirty,
+      setIsDirty,
+      disabled,
+      formatParts,
+    } = useTimeInputDisplayContext();
+    const {
+      value,
+      setValue,
+      refs: { segmentRefs },
+    } = useTimeInputContext();
 
     /** if the value is a `Date` the component is dirty, meaning the component has been interacted with */
     useEffect(() => {
@@ -97,6 +119,8 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       }
     };
 
+    // TODO: need validation on blur
+
     /**
      * Hook to manage the time segments and select unit
      */
@@ -110,15 +134,62 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
         },
       });
 
+    /**
+     * Called when the input, or any of its children, is clicked.
+     * Focuses the appropriate segment
+     */
+    const handleInputClick: MouseEventHandler<HTMLElement> = e => {
+      if (!disabled) {
+        const { target } = e;
+
+        /**
+         * Focus and select the appropriate segment.
+         *
+         * This is done here instead of `InputBox` because this component has padding that needs to be accounted for on click.
+         */
+        focusAndSelectSegment({
+          target,
+          formatParts,
+          segmentRefs,
+        });
+      }
+    };
+
+    /**
+     * Called when any individual segment changes
+     */
+    const handleSegmentChange: TimeInputSegmentChangeEventHandler =
+      segmentChangeEvent => {
+        const { segment, value } = segmentChangeEvent;
+
+        //Fire a simulated `change` event
+        const target = segmentRefs[segment].current;
+
+        if (target) {
+          // At this point, the target stored in segmentRefs has a stale value.
+          // To fix this we update the value of the target with the up-to-date value from `segmentChangeEvent`.
+          target.value = value;
+          const changeEvent = new Event('change');
+          const reactEvent = createSyntheticEvent<
+            ChangeEvent<HTMLInputElement>
+          >(changeEvent, target);
+          onSegmentChange?.(reactEvent);
+        }
+      };
+
     return (
-      <TimeFormField ref={forwardedRef}>
+      <TimeFormField ref={forwardedRef} onClick={handleInputClick} {...rest}>
         <div className={wrapperBaseStyles}>
+          {/* TODO: wrap this in a wrapper container */}
           <TimeFormFieldInputContainer>
             <TimeInputBox
               segments={segments}
               setSegment={(segment, value) => {
                 setSegment(segment, value);
               }}
+              onSegmentChange={handleSegmentChange}
+              segmentRefs={segmentRefs}
+              onKeyDown={onKeyDown}
             />
           </TimeFormFieldInputContainer>
           {is12HourFormat && (
@@ -129,6 +200,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
               }}
             />
           )}
+          {/* TODO: Add 24 hour label */}
         </div>
       </TimeFormField>
     );

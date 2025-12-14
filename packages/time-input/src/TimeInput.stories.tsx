@@ -68,6 +68,9 @@ const Template: StoryFn<typeof TimeInput> = props => {
             utcTime: time?.toUTCString(),
           });
         }}
+        onChange={e => {
+          console.log('Storybook: onChange ⏰', { value: e.target.value });
+        }}
       />
       <p>Time zone: {props.timeZone}</p>
       <p>UTC value: {value?.toUTCString()}</p>

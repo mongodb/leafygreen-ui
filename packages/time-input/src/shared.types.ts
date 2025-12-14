@@ -1,3 +1,5 @@
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
+
 /**
  * An enumerable object that maps the time part names to their values
  */
@@ -27,3 +29,11 @@ export const TimeSegment = {
 export type TimeSegment = (typeof TimeSegment)[keyof typeof TimeSegment];
 
 export type TimeSegmentsState = Record<TimeSegment, string>;
+
+/**
+ * An object that maps the time segment names to their refs
+ */
+export type SegmentRefs = Record<
+  TimeSegment,
+  ReturnType<DynamicRefGetter<HTMLInputElement>>
+>;
