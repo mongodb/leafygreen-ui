@@ -41,8 +41,7 @@
     "@lg-tools/test-harnesses": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "lodash": "^4.17.21",
-    "date-fns-tz": "^2.0.0"
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

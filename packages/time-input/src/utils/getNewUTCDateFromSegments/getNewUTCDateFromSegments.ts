@@ -1,4 +1,4 @@
-import { zonedTimeToUtc } from 'date-fns-tz';
+import { newUTCFromTimeZone } from '@leafygreen-ui/date-utils';
 
 import { TimeSegmentsState } from '../../shared.types';
 import { convert12hTo24h } from '../convert12hTo24h/convert12hTo24h';
@@ -46,24 +46,15 @@ export const getNewUTCDateFromSegments = ({
     isEverySegmentFilled(segments) &&
     isEverySegmentValid({ segments, is12HourFormat })
   ) {
-    /**
-     * Create a new local date object with the date values
-     */
-    const newDate = new Date(
-      Number(year),
-      Number(month) - 1,
-      Number(day),
-      Number(convertedHour),
-      Number(minute),
-      Number(second),
-    );
-
-    /**
-     * Convert the new date object to UTC.
-     *
-     * This takes the local date created above and converts it to UTC using the `zonedTimeToUtc` helper function.
-     */
-    return zonedTimeToUtc(newDate, timeZone); // TODO: move this to date-utils
+    return newUTCFromTimeZone({
+      year,
+      month,
+      day,
+      hour: convertedHour,
+      minute,
+      second,
+      timeZone,
+    });
   }
 
   /**

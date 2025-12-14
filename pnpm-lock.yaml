@@ -3581,9 +3581,6 @@ importers:
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
-      date-fns-tz:
-        specifier: ^2.0.0
-        version: 2.0.1(date-fns@2.30.0)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
