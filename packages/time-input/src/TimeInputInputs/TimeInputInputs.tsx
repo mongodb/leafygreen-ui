@@ -5,12 +5,10 @@ import { isDateObject } from '@leafygreen-ui/date-utils';
 
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
-import { useTimeSegmentsAndSelectUnit } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit';
-import { OnUpdateCallback } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit.types';
+import { OnUpdateCallback,useTimeSegmentsAndSelectUnit } from '../hooks';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
-import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 import {
   getFormatPartsValues,
   getNewUTCDateFromSegments,
