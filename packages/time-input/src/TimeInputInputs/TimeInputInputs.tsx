@@ -52,7 +52,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
      * @param newSelectUnit - The new select unit
      * @param prevSelectUnit - The previous select unit
      */
-    const handleSegmentUpdate: OnUpdateCallback = ({
+    const handleSegmentAndSelectUpdate: OnUpdateCallback = ({
       newSegments,
       prevSegments,
       newSelectUnit,
@@ -106,7 +106,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
         locale,
         timeZone,
         options: {
-          onUpdate: handleSegmentUpdate,
+          onUpdate: handleSegmentAndSelectUpdate,
         },
       });
 
