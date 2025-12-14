@@ -7,13 +7,19 @@ import React, {
 import { isEqual } from 'lodash';
 
 import { isDateObject } from '@leafygreen-ui/date-utils';
+import { focusAndSelectSegment } from '@leafygreen-ui/input-box';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { createSyntheticEvent } from '@leafygreen-ui/lib';
+import { Overline } from '@leafygreen-ui/typography';
 
+import { TWENTY_FOUR_HOURS_TEXT } from '../constants';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { useTimeSegmentsAndSelectUnit } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit';
 import { OnUpdateCallback } from '../hooks/useTimeSegmentsAndSelectUnit/useTimeSegmentsAndSelectUnit.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
+import { TimeInputSegmentChangeEventHandler } from '../TimeInputSegment/TimeInputSegment.types';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
 import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 import {
@@ -22,11 +28,11 @@ import {
   shouldSetValue,
 } from '../utils';
 
-import { wrapperBaseStyles } from './TimeInputInputs.styles';
+import {
+  getTwentyFourHourStyles,
+  getWrapperStyles,
+} from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
-import { TimeInputSegmentChangeEventHandler } from '../TimeInputSegment/TimeInputSegment.types';
-import { createSyntheticEvent } from '@leafygreen-ui/lib';
-import { focusAndSelectSegment } from '@leafygreen-ui/input-box';
 
 /**
  * @internal
@@ -51,6 +57,9 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       setValue,
       refs: { segmentRefs },
     } = useTimeInputContext();
+    const { theme } = useDarkMode();
+
+    const is24HourFormat = !is12HourFormat;
 
     /** if the value is a `Date` the component is dirty, meaning the component has been interacted with */
     useEffect(() => {
@@ -142,11 +151,8 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       if (!disabled) {
         const { target } = e;
 
-        /**
-         * Focus and select the appropriate segment.
-         *
-         * This is done here instead of `InputBox` because this component has padding that needs to be accounted for on click.
-         */
+        // Focus and select the appropriate segment.
+        // This is done here instead of `InputBox` because this component has padding that needs to be accounted for on click.
         focusAndSelectSegment({
           target,
           formatParts,
@@ -179,8 +185,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 
     return (
       <TimeFormField ref={forwardedRef} onClick={handleInputClick} {...rest}>
-        <div className={wrapperBaseStyles}>
-          {/* TODO: wrap this in a wrapper container */}
+        <div className={getWrapperStyles({ is12HourFormat })}>
           <TimeFormFieldInputContainer>
             <TimeInputBox
               segments={segments}
@@ -200,7 +205,11 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
               }}
             />
           )}
-          {/* TODO: Add 24 hour label */}
+          {is24HourFormat && (
+            <Overline className={getTwentyFourHourStyles({ theme })}>
+              {TWENTY_FOUR_HOURS_TEXT}
+            </Overline>
+          )}
         </div>
       </TimeFormField>
     );

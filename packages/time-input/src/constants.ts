@@ -1,5 +1,7 @@
 import { TimeParts, TimeSegment } from './shared.types';
 
+export const TWENTY_FOUR_HOURS_TEXT = '24 hours';
+
 /**
  * The options for the unit select
  */

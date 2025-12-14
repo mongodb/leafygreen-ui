@@ -23,16 +23,23 @@ export const TimeInputSelect = ({
   className,
   onChange,
 }: TimeInputSelectProps) => {
-  const { lgIds } = useTimeInputDisplayContext();
+  const { lgIds, size } = useTimeInputDisplayContext();
+
   /**
    * Gets the current unit option using the unit string
    */
   const currentUnitOption = unitOptions.find(
-    u => u.displayName === unit,
+    unitOption => unitOption.displayName === unit,
   ) as UnitOption;
 
+  /**
+   * Handles the change event for the select component
+   * @param val - The value of the selected unit
+   */
   const handleChange = (val: string) => {
-    const selectedUnit = unitOptions.find(u => u.displayName === val);
+    const selectedUnit = unitOptions.find(
+      unitOption => unitOption.displayName === val,
+    );
 
     if (selectedUnit !== undefined) {
       onChange(selectedUnit);
@@ -50,7 +57,9 @@ export const TimeInputSelect = ({
         allowDeselect={false}
         dropdownWidthBasis={DropdownWidthBasis.Option}
         renderMode={RenderMode.TopLayer}
+        data-testid={lgIds.select}
         data-lgid={lgIds.select}
+        size={size}
       >
         {unitOptions.map(option => (
           <Option key={option.displayName} value={option.displayName}>

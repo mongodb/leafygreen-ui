@@ -6,10 +6,10 @@ import { SupportedLocales } from '@leafygreen-ui/date-utils';
 
 import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { TimeInputDisplayProviderProps } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext.types';
+import { timeSegmentRefsMock } from '../testing/testUtils';
 
 import { TimeInputBox } from './TimeInputBox';
 import { TimeInputBoxProps } from './TimeInputBox.types';
-import { timeSegmentRefsMock } from '../testing/testUtils';
 
 const renderTimeInputBox = ({
   props,

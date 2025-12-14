@@ -22,6 +22,7 @@ export const TimeInputProvider = ({
   handleValidation: _handleValidation,
 }: PropsWithChildren<TimeInputProviderProps>) => {
   const refs = useTimeInputComponentRefs();
+
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
   };
