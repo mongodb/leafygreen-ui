@@ -92,6 +92,7 @@ describe('packages/time-input-inputs', () => {
   afterEach(() => {
     jest.useRealTimers();
   });
+
   describe('Rendering', () => {
     test('Renders empty segments when the value is null', () => {
       const { hourInput, minuteInput, secondInput } = renderTimeInputInputs({
@@ -113,6 +114,7 @@ describe('packages/time-input-inputs', () => {
       expect(minuteInput.value).toBe('00');
       expect(secondInput.value).toBe('00');
     });
+
     test('Renders empty segments when an invalid value is passed', () => {
       const { hourInput, minuteInput, secondInput } = renderTimeInputInputs({
         providerProps: { value: new Date('invalid') },
@@ -252,6 +254,17 @@ describe('packages/time-input-inputs', () => {
         });
       });
     });
+
+    test('does not render the select when the locale is 24h', () => {
+      const { queryByTestId } = renderTimeInputInputs({
+        displayProps: {
+          locale: SupportedLocales.ISO_8601,
+        },
+      });
+      expect(queryByTestId(lgIds.select)).not.toBeInTheDocument();
+    });
+
+    test.todo('renders 24 Hour label when the locale is 24h');
   });
 
   describe('Re-rendering', () => {
@@ -795,5 +808,3 @@ describe('packages/time-input-inputs', () => {
     });
   });
 });
-// TODO: TimeInputBox and TimeInputSelect tests
-// TODO: test that select is not rendered when is12HourFormat is false

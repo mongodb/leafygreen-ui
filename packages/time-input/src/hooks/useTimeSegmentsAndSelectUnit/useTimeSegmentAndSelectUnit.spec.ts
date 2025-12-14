@@ -12,13 +12,11 @@ import { OnUpdateCallback } from './useTimeSegmentsAndSelectUnit.types';
 
 const renderUseTimeSegmentsAndSelectUnitHook = ({
   initialDate,
-  initialIs12HourFormat = false,
   initialTimeZone = 'UTC',
   initialLocale = SupportedLocales.ISO_8601,
   callback,
 }: {
   initialDate: DateType;
-  initialIs12HourFormat?: boolean;
   initialTimeZone?: string;
   initialLocale?: LocaleString;
   callback?: OnUpdateCallback;
@@ -29,7 +27,6 @@ const renderUseTimeSegmentsAndSelectUnitHook = ({
         date: props.date,
         locale: props.locale,
         timeZone: props.timeZone,
-        is12HourFormat: props.is12HourFormat,
         options: { onUpdate: props.callback },
       }),
     {
@@ -37,7 +34,6 @@ const renderUseTimeSegmentsAndSelectUnitHook = ({
         date: initialDate,
         locale: initialLocale,
         timeZone: initialTimeZone,
-        is12HourFormat: initialIs12HourFormat,
         callback,
       },
     },
@@ -48,14 +44,12 @@ const renderUseTimeSegmentsAndSelectUnitHook = ({
     date: DateType;
     locale?: LocaleString;
     timeZone?: string;
-    is12HourFormat?: boolean;
     callback?: OnUpdateCallback;
   }) =>
     _rerender({
       date: props.date,
       locale: props?.locale ?? initialLocale,
       timeZone: props?.timeZone ?? initialTimeZone,
-      is12HourFormat: props?.is12HourFormat ?? initialIs12HourFormat,
       callback: props?.callback ?? callback,
     });
 
@@ -103,7 +97,6 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
             const callback = jest.fn();
             const { result } = renderUseTimeSegmentsAndSelectUnitHook({
               initialDate: testDate,
-              initialIs12HourFormat: false,
               initialLocale: SupportedLocales.en_US,
               callback,
             });
@@ -141,7 +134,6 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
             const callback = jest.fn();
             const { result } = renderUseTimeSegmentsAndSelectUnitHook({
               initialDate: testDate,
-              initialIs12HourFormat: false,
               initialTimeZone: 'America/New_York',
               initialLocale: SupportedLocales.en_US,
               callback,
@@ -181,7 +173,6 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
             const callback = jest.fn();
             const { result } = renderUseTimeSegmentsAndSelectUnitHook({
               initialDate: testDate,
-              initialIs12HourFormat: false,
               initialTimeZone: 'Pacific/Auckland',
               initialLocale: SupportedLocales.en_US,
               callback,
@@ -279,7 +270,6 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
           const callback = jest.fn();
           const { result, rerender } = renderUseTimeSegmentsAndSelectUnitHook({
             initialDate: testDate,
-            initialIs12HourFormat: true,
             initialLocale: SupportedLocales.en_US,
             callback,
           });
@@ -374,7 +364,6 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
           const { result, rerender } = renderUseTimeSegmentsAndSelectUnitHook({
             initialDate: testDate,
             initialTimeZone: 'America/New_York',
-            initialIs12HourFormat: true,
             initialLocale: SupportedLocales.en_US,
             callback,
           });
@@ -470,7 +459,6 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
           const { result, rerender } = renderUseTimeSegmentsAndSelectUnitHook({
             initialDate: testDate,
             initialTimeZone: 'Pacific/Auckland',
-            initialIs12HourFormat: true,
             initialLocale: SupportedLocales.en_US,
             callback,
           });
@@ -646,7 +634,6 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
       const { result } = renderUseTimeSegmentsAndSelectUnitHook({
         initialDate: testDate,
         callback,
-        initialIs12HourFormat: true,
         initialLocale: SupportedLocales.en_US,
       });
 
