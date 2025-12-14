@@ -4,6 +4,7 @@ import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { DisplayTimeInputProps } from '../../TimeInput/TimeInput.types';
+import { GetLgIdsReturnType } from '../../utils/getLgIds';
 
 type AriaLabelKeys = keyof AriaLabelPropsWithLabel;
 type AriaLabelKeysWithoutLabel = Exclude<AriaLabelKeys, 'label'>;
@@ -51,6 +52,11 @@ export type TimeInputDisplayContextProps = Omit<
    * used to determine the order of segments in the input
    */
   formatParts?: Array<Intl.DateTimeFormatPart>;
+
+  /**
+   * LGIDs for the code snippet.
+   */
+  lgIds: GetLgIdsReturnType;
 };
 
 /**
@@ -75,4 +81,9 @@ export type TimeInputDisplayProviderProps = Omit<
    * The aria-labelledby prop
    */
   'aria-labelledby'?: string;
+
+  /**
+   * LGIDs for the code snippet.
+   */
+  lgIds?: GetLgIdsReturnType;
 };

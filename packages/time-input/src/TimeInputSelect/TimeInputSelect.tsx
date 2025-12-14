@@ -9,6 +9,7 @@ import {
 } from '@leafygreen-ui/select';
 
 import { unitOptions } from '../constants';
+import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 
 import { selectStyles, wrapperBaseStyles } from './TimeInputSelect.styles';
 import { TimeInputSelectProps, UnitOption } from './TimeInputSelect.types';
@@ -22,10 +23,9 @@ export const TimeInputSelect = ({
   className,
   onChange,
 }: TimeInputSelectProps) => {
+  const { lgIds } = useTimeInputDisplayContext();
   /**
    * Gets the current unit option using the unit string
-   *
-   * @internal
    */
   const currentUnitOption = unitOptions.find(
     u => u.displayName === unit,
@@ -50,6 +50,7 @@ export const TimeInputSelect = ({
         allowDeselect={false}
         dropdownWidthBasis={DropdownWidthBasis.Option}
         renderMode={RenderMode.TopLayer}
+        data-lgid={lgIds.select}
       >
         {unitOptions.map(option => (
           <Option key={option.displayName} value={option.displayName}>

@@ -6,13 +6,17 @@ import {
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Size } from '../../TimeInput/TimeInput.types';
+import { getLgIds } from '../../utils/getLgIds';
 
 import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
 
-export type DisplayContextPropKeys = keyof TimeInputDisplayProviderProps;
+export type DisplayContextPropKeys = Exclude<
+  keyof TimeInputDisplayProviderProps,
+  'lgIds'
+>;
 
 /**
  * Props names that that are added to the context and used to pick and omit props
@@ -54,4 +58,5 @@ export const defaultTimeInputDisplayContext: TimeInputDisplayContextProps = {
   setIsDirty: () => {},
   is12HourFormat: false,
   showSeconds: true,
+  lgIds: getLgIds(),
 };
