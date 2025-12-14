@@ -15,12 +15,15 @@ import {
 import { TimeInputDisplayContextProps } from '../Context/TimeInputDisplayContext';
 import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext';
 import { TimeSegment } from '../shared.types';
+import { getLgIds } from '../utils/getLgIds';
 
 import { TimeInputSegment } from './TimeInputSegment';
 import {
   TimeInputSegmentChangeEventHandler,
   TimeInputSegmentProps,
 } from './TimeInputSegment.types';
+
+const lgIds = getLgIds();
 
 const renderSegment = (
   props?: Partial<TimeInputSegmentProps>,
@@ -55,8 +58,9 @@ const renderSegment = (
       </TimeInputDisplayProvider>,
     );
 
+  // TODO:: replace with test harnesses
   const getInput = () =>
-    result.getByTestId('lg-time_input_input-segment') as HTMLInputElement;
+    result.getByTestId(lgIds.inputSegment) as HTMLInputElement;
 
   return {
     ...result,

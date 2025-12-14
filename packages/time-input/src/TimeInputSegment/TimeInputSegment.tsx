@@ -16,7 +16,7 @@ export const TimeInputSegment = React.forwardRef<
   HTMLInputElement,
   TimeInputSegmentProps
 >(({ children, segment, ...rest }: TimeInputSegmentProps, fwdRef) => {
-  const { is12HourFormat } = useTimeInputDisplayContext();
+  const { is12HourFormat, lgIds } = useTimeInputDisplayContext();
 
   return (
     <InputSegment
@@ -27,8 +27,8 @@ export const TimeInputSegment = React.forwardRef<
       maxSegmentValue={getDefaultMax({ is12HourFormat })[segment]}
       placeholder={defaultPlaceholder[segment]}
       // TODO: className={cx(segmentWidthStyles[segment])}
-      // TODO: data-lgid
-      data-testid="lg-time_input_input-segment" // TODO: temp
+      data-lgid={lgIds.inputSegment}
+      data-testid={lgIds.inputSegment}
       charsCount={getTimeSegmentRules({ is12HourFormat })[segment].maxChars}
       autoComplete="off"
     />
