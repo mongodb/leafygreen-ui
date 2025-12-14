@@ -61,6 +61,13 @@ describe('packages/time-input/time-input-box', () => {
       expect(minuteInput).toHaveAttribute('aria-label', 'minute');
       expect(secondInput).toHaveAttribute('aria-label', 'second');
     });
+
+    test('does not render seconds when showSeconds is false', () => {
+      const { secondInput } = renderTimeInputBox({
+        displayProps: { showSeconds: false },
+      });
+      expect(secondInput).not.toBeInTheDocument();
+    });
   });
 
   describe('Min/Max', () => {
