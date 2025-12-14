@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { Month, newUTC, SupportedLocales } from '@leafygreen-ui/date-utils';
 import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select/testing';
 
+import { TWENTY_FOUR_HOURS_TEXT } from '../constants';
 import { TimeInputProvider } from '../Context/TimeInputContext/TimeInputContext';
 import { TimeInputProviderProps } from '../Context/TimeInputContext/TimeInputContext.types';
 import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
@@ -256,16 +257,46 @@ describe('packages/time-input-inputs', () => {
       });
     });
 
-    test('does not render the select when the locale is 24h', () => {
-      const { queryByTestId } = renderTimeInputInputs({
-        displayProps: {
-          locale: SupportedLocales.ISO_8601,
-        },
+    describe('24 hour format', () => {
+      test('does not render the select', () => {
+        const { queryByTestId } = renderTimeInputInputs({
+          displayProps: {
+            locale: SupportedLocales.ISO_8601,
+          },
+        });
+        expect(queryByTestId(lgIds.select)).not.toBeInTheDocument();
       });
-      expect(queryByTestId(lgIds.select)).not.toBeInTheDocument();
+
+      test('renders 24 Hour label ', () => {
+        const { getByText } = renderTimeInputInputs({
+          displayProps: {
+            locale: SupportedLocales.ISO_8601,
+          },
+        });
+        expect(getByText(TWENTY_FOUR_HOURS_TEXT)).toBeInTheDocument();
+      });
     });
 
-    test.todo('renders 24 Hour label when the locale is 24h');
+    describe('12 hour format', () => {
+      test('renders the select', () => {
+        renderTimeInputInputs({
+          displayProps: {
+            locale: SupportedLocales.en_US,
+          },
+        });
+        const selectTestUtils = getSelectTestUtils(lgIds.select);
+        expect(selectTestUtils.getInput()).toBeInTheDocument();
+      });
+
+      test('does not render 24 Hour label', () => {
+        const { queryByText } = renderTimeInputInputs({
+          displayProps: {
+            locale: SupportedLocales.en_US,
+          },
+        });
+        expect(queryByText(TWENTY_FOUR_HOURS_TEXT)).not.toBeInTheDocument();
+      });
+    });
   });
 
   describe('Re-rendering', () => {

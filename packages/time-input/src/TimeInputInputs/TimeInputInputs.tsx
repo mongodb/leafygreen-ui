@@ -61,7 +61,9 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
 
     const is24HourFormat = !is12HourFormat;
 
-    /** if the value is a `Date` the component is dirty, meaning the component has been interacted with */
+    /**
+     * If the value is a `Date` the component is dirty, meaning the component has been interacted with
+     */
     useEffect(() => {
       if (isDateObject(value) && !isDirty) {
         setIsDirty(true);
