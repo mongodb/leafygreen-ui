@@ -132,9 +132,9 @@ const lightModeIconColors = {
     [InteractionState.Focus]: red.base,
   },
   [Variant.Disabled]: {
-    [InteractionState.Default]: gray.base,
-    [InteractionState.Hover]: gray.base,
-    [InteractionState.Focus]: gray.base,
+    [InteractionState.Default]: gray.light1,
+    [InteractionState.Hover]: gray.light1,
+    [InteractionState.Focus]: gray.light1,
   },
 } as const satisfies VariantColorRecord;
 

@@ -107,7 +107,7 @@ const darkModeIconColors = {
     [InteractionState.Focus]: blue.light3,
   },
   [Variant.InversePrimary]: {
-    [InteractionState.Default]: white,
+    [InteractionState.Default]: black,
     [InteractionState.Hover]: black,
     [InteractionState.Focus]: blue.dark2,
   },
