@@ -7,7 +7,7 @@ describe('doesSomeSegmentExist', () => {
     );
   });
 
-  test('returns true if at all segments are filled', () => {
+  test('returns true if all segments are filled', () => {
     expect(
       doesSomeSegmentExist({ hour: '12', minute: '00', second: '00' }),
     ).toBe(true);

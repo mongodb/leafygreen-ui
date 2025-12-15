@@ -13,7 +13,7 @@ describe('isEverySegmentFilled', () => {
     );
   });
 
-  test('returns false is all segments are empty', () => {
+  test('returns false if all segments are empty', () => {
     expect(isEverySegmentFilled({ hour: '', minute: '', second: '' })).toBe(
       false,
     );

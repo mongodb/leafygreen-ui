@@ -15,7 +15,7 @@ import { Overline } from '@leafygreen-ui/typography';
 import { TWENTY_FOUR_HOURS_TEXT } from '../constants';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
-import { OnUpdateCallback,useTimeSegmentsAndSelectUnit } from '../hooks';
+import { OnUpdateCallback, useTimeSegmentsAndSelectUnit } from '../hooks';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSegmentChangeEventHandler } from '../TimeInputSegment/TimeInputSegment.types';
