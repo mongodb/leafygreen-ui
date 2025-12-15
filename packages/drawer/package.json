@@ -42,11 +42,11 @@
     "@leafygreen-ui/toolbar": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
-    "polished": "^4.2.2",
+    "polished": "catalog:",
     "react-intersection-observer": "^8.25.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2",
+    "@faker-js/faker": "catalog:",
     "@leafygreen-ui/guide-cue": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },

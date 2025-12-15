@@ -14,7 +14,7 @@
     "tsc": "lg-build tsc"
   },
   "dependencies": {
-    "@babel/core": "7.23.2",
+    "@babel/core": "catalog:",
     "@babel/eslint-parser": "7.25.9",
     "@emotion/eslint-plugin": "11.12.0",
     "@eslint/compat": "^1.2.3",
@@ -23,12 +23,12 @@
     "@lg-tools/build": "workspace:^",
     "@lg-tools/meta": "workspace:^",
     "@types/cli-progress": "^3.11.6",
-    "@types/cross-spawn": "6.0.2",
+    "@types/cross-spawn": "catalog:",
     "@types/prettier": "^2.7.0",
     "@typescript-eslint/eslint-plugin": "8.44.0",
     "@typescript-eslint/parser": "8.44.0",
-    "chalk": "4.1.2",
-    "cross-spawn": "7.0.3",
+    "chalk": "catalog:",
+    "cross-spawn": "catalog:",
     "eslint": "9.16.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.31.0",
@@ -38,11 +38,11 @@
     "eslint-plugin-react-hooks": "5.0.0",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "eslint-plugin-storybook": "0.11.1",
-    "glob": "10.3.12",
+    "glob": "catalog:",
     "globals": "^15.13.0",
     "npm-package-json-lint": "8.0.0",
     "npm-package-json-lint-config-default": "7.0.1",
-    "prettier": "2.8.8"
+    "prettier": "catalog:"
   },
   "peerDependencies": {
     "typescript": "~5.8.0"

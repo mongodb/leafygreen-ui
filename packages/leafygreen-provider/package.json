@@ -17,7 +17,7 @@
   "dependencies": {
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "catalog:"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/leafygreen-provider",

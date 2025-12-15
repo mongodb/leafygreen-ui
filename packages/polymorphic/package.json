@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "workspace:^",
-    "lodash": "^4.17.21"
+    "lodash": "catalog:"
   },
   "exports": {
     ".": {

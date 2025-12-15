@@ -20,7 +20,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@rollup/plugin-url": "8.0.2",
-    "polished": "^4.2.2"
+    "polished": "catalog:"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette",
