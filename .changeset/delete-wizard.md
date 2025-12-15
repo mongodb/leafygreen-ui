@@ -1,5 +1,5 @@
 ---
-'@lg-templates/delete-wizard': minor
+'@leafygreen-ui/delete-wizard': minor
 ---
 
 Initial release of `DeleteWizard`.
