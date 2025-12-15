@@ -2,7 +2,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { color } from '@leafygreen-ui/tokens';
 
-const twelveHourFormatStyles = css`
+const twentyFourHourFormatStyles = css`
   align-items: center;
   gap: 12px;
 `;
@@ -19,11 +19,27 @@ export const getWrapperStyles = ({
       z-index: 0; // Establish new stacking context
     `,
     {
-      [twelveHourFormatStyles]: !is12HourFormat,
+      [twentyFourHourFormatStyles]: !is12HourFormat,
     },
   );
 
-export const getTwentyFourHourStyles = ({ theme }: { theme: Theme }) => css`
-  color: ${color[theme].text.secondary.default};
-  white-space: nowrap;
+const getDisabledThemeStyles = (theme: Theme) => css`
+  color: ${color[theme].text.disabled.default};
 `;
+
+export const getTwentyFourHourStyles = ({
+  theme,
+  disabled,
+}: {
+  theme: Theme;
+  disabled: boolean;
+}) =>
+  cx(
+    css`
+      color: ${color[theme].text.secondary.default};
+      white-space: nowrap;
+    `,
+    {
+      [getDisabledThemeStyles(theme)]: disabled,
+    },
+  );

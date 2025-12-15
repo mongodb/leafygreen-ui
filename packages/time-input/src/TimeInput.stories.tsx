@@ -29,6 +29,20 @@ const meta: StoryMetaType<typeof TimeInput> = {
         'data-testid',
       ],
     },
+    generate: {
+      storyNames: [
+        'TwelveHourFormat',
+        'TwentyFourHourFormat',
+        'WithoutSeconds',
+      ],
+      combineArgs: {
+        darkMode: [false, true],
+        value: [new Date('2026-02-20T04:00:00Z'), undefined],
+        disabled: [true, false],
+        size: Object.values(Size),
+        timeZone: ['UTC', 'America/New_York', 'Europe/London'],
+      },
+    },
   },
   args: {
     showSeconds: true,
@@ -37,6 +51,7 @@ const meta: StoryMetaType<typeof TimeInput> = {
     label: 'Time Input',
     darkMode: false,
     size: Size.Default,
+    disabled: false,
   },
   argTypes: {
     locale: { control: 'select', options: Object.values(SupportedLocales) },
@@ -78,4 +93,36 @@ const Template: StoryFn<typeof TimeInput> = props => {
   );
 };
 
+export const TwelveHourFormat = Template.bind({});
+TwelveHourFormat.parameters = {
+  generate: {
+    args: {
+      locale: SupportedLocales.en_US,
+    },
+  },
+};
+
+export const TwentyFourHourFormat = Template.bind({});
+TwentyFourHourFormat.parameters = {
+  generate: {
+    args: {
+      locale: SupportedLocales.ISO_8601,
+    },
+  },
+};
+
+export const WithoutSeconds = Template.bind({});
+WithoutSeconds.parameters = {
+  generate: {
+    args: {
+      showSeconds: false,
+    },
+  },
+};
+
 export const LiveExample = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};

@@ -199,7 +199,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             />
           )}
           {is24HourFormat && (
-            <Overline className={getTwentyFourHourStyles({ theme })}>
+            <Overline className={getTwentyFourHourStyles({ theme, disabled })}>
               {TWENTY_FOUR_HOURS_TEXT}
             </Overline>
           )}

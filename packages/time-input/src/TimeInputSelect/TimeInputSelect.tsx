@@ -23,7 +23,7 @@ export const TimeInputSelect = ({
   className,
   onChange,
 }: TimeInputSelectProps) => {
-  const { lgIds, size } = useTimeInputDisplayContext();
+  const { lgIds, size, disabled } = useTimeInputDisplayContext();
 
   /**
    * Gets the current unit option using the unit string
@@ -60,6 +60,7 @@ export const TimeInputSelect = ({
         data-testid={lgIds.select}
         data-lgid={lgIds.select}
         size={size}
+        disabled={disabled}
       >
         {unitOptions.map(option => (
           <Option key={option.displayName} value={option.displayName}>
