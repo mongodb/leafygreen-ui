@@ -193,12 +193,6 @@ jobs:
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
 
-      - name: Debug changesets output
-        run: |
-          echo "Changesets output: ${{ steps.changesets.outputs }}"
-          echo "Changesets output type: ${{ toJSON(steps.changesets.outputs) }}"
-          echo "--------------------------------"
-
   release-aws:
     name: Publish to AWS CodeArtifact
     runs-on: ubuntu-latest
