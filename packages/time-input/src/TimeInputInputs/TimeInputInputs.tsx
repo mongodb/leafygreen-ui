@@ -5,7 +5,7 @@ import { isDateObject } from '@leafygreen-ui/date-utils';
 
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
-import { OnUpdateCallback,useTimeSegmentsAndSelectUnit } from '../hooks';
+import { OnUpdateCallback, useTimeSegmentsAndSelectUnit } from '../hooks';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
