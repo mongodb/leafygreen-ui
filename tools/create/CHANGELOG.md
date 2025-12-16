@@ -1,5 +1,11 @@
 # @lg-tools/create
 
+## 0.5.1
+
+### Patch Changes
+
+- fdad661: Add CLI output and documentation for npm trusted publishing (OIDC) initial publish requirement
+
 ## 0.5.0
 
 ### Minor Changes

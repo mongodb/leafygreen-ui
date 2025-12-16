@@ -1,5 +1,17 @@
 # @lg-chat/input-bar
 
+## 12.1.1
+
+### Patch Changes
+
+- dc4ff1f: [LG-5648](https://jira.mongodb.org/browse/LG-5648): Clicking visible input container now correctly focuses `textarea` element
+- Updated dependencies [60080b8]
+- Updated dependencies [7d81983]
+- Updated dependencies [76d5a8f]
+- Updated dependencies [c763ad6]
+  - @leafygreen-ui/tokens@4.2.0
+  - @leafygreen-ui/avatar@3.2.0
+
 ## 12.1.0
 
 ### Minor Changes

@@ -24,6 +24,7 @@ import {
   useControlledValue,
   useDynamicRefs,
   useForwardedRef,
+  useIdAllocator,
   useMergeRefs,
   usePrevious,
 } from '@leafygreen-ui/hooks';
@@ -62,6 +63,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       dropdownFooterSlot,
       dropdownProps,
       errorMessage,
+      id: idProp,
       onClickStopButton,
       onMessageSend,
       onSubmit,
@@ -108,6 +110,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     );
     const highlightedElementRef = promptRefs(`${highlightIndex}`);
 
+    const inputId = useIdAllocator({ prefix: 'lg-chat-input-bar', id: idProp });
     const isLoading = state === State.Loading;
     const isSendButtonDisabled =
       disabled || disableSend || messageBody?.trim() === '';
@@ -398,12 +401,13 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
               })}
               ref={focusContainerRef}
             >
-              <div
+              <label
                 className={getContentWrapperStyles({
                   disabled,
                   isFocused,
                   theme,
                 })}
+                htmlFor={inputId}
               >
                 <TextareaAutosize
                   disabled={disabled}
@@ -416,6 +420,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                     className: textareaProps?.className,
                     theme,
                   })}
+                  id={inputId}
                   onKeyDown={handleKeyDown}
                   onChange={handleChange}
                   onFocus={handleFocus}
@@ -432,7 +437,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                     <InputBarSendButton disabled={isSendButtonDisabled} />
                   )}
                 </div>
-              </div>
+              </label>
             </div>
           </div>
           <DisclaimerText className={disclaimerTextStyles} />
