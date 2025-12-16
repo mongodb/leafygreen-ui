@@ -6,8 +6,7 @@ import React, {
 } from 'react';
 import defaults from 'lodash/defaults';
 
-import { hasDayPeriod } from '../../utils';
-import { getFormatParts } from '../../utils/getFormatParts/getFormatParts';
+import { getFormatParts,hasDayPeriod } from '../../utils';
 
 import {
   TimeInputDisplayContextProps,
