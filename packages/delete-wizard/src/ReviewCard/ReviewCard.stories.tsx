@@ -4,6 +4,7 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { defaultLoadingDescription } from './constants';
 import { ReviewCard } from './ReviewCard';
@@ -82,6 +83,31 @@ export const Review: StoryObj<typeof ReviewCard> = {
     state: ReviewState.Review,
   },
   render: LiveExample.render,
+};
+
+export const ReviewDarkMode: StoryObj<typeof ReviewCard> = {
+  parameters: {
+    controls: {
+      exclude: [
+        'state',
+        'errorTitle',
+        'errorDescription',
+        'loadingTitle',
+        'loadingDescription',
+        'completedTitle',
+        'completedDescription',
+      ],
+    },
+  },
+  args: {
+    darkMode: true,
+    state: ReviewState.Review,
+  },
+  render: args => (
+    <LeafyGreenProvider darkMode>
+      <ReviewCard {...args}></ReviewCard>
+    </LeafyGreenProvider>
+  ),
 };
 
 export const Loading: StoryObj<typeof ReviewCard> = {
