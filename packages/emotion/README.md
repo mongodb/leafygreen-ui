@@ -158,7 +158,7 @@ In the `_document` file, import `extractCritical` from the emotion package, and 
 import { extractCritical } from '@leafygreen-ui/emotion';
 export default class AppDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
-    const initialProps = await Document.getInitialProps(ctx)
+    const initialProps = await Document.getInitialProps(ctx);
     // Extract critical CSS from Emotion for SSR
     const {css, ids} = extractCritical(initialProps.html || '');
 
