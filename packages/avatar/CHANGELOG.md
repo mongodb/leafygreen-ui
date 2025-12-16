@@ -1,5 +1,18 @@
 # @leafygreen-ui/avatar
 
+## 3.2.0
+
+### Minor Changes
+
+- c763ad6: [LG-5744](https://jira.mongodb.org/browse/LG-5744): add `showAnimation` prop to `AssistantAvatar` to enable shimmer animation
+
+### Patch Changes
+
+- 7d81983: [LG-5686](https://jira.mongodb.org/browse/LG-5686): update `AssistantAvatar` gradients
+- Updated dependencies [60080b8]
+- Updated dependencies [76d5a8f]
+  - @leafygreen-ui/tokens@4.2.0
+
 ## 3.1.6
 
 ### Patch Changes

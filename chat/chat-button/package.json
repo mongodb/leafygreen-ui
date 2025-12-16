@@ -1,7 +1,6 @@
-  
 {
   "name": "@lg-chat/chat-button",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "LeafyGreen UI Kit Chat Button",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
