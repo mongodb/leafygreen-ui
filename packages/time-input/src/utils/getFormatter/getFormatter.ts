@@ -1,34 +1,27 @@
 import { isValidLocale, SupportedLocales } from '@leafygreen-ui/date-utils';
 
 /**
- * Returns a formatter for the given locale. This determines the format of the time parts that are returned when called with a date.
+ * Returns a formatter for the given locale.
  *
- * If the locale is invalid, returns undefined.
+ * If the locale is iso-180, we explicitly set the hour cycle to 24h(`hourCycle: 'h23'`).
  *
  * @param locale - The locale to get the formatter for
- * @param showSeconds - Whether to show seconds
- * @param withDate - Whether to include the date parts
- * @param withTime - Whether to include the time parts
- * @param options - The options to pass to the formatter
+ * @param options - The options to configure the formatter. {@link Intl.DateTimeFormatOptions}
  *
- * @returns A formatter for the given locale
+ * @returns Returns an object ({@link Intl.DateTimeFormat}) for the given locale that includes methods to format dates and time parts, such as `format()` and `formatToParts()`.
  *
  * @example
  * ```js
  * const formatter = getFormatter({ locale: 'en-US' });
+ * formatter.format(new Date('2025-01-15T14:30:00Z')); // '1/15/2025'
+ * formatter.formatToParts(new Date('2025-01-15T14:30:00Z')); // [ { type: 'month', value: '1' }, { type: 'literal', value: '/' }, { type: 'day', value: '15' }, { type: 'literal', value: '/' }, { type: 'year', value: '2025' } ]
  * ```
  */
 export const getFormatter = ({
   locale = SupportedLocales.ISO_8601,
-  showSeconds = true,
-  withDate = false,
-  withTime = true,
   options = {},
 }: {
   locale?: string;
-  showSeconds?: boolean;
-  withDate?: boolean;
-  withTime?: boolean;
   options?: Intl.DateTimeFormatOptions;
 }) => {
   const isIsoLocale = locale === SupportedLocales.ISO_8601;
@@ -40,20 +33,6 @@ export const getFormatter = ({
 
   // If the locale is iso-8601, the default locale of the runtime environment is used, which is fine since we can explicitly set the format to 24h
   return new Intl.DateTimeFormat(locale, {
-    ...(withTime
-      ? {
-          hour: 'numeric',
-          minute: 'numeric',
-          second: showSeconds ? 'numeric' : undefined,
-        }
-      : {}),
-    ...(withDate
-      ? {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-        }
-      : {}),
     ...(isIsoLocale ? { hourCycle: 'h23' } : {}),
     ...options,
   });

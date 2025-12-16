@@ -21,7 +21,10 @@ import { getFormatter } from '../getFormatter/getFormatter';
 export const hasDayPeriod = (locale: LocaleString) => {
   if (locale === SupportedLocales.ISO_8601) return false;
 
-  const formatter = getFormatter({ locale });
+  const formatter = getFormatter({
+    locale,
+    options: { hour: 'numeric', minute: 'numeric' },
+  });
 
   if (!formatter) return false;
 
