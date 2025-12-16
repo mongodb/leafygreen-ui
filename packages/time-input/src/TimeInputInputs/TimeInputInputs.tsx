@@ -33,9 +33,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       value: value,
     });
 
-    // eslint-disable-next-line no-console
-    console.log('timeParts 🍎🍎🍎', timeParts);
-
     // TODO: break this out more
     return (
       <FormField aria-labelledby="temp" label="Time Input" ref={forwardedRef}>

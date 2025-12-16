@@ -1,6 +1,6 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 
-import { defaultTimeParts } from '../../constants';
+import { defaultDateTimeParts } from '../../constants';
 import { TimePartKeys, TimeParts } from '../../shared.types';
 
 /**
@@ -31,7 +31,7 @@ export const getFormattedTimeParts = (
 
   const mergedTimeParts: TimeParts = defaultsDeep(
     formattedTimeParts,
-    defaultTimeParts,
+    defaultDateTimeParts,
   );
 
   return mergedTimeParts;

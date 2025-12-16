@@ -38,4 +38,17 @@ describe('packages/time-input/utils/getFormattedTimeParts', () => {
       dayPeriod: 'PM',
     });
   });
+
+  test('returns the formatted time parts with the default time parts when time parts is an empty array', () => {
+    const formattedTimeParts = getFormattedTimeParts([]);
+    expect(formattedTimeParts).toEqual({
+      hour: '',
+      minute: '',
+      second: '',
+      month: '',
+      day: '',
+      year: '',
+      dayPeriod: 'AM',
+    });
+  });
 });

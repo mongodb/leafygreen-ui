@@ -5,7 +5,7 @@
  *
  * @example
  * ```js
- * getFilteredTimeParts([
+ * getNonLiteralTimeParts([
  *   { type: 'hour', value: '12' },
  *   { type: 'literal', value: ':' },
  *   { type: 'minute', value: '30' },
@@ -13,7 +13,7 @@
  * // returns: [{ type: 'hour', value: '12' }, { type: 'minute', value: '30' }]
  * ```
  */
-export const getFilteredTimeParts = ({
+export const getNonLiteralTimeParts = ({
   timeParts,
 }: {
   timeParts?: Array<Intl.DateTimeFormatPart>;

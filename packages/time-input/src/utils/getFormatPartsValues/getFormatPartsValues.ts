@@ -1,9 +1,10 @@
 import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
 
 import { TimeParts } from '../../shared.types';
-import { getFilteredTimeParts } from '../getFilteredTimeParts/getFilteredTimeParts';
 import { getFormattedTimeParts } from '../getFormattedTimeParts/getFormattedTimeParts';
 import { getFormatter } from '../getFormatter/getFormatter';
+
+import { getNonLiteralTimeParts } from './getNonLiteralTimeParts/getNonLiteralTimeParts';
 
 /**
  * Returns the format parts values for the given locale, time zone, and value.
@@ -45,7 +46,7 @@ export const getFormatPartsValues = ({
 
   // This returns the day, month, year, hour, minute, and second based on the value.
   const timeParts = formatter?.formatToParts(isValueValid ? value : new Date());
-  const filteredTimeParts = getFilteredTimeParts({ timeParts });
+  const filteredTimeParts = getNonLiteralTimeParts({ timeParts });
   // this adds a default value for the day period if it is not present. It's not necessary for 24h format locales but we add it for consistency.
   const formattedTimeParts = getFormattedTimeParts(filteredTimeParts);
 

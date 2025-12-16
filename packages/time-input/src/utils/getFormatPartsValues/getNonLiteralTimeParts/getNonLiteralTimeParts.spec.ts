@@ -1,8 +1,8 @@
-import { getFilteredTimeParts } from './getFilteredTimeParts';
+import { getNonLiteralTimeParts } from './getNonLiteralTimeParts';
 
-describe('packages/time-input/utils/getFilteredTimeParts', () => {
+describe('packages/time-input/utils/getNonLiteralTimeParts', () => {
   test('returns the filtered time parts', () => {
-    const filteredTimeParts = getFilteredTimeParts({
+    const filteredTimeParts = getNonLiteralTimeParts({
       timeParts: [
         { type: 'hour', value: '12' },
         { type: 'literal', value: ':' },

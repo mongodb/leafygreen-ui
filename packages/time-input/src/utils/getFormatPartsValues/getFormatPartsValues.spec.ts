@@ -15,61 +15,66 @@ describe('packages/time-input/utils/getFormatPartsValues', () => {
       jest.useRealTimers();
     });
 
-    describe('and the time zone is', () => {
-      test('UTC', () => {
-        const formatPartsValues = getFormatPartsValues({
-          locale: SupportedLocales.ISO_8601,
-          timeZone: 'UTC',
-          value: undefined,
-        });
-        // January 1, 2025 00:00:00 UTC in UTC is January 1, 2025 00:00:00 (UTC)
-        expect(formatPartsValues).toEqual({
-          hour: '',
-          minute: '',
-          second: '',
-          month: '1',
-          day: '1',
-          year: '2025',
-          dayPeriod: 'AM', // This is the default value for the day period since iso-8601 is 24h format
-        });
-      });
+    describe.each([undefined, new Date('invalid')])(
+      'and the value is %p',
+      value => {
+        describe('and the time zone is', () => {
+          test('UTC', () => {
+            const formatPartsValues = getFormatPartsValues({
+              locale: SupportedLocales.ISO_8601,
+              timeZone: 'UTC',
+              value,
+            });
+            // January 1, 2025 00:00:00 UTC in UTC is January 1, 2025 00:00:00 (UTC)
+            expect(formatPartsValues).toEqual({
+              hour: '',
+              minute: '',
+              second: '',
+              month: '1',
+              day: '1',
+              year: '2025',
+              dayPeriod: 'AM', // This is the default value for the day period since iso-8601 is 24h format
+            });
+          });
 
-      test('America/New_York', () => {
-        const formatPartsValues = getFormatPartsValues({
-          locale: SupportedLocales.ISO_8601,
-          timeZone: 'America/New_York',
-          value: undefined,
-        });
-        // January 1, 2025 00:00:00 UTC in America/New_York is December 31, 2024 19:00:00 (UTC-5 hours)
-        expect(formatPartsValues).toEqual({
-          hour: '',
-          minute: '',
-          second: '',
-          month: '12',
-          day: '31',
-          year: '2024',
-          dayPeriod: 'AM', // This is the default value for the day period since iso is 24h format
-        });
-      });
+          test('America/New_York', () => {
+            const formatPartsValues = getFormatPartsValues({
+              locale: SupportedLocales.ISO_8601,
+              timeZone: 'America/New_York',
+              value,
+            });
+            // January 1, 2025 00:00:00 UTC in America/New_York is December 31, 2024 19:00:00 (UTC-5 hours)
+            expect(formatPartsValues).toEqual({
+              hour: '',
+              minute: '',
+              second: '',
+              month: '12',
+              day: '31',
+              year: '2024',
+              dayPeriod: 'AM', // This is the default value for the day period since iso is 24h format
+            });
+          });
 
-      test('Pacific/Auckland', () => {
-        const formatPartsValues = getFormatPartsValues({
-          locale: SupportedLocales.ISO_8601,
-          timeZone: 'Pacific/Auckland',
-          value: undefined,
+          test('Pacific/Auckland', () => {
+            const formatPartsValues = getFormatPartsValues({
+              locale: SupportedLocales.ISO_8601,
+              timeZone: 'Pacific/Auckland',
+              value,
+            });
+            // January 1, 2025 00:00:00 UTC in Pacific/Auckland is January 1, 2025 (UTC+13 hours)
+            expect(formatPartsValues).toEqual({
+              hour: '',
+              minute: '',
+              second: '',
+              month: '1',
+              day: '1',
+              year: '2025',
+              dayPeriod: 'AM',
+            });
+          });
         });
-        // January 1, 2025 00:00:00 UTC in Pacific/Auckland is January 1, 2025 (UTC+13 hours)
-        expect(formatPartsValues).toEqual({
-          hour: '',
-          minute: '',
-          second: '',
-          month: '1',
-          day: '1',
-          year: '2025',
-          dayPeriod: 'AM',
-        });
-      });
-    });
+      },
+    );
   });
 
   describe('returns day, month, year, hour, minute, second, and day period values when the value is defined', () => {

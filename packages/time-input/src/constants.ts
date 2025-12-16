@@ -5,7 +5,7 @@ export const unitOptions = [
   { displayName: 'PM', value: 'PM' },
 ];
 
-export const defaultTimeParts: TimeParts = {
+export const defaultDateTimeParts: TimeParts = {
   hour: '',
   minute: '',
   second: '',
