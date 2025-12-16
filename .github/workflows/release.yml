@@ -162,6 +162,7 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
           registry-url: 'https://registry.npmjs.org'
+          always-auth: true
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
