@@ -1,5 +1,21 @@
 # @leafygreen-ui/tokens
 
+## 4.2.0
+
+### Minor Changes
+
+- 76d5a8f: Updated placeholder color tokens to increase color contrast and improve accessibility
+
+### Patch Changes
+
+- 60080b8: Updates icon color tokens in both light and dark modes to improve visual consistency and accessibility.
+
+  Dark Mode (darkModeColors.ts)
+  Updated the InversePrimary variant's default icon color from white to black to match the hover state, ensuring visual consistency across interaction states.
+
+  Light Mode (lightModeColors.ts)
+  Updated the Disabled variant icon colors from gray.base to gray.light1 across all interaction states (Default, Hover, Focus). This provides a lighter disabled appearance that better distinguishes disabled icons from active ones.
+
 ## 4.1.0
 
 ### Minor Changes

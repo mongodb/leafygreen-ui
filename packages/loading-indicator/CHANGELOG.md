@@ -1,5 +1,32 @@
 # @leafygreen-ui/loading-indicator
 
+## 5.1.0
+
+### Minor Changes
+
+- 12ac0b5: Adds `description` and `direction` props to the `Spinner` component to support text rendering alongside the spinner.
+
+  - `description`: Optional text to display alongside the spinner
+  - `direction`: Controls the layout of the spinner and description (`vertical` or `horizontal`)
+  - `baseFontSize`: Controls the font size of the description text
+  - `svgProps`: Pass-through props for the SVG element
+
+  ```tsx
+  <Spinner
+    size="large"
+    direction="horizontal"
+    description="Loading..."
+    className=""
+    svgProps={{...}}
+  />
+  ```
+
+### Patch Changes
+
+- Updated dependencies [60080b8]
+- Updated dependencies [76d5a8f]
+  - @leafygreen-ui/tokens@4.2.0
+
 ## 5.0.3
 
 ### Patch Changes
