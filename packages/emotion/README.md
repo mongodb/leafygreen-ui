@@ -48,11 +48,11 @@ import App from './App';
 const html = renderStylesToString(renderToString(<App />));
 ```
 
-## SSR
+## SSR Compatibility
 
 Emotion generates styles at runtime and injects them into the DOM. With Next.js App Router and Server Components, styles need to be extracted during server rendering and inserted into the HTML before it's sent to the client. Without proper configuration, you'll see a flash of unstyled content (FOUC) or styles won't apply at all.
 
-> Note: Emotion does not [currently support React Server Components](https://github.com/emotion-js/emotion/issues/2978), so you will need to use `use client`
+> Note: Emotion does not [currently support React Server Components](https://github.com/emotion-js/emotion/issues/2978), so you will need to use `use client` when using Next.JS
 
 > Note: Leafygreen UI components are not all guaranteed to work out of the box even when the Emotion package has been configured correctly.
 
@@ -66,8 +66,7 @@ Create a new file at `src/app/EmotionRegistry.tsx`:
 'use client';
 
 import { useServerInsertedHTML } from 'next/navigation';
-import { cache } from '@leafygreen-ui/emotion';
-import { CacheProvider } from '@emotion/react';
+import { cache, CacheProvider } from '@leafygreen-ui/emotion';
 
 export default function EmotionRegistry({
   children,
@@ -128,7 +127,7 @@ export default function RootLayout({
 
 #### Usage
 
-#### Important: Client Components Only
+##### Important: Client Components Only
 
 The `css` function from `@leafygreen-ui/emotion` only works in **Client Components**. You must add the `'use client'` directive to any component that uses Emotion styling.
 
@@ -156,12 +155,12 @@ export default function Home() {
 In the `_document` file, import `extractCritical` from the emotion package, and add that into a style tag.
 
 ```tsx
-import { extractCritical } from '@leafygreen-ui/emotion'
+import { extractCritical } from '@leafygreen-ui/emotion';
 export default class AppDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx)
     // Extract critical CSS from Emotion for SSR
-    const {css, ids} = extractCritical(initialProps.html || '')
+    const {css, ids} = extractCritical(initialProps.html || '');
 
     return {
       ...initialProps,
