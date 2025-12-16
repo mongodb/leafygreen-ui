@@ -17,6 +17,7 @@ export { getUTCDateString } from './getUTCDateString';
 export { getWeekdayName } from './getWeekdayName';
 export { getWeeksArray } from './getWeeksArray';
 export { isCurrentUTCDay } from './isCurrentUTCDay';
+export { isInRange } from './isInRange';
 export { isOnOrAfter } from './isOnOrAfter';
 export { isOnOrBefore } from './isOnOrBefore';
 export { isSameTZDay } from './isSameTZDay';

@@ -1,0 +1,1 @@
+export { getMinMax } from './getMinMax';

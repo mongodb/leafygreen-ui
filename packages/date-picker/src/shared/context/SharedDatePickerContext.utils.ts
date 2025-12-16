@@ -1,15 +1,14 @@
-import { isBefore, isWithinInterval } from 'date-fns';
+import { isBefore } from 'date-fns';
 import defaults from 'lodash/defaults';
 import defaultTo from 'lodash/defaultTo';
 
 import {
-  DateType,
   getISODate,
-  isValidDate,
   MAX_DATE,
   MIN_DATE,
   SupportedLocales,
   toDate,
+  isInRange as getIsInRange,
 } from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
@@ -101,21 +100,6 @@ export const defaultSharedDatePickerContext: SharedDatePickerContextProps = {
 };
 
 /**
- * Returns an `isInRange` function,
- * with `min` and `max` values in the closure
- */
-export const getIsInRange =
-  (min: Date, max: Date) =>
-  (d?: DateType): boolean =>
-    !!(
-      isValidDate(d) &&
-      isWithinInterval(d, {
-        start: min,
-        end: max,
-      })
-    );
-
-/**
  * Returns a valid `Context` value given optional provider props
  */
 export const getContextProps = (
@@ -133,7 +117,13 @@ export const getContextProps = (
     Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
 
-  const [min, max] = getMinMax(toDate(minProp), toDate(maxProp));
+  const [min, max] = getMinMax({
+    min: toDate(minProp),
+    max: toDate(maxProp),
+    defaultMin: defaultSharedDatePickerContext.min,
+    defaultMax: defaultSharedDatePickerContext.max,
+    componentName: 'DatePicker',
+  });
 
   const providerValue: SharedDatePickerContextProps = {
     ...defaults(rest, defaultSharedDatePickerContext),
@@ -150,17 +140,39 @@ export const getContextProps = (
   return { ...providerValue, isInRange, formatParts };
 };
 
-const getMinMax = (min: Date | null, max: Date | null): [Date, Date] => {
-  const defaultRange: [Date, Date] = [
-    defaultSharedDatePickerContext.min,
-    defaultSharedDatePickerContext.max,
-  ];
+/**
+ * This function is used to get the min and max dates for a component.
+ * It will return the default min and max dates if the provided min and max are not valid.
+ * It will also console an error if the provided min and max are not valid.
+ *
+ * @param {Object} params
+ * @param {Date | null} params.min - The min date to check
+ * @param {Date | null} params.max - The max date to check
+ * @param {Date} params.defaultMin - The default min date
+ * @param {Date} params.defaultMax - The default max date
+ * @param {string} params.componentName - The name of the component
+ * @returns - The min and max dates
+ */
+const getMinMax = ({
+  min,
+  max,
+  defaultMin,
+  defaultMax,
+  componentName,
+}: {
+  min: Date | null;
+  max: Date | null;
+  defaultMin: Date;
+  defaultMax: Date;
+  componentName: string;
+}): [Date, Date] => {
+  const defaultRange: [Date, Date] = [defaultMin, defaultMax];
 
   // if both are defined
   if (min && max) {
     if (isBefore(max, min)) {
       consoleOnce.error(
-        `LeafyGreen DatePicker: Provided max date (${getISODate(
+        `LeafyGreen ${componentName}: Provided max date (${getISODate(
           max,
         )}) is before provided min date (${getISODate(
           min,
@@ -171,31 +183,31 @@ const getMinMax = (min: Date | null, max: Date | null): [Date, Date] => {
 
     return [min, max];
   } else if (min) {
-    if (isBefore(defaultSharedDatePickerContext.max, min)) {
+    if (isBefore(defaultMax, min)) {
       consoleOnce.error(
-        `LeafyGreen DatePicker: Provided min date (${getISODate(
+        `LeafyGreen ${componentName}: Provided min date (${getISODate(
           min,
         )}) is after the default max date (${getISODate(
-          defaultSharedDatePickerContext.max,
+          defaultMax,
         )}). Using default values.`,
       );
       return defaultRange;
     }
 
-    return [min, defaultSharedDatePickerContext.max];
+    return [min, defaultMax];
   } else if (max) {
-    if (isBefore(max, defaultSharedDatePickerContext.min)) {
+    if (isBefore(max, defaultMin)) {
       consoleOnce.error(
-        `LeafyGreen DatePicker: Provided max date (${getISODate(
+        `LeafyGreen ${componentName}: Provided max date (${getISODate(
           max,
         )}) is before the default min date (${getISODate(
-          defaultSharedDatePickerContext.min,
+          defaultMin,
         )}). Using default values.`,
       );
       return defaultRange;
     }
 
-    return [defaultSharedDatePickerContext.min, max];
+    return [defaultMin, max];
   }
 
   return defaultRange;
