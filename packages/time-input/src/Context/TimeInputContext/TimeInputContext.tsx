@@ -36,10 +36,14 @@ export const TimeInputProvider = ({
   };
 
   const handleValidation = (val?: DateType) => {
+    // TODO: check if the time is UTC, if not then the min/max time will be used regardless of the timezone.
+
     // the min/max is in UTC but I only need the time portion.
     // I need check if the min/max are valid dates.
-    // If they are not valid then use defaults.
+    // Then do i need to transform the dates so they have the same day. month, and year? yes, they should have a default of today or jan 1st 1970.
+    // If they are not valid then use defaults. // TODO: the defaults should be the same day, month, and year.
     // If they are valid check if the min is after the min or max is before the min. If so then use defaults.
+    // If the min is after the min or max is before the min, i don't need to convert those values based on the timezone and locale since this is internal logging only but i should only show the time, not the date.
     // After those checks, then I have the correct min/max dates to use.
     // I need to take the month, day, year from the val prop and update the month, day, and year of the min/max.
     // Once I have my updated min/max dates, I need to check if the val is in the range.
