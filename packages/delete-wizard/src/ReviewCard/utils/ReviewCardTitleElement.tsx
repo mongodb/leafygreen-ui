@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { FunctionComponent } from 'react';
 
 import { type ReviewCardProps, ReviewState } from '../ReviewCard.types';
 
@@ -11,7 +11,7 @@ export const ReviewCardTitleElement = ({
 }: Pick<
   ReviewCardProps,
   'state' | 'title' | 'completedTitle' | 'loadingTitle' | 'errorTitle'
->): ReactNode => {
+>): ReturnType<FunctionComponent> => {
   switch (state) {
     case ReviewState.Error:
       return errorTitle;
