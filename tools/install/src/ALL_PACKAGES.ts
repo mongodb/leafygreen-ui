@@ -86,6 +86,7 @@ export const ALL_PACKAGES = [
   '@lg-charts/drag-provider',
   '@lg-charts/legend',
   '@lg-charts/series-provider',
+  '@lg-chat/chat-button',
   '@lg-chat/chat-layout',
   '@lg-chat/chat-window',
   '@lg-chat/input-bar',
@@ -117,5 +118,4 @@ export const ALL_PACKAGES = [
   '@lg-tools/test-harnesses',
   '@lg-tools/update',
   '@lg-tools/validate',
-  '@lg-mcp-ui/list-databases',
 ] as const;

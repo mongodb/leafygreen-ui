@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+
 jobs:
   build:
     name: Build packages
@@ -35,7 +40,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -45,11 +49,11 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       # Only setup & build if there was no build cache hit
-      - name: Use Node 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -76,7 +80,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -99,10 +102,10 @@ jobs:
         with:
           version: 10.18.3
 
-      - name: Use Node 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -120,7 +123,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -153,12 +155,14 @@ jobs:
         with:
           version: 10.18.3
 
-      - name: Use Node 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -174,7 +178,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -182,14 +185,6 @@ jobs:
             tools/*/tsdoc.json
             tools/*/stories.js
           key: ${{needs.build.outputs.cache-primary-key}}
-
-      - name: Updating .npmrc
-        run: |
-          cat << EOF > "$HOME/.npmrc"
-            //registry.npmjs.org/:_authToken=$NPM_TOKEN
-          EOF
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Version packages
         id: changesets
@@ -200,13 +195,6 @@ jobs:
           createGithubReleases: true
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-          NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
-
-      - name: Debug changesets output
-        run: |
-          echo "Changesets output: ${{ steps.changesets.outputs }}"
-          echo "Changesets output type: ${{ toJSON(steps.changesets.outputs) }}"
-          echo "--------------------------------"
 
   release-aws:
     name: Publish to AWS CodeArtifact
@@ -221,10 +209,10 @@ jobs:
         with:
           version: 10.18.3
 
-      - name: Use Node 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -242,7 +230,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -295,7 +282,6 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
-            mcp-ui/*/dist/*
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js

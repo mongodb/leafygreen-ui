@@ -16,10 +16,10 @@ jobs:
         with:
           version: 10.18.3
 
-      - name: Use Node.js 18
+      - name: Use Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
 
       - uses: preactjs/compressed-size-action@v2
         with:

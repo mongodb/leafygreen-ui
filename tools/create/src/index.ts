@@ -3,6 +3,7 @@ import chalk from 'chalk';
 
 import { getComponentRootDirectory } from './utils/getComponentRootDirectory';
 import { getScope } from './utils/getScope';
+import { printInitialPublishInstructions } from './utils/printInitialPublishInstructions';
 import { CreatePackageOptions } from './create.types';
 import { createChangeset } from './createChangeset';
 import { createComponent } from './createComponent';
@@ -41,5 +42,8 @@ export function createPackage(name: string, options: CreatePackageOptions) {
       name,
       scope,
     });
+
+    // Print instructions for initial publish
+    printInitialPublishInstructions();
   }
 }
