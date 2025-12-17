@@ -132,7 +132,7 @@ jobs:
           key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@v13.3.4
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: 'build-storybook'
