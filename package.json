@@ -66,7 +66,7 @@
     "@types/node": "^20.12.5",
     "@types/react": "18.2.23",
     "@types/react-dom": "18.2.8",
-    "chromatic": "^11.0.0",
+    "chromatic": "^13.3.4",
     "dotenv": "^10.0.0",
     "lodash": "^4.17.21",
     "npm-package-json-lint": "8.0.0",
