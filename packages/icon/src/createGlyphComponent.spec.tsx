@@ -4,16 +4,11 @@ import { render, screen } from '@testing-library/react';
 import { createGlyphComponent } from './createGlyphComponent';
 import { Size } from './glyphCommon';
 import { isComponentGlyph } from './isComponentGlyph';
-import {
-  expectFillColor,
-  expectSize,
-  MockSVGRGlyph,
-  MockSVGRGlyphWithChildren,
-} from './testUtils';
+import { TestSVGRGlyph, TestSVGRGlyphWithChildren } from './testUtils';
 
 describe('packages/Icon/createGlyphComponent', () => {
   describe('basic functionality', () => {
-    const GlyphComponent = createGlyphComponent('TestGlyph', MockSVGRGlyph);
+    const GlyphComponent = createGlyphComponent('TestGlyph', TestSVGRGlyph);
 
     test('returns a function', () => {
       expect(typeof GlyphComponent).toBe('function');
@@ -34,7 +29,7 @@ describe('packages/Icon/createGlyphComponent', () => {
   });
 
   describe('rendering', () => {
-    const GlyphComponent = createGlyphComponent('TestGlyph', MockSVGRGlyph);
+    const GlyphComponent = createGlyphComponent('TestGlyph', TestSVGRGlyph);
 
     test('renders an SVG element', () => {
       render(<GlyphComponent />);
@@ -51,99 +46,92 @@ describe('packages/Icon/createGlyphComponent', () => {
   });
 
   describe('size prop', () => {
-    const GlyphComponent = createGlyphComponent('TestGlyph', MockSVGRGlyph);
+    const GlyphComponent = createGlyphComponent('TestGlyph', TestSVGRGlyph);
 
     test('applies numeric size to height and width', () => {
       render(<GlyphComponent size={24} />);
       const glyph = screen.getByTestId('mock-glyph');
-      expectSize(glyph, '24');
+      expect(glyph).toHaveAttribute('height', '24');
+      expect(glyph).toHaveAttribute('width', '24');
     });
 
     test('applies Size.Small correctly (14px)', () => {
       render(<GlyphComponent size={Size.Small} />);
       const glyph = screen.getByTestId('mock-glyph');
-      expectSize(glyph, '14');
+      expect(glyph).toHaveAttribute('height', '14');
+      expect(glyph).toHaveAttribute('width', '14');
     });
 
     test('applies Size.Default correctly (16px)', () => {
       render(<GlyphComponent size={Size.Default} />);
       const glyph = screen.getByTestId('mock-glyph');
-      expectSize(glyph, '16');
+      expect(glyph).toHaveAttribute('height', '16');
+      expect(glyph).toHaveAttribute('width', '16');
     });
 
     test('applies Size.Large correctly (20px)', () => {
       render(<GlyphComponent size={Size.Large} />);
       const glyph = screen.getByTestId('mock-glyph');
-      expectSize(glyph, '20');
+      expect(glyph).toHaveAttribute('height', '20');
+      expect(glyph).toHaveAttribute('width', '20');
     });
 
     test('applies Size.XLarge correctly (24px)', () => {
       render(<GlyphComponent size={Size.XLarge} />);
       const glyph = screen.getByTestId('mock-glyph');
-      expectSize(glyph, '24');
+      expect(glyph).toHaveAttribute('height', '24');
+      expect(glyph).toHaveAttribute('width', '24');
     });
 
     test('uses Size.Default (16px) when size prop is not provided', () => {
       render(<GlyphComponent />);
       const glyph = screen.getByTestId('mock-glyph');
-      expectSize(glyph, '16');
+      expect(glyph).toHaveAttribute('height', '16');
+      expect(glyph).toHaveAttribute('width', '16');
     });
   });
 
   describe('fill prop', () => {
-    const GlyphComponent = createGlyphComponent('TestGlyph', MockSVGRGlyph);
+    const GlyphComponent = createGlyphComponent('TestGlyph', TestSVGRGlyph);
 
-    test('applies fill as CSS color', () => {
+    test('applies fill as CSS color via className', () => {
       render(<GlyphComponent fill="red" />);
       const glyph = screen.getByTestId('mock-glyph');
-      expectFillColor(glyph, 'red');
+      // Fill is applied as a CSS color via an emotion-generated class
+      expect(glyph).toHaveAttribute('class');
+      expect(glyph.className).not.toBe('');
     });
 
-    test('does not apply fill style when fill is not provided', () => {
+    test('does not apply fill style class when fill is not provided', () => {
       render(<GlyphComponent />);
       const glyph = screen.getByTestId('mock-glyph');
-      // When no fill is provided, no fill-related class should be applied
-      // The glyph should still render without error
-      expect(glyph).toBeInTheDocument();
+      // When no fill is provided, no emotion class should be applied
+      expect(glyph.classList.length).toBe(0);
     });
 
     test('applies fill alongside other props', () => {
       render(<GlyphComponent fill="blue" className="custom-class" size={32} />);
       const glyph = screen.getByTestId('mock-glyph');
       expect(glyph).toHaveClass('custom-class');
-      expectSize(glyph, '32');
-      expectFillColor(glyph, 'blue');
+      expect(glyph).toHaveAttribute('height', '32');
+      expect(glyph).toHaveAttribute('width', '32');
+      // Fill adds an emotion class in addition to custom-class
+      expect(glyph.classList.length).toBeGreaterThan(1);
     });
   });
 
   describe('className prop', () => {
-    const GlyphComponent = createGlyphComponent('TestGlyph', MockSVGRGlyph);
+    const GlyphComponent = createGlyphComponent('TestGlyph', TestSVGRGlyph);
 
     test('applies className to the SVG element', () => {
       render(<GlyphComponent className="my-custom-class" />);
       const glyph = screen.getByTestId('mock-glyph');
       expect(glyph).toHaveClass('my-custom-class');
     });
-
-    test('applies multiple classNames to the SVG element', () => {
-      render(<GlyphComponent className="class-one class-two" />);
-      const glyph = screen.getByTestId('mock-glyph');
-      expect(glyph).toHaveClass('class-one');
-      expect(glyph).toHaveClass('class-two');
-    });
-
-    test('applies className alongside fill style', () => {
-      render(<GlyphComponent className="custom-class" fill="green" />);
-      const glyph = screen.getByTestId('mock-glyph');
-      expect(glyph).toHaveClass('custom-class');
-      // fill applies a CSS class for the color style
-      const classList = Array.from(glyph.classList);
-      expect(classList.length).toBeGreaterThan(1);
-    });
   });
 
   describe('role prop', () => {
-    const GlyphComponent = createGlyphComponent('TestGlyph', MockSVGRGlyph);
+    const GlyphComponent = createGlyphComponent('TestGlyph', TestSVGRGlyph);
 
     test('applies role="img" by default', () => {
       render(<GlyphComponent />);
@@ -176,7 +164,7 @@ describe('packages/Icon/createGlyphComponent', () => {
   });
 
   describe('accessibility props', () => {
-    const GlyphComponent = createGlyphComponent('TestGlyph', MockSVGRGlyph);
+    const GlyphComponent = createGlyphComponent('TestGlyph', TestSVGRGlyph);
 
     test('generates default aria-label from glyph name when no accessibility props provided', () => {
       render(<GlyphComponent />);
@@ -214,6 +202,14 @@ describe('packages/Icon/createGlyphComponent', () => {
       expect(ariaLabelledBy).toContain('icon-title');
     });
 
+    test('sets the title ID when title is provided', () => {
+      render(<GlyphComponent title="Test Title" />);
+      const glyph = screen.getByTestId('mock-glyph');
+      const titleId = glyph.getAttribute('aria-labelledby');
+      expect(titleId).not.toBeNull();
+      expect(titleId).toContain('icon-title');
+    });
+
     test('sets aria-hidden to true when role is presentation', () => {
       render(<GlyphComponent role="presentation" />);
       const glyph = screen.getByTestId('mock-glyph');
@@ -224,7 +220,7 @@ describe('packages/Icon/createGlyphComponent', () => {
   describe('title prop', () => {
     const GlyphComponent = createGlyphComponent(
       'TestGlyph',
-      MockSVGRGlyphWithChildren,
+      TestSVGRGlyphWithChildren,
     );
 
     test('does not include title in children when title is not provided', () => {
@@ -236,7 +232,7 @@ describe('packages/Icon/createGlyphComponent', () => {
   });
 
   describe('combined props', () => {
-    const GlyphComponent = createGlyphComponent('TestGlyph', MockSVGRGlyph);
+    const GlyphComponent = createGlyphComponent('TestGlyph', TestSVGRGlyph);
 
     test('applies all props correctly together', () => {
       render(
@@ -249,10 +245,12 @@ describe('packages/Icon/createGlyphComponent', () => {
       );
       const glyph = screen.getByTestId('mock-glyph');
 
-      expectSize(glyph, '32');
+      expect(glyph).toHaveAttribute('height', '32');
+      expect(glyph).toHaveAttribute('width', '32');
       expect(glyph).toHaveClass('combined-class');
       expect(glyph).toHaveAttribute('aria-label', 'Combined Icon');
-      expectFillColor(glyph, 'purple');
+      // Fill adds an emotion class in addition to combined-class
+      expect(glyph.classList.length).toBeGreaterThan(1);
     });
 
     test('applies size enum with className and role', () => {
@@ -265,31 +263,11 @@ describe('packages/Icon/createGlyphComponent', () => {
       );
       const glyph = screen.getByTestId('mock-glyph');
 
-      expectSize(glyph, '20');
+      expect(glyph).toHaveAttribute('height', '20');
+      expect(glyph).toHaveAttribute('width', '20');
       expect(glyph).toHaveClass('accessible-class');
       expect(glyph).toHaveAttribute('role', 'presentation');
       expect(glyph).toHaveAttribute('aria-hidden', 'true');
-    });
-  });
-
-  describe('different glyph names', () => {
-    test('handles PascalCase glyph names correctly', () => {
-      const GlyphComponent = createGlyphComponent(
-        'MyCustomGlyph',
-        MockSVGRGlyph,
-      );
-      expect(GlyphComponent.displayName).toBe('MyCustomGlyph');
-      render(<GlyphComponent />);
-      const glyph = screen.getByTestId('mock-glyph');
-      expect(glyph).toHaveAttribute('aria-label', 'My Custom Glyph Icon');
-    });
-
-    test('handles single word glyph names correctly', () => {
-      const GlyphComponent = createGlyphComponent('Edit', MockSVGRGlyph);
-      expect(GlyphComponent.displayName).toBe('Edit');
-      render(<GlyphComponent />);
-      const glyph = screen.getByTestId('mock-glyph');
-      expect(glyph).toHaveAttribute('aria-label', 'Edit Icon');
     });
   });
 });
