@@ -4,15 +4,15 @@ import { getISODate } from '../getISODate/getISODate';
 import { isValidDate } from '../isValidDate/isValidDate';
 import { DateType } from '../types';
 
-// TODO: should be time only portion of the ISOString
 /**
  * Returns the Date and Time portion of the ISOString for a given date
  * i.e. 2023-11-01T00:00:00.000Z => 2023-11-01
  */
-export const getISODateAndTime = (date: DateType): string => {
+export const getISOTime = (date: DateType): string => {
   if (!isValidDate(date)) return '';
 
-  return date.toISOString();
+  // return only the time portion of the ISOString
+  return date.toISOString().split('T')[1];
 };
 
 /**
@@ -44,9 +44,7 @@ export const getMinMax = ({
   consoleLogDatePortionOnly?: boolean;
 }): [Date, Date] => {
   const defaultRange: [Date, Date] = [defaultMin, defaultMax];
-  const getISODateFormat = consoleLogDatePortionOnly
-    ? getISODate
-    : getISODateAndTime;
+  const getISODateFormat = consoleLogDatePortionOnly ? getISODate : getISOTime;
 
   // if both are defined
   if (min && max) {

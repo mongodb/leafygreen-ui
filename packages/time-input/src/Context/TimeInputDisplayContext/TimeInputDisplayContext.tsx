@@ -9,12 +9,14 @@ import defaultTo from 'lodash/defaultTo';
 
 import { hasDayPeriod } from '../../utils';
 import { getFormatParts } from '../../utils/getFormatParts/getFormatParts';
+import { getMinMax, toDate } from '@leafygreen-ui/date-utils';
 
 import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
-import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
+import { defaultTimeInputDisplayContext } from './TimeInputDisplayContext.utils';
+import { MAX_DATE, MIN_DATE } from '../../constants';
 
 export const TimeInputDisplayContext =
   createContext<TimeInputDisplayContextProps>(defaultTimeInputDisplayContext);
@@ -61,7 +63,29 @@ export const TimeInputDisplayProvider = ({
     Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
 
-  // TODO: min, max helpers will be in a future PR
+  const normalizedMin = normalizeDateToUTCToday({
+    date: toDate(providerValue.min),
+  });
+  const normalizedMax = normalizeDateToUTCToday({
+    date: toDate(providerValue.max),
+  });
+
+  const [min, max] = getMinMax({
+    min: normalizedMin,
+    max: normalizedMax,
+    defaultMin: MIN_DATE,
+    defaultMax: MAX_DATE,
+    componentName: 'TimeInput',
+  });
+
+  // console.log('🦄 min/max', {
+  //   providerMin: providerValue.min,
+  //   providerMax: providerValue.max,
+  //   providerMinISOString: normalizedMin?.toISOString(),
+  //   providerMaxISOString: normalizedMax?.toISOString(),
+  //   min: min?.toISOString(),
+  //   max: max?.toISOString(),
+  // });
 
   return (
     <TimeInputDisplayContext.Provider
@@ -75,6 +99,8 @@ export const TimeInputDisplayProvider = ({
         is12HourFormat,
         formatParts,
         timeZone,
+        min,
+        max,
       }}
     >
       {children}
@@ -84,4 +110,38 @@ export const TimeInputDisplayProvider = ({
 
 export const useTimeInputDisplayContext = () => {
   return useContext(TimeInputDisplayContext);
+};
+
+/**
+ * Normalizes a date to UTC today.
+ *
+ * Takes today's month, day, and year and while preserving the time from the date to create a new date in UTC.
+ *
+ * @param date - The date to normalize
+ * @returns The normalized date
+ *
+ * @example
+ * ```js
+ * Today is February 20, 2026
+ * const date = new Date('2026-01-01T04:00:00Z'); // January 1st, 2026 at 4:00:00 AM
+ * const normalizedDate = normalizeDateToUTCToday({ date });
+ * // '2026-02-20T04:00:00Z' // February 20th, 2026 at 4:00:00 AM
+ * ```
+ */
+const normalizeDateToUTCToday = ({ date }: { date: Date | null }) => {
+  const today = new Date();
+
+  // const
+  return date !== null
+    ? new Date(
+        Date.UTC(
+          today.getUTCFullYear(),
+          today.getUTCMonth(),
+          today.getUTCDate(),
+          date?.getUTCHours(),
+          date?.getUTCMinutes(),
+          date?.getUTCSeconds(),
+        ),
+      )
+    : null;
 };

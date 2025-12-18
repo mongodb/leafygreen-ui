@@ -14,7 +14,7 @@ import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/Tim
 import {
   DisplayContextPropKeys,
   displayContextPropNames,
-} from '../Context/TimeInputDisplayContext/TimePickerDisplayContext.utils';
+} from '../Context/TimeInputDisplayContext/TimeInputDisplayContext.utils';
 import { TimeInputContent } from '../TimeInputContent';
 import { getLgIds } from '../utils/getLgIds';
 

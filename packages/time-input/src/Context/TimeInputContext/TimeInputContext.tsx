@@ -2,15 +2,30 @@ import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 import {
   DateType,
-  // isInRange as getIsInRange,
+  getSimulatedTZDate,
+  // isInRange,
+  isOnOrBefore,
+  isValidDate,
+  isInRange as getIsInRange,
   // isValidDate,
 } from '@leafygreen-ui/date-utils';
+
+import isNull from 'lodash/isNull';
 
 import {
   TimeInputContextProps,
   TimeInputProviderProps,
 } from './TimeInputContext.types';
 import { useTimeInputComponentRefs } from './useTimeInputComponentRefs';
+import { useTimeInputDisplayContext } from '../TimeInputDisplayContext';
+import {
+  getFormatPartsValues,
+  getNewUTCDateFromSegments,
+  isSameUTCDayAndTime,
+} from '../../utils';
+import { isBefore } from 'date-fns';
+import { TimeSegmentsState } from '../../shared.types';
+
 // import { getFormatPartsValues } from '../../utils/getFormatPartsValues/getFormatPartsValues';
 // import { useTimeInputDisplayContext } from '../TimeInputDisplayContext';
 
@@ -29,63 +44,103 @@ export const TimeInputProvider = ({
 }: PropsWithChildren<TimeInputProviderProps>) => {
   const refs = useTimeInputComponentRefs();
 
-  // const { locale, timeZone, min, max } = useTimeInputDisplayContext();
+  const { locale, timeZone, min, max } = useTimeInputDisplayContext();
 
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
   };
 
-  const handleValidation = (val?: DateType) => {
-    // TODO: check if the time is UTC, if not then the min/max time will be used regardless of the timezone.
+  const handleValidation = (
+    val?: DateType,
+    // minUTC?: DateType,
+    // maxUTC?: DateType,
+  ) => {
+    const { month, day, year } = getFormatPartsValues({
+      locale: locale,
+      timeZone: timeZone,
+      value: value,
+    });
 
-    // the min/max is in UTC but I only need the time portion.
-    // I need check if the min/max are valid dates.
-    // Then do i need to transform the dates so they have the same day. month, and year? yes, they should have a default of today or jan 1st 1970.
-    // If they are not valid then use defaults. // TODO: the defaults should be the same day, month, and year.
-    // If they are valid check if the min is after the min or max is before the min. If so then use defaults.
-    // If the min is after the min or max is before the min, i don't need to convert those values based on the timezone and locale since this is internal logging only but i should only show the time, not the date.
-    // After those checks, then I have the correct min/max dates to use.
-    // I need to take the month, day, year from the val prop and update the month, day, and year of the min/max.
-    // Once I have my updated min/max dates, I need to check if the val is in the range.
-    // If it is in range then all good. clear error message if there is one.
-    // if it is not in range, I need to convert that value based on the timezone and locale and then use that converted date in the error message.
+    const minSegments: TimeSegmentsState = {
+      hour: min.getUTCHours().toString(),
+      minute: min.getUTCMinutes().toString(),
+      second: min.getUTCSeconds().toString(),
+    };
 
-    // const createNewDate = ({
-    //   date,
-    //   month,
-    //   day,
-    //   year,
-    // }: {
-    //   date: DateType;
-    //   month: string;
-    //   day: string;
-    //   year: string;
-    // }) => {
-    //   const yearNumber = Number(year);
-    //   const monthNumber = Number(month) - 1;
-    //   const dayNumber = Number(day);
-    //   return new Date(
-    //     yearNumber,
-    //     monthNumber,
-    //     dayNumber,
-    //     date.getHours(),
-    //     date.getMinutes(),
-    //     date.getSeconds(),
-    //   );
-    // };
+    const minUTC = getNewUTCDateFromSegments({
+      segments: minSegments,
+      is12HourFormat: false,
+      dateValues: {
+        day,
+        month,
+        year,
+      },
+      timeZone,
+      dayPeriod: 'AM',
+    });
 
-    // if (isValidDate(val)) {
-    //   const { month, day, year } = getFormatPartsValues({
-    //     locale: locale,
-    //     timeZone: timeZone,
-    //     value: val,
-    //   });
+    const maxSegments: TimeSegmentsState = {
+      hour: max.getUTCHours().toString(),
+      minute: max.getUTCMinutes().toString(),
+      second: max.getUTCSeconds().toString(),
+    };
 
-    //   const newMin = createNewDate({ date: min, month, day, year });
-    // const newMax = createNewDate({ date: max, month, day, year });
+    const maxUTC = getNewUTCDateFromSegments({
+      segments: maxSegments,
+      is12HourFormat: false,
+      dateValues: {
+        day,
+        month,
+        year,
+      },
+      timeZone,
+      dayPeriod: 'AM',
+    });
 
-    // const isInRange = getIsInRange(min, max);
-    // }
+    //// TESTING ////
+
+    console.log('🪼 handleValidation', {
+      value: val && isValidDate(val) ? val.toISOString() : null,
+      min: min && isValidDate(min) ? min.toISOString() : null,
+      max: max && isValidDate(max) ? max.toISOString() : null,
+      timeZone,
+      // simulatedMin: simulatedMin.toISOString(),
+      // simulatedMax: simulatedMax.toISOString(),
+      minUTC: minUTC && isValidDate(minUTC) ? minUTC.toISOString() : null,
+      maxUTC: maxUTC && isValidDate(maxUTC) ? maxUTC.toISOString() : null,
+    });
+
+    const isInRange = getIsInRange(minUTC, maxUTC);
+
+    if (isValidDate(val)) {
+      if (isInRange(val)) {
+        // clearInternalErrorMessage();
+        console.log('🌈is in range');
+      } else {
+        // if (isOnOrBefore(val, minUTC)) {
+        if (isOnOrBeforeDateAndTime(val, minUTC)) {
+          // setInternalErrorMessage(
+          //   `Date must be after ${getFormattedDateString(min, locale)}`,
+          // );
+          console.log('🌈🌈🌈date must be after', {
+            val: val?.toISOString(),
+            minUTC: minUTC?.toISOString(),
+          });
+        } else {
+          // setInternalErrorMessage(
+          //   `Date must be before ${getFormattedDateString(max, locale)}`,
+          // );
+          console.log('❌❌❌date must be before', {
+            val: val?.toISOString(),
+            maxUTC: maxUTC?.toISOString(),
+          });
+        }
+      }
+    } else if (isNull(val)) {
+      // This could still be an error, but it's not defined internally
+      // clearInternalErrorMessage();
+      console.log('🌈is null');
+    }
 
     _handleValidation?.(val);
   };
@@ -106,4 +161,12 @@ export const TimeInputProvider = ({
 
 export const useTimeInputContext = () => {
   return useContext(TimeInputContext);
+};
+
+const isOnOrBeforeDateAndTime = (date: DateType, dateToCompare: DateType) => {
+  return (
+    isValidDate(date) &&
+    isValidDate(dateToCompare) &&
+    (isSameUTCDayAndTime(date, dateToCompare) || isBefore(date, dateToCompare))
+  );
 };

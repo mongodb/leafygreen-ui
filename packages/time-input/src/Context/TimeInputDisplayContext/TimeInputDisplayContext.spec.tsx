@@ -12,7 +12,7 @@ import {
   useTimeInputDisplayContext,
 } from './TimeInputDisplayContext';
 import { type TimeInputDisplayProviderProps } from './TimeInputDisplayContext.types';
-import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
+import { defaultTimeInputDisplayContext } from './TimeInputDisplayContext.utils';
 
 const renderTimeInputDisplayProvider = (
   props?: Partial<TimeInputDisplayProviderProps>,

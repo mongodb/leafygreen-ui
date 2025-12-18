@@ -40,3 +40,4 @@ export { setUTCYear } from './setUTCYear';
 export { toDate } from './toDate';
 export * from './types';
 export { SupportedLocales } from './types/locales';
+export { getMinMax } from './getMinMax';

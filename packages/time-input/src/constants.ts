@@ -1,6 +1,37 @@
 import { TimeParts, TimeSegment } from './shared.types';
 
+/**
+ * The text for the 24 hour format
+ */
 export const TWENTY_FOUR_HOURS_TEXT = '24 hours';
+
+/**
+ * The minimum date for the time input. Is the current date at 00:00:00 UTC.
+ */
+export const MIN_DATE = new Date(
+  Date.UTC(
+    new Date().getUTCFullYear(),
+    new Date().getUTCMonth(),
+    new Date().getUTCDate(),
+    0,
+    0,
+    0,
+  ),
+);
+
+/**
+ * The maximum date for the time input. Is the current date at 23:59:59 UTC.
+ */
+export const MAX_DATE = new Date(
+  Date.UTC(
+    new Date().getUTCFullYear(),
+    new Date().getUTCMonth(),
+    new Date().getUTCDate(),
+    23,
+    59,
+    59,
+  ),
+);
 
 /**
  * The options for the unit select

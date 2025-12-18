@@ -10,6 +10,7 @@ import { DateType, SupportedLocales } from '@leafygreen-ui/date-utils';
 
 import { Size } from './TimeInput/TimeInput.types';
 import { TimeInput } from '.';
+import { MAX_DATE, MIN_DATE } from './constants';
 
 const meta: StoryMetaType<typeof TimeInput> = {
   title: 'Components/Inputs/TimeInput',
@@ -52,15 +53,29 @@ const meta: StoryMetaType<typeof TimeInput> = {
     darkMode: false,
     size: Size.Default,
     disabled: false,
+    // min: MIN_DATE,
+    // max: MAX_DATE,
+    min: new Date('2026-02-20T08:00:00Z'),
+    max: new Date('2026-02-21T22:00:00Z'),
+    // min: new Date('2026-02-20T02:00:00'), // Once you create a Date object, you lose the ability to know whether the original string was intended as local time or UTC.
+    // max: new Date('2026-02-20T05:00:00'),
   },
   argTypes: {
     locale: { control: 'select', options: Object.values(SupportedLocales) },
     timeZone: {
       control: 'select',
-      options: [undefined, 'UTC', 'America/New_York', 'Europe/London'],
+      options: [
+        undefined,
+        'UTC',
+        'America/New_York',
+        'Europe/London',
+        'America/Los_Angeles',
+      ],
     },
     darkMode: storybookArgTypes.darkMode,
     size: { control: 'select', options: Object.values(Size) },
+    min: { control: 'date' },
+    max: { control: 'date' },
   },
 };
 
@@ -68,7 +83,7 @@ export default meta;
 
 const Template: StoryFn<typeof TimeInput> = props => {
   const [value, setValue] = useState<DateType | undefined>(
-    new Date('2026-02-20T04:00:00Z'),
+    new Date('2026-02-20T00:00:00Z'),
   );
 
   return (
