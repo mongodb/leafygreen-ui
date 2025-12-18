@@ -50,19 +50,30 @@ const html = renderStylesToString(renderToString(<App />));
 
 ## SSR Compatibility
 
-Emotion generates styles at runtime and injects them into the DOM. With Next.js App Router and Server Components, styles need to be extracted during server rendering and inserted into the HTML before it's sent to the client. Without proper configuration, you'll see a flash of unstyled content (FOUC) or styles won't apply at all.
+Emotion generates styles at runtime and injects them into the DOM. For server-side rendering, styles must be extracted during rendering and inserted into the HTML before it's sent to the client. Without proper configuration, you'll see a flash of unstyled content (FOUC).
 
-> Note: Emotion does not [currently support React Server Components](https://github.com/emotion-js/emotion/issues/2978), so you will need to use `use client` when using Next.JS
+> ⚠️ **Important:**
+>
+> - Emotion does not [currently support React Server Components](https://github.com/emotion-js/emotion/issues/2978). You must use `'use client'` directive in Next.js.
+> - Ensure you're using the latest version of any `emotion` packages alongside this package.
+> - LeafyGreen UI components may require additional configuration beyond what's documented here.
 
-> Note: Leafygreen UI components are not all guaranteed to work out of the box even when the Emotion package has been configured correctly.
+### Framework Guides
 
-### Next.JS (App Router)
+- [Next.js (App Router)](#nextjs-app-router)
+- [Next.js (Pages Router)](#nextjs-pages-router)
+- [React Router v7+](#react-router-v7)
+- [Gatsby.js](#gatsbyjs)
 
-#### Step 1: Create the Emotion Registry
+---
+
+### Next.js (App Router)
+
+#### 1. Create the Emotion Registry
 
 Create a new file at `src/app/EmotionRegistry.tsx`:
 
-```tsx
+```jsx
 'use client';
 
 import { useServerInsertedHTML } from 'next/navigation';
@@ -71,7 +82,7 @@ import { cache, CacheProvider } from '@leafygreen-ui/emotion';
 export default function EmotionRegistry({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode,
 }) {
   useServerInsertedHTML(() => {
     const names = Object.keys(cache.inserted);
@@ -97,9 +108,9 @@ export default function EmotionRegistry({
 }
 ```
 
-#### Step 2: Add the Registry to Your Root Layout
+#### 2. Add the Registry to Your Root Layout
 
-Wrap your application with the `EmotionRegistry` in `src/app/layout.tsx`:
+Wrap your application in `src/app/layout.tsx`:
 
 ```tsx
 import type { Metadata } from 'next';
@@ -125,23 +136,20 @@ export default function RootLayout({
 }
 ```
 
-#### Usage
+#### 3. Use in Client Components
 
-##### Important: Client Components Only
-
-The `css` function from `@leafygreen-ui/emotion` only works in **Client Components**. You must add the `'use client'` directive to any component that uses Emotion styling.
+> The `css` function only works in **Client Components**:
 
 ```tsx
 'use client';
 
 import { css } from '@leafygreen-ui/emotion';
 
-export default function Home() {
+export default function MyComponent() {
   return (
     <h1
       className={css`
         color: red;
-        font-size: 2rem;
       `}
     >
       Hello World
@@ -150,17 +158,21 @@ export default function Home() {
 }
 ```
 
+---
+
 ### Next.js (Pages Router)
 
-In the `_document` file, import `extractCritical` from the emotion package, and add that into a style tag.
+Add Emotion's critical CSS extraction to your `_document` file:
 
 ```tsx
 import { extractCritical } from '@leafygreen-ui/emotion';
+
 export default class AppDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+  static async getInitialProps(
+    ctx: DocumentContext,
+  ): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
-    // Extract critical CSS from Emotion for SSR
-    const {css, ids} = extractCritical(initialProps.html || '');
+    const { css, ids } = extractCritical(initialProps.html || '');
 
     return {
       ...initialProps,
@@ -173,8 +185,106 @@ export default class AppDocument extends Document {
           />
         </>
       ),
-    }
+    };
+    // ...
   }
-...
 }
 ```
+
+---
+
+### React Router v7+
+
+This guide covers [Framework mode](https://reactrouter.com/start/modes#framework) for React Router.
+
+#### 1. Configure Server Entry
+
+```tsx
+Update `entry.server.tsx`:
+
+import { PassThrough } from 'node:stream';
+import type { EntryContext } from 'react-router';
+import { createReadableStreamFromReadable } from '@react-router/node';
+import { ServerRouter } from 'react-router';
+import { renderToPipeableStream } from 'react-dom/server';
+import { cache, extractCritical, CacheProvider } from '@leafygreen-ui/emotion';
+
+const ABORT_DELAY = 5_000;
+
+export default function handleRequest(
+request: Request,
+responseStatusCode: number,
+responseHeaders: Headers,
+routerContext: EntryContext,
+) {
+  return new Promise<Response>((resolve, reject) => {
+  let statusCode = responseStatusCode;
+  const chunks: Buffer[] = [];
+
+      const { pipe, abort } = renderToPipeableStream(
+        <CacheProvider value={cache}>
+          <ServerRouter context={routerContext} url={request.url} />
+        </CacheProvider>,
+      );
+
+      const collectStream = new PassThrough();
+      collectStream.on('data', chunk => chunks.push(chunk));
+
+      collectStream.on('end', () => {
+        const html = Buffer.concat(chunks).toString('utf-8');
+        const { css, ids } = extractCritical(html);
+        const emotionStyleTag = `<style data-emotion="css ${ids.join(' ')}">${css}</style>`;
+        const htmlWithStyles = html.replace('</head>', `${emotionStyleTag}</head>`);
+
+        const body = new PassThrough();
+        const stream = createReadableStreamFromReadable(body);
+
+        responseHeaders.set('Content-Type', 'text/html');
+        resolve(
+          new Response(stream, {
+            headers: responseHeaders,
+            status: statusCode,
+          }),
+        );
+
+        body.write(htmlWithStyles);
+        body.end();
+      });
+
+      collectStream.on('error', reject);
+      pipe(collectStream);
+      setTimeout(abort, ABORT_DELAY);
+
+  });
+}
+```
+
+#### 2. Configure Client Entry
+
+Update `entry.client.tsx`:
+
+```tsx
+import { startTransition, StrictMode } from 'react';
+import { hydrateRoot } from 'react-dom/client';
+import { HydratedRouter } from 'react-router/dom';
+import { CacheProvider, cache } from '@leafygreen-ui/emotion';
+
+startTransition(() => {
+  hydrateRoot(
+    document,
+    <StrictMode>
+      <CacheProvider value={cache}>
+        <HydratedRouter />
+      </CacheProvider>
+    </StrictMode>,
+  );
+});
+```
+
+---
+
+### Gatsby.js
+
+> ⚠️ **Not Currently Supported**
+>
+> There is a peer dependency mismatch between `@leafygreen-ui/emotion` and `gatsby-plugin-emotion`. As a result, we do not currently support GatsbyJS projects out of the box. If you need Emotion in a Gatsby project, refer to the [Gatsby Emotion documentation](https://www.gatsbyjs.com/docs/how-to/styling/emotion/).
