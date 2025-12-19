@@ -5,10 +5,8 @@ import React, {
   useState,
 } from 'react';
 import defaults from 'lodash/defaults';
-import defaultTo from 'lodash/defaultTo';
 
-import { hasDayPeriod } from '../../utils';
-import { getFormatParts } from '../../utils/getFormatParts/getFormatParts';
+import { getFormatParts, hasDayPeriod } from '../../utils';
 
 import {
   TimeInputDisplayContextProps,
@@ -53,16 +51,6 @@ export const TimeInputDisplayProvider = ({
     showSeconds: providerValue.showSeconds,
   });
 
-  /**
-   * Gets the time zone from the provider value or the browser's default
-   */
-  const timeZone = defaultTo(
-    providerValue.timeZone,
-    Intl.DateTimeFormat().resolvedOptions().timeZone,
-  );
-
-  // TODO: min, max helpers will be in a future PR
-
   return (
     <TimeInputDisplayContext.Provider
       value={{
@@ -74,7 +62,6 @@ export const TimeInputDisplayProvider = ({
         setIsDirty,
         is12HourFormat,
         formatParts,
-        timeZone,
       }}
     >
       {children}

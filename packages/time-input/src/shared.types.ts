@@ -1,7 +1,4 @@
-/**
- * An enumerable object that maps the time part names to their values
- */
-export const TimePartKeys = {
+export const DateTimePartKeys = {
   hour: 'hour',
   minute: 'minute',
   second: 'second',
@@ -11,9 +8,10 @@ export const TimePartKeys = {
   dayPeriod: 'dayPeriod',
 } as const;
 
-export type TimePartKeys = (typeof TimePartKeys)[keyof typeof TimePartKeys];
+export type DateTimePartKeys =
+  (typeof DateTimePartKeys)[keyof typeof DateTimePartKeys];
 
-export type TimeParts = Record<TimePartKeys, string>;
+export type DateTimeParts = Record<DateTimePartKeys, string>;
 
 /**
  * An enumerable object that maps the time segment names to their values
