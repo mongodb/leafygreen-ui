@@ -39,23 +39,14 @@ describe('packages/time-input-select', () => {
       expect(getInput()).toHaveValue('AM');
     });
 
-    test('has 2 options', () => {
-      const { getInput, getOptions } = renderTimeInputSelect({
+    test('has AM and PM options', () => {
+      const { getInput, getOptionByValue, getOptions } = renderTimeInputSelect({
         unit: 'AM',
         onChange: () => {},
       });
 
       userEvent.click(getInput());
       expect(getOptions()).toHaveLength(2);
-    });
-
-    test('has AM and PM options', () => {
-      const { getInput, getOptionByValue } = renderTimeInputSelect({
-        unit: 'AM',
-        onChange: () => {},
-      });
-
-      userEvent.click(getInput());
       expect(getOptionByValue('AM')).toBeInTheDocument();
       expect(getOptionByValue('PM')).toBeInTheDocument();
     });
