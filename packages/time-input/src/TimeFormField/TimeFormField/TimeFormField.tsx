@@ -14,21 +14,13 @@ export const TimeFormField = React.forwardRef<
   HTMLDivElement,
   TimeFormFieldProps
 >(({ children, ...rest }: TimeFormFieldProps, fwdRef) => {
-  const {
-    label,
-    description,
-    // stateNotification: { state, message: errorMessage },
-    disabled,
-    size,
-  } = useTimeInputDisplayContext();
+  const { label, description, disabled, size } = useTimeInputDisplayContext();
 
   return (
     <FormField
       label={label}
       description={description}
       disabled={disabled}
-      // state={state}
-      // errorMessage={errorMessage}
       size={size}
       ref={fwdRef}
       {...rest}

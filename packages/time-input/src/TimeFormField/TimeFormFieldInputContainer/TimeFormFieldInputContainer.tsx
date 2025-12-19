@@ -21,7 +21,6 @@ export const TimeFormFieldInputContainer = React.forwardRef<
   return (
     <FormFieldInputContainer
       ref={fwdRef}
-      role="combobox"
       tabIndex={-1}
       aria-label={!label && ariaLabelProp ? ariaLabelProp : undefined}
       aria-labelledby={
