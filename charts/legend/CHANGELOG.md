@@ -1,5 +1,11 @@
 # @lg-charts/legend
 
+## 1.1.0
+
+### Minor Changes
+
+- 26a0c2a: Updated `@lg-charts/legend` package build configuration to generate both non-minified and minified bundles. The default export is now the non-minified bundle, with the minified bundle provided as a production-specific export.
+
 ## 1.0.10
 
 ### Patch Changes

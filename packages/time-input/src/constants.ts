@@ -1,4 +1,4 @@
-import { TimeParts, TimeSegment } from './shared.types';
+import { DateTimeParts, TimeSegment } from './shared.types';
 
 /**
  * The options for the unit select
@@ -80,7 +80,7 @@ export const defaultPlaceholder = {
 /**
  * The default time parts
  */
-export const defaultTimeParts: TimeParts = {
+export const defaultDateTimeParts: DateTimeParts = {
   hour: '',
   minute: '',
   second: '',
