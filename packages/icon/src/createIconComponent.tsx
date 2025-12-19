@@ -34,6 +34,7 @@ export function createIconComponent<G extends GlyphObject = GlyphObject>(
   const glyphDict = allGlyphsAreComponents
     ? glyphs
     : mapValues(glyphs, (val, key) => {
+        // We do not currently check for valid SVG files. TODO: LG-5827
         if (isComponentGlyph(val)) return val;
 
         return createGlyphComponent(key, val);

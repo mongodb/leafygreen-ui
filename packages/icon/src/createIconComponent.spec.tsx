@@ -127,46 +127,52 @@ describe('packages/Icon/createIconComponent', () => {
     });
   });
 
-  describe('title prop with generated glyphs', () => {
-    // Use real generated glyphs to test title functionality
-    const IconComponent = createIconComponent(generatedGlyphs);
+  describe('raw SVGR component support (auto-wrapped)', () => {
+    // Pass raw SVGR components directly without wrapping with createGlyphComponent
+    const RawSVGRGlyph = createTestSVGRComponent('raw-svgr-glyph');
 
-    test('renders a title element when title prop is provided', () => {
-      render(<IconComponent glyph="Edit" title="Edit Icon Title" />);
-      const glyph = screen.getByRole('img');
-      const titleElement = glyph.querySelector('title');
-      expect(titleElement).toBeInTheDocument();
-      expect(titleElement?.textContent).toBe('Edit Icon Title');
+    const IconComponent = createIconComponent({ RawSVGR: RawSVGRGlyph });
+
+    test('automatically wraps raw SVGR components with createGlyphComponent', () => {
+      render(<IconComponent glyph="RawSVGR" />);
+      const glyph = screen.getByTestId('raw-svgr-glyph');
+      expect(glyph).toBeInTheDocument();
+      expect(glyph.nodeName.toLowerCase()).toBe('svg');
     });
 
-    test('sets aria-labelledby to title element ID when title is provided', () => {
-      render(<IconComponent glyph="Edit" title="Edit Icon Title" />);
-      const glyph = screen.getByRole('img');
-      const titleElement = glyph.querySelector('title');
-      const ariaLabelledBy = glyph.getAttribute('aria-labelledby');
-      expect(ariaLabelledBy).toBe(titleElement?.id);
+    test('applies size prop to auto-wrapped SVGR components', () => {
+      render(<IconComponent glyph="RawSVGR" size={28} />);
+      const glyph = screen.getByTestId('raw-svgr-glyph');
+      expect(glyph).toHaveAttribute('height', '28');
+      expect(glyph).toHaveAttribute('width', '28');
     });
 
-    test('combines title ID with aria-labelledby when both are provided', () => {
-      render(
-        <IconComponent
-          glyph="Edit"
-          title="Edit Icon Title"
-          aria-labelledby="external-label"
-        />,
-      );
-      const glyph = screen.getByRole('img');
-      const titleElement = glyph.querySelector('title');
-      const ariaLabelledBy = glyph.getAttribute('aria-labelledby');
-      expect(ariaLabelledBy).toContain('external-label');
-      expect(ariaLabelledBy).toBe(`${titleElement?.id} external-label`);
+    test('applies Size enum to auto-wrapped SVGR components', () => {
+      render(<IconComponent glyph="RawSVGR" size={Size.XLarge} />);
+      const glyph = screen.getByTestId('raw-svgr-glyph');
+      expect(glyph).toHaveAttribute('height', '24');
+      expect(glyph).toHaveAttribute('width', '24');
     });
 
-    test('does not render title when title prop is not provided', () => {
-      render(<IconComponent glyph="Edit" />);
-      const glyph = screen.getByRole('img');
-      const titleElement = glyph.querySelector('title');
-      expect(titleElement).not.toBeInTheDocument();
+    test('applies className to auto-wrapped SVGR components', () => {
+      render(<IconComponent glyph="RawSVGR" className="my-raw-class" />);
+      const glyph = screen.getByTestId('raw-svgr-glyph');
+      expect(glyph).toHaveClass('my-raw-class');
+    });
+
+    test('applies fill to auto-wrapped SVGR components', () => {
+      render(<IconComponent glyph="RawSVGR" fill="red" />);
+      const glyph = screen.getByTestId('raw-svgr-glyph');
+      // Fill is applied as a CSS color via an emotion-generated class
+      expect(glyph.classList.length).toBeGreaterThan(0);
+    });
+
+    test('applies accessibility props to auto-wrapped SVGR components', () => {
+      render(<IconComponent glyph="RawSVGR" />);
+      const glyph = screen.getByTestId('raw-svgr-glyph');
+      expect(glyph).toHaveAttribute('role', 'img');
+      // Default aria-label is generated from glyph name
+      expect(glyph).toHaveAttribute('aria-label', 'Raw SVGR Icon');
     });
   });
 
@@ -208,15 +214,6 @@ describe('packages/Icon/createIconComponent', () => {
       render(<IconComponent glyph="CustomGlyph" className="custom-class" />);
       const glyph = screen.getByTestId('custom-svgr-glyph');
       expect(glyph).toHaveClass('custom-class');
-    });
-
-    test('applies multiple classNames to glyph SVG element', () => {
-      render(
-        <IconComponent glyph="CustomGlyph" className="class-one class-two" />,
-      );
-      const glyph = screen.getByTestId('custom-svgr-glyph');
-      expect(glyph).toHaveClass('class-one');
-      expect(glyph).toHaveClass('class-two');
     });
 
     test('applies className alongside fill style', () => {

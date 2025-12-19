@@ -197,6 +197,7 @@ describe('packages/Icon/createGlyphComponent', () => {
         <GlyphComponent title="Test Title" aria-labelledby="external-label" />,
       );
       const glyph = screen.getByTestId('mock-glyph');
+
       const ariaLabelledBy = glyph.getAttribute('aria-labelledby');
       expect(ariaLabelledBy).toContain('external-label');
       expect(ariaLabelledBy).toContain('icon-title');

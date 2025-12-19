@@ -3,8 +3,7 @@ import React from 'react';
 import { SVGR } from './types';
 
 /**
- * Creates a mock SVGR component for testing purposes
- * @param testId - The data-testid to apply to the SVG element
+ * Creates a mock SVGR component for testing purposes.
  */
 export const createTestSVGRComponent = (testId: string): SVGR.Component => {
   const TestComponent: SVGR.Component = ({ children, ...props }) => (
@@ -12,6 +11,7 @@ export const createTestSVGRComponent = (testId: string): SVGR.Component => {
       {children}
     </svg>
   );
+
   return TestComponent;
 };
 
@@ -24,19 +24,3 @@ export const CustomSVGRGlyph = createTestSVGRComponent('custom-svgr-glyph');
 export const AnotherCustomGlyph = createTestSVGRComponent(
   'another-custom-glyph',
 );
-
-// /**
-//  * Asserts that an element has the expected height and width attributes
-//  */
-// export const expectSize = (element: HTMLElement, size: string) => {
-//   expect(element).toHaveAttribute('height', size);
-//   expect(element).toHaveAttribute('width', size);
-// };
-
-// /**
-//  * Asserts that an element has the expected fill color applied via CSS
-//  */
-// export const expectFillColor = (element: HTMLElement, color: string) => {
-//   const computedStyle = window.getComputedStyle(element);
-//   expect(computedStyle.color).toBe(color);
-// };

@@ -261,7 +261,7 @@ describe('packages/Icon/Icon', () => {
   test('`fill` prop applies CSS color correctly', () => {
     const { container } = render(<Icon glyph="Edit" fill="red" />);
     const svg = container.querySelector('svg');
-    expect(svg).toBeTruthy();
+    expect(svg).toBeInTheDocument();
     // The fill prop should be applied as a CSS color via emotion
     // We check that the computed style has the correct color
     const computedStyle = window.getComputedStyle(svg!);
