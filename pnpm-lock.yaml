@@ -1701,27 +1701,48 @@ importers:
 
   packages/delete-wizard:
     dependencies:
+      '@leafygreen-ui/badge':
+        specifier: workspace:^
+        version: link:../badge
       '@leafygreen-ui/canvas-header':
         specifier: workspace:^
         version: link:../canvas-header
+      '@leafygreen-ui/card':
+        specifier: workspace:^
+        version: link:../card
       '@leafygreen-ui/compound-component':
         specifier: workspace:^
         version: link:../compound-component
       '@leafygreen-ui/emotion':
-        specifier: workspace:^
+        specifier: workspace:^5.0.0
         version: link:../emotion
+      '@leafygreen-ui/expandable-card':
+        specifier: workspace:^
+        version: link:../expandable-card
       '@leafygreen-ui/form-footer':
         specifier: workspace:^
         version: link:../form-footer
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../icon
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@leafygreen-ui/loading-indicator':
+        specifier: workspace:^
+        version: link:../loading-indicator
+      '@leafygreen-ui/skeleton-loader':
+        specifier: workspace:^
+        version: link:../skeleton-loader
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
       '@leafygreen-ui/wizard':
         specifier: workspace:^
         version: link:../wizard
@@ -1732,9 +1753,6 @@ importers:
       '@faker-js/faker':
         specifier: ^10.1.0
         version: 10.1.0
-      '@leafygreen-ui/typography':
-        specifier: workspace:^
-        version: link:../typography
 
   packages/descendants:
     dependencies:
