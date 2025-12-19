@@ -41,7 +41,7 @@ export const getNewUTCDateFromSegments = ({
     : hour;
 
   /**
-   * Check if all segments are filled and valid. If they are, return the UTC date.
+   * Check if all segments are filled and valid (not necessarily explicit). If they are, return the UTC date.
    */
   if (
     isEverySegmentFilled(segments) &&
