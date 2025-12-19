@@ -22,7 +22,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - uses: actions/cache/restore@v4
         name: Check for build cache
@@ -95,7 +95,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -134,7 +134,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -182,7 +182,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -228,7 +228,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
