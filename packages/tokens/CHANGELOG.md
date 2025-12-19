@@ -1,5 +1,15 @@
 # @leafygreen-ui/tokens
 
+## 4.2.1
+
+### Patch Changes
+
+- d97bab7: Updated color tokens:
+  - Adds border info, onInfo, warning, and onWarning tokens
+  - Adds text info, onInfo, warning, and onWarning tokens
+- Updated dependencies [54d2f83]
+  - @leafygreen-ui/emotion@5.2.0
+
 ## 4.2.0
 
 ### Minor Changes
