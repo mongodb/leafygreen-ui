@@ -1,5 +1,24 @@
 # @lg-tools/storybook-addon
 
+## 0.6.6
+
+### Patch Changes
+
+- 4a34047: Updates Storybook packages to latest patch, re: 12/17 security advisory.
+
+  For details see https://storybook.js.org/blog/security-advisory/
+
+- Updated dependencies [26a0c2a]
+- Updated dependencies [4a34047]
+  - @lg-tools/build@0.9.0
+  - @lg-tools/storybook-decorators@1.0.7
+  - @lg-tools/storybook-utils@0.3.4
+  - @leafygreen-ui/lib@15.7.0
+  - @leafygreen-ui/palette@5.0.2
+  - @leafygreen-ui/tokens@4.2.0
+  - @leafygreen-ui/typography@22.2.3
+  - @lg-tools/meta@0.6.3
+
 ## 0.6.5
 
 ### Patch Changes

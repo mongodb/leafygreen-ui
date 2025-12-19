@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 5.2.0
+
+### Minor Changes
+
+- 54d2f83: This update exports a CacheProvider component for use in Next.JS applications
+
 ## 5.1.0
 
 ### Minor Changes
