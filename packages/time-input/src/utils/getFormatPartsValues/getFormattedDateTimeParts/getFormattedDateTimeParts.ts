@@ -4,12 +4,12 @@ import { defaultDateTimeParts } from '../../../constants';
 import { DateTimePartKeys, DateTimeParts } from '../../../shared.types';
 
 /**
- * Returns the formatted time parts.
+ * Returns the formatted date time parts.
  *
- * This merges the formatted time parts with the default time parts. E.g., when the component is uncontrolled, and the value is undefined, we set empty defaults for the hour, minute, and second.
+ * This merges the formatted date time parts with the default date time parts. E.g., when the component is uncontrolled, and the value is undefined, we set empty defaults for the hour, minute, and second.
  *
- * @param timeParts - The time parts to get the formatted and merged time parts for
- * @returns The formatted and merged time parts
+ * @param dateTimeParts - The date time parts to get the formatted and merged date time parts for
+ * @returns The formatted and merged date time parts
  *
  * @example
  * ```js
