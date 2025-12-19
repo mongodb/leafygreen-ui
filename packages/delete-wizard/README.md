@@ -42,7 +42,7 @@ npm install @leafygreen-ui/delete-wizard
 
   <DeleteWizard.Step requiresAcknowledgement>
     <DeleteWizard.StepContent>
-      <div>Step 2 contents<div>
+      <div>Step 2 contents</div>
     </DeleteWizard.StepContent>
     <DeleteWizard.Footer
       primaryButtonProps={{
@@ -69,7 +69,7 @@ A convenience wrapper around `CanvasHeader`
 ### DeleteWizard.Step
 
 A convenience wrapper around `Wizard.Step` to ensure the correct context.
-Like the basic `Wizard.Step`, of `requiresAcknowledgement` is true, the step must have `isAcknowledged` set in context, (or passed in as a controlled prop) for the Footer's primary button to be enabled. (see the Wizard and DeleteWizard demos in Storybook)
+Like the basic `Wizard.Step`, if `requiresAcknowledgement` is true, the step must have `isAcknowledged` set in context, (or passed in as a controlled prop) for the Footer's primary button to be enabled. (see the Wizard and DeleteWizard demos in Storybook)
 
 ### DeleteWizard.StepContent
 
