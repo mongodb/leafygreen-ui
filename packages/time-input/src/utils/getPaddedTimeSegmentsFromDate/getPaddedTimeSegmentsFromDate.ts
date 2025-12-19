@@ -2,6 +2,7 @@ import { DateType, LocaleString } from '@leafygreen-ui/date-utils';
 
 import { TimeSegmentsState } from '../../shared.types';
 import { getFormatPartsValues } from '../getFormatPartsValues/getFormatPartsValues';
+
 import { getPaddedTimeSegments } from './getPaddedTimeSegments/getPaddedTimeSegments';
 
 /**

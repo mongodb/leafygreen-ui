@@ -3,9 +3,9 @@ export { doesSomeSegmentExist } from './doesSomeSegmentExist/doesSomeSegmentExis
 export { findUnitOptionByDayPeriod } from './findUnitOptionByDayPeriod/findUnitOptionByDayPeriod';
 export { getFormatParts } from './getFormatParts/getFormatParts';
 export { getFormatPartsValues } from './getFormatPartsValues';
-export { getPaddedTimeSegmentsFromDate } from './getPaddedTimeSegmentsFromDate/getPaddedTimeSegmentsFromDate';
 export { getFormatter } from './getFormatter/getFormatter';
 export { getNewUTCDateFromSegments } from './getNewUTCDateFromSegments/getNewUTCDateFromSegments';
+export { getPaddedTimeSegmentsFromDate } from './getPaddedTimeSegmentsFromDate/getPaddedTimeSegmentsFromDate';
 export { hasDayPeriod } from './hasDayPeriod/hasDayPeriod';
 export { isEverySegmentFilled } from './isEverySegmentFilled/isEverySegmentFilled';
 export { isEverySegmentValid } from './isEverySegmentValid/isEverySegmentValid';
