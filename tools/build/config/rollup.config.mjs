@@ -14,7 +14,7 @@ import { getUMDGlobals } from './utils/getUMDGlobals.mjs';
 import { defaultsDeep } from 'lodash-es';
 
 const extensions = ['.ts', '.tsx'];
-const testUtilsFilename = 'src/testing/index.ts';
+const testBundleGlob = 'src/testing/index.ts';
 const storyGlob = 'src/*.stor{y,ies}.tsx';
 
 const babelConfigPath = fileURLToPath(
@@ -33,43 +33,57 @@ const moduleFormatToDirectory = {
   umd: 'dist/umd',
 };
 
-const doTestUtilsExist = glob.sync(testUtilsFilename).length > 0;
+/**
+ * @param {{ format: import('rollup').OutputOptions['format'], useTerser?: boolean, outputFile?: string, outputName?: string, outputDir?: string }} options
+ * @returns {import('rollup').OutputOptions}
+ */
+const createOutput = ({
+  format,
+  useTerser = false,
+  outputFile = undefined,
+  outputName = '[name].js',
+  outputDir = moduleFormatToDirectory[format],
+}) => {
+  return {
+    dir: outputDir,
+    file: outputFile,
+    name,
+    format,
+    sourcemap: true,
+    globals: format === 'umd' ? getUMDGlobals() : {},
+    validate: true,
+    interop: 'compat', // https://rollupjs.org/configuration-options/#output-interop
+    entryFileNames: outputName,
+    plugins: useTerser ? [terser()] : [],
+  };
+};
 
 /**
- *
- * @param {'esm' | 'umd'} format
- * @param {*} overrides
- * @returns
+ * @param {import('rollup').RollupOptions['output']} output
+ * @param {Partial<import('rollup').RollupOptions>} [overrides]
+ * @returns {import('rollup').RollupOptions}
  */
-const createConfigForFormat = (format, overrides) => {
+const createConfigForFormat = (output, overrides = {}) => {
+  /** @type {import('@rollup/plugin-babel').RollupBabelInputPluginOptions} */
+  const babelOptions = {
+    babelrc: false,
+    babelHelpers: 'bundled',
+    extensions,
+    configFile: babelConfigPath,
+    sourceMaps: true,
+    envName: 'production',
+  };
+
+  /** @type {import('rollup').RollupOptions} */
   const formatConfig = {
     input: ['src/index.ts'],
-    output: {
-      dir: moduleFormatToDirectory[format],
-      name,
-      format,
-      sourcemap: true,
-      globals: format === 'umd' ? getUMDGlobals() : {},
-      validate: true,
-      interop: 'compat', // https://rollupjs.org/configuration-options/#output-interop
-    },
+    output,
     plugins: [
       nodePolyfills(),
       nodeExternals({ deps: true }),
       nodeResolve({ extensions }),
-
-      babel({
-        babelrc: false,
-        babelHelpers: 'bundled',
-        extensions,
-        configFile: babelConfigPath,
-        sourceMaps: 'inline',
-        envName: 'production',
-      }),
-
+      babel(babelOptions),
       svgr(),
-
-      terser(),
     ],
     external,
     strictDeprecations: true,
@@ -83,44 +97,85 @@ const createConfigForFormat = (format, overrides) => {
   return finalConfig;
 };
 
-const esmConfig = createConfigForFormat('esm');
-const umdConfig = createConfigForFormat('umd');
+// 1. Create the default esm/umd bundles configs
+const esmConfig = createConfigForFormat(
+  createOutput({ format: 'esm', useTerser: true }),
+);
+const umdConfig = createConfigForFormat(
+  createOutput({ format: 'umd', useTerser: true }),
+);
 
 const defaultConfig = [esmConfig, umdConfig];
 
-// Add additional entry point to UMD build for test-utils if they exist
-doTestUtilsExist &&
+// 1.1. Create the modern dev/prod bundle configs
+const modernDevProdConfig = createConfigForFormat([
+  createOutput({ format: 'esm' }),
+  createOutput({ format: 'umd' }),
+  createOutput({
+    format: 'esm',
+    useTerser: true,
+    outputName: '[name]-min.js',
+  }),
+  createOutput({
+    format: 'umd',
+    useTerser: true,
+    outputName: '[name]-min.js',
+  }),
+]);
+
+// 2. Create testing bundles (if applicable)
+const testingBundleEntryPoints = glob.sync(testBundleGlob);
+
+if (testingBundleEntryPoints.length > 0) {
   defaultConfig.push(
-    createConfigForFormat('esm', {
-      input: testUtilsFilename,
-      output: {
-        dir: `${moduleFormatToDirectory['esm']}/testing`,
+    createConfigForFormat(
+      createOutput({
+        format: 'esm',
+        useTerser: true,
+        outputDir: `${moduleFormatToDirectory['esm']}/testing`,
+      }),
+      {
+        input: testingBundleEntryPoints,
       },
-    }),
-    createConfigForFormat('umd', {
-      input: testUtilsFilename,
-      output: {
-        dir: `${moduleFormatToDirectory['umd']}/testing`,
+    ),
+    createConfigForFormat(
+      createOutput({
+        format: 'umd',
+        useTerser: true,
+        outputDir: `${moduleFormatToDirectory['umd']}/testing`,
+      }),
+      {
+        input: testingBundleEntryPoints,
       },
-    }),
+    ),
   );
+}
+
+// 3. Create stories bundles (if applicable)
+
+const storiesEntryPoints = glob.sync(storyGlob);
 
 // FIXME: Figure out a way to get rid of this.
 // Creates a super-hacky `stories` bundle
-const storiesExist = glob.sync(storyGlob).length > 0;
-const storiesConfig = {
-  ...esmConfig,
-  input: glob.sync(storyGlob)[0],
-  output: {
-    format: 'esm',
-    file: 'stories.js',
+const storiesConfig = createConfigForFormat(
+  {
+    ...createOutput({
+      format: 'esm',
+      useTerser: true,
+      outputDir: null,
+      outputFile: 'stories.js',
+    }),
     sourcemap: false,
-    globals: esmConfig.output.globals,
   },
-};
+  {
+    input: storiesEntryPoints[0],
+  },
+);
 
-storiesExist && defaultConfig.push(storiesConfig);
+if (storiesEntryPoints.length > 0) {
+  defaultConfig.push(storiesConfig);
+}
 
-export { esmConfig, storiesConfig, umdConfig };
+export { modernDevProdConfig, esmConfig, storiesConfig, umdConfig };
 
 export default defaultConfig;

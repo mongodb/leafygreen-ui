@@ -1,5 +1,12 @@
 # @lg-tools/codemods
 
+## 0.7.1
+
+### Patch Changes
+
+- Updated dependencies [26a0c2a]
+  - @lg-tools/build@0.9.0
+
 ## 0.7.0
 
 ### Minor Changes
