@@ -1,7 +1,8 @@
 export { convert12hTo24h } from './convert12hTo24h/convert12hTo24h';
 export { doesSomeSegmentExist } from './doesSomeSegmentExist/doesSomeSegmentExist';
 export { findUnitOptionByDayPeriod } from './findUnitOptionByDayPeriod/findUnitOptionByDayPeriod';
-export { getFormatPartsValues } from './getFormatPartsValues/getFormatPartsValues';
+export { getFormatParts } from './getFormatParts/getFormatParts';
+export { getFormatPartsValues } from './getFormatPartsValues';
 export { getFormattedTimeSegments } from './getFormattedTimeSegments/getFormattedTimeSegments';
 export { getFormattedTimeSegmentsFromDate } from './getFormattedTimeSegmentsFromDate/getFormattedTimeSegmentsFromDate';
 export { getFormatter } from './getFormatter/getFormatter';

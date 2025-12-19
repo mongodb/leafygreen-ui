@@ -1,5 +1,35 @@
 # @lg-tools/cli
 
+## 0.12.1
+
+### Patch Changes
+
+- Updated dependencies [26a0c2a]
+  - @lg-tools/build@0.9.0
+  - @lg-tools/codemods@0.7.1
+  - @lg-tools/create@0.5.2
+  - @lg-tools/install@0.4.2
+  - @lg-tools/link@0.3.1
+  - @lg-tools/lint@3.1.1
+  - @lg-tools/prompt-kit@0.3.3
+  - @lg-tools/slackbot@0.2.19
+  - @lg-tools/test@0.5.1
+  - @lg-tools/update@0.1.20
+  - @lg-tools/validate@0.6.1
+
+## 0.12.0
+
+### Minor Changes
+
+- 12ac0b5: Updates `loading-spinner-v5` codemod to convert `displayOption` prop to `size` and `direction` props. The codemod now keeps the `description` and `baseFontSize` props instead of removing them.
+
+### Patch Changes
+
+- Updated dependencies [fdad661]
+- Updated dependencies [12ac0b5]
+  - @lg-tools/create@0.5.1
+  - @lg-tools/codemods@0.7.0
+
 ## 0.11.0
 
 ### Minor Changes

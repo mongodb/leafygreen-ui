@@ -1,4 +1,4 @@
-import { TimeParts, TimeSegment } from './shared.types';
+import { DateTimeParts, TimeSegment } from './shared.types';
 
 export const TWENTY_FOUR_HOURS_TEXT = '24 hours';
 
@@ -82,7 +82,7 @@ export const defaultPlaceholder = {
 /**
  * The default time parts
  */
-export const defaultTimeParts: TimeParts = {
+export const defaultDateTimeParts: DateTimeParts = {
   hour: '',
   minute: '',
   second: '',

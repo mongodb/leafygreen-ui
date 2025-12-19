@@ -475,7 +475,7 @@ describe('packages/time-input/time-input-segment', () => {
               const onChangeHandler =
                 jest.fn<TimeInputSegmentChangeEventHandler>();
               const { input } = renderSegment({
-                segment: 'minute',
+                segment,
                 value: formatter(
                   getDefaultMin({ is12HourFormat: true })[segment],
                 ),
