@@ -1,4 +1,6 @@
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
+import { InputSegmentChangeEventHandler } from '@leafygreen-ui/input-box';
+import { keyMap } from '@leafygreen-ui/lib';
 
 /**
  * An enumerable object that maps the time part names to their values
@@ -37,4 +39,24 @@ export type TimeSegmentsState = Record<TimeSegment, string>;
 export type SegmentRefs = Record<
   TimeSegment,
   ReturnType<DynamicRefGetter<HTMLInputElement>>
+>;
+
+/**
+ * The type for the time input segment change event
+ */
+export interface TimeInputSegmentChangeEvent {
+  segment: TimeSegment;
+  value: string;
+  meta?: {
+    key?: (typeof keyMap)[keyof typeof keyMap];
+    [key: string]: any;
+  };
+}
+
+/**
+ * The type for the time input segment change event handler
+ */
+export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
+  TimeSegment,
+  string
 >;
