@@ -23,7 +23,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
@@ -100,7 +100,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -153,7 +153,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -205,7 +205,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -260,7 +260,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp

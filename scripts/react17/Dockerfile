@@ -2,7 +2,7 @@ FROM node:18.20.8
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PNPM_VERSION=10.18.3
+ENV PNPM_VERSION=10.26.0
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
