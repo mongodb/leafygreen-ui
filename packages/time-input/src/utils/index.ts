@@ -3,8 +3,7 @@ export { doesSomeSegmentExist } from './doesSomeSegmentExist/doesSomeSegmentExis
 export { findUnitOptionByDayPeriod } from './findUnitOptionByDayPeriod/findUnitOptionByDayPeriod';
 export { getFormatParts } from './getFormatParts/getFormatParts';
 export { getFormatPartsValues } from './getFormatPartsValues';
-export { getFormattedTimeSegments } from './getFormattedTimeSegments/getFormattedTimeSegments';
-export { getFormattedTimeSegmentsFromDate } from './getFormattedTimeSegmentsFromDate/getFormattedTimeSegmentsFromDate';
+export { getPaddedTimeSegmentsFromDate } from './getPaddedTimeSegmentsFromDate/getPaddedTimeSegmentsFromDate';
 export { getFormatter } from './getFormatter/getFormatter';
 export { getNewUTCDateFromSegments } from './getNewUTCDateFromSegments/getNewUTCDateFromSegments';
 export { hasDayPeriod } from './hasDayPeriod/hasDayPeriod';

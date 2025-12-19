@@ -2,7 +2,7 @@ import { DateType, LocaleString } from '@leafygreen-ui/date-utils';
 
 import { TimeSegmentsState } from '../../shared.types';
 import { getFormatPartsValues } from '../getFormatPartsValues/getFormatPartsValues';
-import { getFormattedTimeSegments } from '../getFormattedTimeSegments/getFormattedTimeSegments';
+import { getPaddedTimeSegments } from './getPaddedTimeSegments/getPaddedTimeSegments';
 
 /**
  * Gets the formatted time segments from a date
@@ -14,11 +14,11 @@ import { getFormattedTimeSegments } from '../getFormattedTimeSegments/getFormatt
  *
  * @example
  * ```js
- * getFormattedTimeSegmentsFromDate(new Date('2025-01-01T12:00:00Z'), 'en-US', 'America/New_York');
+ * getPaddedTimeSegmentsFromDate(new Date('2025-01-01T12:00:00Z'), 'en-US', 'America/New_York');
  * // returns: { hour: '12', minute: '00', second: '00' }
  * ```
  */
-export const getFormattedTimeSegmentsFromDate = (
+export const getPaddedTimeSegmentsFromDate = (
   date: DateType,
   locale: LocaleString,
   timeZone: string,
@@ -29,5 +29,5 @@ export const getFormattedTimeSegmentsFromDate = (
     value: date,
   });
 
-  return getFormattedTimeSegments({ hour, minute, second });
+  return getPaddedTimeSegments({ hour, minute, second });
 };

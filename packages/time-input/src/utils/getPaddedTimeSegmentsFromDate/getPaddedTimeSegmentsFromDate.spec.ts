@@ -1,8 +1,8 @@
-import { getFormattedTimeSegmentsFromDate } from './getFormattedTimeSegmentsFromDate';
+import { getPaddedTimeSegmentsFromDate } from './getPaddedTimeSegmentsFromDate';
 
-describe('packages/time-input/utils/getFormattedTimeSegmentsFromDate', () => {
+describe('packages/time-input/utils/getPaddedTimeSegmentsFromDate', () => {
   test('returns the formatted time segments from a date', () => {
-    const formattedTimeSegments = getFormattedTimeSegmentsFromDate(
+    const formattedTimeSegments = getPaddedTimeSegmentsFromDate(
       new Date('2025-01-01T01:00:00Z'),
       'en-US',
       'America/New_York',

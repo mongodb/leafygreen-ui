@@ -1,6 +1,7 @@
 import { newUTCFromTimeZone } from '@leafygreen-ui/date-utils';
 
 import { TimeSegmentsState } from '../../shared.types';
+import { DayPeriod } from '../../shared.types';
 import { convert12hTo24h } from '../convert12hTo24h/convert12hTo24h';
 import { doesSomeSegmentExist } from '../doesSomeSegmentExist/doesSomeSegmentExist';
 import { isEverySegmentFilled } from '../isEverySegmentFilled/isEverySegmentFilled';
@@ -30,13 +31,13 @@ export const getNewUTCDateFromSegments = ({
     month: string;
     year: string;
   };
-  dayPeriod: string;
+  dayPeriod: DayPeriod;
 }) => {
   const { day, month, year } = dateValues;
   const { hour, minute, second } = segments;
 
-  const convertedHour = is12HourFormat
-    ? convert12hTo24h(hour, dayPeriod)
+  const converted12hTo24hHour = is12HourFormat
+    ? convert12hTo24h(Number(hour), dayPeriod).toString()
     : hour;
 
   /**
@@ -50,7 +51,7 @@ export const getNewUTCDateFromSegments = ({
       year,
       month,
       day,
-      hour: convertedHour,
+      hour: converted12hTo24hHour,
       minute,
       second,
       timeZone,
