@@ -71,9 +71,6 @@ A convenience wrapper around `CanvasHeader`
 A convenience wrapper around `Wizard.Step` to ensure the correct context.
 Like the basic `Wizard.Step`, if `requiresAcknowledgement` is true, the step must have `isAcknowledged` set in context, (or passed in as a controlled prop) for the Footer's primary button to be enabled. (see the Wizard and DeleteWizard demos in Storybook)
 
-### DeleteWizard.StepContent
-
-A styled `div` for use inside a `DeleteWizard.Step` to ensure proper page scrolling and footer positioning
 
 ### DeleteWizard.Footer
 
