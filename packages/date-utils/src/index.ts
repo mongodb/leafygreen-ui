@@ -22,6 +22,7 @@ export { isOnOrBefore } from './isOnOrBefore';
 export { isSameTZDay } from './isSameTZDay';
 export { isSameTZMonth } from './isSameTZMonth';
 export { isSameUTCDay } from './isSameUTCDay';
+export { isSameUTCDayAndTime } from './isSameUTCDayAndTime';
 export { isSameUTCMonth } from './isSameUTCMonth';
 export { isSameUTCRange } from './isSameUTCRange';
 export { isTodayTZ } from './isTodayTZ';

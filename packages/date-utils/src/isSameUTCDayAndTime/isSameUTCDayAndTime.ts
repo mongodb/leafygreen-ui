@@ -19,7 +19,6 @@ export const isSameUTCDayAndTime = (
     day1.getUTCFullYear() === day2.getUTCFullYear() &&
     day1.getUTCHours() === day2.getUTCHours() &&
     day1.getUTCMinutes() === day2.getUTCMinutes() &&
-    day1.getUTCSeconds() === day2.getUTCSeconds() &&
-    day1.getUTCMilliseconds() === day2.getUTCMilliseconds()
+    day1.getUTCSeconds() === day2.getUTCSeconds()
   );
 };
