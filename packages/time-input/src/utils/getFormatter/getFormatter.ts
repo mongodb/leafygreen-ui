@@ -1,4 +1,8 @@
-import { isValidLocale, SupportedLocales } from '@leafygreen-ui/date-utils';
+import {
+  isValidLocale,
+  LocaleString,
+  SupportedLocales,
+} from '@leafygreen-ui/date-utils';
 
 /**
  * Returns a formatter for the given locale.
@@ -21,7 +25,7 @@ export const getFormatter = ({
   locale = SupportedLocales.ISO_8601,
   options = {},
 }: {
-  locale?: string;
+  locale?: LocaleString;
   options?: Intl.DateTimeFormatOptions;
 }) => {
   const isIsoLocale = locale === SupportedLocales.ISO_8601;

@@ -1,6 +1,6 @@
 import { LocaleString, SupportedLocales } from '@leafygreen-ui/date-utils';
 
-import { TimePartKeys } from '../../shared.types';
+import { DateTimePartKeys } from '../../shared.types';
 import { getFormatter } from '../getFormatter/getFormatter';
 
 /**
@@ -30,7 +30,9 @@ export const hasDayPeriod = (locale: LocaleString) => {
 
   // Format a sample time and check for dayPeriod (AM/PM)
   const parts = formatter.formatToParts(new Date());
-  const hasDayPeriod = parts.some(part => part.type === TimePartKeys.dayPeriod);
+  const hasDayPeriod = parts.some(
+    part => part.type === DateTimePartKeys.dayPeriod,
+  );
 
   return hasDayPeriod;
 };

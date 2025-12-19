@@ -1,11 +1,11 @@
-import { TimeParts } from './shared.types';
+import { DateTimeParts } from './shared.types';
 
 export const unitOptions = [
   { displayName: 'AM', value: 'AM' },
   { displayName: 'PM', value: 'PM' },
 ];
 
-export const defaultDateTimeParts: TimeParts = {
+export const defaultDateTimeParts: DateTimeParts = {
   hour: '',
   minute: '',
   second: '',

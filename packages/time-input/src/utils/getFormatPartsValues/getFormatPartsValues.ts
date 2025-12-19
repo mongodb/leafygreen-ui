@@ -1,10 +1,9 @@
-import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
+import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
 
-import { TimeParts } from '../../shared.types';
-import { getFormattedTimeParts } from '../getFormattedTimeParts/getFormattedTimeParts';
+import { DateTimeParts } from '../../shared.types';
 import { getFormatter } from '../getFormatter/getFormatter';
 
-import { getNonLiteralTimeParts } from './getNonLiteralTimeParts/getNonLiteralTimeParts';
+import { getFormattedDateTimeParts } from './getFormattedDateTimeParts/getFormattedDateTimeParts';
 
 /**
  * Returns the format parts values for the given locale, time zone, and value.
@@ -28,10 +27,10 @@ export const getFormatPartsValues = ({
   timeZone,
   value,
 }: {
-  locale: string;
+  locale: LocaleString;
   timeZone: string;
   value: DateType | undefined;
-}): TimeParts => {
+}): DateTimeParts => {
   const isValueValid = isValidDate(value);
 
   // Get the formatter that returns day, month, year, hour, minute, and second for the given locale and time zone.
@@ -54,10 +53,17 @@ export const getFormatPartsValues = ({
   });
 
   // This returns the day, month, year, hour, minute, and second based on the value.
-  const timeParts = formatter?.formatToParts(isValueValid ? value : new Date());
-  const filteredTimeParts = getNonLiteralTimeParts({ timeParts });
-  // this adds a default value for the day period if it is not present. It's not necessary for 24h format locales but we add it for consistency.
-  const formattedTimeParts = getFormattedTimeParts(filteredTimeParts);
+  const dateTimeParts = formatter?.formatToParts(
+    isValueValid ? value : new Date(),
+  );
 
-  return formattedTimeParts;
+  const filteredDateTimeParts =
+    dateTimeParts?.filter(part => part.type !== 'literal') ?? [];
+
+  // this adds a default value for the day period if it is not present. It's not necessary for 24h format locales but we add it for consistency.
+  const formattedDateTimeParts = getFormattedDateTimeParts(
+    filteredDateTimeParts,
+  );
+
+  return formattedDateTimeParts;
 };

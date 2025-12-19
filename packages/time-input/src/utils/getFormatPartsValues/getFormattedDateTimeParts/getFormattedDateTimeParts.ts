@@ -1,7 +1,7 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 
-import { defaultDateTimeParts } from '../../constants';
-import { TimePartKeys, TimeParts } from '../../shared.types';
+import { defaultDateTimeParts } from '../../../constants';
+import { DateTimePartKeys, DateTimeParts } from '../../../shared.types';
 
 /**
  * Returns the formatted time parts.
@@ -13,24 +13,35 @@ import { TimePartKeys, TimeParts } from '../../shared.types';
  *
  * @example
  * ```js
- * getFormattedTimeParts([
- *   { type: 'hour', value: '12' },
- *   { type: 'minute', value: '30' },
- *   { type: 'second', value: '00' },
+ * getFormattedDateTimeParts([
+ *   { type: 'day', value: '12' },
+ *   { type: 'month', value: '01' },
+ *   { type: 'year', value: '2025' },
  * ]);
- * // returns: { hour: '12', minute: '30', second: '00' }
+ * // returns: {
+ *  // day: '12',
+ *  // month: '01',
+ *  // year: '2025',
+ *  // hour: '',
+ *  // minute: '',
+ *  // second: '',
+ *  // dayPeriod: 'AM'
+ * // }
  * ```
  */
-export const getFormattedTimeParts = (
-  timeParts: Array<Intl.DateTimeFormatPart>,
-): TimeParts => {
-  const formattedTimeParts: TimeParts = timeParts.reduce((acc, part) => {
-    acc[part.type as TimePartKeys] = part.value;
-    return acc;
-  }, {} as TimeParts);
+export const getFormattedDateTimeParts = (
+  dateTimeParts: Array<Intl.DateTimeFormatPart>,
+): DateTimeParts => {
+  const formattedDateTimeParts: DateTimeParts = dateTimeParts.reduce(
+    (acc, part) => {
+      acc[part.type as DateTimePartKeys] = part.value;
+      return acc;
+    },
+    {} as DateTimeParts,
+  );
 
-  const mergedTimeParts: TimeParts = defaultsDeep(
-    formattedTimeParts,
+  const mergedTimeParts: DateTimeParts = defaultsDeep(
+    formattedDateTimeParts,
     defaultDateTimeParts,
   );
 

@@ -4,11 +4,9 @@ import { cx } from '@leafygreen-ui/emotion';
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 
 import { unitOptions } from '../constants';
-import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
 import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
-import { getFormatPartsValues } from '../utils';
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
@@ -18,20 +16,12 @@ import { TimeInputInputsProps } from './TimeInputInputs.types';
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
-    const { is12hFormat, timeZone, locale } = useTimeInputDisplayContext();
+    const { is12hFormat } = useTimeInputDisplayContext();
     const [selectUnit, setSelectUnit] = useState<UnitOption>(unitOptions[0]);
-
-    const { value } = useTimeInputContext();
 
     const handleSelectChange = (unit: UnitOption) => {
       setSelectUnit(unit);
     };
-
-    const timeParts = getFormatPartsValues({
-      locale: locale,
-      timeZone: timeZone,
-      value: value,
-    });
 
     // TODO: break this out more
     return (
