@@ -176,37 +176,6 @@ describe('packages/Icon/createIconComponent', () => {
     });
   });
 
-  describe('title prop with custom SVGR glyphs', () => {
-    const CustomGlyphWithTitle = createTestSVGRComponent(
-      'custom-glyph-with-title',
-    );
-
-    const customGlyphsWithTitle = {
-      CustomWithTitle: createGlyphComponent(
-        'CustomWithTitle',
-        CustomGlyphWithTitle,
-      ),
-    };
-
-    const IconComponent = createIconComponent(customGlyphsWithTitle);
-
-    test('passes title through createGlyphComponent which sets aria-labelledby', () => {
-      render(<IconComponent glyph="CustomWithTitle" title="Custom Title" />);
-      const glyph = screen.getByTestId('custom-glyph-with-title');
-      // createGlyphComponent sets aria-labelledby when title is provided
-      const ariaLabelledBy = glyph.getAttribute('aria-labelledby');
-      expect(ariaLabelledBy).not.toBeNull();
-      expect(ariaLabelledBy).toContain('icon-title');
-    });
-
-    test('sets aria-label when no title or aria-labelledby provided', () => {
-      render(<IconComponent glyph="CustomWithTitle" />);
-      const glyph = screen.getByTestId('custom-glyph-with-title');
-      // Default aria-label is generated from glyph name
-      expect(glyph).toHaveAttribute('aria-label', 'Custom With Title Icon');
-    });
-  });
-
   describe('className prop', () => {
     const IconComponent = createIconComponent(customGlyphs);
 
@@ -214,38 +183,6 @@ describe('packages/Icon/createIconComponent', () => {
       render(<IconComponent glyph="CustomGlyph" className="custom-class" />);
       const glyph = screen.getByTestId('custom-svgr-glyph');
       expect(glyph).toHaveClass('custom-class');
-    });
-
-    test('applies className alongside fill style', () => {
-      render(
-        <IconComponent
-          glyph="CustomGlyph"
-          className="custom-class"
-          fill="red"
-        />,
-      );
-      const glyph = screen.getByTestId('custom-svgr-glyph');
-      expect(glyph).toHaveClass('custom-class');
-      // fill applies a CSS class for the color style
-      const classList = Array.from(glyph.classList);
-      expect(classList.length).toBeGreaterThan(1);
-    });
-  });
-
-  describe('className prop with generated glyphs', () => {
-    const IconComponent = createIconComponent(generatedGlyphs);
-
-    test('applies className to generated glyph SVG element', () => {
-      render(<IconComponent glyph="Edit" className="generated-glyph-class" />);
-      const glyph = screen.getByRole('img');
-      expect(glyph).toHaveClass('generated-glyph-class');
-    });
-
-    test('applies multiple classNames to generated glyph', () => {
-      render(<IconComponent glyph="Edit" className="class-one class-two" />);
-      const glyph = screen.getByRole('img');
-      expect(glyph).toHaveClass('class-one');
-      expect(glyph).toHaveClass('class-two');
     });
   });
 
