@@ -1,0 +1,38 @@
+import { LocaleString, SupportedLocales } from '@leafygreen-ui/date-utils';
+
+import { DateTimePartKeys } from '../../shared.types';
+import { getFormatter } from '../getFormatter/getFormatter';
+
+/**
+ * Checks if the locale has a day period (AM/PM)
+ *
+ * @param locale - The locale to check
+ * @returns Whether the locale has a day period (AM/PM)
+ *
+ * @default false
+ *
+ * @example
+ * ```js
+ * hasDayPeriod('en-US'); // true
+ * hasDayPeriod('en-GB'); // false
+ * hasDayPeriod('iso-8601'); // false
+ * ```
+ */
+export const hasDayPeriod = (locale: LocaleString) => {
+  if (locale === SupportedLocales.ISO_8601) return false;
+
+  const formatter = getFormatter({
+    locale,
+    options: { hour: 'numeric', minute: 'numeric' },
+  });
+
+  if (!formatter) return false;
+
+  // Format a sample time and check for dayPeriod (AM/PM)
+  const parts = formatter.formatToParts(new Date());
+  const hasDayPeriod = parts.some(
+    part => part.type === DateTimePartKeys.dayPeriod,
+  );
+
+  return hasDayPeriod;
+};

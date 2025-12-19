@@ -78,6 +78,13 @@ export type DisplayTimeInputProps = {
    * A message to show in red underneath the input when state is `Error`
    */
   errorMessage?: string;
+
+  /**
+   * Whether to show seconds in the input.
+   *
+   * @default true
+   */
+  showSeconds?: boolean;
 } & DarkModeProps &
   AriaLabelPropsWithLabel;
 

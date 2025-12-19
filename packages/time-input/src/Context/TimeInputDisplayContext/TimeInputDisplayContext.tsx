@@ -6,6 +6,8 @@ import React, {
 } from 'react';
 import defaults from 'lodash/defaults';
 
+import { getFormatParts, hasDayPeriod } from '../../utils';
+
 import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProviderProps,
@@ -39,6 +41,14 @@ export const TimeInputDisplayProvider = ({
 
   // TODO: min, max helpers
 
+  // Determines if the input should show a select for the day period (AM/PM)
+  const is12hFormat = hasDayPeriod(providerValue.locale);
+
+  // Only used to track the presentation format of the segments, not the value itself
+  const formatParts = getFormatParts({
+    showSeconds: providerValue.showSeconds,
+  });
+
   return (
     <TimeInputDisplayContext.Provider
       value={{
@@ -48,6 +58,8 @@ export const TimeInputDisplayProvider = ({
         ariaLabelledbyProp,
         isDirty,
         setIsDirty,
+        is12hFormat,
+        formatParts,
       }}
     >
       {children}
