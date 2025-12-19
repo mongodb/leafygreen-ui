@@ -154,6 +154,9 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 10.26.0
+      
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@11.7.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -207,9 +210,6 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 10.26.0
-      
-      - name: Upgrade npm for OIDC support
-        run: npm install -g npm@11.7.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
