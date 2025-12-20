@@ -7,7 +7,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Pagination, { PaginationProps } from '.';
+import { Pagination, type PaginationProps } from '.';
 
 const fn = () => {};
 

@@ -17,7 +17,7 @@ export const baseStyles = css`
 export const flexSectionStyles = css`
   flex: 1;
   display: flex;
-  gap: ${spacing[1]}px;
+  gap: ${spacing[100]}px;
   align-items: center;
   justify-content: center;
 `;

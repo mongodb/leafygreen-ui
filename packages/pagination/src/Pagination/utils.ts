@@ -16,3 +16,29 @@ export const getRangeMaxString = (numTotalItems?: number) => {
 export const getTotalNumPages = (numItems: number, itemsPerPage: number) => {
   return Math.ceil(numItems / itemsPerPage);
 };
+
+export const validateCurrentPage = <T extends number>({
+  currentPage,
+  numTotalItems,
+  itemsPerPage,
+}: {
+  currentPage: number;
+  numTotalItems?: number;
+  itemsPerPage: T;
+}) => {
+  return (
+    currentPage < 1 ||
+    (numTotalItems &&
+      getTotalNumPages(numTotalItems, itemsPerPage) < currentPage)
+  );
+};
+
+export const validateItemsPerPage = <T extends number>({
+  itemsPerPage,
+  itemsPerPageOptions,
+}: {
+  itemsPerPage: T;
+  itemsPerPageOptions: Array<T>;
+}) => {
+  return !itemsPerPageOptions.includes(itemsPerPage);
+};
