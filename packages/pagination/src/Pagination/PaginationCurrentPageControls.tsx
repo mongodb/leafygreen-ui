@@ -9,6 +9,7 @@ import {
   Option,
   RenderMode,
   Select,
+  Size,
 } from '@leafygreen-ui/select';
 import { Body } from '@leafygreen-ui/typography';
 
@@ -17,20 +18,8 @@ import {
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
 } from './constants';
 import { flexSectionStyles } from './Pagination.styles';
-import { PaginationProps } from './Pagination.types';
+import { PaginationCurrentPageControlsProps } from './Pagination.types';
 import { getTotalNumPages, validateCurrentPage } from './utils';
-
-type PaginationCurrentPageControlsProps = {} & Pick<
-  PaginationProps,
-  | 'onCurrentPageOptionChange'
-  | 'currentPage'
-  | 'numTotalItems'
-  | 'itemsPerPage'
-  | 'shouldDisableBackArrow'
-  | 'shouldDisableForwardArrow'
-  | 'onBackArrowClick'
-  | 'onForwardArrowClick'
->;
 
 /**
  * PaginationCurrentPageControls is a component that displays the current page and the total number of pages.
@@ -69,7 +58,7 @@ function PaginationCurrentPageControls<T extends number>({
             onChange={onCurrentPageOptionChange}
             value={String(currentPage)}
             allowDeselect={false}
-            size="xsmall"
+            size={Size.XSmall}
             data-testid="lg-pagination-page-select"
             dropdownWidthBasis={DropdownWidthBasis.Option}
             renderMode={RenderMode.TopLayer}

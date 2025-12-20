@@ -7,13 +7,8 @@ import {
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
 } from './constants';
 import { flexSectionStyles } from './Pagination.styles';
-import { PaginationProps } from './Pagination.types';
+import { PaginationRangeViewProps } from './Pagination.types';
 import { getCurrentRangeString, getRangeMaxString } from './utils';
-
-type PaginationRangeViewProps = Pick<
-  PaginationProps,
-  'itemsPerPage' | 'currentPage' | 'numTotalItems'
->;
 
 /**
  * PaginationRangeView is a component that displays the current range of items.

@@ -12,13 +12,8 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { DEFAULT_ITEMS_PER_PAGE_OPTIONS } from './constants';
 import { flexSectionStyles } from './Pagination.styles';
-import { PaginationProps } from './Pagination.types';
+import { PaginationItemsPerPageProps } from './Pagination.types';
 import { validateItemsPerPage } from './utils';
-
-type PaginationItemsPerPageProps = Pick<
-  PaginationProps,
-  'itemsPerPageOptions' | 'id' | 'onItemsPerPageOptionChange' | 'itemsPerPage'
->;
 
 function PaginationItemsPerPage<T extends number>({
   id: idProp,
