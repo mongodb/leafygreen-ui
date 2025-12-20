@@ -1,3 +1,6 @@
+import { InputSegmentChangeEventHandler } from '@leafygreen-ui/input-box';
+import { keyMap } from '@leafygreen-ui/lib';
+
 export const DateTimePartKeys = {
   hour: 'hour',
   minute: 'minute',
@@ -25,3 +28,23 @@ export const TimeSegment = {
 export type TimeSegment = (typeof TimeSegment)[keyof typeof TimeSegment];
 
 export type TimeSegmentsState = Record<TimeSegment, string>;
+
+/**
+ * The type for the time input segment change event
+ */
+export interface TimeInputSegmentChangeEvent {
+  segment: TimeSegment;
+  value: string;
+  meta?: {
+    key?: (typeof keyMap)[keyof typeof keyMap];
+    [key: string]: any;
+  };
+}
+
+/**
+ * The type for the time input segment change event handler
+ */
+export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
+  TimeSegment,
+  string
+>;

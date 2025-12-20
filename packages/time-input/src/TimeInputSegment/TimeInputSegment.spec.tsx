@@ -14,14 +14,14 @@ import {
 } from '../constants';
 import { TimeInputDisplayContextProps } from '../Context/TimeInputDisplayContext';
 import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext';
-import { TimeSegment } from '../shared.types';
+import {
+  TimeSegment,
+  TimeInputSegmentChangeEventHandler,
+} from '../shared.types';
 import { getLgIds } from '../utils/getLgIds';
 
 import { TimeInputSegment } from './TimeInputSegment';
-import {
-  TimeInputSegmentChangeEventHandler,
-  TimeInputSegmentProps,
-} from './TimeInputSegment.types';
+import { TimeInputSegmentProps } from './TimeInputSegment.types';
 
 const lgIds = getLgIds();
 
