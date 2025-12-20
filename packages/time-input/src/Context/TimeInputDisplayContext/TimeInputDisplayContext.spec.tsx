@@ -13,7 +13,7 @@ import {
   useTimeInputDisplayContext,
 } from './TimeInputDisplayContext';
 import { type TimeInputDisplayProviderProps } from './TimeInputDisplayContext.types';
-import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
+import { defaultTimeInputDisplayContext } from './TimeInputDisplayContext.utils';
 
 const lgIds = getLgIds();
 const overrideLgIds = getLgIds('lg-override-lgids');

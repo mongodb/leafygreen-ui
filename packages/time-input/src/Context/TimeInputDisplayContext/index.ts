@@ -11,4 +11,4 @@ export {
   defaultTimeInputDisplayContext,
   DisplayContextPropKeys,
   displayContextPropNames,
-} from './TimePickerDisplayContext.utils';
+} from './TimeInputDisplayContext.utils';
