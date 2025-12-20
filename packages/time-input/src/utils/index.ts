@@ -4,6 +4,7 @@ export { findUnitOptionByDayPeriod } from './findUnitOptionByDayPeriod/findUnitO
 export { getFormatParts } from './getFormatParts/getFormatParts';
 export { getFormatPartsValues } from './getFormatPartsValues';
 export { getFormatter } from './getFormatter/getFormatter';
+export { getLgIds } from './getLgIds';
 export { getNewUTCDateFromSegments } from './getNewUTCDateFromSegments/getNewUTCDateFromSegments';
 export { getPaddedTimeSegmentsFromDate } from './getPaddedTimeSegmentsFromDate/getPaddedTimeSegmentsFromDate';
 export { hasDayPeriod } from './hasDayPeriod/hasDayPeriod';

@@ -7,4 +7,8 @@ export {
   type TimeInputDisplayContextProps,
   type TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
-export { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
+export {
+  defaultTimeInputDisplayContext,
+  DisplayContextPropKeys,
+  displayContextPropNames,
+} from './TimeInputDisplayContext.utils';

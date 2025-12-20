@@ -12,16 +12,18 @@ import {
   getDefaultMin,
   getTimeSegmentRules,
 } from '../constants';
-import { TimeInputDisplayContextProps } from '../Context/TimeInputDisplayContext';
-import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext';
-import { TimeSegment } from '../shared.types';
-import { getLgIds } from '../utils/getLgIds';
-
-import { TimeInputSegment } from './TimeInputSegment';
+import {
+  TimeInputDisplayContextProps,
+  TimeInputDisplayProvider,
+} from '../Context';
 import {
   TimeInputSegmentChangeEventHandler,
-  TimeInputSegmentProps,
-} from './TimeInputSegment.types';
+  TimeSegment,
+} from '../shared.types';
+import { getLgIds } from '../utils';
+
+import { TimeInputSegment } from './TimeInputSegment';
+import { TimeInputSegmentProps } from './TimeInputSegment.types';
 
 const lgIds = getLgIds();
 

@@ -12,7 +12,7 @@ import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
-import { defaultTimeInputDisplayContext } from './TimePickerDisplayContext.utils';
+import { defaultTimeInputDisplayContext } from './TimeInputDisplayContext.utils';
 
 export const TimeInputDisplayContext =
   createContext<TimeInputDisplayContextProps>(defaultTimeInputDisplayContext);
@@ -42,7 +42,7 @@ export const TimeInputDisplayProvider = ({
   /**
    * Determines if the input should show a select for the day period (AM/PM)
    */
-  const is12HourFormat = !!hasDayPeriod(providerValue.locale);
+  const is12HourFormat = hasDayPeriod(providerValue.locale);
 
   /**
    * Only used to track the presentation format of the segments, not the value itself
