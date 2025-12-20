@@ -1,4 +1,5 @@
-import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
+import { isValidDate } from '../isValidDate';
+import { DateType } from '../types';
 
 /**
  * Checks if two dates are the same day and time in UTC.
