@@ -6,7 +6,7 @@ import { renderHook } from '@leafygreen-ui/testing-lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Size } from '../../TimeInput/TimeInput.types';
-import { getLgIds } from '../../utils/getLgIds';
+import { getLgIds } from '../../utils';
 
 import {
   TimeInputDisplayProvider,

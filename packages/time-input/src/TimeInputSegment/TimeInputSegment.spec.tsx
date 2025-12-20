@@ -12,13 +12,15 @@ import {
   getDefaultMin,
   getTimeSegmentRules,
 } from '../constants';
-import { TimeInputDisplayContextProps } from '../Context/TimeInputDisplayContext';
-import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext';
 import {
-  TimeSegment,
+  TimeInputDisplayContextProps,
+  TimeInputDisplayProvider,
+} from '../Context';
+import {
   TimeInputSegmentChangeEventHandler,
+  TimeSegment,
 } from '../shared.types';
-import { getLgIds } from '../utils/getLgIds';
+import { getLgIds } from '../utils';
 
 import { TimeInputSegment } from './TimeInputSegment';
 import { TimeInputSegmentProps } from './TimeInputSegment.types';

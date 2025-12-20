@@ -1,8 +1,7 @@
 import React, { forwardRef } from 'react';
 
 import { unitOptions } from '../constants';
-import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
-import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { useTimeInputContext, useTimeInputDisplayContext } from '../Context';
 import { useSelectUnit } from '../hooks';
 import { TimeSegmentsState } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';

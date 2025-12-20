@@ -13,9 +13,9 @@ type DarkModeKeys = keyof DarkModeProps;
 /**
  * Dynamically generated LGIDs that will be used for the data-lgid and data-testid attributes in child components
  */
-type LgIds = {
+interface LgIds {
   lgIds: GetLgIdsReturnType;
-};
+}
 
 /**
  * The values in context that can be used in the component

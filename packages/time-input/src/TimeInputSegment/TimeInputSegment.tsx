@@ -8,7 +8,7 @@ import {
   getDefaultMin,
   getTimeSegmentRules,
 } from '../constants';
-import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { useTimeInputDisplayContext } from '../Context';
 
 import { TimeInputSegmentProps } from './TimeInputSegment.types';
 

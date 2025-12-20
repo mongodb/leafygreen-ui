@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FormFieldInputContainer } from '@leafygreen-ui/form-field';
 
-import { useTimeInputDisplayContext } from '../../Context/TimeInputDisplayContext';
+import { useTimeInputDisplayContext } from '../../Context';
 
 import { getContainerStyles } from './TimeFormFieldInputContainer.styles';
 import { TimeFormFieldInputContainerProps } from './TimeFormFieldInputContainer.types';
