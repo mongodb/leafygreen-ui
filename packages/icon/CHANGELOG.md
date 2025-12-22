@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 14.7.2
+
+### Patch Changes
+
+- 0e37854: Fixed an issue where icons generated through `createIconComponent` were not passing in fill value correctly
+
 ## 14.7.1
 
 ### Patch Changes
