@@ -32,7 +32,6 @@ export { maxDate } from './maxDate';
 export { minDate } from './minDate';
 export { newTZDate } from './newTZDate';
 export { newUTC } from './newUTC';
-export { newUTCFromTimeZone } from './newUTCFromTimeZone';
 export { setToUTCMidnight } from './setToUTCMidnight';
 export { setUTCDate } from './setUTCDate';
 export { setUTCMonth } from './setUTCMonth';
