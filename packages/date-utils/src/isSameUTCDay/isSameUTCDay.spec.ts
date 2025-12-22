@@ -31,7 +31,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
   describe('when one date is defined locally', () => {
     test('returns true ', () => {
       const utc = newUTC(2023, 8, 10, 0, 0, 0);
-      // new Date(2023, 8, 9, 21) September 9, 2023 21:00 EDT
+      // September 9, 2023 21:00 EDT
       const local = newTZDate({
         timeZone,
         year: 2023,
@@ -45,7 +45,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
 
     test('returns false', () => {
       const utc = newUTC(2023, 8, 10);
-      // new Date(2023, 8, 9, 12) September 9, 2023 12:00 EDT
+      // September 9, 2023 12:00 EDT
       const local = newTZDate({
         timeZone,
         year: 2023,
@@ -53,13 +53,14 @@ describe('packages/date-utils/isSameUTCDay', () => {
         date: 9,
         hours: 12,
       }); // September 9, 2023 16:00 UTC
+
       expect(isSameUTCDay(utc, local)).toBe(false);
     });
   });
 
   describe('when both dates are defined locally', () => {
     test('returns true', () => {
-      // new Date(2023, 8, 8, 20, 0); September 8, 2023 20:00 EDT
+      // September 8, 2023 20:00 EDT
       const local1 = newTZDate({
         timeZone,
         year: 2023,
@@ -69,7 +70,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
         minutes: 0,
       }); // September 9, 2023 00:00 UTC
 
-      // new Date(2023, 8, 9, 18, 0); September 9, 2023 18:00 EDT
+      // September 9, 2023 18:00 EDT
       const local2 = newTZDate({
         timeZone,
         year: 2023,
@@ -82,7 +83,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
     });
 
     test('returns false', () => {
-      // new Date(2023, 8, 9, 0) September 9, 2023 00:00 EDT
+      // September 9, 2023 00:00 EDT
       const local1 = newTZDate({
         timeZone,
         year: 2023,
@@ -90,7 +91,8 @@ describe('packages/date-utils/isSameUTCDay', () => {
         date: 9,
         hours: 0,
       }); // September 9, 2023 04:00 UTC
-      // new Date(2023, 8, 9, 20) September 9, 2023 20:00 EDT
+
+      // September 9, 2023 20:00 EDT
       const local2 = newTZDate({
         timeZone,
         year: 2023,
@@ -98,6 +100,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
         date: 9,
         hours: 20,
       }); // September 10, 2023 00:00 UTC
+
       expect(isSameUTCDay(local1, local2)).toBe(false);
     });
   });
