@@ -16,7 +16,7 @@ describe('packages/date-utils/newTZDate', () => {
     expect(date.getUTCHours()).toBe(0);
   });
 
-  test('positive UTC offset (2023-08-15T00:00:00 CEST (+2UTC) => 2023-08-14T22:00:00 UTC)', () => {
+  test('positive UTC offset (2023-08-15T00:00:00 CEST (UTC+2) => 2023-08-14T22:00:00 UTC)', () => {
     const date = newTZDate({
       timeZone: 'Europe/Paris', // Europe/Paris is +2 hours from UTC in August (CEST)
       year: 2023,
@@ -28,7 +28,7 @@ describe('packages/date-utils/newTZDate', () => {
     expect(date.getUTCDate()).toBe(14);
   });
 
-  test('positive UTC offset with hours, minutes, and seconds with DST (2023-08-15T23:00 CEST (+2UTC) => 2023-08-15T21:00 UTC)', () => {
+  test('positive UTC offset with hours, minutes, and seconds with DST (2023-08-15T23:00 CEST (UTC+2) => 2023-08-15T21:00 UTC)', () => {
     const date = newTZDate({
       timeZone: 'Europe/Paris', // Europe/Paris is +2 hours from UTC in August (CEST)
       year: 2023,
@@ -47,7 +47,7 @@ describe('packages/date-utils/newTZDate', () => {
     expect(date.getUTCMilliseconds()).toBe(0);
   });
 
-  test('positive UTC offset with hours, minutes, and seconds without DST (2020-01-15T23:00 CET (+1UTC) => 2020-01-15T22:00 UTC)', () => {
+  test('positive UTC offset with hours, minutes, and seconds without DST (2020-01-15T23:00 CET (UTC+1) => 2020-01-15T22:00 UTC)', () => {
     const date = newTZDate({
       timeZone: 'Europe/Paris', // Europe/Paris is +1 hour from UTC in January (CET)
       year: 2020,
@@ -66,7 +66,7 @@ describe('packages/date-utils/newTZDate', () => {
     expect(date.getUTCMilliseconds()).toBe(0);
   });
 
-  test('negative UTC offset (2020-01-05T00:00 EST (-5UTC) => 2020-01-05T05:00 UTC)', () => {
+  test('negative UTC offset (2020-01-05T00:00 EST (UTC-5) => 2020-01-05T05:00 UTC)', () => {
     const date = newTZDate({
       timeZone: 'America/New_York', // America/New_York is -5 hours from UTC in January
       year: 2020,
@@ -79,7 +79,7 @@ describe('packages/date-utils/newTZDate', () => {
     expect(date.getUTCHours()).toBe(5);
   });
 
-  test('negative UTC offset with hours, minutes, and seconds with DST (2020-01-05T23:30:45 EST (-5UTC) => 2020-01-06T04:30:45 UTC)', () => {
+  test('negative UTC offset with hours, minutes, and seconds with DST (2020-01-05T23:30:45 EST (UTC-5) => 2020-01-06T04:30:45 UTC)', () => {
     // January 5, 2020 23:00 EST is January 6, 2020 04:00 UTC-5
     const date = newTZDate({
       timeZone: 'America/New_York', // America/New_York is -5 hours from UTC in January
@@ -99,7 +99,7 @@ describe('packages/date-utils/newTZDate', () => {
     expect(date.getUTCMilliseconds()).toBe(0);
   });
 
-  test('negative UTC offset with hours, minutes, and seconds without DST (2020-05-05T23:30:45 EDT (-4UTC) => 2020-05-06T03:30:45 UTC)', () => {
+  test('negative UTC offset with hours, minutes, and seconds without DST (2020-05-05T23:30:45 EDT (UTC-4) => 2020-05-06T03:30:45 UTC)', () => {
     // May 5, 2020 23:00 EDT is May 6, 2020 03:00 UTC-4
     const date = newTZDate({
       timeZone: 'America/New_York', // America/New_York is -4 hours from UTC in May

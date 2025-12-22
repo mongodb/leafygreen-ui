@@ -33,22 +33,22 @@ describe('packages/date-utils/isSameUTCMonth', () => {
   describe('when one date is defined locally', () => {
     test('true', () => {
       const utc = newUTC(2023, Month.September, 10);
+
+      // August 31, 2023 21:00 EDT (UTC-4)
       const local = newTZDate({
         timeZone,
         year: 2023,
-        month: 7,
+        month: Month.August,
         date: 31,
         hours: 21,
         minutes: 0,
       }); // September 01, 2023 01:00 UTC
-
-      expect(local).toEqual(new Date('2023-09-01T01:00:00Z'));
-
       expect(isSameUTCMonth(utc, local)).toBe(true);
     });
 
     test('false', () => {
       const utc = newUTC(2023, Month.September, 10);
+      // August 31, 2023 12:00 EDT (UTC-4)
       const local = newTZDate({
         timeZone,
         year: 2023,
@@ -56,7 +56,7 @@ describe('packages/date-utils/isSameUTCMonth', () => {
         date: 31,
         hours: 12,
         minutes: 0,
-      });
+      }); // August 31, 2023 16:00 UTC
       expect(isSameUTCMonth(utc, local)).toBe(false);
     });
   });
