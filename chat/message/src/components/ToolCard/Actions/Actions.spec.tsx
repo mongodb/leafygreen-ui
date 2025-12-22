@@ -21,10 +21,7 @@ const renderActions = (props: Partial<ActionsProps> = {}) => {
 describe('chat/message/ToolCard/Actions', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
-      const { container } = renderActions({
-        onClickCancel: jest.fn(),
-        onClickRun: jest.fn(),
-      });
+      const { container } = renderActions();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
@@ -33,8 +30,6 @@ describe('chat/message/ToolCard/Actions', () => {
   test('applies className prop', () => {
     const customClassName = 'custom-actions-class';
     const { container } = renderActions({
-      onClickCancel: jest.fn(),
-      onClickRun: jest.fn(),
       className: customClassName,
     });
 
@@ -44,11 +39,7 @@ describe('chat/message/ToolCard/Actions', () => {
 
   test('forwards ref to container element', () => {
     const ref = React.createRef<HTMLDivElement>();
-    renderActions({
-      onClickCancel: jest.fn(),
-      onClickRun: jest.fn(),
-      ref,
-    });
+    renderActions();
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
     expect(ref.current).toHaveAttribute('data-testid', 'actions');
   });
@@ -57,7 +48,6 @@ describe('chat/message/ToolCard/Actions', () => {
     const mockOnClickCancel = jest.fn();
     renderActions({
       onClickCancel: mockOnClickCancel,
-      onClickRun: jest.fn(),
     });
 
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
@@ -69,7 +59,6 @@ describe('chat/message/ToolCard/Actions', () => {
   test('calls onClickRun when Run button is clicked', async () => {
     const mockOnClickRun = jest.fn();
     renderActions({
-      onClickCancel: jest.fn(),
       onClickRun: mockOnClickRun,
     });
 
