@@ -1,5 +1,15 @@
 # @lg-chat/message
 
+## 10.1.3
+
+### Patch Changes
+
+- 7b80cd4: Refactor to use compound component utils from `@leafygreen-ui/compound-component`
+- Updated dependencies [117d242]
+- Updated dependencies [75e6998]
+  - @leafygreen-ui/compound-component@0.2.0
+  - @leafygreen-ui/icon@14.8.0
+
 ## 10.1.2
 
 ### Patch Changes
