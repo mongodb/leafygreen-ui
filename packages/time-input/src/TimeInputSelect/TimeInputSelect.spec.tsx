@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select/testing';
 
-import { getLgIds } from '../utils/getLgIds';
+import { getLgIds } from '../utils';
 
 import { TimeInputSelect, TimeInputSelectProps } from '.';
 

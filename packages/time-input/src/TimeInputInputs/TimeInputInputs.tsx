@@ -17,6 +17,7 @@ import {
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
+import { DayPeriod } from '../shared.types';
 
 /**
  * @internal
@@ -72,7 +73,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             year,
           },
           timeZone,
-          dayPeriod: newSelectUnit.displayName,
+          dayPeriod: newSelectUnit.displayName as DayPeriod,
         });
 
         // Checks if the new date should be set

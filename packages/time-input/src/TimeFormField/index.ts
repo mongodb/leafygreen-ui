@@ -1,2 +1,2 @@
-export { TimeFormField } from './TimeFormField/TimeFormField';
-export { TimeFormFieldInputContainer } from './TimeFormFieldInputContainer/TimeFormFieldInputContainer';
+export { TimeFormField } from './TimeFormField';
+export { TimeFormFieldInputContainer } from './TimeFormFieldInputContainer';

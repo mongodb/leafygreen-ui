@@ -1,6 +1,6 @@
 import { getValueFormatter } from '@leafygreen-ui/input-box';
 
-import { TimeSegmentsState } from '../../shared.types';
+import { TimeSegmentsState } from '../../../shared.types';
 
 /**
  * Formats the time segments to a string with 2 digits for each segment.
@@ -10,11 +10,11 @@ import { TimeSegmentsState } from '../../shared.types';
  *
  * @example
  * ```js
- * getFormattedTimeSegments({ hour: '2', minute: '30', second: '0' });
+ * getPaddedTimeSegments({ hour: '2', minute: '30', second: '0' });
  * // returns: { hour: '02', minute: '30', second: '00' }
  * ```
  */
-export const getFormattedTimeSegments = (segments: TimeSegmentsState) => {
+export const getPaddedTimeSegments = (segments: TimeSegmentsState) => {
   const hour = getValueFormatter({ charsCount: 2, allowZero: true })(
     segments.hour,
   );

@@ -7,14 +7,15 @@ import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { unitOptions } from '../../constants';
-import { TimeSegment } from '../../shared.types';
+import { DayPeriod, TimeSegment } from '../../shared.types';
 import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
 import {
   findUnitOptionByDayPeriod,
   getFormatPartsValues,
-  getFormattedTimeSegmentsFromDate,
-  isSameUTCDayAndTime,
+  getPaddedTimeSegmentsFromDate,
 } from '../../utils';
+
+import { isSameUTCDayAndTime } from '@leafygreen-ui/date-utils';
 
 import {
   Action,
@@ -73,12 +74,12 @@ const getInitialState = (
   });
 
   const initialSelectUnitOption = findUnitOptionByDayPeriod(
-    dayPeriod,
+    dayPeriod as DayPeriod,
     unitOptions,
   );
 
   return {
-    segments: getFormattedTimeSegmentsFromDate(date, locale, timeZone),
+    segments: getPaddedTimeSegmentsFromDate(date, locale, timeZone),
     selectUnit: initialSelectUnitOption,
   };
 };
@@ -127,11 +128,7 @@ export const useTimeSegmentsAndSelectUnit = ({
   useEffect(() => {
     const isDateValid = isValidDate(date);
     const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
-    const newSegments = getFormattedTimeSegmentsFromDate(
-      date,
-      locale,
-      timeZone,
-    );
+    const newSegments = getPaddedTimeSegmentsFromDate(date, locale, timeZone);
     const hasLocaleChanged = prevLocale !== locale;
     const hasTimeZoneChanged = prevTimeZone !== timeZone;
 
@@ -154,14 +151,20 @@ export const useTimeSegmentsAndSelectUnit = ({
         type: ActionKind.UPDATE_TIME_SEGMENTS_AND_SELECT_UNIT,
         payload: {
           segments: newSegments,
-          selectUnit: findUnitOptionByDayPeriod(dayPeriod, unitOptions),
+          selectUnit: findUnitOptionByDayPeriod(
+            dayPeriod as DayPeriod,
+            unitOptions,
+          ),
         },
       });
 
       onUpdate?.({
         newSegments,
         prevSegments: { ...segments },
-        newSelectUnit: findUnitOptionByDayPeriod(dayPeriod, unitOptions),
+        newSelectUnit: findUnitOptionByDayPeriod(
+          dayPeriod as DayPeriod,
+          unitOptions,
+        ),
         prevSelectUnit: selectUnit,
       });
 
@@ -185,7 +188,10 @@ export const useTimeSegmentsAndSelectUnit = ({
         type: ActionKind.UPDATE_TIME_SEGMENTS_AND_SELECT_UNIT,
         payload: {
           segments: newSegments,
-          selectUnit: findUnitOptionByDayPeriod(dayPeriod, unitOptions),
+          selectUnit: findUnitOptionByDayPeriod(
+            dayPeriod as DayPeriod,
+            unitOptions,
+          ),
         },
       });
     }

@@ -2,8 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
-import { TimeInputDisplayProviderProps } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext.types';
+import {
+  TimeInputDisplayProvider,
+  TimeInputDisplayProviderProps,
+} from '../Context';
 
 import { TimeInputBox } from './TimeInputBox';
 import { TimeInputBoxProps } from './TimeInputBox.types';

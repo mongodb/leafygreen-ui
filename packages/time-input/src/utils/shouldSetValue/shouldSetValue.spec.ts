@@ -82,9 +82,10 @@ describe('packages/time-input/utils/shouldSetValue', () => {
       });
     });
   });
+
   describe('when the date is invalid', () => {
     describe('should return true', () => {
-      test('when the date is invalid and the component is dirty', () => {
+      test('when the component is dirty', () => {
         const newDate = new Date('invalid');
         const segments: TimeSegmentsState = {
           hour: '01',
@@ -100,7 +101,7 @@ describe('packages/time-input/utils/shouldSetValue', () => {
 
         expect(shouldSetNewValue).toBe(true);
       });
-      test('when the date is invalid and the component is not dirty and every segment is filled', () => {
+      test('when the component is not dirty and every segment is filled', () => {
         const newDate = new Date('invalid');
         const segments: TimeSegmentsState = {
           hour: '01',
@@ -118,7 +119,7 @@ describe('packages/time-input/utils/shouldSetValue', () => {
       });
     });
     describe('should return false', () => {
-      test('when the date is invalid and the component is not dirty and not every segment is filled', () => {
+      test('when the component is not dirty and not every segment is filled', () => {
         const newDate = new Date('invalid');
         const segments: TimeSegmentsState = {
           hour: '',
@@ -135,24 +136,24 @@ describe('packages/time-input/utils/shouldSetValue', () => {
         expect(shouldSetNewValue).toBe(false);
       });
     });
+  });
 
-    describe('when the date is null', () => {
-      test('should return true', () => {
-        const newDate = null;
-        const segments: TimeSegmentsState = {
-          hour: '01',
-          minute: '01',
-          second: '01',
-        };
-        const shouldSetNewValue = shouldSetValue({
-          newDate,
-          isDirty: true,
-          segments,
-          is12HourFormat: true,
-        });
-
-        expect(shouldSetNewValue).toBe(true);
+  describe('when the date is null', () => {
+    test('should return true', () => {
+      const newDate = null;
+      const segments: TimeSegmentsState = {
+        hour: '01',
+        minute: '01',
+        second: '01',
+      };
+      const shouldSetNewValue = shouldSetValue({
+        newDate,
+        isDirty: true,
+        segments,
+        is12HourFormat: true,
       });
+
+      expect(shouldSetNewValue).toBe(true);
     });
   });
 });

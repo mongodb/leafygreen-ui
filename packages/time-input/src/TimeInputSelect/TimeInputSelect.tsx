@@ -9,7 +9,7 @@ import {
 } from '@leafygreen-ui/select';
 
 import { unitOptions } from '../constants';
-import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { useTimeInputDisplayContext } from '../Context';
 
 import { selectStyles, wrapperBaseStyles } from './TimeInputSelect.styles';
 import { TimeInputSelectProps, UnitOption } from './TimeInputSelect.types';

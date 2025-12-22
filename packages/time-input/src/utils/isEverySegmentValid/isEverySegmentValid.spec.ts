@@ -1,4 +1,5 @@
-import { getDefaultMax, getDefaultMin } from '../../constants';
+import { getDefaultMax } from '../getDefaultMax';
+import { getDefaultMin } from '../getDefaultMin';
 
 import { isEverySegmentValid } from './isEverySegmentValid';
 

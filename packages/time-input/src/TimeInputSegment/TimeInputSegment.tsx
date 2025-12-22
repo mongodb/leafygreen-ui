@@ -2,13 +2,9 @@ import React from 'react';
 
 import { InputSegment } from '@leafygreen-ui/input-box';
 
-import {
-  defaultPlaceholder,
-  getDefaultMax,
-  getDefaultMin,
-  getTimeSegmentRules,
-} from '../constants';
-import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { defaultPlaceholders } from '../constants';
+import { useTimeInputDisplayContext } from '../Context';
+import { getDefaultMax, getDefaultMin, getTimeSegmentRules } from '../utils';
 
 import { TimeInputSegmentProps } from './TimeInputSegment.types';
 
@@ -25,7 +21,7 @@ export const TimeInputSegment = React.forwardRef<
       segment={segment}
       minSegmentValue={getDefaultMin({ is12HourFormat })[segment]}
       maxSegmentValue={getDefaultMax({ is12HourFormat })[segment]}
-      placeholder={defaultPlaceholder[segment]}
+      placeholder={defaultPlaceholders[segment]}
       // TODO: className={cx(segmentWidthStyles[segment])}
       data-lgid={lgIds.inputSegment}
       data-testid={lgIds.inputSegment}
