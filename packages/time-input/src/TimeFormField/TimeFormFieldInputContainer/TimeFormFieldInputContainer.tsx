@@ -15,19 +15,15 @@ export const TimeFormFieldInputContainer = React.forwardRef<
   HTMLDivElement,
   TimeFormFieldInputContainerProps
 >(({ children, onInputClick }: TimeFormFieldInputContainerProps, fwdRef) => {
-  const { label, ariaLabelProp, ariaLabelledbyProp, is12HourFormat } =
+  const { ariaLabelProp, ariaLabelledbyProp, is12HourFormat } =
     useTimeInputDisplayContext();
 
   return (
     <FormFieldInputContainer
       ref={fwdRef}
       tabIndex={-1}
-      aria-label={!label && ariaLabelProp ? ariaLabelProp : undefined}
-      aria-labelledby={
-        !label && !ariaLabelProp && ariaLabelledbyProp
-          ? ariaLabelledbyProp
-          : undefined
-      }
+      aria-label={ariaLabelProp}
+      aria-labelledby={ariaLabelledbyProp}
       onClick={onInputClick}
       className={getContainerStyles({ is12HourFormat })}
     >
