@@ -40,6 +40,7 @@ import Cloud from './Cloud.svg';
 import Code from './Code.svg';
 import CodeBlock from './CodeBlock.svg';
 import Coin from './Coin.svg';
+import CollapseVertical from './CollapseVertical.svg';
 import Colon from './Colon.svg';
 import Config from './Config.svg';
 import Connect from './Connect.svg';
@@ -62,6 +63,7 @@ import EmptyDatabase from './EmptyDatabase.svg';
 import EmptyFolder from './EmptyFolder.svg';
 import Eraser from './Eraser.svg';
 import Escalation from './Escalation.svg';
+import ExpandVertical from './ExpandVertical.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
 import Federation from './Federation.svg';
@@ -224,6 +226,7 @@ export const glyphs = {
   Code,
   CodeBlock,
   Coin,
+  CollapseVertical,
   Colon,
   Config,
   Connect,
@@ -246,6 +249,7 @@ export const glyphs = {
   EmptyFolder,
   Eraser,
   Escalation,
+  ExpandVertical,
   Export,
   Favorite,
   Federation,
