@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import { getValueFormatter } from '@leafygreen-ui/input-box';
 
-import { defaultPlaceholder } from '../constants';
+import { defaultPlaceholders } from '../constants';
 import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProvider,
@@ -41,7 +41,7 @@ const renderSegment = (
     charsCount: getTimeSegmentRules({ is12HourFormat })['hour'].maxChars,
     minSegmentValue: getDefaultMin({ is12HourFormat })['hour'],
     maxSegmentValue: getDefaultMax({ is12HourFormat })['hour'],
-    placeholder: defaultPlaceholder['hour'],
+    placeholder: defaultPlaceholders['hour'],
     shouldWrap: true,
     shouldValidate: true,
     step: 1,

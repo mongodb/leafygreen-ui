@@ -40,18 +40,6 @@ export const DayPeriod = {
 export type DayPeriod = (typeof DayPeriod)[keyof typeof DayPeriod];
 
 /**
- * The type for the time input segment change event
- */
-export interface TimeInputSegmentChangeEvent {
-  segment: TimeSegment;
-  value: string;
-  meta?: {
-    key?: (typeof keyMap)[keyof typeof keyMap];
-    [key: string]: any;
-  };
-}
-
-/**
  * The type for the time input segment change event handler
  */
 export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<

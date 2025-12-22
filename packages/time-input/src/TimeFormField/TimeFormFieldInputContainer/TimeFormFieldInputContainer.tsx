@@ -14,17 +14,12 @@ import { TimeFormFieldInputContainerProps } from './TimeFormFieldInputContainer.
 export const TimeFormFieldInputContainer = React.forwardRef<
   HTMLDivElement,
   TimeFormFieldInputContainerProps
->(({ children, onInputClick }: TimeFormFieldInputContainerProps, fwdRef) => {
-  const { ariaLabelProp, ariaLabelledbyProp, is12HourFormat } =
-    useTimeInputDisplayContext();
+>(({ children }: TimeFormFieldInputContainerProps, fwdRef) => {
+  const { is12HourFormat } = useTimeInputDisplayContext();
 
   return (
     <FormFieldInputContainer
       ref={fwdRef}
-      tabIndex={-1}
-      aria-label={ariaLabelProp}
-      aria-labelledby={ariaLabelledbyProp}
-      onClick={onInputClick}
       className={getContainerStyles({ is12HourFormat })}
     >
       {children}
