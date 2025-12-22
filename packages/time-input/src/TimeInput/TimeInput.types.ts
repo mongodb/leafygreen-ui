@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef } from 'react';
+import { ChangeEvent, ComponentPropsWithRef } from 'react';
 import omit from 'lodash/omit';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
@@ -93,7 +93,7 @@ export type DisplayTimeInputProps = {
  */
 export interface ComponentTimeInputProps
   extends LgIdProps,
-    ComponentPropsWithoutRef<'div'> {
+    ComponentPropsWithRef<'div'> {
   /**
    * Callback fired when any segment changes, (but not necessarily a full value)
    */
