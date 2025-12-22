@@ -11,7 +11,7 @@ export const unitOptions = [
 /**
  * The default placeholders for each segment
  */
-export const defaultPlaceholder = {
+export const defaultPlaceholders = {
   hour: 'HH',
   minute: 'MM',
   second: 'SS',
