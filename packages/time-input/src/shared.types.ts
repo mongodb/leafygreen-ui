@@ -1,5 +1,4 @@
 import { InputSegmentChangeEventHandler } from '@leafygreen-ui/input-box';
-import { keyMap } from '@leafygreen-ui/lib';
 
 export const DateTimePartKeys = {
   hour: 'hour',
