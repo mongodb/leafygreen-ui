@@ -6,12 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import { getValueFormatter } from '@leafygreen-ui/input-box';
 
-import {
-  defaultPlaceholder,
-  getDefaultMax,
-  getDefaultMin,
-  getTimeSegmentRules,
-} from '../constants';
+import { defaultPlaceholder } from '../constants';
 import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProvider,
@@ -20,7 +15,12 @@ import {
   TimeInputSegmentChangeEventHandler,
   TimeSegment,
 } from '../shared.types';
-import { getLgIds } from '../utils';
+import {
+  getDefaultMax,
+  getDefaultMin,
+  getLgIds,
+  getTimeSegmentRules,
+} from '../utils';
 
 import { TimeInputSegment } from './TimeInputSegment';
 import { TimeInputSegmentProps } from './TimeInputSegment.types';

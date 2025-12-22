@@ -1,0 +1,1 @@
+export { getDefaultMin } from './getDefaultMin';
