@@ -14,7 +14,14 @@ export const TimeFormField = React.forwardRef<
   HTMLDivElement,
   TimeFormFieldProps
 >(({ children, ...rest }: TimeFormFieldProps, fwdRef) => {
-  const { label, description, disabled, size } = useTimeInputDisplayContext();
+  const {
+    label,
+    description,
+    disabled,
+    size,
+    ariaLabelProp,
+    ariaLabelledbyProp,
+  } = useTimeInputDisplayContext();
 
   return (
     <FormField
@@ -23,6 +30,8 @@ export const TimeFormField = React.forwardRef<
       disabled={disabled}
       size={size}
       ref={fwdRef}
+      aria-label={ariaLabelProp}
+      aria-labelledby={ariaLabelledbyProp}
       {...rest}
     >
       {children}
