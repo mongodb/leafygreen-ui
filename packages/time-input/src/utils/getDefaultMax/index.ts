@@ -1,0 +1,1 @@
+export { getDefaultMax } from './getDefaultMax';

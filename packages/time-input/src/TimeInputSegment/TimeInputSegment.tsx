@@ -2,13 +2,9 @@ import React from 'react';
 
 import { InputSegment } from '@leafygreen-ui/input-box';
 
-import {
-  defaultPlaceholder,
-  getDefaultMax,
-  getDefaultMin,
-  getTimeSegmentRules,
-} from '../constants';
+import { defaultPlaceholder } from '../constants';
 import { useTimeInputDisplayContext } from '../Context';
+import { getDefaultMax, getDefaultMin, getTimeSegmentRules } from '../utils';
 
 import { TimeInputSegmentProps } from './TimeInputSegment.types';
 
