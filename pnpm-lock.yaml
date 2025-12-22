@@ -568,6 +568,12 @@ importers:
       '@leafygreen-ui/banner':
         specifier: workspace:^
         version: link:../../packages/banner
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../../packages/button
+      '@leafygreen-ui/compound-component':
+        specifier: workspace:^
+        version: link:../../packages/compound-component
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../../packages/emotion
@@ -586,6 +592,9 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
+      '@leafygreen-ui/loading-indicator':
+        specifier: workspace:^
+        version: link:../../packages/loading-indicator
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../../packages/palette
