@@ -38,5 +38,13 @@
       "require": "./dist/umd/index.js"
     }
   },
-  "typesVersions": {}
+  "typesVersions": {},
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/chat/message-rating",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  }
 }
