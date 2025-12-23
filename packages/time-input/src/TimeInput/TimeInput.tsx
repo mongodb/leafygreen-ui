@@ -9,13 +9,14 @@ import { pickAndOmit } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { TimeInputProvider } from '../Context/TimeInputContext/TimeInputContext';
-import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import {
   DisplayContextPropKeys,
   displayContextPropNames,
-} from '../Context/TimeInputDisplayContext/TimePickerDisplayContext.utils';
+  TimeInputDisplayProvider,
+  TimeInputProvider,
+} from '../Context';
 import { TimeInputContent } from '../TimeInputContent';
+import { getLgIds } from '../utils';
 
 import { TimeInputProps } from './TimeInput.types';
 
@@ -26,7 +27,7 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
       onTimeChange: onChangeProp,
       handleValidation,
       initialValue: initialValueProp,
-      'data-lgid': _dataLgId,
+      'data-lgid': dataLgId,
       darkMode: darkModeProp,
       baseFontSize: basefontSizeProp,
       ...props
@@ -35,6 +36,7 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
+    const lgIds = getLgIds(dataLgId);
 
     const { value, updateValue } = useControlled<DateType | undefined>(
       valueProp,
@@ -55,7 +57,7 @@ export const TimeInput = forwardRef<HTMLDivElement, TimeInputProps>(
         darkMode={darkMode}
         baseFontSize={baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize}
       >
-        <TimeInputDisplayProvider {...displayProps}>
+        <TimeInputDisplayProvider {...displayProps} lgIds={lgIds}>
           <TimeInputProvider
             value={value}
             setValue={updateValue}

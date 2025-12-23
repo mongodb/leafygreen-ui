@@ -1,0 +1,1 @@
+export { getTimeSegmentRules } from './getTimeSegmentRules';
