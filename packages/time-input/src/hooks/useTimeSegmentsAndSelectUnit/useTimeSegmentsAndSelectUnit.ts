@@ -84,7 +84,7 @@ const getInitialState = (
 };
 
 /**
- * Returns an object with all 3 time segments, and a setter function
+ * Returns an object with all 3 time segments, a select unit, and setter functions to update the segments and select unit.
  *
  * @param date - The date to use. This is in UTC.
  * @param locale - The locale used to format the date.
