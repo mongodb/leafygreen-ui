@@ -44,4 +44,4 @@ export type DayPeriod = (typeof DayPeriod)[keyof typeof DayPeriod];
 export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
   TimeSegment,
   string
->; //
+>;
