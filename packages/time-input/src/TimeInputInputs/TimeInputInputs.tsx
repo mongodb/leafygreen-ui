@@ -1,11 +1,22 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, {
+  ChangeEvent,
+  forwardRef,
+  MouseEventHandler,
+  useEffect,
+} from 'react';
 import { isEqual } from 'lodash';
 
 import { isDateObject } from '@leafygreen-ui/date-utils';
+import { focusAndSelectSegment } from '@leafygreen-ui/input-box';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { createSyntheticEvent } from '@leafygreen-ui/lib';
+import { Overline } from '@leafygreen-ui/typography';
 
-import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
-import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { TWENTY_FOUR_HOURS_TEXT } from '../constants';
+import { useTimeInputContext, useTimeInputDisplayContext } from '../Context';
 import { OnUpdateCallback, useTimeSegmentsAndSelectUnit } from '../hooks';
+import { TimeInputSegmentChangeEventHandler } from '../shared.types';
+import { DayPeriod } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
@@ -15,21 +26,42 @@ import {
   shouldSetValue,
 } from '../utils';
 
-import { wrapperBaseStyles } from './TimeInputInputs.styles';
+import {
+  getTwentyFourHourStyles,
+  getWrapperStyles,
+} from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
-import { DayPeriod } from '../shared.types';
 
 /**
  * @internal
  * This component renders and updates the time segments and select unit.
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
-  (_props: TimeInputInputsProps, forwardedRef) => {
-    const { is12HourFormat, timeZone, locale, isDirty, setIsDirty } =
-      useTimeInputDisplayContext();
-    const { value, setValue } = useTimeInputContext();
+  (
+    { onChange: onSegmentChange, onKeyDown, ...rest }: TimeInputInputsProps,
+    forwardedRef,
+  ) => {
+    const {
+      is12HourFormat,
+      timeZone,
+      locale,
+      isDirty,
+      setIsDirty,
+      disabled,
+      formatParts,
+    } = useTimeInputDisplayContext();
+    const {
+      value,
+      setValue,
+      refs: { segmentRefs },
+    } = useTimeInputContext();
+    const { theme } = useDarkMode();
 
-    /** if the value is a `Date` the component is dirty, meaning the component has been interacted with */
+    const is24HourFormat = !is12HourFormat;
+
+    /**
+     * If the value is a `Date` the component is dirty, meaning the component has been interacted with
+     */
     useEffect(() => {
       if (isDateObject(value) && !isDirty) {
         setIsDirty(true);
@@ -89,6 +121,8 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       }
     };
 
+    // TODO: need validation on blur
+
     /**
      * Hook to manage the time segments and select unit
      */
@@ -102,15 +136,58 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
         },
       });
 
+    /**
+     * Called when the input, or any of its children, is clicked.
+     * Focuses the appropriate segment
+     */
+    const handleInputClick: MouseEventHandler<HTMLElement> = e => {
+      if (!disabled) {
+        const { target } = e;
+
+        // Focus and select the appropriate segment.
+        // This is done here instead of `InputBox` because this component has padding that needs to be accounted for on click.
+        focusAndSelectSegment({
+          target,
+          formatParts,
+          segmentRefs,
+        });
+      }
+    };
+
+    /**
+     * Called when any individual segment changes
+     */
+    const handleSegmentChange: TimeInputSegmentChangeEventHandler =
+      segmentChangeEvent => {
+        const { segment, value } = segmentChangeEvent;
+
+        //Fire a simulated `change` event
+        const target = segmentRefs[segment].current;
+
+        if (target) {
+          // At this point, the target stored in segmentRefs has a stale value.
+          // To fix this we update the value of the target with the up-to-date value from `segmentChangeEvent`.
+          target.value = value;
+          const changeEvent = new Event('change');
+          const reactEvent = createSyntheticEvent<
+            ChangeEvent<HTMLInputElement>
+          >(changeEvent, target);
+          onSegmentChange?.(reactEvent);
+        }
+      };
+
     return (
-      <TimeFormField ref={forwardedRef}>
-        <div className={wrapperBaseStyles}>
-          <TimeFormFieldInputContainer>
+      <TimeFormField ref={forwardedRef} {...rest}>
+        <div className={getWrapperStyles({ is12HourFormat })}>
+          <TimeFormFieldInputContainer onClick={handleInputClick}>
             <TimeInputBox
               segments={segments}
               setSegment={(segment, value) => {
                 setSegment(segment, value);
               }}
+              onSegmentChange={handleSegmentChange}
+              segmentRefs={segmentRefs}
+              onKeyDown={onKeyDown}
             />
           </TimeFormFieldInputContainer>
           {is12HourFormat && (
@@ -120,6 +197,11 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
                 setSelectUnit(unit);
               }}
             />
+          )}
+          {is24HourFormat && (
+            <Overline className={getTwentyFourHourStyles({ theme, disabled })}>
+              {TWENTY_FOUR_HOURS_TEXT}
+            </Overline>
           )}
         </div>
       </TimeFormField>

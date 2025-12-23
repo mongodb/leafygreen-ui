@@ -2,6 +2,8 @@ import { DateType } from '@leafygreen-ui/date-utils';
 
 import { TimeInputProps } from '../../TimeInput/TimeInput.types';
 
+import { TimeInputComponentRefs } from './useTimeInputComponentRefs';
+
 /**
  * Context props for the time input
  */
@@ -20,6 +22,11 @@ export interface TimeInputContextProps {
    * calls the `handleValidation` function provided by the consumer
    */
   handleValidation: Required<TimeInputProps>['handleValidation'];
+
+  /**
+   * Ref objects for time input segments
+   */
+  refs: TimeInputComponentRefs;
 }
 
 /**

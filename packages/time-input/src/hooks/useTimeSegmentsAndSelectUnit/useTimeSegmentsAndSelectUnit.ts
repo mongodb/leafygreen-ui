@@ -4,6 +4,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
 import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
+import { isSameUTCDayAndTime } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { unitOptions } from '../../constants';
@@ -14,8 +15,6 @@ import {
   getFormatPartsValues,
   getPaddedTimeSegmentsFromDate,
 } from '../../utils';
-
-import { isSameUTCDayAndTime } from '@leafygreen-ui/date-utils';
 
 import {
   Action,

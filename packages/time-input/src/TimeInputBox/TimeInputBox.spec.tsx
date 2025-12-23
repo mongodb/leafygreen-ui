@@ -6,6 +6,7 @@ import {
   TimeInputDisplayProvider,
   TimeInputDisplayProviderProps,
 } from '../Context';
+import { timeSegmentRefsMock } from '../testing/testUtils';
 
 import { TimeInputBox } from './TimeInputBox';
 import { TimeInputBoxProps } from './TimeInputBox.types';
@@ -22,6 +23,7 @@ const renderTimeInputBox = ({
       <TimeInputBox
         segments={{ hour: '', minute: '', second: '' }}
         setSegment={() => {}}
+        segmentRefs={timeSegmentRefsMock}
         {...props}
       />
     </TimeInputDisplayProvider>,
@@ -80,8 +82,13 @@ describe('packages/time-input/time-input-box', () => {
   });
 
   describe('onSegmentChange', () => {
-    test.todo(
-      'should call onSegmentChange with the segment name and the value',
-    );
+    test('should call onSegmentChange with the segment name and the value', () => {
+      const onSegmentChange = jest.fn();
+      const { hourInput } = renderTimeInputBox({ props: { onSegmentChange } });
+      userEvent.type(hourInput, '1');
+      expect(onSegmentChange).toHaveBeenCalledWith(
+        expect.objectContaining({ value: '1' }),
+      );
+    });
   });
 });
