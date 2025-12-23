@@ -115,30 +115,19 @@ export const useTimeSegmentsAndSelectUnit = ({
   const prevTimeZone = usePrevious(timeZone);
 
   /**
-   * The useEffect is only to check if the date has changed or if the segments have changed.
-   *
+   * This useEffect is to check if the date has changed.
    * If the date is different then we update the segments and call onUpdate.
-   *
-   * If the date is the same AND the timezone and locale have not changed then don't update the segments or call onUpdate. This could mean that the user has typed in a new ambiguous value.
-   *
-   * If the date is the same BUT the locale or timezone has changed then update the segments but don't call onUpdate because the time did not change. (instead on segmentChange should be called)
-   *
    */
   useEffect(() => {
     const isDateValid = isValidDate(date);
     const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
     const newSegments = getPaddedTimeSegmentsFromDate(date, locale, timeZone);
-    const hasLocaleChanged = prevLocale !== locale;
-    const hasTimeZoneChanged = prevTimeZone !== timeZone;
-
-    // If the segments were updated in setSegment then the newSegments should be the same as the segments in state.
-    const haveSegmentsChanged = !isEqual(newSegments, segments);
 
     // If the date has been set to null from a previously valid date
     const hasTimeBeenCleared =
       (isNull(date) || isUndefined(date)) && isValidDate(prevDate);
 
-    // if the date is valid, date has been changed, or the time has been cleared then update the segments and call onUpdate and dispatch
+    // if the date is valid, date has changed, or the time has been cleared then update the segments and call onUpdate and dispatch
     if ((isDateValid && hasDateAndTimeChanged) || hasTimeBeenCleared) {
       const { dayPeriod } = getFormatPartsValues({
         locale,
@@ -166,9 +155,35 @@ export const useTimeSegmentsAndSelectUnit = ({
         ),
         prevSelectUnit: selectUnit,
       });
-
-      return;
     }
+  }, [
+    date,
+    locale,
+    timeZone,
+    segments,
+    selectUnit,
+    onUpdate,
+    prevDate,
+    prevLocale,
+    prevTimeZone,
+  ]);
+
+  /**
+   * The useEffect is to check if the segments have changed.
+   *
+   * If the date is the same AND the timezone and locale have not changed then don't update the segments or call onUpdate. This could mean that the user has typed in a new ambiguous value.
+   *
+   * If the date is the same BUT the locale or timezone has changed then update the segments but don't call onUpdate because the time did not change. (instead onSegmentChange should be called)
+   */
+  useEffect(() => {
+    const isDateValid = isValidDate(date);
+    const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
+    const newSegments = getPaddedTimeSegmentsFromDate(date, locale, timeZone);
+    const hasLocaleChanged = prevLocale !== locale;
+    const hasTimeZoneChanged = prevTimeZone !== timeZone;
+
+    // If the segments were updated in setSegment then the newSegments should be the same as the segments in state.
+    const haveSegmentsChanged = !isEqual(newSegments, segments);
 
     // if the date is valid and the date has not changed but the segments are different then update the segments and only call dispatch. This means that the user can be typing in an ambiguous value or the locale or timezone has changed. We don't call onUpdate because the date did not change.
     if (
@@ -254,7 +269,7 @@ export const useTimeSegmentsAndSelectUnit = ({
     if (hasSelectUnitChanged) {
       onUpdate?.({
         newSelectUnit: newSelectUnit,
-        prevSelectUnit: { ...selectUnit },
+        prevSelectUnit: selectUnit,
         newSegments: { ...segments },
         prevSegments: { ...segments },
       });
