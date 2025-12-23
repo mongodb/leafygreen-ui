@@ -3,21 +3,21 @@ import { IconButtonProps } from '@leafygreen-ui/icon-button';
 
 type ButtonProps = Omit<
   IconButtonProps<'button'>,
-  | 'tabIndex'
-  | 'href'
   | 'as'
-  | 'ref'
   | 'children'
-  | 'size'
   | 'darkMode'
+  | 'href'
   | 'onClick'
+  | 'ref'
+  | 'size'
+  | 'tabIndex'
 >;
 
 export interface ToolbarIconButtonProps extends ButtonProps {
   /**
    * The LG Icon that will render in the button
    */
-  glyph: GlyphName;
+  glyph: GlyphName | 'Assistant';
 
   /**
    * The text that will render in the tooltip on hover

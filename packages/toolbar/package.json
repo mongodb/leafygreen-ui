@@ -37,6 +37,7 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
+    "@lg-chat/chat-button": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^"
   },
   "peerDependencies": {
