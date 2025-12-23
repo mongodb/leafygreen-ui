@@ -4,6 +4,7 @@
  */
 export const ToolCardSubcomponentProperty = {
   Actions: 'isLGToolCardActions',
+  ExpandableContent: 'isLGToolCardExpandableContent',
 } as const;
 
 /**
