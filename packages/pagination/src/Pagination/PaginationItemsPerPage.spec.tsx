@@ -173,7 +173,10 @@ describe('PaginationItemsPerPage', () => {
       userEvent.click(option25);
 
       await waitFor(() => {
-        expect(onItemsPerPageOptionChange).toHaveBeenCalledWith('25');
+        expect(onItemsPerPageOptionChange).toHaveBeenCalledWith(
+          '25',
+          expect.anything(),
+        );
       });
     });
 
