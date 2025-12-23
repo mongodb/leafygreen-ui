@@ -7,6 +7,5 @@ import { TimeSegmentsState } from '../../shared.types';
  * @returns Whether some segment exists
  */
 export const doesSomeSegmentExist = (segments: TimeSegmentsState) => {
-  // check if all segments are not empty
   return Object.values(segments).some(segment => segment !== '');
 };
