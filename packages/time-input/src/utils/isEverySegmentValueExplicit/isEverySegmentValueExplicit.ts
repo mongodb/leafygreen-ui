@@ -20,13 +20,15 @@ export const isEverySegmentValueExplicit = ({
   segments: TimeSegmentsState;
   is12HourFormat: boolean;
 }): boolean => {
-  return Object.entries(segments).every(([segment, value]) => {
-    const isExplicit = isExplicitSegmentValue(is12HourFormat)({
-      segment: segment as TimeSegment,
-      value,
-      allowZero: segment === TimeSegment.Hour ? !is12HourFormat : true,
-    });
+  return (Object.entries(segments) as Array<[TimeSegment, string]>).every(
+    ([segment, value]) => {
+      const isExplicit = isExplicitSegmentValue(is12HourFormat)({
+        segment: segment,
+        value,
+        allowZero: segment === TimeSegment.Hour ? !is12HourFormat : true,
+      });
 
-    return isExplicit;
-  });
+      return isExplicit;
+    },
+  );
 };
