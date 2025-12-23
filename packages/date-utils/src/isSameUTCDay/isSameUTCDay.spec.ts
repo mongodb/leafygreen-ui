@@ -4,11 +4,11 @@ import { mockTimeZone } from '../testing/mockTimeZone';
 
 import { isSameUTCDay } from '.';
 
-const TZOffset = -5;
+const timeZone = 'America/New_York';
 
 describe('packages/date-utils/isSameUTCDay', () => {
   beforeEach(() => {
-    mockTimeZone('America/New_York', -5);
+    mockTimeZone(timeZone, -4); // EDT is -4 hours from UTC in September
   });
   afterEach(() => {
     jest.resetAllMocks();
@@ -31,30 +31,76 @@ describe('packages/date-utils/isSameUTCDay', () => {
   describe('when one date is defined locally', () => {
     test('returns true ', () => {
       const utc = newUTC(2023, 8, 10, 0, 0, 0);
-      // '2023-09-09T21:00:00' NY time
-      const local = newTZDate(TZOffset, 2023, 8, 9, 21, 0); //2023-09-10 02:00:00 UTC
+      // September 9, 2023 21:00 EDT
+      const local = newTZDate({
+        timeZone,
+        year: 2023,
+        month: 8,
+        date: 9,
+        hours: 21,
+      }); // September 10, 2023 01:00 UTC
 
       expect(isSameUTCDay(utc, local)).toBe(true);
     });
 
     test('returns false', () => {
       const utc = newUTC(2023, 8, 10);
-      // '2023-09-09T12:00' NY time
-      const local = newTZDate(TZOffset, 2023, 8, 9, 12, 0); //2023-09-09 17:00:00 UTC
+      // September 9, 2023 12:00 EDT
+      const local = newTZDate({
+        timeZone,
+        year: 2023,
+        month: 8,
+        date: 9,
+        hours: 12,
+      }); // September 9, 2023 16:00 UTC
+
       expect(isSameUTCDay(utc, local)).toBe(false);
     });
   });
 
   describe('when both dates are defined locally', () => {
     test('returns true', () => {
-      const local1 = newTZDate(TZOffset, 2023, 8, 8, 20, 0); // 02:00 UTC + 1day
-      const local2 = newTZDate(TZOffset, 2023, 8, 9, 18, 0); // 23:00 UTC
+      // September 8, 2023 20:00 EDT
+      const local1 = newTZDate({
+        timeZone,
+        year: 2023,
+        month: 8,
+        date: 8,
+        hours: 20,
+        minutes: 0,
+      }); // September 9, 2023 00:00 UTC
+
+      // September 9, 2023 18:00 EDT
+      const local2 = newTZDate({
+        timeZone,
+        year: 2023,
+        month: 8,
+        date: 9,
+        hours: 18,
+        minutes: 0,
+      }); // September 9, 2023 22:00 UTC
       expect(isSameUTCDay(local1, local2)).toBe(true);
     });
 
     test('returns false', () => {
-      const local1 = newTZDate(TZOffset, 2023, 8, 9, 0, 0); // 05:00 UTC
-      const local2 = newTZDate(TZOffset, 2023, 8, 9, 20, 0); // 02:00 UTC +1 day
+      // September 9, 2023 00:00 EDT
+      const local1 = newTZDate({
+        timeZone,
+        year: 2023,
+        month: 8,
+        date: 9,
+        hours: 0,
+      }); // September 9, 2023 04:00 UTC
+
+      // September 9, 2023 20:00 EDT
+      const local2 = newTZDate({
+        timeZone,
+        year: 2023,
+        month: 8,
+        date: 9,
+        hours: 20,
+      }); // September 10, 2023 00:00 UTC
+
       expect(isSameUTCDay(local1, local2)).toBe(false);
     });
   });

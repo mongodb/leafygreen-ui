@@ -1,8 +1,17 @@
+export { convert12hTo24h } from './convert12hTo24h';
+export { doesSomeSegmentExist } from './doesSomeSegmentExist';
+export { findUnitOptionByDayPeriod } from './findUnitOptionByDayPeriod';
 export { getDefaultMax } from './getDefaultMax';
 export { getDefaultMin } from './getDefaultMin';
 export { getFormatParts } from './getFormatParts';
 export { getFormatPartsValues } from './getFormatPartsValues';
 export { getFormatter } from './getFormatter';
 export { getLgIds } from './getLgIds';
+export { getNewUTCDateFromSegments } from './getNewUTCDateFromSegments';
+export { getPaddedTimeSegmentsFromDate } from './getPaddedTimeSegmentsFromDate';
 export { getTimeSegmentRules } from './getTimeSegmentRules';
 export { hasDayPeriod } from './hasDayPeriod';
+export { isEverySegmentFilled } from './isEverySegmentFilled';
+export { isEverySegmentValid } from './isEverySegmentValid';
+export { isEverySegmentValueExplicit } from './isEverySegmentValueExplicit';
+export { shouldSetValue } from './shouldSetValue';

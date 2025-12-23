@@ -1,0 +1,1 @@
+export { isEverySegmentValid } from './isEverySegmentValid';

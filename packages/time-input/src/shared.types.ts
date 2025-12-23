@@ -1,5 +1,4 @@
 import { InputSegmentChangeEventHandler } from '@leafygreen-ui/input-box';
-import { keyMap } from '@leafygreen-ui/lib';
 
 export const DateTimePartKeys = {
   hour: 'hour',
@@ -28,6 +27,16 @@ export const TimeSegment = {
 export type TimeSegment = (typeof TimeSegment)[keyof typeof TimeSegment];
 
 export type TimeSegmentsState = Record<TimeSegment, string>;
+
+/*
+ * An enumerable object that maps the day period names to their values
+ */
+export const DayPeriod = {
+  AM: 'AM',
+  PM: 'PM',
+} as const;
+
+export type DayPeriod = (typeof DayPeriod)[keyof typeof DayPeriod];
 
 /**
  * The type for the time input segment change event handler
