@@ -47,6 +47,10 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       optional,
       id,
       'data-lgid': dataLgId,
+      'aria-label': ariaLabelProp,
+      'aria-labelledby': ariaLabelledbyProp,
+      'aria-invalid': ariaInvalidProp,
+      readOnly,
       ...rest
     }: FormFieldProps,
     fwdRef,
@@ -62,7 +66,10 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         state,
         id,
         disabled,
-        ...rest,
+        'aria-label': ariaLabelProp,
+        'aria-labelledby': ariaLabelledbyProp,
+        'aria-invalid': ariaInvalidProp,
+        readOnly,
       });
 
     const formFieldFeedbackProps = {
