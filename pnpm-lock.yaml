@@ -3692,6 +3692,9 @@ importers:
       '@leafygreen-ui/tooltip':
         specifier: workspace:^
         version: link:../tooltip
+      '@lg-chat/chat-button':
+        specifier: workspace:^
+        version: link:../../chat/chat-button
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
