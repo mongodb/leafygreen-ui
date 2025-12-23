@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/chat-button",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "LeafyGreen UI Kit Chat Button",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -38,7 +38,7 @@
     "@lg-tools/test-harnesses": "workspace:^"
   },
   "peerDependencies": {
-     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/chat/chat-button",
   "repository": {

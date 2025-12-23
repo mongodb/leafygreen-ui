@@ -1,5 +1,11 @@
 # @lg-chat/chat-button
 
+## 0.2.0
+
+### Minor Changes
+
+- c2e7029: [LG-5832](https://jira.mongodb.org/browse/LG-5832): adds `ChatIconButton`
+
 ## 0.1.0
 
 ### Minor Changes
