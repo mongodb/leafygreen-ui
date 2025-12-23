@@ -177,9 +177,9 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       };
 
     return (
-      <TimeFormField ref={forwardedRef} onClick={handleInputClick} {...rest}>
+      <TimeFormField ref={forwardedRef} {...rest}>
         <div className={getWrapperStyles({ is12HourFormat })}>
-          <TimeFormFieldInputContainer>
+          <TimeFormFieldInputContainer onClick={handleInputClick}>
             <TimeInputBox
               segments={segments}
               setSegment={(segment, value) => {
