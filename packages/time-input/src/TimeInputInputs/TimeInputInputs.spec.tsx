@@ -489,6 +489,79 @@ describe('packages/time-input-inputs', () => {
         });
       });
     });
+
+    describe('Locale', () => {
+      describe('en_US (12 hour format) to ISO_8601 (24 hour format)', () => {
+        test('updates the segments and select unit but does not call the value setter', () => {
+          const setValue = jest.fn();
+          const {
+            hourInput,
+            minuteInput,
+            secondInput,
+            rerenderTimeInputInputs,
+          } = renderTimeInputInputs({
+            providerProps: { value: new Date('2025-01-01T22:20:30Z') },
+            displayProps: {
+              timeZone: 'UTC',
+              locale: SupportedLocales.en_US,
+            },
+          });
+          const selectTestUtils = getSelectTestUtils(lgIds.select);
+          expect(hourInput.value).toBe('10');
+          expect(minuteInput.value).toBe('20');
+          expect(secondInput.value).toBe('30');
+          expect(selectTestUtils.getInputValue()).toBe('PM');
+
+          rerenderTimeInputInputs({
+            newDisplayProps: {
+              locale: SupportedLocales.ISO_8601,
+            },
+            newProviderProps: { setValue },
+          });
+
+          expect(hourInput.value).toBe('22');
+          expect(minuteInput.value).toBe('20');
+          expect(secondInput.value).toBe('30');
+          expect(setValue).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('ISO_8601 (24 hour format) to en_US (12 hour format)', () => {
+        test('updates the segments and select unit but does not call the value setter', () => {
+          const setValue = jest.fn();
+          const {
+            hourInput,
+            minuteInput,
+            secondInput,
+            rerenderTimeInputInputs,
+          } = renderTimeInputInputs({
+            providerProps: { value: new Date('2025-01-01T22:20:30Z') },
+            displayProps: {
+              timeZone: 'UTC',
+              locale: SupportedLocales.ISO_8601,
+            },
+          });
+
+          expect(hourInput.value).toBe('22');
+          expect(minuteInput.value).toBe('20');
+          expect(secondInput.value).toBe('30');
+
+          rerenderTimeInputInputs({
+            newDisplayProps: {
+              locale: SupportedLocales.en_US,
+            },
+            newProviderProps: { setValue },
+          });
+
+          const selectTestUtils = getSelectTestUtils(lgIds.select);
+          expect(hourInput.value).toBe('10');
+          expect(minuteInput.value).toBe('20');
+          expect(secondInput.value).toBe('30');
+          expect(selectTestUtils.getInputValue()).toBe('PM');
+          expect(setValue).not.toHaveBeenCalled();
+        });
+      });
+    });
   });
 
   describe('Typing', () => {
