@@ -6,6 +6,7 @@ import { isDateObject } from '@leafygreen-ui/date-utils';
 import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
 import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import { OnUpdateCallback, useTimeSegmentsAndSelectUnit } from '../hooks';
+import { DayPeriod } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
@@ -17,7 +18,6 @@ import {
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
-import { DayPeriod } from '../shared.types';
 
 /**
  * @internal
@@ -106,19 +106,12 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       <TimeFormField ref={forwardedRef}>
         <div className={wrapperBaseStyles}>
           <TimeFormFieldInputContainer>
-            <TimeInputBox
-              segments={segments}
-              setSegment={(segment, value) => {
-                setSegment(segment, value);
-              }}
-            />
+            <TimeInputBox segments={segments} setSegment={setSegment} />
           </TimeFormFieldInputContainer>
           {is12HourFormat && (
             <TimeInputSelect
               unit={selectUnit.displayName}
-              onChange={unit => {
-                setSelectUnit(unit);
-              }}
+              onChange={setSelectUnit}
             />
           )}
         </div>
