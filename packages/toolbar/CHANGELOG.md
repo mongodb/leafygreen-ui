@@ -1,5 +1,16 @@
 # @leafygreen-ui/toolbar
 
+## 1.3.0
+
+### Minor Changes
+
+- d7bcde1: [LG-5825](https://jira.mongodb.org/browse/LG-5825): Adds support for `glyph="Assistant"` in `ToolbarIconButton`. This will render a `ChatIconButton` instead of a standard `IconButton`.
+
+### Patch Changes
+
+- Updated dependencies [c2e7029]
+  - @lg-chat/chat-button@0.2.0
+
 ## 1.2.0
 
 ### Minor Changes
