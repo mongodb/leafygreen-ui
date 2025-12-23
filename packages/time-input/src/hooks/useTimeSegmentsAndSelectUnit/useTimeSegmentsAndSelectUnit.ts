@@ -17,71 +17,10 @@ import {
 } from '../../utils';
 
 import {
-  Action,
   ActionKind,
-  TimeSegmentsAndSelectUnitState,
   UseTimeSegmentsOptions,
 } from './useTimeSegmentsAndSelectUnit.types';
-
-/**
- * Reducer for the useTimeSegmentsAndSelect hook
- */
-const timeSegmentsAndSelectUnitReducer = (
-  currentState: TimeSegmentsAndSelectUnitState,
-  action: Action,
-): TimeSegmentsAndSelectUnitState => {
-  switch (action.type) {
-    case ActionKind.UPDATE_TIME_SEGMENTS:
-      return {
-        ...currentState,
-        segments: {
-          ...currentState.segments,
-          ...action.payload,
-        },
-      };
-    case ActionKind.UPDATE_SELECT_UNIT:
-      return {
-        ...currentState,
-        selectUnit: action.payload,
-      };
-    case ActionKind.UPDATE_TIME_SEGMENTS_AND_SELECT_UNIT:
-      return {
-        ...currentState,
-        segments: {
-          ...currentState.segments,
-          ...action.payload.segments,
-        },
-        selectUnit: action.payload.selectUnit,
-      };
-    default:
-      return currentState;
-  }
-};
-
-/**
- * Gets the initial state for the useTimeSegmentsAndSelect hook
- */
-const getInitialState = (
-  date: DateType,
-  locale: LocaleString,
-  timeZone: string,
-): TimeSegmentsAndSelectUnitState => {
-  const { dayPeriod } = getFormatPartsValues({
-    locale,
-    timeZone,
-    value: date,
-  });
-
-  const initialSelectUnitOption = findUnitOptionByDayPeriod(
-    dayPeriod as DayPeriod,
-    unitOptions,
-  );
-
-  return {
-    segments: getPaddedTimeSegmentsFromDate(date, locale, timeZone),
-    selectUnit: initialSelectUnitOption,
-  };
-};
+import { getInitialState, timeSegmentsAndSelectUnitReducer } from './utils';
 
 /**
  * Returns an object with all 3 time segments, a select unit, and setter functions to update the segments and select unit.
@@ -122,13 +61,18 @@ export const useTimeSegmentsAndSelectUnit = ({
     const isDateValid = isValidDate(date);
     const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
     const newSegments = getPaddedTimeSegmentsFromDate(date, locale, timeZone);
+    const hasLocaleChanged = prevLocale !== locale;
+    const hasTimeZoneChanged = prevTimeZone !== timeZone;
 
     // If the date has been set to null from a previously valid date
     const hasTimeBeenCleared =
       (isNull(date) || isUndefined(date)) && isValidDate(prevDate);
 
     // if the date is valid, date has changed, or the time has been cleared then update the segments and call onUpdate and dispatch
-    if ((isDateValid && hasDateAndTimeChanged) || hasTimeBeenCleared) {
+    if (
+      ((isDateValid && hasDateAndTimeChanged) || hasTimeBeenCleared) &&
+      !(hasLocaleChanged || hasTimeZoneChanged)
+    ) {
       const { dayPeriod } = getFormatPartsValues({
         locale,
         timeZone,
@@ -207,6 +151,53 @@ export const useTimeSegmentsAndSelectUnit = ({
             unitOptions,
           ),
         },
+      });
+    }
+  }, [
+    date,
+    locale,
+    timeZone,
+    segments,
+    selectUnit,
+    onUpdate,
+    prevDate,
+    prevLocale,
+    prevTimeZone,
+  ]);
+
+  /**
+   * This useEffect is to check if the select unit has changed.
+   *
+   * If the date is the same BUT the locale or timezone has changed then update the select unit but don't call onUpdate because the time did not change.
+   *
+   * This is to catch the case where the time zone has changed, the segments are the same but the day period has changed.
+   */
+  useEffect(() => {
+    const isDateValid = isValidDate(date);
+    const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
+    const { dayPeriod } = getFormatPartsValues({
+      locale,
+      timeZone,
+      value: date,
+    });
+    const newSelectUnit = findUnitOptionByDayPeriod(
+      dayPeriod as DayPeriod,
+      unitOptions,
+    );
+    const hasLocaleChanged = prevLocale !== locale;
+    const hasTimeZoneChanged = prevTimeZone !== timeZone;
+    const haveSelectUnitChanged = !isEqual(newSelectUnit, selectUnit);
+
+    // if the date is valid and the date has not changed but the segments are different then update the segments and only call dispatch. This means that the user can be typing in an ambiguous value or the locale or timezone has changed. We don't call onUpdate because the date did not change.
+    if (
+      isDateValid &&
+      !hasDateAndTimeChanged &&
+      haveSelectUnitChanged &&
+      (hasLocaleChanged || hasTimeZoneChanged)
+    ) {
+      dispatch({
+        type: ActionKind.UPDATE_SELECT_UNIT,
+        payload: newSelectUnit,
       });
     }
   }, [

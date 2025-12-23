@@ -501,6 +501,7 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
         });
       });
     });
+
     describe('with a null value', () => {
       test('calls callback with empty segments', () => {
         const testDate = newUTC(2023, Month.February, 20, 12, 0, 0);
@@ -545,8 +546,9 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
         );
       });
     });
+
     describe('with an invalid Date value', () => {
-      test('calls callback with previous segments', () => {
+      test('does not call callback with previous segments', () => {
         const testDate = newUTC(2023, Month.February, 20, 12, 0, 0);
         const callback = jest.fn();
         const { result, rerender } = renderUseTimeSegmentsAndSelectUnitHook({
@@ -554,39 +556,176 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
           callback,
         });
 
-        const { segments } = result.current;
+        const { segments, selectUnit } = result.current;
 
         expect(segments.hour).toEqual('12');
         expect(segments.minute).toEqual('00');
         expect(segments.second).toEqual('00');
+        expect(selectUnit).toEqual({ displayName: 'AM', value: 'AM' });
 
         rerender({
           date: new Date('invalid'),
           callback,
         });
 
-        expect(callback).toHaveBeenCalledWith(
-          expect.objectContaining({
-            newSegments: expect.objectContaining({
-              hour: '12',
-              minute: '00',
-              second: '00',
-            }),
-            newSelectUnit: expect.objectContaining({
+        expect(callback).not.toHaveBeenCalled();
+        const { segments: updatedSegments, selectUnit: updatedSelectUnit } =
+          result.current;
+        expect(updatedSegments.hour).toEqual('12');
+        expect(updatedSegments.minute).toEqual('00');
+        expect(updatedSegments.second).toEqual('00');
+        expect(updatedSelectUnit).toEqual({ displayName: 'AM', value: 'AM' });
+      });
+    });
+
+    describe('to a different time zone', () => {
+      describe('does not call the callback but updates the values', () => {
+        describe('24 hour format', () => {
+          test('UTC to America/New_York', () => {
+            const testDate = newUTC(2023, Month.February, 20, 12, 0, 0);
+            const callback = jest.fn();
+            const { result, rerender } = renderUseTimeSegmentsAndSelectUnitHook(
+              {
+                initialDate: testDate,
+                callback,
+              },
+            );
+
+            const { segments } = result.current;
+
+            expect(segments.hour).toEqual('12');
+            expect(segments.minute).toEqual('00');
+            expect(segments.second).toEqual('00');
+
+            rerender({
+              date: testDate,
+              callback,
+              timeZone: 'America/New_York',
+            });
+
+            const { segments: updatedSegments, selectUnit: updatedSelectUnit } =
+              result.current;
+            expect(callback).not.toHaveBeenCalled();
+            expect(updatedSegments.hour).toEqual('07');
+            expect(updatedSegments.minute).toEqual('00');
+            expect(updatedSegments.second).toEqual('00');
+            expect(updatedSelectUnit).toEqual({
               displayName: 'AM',
               value: 'AM',
-            }),
-            prevSegments: expect.objectContaining({
-              hour: '12',
-              minute: '00',
-              second: '00',
-            }),
-            prevSelectUnit: expect.objectContaining({
+            });
+          });
+        });
+
+        describe('12 hour format', () => {
+          test('UTC to Pacific/Fiji (UTC+12)', () => {
+            const testDate = newUTC(2023, Month.February, 20, 12, 0, 0); // 12:00 PM
+            const callback = jest.fn();
+            const { result, rerender } = renderUseTimeSegmentsAndSelectUnitHook(
+              {
+                initialDate: testDate,
+                initialLocale: SupportedLocales.en_US,
+                callback,
+              },
+            );
+
+            const { segments, selectUnit } = result.current;
+
+            expect(segments.hour).toEqual('12');
+            expect(segments.minute).toEqual('00');
+            expect(segments.second).toEqual('00');
+            expect(selectUnit).toEqual({ displayName: 'PM', value: 'PM' });
+
+            rerender({
+              date: testDate,
+              callback,
+              timeZone: 'Pacific/Fiji',
+            });
+
+            const { segments: updatedSegments, selectUnit: updatedSelectUnit } =
+              result.current;
+            expect(callback).not.toHaveBeenCalled();
+            expect(updatedSegments.hour).toEqual('12');
+            expect(updatedSegments.minute).toEqual('00');
+            expect(updatedSegments.second).toEqual('00');
+            expect(updatedSelectUnit).toEqual({
               displayName: 'AM',
               value: 'AM',
-            }),
-          }),
-        );
+            });
+          });
+        });
+      });
+    });
+
+    describe('to a different locale', () => {
+      describe('does not call the callback but updates the values', () => {
+        test('24h format to 12h format', () => {
+          const testDate = newUTC(2023, Month.February, 20, 13, 0, 0);
+          const callback = jest.fn();
+          const { result, rerender } = renderUseTimeSegmentsAndSelectUnitHook({
+            initialDate: testDate,
+            callback,
+          });
+
+          const { segments, selectUnit } = result.current;
+
+          expect(segments.hour).toEqual('13');
+          expect(segments.minute).toEqual('00');
+          expect(segments.second).toEqual('00');
+          expect(selectUnit).toEqual({ displayName: 'AM', value: 'AM' });
+
+          rerender({
+            date: testDate,
+            callback,
+            locale: SupportedLocales.en_US,
+          });
+
+          const { segments: updatedSegments, selectUnit: updatedSelectUnit } =
+            result.current;
+          expect(callback).not.toHaveBeenCalled();
+          expect(updatedSegments.hour).toEqual('01');
+          expect(updatedSegments.minute).toEqual('00');
+          expect(updatedSegments.second).toEqual('00');
+          expect(updatedSelectUnit).toEqual({
+            displayName: 'PM',
+            value: 'PM',
+          });
+        });
+
+        test('12h format to 24h format', () => {
+          const testDate = newUTC(2023, Month.February, 20, 13, 0, 0);
+          const callback = jest.fn();
+          const { result, rerender } = renderUseTimeSegmentsAndSelectUnitHook({
+            initialDate: testDate,
+            initialLocale: SupportedLocales.en_US,
+            callback,
+          });
+
+          const { segments, selectUnit } = result.current;
+
+          expect(segments.hour).toEqual('01');
+          expect(segments.minute).toEqual('00');
+          expect(segments.second).toEqual('00');
+          expect(selectUnit).toEqual({ displayName: 'PM', value: 'PM' });
+
+          rerender({
+            date: testDate,
+            callback,
+            locale: SupportedLocales.ISO_8601,
+          });
+
+          expect(callback).not.toHaveBeenCalled();
+
+          const { segments: updatedSegments, selectUnit: updatedSelectUnit } =
+            result.current;
+          expect(callback).not.toHaveBeenCalled();
+          expect(updatedSegments.hour).toEqual('13');
+          expect(updatedSegments.minute).toEqual('00');
+          expect(updatedSegments.second).toEqual('00');
+          expect(updatedSelectUnit).toEqual({
+            displayName: 'AM',
+            value: 'AM',
+          });
+        });
       });
     });
   });
