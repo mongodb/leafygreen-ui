@@ -9,11 +9,5 @@ import { TimeSegmentsState } from '../../shared.types';
  * @returns Whether every segment is filled
  */
 export const isEverySegmentFilled = (segments: TimeSegmentsState) => {
-  const isEverySegmentFilled = Object.values(segments).every(segment => {
-    const isSegmentDefined = isDefined(segment);
-    const isSegmentEmpty = segment === '';
-    return !isSegmentEmpty && isSegmentDefined;
-  });
-  // check if all segments are not empty
-  return isEverySegmentFilled;
+  return Object.values(segments).every(segment => segment !== '');
 };
