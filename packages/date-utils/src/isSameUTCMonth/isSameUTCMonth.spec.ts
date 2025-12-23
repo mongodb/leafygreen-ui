@@ -5,11 +5,12 @@ import { mockTimeZone } from '../testing/mockTimeZone';
 
 import { isSameUTCMonth } from '.';
 
-const TZOffset = -5;
+const TZOffset = -4;
+const timeZone = 'America/New_York';
 
 describe('packages/date-utils/isSameUTCMonth', () => {
   beforeEach(() => {
-    mockTimeZone('America/New_York', TZOffset);
+    mockTimeZone(timeZone, TZOffset);
   });
   afterEach(() => {
     jest.resetAllMocks();
@@ -32,27 +33,72 @@ describe('packages/date-utils/isSameUTCMonth', () => {
   describe('when one date is defined locally', () => {
     test('true', () => {
       const utc = newUTC(2023, Month.September, 10);
-      const local = newTZDate(TZOffset, 2023, Month.August, 31, 21, 0, 0);
+
+      // August 31, 2023 21:00 EDT (UTC-4)
+      const local = newTZDate({
+        timeZone,
+        year: 2023,
+        month: Month.August,
+        date: 31,
+        hours: 21,
+        minutes: 0,
+      }); // September 01, 2023 01:00 UTC
       expect(isSameUTCMonth(utc, local)).toBe(true);
     });
 
     test('false', () => {
       const utc = newUTC(2023, Month.September, 10);
-      const local = newTZDate(TZOffset, 2023, Month.August, 31, 12, 0);
+      // August 31, 2023 12:00 EDT (UTC-4)
+      const local = newTZDate({
+        timeZone,
+        year: 2023,
+        month: Month.August,
+        date: 31,
+        hours: 12,
+        minutes: 0,
+      }); // August 31, 2023 16:00 UTC
       expect(isSameUTCMonth(utc, local)).toBe(false);
     });
   });
 
   describe(' when both dates are defined locally', () => {
     test('true', () => {
-      const local1 = newTZDate(TZOffset, 2023, Month.September, 1, 0, 0);
-      const local2 = newTZDate(TZOffset, 2023, Month.September, 30, 18, 0);
+      const local1 = newTZDate({
+        timeZone,
+        year: 2023,
+        month: Month.September,
+        date: 1,
+        hours: 0,
+        minutes: 0,
+      });
+      const local2 = newTZDate({
+        timeZone,
+        year: 2023,
+        month: Month.September,
+        date: 30,
+        hours: 18,
+        minutes: 0,
+      });
       expect(isSameUTCMonth(local1, local2)).toBe(true);
     });
 
     test('false', () => {
-      const local1 = newTZDate(TZOffset, 2023, Month.September, 1, 0, 0);
-      const local2 = newTZDate(TZOffset, 2023, Month.September, 30, 20, 0);
+      const local1 = newTZDate({
+        timeZone,
+        year: 2023,
+        month: Month.September,
+        date: 1,
+        hours: 0,
+        minutes: 0,
+      });
+      const local2 = newTZDate({
+        timeZone,
+        year: 2023,
+        month: Month.September,
+        date: 30,
+        hours: 20,
+        minutes: 0,
+      });
       expect(isSameUTCMonth(local1, local2)).toBe(false);
     });
   });

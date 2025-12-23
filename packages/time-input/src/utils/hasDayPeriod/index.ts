@@ -1,0 +1,1 @@
+export { hasDayPeriod } from './hasDayPeriod';

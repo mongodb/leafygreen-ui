@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FormFieldInputContainer } from '@leafygreen-ui/form-field';
 
-import { useTimeInputDisplayContext } from '../../Context/TimeInputDisplayContext';
+import { useTimeInputDisplayContext } from '../../Context';
 
 import { getContainerStyles } from './TimeFormFieldInputContainer.styles';
 import { TimeFormFieldInputContainerProps } from './TimeFormFieldInputContainer.types';
@@ -14,21 +14,12 @@ import { TimeFormFieldInputContainerProps } from './TimeFormFieldInputContainer.
 export const TimeFormFieldInputContainer = React.forwardRef<
   HTMLDivElement,
   TimeFormFieldInputContainerProps
->(({ children, onInputClick }: TimeFormFieldInputContainerProps, fwdRef) => {
-  const { label, ariaLabelProp, ariaLabelledbyProp, is12HourFormat } =
-    useTimeInputDisplayContext();
+>(({ children }: TimeFormFieldInputContainerProps, fwdRef) => {
+  const { is12HourFormat } = useTimeInputDisplayContext();
 
   return (
     <FormFieldInputContainer
       ref={fwdRef}
-      tabIndex={-1}
-      aria-label={!label && ariaLabelProp ? ariaLabelProp : undefined}
-      aria-labelledby={
-        !label && !ariaLabelProp && ariaLabelledbyProp
-          ? ariaLabelledbyProp
-          : undefined
-      }
-      onClick={onInputClick}
       className={getContainerStyles({ is12HourFormat })}
     >
       {children}

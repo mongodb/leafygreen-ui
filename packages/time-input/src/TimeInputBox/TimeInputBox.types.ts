@@ -5,8 +5,7 @@ import {
   TimeSegmentsState,
 } from '../shared.types';
 
-export interface TimeInputBoxProps
-  extends React.ComponentPropsWithoutRef<'div'> {
+export interface TimeInputBoxProps extends React.ComponentPropsWithRef<'div'> {
   /**
    * The segments of the time input
    */

@@ -16,6 +16,7 @@ import { TWENTY_FOUR_HOURS_TEXT } from '../constants';
 import { useTimeInputContext, useTimeInputDisplayContext } from '../Context';
 import { OnUpdateCallback, useTimeSegmentsAndSelectUnit } from '../hooks';
 import { TimeInputSegmentChangeEventHandler } from '../shared.types';
+import { DayPeriod } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
@@ -104,7 +105,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
             year,
           },
           timeZone,
-          dayPeriod: newSelectUnit.displayName,
+          dayPeriod: newSelectUnit.displayName as DayPeriod,
         });
 
         // Checks if the new date should be set

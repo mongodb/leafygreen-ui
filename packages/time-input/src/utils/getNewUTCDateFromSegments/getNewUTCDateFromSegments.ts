@@ -1,6 +1,7 @@
-import { newUTCFromTimeZone } from '@leafygreen-ui/date-utils';
+import { newTZDate } from '@leafygreen-ui/date-utils';
 
 import { TimeSegmentsState } from '../../shared.types';
+import { DayPeriod } from '../../shared.types';
 import { convert12hTo24h } from '../convert12hTo24h/convert12hTo24h';
 import { doesSomeSegmentExist } from '../doesSomeSegmentExist/doesSomeSegmentExist';
 import { isEverySegmentFilled } from '../isEverySegmentFilled/isEverySegmentFilled';
@@ -30,29 +31,29 @@ export const getNewUTCDateFromSegments = ({
     month: string;
     year: string;
   };
-  dayPeriod: string;
+  dayPeriod: DayPeriod;
 }) => {
   const { day, month, year } = dateValues;
   const { hour, minute, second } = segments;
 
-  const convertedHour = is12HourFormat
-    ? convert12hTo24h(hour, dayPeriod)
+  const converted12hTo24hHour = is12HourFormat
+    ? convert12hTo24h(Number(hour), dayPeriod)
     : hour;
 
   /**
-   * Check if all segments are filled and valid. If they are, return the UTC date.
+   * Check if all segments are filled and valid (not necessarily explicit). If they are, return the UTC date.
    */
   if (
     isEverySegmentFilled(segments) &&
     isEverySegmentValid({ segments, is12HourFormat })
   ) {
-    return newUTCFromTimeZone({
-      year,
-      month,
-      day,
-      hour: convertedHour,
-      minute,
-      second,
+    return newTZDate({
+      year: Number(year),
+      month: Number(month) - 1,
+      date: Number(day),
+      hours: Number(converted12hTo24hHour),
+      minutes: Number(minute),
+      seconds: Number(second),
       timeZone,
     });
   }

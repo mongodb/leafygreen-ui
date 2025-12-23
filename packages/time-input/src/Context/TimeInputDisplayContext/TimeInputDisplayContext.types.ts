@@ -11,6 +11,13 @@ type AriaLabelKeysWithoutLabel = Exclude<AriaLabelKeys, 'label'>;
 type DarkModeKeys = keyof DarkModeProps;
 
 /**
+ * Dynamically generated LGIDs that will be used for the data-lgid and data-testid attributes in child components
+ */
+interface LgIds {
+  lgIds: GetLgIdsReturnType;
+}
+
+/**
  * The values in context that can be used in the component
  * Omits the aria-label and aria-labelledby props and replaces them with the ariaLabelProp and ariaLabelledbyProp
  * Omits the state prop
@@ -19,45 +26,41 @@ type DarkModeKeys = keyof DarkModeProps;
 export type TimeInputDisplayContextProps = Omit<
   Required<DisplayTimeInputProps>,
   AriaLabelKeysWithoutLabel | 'state' | DarkModeKeys
-> & {
-  /**
-   *  The aria-label prop
-   */
-  ariaLabelProp: string;
+> &
+  LgIds & {
+    /**
+     *  The aria-label prop
+     */
+    ariaLabelProp: string;
 
-  /**
-   * The aria-labelledby prop
-   */
-  ariaLabelledbyProp: string;
+    /**
+     * The aria-labelledby prop
+     */
+    ariaLabelledbyProp: string;
 
-  /**
-   * Whether the input has been interacted with
-   */
-  isDirty: boolean;
+    /**
+     * Whether the input has been interacted with
+     */
+    isDirty: boolean;
 
-  /**
-   * Setter for whether the input has been interacted with
-   */
-  setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
+    /**
+     * Setter for whether the input has been interacted with
+     */
+    setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
 
-  /**
-   * Whether the time input is in 12-hour format. Helps determine if the AM/PM select should be shown.
-   *
-   * @default false
-   */
-  is12HourFormat: boolean;
+    /**
+     * Whether the time input is in 12-hour format. Helps determine if the AM/PM select should be shown.
+     *
+     * @default false
+     */
+    is12HourFormat: boolean;
 
-  /**
-   * An array of {@link Intl.DateTimeFormatPart},
-   * used to determine the order of segments in the input
-   */
-  formatParts?: Array<Intl.DateTimeFormatPart>;
-
-  /**
-   * LGIDs for the code snippet.
-   */
-  lgIds: GetLgIdsReturnType;
-};
+    /**
+     * An array of {@link Intl.DateTimeFormatPart},
+     * used to determine the order of segments in the input
+     */
+    formatParts?: Array<Intl.DateTimeFormatPart>;
+  };
 
 /**
  * The props expected to pass into the provider
@@ -66,24 +69,20 @@ export type TimeInputDisplayContextProps = Omit<
 export type TimeInputDisplayProviderProps = Omit<
   DisplayTimeInputProps,
   AriaLabelKeys | DarkModeKeys
-> & {
-  /**
-   * The label prop
-   */
-  label?: ReactNode;
+> &
+  Partial<LgIds> & {
+    /**
+     * The label prop
+     */
+    label?: ReactNode;
 
-  /**
-   * The aria-label prop
-   */
-  'aria-label'?: string;
+    /**
+     * The aria-label prop
+     */
+    'aria-label'?: string;
 
-  /**
-   * The aria-labelledby prop
-   */
-  'aria-labelledby'?: string;
-
-  /**
-   * LGIDs for the code snippet.
-   */
-  lgIds?: GetLgIdsReturnType;
-};
+    /**
+     * The aria-labelledby prop
+     */
+    'aria-labelledby'?: string;
+  };

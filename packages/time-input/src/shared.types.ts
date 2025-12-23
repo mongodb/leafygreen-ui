@@ -60,3 +60,13 @@ export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
   TimeSegment,
   string
 >;
+
+/*
+ * An enumerable object that maps the day period names to their values
+ */
+export const DayPeriod = {
+  AM: 'AM',
+  PM: 'PM',
+} as const;
+
+export type DayPeriod = (typeof DayPeriod)[keyof typeof DayPeriod];
