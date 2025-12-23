@@ -5,10 +5,11 @@ import { Body } from '@leafygreen-ui/typography';
 import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
-} from './constants';
-import { flexSectionStyles } from './Pagination.styles';
-import { PaginationRangeViewProps } from './Pagination.types';
-import { getCurrentRangeString, getRangeMaxString } from './utils';
+} from '../constants';
+import { flexSectionStyles } from '../Pagination.styles';
+import { getCurrentRangeString, getRangeMaxString } from '../utils';
+
+import { PaginationRangeViewProps } from './PaginationRangeView.types';
 
 /**
  * PaginationRangeView is a component that displays the current range of items.

@@ -10,10 +10,11 @@ import {
 } from '@leafygreen-ui/select';
 import { Body } from '@leafygreen-ui/typography';
 
-import { DEFAULT_ITEMS_PER_PAGE_OPTIONS } from './constants';
-import { flexSectionStyles } from './Pagination.styles';
-import { PaginationItemsPerPageProps } from './Pagination.types';
-import { validateItemsPerPage } from './utils';
+import { DEFAULT_ITEMS_PER_PAGE_OPTIONS } from '../constants';
+import { flexSectionStyles } from '../Pagination.styles';
+import { validateItemsPerPage } from '../utils';
+
+import { PaginationItemsPerPageProps } from './PaginationItemsPerPage.types';
 
 function PaginationItemsPerPage<T extends number>({
   id: idProp,

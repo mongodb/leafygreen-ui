@@ -60,31 +60,4 @@ interface PaginationProps<T extends number = number>
 
 type ExcludeFromTypeInference<T> = [T][T extends number ? 0 : never];
 
-type PaginationItemsPerPageProps = Pick<
-  PaginationProps,
-  'itemsPerPageOptions' | 'id' | 'onItemsPerPageOptionChange' | 'itemsPerPage'
->;
-
-type PaginationRangeViewProps = Pick<
-  PaginationProps,
-  'itemsPerPage' | 'currentPage' | 'numTotalItems'
->;
-
-type PaginationCurrentPageControlsProps = Pick<
-  PaginationProps,
-  | 'onCurrentPageOptionChange'
-  | 'currentPage'
-  | 'numTotalItems'
-  | 'itemsPerPage'
-  | 'shouldDisableBackArrow'
-  | 'shouldDisableForwardArrow'
-  | 'onBackArrowClick'
-  | 'onForwardArrowClick'
->;
-
-export type {
-  PaginationCurrentPageControlsProps,
-  PaginationItemsPerPageProps,
-  PaginationProps,
-  PaginationRangeViewProps,
-};
+export type { PaginationProps };

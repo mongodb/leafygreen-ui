@@ -16,10 +16,11 @@ import { Body } from '@leafygreen-ui/typography';
 import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
-} from './constants';
-import { flexSectionStyles } from './Pagination.styles';
-import { PaginationCurrentPageControlsProps } from './Pagination.types';
-import { getTotalNumPages, validateCurrentPage } from './utils';
+} from '../constants';
+import { flexSectionStyles } from '../Pagination.styles';
+import { getTotalNumPages, validateCurrentPage } from '../utils';
+
+import { PaginationCurrentPageControlsProps } from './PaginationCurrentPageControls.types';
 
 /**
  * PaginationCurrentPageControls is a component that displays the current page and the total number of pages.

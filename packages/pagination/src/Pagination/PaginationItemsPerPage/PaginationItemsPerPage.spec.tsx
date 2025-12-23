@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import PaginationItemsPerPage from './PaginationItemsPerPage';
+import PaginationItemsPerPage from '.';
 
 let offsetParentSpy: jest.SpyInstance;
 

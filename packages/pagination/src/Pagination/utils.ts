@@ -13,8 +13,11 @@ export const getRangeMaxString = (numTotalItems?: number) => {
   return numTotalItems ? `${numTotalItems} items` : 'many';
 };
 
-export const getTotalNumPages = (numItems: number, itemsPerPage: number) => {
-  return Math.ceil(numItems / itemsPerPage);
+export const getTotalNumPages = (
+  numTotalItems: number,
+  itemsPerPage: number,
+) => {
+  return Math.ceil(numTotalItems / itemsPerPage);
 };
 
 export const validateCurrentPage = <T extends number>({
