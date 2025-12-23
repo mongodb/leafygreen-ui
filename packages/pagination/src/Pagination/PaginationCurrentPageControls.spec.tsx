@@ -171,7 +171,10 @@ describe('PaginationCurrentPageControls', () => {
       userEvent.click(option2);
 
       await waitFor(() => {
-        expect(onCurrentPageOptionChange).toHaveBeenCalledWith('2');
+        expect(onCurrentPageOptionChange).toHaveBeenCalledWith(
+          '2',
+          expect.anything(),
+        );
       });
     });
   });
