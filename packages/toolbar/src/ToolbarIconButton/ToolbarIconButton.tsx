@@ -1,4 +1,5 @@
 import React, { ComponentPropsWithoutRef, useEffect } from 'react';
+import { ChatIconButton } from '@lg-chat/chat-button';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { Icon } from '@leafygreen-ui/icon';
@@ -62,6 +63,40 @@ export const ToolbarIconButton = React.forwardRef<
       if (isFocusable && shouldFocus) ref.current?.focus();
     }, [isFocusable, ref, shouldFocus]);
 
+    const renderTrigger = () => {
+      const commonProps = {
+        active,
+        'aria-label': ariaLabel || getNodeTextContent(label),
+        className: getIconButtonStyles({
+          theme,
+          active,
+          disabled,
+          className,
+        }),
+        'data-active': active,
+        'data-lgid': `${lgIds.iconButton}-${index}`,
+        'data-testid': `${lgIds.iconButton}-${index}`,
+        disabled,
+        onClick: (event: React.MouseEvent<HTMLButtonElement>) =>
+          handleOnIconButtonClick(event, index, onClick),
+        ref,
+        tabIndex: isFocusable ? 0 : -1,
+        ...(rest as ComponentPropsWithoutRef<'button'>),
+      };
+
+      return (
+        <div className={triggerStyles}>
+          {glyph === 'Assistant' ? (
+            <ChatIconButton {...commonProps} />
+          ) : (
+            <IconButton {...commonProps}>
+              <Icon glyph={glyph} />
+            </IconButton>
+          )}
+        </div>
+      );
+    };
+
     return (
       <Tooltip
         data-testid={`${lgIds.iconButtonTooltip}-${index}`}
@@ -69,32 +104,7 @@ export const ToolbarIconButton = React.forwardRef<
         align={Align.Left}
         justify={Justify.Middle}
         enabled={isTooltipEnabled}
-        trigger={
-          <div className={triggerStyles}>
-            <IconButton
-              aria-label={ariaLabel || getNodeTextContent(label)}
-              active={active}
-              className={getIconButtonStyles({
-                theme,
-                active,
-                disabled,
-                className,
-              })}
-              tabIndex={isFocusable ? 0 : -1}
-              onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-                handleOnIconButtonClick(event, index, onClick)
-              }
-              disabled={disabled}
-              data-testid={`${lgIds.iconButton}-${index}`}
-              data-lgid={`${lgIds.iconButton}-${index}`}
-              data-active={active}
-              ref={ref}
-              {...(rest as ComponentPropsWithoutRef<'button'>)}
-            >
-              <Icon glyph={glyph} />
-            </IconButton>
-          </div>
-        }
+        trigger={renderTrigger}
         spacing={spacingToken[100]}
         variant={TooltipVariant.Compact}
       >

@@ -270,6 +270,139 @@ const Modal = CompoundComponent(
 );
 ```
 
+### Hierarchical Compound Components (Nested SubComponents)
+
+`CompoundSubComponent` can accept additional static properties to create hierarchical compound components without needing to nest `CompoundComponent` calls. This provides a cleaner DX:
+
+```tsx
+import {
+  CompoundComponent,
+  CompoundSubComponent,
+  findChild,
+} from '@leafygreen-ui/compound-component';
+
+// Define property constants for each level
+const ModalProperties = {
+  Header: 'isModalHeader',
+  Body: 'isModalBody',
+  Footer: 'isModalFooter',
+} as const;
+
+const FooterProperties = {
+  PrimaryAction: 'isPrimaryAction',
+  SecondaryAction: 'isSecondaryAction',
+} as const;
+
+// Create the deepest level sub-components
+const PrimaryAction = CompoundSubComponent(
+  ({ children, ...props }) => (
+    <button className="primary-action" {...props}>
+      {children}
+    </button>
+  ),
+  {
+    displayName: 'PrimaryAction',
+    key: FooterProperties.PrimaryAction,
+  },
+);
+
+const SecondaryAction = CompoundSubComponent(
+  ({ children, ...props }) => (
+    <button className="secondary-action" {...props}>
+      {children}
+    </button>
+  ),
+  {
+    displayName: 'SecondaryAction',
+    key: FooterProperties.SecondaryAction,
+  },
+);
+
+// ModalFooter is BOTH a SubComponent AND has its own sub-components
+// No need to wrap with CompoundComponent!
+const ModalFooter = CompoundSubComponent(
+  ({ children }) => {
+    // ModalFooter can use findChild for its own children
+    const primaryAction = findChild(children, FooterProperties.PrimaryAction);
+    const secondaryAction = findChild(
+      children,
+      FooterProperties.SecondaryAction,
+    );
+
+    return (
+      <div className="modal-footer">
+        {secondaryAction}
+        {primaryAction}
+      </div>
+    );
+  },
+  {
+    displayName: 'ModalFooter',
+    key: ModalProperties.Footer,
+    // Attach sub-components directly!
+    PrimaryAction,
+    SecondaryAction,
+  },
+);
+
+const ModalHeader = CompoundSubComponent(
+  ({ children }) => <div className="modal-header">{children}</div>,
+  {
+    displayName: 'ModalHeader',
+    key: ModalProperties.Header,
+  },
+);
+
+const ModalBody = CompoundSubComponent(
+  ({ children }) => <div className="modal-body">{children}</div>,
+  {
+    displayName: 'ModalBody',
+    key: ModalProperties.Body,
+  },
+);
+
+// Attach to parent Modal component
+const Modal = CompoundComponent(
+  ({ children }) => {
+    const header = findChild(children, ModalProperties.Header);
+    const body = findChild(children, ModalProperties.Body);
+    const footer = findChild(children, ModalProperties.Footer);
+
+    return (
+      <div className="modal">
+        {header}
+        {body}
+        {footer}
+      </div>
+    );
+  },
+  {
+    displayName: 'Modal',
+    Header: ModalHeader,
+    Body: ModalBody,
+    Footer: ModalFooter,
+  },
+);
+
+// Usage: Modal.Footer.PrimaryAction works without nesting CompoundComponent!
+function App() {
+  return (
+    <Modal>
+      <Modal.Header>Confirm Action</Modal.Header>
+      <Modal.Body>Are you sure you want to proceed?</Modal.Body>
+      <Modal.Footer>
+        <Modal.Footer.SecondaryAction onClick={() => {}}>
+          Cancel
+        </Modal.Footer.SecondaryAction>
+        <Modal.Footer.PrimaryAction onClick={() => {}}>
+          Confirm
+        </Modal.Footer.PrimaryAction>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+```
+
 ## API
 
 ### `CompoundComponent<Props, Properties>(componentRenderFn, properties)`
@@ -285,14 +418,17 @@ Creates a compound component with attached sub-components.
 
 ### `CompoundSubComponent<Key, Props>(componentRenderFn, properties)`
 
-Creates a sub-component with a static key property for identification.
+Creates a sub-component with a static key property for identification. Can optionally accept additional static properties (like nested sub-components) to create hierarchical compound components.
 
 **Parameters:**
 
 - `componentRenderFn`: The React component render function
-- `properties`: Object containing `displayName` and `key`
+- `properties`: Object containing:
+  - `displayName` (required): The component display name
+  - `key` (required): The static property name to identify this component
+  - Additional properties (optional): Any nested sub-components or other static properties
 
-**Returns:** A React component with the specified key property set to `true`
+**Returns:** A React component with the specified key property set to `true` and any additional properties attached
 
 ### `findChild(children, staticProperty)`
 

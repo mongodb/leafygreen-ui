@@ -6,7 +6,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface MessageActionsProps
   extends DarkModeProps,
-    React.ComponentProps<'div'> {
+    React.ComponentPropsWithRef<'div'> {
   /**
    * Optional error message to display when feedback submission fails.
    * @default 'Oops, please try again.'

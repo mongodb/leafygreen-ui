@@ -318,7 +318,7 @@ const getToolbarData = ({ assistantName }: { assistantName?: string }) => [
   {
     id: 'assistant',
     label: 'MongoDB Assistant',
-    glyph: 'Sparkle' as const,
+    glyph: 'Assistant',
     title: 'MongoDB Assistant',
     content: <ChatDrawerContent assistantName={assistantName} />,
     hasPadding: false,
@@ -364,7 +364,7 @@ export const InDrawerLayout: StoryObj<ChatWindowStoryProps> = {
   },
   parameters: {
     chromatic: {
-      delay: 400,
+      delay: 3000,
     },
   },
 };
