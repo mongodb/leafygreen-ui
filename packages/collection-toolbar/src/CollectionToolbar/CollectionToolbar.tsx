@@ -11,10 +11,11 @@ export function CollectionToolbar({
   size = Size.Default,
   variant = Variant.Default,
   className,
+  children,
 }: CollectionToolbarProps) {
   return (
     <div className={getCollectionToolbarStyles({ size, variant, className })}>
-      CollectionToolbar
+      {children}
     </div>
   );
 }
