@@ -25,9 +25,11 @@ export const CollectionToolbar = CompoundComponent(
       children,
       CollectionToolbarSubComponentProperty.Title,
     );
+    const showTitle = title && variant === Variant.Collapsible;
+
     return (
       <div className={getCollectionToolbarStyles({ size, variant, className })}>
-        {title}
+        {showTitle && title}
         CollectionToolbar
       </div>
     );
