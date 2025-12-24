@@ -1,17 +1,40 @@
-
 import React from 'react';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { CollectionToolbar } from '.';
+import { CollectionToolbar, Size, Variant } from '.';
 
-export default {
+const meta: StoryMetaType<typeof CollectionToolbar> = {
   title: 'Components/CollectionToolbar',
   component: CollectionToolbar,
-}
+  parameters: {
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        size: Object.values(Size),
+        variant: Object.values(Variant),
+      },
+    },
+  },
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+    },
+    variant: {
+      control: 'select',
+      options: Object.values(Variant),
+    },
+  },
+  args: {
+    children: 'Collection Toolbar',
+  },
+};
 
-const Template: StoryFn<typeof CollectionToolbar> = (props) => (
+export default meta;
+
+export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
   <CollectionToolbar {...props} />
 );
-
-export const Basic = Template.bind({});
-

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Size as ImportedSize } from '@leafygreen-ui/tokens';
 
 export const Variant = {
@@ -17,4 +19,5 @@ export interface CollectionToolbarProps {
   size?: typeof ImportedSize.Default | typeof ImportedSize.Small;
   variant?: Variant;
   className?: string;
+  children?: React.ReactNode;
 }
