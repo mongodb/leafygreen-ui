@@ -19,7 +19,7 @@ function PaginationRangeView<T extends number>({
   currentPage = DEFAULT_CURRENT_PAGE,
   numTotalItems,
   className,
-}: PaginationRangeViewProps) {
+}: PaginationRangeViewProps<T>) {
   return (
     <div className={getSectionStyles({ className })}>
       <Body data-testid="lg-pagination-item-range">
