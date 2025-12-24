@@ -7,6 +7,10 @@ import { CollectionToolbarSubComponentProperty } from '../CollectionToolbar.type
 
 import { CollectionToolbarTitleProps } from './CollectionToolbarTitle.types';
 
+/**
+ * CollectionToolbarTitle is a compound component that renders a title for a collection toolbar.
+ * It will only render if the CollectionToolbar variant is set to Collapsible.
+ */
 const CollectionToolbarTitle = CompoundSubComponent(
   ({ className, children, ...rest }: CollectionToolbarTitleProps) => (
     <H3 className={className} {...rest}>

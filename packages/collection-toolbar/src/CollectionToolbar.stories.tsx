@@ -53,6 +53,6 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
 
 export const Title: StoryFn<typeof CollectionToolbar> = props => (
   <CollectionToolbar {...props}>
-    <CollectionToolbar.Title>Title</CollectionToolbar.Title>
+    <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
   </CollectionToolbar>
 );
