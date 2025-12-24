@@ -22,6 +22,12 @@
       "path": "../tokens"
     },
     {
+      "path": "../compound-component"
+    },
+    {
+      "path": "../typography"
+    },
+    {
       "path": "../../tools/test-harnesses"
     }
   ]
