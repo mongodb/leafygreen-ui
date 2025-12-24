@@ -4,3 +4,7 @@ export {
   Size,
   Variant,
 } from './CollectionToolbar.types';
+export {
+  CollectionToolbarTitle,
+  type CollectionToolbarTitleProps,
+} from './CollectionToolbarTitle';

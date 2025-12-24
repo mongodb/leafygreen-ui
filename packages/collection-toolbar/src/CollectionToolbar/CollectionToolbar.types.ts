@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { Size as ImportedSize } from '@leafygreen-ui/tokens';
 
 export const Variant = {
@@ -15,9 +16,26 @@ export const Size = {
 } as const;
 export type Size = (typeof Size)[keyof typeof Size];
 
-export interface CollectionToolbarProps {
+export interface CollectionToolbarProps extends DarkModeProps {
+  children?: React.ReactNode;
   size?: typeof ImportedSize.Default | typeof ImportedSize.Small;
   variant?: Variant;
   className?: string;
-  children?: React.ReactNode;
 }
+
+/**
+ * Static property names used to identify CollectionToolbar compound components.
+ * These are implementation details for the compound component pattern and should not be exported.
+ */
+export const CollectionToolbarSubComponentProperty = {
+  Title: 'isCollectionToolbarTitle',
+  SearchInput: 'isCollectionToolbarSearchInput',
+  Actions: 'isCollectionToolbarActions',
+  Filters: 'isCollectionToolbarFilters',
+} as const;
+
+/**
+ * Type representing the possible static property names for CollectionToolbar sub components.
+ */
+export type CollectionToolbarSubComponentProperty =
+  (typeof CollectionToolbarSubComponentProperty)[keyof typeof CollectionToolbarSubComponentProperty];
