@@ -1,9 +1,9 @@
 import {
+  areItemsPerPageValid,
   getCurrentRangeString,
   getRangeMaxString,
   getTotalNumPages,
-  validateCurrentPage,
-  validateItemsPerPage,
+  isCurrentPageValid,
 } from './utils';
 
 describe('Pagination utils', () => {
@@ -106,154 +106,154 @@ describe('Pagination utils', () => {
     });
   });
 
-  describe('validateCurrentPage', () => {
-    test('returns true when currentPage is less than 1', () => {
+  describe('isCurrentPageValid', () => {
+    test('returns false when currentPage is less than 1', () => {
       expect(
-        validateCurrentPage({
+        isCurrentPageValid({
           currentPage: 0,
           itemsPerPage: 10,
         }),
-      ).toBe(true);
+      ).toBe(false);
     });
 
-    test('returns true when currentPage is negative', () => {
+    test('returns false when currentPage is negative', () => {
       expect(
-        validateCurrentPage({
+        isCurrentPageValid({
           currentPage: -1,
           itemsPerPage: 10,
         }),
-      ).toBe(true);
+      ).toBe(false);
     });
 
-    test('returns true when currentPage exceeds total pages', () => {
+    test('returns false when currentPage exceeds total pages', () => {
       expect(
-        validateCurrentPage({
+        isCurrentPageValid({
           currentPage: 11,
           numTotalItems: 100,
           itemsPerPage: 10,
         }),
-      ).toBe(true);
+      ).toBe(false);
     });
 
-    test('returns false when currentPage is valid (first page)', () => {
+    test('returns true when currentPage is valid (first page)', () => {
       expect(
-        validateCurrentPage({
+        isCurrentPageValid({
           currentPage: 1,
           numTotalItems: 100,
           itemsPerPage: 10,
         }),
-      ).toBe(false);
+      ).toBe(true);
     });
 
-    test('returns false when currentPage is valid (last page)', () => {
+    test('returns true when currentPage is valid (last page)', () => {
       expect(
-        validateCurrentPage({
+        isCurrentPageValid({
           currentPage: 10,
           numTotalItems: 100,
           itemsPerPage: 10,
         }),
-      ).toBe(false);
+      ).toBe(true);
     });
 
-    test('returns false when currentPage is valid (middle page)', () => {
+    test('returns true when currentPage is valid (middle page)', () => {
       expect(
-        validateCurrentPage({
+        isCurrentPageValid({
           currentPage: 5,
           numTotalItems: 100,
           itemsPerPage: 10,
         }),
-      ).toBe(false);
+      ).toBe(true);
     });
 
-    test('returns falsy when numTotalItems is undefined and currentPage is valid', () => {
+    test('returns true when numTotalItems is undefined and currentPage is valid', () => {
       expect(
-        validateCurrentPage({
+        isCurrentPageValid({
           currentPage: 100,
           itemsPerPage: 10,
         }),
-      ).toBeFalsy();
+      ).toBe(true);
     });
 
     test('handles edge case with partial last page', () => {
       // 1021 items / 10 per page = 103 pages
       expect(
-        validateCurrentPage({
+        isCurrentPageValid({
           currentPage: 103,
           numTotalItems: 1021,
           itemsPerPage: 10,
         }),
-      ).toBe(false);
+      ).toBe(true);
 
       expect(
-        validateCurrentPage({
+        isCurrentPageValid({
           currentPage: 104,
           numTotalItems: 1021,
           itemsPerPage: 10,
         }),
-      ).toBe(true);
+      ).toBe(false);
     });
   });
 
-  describe('validateItemsPerPage', () => {
-    test('returns true when itemsPerPage is not in options', () => {
+  describe('areItemsPerPageValid', () => {
+    test('returns false when itemsPerPage is not in options', () => {
       expect(
-        validateItemsPerPage({
+        areItemsPerPageValid({
           itemsPerPage: 15,
           itemsPerPageOptions: [10, 25, 50, 100],
         }),
-      ).toBe(true);
-    });
-
-    test('returns false when itemsPerPage is in options', () => {
-      expect(
-        validateItemsPerPage({
-          itemsPerPage: 10,
-          itemsPerPageOptions: [10, 25, 50, 100],
-        }),
       ).toBe(false);
     });
 
-    test('returns false when itemsPerPage matches middle option', () => {
+    test('returns true when itemsPerPage is in options', () => {
       expect(
-        validateItemsPerPage({
+        areItemsPerPageValid({
+          itemsPerPage: 10,
+          itemsPerPageOptions: [10, 25, 50, 100],
+        }),
+      ).toBe(true);
+    });
+
+    test('returns true when itemsPerPage matches middle option', () => {
+      expect(
+        areItemsPerPageValid({
           itemsPerPage: 50,
           itemsPerPageOptions: [10, 25, 50, 100],
         }),
-      ).toBe(false);
+      ).toBe(true);
     });
 
-    test('returns false when itemsPerPage matches last option', () => {
+    test('returns true when itemsPerPage matches last option', () => {
       expect(
-        validateItemsPerPage({
+        areItemsPerPageValid({
           itemsPerPage: 100,
           itemsPerPageOptions: [10, 25, 50, 100],
         }),
-      ).toBe(false);
+      ).toBe(true);
     });
 
-    test('returns true with empty options array', () => {
+    test('returns false with empty options array', () => {
       expect(
-        validateItemsPerPage({
+        areItemsPerPageValid({
           itemsPerPage: 10,
           itemsPerPageOptions: [],
         }),
-      ).toBe(true);
+      ).toBe(false);
     });
 
     test('handles single option array', () => {
       expect(
-        validateItemsPerPage({
+        areItemsPerPageValid({
           itemsPerPage: 10,
           itemsPerPageOptions: [10],
         }),
-      ).toBe(false);
+      ).toBe(true);
 
       expect(
-        validateItemsPerPage({
+        areItemsPerPageValid({
           itemsPerPage: 25,
           itemsPerPageOptions: [10],
         }),
-      ).toBe(true);
+      ).toBe(false);
     });
   });
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import PaginationRangeView from './PaginationRangeView';
+import PaginationRangeView from '.';
 
 describe('PaginationRangeView', () => {
   describe('a11y', () => {

@@ -4,6 +4,8 @@ import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { consoleOnce } from '@leafygreen-ui/lib';
+
 import PaginationCurrentPageControls from './PaginationCurrentPageControls';
 
 const onBackArrowClick = jest.fn();
@@ -392,14 +394,16 @@ describe('PaginationCurrentPageControls', () => {
   });
 
   describe('validation', () => {
-    let consoleSpy: jest.SpyInstance;
+    let consoleOnceSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      consoleOnceSpy = jest
+        .spyOn(consoleOnce, 'error')
+        .mockImplementation(() => {});
     });
 
     afterEach(() => {
-      consoleSpy.mockRestore();
+      consoleOnceSpy.mockRestore();
     });
 
     test('console errors when currentPage is less than 1', () => {
@@ -413,7 +417,7 @@ describe('PaginationCurrentPageControls', () => {
         />,
       );
 
-      expect(consoleSpy).toHaveBeenCalledWith(
+      expect(consoleOnceSpy).toHaveBeenCalledWith(
         `Value of the 'currentPage' prop is invalid.`,
       );
     });
@@ -429,7 +433,7 @@ describe('PaginationCurrentPageControls', () => {
         />,
       );
 
-      expect(consoleSpy).toHaveBeenCalledWith(
+      expect(consoleOnceSpy).toHaveBeenCalledWith(
         `Value of the 'currentPage' prop is invalid.`,
       );
     });
@@ -445,7 +449,7 @@ describe('PaginationCurrentPageControls', () => {
         />,
       );
 
-      expect(consoleSpy).not.toHaveBeenCalled();
+      expect(consoleOnceSpy).not.toHaveBeenCalled();
     });
   });
 });

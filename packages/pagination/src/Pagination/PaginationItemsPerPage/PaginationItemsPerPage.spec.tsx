@@ -4,6 +4,8 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { consoleOnce } from '@leafygreen-ui/lib';
+
 import PaginationItemsPerPage from '.';
 
 let offsetParentSpy: jest.SpyInstance;
@@ -112,14 +114,16 @@ describe('PaginationItemsPerPage', () => {
   });
 
   describe('validation', () => {
-    let consoleSpy: jest.SpyInstance;
+    let consoleOnceSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      consoleOnceSpy = jest
+        .spyOn(consoleOnce, 'error')
+        .mockImplementation(() => {});
     });
 
     afterEach(() => {
-      consoleSpy.mockRestore();
+      consoleOnceSpy.mockRestore();
     });
 
     test('console errors when itemsPerPage is not a valid option', () => {
@@ -131,7 +135,7 @@ describe('PaginationItemsPerPage', () => {
         />,
       );
 
-      expect(consoleSpy).toHaveBeenCalledWith(
+      expect(consoleOnceSpy).toHaveBeenCalledWith(
         `Value of the 'itemsPerPage' prop is not a valid option specified in 'itemsPerPageOptions'.`,
       );
     });
@@ -145,7 +149,7 @@ describe('PaginationItemsPerPage', () => {
         />,
       );
 
-      expect(consoleSpy).not.toHaveBeenCalled();
+      expect(consoleOnceSpy).not.toHaveBeenCalled();
     });
   });
 

@@ -6,7 +6,7 @@ import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
 } from '../constants';
-import { flexSectionStyles } from '../Pagination.styles';
+import { getSectionStyles } from '../Pagination.styles';
 import { getCurrentRangeString, getRangeMaxString } from '../utils';
 
 import { PaginationRangeViewProps } from './PaginationRangeView.types';
@@ -18,9 +18,10 @@ function PaginationRangeView<T extends number>({
   itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0] as T,
   currentPage = DEFAULT_CURRENT_PAGE,
   numTotalItems,
+  className,
 }: PaginationRangeViewProps) {
   return (
-    <div className={flexSectionStyles}>
+    <div className={getSectionStyles({ className })}>
       <Body data-testid="lg-pagination-item-range">
         {getCurrentRangeString(itemsPerPage, currentPage, numTotalItems)} of{' '}
         {getRangeMaxString(numTotalItems)}

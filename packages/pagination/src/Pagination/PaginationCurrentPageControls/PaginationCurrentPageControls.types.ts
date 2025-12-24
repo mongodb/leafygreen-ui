@@ -10,4 +10,5 @@ export type PaginationCurrentPageControlsProps = Pick<
   | 'shouldDisableForwardArrow'
   | 'onBackArrowClick'
   | 'onForwardArrowClick'
+  | 'className'
 >;

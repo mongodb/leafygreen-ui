@@ -20,7 +20,7 @@ export const getTotalNumPages = (
   return Math.ceil(numTotalItems / itemsPerPage);
 };
 
-export const validateCurrentPage = <T extends number>({
+export const isCurrentPageValid = <T extends number>({
   currentPage,
   numTotalItems,
   itemsPerPage,
@@ -29,19 +29,24 @@ export const validateCurrentPage = <T extends number>({
   numTotalItems?: number;
   itemsPerPage: T;
 }) => {
-  return (
-    currentPage < 1 ||
-    (numTotalItems &&
-      getTotalNumPages(numTotalItems, itemsPerPage) < currentPage)
-  );
+  if (currentPage < 1) return false;
+
+  if (
+    numTotalItems &&
+    getTotalNumPages(numTotalItems, itemsPerPage) < currentPage
+  ) {
+    return false;
+  }
+
+  return true;
 };
 
-export const validateItemsPerPage = <T extends number>({
+export const areItemsPerPageValid = <T extends number>({
   itemsPerPage,
   itemsPerPageOptions,
 }: {
   itemsPerPage: T;
   itemsPerPageOptions: Array<T>;
 }) => {
-  return !itemsPerPageOptions.includes(itemsPerPage);
+  return itemsPerPageOptions.includes(itemsPerPage);
 };

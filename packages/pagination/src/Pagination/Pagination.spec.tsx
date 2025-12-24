@@ -142,6 +142,20 @@ describe('packages/pagination', () => {
         fireEvent.click(nextButton);
         expect(onForwardArrowClick).toHaveBeenCalledTimes(1);
       });
+
+      test('does not render PaginationItemsPerPage when onItemsPerPageOptionChange is not provided', () => {
+        const { queryByText, queryByTestId } = renderPagination({
+          numTotalItems: 1021,
+          itemsPerPageOptions: [10, 50, 100],
+          onBackArrowClick,
+          onForwardArrowClick,
+        });
+
+        expect(queryByText('Items per page:')).not.toBeInTheDocument();
+        expect(
+          queryByTestId('leafygreen-ui-select-menubutton'),
+        ).not.toBeInTheDocument();
+      });
     });
   });
 });

@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
@@ -14,10 +14,14 @@ export const baseStyles = css`
   }
 `;
 
-export const flexSectionStyles = css`
-  flex: 1;
-  display: flex;
-  gap: ${spacing[100]}px;
-  align-items: center;
-  justify-content: center;
-`;
+export const getSectionStyles = ({ className }: { className?: string }) =>
+  cx(
+    css`
+      flex: 1;
+      display: flex;
+      gap: ${spacing[100]}px;
+      align-items: center;
+      justify-content: center;
+    `,
+    className,
+  );

@@ -4,6 +4,7 @@ import range from 'lodash/range';
 import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { IconButton } from '@leafygreen-ui/icon-button';
+import { consoleOnce } from '@leafygreen-ui/lib';
 import {
   DropdownWidthBasis,
   Option,
@@ -17,8 +18,8 @@ import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
 } from '../constants';
-import { flexSectionStyles } from '../Pagination.styles';
-import { getTotalNumPages, validateCurrentPage } from '../utils';
+import { getSectionStyles } from '../Pagination.styles';
+import { getTotalNumPages, isCurrentPageValid } from '../utils';
 
 import { PaginationCurrentPageControlsProps } from './PaginationCurrentPageControls.types';
 
@@ -35,6 +36,7 @@ function PaginationCurrentPageControls<T extends number>({
   shouldDisableForwardArrow,
   onBackArrowClick,
   onForwardArrowClick,
+  className,
 }: PaginationCurrentPageControlsProps) {
   const shouldDisableBackButton =
     shouldDisableBackArrow !== undefined
@@ -46,12 +48,12 @@ function PaginationCurrentPageControls<T extends number>({
       : numTotalItems !== undefined &&
         currentPage >= getTotalNumPages(numTotalItems, itemsPerPage);
 
-  if (validateCurrentPage({ currentPage, numTotalItems, itemsPerPage })) {
-    console.error(`Value of the 'currentPage' prop is invalid.`);
+  if (!isCurrentPageValid({ currentPage, numTotalItems, itemsPerPage })) {
+    consoleOnce.error(`Value of the 'currentPage' prop is invalid.`);
   }
 
   return (
-    <div className={flexSectionStyles}>
+    <div className={getSectionStyles({ className })}>
       {onCurrentPageOptionChange !== undefined && numTotalItems ? (
         <>
           <Select

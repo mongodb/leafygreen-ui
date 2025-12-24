@@ -7,7 +7,16 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { Pagination, type PaginationProps } from '.';
+import {
+  Pagination,
+  PaginationCurrentPageControls,
+  PaginationCurrentPageControlsProps,
+  PaginationItemsPerPage,
+  PaginationItemsPerPageProps,
+  type PaginationProps,
+  PaginationRangeView,
+  PaginationRangeViewProps,
+} from '.';
 
 const fn = () => {};
 
@@ -175,4 +184,80 @@ VariableItemsPerPage.parameters = {
       onItemsPerPageOptionChange: fn,
     },
   },
+};
+
+export const PaginationItemsPerPageLiveExample: StoryFn<
+  PaginationItemsPerPageProps
+> = args => {
+  const [itemsPerPage, setItemsPerPage] = useState<number>(
+    args.itemsPerPageOptions ? args.itemsPerPageOptions[0] : 10,
+  );
+
+  const handleItemsPerPageOptionChange: PaginationItemsPerPageProps['onItemsPerPageOptionChange'] =
+    (value, _) => {
+      setItemsPerPage(Number(value));
+    };
+
+  return (
+    <PaginationItemsPerPage
+      {...args}
+      itemsPerPage={itemsPerPage}
+      onItemsPerPageOptionChange={handleItemsPerPageOptionChange}
+    />
+  );
+};
+PaginationItemsPerPageLiveExample.args = {
+  itemsPerPageOptions: [10, 25, 50],
+  itemsPerPage: 10,
+  onItemsPerPageOptionChange: fn,
+};
+
+export const PaginationRangeViewLiveExample: StoryFn<
+  PaginationRangeViewProps
+> = args => {
+  return <PaginationRangeView {...args} />;
+};
+PaginationRangeViewLiveExample.args = {
+  itemsPerPage: 10,
+  currentPage: 1,
+  numTotalItems: 100,
+};
+
+export const PaginationCurrentPageControlsLiveExample: StoryFn<
+  PaginationCurrentPageControlsProps
+> = args => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const handleCurrentPageOptionChange: PaginationCurrentPageControlsProps['onCurrentPageOptionChange'] =
+    (value, _) => {
+      setCurrentPage(Number(value));
+    };
+
+  const handleBackArrowClick = () => {
+    setCurrentPage(cp => Math.max(cp - 1, 1));
+  };
+
+  const handleForwardArrowClick = () => {
+    setCurrentPage(cp => cp + 1);
+  };
+
+  return (
+    <PaginationCurrentPageControls
+      {...args}
+      currentPage={currentPage}
+      onCurrentPageOptionChange={handleCurrentPageOptionChange}
+      onBackArrowClick={handleBackArrowClick}
+      onForwardArrowClick={handleForwardArrowClick}
+    />
+  );
+};
+PaginationCurrentPageControlsLiveExample.args = {
+  currentPage: 1,
+  numTotalItems: 100,
+  itemsPerPage: 10,
+  onCurrentPageOptionChange: fn,
+};
+
+PaginationRangeViewLiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
