@@ -1,1 +1,7 @@
-export { CollectionToolbar, type CollectionToolbarProps } from './CollectionToolbar';
+export {
+  CollectionToolbar,
+  type CollectionToolbarProps,
+  type CollectionToolbarTitleProps,
+  Size,
+  Variant,
+} from './CollectionToolbar';

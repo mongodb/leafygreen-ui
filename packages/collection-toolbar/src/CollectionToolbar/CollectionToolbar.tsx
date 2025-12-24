@@ -1,22 +1,43 @@
 import React from 'react';
 
+import {
+  CompoundComponent,
+  findChild,
+} from '@leafygreen-ui/compound-component';
+
 import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
 import {
   CollectionToolbarProps,
+  CollectionToolbarSubComponentProperty,
   Size,
   Variant,
 } from './CollectionToolbar.types';
+import { CollectionToolbarTitle } from './CollectionToolbarTitle';
 
-export function CollectionToolbar({
-  size = Size.Default,
-  variant = Variant.Default,
-  className,
-}: CollectionToolbarProps) {
-  return (
-    <div className={getCollectionToolbarStyles({ size, variant, className })}>
-      CollectionToolbar
-    </div>
-  );
-}
+export const CollectionToolbar = CompoundComponent(
+  ({
+    size = Size.Default,
+    variant = Variant.Default,
+    className,
+    children,
+  }: CollectionToolbarProps) => {
+    const title = findChild(
+      children,
+      CollectionToolbarSubComponentProperty.Title,
+    );
+    const showTitle = title && variant === Variant.Collapsible;
+
+    return (
+      <div className={getCollectionToolbarStyles({ size, variant, className })}>
+        {showTitle && title}
+        CollectionToolbar
+      </div>
+    );
+  },
+  {
+    displayName: 'CollectionToolbar',
+    Title: CollectionToolbarTitle,
+  },
+);
 
 CollectionToolbar.displayName = 'CollectionToolbar';
