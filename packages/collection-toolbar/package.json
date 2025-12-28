@@ -1,4 +1,3 @@
-  
 {
   "name": "@leafygreen-ui/collection-toolbar",
   "version": "0.0.1",
@@ -28,10 +27,15 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@lg-tools/test-harnesses": "workspace:^"
+    "@lg-tools/test-harnesses": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"

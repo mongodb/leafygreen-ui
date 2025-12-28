@@ -1,24 +1,20 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { Size, Variant } from './CollectionToolbar.types';
+import { Variant } from '../CollectionToolbar.types';
 
 export const baseStyles = css`
-  width: 100%;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   gap: ${spacing[200]}px;
   align-items: center;
   justify-content: flex-end;
 `;
 
-export const getCollectionToolbarStyles = ({
-  size,
+export const getCollectionToolbarActionsStyles = ({
   variant,
   className,
 }: {
-  size?: Size;
   variant?: Variant;
   className?: string;
 }) => cx(baseStyles, className);

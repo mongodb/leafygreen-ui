@@ -4,3 +4,8 @@ export {
   Size,
   Variant,
 } from './CollectionToolbar.types';
+export {
+  CollectionToolbarActions,
+  CollectionToolbarActionsButtonVariant,
+  type CollectionToolbarActionsProps,
+} from './CollectionToolbarActions';
