@@ -1,7 +1,12 @@
 import defaultsDeep from 'lodash/defaultsDeep';
 
 import { defaultDateTimeParts } from '../../../constants';
-import { DateTimePartKeys, DateTimeParts } from '../../../shared.types';
+import {
+  DateTimePartKeys,
+  DateTimePartKeysWithoutDayPeriod,
+  DateTimeParts,
+  DayPeriod,
+} from '../../../shared.types';
 
 /**
  * Returns the formatted date time parts.
@@ -32,13 +37,14 @@ import { DateTimePartKeys, DateTimeParts } from '../../../shared.types';
 export const getFormattedDateTimeParts = (
   dateTimeParts: Array<Intl.DateTimeFormatPart>,
 ): DateTimeParts => {
-  const formattedDateTimeParts: DateTimeParts = dateTimeParts.reduce(
-    (acc, part) => {
-      acc[part.type as DateTimePartKeys] = part.value;
-      return acc;
-    },
-    {} as DateTimeParts,
-  );
+  const formattedDateTimeParts = dateTimeParts.reduce((acc, part) => {
+    if (part.type === 'dayPeriod') {
+      acc.dayPeriod = part.value as DayPeriod;
+    } else if (part.type in DateTimePartKeys) {
+      acc[part.type as DateTimePartKeysWithoutDayPeriod] = part.value;
+    }
+    return acc;
+  }, {} as DateTimeParts);
 
   const mergedTimeParts: DateTimeParts = defaultsDeep(
     formattedDateTimeParts,

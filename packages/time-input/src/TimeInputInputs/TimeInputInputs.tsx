@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import { unitOptions } from '../constants';
 import { useTimeInputContext, useTimeInputDisplayContext } from '../Context';
 import { useSelectUnit } from '../hooks';
-import { DayPeriod, TimeSegmentsState } from '../shared.types';
+import { TimeSegmentsState } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
@@ -51,7 +51,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
      * // TODO: This is temp and will be replaced in the next PR
      */
     const { selectUnit, setSelectUnit } = useSelectUnit({
-      dayPeriod: timeParts.dayPeriod as DayPeriod,
+      dayPeriod: timeParts.dayPeriod,
       value,
       unitOptions,
     });

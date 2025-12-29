@@ -13,7 +13,14 @@ export const DateTimePartKeys = {
 export type DateTimePartKeys =
   (typeof DateTimePartKeys)[keyof typeof DateTimePartKeys];
 
-export type DateTimeParts = Record<DateTimePartKeys, string>;
+export type DateTimePartKeysWithoutDayPeriod = Exclude<
+  DateTimePartKeys,
+  typeof DateTimePartKeys.dayPeriod
+>;
+
+export type DateTimeParts = Record<DateTimePartKeysWithoutDayPeriod, string> & {
+  [DateTimePartKeys.dayPeriod]: DayPeriod;
+};
 
 /**
  * An enumerable object that maps the time segment names to their values
