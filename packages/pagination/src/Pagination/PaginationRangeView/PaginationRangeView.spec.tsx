@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { DEFAULT_ITEMS_PER_PAGE_OPTIONS } from '../constants';
+
 import PaginationRangeView from '.';
 
 describe('PaginationRangeView', () => {
@@ -138,12 +140,17 @@ describe('PaginationRangeView', () => {
 
   describe('default values', () => {
     test('uses default itemsPerPage when not provided', () => {
+      const currentPage = 1;
+      const numTotalItems = 100;
+
       const { getByTestId } = render(
-        <PaginationRangeView currentPage={1} numTotalItems={100} />,
+        <PaginationRangeView
+          currentPage={currentPage}
+          numTotalItems={numTotalItems}
+        />,
       );
-      // Default is 10 from constants
       expect(getByTestId('lg-pagination-item-range').textContent).toBe(
-        '1 - 10 of 100 items',
+        `${currentPage} - ${DEFAULT_ITEMS_PER_PAGE_OPTIONS[0]} of ${numTotalItems} items`,
       );
     });
 
