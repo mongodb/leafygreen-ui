@@ -5,12 +5,7 @@ import { CollectionToolbarActions } from '.';
 
 describe('packages/collection-toolbar-actions', () => {
   test('renders correctly', () => {
-    render(
-      <CollectionToolbarActions>
-        <button>Primary Action</button>
-        <button>Secondary Action</button>
-      </CollectionToolbarActions>,
-    );
+    render(<CollectionToolbarActions />);
     expect(screen.getByText('Collection Toolbar Actions')).toBeInTheDocument();
   });
 });

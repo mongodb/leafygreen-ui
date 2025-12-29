@@ -5,6 +5,8 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 
+import { getLgIds } from '../utils/getLgIds';
+
 import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
 import {
   CollectionToolbarProps,
@@ -22,6 +24,7 @@ export const CollectionToolbar = CompoundComponent(
     className,
     children,
   }: CollectionToolbarProps) => {
+    const lgIds = getLgIds();
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const toggleCollapse = () => {
@@ -41,6 +44,7 @@ export const CollectionToolbar = CompoundComponent(
         size={size}
       >
         <div
+          data-testid={lgIds.root}
           className={getCollectionToolbarStyles({ size, variant, className })}
         >
           {Actions}

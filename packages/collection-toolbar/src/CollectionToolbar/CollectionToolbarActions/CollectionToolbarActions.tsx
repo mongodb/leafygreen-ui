@@ -8,6 +8,7 @@ import { Icon } from '@leafygreen-ui/icon';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
+import { getLgIds } from '../../utils/getLgIds';
 import {
   CollectionToolbarSubComponentProperty,
   Variant,
@@ -22,9 +23,12 @@ import {
 import { CollectionToolbarActionsButton } from './CollectionToolbarActionsButton';
 
 export const CollectionToolbarActions = CompoundSubComponent(
-  ({ children }: CollectionToolbarActionsProps) => {
+  ({ children, className }: CollectionToolbarActionsProps) => {
+    const lgIds = getLgIds();
     const { onCollapse, variant } = useCollectionToolbarContext();
+
     const showToggleButton = variant === Variant.Collapsible;
+
     const Buttons = findChildren(
       children,
       CollectionToolbarActionsSubComponentProperty.Button,
@@ -40,12 +44,16 @@ export const CollectionToolbarActions = CompoundSubComponent(
 
     return (
       <div
-        data-testid="collection-toolbar-actions"
-        className={getCollectionToolbarActionsStyles({ variant })}
+        data-testid={lgIds.actions}
+        className={getCollectionToolbarActionsStyles({ className, variant })}
       >
         {PrimaryButtons}
         {showToggleButton && (
-          <IconButton onClick={onCollapse} aria-label="Toggle collapse">
+          <IconButton
+            data-testid={lgIds.toggleButton}
+            onClick={onCollapse}
+            aria-label="Toggle collapse"
+          >
             <Icon glyph="ChevronDown" />
           </IconButton>
         )}

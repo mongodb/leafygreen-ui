@@ -12,7 +12,6 @@ export const baseStyles = css`
 `;
 
 export const getCollectionToolbarActionsStyles = ({
-  variant,
   className,
 }: {
   variant?: Variant;
