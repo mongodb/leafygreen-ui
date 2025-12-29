@@ -2,11 +2,18 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { State } from '../shared.types';
+
 import { ExpandableContent } from './ExpandableContent';
 import type { ExpandableContentProps } from './ExpandableContent.types';
 
 jest.mock('@lg-chat/lg-markdown', () => ({
   LGMarkdown: jest.fn(({ children }) => <div>{children}</div>),
+}));
+
+const mockUseToolCardContext = jest.fn();
+jest.mock('../ToolCardContext', () => ({
+  useToolCardContext: () => mockUseToolCardContext(),
 }));
 
 const renderExpandableContent = (
@@ -20,7 +27,21 @@ const renderExpandableContent = (
   );
 };
 
+const baseMockContext = {
+  showExpandButton: true,
+  state: State.Idle,
+  toggleExpand: jest.fn(),
+};
+
 describe('chat/message/ToolCard/ExpandableContent', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockUseToolCardContext.mockReturnValue({
+      ...baseMockContext,
+      isExpanded: false,
+    });
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = renderExpandableContent();
@@ -48,10 +69,12 @@ describe('chat/message/ToolCard/ExpandableContent', () => {
     expect(ref.current).toHaveAttribute('data-testid', 'expandable-content');
   });
 
-  // Note: Currently hardcoded to false, so this test will need to be updated
-  // when ToolCardContext is implemented
-  // eslint-disable-next-line jest/no-disabled-tests
-  test.skip('renders content when expanded', () => {
+  test('renders content when expanded', () => {
+    mockUseToolCardContext.mockReturnValue({
+      ...baseMockContext,
+      isExpanded: true,
+    });
+
     renderExpandableContent({
       children: 'Test content',
     });
@@ -61,6 +84,11 @@ describe('chat/message/ToolCard/ExpandableContent', () => {
   });
 
   test('hides content when collapsed', () => {
+    mockUseToolCardContext.mockReturnValue({
+      ...baseMockContext,
+      isExpanded: false,
+    });
+
     renderExpandableContent({
       children: 'Test content',
     });
