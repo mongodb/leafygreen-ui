@@ -32,4 +32,3 @@ Additionally, this PR improves the Storybook configuration with proper `StoryMet
 3. Toggle the `variant` control to `Collapsible` - the title should appear
 4. Toggle the `variant` control to `Default` - the title should be hidden
 5. Verify that the title renders correctly with different `size` and `darkMode` combinations
-
