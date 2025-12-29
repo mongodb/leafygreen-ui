@@ -15,13 +15,13 @@ describe('packages/date-utils/isSameUTCDay', () => {
   });
 
   describe('when both dates are defined in UTC', () => {
-    test('returns true', () => {
+    test('returns true when both dates are equal', () => {
       const utc1 = newUTC(2023, 8, 1, 0, 0, 0);
       const utc2 = newUTC(2023, 8, 1, 21, 0, 0);
       expect(isSameUTCDay(utc1, utc2)).toBe(true);
     });
 
-    test('returns false', () => {
+    test('returns false when both dates are not equal', () => {
       const utc1 = newUTC(2023, 8, 1, 0, 0, 0);
       const utc2 = newUTC(2023, 8, 2, 0, 0, 0);
       expect(isSameUTCDay(utc1, utc2)).toBe(false);
@@ -29,7 +29,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
   });
 
   describe('when one date is defined locally', () => {
-    test('returns true ', () => {
+    test('returns true when both dates are the same day in UTC', () => {
       const utc = newUTC(2023, 8, 10, 0, 0, 0); // September 10, 2023 00:00 UTC
 
       // September 9, 2023 21:00 EDT => September 10, 2023 01:00 UTC
@@ -45,7 +45,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
       expect(isSameUTCDay(utc, local)).toBe(true);
     });
 
-    test('returns false', () => {
+    test('returns false when both dates are not the same day in UTC', () => {
       const utc = newUTC(2023, 8, 10); // September 10, 2023 00:00 UTC
 
       // September 9, 2023 12:00 EDT => September 9, 2023 16:00 UTC
@@ -63,7 +63,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
   });
 
   describe('when both dates are defined locally', () => {
-    test('returns true', () => {
+    test('returns true when both dates are the same day in UTC', () => {
       // September 8, 2023 20:00 EDT => September 9, 2023 00:00 UTC
       const local1 = newTZDate({
         timeZone: americaNewYorkTimeZone,
@@ -86,7 +86,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
       expect(isSameUTCDay(local1, local2)).toBe(true);
     });
 
-    test('returns false', () => {
+    test('returns false when both dates are not the same day in UTC', () => {
       // September 9, 2023 00:00 EDT => September 9, 2023 04:00 UTC
       const local1 = newTZDate({
         timeZone: americaNewYorkTimeZone,
