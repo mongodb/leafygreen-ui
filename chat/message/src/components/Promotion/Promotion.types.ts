@@ -2,7 +2,7 @@ import React from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-export interface MessagePromotionProps
+export interface PromotionProps
   extends Omit<React.ComponentPropsWithRef<'div'>, 'children'>,
     DarkModeProps {
   /**

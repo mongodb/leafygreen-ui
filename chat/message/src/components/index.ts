@@ -1,3 +1,4 @@
+export { Promotion, type PromotionProps } from './Promotion';
 export {
   ToolCard,
   type ToolCardActionsProps,

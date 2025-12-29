@@ -9,22 +9,19 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body, Link } from '@leafygreen-ui/typography';
 
-import { MessageSubcomponentProperty } from '../shared.types';
+import { MessageSubcomponentProperty } from '../../shared.types';
 
-import {
-  badgeStyles,
-  promotionContainerStyles,
-} from './MessagePromotion.styles';
-import { type MessagePromotionProps } from './MessagePromotion.types';
+import { badgeStyles, promotionContainerStyles } from './Promotion.styles';
+import { type PromotionProps } from './Promotion.types';
 
 /**
  * Renders promotional content with an award icon and "Learn More" link.
  *
  * @returns The rendered promotional message component.
  */
-export const MessagePromotion = CompoundSubComponent(
+export const Promotion = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
-  forwardRef<HTMLDivElement, MessagePromotionProps>(
+  forwardRef<HTMLDivElement, PromotionProps>(
     (
       {
         promotionText,
@@ -62,7 +59,7 @@ export const MessagePromotion = CompoundSubComponent(
     },
   ),
   {
-    displayName: 'MessagePromotion',
+    displayName: 'Promotion',
     key: MessageSubcomponentProperty.Promotion,
   },
 );

@@ -3,28 +3,24 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { MessagePromotion, type MessagePromotionProps } from '.';
+import { Promotion, type PromotionProps } from '.';
 
-const defaultProps: MessagePromotionProps = {
+const defaultProps: PromotionProps = {
   promotionText: 'Go learn a new skill!',
   promotionUrl: 'https://learn.mongodb.com/skills',
 };
 
-const renderMessagePromotion = (props: Partial<MessagePromotionProps> = {}) => {
+const renderPromotion = (props: Partial<PromotionProps> = {}) => {
   const { container } = render(
-    <MessagePromotion
-      data-testid="message-promotion"
-      {...defaultProps}
-      {...props}
-    />,
+    <Promotion data-testid="message-promotion" {...defaultProps} {...props} />,
   );
   return { container };
 };
 
-describe('MessagePromotion', () => {
+describe('Promotion', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
-      const { container } = renderMessagePromotion();
+      const { container } = renderPromotion();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
@@ -33,7 +29,7 @@ describe('MessagePromotion', () => {
   describe('rendering', () => {
     test('renders promotion text & link', () => {
       const promotionText = 'This is a test promotion message';
-      renderMessagePromotion({
+      renderPromotion({
         promotionText,
         promotionUrl: 'https://learn.mongodb.com/skills',
       });
@@ -47,7 +43,7 @@ describe('MessagePromotion', () => {
     test('onPromotionLinkClick is called when promotion element is clicked', async () => {
       const mockOnClick = jest.fn();
 
-      renderMessagePromotion({
+      renderPromotion({
         ...defaultProps,
         onPromotionLinkClick: mockOnClick,
       });
@@ -60,7 +56,7 @@ describe('MessagePromotion', () => {
 
     test('onPromotionLinkClick is not required', () => {
       expect(() => {
-        renderMessagePromotion({
+        renderPromotion({
           ...defaultProps,
           onPromotionLinkClick: undefined,
         });
