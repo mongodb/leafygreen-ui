@@ -1,5 +1,6 @@
 export {
   type ActionsProps as MessageActionsProps,
+  type LinksProps as MessageLinksProps,
   type PromotionProps as MessagePromotionProps,
   type ToolCardActionsProps,
   type ToolCardChipProps,
@@ -13,5 +14,4 @@ export {
   MessageContext,
   useMessageContext,
 } from './MessageContext/MessageContext';
-export { type MessageLinksProps } from './MessageLinks';
 export { type MessageVerifiedBannerProps } from './MessageVerifiedBanner';

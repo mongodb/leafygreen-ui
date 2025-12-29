@@ -3,8 +3,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { MessageLinks } from './MessageLinks';
-import { MessageLinksProps } from './MessageLinks.types';
+import { Links } from './Links';
+import { LinksProps } from './Links.types';
 
 // Mock RichLinksArea component
 jest.mock('@lg-chat/rich-links', () => ({
@@ -25,28 +25,28 @@ const mockLinks = [
   { children: 'Link 3', href: 'https://example.com/3' },
 ];
 
-const defaultProps: MessageLinksProps = {
+const defaultProps: LinksProps = {
   links: mockLinks,
 };
 
-const renderMessageLinks = (props: Partial<MessageLinksProps> = {}) => {
-  return render(<MessageLinks {...defaultProps} {...props} />);
+const renderLinks = (props: Partial<LinksProps> = {}) => {
+  return render(<Links {...defaultProps} {...props} />);
 };
 
-describe('MessageLinks', () => {
+describe('Links', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
-      const { container } = renderMessageLinks();
+      const { container } = renderLinks();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
 
     test('has proper ARIA attributes', () => {
-      const { container } = renderMessageLinks();
+      const { container } = renderLinks();
 
       const toggleButton = screen.getByRole('button');
       // Use container.querySelector since the region might be hidden
@@ -70,24 +70,24 @@ describe('MessageLinks', () => {
 
   describe('rendering', () => {
     test('renders with default heading text', () => {
-      renderMessageLinks();
+      renderLinks();
       expect(screen.getByText('Related Resources')).toBeInTheDocument();
     });
 
     test('renders with custom heading text', () => {
       const customHeading = 'Custom Links';
-      renderMessageLinks({ headingText: customHeading });
+      renderLinks({ headingText: customHeading });
       expect(screen.getByText(customHeading)).toBeInTheDocument();
     });
 
     test('renders toggle button', () => {
-      renderMessageLinks();
+      renderLinks();
       const toggleButton = screen.getByRole('button');
       expect(toggleButton).toBeInTheDocument();
     });
 
     test('renders RichLinksArea with provided links', () => {
-      renderMessageLinks();
+      renderLinks();
       const richLinksArea = screen.getByTestId('rich-links-area');
       expect(richLinksArea).toBeInTheDocument();
 
@@ -100,7 +100,7 @@ describe('MessageLinks', () => {
 
   describe('expand/collapse behavior', () => {
     test('starts in collapsed state by default', () => {
-      const { container } = renderMessageLinks();
+      const { container } = renderLinks();
       const toggleButton = screen.getByRole('button');
       const contentRegion = container.querySelector('[role="region"]');
 
@@ -113,7 +113,7 @@ describe('MessageLinks', () => {
     });
 
     test('expands when toggle button is clicked', async () => {
-      const { container } = renderMessageLinks();
+      const { container } = renderLinks();
 
       const toggleButton = screen.getByRole('button');
       const contentRegion = container.querySelector('[role="region"]');
@@ -133,7 +133,7 @@ describe('MessageLinks', () => {
     });
 
     test('collapses when toggle button is clicked again', async () => {
-      const { container } = renderMessageLinks();
+      const { container } = renderLinks();
 
       const toggleButton = screen.getByRole('button');
       const contentRegion = container.querySelector('[role="region"]');
@@ -160,7 +160,7 @@ describe('MessageLinks', () => {
     test('calls onLinkClick when link is clicked', async () => {
       const mockOnLinkClick = jest.fn();
 
-      renderMessageLinks({ onLinkClick: mockOnLinkClick });
+      renderLinks({ onLinkClick: mockOnLinkClick });
 
       const toggleButton = screen.getByRole('button');
       await userEvent.click(toggleButton);
@@ -179,7 +179,7 @@ describe('MessageLinks', () => {
 
   describe('keyboard navigation', () => {
     test('toggle button is focusable', () => {
-      renderMessageLinks();
+      renderLinks();
       const toggleButton = screen.getByRole('button');
 
       toggleButton.focus();
@@ -187,7 +187,7 @@ describe('MessageLinks', () => {
     });
 
     test('can be activated with Enter key', async () => {
-      renderMessageLinks();
+      renderLinks();
 
       const toggleButton = screen.getByRole('button');
       toggleButton.focus();
@@ -198,7 +198,7 @@ describe('MessageLinks', () => {
     });
 
     test('can be activated with Space key', async () => {
-      renderMessageLinks();
+      renderLinks();
 
       const toggleButton = screen.getByRole('button');
       toggleButton.focus();
@@ -211,7 +211,7 @@ describe('MessageLinks', () => {
 
   describe('edge cases', () => {
     test('handles empty links array', () => {
-      renderMessageLinks({ links: [] });
+      renderLinks({ links: [] });
 
       expect(screen.queryByText('Related Resources')).toBeNull();
       expect(screen.queryByRole('button')).toBeNull();
@@ -219,7 +219,7 @@ describe('MessageLinks', () => {
     });
 
     test('handles missing onLinkClick prop', async () => {
-      renderMessageLinks({ onLinkClick: undefined });
+      renderLinks({ onLinkClick: undefined });
 
       const toggleButton = screen.getByRole('button');
       await userEvent.click(toggleButton);

@@ -1,4 +1,5 @@
 export { Actions, type ActionsProps } from './Actions';
+export { Links, type LinksProps } from './Links';
 export { Promotion, type PromotionProps } from './Promotion';
 export {
   ToolCard,
