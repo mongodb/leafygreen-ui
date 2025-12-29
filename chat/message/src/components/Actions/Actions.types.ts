@@ -4,7 +4,7 @@ import { MessageRatingValue } from '@lg-chat/message-rating';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-export interface MessageActionsProps
+export interface ActionsProps
   extends DarkModeProps,
     React.ComponentPropsWithRef<'div'> {
   /**

@@ -3,9 +3,9 @@ import { MessageRatingValue } from '@lg-chat/message-rating';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Message } from '../Message';
+import { Message } from '../../Message';
 
-import { MessageActions, MessageActionsProps } from '.';
+import { Actions, ActionsProps } from '.';
 
 jest.mock('@lg-chat/lg-markdown', () => ({
   LGMarkdown: jest.fn(({ children }) => <div>{children}</div>),
@@ -22,8 +22,8 @@ Object.defineProperty(navigator, 'clipboard', {
   writable: true,
 });
 
-const renderMessageActions = (
-  props?: Partial<MessageActionsProps>,
+const renderActions = (
+  props?: Partial<ActionsProps>,
   options: {
     messageBody?: string;
   } = {},
@@ -32,7 +32,7 @@ const renderMessageActions = (
 
   return render(
     <Message messageBody={messageBody}>
-      <MessageActions {...props} />
+      <Actions {...props} />
     </Message>,
   );
 };
@@ -44,7 +44,7 @@ describe('packages/message-actions', () => {
   });
 
   test('renders all buttons when onClickRetry and onRatingChange are provided', () => {
-    renderMessageActions({
+    renderActions({
       onClickRetry: jest.fn(),
       onRatingChange: jest.fn(),
     });
@@ -65,7 +65,7 @@ describe('packages/message-actions', () => {
 
   describe('copy button', () => {
     test('renders copy button', () => {
-      renderMessageActions();
+      renderActions();
 
       expect(
         screen.getByRole('button', { name: 'Copy message' }),
@@ -74,7 +74,7 @@ describe('packages/message-actions', () => {
 
     test('calls onClickCopy when copy button is clicked', async () => {
       const mockOnClickCopy = jest.fn();
-      renderMessageActions({ onClickCopy: mockOnClickCopy });
+      renderActions({ onClickCopy: mockOnClickCopy });
 
       const copyButton = screen.getByRole('button', { name: 'Copy message' });
       userEvent.click(copyButton);
@@ -89,7 +89,7 @@ describe('packages/message-actions', () => {
       const mockOnClickCopy = jest.fn();
       const testMessageBody = 'Test message content from context';
 
-      renderMessageActions(
+      renderActions(
         { onClickCopy: mockOnClickCopy },
         { messageBody: testMessageBody },
       );
@@ -109,7 +109,7 @@ describe('packages/message-actions', () => {
 
       const { container: _container } = render(
         <Message messageBody={undefined}>
-          <MessageActions onClickCopy={mockOnClickCopy} />
+          <Actions onClickCopy={mockOnClickCopy} />
         </Message>,
       );
 
@@ -126,7 +126,7 @@ describe('packages/message-actions', () => {
 
   describe('retry button', () => {
     test('renders retry button when onClickRetry is provided', () => {
-      renderMessageActions({ onClickRetry: jest.fn() });
+      renderActions({ onClickRetry: jest.fn() });
 
       expect(
         screen.getByRole('button', { name: 'Retry message' }),
@@ -134,7 +134,7 @@ describe('packages/message-actions', () => {
     });
 
     test('does not render retry button when onClickRetry is not provided', () => {
-      renderMessageActions();
+      renderActions();
 
       expect(
         screen.queryByRole('button', { name: 'Retry message' }),
@@ -143,7 +143,7 @@ describe('packages/message-actions', () => {
 
     test('calls onClickRetry when retry button is clicked', () => {
       const mockOnClickRetry = jest.fn();
-      renderMessageActions({ onClickRetry: mockOnClickRetry });
+      renderActions({ onClickRetry: mockOnClickRetry });
 
       const retryButton = screen.getByRole('button', {
         name: 'Retry message',
@@ -156,7 +156,7 @@ describe('packages/message-actions', () => {
 
   describe('rating buttons', () => {
     test('renders rating buttons when onRatingChange is provided', () => {
-      renderMessageActions({ onRatingChange: jest.fn() });
+      renderActions({ onRatingChange: jest.fn() });
 
       expect(
         screen.getByRole('radio', { name: 'Like this message' }),
@@ -167,7 +167,7 @@ describe('packages/message-actions', () => {
     });
 
     test('does not render rating buttons when onRatingChange is not provided', () => {
-      renderMessageActions();
+      renderActions();
 
       expect(
         screen.queryByRole('radio', { name: 'Like this message' }),
@@ -176,7 +176,7 @@ describe('packages/message-actions', () => {
 
     test('calls onRatingChange when rating buttons are clicked', () => {
       const mockOnRatingChange = jest.fn();
-      renderMessageActions({
+      renderActions({
         onRatingChange: mockOnRatingChange,
       });
 
@@ -208,7 +208,7 @@ describe('packages/message-actions', () => {
     });
 
     test('MessageRating buttons become non-interactable after feedback submission', () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
       });
@@ -230,7 +230,7 @@ describe('packages/message-actions', () => {
     });
 
     test('hides thumbs down button after selecting thumbs up and submitting feedback', async () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
       });
@@ -264,7 +264,7 @@ describe('packages/message-actions', () => {
     });
 
     test('hides thumbs up button after selecting thumbs down and submitting feedback', async () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
       });
@@ -300,7 +300,7 @@ describe('packages/message-actions', () => {
 
   describe('feedback form', () => {
     test('renders feedback form when rating is selected and onSubmitFeedback is provided', () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
       });
@@ -319,7 +319,7 @@ describe('packages/message-actions', () => {
     });
 
     test('does not render feedback form when onSubmitFeedback is not provided', () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
       });
 
@@ -334,7 +334,7 @@ describe('packages/message-actions', () => {
 
     test('calls onSubmitFeedback when submit button is clicked', () => {
       const mockOnSubmitFeedback = jest.fn();
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: mockOnSubmitFeedback,
       });
@@ -357,7 +357,7 @@ describe('packages/message-actions', () => {
     });
 
     test('handles feedback text input', () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
       });
@@ -375,7 +375,7 @@ describe('packages/message-actions', () => {
 
     test('closes feedback form when close button is clicked', () => {
       const mockOnCloseFeedback = jest.fn();
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
         onCloseFeedback: mockOnCloseFeedback,
@@ -398,7 +398,7 @@ describe('packages/message-actions', () => {
     });
 
     test('uses custom submit button text', () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
         submitButtonText: 'Send Feedback',
@@ -415,7 +415,7 @@ describe('packages/message-actions', () => {
     });
 
     test('does not submit feedback form when no rating is selected', () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
       });
@@ -426,7 +426,7 @@ describe('packages/message-actions', () => {
     });
 
     test('does not submit feedback form when feedback is not provided', () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
       });
@@ -445,7 +445,7 @@ describe('packages/message-actions', () => {
     });
 
     test('shows submitted message after feedback is submitted', () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
       });
@@ -465,7 +465,7 @@ describe('packages/message-actions', () => {
     });
 
     test('uses custom submitted message', () => {
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
         submittedMessage: 'Feedback received!',
@@ -491,7 +491,7 @@ describe('packages/message-actions', () => {
         .mockRejectedValue(new Error('Network error'));
       const errorMessage = 'Failed to submit feedback. Please try again.';
 
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: mockOnSubmitFeedback,
         errorMessage,
@@ -529,7 +529,7 @@ describe('packages/message-actions', () => {
         throw new Error('Network error');
       });
 
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: mockOnSubmitFeedback,
       });
@@ -565,7 +565,7 @@ describe('packages/message-actions', () => {
       });
       const errorMessage = 'Failed to submit feedback. Please try again.';
 
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: mockOnSubmitFeedback,
         errorMessage,
@@ -607,7 +607,7 @@ describe('packages/message-actions', () => {
         return;
       });
 
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: mockOnSubmitFeedback,
       });
@@ -645,7 +645,7 @@ describe('packages/message-actions', () => {
     test('resets state when feedback form is closed', () => {
       const mockOnCloseFeedback = jest.fn();
 
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: jest.fn(),
         onCloseFeedback: mockOnCloseFeedback,
@@ -676,7 +676,7 @@ describe('packages/message-actions', () => {
         throw new Error('Network error');
       });
 
-      renderMessageActions({
+      renderActions({
         onRatingChange: jest.fn(),
         onSubmitFeedback: mockOnSubmitFeedback,
         errorMessage: 'Submission failed',
