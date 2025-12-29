@@ -1,1 +1,1 @@
-export { isSameUTCDayAndTime } from './isSameUTCDayAndTime';
+export { isSameUTCDateTime } from './isSameUTCDateTime';
