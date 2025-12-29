@@ -43,6 +43,7 @@ export const getFormattedDateTimeParts = (
     } else if (part.type in DateTimePartKeys) {
       acc[part.type as DateTimePartKeysWithoutDayPeriod] = part.value;
     }
+
     return acc;
   }, {} as DateTimeParts);
 

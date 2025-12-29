@@ -22,6 +22,8 @@ export type DateTimeParts = Record<DateTimePartKeysWithoutDayPeriod, string> & {
   [DateTimePartKeys.dayPeriod]: DayPeriod;
 };
 
+export type DateParts = Pick<DateTimeParts, 'day' | 'month' | 'year'>;
+
 /**
  * An enumerable object that maps the time segment names to their values
  */
