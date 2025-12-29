@@ -4,11 +4,11 @@ import { mockTimeZone } from '../testing/mockTimeZone';
 
 import { isSameUTCDay } from '.';
 
-const timeZone = 'America/New_York';
+const americaNewYorkTimeZone = 'America/New_York';
 
 describe('packages/date-utils/isSameUTCDay', () => {
   beforeEach(() => {
-    mockTimeZone(timeZone, -4); // EDT is UTC-4 (4 hours behind UTC) in September
+    mockTimeZone(americaNewYorkTimeZone, -4); // EDT is UTC-4 (4 hours behind UTC) in September
   });
   afterEach(() => {
     jest.resetAllMocks();
@@ -34,7 +34,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
 
       // September 9, 2023 21:00 EDT => September 10, 2023 01:00 UTC
       const local = newTZDate({
-        timeZone,
+        timeZone: americaNewYorkTimeZone,
         year: 2023,
         month: 8,
         date: 9,
@@ -50,7 +50,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
 
       // September 9, 2023 12:00 EDT => September 9, 2023 16:00 UTC
       const local = newTZDate({
-        timeZone,
+        timeZone: americaNewYorkTimeZone,
         year: 2023,
         month: 8,
         date: 9,
@@ -66,7 +66,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
     test('returns true', () => {
       // September 8, 2023 20:00 EDT => September 9, 2023 00:00 UTC
       const local1 = newTZDate({
-        timeZone,
+        timeZone: americaNewYorkTimeZone,
         year: 2023,
         month: 8,
         date: 8,
@@ -76,7 +76,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
 
       // September 9, 2023 18:00 EDT => September 9, 2023 22:00 UTC
       const local2 = newTZDate({
-        timeZone,
+        timeZone: americaNewYorkTimeZone,
         year: 2023,
         month: 8,
         date: 9,
@@ -89,7 +89,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
     test('returns false', () => {
       // September 9, 2023 00:00 EDT => September 9, 2023 04:00 UTC
       const local1 = newTZDate({
-        timeZone,
+        timeZone: americaNewYorkTimeZone,
         year: 2023,
         month: 8,
         date: 9,
@@ -99,7 +99,7 @@ describe('packages/date-utils/isSameUTCDay', () => {
 
       // September 9, 2023 20:00 EDT => September 10, 2023 00:00 UTC
       const local2 = newTZDate({
-        timeZone,
+        timeZone: americaNewYorkTimeZone,
         year: 2023,
         month: 8,
         date: 9,
