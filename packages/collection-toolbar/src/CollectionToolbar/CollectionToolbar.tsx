@@ -5,6 +5,8 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 
+import { getLgIds } from '../utils/getLgIds';
+
 import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
 import {
   CollectionToolbarProps,
@@ -21,6 +23,7 @@ export const CollectionToolbar = CompoundComponent(
     className,
     children,
   }: CollectionToolbarProps) => {
+    const lgIds = getLgIds();
     const title = findChild(
       children,
       CollectionToolbarSubComponentProperty.Title,
@@ -29,7 +32,10 @@ export const CollectionToolbar = CompoundComponent(
     const showTitle = title && variant === Variant.Collapsible;
 
     return (
-      <div className={getCollectionToolbarStyles({ size, variant, className })}>
+      <div
+        data-testid={lgIds.root}
+        className={getCollectionToolbarStyles({ size, variant, className })}
+      >
         {showTitle && title}
         CollectionToolbar
       </div>

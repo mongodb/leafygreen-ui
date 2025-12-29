@@ -5,8 +5,6 @@ import { Size, Variant } from './CollectionToolbar.types';
 export const baseStyles = css``;
 
 export const getCollectionToolbarStyles = ({
-  size,
-  variant,
   className,
 }: {
   size?: Size;
