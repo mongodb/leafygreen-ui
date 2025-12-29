@@ -3,7 +3,7 @@ import { TimeSegment } from '../../shared.types';
 import { getTimeSegmentRules } from './getTimeSegmentRules';
 
 describe('packages/time-input/utils/getTimeSegmentRules', () => {
-  test('returns the time segment rules', () => {
+  test('returns the time segment rules for 12 hour format', () => {
     const timeSegmentRules = getTimeSegmentRules({ is12HourFormat: true });
     expect(timeSegmentRules).toEqual({
       [TimeSegment.Hour]: { maxChars: 2, minExplicitValue: 2 },

@@ -15,6 +15,7 @@ describe('packages/time-input/utils/findUnitOptionByDayPeriod', () => {
       ]),
     ).toEqual({ displayName: 'PM', value: 'PM' });
   });
+
   test('returns the first unit option if the day period is not found', () => {
     expect(
       // @ts-expect-error - invalid day period

@@ -28,15 +28,15 @@ describe('packages/time-input/utils/getFormatter', () => {
     expect(formatter).toBeUndefined();
   });
 
-  describe('formatter can ', () => {
-    test('format dates', () => {
+  describe('formatter methods', () => {
+    test('format() returns formatted date string', () => {
       const testDate = new Date('2025-01-15T14:30:00Z');
       const formatter = getFormatter({ locale: SupportedLocales.en_US });
       const formatted = formatter?.format(testDate);
       expect(formatted).toBe('1/15/2025');
     });
 
-    test('formatToParts', () => {
+    test('formatToParts() returns date parts array', () => {
       const testDate = new Date('2025-01-15T14:30:00Z');
       const formatter = getFormatter({ locale: SupportedLocales.en_US });
       const formatParts = formatter?.formatToParts(testDate);
