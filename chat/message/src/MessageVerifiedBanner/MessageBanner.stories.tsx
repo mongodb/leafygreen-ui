@@ -1,12 +1,11 @@
 import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { type StoryMetaType } from '@leafygreen-ui/lib';
-
-import { MessageBanner } from '.';
+import { MessageBanner } from './MessageBanner';
 
 const meta: StoryMetaType<typeof MessageBanner> = {
-  title: 'Composition/Chat/MessageBanner',
+  title: 'Composition/Chat/Message/Banner',
   component: MessageBanner,
   args: {
     children: 'This is a message banner',
