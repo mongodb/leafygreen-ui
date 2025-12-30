@@ -1,19 +1,22 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { CollectionToolbar, Variant } from '.';
+import { Variant } from '../shared.types';
+import { getTestUtils } from '../testing/getTestUtils';
+
+import { CollectionToolbar } from '.';
 
 describe('packages/collection-toolbar', () => {
   test('renders correctly', () => {
     render(<CollectionToolbar />);
-    expect(screen.getByTestId('lg-collection_toolbar')).toBeInTheDocument();
+    const utils = getTestUtils();
+    expect(utils.getCollectionToolbar()).toBeInTheDocument();
   });
 
   test('applies className to the root element', () => {
     render(<CollectionToolbar className="test-class" />);
-    expect(screen.getByTestId('lg-collection_toolbar')).toHaveClass(
-      'test-class',
-    );
+    const utils = getTestUtils();
+    expect(utils.getCollectionToolbar()?.className).toContain('test-class');
   });
 
   describe('variant: collapsible', () => {

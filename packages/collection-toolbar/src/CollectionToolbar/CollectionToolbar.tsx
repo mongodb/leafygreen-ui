@@ -5,16 +5,16 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 
-import { getLgIds } from '../utils/getLgIds';
-
-import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
+import { Title } from '../components';
 import {
-  CollectionToolbarProps,
   CollectionToolbarSubComponentProperty,
   Size,
   Variant,
-} from './CollectionToolbar.types';
-import { CollectionToolbarTitle } from './CollectionToolbarTitle';
+} from '../shared.types';
+import { getLgIds } from '../utils';
+
+import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
+import { CollectionToolbarProps } from './CollectionToolbar.types';
 
 export const CollectionToolbar = CompoundComponent(
   ({
@@ -33,17 +33,16 @@ export const CollectionToolbar = CompoundComponent(
 
     return (
       <div
-        data-testid={lgIds.root}
+        data-lgid={lgIds.root}
         className={getCollectionToolbarStyles({ size, variant, className })}
       >
         {showTitle && title}
-        CollectionToolbar
       </div>
     );
   },
   {
     displayName: 'CollectionToolbar',
-    Title: CollectionToolbarTitle,
+    Title,
   },
 );
 
