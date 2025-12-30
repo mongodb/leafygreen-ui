@@ -73,9 +73,7 @@ const Example = () => {
   return (
     <InputBar onMessageSend={handleMessageSend}>
       <InputBar.AdditionalActions>
-        <Button
-          onClick={() => console.log('Attach clicked')}
-        >
+        <Button onClick={() => console.log('Attach clicked')}>
           Attach file
         </Button>
       </InputBar.AdditionalActions>
