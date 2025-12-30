@@ -87,7 +87,7 @@ describe('packages/time-input/time-input-box', () => {
       const { hourInput } = renderTimeInputBox({ props: { onSegmentChange } });
       userEvent.type(hourInput, '1');
       expect(onSegmentChange).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '1' }),
+        expect.objectContaining({ segment: 'hour', value: '1' }),
       );
     });
   });
