@@ -15,12 +15,14 @@ export const TimeFormFieldInputContainer = React.forwardRef<
   HTMLDivElement,
   TimeFormFieldInputContainerProps
 >(({ children, ...rest }: TimeFormFieldInputContainerProps, fwdRef) => {
-  const { is12HourFormat } = useTimeInputDisplayContext();
+  const { is12HourFormat, lgIds } = useTimeInputDisplayContext();
 
   return (
     <FormFieldInputContainer
       ref={fwdRef}
       className={getContainerStyles({ is12HourFormat })}
+      data-lgid={lgIds.inputContainer}
+      data-testid={lgIds.inputContainer}
       {...rest}
     >
       {children}

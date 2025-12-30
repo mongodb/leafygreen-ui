@@ -68,6 +68,9 @@ const renderTimeInputInputs = ({
   const secondInput = result.container.querySelector(
     'input[aria-label="second"]',
   ) as HTMLInputElement;
+  const inputContainer = result.container.querySelector(
+    `[data-lgid="${lgIds.inputContainer}"]`,
+  ) as HTMLDivElement;
 
   if (!(hourInput && minuteInput && secondInput)) {
     throw new Error('Some or all input segments are missing');
@@ -79,6 +82,7 @@ const renderTimeInputInputs = ({
     hourInput,
     minuteInput,
     secondInput,
+    inputContainer,
   };
 };
 
@@ -969,6 +973,58 @@ describe('packages/time-input-inputs', () => {
         expect(calledWith).toBeInstanceOf(Date);
         expect(calledWith.getTime()).toBeNaN();
       });
+    });
+  });
+
+  describe('Clicking the input', () => {
+    test('focuses the hour segment when clicked', async () => {
+      const { hourInput } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      userEvent.click(hourInput);
+      expect(hourInput).toHaveFocus();
+    });
+
+    test('focuses the minute segment when clicked', async () => {
+      const { minuteInput } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      userEvent.click(minuteInput);
+      expect(minuteInput).toHaveFocus();
+    });
+
+    test('focuses the second segment when clicked', async () => {
+      const { secondInput } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      userEvent.click(secondInput);
+      expect(secondInput).toHaveFocus();
+    });
+
+    test('focuses the first segment when all are empty', async () => {
+      const { hourInput, inputContainer } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      userEvent.click(inputContainer);
+      expect(hourInput).toHaveFocus();
+    });
+
+    test('focuses the first empty segment when some are empty', async () => {
+      const { hourInput, minuteInput, inputContainer } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      hourInput.value = '08';
+      hourInput.blur();
+      userEvent.click(inputContainer);
+      expect(minuteInput).toHaveFocus();
+    });
+
+    test('focuses the last segment when all are filled', async () => {
+      const { inputContainer, secondInput } = renderTimeInputInputs({
+        providerProps: { value: new Date('2025-01-01T00:00:00Z') },
+      });
+      userEvent.click(inputContainer);
+      expect(secondInput).toHaveFocus();
     });
   });
 });
