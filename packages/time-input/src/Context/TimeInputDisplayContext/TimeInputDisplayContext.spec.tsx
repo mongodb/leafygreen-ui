@@ -6,6 +6,7 @@ import { renderHook } from '@leafygreen-ui/testing-lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Size } from '../../TimeInput/TimeInput.types';
+import { getLgIds } from '../../utils';
 
 import {
   TimeInputDisplayProvider,
@@ -13,6 +14,9 @@ import {
 } from './TimeInputDisplayContext';
 import { type TimeInputDisplayProviderProps } from './TimeInputDisplayContext.types';
 import { defaultTimeInputDisplayContext } from './TimeInputDisplayContext.utils';
+
+const lgIds = getLgIds();
+const overrideLgIds = getLgIds('lg-override-lgids');
 
 const renderTimeInputDisplayProvider = (
   props?: Partial<TimeInputDisplayProviderProps>,
@@ -60,6 +64,7 @@ describe('packages/time-input-display-context', () => {
         defaultTimeInputDisplayContext.isDirty,
       );
       expect(typeof result.current.setIsDirty).toBe('function');
+      expect(result.current.lgIds).toEqual(lgIds);
     });
 
     test('overrides default values with provided props', () => {
@@ -73,6 +78,7 @@ describe('packages/time-input-display-context', () => {
         disabled: true,
         size: Size.Large,
         errorMessage: 'Custom error message',
+        lgIds: overrideLgIds,
       };
 
       const { result } = renderTimeInputDisplayProvider(customProps);
@@ -86,6 +92,7 @@ describe('packages/time-input-display-context', () => {
       expect(result.current.disabled).toBe(true);
       expect(result.current.size).toBe(Size.Large);
       expect(result.current.errorMessage).toBe('Custom error message');
+      expect(result.current.lgIds).toEqual(overrideLgIds);
     });
 
     describe('isDirty', () => {

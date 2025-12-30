@@ -6,22 +6,24 @@ import userEvent from '@testing-library/user-event';
 import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import { getValueFormatter } from '@leafygreen-ui/input-box';
 
+import { defaultPlaceholders } from '../constants';
 import {
-  defaultPlaceholder,
-  getDefaultMax,
-  getDefaultMin,
-  getTimeSegmentRules,
-} from '../constants';
-import { TimeInputDisplayContextProps } from '../Context/TimeInputDisplayContext';
-import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext';
-import { TimeSegment } from '../shared.types';
-import { getLgIds } from '../utils/getLgIds';
-
-import { TimeInputSegment } from './TimeInputSegment';
+  TimeInputDisplayContextProps,
+  TimeInputDisplayProvider,
+} from '../Context';
 import {
   TimeInputSegmentChangeEventHandler,
-  TimeInputSegmentProps,
-} from './TimeInputSegment.types';
+  TimeSegment,
+} from '../shared.types';
+import {
+  getDefaultMax,
+  getDefaultMin,
+  getLgIds,
+  getTimeSegmentRules,
+} from '../utils';
+
+import { TimeInputSegment } from './TimeInputSegment';
+import { TimeInputSegmentProps } from './TimeInputSegment.types';
 
 const lgIds = getLgIds();
 
@@ -39,7 +41,7 @@ const renderSegment = (
     charsCount: getTimeSegmentRules({ is12HourFormat })['hour'].maxChars,
     minSegmentValue: getDefaultMin({ is12HourFormat })['hour'],
     maxSegmentValue: getDefaultMax({ is12HourFormat })['hour'],
-    placeholder: defaultPlaceholder['hour'],
+    placeholder: defaultPlaceholders['hour'],
     shouldWrap: true,
     shouldValidate: true,
     step: 1,
@@ -475,7 +477,7 @@ describe('packages/time-input/time-input-segment', () => {
               const onChangeHandler =
                 jest.fn<TimeInputSegmentChangeEventHandler>();
               const { input } = renderSegment({
-                segment: 'minute',
+                segment,
                 value: formatter(
                   getDefaultMin({ is12HourFormat: true })[segment],
                 ),

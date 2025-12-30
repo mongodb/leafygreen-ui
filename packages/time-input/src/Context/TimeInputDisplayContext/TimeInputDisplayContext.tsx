@@ -5,11 +5,9 @@ import React, {
   useState,
 } from 'react';
 import defaults from 'lodash/defaults';
-import defaultTo from 'lodash/defaultTo';
 
-import { hasDayPeriod } from '../../utils';
-import { getFormatParts } from '../../utils/getFormatParts/getFormatParts';
 import { getMinMax, isValidDate, toDate } from '@leafygreen-ui/date-utils';
+import { getFormatParts, hasDayPeriod } from '../../utils';
 
 import {
   TimeInputDisplayContextProps,
@@ -46,7 +44,7 @@ export const TimeInputDisplayProvider = ({
   /**
    * Determines if the input should show a select for the day period (AM/PM)
    */
-  const is12HourFormat = !!hasDayPeriod(providerValue.locale);
+  const is12HourFormat = hasDayPeriod(providerValue.locale);
 
   /**
    * Only used to track the presentation format of the segments, not the value itself
@@ -54,14 +52,6 @@ export const TimeInputDisplayProvider = ({
   const formatParts = getFormatParts({
     showSeconds: providerValue.showSeconds,
   });
-
-  /**
-   * Gets the time zone from the provider value or the browser's default
-   */
-  const timeZone = defaultTo(
-    providerValue.timeZone,
-    Intl.DateTimeFormat().resolvedOptions().timeZone,
-  );
 
   /**
    * Gets the min and max dates for the time input
@@ -89,7 +79,6 @@ export const TimeInputDisplayProvider = ({
         setIsDirty,
         is12HourFormat,
         formatParts,
-        timeZone,
         min,
         max,
       }}

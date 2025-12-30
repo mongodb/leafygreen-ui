@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FormField } from '@leafygreen-ui/form-field';
 
-import { useTimeInputDisplayContext } from '../../Context/TimeInputDisplayContext';
+import { useTimeInputDisplayContext } from '../../Context';
 
 import { TimeFormFieldProps } from './TimeFormField.types';
 
@@ -17,9 +17,10 @@ export const TimeFormField = React.forwardRef<
   const {
     label,
     description,
-    // stateNotification: { state, message: errorMessage },
     disabled,
     size,
+    ariaLabelProp,
+    ariaLabelledbyProp,
   } = useTimeInputDisplayContext();
 
   return (
@@ -27,10 +28,10 @@ export const TimeFormField = React.forwardRef<
       label={label}
       description={description}
       disabled={disabled}
-      // state={state}
-      // errorMessage={errorMessage}
       size={size}
       ref={fwdRef}
+      aria-label={ariaLabelProp}
+      aria-labelledby={ariaLabelledbyProp}
       {...rest}
     >
       {children}

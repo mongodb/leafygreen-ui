@@ -4,7 +4,8 @@ import {
   DateType,
   isValidDate,
   isInRange as getIsInRange,
-  newUTCFromTimeZone,
+  newTZDate,
+  isSameUTCDateTime,
 } from '@leafygreen-ui/date-utils';
 
 import isNull from 'lodash/isNull';
@@ -15,11 +16,7 @@ import {
 } from './TimeInputContext.types';
 import { useTimeInputComponentRefs } from './useTimeInputComponentRefs';
 import { useTimeInputDisplayContext } from '../TimeInputDisplayContext';
-import {
-  getFormatPartsValues,
-  hasDayPeriod,
-  isSameUTCDayAndTime,
-} from '../../utils';
+import { getFormatPartsValues, hasDayPeriod } from '../../utils';
 import { isBefore } from 'date-fns';
 
 export const TimeInputContext = createContext<TimeInputContextProps>(
@@ -57,24 +54,24 @@ export const TimeInputProvider = ({
       });
 
       // With the local hour, minute, and second parts, along with the UTC month, day, and year parts a min UTC date object is created. If the min is 08, it will be 08 in every time zone. E.g. 08 in New York, 08 in London, 08 in Tokyo, etc.
-      const minUTC = newUTCFromTimeZone({
-        year,
-        month,
-        day,
-        hour: min.getUTCHours().toString(),
-        minute: min.getUTCMinutes().toString(),
-        second: min.getUTCSeconds().toString(),
+      const minUTC = newTZDate({
+        year: Number(year),
+        month: Number(month) - 1,
+        date: Number(day),
+        hours: min.getUTCHours(),
+        minutes: min.getUTCMinutes(),
+        seconds: min.getUTCSeconds(),
         timeZone,
       });
 
       // With the local hour, minute, and second parts, along with the UTC month, day, and year parts a max UTC date object is created. If the min is 08, it will be 08 in every time zone. E.g. 08 in New York, 08 in London, 08 in Tokyo, etc.
-      const maxUTC = newUTCFromTimeZone({
-        year,
-        month,
-        day,
-        hour: max.getUTCHours().toString(),
-        minute: max.getUTCMinutes().toString(),
-        second: max.getUTCSeconds().toString(),
+      const maxUTC = newTZDate({
+        year: Number(year),
+        month: Number(month) - 1,
+        date: Number(day),
+        hours: max.getUTCHours(),
+        minutes: max.getUTCMinutes(),
+        seconds: max.getUTCSeconds(),
         timeZone,
       });
 
@@ -166,7 +163,7 @@ const isOnOrBeforeDateTime = (date: DateType, dateToCompare: DateType) => {
   return (
     isValidDate(date) &&
     isValidDate(dateToCompare) &&
-    (isSameUTCDayAndTime(date, dateToCompare) || isBefore(date, dateToCompare))
+    (isSameUTCDateTime(date, dateToCompare) || isBefore(date, dateToCompare))
   );
 };
 

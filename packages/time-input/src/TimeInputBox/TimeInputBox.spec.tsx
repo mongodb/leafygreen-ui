@@ -2,10 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { SupportedLocales } from '@leafygreen-ui/date-utils';
-
-import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
-import { TimeInputDisplayProviderProps } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext.types';
+import {
+  TimeInputDisplayProvider,
+  TimeInputDisplayProviderProps,
+} from '../Context';
 import { timeSegmentRefsMock } from '../testing/testUtils';
 
 import { TimeInputBox } from './TimeInputBox';
@@ -72,59 +72,6 @@ describe('packages/time-input/time-input-box', () => {
     });
   });
 
-  describe('Min/Max', () => {
-    describe('hour segment', () => {
-      describe('12 hour format', () => {
-        it('should have a min of 1 for the hour segment', () => {
-          const { hourInput } = renderTimeInputBox({
-            displayProps: { locale: SupportedLocales.en_US },
-          });
-          expect(hourInput).toHaveAttribute('min', '1');
-        });
-        it('should have a max of 12 for the hour segment', () => {
-          const { hourInput } = renderTimeInputBox({
-            displayProps: { locale: SupportedLocales.en_US },
-          });
-          expect(hourInput).toHaveAttribute('max', '12');
-        });
-      });
-
-      describe('24 hour format', () => {
-        it('should have a min of 0 for the hour segment', () => {
-          const { hourInput } = renderTimeInputBox({
-            displayProps: { locale: SupportedLocales.ISO_8601 },
-          });
-          expect(hourInput).toHaveAttribute('min', '0');
-        });
-        it('should have a max of 23 for the hour segment', () => {
-          const { hourInput } = renderTimeInputBox({
-            displayProps: { locale: SupportedLocales.ISO_8601 },
-          });
-          expect(hourInput).toHaveAttribute('max', '23');
-        });
-      });
-    });
-
-    describe.each(['minute', 'second'])('%p segment', segment => {
-      test('should have a min of 0 for the %p segment', () => {
-        const result = renderTimeInputBox({
-          displayProps: { locale: SupportedLocales.ISO_8601 },
-        });
-        const input =
-          segment === 'minute' ? result.minuteInput : result.secondInput;
-        expect(input).toHaveAttribute('min', '0');
-      });
-      test('should have a max of 59 for the %p segment', () => {
-        const result = renderTimeInputBox({
-          displayProps: { locale: SupportedLocales.ISO_8601 },
-        });
-        const input =
-          segment === 'minute' ? result.minuteInput : result.secondInput;
-        expect(input).toHaveAttribute('max', '59');
-      });
-    });
-  });
-
   describe('setSegment', () => {
     test('should call setSegment with the segment name and the value', () => {
       const setSegment = jest.fn();
@@ -140,7 +87,7 @@ describe('packages/time-input/time-input-box', () => {
       const { hourInput } = renderTimeInputBox({ props: { onSegmentChange } });
       userEvent.type(hourInput, '1');
       expect(onSegmentChange).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '1' }),
+        expect.objectContaining({ segment: 'hour', value: '1' }),
       );
     });
   });

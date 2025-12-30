@@ -1,5 +1,13 @@
 # @lg-tools/install
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [26a0c2a]
+  - @lg-tools/build@0.9.0
+  - @lg-tools/meta@0.6.3
+
 ## 0.4.1
 
 ### Patch Changes

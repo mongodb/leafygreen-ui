@@ -2,10 +2,10 @@ import React from 'react';
 
 import { InputBox } from '@leafygreen-ui/input-box';
 
-import { getTimeSegmentRules } from '../constants';
-import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { useTimeInputDisplayContext } from '../Context';
 import { TimeSegment } from '../shared.types';
 import { TimeInputSegment } from '../TimeInputSegment/TimeInputSegment';
+import { getTimeSegmentRules } from '../utils';
 
 import { TimeInputBoxProps } from './TimeInputBox.types';
 

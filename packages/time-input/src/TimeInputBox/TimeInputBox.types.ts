@@ -1,8 +1,11 @@
-import { SegmentRefs, TimeSegment, TimeSegmentsState } from '../shared.types';
-import { TimeInputSegmentChangeEventHandler } from '../TimeInputSegment/TimeInputSegment.types';
+import {
+  SegmentRefs,
+  TimeInputSegmentChangeEventHandler,
+  TimeSegment,
+  TimeSegmentsState,
+} from '../shared.types';
 
-export interface TimeInputBoxProps
-  extends React.ComponentPropsWithoutRef<'div'> {
+export interface TimeInputBoxProps extends React.ComponentPropsWithRef<'div'> {
   /**
    * The segments of the time input
    */

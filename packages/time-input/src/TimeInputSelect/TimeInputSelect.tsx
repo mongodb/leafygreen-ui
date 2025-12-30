@@ -9,10 +9,11 @@ import {
 } from '@leafygreen-ui/select';
 
 import { unitOptions } from '../constants';
-import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { useTimeInputDisplayContext } from '../Context';
+import { UnitOption } from '../shared.types';
 
 import { selectStyles, wrapperBaseStyles } from './TimeInputSelect.styles';
-import { TimeInputSelectProps, UnitOption } from './TimeInputSelect.types';
+import { TimeInputSelectProps } from './TimeInputSelect.types';
 
 /**
  * @internal

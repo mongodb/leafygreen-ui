@@ -9,14 +9,14 @@ import { pickAndOmit } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { TimeInputProvider } from '../Context/TimeInputContext/TimeInputContext';
-import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
 import {
   DisplayContextPropKeys,
   displayContextPropNames,
-} from '../Context/TimeInputDisplayContext/TimeInputDisplayContext.utils';
+  TimeInputDisplayProvider,
+  TimeInputProvider,
+} from '../Context';
 import { TimeInputContent } from '../TimeInputContent';
-import { getLgIds } from '../utils/getLgIds';
+import { getLgIds } from '../utils';
 
 import { TimeInputProps } from './TimeInput.types';
 

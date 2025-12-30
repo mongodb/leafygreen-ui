@@ -1,6 +1,7 @@
-import { newUTCFromTimeZone } from '@leafygreen-ui/date-utils';
+import { newTZDate } from '@leafygreen-ui/date-utils';
 
-import { TimeSegmentsState } from '../../shared.types';
+import { DateParts, TimeSegmentsState } from '../../shared.types';
+import { DayPeriod } from '../../shared.types';
 import { convert12hTo24h } from '../convert12hTo24h/convert12hTo24h';
 import { doesSomeSegmentExist } from '../doesSomeSegmentExist/doesSomeSegmentExist';
 import { isEverySegmentFilled } from '../isEverySegmentFilled/isEverySegmentFilled';
@@ -25,47 +26,43 @@ export const getNewUTCDateFromSegments = ({
   segments: TimeSegmentsState;
   is12HourFormat: boolean;
   timeZone: string;
-  dateValues: {
-    day: string;
-    month: string;
-    year: string;
-  };
-  dayPeriod: string;
+  dateValues: DateParts;
+  dayPeriod: DayPeriod;
 }) => {
   const { day, month, year } = dateValues;
   const { hour, minute, second } = segments;
 
-  const convertedHour = is12HourFormat
-    ? convert12hTo24h(hour, dayPeriod)
+  const converted12hTo24hHour = is12HourFormat
+    ? convert12hTo24h(Number(hour), dayPeriod)
     : hour;
 
   /**
-   * Check if all segments are filled and valid. If they are, return the UTC date.
-   */
-  if (
-    isEverySegmentFilled(segments) &&
-    isEverySegmentValid({ segments, is12HourFormat })
-  ) {
-    return newUTCFromTimeZone({
-      year,
-      month,
-      day,
-      hour: convertedHour,
-      minute,
-      second,
-      timeZone,
-    });
-  }
-
-  /**
-   * Check if any segments are filled. If not, return null. This means all segments are empty.
+   * All segments are empty
    */
   if (!doesSomeSegmentExist(segments)) {
     return null;
   }
 
   /**
-   * Return an invalid date object if some segments are empty or invalid.
+   * Not all segments are filled or valid
    */
-  return new Date('invalid');
+  if (
+    !isEverySegmentFilled(segments) ||
+    !isEverySegmentValid({ segments, is12HourFormat })
+  ) {
+    return new Date('invalid');
+  }
+
+  /**
+   * All segments are filled and valid (not necessarily explicit)
+   */
+  return newTZDate({
+    year: Number(year),
+    month: Number(month) - 1,
+    date: Number(day),
+    hours: Number(converted12hTo24hHour),
+    minutes: Number(minute),
+    seconds: Number(second),
+    timeZone,
+  });
 };

@@ -3,24 +3,25 @@ import { Month, SupportedLocales } from '@leafygreen-ui/date-utils';
 import { getFormatPartsValues } from './getFormatPartsValues';
 
 describe('packages/time-input/utils/getFormatPartsValues', () => {
-  describe('returns current day, month, and year format parts values with the value is undefined', () => {
-    beforeEach(() => {
-      // Mock the current date/time in UTC
-      jest.useFakeTimers().setSystemTime(
-        new Date(Date.UTC(2025, Month.January, 1, 0, 0, 0)), // January 1, 2025 00:00:00 UTC
-      );
-    });
+  beforeEach(() => {
+    // Mock the current date/time in UTC
+    jest.useFakeTimers().setSystemTime(
+      new Date(Date.UTC(2025, Month.January, 1, 0, 0, 0)), // January 1, 2025 00:00:00 UTC
+    );
+  });
 
-    afterEach(() => {
-      jest.useRealTimers();
-    });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
-    describe('and the time zone is', () => {
-      test('UTC', () => {
+  describe.each([undefined, new Date('invalid')])(
+    'when the value is %p',
+    value => {
+      test('UTC returns the correct values', () => {
         const formatPartsValues = getFormatPartsValues({
           locale: SupportedLocales.ISO_8601,
           timeZone: 'UTC',
-          value: undefined,
+          value,
         });
         // January 1, 2025 00:00:00 UTC in UTC is January 1, 2025 00:00:00 (UTC)
         expect(formatPartsValues).toEqual({
@@ -34,11 +35,11 @@ describe('packages/time-input/utils/getFormatPartsValues', () => {
         });
       });
 
-      test('America/New_York', () => {
+      test('America/New_York returns the correct values', () => {
         const formatPartsValues = getFormatPartsValues({
           locale: SupportedLocales.ISO_8601,
           timeZone: 'America/New_York',
-          value: undefined,
+          value,
         });
         // January 1, 2025 00:00:00 UTC in America/New_York is December 31, 2024 19:00:00 (UTC-5 hours)
         expect(formatPartsValues).toEqual({
@@ -52,11 +53,11 @@ describe('packages/time-input/utils/getFormatPartsValues', () => {
         });
       });
 
-      test('Pacific/Auckland', () => {
+      test('Pacific/Auckland returns the correct values', () => {
         const formatPartsValues = getFormatPartsValues({
           locale: SupportedLocales.ISO_8601,
           timeZone: 'Pacific/Auckland',
-          value: undefined,
+          value,
         });
         // January 1, 2025 00:00:00 UTC in Pacific/Auckland is January 1, 2025 (UTC+13 hours)
         expect(formatPartsValues).toEqual({
@@ -69,15 +70,15 @@ describe('packages/time-input/utils/getFormatPartsValues', () => {
           dayPeriod: 'AM',
         });
       });
-    });
-  });
+    },
+  );
 
-  describe('returns day, month, year, hour, minute, second, and day period values when the value is defined', () => {
+  describe('when the value is defined', () => {
     const utcValue = new Date(Date.UTC(2025, Month.February, 20, 13, 30, 59)); // February 20, 2025 13:30:59 UTC
 
     describe('and the time zone is', () => {
       describe('UTC', () => {
-        test('24 hour format', () => {
+        test('24 hour format returns the correct values', () => {
           const formatPartsValues = getFormatPartsValues({
             locale: SupportedLocales.ISO_8601,
             timeZone: 'UTC',
@@ -94,7 +95,7 @@ describe('packages/time-input/utils/getFormatPartsValues', () => {
           });
         });
 
-        test('12 hour format', () => {
+        test('12 hour format returns the correct values', () => {
           const formatPartsValues = getFormatPartsValues({
             locale: SupportedLocales.en_US,
             timeZone: 'UTC',
@@ -113,7 +114,7 @@ describe('packages/time-input/utils/getFormatPartsValues', () => {
       });
 
       describe('America/New_York', () => {
-        test('24 hour format', () => {
+        test('24 hour format returns the correct values', () => {
           const formatPartsValues = getFormatPartsValues({
             locale: SupportedLocales.ISO_8601,
             timeZone: 'America/New_York',
@@ -130,7 +131,7 @@ describe('packages/time-input/utils/getFormatPartsValues', () => {
             dayPeriod: 'AM',
           });
         });
-        test('12 hour format', () => {
+        test('12 hour format returns the correct values', () => {
           const formatPartsValues = getFormatPartsValues({
             locale: SupportedLocales.en_US,
             timeZone: 'America/New_York',
@@ -150,7 +151,7 @@ describe('packages/time-input/utils/getFormatPartsValues', () => {
       });
 
       describe('Pacific/Auckland', () => {
-        test('24 hour format', () => {
+        test('24 hour format returns the correct values', () => {
           const formatPartsValues = getFormatPartsValues({
             locale: SupportedLocales.ISO_8601,
             timeZone: 'Pacific/Auckland',
@@ -167,7 +168,7 @@ describe('packages/time-input/utils/getFormatPartsValues', () => {
             dayPeriod: 'AM',
           });
         });
-        test('12 hour format', () => {
+        test('12 hour format returns the correct values', () => {
           const formatPartsValues = getFormatPartsValues({
             locale: SupportedLocales.en_US,
             timeZone: 'Pacific/Auckland',

@@ -1,8 +1,8 @@
 import { isValidValueForSegment } from '@leafygreen-ui/input-box';
 
-import { getDefaultMax, getDefaultMin } from '../../constants';
-import { TimeSegment } from '../../shared.types';
-import { TimeSegmentsState } from '../../shared.types';
+import { TimeSegment, TimeSegmentsState } from '../../shared.types';
+import { getDefaultMax } from '../getDefaultMax';
+import { getDefaultMin } from '../getDefaultMin';
 
 /**
  * Checks if every segment is valid
@@ -18,19 +18,22 @@ export const isEverySegmentValid = ({
   segments: TimeSegmentsState;
   is12HourFormat: boolean;
 }) => {
-  const isEverySegmentValid = Object.entries(segments).every(
-    ([segment, value]) => {
-      const isSegmentValid = isValidValueForSegment({
-        segment: segment as TimeSegment,
-        value: value as string,
-        defaultMin: getDefaultMin({ is12HourFormat })[segment as TimeSegment],
-        defaultMax: getDefaultMax({ is12HourFormat })[segment as TimeSegment],
-        segmentEnum: TimeSegment,
-      });
+  const defaultMinValues = getDefaultMin({ is12HourFormat });
+  const defaultMaxValues = getDefaultMax({ is12HourFormat });
 
-      return isSegmentValid;
-    },
-  );
+  const isEverySegmentValid = (
+    Object.entries(segments) as Array<[TimeSegment, string]>
+  ).every(([segment, value]) => {
+    const isSegmentValid = isValidValueForSegment({
+      segment: segment,
+      value: value,
+      defaultMin: defaultMinValues[segment],
+      defaultMax: defaultMaxValues[segment],
+      segmentEnum: TimeSegment,
+    });
+
+    return isSegmentValid;
+  });
 
   return isEverySegmentValid;
 };

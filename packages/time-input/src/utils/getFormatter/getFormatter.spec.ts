@@ -13,8 +13,40 @@ describe('packages/time-input/utils/getFormatter', () => {
     expect(formatter).toBeDefined();
   });
 
+  test('returns a formatter if locale is not provided', () => {
+    const formatter = getFormatter({});
+    expect(formatter).toBeDefined();
+  });
+
   test('returns undefined for an invalid locale', () => {
     const formatter = getFormatter({ locale: '!!!' });
     expect(formatter).toBeUndefined();
+  });
+
+  test('returns undefined for an an empty string locale', () => {
+    const formatter = getFormatter({ locale: '' });
+    expect(formatter).toBeUndefined();
+  });
+
+  describe('formatter methods', () => {
+    test('format() returns formatted date string', () => {
+      const testDate = new Date('2025-01-15T14:30:00Z');
+      const formatter = getFormatter({ locale: SupportedLocales.en_US });
+      const formatted = formatter?.format(testDate);
+      expect(formatted).toBe('1/15/2025');
+    });
+
+    test('formatToParts() returns date parts array', () => {
+      const testDate = new Date('2025-01-15T14:30:00Z');
+      const formatter = getFormatter({ locale: SupportedLocales.en_US });
+      const formatParts = formatter?.formatToParts(testDate);
+      expect(formatParts).toEqual([
+        { type: 'month', value: '1' },
+        { type: 'literal', value: '/' },
+        { type: 'day', value: '15' },
+        { type: 'literal', value: '/' },
+        { type: 'year', value: '2025' },
+      ]);
+    });
   });
 });

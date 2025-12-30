@@ -1,4 +1,4 @@
-import { TimeParts, TimeSegment } from './shared.types';
+import { DateTimeParts } from './shared.types';
 
 /**
  * The text for the 24 hour format
@@ -39,72 +39,12 @@ export const MAX_DATE = new Date(
 export const unitOptions = [
   { displayName: 'AM', value: 'AM' },
   { displayName: 'PM', value: 'PM' },
-];
-
-/**
- * The rules for the time segments
- *
- * @param is12HourFormat - Whether the time input is in 12-hour format
- */
-export const getTimeSegmentRules = ({
-  is12HourFormat,
-}: {
-  is12HourFormat: boolean;
-}) => {
-  return {
-    [TimeSegment.Hour]: {
-      maxChars: 2,
-      minExplicitValue: is12HourFormat ? 2 : 3,
-    },
-    [TimeSegment.Minute]: {
-      maxChars: 2,
-      minExplicitValue: 6,
-    },
-    [TimeSegment.Second]: {
-      maxChars: 2,
-      minExplicitValue: 6,
-    },
-  };
-};
-
-/**
- * The minimum number for each segment
- *
- * @param is12HourFormat - Whether the time input is in 12-hour format
- */
-export const getDefaultMin = ({
-  is12HourFormat,
-}: {
-  is12HourFormat: boolean;
-}) => {
-  return {
-    hour: is12HourFormat ? 1 : 0,
-    minute: 0,
-    second: 0,
-  } as const;
-};
-
-/**
- * The maximum number for each segment
- *
- * @param is12HourFormat - Whether the time input is in 12-hour format
- */
-export const getDefaultMax = ({
-  is12HourFormat,
-}: {
-  is12HourFormat: boolean;
-}) => {
-  return {
-    hour: is12HourFormat ? 12 : 23,
-    minute: 59,
-    second: 59,
-  } as const;
-};
+] as const;
 
 /**
  * The default placeholders for each segment
  */
-export const defaultPlaceholder = {
+export const defaultPlaceholders = {
   hour: 'HH',
   minute: 'MM',
   second: 'SS',
@@ -113,7 +53,7 @@ export const defaultPlaceholder = {
 /**
  * The default time parts
  */
-export const defaultTimeParts: TimeParts = {
+export const defaultDateTimeParts: DateTimeParts = {
   hour: '',
   minute: '',
   second: '',

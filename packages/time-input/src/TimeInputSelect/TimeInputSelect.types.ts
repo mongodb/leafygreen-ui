@@ -1,7 +1,4 @@
-export interface UnitOption {
-  displayName: string;
-  value: string;
-}
+import { UnitOption } from '../shared.types';
 
 export interface TimeInputSelectProps {
   /**

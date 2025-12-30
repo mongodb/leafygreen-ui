@@ -1,18 +1,21 @@
+import { unitOptions } from '../../constants';
+
 import { findUnitOptionByDayPeriod } from './findUnitOptionByDayPeriod';
 
 describe('packages/time-input/utils/findUnitOptionByDayPeriod', () => {
   test('returns the unit option by day period', () => {
+    expect(findUnitOptionByDayPeriod('AM', unitOptions)).toEqual(
+      unitOptions[0],
+    );
+    expect(findUnitOptionByDayPeriod('PM', unitOptions)).toEqual(
+      unitOptions[1],
+    );
+  });
+
+  test('returns the first unit option if the day period is not found', () => {
     expect(
-      findUnitOptionByDayPeriod('AM', [
-        { displayName: 'AM', value: 'AM' },
-        { displayName: 'PM', value: 'PM' },
-      ]),
-    ).toEqual({ displayName: 'AM', value: 'AM' });
-    expect(
-      findUnitOptionByDayPeriod('PM', [
-        { displayName: 'AM', value: 'AM' },
-        { displayName: 'PM', value: 'PM' },
-      ]),
-    ).toEqual({ displayName: 'PM', value: 'PM' });
+      // @ts-expect-error - invalid day period
+      findUnitOptionByDayPeriod('', unitOptions),
+    ).toEqual(unitOptions[0]);
   });
 });
