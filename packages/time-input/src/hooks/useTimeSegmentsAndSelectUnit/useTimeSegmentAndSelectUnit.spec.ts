@@ -239,8 +239,7 @@ describe('packages/time-input/hooks/useTimeSegmentsAndSelectUnit', () => {
               callback,
             });
 
-            const { segments: updatedSegments, selectUnit: updatedSelectUnit } =
-              result.current;
+            const { segments: updatedSegments } = result.current;
             expect(updatedSegments.hour).toEqual('13');
             expect(updatedSegments.minute).toEqual('00');
             expect(updatedSegments.second).toEqual('00');
