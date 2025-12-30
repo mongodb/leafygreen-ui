@@ -1,4 +1,16 @@
 /**
+ * State enum for tool interaction lifecycle states
+ */
+export const State = {
+  Canceled: 'canceled',
+  Error: 'error',
+  Idle: 'idle',
+  Running: 'running',
+  Success: 'success',
+} as const;
+export type State = (typeof State)[keyof typeof State];
+
+/**
  * Static property names used to identify ToolCard compound components.
  * These are implementation details for the compound component pattern and should not be exported.
  */
