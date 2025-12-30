@@ -37,6 +37,13 @@ export type BarProps = SeriesProps & {
    * - `none`: Other bars will not be affected by the hover. (default)
    */
   hoverBehavior?: BarHoverBehavior;
+
+  /**
+   * Minimum height of bar in pixels. Can be used to ensure small values are still visible.
+   * Useful when charts have large differences in value magnitudes.
+   * @default 0
+   */
+  barMinHeight?: number;
 };
 
 export const Bar = ({
@@ -44,6 +51,7 @@ export const Bar = ({
   data,
   stack,
   hoverBehavior = BarHoverBehavior.None,
+  barMinHeight = 0,
 }: BarProps) => {
   const options = useCallback<
     (stylingContext: StylingContext) => EChartSeriesOptions['bar']['options']
@@ -51,6 +59,7 @@ export const Bar = ({
     stylingContext => ({
       clip: false,
       stack,
+      barMinHeight,
       emphasis: {
         focus: getEmphasisFocus(hoverBehavior),
       },
@@ -58,7 +67,7 @@ export const Bar = ({
         color: stylingContext.seriesColor,
       },
     }),
-    [stack, hoverBehavior],
+    [stack, hoverBehavior, barMinHeight],
   );
 
   return <Series type="bar" name={name} data={data} options={options} />;
