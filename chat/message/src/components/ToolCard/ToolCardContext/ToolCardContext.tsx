@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 import { State } from '../shared.types';
 
@@ -28,6 +28,19 @@ export interface ToolCardContextValue {
 }
 
 export const ToolCardContext = createContext<ToolCardContextValue | null>(null);
+
+export const ToolCardProvider = ({
+  value,
+  children,
+}: PropsWithChildren<{
+  value: ToolCardContextValue;
+}>) => {
+  return (
+    <ToolCardContext.Provider value={value}>
+      {children}
+    </ToolCardContext.Provider>
+  );
+};
 
 export const useToolCardContext = () => {
   const context = useContext(ToolCardContext);
