@@ -8,6 +8,7 @@ import { Icon } from '@leafygreen-ui/icon';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
+import { CollectionToolbarActionsSubComponentProperty } from '../../shared.types';
 import { getLgIds } from '../../utils/getLgIds';
 import {
   CollectionToolbarSubComponentProperty,
@@ -16,10 +17,7 @@ import {
 import { useCollectionToolbarContext } from '../CollectionToolbarContext';
 
 import { getCollectionToolbarActionsStyles } from './CollectionToolbarActions.styles';
-import {
-  CollectionToolbarActionsProps,
-  CollectionToolbarActionsSubComponentProperty,
-} from './CollectionToolbarActions.types';
+import { CollectionToolbarActionsProps } from './CollectionToolbarActions.types';
 import { CollectionToolbarActionsButton } from './CollectionToolbarActionsButton';
 
 export const CollectionToolbarActions = CompoundSubComponent(
