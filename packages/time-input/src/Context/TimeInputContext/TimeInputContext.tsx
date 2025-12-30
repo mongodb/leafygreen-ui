@@ -22,9 +22,6 @@ import {
 } from '../../utils';
 import { isBefore } from 'date-fns';
 
-// import { getFormatPartsValues } from '../../utils/getFormatPartsValues/getFormatPartsValues';
-// import { useTimeInputDisplayContext } from '../TimeInputDisplayContext';
-
 export const TimeInputContext = createContext<TimeInputContextProps>(
   {} as TimeInputContextProps,
 );
@@ -84,12 +81,12 @@ export const TimeInputProvider = ({
       //// TESTING ////
 
       console.log('🪼 handleValidation', {
-        value: val && isValidDate(val) ? val.toISOString() : null,
-        min: min && isValidDate(min) ? min.toISOString() : null,
-        max: max && isValidDate(max) ? max.toISOString() : null,
+        value: val.toISOString(),
+        min: min.toISOString(),
+        max: max.toISOString(),
         timeZone,
-        minUTC: minUTC && isValidDate(minUTC) ? minUTC.toISOString() : null,
-        maxUTC: maxUTC && isValidDate(maxUTC) ? maxUTC.toISOString() : null,
+        minUTC: minUTC.toISOString(),
+        maxUTC: maxUTC.toISOString(),
       });
 
       const isInRange = getIsInRange(minUTC, maxUTC);

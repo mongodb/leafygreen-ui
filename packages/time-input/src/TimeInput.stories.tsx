@@ -57,8 +57,6 @@ const meta: StoryMetaType<typeof TimeInput> = {
     // max: MAX_DATE,
     min: new Date('2026-02-20T08:22:00Z'), // 8:22AM in every timezone
     max: new Date('2026-02-21T22:00:00Z'), // 10PM in every timezone
-    // min: new Date('2026-02-20T02:00:00'), // Once you create a Date object, you lose the ability to know whether the original string was intended as local time or UTC.
-    // max: new Date('2026-02-20T05:00:00'),
   },
   argTypes: {
     locale: { control: 'select', options: Object.values(SupportedLocales) },

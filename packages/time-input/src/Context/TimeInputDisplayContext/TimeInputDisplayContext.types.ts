@@ -5,10 +5,22 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { DisplayTimeInputProps } from '../../TimeInput/TimeInput.types';
 import { GetLgIdsReturnType } from '../../utils/getLgIds';
+// import { State } from '../../TimeInput/TimeInput.types';
 
 type AriaLabelKeys = keyof AriaLabelPropsWithLabel;
 type AriaLabelKeysWithoutLabel = Exclude<AriaLabelKeys, 'label'>;
 type DarkModeKeys = keyof DarkModeProps;
+
+// TODO: temporary types for error notifications. Will be updated in the next PR.
+// export interface StateNotification {
+//   state: State;
+//   message: string;
+// }
+// export interface UseTimeInputErrorNotificationsReturnObject {
+//   stateNotification: StateNotification;
+//   setInternalErrorMessage: (msg: string) => void;
+//   clearInternalErrorMessage: () => void;
+// }
 
 /**
  * The values in context that can be used in the component

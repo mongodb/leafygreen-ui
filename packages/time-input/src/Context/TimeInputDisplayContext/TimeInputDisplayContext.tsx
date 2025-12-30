@@ -9,7 +9,7 @@ import defaultTo from 'lodash/defaultTo';
 
 import { hasDayPeriod } from '../../utils';
 import { getFormatParts } from '../../utils/getFormatParts/getFormatParts';
-import { getMinMax, toDate } from '@leafygreen-ui/date-utils';
+import { getMinMax, isValidDate, toDate } from '@leafygreen-ui/date-utils';
 
 import {
   TimeInputDisplayContextProps,
@@ -63,29 +63,20 @@ export const TimeInputDisplayProvider = ({
     Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
 
-  const normalizedMin = normalizeDateToUTCToday({
-    date: toDate(providerValue.min),
-  });
-  const normalizedMax = normalizeDateToUTCToday({
-    date: toDate(providerValue.max),
-  });
-
+  /**
+   * Gets the min and max dates for the time input
+   */
   const [min, max] = getMinMax({
-    min: normalizedMin,
-    max: normalizedMax,
+    min: applyTimeToUTCToday({
+      date: toDate(providerValue.min),
+    }),
+    max: applyTimeToUTCToday({
+      date: toDate(providerValue.max),
+    }),
     defaultMin: MIN_DATE,
     defaultMax: MAX_DATE,
     componentName: 'TimeInput',
   });
-
-  // console.log('🦄 min/max', {
-  //   providerMin: providerValue.min,
-  //   providerMax: providerValue.max,
-  //   providerMinISOString: normalizedMin?.toISOString(),
-  //   providerMaxISOString: normalizedMax?.toISOString(),
-  //   min: min?.toISOString(),
-  //   max: max?.toISOString(),
-  // });
 
   return (
     <TimeInputDisplayContext.Provider
@@ -113,35 +104,34 @@ export const useTimeInputDisplayContext = () => {
 };
 
 /**
- * Normalizes a date to UTC today.
+ * Applies the time from the given date to today's month, day, and year to create a new date in UTC.
  *
- * Takes today's month, day, and year and while preserving the time from the date to create a new date in UTC.
- *
- * @param date - The date to normalize
- * @returns The normalized date
+ * @param date - The date to apply the time to
+ * @returns The date with the time applied to today's month, day, and year in UTC
  *
  * @example
  * ```js
  * Today is February 20, 2026
  * const date = new Date('2026-01-01T04:00:00Z'); // January 1st, 2026 at 4:00:00 AM
- * const normalizedDate = normalizeDateToUTCToday({ date });
+ * const normalizedDate = applyTimeToUTCToday({ date });
  * // '2026-02-20T04:00:00Z' // February 20th, 2026 at 4:00:00 AM
  * ```
  */
-const normalizeDateToUTCToday = ({ date }: { date: Date | null }) => {
+const applyTimeToUTCToday = ({ date }: { date: Date | null }) => {
+  if (!isValidDate(date)) {
+    return null;
+  }
+
   const today = new Date();
 
-  // const
-  return date !== null
-    ? new Date(
-        Date.UTC(
-          today.getUTCFullYear(),
-          today.getUTCMonth(),
-          today.getUTCDate(),
-          date?.getUTCHours(),
-          date?.getUTCMinutes(),
-          date?.getUTCSeconds(),
-        ),
-      )
-    : null;
+  return new Date(
+    Date.UTC(
+      today.getUTCFullYear(),
+      today.getUTCMonth(),
+      today.getUTCDate(),
+      date.getUTCHours(),
+      date.getUTCMinutes(),
+      date.getUTCSeconds(),
+    ),
+  );
 };
