@@ -7,15 +7,16 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import PageSize from './Pagination/PageSize';
 import {
+  NavigationProps,
+  type PageSizeProps,
   Pagination,
-  PaginationCurrentPageControls,
-  PaginationCurrentPageControlsProps,
-  PaginationItemsPerPage,
-  PaginationItemsPerPageProps,
+  PaginationNavigation,
+  PaginationPageSize,
   type PaginationProps,
-  PaginationRangeView,
-  PaginationRangeViewProps,
+  PaginationSummary,
+  type SummaryProps,
 } from '.';
 
 const fn = () => {};
@@ -187,19 +188,19 @@ VariableItemsPerPage.parameters = {
 };
 
 export const PaginationItemsPerPageLiveExample: StoryFn<
-  PaginationItemsPerPageProps
+  PageSizeProps
 > = args => {
   const [itemsPerPage, setItemsPerPage] = useState<number>(
     args.itemsPerPageOptions ? args.itemsPerPageOptions[0] : 10,
   );
 
-  const handleItemsPerPageOptionChange: PaginationItemsPerPageProps['onItemsPerPageOptionChange'] =
+  const handleItemsPerPageOptionChange: PageSizeProps['onItemsPerPageOptionChange'] =
     (value, _) => {
       setItemsPerPage(Number(value));
     };
 
   return (
-    <PaginationItemsPerPage
+    <PageSize
       {...args}
       itemsPerPage={itemsPerPage}
       onItemsPerPageOptionChange={handleItemsPerPageOptionChange}
@@ -212,23 +213,21 @@ PaginationItemsPerPageLiveExample.args = {
   onItemsPerPageOptionChange: fn,
 };
 
-export const PaginationRangeViewLiveExample: StoryFn<
-  PaginationRangeViewProps
-> = args => {
-  return <PaginationRangeView {...args} />;
+export const PaginationSummaryLiveExample: StoryFn<SummaryProps> = args => {
+  return <PaginationSummary {...args} />;
 };
-PaginationRangeViewLiveExample.args = {
+PaginationSummaryLiveExample.args = {
   itemsPerPage: 10,
   currentPage: 1,
   numTotalItems: 100,
 };
 
-export const PaginationCurrentPageControlsLiveExample: StoryFn<
-  PaginationCurrentPageControlsProps
+export const PaginationNavigationLiveExample: StoryFn<
+  NavigationProps
 > = args => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const handleCurrentPageOptionChange: PaginationCurrentPageControlsProps['onCurrentPageOptionChange'] =
+  const handleCurrentPageOptionChange: NavigationProps['onCurrentPageOptionChange'] =
     (value, _) => {
       setCurrentPage(Number(value));
     };
@@ -242,7 +241,7 @@ export const PaginationCurrentPageControlsLiveExample: StoryFn<
   };
 
   return (
-    <PaginationCurrentPageControls
+    <PaginationNavigation
       {...args}
       currentPage={currentPage}
       onCurrentPageOptionChange={handleCurrentPageOptionChange}
@@ -251,13 +250,28 @@ export const PaginationCurrentPageControlsLiveExample: StoryFn<
     />
   );
 };
-PaginationCurrentPageControlsLiveExample.args = {
+
+PaginationNavigationLiveExample.args = {
   currentPage: 1,
   numTotalItems: 100,
   itemsPerPage: 10,
   onCurrentPageOptionChange: fn,
 };
 
-PaginationRangeViewLiveExample.parameters = {
+PaginationNavigationLiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const PaginationPageSizeLiveExample: StoryFn<PageSizeProps> = args => {
+  return <PaginationPageSize {...args} />;
+};
+
+PaginationPageSizeLiveExample.args = {
+  itemsPerPageOptions: [10, 25, 50],
+  itemsPerPage: 10,
+  onItemsPerPageOptionChange: fn,
+};
+
+PaginationPageSizeLiveExample.parameters = {
   chromatic: { disableSnapshot: true },
 };
