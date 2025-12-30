@@ -39,9 +39,9 @@ export type BarProps = SeriesProps & {
   hoverBehavior?: BarHoverBehavior;
 
   /**
-   * Minimum height of bar in pixels. Can be used to ensure small values are still visible.
+   * Minimum height of bar in pixels. Ensures small values (including zero) are still visible.
    * Useful when charts have large differences in value magnitudes.
-   * @default 0
+   * @default 1
    */
   barMinHeight?: number;
 };
@@ -51,7 +51,7 @@ export const Bar = ({
   data,
   stack,
   hoverBehavior = BarHoverBehavior.None,
-  barMinHeight = 0,
+  barMinHeight = 1,
 }: BarProps) => {
   const options = useCallback<
     (stylingContext: StylingContext) => EChartSeriesOptions['bar']['options']
