@@ -17,9 +17,9 @@ export const useTimeInputComponentRefs = (): TimeInputComponentRefs => {
 
   const segmentRefs: SegmentRefs = useMemo(
     () => ({
-      hour: getSegmentRef('hour') || undefined,
-      minute: getSegmentRef('minute') || undefined,
-      second: getSegmentRef('second') || undefined,
+      hour: getSegmentRef('hour'),
+      minute: getSegmentRef('minute'),
+      second: getSegmentRef('second'),
     }),
     [getSegmentRef],
   );
