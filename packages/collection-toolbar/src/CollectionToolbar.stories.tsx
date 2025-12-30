@@ -2,7 +2,12 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { CollectionToolbar, Size, Variant } from '.';
+import {
+  CollectionToolbar,
+  CollectionToolbarActionsButtonVariant,
+  Size,
+  Variant,
+} from '.';
 
 const meta: StoryMetaType<typeof CollectionToolbar> = {
   title: 'Components/CollectionToolbar',
@@ -28,6 +33,22 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
       options: Object.values(Variant),
     },
   },
+  decorators: [
+    (Story: StoryFn) => {
+      return (
+        <div
+          style={{
+            background: 'lightblue',
+            width: '100vw',
+            height: '100%',
+            margin: '-100px',
+          }}
+        >
+          <Story />
+        </div>
+      );
+    },
+  ],
   args: {
     children: 'Collection Toolbar',
   },
@@ -36,5 +57,18 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
 export default meta;
 
 export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
-  <CollectionToolbar {...props} />
+  <CollectionToolbar {...props}>
+    <CollectionToolbar.Actions>
+      <CollectionToolbar.Actions.Button
+        variant={CollectionToolbarActionsButtonVariant.Default}
+      >
+        Default Button
+      </CollectionToolbar.Actions.Button>
+      <CollectionToolbar.Actions.Button
+        variant={CollectionToolbarActionsButtonVariant.Primary}
+      >
+        Primary Button
+      </CollectionToolbar.Actions.Button>
+    </CollectionToolbar.Actions>
+  </CollectionToolbar>
 );

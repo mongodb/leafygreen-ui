@@ -21,3 +21,24 @@ export interface CollectionToolbarProps {
   className?: string;
   children?: React.ReactNode;
 }
+
+/**
+ * Static property names used to identify CollectionToolbar compound components.
+ * These are implementation details for the compound component pattern and should not be exported.
+ */
+export const CollectionToolbarSubComponentProperty = {
+  Title: 'isCollectionToolbarTitle',
+  SearchInput: 'isCollectionToolbarSearchInput',
+  Actions: 'isCollectionToolbarActions',
+  ActionsButtons: 'isCollectionToolbarActionsButtons',
+  ActionsMenu: 'isCollectionToolbarActionsMenu',
+  ActionsMenuItems: 'isCollectionToolbarActionsMenuItems',
+  ActionsPaginationView: 'isCollectionToolbarActionsPaginationView',
+  Filters: 'isCollectionToolbarFilters',
+} as const;
+
+/**
+ * Type representing the possible static property names for CollectionToolbar sub components.
+ */
+export type CollectionToolbarSubComponentProperty =
+  (typeof CollectionToolbarSubComponentProperty)[keyof typeof CollectionToolbarSubComponentProperty];

@@ -22,6 +22,21 @@
       "path": "../tokens"
     },
     {
+      "path": "../button"
+    },
+    {
+      "path": "../compound-component"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
       "path": "../../tools/test-harnesses"
     }
   ]
