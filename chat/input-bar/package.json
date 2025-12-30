@@ -17,6 +17,7 @@
     "@leafygreen-ui/avatar": "workspace:^",
     "@leafygreen-ui/banner": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
